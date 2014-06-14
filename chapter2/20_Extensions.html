@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.20" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.20" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_125">
+                    <section class="normal" id="section-gitbook_72">
                     
                         <blockquote>
 <p>翻译：lyuka</p>
@@ -612,7 +612,7 @@
 <li>提供新的构造器</li>
 <li>定义下标</li>
 <li>定义和使用新的嵌套类型</li>
-<li>使一个已有类型符合某个接口</li>
+<li>使一个已有类型符合某个协议</li>
 </ul>
 <blockquote>
 <p>注意：</p>
@@ -624,7 +624,7 @@
 <pre><code>extension SomeType {
     // 加到SomeType的新功能写到这里
 }
-</code></pre><p>一个扩展可以扩展一个已有类型，使其能够适配一个或多个协议（protocol）。当这种情况发生时，接口的名字应该完全按照类或结构体的名字的方式进行书写：</p>
+</code></pre><p>一个扩展可以扩展一个已有类型，使其能够适配一个或多个协议（protocol）。当这种情况发生时，协议的名字应该完全按照类或结构体的名字的方式进行书写：</p>
 <pre><code>extension SomeType: SomeProtocol, AnotherProctocol {
     // 协议实现写到这里
 }
@@ -658,11 +658,11 @@ println(&quot;A marathon is \(aMarathon) meters long&quot;)
 </blockquote>
 <p><a name="initializers"></a></p>
 <h2 id="-initializers-">构造器（Initializers）</h2>
-<p>扩展可以向已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为构造器参数，或者提供该类型的原始实现中没有包含的额外初始化选项。</p>
+<p>扩展可以向已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为构造器参数，或者提供该类型的原始实现中没有包含的额外初始化选项。  </p>
+<p>扩展能向类中添加新的便利构造器，但是它们不能向类中添加新的指定构造器或析构函数。指定构造器和析构函数必须总是由原始的类实现来提供。</p>
 <blockquote>
 <p>注意：</p>
-<p>如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和成员级构造器(memberwise initializers)。
-正如在值类型的构造器授权中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。</p>
+<p>如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。<br>正如在值类型的构造器授权中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。</p>
 </blockquote>
 <p>下面的例子定义了一个用于描述几何矩形的定制结构体<code>Rect</code>。这个例子同时定义了两个辅助结构体<code>Size</code>和<code>Point</code>，它们都把<code>0.0</code>作为所有属性的默认值：</p>
 <pre><code>struct Size {

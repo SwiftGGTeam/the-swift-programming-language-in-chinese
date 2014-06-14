@@ -342,7 +342,7 @@
 通过`扩展`为上一节中提到的`Dice`类遵循`TextRepresentable`协议
 
 	extension Dice: TextRepresentable {
-		cun asText() -> String {
+		func asText() -> String {
 			return "A \(sides)-sided dice"
 		}
 	}

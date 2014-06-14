@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.16" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.16" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_117">
+                    <section class="normal" id="section-gitbook_64">
                     
                         <blockquote>
 <p>翻译：TimothyYe</p>
@@ -779,7 +779,7 @@ class CreditCard {
 </code></pre><p>现在你可以创建<code>Customer</code>类的实例，用它初始化<code>CreditCard</code>实例，并将新创建的<code>CreditCard</code>实例赋值为客户的<code>card</code>属性。</p>
 <pre><code>john = Customer(name: &quot;John Appleseed&quot;)
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
-</code></pre><p>在你关联两个实例后，他们的引用关系如下图所示：</p>
+</code></pre><p>在你关联两个实例后，它们的引用关系如下图所示：</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/unownedReference01_2x.png" alt=""></p>
 <p><code>Customer</code>实例持有对<code>CreditCard</code>实例的强引用，而<code>CreditCard</code>实例持有对<code>Customer</code>实例的无主引用。</p>
 <p>由于<code>customer</code>的无主引用，当你断开<code>john</code>变量持有的强引用时，再也没有指向<code>Customer</code>实例的强引用了：</p>
@@ -815,7 +815,7 @@ class City {
 }
 </code></pre><p>为了建立两个类的依赖关系，<code>City</code>的构造函数有一个<code>Country</code>实例的参数，并且将实例保存为<code>country</code>属性。</p>
 <p><code>Country</code>的构造函数调用了<code>City</code>的构造函数。然而，只有<code>Country</code>的实例完全初始化完后，<code>Country</code>的构造函数才能把<code>self</code>传给<code>City</code>的构造函数。（<a href="14_Initialization.html">在两段式构造过程中有具体描述</a>）</p>
-<p>为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将<code>Country</code>的<code>capitalCity</code>属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，<code>capitalCity</code>属性的默认值为<code>nil</code>，但是不需要展开他的值就能访问它。（<a href="01_The_Basics.html">在隐式解析可选类型中有描述</a>）</p>
+<p>为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将<code>Country</code>的<code>capitalCity</code>属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，<code>capitalCity</code>属性的默认值为<code>nil</code>，但是不需要展开它的值就能访问它。（<a href="01_The_Basics.html">在隐式解析可选类型中有描述</a>）</p>
 <p>由于<code>capitalCity</code>默认值为<code>nil</code>，一旦<code>Country</code>的实例在构造函数中给<code>name</code>属性赋值后，整个初始化过程就完成了。这代表一旦<code>name</code>属性被赋值后，<code>Country</code>的构造函数就能引用并传递隐式的<code>self</code>。<code>Country</code>的构造函数在赋值<code>capitalCity</code>时，就能将<code>self</code>作为参数传递给<code>City</code>的构造函数。</p>
 <p>以上的意义在于你可以通过一条语句同时创建<code>Country</code>和<code>City</code>的实例，而不产生循环强引用，并且<code>capitalCity</code>的属性能被直接访问，而不需要通过感叹号来展开它的可选值：</p>
 <pre><code>var country = Country(name: &quot;Canada&quot;, capitalName: &quot;Ottawa&quot;)
@@ -900,7 +900,7 @@ println(paragraph!.asHTML())
 }
 </code></pre><h3 id="-">弱引用和无主引用</h3>
 <p>当闭包和捕获的实例总是互相引用时并且总是同时销毁时，将闭包内的捕获定义为无主引用。</p>
-<p>相反的，当捕获引用有时可能会是<code>nil</code>时，将闭包内的捕获定义为弱引用。弱引用总是可选类型，并且当引用的实例被销毁后，弱引用的值会自动置为<code>nil</code>。这使我们可以在闭包内检查他们是否存在。</p>
+<p>相反的，当捕获引用有时可能会是<code>nil</code>时，将闭包内的捕获定义为弱引用。弱引用总是可选类型，并且当引用的实例被销毁后，弱引用的值会自动置为<code>nil</code>。这使我们可以在闭包内检查它们是否存在。</p>
 <blockquote>
 <p>注意:</p>
 <p>如果捕获的引用绝对不会置为<code>nil</code>，应该用无主引用，而不是弱引用。</p>

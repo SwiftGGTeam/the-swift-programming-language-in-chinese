@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.8" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="3.8" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,11 +587,11 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_146">
+                    <section class="normal" id="section-gitbook_93">
                     
                         <blockquote>
 <p>翻译：honghaoz</p>
-<p>校对：numbbbbb</p>
+<p>校对：numbbbbb, stanzhai</p>
 </blockquote>
 <h1 id="-patterns-">模式（Patterns）</h1>
 <hr>
@@ -601,132 +601,114 @@
 <li><a href="#identifier_pattern">标识符模式（Identifier Pattern）</a></li>
 <li><a href="#value-binding_pattern">值绑定模式（Value-Binding Pattern）</a></li>
 <li><a href="#tuple_pattern">元组模式（Tuple Pattern）</a></li>
-<li><a href="#enumeration_case_pattern">枚举案例模式（Enumeration Case Pattern）</a></li>
+<li><a href="#enumeration_case_pattern">枚举用例模式（Enumeration Case Pattern）</a></li>
 <li><a href="#type-casting_patterns">类型转换模式（Type-Casting Patterns）</a></li>
 <li><a href="#expression_pattern">表达式模式（Expression Pattern）</a></li>
 </ul>
 <p>模式（pattern）代表了单个值或者复合值的结构。例如，元组<code>(1, 2)</code>的结构是逗号分隔的，包含两个元素的列表。因为模式代表一种值的结构，而不是特定的某个值，你可以把模式和各种同类型的值匹配起来。比如，<code>(x, y)</code>可以匹配元组<code>(1, 2)</code>，以及任何含两个元素的元组。除了将模式与一个值匹配外，你可以从合成值中提取出部分或全部，然后分别把各个部分和一个常量或变量绑定起来。</p>
-<p>在Swift中，模式出现在变量和常量的声明（在它们的左侧），<code>for-in</code>语句和<code>switch</code>语句（在他们的case标签）中。尽管任何模式都可以出现在<code>switch</code>语句的case标签中，但在其他情况下，只有通配符模式（wildcard pattern），标识符模式（identifier pattern）和包含这两种模式的模式才能出现。</p>
+<p>在Swift中，模式出现在变量和常量的声明（在它们的左侧），<code>for-in</code>语句和<code>switch</code>语句（在它们的case标签）中。尽管任何模式都可以出现在<code>switch</code>语句的case标签中，但在其他情况下，只有通配符模式（wildcard pattern），标识符模式（identifier pattern）和包含这两种模式的模式才能出现。</p>
 <p>你可以为通配符模式（wildcard pattern），标识符模式（identifier pattern）和元组模式（tuple pattern）指定类型注释，用来限制这种模式只匹配某种类型的值。</p>
 <blockquote>
-<p>模式的语法：</p>
-<p>pattern → wildcard-patterntype-annotationopt</p>
-<p>pattern → identifier-patterntype-annotationopt</p>
-<p>pattern → value-binding-pattern</p>
-<p>pattern → tuple-patterntype-annotationopt</p>
-<p>pattern → enum-case-pattern</p>
-<p>pattern → type-casting-pattern</p>
-<p>pattern → expression-pattern</p>
+<p>模式(Patterns) 语法<br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#wildcard_pattern"><em>通配符模式</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#identifier_pattern"><em>标识符模式</em></a> <a href="..\chapter3\03_Types.html#type_annotati(Value Binding"><em>类型注解</em></a>on) <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#value_binding_pattern"><em>值绑定模式</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#tuple_pattern"><em>元组模式</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#enum_case_pattern"><em>enum-case-pattern</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#type_casting_pattern"><em>type-casting-pattern</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#expression_pattern"><em>表达式模式</em></a>  </p>
 </blockquote>
 <p><a name="wildcard_pattern"></a></p>
 <h2 id="-wildcard-pattern-">通配符模式（Wildcard Pattern）</h2>
 <p>通配符模式匹配并忽略任何值，包含一个下划线（_）。当你不关心被匹配的值时，可以使用此模式。例如，下面这段代码进行了<code>1...3</code>的循环，并忽略了每次循环的值：</p>
-<pre><code>        for _ in 1...3 {
-            // Do something three times.
-        }
+<pre><code>for _ in 1...3 {
+    // Do something three times.
+}
 </code></pre><blockquote>
-<p>通配符模式的语法：</p>
-<p>wildcard-pattern → _</p>
+<p>通配符模式语法<br><em>通配符模式</em> → <strong>_</strong>  </p>
 </blockquote>
 <p><a name="identifier_pattern"></a></p>
 <h2 id="-identifier-pattern-">标识符模式（Identifier Pattern）</h2>
 <p>标识符模式匹配任何值，并将匹配的值和一个变量或常量绑定起来。例如，在下面的常量申明中，<code>someValue</code>是一个标识符模式，匹配了类型是<code>Int</code>的<code>42</code>。</p>
-<pre><code>        let someValue = 42
+<pre><code>    let someValue = 42
 </code></pre><p>当匹配成功时，<code>42</code>被绑定（赋值）给常量<code>someValue</code>。</p>
 <p>当一个变量或常量申明的左边是标识符模式时，此时，标识符模式是隐式的值绑定模式（value-binding pattern）。</p>
 <blockquote>
-<p>标识符模式的语法：</p>
-<p>identifier-pattern → identifier</p>
+<p>标识符模式语法<br><em>标识符模式</em> → <a href="LexicalStructure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
 <p><a name="value-binding_pattern"></a></p>
 <h2 id="-value-binding-pattern-">值绑定模式（Value-Binding Pattern）</h2>
 <p>值绑定模式绑定匹配的值到一个变量或常量。当绑定匹配值给常量时，用关键字<code>let</code>,绑定给变量时，用关键之<code>var</code>。</p>
 <p>标识符模式包含在值绑定模式中，绑定新的变量或常量到匹配的值。例如，你可以分解一个元组的元素，并把每个元素绑定到相应的标识符模式中。</p>
-<pre><code>        let point = (3, 2)
-        switch point {
-            // Bind x and y to the elements of point.
-        case let (x, y):
-            println(&quot;The point is at (\(x), \(y)).&quot;)
-        }
-        // prints &quot;The point is at (3, 2).”
+<pre><code>let point = (3, 2)
+switch point {
+    // Bind x and y to the elements of point.
+case let (x, y):
+    println(&quot;The point is at (\(x), \(y)).&quot;)
+}
+// prints &quot;The point is at (3, 2).”
 </code></pre><p>在上面这个例子中，<code>let</code>将元组模式<code>(x, y)</code>分配到各个标识符模式。因为这种行为，<code>switch</code>语句中<code>case let (x, y):</code>和<code>case (let x, let y):</code>匹配的值是一样的。</p>
 <blockquote>
-<p>值绑定模式的语法：</p>
-<p>value-binding-pattern → var pattern | let pattern</p>
+<p>值绑定(Value Binding)模式语法<br><em>值绑定模式</em> → <strong>var</strong> <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> | <strong>let</strong> <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a>  </p>
 </blockquote>
 <p><a name="tuple_pattern"></a></p>
 <h2 id="-tuple-pattern-">元组模式（Tuple Pattern）</h2>
 <p>元组模式是逗号分隔的列表，包含一个或多个模式，并包含在一对圆括号中。元组模式匹配相应元组类型的值。</p>
 <p>你可以使用类型注释来限制一个元组模式来匹配某种元组类型。例如，在常量申明<code>let (x, y): (Int, Int) = (1, 2)</code>中的元组模式<code>(x, y): (Int, Int)</code>，只匹配两个元素都是<code>Int</code>这种类型的元组。如果仅需要限制一个元组模式中的某几个元素，只需要直接对这几个元素提供类型注释即可。例如，在<code>let (x: String, y)</code>中的元组模式，只要某个元组类型是包含两个元素，且第一个元素类型是<code>String</code>，则被匹配。</p>
 <p>当元组模式被用在<code>for-in</code>语句或者变量或常量申明时，它可以包含通配符模式，标识符模式或者其他包含这两种模式的模式。例如，下面这段代码是不正确的，因为<code>(x, 0)</code>中的元素<code>0</code>是一个表达式模式：</p>
-<pre><code>        let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-        // This code isn&#39;t valid.
-        for (x, 0) in points {
-            /* ... */
-        }
+<pre><code>let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+// This code isn&#39;t valid.
+for (x, 0) in points {
+    /* ... */
+}
 </code></pre><p>对于只包含一个元素的元组，括号是不起作用的。模式匹配那个单个元素的类型。例如，下面是等效的：</p>
-<pre><code>        let a = 2        // a: Int = 2
-        let (a) = 2      // a: Int = 2
-        let (a): Int = 2 // a: Int = 2
+<pre><code>let a = 2        // a: Int = 2
+let (a) = 2      // a: Int = 2
+let (a): Int = 2 // a: Int = 2
 </code></pre><blockquote>
-<p>元组模式的语法：</p>
-<p>tuple-pattern → (tuple-pattern-element-list opt)</p>
-<p>tuple-pattern-element-list → tuple-pattern-element | tuple-pattern-element, tuple-pattern-element-list</p>
-<p>tuple-pattern-element → pattern</p>
+<p>元组模式语法<br><em>元组模式</em> → <strong>(</strong> <a href="..\chapter3\07_Patterns.html#tuple_pattern_element_list"><em>元组模式元素列表</em></a> <em>可选</em> <strong>)</strong><br><em>元组模式元素列表</em> → <a href="..\chapter3\07_Patterns.html#tuple_pattern_element"><em>元组模式元素</em></a> | <a href="..\chapter3\07_Patterns.html#tuple_pattern_element"><em>元组模式元素</em></a> <strong>,</strong> <a href="..\chapter3\07_Patterns.html#tuple_pattern_element_list"><em>元组模式元素列表</em></a><br><em>元组模式元素</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a>  </p>
 </blockquote>
 <p><a name="enumeration_case_pattern"></a></p>
-<h2 id="-enumeration-case-pattern-">枚举案例模式（Enumeration Case Pattern）</h2>
-<p>枚举案例模式匹配现有的枚举类型的某种案例。枚举案例模式仅在<code>switch</code>语句中的<code>case</code>标签中出现。</p>
-<p>如果你准备匹配的枚举案例有任何关联的值，则相应的枚举案例模式必须指定一个包含每个关联值元素的元组模式。关于使用<code>switch</code>语句来匹配包含关联值枚举案例的例子，请参阅<code>Associated Values</code>.</p>
+<h2 id="-enumeration-case-pattern-">枚举用例模式（Enumeration Case Pattern）</h2>
+<p>枚举用例模式匹配现有的枚举类型的某种用例。枚举用例模式仅在<code>switch</code>语句中的<code>case</code>标签中出现。</p>
+<p>如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用<code>switch</code>语句来匹配包含关联值枚举用例的例子，请参阅<code>Associated Values</code>.</p>
 <blockquote>
-<p>枚举案例模式的语法：</p>
-<p>enum-case-pattern → type-identifier opt . enum-case-name tuple-pattern opt</p>
+<p>枚举用例模式语法<br><em>enum-case-pattern</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <em>可选</em> <strong>.</strong> <a href="..\chapter3\05_Declarations.html#enum_case_name"><em>枚举的case名</em></a> <a href="..\chapter3\07_Patterns.html#tuple_pattern"><em>元组模式</em></a> <em>可选</em>  </p>
 </blockquote>
 <p><a name="type-casting_patterns"></a></p>
 <h2 id="-type-casting-patterns-">类型转换模式（Type-Casting Patterns）</h2>
 <p>有两种类型转换模式，<code>is</code>模式和<code>as</code>模式。这两种模式均只出现在<code>switch</code>语句中的<code>case</code>标签中。<code>is</code>模式和<code>as</code>模式有以下形式：</p>
-<pre><code>        is type
-        pattern as type
-</code></pre><p><code>is</code>模式匹配一个值，如果这个值的类型在运行时（runtime）和<code>is</code>模式右边的指定类型（或者那个类型的子类）是一致的。<code>is</code>模式和<code>is</code>操作符一样，他们都进行类型转换，但是抛弃了返回的类型。</p>
+<pre><code>is type
+pattern as type
+</code></pre><p><code>is</code>模式匹配一个值，如果这个值的类型在运行时（runtime）和<code>is</code>模式右边的指定类型（或者那个类型的子类）是一致的。<code>is</code>模式和<code>is</code>操作符一样，它们都进行类型转换，但是抛弃了返回的类型。</p>
 <p><code>as</code>模式匹配一个值，如果这个值的类型在运行时（runtime）和<code>as</code>模式右边的指定类型（或者那个类型的子类）是一致的。一旦匹配成功，匹配的值的类型被转换成<code>as</code>模式左边指定的模式。</p>
 <p>关于使用<code>switch</code>语句来匹配<code>is</code>模式和<code>as</code>模式值的例子，请参阅<code>Type Casting for Any and AnyObject</code>。</p>
 <blockquote>
-<p>类型转换模式的语法：</p>
-<p>type-casting-pattern → is-pattern  as-pattern</p>
-<p>is-pattern → istype</p>
-<p>as-pattern → patternastype</p>
+<p>类型转换模式语法<br><em>type-casting-pattern</em> → <a href="..\chapter3\07_Patterns.html#is_pattern"><em>is模式</em></a> | <a href="..\chapter3\07_Patterns.html#as_pattern"><em>as模式</em></a><br><em>is模式</em> → <strong>is</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a><br><em>as模式</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <strong>as</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
 <p><a name="expression_pattern"></a></p>
 <h2 id="-expression-pattern-">表达式模式（Expression Pattern）</h2>
 <p>表达式模式代表了一个表达式的值。这个模式只出现在<code>switch</code>语句中的<code>case</code>标签中。</p>
 <p>由表达式模式所代表的表达式用Swift标准库中的<code>~=</code>操作符与输入表达式的值进行比较。如果<code>~=</code>操作符返回<code>true</code>，则匹配成功。默认情况下，<code>~=</code>操作符使用<code>==</code>操作符来比较两个相同类型的值。它也可以匹配一个整数值与一个<code>Range</code>对象中的整数范围，正如下面这个例子所示：</p>
-<pre><code>        let point = (1, 2)
-        switch point {
-        case (0, 0):
-            println(&quot;(0, 0) is at the origin.&quot;)
-        case (-2...2, -2...2):
-            println(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
-        default:
-            println(&quot;The point is at (\(point.0), \(point.1)).&quot;)
-        }
-        // prints &quot;(1, 2) is near the origin.”
+<pre><code>let point = (1, 2)
+switch point {
+case (0, 0):
+    println(&quot;(0, 0) is at the origin.&quot;)
+case (-2...2, -2...2):
+    println(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
+default:
+    println(&quot;The point is at (\(point.0), \(point.1)).&quot;)
+}
+// prints &quot;(1, 2) is near the origin.”
 </code></pre><p>你可以重载<code>~=</code>操作符来提供自定义的表达式行为。例如，你可以重写上面的例子，以实现用字符串表达的点来比较<code>point</code>表达式。</p>
-<pre><code>        // Overload the ~= operator to match a string with an integer
-        func ~=(pattern: String, value: Int) -&gt; Bool {
-            return pattern == &quot;\(value)&quot;
-        }
-        switch point {
-        case (&quot;0&quot;, &quot;0&quot;):
-            println(&quot;(0, 0) is at the origin.&quot;)
-        case (&quot;-2...2&quot;, &quot;-2...2&quot;):
-            println(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
-        default:
-            println(&quot;The point is at (\(point.0), \(point.1)).&quot;)
-        }
-        // prints &quot;(1, 2) is near the origin.”
+<pre><code>// Overload the ~= operator to match a string with an integer
+func ~=(pattern: String, value: Int) -&gt; Bool {
+    return pattern == &quot;\(value)&quot;
+}
+switch point {
+case (&quot;0&quot;, &quot;0&quot;):
+    println(&quot;(0, 0) is at the origin.&quot;)
+case (&quot;-2...2&quot;, &quot;-2...2&quot;):
+    println(&quot;(\(point.0), \(point.1)) is near the origin.&quot;)
+default:
+    println(&quot;The point is at (\(point.0), \(point.1)).&quot;)
+}
+// prints &quot;(1, 2) is near the origin.”
 </code></pre><blockquote>
-<p>表达式模式的语法：</p>
-<p>expression-pattern → expression</p>
+<p>表达式模式语法<br><em>表达式模式</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
 
                     

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.22" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.22" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_129">
+                    <section class="normal" id="section-gitbook_76">
                     
                         <blockquote>
 <p>翻译：takalard</p>
@@ -709,7 +709,7 @@ swapTwoValues(&amp;someString, &amp;anotherString)
         return items.removeLast()
     }
 }
-</code></pre><p>这个结构体在栈中使用一个<code>Array</code>性质的<code>items</code>存储值。<code>Stack</code>提供两个方法：<code>push</code>和<code>pop</code>，从栈中压进一个值和移除一个值。这些方法标记为可变的，因为他们需要修改（或<em>转换</em>）结构体的<code>items</code>数组。</p>
+</code></pre><p>这个结构体在栈中使用一个<code>Array</code>性质的<code>items</code>存储值。<code>Stack</code>提供两个方法：<code>push</code>和<code>pop</code>，从栈中压进一个值和移除一个值。这些方法标记为可变的，因为它们需要修改（或<em>转换</em>）结构体的<code>items</code>数组。</p>
 <p>上面所展现的<code>IntStack</code>类型只能用于<code>Int</code>值，不过，其对于定义一个泛型<code>Stack</code>类（可以处理<em>任何</em>类型值的栈）是非常有用的。</p>
 <p>这里是一个相同代码的泛型版本：</p>
 <pre><code>struct Stack&lt;T&gt; {
@@ -748,7 +748,7 @@ stackOfStrings.push(&quot;cuatro&quot;)
 <p><code>swapTwoValues</code>函数和<code>Stack</code>类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。</p>
 <p>例如，Swift 的<code>Dictionary</code>类型对作用于其键的类型做了些限制。在[字典][5]的描述中，字典的键类型必须是<em>可哈希</em>，也就是说，必须有一种方法可以使其是唯一的表示。<code>Dictionary</code>之所以需要其键是可哈希是为了以便于其检查其是否包含某个特定键的值。如无此需求，<code>Dictionary</code>即不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。</p>
 <p>这个需求强制加上一个类型约束作用于<code>Dictionary</code>的键上，当然其键类型必须遵循<code>Hashable</code>协议（Swift 标准库中定义的一个特定协议）。所有的 Swift 基本类型（如<code>String</code>，<code>Int</code>， <code>Double</code>和 <code>Bool</code>）默认都是可哈希。</p>
-<p>当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如<code>可哈希</code>具有的类型特征是根据他们概念特征来界定的，而不是他们的直接类型特征。</p>
+<p>当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如<code>可哈希</code>具有的类型特征是根据它们概念特征来界定的，而不是它们的直接类型特征。</p>
 <h3 id="-">类型约束语法</h3>
 <p>你可以写一个在一个类型参数名后面的类型约束，通过冒号分割，来作为类型参数链的一部分。这种作用于泛型函数的类型约束的基础语法如下所示（和泛型类型的语法相同）：</p>
 <pre><code>func someFunction&lt;T: SomeClass, U: SomeProtocol&gt;(someT: T, someU: U) {
@@ -876,7 +876,7 @@ let stringIndex = findIndex([&quot;Mike&quot;, &quot;Malcolm&quot;, &quot;Andrea
 <p>[类型约束][8]中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。</p>
 <p>对于关联类型的定义需求也是非常有用的。你可以通过这样去定义<em>where语句</em>作为一个类型参数队列的一部分。一个<code>where</code>语句使你能够要求一个关联类型遵循一个特定的协议，以及（或）那个特定的类型参数和关联类型可以是相同的。你可写一个<code>where</code>语句，通过紧随放置<code>where</code>关键字在类型参数队列后面，其后跟着一个或者多个针对关联类型的约束，以及（或）一个或多个类型和关联类型的等于关系。</p>
 <p>下面的列子定义了一个名为<code>allItemsMatch</code>的泛型函数，用来检查是否两个<code>Container</code>单例包含具有相同顺序的相同元素。如果匹配到所有的元素，那么返回一个为<code>true</code>的<code>Boolean</code>值，反之，则相反。</p>
-<p>这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但他们确实拥有相同类型的元素。这个需求通过一个类型约束和<code>where</code>语句结合来表示：</p>
+<p>这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和<code>where</code>语句结合来表示：</p>
 <pre><code>func allItemsMatch&lt;
     C1: Container, C2: Container
     where C1.ItemType == C2.ItemType, C1.ItemType: Equatable&gt;
@@ -912,9 +912,9 @@ let stringIndex = findIndex([&quot;Mike&quot;, &quot;Malcolm&quot;, &quot;Andrea
 <code>anotherContainer</code>是一个<code>C2</code>类型的容器。
 <code>someContainer</code>和<code>anotherContainer</code>包含相同的元素类型。
 <code>someContainer</code>中的元素可以通过不等于操作(<code>!=</code>)来检查它们是否彼此不同。</p>
-<p>第三个和第四个要求结合起来的意思是<code>anotherContainer</code>中的元素也可以通过 <code>!=</code> 操作来检查，因为他们在<code>someContainer</code>中元素确实是相同的类型。</p>
-<p>这些要求能够使<code>allItemsMatch</code>函数比较两个容器，即便他们是不同的容器类型。</p>
-<p><code>allItemsMatch</code>首先检查两个容器是否拥有同样数目的items，如果他们的元素数目不同，没有办法进行匹配，函数就会<code>false</code>。</p>
+<p>第三个和第四个要求结合起来的意思是<code>anotherContainer</code>中的元素也可以通过 <code>!=</code> 操作来检查，因为它们在<code>someContainer</code>中元素确实是相同的类型。</p>
+<p>这些要求能够使<code>allItemsMatch</code>函数比较两个容器，即便它们是不同的容器类型。</p>
+<p><code>allItemsMatch</code>首先检查两个容器是否拥有同样数目的items，如果它们的元素数目不同，没有办法进行匹配，函数就会<code>false</code>。</p>
 <p>检查完之后，函数通过<code>for-in</code>循环和半闭区间操作（..）来迭代<code>someContainer</code>中的所有元素。对于每个元素，函数检查是否<code>someContainer</code>中的元素不等于对应的<code>anotherContainer</code>中的元素，如果这两个元素不等，则这两个容器不匹配，返回<code>false</code>。</p>
 <p>如果循环体结束后未发现没有任何的不匹配，那表明两个容器匹配，函数返回<code>true</code>。</p>
 <p>这里演示了allItemsMatch函数运算的过程：</p>
@@ -931,7 +931,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
     println(&quot;Not all items match.&quot;)
 }
 // 输出 &quot;All items match.&quot;
-</code></pre><p> 上面的例子创建一个<code>Stack</code>单例来存储<code>String</code>，然后压了三个字符串进栈。这个例子也创建了一个<code>Array</code>单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但他们都遵循<code>Container</code>协议，而且他们都包含同样的类型值。你因此可以调用<code>allItemsMatch</code>函数，用这两个容器作为它的参数。在上面的例子中，<code>allItemsMatch</code>函数正确的显示了所有的这两个容器的<code>items</code>匹配。</p>
+</code></pre><p> 上面的例子创建一个<code>Stack</code>单例来存储<code>String</code>，然后压了三个字符串进栈。这个例子也创建了一个<code>Array</code>单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但它们都遵循<code>Container</code>协议，而且它们都包含同样的类型值。你因此可以调用<code>allItemsMatch</code>函数，用这两个容器作为它的参数。在上面的例子中，<code>allItemsMatch</code>函数正确的显示了所有的这两个容器的<code>items</code>匹配。</p>
 
                     
                     </section>

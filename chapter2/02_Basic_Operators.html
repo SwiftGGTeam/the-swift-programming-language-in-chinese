@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_111">
+                    <section class="normal" id="section-gitbook_55">
                     
                         <blockquote>
-<p>翻译：xielingwang</p>
-<p>校对：Evilcome</p>
+<p>翻译：xielingwang<br>校对：Evilcome  </p>
 </blockquote>
 <h1 id="-">基本运算符</h1>
 <hr>
@@ -628,9 +627,10 @@ a = b
 // a 现在等于 10
 </code></pre>
 <p>如果赋值的右边是一个多元组，它的元素可以马上被分解多个变量或变量：</p>
-<pre><code>let (x, y) = (1, 2)
+<pre><code class="lang-swiflt">let (x, y) = (1, 2)
 // 现在 x 等于 1, y 等于 2
-</code></pre><p>与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下代码是错误的：</p>
+</code></pre>
+<p>与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下代码是错误的：</p>
 <pre><code class="lang-swift">if x = y {
     // 此句错误, 因为 x = y 并不返回任何值
 }
@@ -665,8 +665,7 @@ let dogCow = dog + cow
 <h3 id="-">求余运算</h3>
 <p>求余运算（<code>a % b</code>）是计算<code>b</code>的多少倍刚刚好可以容入<code>a</code>，返回多出来的那部分（余数）。</p>
 <blockquote>
-<p>注意：</p>
-<p>求余运算（<code>%</code>）在其他语言也叫取模运算。然而严格说来，我们看该运算符对负数的操作结果，&quot;求余&quot;比&quot;取模&quot;更合适些。</p>
+<p>注意：<br>求余运算（<code>%</code>）在其他语言也叫取模运算。然而严格说来，我们看该运算符对负数的操作结果，&quot;求余&quot;比&quot;取模&quot;更合适些。</p>
 </blockquote>
 <p>我们来谈谈取余是怎么回事，计算<code>9 % 4</code>，你先计算出<code>4</code>的多少倍会刚好可以容入<code>9</code>中：</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png" alt="Art/remainderInteger_2x.png" title="Art/remainderInteger_2x.png"></p>
@@ -738,8 +737,7 @@ a += 2 // a 现在是 3
 </code></pre>
 <p>表达式<code>a += 2</code>是<code>a = a + 2</code>的简写，一个加赋运算就把加法和赋值两件事完成了。</p>
 <blockquote>
-<p>注意：</p>
-<p>复合赋值运算没有返回值，<code>let b = a += 2</code>这类代码是错误。这不同于上面提到的自增和自减运算符。</p>
+<p>注意：<br>复合赋值运算没有返回值，<code>let b = a += 2</code>这类代码是错误。这不同于上面提到的自增和自减运算符。</p>
 </blockquote>
 <p>在<a href="../chapter3/04_Expressions.html">表达式</a>章节里有复合运算符的完整列表。
 ‌
@@ -755,8 +753,7 @@ a += 2 // a 现在是 3
 <li>小于等于（<code>a &lt;= b</code>）</li>
 </ul>
 <blockquote>
-<p>注意：</p>
-<p>Swift 也提供恒等<code>===</code>和不恒等<code>!==</code>这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在<a href="09_Classes_and_Structures.html">类与结构</a>。</p>
+<p>注意：<br>Swift 也提供恒等<code>===</code>和不恒等<code>!==</code>这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在<a href="09_Classes_and_Structures.html">类与结构</a>。</p>
 </blockquote>
 <p>每个比较运算都返回了一个标识表达式是否成立的布尔值：</p>
 <pre><code class="lang-swift">1 == 1   // true, 因为 1 等于 1
@@ -781,10 +778,9 @@ if name == &quot;world&quot; {
 <p>三元条件运算的特殊在于它是有三个操作数的运算符，它的原型是 <code>问题 ? 答案1 : 答案2</code>。它简洁地表达根据<code>问题</code>成立与否作出二选一的操作。如果<code>问题</code>成立，返回<code>答案1</code>的结果; 如果不成立，返回<code>答案2</code>的结果。</p>
 <p>使用三元条件运算简化了以下代码：</p>
 <pre><code class="lang-swift">if question: {
-    answer1
-}
-else {
-    answer2
+  answer1
+} else {
+  answer2
 }
 </code></pre>
 <p>这里有个计算表格行高的例子。如果有表头，那行高应比内容高度要高出50像素; 如果没有表头，只需高出20像素。</p>
@@ -814,7 +810,7 @@ if hasHeader {
 ‌
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在<code>for-in</code>循环中：</p>
 <pre><code class="lang-swift">for index in 1...5 {
-      println(&quot;\(index) * 5 = \(index * 5)&quot;)
+    println(&quot;\(index) * 5 = \(index * 5)&quot;)
 }
 // 1 * 5 = 5
 // 2 * 5 = 10

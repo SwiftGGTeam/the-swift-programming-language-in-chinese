@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.23" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.23" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_131">
+                    <section class="normal" id="section-gitbook_78">
                     
                         <blockquote>
 <p>翻译：xielingwang</p>
@@ -855,7 +855,7 @@ let afterIncrement = ++toIncrement
     return !(left == right)
 }
 </code></pre>
-<p>上述代码实现了相等运算符<code>==</code>来判断两个<code>Vector2D</code>对象是否有相等的值，相等的概念就是他们有相同的<code>x</code>值和相同的<code>y</code>值，我们就用这个逻辑来实现。接着使用<code>==</code>的结果实现了不相等运算符<code>!=</code>。</p>
+<p>上述代码实现了相等运算符<code>==</code>来判断两个<code>Vector2D</code>对象是否有相等的值，相等的概念就是它们有相同的<code>x</code>值和相同的<code>y</code>值，我们就用这个逻辑来实现。接着使用<code>==</code>的结果实现了不相等运算符<code>!=</code>。</p>
 <p>现在我们可以使用这两个运算符来判断两个<code>Vector2D</code>对象是否相等。</p>
 <pre><code class="lang-swift">let twoThree = Vector2D(x: 2.0, y: 3.0)
 let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
@@ -895,7 +895,7 @@ let secondVector = Vector2D(x: 3.0, y: 4.0)
 let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 此时的值为 (4.0, -2.0)
 </code></pre>
-<p>这个运算符把两个向量的<code>x</code>相加，把向量的<code>y</code>相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(<code>left</code>和<code>140</code>)。查阅完整的Swift默认结合性和优先级的设置，请移步<a href="../chapter3/04_Expressions.html">表达式</a>;</p>
+<p>这个运算符把两个向量的<code>x</code>相加，把向量的<code>y</code>相减。因为它实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(<code>left</code>和<code>140</code>)。查阅完整的Swift默认结合性和优先级的设置，请移步<a href="../chapter3/04_Expressions.html">表达式</a>;</p>
 
                     
                     </section>

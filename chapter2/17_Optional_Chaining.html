@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.17" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.17" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_119">
+                    <section class="normal" id="section-gitbook_66">
                     
                         <blockquote>
 <p>翻译：Jasonbroker</p>
@@ -612,7 +612,7 @@ Swift 的可选链和 Objective-C 中的消息为空有些相像，但是 Swift 
 </blockquote>
 <p><a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a></p>
 <h2 id="-">可选链可替代强制解析</h2>
-<p>通过在想调用的属性、方法、或子脚本的可选值（<code>optional value</code>）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。</p>
+<p>通过在想调用的属性、方法、或子脚本的可选值（<code>optional value</code>）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。它们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。</p>
 <p>为了反映可选链可以调用空（<code>nil</code>），不论你调用的属性、方法、子脚本等返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来检测你的可选链是否调用成功，有返回值即成功，返回nil则失败。</p>
 <p>调用可选链的返回结果与原本的返回结果具有相同的类型，但是原本的返回结果被包装成了一个可选值，当可选链调用成功时，一个应该返回<code>Int</code>的属性将会返回<code>Int?</code>。</p>
 <p>下面几段代码将解释可选链和强制解析的不同。</p>
@@ -760,7 +760,7 @@ if let firstRoomName = john.residence?[0].name {
 <p>因此：</p>
 <p>如果你试图通过可选链获得<code>Int</code>值，不论使用了多少层链接返回的总是<code>Int?</code>。
 相似的，如果你试图通过可选链获得<code>Int?</code>值，不论使用了多少层链接返回的总是<code>Int?</code>。</p>
-<p>下面的例子试图获取<code>john</code>的<code>residence</code>属性里的<code>address</code>的<code>street</code>属性。这里使用了两层可选链来联系<code>residence</code>和<code>address</code>属性，他们两者都是可选类型：</p>
+<p>下面的例子试图获取<code>john</code>的<code>residence</code>属性里的<code>address</code>的<code>street</code>属性。这里使用了两层可选链来联系<code>residence</code>和<code>address</code>属性，它们两者都是可选类型：</p>
 <pre><code>if let johnsStreet = john.residence?.address?.street {
     println(&quot;John&#39;s street name is \(johnsStreet).&quot;)
 } else {

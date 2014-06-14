@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_96">
+                    <section class="normal" id="section-gitbook_43">
                     
                         <blockquote>
-<p>翻译：vclwei, coverxit, NicePiao</p>
-<p>校对：coverxit</p>
+<p>翻译：vclwei, coverxit, NicePiao<br>校对：coverxit, stanzhai</p>
 </blockquote>
 <h1 id="-">控制流</h1>
 <hr>
@@ -603,16 +602,14 @@
 <li><a href="#control_transfer_statements">控制转移语句（Control Transfer Statements）</a></li>
 </ul>
 <p>Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的<code>for</code>和<code>while</code>循环，基于特定条件选择执行不同代码分支的<code>if</code>和<code>switch</code>语句，还有控制流程跳转到其他代码的<code>break</code>和<code>continue</code>语句。</p>
-<p>除了 C 语言里面传统的for条件递增（<code>for-condition-increment</code>）循环，Swift 还增加了<code>for-in</code>循环，用来更简单地遍历数组（array），字典（dictionary），区间（range），字符串（string）和其他序列类型。</p>
+<p>除了 C 语言里面传统的 for 条件递增（<code>for-condition-increment</code>）循环，Swift 还增加了<code>for-in</code>循环，用来更简单地遍历数组（array），字典（dictionary），区间（range），字符串（string）和其他序列类型。</p>
 <p>Swift 的<code>switch</code>语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了<code>break</code>，这个 case 就会贯穿（fallthrough）至下一个 case，Swift 无需写<code>break</code>，所以不会发生这种贯穿（fallthrough）的情况。case 还可以匹配更多的类型模式，包括区间匹配（range matching），元组（tuple）和特定类型的描述。<code>switch</code>的 case 语句中匹配的值可以是由 case 体内部临时的常量或者变量决定，也可以由<code>where</code>分句描述更复杂的匹配条件。</p>
 <p><a name="for_loops"></a></p>
 <h2 id="for-">For 循环</h2>
 <p><code>for</code>循环用来按照指定的次数多次执行一系列语句。Swift 提供两种<code>for</code>循环形式：</p>
 <ul>
-<li><p><code>for-in</code>用来遍历一个区间（range），序列（sequence），集合（collection），系列（progression）里面所有的元素执行一系列语句。</p>
-</li>
-<li><p>for条件递增（<code>for-condition-increment</code>）语句，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。</p>
-</li>
+<li><code>for-in</code>用来遍历一个区间（range），序列（sequence），集合（collection），系列（progression）里面所有的元素执行一系列语句。</li>
+<li>for条件递增（<code>for-condition-increment</code>）语句，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。</li>
 </ul>
 <p><a name="for_in"></a></p>
 <h3 id="for-in">For-In</h3>
@@ -630,8 +627,7 @@
 <p>例子中用来进行遍历的元素是一组使用闭区间操作符（<code>...</code>）表示的从<code>1</code>到<code>5</code>的数字。<code>index</code>被赋值为闭区间中的第一个数字（<code>1</code>），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前<code>index</code>值所对应的乘 5 乘法表结果。该语句执行后，<code>index</code>的值被更新为闭区间中的第二个数字（<code>2</code>），之后<code>println</code>方法会再执行一次。整个过程会进行到闭区间结尾为止。</p>
 <p>上面的例子中，<code>index</code>是一个每次循环遍历开始时被自动赋值的常量。这种情况下，<code>index</code>在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用<code>let</code>关键字声明。</p>
 <blockquote>
-<p>注意：</p>
-<p><code>index</code>常量只存在于循环的生命周期里。如果你想在循环完成后访问<code>index</code>的值，又或者想让<code>index</code>成为一个变量而不是常量，你必须在循环之前自己进行声明。</p>
+<p>注意：<br><code>index</code>常量只存在于循环的生命周期里。如果你想在循环完成后访问<code>index</code>的值，又或者想让<code>index</code>成为一个变量而不是常量，你必须在循环之前自己进行声明。</p>
 </blockquote>
 <p>如果你不需要知道区间内每一项的值，你可以使用下划线（<code>_</code>）替代变量名来忽略对值的访问：</p>
 <pre><code class="lang-swift">let base = 3
@@ -685,10 +681,9 @@ for (animalName, legCount) in numberOfLegs {
 // index is 2
 </code></pre>
 <p>下面是一般情况下这种循环方式的格式：</p>
-<pre><code class="lang-swift">for `initialization`; `condition`; `increment` {
-    `statements`
-}
-</code></pre>
+<blockquote>
+<p>for <code>initialization</code>; <code>condition</code>; <code>increment</code> {<br>    <code>statements</code><br>}  </p>
+</blockquote>
 <p>和 C 语言中一样，分号将循环的定义分为 3 个部分，不同的是，Swift 不需要使用圆括号将“initialization; condition; increment”包括起来。</p>
 <p>这个循环执行流程如下：</p>
 <ol>
@@ -698,12 +693,9 @@ for (animalName, legCount) in numberOfLegs {
 <li>执行所有语句（<em>statements</em>）之后，执行递增表达式（<em>increment expression</em>）。通常会增加或减少计数器的值，或者根据语句（<em>statements</em>）输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第 2 步，条件表达式会再次执行。</li>
 </ol>
 <p>上述描述和循环格式等同于：</p>
-<pre><code class="lang-swift">`initialization`
-while `condition` {
-    `statements`
-    `increment`
-}
-</code></pre>
+<blockquote>
+<p><code>initialization</code><br>while <code>condition</code> {<br>    <code>statements</code><br>    <code>increment</code><br>}  </p>
+</blockquote>
 <p>在初始化表达式中声明的常量和变量（比如<code>var index = 0</code>）只在<code>for</code>循环的生命周期里有效。如果想在循环结束后访问<code>index</code>的值，你必须要在循环生命周期开始前声明<code>index</code>。</p>
 <pre><code class="lang-swift">var index: Int
 for index = 0; index &lt; 3; ++index {
@@ -720,19 +712,16 @@ println(&quot;The loop statements were executed \(index) times&quot;)
 <h2 id="while-">While 循环</h2>
 <p><code>while</code>循环运行一系列语句直到条件变成<code>false</code>。这类循环适合使用在第一次迭代前迭代次数未知的情况下。Swift 提供两种<code>while</code>循环形式：</p>
 <ul>
-<li><p><code>while</code>循环，每次在循环开始时计算条件是否符合；</p>
-</li>
-<li><p><code>do-while</code>循环，每次在循环结束时计算条件是否符合。</p>
-</li>
+<li><code>while</code>循环，每次在循环开始时计算条件是否符合；</li>
+<li><code>do-while</code>循环，每次在循环结束时计算条件是否符合。</li>
 </ul>
 <p><a name="while"></a></p>
 <h3 id="while">While</h3>
 <p><code>while</code>循环从计算单一条件开始。如果条件为<code>true</code>，会重复运行一系列语句，直到条件变为<code>false</code>。</p>
 <p>下面是一般情况下 <code>while</code> 循环格式：</p>
-<pre><code class="lang-swift">while `condition` {
-    `statements`
-}
-</code></pre>
+<blockquote>
+<p>while <code>condition</code> {<br>    <code>statements</code><br>}  </p>
+</blockquote>
 <p>下面的例子来玩一个叫做<em>蛇和梯子（Snakes and Ladders）</em>的小游戏，也叫做<em>滑道和梯子（Chutes and Ladders）</em>：</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png" alt="image"></p>
 <p>游戏的规则如下：</p>
@@ -775,10 +764,9 @@ println(&quot;Game over!&quot;)
 <h3 id="do-while">Do-While</h3>
 <p><code>while</code>循环的另外一种形式是<code>do-while</code>，它和<code>while</code>的区别是在判断循环条件之前，先执行一次循环的代码块，然后重复循环直到条件为<code>false</code>。</p>
 <p>下面是一般情况下 <code>do-while</code>循环的格式：</p>
-<pre><code class="lang-swift">do {
-    `statements`
-} while `condition`
-</code></pre>
+<blockquote>
+<p>do {<br>    <code>statements</code><br>} while <code>condition</code>  </p>
+</blockquote>
 <p>还是蛇和梯子的游戏，使用<code>do-while</code>循环来替代<code>while</code>循环。<code>finalSquare</code>、<code>board</code>、<code>square</code>和<code>diceRoll</code>的值初始化同<code>while</code>循环一样：</p>
 <pre><code class="lang-swift">let finalSquare = 25
 var board = Int[](count: finalSquare + 1, repeatedValue: 0)
@@ -850,16 +838,9 @@ if temperatureInFahrenheit &lt;= 32 {
 <h3 id="switch">Switch</h3>
 <p><code>switch</code>语句会尝试把某个值与若干个模式（pattern）进行匹配。根据第一个匹配成功的模式，<code>switch</code>语句会执行对应的代码。当有可能的情况较多时，通常用<code>switch</code>语句替换<code>if</code>语句。</p>
 <p><code>switch</code>语句最简单的形式就是把某个值与一个或若干个相同类型的值作比较：</p>
-<pre><code class="lang-swift">switch `some value to consider` {
-case `value 1`:
-    `respond to value 1`
-case `value 2`,
-`value 3`:
-    `respond to value 2 or 3`
-default:
-    `otherwise, do something else`
-}
-</code></pre>
+<blockquote>
+<p>switch <code>some value to consider</code> {<br>case <code>value 1</code>:<br>    <code>respond to value 1</code><br>case <code>value 2</code>,<br><code>value 3</code>:<br>    <code>respond to value 2 or 3</code><br>default:<br>    <code>otherwise, do something else</code><br>}  </p>
+</blockquote>
 <p><code>switch</code>语句都由<em>多个 case</em> 构成。为了匹配某些更特定的值，Swift 提供了几种更复杂的匹配模式，这些模式将在本节的稍后部分提到。</p>
 <p>每一个 case 都是代码执行的一条分支，这与<code>if</code>语句类似。与之不同的是，<code>switch</code>语句会决定哪一条分支应该被执行。</p>
 <p><code>switch</code>语句必须是<em>完备的</em>。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（<code>default</code>）分支满足该要求，这个默认分支必须在<code>switch</code>语句的最后面。</p>
@@ -882,8 +863,7 @@ default:
 <h4 id="-no-implicit-fallthrough-">不存在隐式的贯穿（No Implicit Fallthrough）</h4>
 <p>与 C 语言和 Objective-C 中的<code>switch</code>语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止<code>switch</code>语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用<code>break</code>语句。这使得<code>switch</code>语句更安全、更易用，也避免了因忘记写<code>break</code>语句而产生的错误。</p>
 <blockquote>
-<p>注意：</p>
-<p>你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考<a href="#break_in_a_switch_statement">Switch 语句中的 break</a>。</p>
+<p>注意：<br>你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考<a href="#break_in_a_switch_statement">Switch 语句中的 break</a>。</p>
 </blockquote>
 <p>每一个 case 分支都<em>必须</em>包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：</p>
 <pre><code class="lang-swift">let anotherCharacter: Character = &quot;a&quot;
@@ -898,15 +878,9 @@ default:
 </code></pre>
 <p>不像 C 语言里的<code>switch</code>语句，在 Swift 中，<code>switch</code>语句不会同时匹配<code>&quot;a&quot;</code>和<code>&quot;A&quot;</code>。相反的，上面的代码会引起编译期错误：<code>case &quot;a&quot;: does not contain any executable statements</code>——这就避免了意外地从一个 case 分支贯穿到另外一个，使得代码更安全、也更直观。</p>
 <p>一个 case 也可以包含多个模式，用逗号把它们分开（如果太长了也可以分行写）：</p>
-<pre><code class="lang-swift">switch `some value to consider` {
-case `value 1`,
-`value 2`:
-    `statements`
-}
-</code></pre>
 <blockquote>
-<p>注意：
-如果想要贯穿至特定的 case 分支中，请使用<code>fallthrough</code>语句，详情请参考<a href="#fallthrough">贯穿（Fallthrough）</a>。</p>
+<p>switch <code>some value to consider</code> {<br>case <code>value 1</code>,<br><code>value 2</code>:<br>    <code>statements</code><br>}  </p>
+<p>注意：<br>如果想要贯穿至特定的 case 分支中，请使用<code>fallthrough</code>语句，详情请参考<a href="#fallthrough">贯穿（Fallthrough）</a>。</p>
 </blockquote>
 <p><a name="range_matching"></a></p>
 <h4 id="-range-matching-">区间匹配（Range Matching）</h4>
@@ -1009,8 +983,7 @@ case let (x, y):
 <h3 id="continue">Continue</h3>
 <p><code>continue</code>语句告诉一个循环体立刻停止本次循环迭代，重新开始下次循环迭代。就好像在说“本次循环迭代我已经执行完了”，但是并不会离开整个循环体。</p>
 <blockquote>
-<p>注意：</p>
-<p>在一个for条件递增（<code>for-condition-increment</code>）循环体中，在调用<code>continue</code>语句后，迭代增量仍然会被计算求值。循环体继续像往常一样工作，仅仅只是循环体中的执行代码会被跳过。</p>
+<p>注意：<br>在一个for条件递增（<code>for-condition-increment</code>）循环体中，在调用<code>continue</code>语句后，迭代增量仍然会被计算求值。循环体继续像往常一样工作，仅仅只是循环体中的执行代码会被跳过。</p>
 </blockquote>
 <p>下面的例子把一个小写字符串中的元音字母和空格字符移除，生成了一个含义模糊的短句：</p>
 <pre><code class="lang-swift">let puzzleInput = &quot;great minds think alike&quot;
@@ -1038,8 +1011,7 @@ println(puzzleOutput)
 <p>当在一个<code>switch</code>代码块中使用<code>break</code>时，会立即中断该<code>switch</code>代码块的执行，并且跳转到表示<code>switch</code>代码块结束的大括号(<code>}</code>)后的第一行代码。</p>
 <p>这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的<code>switch</code>需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上<code>break</code>语句。当那个分支被匹配到时，分支内的<code>break</code>语句立即结束<code>switch</code>代码块。</p>
 <blockquote>
-<p>注意：</p>
-<p>当一个<code>switch</code>分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让<code>switch</code>分支达到被忽略的效果。你总是可以使用<code>break</code>来忽略某个分支。</p>
+<p>注意：<br>当一个<code>switch</code>分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让<code>switch</code>分支达到被忽略的效果。你总是可以使用<code>break</code>来忽略某个分支。</p>
 </blockquote>
 <p>下面的例子通过<code>switch</code>来判断一个<code>Character</code>值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。</p>
 <pre><code class="lang-swift">let numberSymbol: Character = &quot;三&quot;  // 简体中文里的数字 3
@@ -1086,18 +1058,17 @@ println(description)
 <p>如果<code>integerToDescribe</code>的值不属于列表中的任何质数，那么它不会匹配到第一个<code>switch</code>分支。而这里没有其他特别的分支情况，所以<code>integerToDescribe</code>匹配到包含所有的<code>default</code>分支中。</p>
 <p>当<code>switch</code>代码块执行完后，使用<code>println</code>函数打印该数字的描述。在这个例子中，数字<code>5</code>被准确的识别为了一个质数。</p>
 <blockquote>
-<p>注意：</p>
-<p><code>fallthrough</code>关键字不会检查它下一个将会落入执行的 case 中的匹配条件。<code>fallthrough</code>简单地使代码执行继续连接到下一个 case 中的执行代码，这和 C 语言标准中的<code>switch</code>语句特性是一样的。</p>
+<p>注意：<br><code>fallthrough</code>关键字不会检查它下一个将会落入执行的 case 中的匹配条件。<code>fallthrough</code>简单地使代码执行继续连接到下一个 case 中的执行代码，这和 C 语言标准中的<code>switch</code>语句特性是一样的。</p>
 </blockquote>
 <p><a name="labeled_statements"></a></p>
 <h3 id="-labeled-statements-">带标签的语句（Labeled Statements）</h3>
 <p>在 Swift 中，你可以在循环体和<code>switch</code>代码块中嵌套循环体和<code>switch</code>代码块来创造复杂的控制流结构。然而，循环体和<code>switch</code>代码块两者都可以使用<code>break</code>语句来提前结束整个方法体。因此，显示地指明<code>break</code>语句想要终止的是哪个循环体或者<code>switch</code>代码块，会很有用。类似地，如果你有许多嵌套的循环体，显示指明<code>continue</code>语句想要影响哪一个循环体也会非常有用。</p>
 <p>为了实现这个目的，你可以使用标签来标记一个循环体或者<code>switch</code>代码块，当使用<code>break</code>或者<code>continue</code>时，带上这个标签，可以控制该标签代表对象的中断或者执行。</p>
 <p>产生一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，并且该标签后面还需带着一个冒号。下面是一个<code>while</code>循环体的语法，同样的规则适用于所有的循环体和<code>switch</code>代码块。</p>
-<pre><code>`label name`: while `condition` {
-    `statements`
-}
-</code></pre><p>下面的例子是在一个带有标签的<code>while</code>循环体中调用<code>break</code>和<code>continue</code>语句，该循环体是前面章节中<em>蛇和梯子</em>的改编版本。这次，游戏增加了一条额外的规则：</p>
+<blockquote>
+<p><code>label name</code>: while <code>condition</code> {<br>    <code>statements</code><br>}  </p>
+</blockquote>
+<p>下面的例子是在一个带有标签的<code>while</code>循环体中调用<code>break</code>和<code>continue</code>语句，该循环体是前面章节中<em>蛇和梯子</em>的改编版本。这次，游戏增加了一条额外的规则：</p>
 <ul>
 <li>为了获胜，你必须<em>刚好</em>落在第 25 个方块中。</li>
 </ul>
@@ -1133,16 +1104,12 @@ println(&quot;Game over!&quot;)
 </code></pre>
 <p>每次循环迭代开始时掷骰子。与之前玩家掷完骰子就立即移动不同，这里使用了<code>switch</code>来考虑每次移动可能产生的结果，从而决定玩家本次是否能够移动。</p>
 <ul>
-<li><p>如果骰子数刚好使玩家移动到最终的方格里，游戏结束。<code>break gameLoop</code>语句跳转控制去执行<code>while</code>循环体后的第一行代码，游戏结束。</p>
-</li>
-<li><p>如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。<code>continue gameLoop</code>语句结束本次<code>while</code>循环的迭代，开始下一次循环迭代。</p>
-</li>
-<li><p>在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到<code>while</code>循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。</p>
-</li>
+<li>如果骰子数刚好使玩家移动到最终的方格里，游戏结束。<code>break gameLoop</code>语句跳转控制去执行<code>while</code>循环体后的第一行代码，游戏结束。</li>
+<li>如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。<code>continue gameLoop</code>语句结束本次<code>while</code>循环的迭代，开始下一次循环迭代。</li>
+<li>在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到<code>while</code>循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。</li>
 </ul>
 <blockquote>
-<p>注意：</p>
-<p>如果上述的<code>break</code>语句没有使用<code>gameLoop</code>标签，那么它将会中断<code>switch</code>代码块而不是<code>while</code>循环体。使用<code>gameLoop</code>标签清晰的表明了<code>break</code>想要中断的是哪个代码块。
+<p>注意：<br>如果上述的<code>break</code>语句没有使用<code>gameLoop</code>标签，那么它将会中断<code>switch</code>代码块而不是<code>while</code>循环体。使用<code>gameLoop</code>标签清晰的表明了<code>break</code>想要中断的是哪个代码块。
 同时请注意，当调用<code>continue gameLoop</code>去跳转到下一次循环迭代时，这里使用<code>gameLoop</code>标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以<code>continue</code>语句会影响到哪个循环体是没有歧义的。然而，<code>continue</code>语句使用<code>gameLoop</code>标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的<code>break gameLoop</code>，能够使游戏的逻辑更加清晰和易于理解。</p>
 </blockquote>
 

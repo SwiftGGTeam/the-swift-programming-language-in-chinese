@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402677669306">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402750255397">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
+                <i class="fa fa-check"></i> <b>2.12.</b> 下标脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="下标脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_98">
+                    <section class="normal" id="section-gitbook_45">
                     
                         <blockquote>
-<p>翻译：honghaoz</p>
-<p>校对：LunaticM</p>
+<p>翻译：honghaoz<br>校对：LunaticM  </p>
 </blockquote>
 <h1 id="-functions-">函数（Functions）</h1>
 <hr>
@@ -605,8 +604,8 @@
 </ul>
 <p>函数是用来完成特定任务的独立的代码块。你给一个函数起一个合适的名字，用来标示函数做什么，并且当函数需要执行的时候，这个名字会被“调用”。</p>
 <p>Swift 统一的函数语法足够灵活，可以用来表示任何函数，包括从最简单的没有参数名字的 C 风格函数，到复杂的带局部和外部参数名的 Objective-C 风格函数。参数可以提供默认值，以简化函数调用。参数也可以即当做传入参数，也当做传出参数，也就是说，一旦函数执行结束，传入的参数值可以被修改。</p>
-<p>在 Swift 中，每个函数都有一种类型，包括函数的参数值类型和返回值类型。你可以把函数类型当做任何其他普通变量类型一样处理，这样就可以更简单地把函数当做别的函数的参数，也可以从其他函数中返回函数。函数的定义可以写在在其他函数定义中，这样可以在嵌套函数范围内实现功能封装。
-<a name="Defining_and_Calling_Functions"></a></p>
+<p>在 Swift 中，每个函数都有一种类型，包括函数的参数值类型和返回值类型。你可以把函数类型当做任何其他普通变量类型一样处理，这样就可以更简单地把函数当做别的函数的参数，也可以从其他函数中返回函数。函数的定义可以写在在其他函数定义中，这样可以在嵌套函数范围内实现功能封装。</p>
+<p><a name="Defining_and_Calling_Functions"></a></p>
 <h2 id="-defining-and-calling-functions-">函数的定义与调用（Defining and Calling Functions）</h2>
 <p>当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入（称为参数，parameters），也可以定义某种类型的值作为函数执行结束的输出（称为返回类型）。</p>
 <p>每个函数有个函数名，用来描述函数执行的任务。要使用一个函数时，你用函数名“调用”，并传给它匹配的输入值（称作实参，arguments）。一个函数的实参必须与函数参数表里参数的顺序一致。</p>
@@ -664,8 +663,7 @@ sayGoodbye(&quot;Dave&quot;)
 </code></pre>
 <p>因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（-&gt;）和返回类型。</p>
 <blockquote>
-<p>注意：</p>
-<p>严格上来说，虽然没有返回值被定义，<code>sayGoodbye</code> 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 <code>Void</code>。它其实是一个空的元组（tuple），没有任何元素，可以写成<code>()</code>。</p>
+<p>注意：<br>严格上来说，虽然没有返回值被定义，<code>sayGoodbye</code> 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 <code>Void</code>。它其实是一个空的元组（tuple），没有任何元素，可以写成<code>()</code>。  </p>
 </blockquote>
 <p>被调用时，一个函数的返回值可以被忽略：</p>
 <pre><code class="lang-swift">func printAndCount(stringToPrint: String) -&gt; Int {
@@ -682,8 +680,7 @@ printWithoutCounting(&quot;hello, world&quot;)
 </code></pre>
 <p>第一个函数 <code>printAndCount</code>，输出一个字符串并返回 <code>Int</code> 类型的字符数。第二个函数 <code>printWithoutCounting</code>调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。</p>
 <blockquote>
-<p>注意：</p>
-<p>返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。</p>
+<p>注意：<br>返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。  </p>
 </blockquote>
 <h3 id="-functions-with-multiple-return-values-">多重返回值函数（Functions with Multiple Return Values）</h3>
 <p>你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。</p>
@@ -705,11 +702,12 @@ printWithoutCounting(&quot;hello, world&quot;)
 }
 </code></pre>
 <p>你可以用 <code>count</code> 函数来处理任何一个字符串，返回的值将是一个包含三个 <code>Int</code> 型值的元组（tuple）：</p>
-<pre><code>let total = count(&quot;some arbitrary string!&quot;)
+<pre><code class="lang-swift">let total = count(&quot;some arbitrary string!&quot;)
 println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 // prints &quot;6 vowels and 13 consonants
-</code></pre><p>需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
-<a name="Function_Parameter_Names"></a></p>
+</code></pre>
+<p>需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。</p>
+<p><a name="Function_Parameter_Names"></a></p>
 <h2 id="-function-parameter-names-">函数参数名称（Function Parameter Names）</h2>
 <p>以上所有的函数都给它们的参数定义了<code>参数名（parameter name）</code>：</p>
 <pre><code class="lang-swift">func someFunction(parameterName: Int) {
@@ -727,8 +725,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 }
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。</p>
+<p>注意：<br>如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。  </p>
 </blockquote>
 <p>以下是个例子，这个函数使用一个<code>结合者（joiner）</code>把两个字符串联在一起：</p>
 <pre><code class="lang-swift">func join(s1: String, s2: String, joiner: String) -&gt; String {
@@ -751,8 +748,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 </code></pre>
 <p>使用外部参数名让第二个版本的 <code>join</code> 函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。</p>
 <blockquote>
-<p>注意：</p>
-<p>当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。</p>
+<p>注意：<br>当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。  </p>
 </blockquote>
 <h3 id="-shorthand-external-parameter-names-">简写外部参数名（Shorthand External Parameter Names）</h3>
 <p>如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用<code>井号（#）</code>作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。</p>
@@ -773,8 +769,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 <h3 id="-default-parameter-values-">默认参数值（Default Parameter Values）</h3>
 <p>你可以在函数体中为每个参数定义<code>默认值</code>。当默认值被定义后，调用这个函数时可以略去这个参数。</p>
 <blockquote>
-<p>注意：</p>
-<p>将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。</p>
+<p>注意：<br>将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  </p>
 </blockquote>
 <p>以下是另一个版本的<code>join</code>函数，其中<code>joiner</code>有了默认参数值：</p>
 <pre><code class="lang-swift">func join(string s1: String, toString s2: String, withJoiner joiner: String = &quot; &quot;) -&gt; String {
@@ -802,8 +797,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 // returns &quot;hello-world&quot;
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>你可以使用<code>下划线（_）</code>作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。</p>
+<p>注意：<br>你可以使用<code>下划线（_）</code>作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。  </p>
 </blockquote>
 <h3 id="-variadic-parameters-">可变参数（Variadic Parameters）</h3>
 <p>一个<code>可变参数（variadic parameter）</code>可以接受一个或多个值。函数调用时，你可以用可变参数来传入不确定数量的输入参数。通过在变量类型名后面加入<code>（...）</code>的方式来定义可变参数。</p>
@@ -812,7 +806,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 <pre><code class="lang-swift">func arithmeticMean(numbers: Double...) -&gt; Double {
     var total: Double = 0
     for number in numbers {
-          total += number
+        total += number
     }
     return total / Double(numbers.count)
 }
@@ -822,8 +816,7 @@ arithmeticMean(3, 8, 19)
 // returns 10.0, which is the arithmetic mean of these three numbers
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。</p>
+<p>注意：<br>一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。  </p>
 </blockquote>
 <p>如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。</p>
 <h3 id="-constant-and-variable-parameters-">常量参数和变量参数（Constant and Variable Parameters）</h3>
@@ -846,16 +839,14 @@ let paddedString = alignRight(originalString, 10, &quot;-&quot;)
 <p><code>alignRight</code> 函数将参数 <code>string</code> 定义为变量参数。这意味着 <code>string</code> 现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。</p>
 <p>该函数首先计算出多少个字符需要被添加到 <code>string</code> 的左边，以右对齐到总的字符串中。这个值存在局部常量 <code>amountToPad</code> 中。这个函数然后将 <code>amountToPad</code> 多的填充（pad）字符填充到 <code>string</code> 左边，并返回结果。它使用了 <code>string</code> 这个变量参数来进行所有字符串操作。</p>
 <blockquote>
-<p>注意：</p>
-<p>对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。</p>
+<p>注意：<br>对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。  </p>
 </blockquote>
 <h3 id="-in-out-parameters-">输入输出参数（In-Out Parameters）</h3>
 <p>变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。</p>
 <p>定义一个输入输出参数时，在参数定义前加 <code>inout</code> 关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。</p>
 <p>你只能传入一个变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加<code>&amp;</code>符，表示这个值可以被函数修改。</p>
 <blockquote>
-<p>注意：</p>
-<p>输入输出参数不能有默认值，而且可变参数不能用 <code>inout</code> 标记。如果你用 <code>inout</code> 标记一个参数，这个参数不能被 <code>var</code> 或者 <code>let</code> 标记。</p>
+<p>注意：<br>输入输出参数不能有默认值，而且可变参数不能用 <code>inout</code> 标记。如果你用 <code>inout</code> 标记一个参数，这个参数不能被 <code>var</code> 或者 <code>let</code> 标记。  </p>
 </blockquote>
 <p>下面是例子，<code>swapTwoInts</code> 函数，有两个分别叫做 <code>a</code> 和 <code>b</code> 的输出输出参数：</p>
 <pre><code class="lang-swift">func swapTwoInts(inout a: Int, inout b: Int) {
@@ -874,8 +865,7 @@ println(&quot;someInt is now \(someInt), and anotherInt is now \(anotherInt)&quo
 </code></pre>
 <p>从上面这个例子中，我们可以看到 <code>someInt</code> 和 <code>anotherInt</code> 的原始值在 <code>swapTwoInts</code> 函数中被修改，尽管它们的定义在函数体外。</p>
 <blockquote>
-<p>注意：</p>
-<p>输出输出参数和返回值是不一样的。上面的 <code>swapTwoInts</code> 函数并没有定义任何返回值，但仍然修改了 <code>someInt</code> 和 <code>anotherInt</code> 的值。输入输出参数是函数对函数体外产生影响的另一种方式。</p>
+<p>注意：<br>输出输出参数和返回值是不一样的。上面的 <code>swapTwoInts</code> 函数并没有定义任何返回值，但仍然修改了 <code>someInt</code> 和 <code>anotherInt</code> 的值。输入输出参数是函数对函数体外产生影响的另一种方式。  </p>
 </blockquote>
 <p><a name="Function_Types"></a></p>
 <h2 id="-function-types-">函数类型（Function Types）</h2>
@@ -912,7 +902,7 @@ func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
 println(&quot;Result: \(mathFunction(2, 3))&quot;)
 // prints &quot;Result: 6&quot;
 </code></pre>
-<p>就像其他类型一样，当赋值一个函数给常量或变量时，你可以让 Swift 来推测其函数类型：</p>
+<p>就像其他类型一样，当赋值一个函数给常量或变量时，你可以让 Swift 来推断其函数类型：</p>
 <pre><code class="lang-swift">let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -&gt; Int
 </code></pre>
