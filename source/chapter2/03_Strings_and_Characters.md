@@ -1,6 +1,5 @@
-> 翻译：wh1100717
-
-> 校对：Hawstein
+> 翻译：wh1100717  
+> 校对：Hawstein  
 
 # 字符串和字符（Strings and Characters）
 -----------------
@@ -31,11 +30,9 @@ Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode �
 
 Swift 可以在常量、变量、字面量和表达式中进行字符串插值操作，可以轻松创建用于展示、存储和打印的自定义字符串。
 
-> 注意：
->
+> 注意：  
 Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。如果您利用 Cocoa 或 Cocoa Touch 中的 Foundation 框架进行工作。所有`NSString` API 都可以调用您创建的任意`String`类型的值。除此之外，还可以使用本章介绍的`String`特性。您也可以在任意要求传入`NSString`实例作为参数的 API 中使用`String`类型的值作为替代。
->
->更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+>更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。  
 
 <a name="string_literals"></a>
 ## 字符串字面量（String Literals）
@@ -45,12 +42,11 @@ Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。如�
 
 字符串字面量可以用于为常量和变量提供初始值。
 
-```
+```swift
 let someString = "Some string literal value"
 ```
 
-> 注意：
->
+> 注意：  
 `someString`变量通过字符串字面量进行初始化，Swift 因此推断该变量为`String`类型。
 
 字符串字面量可以包含以下特殊字符：
@@ -64,12 +60,12 @@ let someString = "Some string literal value"
 `wiseWords`常量包含了两个转移特殊字符 (双括号)；
 `dollarSign`、`blackHeart`和`sparklingHeart`常量演示了三种不同格式的 Unicode 标量：
 
-```
+```swift
 let wiseWords = "\"我是要成为海贼王的男人\" - 路飞"
 // "我是要成为海贼王的男人" - 路飞
-let dollarSign = "\x24"        		// $,  Unicode 标量 U+0024
-let blackHeart = "\u2665"      		// ♥,  Unicode 标量 U+2665
-let sparklingHeart = "\U0001F496"	// 💖, Unicode 标量 U+1F496
+let dollarSign = "\x24"             // $,  Unicode 标量 U+0024
+let blackHeart = "\u2665"           // ♥,  Unicode 标量 U+2665
+let sparklingHeart = "\U0001F496"  // 💖, Unicode 标量 U+1F496
 ```
 
 <a name="initializing_an_empty_string"></a>
@@ -78,7 +74,7 @@ let sparklingHeart = "\U0001F496"	// 💖, Unicode 标量 U+1F496
 为了构造一个很长的字符串，可以创建一个空字符串作为初始值。
 可以将空的字符串字面量赋值给变量，也可以初始化一个新的`String`实例：
 
-```
+```swift
 var emptyString = ""               // 空字符串字面量
 var anotherEmptyString = String()  // 初始化 String 实例
 // 两个字符串均为空并等价。
@@ -86,7 +82,7 @@ var anotherEmptyString = String()  // 初始化 String 实例
 
 您可以通过检查其`Boolean`类型的`isEmpty`属性来判断该字符串是否为空：
 
-```
+```swift
 if emptyString.isEmpty {
     println("什么都没有")
 }
@@ -98,7 +94,7 @@ if emptyString.isEmpty {
 
 您可以通过将一个特定字符串分配给一个变量来对其进行修改，或者分配给一个常量来保证其不会被修改：
 
-```
+```swift
 var variableString = "Horse"
 variableString += " and carriage"
 // variableString 现在为 "Horse and carriage"
@@ -107,8 +103,7 @@ constantString += " and another Highlander"
 // 这会报告一个编译错误 (compile-time error) - 常量不可以被修改。
 ```
 
-> 注意：
->
+> 注意：  
 在 Objective-C 和 Cocoa 中，您通过选择两个不同的类(`NSString`和`NSMutableString`)来指定该字符串是否可以被修改，Swift 中的字符串是否可以修改仅通过定义的是变量还是常量来决定，实现了多种类型可变性操作的统一。
 
 <a name="strings_are_value_types"></a>
@@ -119,8 +114,7 @@ Swift 的`String`类型是值类型。
 任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。
 值类型在 [结构体和枚举是值类型](09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了说明。
 
-> 注意：
->
+> 注意：  
 与 Cocoa 中的`NSString`不同，当您在 Cocoa 中创建了一个`NSString`实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该`NSString`实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
 
 Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值。
@@ -136,7 +130,7 @@ Swift 的`String`类型表示特定序列的`Character`（字符） 类型值的
 每一个字符值代表一个 Unicode 字符。
 您可利用`for-in`循环来遍历字符串中的每一个字符：
 
-```
+```swift
 for character in "Dog!🐶" {
     println(character)
 }
@@ -151,7 +145,7 @@ for-in 循环在 [For Loops](05_Control_Flow.html#for_loops) 中进行了详细�
 
 另外，通过标明一个`Character`类型注解并通过字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
-```
+```swift
 let yenSign: Character = "¥"
 ```
 
@@ -160,24 +154,22 @@ let yenSign: Character = "¥"
 
 通过调用全局`countElements`函数，并将字符串作为参数进行传递，可以获取该字符串的字符数量。
 
-```
+```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 // 打印输出："unusualMenagerie has 40 characters"
 ```
 
-> 注意：
->
+> 注意：  
 不同的 Unicode 字符以及相同 Unicode 字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间。因此字符串的长度不得不通过迭代字符串中每一个字符的长度来进行计算。如果您正在处理一个长字符串，需要注意`countElements`函数必须遍历字符串中的字符以精准计算字符串的长度。
->
-> 另外需要注意的是通过`countElements`返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是基于利用 UTF-16 表示的十六位代码单元数字，而不是基于 Unicode 字符。为了解决这个问题，`NSString`的`length`属性在被 Swift 的`String`访问时会成为`utf16count`。
+> 另外需要注意的是通过`countElements`返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是基于利用 UTF-16 表示的十六位代码单元数字，而不是基于 Unicode 字符。为了解决这个问题，`NSString`的`length`属性在被 Swift 的`String`访问时会成为`utf16count`。  
 
 <a name="concatenating_strings_and_characters"></a>
 ## 连接字符串和字符 (Concatenating Strings and Characters)
 
 字符串和字符的值可以通过加法运算符（`+`）相加在一起并创建一个新的字符串值：
 
-```
+```swift
 let string1 = "hello"
 let string2 = " there"
 let character1: Character = "!"
@@ -191,7 +183,7 @@ let characterPlusCharacter = character1 + character2  // 等于 "!?"
 
 您也可以通过加法赋值运算符 (`+=`) 将一个字符串或者字符添加到一个已经存在字符串变量上：
 
-```
+```swift
 var instruction = "look over"
 instruction += string2
 // instruction 现在等于 "look over there"
@@ -201,8 +193,7 @@ welcome += character1
 // welcome 现在等于 "good morning!"
 ```
 
-> 注意：
->
+> 注意：  
 您不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
 
 <a name="string_interpolation"></a>
@@ -211,7 +202,7 @@ welcome += character1
 字符串插值是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。
 您插入的字符串字面量的每一项都被包裹在以反斜线为前缀的圆括号中：
 
-```
+```swift
 let multiplier = 3
 let message = "\(multiplier) 乘以 2.5 是 \(Double(multiplier) * 2.5)"
 // message 是 "3 乘以 2.5 是 7.5"
@@ -224,8 +215,7 @@ let message = "\(multiplier) 乘以 2.5 是 \(Double(multiplier) * 2.5)"
 该表达式计算`Double(multiplier) * 2.5`的值并将结果 (7.5) 插入到字符串中。
 在这个例子中，表达式写为`\(Double(multiplier) * 2.5)`并包含在字符串字面量中。
 
-> 注意：
->
+> 注意：  
 插值字符串中写在括号中的表达式不能包含非转义双引号 (`"`) 和反斜杠 (`\`)，并且不能包含回车或换行符。
 
 <a name="comparing_strings"></a>
@@ -238,7 +228,7 @@ Swift 提供了三种方式来比较字符串的值：字符串相等、前缀�
 
 如果两个字符串以同一顺序包含完全相同的字符，则认为两者字符串相等：
 
-```
+```swift
 let quotation = "我们是一样一样滴."
 let sameQuotation = "我们是一样一样滴."
 if quotation == sameQuotation {
@@ -256,7 +246,7 @@ if quotation == sameQuotation {
 
 下面的例子以一个字符串数组表示莎士比亚话剧《罗密欧与朱丽叶》中前两场的场景位置：
 
-```
+```swift
 let romeoAndJuliet = [
     "Act 1 Scene 1: Verona, A public place",
     "Act 1 Scene 2: Capulet's mansion",
@@ -274,7 +264,7 @@ let romeoAndJuliet = [
 
 您可以利用`hasPrefix`方法来计算话剧中第一幕的场景数：
 
-```
+```swift
 var act1SceneCount = 0
 for scene in romeoAndJuliet {
     if scene.hasPrefix("Act 1 ") {
@@ -287,7 +277,7 @@ println("There are \(act1SceneCount) scenes in Act 1")
 
 相似地，您可以用`hasSuffix`方法来计算发生在不同地方的场景数：
 
-```
+```swift
 var mansionCount = 0
 var cellCount = 0
 for scene in romeoAndJuliet {
@@ -306,7 +296,7 @@ println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 您可以通过字符串的`uppercaseString`和`lowercaseString`属性来访问大写/小写版本的字符串。
 
-```
+```swift
 let normal = "Could you help me, please?"
 let shouty = normal.uppercaseString
 // shouty 值为 "COULD YOU HELP ME, PLEASE?"
@@ -346,7 +336,7 @@ Swift 提供了几种不同的方式来访问字符串的 Unicode 表示。
 
 下面由`D``o``g``!`和`🐶`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
 
-```
+```swift
 let dogString = "Dog!🐶"
 ```
 
@@ -356,7 +346,7 @@ let dogString = "Dog!🐶"
 您可以通过遍历字符串的`utf8`属性来访问它的`UTF-8`表示。
 其为`UTF8View`类型的属性，`UTF8View`是无符号8位 (`UInt8`) 值的集合，每一个`UInt8`值都是一个字符的 UTF-8 表示：
 
-```
+```swift
 for codeUnit in dogString.utf8 {
     print("\(codeUnit) ")
 }
@@ -373,7 +363,7 @@ print("\n")
 您可以通过遍历字符串的`utf16`属性来访问它的`UTF-16`表示。
 其为`UTF16View`类型的属性，`UTF16View`是无符号16位 (`UInt16`) 值的集合，每一个`UInt16`都是一个字符的 UTF-16 表示：
 
-```
+```swift
 for codeUnit in dogString.utf16 {
     print("\(codeUnit) ")
 }
@@ -395,7 +385,7 @@ print("\n")
 
 每一个`UnicodeScalar`拥有一个值属性，可以返回对应的21位数值，用`UInt32`来表示。
 
-```
+```swift
 for scalar in dogString.unicodeScalars {
     print("\(scalar.value) ")
 }
@@ -409,7 +399,7 @@ print("\n")
 
 作为查询字符值属性的一种替代方法，每个`UnicodeScalar`值也可以用来构建一个新的字符串值，比如在字符串插值中使用：
 
-```
+```swift
 for scalar in dogString.unicodeScalars {
     println("\(scalar) ")
 }
@@ -419,4 +409,3 @@ for scalar in dogString.unicodeScalars {
 // !
 // 🐶
 ```
-

@@ -1,15 +1,13 @@
-> 翻译：pp-prog
-
-> 校对：zqp
+> 翻译：pp-prog  
+> 校对：zqp  
 
 # 方法（Methods）
 -----------------
 
-
 本页包含内容：
 
--   [实例方法(Instance Methods](#instance_methods)
--   [类型方法(Type Methods)](#type_methods)
+- [实例方法(Instance Methods](#instance_methods)
+- [类型方法(Type Methods)](#type_methods)
 
 **方法**是与某些特定类型相关联的函数。类、结构体、枚举都可以定义实例方法；实例方法为给定类型的实例封装了具体的任务与功能。类、结构体、枚举也可以定义类型方法；类型方法与类型本身相关联。类型方法与 Objective-C 中的类方法（class methods）相似。
 
@@ -24,7 +22,7 @@
 
 下面的例子，定义一个很简单的类`Counter`，`Counter`能被用来对一个动作发生的次数进行计数：
 
-```
+```swift
 class Counter {
   var count = 0
   func increment() {
@@ -48,7 +46,7 @@ class Counter {
 
 和调用属性一样，用点语法（dot syntax）调用实例方法：
 
-```
+```swift
  let counter = Counter()
  // 初始计数值是0
  counter.increment()
@@ -58,6 +56,7 @@ class Counter {
  counter.reset()
  // 计数值现在是0
 ```
+
 <a name="local_and_external_parameter"></a>
 ### 方法的局部参数名称和外部参数名称(Local and External Parameter Names for Methods)
 
@@ -69,7 +68,7 @@ Swift 中的方法和 Objective-C 中的方法极其相似。像在 Objective-C 
 
 看看下面这个`Counter`的另一个版本（它定义了一个更复杂的`incrementBy`方法）：
 
-```
+```swift
 class Counter {
   var count: Int = 0
   func incrementBy(amount: Int, numberOfTimes: Int) {
@@ -80,7 +79,7 @@ class Counter {
 
 `incrementBy`方法有两个参数： `amount`和`numberOfTimes`。默认情况下，Swift 只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作局部名称又看作外部名称。下面调用这个方法：
 
-```
+```swift
 let counter = Counter()
 counter.incrementBy(5, numberOfTimes: 3)
 // counter value is now 15
@@ -90,9 +89,9 @@ counter.incrementBy(5, numberOfTimes: 3)
 
 这种默认的行为能够有效的处理方法（method）,类似于在参数`numberOfTimes`前写一个井号（`#`）：
 
-```
+```swift
 func incrementBy(amount: Int, #numberOfTimes: Int) {
- count += amount * numberOfTimes
+  count += amount * numberOfTimes
 }
 ```
 
@@ -111,7 +110,8 @@ func incrementBy(amount: Int, #numberOfTimes: Int) {
 类型的每一个实例都有一个隐含属性叫做`self`，`self`完全等同于该实例本身。你可以在一个实例的实例方法中使用这个隐含的`self`属性来引用当前实例。
 
 上面例子中的`increment`方法还可以这样写：
-```
+
+```swift
 func increment() {
   self.count++
 }
@@ -123,7 +123,7 @@ func increment() {
 
 下面的例子中，`self`消除方法参数`x`和实例属性`x`之间的歧义：
 
-```
+```swift
 struct Point {
   var x = 0.0, y = 0.0
   func isToTheRightOfX(x: Double) -> Bool {
@@ -148,7 +148,7 @@ if somePoint.isToTheRightOfX(1.0) {
 
 要使用`变异`方法， 将关键字`mutating` 放到方法的`func`关键字之前就可以了：
 
-```
+```swift
 struct Point {
   var x = 0.0, y = 0.0
   mutating func moveByX(deltaX: Double, y deltaY: Double) {
@@ -166,17 +166,18 @@ println("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量]("10_Properties.html")
 
-```
+```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
 fixedPoint.moveByX(2.0, y: 3.0)
 // this will report an error
 ```
+
 <a name="mutating_method_self"></a>
 ### 在变异方法中给self赋值(Assigning to self Within a Mutating Method)
 
 变异方法能够赋给隐含属性`self`一个全新的实例。上面`Point`的例子可以用下面的方式改写：
 
-```
+```swift
 struct Point {
   var x = 0.0, y = 0.0
   mutating func moveByX(deltaX: Double, y deltaY: Double) {
@@ -189,7 +190,7 @@ struct Point {
 
 枚举的变异方法可以把`self`设置为相同的枚举类型中不同的成员：
 
-```
+```swift
 enum TriStateSwitch {
   case Off, Low, High
   mutating func next() {
@@ -217,13 +218,12 @@ ovenLight.next()
 
 实例方法是被类型的某个实例调用的方法。你也可以定义类型本身调用的方法，这种方法就叫做**类型方法**。声明类的类型方法，在方法的`func`关键字之前加上关键字`class`；声明结构体和枚举的类型方法，在方法的`func`关键字之前加上关键字`static`。
 
-> 注意：
-
-> 在 Objective-C 里面，你只能为 Objective-C 的类定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法：每一个类型方法都被它所支持的类型显式包含。
+> 注意：  
+> 在 Objective-C 里面，你只能为 Objective-C 的类定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法：每一个类型方法都被它所支持的类型显式包含。  
 
 类型方法和实例方法一样用点语法调用。但是，你是在类型层面上调用这个方法，而不是在实例层面上调用。下面是如何在`SomeClass`类上调用类型方法的例子：
 
-```
+```swift
 class SomeClass {
   class func someTypeMethod() {
     // type method implementation goes here
@@ -240,7 +240,7 @@ SomeClass.someTypeMethod()
 
 游戏初始时，所有的游戏等级（除了等级 1）都被锁定。每次有玩家完成一个等级，这个等级就对这个设备上的所有玩家解锁。`LevelTracker`结构体用静态属性和方法监测游戏的哪个等级已经被解锁。它还监测每个玩家的当前等级。
 
-```
+```swift
 struct LevelTracker {
   static var highestUnlockedLevel = 1
   static func unlockLevel(level: Int) {
@@ -271,7 +271,7 @@ struct LevelTracker {
 
 下面，`Player`类使用`LevelTracker`来监测和更新每个玩家的发展进度：
 
-```
+```swift
 class Player {
   var tracker = LevelTracker()
   let playerName: String
@@ -289,22 +289,21 @@ class Player {
 
 你还可以为一个新的玩家创建一个`Player`的实例，然后看这个玩家完成等级一时发生了什么：
 
-```
+```swift
 var player = Player(name: "Argyrios")
 player.completedLevel(1)
 println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-// 输出 "highest unlocked level is now 2"（最高等级现在是2
-）
+// 输出 "highest unlocked level is now 2"（最高等级现在是2）
 ```
 
 如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，那么这次设置玩家当前等级的尝试将会失败：
 
-```
+```swift
 player = Player(name: "Beto")
 if player.tracker.advanceToLevel(6) {
-println("player is now on level 6")
+  println("player is now on level 6")
 } else {
-println("level 6 has not yet been unlocked")
+  println("level 6 has not yet been unlocked")
 }
 // 输出 "level 6 has not yet been unlocked"（等级6还没被解锁）
 ```
