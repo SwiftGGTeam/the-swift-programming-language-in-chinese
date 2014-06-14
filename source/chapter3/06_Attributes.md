@@ -114,14 +114,14 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 
 该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，`T`，是`@noreturn T`。
 
-> 特性的语法
-> attribute -> @ [attribute-name]() [attribute-argument-clause]()opt
-> attribute-name -> [identifier]()
-> attribute-argument-clause -> ( [balanced-tokens]()opt )
-> attributes -> [attribute]() [attributes]()opt
-> balanced-tokens -> [balanced-token]() [balanced-tokens]()opt
-> balanced-token -> ( [balanced-tokens]()opt )
-> balanced-token -> [ [balanced-tokens]()opt ]
-> balanced-token -> { [balanced-tokens]()opt }
-> balanced-token -> 任意标识符，关键字，字面量，或运算符
-> balanced-token -> 任意标点符号，除了(, ), [, ], {, 或 }
+> 特性语法  
+> *特色* → **@** [*特性名*](..\chapter3\06_Attributes.html#attribute_name) [*特性参数子句*](..\chapter3\06_Attributes.html#attribute_argument_clause) _可选_  
+> *特性名* → [*标识符*](LexicalStructure.html#identifier)  
+> *特性参数子句* → **(** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **)**  
+> *特性(Attributes)列表* → [*特色*](..\chapter3\06_Attributes.html#attribute) [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_  
+> *平衡令牌列表* → [*平衡令牌*](..\chapter3\06_Attributes.html#balanced_token) [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_  
+> *平衡令牌* → **(** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **)**  
+> *平衡令牌* → **[** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **]**  
+> *平衡令牌* → **{** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **}**  
+> *平衡令牌* → **任意标识符, 关键字, 字面量或运算符**  
+> *平衡令牌* → **任意标点除了(, ), [, ], {, 或 }**
