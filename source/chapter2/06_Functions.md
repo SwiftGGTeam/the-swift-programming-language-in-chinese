@@ -1,23 +1,23 @@
-> 翻译：honghaoz
-
-> 校对：LunaticM
+> 翻译：honghaoz  
+> 校对：LunaticM  
 
 # 函数（Functions）
 -----------------
 
 本页包含内容：
 
--   [函数定义与调用（Defining and Calling Functions）](#Defining_and_Calling_Functions)
--   [函数参数与返回值（Function Parameters and Return Values）](#Function_Parameters_and_Return_Values)
--   [函数参数名称（Function Parameter Names）](#Function_Parameter_Names)
--   [函数类型（Function Types）](#Function_Types)
--   [函数嵌套（Nested Functions）](#Nested_Functions)
+- [函数定义与调用（Defining and Calling Functions）](#Defining_and_Calling_Functions)
+- [函数参数与返回值（Function Parameters and Return Values）](#Function_Parameters_and_Return_Values)
+- [函数参数名称（Function Parameter Names）](#Function_Parameter_Names)
+- [函数类型（Function Types）](#Function_Types)
+- [函数嵌套（Nested Functions）](#Nested_Functions)
 
 函数是用来完成特定任务的独立的代码块。你给一个函数起一个合适的名字，用来标示函数做什么，并且当函数需要执行的时候，这个名字会被“调用”。
 
 Swift 统一的函数语法足够灵活，可以用来表示任何函数，包括从最简单的没有参数名字的 C 风格函数，到复杂的带局部和外部参数名的 Objective-C 风格函数。参数可以提供默认值，以简化函数调用。参数也可以即当做传入参数，也当做传出参数，也就是说，一旦函数执行结束，传入的参数值可以被修改。
 
 在 Swift 中，每个函数都有一种类型，包括函数的参数值类型和返回值类型。你可以把函数类型当做任何其他普通变量类型一样处理，这样就可以更简单地把函数当做别的函数的参数，也可以从其他函数中返回函数。函数的定义可以写在在其他函数定义中，这样可以在嵌套函数范围内实现功能封装。
+
 <a name="Defining_and_Calling_Functions"></a>
 ## 函数的定义与调用（Defining and Calling Functions）
 
@@ -79,6 +79,7 @@ func halfOpenRangeLength(start: Int, end: Int) -> Int {
 println(halfOpenRangeLength(1, 10))
 // prints "9
 ```
+
 ### 无参函数（Functions Without Parameters）
 
 函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的 `String` 消息：
@@ -107,9 +108,8 @@ sayGoodbye("Dave")
 
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
-> 注意：
->
-> 严格上来说，虽然没有返回值被定义，`sayGoodbye` 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 `Void`。它其实是一个空的元组（tuple），没有任何元素，可以写成`()`。
+> 注意：  
+> 严格上来说，虽然没有返回值被定义，`sayGoodbye` 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 `Void`。它其实是一个空的元组（tuple），没有任何元素，可以写成`()`。  
 
 被调用时，一个函数的返回值可以被忽略：
 
@@ -130,9 +130,8 @@ printWithoutCounting("hello, world")
 
 第一个函数 `printAndCount`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
-> 注意：
->
-> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。
+> 注意：  
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。  
 
 ### 多重返回值函数（Functions with Multiple Return Values）
 
@@ -160,11 +159,14 @@ func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
 
 你可以用 `count` 函数来处理任何一个字符串，返回的值将是一个包含三个 `Int` 型值的元组（tuple）：
 
-    let total = count("some arbitrary string!")
-    println("\(total.vowels) vowels and \(total.consonants) consonants")
-    // prints "6 vowels and 13 consonants
+```swift
+let total = count("some arbitrary string!")
+println("\(total.vowels) vowels and \(total.consonants) consonants")
+// prints "6 vowels and 13 consonants
+```
 
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
+
 <a name="Function_Parameter_Names"></a>
 ## 函数参数名称（Function Parameter Names）
 
@@ -192,9 +194,8 @@ func someFunction(externalParameterName localParameterName: Int) {
 }
 ```
 
-> 注意：
->
-> 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。
+> 注意：  
+> 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。  
 
 以下是个例子，这个函数使用一个`结合者（joiner）`把两个字符串联在一起：
 
@@ -230,9 +231,8 @@ join(string: "hello", toString: "world", withJoiner: ", ")
 
 使用外部参数名让第二个版本的 `join` 函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。
 
-> 注意：
->
-> 当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。
+> 注意：  
+> 当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。  
 
 ### 简写外部参数名（Shorthand External Parameter Names）
 
@@ -262,9 +262,8 @@ let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
 
 你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以略去这个参数。
 
-> 注意：
->
-> 将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。
+> 注意：  
+> 将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  
 
 以下是另一个版本的`join`函数，其中`joiner`有了默认参数值：
 
@@ -287,6 +286,7 @@ join(string: "hello", toString: "world", withJoiner: "-")
 join(string: "hello", toString:"world")
 // returns "hello world"
 ```
+
 ### 默认值参数的外部参数名（External Names for Parameters with Default Values）
 
 在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。
@@ -308,9 +308,8 @@ join("hello", "world", joiner: "-")
 // returns "hello-world"
 ```
 
-> 注意：
->
-> 你可以使用`下划线（_）`作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。
+> 注意：  
+> 你可以使用`下划线（_）`作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。  
 
 ### 可变参数（Variadic Parameters）
 
@@ -324,7 +323,7 @@ join("hello", "world", joiner: "-")
 func arithmeticMean(numbers: Double...) -> Double {
     var total: Double = 0
     for number in numbers {
-      	total += number
+        total += number
     }
     return total / Double(numbers.count)
 }
@@ -334,9 +333,8 @@ arithmeticMean(3, 8, 19)
 // returns 10.0, which is the arithmetic mean of these three numbers
 ```
 
-> 注意：
->
-> 一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。
+> 注意：  
+> 一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。  
 
 如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
 
@@ -368,9 +366,8 @@ let paddedString = alignRight(originalString, 10, "-")
 
 该函数首先计算出多少个字符需要被添加到 `string` 的左边，以右对齐到总的字符串中。这个值存在局部常量 `amountToPad` 中。这个函数然后将 `amountToPad` 多的填充（pad）字符填充到 `string` 左边，并返回结果。它使用了 `string` 这个变量参数来进行所有字符串操作。
 
-> 注意：
->
-> 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
+> 注意：  
+> 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。  
 
 ### 输入输出参数（In-Out Parameters）
 
@@ -380,9 +377,8 @@ let paddedString = alignRight(originalString, 10, "-")
 
 你只能传入一个变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加`&`符，表示这个值可以被函数修改。
 
-> 注意：
->
-> 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。如果你用 `inout` 标记一个参数，这个参数不能被 `var` 或者 `let` 标记。
+> 注意：  
+> 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。如果你用 `inout` 标记一个参数，这个参数不能被 `var` 或者 `let` 标记。  
 
 下面是例子，`swapTwoInts` 函数，有两个分别叫做 `a` 和 `b` 的输出输出参数：
 
@@ -408,9 +404,8 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts` 函数中被修改，尽管它们的定义在函数体外。
 
-> 注意：
->
-> 输出输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
+> 注意：  
+> 输出输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。  
 
 <a name="Function_Types"></a>
 ## 函数类型（Function Types）
@@ -477,6 +472,7 @@ println("Result: \(mathFunction(2, 3))")
 let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 ```
+
 ### 函数类型作为参数类型（Function Types as Parameter Types）
 
 你可以用`(Int, Int) -> Int`这样的函数类型作为另一个函数的参数类型。这样你可以将函数的一部分实现交由给函数的调用者。
