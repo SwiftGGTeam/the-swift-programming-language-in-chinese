@@ -7,10 +7,10 @@
 
 本页包含内容：
 
--   [闭包表达式（Closure Expressions）](#closure_expressions)
--   [尾随闭包（Trailing Closures）](#trailing_closures)
--   [值捕获（Capturing Values）](#capturing_values)
--   [闭包是引用类型（Closures Are Reference Types）](#closures_are_reference_types)
+- [闭包表达式（Closure Expressions）](#closure_expressions)
+- [尾随闭包（Trailing Closures）](#trailing_closures)
+- [值捕获（Capturing Values）](#capturing_values)
+- [闭包是引用类型（Closures Are Reference Types）](#closures_are_reference_types)
 
 闭包是自包含的函数代码块，可以在代码中被传递和使用。
 Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的 lambdas 函数比较相似。
@@ -24,16 +24,16 @@ Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他�
 
 在[函数](../chapter2/06_Functions.html) 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
 
-*	全局函数是一个有名字但不会捕获任何值的闭包
-*	嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包
-*	闭包表达式是一个利用轻量级语法所写的可以捕获其上下文中变量或常量值的匿名闭包
+* 全局函数是一个有名字但不会捕获任何值的闭包
+* 嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包
+* 闭包表达式是一个利用轻量级语法所写的可以捕获其上下文中变量或常量值的匿名闭包
 
 Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进行语法优化，主要优化如下：
 
-*	利用上下文推断参数和返回值类型
-*	隐式返回单表达式闭包，即单表达式闭包可以省略`return`关键字
-*	参数名称缩写
-*	尾随（Trailing）闭包语法
+* 利用上下文推断参数和返回值类型
+* 隐式返回单表达式闭包，即单表达式闭包可以省略`return`关键字
+* 参数名称缩写
+* 尾随（Trailing）闭包语法
 
 <a name="closure_expressions"></a>
 ## 闭包表达式（Closure Expressions）
@@ -60,8 +60,8 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 `sort`函数需要传入两个参数：
 
-*	已知类型的数组
-*	闭包函数，该闭包函数需要传入与数组类型相同的两个值，并返回一个布尔类型值来告诉`sort`函数当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
+* 已知类型的数组
+* 闭包函数，该闭包函数需要传入与数组类型相同的两个值，并返回一个布尔类型值来告诉`sort`函数当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
 
 该例子对一个`String`类型的数组进行排序，因此排序闭包函数类型需为`(String, String) -> Bool`。
 
@@ -103,7 +103,7 @@ var reversed = sort(names, backwards)
 ```
 reversed = sort(names, { (s1: String, s2: String) -> Bool in
     return s1 > s2
-    })
+})
 ```
 
 需要注意的是内联闭包参数和返回值类型声明与`backwards`函数类型声明相同。
