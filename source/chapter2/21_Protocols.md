@@ -340,7 +340,7 @@ class DiceGameTracker: DiceGameDelegate {
 `DiceGameTracker`的运行情况，如下所示：
 
 ```swift
-“let tracker = DiceGameTracker()
+let tracker = DiceGameTracker()
 let game = SnakesAndLadders()
 game.delegate = tracker
 game.play()
