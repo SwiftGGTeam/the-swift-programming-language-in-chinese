@@ -262,11 +262,12 @@ someInstance.dynamicType.printClassName()
 // prints "SomeSubClass
 ```
 
->元类型的语法：
-*metatype-type* → *type*.**Type** | *type*.**Protocol**
+> 元(Metatype)类型语法  
+> *元类型* → [*类型*](..\chapter3\03_Types.html#type) **.** **Type** | [*类型*](..\chapter3\03_Types.html#type) **.** **Protocol**  x
 
 <a name="type_inheritance_clause"></a>
 ##类型继承子句
+
 类型继承子句被用来指定一个命名型类型继承哪个类且适配哪些协议。类型继承子句开始于冒号`:`，紧跟由`,`隔开的类型标识符列表。
 
 类可以继承单个超类，适配任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要适配的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，见章节“继承”。
@@ -275,8 +276,9 @@ someInstance.dynamicType.printClassName()
 
 枚举定义中的类型继承子句可以是一个协议列表，或是指定原始值的枚举，一个单独的指定原始值类型的命名型类型。使用类型继承子句来指定原始值类型的枚举定义的例子，见章节“原始值”。
 
-> 元型(Metatype)类型语法  
-> *元型类型* → [*类型*](..\chapter3\03_Types.html#type) **.** **Type** | [*类型*](..\chapter3\03_Types.html#type) **.** **Protocol**  
+> 类型继承子句语法  
+> *类型继承子句* → **:** [*类型继承列表*](..\chapter3\03_Types.html#type_inheritance_list)  
+> *类型继承列表* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) | [*类型标识*](..\chapter3\03_Types.html#type_identifier) **,** [*类型继承列表*](..\chapter3\03_Types.html#type_inheritance_list)
 
 <a name="type_inference"></a>
 ##类型推断
