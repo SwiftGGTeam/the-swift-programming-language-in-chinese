@@ -770,7 +770,6 @@ type-inheritance-clause是一个只包含协议列表的扩展声明。
 <a name="subscript_declaration"></a>
 ##下标脚本声明(translated by 林)
 
-<<<<<<< HEAD
 附属脚本用于向特定类型添加附属脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。附属脚本声明使用关键字`subscript`，声明形式如下：
 
 > subscript (`parameter`) -> (return type){  
@@ -783,18 +782,6 @@ type-inheritance-clause是一个只包含协议列表的扩展声明。
 > }    
 
 附属脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
-=======
-下标脚本用于向特定类型添加下标脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。下标脚本声明使用关键字`subscript`，声明形式如下：
-> subscript (`parameter`) -> (return type){
-    get{
-      `statements`
-    }
-    set(`setter name`){
-      `statements`
-    }
-}
-下标脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
 _变量(parameters)_指定一个或多个用于在相关类型的下标脚本中访问元素的索引（例如，表达式`object[i]`中的`i`）。尽管用于元素访问的索引可以是任意类型的，但是每个变量必须包含一个用于指定每种索引类型的类型标注。_返回类型(return type)_指定被访问的元素的类型。
 
