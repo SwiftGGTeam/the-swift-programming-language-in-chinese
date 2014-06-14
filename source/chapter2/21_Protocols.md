@@ -34,6 +34,10 @@ protocol SomeProtocol {
 	// 协议内容
 }
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e
 
 在类，结构体，枚举的名称后加上`协议名称`，中间以冒号`:`分隔即可实现协议；实现多个协议时，各协议之间用逗号`,`分隔，如下所示：
 
@@ -98,10 +102,17 @@ class Starship: FullyNamed {
 	init(name: String, prefix: String? = nil ) {
 		self.anme = name
 		self.prefix = prefix
+<<<<<<< HEAD
 	}
 	var fullName: String {
 	return (prefix ? prefix ! + " " : " ") + name
 	}
+=======
+	}
+	var fullName: String {
+	return (prefix ? prefix ! + " " : " ") + name
+	}
+>>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName == "USS Enterprise"
@@ -211,10 +222,17 @@ class Dice {
 	init(sides: Int, generator: RandomNumberGenerator) {
 		self.sides = sides
 		self.generator = generator
+<<<<<<< HEAD
 	}
 	func roll() -> Int {
 		return Int(generator.random() * Double(sides)) +1
 	}
+=======
+	}
+	func roll() -> Int {
+		return Int(generator.random() * Double(sides)) +1
+	}
+>>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e
 }
 ```
 
@@ -716,3 +734,8 @@ for _ in 1...5 {
 // 0
 // 0
 ```
+<<<<<<< HEAD
+=======
+
+preview
+>>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e

@@ -596,7 +596,10 @@ someInstance.dynamicType.printClassName（）
 
 关于subscript的声明，请参见： Protocol Subscript Declaration.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e
 > 附属脚本表达式语法  
 > *附属脚本表达式* → [*后置表达式*](..\chapter3\04_Expressions.html#postfix_expression) **[** [*表达式列表*](..\chapter3\04_Expressions.html#expression_list) **]**  
 
