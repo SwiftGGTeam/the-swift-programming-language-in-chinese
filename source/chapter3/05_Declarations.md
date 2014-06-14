@@ -1,6 +1,6 @@
 > 翻译：marsprince
 
-> 校对：numbbbbb
+> 校对：numbbbbb, stanzhai
 
 # 声明
  -----------------
@@ -31,41 +31,24 @@
 在swift中，大多数声明在某种意义上讲也是执行或同事声明它们的初始化定义。这意味着，因为协议和他们的成员不匹配，
 大多数协议成员需要单独的声明。为了方便起见，也因为这些区别在swift里不是很重要，声明语句同时包含了声明和定义。
 
->GRAMMAR OF A DECLARATION
-
->declaration → import-declaration­
-
->declaration → constant-declaration­
-
->declaration → variable-declaration­
-
->declaration → typealias-declaration­
-
->declaration → function-declaration­
-
->declaration → enum-declaration­
-
->declaration → struct-declaration­
-
->declaration → class-declaration­
-
->declaration → protocol-declaration­
-
-> declaration → initializer-declaration­
-
->declaration → deinitializer-declaration­
-
-> declaration → extension-declaration­
-
-> declaration → subscript-declaration­
-
->declaration → operator-declaration­
-
->declarations → declaration­declarations­opt­
-
->declaration-specifiers → declaration-specifier­declaration-specifiers­opt­
-
->declaration-specifier → class­ | mutating ­| nonmutating­ | override­ | static­ | unowned |
+> 声明语法  
+> *声明* → [*导入声明*](..\chapter3\05_Declarations.html#import_declaration)  
+> *声明* → [*常量声明*](..\chapter3\05_Declarations.html#constant_declaration)  
+> *声明* → [*变量声明*](..\chapter3\05_Declarations.html#variable_declaration)  
+> *声明* → [*类型别名声明*](..\chapter3\05_Declarations.html#typealias_declaration)  
+> *声明* → [*函数声明*](..\chapter3\05_Declarations.html#function_declaration)  
+> *声明* → [*枚举声明*](..\chapter3\05_Declarations.html#enum_declaration)  
+> *声明* → [*结构体声明*](..\chapter3\05_Declarations.html#struct_declaration)  
+> *声明* → [*类声明*](..\chapter3\05_Declarations.html#class_declaration)  
+> *声明* → [*协议声明*](..\chapter3\05_Declarations.html#protocol_declaration)  
+> *声明* → [*构造器声明*](..\chapter3\05_Declarations.html#initializer_declaration)  
+> *声明* → [*析构器声明*](..\chapter3\05_Declarations.html#deinitializer_declaration)  
+> *声明* → [*扩展声明*](..\chapter3\05_Declarations.html#extension_declaration)  
+> *声明* → [*附属脚本声明*](..\chapter3\05_Declarations.html#subscript_declaration)  
+> *声明* → [*运算符声明*](..\chapter3\05_Declarations.html#operator_declaration)  
+> *声明(Declarations)列表* → [*声明*](..\chapter3\05_Declarations.html#declaration) [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_  
+> *声明描述符(Specifiers)列表* → [*声明描述符(Specifier)*](..\chapter3\05_Declarations.html#declaration_specifier) [*声明描述符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_  
+> *声明描述符(Specifier)* → **class** | **mutating** | **nonmutating** | **override** | **static** | **unowned** | **unowned(safe)** | **unowned(unsafe)** | **weak**  
 
 <a name="module_scope"></a>
 ##模块范围
@@ -73,9 +56,8 @@
 模块范围定义了对模块中其他源文件可见的代码。（注：待改进）在swift的源文件中，最高级别的代码由零个或多个语句，
 声明和表达组成。变量，常量和其他的声明语句在一个源文件的最顶级被声明，使得他们对同一模块中的每个源文件都是可见的。
 
->GRAMMAR OF A TOP-LEVEL DECLARATION
-
->top-level-declaration → statements ­opt
+> 顶级(Top Level) 声明语法  
+> *顶级声明* → [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements) _可选_  
 
 <a name="code_blocks"></a>
 ##代码块
@@ -88,9 +70,8 @@
 
 代码块中的语句包括声明，表达式和各种其他类型的语句，它们按照在源码中的出现顺序被依次执行。
 
->GRAMMAR OF A CODE BLOCK
-
->code-block → ­statements ­opt­
+> 代码块语法  
+> *代码块* → **{** [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements) _可选_ **}**  
 
 <a name="import_declaration"></a>
 ##引入声明
@@ -106,12 +87,11 @@
     import import kind module.symbol name
     import module.submodule
 
->GRAMMAR OF AN IMPORT DECLARATION
-
->import-declaration → attributes ­opt ­import­ import-kind­ opt import-path­
->import-kind → typealias­ | struct­ | class­ | enum­ | protocol­ | var­ | func­
->import-path → import-path-identifier­  import-path-identifier­.­import-path­
->import-path-identifier → identifier­  operator
+> 导入(Import)声明语法  
+> *导入声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **import** [*导入类型*](..\chapter3\05_Declarations.html#import_kind) _可选_ [*导入路径*](..\chapter3\05_Declarations.html#import_path)  
+> *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **var** | **func**  
+> *导入路径* → [*导入路径标识符*](..\chapter3\05_Declarations.html#import_path_identifier) | [*导入路径标识符*](..\chapter3\05_Declarations.html#import_path_identifier) **.** [*导入路径*](..\chapter3\05_Declarations.html#import_path)  
+> *导入路径标识符* → [*标识符*](LexicalStructure.html#identifier) | [*运算符*](LexicalStructure.html#operator)  
 
 <a name="constant_declaration"></a>
 ##常量声明
@@ -131,10 +111,10 @@
 
 在上例中，firstNumber是一个值为10的常量，secnodeName是一个值为42的常量。所有常量都可以独立的使用：
 
-    1  println("The first number is \(firstNumber).")
-    2  // prints "The first number is 10."
-    3  println("The second number is \(secondNumber).")
-    4  // prints "The second number is 42."
+    println("The first number is \(firstNumber).")
+    // prints "The first number is 10."
+    println("The second number is \(secondNumber).")
+    // prints "The second number is 42."
 
 类型注释（:type）在常量声明中是一个可选项，它可以用来描述在类型接口（type inference）中找到的类型。
 
@@ -143,12 +123,11 @@
 如果还想获得更多关于常量的信息或者想在使用中获得帮助，请查看常量和变量（constants and variables）,
 存储属性（stored properties）等节。
 
->GRAMMAR OF A CONSTANT DECLARATION
-
->constant-declaration → attributes­ opt ­declaration-specifiers­ opt ­let­pattern-initializer-list­
->pattern-initializer-list → pattern-initializer­ | pattern-initializer­ , pattern-initializer-list­
->pattern-initializer → pattern ­initializer ­opt­
->initializer → =­expression
+> 常数声明语法  
+> *常量声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明描述符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **let** [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
+> *模式构造器列表* → [*模式构造器*](..\chapter3\05_Declarations.html#pattern_initializer) | [*模式构造器*](..\chapter3\05_Declarations.html#pattern_initializer) **,** [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
+> *模式构造器* → [*模式*](..\chapter3\07_Patterns.html#pattern) [*构造器*](..\chapter3\05_Declarations.html#initializer) _可选_  
+> *构造器* → **=** [*表达式*](..\chapter3\04_Expressions.html#expression)  
 
 <a name="variable_declaration"></a>
 ##变量声明
@@ -246,47 +225,27 @@ willset监视器初始名为newvalue，didset监视器初始名为oldvalue。
 
 class关键字用来声明类的计算型属性。static关键字用来声明类的静态变量属性。类和静态变量在类型属性(type properties)中有详细讨论。
 
->GRAMMAR OF A VARIABLE DECLARATION
-
->variable-declaration → variable-declaration-head­pattern-initializer-list­
-
->variable-declaration → variable-declaration-head ­variable-name ­type-annotation ­code-block­
-
->variable-declaration → variable-declaration-head ­variable-name ­type-annotation ­getter-setter-block­
-
->variable-declaration → variable-declaration-head ­variable-name­ type-annotation ­getter-setter-keyword-block­
-
- > variable-declaration → variable-declaration-head­ variable-name ­type-annotation­initializer­ opt ­willSet-didSet-block­
-
->variable-declaration-head → attributes ­opt­ declaration-specifiers ­opt ­var
-­
->variable-name → identifier­
-
->getter-setter-block → {­getter-clause ­setter-clause­ opt­}­
-
->getter-setter-block → {­setter-clause ­getter-clause­}­
-
->getter-clause → attributes ­opt­get­code-block­
-
->setter-clause → attributes ­opt ­set­ setter-name­ opt­ code-block­
-
->setter-name → (­identifier­)­
-
->getter-setter-keyword-block → {­getter-keyword-clause ­setter-keyword-clause­ opt­}
-­
->getter-setter-keyword-block → {­setter-keyword-clause ­getter-keyword-clause­}
-
->getter-keyword-clause → attributes­ opt­ get­
-
->setter-keyword-clause → attributes ­opt­ set­
-
->willSet-didSet-block → {­willSet-clause ­didSet-clause ­opt­}­
-
->willSet-didSet-block → {­didSet-clause ­willSet-clause­}­
-
->willSet-clause → attributes ­opt ­willSet ­setter-name­ opt ­code-block­
-
->didSet-clause → attributes ­opt ­didSet ­setter-name ­opt­ code-block­
+> 变量声明语法  
+> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
+> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*getter-setter块*](..\chapter3\05_Declarations.html#getter_setter_block)  
+> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
+> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*构造器*](..\chapter3\05_Declarations.html#initializer) _可选_ [*willSet-didSet代码块*](..\chapter3\05_Declarations.html#willSet_didSet_block)  
+> *变量声明头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明描述符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **var**  
+> *变量名称* → [*标识符*](LexicalStructure.html#identifier)  
+> *getter-setter块* → **{** [*getter子句*](..\chapter3\05_Declarations.html#getter_clause) [*setter子句*](..\chapter3\05_Declarations.html#setter_clause) _可选_ **}**  
+> *getter-setter块* → **{** [*setter子句*](..\chapter3\05_Declarations.html#setter_clause) [*getter子句*](..\chapter3\05_Declarations.html#getter_clause) **}**  
+> *getter子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **get** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *setter子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **set** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *setter名称* → **(** [*标识符*](LexicalStructure.html#identifier) **)**  
+> *getter-setter关键字(Keyword)块* → **{** [*getter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#getter_keyword_clause) [*setter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#setter_keyword_clause) _可选_ **}**  
+> *getter-setter关键字(Keyword)块* → **{** [*setter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#setter_keyword_clause) [*getter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#getter_keyword_clause) **}**  
+> *getter关键字(Keyword)子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **get**  
+> *setter关键字(Keyword)子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **set**  
+> *willSet-didSet代码块* → **{** [*willSet子句*](..\chapter3\05_Declarations.html#willSet_clause) [*didSet子句*](..\chapter3\05_Declarations.html#didSet_clause) _可选_ **}**  
+> *willSet-didSet代码块* → **{** [*didSet子句*](..\chapter3\05_Declarations.html#didSet_clause) [*willSet子句*](..\chapter3\05_Declarations.html#willSet_clause) **}**  
+> *willSet子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **willSet** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *didSet子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **didSet** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
 
 <a name="type_alias_declaration"></a>
 ##类型的别名声明
@@ -301,12 +260,11 @@ class关键字用来声明类的计算型属性。static关键字用来声明类
 
 查看更多Protocol Associated Type Declaration.
 
->GRAMMAR OF A TYPE ALIAS DECLARATION
-
-> typealias-declaration → typealias-head­ typealias-assignment
-> typealias-head → typealias­ typealias-name
-> typealias-name → identifier
-> typealias-assignment → =type
+> 类型别名声明语法  
+> *类型别名声明* → [*类型别名头(Head)*](..\chapter3\05_Declarations.html#typealias_head) [*类型别名赋值*](..\chapter3\05_Declarations.html#typealias_assignment)  
+> *类型别名头(Head)* → **typealias** [*类型别名名称*](..\chapter3\05_Declarations.html#typealias_name)  
+> *类型别名名称* → [*标识符*](LexicalStructure.html#identifier)  
+> *类型别名赋值* → **=** [*类型*](..\chapter3\03_Types.html#type)  
 
 <a name="function_declaration"></a>
 ##函数声明
@@ -420,23 +378,22 @@ f()和f(x:7)都是只有一个变量x的函数的有效调用，但是f(7)是非
 
 多级柯里化应用如下
 
->GRAMMAR OF A FUNCTION DECLARATION
-
->function-declaration → function-head­ function-name­ generic-parameter-clause ­opt­function-signature­ function-body­
-> function-head → attributes ­opt ­declaration-specifiers ­opt ­func­
-> function-name → identifier­  operator­
->function-signature → parameter-clauses ­function-result ­opt­
-> function-result → ->­attributes ­opt ­type­
->  function-body → code-block­
->  parameter-clauses → parameter-clause ­parameter-clauses ­opt­
->  parameter-clause → (­)­  (­parameter-list­...­opt­)­
->  parameter-list → parameter­  parameter­,­parameter-list­
-> parameter → inout ­opt ­let ­opt­#­opt­parameter-name local-parameter-name ­opt­ type-annotation ­default-argument-clause ­opt­
-> parameter → inout­opt­var­#­opt­parameter-name­local-parameter-name ­opt­ type-annotation­default-argument-clause ­opt­
-> parameter → attributes ­opt ­type­
-> parameter-name → identifier­  _­
->  local-parameter-name → identifier­  _­
->  default-argument-clause → =­expression­：
+> 函数声明语法  
+> *函数声明* → [*函数头*](..\chapter3\05_Declarations.html#function_head) [*函数名*](..\chapter3\05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](..\chapter3\05_Declarations.html#function_signature) [*函数体*](..\chapter3\05_Declarations.html#function_body)  
+> *函数头* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明描述符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **func**  
+> *函数名* → [*标识符*](LexicalStructure.html#identifier) | [*运算符*](LexicalStructure.html#operator)  
+> *函数签名(Signature)* → [*parameter-clauses*](..\chapter3\05_Declarations.html#parameter_clauses) [*函数结果*](..\chapter3\05_Declarations.html#function_result) _可选_  
+> *函数结果* → **->** [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)  
+> *函数体* → [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *parameter-clauses* → [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause) [*parameter-clauses*](..\chapter3\05_Declarations.html#parameter_clauses) _可选_  
+> *参数子句* → **(** **)** | **(** [*参数列表*](..\chapter3\05_Declarations.html#parameter_list) **...** _可选_ **)**  
+> *参数列表* → [*参数*](..\chapter3\05_Declarations.html#parameter) | [*参数*](..\chapter3\05_Declarations.html#parameter) **,** [*参数列表*](..\chapter3\05_Declarations.html#parameter_list)  
+> *参数* → **inout** _可选_ **let** _可选_ **#** _可选_ [*参数名*](..\chapter3\05_Declarations.html#parameter_name) [*本地参数名*](..\chapter3\05_Declarations.html#local_parameter_name) _可选_ [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*默认参数子句*](..\chapter3\05_Declarations.html#default_argument_clause) _可选_  
+> *参数* → **inout** _可选_ **var** **#** _可选_ [*参数名*](..\chapter3\05_Declarations.html#parameter_name) [*本地参数名*](..\chapter3\05_Declarations.html#local_parameter_name) _可选_ [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*默认参数子句*](..\chapter3\05_Declarations.html#default_argument_clause) _可选_  
+> *参数* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)  
+> *参数名* → [*标识符*](LexicalStructure.html#identifier) | **_**  
+> *本地参数名* → [*标识符*](LexicalStructure.html#identifier) | **_**  
+> *默认参数子句* → **=** [*表达式*](..\chapter3\04_Expressions.html#expression)  
 
 <a name="enumeration_declaration"></a>
 ##枚举声明
@@ -505,24 +462,23 @@ ExampleEnum.D的值会自动增长为6.
 
 枚举类型是模式匹配(pattern-matched)的，和其相反的是switch语句case块中枚举事件匹配，在枚举事件类型(Enumeration Case Pattern)中有描述。
 
->GRAMMAR OF AN ENUMERATION DECLARATION
-
->   enum-declaration → attributes­opt­union-style-enum­  attributes­opt­raw-value-style-enum­
->    union-style-enum → enum-name­generic-parameter-clause­opt­{­union-style-enum-members­opt­}­
-    union-style-enum-members → union-style-enum-member­union-style-enum-members­opt­
-    union-style-enum-member → declaration­  union-style-enum-case-clause­
-    union-style-enum-case-clause → attributes­opt­case­union-style-enum-case-list­
-    union-style-enum-case-list → union-style-enum-case­  union-style-enum-case­,­union-style-enum-case-list­
-    union-style-enum-case → enum-case-name­tuple-type­opt­
-    enum-name → identifier­
-    enum-case-name → identifier­
-    raw-value-style-enum → enum-name­generic-parameter-clause­opt­:­type-identifier­{­raw-value-style-enum-members­opt­}­
-    raw-value-style-enum-members → raw-value-style-enum-member­raw-value-style-enum-members­opt­
-    raw-value-style-enum-member → declaration­  raw-value-style-enum-case-clause­
-    raw-value-style-enum-case-clause → attributes­opt­case­raw-value-style-enum-case-list­
-    raw-value-style-enum-case-list → raw-value-style-enum-case­  raw-value-style-enum-case­,­raw-value-style-enum-case-list­
-    raw-value-style-enum-case → enum-case-name­raw-value-assignment­opt­
-    raw-value-assignment → =­literal­
+> 枚举声明语法  
+> *枚举声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*联合式枚举*](..\chapter3\05_Declarations.html#union_style_enum) | [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*原始值式枚举*](..\chapter3\05_Declarations.html#raw_value_style_enum)  
+> *联合式枚举* → [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ **{** [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_ **}**  
+> *union-style-enum-members* → [*union-style-enum-member*](..\chapter3\05_Declarations.html#union_style_enum_member) [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_  
+> *union-style-enum-member* → [*声明*](..\chapter3\05_Declarations.html#declaration) | [*联合式(Union Style)的枚举case子句*](..\chapter3\05_Declarations.html#union_style_enum_case_clause)  
+> *联合式(Union Style)的枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **case** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
+> *联合式(Union Style)的枚举case列表* → [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) | [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) **,** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
+> *联合式(Union Style)的case* → [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组类型*](..\chapter3\03_Types.html#tuple_type) _可选_  
+> *枚举名* → [*标识符*](LexicalStructure.html#identifier)  
+> *枚举的case名* → [*标识符*](LexicalStructure.html#identifier)  
+> *原始值式枚举* → [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ **:** [*类型标识*](..\chapter3\03_Types.html#type_identifier) **{** [*原始值式枚举成员列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_members) _可选_ **}**  
+> *原始值式枚举成员列表* → [*原始值式枚举成员*](..\chapter3\05_Declarations.html#raw_value_style_enum_member) [*原始值式枚举成员列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_members) _可选_  
+> *原始值式枚举成员* → [*声明*](..\chapter3\05_Declarations.html#declaration) | [*原始值式枚举case子句*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_clause)  
+> *原始值式枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **case** [*原始值式枚举case列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_list)  
+> *原始值式枚举case列表* → [*原始值式枚举case*](..\chapter3\05_Declarations.html#raw_value_style_enum_case) | [*原始值式枚举case*](..\chapter3\05_Declarations.html#raw_value_style_enum_case) **,** [*原始值式枚举case列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_list)  
+> *原始值式枚举case* → [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*原始值赋值*](..\chapter3\05_Declarations.html#raw_value_assignment) _可选_  
+> *原始值赋值* → **=** [*字面量*](LexicalStructure.html#literal)  
 
 <a name="structure_declaration"></a>
 ##结构体声明
@@ -556,11 +512,10 @@ ExampleEnum.D的值会自动增长为6.
 
 你可以使用扩展声明来扩展结构体类型的行为，参见扩展声明(Extension Declaration).
 
->GRAMMAR OF A STRUCTURE DECLARATION
-
->    struct-declaration → attributes­opt­struct­struct-name­generic-parameter-clause­opt­type-inheritance-clause­opt­struct-body­
->    struct-name → identifier­
->    struct-body → {­declarations­opt­}
+> 结构体声明语法  
+> *结构体声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **struct** [*结构体名称*](..\chapter3\05_Declarations.html#struct_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*结构体主体*](..\chapter3\05_Declarations.html#struct_body)  
+> *结构体名称* → [*标识符*](LexicalStructure.html#identifier)  
+> *结构体主体* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="class_declaration"></a>
 ##类声明
@@ -599,11 +554,10 @@ ExampleEnum.D的值会自动增长为6.
 
 你可以使用扩展声明来扩展类的行为，参见扩展声明(Extension Declaration).
 
- >  GRAMMAR OF A CLASS DECLARATION
-
- >   class-declaration → attributes­opt­class­class-name­generic-parameter-clause­opt­type-inheritance-clause­opt­class-body­
- >   class-name → identifier­
- >  class-body → {­declarations­opt­}
+> 类声明语法  
+> *类声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **class** [*类名*](..\chapter3\05_Declarations.html#class_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*类主体*](..\chapter3\05_Declarations.html#class_body)  
+> *类名* → [*标识符*](LexicalStructure.html#identifier)  
+> *类主体* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="protocol_declaration"></a>
 ##协议声明(translated by 小一)
@@ -638,25 +592,23 @@ protocol protocol name: inherited protocols {
 
 你可以使用协议来声明一个类的代理的方法或者应该实现的结构，就像[委托(代理)模式](../chapter2/21_Protocols.html#delegation)描述的那样。
 
->协议声明的语法
-protocol-declaration → attributes­opt­protocol­protocol-name­type-inheritance-clause­opt­protocol-body­
-protocol-name → identifier­
-protocol-body → {­protocol-member-declarations­opt­}­
-protocol-member-declaration → protocol-property-declaration­
-protocol-member-declaration → protocol-method-declaration­
-protocol-member-declaration → protocol-initializer-declaration­
-protocol-member-declaration → protocol-subscript-declaration­
-protocol-member-declaration → protocol-associated-type-declaration­
-protocol-member-declarations → protocol-member-declaration­protocol-member-declarations­opt­
+> 协议(Protocol)声明语法  
+> *协议声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **protocol** [*协议名*](..\chapter3\05_Declarations.html#protocol_name) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*协议主体*](..\chapter3\05_Declarations.html#protocol_body)  
+> *协议名* → [*标识符*](LexicalStructure.html#identifier)  
+> *协议主体* → **{** [*协议成员声明(Declarations)列表*](..\chapter3\05_Declarations.html#protocol_member_declarations) _可选_ **}**  
+> *协议成员声明* → [*协议属性声明*](..\chapter3\05_Declarations.html#protocol_property_declaration)  
+> *协议成员声明* → [*协议方法声明*](..\chapter3\05_Declarations.html#protocol_method_declaration)  
+> *协议成员声明* → [*协议构造器声明*](..\chapter3\05_Declarations.html#protocol_initializer_declaration)  
+> *协议成员声明* → [*协议附属脚本声明*](..\chapter3\05_Declarations.html#protocol_subscript_declaration)  
+> *协议成员声明* → [*协议关联类型声明*](..\chapter3\05_Declarations.html#protocol_associated_type_declaration)  
+> *协议成员声明(Declarations)列表* → [*协议成员声明*](..\chapter3\05_Declarations.html#protocol_member_declaration) [*协议成员声明(Declarations)列表*](..\chapter3\05_Declarations.html#protocol_member_declarations) _可选_  
 
 <a name="protocol_property_declaration"></a>
 ###协议属性声明
 
 协议声明了一致性类型必须在协议声明的主体里通过引入一个协议属性声明来实现一个属性。协议属性声明有一种特殊的类型声明形式：
 
-```javascript
-var property name: type { get set }
-```
+    var property name: type { get set }
 
 同其它协议成员声明一样，这些属性声明仅仅针对符合该协议的类型声明了`getter`和`setter`要求。结果就是你不需要在协议里它被声明的地方实现`getter`和`setter`。
 
@@ -664,8 +616,8 @@ var property name: type { get set }
 
 更多参见[变量声明](../chapter3/05_Declarations.html#variable_declaration)
 
->协议属性声明语法
-protocol-property-declaration → variable-declaration-head­variable-name­type-annotation­getter-setter-keyword-block­
+> 协议属性声明语法  
+> *协议属性声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型注解*](..\chapter3\03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
 
 ###协议方法声明
 
@@ -679,9 +631,8 @@ protocol-property-declaration → variable-declaration-head­variable-name­type
 
 更多请参阅函数声明。
 
->GRAMMAR OF A PROTOCOL METHOD DECLARATION
-
->protocol-method-declaration → function-head­function-name­generic-parameter-clause­opt­function-signature­
+> 协议方法声明语法  
+> *协议方法声明* → [*函数头*](..\chapter3\05_Declarations.html#function_head) [*函数名*](..\chapter3\05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](..\chapter3\05_Declarations.html#function_signature)  
 
 ###协议构造器声明
 
@@ -690,16 +641,15 @@ protocol-property-declaration → variable-declaration-head­variable-name­type
 
 更多请参阅构造器声明。
 
->GRAMMAR OF A PROTOCOL INITIALIZER DECLARATION
-
->protocol-initializer-declaration → initializer-head­generic-parameter-clause­opt­parameter-clause­
+> 协议构造器声明语法  
+> *协议构造器声明* → [*构造器头(Head)*](..\chapter3\05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause)  
 
 ###协议附属脚本声明
 
 协议声明了一致性类型必须在协议声明的主体里通过引入一个协议附属脚本声明来实现一个附属脚本。协议属性声明
 对附属脚本声明有一个特殊的形式：
 
->subscript (parameters) -> return type { get set }
+    subscript (parameters) -> return type { get set }
 
 附属脚本声明只为和协议一致的类型声明了必需的最小数量的的getter和setter。如果附属脚本申明包含get和set关键字，
 一致的类型也必须有一个getter和setter语句。如果附属脚本声明值包含get关键字，一致的类型必须至少包含一个
@@ -707,9 +657,8 @@ getter语句，可以选择是否包含setter语句。
 
 更多参阅附属脚本声明。
 
->GRAMMAR OF A PROTOCOL SUBSCRIPT DECLARATION
-
->protocol-subscript-declaration → subscript-head­subscript-result­getter-setter-keyword-block­
+> 协议附属脚本声明语法  
+> *协议附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
 
 ###协议相关类型声明
 
@@ -717,9 +666,8 @@ getter语句，可以选择是否包含setter语句。
 语句中的类型参数很相似，但是它们在声明的协议中包含self关键字。在这些语句中，self指代和协议一致的可能的类型。
 获得更多信息和例子，查看相关类型或类型别名声明。
 
->GRAMMAR OF A PROTOCOL ASSOCIATED TYPE DECLARATION
-
->protocol-associated-type-declaration → typealias-head­type-inheritance-clause­opt­typealias-assignment­opt­
+> 协议关联类型声明语法  
+> *协议关联类型声明* → [*类型别名头(Head)*](..\chapter3\05_Declarations.html#typealias_head) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*类型别名赋值*](..\chapter3\05_Declarations.html#typealias_assignment) _可选_  
 
 <a name="initializer_declaration"></a>
 ##构造器声明
@@ -759,11 +707,10 @@ overrride关键字。
 
 查看更多关于不同声明方法的构造器的例子，参阅构造过程一节。
 
->GRAMMAR OF AN INITIALIZER DECLARATION
-
->initializer-declaration → initializer-head­generic-parameter-clause­opt­parameter-clause­initializer-body­
->initializer-head → attributes­opt­convenience­opt­init­
->initializer-body → code-block­
+> 构造器声明语法  
+> *构造器声明* → [*构造器头(Head)*](..\chapter3\05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause) [*构造器主体*](..\chapter3\05_Declarations.html#initializer_body)  
+> *构造器头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **convenience** _可选_ **init**  
+> *构造器主体* → [*代码块*](..\chapter3\05_Declarations.html#code_block)  
 
 <a name="deinitializer_declaration"></a>
 ##析构声明
@@ -781,12 +728,10 @@ overrride关键字。
 
 析构器不会被直接调用。
 
-查看例子和如何在类的声明中使用析构器，参见析构过程一节
-。
+查看例子和如何在类的声明中使用析构器，参见析构过程一节。
 
->GRAMMAR OF A DEINITIALIZER DECLARATION
-
->deinitializer-declaration → attributes­opt­deinit­code-block
+> 析构器声明语法  
+> *析构器声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **deinit** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
 
 <a name="extension_declaration"></a>
 ##扩展声明
@@ -809,23 +754,23 @@ type-inheritance-clause是一个只包含协议列表的扩展声明。
 扩展声明可以包含构造器声明，这意味着，如果你扩展的类型在其他模块中定义，构造器声明必须委托另一个在
 那个模块里声明的构造器来恰当的初始化。
 
->GRAMMAR OF AN EXTENSION DECLARATION
-
->extension-declaration → extension­type-identifier­type-inheritance-clause­opt­extension-body­
->extension-body → {­declarations­opt­}­
+> 扩展(Extension)声明语法  
+> *扩展声明* → **extension** [*类型标识*](..\chapter3\03_Types.html#type_identifier) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*extension-body*](..\chapter3\05_Declarations.html#extension_body)  
+> *extension-body* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="subscript_declaration"></a>
 ##附属脚本声明(translated by 林)
 
 附属脚本用于向特定类型添加附属脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。附属脚本声明使用关键字`subscript`，声明形式如下：
-> subscript (`parameter`) -> (return type){
-    get{
-      `statements`
-    }
-    set(`setter name`){
-      `statements`
-    }
-}
+> subscript (`parameter`) -> (return type){  
+    get{  
+      `statements`  
+    }  
+    set(`setter name`){  
+      `statements`  
+    }  
+}  
+
 附属脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
 
 _变量(parameters)_指定一个或多个用于在相关类型的附属脚本中访问元素的索引（例如，表达式`object[i]`中的`i`）。尽管用于元素访问的索引可以是任意类型的，但是每个变量必须包含一个用于指定每种索引类型的类型标注。_返回类型(return type)_指定被访问的元素的类型。
@@ -840,13 +785,12 @@ setter的名字和封闭的括号是可选的。如果使用了setter名称，�
 
 更多关于附属脚本和附属脚本声明的例子，请参考[Subscripts](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html#//apple_ref/doc/uid/TP40014097-CH16-XID_393)。
 
->GRAMMAR OF A SUBSCRIPT DECLARATION
-
->subscript-declaration → subscript-head­subscript-result­code-block­
->subscript-declaration → subscript-head­subscript-result­getter-setter-block­
->subscript-declaration → subscript-head­subscript-result­getter-setter-keyword-block­
->subscript-head → attributes­opt­subscript­parameter-clause­
->subscript-result → ->­attributes­opt­type­
+> 附属脚本声明语法  
+> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter块*](..\chapter3\05_Declarations.html#getter_setter_block)  
+> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
+> *附属脚本头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **subscript** [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause)  
+> *附属脚本结果(Result)* → **->** [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type) 
 
 <a name="operator_declaration"></a>
 ##运算符声明(translated by 林)
@@ -889,14 +833,13 @@ _中缀_运算符是二元运算符，它可以被置于两个操作数之间，
 
 声明了一个新的运算符以后，需要声明一个跟这个运算符同名的函数来实现这个运算符。如何实现一个新的运算符，请参考[Custom Operators](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48)。
 
->GRAMMAR OF AN OPERATOR DECLARATION
->
->operator-declaration → prefix-operator-declaration­  postfix-operator-declaration­  >infix-operator-declaration­
->prefix-operator-declaration → operator ­prefix­ operator­{­}­
->postfix-operator-declaration → operator ­postfix­ operator­{­}­
->infix-operator-declaration → operator­infix­operator­{­infix-operator-attributes­opt­}­
->infix-operator-attributes → precedence-clause­opt­associativity-clause­opt­
->precedence-clause → precedence­precedence-level­
->precedence-level → Digit 0 through 255
->associativity-clause → associativity­associativity­
->associativity → left­  right­  none
+> 运算符声明语法  
+> *运算符声明* → [*前置运算符声明*](..\chapter3\05_Declarations.html#prefix_operator_declaration) | [*后置运算符声明*](..\chapter3\05_Declarations.html#postfix_operator_declaration) | [*中置运算符声明*](..\chapter3\05_Declarations.html#infix_operator_declaration)  
+> *前置运算符声明* → **运算符** **prefix** [*运算符*](LexicalStructure.html#operator) **{** **}**  
+> *后置运算符声明* → **运算符** **postfix** [*运算符*](LexicalStructure.html#operator) **{** **}**  
+> *中置运算符声明* → **运算符** **infix** [*运算符*](LexicalStructure.html#operator) **{** [*中置运算符属性*](..\chapter3\05_Declarations.html#infix_operator_attributes) _可选_ **}**  
+> *中置运算符属性* → [*优先级子句*](..\chapter3\05_Declarations.html#precedence_clause) _可选_ [*结和性子句*](..\chapter3\05_Declarations.html#associativity_clause) _可选_  
+> *优先级子句* → **precedence** [*优先级水平*](..\chapter3\05_Declarations.html#precedence_level)  
+> *优先级水平* → 数值 0 到 255  
+> *结和性子句* → **associativity** [*结和性*](..\chapter3\05_Declarations.html#associativity)  
+> *结和性* → **left** | **right** | **none**  
