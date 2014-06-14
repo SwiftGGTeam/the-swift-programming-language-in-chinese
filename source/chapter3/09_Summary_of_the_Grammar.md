@@ -687,7 +687,7 @@ _________________
 
 <p></p>
 
-> 类型标注语法  
+> 类型注解语法  
 > *类型注解* → **:** [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)  
 
 <p></p>
