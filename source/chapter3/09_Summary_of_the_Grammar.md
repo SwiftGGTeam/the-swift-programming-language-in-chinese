@@ -95,10 +95,10 @@ _________________
 <p></p>
 
 > 控制传递语句(Control Transfer Statement) 语法  
-> *控制转移语句* → [*break语句*](..\chapter3\10_Statements.html#break_statement)  
-> *控制转移语句* → [*continue语句*](..\chapter3\10_Statements.html#continue_statement)  
-> *控制转移语句* → [*fallthrough语句*](..\chapter3\10_Statements.html#fallthrough_statement)  
-> *控制转移语句* → [*return语句*](..\chapter3\10_Statements.html#return_statement)  
+> *控制传递语句* → [*break语句*](..\chapter3\10_Statements.html#break_statement)  
+> *控制传递语句* → [*continue语句*](..\chapter3\10_Statements.html#continue_statement)  
+> *控制传递语句* → [*fallthrough语句*](..\chapter3\10_Statements.html#fallthrough_statement)  
+> *控制传递语句* → [*return语句*](..\chapter3\10_Statements.html#return_statement)  
 
 <p></p>
 
