@@ -1,7 +1,7 @@
 > 翻译：xiehurricane  
 > 校对：happyming  
 
-# 类型转换（Type Casting）
+# 类型检查（Type Casting）
 -----------------
 
 本页包含内容：
@@ -9,7 +9,7 @@
 - [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
 - [检查类型](#checking_type)
 - [向下转型（Downcasting）](#downcasting)
-- [`Any`和`AnyObject`的类型转换](#type_casting_for_any_and_anyobject)
+- [`Any`和`AnyObject`的类型检查](#type_casting_for_any_and_anyobject)
 
 
 _类型检查_是一种检查类实例的方式，并且或者也是让实例作为它的父类或者子类的一种方式。
@@ -70,7 +70,7 @@ let library = [
 在幕后`library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的，但是，若你迭代它，取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型的。为了让它们作为它们本来的类型工作，你需要检查它们的类型或者向下转换它们的类型到其它类型，就像下面描述的一样。
 
 <a name="checking_type"></a>
-## 检查类型
+## 检查类型（Checking Type）
 
 用类型检查操作符(`is`)来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true` ，否则返回 `false` 。
 
@@ -102,17 +102,17 @@ Song`检查item是否为`Song`类型的实例。在循环结束后，`movieCount
 <a name="downcasting"></a>
 ## 向下转型（Downcasting）
 
-某类型的一个常量或变量可能在幕后实际上属于一个子类。你可以相信，上面就是这种情况。你可以尝试向下转到它的子类型，用类型转换操作符(`as`)
+某类型的一个常量或变量可能在幕后实际上属于一个子类。你可以相信，上面就是这种情况。你可以尝试向下转到它的子类型，用类型检查操作符(`as`)
 
 因为向下转型可能会失败，类型转型操作符带有两种不同形式。可选形式（ optional form） `as?` 返回一个你试图下转成的类型的可选值（optional value）。强制形式 `as` 把试图向下转型和强制解包（force-unwraps）结果作为一个混合动作。
 
-当你不确定向下转型可以成功时，用类型转换的可选形式(`as?`)。可选形式的类型转换总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 `nil` 。这使你能够检查向下转型是否成功。
+当你不确定向下转型可以成功时，用类型检查的可选形式(`as?`)。可选形式的类型检查总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 `nil` 。这使你能够检查向下转型是否成功。
 
-只有你可以确定向下转型一定会成功时，才使用强制形式。当你试图向下转型为一个不正确的类型时，强制形式的类型转换会触发一个运行时错误。
+只有你可以确定向下转型一定会成功时，才使用强制形式。当你试图向下转型为一个不正确的类型时，强制形式的类型检查会触发一个运行时错误。
 
 下面的例子，迭代了`library`里的每一个 `MediaItem` ，并打印出适当的描述。要这样做，`item`需要真正作为`Movie` 或 `Song`的类型来使用。不仅仅是作为 `MediaItem`。为了能够使用`Movie` 或 `Song`的 `director` 或 `artist`属性，这是必要的。
 
-在这个示例中，数组中的每一个`item`可能是 `Movie` 或 `Song`。   事前你不知道每个`item`的真实类型，所以这里使用可选形式的类型转换 （`as?`）去检查循环里的每次下转。
+在这个示例中，数组中的每一个`item`可能是 `Movie` 或 `Song`。   事前你不知道每个`item`的真实类型，所以这里使用可选形式的类型检查 （`as?`）去检查循环里的每次下转。
 
 ```swift
 for item in library {
@@ -145,7 +145,7 @@ for item in library {
 转换没有真的改变实例或它的值。潜在的根本的实例保持不变；只是简单地把它作为它被转换成的类来使用。
 
 <a name="type_casting_for_any_and_anyobject"></a>
-## `Any`和`AnyObject`的类型转换
+## `Any`和`AnyObject`的类型检查
 
 Swift为不确定类型提供了两种特殊类型别名：
 
@@ -160,7 +160,7 @@ Swift为不确定类型提供了两种特殊类型别名：
 当需要在工作中使用 Cocoa
 APIs，它一般接收一个`AnyObject[]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。
 
-在这些情况下，你可以使用强制形式的类型转换(`as`)来下转在数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解析（optional unwrapping）。
+在这些情况下，你可以使用强制形式的类型检查(`as`)来下转在数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解析（optional unwrapping）。
 
 下面的示例定义了一个 `AnyObject[]` 类型的数组并填入三个`Movie`类型的实例：
 
@@ -250,4 +250,4 @@ for thing in things {
 
 
 > 注意：  
-在一个switch语句的case中使用强制形式的类型转换操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 switch case 语句的内容中这种检查总是安全的。
+在一个switch语句的case中使用强制形式的类型检查操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 switch case 语句的内容中这种检查总是安全的。
