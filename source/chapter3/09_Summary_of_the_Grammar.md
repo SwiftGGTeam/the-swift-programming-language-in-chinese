@@ -734,8 +734,8 @@ _________________
 
 <p></p>
 
-> 元型(Metatype)类型语法  
-> *元型类型* → [*类型*](..\chapter3\03_Types.html#type) **.** **Type** | [*类型*](..\chapter3\03_Types.html#type) **.** **Protocol**  
+> 元(Metatype)类型语法  
+> *元类型* → [*类型*](..\chapter3\03_Types.html#type) **.** **Type** | [*类型*](..\chapter3\03_Types.html#type) **.** **Protocol**  
 
 <p></p>
 
