@@ -21,14 +21,14 @@
 - [构造器声明](#initializer_declaration)
 - [析构声明](#deinitializer_declaration)
 - [扩展声明](#extension_declaration)
-- [附属脚本声明](#subscript_declaration)
+- [下标脚本声明](#subscript_declaration)
 - [运算符声明](#operator_declaration)
 
 一条声明可以在你的程序里引入新的名字和构造。举例来说，你可以使用声明来引入函数和方法，变量和常量，或者来定义
 新的命名好的枚举，结构，类和协议类型。你也可以使用一条声明来延长一个已经存在的命名好的类型的行为。或者在你的
 程序里引入在其他地方声明的符号。
 
-在swift中，大多数声明在某种意义上讲也是执行或同事声明它们的初始化定义。这意味着，因为协议和他们的成员不匹配，
+在swift中，大多数声明在某种意义上讲也是执行或同事声明它们的初始化定义。这意味着，因为协议和它们的成员不匹配，
 大多数协议成员需要单独的声明。为了方便起见，也因为这些区别在swift里不是很重要，声明语句同时包含了声明和定义。
 
 > 声明语法  
@@ -54,7 +54,7 @@
 ##模块范围
 
 模块范围定义了对模块中其他源文件可见的代码。（注：待改进）在swift的源文件中，最高级别的代码由零个或多个语句，
-声明和表达组成。变量，常量和其他的声明语句在一个源文件的最顶级被声明，使得他们对同一模块中的每个源文件都是可见的。
+声明和表达组成。变量，常量和其他的声明语句在一个源文件的最顶级被声明，使得它们对同一模块中的每个源文件都是可见的。
 
 > 顶级(Top Level) 声明语法  
 > *顶级声明* → [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements) _可选_  
@@ -102,7 +102,7 @@
 
 当常量的值被给定后，常量就将常量名称和表达式初始值不变的结合在了一起，而且不能更改。
 这意味着如果常量以类的形式被初始化，类本身的内容是可以改变的，但是常量和类之间的结合关系是不能改变的。
-当一个常量被声明为全局变量，它必须被给定一个初始值。当一个常量在类或者结构体中被声明时，他被认为是一个常量
+当一个常量被声明为全局变量，它必须被给定一个初始值。当一个常量在类或者结构体中被声明时，它被认为是一个常量
 属性。常量并不是可计算的属性，因此不包含getters和setters。（译者注：getters和setters不知道怎么翻译，待改进）
 
 如果常量名是一个元祖形式，元祖中的每一项初始化表达式中都要有对应的值
@@ -116,7 +116,7 @@
     println("The second number is \(secondNumber).")
     // prints "The second number is 42."
 
-类型注释（:type）在常量声明中是一个可选项，它可以用来描述在类型接口（type inference）中找到的类型。
+类型注释（:type）在常量声明中是一个可选项，它可以用来描述在类型推断（type inference）中找到的类型。
 
 声明一个静态常量要使用关键字static。静态属性在类型属性（type propetries）中有介绍。
 
@@ -147,7 +147,7 @@
     var variable name: type = expression
 
 你可以在全局，函数内，或者在类和结构体的声明(context)中使用这种形式来声明一个变量。当变量以这种形式
-在全局或者一个函数内被声明时，它代表一个存储型变量。当他在类或者结构体中被声明时，他代表一个存储型变量属性。
+在全局或者一个函数内被声明时，它代表一个存储型变量。当它在类或者结构体中被声明时，它代表一个存储型变量属性。
 
 构造器表达式可以被
 
@@ -169,8 +169,8 @@
     }
 
 你可以在全局，函数体内或者类，结构体，枚举，扩展声明的上下文中使用这种形式的声明。
-当变量以这种形式在全局或者一个函数内被声明时，它代表一个计算型变量。当他在类，结构体，枚举，扩展声明的上下文
-中中被声明时，他代表一个计算型变量属性。
+当变量以这种形式在全局或者一个函数内被声明时，它代表一个计算型变量。当它在类，结构体，枚举，扩展声明的上下文
+中中被声明时，它代表一个计算型变量属性。
 
 getter用来读取变量值，setter用来写入变量值。setter子句是可选择的，只有getter是必需的，你可以将这些语句
 都省略，只是简单的直接返回请求值，正如在只读计算属性(read-only computed properites)中描述的那样。
@@ -198,7 +198,7 @@ setter的初始名为newValue，正如在seter声明速记(shorthand setter decl
 
 你可以在全局，函数体内或者类，结构体，枚举，扩展声明的上下文中使用这种形式的声明。
 当变量以这种形式在全局或者一个函数内被声明时，监视器代表一个存储型变量监视器；
-当他在类，结构体，枚举，扩展声明的上下文中被声明时，监视器代表属性监视器。
+当它在类，结构体，枚举，扩展声明的上下文中被声明时，监视器代表属性监视器。
 
 你可以为适合的监视器添加任何存储型属性。你也可以通过重写子类属性的方式为适合的监视器添加任何继承的属性
 (无论是存储型还是计算型的)，参见重写属性监视器(overriding properyt observers)。
@@ -207,7 +207,7 @@ setter的初始名为newValue，正如在seter声明速记(shorthand setter decl
 所有包含监视器的变量声明都必须有类型注释(type annotation)。
 
 当变量或属性的值被改变时，willset和didset监视器提供了一个监视方法（适当的回应）。
-监视器不会在变量或属性第一次初始化时不会被运行，他们只有在值被外部初始化语句改变时才会被运行。
+监视器不会在变量或属性第一次初始化时不会被运行，它们只有在值被外部初始化语句改变时才会被运行。
 
 willset监视器只有在变量或属性值被改变之前运行。新的值作为一个常量经过过willset监视器，因此不可以在
 willset语句中改变它。didset监视器在变量或属性值被改变后立即运行。和willset监视器相反，为了以防止你仍然
@@ -570,7 +570,7 @@ protocol protocol name: inherited protocols {
 }
 ```
 
-协议的主体包含零或多个协议成员声明，这些成员描述了任何采用该协议必须满足的一致性要求。特别的，一个协议可以声明必须实现某些属性、方法、初始化程序及附属脚本的一致性类型。协议也可以声明专用种类的类型别名，叫做关联类型，它可以指定协议的不同声明之间的关系。协议成员声明会在下面的详情里进行讨论。
+协议的主体包含零或多个协议成员声明，这些成员描述了任何采用该协议必须满足的一致性要求。特别的，一个协议可以声明必须实现某些属性、方法、初始化程序及下标脚本的一致性类型。协议也可以声明专用种类的类型别名，叫做关联类型，它可以指定协议的不同声明之间的关系。协议成员声明会在下面的详情里进行讨论。
 
 协议类型可以从很多其它协议那继承。当一个协议类型从其它协议那继承的时候，来自其它协议的所有要求就集合了，而且从当前协议继承的任何类型必须符合所有的这些要求。对于如何使用协议继承的例子，查看[协议继承](../chapter2/21_Protocols.html#protocol_inheritance)
 
@@ -580,7 +580,7 @@ protocol protocol name: inherited protocols {
 
 你可以通过采用在类型的扩展声明中的协议来为之前声明的类型添加协议一致性。在扩展中你必须实现所有采用协议的要求。如果该类型已经实现了所有的要求，你可以让这个扩展声明的主题留空。
 
-默认地，符合某一个协议的类型必须实现所有声明在协议中的属性、方法和附属脚本。也就是说，你可以用`optional`属性标注这些协议成员声明以指定它们的一致性类型实现是可选的。`optional`属性仅仅可以用于使用`objc`属性标记过的协议。这样的结果就是仅仅类类型可以采用并符合包含可选成员要求的协议。更多关于如何使用`optional`属性的信息及如何访问可选协议成员的指导——比如当你不能肯定是否一致性的类型实现了它们——参见[可选协议要求](../chapter2/21_Protocols.html#optional_protocol_requirements)
+默认地，符合某一个协议的类型必须实现所有声明在协议中的属性、方法和下标脚本。也就是说，你可以用`optional`属性标注这些协议成员声明以指定它们的一致性类型实现是可选的。`optional`属性仅仅可以用于使用`objc`属性标记过的协议。这样的结果就是仅仅类类型可以采用并符合包含可选成员要求的协议。更多关于如何使用`optional`属性的信息及如何访问可选协议成员的指导——比如当你不能肯定是否一致性的类型实现了它们——参见[可选协议要求](../chapter2/21_Protocols.html#optional_protocol_requirements)
 
 为了限制协议的采用仅仅针对类类型，需要使用`class_protocol`属性标记整个协议声明。任意继承自标记有`class_protocol`属性协议的协议都可以智能地仅能被类类型采用。
 
@@ -622,7 +622,7 @@ protocol protocol name: inherited protocols {
 ###协议方法声明
 
 协议声明了一致性类型必须在协议声明的主体里通过引入一个协议方法声明来实现一个方法.
-协议方法声明和函数方法声明有着相同的形式，包含如下两条规则：他们不包括函数体，你不能在类的声明内为他们的
+协议方法声明和函数方法声明有着相同的形式，包含如下两条规则：它们不包括函数体，你不能在类的声明内为它们的
 参数提供初始值.举例来说，符合的类型执行协议必需的方法。参见必需方法一节。
 
 使用关键字class可以在协议声明中声明一个类或必需的静态方法。执行这些方法的类也用关键字class声明。
@@ -644,18 +644,18 @@ protocol protocol name: inherited protocols {
 > 协议构造器声明语法  
 > *协议构造器声明* → [*构造器头(Head)*](..\chapter3\05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause)  
 
-###协议附属脚本声明
+###协议下标脚本声明
 
-协议声明了一致性类型必须在协议声明的主体里通过引入一个协议附属脚本声明来实现一个附属脚本。协议属性声明
-对附属脚本声明有一个特殊的形式：
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议下标脚本声明来实现一个下标脚本。协议属性声明
+对下标脚本声明有一个特殊的形式：
 
     subscript (parameters) -> return type { get set }
 
-附属脚本声明只为和协议一致的类型声明了必需的最小数量的的getter和setter。如果附属脚本申明包含get和set关键字，
-一致的类型也必须有一个getter和setter语句。如果附属脚本声明值包含get关键字，一致的类型必须至少包含一个
+下标脚本声明只为和协议一致的类型声明了必需的最小数量的的getter和setter。如果下标脚本申明包含get和set关键字，
+一致的类型也必须有一个getter和setter语句。如果下标脚本声明值包含get关键字，一致的类型必须至少包含一个
 getter语句，可以选择是否包含setter语句。
 
-更多参阅附属脚本声明。
+更多参阅下标脚本声明。
 
 > 协议附属脚本声明语法  
 > *协议附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
@@ -701,8 +701,8 @@ getter语句，可以选择是否包含setter语句。
 以一个将所有类属性完全初始化的指定构造器的调用作为结束。便利构造器不能调用超类的构造器。
 
 你可以使用requierd关键字，将便利构造器和指定构造器标记为每个子类的构造器都必须拥有的。因为指定构造器
-不被子类继承，他们必须被立即执行。当子类直接执行所有超类的指定构造器(或使用便利构造器重写指定构造器)时，
-必需的便利构造器可以被隐式的执行，亦可以被继承。不像方法，附属脚本那样，你不需要为这些重写的构造器标注
+不被子类继承，它们必须被立即执行。当子类直接执行所有超类的指定构造器(或使用便利构造器重写指定构造器)时，
+必需的便利构造器可以被隐式的执行，亦可以被继承。不像方法，下标脚本那样，你不需要为这些重写的构造器标注
 overrride关键字。
 
 查看更多关于不同声明方法的构造器的例子，参阅构造过程一节。
@@ -743,7 +743,7 @@ overrride关键字。
     }
 
 一个扩展声明体包括零个或多个声明。这些声明可以包括计算型属性，计算型静态属性，实例方法，静态和类方法，构造器，
-附属脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构器，协议声明，存储型属性，属性监测器或其他
+下标脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构器，协议声明，存储型属性，属性监测器或其他
 的扩展属性。详细讨论和查看包含多种扩展声明的实例，参见扩展一节。
 
 扩展声明可以向现存的类，结构体，枚举内添加一致的协议。扩展声明不能向一个类中添加继承的类，因此
@@ -759,8 +759,9 @@ type-inheritance-clause是一个只包含协议列表的扩展声明。
 > *extension-body* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="subscript_declaration"></a>
-##附属脚本声明(translated by 林)
+##下标脚本声明(translated by 林)
 
+<<<<<<< HEAD
 附属脚本用于向特定类型添加附属脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。附属脚本声明使用关键字`subscript`，声明形式如下：
 > subscript (`parameter`) -> (return type){  
     get{  
@@ -772,18 +773,30 @@ type-inheritance-clause是一个只包含协议列表的扩展声明。
 }  
 
 附属脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
+=======
+下标脚本用于向特定类型添加下标脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。下标脚本声明使用关键字`subscript`，声明形式如下：
+> subscript (`parameter`) -> (return type){
+    get{
+      `statements`
+    }
+    set(`setter name`){
+      `statements`
+    }
+}
+下标脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
+>>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
-_变量(parameters)_指定一个或多个用于在相关类型的附属脚本中访问元素的索引（例如，表达式`object[i]`中的`i`）。尽管用于元素访问的索引可以是任意类型的，但是每个变量必须包含一个用于指定每种索引类型的类型标注。_返回类型(return type)_指定被访问的元素的类型。
+_变量(parameters)_指定一个或多个用于在相关类型的下标脚本中访问元素的索引（例如，表达式`object[i]`中的`i`）。尽管用于元素访问的索引可以是任意类型的，但是每个变量必须包含一个用于指定每种索引类型的类型标注。_返回类型(return type)_指定被访问的元素的类型。
 
-和计算性属性一样，附属脚本声明支持对访问元素的读写操作。getter用于读取值，setter用于写入值。setter子句是可选的，当仅需要一个getter子句时，可以将二者都忽略且直接返回请求的值即可。也就是说，如果使用了setter子句，就必须使用getter子句。
+和计算性属性一样，下标脚本声明支持对访问元素的读写操作。getter用于读取值，setter用于写入值。setter子句是可选的，当仅需要一个getter子句时，可以将二者都忽略且直接返回请求的值即可。也就是说，如果使用了setter子句，就必须使用getter子句。
 
 setter的名字和封闭的括号是可选的。如果使用了setter名称，它会被当做传给setter的变量的名称。如果不使用setter名称，那么传给setter的变量的名称默认是`value`。setter名称的类型必须与_返回类型(return type)_的类型相同。
 
-可以在附属脚本声明的类型中，可以重载附属脚本，只要_变量(parameters)_或_返回类型(return type)_与先前的不同即可。此时，必须使用`override`关键字声明那个被覆盖的附属脚本。(注：好乱啊！到底是重载还是覆盖？！)
+可以在下标脚本声明的类型中，可以重载下标脚本，只要_变量(parameters)_或_返回类型(return type)_与先前的不同即可。此时，必须使用`override`关键字声明那个被覆盖的下标脚本。(注：好乱啊！到底是重载还是覆盖？！)
 
-同样可以在协议声明的上下文中声明附属脚本，[Protocol Subscript Declaration](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_619)中有所描述。
+同样可以在协议声明的上下文中声明下标脚本，[Protocol Subscript Declaration](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_619)中有所描述。
 
-更多关于附属脚本和附属脚本声明的例子，请参考[Subscripts](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html#//apple_ref/doc/uid/TP40014097-CH16-XID_393)。
+更多关于下标脚本和下标脚本声明的例子，请参考[Subscripts](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html#//apple_ref/doc/uid/TP40014097-CH16-XID_393)。
 
 > 附属脚本声明语法  
 > *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*代码块*](..\chapter3\05_Declarations.html#code_block)  

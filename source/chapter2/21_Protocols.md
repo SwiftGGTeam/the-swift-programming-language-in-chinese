@@ -525,7 +525,7 @@
 		init(legs: Int) { self.legs = legs }
 	}
 
-`Circle,Country,Animal`并没有一个相同的基类，所以采用`AnyObject`类型的数组来装载在他们的实例，如下所示：
+`Circle,Country,Animal`并没有一个相同的基类，所以采用`AnyObject`类型的数组来装载在它们的实例，如下所示：
 
 	let objects: AnyObject[] = [
 		Circle(radius: 2.0),

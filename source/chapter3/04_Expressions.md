@@ -607,17 +607,17 @@ someInstance.dynamicType.printClassName（）
 >
 > *dynamic-type-expression* → *postfix-expression*­.­dynamicType­
 
-### 附属脚本表达式（Subscript Expression）
+### 下标脚本表达式（Subscript Expression）
 
-附属脚本表达式提供了通过附属脚本访问getter/setter 的方法。它的形式是：
+下标脚本表达式提供了通过下标脚本访问getter/setter 的方法。它的形式是：
 
 `expression`[`index expressions`]
 
-可以通过附属脚本表达式通过getter获取某个值，或者通过setter赋予某个值.
+可以通过下标脚本表达式通过getter获取某个值，或者通过setter赋予某个值.
 
 关于subscript的声明，请参见： Protocol Subscript Declaration.
 
-> 附属脚本表达式的语法
+> 下标脚本表达式的语法
 >
 > *subscript-expression* → *postfix-expression*­[­*expression-list*­]­
 

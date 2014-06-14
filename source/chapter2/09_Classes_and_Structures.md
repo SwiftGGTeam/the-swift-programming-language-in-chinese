@@ -22,14 +22,23 @@
 ###类和结构体对比
 Swift 中类和结构体有很多共同点。共同处在于：
 
+<<<<<<< HEAD
 * 定义属性用于储存值
 * 定义方法用于提供功能
 * 定义附属脚本用于访问值
 * 定义构造器用于生成初始化值
 * 通过扩展以增加默认实现的功能
 * 符合协议以对某类提供标准功能
+=======
+* 	定义属性用于储存值
+* 	定义方法用于提供功能
+* 	定义下标脚本用于访问值
+* 	定义构造器用于生成初始化值
+* 	通过扩展以增加默认实现的功能
+* 	符合协议以对某类提供标准功能
+>>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
-更多信息请参见 [属性](10_Properties.html)，[方法](11_Methods.html)，[附属脚本](12_Subscripts.html)，[初始过程](14_Initialization.html)，[扩展](20_Extensions.html)，和[协议](21_Protocols.html)。
+更多信息请参见 [属性](10_Properties.html)，[方法](11_Methods.html)，[下标脚本](12_Subscripts.html)，[初始过程](14_Initialization.html)，[扩展](20_Extensions.html)，和[协议](21_Protocols.html)。
 
 与结构体相比，类还有如下的附加功能：
 

@@ -25,7 +25,7 @@
 
 可以在定义存储属性的时候指定默认值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[默认属性值](../chapter2/14_Initialization.html#default_property_values)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[在初始化阶段修改常量存储属性](../chapter2/14_Initialization.html#modifying_constant_properties_during_initialization)一节。
 
-下面的例子定义了一个名为`FixedLengthRange`的结构体，他描述了一个在创建后无法修改值域宽度的区间：
+下面的例子定义了一个名为`FixedLengthRange`的结构体，它描述了一个在创建后无法修改值域宽度的区间：
 
 ```swift
 struct FixedLengthRange {
@@ -193,8 +193,14 @@ struct AlternativeRect {
 
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
+<<<<<<< HEAD
 > 注意：  
 > 必须使用`var`关键字定义计算属性，包括只读计算属性，因为他们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。  
+=======
+> 注意：
+>
+> 必须使用`var`关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
+>>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
 只读计算属性的声明可以去掉`get`关键字和花括号：
 
@@ -231,8 +237,14 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 类似地，`didSet`监视器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
+<<<<<<< HEAD
 > 注意：  
 > `willSet`和`didSet`监视器在属性初始化过程中不会被调用，他们只会当属性的值在初始化之外的地方被设置时被调用。  
+=======
+> 注意：
+>
+> `willSet`和`didSet`监视器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
+>>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
 这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数，可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
