@@ -12,7 +12,7 @@
 -   [函数和闭包（Functions and Closures）](#functions_and_closures)
 -   [对象和类（Objects and Classes）](#objects_and_classes)
 -   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
--   [接口和扩展（Protocols and Extensions）](#protocols_and_extensions)
+-   [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
 -   [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
@@ -623,9 +623,9 @@
 注意如何从`ServerResponse`中提取日升和日落时间。
 
 <a name="protocols_and_extensions"></a>
-## 接口和扩展
+## 协议和扩展
 
-使用`protocol`来声明一个接口。
+使用`protocol`来声明一个协议。
 
 ```swift
     protocol ExampleProtocol {
@@ -634,7 +634,7 @@
     }
 ```
 
-类、枚举和结构体都可以实现接口。
+类、枚举和结构体都可以实现协议。
 
 ```swift
     class SimpleClass: ExampleProtocol {
@@ -661,7 +661,7 @@
 
 > 练习：
 >
-> 写一个实现这个接口的枚举。
+> 写一个实现这个协议的枚举。
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
 
@@ -683,7 +683,7 @@
 >
 > 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
-你可以像使用其他命名类型一样使用接口名——例如，创建一个有不同类型但是都实现一个接口的对象集合。当你处理类型是接口的值时，接口外定义的方法不可用。
+你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
 
 ```swift
     let protocolValue: ExampleProtocol = a
@@ -691,7 +691,7 @@
     // protocolValue.anotherProperty  // Uncomment to see the error
 ```
 
-即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的接口之外实现的方法或者属性。
+即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
 
 <a name="generics"></a>
 ## 泛型
@@ -741,4 +741,4 @@
 >
 > 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-简单起见，你可以忽略`where`，只在冒号后面写接口或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
+简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
