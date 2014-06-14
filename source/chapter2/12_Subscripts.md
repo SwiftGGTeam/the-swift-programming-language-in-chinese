@@ -1,6 +1,5 @@
-> 翻译：siemenliu
-
-> 校对：zq54zquan
+> 翻译：siemenliu  
+> 校对：zq54zquan  
 
 
 # 附属脚本（Subscripts）
@@ -16,22 +15,22 @@
 
 对于同一个目标可以定义多个附属脚本，通过索引值类型的不同来进行重载，而且索引值的个数可以是多个。
 
-> 译者：这里附属脚本重载在本小节中原文并没有任何演示
+> 译者：这里附属脚本重载在本小节中原文并没有任何演示  
 
 <a name="subscript_syntax"></a>
 ## 附属脚本语法
 
 附属脚本允许你通过在实例后面的方括号中传入一个或者多个的索引值来对实例进行访问和赋值。语法类似于实例方法和计算型属性的混合。与定义实例方法类似，定义附属脚本使用`subscript`关键字，显式声明入参（一个或多个）和返回类型。与实例方法不同的是附属脚本可以设定为读写或只读。这种方式又有点像计算型属性的getter和setter：
 
-```
+```swift
 subscript(index: Int) -> Int {
-	get {
-		// 返回与入参匹配的Int类型的值
-	}
+    get {
+      // 返回与入参匹配的Int类型的值
+    }
 
-	set(newValue) {
-		// 执行赋值操作
-	}
+    set(newValue) {
+      // 执行赋值操作
+    }
 }
 ```
 
@@ -39,20 +38,20 @@ subscript(index: Int) -> Int {
 
 与只读计算型属性一样，可以直接将原本应该写在`get`代码块中的代码写在`subscript`中：
 
-```
+```swift
 subscript(index: Int) -> Int {
-	// 返回与入参匹配的Int类型的值
+    // 返回与入参匹配的Int类型的值
 }
 ```
 
 下面代码演示了一个在`TimesTable`结构体中使用只读附属脚本的用法，该结构体用来展示传入整数的*n*倍。
 
-```
+```swift
 struct TimesTable {
-	let multiplier: Int
-	subscript(index: Int) -> Int {
-		return multiplier * index
-	}
+    let multiplier: Int
+    subscript(index: Int) -> Int {
+      return multiplier * index
+    }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 println("3的6倍是\(threeTimesTable[6])")
@@ -63,9 +62,8 @@ println("3的6倍是\(threeTimesTable[6])")
 
 你可以通过附属脚本来得到结果，比如`threeTimesTable[6]`。这条语句访问了`threeTimesTable`的第六个元素，返回`6`的`3`倍即`18`。
 
->注意：
->
-> `TimesTable`例子是基于一个固定的数学公式。它并不适合开放写权限来对`threeTimesTable[someIndex]`进行赋值操作，这也是为什么附属脚本只定义为只读的原因。
+>注意：  
+> `TimesTable`例子是基于一个固定的数学公式。它并不适合开放写权限来对`threeTimesTable[someIndex]`进行赋值操作，这也是为什么附属脚本只定义为只读的原因。  
 
 
 <a name="subscript_usage"></a>
@@ -75,7 +73,7 @@ println("3的6倍是\(threeTimesTable[6])")
 
 例如，Swift 的字典（Dictionary）实现了通过附属脚本来对其实例中存放的值进行存取操作。在附属脚本中使用和字典索引相同类型的值，并且把一个字典值类型的值赋值给这个附属脚本来为字典设值：
 
-```
+```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
@@ -84,9 +82,8 @@ numberOfLegs["bird"] = 2
 
 更多关于字典（Dictionary）附属脚本的信息请参考[读取和修改字典](../chapter2/04_Collection_Types.html)
 
-> 注意：
->
-> Swift 中字典的附属脚本实现中，在`get`部分返回值是`Int?`，上例中的`numberOfLegs`字典通过附属脚本返回的是一个`Int?`或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是`nil`；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为`nil`即可。
+> 注意：  
+> Swift 中字典的附属脚本实现中，在`get`部分返回值是`Int?`，上例中的`numberOfLegs`字典通过附属脚本返回的是一个`Int?`或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是`nil`；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为`nil`即可。  
 
 <a name="subscript_options"></a>
 ## 附属脚本选项
@@ -97,16 +94,16 @@ numberOfLegs["bird"] = 2
 
 一个附属脚本入参是最常见的情况，但只要有合适的场景也可以定义多个附属脚本入参。如下例定义了一个`Matrix`结构体，将呈现一个`Double`类型的二维矩阵。`Matrix`结构体的附属脚本需要两个整型参数：
 
-```
+```swift
 struct Matrix {
-	let rows: Int, columns: Int
-	var grid: Double[]
-	init(rows: Int, columns: Int) {
-		self.rows = rows
-		self.columns = columns
-		grid = Array(count: rows * columns, repeatedValue: 0.0)
-	}
-	func indexIsValidForRow(row: Int, column: Int) -> Bool {
+    let rows: Int, columns: Int
+    var grid: Double[]
+    init(rows: Int, columns: Int) {
+      self.rows = rows
+      self.columns = columns
+      grid = Array(count: rows * columns, repeatedValue: 0.0)
+    }
+    func indexIsValidForRow(row: Int, column: Int) -> Bool {
         return row >= 0 && row < rows && column >= 0 && column < columns
     }
     subscript(row: Int, column: Int) -> Double {
@@ -118,7 +115,7 @@ struct Matrix {
             assert(indexIsValidForRow(row, column: column), "Index out of range")
             grid[(row * columns) + columns] = newValue
         }
-	}
+    }
 }
 ```
 
@@ -126,38 +123,38 @@ struct Matrix {
 
 你可以通过传入合适的`row`和`column`的数量来构造一个新的`Matrix`实例：
 
-```
+```swift
 var matrix = Matrix(rows: 2, columns: 2)
 ```
 
 上例中创建了一个新的两行两列的`Matrix`实例。在阅读顺序从左上到右下的`Matrix`实例中的数组实例`grid`是矩阵二维数组的扁平化存储：
 
-```
+```swift
 // 示意图
 grid = [0.0, 0.0, 0.0, 0.0]
 
-		col0 	col1
-row0   [0.0, 	0.0,
-row1	0.0, 	0.0]
+      col0  col1
+row0   [0.0,     0.0,
+row1    0.0,  0.0]
 ```
 
 将值赋给带有`row`和`column`附属脚本的`matrix`实例表达式可以完成赋值操作，附属脚本入参使用逗号分割
 
-```
+```swift
 matrix[0, 1] = 1.5
 matrix[1, 0] = 3.2
 ```
 
 上面两条语句分别`让matrix`的右上值为 1.5，坐下值为 3.2：
 
-```
+```swift
 [0.0, 1.5,
  3.2, 0.0]
 ```
 
 `Matrix`附属脚本的`getter`和`setter`中同时调用了附属脚本入参的`row`和`column`是否有效的判断。为了方便进行断言，`Matrix`包含了一个名为`indexIsValid`的成员方法，用来确认入参的`row`或`column`值是否会造成数组越界：
 
-```
+```swift
 func indexIsValidForRow(row: Int, column: Int) -> Bool {
     return row >= 0 && row < rows && column >= 0 && column < columns
 }
@@ -165,8 +162,7 @@ func indexIsValidForRow(row: Int, column: Int) -> Bool {
 
 断言在附属脚本越界时触发：
 
-```
+```swift
 let someValue = matrix[2, 2]
 // 断言将会触发，因为 [2, 2] 已经超过了matrix的最大长度
 ```
-
