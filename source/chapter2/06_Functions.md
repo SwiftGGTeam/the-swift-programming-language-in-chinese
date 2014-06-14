@@ -466,7 +466,7 @@ println("Result: \(mathFunction(2, 3))")
 // prints "Result: 6"
 ```
 
-就像其他类型一样，当赋值一个函数给常量或变量时，你可以让 Swift 来推测其函数类型：
+就像其他类型一样，当赋值一个函数给常量或变量时，你可以让 Swift 来推断其函数类型：
 
 ```swift
 let anotherMathFunction = addTwoInts

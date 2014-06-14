@@ -24,7 +24,7 @@ Swift 的可选链和 Objective-C 中的消息为空有些相像，但是 Swift 
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
 ## 可选链可替代强制解析
 
-通过在想调用的属性、方法、或子脚本的可选值（`optional value`）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。
+通过在想调用的属性、方法、或子脚本的可选值（`optional value`）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。它们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。
 
 为了反映可选链可以调用空（`nil`），不论你调用的属性、方法、子脚本等返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来检测你的可选链是否调用成功，有返回值即成功，返回nil则失败。
 
@@ -232,7 +232,7 @@ Swift 的可选链和 Objective-C 中的消息为空有些相像，但是 Swift 
 如果你试图通过可选链获得`Int`值，不论使用了多少层链接返回的总是`Int?`。
 相似的，如果你试图通过可选链获得`Int?`值，不论使用了多少层链接返回的总是`Int?`。
 
-下面的例子试图获取`john`的`residence`属性里的`address`的`street`属性。这里使用了两层可选链来联系`residence`和`address`属性，他们两者都是可选类型：
+下面的例子试图获取`john`的`residence`属性里的`address`的`street`属性。这里使用了两层可选链来联系`residence`和`address`属性，它们两者都是可选类型：
 
 	if let johnsStreet = john.residence?.address?.street {
 	    println("John's street name is \(johnsStreet).")

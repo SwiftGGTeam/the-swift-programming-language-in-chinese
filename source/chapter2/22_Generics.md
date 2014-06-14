@@ -155,7 +155,7 @@
 	    }
 	}
 
-这个结构体在栈中使用一个`Array`性质的`items`存储值。`Stack`提供两个方法：`push`和`pop`，从栈中压进一个值和移除一个值。这些方法标记为可变的，因为他们需要修改（或*转换*）结构体的`items`数组。
+这个结构体在栈中使用一个`Array`性质的`items`存储值。`Stack`提供两个方法：`push`和`pop`，从栈中压进一个值和移除一个值。这些方法标记为可变的，因为它们需要修改（或*转换*）结构体的`items`数组。
 
 上面所展现的`IntStack`类型只能用于`Int`值，不过，其对于定义一个泛型`Stack`类（可以处理*任何*类型值的栈）是非常有用的。
 
@@ -213,7 +213,7 @@
 
 这个需求强制加上一个类型约束作用于`Dictionary`的键上，当然其键类型必须遵循`Hashable`协议（Swift 标准库中定义的一个特定协议）。所有的 Swift 基本类型（如`String`，`Int`， `Double`和 `Bool`）默认都是可哈希。
 
-当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如`可哈希`具有的类型特征是根据他们概念特征来界定的，而不是他们的直接类型特征。
+当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如`可哈希`具有的类型特征是根据它们概念特征来界定的，而不是它们的直接类型特征。
 
 ### 类型约束语法
 
@@ -391,7 +391,7 @@ Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标�
 
 下面的列子定义了一个名为`allItemsMatch`的泛型函数，用来检查是否两个`Container`单例包含具有相同顺序的相同元素。如果匹配到所有的元素，那么返回一个为`true`的`Boolean`值，反之，则相反。
 
-这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但他们确实拥有相同类型的元素。这个需求通过一个类型约束和`where`语句结合来表示：
+这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和`where`语句结合来表示：
 
 	func allItemsMatch<
 	    C1: Container, C2: Container
@@ -434,11 +434,11 @@ Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标�
 `someContainer`和`anotherContainer`包含相同的元素类型。
 `someContainer`中的元素可以通过不等于操作(`!=`)来检查它们是否彼此不同。
 
-第三个和第四个要求结合起来的意思是`anotherContainer`中的元素也可以通过 `!=` 操作来检查，因为他们在`someContainer`中元素确实是相同的类型。
+第三个和第四个要求结合起来的意思是`anotherContainer`中的元素也可以通过 `!=` 操作来检查，因为它们在`someContainer`中元素确实是相同的类型。
 
-这些要求能够使`allItemsMatch`函数比较两个容器，即便他们是不同的容器类型。
+这些要求能够使`allItemsMatch`函数比较两个容器，即便它们是不同的容器类型。
 
-`allItemsMatch`首先检查两个容器是否拥有同样数目的items，如果他们的元素数目不同，没有办法进行匹配，函数就会`false`。
+`allItemsMatch`首先检查两个容器是否拥有同样数目的items，如果它们的元素数目不同，没有办法进行匹配，函数就会`false`。
 
 检查完之后，函数通过`for-in`循环和半闭区间操作（..）来迭代`someContainer`中的所有元素。对于每个元素，函数检查是否`someContainer`中的元素不等于对应的`anotherContainer`中的元素，如果这两个元素不等，则这两个容器不匹配，返回`false`。
 
@@ -460,7 +460,7 @@ Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标�
 	}
 	// 输出 "All items match."
 
- 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但他们都遵循`Container`协议，而且他们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
+ 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
 
   [1]: ../chapter2/06_Functions.html
   [2]: https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png

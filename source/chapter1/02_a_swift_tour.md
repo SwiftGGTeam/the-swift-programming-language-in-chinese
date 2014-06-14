@@ -7,13 +7,13 @@
 
 本页内容包括：
 
-- [简单值（Simple Values）](#simple_values)
-- [控制流（Control Flow）](#control_flow)
-- [函数和闭包（Functions and Closures）](#functions_and_closures)
-- [对象和类（Objects and Classes）](#objects_and_classes)
-- [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
-- [接口和扩展（Protocols and Extensions）](#protocols_and_extensions)
-- [泛型（Generics）](#generics)
+-   [简单值（Simple Values）](#simple_values)
+-   [控制流（Control Flow）](#control_flow)
+-   [函数和闭包（Functions and Closures）](#functions_and_closures)
+-   [对象和类（Objects and Classes）](#objects_and_classes)
+-   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
+-   [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
+-   [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
@@ -31,7 +31,7 @@ println("Hello, world")
 <a name="simple_values"></a>
 ## 简单值
 
-使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
+使用`let`来声明常量，使用`var`来声明变量。一个常量的值，在编译的时候，并不需要有明确的值，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
 ```swift
 var myVariable = 42
@@ -443,7 +443,7 @@ triangle.sideLength
 2. 调用父类的构造器
 3. 改变父类定义的属性值。其他的工作比如调用方法、getters和setters也可以在这个阶段完成。
 
-如果你不需要计算属性但是需要在设置一个新值之前运行一些代码，使用`willSet`和`didSet`。
+如果你不需要计算属性，但是仍然需要在设置一个新值之前或者之后运行代码，使用`willSet`和`didSet`。
 
 比如，下面的类确保三角形的边长总是和正方形的边长相同。
 
@@ -607,9 +607,9 @@ case let .Error(error):
 注意如何从`ServerResponse`中提取日升和日落时间。
 
 <a name="protocols_and_extensions"></a>
-## 接口和扩展
+## 协议和扩展
 
-使用`protocol`来声明一个接口。
+使用`protocol`来声明一个协议。
 
 ```swift
 protocol ExampleProtocol {
@@ -618,7 +618,7 @@ protocol ExampleProtocol {
 }
 ```
 
-类、枚举和结构体都可以实现接口。
+类、枚举和结构体都可以实现协议。
 
 ```swift
 class SimpleClass: ExampleProtocol {
@@ -643,12 +643,13 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
-> 练习：  
-> 写一个实现这个接口的枚举。
+> 练习：
+>
+> 写一个实现这个协议的枚举。
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
 
-使用`extension`来为现有的类型添加功能，比如添加一个计算属性的方法。你可以使用扩展来给任意类型添加协议，甚至是你从外部库或者框架中导入的类型。
+使用`extension`来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展来改造定义在别处，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
 
 ```swift
 extension Int: ExampleProtocol {
@@ -666,7 +667,7 @@ extension Int: ExampleProtocol {
 >
 > 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
-你可以像使用其他命名类型一样使用接口名——例如，创建一个有不同类型但是都实现一个接口的对象集合。当你处理类型是接口的值时，接口外定义的方法不可用。
+你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
 
 ```swift
 let protocolValue: ExampleProtocol = a
@@ -674,7 +675,7 @@ protocolValue.simpleDescription
 // protocolValue.anotherProperty  // Uncomment to see the error
 ```
 
-即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的接口之外实现的方法或者属性。
+即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
 
 <a name="generics"></a>
 ## 泛型
@@ -704,7 +705,7 @@ var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 ```
 
-在类型名后面使用`where`来指定一个需求列表——例如，要限定实现一个协议的类型，需要限定两个类型要相同，或者限定一个类必须有一个特定的父类。
+在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
 
 ```swift
 func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
@@ -723,4 +724,4 @@ anyCommonElements([1, 2, 3], [3])
 > 练习：  
 > 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-简单起见，你可以忽略`where`，只在冒号后面写接口或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
+简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
