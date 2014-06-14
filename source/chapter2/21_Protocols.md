@@ -350,7 +350,7 @@ game.play()
 // Rolled a 5
 // Rolled a 4
 // Rolled a 5
-// The game lasted for 4 turns”
+// The game lasted for 4 turns
 ```
 
 <a name="adding_protocol_conformance_with_an_extension"></a>
