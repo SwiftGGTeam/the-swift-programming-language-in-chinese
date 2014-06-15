@@ -349,7 +349,7 @@ protocol Container {
 
 为了定义这三个条件，`Container`协议需要一个方法指定容器里的元素将会保留，而不需要知道特定容器的类型。`Container`协议需要指定任何通过`append`方法添加到容器里的值和容器里元素是相同类型，并且通过容器下标返回的容器元素类型的值的类型是相同类型。
 
-为了达到此目的，`Container`协议声明了一个ItemType的关联类型，写作`typealias ItemType`。The protocol does not define what ItemType is an alias for—that information is left for any conforming type to provide（这个协议不会定义`ItemType`是遵循类型所提供的何种信息的别名）。尽管如此，`ItemType`别名支持一种方法识别在一个容器里的items类型，以及定义一种使用在`append`方法和下标中的类型，以便保证任何期望的`Container`的行为是强制性的。
+为了达到此目的，`Container`协议声明了一个ItemType的关联类型，写作`typealias ItemType`。这个协议不会定义`ItemType`是什么的别名，这个信息留给了任何遵循协议的类型来提供。尽管如此，`ItemType`别名支持一种方法识别在一个容器里的items类型，以及定义一种使用在`append`方法和下标中的类型，以便保证任何期望的`Container`的行为是强制性的。
 
 这里是一个早前IntStack类型的非泛型版本，适用于遵循Container协议：
 
