@@ -24,8 +24,6 @@ CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/14026
 
 # 译者记录
 
-> 说明：翻译之前请先到PR列表中查看别人认领的内容，尽量不要重复，谢谢！
-
 * 欢迎使用 Swift
    * 关于 Swift ([numbbbbb])
    * Swift 初见 ([numbbbbb])
@@ -54,7 +52,7 @@ CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/14026
    * 泛型 ([takalard])
    * 高级操作符 ([xielingwang])
 * 语言参考
-   * 关于语言参考 ([ChildhoodAndy])
+   * 关于语言参考 ([dabing1022])
    * 词法结构 ([superkam])
    * 类型 ([lyuka])
    * 表达式 ([sg552] )
