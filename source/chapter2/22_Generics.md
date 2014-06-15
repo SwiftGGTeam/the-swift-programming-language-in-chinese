@@ -1,3 +1,4 @@
+
 > 翻译：[takalard](https://github.com/takalard)  
 > 校对：[lifedim](https://github.com/lifedim)
 
@@ -33,7 +34,7 @@ func swapTwoInts(inout a: Int, inout b: Int)
 }
 ```
 
-这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[写入读出参数][1]。
+这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[写入读出参数](../chapter2/06_Functions.html)。
 
 `swapTwoInts`函数可以交换`b`的原始值到`a`，也可以交换a的原始值到`b`，你可以调用这个函数交换两个`Int`变量值：
 
@@ -92,7 +93,7 @@ func swapTwoValues<T>(inout a: T, inout b: T)
 
 这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`In`、`String`或`Doubl`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
 
-另外一个不同之处在于这个泛型函数名后面跟着的展位类型名字（T）是用尖括号括起来的（<T>）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
+另外一个不同之处在于这个泛型函数名后面跟着的展位类型名字（T）是用尖括号括起来的（`<T>`）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
 
 `swapTwoValues`函数除了要求传入的两个任何类型值是同一类型外，也可以作为`swapTwoInts`函数被调用。每次`swapTwoValues`被调用，T所代表的类型值都会传给函数。
 
@@ -119,7 +120,7 @@ swapTwoValues(&someString, &anotherString)
 <a name="type_parameters"></a>
 ## 类型参数
 
-在上面的`swapTwoValues`例子中，占位类型`T`是一种类型参数的示例。类型参数指定并命名为一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（如<T>）。
+在上面的`swapTwoValues`例子中，占位类型`T`是一种类型参数的示例。类型参数指定并命名为一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（如`<T>`）。
 
 一旦一个类型参数被指定，那么其可以被使用来定义一个函数的参数类型（如`swapTwoValues`函数中的参数`a`和`b`），或作为一个函数返回类型，或用作函数主体中的注释类型。在这种情况下，被类型参数所代表的占位类型不管函数任何时候被调用，都会被实际类型所替换（在上面`swapTwoValues`例子中，当函数第一次被调用时，`T`被`Int`替换，第二次调用时，被`String`替换。）。
 
@@ -146,9 +147,9 @@ swapTwoValues(&someString, &anotherString)
 >注意  
 栈的概念已被`UINavigationController`类使用来模拟试图控制器的导航结构。你通过调用`UINavigationController`的`pushViewController:animated:`方法来为导航栈添加（add）新的试图控制器；而通过`popViewControllerAnimated:`的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的`后进先出`方式来管理集合，堆栈都是最实用的模型。
 
-下图展示了一个栈的压栈(push)/出栈(pop)的行为：
+下图展示了一个栈的压栈(push)/出栈(pop)的行为：  
 
-![此处输入图片的描述][2]
+![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png)
 
 1. 现在有三个值在栈中；
 2. 第四个值“pushed”到栈的顶部；
@@ -211,7 +212,7 @@ stackOfStrings.push("cuatro")
 
 下图将展示`stackOfStrings`如何`push`这四个值进栈的过程：
 
-![此处输入图片的描述][3]
+![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushedFourStrings_2x.png)
 
 从栈中`pop`并移除值"cuatro"：
 
@@ -220,8 +221,8 @@ let fromTheTop = stackOfStrings.pop()
 // fromTheTop is equal to "cuatro", and the stack now contains 3 strings
 ```
 
-下图展示了如何从栈中pop一个值的过程：
-![此处输入图片的描述][4]
+下图展示了如何从栈中pop一个值的过程：  
+![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
 
 由于`Stack`是泛型类型，所以在 Swift 中其可以用来创建任何有效类型的栈，这种方式如同`Array`和`Dictionary`。
 
@@ -230,7 +231,7 @@ let fromTheTop = stackOfStrings.pop()
 
 `swapTwoValues`函数和`Stack`类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
 
-例如，Swift 的`Dictionary`类型对作用于其键的类型做了些限制。在[字典][5]的描述中，字典的键类型必须是*可哈希*，也就是说，必须有一种方法可以使其是唯一的表示。`Dictionary`之所以需要其键是可哈希是为了以便于其检查其是否包含某个特定键的值。如无此需求，`Dictionary`即不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。
+例如，Swift 的`Dictionary`类型对作用于其键的类型做了些限制。在[字典](../chapter2/04_Collection_Types.html)的描述中，字典的键类型必须是*可哈希*，也就是说，必须有一种方法可以使其是唯一的表示。`Dictionary`之所以需要其键是可哈希是为了以便于其检查其是否包含某个特定键的值。如无此需求，`Dictionary`即不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。
 
 这个需求强制加上一个类型约束作用于`Dictionary`的键上，当然其键类型必须遵循`Hashable`协议（Swift 标准库中定义的一个特定协议）。所有的 Swift 基本类型（如`String`，`Int`， `Double`和 `Bool`）默认都是可哈希。
 
@@ -413,9 +414,9 @@ struct Stack<T>: Container {
 
 ### 扩展一个存在的类型为一指定关联类型
 
-在[使用扩展来添加协议兼容性][6]中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
+在[使用扩展来添加协议兼容性](../chapter2/21_Protocols.html)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
 
-Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳][7]中有描述这样一个实现一个空扩展的行为：
+Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳](../chapter2/21_Protocols.html)中有描述这样一个实现一个空扩展的行为：
 
 ```swift
 extension Array: Container {}
@@ -426,7 +427,7 @@ extension Array: Container {}
 <a name="where_clauses"></a>
 ## Where 语句
 
-[类型约束][8]中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。
+[类型约束](#type_constraints)中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。
 
 对于关联类型的定义需求也是非常有用的。你可以通过这样去定义*where语句*作为一个类型参数队列的一部分。一个`where`语句使你能够要求一个关联类型遵循一个特定的协议，以及（或）那个特定的类型参数和关联类型可以是相同的。你可写一个`where`语句，通过紧随放置`where`关键字在类型参数队列后面，其后跟着一个或者多个针对关联类型的约束，以及（或）一个或多个类型和关联类型的等于关系。
 
@@ -515,4 +516,3 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   [6]: ../chapter2/21_Protocols.html
   [7]: ../chapter2/21_Protocols.html
   [8]: #type_constraints
-
