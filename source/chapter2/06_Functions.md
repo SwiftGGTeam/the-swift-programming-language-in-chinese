@@ -42,7 +42,7 @@ func sayHello(personName: String) -> String {
 println(sayHello("Anna"))
 // prints "Hello, Anna!"
 println(sayHello("Brian"))
-// prints "Hello, Brian!
+// prints "Hello, Brian!"
 ```
 
 调用 `sayHello` 函数时，在圆括号中传给它一个 `String` 类型的实参。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `println` 的调用中，用来输出这个函数的返回值，正如上面所示。
@@ -58,7 +58,7 @@ func sayHelloAgain(personName: String) -> String {
     return "Hello again, " + personName + "!"
 }
 println(sayHelloAgain("Anna"))
-// prints "Hello again, Anna!
+// prints "Hello again, Anna!"
 ```
 
 <a name="Function_Parameters_and_Return_Values"></a>
@@ -77,7 +77,7 @@ func halfOpenRangeLength(start: Int, end: Int) -> Int {
     return end - start
 }
 println(halfOpenRangeLength(1, 10))
-// prints "9
+// prints "9"
 ```
 
 ### 无参函数（Functions Without Parameters）
@@ -89,7 +89,7 @@ func sayHelloWorld() -> String {
     return "hello, world"
 }
 println(sayHelloWorld())
-// prints "hello, world
+// prints "hello, world"
 ```
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
@@ -103,7 +103,7 @@ func sayGoodbye(personName: String) {
     println("Goodbye, \(personName)!")
 }
 sayGoodbye("Dave")
-// prints "Goodbye, Dave!
+// prints "Goodbye, Dave!"
 ```
 
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
@@ -162,7 +162,7 @@ func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
 ```swift
 let total = count("some arbitrary string!")
 println("\(total.vowels) vowels and \(total.consonants) consonants")
-// prints "6 vowels and 13 consonants
+// prints "6 vowels and 13 consonants"
 ```
 
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
@@ -209,7 +209,7 @@ func join(s1: String, s2: String, joiner: String) -> String {
 
 ```swift
 join("hello", "world", ", ")
-// returns "hello, world
+// returns "hello, world"
 ```
 
 为了让这些字符串的用途更为明显，我们为 `join` 函数添加外部参数名：
@@ -226,7 +226,7 @@ func join(string s1: String, toString s2: String, withJoiner joiner: String) -> 
 
 ```swift
 join(string: "hello", toString: "world", withJoiner: ", ")
-// returns "hello, world
+// returns "hello, world"
 ```
 
 使用外部参数名让第二个版本的 `join` 函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。
@@ -277,7 +277,7 @@ func join(string s1: String, toString s2: String, withJoiner joiner: String = " 
 
 ```swift
 join(string: "hello", toString: "world", withJoiner: "-")
-// returns "hello-world
+// returns "hello-world"
 ```
 
 当这个函数被调用时，如果 `joiner` 的值没有被指定，函数会使用默认值（" "）：
@@ -435,7 +435,7 @@ func printHelloWorld() {
 }
 ```
 
-这个函数的类型是：`() -> ()`，或者叫“没有参数，并返回 `Void` 类型的函数。”。没有指定返回类型的函数总返回 `Void`。在Swift中，`Void` 与空的元组是一样的。
+这个函数的类型是：`() -> ()`，或者叫“没有参数，并返回 `Void` 类型的函数”。没有指定返回类型的函数总返回 `Void`。在Swift中，`Void` 与空的元组是一样的。
 
 ### 使用函数类型（Using Function Types）
 
@@ -455,7 +455,7 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
 
 ```swift
 println("Result: \(mathFunction(2, 3))")
-// prints "Result: 5
+// prints "Result: 5"
 ```
 
 有相同匹配类型的不同函数可以被赋值给同一个变量，就像非函数类型的变量一样：
