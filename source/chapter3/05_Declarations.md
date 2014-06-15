@@ -1,4 +1,4 @@
-> 翻译：[marsprince](https://github.com/marsprince)
+> 翻译：[marsprince](https://github.com/marsprince)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 声明

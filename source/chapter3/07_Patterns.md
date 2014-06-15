@@ -1,4 +1,4 @@
-> 翻译：[honghaoz](https://github.com/honghaoz)
+> 翻译：[honghaoz](https://github.com/honghaoz)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 模式（Patterns）
