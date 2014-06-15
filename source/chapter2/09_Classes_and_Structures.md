@@ -1,4 +1,4 @@
-> 翻译：[JaySurplus](https://github.com/JaySurplus)
+> 翻译：[JaySurplus](https://github.com/JaySurplus)  
 > 校对：[sg552](https://github.com/sg552)
 
 # 类和结构体

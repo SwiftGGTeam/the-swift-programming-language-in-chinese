@@ -1,4 +1,4 @@
-> 翻译：[pp-prog](https://github.com/pp-prog)
+> 翻译：[pp-prog](https://github.com/pp-prog)  
 > 校对：[zqp](https://github.com/zqp)
 
 # 方法（Methods）
