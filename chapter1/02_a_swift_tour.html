@@ -617,7 +617,7 @@ plauground版本原链接： https://developer.apple.com/library/prerelease/ios/
 -->
 </blockquote>
 <p><a name="simple_values"></a></p>
-<h2 id="-">简单值</h2>
+<h2 id="simple-values">简单值</h2>
 <p>使用<code>let</code>来声明常量，使用<code>var</code>来声明变量。一个常量的值，在编译的时候，并不需要有明确的值，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。</p>
 <pre><code class="lang-swift">var myVariable = 42
 myVariable = 50
@@ -667,7 +667,7 @@ let emptyDictionary = Dictionary&lt;String, Float&gt;()
 <pre><code class="lang-swift">shoppingList = []   // 去逛街并买点东西
 </code></pre>
 <p><a name="control_flow"></a></p>
-<h2 id="-">控制流</h2>
+<h2 id="control-flow">控制流</h2>
 <p>使用<code>if</code>和<code>switch</code>来进行条件操作，使用<code>for-in</code>、<code>for</code>、<code>while</code>和<code>do-while</code>来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。</p>
 <pre><code class="lang-swift">let individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
@@ -759,7 +759,7 @@ secondForLoop
 </code></pre>
 <p>使用<code>..</code>创建的范围不包含上界，如果想包含的话需要使用<code>...</code>。</p>
 <p><a name="functions_and_closures"></a></p>
-<h2 id="-">函数和闭包</h2>
+<h2 id="functions-and-closures">函数和闭包</h2>
 <p>使用<code>func</code>来声明一个函数，使用名字和参数来调用函数。使用<code>-&gt;</code>来指定函数返回值。</p>
 <pre><code class="lang-swift">func greet(name: String, day: String) -&gt; String {
     return &quot;Hello \(name), today is \(day).&quot;
@@ -975,7 +975,7 @@ counter.incrementBy(2, numberOfTimes: 7)
 let sideLength = optionalSquare?.sideLength
 </code></pre>
 <p><a name="enumerations_and_structure"></a></p>
-<h2 id="-">枚举和结构体</h2>
+<h2 id="enumerations-and-structure">枚举和结构体</h2>
 <p>使用<code>enum</code>来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。</p>
 <pre><code class="lang-swift">enum Rank: Int {
     case Ace = 1
@@ -1070,7 +1070,7 @@ case let .Error(error):
 </blockquote>
 <p>注意如何从<code>ServerResponse</code>中提取日升和日落时间。</p>
 <p><a name="protocols_and_extensions"></a></p>
-<h2 id="-">协议和扩展</h2>
+<h2 id="protocols-and-extensions">协议和扩展</h2>
 <p>使用<code>protocol</code>来声明一个协议。</p>
 <pre><code class="lang-swift">protocol ExampleProtocol {
     var simpleDescription: String { get }
@@ -1126,7 +1126,7 @@ protocolValue.simpleDescription
 </code></pre>
 <p>即使<code>protocolValue</code>变量运行时的类型是<code>simpleClass</code>，编译器会把它的类型当做<code>ExampleProtocol</code>。这表示你不能调用类在它实现的协议之外实现的方法或者属性。</p>
 <p><a name="generics"></a></p>
-<h2 id="-">泛型</h2>
+<h2 id="generics-">泛型</h2>
 <p>在尖括号里写一个名字来创建一个泛型函数或者类型。</p>
 <pre><code class="lang-swift">func repeat&lt;ItemType&gt;(item: ItemType, times: Int) -&gt; ItemType[] {
     var result = ItemType[]()
