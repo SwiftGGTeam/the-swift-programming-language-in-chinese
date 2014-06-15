@@ -1,5 +1,5 @@
-> 翻译：zqp
-> 校对：shinyzhu
+> 翻译：zqp  
+> 校对：shinyzhu, stanzhai  
 
 # 集合类型 (Collection Types)
 -----------------
@@ -14,7 +14,7 @@ Swift 语言提供经典的数组和字典两种集合类型来存储集合数�
 
 Swift 语言里的数组和字典中存储的数据值类型必须明确。 这意味着我们不能把不正确的数据类型插入其中。 同时这也说明我们完全可以对获取出的值类型非常自信。 Swift 对显式类型集合的使用确保了我们的代码对工作所需要的类型非常清楚，也让我们在开发中可以早早地找到任何的类型不匹配错误。
 
-> 注意：
+> 注意：  
 Swift 的数组结构在被声明成常量和变量或者被传入函数与方法中时会相对于其他类型展现出不同的特性。 获取更多信息请参见[集合的可变性](#mutability_of_collections)与[集合在赋值和复制中的行为](09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types)章节。
 
 <a name="arrays"></a>
@@ -44,8 +44,8 @@ var shoppingList: String[] = ["Eggs", "Milk"]
 
 `shoppingList`变量被声明为“字符串值类型的数组“，记作`String[]`。 因为这个数组被规定只有`String`一种数据结构，所以只有`String`类型可以在其中被存取。 在这里，`shoppinglist`数组由两个`String`值（`"Eggs"` 和`"Milk"`）构造，并且由字面量定义。
 
-> 注意：
-> `Shoppinglist`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
+> 注意：  
+> `Shoppinglist`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。  
 
 在这个例子中，字面量仅仅包含两个`String`值。匹配了该数组的变量声明（只能包含`String`的数组），所以这个字面量的分配过程就是允许用两个初始项来构造`shoppinglist`。
 
@@ -123,14 +123,8 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 // shoppingList 现在有六项
 ```
 
-<<<<<<< HEAD
-> 注意：
->我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
-=======
-> 注意：
->
->我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行时错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
+> 注意：  
+>我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。  
 
 调用数组的`insert(atIndex:)`方法来在某个具体索引值之前添加数据项：
 
@@ -271,8 +265,8 @@ var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
 
 `airports`字典被定义为一种`Dictionary<String, String>`,它意味着这个字典的键和值都是`String`类型。
 
-> 注意：
-> `airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。
+> 注意：  
+> `airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。  
 
 `airports`字典使用字典字面量初始化，包含两个键值对。第一对的键是`TYO`，值是`Tokyo`。第二对的键是`DUB`，值是`Dublin`。
 
@@ -364,6 +358,7 @@ for (airportCode, airportName) in airports {
 // TYO: Tokyo
 // LHR: London Heathrow
 ```
+
 `for-in`循环请参见[For 循环](05_Control_Flow.html#for_loops)。
 
 我们也可以通过访问它的`keys`或者`values`属性（都是可遍历集合）检索一个字典的键或者值：
@@ -374,9 +369,7 @@ for airportCode in airports.keys {
 }
 // Airport code: TYO
 // Airport code: LHR
-```
 
-```swift
 for airportName in airports.values {
     println("Airport name: \(airportName)")
 }
@@ -389,15 +382,13 @@ for airportName in airports.values {
 ```swift
 let airportCodes = Array(airports.keys)
 // airportCodes is ["TYO", "LHR"]
-```
 
-```swift
 let airportNames = Array(airports.values)
 // airportNames is ["Tokyo", "London Heathrow"]
 ```
 
-> 注意：
-> Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。
+> 注意：  
+> Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。  
 
 <a name="creating_an_empty_dictionary"></a>
 ### 创建一个空字典
@@ -420,8 +411,8 @@ namesOfIntegers = [:]
 // namesOfIntegers 又成为了一个 Int, String类型的空字典
 ```
 
-> 注意：
-> 在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见[泛型](22_Generics.html)。
+> 注意：  
+> 在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见[泛型](22_Generics.html)。  
 
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
@@ -433,6 +424,5 @@ namesOfIntegers = [:]
 
 Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见[集合在赋值和复制中的行为](09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types)。
 
-> 注意：
-> 在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。
-
+> 注意：  
+> 在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。  
