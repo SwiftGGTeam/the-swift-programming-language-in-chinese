@@ -27,7 +27,7 @@
 使用`enum`关键词并且把它们的整个定义放在一对大括号内：
 
 ```swift
-enum SomeEumeration {
+enum SomeEnumeration {
   // enumeration definition goes here
 }
 ```
