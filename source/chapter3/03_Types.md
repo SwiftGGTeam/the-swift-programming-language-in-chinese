@@ -31,6 +31,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 
 <a name="type_annotation"></a>
 ##类型注解
+
 类型注解显式地指定一个变量或表达式的值。类型注解始于冒号`:`终于类型，比如下面两个例子：
 
 ```swift
@@ -70,6 +71,7 @@ var someValue: ExampleModule.MyType
 
 <a name="tuple_type"></a>
 ##元组类型
+
 元组类型使用逗号隔开并使用括号括起来的0个或多个类型组成的列表。
 
 你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符和`:`组成。“函数和多返回值”章节里有一个展示上述特性的例子。
@@ -218,6 +220,7 @@ var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 
 <a name="protocol_composition_type"></a>
 ##协议合成类型
+
 协议合成类型是一种符合每个协议的指定协议列表类型。协议合成类型可能会用在类型注解和泛型参数中。
 
 协议合成类型的形式如下：
