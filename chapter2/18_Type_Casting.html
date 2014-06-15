@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.18" data-basepath=".." data-revision="1402840691919">
+    <div class="book"  data-level="2.18" data-basepath=".." data-revision="1402845135014">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -592,21 +592,21 @@
                         <blockquote>
 <p>翻译：<a href="https://github.com/xiehurricane" target="_blank">xiehurricane</a><br>校对：<a href="https://github.com/happyming" target="_blank">happyming</a></p>
 </blockquote>
-<h1 id="-type-casting-">类型检查（Type Casting）</h1>
+<h1 id="-type-casting-">类型转换（Type Casting）</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
 <li><a href="#defining_a_class_hierarchy_for_type_casting">定义一个类层次作为例子</a></li>
 <li><a href="#checking_type">检查类型</a></li>
 <li><a href="#downcasting">向下转型（Downcasting）</a></li>
-<li><a href="#type_casting_for_any_and_anyobject"><code>Any</code>和<code>AnyObject</code>的类型检查</a></li>
+<li><a href="#type_casting_for_any_and_anyobject"><code>Any</code>和<code>AnyObject</code>的类型转换</a></li>
 </ul>
-<p><em>类型检查</em>是一种检查类实例的方式，并且或者也是让实例作为它的父类或者子类的一种方式。</p>
-<p>类型检查在 Swift 中使用<code>is</code> 和 <code>as</code>操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。</p>
+<p><em>类型转换</em>是一种检查类实例的方式，并且或者也是让实例作为它的父类或者子类的一种方式。</p>
+<p>类型转换在 Swift 中使用<code>is</code> 和 <code>as</code>操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。</p>
 <p>你也可以用来检查一个类是否实现了某个协议，就像在 <a href="Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_363">Checking for Protocol Conformance</a>部分讲述的一样。</p>
 <p><a name="defining_a_class_hierarchy_for_type_casting"></a></p>
 <h2 id="-">定义一个类层次作为例子</h2>
-<p>你可以将它用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。这下面的三个代码段定义了一个类层次和一个包含了几个这些类实例的数组，作为类型检查的例子。</p>
+<p>你可以将它用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。这下面的三个代码段定义了一个类层次和一个包含了几个这些类实例的数组，作为类型转换的例子。</p>
 <p>第一个代码片段定义了一个新的基础类<code>MediaItem</code>。这个类为任何出现在数字媒体库的媒体项提供基础功能。特别的，它声明了一个 <code>String</code> 类型的 <code>name</code> 属性，和一个<code>init name</code>初始化器。（它假定所有的媒体项都有个名称。）</p>
 <pre><code class="lang-swift">class MediaItem {
     var name: String
@@ -668,12 +668,12 @@ println(&quot;Media library contains \(movieCount) movies and \(songCount) songs
 Song</code>检查item是否为<code>Song</code>类型的实例。在循环结束后，<code>movieCount</code> 和 <code>songCount</code>的值就是被找到属于各自的类型的实例数量。</p>
 <p><a name="downcasting"></a></p>
 <h2 id="-downcasting-">向下转型（Downcasting）</h2>
-<p>某类型的一个常量或变量可能在幕后实际上属于一个子类。你可以相信，上面就是这种情况。你可以尝试向下转到它的子类型，用类型检查操作符(<code>as</code>)</p>
+<p>某类型的一个常量或变量可能在幕后实际上属于一个子类。你可以相信，上面就是这种情况。你可以尝试向下转到它的子类型，用类型转换操作符(<code>as</code>)</p>
 <p>因为向下转型可能会失败，类型转型操作符带有两种不同形式。可选形式（ optional form） <code>as?</code> 返回一个你试图下转成的类型的可选值（optional value）。强制形式 <code>as</code> 把试图向下转型和强制解包（force-unwraps）结果作为一个混合动作。</p>
-<p>当你不确定向下转型可以成功时，用类型检查的可选形式(<code>as?</code>)。可选形式的类型检查总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 <code>nil</code> 。这使你能够检查向下转型是否成功。</p>
-<p>只有你可以确定向下转型一定会成功时，才使用强制形式。当你试图向下转型为一个不正确的类型时，强制形式的类型检查会触发一个运行时错误。</p>
+<p>当你不确定向下转型可以成功时，用类型转换的可选形式(<code>as?</code>)。可选形式的类型转换总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 <code>nil</code> 。这使你能够检查向下转型是否成功。</p>
+<p>只有你可以确定向下转型一定会成功时，才使用强制形式。当你试图向下转型为一个不正确的类型时，强制形式的类型转换会触发一个运行时错误。</p>
 <p>下面的例子，迭代了<code>library</code>里的每一个 <code>MediaItem</code> ，并打印出适当的描述。要这样做，<code>item</code>需要真正作为<code>Movie</code> 或 <code>Song</code>的类型来使用。不仅仅是作为 <code>MediaItem</code>。为了能够使用<code>Movie</code> 或 <code>Song</code>的 <code>director</code> 或 <code>artist</code>属性，这是必要的。</p>
-<p>在这个示例中，数组中的每一个<code>item</code>可能是 <code>Movie</code> 或 <code>Song</code>。   事前你不知道每个<code>item</code>的真实类型，所以这里使用可选形式的类型检查 （<code>as?</code>）去检查循环里的每次下转。</p>
+<p>在这个示例中，数组中的每一个<code>item</code>可能是 <code>Movie</code> 或 <code>Song</code>。   事前你不知道每个<code>item</code>的真实类型，所以这里使用可选形式的类型转换 （<code>as?</code>）去检查循环里的每次下转。</p>
 <pre><code class="lang-swift">for item in library {
     if let movie = item as? Movie {
         println(&quot;Movie: &#39;\(movie.name)&#39;, dir. \(movie.director)&quot;)
@@ -699,7 +699,7 @@ Song</code>检查item是否为<code>Song</code>类型的实例。在循环结束
 <p>注意：<br>转换没有真的改变实例或它的值。潜在的根本的实例保持不变；只是简单地把它作为它被转换成的类来使用。</p>
 </blockquote>
 <p><a name="type_casting_for_any_and_anyobject"></a></p>
-<h2 id="-any-anyobject-"><code>Any</code>和<code>AnyObject</code>的类型检查</h2>
+<h2 id="-any-anyobject-"><code>Any</code>和<code>AnyObject</code>的类型转换</h2>
 <p>Swift为不确定类型提供了两种特殊类型别名：</p>
 <ul>
 <li><code>AnyObject</code>可以代表任何class类型的实例。</li>
@@ -709,9 +709,8 @@ Song</code>检查item是否为<code>Song</code>类型的实例。在循环结束
 <p>注意：<br>只有当你明确的需要它的行为和功能时才使用<code>Any</code>和<code>AnyObject</code>。在你的代码里使用你期望的明确的类型总是更好的。</p>
 </blockquote>
 <h3 id="-anyobject-"><code>AnyObject</code>类型</h3>
-<p>当需要在工作中使用 Cocoa
-APIs，它一般接收一个<code>AnyObject[]</code>类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。</p>
-<p>在这些情况下，你可以使用强制形式的类型检查(<code>as</code>)来下转在数组中的每一项到比 <code>AnyObject</code> 更明确的类型，不需要可选解析（optional unwrapping）。</p>
+<p>当需要在工作中使用 Cocoa APIs，它一般接收一个<code>AnyObject[]</code>类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。</p>
+<p>在这些情况下，你可以使用强制形式的类型转换(<code>as</code>)来下转在数组中的每一项到比 <code>AnyObject</code> 更明确的类型，不需要可选解析（optional unwrapping）。</p>
 <p>下面的示例定义了一个 <code>AnyObject[]</code> 类型的数组并填入三个<code>Movie</code>类型的实例：</p>
 <pre><code class="lang-swift">let someObjects: AnyObject[] = [
     Movie(name: &quot;2001: A Space Odyssey&quot;, director: &quot;Stanley Kubrick&quot;),
@@ -782,7 +781,7 @@ things.append(Movie(name: &quot;Ghostbusters&quot;, director: &quot;Ivan Reitman
 // a movie called &#39;Ghostbusters&#39;, dir. Ivan Reitman
 </code></pre>
 <blockquote>
-<p>注意：<br>在一个switch语句的case中使用强制形式的类型检查操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 switch case 语句的内容中这种检查总是安全的。</p>
+<p>注意：<br>在一个switch语句的case中使用强制形式的类型转换操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 switch case 语句的内容中这种检查总是安全的。</p>
 </blockquote>
 
                     

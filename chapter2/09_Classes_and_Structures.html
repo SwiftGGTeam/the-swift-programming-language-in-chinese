@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402840691919">
+    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402845135014">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -654,14 +654,14 @@ class VideoMode {
 }
 </code></pre>
 <p>在上面的示例中我们定义了一个名为<code>Resolution</code>的结构体，用来描述一个显示器的像素分辨率。这个结构体包含了两个名为<code>width</code>和<code>height</code>的储存属性。储存属性是捆绑和储存在类或结构体中的常量或变量。当这两个属性被初始化为整数<code>0</code>的时候，它们会被推断为<code>Int</code>类型。</p>
-<p>在上面的示例中我们还定义了一个名为<code>VideoMode</code>的类，用来描述一个视频显示器的特定模式。这个类包含了四个储存属性变量。第一个是<code>分辨率</code>，它被初始化为一个新的<code>Resolution</code>结构体的实例，具有<code>Resolution</code>的属性类型。新<code>VideoMode</code>实例同时还会初始化其它三个属性，它们分别是，初始值为<code>false</code>(意为“non-interlaced video”)的<code>inteflaced</code>，回放帧率初始值为<code>0.0</code>的<code>frameRate</code>和值为可选<code>String</code>的<code>name</code>。<code>name</code>属性会被自动赋予一个默认值<code>nil</code>，意为“没有<code>name</code>值”，因它是一个可选类型。</p>
+<p>在上面的示例中我们还定义了一个名为<code>VideoMode</code>的类，用来描述一个视频显示器的特定模式。这个类包含了四个储存属性变量。第一个是<code>分辨率</code>，它被初始化为一个新的<code>Resolution</code>结构体的实例，具有<code>Resolution</code>的属性类型。新<code>VideoMode</code>实例同时还会初始化其它三个属性，它们分别是，初始值为<code>false</code>(意为“non-interlaced video”)的<code>interlaced</code>，回放帧率初始值为<code>0.0</code>的<code>frameRate</code>和值为可选<code>String</code>的<code>name</code>。<code>name</code>属性会被自动赋予一个默认值<code>nil</code>，意为“没有<code>name</code>值”，因它是一个可选类型。</p>
 <h3 id="-">类和结构体实例</h3>
 <p><code>Resolution</code>结构体和<code>VideoMode</code>类的定义仅描述了什么是<code>Resolution</code>和<code>VideoMode</code>。它们并没有描述一个特定的分辨率（resolution）或者视频模式（video mode）。为了描述一个特定的分辨率或者视频模式，我们需要生成一个它们的实例。</p>
 <p>生成结构体和类实例的语法非常相似：</p>
 <pre><code class="lang-swift">let someResolution = Resolution()
 let someVideoMode = VideoMode()
 </code></pre>
-<p>结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如<code>Resolution()</code>或<code>VideoMode()</code>。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。<a href="14_Initialization.html">构造过程</a>章节会对类和结构体的初始化进行更详细的讨论。</p>
+<p>结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如<code>Resolution()</code>或<code>VideoMode()</code>。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。<a href="14_Initialization.html">构造过程</a>章节会对类和结构体的初始化进行更详细的讨论。</p>
 <h3 id="-">属性访问</h3>
 <p>通过使用<em>点语法</em>（<em>dot syntax</em>）,你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：</p>
 <pre><code class="lang-swift">println(&quot;The width of someResolution is \(someResolution.width)&quot;)
@@ -678,7 +678,7 @@ println(&quot;The width of someVideoMode is now \(someVideoMode.resolution.width
 // 输出 &quot;The width of someVideoMode is now 1280&quot;
 </code></pre>
 <blockquote>
-<p> 注意：<br>与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了<code>someVideoMode</code>中<code>resolution</code>属性的<code>width</code>这个子属性，以上操作并不需要从新设置<code>resolution</code>属性。</p>
+<p> 注意：<br>与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了<code>someVideoMode</code>中<code>resolution</code>属性的<code>width</code>这个子属性，以上操作并不需要重新设置<code>resolution</code>属性。</p>
 </blockquote>
 <h3 id="-memberwise-initializers-for-structure-types-">结构体类型的成员逐一构造器(Memberwise Initializers for structure Types)</h3>
 <p>所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：</p>

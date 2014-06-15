@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1402840691919">
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1402845135014">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_6">
+                    <section class="normal" id="section-gitbook_4">
                     
                         <blockquote>
 <p>翻译：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a><br>校对：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
@@ -610,7 +610,8 @@
 <p>如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要<code>main</code>函数。你同样不需要在每个语句结尾写上分号。</p>
 <p>这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。</p>
 <blockquote>
-<p>注意：<br>为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。</p>
+<p>注意：<br>为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+<a href="https://github.com/Tairraos/the-swift-programming-language-in-chinese/blob/gh-pages/chapter1/GuidedTour.playground.zip?raw=true">打开Playground</a></p>
 </blockquote>
 <p><a name="simple_values"></a></p>
 <h2 id="-">简单值</h2>
@@ -829,7 +830,7 @@ hasAnyMatches(numbers, lessThanTen)
 })
 </code></pre>
 <blockquote>
-<p>练习：<br>重写闭包，对所有奇数返回 0.</p>
+<p>练习：<br>重写闭包，对所有奇数返回0。</p>
 </blockquote>
 <p>有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。</p>
 <pre><code class="lang-swift">numbers.map({ number in 3 * number })
@@ -1096,8 +1097,7 @@ b.adjust()
 let bDescription = b.simpleDescription
 </code></pre>
 <blockquote>
-<p>练习：</p>
-<p>写一个实现这个协议的枚举。</p>
+<p>练习：<br>写一个实现这个协议的枚举。</p>
 </blockquote>
 <p>注意声明<code>SimpleStructure</code>时候<code>mutating</code>关键字用来标记一个会修改结构体的方法。<code>SimpleClass</code>的声明不需要标记任何方法因为类中的方法经常会修改类。</p>
 <p>使用<code>extension</code>来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展来改造定义在别处，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。</p>
@@ -1112,8 +1112,7 @@ let bDescription = b.simpleDescription
 7.simpleDescription
 </code></pre>
 <blockquote>
-<p>练习：</p>
-<p>给<code>Double</code>类型写一个扩展，添加<code>absoluteValue</code>功能。</p>
+<p>练习：<br>给<code>Double</code>类型写一个扩展，添加<code>absoluteValue</code>功能。</p>
 </blockquote>
 <p>你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。</p>
 <pre><code class="lang-swift">let protocolValue: ExampleProtocol = a

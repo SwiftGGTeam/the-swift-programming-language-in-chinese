@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402840691919">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402845135014">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -731,8 +731,7 @@ let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型的最大值
 <li>在64位平台上，<code>UInt</code>和<code>UInt64</code>长度相同。</li>
 </ul>
 <blockquote>
-<p>注意：</p>
-<p>尽量不要使用<code>UInt</code>，除非你真的需要存储一个和当前平台原生字长相同的无符号整数。除了这种情况，最好使用<code>Int</code>，即使你要存储的值已知是非负的。统一使用<code>Int</code>可以提高代码的可复用性，避免不同类型数字之间的转换，并且匹配数字的类型推断，请参考<a href="#type_safety_and_type_inference">类型安全和类型推断</a>。</p>
+<p>注意：<br>尽量不要使用<code>UInt</code>，除非你真的需要存储一个和当前平台原生字长相同的无符号整数。除了这种情况，最好使用<code>Int</code>，即使你要存储的值已知是非负的。统一使用<code>Int</code>可以提高代码的可复用性，避免不同类型数字之间的转换，并且匹配数字的类型推断，请参考<a href="#type_safety_and_type_inference">类型安全和类型推断</a>。</p>
 </blockquote>
 <p><a name="floating-point_numbers"></a></p>
 <h2 id="-">浮点数</h2>
@@ -929,8 +928,7 @@ println(&quot;The status message is \(http200Status.description)&quot;)
 <li><em>没有</em>值</li>
 </ul>
 <blockquote>
-<p>注意：</p>
-<p>C 和 Objective-C 中并没有可选类型这个概念。最接近的是 Objective-C 中的一个特性，一个方法要不返回一个对象要不返回<code>nil</code>，<code>nil</code>表示“缺少一个合法的对象”。然而，这只对对象起作用——对于结构体，基本的 C 类型或者枚举类型不起作用。对于这些类型，Objective-C 方法一般会返回一个特殊值（比如<code>NSNotFound</code>）来暗示值缺失。这种方法假设方法的调用者知道并记得对特殊值进行判断。然而，Swift 的可选类型可以让你暗示<em>任意类型</em>的值缺失，并不需要一个特殊值。</p>
+<p>注意：<br>C 和 Objective-C 中并没有可选类型这个概念。最接近的是 Objective-C 中的一个特性，一个方法要不返回一个对象要不返回<code>nil</code>，<code>nil</code>表示“缺少一个合法的对象”。然而，这只对对象起作用——对于结构体，基本的 C 类型或者枚举类型不起作用。对于这些类型，Objective-C 方法一般会返回一个特殊值（比如<code>NSNotFound</code>）来暗示值缺失。这种方法假设方法的调用者知道并记得对特殊值进行判断。然而，Swift 的可选类型可以让你暗示<em>任意类型</em>的值缺失，并不需要一个特殊值。</p>
 </blockquote>
 <p>来看一个例子。Swift 的<code>String</code>类型有一个叫做<code>toInt</code>的方法，作用是将一个<code>String</code>值转换成一个<code>Int</code>值。然而，并不是所有的字符串都可以转换成一个整数。字符串<code>&quot;123&quot;</code>可以被转换成数字<code>123</code>，但是字符串<code>&quot;hello, world&quot;</code>不行。</p>
 <p>下面的例子使用<code>toInt</code>方法来尝试将一个<code>String</code>转换成<code>Int</code>：</p>
@@ -988,8 +986,7 @@ serverResponseCode = nil
 // surveyAnswer 被自动设置为 nil
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>Swift 的<code>nil</code>和 Objective-C 中的<code>nil</code>并不一样。在 Objective-C 中，<code>nil</code>是一个指向不存在对象的指针。在 Swift 中，<code>nil</code>不是指针——它是一个确定的值，用来表示值缺失。<em>任何</em>类型的可选状态都可以被设置为<code>nil</code>，不只是对象类型。</p>
+<p>注意：<br>Swift 的<code>nil</code>和 Objective-C 中的<code>nil</code>并不一样。在 Objective-C 中，<code>nil</code>是一个指向不存在对象的指针。在 Swift 中，<code>nil</code>不是指针——它是一个确定的值，用来表示值缺失。<em>任何</em>类型的可选状态都可以被设置为<code>nil</code>，不只是对象类型。</p>
 </blockquote>
 <h3 id="-">隐式解析可选类型</h3>
 <p>如上所述，可选类型暗示了常量或者变量可以“没有值”。可选可以通过<code>if</code>语句来判断是否有值，如果有值的话可以通过可选绑定来解析值。</p>
@@ -1007,8 +1004,7 @@ println(assumedString)  // 不需要感叹号
 </code></pre>
 <p>你可以把隐式解析可选类型当做一个可以自动解析的可选类型。你要做的只是声明的时候把感叹号放到类型的结尾，而不是每次取值的可选名字的结尾。</p>
 <blockquote>
-<p>注意：</p>
-<p>如果你在隐式解析可选类型没有值的时候尝试取值，会触发运行时错误。和你在没有值的普通可选类型后面加一个惊叹号一样。</p>
+<p>注意：<br>如果你在隐式解析可选类型没有值的时候尝试取值，会触发运行时错误。和你在没有值的普通可选类型后面加一个惊叹号一样。</p>
 </blockquote>
 <p>你仍然可以把隐式解析可选类型当做普通可选类型来判断它是否包含值：</p>
 <pre><code class="lang-swift">if assumedString {
@@ -1023,8 +1019,7 @@ println(assumedString)  // 不需要感叹号
 // 输出 &quot;An implicitly unwrapped optional string.&quot;
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>如果一个变量之后可能变成<code>nil</code>的话请不要使用隐式解析可选类型。如果你需要在变量的生命周期中判断是否是<code>nil</code>的话，请使用普通可选类型。</p>
+<p>注意：<br>如果一个变量之后可能变成<code>nil</code>的话请不要使用隐式解析可选类型。如果你需要在变量的生命周期中判断是否是<code>nil</code>的话，请使用普通可选类型。</p>
 </blockquote>
 <p><a name="assertions"></a></p>
 <h2 id="-">断言</h2>

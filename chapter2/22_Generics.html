@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.22" data-basepath=".." data-revision="1402840691919">
+    <div class="book"  data-level="2.22" data-basepath=".." data-revision="1402845135014">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -616,7 +616,7 @@
   b = temporaryA
 }
 </code></pre>
-<p>这个函数使用写入读出（in-out）参数来交换<code>a</code>和<code>b</code>的值，请参考[写入读出参数][1]。</p>
+<p>这个函数使用写入读出（in-out）参数来交换<code>a</code>和<code>b</code>的值，请参考<a href="../chapter2/06_Functions.html">写入读出参数</a>。</p>
 <p><code>swapTwoInts</code>函数可以交换<code>b</code>的原始值到<code>a</code>，也可以交换a的原始值到<code>b</code>，你可以调用这个函数交换两个<code>Int</code>变量值：</p>
 <pre><code class="lang-swift">var someInt = 3
 var anotherInt = 107
@@ -656,7 +656,7 @@ func swapTwoDoubles(inout a: Double, inout b: Double) {
 func swapTwoValues&lt;T&gt;(inout a: T, inout b: T)
 </code></pre>
 <p>这个函数的泛型版本使用了占位类型名字（通常此情况下用字母<code>T</code>来表示）来代替实际类型名（如<code>In</code>、<code>String</code>或<code>Doubl</code>）。占位类型名没有提示<code>T</code>必须是什么类型，但是它提示了<code>a</code>和<code>b</code>必须是同一类型<code>T</code>，而不管<code>T</code>表示什么类型。只有<code>swapTwoValues</code>函数在每次调用时所传入的实际类型才能决定<code>T</code>所代表的类型。</p>
-<p>另外一个不同之处在于这个泛型函数名后面跟着的展位类型名字（T）是用尖括号括起来的（<T>）。这个尖括号告诉 Swift 那个<code>T</code>是<code>swapTwoValues</code>函数所定义的一个类型。因为<code>T</code>是一个占位命名类型，Swift 不会去查找命名为T的实际类型。</p>
+<p>另外一个不同之处在于这个泛型函数名后面跟着的展位类型名字（T）是用尖括号括起来的（<code>&lt;T&gt;</code>）。这个尖括号告诉 Swift 那个<code>T</code>是<code>swapTwoValues</code>函数所定义的一个类型。因为<code>T</code>是一个占位命名类型，Swift 不会去查找命名为T的实际类型。</p>
 <p><code>swapTwoValues</code>函数除了要求传入的两个任何类型值是同一类型外，也可以作为<code>swapTwoInts</code>函数被调用。每次<code>swapTwoValues</code>被调用，T所代表的类型值都会传给函数。</p>
 <p>在下面的两个例子中,<code>T</code>分别代表<code>Int</code>和<code>String</code>：</p>
 <pre><code class="lang-swift">var someInt = 3
@@ -674,7 +674,7 @@ swapTwoValues(&amp;someString, &amp;anotherString)
 </blockquote>
 <p><a name="type_parameters"></a></p>
 <h2 id="-">类型参数</h2>
-<p>在上面的<code>swapTwoValues</code>例子中，占位类型<code>T</code>是一种类型参数的示例。类型参数指定并命名为一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（如<T>）。</p>
+<p>在上面的<code>swapTwoValues</code>例子中，占位类型<code>T</code>是一种类型参数的示例。类型参数指定并命名为一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（如<code>&lt;T&gt;</code>）。</p>
 <p>一旦一个类型参数被指定，那么其可以被使用来定义一个函数的参数类型（如<code>swapTwoValues</code>函数中的参数<code>a</code>和<code>b</code>），或作为一个函数返回类型，或用作函数主体中的注释类型。在这种情况下，被类型参数所代表的占位类型不管函数任何时候被调用，都会被实际类型所替换（在上面<code>swapTwoValues</code>例子中，当函数第一次被调用时，<code>T</code>被<code>Int</code>替换，第二次调用时，被<code>String</code>替换。）。</p>
 <p>你可支持多个类型参数，命名在尖括号中，用逗号分开。</p>
 <p><a name="naming_type_parameters"></a></p>
@@ -691,8 +691,8 @@ swapTwoValues(&amp;someString, &amp;anotherString)
 <blockquote>
 <p>注意<br>栈的概念已被<code>UINavigationController</code>类使用来模拟试图控制器的导航结构。你通过调用<code>UINavigationController</code>的<code>pushViewController:animated:</code>方法来为导航栈添加（add）新的试图控制器；而通过<code>popViewControllerAnimated:</code>的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的<code>后进先出</code>方式来管理集合，堆栈都是最实用的模型。</p>
 </blockquote>
-<p>下图展示了一个栈的压栈(push)/出栈(pop)的行为：</p>
-<p>![此处输入图片的描述][2]</p>
+<p>下图展示了一个栈的压栈(push)/出栈(pop)的行为：  </p>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png" alt="此处输入图片的描述"></p>
 <ol>
 <li>现在有三个值在栈中；</li>
 <li>第四个值“pushed”到栈的顶部；</li>
@@ -740,18 +740,17 @@ stackOfStrings.push(&quot;cuatro&quot;)
 // 现在栈已经有4个string了
 </code></pre>
 <p>下图将展示<code>stackOfStrings</code>如何<code>push</code>这四个值进栈的过程：</p>
-<p>![此处输入图片的描述][3]</p>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushedFourStrings_2x.png" alt="此处输入图片的描述"></p>
 <p>从栈中<code>pop</code>并移除值&quot;cuatro&quot;：</p>
 <pre><code class="lang-swift">let fromTheTop = stackOfStrings.pop()
 // fromTheTop is equal to &quot;cuatro&quot;, and the stack now contains 3 strings
 </code></pre>
-<p>下图展示了如何从栈中pop一个值的过程：
-![此处输入图片的描述][4]</p>
+<p>下图展示了如何从栈中pop一个值的过程：<br><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png" alt="此处输入图片的描述"></p>
 <p>由于<code>Stack</code>是泛型类型，所以在 Swift 中其可以用来创建任何有效类型的栈，这种方式如同<code>Array</code>和<code>Dictionary</code>。</p>
 <p><a name="type_constraints"></a></p>
 <h2 id="-">类型约束</h2>
 <p><code>swapTwoValues</code>函数和<code>Stack</code>类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。</p>
-<p>例如，Swift 的<code>Dictionary</code>类型对作用于其键的类型做了些限制。在[字典][5]的描述中，字典的键类型必须是<em>可哈希</em>，也就是说，必须有一种方法可以使其是唯一的表示。<code>Dictionary</code>之所以需要其键是可哈希是为了以便于其检查其是否包含某个特定键的值。如无此需求，<code>Dictionary</code>即不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。</p>
+<p>例如，Swift 的<code>Dictionary</code>类型对作用于其键的类型做了些限制。在<a href="../chapter2/04_Collection_Types.html">字典</a>的描述中，字典的键类型必须是<em>可哈希</em>，也就是说，必须有一种方法可以使其被唯一的表示。<code>Dictionary</code>之所以需要其键是可哈希是为了以便于其检查其是否已经包含某个特定键的值。如无此需求，<code>Dictionary</code>既不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。</p>
 <p>这个需求强制加上一个类型约束作用于<code>Dictionary</code>的键上，当然其键类型必须遵循<code>Hashable</code>协议（Swift 标准库中定义的一个特定协议）。所有的 Swift 基本类型（如<code>String</code>，<code>Int</code>， <code>Double</code>和 <code>Bool</code>）默认都是可哈希。</p>
 <p>当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如<code>可哈希</code>具有的类型特征是根据它们概念特征来界定的，而不是它们的直接类型特征。</p>
 <h3 id="-">类型约束语法</h3>
@@ -830,7 +829,7 @@ let stringIndex = findIndex([&quot;Mike&quot;, &quot;Malcolm&quot;, &quot;Andrea
 <p>这个协议没有指定容器里item是如何存储的或何种类型是允许的。这个协议只指定三个任何遵循<code>Container</code>类型所必须支持的功能点。一个遵循的类型也可以提供其他额外的功能，只要满足这三个条件。</p>
 <p>任何遵循<code>Container</code>协议的类型必须指定存储在其里面的值类型，必须保证只有正确类型的items可以加进容器里，必须明确可以通过其下标返回item类型。</p>
 <p>为了定义这三个条件，<code>Container</code>协议需要一个方法指定容器里的元素将会保留，而不需要知道特定容器的类型。<code>Container</code>协议需要指定任何通过<code>append</code>方法添加到容器里的值和容器里元素是相同类型，并且通过容器下标返回的容器元素类型的值的类型是相同类型。</p>
-<p>为了达到此目的，<code>Container</code>协议声明了一个ItemType的关联类型，写作<code>typealias ItemType</code>。The protocol does not define what ItemType is an alias for—that information is left for any conforming type to provide（这个协议不会定义<code>ItemType</code>是遵循类型所提供的何种信息的别名）。尽管如此，<code>ItemType</code>别名支持一种方法识别在一个容器里的items类型，以及定义一种使用在<code>append</code>方法和下标中的类型，以便保证任何期望的<code>Container</code>的行为是强制性的。</p>
+<p>为了达到此目的，<code>Container</code>协议声明了一个ItemType的关联类型，写作<code>typealias ItemType</code>。这个协议不会定义<code>ItemType</code>是什么的别名，这个信息留给了任何遵循协议的类型来提供。尽管如此，<code>ItemType</code>别名支持一种方法识别在一个容器里的items类型，以及定义一种使用在<code>append</code>方法和下标中的类型，以便保证任何期望的<code>Container</code>的行为是强制性的。</p>
 <p>这里是一个早前IntStack类型的非泛型版本，适用于遵循Container协议：</p>
 <pre><code class="lang-swift">struct IntStack: Container {
     // original IntStack implementation
@@ -881,14 +880,14 @@ let stringIndex = findIndex([&quot;Mike&quot;, &quot;Malcolm&quot;, &quot;Andrea
 </code></pre>
 <p>这个时候，占位类型参数<code>T</code>被用作<code>append</code>方法的item参数和下标的返回类型。Swift 因此可以推断出被用作这个特定容器的<code>ItemType</code>的<code>T</code>的合适类型。</p>
 <h3 id="-">扩展一个存在的类型为一指定关联类型</h3>
-<p>在[使用扩展来添加协议兼容性][6]中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。</p>
-<p>Swift的<code>Array</code>已经提供<code>append</code>方法，一个<code>count</code>属性和通过下标来查找一个自己的元素。这三个功能都达到<code>Container</code>协议的要求。也就意味着你可以扩展<code>Array</code>去遵循<code>Container</code>协议，只要通过简单声明<code>Array</code>适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳][7]中有描述这样一个实现一个空扩展的行为：</p>
+<p>在<a href="../chapter2/21_Protocols.html">使用扩展来添加协议兼容性</a>中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。</p>
+<p>Swift的<code>Array</code>已经提供<code>append</code>方法，一个<code>count</code>属性和通过下标来查找一个自己的元素。这三个功能都达到<code>Container</code>协议的要求。也就意味着你可以扩展<code>Array</code>去遵循<code>Container</code>协议，只要通过简单声明<code>Array</code>适用于该协议而已。如何实践这样一个空扩展，在<a href="../chapter2/21_Protocols.html">使用扩展来声明协议的采纳</a>中有描述这样一个实现一个空扩展的行为：</p>
 <pre><code class="lang-swift">extension Array: Container {}
 </code></pre>
 <p>如同上面的泛型<code>Stack</code>类型一样，<code>Array的append</code>方法和下标保证<code>Swift</code>可以推断出<code>ItemType</code>所使用的适用的类型。定义了这个扩展后，你可以将任何<code>Array</code>当作<code>Container</code>来使用。</p>
 <p><a name="where_clauses"></a></p>
 <h2 id="where-">Where 语句</h2>
-<p>[类型约束][8]中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。</p>
+<p><a href="#type_constraints">类型约束</a>中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。</p>
 <p>对于关联类型的定义需求也是非常有用的。你可以通过这样去定义<em>where语句</em>作为一个类型参数队列的一部分。一个<code>where</code>语句使你能够要求一个关联类型遵循一个特定的协议，以及（或）那个特定的类型参数和关联类型可以是相同的。你可写一个<code>where</code>语句，通过紧随放置<code>where</code>关键字在类型参数队列后面，其后跟着一个或者多个针对关联类型的约束，以及（或）一个或多个类型和关联类型的等于关系。</p>
 <p>下面的列子定义了一个名为<code>allItemsMatch</code>的泛型函数，用来检查是否两个<code>Container</code>单例包含具有相同顺序的相同元素。如果匹配到所有的元素，那么返回一个为<code>true</code>的<code>Boolean</code>值，反之，则相反。</p>
 <p>这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和<code>where</code>语句结合来表示：</p>
