@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.7" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="3.7" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_81">
+                    <section class="normal" id="section-gitbook_55">
                     
                         <blockquote>
-<p>翻译：Hawstein</p>
-<p>校对：numbbbbb</p>
+<p>翻译：<a href="https://github.com/Hawstein" target="_blank">Hawstein</a><br>校对：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
 </blockquote>
 <h1 id="-">特性</h1>
 <hr>
@@ -602,9 +601,10 @@
 </ul>
 <p>特性提供了关于声明和类型的更多信息。在Swift中有两类特性，用于修饰声明的以及用于修饰类型的。例如，<code>required</code>特性，当应用于一个类的指定或便利初始化器声明时，表明它的每个子类都必须实现那个初始化器。再比如<code>noreturn</code>特性，当应用于函数或方法类型时，表明该函数或方法不会返回到它的调用者。</p>
 <p>通过以下方式指定一个特性：符号<code>@</code>后面跟特性名，如果包含参数，则把参数带上：</p>
-<pre><code>@attribute name
-@attribute name(attribute arguments)
-</code></pre><p>有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。</p>
+<blockquote>
+<p>@<code>attribute name</code><br>@<code>attribute name</code>(<code>attribute arguments</code>)  </p>
+</blockquote>
+<p>有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。</p>
 <p><a name="declaration_attributes"></a></p>
 <h2 id="-">声明特性</h2>
 <p>声明特性只能应用于声明。然而，你也可以将<code>noreturn</code>特性应用于函数或方法类型。</p>
@@ -631,7 +631,7 @@
 <p>该特性用于修饰任意可以在Objective-C中表示的声明，比如，非嵌套类，协议，类和协议中的属性和方法（包含getter和setter），初始化器，析构器，以下下标。<code>objc</code>特性告诉编译器该声明可以在Objective-C代码中使用。</p>
 <p>如果你将<code>objc</code>特性应用于一个类或协议，它也会隐式地应用于那个类或协议的成员。对于标记了<code>objc</code>特性的类，编译器会隐式地为它的子类添加<code>objc</code>特性。标记了<code>objc</code>特性的协议不能继承自没有标记<code>objc</code>的协议。</p>
 <p><code>objc</code>特性有一个可选的参数，由标记符组成。当你想把<code>objc</code>所修饰的实体以一个不同的名字暴露给Objective-C，你就可以使用这个特性参数。你可以使用这个参数来命名类，协议，方法，getters，setters，以及初始化器。下面的例子把<code>ExampleClass</code>中<code>enabled</code>属性的getter暴露给Objective-C，名字是<code>isEnabled</code>，而不是它原来的属性名。</p>
-<pre><code>@objc
+<pre><code class="lang-swift">@objc
 class ExampleClass {
     var enabled: Bool {
     @objc(isEnabled) get {
@@ -639,7 +639,8 @@ class ExampleClass {
     }
     }
 }
-</code></pre><p><code>optional</code></p>
+</code></pre>
+<p><code>optional</code></p>
 <p>用该特性修饰协议的属性，方法或下标成员，表示实现这些成员并不需要一致性类型（conforming type）。</p>
 <p>你只能用<code>optional</code>特性修饰那些标记了<code>objc</code>特性的协议。因此，只有类类型可以adopt和comform to那些包含可选成员需求的协议。更多关于如何使用<code>optional</code>特性以及如何访问可选协议成员的指导，例如，当你不确定一个conforming类型是否实现了它们，请见：<a href="">可选协议需求</a>。</p>
 <p><code>required</code></p>
@@ -656,7 +657,7 @@ class ExampleClass {
 <p><code>noreturn</code></p>
 <p>该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，<code>T</code>，是<code>@noreturn T</code>。</p>
 <blockquote>
-<p>特性语法<br><em>特色</em> → <strong>@</strong> <a href="..\chapter3\06_Attributes.html#attribute_name"><em>特性名</em></a> <a href="..\chapter3\06_Attributes.html#attribute_argument_clause"><em>特性参数子句</em></a> <em>可选</em><br><em>特性名</em> → <a href="LexicalStructure.html#identifier"><em>标识符</em></a><br><em>特性参数子句</em> → <strong>(</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>)</strong><br><em>特性(Attributes)列表</em> → <a href="..\chapter3\06_Attributes.html#attribute"><em>特色</em></a> <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em><br><em>平衡令牌列表</em> → <a href="..\chapter3\06_Attributes.html#balanced_token"><em>平衡令牌</em></a> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em><br><em>平衡令牌</em> → <strong>(</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>)</strong><br><em>平衡令牌</em> → <strong>[</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>]</strong><br><em>平衡令牌</em> → <strong>{</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>}</strong><br><em>平衡令牌</em> → <strong>任意标识符, 关键字, 字面量或运算符</strong><br><em>平衡令牌</em> → <strong>任意标点除了(, ), [, ], {, 或 }</strong></p>
+<p>特性语法<br><em>特性</em> → <strong>@</strong> <a href="..\chapter3\06_Attributes.html#attribute_name"><em>特性名</em></a> <a href="..\chapter3\06_Attributes.html#attribute_argument_clause"><em>特性参数子句</em></a> <em>可选</em><br><em>特性名</em> → <a href="LexicalStructure.html#identifier"><em>标识符</em></a><br><em>特性参数子句</em> → <strong>(</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>)</strong><br><em>特性(Attributes)列表</em> → <a href="..\chapter3\06_Attributes.html#attribute"><em>特色</em></a> <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em><br><em>平衡令牌列表</em> → <a href="..\chapter3\06_Attributes.html#balanced_token"><em>平衡令牌</em></a> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em><br><em>平衡令牌</em> → <strong>(</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>)</strong><br><em>平衡令牌</em> → <strong>[</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>]</strong><br><em>平衡令牌</em> → <strong>{</strong> <a href="..\chapter3\06_Attributes.html#balanced_tokens"><em>平衡令牌列表</em></a> <em>可选</em> <strong>}</strong><br><em>平衡令牌</em> → <strong>任意标识符, 关键字, 字面量或运算符</strong><br><em>平衡令牌</em> → <strong>任意标点除了(, ), [, ], {, 或 }</strong></p>
 </blockquote>
 
                     

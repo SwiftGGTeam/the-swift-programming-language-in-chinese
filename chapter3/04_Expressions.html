@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.4" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="3.4" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_87">
+                    <section class="normal" id="section-gitbook_61">
                     
                         <blockquote>
-<p>翻译：sg552</p>
-<p>校对：numbbbbb</p>
+<p>翻译：<a href="https://github.com/sg552" target="_blank">sg552</a><br>校对：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
 </blockquote>
 <h1 id="-expressions-">表达式（Expressions）</h1>
 <hr>
@@ -608,9 +607,7 @@
 <p>Swift 中存在四种表达式： 前缀（prefix）表达式，二元（binary）表达式，主要（primary）表达式和后缀（postfix）表达式。表达式可以返回一个值，以及运行某些逻辑（causes a side effect）。</p>
 <p>前缀表达式和二元表达式就是对某些表达式使用各种运算符（operators）。 主要表达式是最短小的表达式，它提供了获取（变量的）值的一种途径。 后缀表达式则允许你建立复杂的表达式，例如配合函数调用和成员访问。 每种表达式都在下面有详细论述～</p>
 <blockquote>
-<p>表达式的语法</p>
-<p><em>expression</em> → <em>prefix-expression</em>­<em>binary-expressions(</em>opt)
-<em>expression-list</em> → <em>expression</em>­| <em>expression</em>­,­<em>expression-list</em></p>
+<p>表达式语法<br><em>表达式</em> → <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a> <a href="..\chapter3\04_Expressions.html#binary_expressions"><em>二元表达式列表</em></a> <em>可选</em><br><em>表达式列表</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#expression_list"><em>表达式列表</em></a>  </p>
 </blockquote>
 <p><a name="prefix_expressions"></a></p>
 <h2 id="-prefix-expressions-">前缀表达式（Prefix Expressions）</h2>
@@ -627,15 +624,14 @@
 <p>对于这些操作符的使用，请参见： Basic Operators and Advanced Operators</p>
 <p>作为对上面标准库运算符的补充，你也可以对 某个函数的参数使用 &#39;&amp;&#39;运算符。 更多信息，请参见： &quot;In-Out parameters&quot;.</p>
 <blockquote>
-<p>前缀表达式的语法</p>
-<p><em>prefix-expression</em> → <em>prefix-operator</em> (opt) <em>postfix-expression</em>
-<em>prefix-expression</em> → <em>in-out-expression</em>­
-<em>in-out-expression</em> → &amp;­<em>identifier</em>­</p>
+<p>前置表达式语法<br><em>前置表达式</em> → <a href="LexicalStructure.html#prefix_operator"><em>前置运算符</em></a> <em>可选</em> <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a><br><em>前置表达式</em> → <a href="..\chapter3\04_Expressions.html#in_out_expression"><em>写入写出(in-out)表达式</em></a><br><em>写入写出(in-out)表达式</em> → <strong>&amp;</strong> <a href="LexicalStructure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
 <p><a name="binary_expressions"></a></p>
 <h2 id="-binary-expressions-">二元表达式（Binary Expressions）</h2>
 <p>二元表达式由 &quot;左边参数&quot; + &quot;二元运算符&quot; + &quot;右边参数&quot; 组成, 它有如下的形式：</p>
-<p>  <code>left-hand argument</code> <code>operator</code> <code>right-hand argument</code></p>
+<blockquote>
+<p><code>left-hand argument</code> <code>operator</code> <code>right-hand argument</code></p>
+</blockquote>
 <p>Swift 标准库提供了如下的二元运算符：</p>
 <ul>
 <li>求幂相关（无结合，优先级160）<ul>
@@ -731,55 +727,50 @@
 </ul>
 <p>关于这些运算符（operators）的更多信息，请参见：Basic Operators and Advanced Operators.</p>
 <blockquote>
-<blockquote>
-<p>注意</p>
-<p>在解析时,  一个二元表达式表示为一个一级数组（a flat list）, 这个数组（List）根据运算符的先后顺序，被转换成了一个tree. 例如： 2 + 3 <em> 5 首先被认为是：  2, + , <code>3</code>, </em>, 5. 随后它被转换成 tree （2 + （3 * 5））</p>
+<p>注意<br>在解析时,  一个二元表达式表示为一个一级数组（a flat list）, 这个数组（List）根据运算符的先后顺序，被转换成了一个tree. 例如： 2 + 3 <em> 5 首先被认为是：  2, + , <code>3</code>, </em>, 5. 随后它被转换成 tree （2 + （3 * 5））</p>
 </blockquote>
-<p>二元表达式的语法</p>
-<p><em>binary-expression</em> → <em>binary-operator</em>­<em>prefix-expression</em>­
-<em>binary-expression</em> → <em>assignment-operator</em>­prefix-expression<em>
-</em>binary-expression<em> → </em>conditional-operator<em>­prefix-expression</em>
-<em>binary-expression</em> → <em>type-casting-operator</em>­
-<em>binary-expression</em>s → <em>binary-expression</em>­<em>binary-expressions</em>(opt)</p>
+<p></p>
+
+<blockquote>
+<p>二元表达式语法<br><em>二元表达式</em> → <a href="LexicalStructure.html#binary_operator"><em>二元运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#assignment_operator"><em>赋值运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#conditional_operator"><em>条件运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#type_casting_operator"><em>类型转换运算符</em></a><br><em>二元表达式列表</em> → <a href="..\chapter3\04_Expressions.html#binary_expression"><em>二元表达式</em></a> <a href="..\chapter3\04_Expressions.html#binary_expressions"><em>二元表达式列表</em></a> <em>可选</em>  </p>
 </blockquote>
 <p><a name="assignment_operator"></a></p>
 <h2 id="-assignment-operator-">赋值表达式（Assignment Operator）</h2>
 <p>The assigment operator sets a new value for a given expression. It has the following form:
 赋值表达式会对某个给定的表达式赋值。 它有如下的形式；</p>
+<blockquote>
 <p><code>expression</code> = <code>value</code></p>
+</blockquote>
 <p>就是把右边的 <em>value</em> 赋值给左边的 <em>expression</em>. 如果左边的<em>expression</em> 需要接收多个参数（是一个tuple ），那么右边必须也是一个具有同样数量参数的tuple. （允许嵌套的tuple）</p>
 <pre><code class="lang-swift">(a, _, (b, c)) = (&quot;test&quot;, 9.45, (12, 3))
 // a is &quot;test&quot;, b is 12, c is 3, and 9.45 is ignored
 </code></pre>
 <p>赋值运算符不返回任何值。</p>
 <blockquote>
-<p>赋值表达式的语法</p>
-<p><em>assignment-operator</em> → =­</p>
+<p>赋值运算符语法<br><em>赋值运算符</em> → <strong>=</strong>  </p>
 </blockquote>
 <p><a name="ternary_conditional_operator"></a></p>
 <h2 id="-ternary-conditional-operator-">三元条件运算符（Ternary Conditional Operator）</h2>
 <p>三元条件运算符 是根据条件来获取值。 形式如下：</p>
-<pre><code>`condition` ? `expression used if true` : `expression used if false`
-</code></pre><p>如果 <code>condition</code> 是true, 那么返回 第一个表达式的值（此时不会调用第二个表达式）， 否则返回第二个表达式的值（此时不会调用第一个表达式）。</p>
+<blockquote>
+<p><code>condition</code> ? <code>expression used if true</code> : <code>expression used if false</code></p>
+</blockquote>
+<p>如果 <code>condition</code> 是true, 那么返回 第一个表达式的值（此时不会调用第二个表达式）， 否则返回第二个表达式的值（此时不会调用第一个表达式）。</p>
 <p>想看三元条件运算符的例子，请参见： Ternary Conditional Operator.</p>
 <blockquote>
-<p>三元条件表达式</p>
-<p><code>conditional-operator</code> → ?­<code>expression</code>­:­</p>
+<p>三元条件运算符语法<br><em>三元条件运算符</em> → <strong>?</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>:</strong>  </p>
 </blockquote>
 <p><a name="type-casting_operators"></a></p>
 <h2 id="-type-casting-operators-">类型转换运算符（Type-Casting Operators）</h2>
 <p>有两种类型转换操作符： as 和 is.  它们有如下的形式：</p>
-<pre><code>`expression` as `type`
-`expression` as? `type`
-`expression` is `type`
-</code></pre><p>as 运算符会把<code>目标表达式</code>转换成指定的<code>类型</code>（specified type），过程如下：</p>
+<blockquote>
+<p><code>expression</code> as <code>type</code><br><code>expression</code> as? <code>type</code><br><code>expression</code> is <code>type</code>  </p>
+</blockquote>
+<p>as 运算符会把<code>目标表达式</code>转换成指定的<code>类型</code>（specified type），过程如下：</p>
 <ul>
-<li><p>如果类型转换成功， 那么目标表达式就会返回指定类型的实例（instance）. 例如：把子类（subclass）变成父类（superclass）时.</p>
-</li>
-<li><p>如果转换失败，则会抛出编译错误（ compile-time error）。</p>
-</li>
-<li><p>如果上述两个情况都不是（也就是说，编译器在编译时期无法确定转换能否成功，） 那么目标表达式就会变成指定的类型的optional. （is an optional of the specified type ） 然后在运行时，如果转换成功， 目标表达式就会作为 optional的一部分来返回， 否则，目标表达式返回nil. 对应的例子是： 把一个 superclass 转换成一个 subclass.</p>
-</li>
+<li>如果类型转换成功， 那么目标表达式就会返回指定类型的实例（instance）. 例如：把子类（subclass）变成父类（superclass）时.</li>
+<li>如果转换失败，则会抛出编译错误（ compile-time error）。</li>
+<li>如果上述两个情况都不是（也就是说，编译器在编译时期无法确定转换能否成功，） 那么目标表达式就会变成指定的类型的optional. （is an optional of the specified type ） 然后在运行时，如果转换成功， 目标表达式就会作为 optional的一部分来返回， 否则，目标表达式返回nil. 对应的例子是： 把一个 superclass 转换成一个 subclass.</li>
 </ul>
 <pre><code class="lang-swift">class SomeSuperType {}
 class SomeType: SomeSuperType {}
@@ -802,22 +793,13 @@ let y2: SomeType = x    // Type information from an annotation
 </code></pre>
 <p>关于类型转换的更多内容和例子，请参见： Type Casting.</p>
 <blockquote>
-<p>类型转换的语法</p>
-<p><em>type-casting-operator</em> → is­<em>type</em>­| as­?(opt)­<em>type</em></p>
+<p>类型转换运算符(type-casting-operator)语法<br><em>类型转换运算符</em> → <strong>is</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> | <strong>as</strong> <strong>?</strong> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
 <p><a name="primary_expressions"></a></p>
-<h2 id="-primary-expressions-">主要表达式（Primary Expressions）</h2>
-<p><code>主要表达式</code>是最基本的表达式。 它们可以跟 前缀表达式，二元表达式，后缀表达式以及其他主要表达式组合使用。</p>
+<h2 id="-primary-expressions-">主表达式（Primary Expressions）</h2>
+<p><code>主表达式</code>是最基本的表达式。 它们可以跟 前缀表达式，二元表达式，后缀表达式以及其他主要表达式组合使用。</p>
 <blockquote>
-<p>主要表达式的语法</p>
-<p><em>primary-expression</em> → <em>identifier</em>­<em>generic-argument-clause</em>(opt)
-<em>primary-expression</em> → <em>literal-expression</em>­
-<em>primary-expression</em> → <em>self-expression</em>­
-<em>primary-expression</em> → <em>superclass-expression</em>­
-<em>primary-expression</em> → <em>closure-expression</em>­
-<em>primary-expression</em> → <em>parenthesized-expression</em>­
-<em>primary-expression</em> → <em>implicit-member-expression</em>
-<em>primary-expression</em> → <em>wildcard-expression</em></p>
+<p>主表达式语法<br><em>主表达式</em> → <a href="LexicalStructure.html#identifier"><em>标识符</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#literal_expression"><em>字面量表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#self_expression"><em>self表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#superclass_expression"><em>超类表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#closure_expression"><em>闭包表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#implicit_member_expression"><em>隐式成员表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#wildcard_expression"><em>通配符表达式</em></a>  </p>
 </blockquote>
 <h3 id="-literal-expression-">字符型表达式（Literal Expression）</h3>
 <p>由这些内容组成：普通的字符（string, number） , 一个字符的字典或者数组，或者下面列表中的特殊字符。</p>
@@ -854,31 +836,22 @@ let y2: SomeType = x    // Type information from an annotation
 </table>
 <p>在某个函数（function）中，<code>__FUNCTION__</code> 会返回当前函数的名字。 在某个方法（method）中，它会返回当前方法的名字。 在某个property 的getter/setter中会返回这个属性的名字。 在init/subscript中 只有的特殊成员（member）中会返回这个keyword的名字，在某个文件的顶端（the top level of a file），它返回的是当前module的名字。</p>
 <p>一个array literal，是一个有序的值的集合。 它的形式是：</p>
-<pre><code>[`value 1`, `value 2`, `...`]
-</code></pre><p>数组中的最后一个表达式可以紧跟一个逗号（&#39;,&#39;）. []表示空数组 。 array literal的type是 T[], 这个T就是数组中元素的type. 如果该数组中有多种type, T则是跟这些type的公共supertype最接近的type.（closest common supertype）</p>
-<p>一个<code>dictionary literal</code> 是一个包含无序的键值对（key-value pairs）的集合，它的形式是:</p>
-<pre><code>[`key 1`: `value 1`, `key 2`: `value 2`, `...`]
-</code></pre><p>dictionary 的最后一个表达式可以是一个逗号（&#39;,&#39;）. [:] 表示一个空的dictionary. 它的type是 Dictionary<KeyType, ValueType> （这里KeyType表示 key的type, ValueType表示 value的type） 如果这个dictionary 中包含多种 types, 那么KeyType, Value 则对应着它们的公共supertype最接近的type（ closest common supertype）.</p>
 <blockquote>
-<p>字符型表达式的语法</p>
-<p><em>literal-expression</em>  → <em>literal</em>
-<em>literal-expression</em>  → <em>array-literal</em>­| <em>dictionary-literal</em>­
-<em>literal-expression</em>  → <em>_<em>FILE_</em></em>­| <em>_<em>LINE_</em></em>­| <em>_<em>COLUMN_</em></em>­| <em>_<em>FUNCTION_</em></em>­
-<em>array-literal</em>  → [­<em>array-literal-items</em>­opt­]­
-<em>array-literal-items</em>  → <em>array-literal-item</em>­,­(opt) | ­<em>array-literal-item</em>­,­<em>array-literal-items</em>­
-<em>array-literal-item</em>  → <em>expression</em>­
-<em>dictionary-literal</em>  → [­<em>dictionary-literal-items</em>­]­  [­:­]­
-<em>dictionary-literal-items</em>  → <em>dictionary-literal-item</em>,­(opt)­| <em>dictionary-literal-item</em>­,­<em>dictionary-literal-items</em>­
-<em>dictionary-literal-item</em>  → <em>expression</em>­:­<em>expression</em>­</p>
+<p>[<code>value 1</code>, <code>value 2</code>, <code>...</code>]</p>
+</blockquote>
+<p>数组中的最后一个表达式可以紧跟一个逗号（&#39;,&#39;）. []表示空数组 。 array literal的type是 T[], 这个T就是数组中元素的type. 如果该数组中有多种type, T则是跟这些type的公共supertype最接近的type.（closest common supertype）</p>
+<p>一个<code>dictionary literal</code> 是一个包含无序的键值对（key-value pairs）的集合，它的形式是:</p>
+<blockquote>
+<p>[<code>key 1</code>: <code>value 1</code>, <code>key 2</code>: <code>value 2</code>, <code>...</code>]</p>
+</blockquote>
+<p>dictionary 的最后一个表达式可以是一个逗号（&#39;,&#39;）. [:] 表示一个空的dictionary. 它的type是 Dictionary<KeyType, ValueType> （这里KeyType表示 key的type, ValueType表示 value的type） 如果这个dictionary 中包含多种 types, 那么KeyType, Value 则对应着它们的公共supertype最接近的type（ closest common supertype）.</p>
+<blockquote>
+<p>字面量表达式语法<br><em>字面量表达式</em> → <a href="LexicalStructure.html#literal"><em>字面量</em></a><br><em>字面量表达式</em> → <a href="..\chapter3\04_Expressions.html#array_literal"><em>数组字面量</em></a> | <a href="..\chapter3\04_Expressions.html#dictionary_literal"><em>字典字面量</em></a><br><em>字面量表达式</em> → <strong>&#95;&#95;FILE&#95;&#95;</strong> | <strong>&#95;&#95;LINE&#95;&#95;</strong> | <strong>&#95;&#95;COLUMN&#95;&#95;</strong> | <strong>&#95;&#95;FUNCTION&#95;&#95;</strong><br><em>数组字面量</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#array_literal_items"><em>数组字面量项列表</em></a> <em>可选</em> <strong>]</strong><br><em>数组字面量项列表</em> → <a href="..\chapter3\04_Expressions.html#array_literal_item"><em>数组字面量项</em></a> <strong>,</strong> <em>可选</em> | <a href="..\chapter3\04_Expressions.html#array_literal_item"><em>数组字面量项</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#array_literal_items"><em>数组字面量项列表</em></a><br><em>数组字面量项</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a><br><em>字典字面量</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#dictionary_literal_items"><em>字典字面量项列表</em></a> <strong>]</strong> | <strong>[</strong> <strong>:</strong> <strong>]</strong><br><em>字典字面量项列表</em> → <a href="..\chapter3\04_Expressions.html#dictionary_literal_item"><em>字典字面量项</em></a> <strong>,</strong> <em>可选</em> | <a href="..\chapter3\04_Expressions.html#dictionary_literal_item"><em>字典字面量项</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#dictionary_literal_items"><em>字典字面量项列表</em></a><br><em>字典字面量项</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>:</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
 <h3 id="self-self-expression-">self表达式（Self Expression）</h3>
 <p>self表达式是对 当前type 或者当前instance的引用。它的形式如下：</p>
 <blockquote>
-<p>self
-self.<code>member name</code>
-self[<code>subscript index</code>]
-self（<code>initializer arguments</code>）
-self.init（<code>initializer arguments</code>）</p>
+<p>self<br>self.<code>member name</code><br>self[<code>subscript index</code>]<br>self（<code>initializer arguments</code>）<br>self.init（<code>initializer arguments</code>）  </p>
 </blockquote>
 <p>如果在 initializer, subscript, instance method中，self等同于当前type的instance. 在一个静态方法（static method）, 类方法（class method）中， self等同于当前的type.</p>
 <p>当访问 member（成员变量时）， self 用来区分重名变量（例如函数的参数）.  例如，
@@ -899,31 +872,23 @@ self.init（<code>initializer arguments</code>）</p>
 }
 </code></pre>
 <blockquote>
-<p>self表达式的语法</p>
-<p><em>self-expression</em> → self­
-<em>self-expression</em> → self­.­<em>identifier</em>­
-<em>self-expression</em> → self­[­<em>expression</em>­]­
-<em>self-expression</em> → self­.­init­</p>
+<p>Self 表达式语法<br><em>self表达式</em> → <strong>self</strong><br><em>self表达式</em> → <strong>self</strong> <strong>.</strong> <a href="LexicalStructure.html#identifier"><em>标识符</em></a><br><em>self表达式</em> → <strong>self</strong> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>self表达式</em> → <strong>self</strong> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
 <h3 id="-superclass-expression-">超类表达式（Superclass Expression）</h3>
 <p>超类表达式可以使我们在某个class中访问它的超类. 它有如下形式：</p>
-<pre><code>super.`member name`
-super[`subscript index`]
-super.init（`initializer arguments`）
-</code></pre><p>形式1 用来访问超类的某个成员（member）. 形式2 用来访问该超类的 subscript 实现。 形式3 用来访问该超类的 initializer.</p>
+<blockquote>
+<p>super.<code>member name</code><br>super[<code>subscript index</code>]<br>super.init（<code>initializer arguments</code>）  </p>
+</blockquote>
+<p>形式1 用来访问超类的某个成员（member）. 形式2 用来访问该超类的 subscript 实现。 形式3 用来访问该超类的 initializer.</p>
 <p>子类（subclass）可以通过超类（superclass）表达式在它们的 member, subscripting 和 initializers 中来利用它们超类中的某些实现（既有的方法或者逻辑）。</p>
 <blockquote>
-<p>GRAMMAR OF A SUPERCLASS EXPRESSION</p>
-<p><em>superclass-expression</em> →  <em>superclass-method-expression</em> |  <em>superclass-subscript-expression</em>­|  <em>superclass-initializer-expression</em>
-<em>superclass-method-expression</em> → super­.­<em>identifier</em>
-<em>superclass-subscript-expression</em> → super­[­<em>expression</em>­]­
-<em>superclass-initializer-expression</em> → super­.­init­</p>
+<p>超类(superclass)表达式语法<br><em>超类表达式</em> → <a href="..\chapter3\04_Expressions.html#superclass_method_expression"><em>超类方法表达式</em></a> | <a href="..\chapter3\04_Expressions.html#超类下标表达式"><em>超类下标表达式</em></a> | <a href="..\chapter3\04_Expressions.html#superclass_initializer_expression"><em>超类构造器表达式</em></a><br><em>超类方法表达式</em> → <strong>super</strong> <strong>.</strong> <a href="LexicalStructure.html#identifier"><em>标识符</em></a><br><em>超类下标表达式</em> → <strong>super</strong> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>超类构造器表达式</em> → <strong>super</strong> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
 <h3 id="-closure-expression-">闭包表达式（Closure Expression）</h3>
 <p>闭包（closure） 表达式可以建立一个闭包（在其他语言中也叫 lambda, 或者 匿名函数（anonymous function））. 跟函数（function）的声明一样， 闭包（closure）包含了可执行的代码（跟方法主体（statement）类似） 以及接收（capture）的参数。 它的形式如下：</p>
-<pre><code class="lang-swift">  { （parameters） -&gt; return type in
-      statements
-  }
+<pre><code class="lang-swift">{ （parameters） -&gt; return type in
+    statements
+}
 </code></pre>
 <p>闭包的参数声明形式跟方法中的声明一样, 请参见：Function Declaration.</p>
 <p>闭包还有几种特殊的形式, 让使用更加简洁：</p>
@@ -960,36 +925,28 @@ myFunction { [weak parent = self.parent] in print（parent!.title） }
 </code></pre>
 <p>关于闭包表达式的更多信息和例子，请参见： Closure Expressions.</p>
 <blockquote>
-<p>闭包表达式的语法</p>
-<p><em>closure-expression</em> → {­<em>closure-signature</em>­opt­<em>statements</em>­}­
-<em>closure-signature</em> →  <em>parameter-clause</em>­<em>function-result</em>­(opt)­in­
-<em>closure-signature</em> →  <em>identifier-list</em>­<em>function-result</em>­(opt)­in­
-<em>closure-signature</em> →  <em>capture-list</em>­<em>parameter-clause</em>­<em>function-result</em>­(opt)­in­
-<em>closure-signature</em> →  <em>capture-list</em>­<em>identifier-list</em>­<em>function-result</em>­(opt)­in­
-<em>closure-signature</em> →  <em>capture-list</em>­in­
-<em>capture-list</em> → [­<em>capture-specifier</em>­<em>expression</em>­]­
-<em>capture-specifier</em> → weak­| unowned­| unowned（safe）­| unowned（unsafe）­</p>
+<p>闭包表达式语法<br><em>闭包表达式</em> → <strong>{</strong> <a href="..\chapter3\04_Expressions.html#closure_signature"><em>闭包签名(Signational)</em></a> <em>可选</em> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> <strong>}</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="LexicalStructure.html#identifier_list"><em>标识符列表</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <a href="LexicalStructure.html#identifier_list"><em>标识符列表</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <strong>in</strong><br><em>捕获(Capature)列表</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#capture_specifier"><em>捕获(Capature)说明符</em></a> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>捕获(Capature)说明符</em> → <strong>weak</strong> | <strong>unowned</strong> | <strong>unowned(safe)</strong> | <strong>unowned(unsafe)</strong>  </p>
 </blockquote>
 <h3 id="-implicit-member-expression-">隐式成员表达式（Implicit Member Expression）</h3>
 <p>在可以判断出类型（type）的上下文（context）中，隐式成员表达式是访问某个type的member（ 例如 class method, enumeration case） 的简洁方法。 它的形式是：</p>
+<blockquote>
 <p>.<code>member name</code></p>
+</blockquote>
 <p>例子：</p>
 <pre><code class="lang-swift">var x = MyEnumeration.SomeValue
 x = .AnotherValue
 </code></pre>
 <blockquote>
-<p> 隐式成员表达式的语法</p>
-<p> <em>implicit-member-expression</em> → .­<em>identifier</em></p>
+<p>隐式成员表达式语法<br><em>隐式成员表达式</em> → <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
 <h3 id="-parenthesized-expression-">圆括号表达式（Parenthesized Expression）</h3>
 <p>圆括号表达式由多个子表达式和逗号&#39;,&#39;组成。 每个子表达式前面可以有 identifier x: 这样的可选前缀。形式如下：</p>
+<blockquote>
 <p>（<code>identifier 1</code>: <code>expression 1</code>, <code>identifier 2</code>: <code>expression 2</code>, <code>...</code>）</p>
+</blockquote>
 <p>圆括号表达式用来建立tuples ， 然后把它做为参数传递给 function. 如果某个圆括号表达式中只有一个 子表达式，那么它的type就是 子表达式的type。例如： （1）的 type是Int, 而不是（Int）</p>
 <blockquote>
-<p>圆括号表达式的语法</p>
-<p><em>parenthesized-expression</em> → （­<em>expression-element-list</em> (opt)­）­
-<em>expression-element-list</em> → <em>expression-element</em>­| <em>expression-element</em>­,­<em>expression-element-list</em>­
-<em>expression-element</em> → <em>expression</em>­| <em>identifier</em>­:­<em>expression</em></p>
+<p>圆括号表达式(Parenthesized Expression)语法<br><em>圆括号表达式</em> → <strong>(</strong> <a href="..\chapter3\04_Expressions.html#expression_element_list"><em>表达式元素列表</em></a> <em>可选</em> <strong>)</strong><br><em>表达式元素列表</em> → <a href="..\chapter3\04_Expressions.html#expression_element"><em>表达式元素</em></a> | <a href="..\chapter3\04_Expressions.html#expression_element"><em>表达式元素</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#expression_element_list"><em>表达式元素列表</em></a><br><em>表达式元素</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <strong>:</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
 <h3 id="-wildcard-expression-">通配符表达式（Wildcard Expression）</h3>
 <p>通配符表达式用来忽略传递进来的某个参数。例如：下面的代码中，10被传递给x, 20被忽略（译注：好奇葩的语法。。。）</p>
@@ -997,8 +954,7 @@ x = .AnotherValue
 // x is 10, 20 is ignored
 </code></pre>
 <blockquote>
-<p>通配符表达式的语法</p>
-<p><em>wildcard-expression</em> → _­</p>
+<p>通配符表达式语法<br><em>通配符表达式</em> → <strong>_</strong>  </p>
 </blockquote>
 <p><a name="postfix_expressions"></a></p>
 <h2 id="-postfix-expressions-">后缀表达式（Postfix Expressions）</h2>
@@ -1010,25 +966,19 @@ x = .AnotherValue
 </ul>
 <p>对于这些操作符的使用，请参见： Basic Operators and Advanced Operators</p>
 <blockquote>
-<p>后缀表达式的语法</p>
-<p><em>postfix-expression</em> → <em>primary-expression</em>
-<em>postfix-expression</em> → <em>postfix-expression</em>­<em>postfix-operator</em>
-<em>postfix-expression</em> → <em>function-call-expression</em>­
-<em>postfix-expression</em> → <em>initializer-expression</em>­
-<em>postfix-expression</em> → <em>explicit-member-expression</em>­
-<em>postfix-expression</em> → <em>postfix-self-expression</em>­
-<em>postfix-expression</em> → <em>dynamic-type-expression</em>­
-<em>postfix-expression</em> → <em>subscript-expression</em>­
-<em>postfix-expression</em> → <em>forced-value-expression</em>­
-<em>postfix-expression</em> → <em>optional-chaining-expression</em>­</p>
+<p>后置表达式语法<br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#primary_expression"><em>主表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\02_Lexical_Structure.html#postfix_operator"><em>后置运算符</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#function_call_expression"><em>函数调用表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#initializer_expression"><em>构造器表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#explicit_member_expression"><em>显示成员表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_self_expression"><em>后置self表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#dynamic_type_expression"><em>动态类型表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#subscript_expression"><em>下标表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#forced_value_expression"><em>强制取值(Forced Value)表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#optional_chaining_expression"><em>可选链(Optional Chaining)表达式</em></a>  </p>
 </blockquote>
 <h3 id="-function-call-expression-">函数调用表达式（Function Call Expression）</h3>
 <p>函数调用表达式由函数名和参数列表组成。它的形式如下：</p>
+<blockquote>
 <p><code>function name</code>（<code>argument value 1</code>, <code>argument value 2</code>）</p>
+</blockquote>
 <p>The function name can be any expression whose value is of a function type.
 （不用翻译了, 太罗嗦）</p>
 <p>如果该function 的声明中指定了参数的名字，那么在调用的时候也必须得写出来. 例如：</p>
+<blockquote>
 <p><code>function name</code>（<code>argument name 1</code>: <code>argument value 1</code>, <code>argument name 2</code>: <code>argument value 2</code>）</p>
+</blockquote>
 <p>可以在 函数调用表达式的尾部（最后一个参数之后）加上 一个闭包（closure） ， 该闭包会被目标函数理解并执行。它具有如下两种写法：</p>
 <pre><code class="lang-swift">// someFunction takes an integer and a closure as its arguments
 someFunction（x, {$0 == 13}）
@@ -1040,23 +990,19 @@ myData.someMethod（） {$0 == 13}
 myData.someMethod {$0 == 13}
 </code></pre>
 <blockquote>
-<p>GRAMMAR OF A FUNCTION CALL EXPRESSION</p>
-<p><em>function-call-expression</em> → <em>postfix-expression</em>­<em>parenthesized-expression</em>
-<em>function-call-expression</em> → <em>postfix-expression</em>­<em>parenthesized-expression</em>­(opt)­<em>trailing-closure</em>­
-<em>trailing-closure</em> → <em>closure-expression</em>­</p>
+<p>函数调用表达式语法<br><em>函数调用表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a><br><em>函数调用表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a> <em>可选</em> <a href="..\chapter3\04_Expressions.html#trailing_closure"><em>后置闭包(Trailing Closure)</em></a><br><em>后置闭包(Trailing Closure)</em> → <a href="..\chapter3\04_Expressions.html#closure_expression"><em>闭包表达式</em></a>  </p>
 </blockquote>
 <h3 id="-initializer-expression-">初始化函数表达式（Initializer Expression）</h3>
 <p>Initializer表达式用来给某个Type初始化。 它的形式如下：</p>
+<blockquote>
 <p><code>expression</code>.init（<code>initializer arguments</code>）</p>
+</blockquote>
 <p>（Initializer表达式用来给某个Type初始化。） 跟函数（function）不同， initializer 不能返回值。</p>
 <pre><code class="lang-swift">var x = SomeClass.someClassFunction // ok
 var y = SomeClass.init              // error
-```swift
-
-可以通过 initializer 表达式来委托调用（delegate to ）到superclass的initializers.
-
-```swift
-class SomeSubClass: SomeSuperClass {
+</code></pre>
+<p>可以通过 initializer 表达式来委托调用（delegate to ）到superclass的initializers.</p>
+<pre><code class="lang-swift">class SomeSubClass: SomeSuperClass {
     init（） {
         // subclass initialization goes here
         super.init（）
@@ -1064,12 +1010,13 @@ class SomeSubClass: SomeSuperClass {
 }
 </code></pre>
 <blockquote>
-<p>initializer表达式的语法</p>
-<p><em>initializer-expression</em> → <em>postfix-expression</em>­.­init­</p>
+<p>构造器表达式语法<br><em>构造器表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
 <h3 id="-explicit-member-expression-">显式成员表达式（Explicit Member Expression）</h3>
 <p>显示成员表达式允许我们访问type, tuple, module的成员变量。它的形式如下：</p>
+<blockquote>
 <p><code>expression</code>.<code>member name</code></p>
+</blockquote>
 <p>该member 就是某个type在声明时候所定义（declaration or extension） 的变量, 例如：</p>
 <pre><code class="lang-swift">class SomeClass {
     var someProperty = 42
@@ -1085,24 +1032,24 @@ t.0 = t.1
 <p>The members of a module access the top-level declarations of that module.
 （不确定：对于某个module的member的调用，只能调用在top-level声明中的member.）</p>
 <blockquote>
-<p>显示成员表达式的语法</p>
-<p><em>explicit-member-expression</em> → <em>postfix-expression</em>­.­<em>decimal-digit</em>­
-<em>explicit-member-expression</em> → <em>postfix-expression</em>­.­<em>identifier</em>­<em>generic-argument-clause</em>(opt)</p>
+<p>显式成员表达式语法<br><em>显示成员表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#decimal_digit"><em>十进制数字</em></a><br><em>显示成员表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em>  </p>
 </blockquote>
 <h3 id="-self-postfix-self-expression-">后缀self表达式（Postfix Self Expression）</h3>
 <p>后缀表达式由 某个表达式 + &#39;.self&#39; 组成. 形式如下：</p>
-<p><code>expression</code>.self
-<code>type</code>.self</p>
+<blockquote>
+<p><code>expression</code>.self<br><code>type</code>.self  </p>
+</blockquote>
 <p>形式1 表示会返回 expression 的值。例如： x.self 返回 x</p>
 <p>形式2：返回对应的type。我们可以用它来动态的获取某个instance的type。</p>
 <blockquote>
-<p>后缀self表达式的语法</p>
-<p><em>postfix-self-expression</em> → <em>postfix-expression</em>­.­self­</p>
+<p>后置Self 表达式语法<br><em>后置self表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>self</strong>  </p>
 </blockquote>
 <h3 id="dynamic-dynamic-type-expression-">dynamic表达式（Dynamic Type Expression）</h3>
 <p>（因为dynamicType是一个独有的方法，所以这里保留了英文单词，未作翻译, --- 类似与self expression）</p>
 <p>dynamicType 表达式由 某个表达式 + &#39;.dynamicType&#39; 组成。</p>
+<blockquote>
 <p><code>expression</code>.dynamicType</p>
+</blockquote>
 <p>上面的形式中， expression 不能是某type的名字（当然了，如果我都知道它的名字了还需要动态来获取它吗）。动态类型表达式会返回&quot;运行时&quot;某个instance的type, 具体请看下面的列子：</p>
 <pre><code class="lang-swift">class SomeBaseClass {
     class func printClassName（） {
@@ -1122,29 +1069,32 @@ someInstance.dynamicType.printClassName（）
 // prints &quot;SomeSubClass&quot;
 </code></pre>
 <blockquote>
-<p>dynamic type 表达式</p>
-<p><em>dynamic-type-expression</em> → <em>postfix-expression</em>­.­dynamicType­</p>
+<p>动态类型表达式语法<br><em>动态类型表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>dynamicType</strong>  </p>
 </blockquote>
 <h3 id="-subscript-expression-">下标脚本表达式（Subscript Expression）</h3>
 <p>下标脚本表达式提供了通过下标脚本访问getter/setter 的方法。它的形式是：</p>
+<blockquote>
 <p><code>expression</code>[<code>index expressions</code>]</p>
+</blockquote>
 <p>可以通过下标脚本表达式通过getter获取某个值，或者通过setter赋予某个值.</p>
 <p>关于subscript的声明，请参见： Protocol Subscript Declaration.</p>
 <blockquote>
-<p>下标脚本表达式的语法</p>
-<p><em>subscript-expression</em> → <em>postfix-expression</em>­[­<em>expression-list</em>­]­</p>
+<p>附属脚本表达式语法<br><em>附属脚本表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression_list"><em>表达式列表</em></a> <strong>]</strong>  </p>
 </blockquote>
 <h3 id="-forced-value-expression-">强制取值表达式（Forced-Value Expression）</h3>
 <p>强制取值表达式用来获取某个目标表达式的值（该目标表达式的值必须不是nil ）。它的形式如下：</p>
+<blockquote>
 <p><code>expression</code>!</p>
+</blockquote>
 <p>如果该表达式的值不是nil, 则返回对应的值。 否则，抛出运行时错误（runtime error）。</p>
 <blockquote>
-<p>强制取值表达式的语法</p>
-<p><em>forced-value-expression</em> → <em>postfix-expression</em>­!­</p>
+<p>强制取值(Forced Value)语法<br><em>强制取值(Forced Value)表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>!</strong>  </p>
 </blockquote>
 <h3 id="-optional-chaining-expression-">可选链表达式（Optional-Chaining Expression）</h3>
 <p>可选链表达式由目标表达式 + &#39;?&#39; 组成，形式如下：</p>
+<blockquote>
 <p><code>expression</code>?</p>
+</blockquote>
 <p>后缀&#39;?&#39; 返回目标表达式的值，把它做为可选的参数传递给后续的表达式</p>
 <p>如果某个后缀表达式包含了可选链表达式，那么它的执行过程就比较特殊： 首先先判断该可选链表达式的值，如果是 nil, 整个后缀表达式都返回 nil, 如果该可选链的值不是nil, 则正常返回该后缀表达式的值（依次执行它的各个子表达式）。在这两种情况下，该后缀表达式仍然是一个optional type（In either case, the value of the postfix expression is still of an optional type）</p>
 <p>如果某个&quot;后缀表达式&quot;的&quot;子表达式&quot;中包含了&quot;可选链表达式&quot;，那么只有最外层的表达式返回的才是一个optional type. 例如，在下面的例子中， 如果c 不是nil, 那么 c?.property.performAction（） 这句代码在执行时，就会先获得c 的property方法，然后调用 performAction（）方法。 然后对于 &quot;c?.property.performAction（）&quot; 这个整体，它的返回值是一个optional type.</p>
@@ -1157,8 +1107,7 @@ var result: Bool? = c?.property.performAction（）
 }
 </code></pre>
 <blockquote>
-<p>可选链表达式的语法</p>
-<p><em>optional-chaining-expression</em> → <em>postfix-expression</em>­?­</p>
+<p>可选链表达式语法<br><em>可选链表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>?</strong>  </p>
 </blockquote>
 
                     

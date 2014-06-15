@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.8" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="2.8" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,10 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_49">
+                    <section class="normal" id="section-gitbook_23">
                     
                         <blockquote>
-<p>翻译：yankuangshi<br>校对：shinyzhu  </p>
+<p>翻译：<a href="https://github.com/yankuangshi" target="_blank">yankuangshi</a><br>校对：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a></p>
 </blockquote>
 <h1 id="-enumerations-">枚举（Enumerations）</h1>
 <hr>
@@ -609,7 +609,7 @@
 <p><a name="enumeration_syntax"></a></p>
 <h2 id="-">枚举语法</h2>
 <p>使用<code>enum</code>关键词并且把它们的整个定义放在一对大括号内：</p>
-<pre><code class="lang-swift">enum SomeEumeration {
+<pre><code class="lang-swift">enum SomeEnumeration {
   // enumeration definition goes here
 }
 </code></pre>
@@ -721,7 +721,7 @@ case let .QRCode(productCode):
     case CarriageReturn = &quot;\r&quot;
 }
 </code></pre>
-<p>在这里，称为<code>ASCIIControlCharacter</code>的枚举的原始值类型被定义为字符型<code>Character</code>，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符<code>Strings and Characters</code>部分。</p>
+<p>在这里，称为<code>ASCIIControlCharacter</code>的枚举的原始值类型被定义为字符型<code>Character</code>，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符<a href="03_Strings_and_Characters.html"><code>Strings and Characters</code></a>部分。</p>
 <p>注意，原始值和实例值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。实例值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。</p>
 <p>原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当整型值被用于原始值，如果其他枚举成员没有值时，它们会自动递增。</p>
 <p>下面的枚举是对之前<code>Planet</code>这个枚举的一个细化，利用原始整型值来表示每个 planet 在太阳系中的顺序：</p>

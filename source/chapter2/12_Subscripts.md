@@ -1,5 +1,5 @@
-> 翻译：siemenliu  
-> 校对：zq54zquan  
+> 翻译：[siemenliu](https://github.com/siemenliu)  
+> 校对：[zq54zquan](https://github.com/zq54zquan)
 
 
 # 下标脚本（Subscripts）
@@ -15,11 +15,7 @@
 
 对于同一个目标可以定义多个下标脚本，通过索引值类型的不同来进行重载，而且索引值的个数可以是多个。
 
-<<<<<<< HEAD
 > 译者：这里附属脚本重载在本小节中原文并没有任何演示  
-=======
-> 译者：这里下标脚本重载在本小节中原文并没有任何演示
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
 <a name="subscript_syntax"></a>
 ## 下标脚本语法
@@ -66,15 +62,8 @@ println("3的6倍是\(threeTimesTable[6])")
 
 你可以通过下标脚本来得到结果，比如`threeTimesTable[6]`。这条语句访问了`threeTimesTable`的第六个元素，返回`6`的`3`倍即`18`。
 
-<<<<<<< HEAD
 >注意：  
 > `TimesTable`例子是基于一个固定的数学公式。它并不适合开放写权限来对`threeTimesTable[someIndex]`进行赋值操作，这也是为什么附属脚本只定义为只读的原因。  
-=======
->注意：
->
-> `TimesTable`例子是基于一个固定的数学公式。它并不适合开放写权限来对`threeTimesTable[someIndex]`进行赋值操作，这也是为什么下标脚本只定义为只读的原因。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
-
 
 <a name="subscript_usage"></a>
 ## 下标脚本用法
@@ -92,14 +81,8 @@ numberOfLegs["bird"] = 2
 
 更多关于字典（Dictionary）下标脚本的信息请参考[读取和修改字典](../chapter2/04_Collection_Types.html)
 
-<<<<<<< HEAD
 > 注意：  
 > Swift 中字典的附属脚本实现中，在`get`部分返回值是`Int?`，上例中的`numberOfLegs`字典通过附属脚本返回的是一个`Int?`或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是`nil`；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为`nil`即可。  
-=======
-> 注意：
->
-> Swift 中字典的下标脚本实现中，在`get`部分返回值是`Int?`，上例中的`numberOfLegs`字典通过下标脚本返回的是一个`Int?`或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是`nil`；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为`nil`即可。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
 
 <a name="subscript_options"></a>
 ## 下标脚本选项

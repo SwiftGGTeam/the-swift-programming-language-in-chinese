@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.10" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="2.10" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,10 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_57">
+                    <section class="normal" id="section-gitbook_26">
                     
                         <blockquote>
-<p>翻译：shinyzhu<br>校对：pp-prog  </p>
+<p>翻译：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a><br>校对：<a href="https://github.com/pp-prog" target="_blank">pp-prog</a></p>
 </blockquote>
 <h1 id="-properties-">属性 (Properties)</h1>
 <hr>
@@ -736,10 +736,6 @@ println(&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&q
 <p><a name="readonly_computed_properties"></a></p>
 <h3 id="-">只读计算属性</h3>
 <p>只有 getter 没有 setter 的计算属性就是<em>只读计算属性</em>。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<blockquote>
-<p>注意：  </p>
-<h1 id="-var-let-">必须使用<code>var</code>关键字定义计算属性，包括只读计算属性，因为他们的值不是固定的。<code>let</code>关键字只用来声明常量属性，表示初始化后再也无法修改的值。  </h1>
 <p>注意：</p>
 <p>必须使用<code>var</code>关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。<code>let</code>关键字只用来声明常量属性，表示初始化后再也无法修改的值。</p>
 <blockquote>
@@ -782,10 +778,6 @@ println(&quot;the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)&quot;)
 </ul>
 <p><code>willSet</code>监视器会将新的属性值作为固定参数传入，在<code>willSet</code>的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称<code>newValue</code>表示。</p>
 <p>类似地，<code>didSet</code>监视器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名<code>oldValue</code>。</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<blockquote>
-<p>注意：  </p>
-<h1 id="-willset-didset-"><code>willSet</code>和<code>didSet</code>监视器在属性初始化过程中不会被调用，他们只会当属性的值在初始化之外的地方被设置时被调用。  </h1>
 <p>注意：</p>
 <p><code>willSet</code>和<code>didSet</code>监视器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。</p>
 <blockquote>

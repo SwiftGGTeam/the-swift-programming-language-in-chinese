@@ -1,6 +1,5 @@
-> 翻译：Hawstein
-
-> 校对：numbbbbb
+> 翻译：[Hawstein](https://github.com/Hawstein)  
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 特性
 -----------------
@@ -14,10 +13,8 @@
 
 通过以下方式指定一个特性：符号`@`后面跟特性名，如果包含参数，则把参数带上：
 
-```
-@attribute name
-@attribute name(attribute arguments)
-```
+> @`attribute name`  
+> @`attribute name`(`attribute arguments`)  
 
 有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。
 
@@ -72,7 +69,7 @@
 
 `objc`特性有一个可选的参数，由标记符组成。当你想把`objc`所修饰的实体以一个不同的名字暴露给Objective-C，你就可以使用这个特性参数。你可以使用这个参数来命名类，协议，方法，getters，setters，以及初始化器。下面的例子把`ExampleClass`中`enabled`属性的getter暴露给Objective-C，名字是`isEnabled`，而不是它原来的属性名。
 
-```
+```swift
 @objc
 class ExampleClass {
     var enabled: Bool {
@@ -115,7 +112,7 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，`T`，是`@noreturn T`。
 
 > 特性语法  
-> *特色* → **@** [*特性名*](..\chapter3\06_Attributes.html#attribute_name) [*特性参数子句*](..\chapter3\06_Attributes.html#attribute_argument_clause) _可选_  
+> *特性* → **@** [*特性名*](..\chapter3\06_Attributes.html#attribute_name) [*特性参数子句*](..\chapter3\06_Attributes.html#attribute_argument_clause) _可选_  
 > *特性名* → [*标识符*](LexicalStructure.html#identifier)  
 > *特性参数子句* → **(** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **)**  
 > *特性(Attributes)列表* → [*特色*](..\chapter3\06_Attributes.html#attribute) [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_  

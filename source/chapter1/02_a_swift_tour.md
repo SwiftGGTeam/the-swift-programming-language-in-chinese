@@ -1,5 +1,5 @@
-> 翻译：numbbbbb  
-> 校对：shinyzhu, stanzhai
+> 翻译：[numbbbbb](https://github.com/numbbbbb)  
+> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
 
 # Swift 初见
 
@@ -643,8 +643,7 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
-> 练习：
->
+> 练习：  
 > 写一个实现这个协议的枚举。
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
@@ -663,8 +662,7 @@ extension Int: ExampleProtocol {
 7.simpleDescription
 ```
 
-> 练习：
->
+> 练习：  
 > 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
 你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。

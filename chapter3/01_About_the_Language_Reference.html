@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.1" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="3.1" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_83">
+                    <section class="normal" id="section-gitbook_57">
                     
                         <blockquote>
-<p>翻译：ChildhoodAndy</p>
-<p>校对：numbbbbb</p>
+<p>翻译：<a href="https://github.com/dabing1022" target="_blank">dabing1022</a><br>校对：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a></p>
 </blockquote>
 <h1 id="-">关于语言附注</h1>
 <hr>
@@ -604,8 +603,8 @@
 <p><a name="how_to_read_the_grammar"></a></p>
 <h2 id="-">如何阅读语法</h2>
 <p>用来描述Swift编程语言形式语法的记法遵循下面几个约定：</p>
+<p>-](<a href="https://github.com/numbbbbb)箭头（→）用来标记语法产式，可以被理](https://github.com/numbbbbb)解为“可以包含”。" target="_blank">https://github.com/numbbbbb)箭头（→）用来标记语法产式，可以被理](https://github.com/numbbbbb)解为“可以包含”。</a></p>
 <ul>
-<li>箭头（→）用来标记语法产式，可以被理解为“可以包含”。</li>
 <li>句法范畴由<em>斜体</em>文字表示，并出现在一个语法产式规则两侧。</li>
 <li>义词和标点符号由粗体固定宽度的文本显示和只出现在一个语法产式规则的右边。</li>
 <li>选择性的语法产式由竖线（|）分隔。当可选用的语法产式太多时，为了阅读方便，它们将被拆分为多行语法产式规则。</li>
@@ -614,14 +613,11 @@
 </ul>
 <p>举个例子，getter-setter的语法块的定义如下：</p>
 <blockquote>
-<p>GRAMMAR OF A GETTER-SETTER BLOCK</p>
-<p><em>getter-setter-block</em> → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>getter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank">­<em>setter-clause</em>­</a><em>opt</em> ­}­ | {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>setter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank">­<em>getter-clause</em></a>­}­</p>
+<p>GRAMMAR OF A GETTER-SETTER BLOCK<br><em>getter-setter-block</em> → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>getter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank">­<em>setter-clause</em>­</a><em>opt</em> ­}­ | {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>setter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank">­<em>getter-clause</em></a>­}­</p>
 </blockquote>
 <p>这个定义表明，一个getter-setter方法​​块可以由一个getter子句后跟一个可选的setter子句构成，用大括号括起来，或者由一个setter子句后跟一个getter子句构成，用大括号括起来。上述的文法产生等价于下面的两个产生，明确阐明如何二中择一：</p>
 <blockquote>
-<p>GRAMMAR OF A GETTER-SETTER BLOCK</p>
-<p>getter-setter-block → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>getter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>­setter-clause</em>­</a><em>opt</em> ­}­­</p>
-<p>getter-setter-block → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>setter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>­getter-clause</em></a>­}­</p>
+<p>GRAMMAR OF A GETTER-SETTER BLOCK<br>getter-setter-block → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>getter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>­setter-clause</em>­</a><em>opt</em> ­}­­<br>getter-setter-block → {­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/setter-clause" target="_blank"><em>setter-clause</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-clause" target="_blank"><em>­getter-clause</em></a>­}­</p>
 </blockquote>
 
                     

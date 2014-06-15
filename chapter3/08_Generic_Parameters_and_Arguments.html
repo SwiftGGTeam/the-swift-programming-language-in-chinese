@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.9" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="3.9" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_95">
+                    <section class="normal" id="section-gitbook_69">
                     
                         <blockquote>
-<p>翻译：fd5788</p>
-<p>校对：yankuangshi</p>
+<p>翻译：<a href="https://github.com/fd5788" target="_blank">fd5788</a><br>校对：<a href="https://github.com/yankuangshi" target="_blank">yankuangshi</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
 </blockquote>
 <h1 id="-">泛型参数</h1>
 <hr>
@@ -605,22 +604,27 @@
 <p><a name="generic_parameter"></a></p>
 <h2 id="-">泛型形参子句</h2>
 <p>泛型形参子句指定泛型类型或函数的类型形参，以及这些参数的关联约束和要求。泛型形参子句用尖括号（&lt;&gt;）包住，并且有以下两种形式：</p>
-<pre><code>&lt;generic parameter list&gt;
-&lt;generic parameter list where requirements &gt;
-</code></pre><p>泛型形参列表中泛型形参用逗号分开，每一个采用以下形式：</p>
-<pre><code>type parameter : constrain
-</code></pre><p>泛型形参由两部分组成：类型形参及其后的可选约束。类型形参只是占位符类型（如T，U，V，KeyType，ValueType等）的名字而已。你可以在泛型类型、函数的其余部分或者构造器声明，以及函数或构造器的签名中使用它。</p>
+<blockquote>
+<p>&lt;<code>generic parameter list</code>&gt;<br>&lt;<code>generic parameter list</code> where <code>requirements</code>&gt;</p>
+</blockquote>
+<p>泛型形参列表中泛型形参用逗号分开，每一个采用以下形式：</p>
+<blockquote>
+<p><code>type parameter</code> : <code>constrain</code></p>
+</blockquote>
+<p>泛型形参由两部分组成：类型形参及其后的可选约束。类型形参只是占位符类型（如T，U，V，KeyType，ValueType等）的名字而已。你可以在泛型类型、函数的其余部分或者构造器声明，以及函数或构造器的签名中使用它。</p>
 <p>约束用于指明该类型形参继承自某个类或者遵守某个协议或协议的一部分。例如，在下面的泛型中，泛型形参<code>T: Comparable</code>表示任何用于替代类型形参<code>T</code>的类型实参必须满足<code>Comparable</code>协议。</p>
-<pre><code>func simpleMin&lt;T: COmparable&gt;(x: T, y: T) -&gt; T {
+<pre><code class="lang-swift">func simpleMin&lt;T: COmparable&gt;(x: T, y: T) -&gt; T {
     if x &lt; y {
         return y
     }
     return x
 }
-</code></pre><p>如，<code>Int</code>和<code>Double</code>均满足<code>Comparable</code>协议，该函数接受任何一种类型。与泛型类型相反，调用泛型函数或构造器时不需要指定泛型实参子句。类型实参由传递给函数或构造器的实参推断而出。</p>
-<pre><code>simpleMin(17, 42) // T is inferred to be Int
+</code></pre>
+<p>如，<code>Int</code>和<code>Double</code>均满足<code>Comparable</code>协议，该函数接受任何一种类型。与泛型类型相反，调用泛型函数或构造器时不需要指定泛型实参子句。类型实参由传递给函数或构造器的实参推断而出。</p>
+<pre><code class="lang-swift">simpleMin(17, 42) // T is inferred to be Int
 simpleMin(3.14159, 2.71828) // T is inferred to be Double
-</code></pre><h2 id="where-">Where 子句</h2>
+</code></pre>
+<h2 id="where-">Where 子句</h2>
 <p>要想对类型形参及其关联类型指定额外要求，可以在泛型形参列表之后添加<code>where</code>子句。<code>where</code>子句由关键字<code>where</code>及其后的用逗号分割的多个要求组成。</p>
 <p><code>where</code>子句中的要求用于指明该类型形参继承自某个类或遵守某个协议或协议的一部分。尽管<code>where</code>子句有助于表达类型形参上的简单约束（如<code>T: Comparable</code>等同于<code>T where T: Comparable</code>，等等），但是依然可以用来对类型形参及其关联约束提供更复杂的约束。如，<code>&lt;T where T: C, T: P&gt;</code>表示泛型类型<code>T</code>继承自类<code>C</code>且遵守协议<code>P</code>。</p>
 <p>如上所述，可以强制约束类型形参的关联类型遵守某个协议。<code>&lt;T: Generator where T.Element: Equatable&gt;</code>表示<code>T</code>遵守<code>Generator</code>协议，而且<code>T</code>的关联类型<code>T.Element</code>遵守<code>Eauatable</code>协议（<code>T</code>有关联类型是因为<code>Generator</code>声明了<code>Element</code>，而<code>T</code>遵守<code>Generator</code>协议）。</p>
@@ -634,15 +638,19 @@ simpleMin(3.14159, 2.71828) // T is inferred to be Double
 <p><a name="generic_argument"></a></p>
 <h2 id="-">泛型实参子句</h2>
 <p>泛型实参子句指定<em>泛型类型</em>的类型实参。泛型实参子句用尖括号（&lt;&gt;）包住，形式如下：</p>
-<pre><code>&lt; generic argument list &gt;
-</code></pre><p>泛型实参列表中类型实参有逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参子句中的相应的类型形参。从而得到泛型类型的一个特化版本。如，Swift标准库的泛型字典类型定义如下：</p>
-<pre><code>struct Dictionary&lt;KeyTypel: Hashable, ValueType&gt;: Collection, DictionaryLiteralConvertible {
+<blockquote>
+<p>&lt;<code>generic argument list</code>&gt;</p>
+</blockquote>
+<p>泛型实参列表中类型实参有逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参子句中的相应的类型形参。从而得到泛型类型的一个特化版本。如，Swift标准库的泛型字典类型定义如下：</p>
+<pre><code class="lang-swift">struct Dictionary&lt;KeyTypel: Hashable, ValueType&gt;: Collection, DictionaryLiteralConvertible {
     /* .. */
 }
-</code></pre><p>泛型<code>Dictionary</code>类型的特化版本，<code>Dictionary&lt;String, Int&gt;</code>就是用具体的<code>String</code>和<code>Int</code>类型替代泛型类型<code>KeyType: Hashable</code>和<code>ValueType</code>产生的。每一个类型实参必须满足它所替代的泛型形参的所有约束，包括任何<code>where</code>子句所指定的额外的要求。上面的例子中，类型形参<code>KeyType</code>要求满足<code>Hashable</code>协议，因此<code>String</code>也必须满足<code>Hashable</code>协议。</p>
+</code></pre>
+<p>泛型<code>Dictionary</code>类型的特化版本，<code>Dictionary&lt;String, Int&gt;</code>就是用具体的<code>String</code>和<code>Int</code>类型替代泛型类型<code>KeyType: Hashable</code>和<code>ValueType</code>产生的。每一个类型实参必须满足它所替代的泛型形参的所有约束，包括任何<code>where</code>子句所指定的额外的要求。上面的例子中，类型形参<code>KeyType</code>要求满足<code>Hashable</code>协议，因此<code>String</code>也必须满足<code>Hashable</code>协议。</p>
 <p>可以用本身就是泛型类型的特化版本的类型实参替代类型形参（假设已满足合适的约束和要求）。例如，为了生成一个元素类型是整型数组的数组，可以用数组的特化版本<code>Array&lt;Int&gt;</code>替代泛型类型<code>Array&lt;T&gt;</code>的类型形参<code>T</code>来实现。</p>
-<pre><code>let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-</code></pre><p>如<a href="#generic_parameter">泛型形参子句</a>所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。</p>
+<pre><code class="lang-swift">let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+</code></pre>
+<p>如<a href="#generic_parameter">泛型形参子句</a>所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。</p>
 <blockquote>
 <p>泛型实参子句语法<br><em>(泛型参数子句Generic Argument Clause)</em> → <strong>&lt;</strong> <a href="GenericParametersAndArguments.html#generic_argument_list"><em>泛型参数列表</em></a> <strong>&gt;</strong><br><em>泛型参数列表</em> → <a href="GenericParametersAndArguments.html#generic_argument"><em>泛型参数</em></a> | <a href="GenericParametersAndArguments.html#generic_argument"><em>泛型参数</em></a> <strong>,</strong> <a href="GenericParametersAndArguments.html#generic_argument_list"><em>泛型参数列表</em></a><br><em>泛型参数</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>

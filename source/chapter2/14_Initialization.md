@@ -1,5 +1,5 @@
-> 翻译：lifedim  
-> 校对：lifedim  
+> 翻译：[lifedim](https://github.com/lifedim)  
+> 校对：[lifedim](https://github.com/lifedim)
 
 # 构造过程（Initialization）
 

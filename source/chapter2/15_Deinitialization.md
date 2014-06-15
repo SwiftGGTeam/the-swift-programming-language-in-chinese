@@ -1,6 +1,5 @@
-> 翻译：bruce0505  
-> 校对：fd5788  
-
+> 翻译：[bruce0505](https://github.com/bruce0505)  
+> 校对：[fd5788](https://github.com/fd5788)
 
 # 析构过程（Deinitialization）
 ---------------------------

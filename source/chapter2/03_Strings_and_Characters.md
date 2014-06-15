@@ -1,5 +1,5 @@
-> 翻译：wh1100717  
-> 校对：Hawstein  
+> 翻译：[wh1100717](https://github.com/wh1100717)  
+> 校对：[Hawstein](https://github.com/Hawstein)
 
 # 字符串和字符（Strings and Characters）
 -----------------

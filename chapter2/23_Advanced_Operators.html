@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.23" data-basepath=".." data-revision="1402750255397">
+    <div class="book"  data-level="2.23" data-basepath=".." data-revision="1402809661159">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,11 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_78">
+                    <section class="normal" id="section-gitbook_52">
                     
                         <blockquote>
-<p>翻译：xielingwang</p>
-<p>校对：numbbbbb</p>
+<p>翻译：<a href="https://github.com/xielingwang" target="_blank">xielingwang</a><br>校对：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a></p>
 </blockquote>
 <h1 id="-">高级运算符</h1>
 <hr>
@@ -776,8 +775,7 @@ let y = x &amp;/ 0
 <p>计算结果为 4。</p>
 <p>查阅Swift运算符的优先级和结合性的完整列表，请看<a href="../chapter3/04_Expressions.html">表达式</a>。</p>
 <blockquote>
-<p>注意：</p>
-<p>Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着跟基于C的语言可能不一样。所以，在移植已有代码到Swift时，注意去确保代码按你想的那样去执行。</p>
+<p>注意：<br>Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着跟基于C的语言可能不一样。所以，在移植已有代码到Swift时，注意去确保代码按你想的那样去执行。</p>
 </blockquote>
 <p><a name="operator_functions"></a></p>
 <h2 id="-">运算符函数</h2>
@@ -841,8 +839,7 @@ let afterIncrement = ++toIncrement
 // afterIncrement 现在也是 (4.0, 5.0)
 </code></pre>
 <blockquote>
-<p>注意：</p>
-<p>默认的赋值符是不可重载的。只有组合赋值符可以重载。三目条件运算符 <code>a？b：c</code> 也是不可重载。</p>
+<p>注意：<br>默认的赋值符是不可重载的。只有组合赋值符可以重载。三目条件运算符 <code>a？b：c</code> 也是不可重载。</p>
 </blockquote>
 <h3 id="-">比较运算符</h3>
 <p>Swift无所知道自定义类型是否相等或不等，因为等于或者不等于由你的代码说了算了。所以自定义的类和结构要使用比较符<code>==</code>或<code>!=</code>就需要重载。</p>
@@ -895,7 +892,7 @@ let secondVector = Vector2D(x: 3.0, y: 4.0)
 let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 此时的值为 (4.0, -2.0)
 </code></pre>
-<p>这个运算符把两个向量的<code>x</code>相加，把向量的<code>y</code>相减。因为它实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(<code>left</code>和<code>140</code>)。查阅完整的Swift默认结合性和优先级的设置，请移步<a href="../chapter3/04_Expressions.html">表达式</a>;</p>
+<p>这个运算符把两个向量的<code>x</code>相加，把向量的<code>y</code>相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(<code>left</code>和<code>140</code>)。查阅完整的Swift默认结合性和优先级的设置，请移步<a href="../chapter3/04_Expressions.html">表达式</a>;</p>
 
                     
                     </section>

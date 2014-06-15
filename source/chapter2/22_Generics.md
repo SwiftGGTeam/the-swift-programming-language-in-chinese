@@ -1,6 +1,6 @@
-> 翻译：takalard
 
-> 校对：lifedim
+> 翻译：[takalard](https://github.com/takalard)  
+> 校对：[lifedim](https://github.com/lifedim)
 
 # 泛型
 
@@ -26,42 +26,48 @@
 
 这里是一个标准的，非泛型函数`swapTwoInts`,用来交换两个Int值：
 
-	func swapTwoInts(inout a: Int, inout b: Int)
-		let temporaryA = a
-		a = b
-		b = temporaryA
-	}
+```swift
+func swapTwoInts(inout a: Int, inout b: Int)
+  let temporaryA = a
+  a = b
+  b = temporaryA
+}
+```
 
 这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[写入读出参数][1]。
 
 `swapTwoInts`函数可以交换`b`的原始值到`a`，也可以交换a的原始值到`b`，你可以调用这个函数交换两个`Int`变量值：
 
-    var someInt = 3
-    var anotherInt = 107
-    swapTwoInts(&someInt, &anotherInt)
-    println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-    // 输出 "someInt is now 107, and anotherInt is now 3"
+```swift
+var someInt = 3
+var anotherInt = 107
+swapTwoInts(&someInt, &anotherInt)
+println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+// 输出 "someInt is now 107, and anotherInt is now 3"
+```
 
 
 `swapTwoInts`函数是非常有用的，但是它只能交换`Int`值，如果你想要交换两个`String`或者`Double`，就不得不写更多的函数，如 `swapTwoStrings`和`swapTwoDoublesfunctions `，如同如下所示：
 
-    func swapTwoStrings(inout a: String, inout b: String) {
-        let temporaryA = a
-        a = b
-        b = temporaryA
-    }
+```swift
+func swapTwoStrings(inout a: String, inout b: String) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
 
-    func swapTwoDoubles(inout a: Double, inout b: Double) {
-        let temporaryA = a
-        a = b
-        b = temporaryA
-    }
+func swapTwoDoubles(inout a: Double, inout b: Double) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+```
 
 你可能注意到 `swapTwoInts`、 `swapTwoStrings`和`swapTwoDoubles`函数功能都是相同的，唯一不同之处就在于传入的变量类型不同，分别是`Int`、`String`和`Double`。
 
 但实际应用中通常需要一个用处更强大并且尽可能的考虑到更多的灵活性单个函数，可以用来交换两个任何类型值，很幸运的是，泛型代码帮你解决了这种问题。（一个这种泛型函数后面已经定义好了。）
 
->注意：
+>注意：  
 在所有三个函数中，`a`和`b`的类型是一样的。如果`a`和`b`不是相同的类型，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个`String`类型的变量和一个`Double`类型的变量互相交换值。如果一定要做，Swift 将报编译错误。
 
 <a name="generic_functions"></a>
@@ -69,16 +75,20 @@
 
 `泛型函数`可以工作于任何类型，这里是一个上面`swapTwoInts`函数的泛型版本，用于交换两个值：
 
-    func swapTwoValues<T>(inout a: T, inout b: T) {
-        let temporaryA = a
-        a = b
-        b = temporaryA
-    }
+```swift
+func swapTwoValues<T>(inout a: T, inout b: T) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+```
 
 `swapTwoValues`函数主体和`swapTwoInts`函数是一样的，它只在第一行稍微有那么一点点不同于`swapTwoInts`，如下所示：
 
-    func swapTwoInts(inout a: Int, inout b: Int)
-    func swapTwoValues<T>(inout a: T, inout b: T)
+```swift
+func swapTwoInts(inout a: Int, inout b: Int)
+func swapTwoValues<T>(inout a: T, inout b: T)
+```
 
 
 这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`In`、`String`或`Doubl`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
@@ -89,18 +99,22 @@
 
 在下面的两个例子中,`T`分别代表`Int`和`String`：
 
-    var someInt = 3
-    var anotherInt = 107
-    swapTwoValues(&someInt, &anotherInt)
-    // someInt is now 107, and anotherInt is now 3
+```swift
+var someInt = 3
+var anotherInt = 107
+swapTwoValues(&someInt, &anotherInt)
+// someInt is now 107, and anotherInt is now 3
+```
 
-    var someString = "hello"
-    var anotherString = "world"
-    swapTwoValues(&someString, &anotherString)
-    // someString is now "world", and anotherString is now "hello"
+```swift
+var someString = "hello"
+var anotherString = "world"
+swapTwoValues(&someString, &anotherString)
+// someString is now "world", and anotherString is now "hello"
+```
 
 
->注意
+>注意  
 上面定义的函数`swapTwoValues`是受`swap`函数启发而实现的。`swap`函数存在于 Swift 标准库，并可以在其它类中任意使用。如果你在自己代码中需要类似`swapTwoValues`函数的功能，你可以使用已存在的交换函数`swap`函数。
 
 <a name="type_parameters"></a>
@@ -119,7 +133,7 @@
 
 如果你使用多个参数定义更复杂的泛型函数或泛型类型，那么使用更多的描述类型参数是非常有用的。例如，Swift 字典（Dictionary）类型有两个类型参数，一个是键，另外一个是值。如果你自己写字典，你或许会定义这两个类型参数为`KeyType`和`ValueType`，用来记住它们在你的泛型代码中的作用。
 
->注意
+>注意  
 请始终使用大写字母开头的驼峰式命名法（例如`T`和`KeyType`）来给类型参数命名，以表明它们是类型的占位符，而非类型值。
 
 <a name="generic_types"></a>
@@ -130,7 +144,7 @@
 
 这部分向你展示如何写一个泛型集类型--`Stack`（栈）。一个栈是一系列值域的集合，和`Array`（数组）类似，但其是一个比 Swift 的`Array`类型更多限制的集合。一个数组可以允许其里面任何位置的插入/删除操作，而栈，只允许在集合的末端添加新的项（如同*push*一个新值进栈）。同样的一个栈也只能从末端移除项（如同*pop*一个值出栈）。
 
->注意
+>注意  
 栈的概念已被`UINavigationController`类使用来模拟试图控制器的导航结构。你通过调用`UINavigationController`的`pushViewController:animated:`方法来为导航栈添加（add）新的试图控制器；而通过`popViewControllerAnimated:`的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的`后进先出`方式来管理集合，堆栈都是最实用的模型。
 
 下图展示了一个栈的压栈(push)/出栈(pop)的行为：
@@ -145,15 +159,17 @@
 
 这里展示了如何写一个非泛型版本的栈，`Int`值型的栈：
 
-	struct IntStack {
-	    var items = Int[]()
-	    mutating func push(item: Int) {
-	        items.append(item)
-	    }
-	    mutating func pop() -> Int {
-	        return items.removeLast()
-	    }
-	}
+```swift
+struct IntStack {
+    var items = Int[]()
+    mutating func push(item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -> Int {
+        return items.removeLast()
+    }
+}
+```
 
 这个结构体在栈中使用一个`Array`性质的`items`存储值。`Stack`提供两个方法：`push`和`pop`，从栈中压进一个值和移除一个值。这些方法标记为可变的，因为它们需要修改（或*转换*）结构体的`items`数组。
 
@@ -162,15 +178,17 @@
 这里是一个相同代码的泛型版本：
 
 
-	struct Stack<T> {
-	    var items = T[]()
-	    mutating func push(item: T) {
-	        items.append(item)
-	    }
-	    mutating func pop() -> T {
-	        return items.removeLast()
-	    }
-	}
+```swift
+struct Stack<T> {
+    var items = T[]()
+    mutating func push(item: T) {
+        items.append(item)
+    }
+    mutating func pop() -> T {
+        return items.removeLast()
+    }
+}
+```
 
 
 注意到`Stack`的泛型版本基本上和非泛型版本相同，但是泛型版本的占位类型参数为T代替了实际`Int`类型。这种类型参数包含在一对尖括号里（`<T>`），紧随在结构体名字后面。
@@ -183,12 +201,14 @@
 
 当创建一个新单例并初始化时， 通过用一对紧随在类型名后的尖括号里写出实际指定栈用到类型，创建一个`Stack`实例，同创建`Array`和`Dictionary`一样：
 
-	var stackOfStrings = Stack<String>()
-	stackOfStrings.push("uno")
-	stackOfStrings.push("dos")
-	stackOfStrings.push("tres")
-	stackOfStrings.push("cuatro")
-	// 现在栈已经有4个string了
+```swift
+var stackOfStrings = Stack<String>()
+stackOfStrings.push("uno")
+stackOfStrings.push("dos")
+stackOfStrings.push("tres")
+stackOfStrings.push("cuatro")
+// 现在栈已经有4个string了
+```
 
 下图将展示`stackOfStrings`如何`push`这四个值进栈的过程：
 
@@ -196,8 +216,10 @@
 
 从栈中`pop`并移除值"cuatro"：
 
-	let fromTheTop = stackOfStrings.pop()
-	// fromTheTop is equal to "cuatro", and the stack now contains 3 strings
+```swift
+let fromTheTop = stackOfStrings.pop()
+// fromTheTop is equal to "cuatro", and the stack now contains 3 strings
+```
 
 下图展示了如何从栈中pop一个值的过程：
 ![此处输入图片的描述][4]
@@ -219,9 +241,11 @@
 
 你可以写一个在一个类型参数名后面的类型约束，通过冒号分割，来作为类型参数链的一部分。这种作用于泛型函数的类型约束的基础语法如下所示（和泛型类型的语法相同）：
 
-	func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
-	    // function body goes here
-	}
+```swift
+func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+    // function body goes here
+}
+```
 
 上面这个假定函数有两个类型参数。第一个类型参数`T`，有一个需要`T`必须是`SomeClass`子类的类型约束；第二个类型参数`U`，有一个需要`U`必须遵循`SomeProtocol`协议的类型约束。
 
@@ -229,36 +253,42 @@
 
 这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
 
-	func findStringIndex(array: String[], valueToFind: String) -> Int? {
-	    for (index, value) in enumerate(array) {
-	        if value == valueToFind {
-	            return index
-	        }
-	    }
-	    return nil
-	}
+```swift
+func findStringIndex(array: String[], valueToFind: String) -> Int? {
+    for (index, value) in enumerate(array) {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+```
 
 
 `findStringIndex`函数可以作用于查找一字符串数组中的某个字符串:
 
-	let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
-	if let foundIndex = findStringIndex(strings, "llama") {
-	    println("The index of llama is \(foundIndex)")
-	}
-	// 输出 "The index of llama is 2"
+```swift
+let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
+if let foundIndex = findStringIndex(strings, "llama") {
+    println("The index of llama is \(foundIndex)")
+}
+// 输出 "The index of llama is 2"
+```
 
 如果只是针对字符串而言查找在数组中的某个值的索引，用处不是很大，不过，你可以写出相同功能的泛型函数`findIndex`，用某个类型`T`值替换掉提到的字符串。
 
 这里展示如何写一个你或许期望的`findStringIndex`的泛型版本`findIndex`。请注意这个函数仍然返回`Int`，是不是有点迷惑呢，而不是泛型类型?那是因为函数返回的是一个可选的索引数，而不是从数组中得到的一个可选值。需要提醒的是，这个函数不会编译，原因在例子后面会说明：
 
-	func findIndex<T>(array: T[], valueToFind: T) -> Int? {
-	    for (index, value) in enumerate(array) {
-	        if value == valueToFind {
-	            return index
-	        }
-	    }
-	    return nil
-	}
+```swift
+func findIndex<T>(array: T[], valueToFind: T) -> Int? {
+    for (index, value) in enumerate(array) {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+```
 
 上面所写的函数不会编译。这个问题的位置在等式的检查上，`“if value == valueToFind”`。不是所有的 Swift 中的类型都可以用等式符（==）进行比较。例如，如果你创建一个你自己的类或结构体来表示一个复杂的数据模型，那么 Swift 没法猜到对于这个类或结构体而言“等于”的意思。正因如此，这部分代码不能可能保证工作于每个可能的类型`T`，当你试图编译这部分代码时估计会出现相应的错误。
 
@@ -266,24 +296,28 @@
 
 任何`Equatable`类型都可以安全的使用在`findIndex`函数中，因为其保证支持等式操作。为了说明这个事实，当你定义一个函数时，你可以写一个`Equatable`类型约束作为类型参数定义的一部分：
 
-	func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
-	    for (index, value) in enumerate(array) {
-	        if value == valueToFind {
-	            return index
-	        }
-	    }
-	    return nil
-	}
+```swift
+func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
+    for (index, value) in enumerate(array) {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+```
 
 
 `findIndex`中这个单个类型参数写做：`T: Equatable`，也就意味着“任何T类型都遵循`Equatable`协议”。
 
 `findIndex`函数现在则可以成功的编译过，并且作用于任何遵循`Equatable`的类型，如`Double`或`String`:
 
-	let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
-	// doubleIndex is an optional Int with no value, because 9.3 is not in the array
-	let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
-	// stringIndex is an optional Int containing a value of 2
+```swift
+let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
+// doubleIndex is an optional Int with no value, because 9.3 is not in the array
+let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
+// stringIndex is an optional Int containing a value of 2
+```
 
 <a name="associated_types"></a>
 ##关联类型
@@ -294,12 +328,14 @@
 
 这里是一个`Container`协议的例子，定义了一个ItemType关联类型：
 
-	protocol Container {
-	    typealias ItemType
-	    mutating func append(item: ItemType)
-	    var count: Int { get }
-	    subscript(i: Int) -> ItemType { get }
-	}
+```swift
+protocol Container {
+    typealias ItemType
+    mutating func append(item: ItemType)
+    var count: Int { get }
+    subscript(i: Int) -> ItemType { get }
+}
+```
 
 `Container`协议定义了三个任何容器必须支持的兼容要求：
 
@@ -317,27 +353,29 @@
 
 这里是一个早前IntStack类型的非泛型版本，适用于遵循Container协议：
 
-	struct IntStack: Container {
-	    // original IntStack implementation
-	    var items = Int[]()
-	    mutating func push(item: Int) {
-	        items.append(item)
-	    }
-	    mutating func pop() -> Int {
-	        return items.removeLast()
-	    }
-	    // conformance to the Container protocol
-	    typealias ItemType = Int
-	    mutating func append(item: Int) {
-	        self.push(item)
-	    }
-	    var count: Int {
-	    return items.count
-	    }
-	    subscript(i: Int) -> Int {
-	        return items[i]
-	    }
-	}
+```swift
+struct IntStack: Container {
+    // original IntStack implementation
+    var items = Int[]()
+    mutating func push(item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -> Int {
+        return items.removeLast()
+    }
+    // conformance to the Container protocol
+    typealias ItemType = Int
+    mutating func append(item: Int) {
+        self.push(item)
+    }
+    var count: Int {
+    return items.count
+    }
+    subscript(i: Int) -> Int {
+        return items[i]
+    }
+}
+```
 
 
 `IntStack`类型实现了`Container`协议的所有三个要求，在`IntStack`类型的每个包含部分的功能都满足这些要求。
@@ -348,26 +386,28 @@
 
 你也可以生成遵循`Container`协议的泛型`Stack`类型：
 
-	struct Stack<T>: Container {
-	    // original Stack<T> implementation
-	    var items = T[]()
-	    mutating func push(item: T) {
-	        items.append(item)
-	    }
-	    mutating func pop() -> T {
-	        return items.removeLast()
-	    }
-	    // conformance to the Container protocol
-	    mutating func append(item: T) {
-	        self.push(item)
-	    }
-	    var count: Int {
-	    return items.count
-	    }
-	    subscript(i: Int) -> T {
-	        return items[i]
-	    }
-	}
+```swift
+struct Stack<T>: Container {
+    // original Stack<T> implementation
+    var items = T[]()
+    mutating func push(item: T) {
+        items.append(item)
+    }
+    mutating func pop() -> T {
+        return items.removeLast()
+    }
+    // conformance to the Container protocol
+    mutating func append(item: T) {
+        self.push(item)
+    }
+    var count: Int {
+    return items.count
+    }
+    subscript(i: Int) -> T {
+        return items[i]
+    }
+}
+```
 
 这个时候，占位类型参数`T`被用作`append`方法的item参数和下标的返回类型。Swift 因此可以推断出被用作这个特定容器的`ItemType`的`T`的合适类型。
 
@@ -378,7 +418,9 @@
 
 Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳][7]中有描述这样一个实现一个空扩展的行为：
 
-	extension Array: Container {}
+```swift
+extension Array: Container {}
+```
 
 如同上面的泛型`Stack`类型一样，`Array的append`方法和下标保证`Swift`可以推断出`ItemType`所使用的适用的类型。定义了这个扩展后，你可以将任何`Array`当作`Container`来使用。
 
@@ -393,27 +435,29 @@ Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标�
 
 这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和`where`语句结合来表示：
 
-	func allItemsMatch<
-	    C1: Container, C2: Container
-	    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-	    (someContainer: C1, anotherContainer: C2) -> Bool {
+```swift
+func allItemsMatch<
+    C1: Container, C2: Container
+    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
+    (someContainer: C1, anotherContainer: C2) -> Bool {
 
-	        // check that both containers contain the same number of items
-	        if someContainer.count != anotherContainer.count {
-	            return false
-	        }
+        // check that both containers contain the same number of items
+        if someContainer.count != anotherContainer.count {
+            return false
+        }
 
-	        // check each pair of items to see if they are equivalent
-	        for i in 0..someContainer.count {
-	            if someContainer[i] != anotherContainer[i] {
-	                return false
-	            }
-	        }
+        // check each pair of items to see if they are equivalent
+        for i in 0..someContainer.count {
+            if someContainer[i] != anotherContainer[i] {
+                return false
+            }
+        }
 
-	        // all items match, so return true
-	        return true
+        // all items match, so return true
+        return true
 
-	}
+}
+```
 
 
 这个函数用了两个参数：`someContainer`和`anotherContainer`。`someContainer`参数是类型`C1`，`anotherContainer`参数是类型`C2`。`C1`和`C2`是容器的两个占位类型参数，决定了这个函数何时被调用。
@@ -446,19 +490,21 @@ Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标�
 
 这里演示了allItemsMatch函数运算的过程：
 
-	var stackOfStrings = Stack<String>()
-	stackOfStrings.push("uno")
-	stackOfStrings.push("dos")
-	stackOfStrings.push("tres")
+```swift
+var stackOfStrings = Stack<String>()
+stackOfStrings.push("uno")
+stackOfStrings.push("dos")
+stackOfStrings.push("tres")
 
-	var arrayOfStrings = ["uno", "dos", "tres"]
+var arrayOfStrings = ["uno", "dos", "tres"]
 
-	if allItemsMatch(stackOfStrings, arrayOfStrings) {
-	    println("All items match.")
-	} else {
-	    println("Not all items match.")
-	}
-	// 输出 "All items match."
+if allItemsMatch(stackOfStrings, arrayOfStrings) {
+    println("All items match.")
+} else {
+    println("Not all items match.")
+}
+// 输出 "All items match."
+```
 
  上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
 
