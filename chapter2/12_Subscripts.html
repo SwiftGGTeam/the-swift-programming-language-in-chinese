@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 兴趣交流群：307017261">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.12" data-basepath=".." data-revision="1402792177330">
+    <div class="book"  data-level="2.12" data-basepath=".." data-revision="1402808574723">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,10 +587,11 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_610">
+                    <section class="normal" id="section-gitbook_30">
                     
                         <blockquote>
-<p>翻译：siemenliu<br>校对：zq54zquan  </p>
+<p>翻译：<a href="https://github.com/siemenliu" target="_blank">siemenliu</a>
+校对：<a href="https://github.com/zq54zquan" target="_blank">zq54zquan</a></p>
 </blockquote>
 <h1 id="-subscripts-">下标脚本（Subscripts）</h1>
 <hr>
@@ -602,23 +603,8 @@
 </ul>
 <p><em>下标脚本</em> 可以定义在类（Class）、结构体（structure）和枚举（enumeration）这些目标中，可以认为是访问对象、集合或序列的快捷方式，不需要再调用实例的特定的赋值和访问方法。举例来说，用下标脚本访问一个数组(Array)实例中的元素可以这样写 <code>someArray[index]</code> ，访问字典(Dictionary)实例中的元素可以这样写 <code>someDictionary[key]</code>。</p>
 <p>对于同一个目标可以定义多个下标脚本，通过索引值类型的不同来进行重载，而且索引值的个数可以是多个。</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<h1 id="-">&gt; 译者：这里附属脚本重载在本小节中原文并没有任何演示  </h1>
 <blockquote>
-<p>译者：这里下标脚本重载在本小节中原文并没有任何演示</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a516af6a531a104ec88da0d236ecf389a5ec72af</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>译者：这里附属脚本重载在本小节中原文并没有任何演示  </p>
 </blockquote>
 <p><a name="subscript_syntax"></a></p>
 <h2 id="-">下标脚本语法</h2>
@@ -652,25 +638,8 @@ println(&quot;3的6倍是\(threeTimesTable[6])&quot;)
 </code></pre>
 <p>在上例中，通过<code>TimesTable</code>结构体创建了一个用来表示索引值三倍的实例。数值<code>3</code>作为结构体<code>构造函数</code>入参初始化实例成员<code>multiplier</code>。</p>
 <p>你可以通过下标脚本来得到结果，比如<code>threeTimesTable[6]</code>。这条语句访问了<code>threeTimesTable</code>的第六个元素，返回<code>6</code>的<code>3</code>倍即<code>18</code>。</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <blockquote>
-<p>注意：  </p>
-<h1 id="-timestable-threetimestable-someindex-"><code>TimesTable</code>例子是基于一个固定的数学公式。它并不适合开放写权限来对<code>threeTimesTable[someIndex]</code>进行赋值操作，这也是为什么附属脚本只定义为只读的原因。  </h1>
-<p>注意：</p>
-<p><code>TimesTable</code>例子是基于一个固定的数学公式。它并不适合开放写权限来对<code>threeTimesTable[someIndex]</code>进行赋值操作，这也是为什么下标脚本只定义为只读的原因。</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a516af6a531a104ec88da0d236ecf389a5ec72af</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>注意：<br><code>TimesTable</code>例子是基于一个固定的数学公式。它并不适合开放写权限来对<code>threeTimesTable[someIndex]</code>进行赋值操作，这也是为什么附属脚本只定义为只读的原因。  </p>
 </blockquote>
 <p><a name="subscript_usage"></a></p>
 <h2 id="-">下标脚本用法</h2>
@@ -681,25 +650,8 @@ numberOfLegs[&quot;bird&quot;] = 2
 </code></pre>
 <p>上例定义一个名为<code>numberOfLegs</code>的变量并用一个字典字面量初始化出了包含三对键值的字典实例。<code>numberOfLegs</code>的字典存放值类型推断为<code>Dictionary&lt;String, Int&gt;</code>。字典实例创建完成之后通过下标脚本的方式将整型值<code>2</code>赋值到字典实例的索引为<code>bird</code>的位置中。</p>
 <p>更多关于字典（Dictionary）下标脚本的信息请参考<a href="../chapter2/04_Collection_Types.html">读取和修改字典</a></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <blockquote>
-<p>注意：  </p>
-<h1 id="swift-get-int-numberoflegs-int-int-nil-nil-">Swift 中字典的附属脚本实现中，在<code>get</code>部分返回值是<code>Int?</code>，上例中的<code>numberOfLegs</code>字典通过附属脚本返回的是一个<code>Int?</code>或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是<code>nil</code>；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为<code>nil</code>即可。  </h1>
-<p>注意：</p>
-<p>Swift 中字典的下标脚本实现中，在<code>get</code>部分返回值是<code>Int?</code>，上例中的<code>numberOfLegs</code>字典通过下标脚本返回的是一个<code>Int?</code>或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是<code>nil</code>；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为<code>nil</code>即可。</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>a516af6a531a104ec88da0d236ecf389a5ec72af</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>注意：<br>Swift 中字典的附属脚本实现中，在<code>get</code>部分返回值是<code>Int?</code>，上例中的<code>numberOfLegs</code>字典通过附属脚本返回的是一个<code>Int?</code>或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是<code>nil</code>；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为<code>nil</code>即可。  </p>
 </blockquote>
 <p><a name="subscript_options"></a></p>
 <h2 id="-">下标脚本选项</h2>

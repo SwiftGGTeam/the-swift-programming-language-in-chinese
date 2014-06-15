@@ -10,7 +10,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 兴趣交流群：307017261">
+        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -44,7 +44,7 @@
 
 
         
-    <div class="book"  data-level="3.10" data-basepath=".." data-revision="1402792177330">
+    <div class="book"  data-level="3.10" data-basepath=".." data-revision="1402808574723">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -585,11 +585,11 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_651">
+                    <section class="normal" id="section-gitbook_71">
                     
                         <blockquote>
-<p>翻译：stanzhai</p>
-<p>校对：xielingwang</p>
+<p>翻译：<a href="https://github.com/stanzhai" target="_blank">stanzhai</a>
+校对：<a href="https://github.com/xielingwang" target="_blank">xielingwang</a></p>
 </blockquote>
 <h1 id="-">语法总结</h1>
 <hr>
@@ -609,72 +609,72 @@
 <blockquote>
 <p>语句语法<br><em>语句</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>;</strong> <em>可选</em><br><em>语句</em> → <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a> <strong>;</strong> <em>可选</em><br><em>语句</em> → <a href="..\chapter3\10_Statements.html#loop_statement"><em>循环语句</em></a> <strong>;</strong> <em>可选</em><br><em>语句</em> → <a href="..\chapter3\10_Statements.html#branch_statement"><em>分支语句</em></a> <strong>;</strong> <em>可选</em><br><em>语句</em> → <a href="..\chapter3\10_Statements.html#labeled_statement"><em>标记语句(Labeled Statement)</em></a><br><em>语句</em> → <a href="..\chapter3\10_Statements.html#control_transfer_statement"><em>控制转移语句</em></a> <strong>;</strong> <em>可选</em><br><em>多条语句(Statements)</em> → <a href="..\chapter3\10_Statements.html#statement"><em>语句</em></a> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>循环语句语法<br><em>循环语句</em> → <a href="..\chapter3\10_Statements.html#for_statement"><em>for语句</em></a><br><em>循环语句</em> → <a href="..\chapter3\10_Statements.html#for_in_statement"><em>for-in语句</em></a><br><em>循环语句</em> → <a href="..\chapter3\10_Statements.html#wheetatype类型ile_statement"><em>while语句</em></a><br><em>循环语句</em> → <a href="..\chapter3\10_Statements.html#do_while_statement"><em>do-while语句</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>For 循环语法<br><em>for语句</em> → <strong>for</strong> <a href="..\chapter3\10_Statements.html#for_init"><em>for初始条件</em></a> <em>可选</em> <strong>;</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <em>可选</em> <strong>;</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>for语句</em> → <strong>for</strong> <strong>(</strong> <a href="..\chapter3\10_Statements.html#for_init"><em>for初始条件</em></a> <em>可选</em> <strong>;</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <em>可选</em> <strong>;</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <em>可选</em> <strong>)</strong> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>for初始条件</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration"><em>变量声明</em></a> | <a href="..\chapter3\04_Expressions.html#expression_list"><em>表达式列表</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>For-In 循环语法<br><em>for-in语句</em> → <strong>for</strong> <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <strong>in</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>While 循环语法<br><em>while语句</em> → <strong>while</strong> <a href="..\chapter3\10_Statements.html#while_condition"><em>while条件</em></a> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>while条件</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Do-While 循环语法<br><em>do-while语句</em> → <strong>do</strong> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a> <strong>while</strong> <a href="..\chapter3\10_Statements.html#while_condition"><em>while条件</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>分支语句语法<br><em>分支语句</em> → <a href="..\chapter3\10_Statements.html#if_statement"><em>if语句</em></a><br><em>分支语句</em> → <a href="..\chapter3\10_Statements.html#switch_statement"><em>switch语句</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>If语句语法<br><em>if语句</em> → <strong>if</strong> <a href="..\chapter3\10_Statements.html#if_condition"><em>if条件</em></a> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a> <a href="..\chapter3\10_Statements.html#else_clause"><em>else子句(Clause)</em></a> <em>可选</em><br><em>if条件</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a><br><em>else子句(Clause)</em> → <strong>else</strong> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a> | <strong>else</strong> <a href="..\chapter3\10_Statements.html#if_statement"><em>if语句</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Switch语句语法<br><em>switch语句</em> → <strong>switch</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>{</strong> <a href="..\chapter3\10_Statements.html#switch_cases"><em>SwitchCase列表</em></a> <em>可选</em> <strong>}</strong><br><em>SwitchCase列表</em> → <a href="..\chapter3\10_Statements.html#switch_case"><em>SwitchCase</em></a> <a href="..\chapter3\10_Statements.html#switch_cases"><em>SwitchCase列表</em></a> <em>可选</em><br><em>SwitchCase</em> → <a href="..\chapter3\10_Statements.html#case_label"><em>case标签</em></a> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> | <a href="..\chapter3\10_Statements.html#default_label"><em>default标签</em></a> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a><br><em>SwitchCase</em> → <a href="..\chapter3\10_Statements.html#case_label"><em>case标签</em></a> <strong>;</strong> | <a href="..\chapter3\10_Statements.html#default_label"><em>default标签</em></a> <strong>;</strong><br><em>case标签</em> → <strong>case</strong> <a href="..\chapter3\10_Statements.html#case_item_list"><em>case项列表</em></a> <strong>:</strong><br><em>case项列表</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <a href="..\chapter3\10_Statements.html#guard_clause"><em>guard-clause</em></a> <em>可选</em> | <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <a href="..\chapter3\10_Statements.html#guard_clause"><em>guard-clause</em></a> <em>可选</em> <strong>,</strong> <a href="..\chapter3\10_Statements.html#case_item_list"><em>case项列表</em></a><br><em>default标签</em> → <strong>default</strong> <strong>:</strong><br><em>guard-clause</em> → <strong>where</strong> <a href="..\chapter3\10_Statements.html#guard_expression"><em>guard-expression</em></a><br><em>guard-expression</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>标记语句语法<br><em>标记语句(Labeled Statement)</em> → <a href="..\chapter3\10_Statements.html#statement_label"><em>语句标签</em></a> <a href="..\chapter3\10_Statements.html#loop_statement"><em>循环语句</em></a> | <a href="..\chapter3\10_Statements.html#statement_label"><em>语句标签</em></a> <a href="..\chapter3\10_Statements.html#switch_statement"><em>switch语句</em></a><br><em>语句标签</em> → <a href="..\chapter3\10_Statements.html#label_name"><em>标签名称</em></a> <strong>:</strong><br><em>标签名称</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
-<p>控制传递语句(Control Transfer Statement) 语法<br><em>控制转移语句</em> → <a href="..\chapter3\10_Statements.html#break_statement"><em>break语句</em></a><br><em>控制转移语句</em> → <a href="..\chapter3\10_Statements.html#continue_statement"><em>continue语句</em></a><br><em>控制转移语句</em> → <a href="..\chapter3\10_Statements.html#fallthrough_statement"><em>fallthrough语句</em></a><br><em>控制转移语句</em> → <a href="..\chapter3\10_Statements.html#return_statement"><em>return语句</em></a>  </p>
+<p>控制传递语句(Control Transfer Statement) 语法<br><em>控制传递语句</em> → <a href="..\chapter3\10_Statements.html#break_statement"><em>break语句</em></a><br><em>控制传递语句</em> → <a href="..\chapter3\10_Statements.html#continue_statement"><em>continue语句</em></a><br><em>控制传递语句</em> → <a href="..\chapter3\10_Statements.html#fallthrough_statement"><em>fallthrough语句</em></a><br><em>控制传递语句</em> → <a href="..\chapter3\10_Statements.html#return_statement"><em>return语句</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Break 语句语法<br><em>break语句</em> → <strong>break</strong> <a href="..\chapter3\10_Statements.html#label_name"><em>标签名称</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Continue 语句语法<br><em>continue语句</em> → <strong>continue</strong> <a href="..\chapter3\10_Statements.html#label_name"><em>标签名称</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Fallthrough 语句语法<br><em>fallthrough语句</em> → <strong>fallthrough</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Return 语句语法<br><em>return语句</em> → <strong>return</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <em>可选</em>  </p>
@@ -684,7 +684,7 @@
 <blockquote>
 <p>泛型形参子句(Generic Parameter Clause) 语法<br><em>泛型参数子句</em> → <strong>&lt;</strong> <a href="GenericParametersAndArguments.html#generic_parameter_list"><em>泛型参数列表</em></a> <a href="GenericParametersAndArguments.html#requirement_clause"><em>约束子句</em></a> <em>可选</em> <strong>&gt;</strong><br><em>泛型参数列表</em> → <a href="GenericParametersAndArguments.html#generic_parameter"><em>泛形参数</em></a> | <a href="GenericParametersAndArguments.html#generic_parameter"><em>泛形参数</em></a> <strong>,</strong> <a href="GenericParametersAndArguments.html#generic_parameter_list"><em>泛型参数列表</em></a><br><em>泛形参数</em> → <a href="..\chapter3\03_Types.html#type_name"><em>类型名称</em></a><br><em>泛形参数</em> → <a href="..\chapter3\03_Types.html#type_name"><em>类型名称</em></a> <strong>:</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a><br><em>泛形参数</em> → <a href="..\chapter3\03_Types.html#type_name"><em>类型名称</em></a> <strong>:</strong> <a href="..\chapter3\03_Types.html#protocol_composition_type"><em>协议合成类型</em></a><br><em>约束子句</em> → <strong>where</strong> <a href="GenericParametersAndArguments.html#requirement_list"><em>约束列表</em></a><br><em>约束列表</em> → <a href="GenericParametersAndArguments.html#requirement"><em>约束</em></a> | <a href="GenericParametersAndArguments.html#requirement"><em>约束</em></a> <strong>,</strong> <a href="GenericParametersAndArguments.html#requirement_list"><em>约束列表</em></a><br><em>约束</em> → <a href="GenericParametersAndArguments.html#conformance_requirement"><em>一致性约束</em></a> | <a href="GenericParametersAndArguments.html#same_type_requirement"><em>同类型约束</em></a><br><em>一致性约束</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <strong>:</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a><br><em>一致性约束</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <strong>:</strong> <a href="..\chapter3\03_Types.html#protocol_composition_type"><em>协议合成类型</em></a><br><em>同类型约束</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <strong>==</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>泛型实参子句语法<br><em>(泛型参数子句Generic Argument Clause)</em> → <strong>&lt;</strong> <a href="GenericParametersAndArguments.html#generic_argument_list"><em>泛型参数列表</em></a> <strong>&gt;</strong><br><em>泛型参数列表</em> → <a href="GenericParametersAndArguments.html#generic_argument"><em>泛型参数</em></a> | <a href="GenericParametersAndArguments.html#generic_argument"><em>泛型参数</em></a> <strong>,</strong> <a href="GenericParametersAndArguments.html#generic_argument_list"><em>泛型参数列表</em></a><br><em>泛型参数</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
@@ -694,107 +694,107 @@
 <blockquote>
 <p>声明语法<br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#import_declaration"><em>导入声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#constant_declaration"><em>常量声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration"><em>变量声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#typealias_declaration"><em>类型别名声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#function_declaration"><em>函数声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#enum_declaration"><em>枚举声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#struct_declaration"><em>结构体声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#class_declaration"><em>类声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_declaration"><em>协议声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#initializer_declaration"><em>构造器声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#deinitializer_declaration"><em>析构器声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#extension_declaration"><em>扩展声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#subscript_declaration"><em>下标脚本声明</em></a><br><em>声明</em> → <a href="..\chapter3\05_Declarations.html#operator_declaration"><em>运算符声明</em></a><br><em>声明(Declarations)列表</em> → <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a> <a href="..\chapter3\05_Declarations.html#declarations"><em>声明(Declarations)列表</em></a> <em>可选</em><br><em>声明描述符(Specifiers)列表</em> → <a href="..\chapter3\05_Declarations.html#declaration_specifier"><em>声明描述符(Specifier)</em></a> <a href="..\chapter3\05_Declarations.html#declaration_specifiers"><em>声明描述符(Specifiers)列表</em></a> <em>可选</em><br><em>声明描述符(Specifier)</em> → <strong>class</strong> | <strong>mutating</strong> | <strong>nonmutating</strong> | <strong>override</strong> | <strong>static</strong> | <strong>unowned</strong> | <strong>unowned(safe)</strong> | <strong>unowned(unsafe)</strong> | <strong>weak</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>顶级(Top Level) 声明语法<br><em>顶级声明</em> → <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>代码块语法<br><em>代码块</em> → <strong>{</strong> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> <em>可选</em> <strong>}</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>导入(Import)声明语法<br><em>导入声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>import</strong> <a href="..\chapter3\05_Declarations.html#import_kind"><em>导入类型</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#import_path"><em>导入路径</em></a><br><em>导入类型</em> → <strong>typealias</strong> | <strong>struct</strong> | <strong>class</strong> | <strong>enum</strong> | <strong>protocol</strong> | <strong>var</strong> | <strong>func</strong><br><em>导入路径</em> → <a href="..\chapter3\05_Declarations.html#import_path_identifier"><em>导入路径标识符</em></a> | <a href="..\chapter3\05_Declarations.html#import_path_identifier"><em>导入路径标识符</em></a> <strong>.</strong> <a href="..\chapter3\05_Declarations.html#import_path"><em>导入路径</em></a><br><em>导入路径标识符</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>常数声明语法<br><em>常量声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#declaration_specifiers"><em>声明描述符(Specifiers)列表</em></a> <em>可选</em> <strong>let</strong> <a href="..\chapter3\05_Declarations.html#pattern_initializer_list"><em>模式构造器列表</em></a><br><em>模式构造器列表</em> → <a href="..\chapter3\05_Declarations.html#pattern_initializer"><em>模式构造器</em></a> | <a href="..\chapter3\05_Declarations.html#pattern_initializer"><em>模式构造器</em></a> <strong>,</strong> <a href="..\chapter3\05_Declarations.html#pattern_initializer_list"><em>模式构造器列表</em></a><br><em>模式构造器</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <a href="..\chapter3\05_Declarations.html#initializer"><em>构造器</em></a> <em>可选</em><br><em>构造器</em> → <strong>=</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>变量声明语法<br><em>变量声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#pattern_initializer_list"><em>模式构造器列表</em></a><br><em>变量声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#variable_name"><em>变量名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>变量声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#variable_name"><em>变量名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_block"><em>getter-setter块</em></a><br><em>变量声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#variable_name"><em>变量名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_keyword_block"><em>getter-setter关键字(Keyword)块</em></a><br><em>变量声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#variable_name"><em>变量名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#initializer"><em>构造器</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#willSet_didSet_block"><em>willSet-didSet代码块</em></a><br><em>变量声明头(Head)</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#declaration_specifiers"><em>声明描述符(Specifiers)列表</em></a> <em>可选</em> <strong>var</strong><br><em>变量名称</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>getter-setter块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#getter_clause"><em>getter子句</em></a> <a href="..\chapter3\05_Declarations.html#setter_clause"><em>setter子句</em></a> <em>可选</em> <strong>}</strong><br><em>getter-setter块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#setter_clause"><em>setter子句</em></a> <a href="..\chapter3\05_Declarations.html#getter_clause"><em>getter子句</em></a> <strong>}</strong><br><em>getter子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>get</strong> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>setter子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>set</strong> <a href="..\chapter3\05_Declarations.html#setter_name"><em>setter名称</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>setter名称</em> → <strong>(</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <strong>)</strong><br><em>getter-setter关键字(Keyword)块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#getter_keyword_clause"><em>getter关键字(Keyword)子句</em></a> <a href="..\chapter3\05_Declarations.html#setter_keyword_clause"><em>setter关键字(Keyword)子句</em></a> <em>可选</em> <strong>}</strong><br><em>getter-setter关键字(Keyword)块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#setter_keyword_clause"><em>setter关键字(Keyword)子句</em></a> <a href="..\chapter3\05_Declarations.html#getter_keyword_clause"><em>getter关键字(Keyword)子句</em></a> <strong>}</strong><br><em>getter关键字(Keyword)子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>get</strong><br><em>setter关键字(Keyword)子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>set</strong><br><em>willSet-didSet代码块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#willSet_clause"><em>willSet子句</em></a> <a href="..\chapter3\05_Declarations.html#didSet_clause"><em>didSet子句</em></a> <em>可选</em> <strong>}</strong><br><em>willSet-didSet代码块</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#didSet_clause"><em>didSet子句</em></a> <a href="..\chapter3\05_Declarations.html#willSet_clause"><em>willSet子句</em></a> <strong>}</strong><br><em>willSet子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>willSet</strong> <a href="..\chapter3\05_Declarations.html#setter_name"><em>setter名称</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>didSet子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>didSet</strong> <a href="..\chapter3\05_Declarations.html#setter_name"><em>setter名称</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型别名声明语法<br><em>类型别名声明</em> → <a href="..\chapter3\05_Declarations.html#typealias_head"><em>类型别名头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#typealias_assignment"><em>类型别名赋值</em></a><br><em>类型别名头(Head)</em> → <strong>typealias</strong> <a href="..\chapter3\05_Declarations.html#typealias_name"><em>类型别名名称</em></a><br><em>类型别名名称</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>类型别名赋值</em> → <strong>=</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>函数声明语法<br><em>函数声明</em> → <a href="..\chapter3\05_Declarations.html#function_head"><em>函数头</em></a> <a href="..\chapter3\05_Declarations.html#function_name"><em>函数名</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#function_signature"><em>函数签名(Signature)</em></a> <a href="..\chapter3\05_Declarations.html#function_body"><em>函数体</em></a><br><em>函数头</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#declaration_specifiers"><em>声明描述符(Specifiers)列表</em></a> <em>可选</em> <strong>func</strong><br><em>函数名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a><br><em>函数签名(Signature)</em> → <a href="..\chapter3\05_Declarations.html#parameter_clauses"><em>parameter-clauses</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em><br><em>函数结果</em> → <strong>-&gt;</strong> <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a><br><em>函数体</em> → <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>parameter-clauses</em> → <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#parameter_clauses"><em>parameter-clauses</em></a> <em>可选</em><br><em>参数子句</em> → <strong>(</strong> <strong>)</strong> | <strong>(</strong> <a href="..\chapter3\05_Declarations.html#parameter_list"><em>参数列表</em></a> <strong>...</strong> <em>可选</em> <strong>)</strong><br><em>参数列表</em> → <a href="..\chapter3\05_Declarations.html#parameter"><em>参数</em></a> | <a href="..\chapter3\05_Declarations.html#parameter"><em>参数</em></a> <strong>,</strong> <a href="..\chapter3\05_Declarations.html#parameter_list"><em>参数列表</em></a><br><em>参数</em> → <strong>inout</strong> <em>可选</em> <strong>let</strong> <em>可选</em> <strong>#</strong> <em>可选</em> <a href="..\chapter3\05_Declarations.html#parameter_name"><em>参数名</em></a> <a href="..\chapter3\05_Declarations.html#local_parameter_name"><em>本地参数名</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#default_argument_clause"><em>默认参数子句</em></a> <em>可选</em><br><em>参数</em> → <strong>inout</strong> <em>可选</em> <strong>var</strong> <strong>#</strong> <em>可选</em> <a href="..\chapter3\05_Declarations.html#parameter_name"><em>参数名</em></a> <a href="..\chapter3\05_Declarations.html#local_parameter_name"><em>本地参数名</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#default_argument_clause"><em>默认参数子句</em></a> <em>可选</em><br><em>参数</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a><br><em>参数名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> | <strong>_</strong><br><em>本地参数名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> | <strong>_</strong><br><em>默认参数子句</em> → <strong>=</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>枚举声明语法<br><em>枚举声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#union_style_enum"><em>联合式枚举</em></a> | <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#raw_value_style_enum"><em>原始值式枚举</em></a><br><em>联合式枚举</em> → <a href="..\chapter3\05_Declarations.html#enum_name"><em>枚举名</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <strong>{</strong> <a href="..\chapter3\05_Declarations.html#union_style_enum_members"><em>union-style-enum-members</em></a> <em>可选</em> <strong>}</strong><br><em>union-style-enum-members</em> → <a href="..\chapter3\05_Declarations.html#union_style_enum_member"><em>union-style-enum-member</em></a> <a href="..\chapter3\05_Declarations.html#union_style_enum_members"><em>union-style-enum-members</em></a> <em>可选</em><br><em>union-style-enum-member</em> → <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a> | <a href="..\chapter3\05_Declarations.html#union_style_enum_case_clause"><em>联合式(Union Style)的枚举case子句</em></a><br><em>联合式(Union Style)的枚举case子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>case</strong> <a href="..\chapter3\05_Declarations.html#union_style_enum_case_list"><em>联合式(Union Style)的枚举case列表</em></a><br><em>联合式(Union Style)的枚举case列表</em> → <a href="..\chapter3\05_Declarations.html#union_style_enum_case"><em>联合式(Union Style)的case</em></a> | <a href="..\chapter3\05_Declarations.html#union_style_enum_case"><em>联合式(Union Style)的case</em></a> <strong>,</strong> <a href="..\chapter3\05_Declarations.html#union_style_enum_case_list"><em>联合式(Union Style)的枚举case列表</em></a><br><em>联合式(Union Style)的case</em> → <a href="..\chapter3\05_Declarations.html#enum_case_name"><em>枚举的case名</em></a> <a href="..\chapter3\03_Types.html#tuple_type"><em>元组类型</em></a> <em>可选</em><br><em>枚举名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>枚举的case名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>原始值式枚举</em> → <a href="..\chapter3\05_Declarations.html#enum_name"><em>枚举名</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <strong>:</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <strong>{</strong> <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_members"><em>原始值式枚举成员列表</em></a> <em>可选</em> <strong>}</strong><br><em>原始值式枚举成员列表</em> → <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_member"><em>原始值式枚举成员</em></a> <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_members"><em>原始值式枚举成员列表</em></a> <em>可选</em><br><em>原始值式枚举成员</em> → <a href="..\chapter3\05_Declarations.html#declaration"><em>声明</em></a> | <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_case_clause"><em>原始值式枚举case子句</em></a><br><em>原始值式枚举case子句</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>case</strong> <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_case_list"><em>原始值式枚举case列表</em></a><br><em>原始值式枚举case列表</em> → <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_case"><em>原始值式枚举case</em></a> | <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_case"><em>原始值式枚举case</em></a> <strong>,</strong> <a href="..\chapter3\05_Declarations.html#raw_value_style_enum_case_list"><em>原始值式枚举case列表</em></a><br><em>原始值式枚举case</em> → <a href="..\chapter3\05_Declarations.html#enum_case_name"><em>枚举的case名</em></a> <a href="..\chapter3\05_Declarations.html#raw_value_assignment"><em>原始值赋值</em></a> <em>可选</em><br><em>原始值赋值</em> → <strong>=</strong> <a href="..\chapter3\02_Lexical_Structure.html#literal"><em>字面量</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>结构体声明语法<br><em>结构体声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>struct</strong> <a href="..\chapter3\05_Declarations.html#struct_name"><em>结构体名称</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type_inheritance_clause"><em>类型继承子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#struct_body"><em>结构体主体</em></a><br><em>结构体名称</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>结构体主体</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#declarations"><em>声明(Declarations)列表</em></a> <em>可选</em> <strong>}</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类声明语法<br><em>类声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>class</strong> <a href="..\chapter3\05_Declarations.html#class_name"><em>类名</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type_inheritance_clause"><em>类型继承子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#class_body"><em>类主体</em></a><br><em>类名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>类主体</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#declarations"><em>声明(Declarations)列表</em></a> <em>可选</em> <strong>}</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议(Protocol)声明语法<br><em>协议声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>protocol</strong> <a href="..\chapter3\05_Declarations.html#protocol_name"><em>协议名</em></a> <a href="..\chapter3\03_Types.html#type_inheritance_clause"><em>类型继承子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#protocol_body"><em>协议主体</em></a><br><em>协议名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>协议主体</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#protocol_member_declarations"><em>协议成员声明(Declarations)列表</em></a> <em>可选</em> <strong>}</strong><br><em>协议成员声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_property_declaration"><em>协议属性声明</em></a><br><em>协议成员声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_method_declaration"><em>协议方法声明</em></a><br><em>协议成员声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_initializer_declaration"><em>协议构造器声明</em></a><br><em>协议成员声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_subscript_declaration"><em>协议下标脚本声明</em></a><br><em>协议成员声明</em> → <a href="..\chapter3\05_Declarations.html#protocol_associated_type_declaration"><em>协议关联类型声明</em></a><br><em>协议成员声明(Declarations)列表</em> → <a href="..\chapter3\05_Declarations.html#protocol_member_declaration"><em>协议成员声明</em></a> <a href="..\chapter3\05_Declarations.html#protocol_member_declarations"><em>协议成员声明(Declarations)列表</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议属性声明语法<br><em>协议属性声明</em> → <a href="..\chapter3\05_Declarations.html#variable_declaration_head"><em>变量声明头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#variable_name"><em>变量名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_keyword_block"><em>getter-setter关键字(Keyword)块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议方法声明语法<br><em>协议方法声明</em> → <a href="..\chapter3\05_Declarations.html#function_head"><em>函数头</em></a> <a href="..\chapter3\05_Declarations.html#function_name"><em>函数名</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#function_signature"><em>函数签名(Signature)</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议构造器声明语法<br><em>协议构造器声明</em> → <a href="..\chapter3\05_Declarations.html#initializer_head"><em>构造器头(Head)</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议下标脚本声明语法<br><em>协议下标脚本声明</em> → <a href="..\chapter3\05_Declarations.html#subscript_head"><em>下标脚本头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#subscript_result"><em>下标脚本结果(Result)</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_keyword_block"><em>getter-setter关键字(Keyword)块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议关联类型声明语法<br><em>协议关联类型声明</em> → <a href="..\chapter3\05_Declarations.html#typealias_head"><em>类型别名头(Head)</em></a> <a href="..\chapter3\03_Types.html#type_inheritance_clause"><em>类型继承子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#typealias_assignment"><em>类型别名赋值</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>构造器声明语法<br><em>构造器声明</em> → <a href="..\chapter3\05_Declarations.html#initializer_head"><em>构造器头(Head)</em></a> <a href="GenericParametersAndArguments.html#generic_parameter_clause"><em>泛型参数子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#initializer_body"><em>构造器主体</em></a><br><em>构造器头(Head)</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>convenience</strong> <em>可选</em> <strong>init</strong><br><em>构造器主体</em> → <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>析构器声明语法<br><em>析构器声明</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>deinit</strong> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>扩展(Extension)声明语法<br><em>扩展声明</em> → <strong>extension</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <a href="..\chapter3\03_Types.html#type_inheritance_clause"><em>类型继承子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#extension_body"><em>extension-body</em></a><br><em>extension-body</em> → <strong>{</strong> <a href="..\chapter3\05_Declarations.html#declarations"><em>声明(Declarations)列表</em></a> <em>可选</em> <strong>}</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>下标脚本声明语法<br><em>下标脚本声明</em> → <a href="..\chapter3\05_Declarations.html#subscript_head"><em>下标脚本头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#subscript_result"><em>下标脚本结果(Result)</em></a> <a href="..\chapter3\05_Declarations.html#code_block"><em>代码块</em></a><br><em>下标脚本声明</em> → <a href="..\chapter3\05_Declarations.html#subscript_head"><em>下标脚本头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#subscript_result"><em>下标脚本结果(Result)</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_block"><em>getter-setter块</em></a><br><em>下标脚本声明</em> → <a href="..\chapter3\05_Declarations.html#subscript_head"><em>下标脚本头(Head)</em></a> <a href="..\chapter3\05_Declarations.html#subscript_result"><em>下标脚本结果(Result)</em></a> <a href="..\chapter3\05_Declarations.html#getter_setter_keyword_block"><em>getter-setter关键字(Keyword)块</em></a><br><em>下标脚本头(Head)</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>subscript</strong> <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a><br><em>下标脚本结果(Result)</em> → <strong>-&gt;</strong> <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>运算符声明语法<br><em>运算符声明</em> → <a href="..\chapter3\05_Declarations.html#prefix_operator_declaration"><em>前置运算符声明</em></a> | <a href="..\chapter3\05_Declarations.html#postfix_operator_declaration"><em>后置运算符声明</em></a> | <a href="..\chapter3\05_Declarations.html#infix_operator_declaration"><em>中置运算符声明</em></a><br><em>前置运算符声明</em> → <strong>运算符</strong> <strong>prefix</strong> <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a> <strong>{</strong> <strong>}</strong><br><em>后置运算符声明</em> → <strong>运算符</strong> <strong>postfix</strong> <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a> <strong>{</strong> <strong>}</strong><br><em>中置运算符声明</em> → <strong>运算符</strong> <strong>infix</strong> <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a> <strong>{</strong> <a href="..\chapter3\05_Declarations.html#infix_operator_attributes"><em>中置运算符属性</em></a> <em>可选</em> <strong>}</strong><br><em>中置运算符属性</em> → <a href="..\chapter3\05_Declarations.html#precedence_clause"><em>优先级子句</em></a> <em>可选</em> <a href="..\chapter3\05_Declarations.html#associativity_clause"><em>结和性子句</em></a> <em>可选</em><br><em>优先级子句</em> → <strong>precedence</strong> <a href="..\chapter3\05_Declarations.html#precedence_level"><em>优先级水平</em></a><br><em>优先级水平</em> → 数值 0 到 255<br><em>结和性子句</em> → <strong>associativity</strong> <a href="..\chapter3\05_Declarations.html#associativity"><em>结和性</em></a><br><em>结和性</em> → <strong>left</strong> | <strong>right</strong> | <strong>none</strong>  </p>
@@ -804,37 +804,37 @@
 <blockquote>
 <p>模式(Patterns) 语法<br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#wildcard_pattern"><em>通配符模式</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#identifier_pattern"><em>标识符模式</em></a> <a href="..\chapter3\03_Types.html#type_annotati(Value Binding"><em>类型注解</em></a>on) <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#value_binding_pattern"><em>值绑定模式</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#tuple_pattern"><em>元组模式</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a> <em>可选</em><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#enum_case_pattern"><em>enum-case-pattern</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#type_casting_pattern"><em>type-casting-pattern</em></a><br><em>模式</em> → <a href="..\chapter3\07_Patterns.html#expression_pattern"><em>表达式模式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>通配符模式语法<br><em>通配符模式</em> → <strong>_</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>标识符模式语法<br><em>标识符模式</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>值绑定(Value Binding)模式语法<br><em>值绑定模式</em> → <strong>var</strong> <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> | <strong>let</strong> <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>元组模式语法<br><em>元组模式</em> → <strong>(</strong> <a href="..\chapter3\07_Patterns.html#tuple_pattern_element_list"><em>元组模式元素列表</em></a> <em>可选</em> <strong>)</strong><br><em>元组模式元素列表</em> → <a href="..\chapter3\07_Patterns.html#tuple_pattern_element"><em>元组模式元素</em></a> | <a href="..\chapter3\07_Patterns.html#tuple_pattern_element"><em>元组模式元素</em></a> <strong>,</strong> <a href="..\chapter3\07_Patterns.html#tuple_pattern_element_list"><em>元组模式元素列表</em></a><br><em>元组模式元素</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>枚举用例模式语法<br><em>enum-case-pattern</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <em>可选</em> <strong>.</strong> <a href="..\chapter3\05_Declarations.html#enum_case_name"><em>枚举的case名</em></a> <a href="..\chapter3\07_Patterns.html#tuple_pattern"><em>元组模式</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型转换模式语法<br><em>type-casting-pattern</em> → <a href="..\chapter3\07_Patterns.html#is_pattern"><em>is模式</em></a> | <a href="..\chapter3\07_Patterns.html#as_pattern"><em>as模式</em></a><br><em>is模式</em> → <strong>is</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a><br><em>as模式</em> → <a href="..\chapter3\07_Patterns.html#pattern"><em>模式</em></a> <strong>as</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>表达式模式语法<br><em>表达式模式</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
@@ -849,112 +849,112 @@
 <blockquote>
 <p>表达式语法<br><em>表达式</em> → <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a> <a href="..\chapter3\04_Expressions.html#binary_expressions"><em>二元表达式列表</em></a> <em>可选</em><br><em>表达式列表</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#expression_list"><em>表达式列表</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>前置表达式语法<br><em>前置表达式</em> → <a href="..\chapter3\02_Lexical_Structure.html#prefix_operator"><em>前置运算符</em></a> <em>可选</em> <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a><br><em>前置表达式</em> → <a href="..\chapter3\04_Expressions.html#in_out_expression"><em>写入写出(in-out)表达式</em></a><br><em>写入写出(in-out)表达式</em> → <strong>&amp;</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>二元表达式语法<br><em>二元表达式</em> → <a href="..\chapter3\02_Lexical_Structure.html#binary_operator"><em>二元运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#assignment_operator"><em>赋值运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#conditional_operator"><em>条件运算符</em></a> <a href="..\chapter3\04_Expressions.html#prefix_expression"><em>前置表达式</em></a><br><em>二元表达式</em> → <a href="..\chapter3\04_Expressions.html#type_casting_operator"><em>类型转换运算符</em></a><br><em>二元表达式列表</em> → <a href="..\chapter3\04_Expressions.html#binary_expression"><em>二元表达式</em></a> <a href="..\chapter3\04_Expressions.html#binary_expressions"><em>二元表达式列表</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>赋值运算符语法<br><em>赋值运算符</em> → <strong>=</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>三元条件运算符语法<br><em>三元条件运算符</em> → <strong>?</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>:</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型转换运算符语法<br><em>类型转换运算符</em> → <strong>is</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> | <strong>as</strong> <strong>?</strong> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>主表达式语法<br><em>主表达式</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#literal_expression"><em>字面量表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#self_expression"><em>self表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#superclass_expression"><em>超类表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#closure_expression"><em>闭包表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#implicit_member_expression"><em>隐式成员表达式</em></a><br><em>主表达式</em> → <a href="..\chapter3\04_Expressions.html#wildcard_expression"><em>通配符表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>字面量表达式语法<br><em>字面量表达式</em> → <a href="..\chapter3\02_Lexical_Structure.html#literal"><em>字面量</em></a><br><em>字面量表达式</em> → <a href="..\chapter3\04_Expressions.html#array_literal"><em>数组字面量</em></a> | <a href="..\chapter3\04_Expressions.html#dictionary_literal"><em>字典字面量</em></a><br><em>字面量表达式</em> → <strong>&#95;&#95;FILE&#95;&#95;</strong> | <strong>&#95;&#95;LINE&#95;&#95;</strong> | <strong>&#95;&#95;COLUMN&#95;&#95;</strong> | <strong>&#95;&#95;FUNCTION&#95;&#95;</strong><br><em>数组字面量</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#array_literal_items"><em>数组字面量项列表</em></a> <em>可选</em> <strong>]</strong><br><em>数组字面量项列表</em> → <a href="..\chapter3\04_Expressions.html#array_literal_item"><em>数组字面量项</em></a> <strong>,</strong> <em>可选</em> | <a href="..\chapter3\04_Expressions.html#array_literal_item"><em>数组字面量项</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#array_literal_items"><em>数组字面量项列表</em></a><br><em>数组字面量项</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a><br><em>字典字面量</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#dictionary_literal_items"><em>字典字面量项列表</em></a> <strong>]</strong> | <strong>[</strong> <strong>:</strong> <strong>]</strong><br><em>字典字面量项列表</em> → <a href="..\chapter3\04_Expressions.html#dictionary_literal_item"><em>字典字面量项</em></a> <strong>,</strong> <em>可选</em> | <a href="..\chapter3\04_Expressions.html#dictionary_literal_item"><em>字典字面量项</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#dictionary_literal_items"><em>字典字面量项列表</em></a><br><em>字典字面量项</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>:</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>Self 表达式语法<br><em>self表达式</em> → <strong>self</strong><br><em>self表达式</em> → <strong>self</strong> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>self表达式</em> → <strong>self</strong> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>self表达式</em> → <strong>self</strong> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>超类表达式语法<br><em>超类表达式</em> → <a href="..\chapter3\04_Expressions.html#superclass_method_expression"><em>超类方法表达式</em></a> | <a href="..\chapter3\04_Expressions.html#超类下标表达式"><em>超类下标表达式</em></a> | <a href="..\chapter3\04_Expressions.html#superclass_initializer_expression"><em>超类构造器表达式</em></a><br><em>超类方法表达式</em> → <strong>super</strong> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a><br><em>超类下标表达式</em> → <strong>super</strong> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>超类构造器表达式</em> → <strong>super</strong> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>闭包表达式语法<br><em>闭包表达式</em> → <strong>{</strong> <a href="..\chapter3\04_Expressions.html#closure_signature"><em>闭包签名(Signational)</em></a> <em>可选</em> <a href="..\chapter3\10_Statements.html#statements"><em>多条语句(Statements)</em></a> <strong>}</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier_list"><em>标识符列表</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <a href="..\chapter3\05_Declarations.html#parameter_clause"><em>参数子句</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <a href="..\chapter3\02_Lexical_Structure.html#identifier_list"><em>标识符列表</em></a> <a href="..\chapter3\05_Declarations.html#function_result"><em>函数结果</em></a> <em>可选</em> <strong>in</strong><br><em>闭包签名(Signational)</em> → <a href="..\chapter3\04_Expressions.html#capture_list"><em>捕获(Capature)列表</em></a> <strong>in</strong><br><em>捕获(Capature)列表</em> → <strong>[</strong> <a href="..\chapter3\04_Expressions.html#capture_specifier"><em>捕获(Capature)说明符</em></a> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>]</strong><br><em>捕获(Capature)说明符</em> → <strong>weak</strong> | <strong>unowned</strong> | <strong>unowned(safe)</strong> | <strong>unowned(unsafe)</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>隐式成员表达式语法<br><em>隐式成员表达式</em> → <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>圆括号表达式(Parenthesized Expression)语法<br><em>圆括号表达式</em> → <strong>(</strong> <a href="..\chapter3\04_Expressions.html#expression_element_list"><em>表达式元素列表</em></a> <em>可选</em> <strong>)</strong><br><em>表达式元素列表</em> → <a href="..\chapter3\04_Expressions.html#expression_element"><em>表达式元素</em></a> | <a href="..\chapter3\04_Expressions.html#expression_element"><em>表达式元素</em></a> <strong>,</strong> <a href="..\chapter3\04_Expressions.html#expression_element_list"><em>表达式元素列表</em></a><br><em>表达式元素</em> → <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <strong>:</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>通配符表达式语法<br><em>通配符表达式</em> → <strong>_</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>后置表达式语法<br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#primary_expression"><em>主表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\02_Lexical_Structure.html#postfix_operator"><em>后置运算符</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#function_call_expression"><em>函数调用表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#initializer_expression"><em>构造器表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#explicit_member_expression"><em>显示成员表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_self_expression"><em>后置self表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#dynamic_type_expression"><em>动态类型表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#subscript_expression"><em>下标表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#forced_value_expression"><em>强制取值(Forced Value)表达式</em></a><br><em>后置表达式</em> → <a href="..\chapter3\04_Expressions.html#optional_chaining_expression"><em>可选链(Optional Chaining)表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>函数调用表达式语法<br><em>函数调用表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a><br><em>函数调用表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <a href="..\chapter3\04_Expressions.html#parenthesized_expression"><em>圆括号表达式</em></a> <em>可选</em> <a href="..\chapter3\04_Expressions.html#trailing_closure"><em>后置闭包(Trailing Closure)</em></a><br><em>后置闭包(Trailing Closure)</em> → <a href="..\chapter3\04_Expressions.html#closure_expression"><em>闭包表达式</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>构造器表达式语法<br><em>构造器表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>init</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>显式成员表达式语法<br><em>显示成员表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#decimal_digit"><em>十进制数字</em></a><br><em>显示成员表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>后置Self 表达式语法<br><em>后置self表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>self</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>动态类型表达式语法<br><em>动态类型表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>.</strong> <strong>dynamicType</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>附属脚本表达式语法<br><em>附属脚本表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>[</strong> <a href="..\chapter3\04_Expressions.html#expression_list"><em>表达式列表</em></a> <strong>]</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>强制取值(Forced Value)语法<br><em>强制取值(Forced Value)表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>!</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>可选链表达式语法<br><em>可选链表达式</em> → <a href="..\chapter3\04_Expressions.html#postfix_expression"><em>后置表达式</em></a> <strong>?</strong>  </p>
@@ -964,27 +964,27 @@
 <blockquote>
 <p>标识符语法<br><em>标识符</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier_head"><em>标识符头(Head)</em></a> <a href="..\chapter3\02_Lexical_Structure.html#identifier_characters"><em>标识符字符列表</em></a> <em>可选</em><br><em>标识符</em> → <strong>`</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier_head"><em>标识符头(Head)</em></a> <a href="..\chapter3\02_Lexical_Structure.html#identifier_characters"><em>标识符字符列表</em></a> <em>可选</em> <strong>`</strong><br><em>标识符</em> → <a href="..\chapter3\02_Lexical_Structure.html#implicit_parameter_name"><em>隐式参数名</em></a><br><em>标识符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a> <strong>,</strong> <a href="..\chapter3\02_Lexical_Structure.html#identifier_list"><em>标识符列表</em></a><br><em>标识符头(Head)</em> → Upper- or lowercase letter A through Z<br><em>标识符头(Head)</em> → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA<br><em>标识符头(Head)</em> → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF<br><em>标识符头(Head)</em> → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF<br><em>标识符头(Head)</em> → U+1E00–U+1FFF<br><em>标识符头(Head)</em> → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F<br><em>标识符头(Head)</em> → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793<br><em>标识符头(Head)</em> → U+2C00–U+2DFF or U+2E80–U+2FFF<br><em>标识符头(Head)</em> → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF<br><em>标识符头(Head)</em> → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44<br><em>标识符头(Head)</em> → U+FE47–U+FFFD<br><em>标识符头(Head)</em> → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD<br><em>标识符头(Head)</em> → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD<br><em>标识符头(Head)</em> → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD<br><em>标识符头(Head)</em> → U+D0000–U+DFFFD or U+E0000–U+EFFFD<br><em>标识符字符</em> → 数值 0 到 9<br><em>标识符字符</em> → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F<br><em>标识符字符</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier_head"><em>标识符头(Head)</em></a><br><em>标识符字符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier_character"><em>标识符字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#identifier_characters"><em>标识符字符列表</em></a> <em>可选</em><br><em>隐式参数名</em> → <strong>$</strong> <a href="..\chapter3\02_Lexical_Structure.html#decimal_digits"><em>十进制数字列表</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>字面量语法<br><em>字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#integer_literal"><em>整型字面量</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#floating_point_literal"><em>浮点数字面量</em></a> | <a href="..\chapter3\02_Lexical_Structure.html#string_literal"><em>字符串字面量</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>整型字面量语法<br><em>整型字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#binary_literal"><em>二进制字面量</em></a><br><em>整型字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#octal_literal"><em>八进制字面量</em></a><br><em>整型字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal"><em>十进制字面量</em></a><br><em>整型字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal"><em>十六进制字面量</em></a><br><em>二进制字面量</em> → <strong>0b</strong> <a href="..\chapter3\02_Lexical_Structure.html#binary_digit"><em>二进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#binary_literal_characters"><em>二进制字面量字符列表</em></a> <em>可选</em><br><em>二进制数字</em> → 数值 0 到 1<br><em>二进制字面量字符</em> → <a href="..\chapter3\02_Lexical_Structure.html#binary_digit"><em>二进制数字</em></a> | <strong>_</strong><br><em>二进制字面量字符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#binary_literal_character"><em>二进制字面量字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#binary_literal_characters"><em>二进制字面量字符列表</em></a> <em>可选</em><br><em>八进制字面量</em> → <strong>0o</strong> <a href="..\chapter3\02_Lexical_Structure.html#octal_digit"><em>八进字数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#octal_literal_characters"><em>八进制字符列表</em></a> <em>可选</em><br><em>八进字数字</em> → 数值 0 到 7<br><em>八进制字符</em> → <a href="..\chapter3\02_Lexical_Structure.html#octal_digit"><em>八进字数字</em></a> | <strong>_</strong><br><em>八进制字符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#octal_literal_character"><em>八进制字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#octal_literal_characters"><em>八进制字符列表</em></a> <em>可选</em><br><em>十进制字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_digit"><em>十进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal_characters"><em>十进制字符列表</em></a> <em>可选</em><br><em>十进制数字</em> → 数值 0 到 9<br><em>十进制数字列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_digit"><em>十进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#decimal_digits"><em>十进制数字列表</em></a> <em>可选</em><br><em>十进制字符</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_digit"><em>十进制数字</em></a> | <strong>_</strong><br><em>十进制字符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal_character"><em>十进制字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal_characters"><em>十进制字符列表</em></a> <em>可选</em><br><em>十六进制字面量</em> → <strong>0x</strong> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal_characters"><em>十六进制字面量字符列表</em></a> <em>可选</em><br><em>十六进制数字</em> → 数值 0 到 9, a through f, or A through F<br><em>十六进制字符</em> → <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> | <strong>_</strong><br><em>十六进制字面量字符列表</em> → <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal_character"><em>十六进制字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal_characters"><em>十六进制字面量字符列表</em></a> <em>可选</em>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>浮点型字面量语法<br><em>浮点数字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal"><em>十进制字面量</em></a> <a href="..\chapter3\02_Lexical_Structure.html#decimal_fraction"><em>十进制分数</em></a> <em>可选</em> <a href="..\chapter3\02_Lexical_Structure.html#decimal_exponent"><em>十进制指数</em></a> <em>可选</em><br><em>浮点数字面量</em> → <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal"><em>十六进制字面量</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_fraction"><em>十六进制分数</em></a> <em>可选</em> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_exponent"><em>十六进制指数</em></a><br><em>十进制分数</em> → <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal"><em>十进制字面量</em></a><br><em>十进制指数</em> → <a href="..\chapter3\02_Lexical_Structure.html#floating_point_e"><em>浮点数e</em></a> <a href="..\chapter3\02_Lexical_Structure.html#sign"><em>正负号</em></a> <em>可选</em> <a href="..\chapter3\02_Lexical_Structure.html#decimal_literal"><em>十进制字面量</em></a><br><em>十六进制分数</em> → <strong>.</strong> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal"><em>十六进制字面量</em></a> <em>可选</em><br><em>十六进制指数</em> → <a href="..\chapter3\02_Lexical_Structure.html#floating_point_p"><em>浮点数p</em></a> <a href="..\chapter3\02_Lexical_Structure.html#sign"><em>正负号</em></a> <em>可选</em> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_literal"><em>十六进制字面量</em></a><br><em>浮点数e</em> → <strong>e</strong> | <strong>E</strong><br><em>浮点数p</em> → <strong>p</strong> | <strong>P</strong><br><em>正负号</em> → <strong>+</strong> | <strong>-</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>字符型字面量语法<br><em>字符串字面量</em> → <strong>&quot;</strong> <a href="..\chapter3\02_Lexical_Structure.html#quoted_text"><em>引用文本</em></a> <strong>&quot;</strong><br><em>引用文本</em> → <a href="..\chapter3\02_Lexical_Structure.html#quoted_text_item"><em>引用文本条目</em></a> <a href="..\chapter3\02_Lexical_Structure.html#quoted_text"><em>引用文本</em></a> <em>可选</em><br><em>引用文本条目</em> → <a href="..\chapter3\02_Lexical_Structure.html#escaped_character"><em>转义字符</em></a><br><em>引用文本条目</em> → <strong>(</strong> <a href="..\chapter3\04_Expressions.html#expression"><em>表达式</em></a> <strong>)</strong><br><em>引用文本条目</em> → 除了&quot;­, \­, U+000A, or U+000D的所有Unicode的字符<br><em>转义字符</em> → <strong>\0</strong> | <strong>\</strong> | <strong>\t</strong> | <strong>\n</strong> | <strong>\r</strong> | <strong>\&quot;</strong> | <strong>\&#39;</strong><br><em>转义字符</em> → <strong>\x</strong> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a><br><em>转义字符</em> → <strong>\u</strong> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a><br><em>转义字符</em> → <strong>\U</strong> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a> <a href="..\chapter3\02_Lexical_Structure.html#hexadecimal_digit"><em>十六进制数字</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>运算符语法语法<br><em>运算符</em> → <a href="..\chapter3\02_Lexical_Structure.html#operator_character"><em>运算符字符</em></a> <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a> <em>可选</em><br><em>运算符字符</em> → <strong>/</strong> | <strong>=</strong> | <strong>-</strong> | <strong>+</strong> | <strong>!</strong> | <strong>&#42;</strong> | <strong>%</strong> | <strong>&lt;</strong> | <strong>&gt;</strong> | <strong>&amp;</strong> | <strong>|</strong> | <strong>^</strong> | <strong>~</strong> | <strong>.</strong><br><em>二元运算符</em> → <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a><br><em>前置运算符</em> → <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a><br><em>后置运算符</em> → <a href="..\chapter3\02_Lexical_Structure.html#operator"><em>运算符</em></a>  </p>
@@ -994,52 +994,52 @@
 <blockquote>
 <p>类型语法<br><em>类型</em> → <a href="..\chapter3\03_Types.html#array_type"><em>数组类型</em></a> | <a href="..\chapter3\03_Types.html#function_type"><em>函数类型</em></a> | <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> | <a href="..\chapter3\03_Types.html#tuple_type"><em>元组类型</em></a> | <a href="..\chapter3\03_Types.html#optional_type"><em>可选类型</em></a> | <a href="..\chapter3\03_Types.html#implicitly_unwrapped_optional_type"><em>隐式解析可选类型</em></a> | <a href="..\chapter3\03_Types.html#protocol_composition_type"><em>协议合成类型</em></a> | <a href="..\chapter3\03_Types.html#metatype_type"><em>元型类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型注解语法<br><em>类型注解</em> → <strong>:</strong> <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型标识语法<br><em>类型标识</em> → <a href="..\chapter3\03_Types.html#type_name"><em>类型名称</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em> | <a href="..\chapter3\03_Types.html#type_name"><em>类型名称</em></a> <a href="GenericParametersAndArguments.html#generic_argument_clause"><em>泛型参数子句</em></a> <em>可选</em> <strong>.</strong> <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a><br><em>类名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>元组类型语法<br><em>元组类型</em> → <strong>(</strong> <a href="..\chapter3\03_Types.html#tuple_type_body"><em>元组类型主体</em></a> <em>可选</em> <strong>)</strong><br><em>元组类型主体</em> → <a href="..\chapter3\03_Types.html#tuple_type_element_list"><em>元组类型的元素列表</em></a> <strong>...</strong> <em>可选</em><br><em>元组类型的元素列表</em> → <a href="..\chapter3\03_Types.html#tuple_type_element"><em>元组类型的元素</em></a> | <a href="..\chapter3\03_Types.html#tuple_type_element"><em>元组类型的元素</em></a> <strong>,</strong> <a href="..\chapter3\03_Types.html#tuple_type_element_list"><em>元组类型的元素列表</em></a><br><em>元组类型的元素</em> → <a href="..\chapter3\06_Attributes.html#attributes"><em>特性(Attributes)列表</em></a> <em>可选</em> <strong>inout</strong> <em>可选</em> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> | <strong>inout</strong> <em>可选</em> <a href="..\chapter3\03_Types.html#element_name"><em>元素名</em></a> <a href="..\chapter3\03_Types.html#type_annotation"><em>类型注解</em></a><br><em>元素名</em> → <a href="..\chapter3\02_Lexical_Structure.html#identifier"><em>标识符</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>函数类型语法<br><em>函数类型</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>-&gt;</strong> <a href="..\chapter3\03_Types.html#type"><em>类型</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>数组类型语法<br><em>数组类型</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>[</strong> <strong>]</strong> | <a href="..\chapter3\03_Types.html#array_type"><em>数组类型</em></a> <strong>[</strong> <strong>]</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>可选类型语法<br><em>可选类型</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>?</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>隐式解析可选类型(Implicitly Unwrapped Optional Type)语法<br><em>隐式解析可选类型</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>!</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>协议合成类型语法<br><em>协议合成类型</em> → <strong>protocol</strong> <strong>&lt;</strong> <a href="..\chapter3\03_Types.html#protocol_identifier_list"><em>协议标识符列表</em></a> <em>可选</em> <strong>&gt;</strong><br><em>协议标识符列表</em> → <a href="..\chapter3\03_Types.html#protocol_identifier"><em>协议标识符</em></a> | <a href="..\chapter3\03_Types.html#protocol_identifier"><em>协议标识符</em></a> <strong>,</strong> <a href="..\chapter3\03_Types.html#protocol_identifier_list"><em>协议标识符列表</em></a><br><em>协议标识符</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>元(Metatype)类型语法<br><em>元类型</em> → <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>.</strong> <strong>Type</strong> | <a href="..\chapter3\03_Types.html#type"><em>类型</em></a> <strong>.</strong> <strong>Protocol</strong>  </p>
 </blockquote>
-<p></p>
+<!-- -->
 
 <blockquote>
 <p>类型继承子句语法<br><em>类型继承子句</em> → <strong>:</strong> <a href="..\chapter3\03_Types.html#type_inheritance_list"><em>类型继承列表</em></a><br><em>类型继承列表</em> → <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> | <a href="..\chapter3\03_Types.html#type_identifier"><em>类型标识</em></a> <strong>,</strong> <a href="..\chapter3\03_Types.html#type_inheritance_list"><em>类型继承列表</em></a></p>
