@@ -590,7 +590,7 @@
                     <section class="normal" id="section-gitbook_6">
                     
                         <blockquote>
-<p>翻译：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a><br>校对：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
+<p>翻译：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a><br />校对：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a>, <a href="https://github.com/stanzhai" target="_blank">stanzhai</a></p>
 </blockquote>
 <h1 id="swift-">Swift 初见</h1>
 <hr>
@@ -610,7 +610,7 @@
 <p>如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要<code>main</code>函数。你同样不需要在每个语句结尾写上分号。</p>
 <p>这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。</p>
 <blockquote>
-<p>注意：<br>为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。<a href="https://github.com/Tairraos/the-swift-programming-language-in-chinese/blob/gh-pages/chapter1/GuidedTour.playground.zip?raw=true">打开Playground</a></p>
+<p>注意：<br />为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。<br /><a href="https://github.com/Tairraos/the-swift-programming-language-in-chinese/blob/gh-pages/chapter1/GuidedTour.playground.zip?raw=true">打开Playground</a></p>
 <!--
 此处原网页： https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.html#//apple_ref/doc/uid/TP40014097-CH2-XID_1
 plauground版本原链接： https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip
@@ -630,7 +630,7 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 </code></pre>
 <blockquote>
-<p>练习：<br>创建一个常量，显式指定类型为<code>Float</code>并指定初始值为4。</p>
+<p>练习：<br />创建一个常量，显式指定类型为<code>Float</code>并指定初始值为4。</p>
 </blockquote>
 <p>值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。</p>
 <pre><code class="lang-swift">let label = &quot;The width is&quot;
@@ -638,7 +638,7 @@ let width = 94
 let widthLabel = label + String(width)
 </code></pre>
 <blockquote>
-<p>练习：<br>删除最后一行中的<code>String</code>，错误提示是什么？</p>
+<p>练习：<br />删除最后一行中的<code>String</code>，错误提示是什么？</p>
 </blockquote>
 <p>有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：</p>
 <pre><code class="lang-swift">let apples = 3
@@ -647,7 +647,7 @@ let appleSummary = &quot;I have \(apples) apples.&quot;
 let fruitSummary = &quot;I have \(apples + oranges) pieces of fruit.&quot;
 </code></pre>
 <blockquote>
-<p>练习：<br>使用<code>\()</code>来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。</p>
+<p>练习：<br />使用<code>\()</code>来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。</p>
 </blockquote>
 <p>使用方括号<code>[]</code>来创建数组和字典，并使用下标或者键（key）来访问元素。</p>
 <pre><code class="lang-swift">var shoppingList = [&quot;catfish&quot;, &quot;water&quot;, &quot;tulips&quot;, &quot;blue paint&quot;]
@@ -692,7 +692,7 @@ if let name = optionalName {
 }
 </code></pre>
 <blockquote>
-<p>练习：<br>把<code>optionalName</code>改成<code>nil</code>，greeting会是什么？添加一个<code>else</code>语句，当<code>optionalName</code>是<code>nil</code>时给greeting赋一个不同的值。</p>
+<p>练习：<br />把<code>optionalName</code>改成<code>nil</code>，greeting会是什么？添加一个<code>else</code>语句，当<code>optionalName</code>是<code>nil</code>时给greeting赋一个不同的值。</p>
 </blockquote>
 <p>如果变量的可选值是<code>nil</code>，条件会判断为<code>false</code>，大括号中的代码会被跳过。如果不是<code>nil</code>，会将值赋给<code>let</code>后面的常量，这样代码块中就可以使用这个值了。</p>
 <p><code>switch</code>支持任意类型的数据以及各种比较操作——不仅仅是整数以及测试相等。</p>
@@ -709,7 +709,7 @@ default:
 }
 </code></pre>
 <blockquote>
-<p>练习：<br>删除<code>default</code>语句，看看会有什么错误？</p>
+<p>练习：<br />删除<code>default</code>语句，看看会有什么错误？</p>
 </blockquote>
 <p>运行<code>switch</code>中匹配到的子句之后，程序会退出<code>switch</code>语句，并不会继续向下运行，所以不需要在每个子句结尾写<code>break</code>。</p>
 <p>你可以使用<code>for-in</code>来遍历字典，需要两个变量来表示每个键值对。</p>
@@ -729,7 +729,7 @@ for (kind, numbers) in interestingNumbers {
 largest
 </code></pre>
 <blockquote>
-<p>练习：<br>添加另一个变量来记录哪种类型的数字是最大的。</p>
+<p>练习：<br />添加另一个变量来记录哪种类型的数字是最大的。</p>
 </blockquote>
 <p>使用<code>while</code>来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。</p>
 <pre><code class="lang-swift">var n = 2
@@ -767,7 +767,7 @@ secondForLoop
 greet(&quot;Bob&quot;, &quot;Tuesday&quot;)
 </code></pre>
 <blockquote>
-<p>练习：<br>删除<code>day</code>参数，添加一个参数来表示今天吃了什么午饭。</p>
+<p>练习：<br />删除<code>day</code>参数，添加一个参数来表示今天吃了什么午饭。</p>
 </blockquote>
 <p>使用一个元组来返回多个值。</p>
 <pre><code class="lang-swift">func getGasPrices() -&gt; (Double, Double, Double) {
@@ -787,7 +787,7 @@ sumOf()
 sumOf(42, 597, 12)
 </code></pre>
 <blockquote>
-<p>练习：<br>写一个计算参数平均值的函数。</p>
+<p>练习：<br />写一个计算参数平均值的函数。</p>
 </blockquote>
 <p>函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。</p>
 <pre><code class="lang-swift">func returnFifteen() -&gt; Int {
@@ -833,7 +833,7 @@ hasAnyMatches(numbers, lessThanTen)
 })
 </code></pre>
 <blockquote>
-<p>练习：<br>重写闭包，对所有奇数返回0。</p>
+<p>练习：<br />重写闭包，对所有奇数返回0。</p>
 </blockquote>
 <p>有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。</p>
 <pre><code class="lang-swift">numbers.map({ number in 3 * number })
@@ -852,7 +852,7 @@ hasAnyMatches(numbers, lessThanTen)
 }
 </code></pre>
 <blockquote>
-<p>练习：<br>使用<code>let</code>添加一个常量属性，再添加一个接收一个参数的方法。</p>
+<p>练习：<br />使用<code>let</code>添加一个常量属性，再添加一个接收一个参数的方法。</p>
 </blockquote>
 <p>要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。</p>
 <pre><code class="lang-swift">var shape = Shape()
@@ -899,7 +899,7 @@ test.area()
 test.simpleDescription()
 </code></pre>
 <blockquote>
-<p>练习：<br>创建<code>NamedShape</code>的另一个子类<code>Circle</code>，构造器接收两个参数，一个是半径一个是名称，实现<code>area</code>和<code>describe</code>方法。</p>
+<p>练习：<br />创建<code>NamedShape</code>的另一个子类<code>Circle</code>，构造器接收两个参数，一个是半径一个是名称，实现<code>area</code>和<code>describe</code>方法。</p>
 </blockquote>
 <p>属性可以有 getter 和 setter 。</p>
 <pre><code class="lang-swift">class EquilateralTriangle: NamedShape {
@@ -1000,7 +1000,7 @@ let ace = Rank.Ace
 let aceRawValue = ace.toRaw()
 </code></pre>
 <blockquote>
-<p>练习：<br>写一个函数，通过比较它们的原始值来比较两个<code>Rank</code>值。</p>
+<p>练习：<br />写一个函数，通过比较它们的原始值来比较两个<code>Rank</code>值。</p>
 </blockquote>
 <p>在上面的例子中，枚举原始值的类型是<code>Int</code>，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。</p>
 <p>使用<code>toRaw</code>和<code>fromRaw</code>函数来在原始值和枚举值之间进行转换。</p>
@@ -1029,7 +1029,7 @@ let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 </code></pre>
 <blockquote>
-<p>练习：<br>给<code>Suit</code>添加一个<code>color</code>方法，对<code>spades</code>和<code>clubs</code>返回“black”，对<code>hearts</code>和<code>diamonds</code>返回“red”。</p>
+<p>练习：<br />给<code>Suit</code>添加一个<code>color</code>方法，对<code>spades</code>和<code>clubs</code>返回“black”，对<code>hearts</code>和<code>diamonds</code>返回“red”。</p>
 </blockquote>
 <p>注意，有两种方式可以引用<code>Hearts</code>成员：给<code>hearts</code>常量赋值时，枚举成员<code>Suit.Hearts</code>需要用全名来引用，因为常量没有显式指定类型。在<code>switch</code>里，枚举成员使用缩写<code>.Hearts</code>来引用，因为<code>self</code>的值已经知道是一个<code>suit</code>。已知变量类型的情况下你可以使用缩写。</p>
 <p>使用<code>struct</code>来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是
@@ -1046,7 +1046,7 @@ let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 </code></pre>
 <blockquote>
-<p>练习：<br>给<code>Card</code>添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。</p>
+<p>练习：<br />给<code>Card</code>添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。</p>
 </blockquote>
 <p>一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。</p>
 <p>例如，考虑从服务器获取日出和日落的时间。服务器会返回正常结果或者错误信息。</p>
@@ -1066,7 +1066,7 @@ case let .Error(error):
 }
 </code></pre>
 <blockquote>
-<p>练习：<br>给<code>ServerResponse</code>和<code>switch</code>添加第三种情况。</p>
+<p>练习：<br />给<code>ServerResponse</code>和<code>switch</code>添加第三种情况。</p>
 </blockquote>
 <p>注意如何从<code>ServerResponse</code>中提取日升和日落时间。</p>
 <p><a name="protocols_and_extensions"></a></p>
@@ -1160,7 +1160,7 @@ possibleInteger = .Some(100)
 anyCommonElements([1, 2, 3], [3])
 </code></pre>
 <blockquote>
-<p>练习：<br>修改<code>anyCommonElements</code>函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。</p>
+<p>练习：<br />修改<code>anyCommonElements</code>函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。</p>
 </blockquote>
 <p>简单起见，你可以忽略<code>where</code>，只在冒号后面写协议或者类名。<code>&lt;T: Equatable&gt;</code>和<code>&lt;T where T: Equatable&gt;</code>是等价的。</p>
 
