@@ -1,5 +1,5 @@
-> 翻译：vclwei, coverxit, NicePiao  
-> 校对：coverxit, stanzhai
+> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
+> 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
 # 控制流
 -----------------

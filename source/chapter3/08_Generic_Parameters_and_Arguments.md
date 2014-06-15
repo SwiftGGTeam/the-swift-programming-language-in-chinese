@@ -1,5 +1,5 @@
-> 翻译：fd5788  
-> 校对：yankuangshi, stanzhai  
+> 翻译：[fd5788](https://github.com/fd5788)
+> 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai)
 
 # 泛型参数
 ---------

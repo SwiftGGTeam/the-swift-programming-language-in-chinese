@@ -1,5 +1,5 @@
-> 翻译：geek5nan
-> 校对：dabing1022
+> 翻译：[geek5nan](https://github.com/geek5nan)
+> 校对：[dabing1022](https://github.com/dabing1022)
 
 # 协议
 -----------------

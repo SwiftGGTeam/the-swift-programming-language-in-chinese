@@ -1,5 +1,5 @@
-> 翻译：numbbbbb, lyuka, JaySurplus  
-> 校对：lslxdx  
+> 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)  
+> 校对：[lslxdx](https://github.com/lslxdx)
 
 # 基础部分
 -----------------

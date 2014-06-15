@@ -1,5 +1,5 @@
-> 翻译：yankuangshi  
-> 校对：shinyzhu  
+> 翻译：[yankuangshi](https://github.com/yankuangshi)
+> 校对：[shinyzhu](https://github.com/shinyzhu)
 
 # 枚举（Enumerations）
 ---

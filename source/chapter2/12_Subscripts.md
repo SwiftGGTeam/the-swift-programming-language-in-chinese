@@ -1,5 +1,5 @@
-> 翻译：siemenliu  
-> 校对：zq54zquan  
+> 翻译：[siemenliu](https://github.com/siemenliu)
+> 校对：[zq54zquan](https://github.com/zq54zquan)
 
 
 # 下标脚本（Subscripts）

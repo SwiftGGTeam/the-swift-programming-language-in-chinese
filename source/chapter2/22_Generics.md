@@ -1,5 +1,5 @@
-> 翻译：takalard  
-> 校对：lifedim  
+> 翻译：[takalard](https://github.com/takalard)
+> 校对：[lifedim](https://github.com/lifedim)
 
 # 泛型
 

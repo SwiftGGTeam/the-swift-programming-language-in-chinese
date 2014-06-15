@@ -1,5 +1,5 @@
-> 翻译：honghaoz  
-> 校对：LunaticM  
+> 翻译：[honghaoz](https://github.com/honghaoz)
+> 校对：[LunaticM](https://github.com/LunaticM)
 
 # 函数（Functions）
 -----------------

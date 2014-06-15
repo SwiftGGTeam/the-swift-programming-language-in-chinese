@@ -1,5 +1,5 @@
-> 翻译：xielingwang  
-> 校对：Evilcome  
+> 翻译：[xielingwang](https://github.com/xielingwang)  
+> 校对：[Evilcome](https://github.com/Evilcome)
 
 # 基本运算符
 -----------------

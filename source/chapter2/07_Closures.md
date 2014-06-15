@@ -1,5 +1,5 @@
-> 翻译：wh1100717  
-> 校对：lyuka  
+> 翻译：[wh1100717](https://github.com/wh1100717)
+> 校对：[lyuka](https://github.com/lyuka)
 
 # 闭包（Closures）
 -----------------

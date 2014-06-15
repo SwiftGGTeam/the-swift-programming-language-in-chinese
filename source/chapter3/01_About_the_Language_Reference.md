@@ -1,5 +1,5 @@
-> 翻译：ChildhoodAndy  
-> 校对：numbbbbb
+> 翻译：[ChildhoodAndy](https://github.com/ChildhoodAndy)
+> 校对：[numbbbbb](https://github.com/numbbbbb)
 
 
 # 关于语言附注
@@ -19,7 +19,7 @@ Swift语言相对小点，这是由于在Swift代码中几乎无处不在的许�
 
 用来描述Swift编程语言形式语法的记法遵循下面几个约定：
 
--  箭头（→）用来标记语法产式，可以被理解为“可以包含”。
+-](https://github.com/numbbbbb)箭头（→）用来标记语法产式，可以被理](https://github.com/numbbbbb)解为“可以包含”。
 -  句法范畴由*斜体*文字表示，并出现在一个语法产式规则两侧。
 -  义词和标点符号由粗体固定宽度的文本显示和只出现在一个语法产式规则的右边。
 -  选择性的语法产式由竖线（|）分隔。当可选用的语法产式太多时，为了阅读方便，它们将被拆分为多行语法产式规则。

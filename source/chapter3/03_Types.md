@@ -1,5 +1,5 @@
-> 翻译：lyuka  
-> 校对：numbbbbb, stanzhai
+> 翻译：[lyuka](https://github.com/lyuka)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 类型（Types）
 -----------------

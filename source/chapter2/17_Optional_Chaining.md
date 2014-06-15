@@ -1,5 +1,5 @@
-> 翻译：Jasonbroker  
-> 校对：numbbbbb, stanzhai  
+> 翻译：[Jasonbroker](https://github.com/Jasonbroker)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # Optional Chaining
 -----------------

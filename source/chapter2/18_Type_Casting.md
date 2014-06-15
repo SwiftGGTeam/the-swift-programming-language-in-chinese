@@ -1,5 +1,5 @@
-> 翻译：xiehurricane  
-> 校对：happyming  
+> 翻译：[xiehurricane](https://github.com/xiehurricane)
+> 校对：[happyming](https://github.com/happyming)
 
 # 类型检查（Type Casting）
 -----------------

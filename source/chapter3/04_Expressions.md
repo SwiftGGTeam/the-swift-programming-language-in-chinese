@@ -1,5 +1,5 @@
-> 翻译：sg552  
-> 校对：numbbbbb, stanzhai
+> 翻译：[sg552](https://github.com/sg552)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 表达式（Expressions）
 -----------------

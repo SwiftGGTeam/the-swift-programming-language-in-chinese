@@ -1,5 +1,5 @@
-> 翻译：Hawstein  
-> 校对：numbbbbb, stanzhai
+> 翻译：[Hawstein](https://github.com/Hawstein)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 特性
 -----------------

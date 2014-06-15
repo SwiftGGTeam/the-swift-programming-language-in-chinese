@@ -1,5 +1,5 @@
-> 翻译：stanzhai  
-> 校对：xielingwang
+> 翻译：[stanzhai](https://github.com/stanzhai)
+> 校对：[xielingwang](https://github.com/xielingwang)
 
 # 语法总结
 _________________

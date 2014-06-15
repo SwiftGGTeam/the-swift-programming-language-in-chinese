@@ -1,5 +1,5 @@
-> 翻译：lyuka  
-> 校对：Hawstein  
+> 翻译：[lyuka](https://github.com/lyuka)
+> 校对：[Hawstein](https://github.com/Hawstein)
 
 #扩展（Extensions）
 ----

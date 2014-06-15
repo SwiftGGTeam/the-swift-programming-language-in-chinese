@@ -1,5 +1,5 @@
-> 翻译：TimothyYe  
-> 校对：Hawstein  
+> 翻译：[TimothyYe](https://github.com/TimothyYe)
+> 校对：[Hawstein](https://github.com/Hawstein)
 
 # 自动引用计数
 -----------------
