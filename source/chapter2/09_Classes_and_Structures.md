@@ -119,7 +119,7 @@ println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 ```
 
 >  注意：  
-与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要从新设置`resolution`属性。
+与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新设置`resolution`属性。
 
 ### 结构体类型的成员逐一构造器(Memberwise Initializers for structure Types)
 
