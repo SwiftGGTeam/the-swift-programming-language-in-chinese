@@ -1,4 +1,4 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb)
+> 翻译：[numbbbbb](https://github.com/numbbbbb)  
 > 校对：[yeahdongcn](https://github.com/yeahdongcn)
 
 # 关于 Swift

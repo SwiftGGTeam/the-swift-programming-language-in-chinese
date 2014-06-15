@@ -1,4 +1,4 @@
-> 翻译：[shinyzhu](https://github.com/shinyzhu)
+> 翻译：[shinyzhu](https://github.com/shinyzhu)  
 > 校对：[pp-prog](https://github.com/pp-prog)
 
 # 属性 (Properties)

@@ -1,4 +1,4 @@
-> 翻译：[lyuka](https://github.com/lyuka)
+> 翻译：[lyuka](https://github.com/lyuka)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 类型（Types）
@@ -35,7 +35,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 类型注解显式地指定一个变量或表达式的值。类型注解始于冒号`:`终于类型，比如下面两个例子：
 
 ```swift
-let someTuple：(Double, Double) = (3.14159, 2.71828)
+let someTuple: (Double, Double) = (3.14159, 2.71828)
 func someFunction(a: Int){ /* ... */ }
 ```
 在第一个例子中，表达式`someTuple`的类型被指定为`(Double, Double)`。在第二个例子中，函数`someFunction`的参数`a`的类型被指定为`Int`。

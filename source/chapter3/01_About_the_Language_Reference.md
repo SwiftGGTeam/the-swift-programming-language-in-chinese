@@ -1,4 +1,4 @@
-> 翻译：[ChildhoodAndy](https://github.com/ChildhoodAndy)
+> 翻译：[ChildhoodAndy](https://github.com/ChildhoodAndy)  
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 

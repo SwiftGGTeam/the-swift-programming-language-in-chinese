@@ -1,4 +1,4 @@
-> 翻译：[Hawstein](https://github.com/Hawstein)
+> 翻译：[Hawstein](https://github.com/Hawstein)  
 > 校对：[menlongsheng](https://github.com/menlongsheng)
 
 # 继承（Inheritance）
