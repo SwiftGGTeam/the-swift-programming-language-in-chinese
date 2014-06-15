@@ -1,5 +1,4 @@
-> Swift 兴趣交流群：307017261
-
+> Swift 兴趣交流群：307017261  
 > [Swift 开发者社区](http://swiftist.org)
 
 <!-- -->
