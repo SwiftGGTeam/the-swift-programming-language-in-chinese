@@ -80,5 +80,5 @@ lifedim说他平时12点就会睡，1点47分，发给我校对后的文档。
 - [bruce0505](https://github.com/bruce0505)
 - [Lin-H](https://github.com/Lin-H)
 - [takalard](https://github.com/takalard)
-- [ChildhoodAndy](https://github.com/ChildhoodAndy)
+- [dabing1022](https://github.com/dabing1022)
 - [marsprince](https://github.com/marsprince)
