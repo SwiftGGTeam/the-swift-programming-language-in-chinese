@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402845135014">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402872701141">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -620,7 +620,7 @@
 <pre><code class="lang-swift">println(sayHello(&quot;Anna&quot;))
 // prints &quot;Hello, Anna!&quot;
 println(sayHello(&quot;Brian&quot;))
-// prints &quot;Hello, Brian!
+// prints &quot;Hello, Brian!&quot;
 </code></pre>
 <p>调用 <code>sayHello</code> 函数时，在圆括号中传给它一个 <code>String</code> 类型的实参。因为这个函数返回一个 <code>String</code> 类型的值，<code>sayHello</code> 可以被包含在 <code>println</code> 的调用中，用来输出这个函数的返回值，正如上面所示。</p>
 <p>在 <code>sayHello</code> 的函数体中，先定义了一个新的名为 <code>greeting</code> 的 <code>String</code> 常量，同时赋值了给 <code>personName</code> 的一个简单问候消息。然后用 <code>return</code> 关键字把这个问候返回出去。一旦 <code>return greeting</code> 被调用，该函数结束它的执行并返回 <code>greeting</code> 的当前值。</p>
@@ -630,7 +630,7 @@ println(sayHello(&quot;Brian&quot;))
     return &quot;Hello again, &quot; + personName + &quot;!&quot;
 }
 println(sayHelloAgain(&quot;Anna&quot;))
-// prints &quot;Hello again, Anna!
+// prints &quot;Hello again, Anna!&quot;
 </code></pre>
 <p><a name="Function_Parameters_and_Return_Values"></a></p>
 <h2 id="-function-parameters-and-return-values-">函数参数与返回值（Function Parameters and Return Values）</h2>
@@ -642,7 +642,7 @@ println(sayHelloAgain(&quot;Anna&quot;))
     return end - start
 }
 println(halfOpenRangeLength(1, 10))
-// prints &quot;9
+// prints &quot;9&quot;
 </code></pre>
 <h3 id="-functions-without-parameters-">无参函数（Functions Without Parameters）</h3>
 <p>函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的 <code>String</code> 消息：</p>
@@ -650,7 +650,7 @@ println(halfOpenRangeLength(1, 10))
     return &quot;hello, world&quot;
 }
 println(sayHelloWorld())
-// prints &quot;hello, world
+// prints &quot;hello, world&quot;
 </code></pre>
 <p>尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。</p>
 <h3 id="-functions-without-return-values-">无返回值函数（Functions Without Return Values）</h3>
@@ -659,7 +659,7 @@ println(sayHelloWorld())
     println(&quot;Goodbye, \(personName)!&quot;)
 }
 sayGoodbye(&quot;Dave&quot;)
-// prints &quot;Goodbye, Dave!
+// prints &quot;Goodbye, Dave!&quot;
 </code></pre>
 <p>因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（-&gt;）和返回类型。</p>
 <blockquote>
@@ -704,7 +704,7 @@ printWithoutCounting(&quot;hello, world&quot;)
 <p>你可以用 <code>count</code> 函数来处理任何一个字符串，返回的值将是一个包含三个 <code>Int</code> 型值的元组（tuple）：</p>
 <pre><code class="lang-swift">let total = count(&quot;some arbitrary string!&quot;)
 println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
-// prints &quot;6 vowels and 13 consonants
+// prints &quot;6 vowels and 13 consonants&quot;
 </code></pre>
 <p>需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。</p>
 <p><a name="Function_Parameter_Names"></a></p>
@@ -734,7 +734,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 </code></pre>
 <p>当你调用这个函数时，这三个字符串的用途是不清楚的：</p>
 <pre><code class="lang-swift">join(&quot;hello&quot;, &quot;world&quot;, &quot;, &quot;)
-// returns &quot;hello, world
+// returns &quot;hello, world&quot;
 </code></pre>
 <p>为了让这些字符串的用途更为明显，我们为 <code>join</code> 函数添加外部参数名：</p>
 <pre><code class="lang-swift">func join(string s1: String, toString s2: String, withJoiner joiner: String) -&gt; String {
@@ -744,7 +744,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 <p>在这个版本的 <code>join</code> 函数中，第一个参数有一个叫 <code>string</code> 的外部参数名和 <code>s1</code> 的局部参数名，第二个参数有一个叫 <code>toString</code> 的外部参数名和 <code>s2</code> 的局部参数名，第三个参数有一个叫 <code>withJoiner</code> 的外部参数名和 <code>joiner</code> 的局部参数名。</p>
 <p>现在，你可以使用这些外部参数名以一种清晰地方式来调用函数了：</p>
 <pre><code class="lang-swift">join(string: &quot;hello&quot;, toString: &quot;world&quot;, withJoiner: &quot;, &quot;)
-// returns &quot;hello, world
+// returns &quot;hello, world&quot;
 </code></pre>
 <p>使用外部参数名让第二个版本的 <code>join</code> 函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。</p>
 <blockquote>
@@ -778,7 +778,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 </code></pre>
 <p>像第一个版本的 <code>join</code> 函数一样，如果 <code>joiner</code> 被赋值时，函数将使用这个字符串值来连接两个字符串：</p>
 <pre><code class="lang-swift">join(string: &quot;hello&quot;, toString: &quot;world&quot;, withJoiner: &quot;-&quot;)
-// returns &quot;hello-world
+// returns &quot;hello-world&quot;
 </code></pre>
 <p>当这个函数被调用时，如果 <code>joiner</code> 的值没有被指定，函数会使用默认值（&quot; &quot;）：</p>
 <pre><code class="lang-swift">join(string: &quot;hello&quot;, toString:&quot;world&quot;)
@@ -885,7 +885,7 @@ func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
     println(&quot;hello, world&quot;)
 }
 </code></pre>
-<p>这个函数的类型是：<code>() -&gt; ()</code>，或者叫“没有参数，并返回 <code>Void</code> 类型的函数。”。没有指定返回类型的函数总返回 <code>Void</code>。在Swift中，<code>Void</code> 与空的元组是一样的。</p>
+<p>这个函数的类型是：<code>() -&gt; ()</code>，或者叫“没有参数，并返回 <code>Void</code> 类型的函数”。没有指定返回类型的函数总返回 <code>Void</code>。在Swift中，<code>Void</code> 与空的元组是一样的。</p>
 <h3 id="-using-function-types-">使用函数类型（Using Function Types）</h3>
 <p>在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：</p>
 <pre><code class="lang-swift">var mathFunction: (Int, Int) -&gt; Int = addTwoInts
@@ -895,7 +895,7 @@ func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
 <p><code>addTwoInts</code> 和 <code>mathFunction</code> 有同样的类型，所以这个赋值过程在 Swift 类型检查中是允许的。</p>
 <p>现在，你可以用 <code>mathFunction</code> 来调用被赋值的函数了：</p>
 <pre><code class="lang-swift">println(&quot;Result: \(mathFunction(2, 3))&quot;)
-// prints &quot;Result: 5
+// prints &quot;Result: 5&quot;
 </code></pre>
 <p>有相同匹配类型的不同函数可以被赋值给同一个变量，就像非函数类型的变量一样：</p>
 <pre><code class="lang-swift">mathFunction = multiplyTwoInts
