@@ -27,6 +27,7 @@ println("Hello, world")
 
 > 注意：  
 > 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+> <a href="https://github.com/Tairraos/the-swift-programming-language-in-chinese/blob/gh-pages/chapter1/GuidedTour.playground.zip?raw=true">打开Playground</a>
 
 <a name="simple_values"></a>
 ## 简单值
@@ -314,7 +315,7 @@ numbers.map({
 ```
 
 > 练习：  
-> 重写闭包，对所有奇数返回 0.
+> 重写闭包，对所有奇数返回0。
 
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
