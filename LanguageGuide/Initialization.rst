@@ -419,8 +419,8 @@ You can only call ``self.init`` from within an initializer.
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
 (or the memberwise initializer, if it is a structure) for that type.
-This constraint prevents a situation in which you provide a more complex initializer
-that performs additional essential setup
+This constraint prevents a situation in which additional essential setup
+provided in a more complex initializer
 is circumvented by someone accidentally using one of the automatic initializers instead.
 
 .. note::
