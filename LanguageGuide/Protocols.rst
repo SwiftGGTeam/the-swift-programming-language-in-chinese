@@ -211,9 +211,9 @@ The following example defines a protocol with a single instance method requireme
 This protocol, ``RandomNumberGenerator``, requires any conforming type
 to have an instance method called ``random``,
 which returns a ``Double`` value whenever it is called.
-(Although it is not specified as part of the protocol,
+Although it is not specified as part of the protocol,
 it is assumed that this value will be
-a number between ``0.0`` and ``1.0`` inclusive.)
+a number from ``0.0`` up to (but not including) ``1.0``.
 
 The ``RandomNumberGenerator`` protocol does not make any assumptions
 about how each random number will be generated ---
