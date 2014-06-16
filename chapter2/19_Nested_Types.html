@@ -1,52 +1,38 @@
 <!DOCTYPE HTML>
 <html lang="en-US" manifest="../manifest.appcache">
     
-    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
-        
+    <head>
         
         <meta charset="UTF-8">
         <title>《The Swift Programming Language》中文版</title>
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="robots" content="index, follow">
-        <meta name="author" content="">
-        <meta name="description" content="Swift 兴趣交流群：307017261Swift 开发者社区">
-        <meta name="keywords" content="gitbook,github" >
-        <meta name="generator" content="www.gitbook.io">
-
-        
-        <link rel="next" href="../chapter2/20_Extensions.html" />
-        
-        
-        <link rel="prev" href="../chapter2/18_Type_Casting.html" />
-        
-
-        <meta property="og:title" content="类型嵌套 | The Swift Programming Language 中文版">
-        <meta property="og:site_name" content="The Swift Programming Language 中文版">
-        <meta property="og:type" content="book">
-        <meta property="og:locale" content="en_US">
-
-        <meta property="book:author" content="https://github.com/">
-        <meta property="book:tag" content="GitBook">
-
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 0.5.2">
+        <meta name="HandheldFriendly" content="true"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
         <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
         
+    
+    
+    
+    <link rel="next" href="../chapter2/20_Extensions.html" />
+    
+    
+    <link rel="prev" href="../chapter2/18_Type_Casting.html" />
+    
+
         
     </head>
     <body>
         
         
-
-        <link rel="stylesheet" href="../gitbook/style.css">
-        
+<link rel="stylesheet" href="../gitbook/style.css">
 
 
         
-    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1402872701141">
+    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1402896972964">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -331,7 +317,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
+                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
             </a>
             
             
@@ -534,7 +520,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter  " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -592,17 +578,17 @@
                         <blockquote>
 <p>翻译：<a href="https://github.com/Lin-H" target="_blank">Lin-H</a><br>校对：<a href="https://github.com/shinyzhu" target="_blank">shinyzhu</a></p>
 </blockquote>
-<h1 id="-">类型嵌套</h1>
+<h1 id="-">嵌套类型</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li><a href="#nested_types_in_action">类型嵌套实例</a></li>
-<li><a href="#referring_to_nested_types">类型嵌套的引用</a></li>
+<li><a href="#nested_types_in_action">嵌套类型实例</a></li>
+<li><a href="#referring_to_nested_types">嵌套类型的引用</a></li>
 </ul>
-<p>枚举类型常被用于实现特定类或结构体的功能。也能够在有多种变量类型的环境中，方便地定义通用类或结构体来使用，为了实现这种功能，Swift允许你定义类型嵌套，可以在枚举类型、类和结构体中定义支持嵌套的类型。</p>
+<p>枚举类型常被用于实现特定类或结构体的功能。也能够在有多种变量类型的环境中，方便地定义通用类或结构体来使用，为了实现这种功能，Swift允许你定义嵌套类型，可以在枚举类型、类和结构体中定义支持嵌套的类型。</p>
 <p>要在一个类型中嵌套另一个类型，将需要嵌套的类型的定义写在被嵌套类型的区域{}内，而且可以根据需要定义多级嵌套。</p>
 <p><a name="nested_types_in_action"></a></p>
-<h2 id="-">类型嵌套实例</h2>
+<h2 id="-">嵌套类型实例</h2>
 <p>下面这个例子定义了一个结构体<code>BlackjackCard</code>(二十一点)，用来模拟<code>BlackjackCard</code>中的扑克牌点数。<code>BlackjackCard</code>结构体包含2个嵌套定义的枚举类型<code>Suit</code> 和 <code>Rank</code>。</p>
 <p>在<code>BlackjackCard</code>规则中，<code>Ace</code>牌可以表示1或者11，<code>Ace</code>牌的这一特征用一个嵌套在枚举型<code>Rank</code>的结构体<code>Values</code>来表示。</p>
 <pre><code class="lang-swift">struct BlackjackCard {
@@ -656,7 +642,7 @@ println(&quot;theAceOfSpades: \(theAceOfSpades.description)&quot;)
 </code></pre>
 <p>尽管<code>Rank</code>和<code>Suit</code>嵌套在<code>BlackjackCard</code>中，但仍可被引用，所以在初始化实例时能够通过枚举类型中的成员名称单独引用。在上面的例子中<code>description</code>属性能正确得输出对<code>Ace</code>牌有1和11两个值。</p>
 <p><a name="referring_to_nested_types"></a></p>
-<h2 id="-">类型嵌套的引用</h2>
+<h2 id="-">嵌套类型的引用</h2>
 <p>在外部对嵌套类型的引用，以被嵌套类型的名字为前缀，加上所要引用的属性名：</p>
 <pre><code class="lang-swift">let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
 // 红心的符号 为 &quot;♡&quot;
@@ -681,16 +667,8 @@ println(&quot;theAceOfSpades: \(theAceOfSpades.description)&quot;)
 </div>
 
         
-
-        <script src="http://cdn.bootcss.com/ace/1.1.3/ace.js"></script>
-        <script src="http://cdn.bootcss.com/ace/1.1.3/mode-javascript.js"></script>
-        <script src="../gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
-        <script src="../gitbook/app.js"></script>
-        
-
-    
-    <script src="../gitbook/plugins/gitbook-plugin-mixpanel/plugin.js"></script>
-    
+<script src="../gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+<script src="../gitbook/app.js"></script>
 
     
     <script src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
