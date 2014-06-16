@@ -16,6 +16,8 @@
         
     
     
+    <meta name="author" content="https:">
+    
     
     <link rel="next" href="../chapter2/07_Closures.html" />
     
@@ -32,12 +34,12 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402903834498">
+    <div class="book" data-github="https://github.com/numbbbbb/the-swift-programming-language-in-chinese" data-level="2.6" data-basepath=".." data-revision="1402929590291">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
     
-    <a href="https://github.com/null" target="_blank" class="btn pull-left home-bookmark" aria-label="GitHub home"><i class="fa fa-bookmark-o"></i></a>
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese" target="_blank" class="btn pull-left home-bookmark" aria-label="GitHub home"><i class="fa fa-bookmark-o"></i></a>
     
     <a href="#" class="btn pull-left toggle-search" aria-label="Toggle search"><i class="fa fa-search"></i></a>
     <span id="font-settings-wrapper">
@@ -80,6 +82,9 @@
     
 
     
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/stargazers" target="_blank" class="btn pull-right count-star hidden-xs"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/watchers" target="_blank" class="btn pull-right count-watch hidden-xs"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
 
     <!-- Title -->
     <h1>
@@ -97,11 +102,28 @@
     <ul class="summary">
         
         
-
+        
+        <li>
+            <a href="https://github.com/https:" target="blank" class="author-link">About the author</a>
+        </li>
         
 
         
+        
+        <li>
+            <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/issues" target="blank"class="issues-link">Questions and Issues</a>
+        </li>
+        
 
+        
+        
+        <li>
+            <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/edit/master/chapter2/06_Functions.md" target="blank" class="contribute-link">Edit and Contribute</a>
+        </li>
+        
+
+        
+        <li class="divider"></li>
         
 
         <li data-level="0" data-path="index.html">
@@ -573,7 +595,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_98">
+                    <section class="normal" id="section-gitbook_19">
                     
                         <blockquote>
 <p>翻译：<a href="https://github.com/honghaoz" target="_blank">honghaoz</a><br>校对：<a href="https://github.com/LunaticM" target="_blank">LunaticM</a></p>
@@ -666,7 +688,7 @@ printWithoutCounting(&quot;hello, world&quot;)
 </code></pre>
 <p>第一个函数 <code>printAndCount</code>，输出一个字符串并返回 <code>Int</code> 类型的字符数。第二个函数 <code>printWithoutCounting</code>调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。</p>
 <blockquote>
-<p>注意：<br>返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。  </p>
+<p>注意：<br>返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这将导致编译错误（compile-time error）。  </p>
 </blockquote>
 <h3 id="-functions-with-multiple-return-values-">多重返回值函数（Functions with Multiple Return Values）</h3>
 <p>你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。</p>
@@ -692,7 +714,7 @@ printWithoutCounting(&quot;hello, world&quot;)
 println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 // prints &quot;6 vowels and 13 consonants&quot;
 </code></pre>
-<p>需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。</p>
+<p>需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型中有了定义。</p>
 <p><a name="Function_Parameter_Names"></a></p>
 <h2 id="-function-parameter-names-">函数参数名称（Function Parameter Names）</h2>
 <p>以上所有的函数都给它们的参数定义了<code>参数名（parameter name）</code>：</p>
@@ -737,7 +759,7 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 <p>注意：<br>当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。  </p>
 </blockquote>
 <h3 id="-shorthand-external-parameter-names-">简写外部参数名（Shorthand External Parameter Names）</h3>
-<p>如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用<code>井号（#）</code>作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。</p>
+<p>如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次参数名。相反，只写一次参数名，并用<code>井号（#）</code>作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。</p>
 <p>下面这个例子定义了一个叫 <code>containsCharacter</code> 的函数，使用<code>井号（#）</code>的方式定义了外部参数名：</p>
 <pre><code class="lang-swift">func containsCharacter(#string: String, #characterToFind: Character) -&gt; Bool {
     for character in string {
@@ -753,9 +775,9 @@ println(&quot;\(total.vowels) vowels and \(total.consonants) consonants&quot;)
 // containsAVee equals true, because &quot;aardvark&quot; contains a &quot;v”
 </code></pre>
 <h3 id="-default-parameter-values-">默认参数值（Default Parameter Values）</h3>
-<p>你可以在函数体中为每个参数定义<code>默认值</code>。当默认值被定义后，调用这个函数时可以略去这个参数。</p>
+<p>你可以在函数体中为每个参数定义<code>默认值</code>。当默认值被定义后，调用这个函数时可以忽略这个参数。</p>
 <blockquote>
-<p>注意：<br>将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  </p>
+<p>注意：<br>将带有默认值的参数放在函数参数列表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  </p>
 </blockquote>
 <p>以下是另一个版本的<code>join</code>函数，其中<code>joiner</code>有了默认参数值：</p>
 <pre><code class="lang-swift">func join(string s1: String, toString s2: String, withJoiner joiner: String = &quot; &quot;) -&gt; String {

@@ -16,6 +16,8 @@
         
     
     
+    <meta name="author" content="https:">
+    
     
     <link rel="next" href="../chapter3/chapter3.html" />
     
@@ -32,12 +34,12 @@
 
 
         
-    <div class="book"  data-level="2.23" data-basepath=".." data-revision="1402903834498">
+    <div class="book" data-github="https://github.com/numbbbbb/the-swift-programming-language-in-chinese" data-level="2.23" data-basepath=".." data-revision="1402929590291">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
     
-    <a href="https://github.com/null" target="_blank" class="btn pull-left home-bookmark" aria-label="GitHub home"><i class="fa fa-bookmark-o"></i></a>
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese" target="_blank" class="btn pull-left home-bookmark" aria-label="GitHub home"><i class="fa fa-bookmark-o"></i></a>
     
     <a href="#" class="btn pull-left toggle-search" aria-label="Toggle search"><i class="fa fa-search"></i></a>
     <span id="font-settings-wrapper">
@@ -80,6 +82,9 @@
     
 
     
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/stargazers" target="_blank" class="btn pull-right count-star hidden-xs"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/watchers" target="_blank" class="btn pull-right count-watch hidden-xs"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
 
     <!-- Title -->
     <h1>
@@ -97,11 +102,28 @@
     <ul class="summary">
         
         
-
+        
+        <li>
+            <a href="https://github.com/https:" target="blank" class="author-link">About the author</a>
+        </li>
         
 
         
+        
+        <li>
+            <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/issues" target="blank"class="issues-link">Questions and Issues</a>
+        </li>
+        
 
+        
+        
+        <li>
+            <a href="https://github.com/https://github.com/numbbbbb/the-swift-programming-language-in-chinese/edit/master/chapter2/23_Advanced_Operators.md" target="blank" class="contribute-link">Edit and Contribute</a>
+        </li>
+        
+
+        
+        <li class="divider"></li>
         
 
         <li data-level="0" data-path="index.html">
@@ -573,7 +595,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_133">
+                    <section class="normal" id="section-gitbook_52">
                     
                         <blockquote>
 <p>翻译：<a href="https://github.com/xielingwang" target="_blank">xielingwang</a><br>校对：<a href="https://github.com/numbbbbb" target="_blank">numbbbbb</a></p>
@@ -739,23 +761,18 @@ let y = x &amp;/ 0
 </code></pre>
 <p>如果严格地从左计算到右，计算过程会是这样：</p>
 <ul>
-<li>2 plus 3 equals 5;</li>
 <li>2 + 3 = 5</li>
-<li>5 times 4 equals 20;</li>
 <li>5 * 4 = 20</li>
-<li>20 remainder 5 equals 0</li>
 <li>20 / 5 = 4 余 0</li>
 </ul>
 <p>但是正确答案是<code>4</code>而不是<code>0</code>。优先级高的运算符要先计算，在Swift和C语言中，都是先乘除后加减的。所以，执行完乘法和求余运算才能执行加减运算。</p>
 <p>乘法和求余拥有相同的优先级，在运算过程中，我们还需要结合性，乘法和求余运算都是左结合的。这相当于在表达式中有隐藏的括号让运算从左开始。</p>
 <pre><code class="lang-swift">2 + ((3 * 4) % 5)
 </code></pre>
-<p>(3 <em> 4) is 12, so this is equivalent to:
-3 </em> 4 = 12，所以这相当于：</p>
+<p>3 * 4 = 12，所以这相当于：</p>
 <pre><code class="lang-swift">2 + (12 % 5)
 </code></pre>
-<p>(12 % 5) is 2, so this is equivalent to:
-12 % 5 = 2，所这又相当于</p>
+<p>12 % 5 = 2，所这又相当于</p>
 <pre><code class="lang-swift">2 + 2
 </code></pre>
 <p>计算结果为 4。</p>
