@@ -131,7 +131,7 @@ printWithoutCounting("hello, world")
 第一个函数 `printAndCount`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
 > 注意：  
-> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。  
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这将导致编译错误（compile-time error）。  
 
 ### 多重返回值函数（Functions with Multiple Return Values）
 
@@ -165,7 +165,7 @@ println("\(total.vowels) vowels and \(total.consonants) consonants")
 // prints "6 vowels and 13 consonants"
 ```
 
-需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
+需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型中有了定义。
 
 <a name="Function_Parameter_Names"></a>
 ## 函数参数名称（Function Parameter Names）
@@ -236,7 +236,7 @@ join(string: "hello", toString: "world", withJoiner: ", ")
 
 ### 简写外部参数名（Shorthand External Parameter Names）
 
-如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。
+如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。
 
 下面这个例子定义了一个叫 `containsCharacter` 的函数，使用`井号（#）`的方式定义了外部参数名：
 
@@ -260,10 +260,10 @@ let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
 
 ### 默认参数值（Default Parameter Values）
 
-你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以略去这个参数。
+你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以忽略这个参数。
 
 > 注意：  
-> 将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  
+> 将带有默认值的参数放在函数参数列表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。  
 
 以下是另一个版本的`join`函数，其中`joiner`有了默认参数值：
 
