@@ -1103,6 +1103,12 @@ If you omit these parentheses,
 you are trying to assign the closure itself to the property,
 and not the return value of the closure.
 
+.. TODO: feedback from Peter is that this is very close to the syntax for
+   a computed property that doesn't define a separate getter.
+   He's right, and it would be good to provide an additional example -
+   perhaps with a stored property that is assigned the result of a function -
+   to make the difference more explicit.
+
 .. note::
 
    If you use a closure to initialize a property,
