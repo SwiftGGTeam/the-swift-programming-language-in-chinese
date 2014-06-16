@@ -326,7 +326,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 > 注意：
 > 输入输出参数不能有默认值，而且变量参数不能用`inout`标记。如果你用`inout`标记一个参数，这个参数不能别`var`或者`let`标记。
 
-下面是例子，`swapTwoInts`函数，有两个分别叫做`a`和`b`的输出输出参数：
+下面是例子，`swapTwoInts`函数，有两个分别叫做`a`和`b`的输入输出参数：
 
 			func swapTwoInts(inout a: Int, inout b: Int) {
     			let temporaryA = a
