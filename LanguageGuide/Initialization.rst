@@ -358,10 +358,15 @@ and assigns this new instance to a variable called ``item``.
 Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to the default initializers mentioned above,
-structure types automatically receive a :newTerm:`memberwise initializer`
-if they provide default values for all of their stored properties
-and do not define any of their own custom initializers.
+Structure types automatically receive a :newTerm:`memberwise initializer`
+if they do not define any of their own custom initializers.
+This is true even if the structure's stored properties do not have default values.
+
+.. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
+
+   -> struct S { var int: Int; var string: String }
+   -> let s = S(int: 42, string: "hello")
+   << // s : S = V4REPL1S (has 2 children)
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -373,8 +378,7 @@ with two properties called ``width`` and ``height``.
 Both properties are inferred to be of type ``Double``
 by assigning a default value of ``0.0``.
 
-Because both stored properties have a default value,
-the ``Size`` structure automatically receives an ``init(width:height:)``
+The ``Size`` structure automatically receives an ``init(width:height:)``
 memberwise initializer,
 which you can use to initialize a new ``Size`` instance:
 
@@ -414,7 +418,7 @@ You can only call ``self.init`` from within an initializer.
 
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
-(or the memberwise structure initializer, if it is a structure) for that type.
+(or the memberwise initializer, if it is a structure) for that type.
 This constraint prevents a situation in which you provide a more complex initializer
 that performs additional essential setup
 is circumvented by someone accidentally using one of the automatic initializers instead.
