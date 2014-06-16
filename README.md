@@ -45,7 +45,7 @@ CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/14026
    * 析构过程 ([bruce0505])
    * 自动引用计数 ([TimothyYe])
    * 可选链 ([Jasonbroker])
-   * 类型检查 ([xiehurricane])
+   * 类型转换 ([xiehurricane])
    * 嵌套类型 ([Lin-H])
    * 扩展 ([lyuka])
    * 协议 ([geek5nan])
