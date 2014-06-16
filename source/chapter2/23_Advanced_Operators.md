@@ -285,7 +285,6 @@ let y = x &/ 0
 2 + ((3 * 4) % 5)
 ```
 
-(3 * 4) is 12, so this is equivalent to:
 3 * 4 = 12，所以这相当于：
 
 
@@ -293,7 +292,6 @@ let y = x &/ 0
 2 + (12 % 5)
 ```
 
-(12 % 5) is 2, so this is equivalent to:
 12 % 5 = 2，所这又相当于
 
 ```swift
