@@ -7,21 +7,21 @@
 本页包含内容：
 
 - [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
-- [检查类型](#checking_type)
+- [类型检查](#checking_type)
 - [向下转型（Downcasting）](#downcasting)
 - [`Any`和`AnyObject`的类型转换](#type_casting_for_any_and_anyobject)
 
 
-_类型转换_是一种检查类实例的方式，并且或者也是让实例作为它的父类或者子类的一种方式。
+_类型转换_是一种检查类实例类型的方式，或者也是让实例作为它的父类或者子类的一种方式。
 
-类型转换在 Swift 中使用`is` 和 `as`操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
+类型转换在 Swift 中使用`is` 和 `as`操作符实现。这两个操作符提供了一种简单便捷的方法去检查值的类型或者转换它的类型。
 
-你也可以用来检查一个类是否实现了某个协议，就像在 [Checking for Protocol Conformance](Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_363)部分讲述的一样。
+你也可以用它们来检查一个类是否实现了某个协议，就像在 [Checking for Protocol Conformance](Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_363)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
 ## 定义一个类层次作为例子
 
-你可以将它用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。这下面的三个代码段定义了一个类层次和一个包含了几个这些类实例的数组，作为类型转换的例子。
+你可以将它们用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了几个这些类实例的数组，作为类型转换的例子。
 
 第一个代码片段定义了一个新的基础类`MediaItem`。这个类为任何出现在数字媒体库的媒体项提供基础功能。特别的，它声明了一个 `String` 类型的 `name` 属性，和一个`init name`初始化器。（它假定所有的媒体项都有个名称。）
 
@@ -54,7 +54,7 @@ class Song: MediaItem {
 }
 ```
 
-最后一个代码段创建了一个数组常量 `library`，包含两个`Movie`实例和三个`Song`实例。`library`的类型是在它被初始化时根据它数组中所包含的内容推断来的。Swift 的类型检测器能够演绎出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `MediaItem[]` 类作为 `library` 的类型。
+最后一个代码段创建了一个数组常量 `library`，包含两个`Movie`实例和三个`Song`实例。`library`的类型是根据它初始化时数组中所赋值的类型来推断的。Swift 的类型检测器能够检测出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `MediaItem[]` 类作为 `library` 的类型。
 
 ```swift
 let library = [
@@ -67,10 +67,10 @@ let library = [
 // the type of "library" is inferred to be MediaItem[]
 ```
 
-在幕后`library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的，但是，若你迭代它，取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型的。为了让它们作为它们本来的类型工作，你需要检查它们的类型或者向下转换它们的类型到其它类型，就像下面描述的一样。
+在幕后`library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的，但是，若需要迭代它，取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型的。为了让它们作为它们本来的类型工作，你需要检查它们的类型或者向下转换它们的类型到其它类型，就像下面描述的一样。
 
 <a name="checking_type"></a>
-## 检查类型（Checking Type）
+## 类型检查（Checking Type）
 
 用类型检查操作符(`is`)来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true` ，否则返回 `false` 。
 
@@ -96,15 +96,14 @@ println("Media library contains \(movieCount) movies and \(songCount) songs")
 `item` 为数组中的下一个 `MediaItem`。
 
 若当前 `MediaItem` 是一个 `Movie` 类型的实例， `item is Movie` 返回
-`true`，相反返回 `false`。同样的，`item is
-Song`检查item是否为`Song`类型的实例。在循环结束后，`movieCount` 和 `songCount`的值就是被找到属于各自的类型的实例数量。
+`true`，相反返回 `false`。同样的，`item is Song`检查item是否为`Song`类型的实例。在循环结束后，`movieCount` 和 `songCount`的值就是被找到属于各自的类型的实例数量。
 
 <a name="downcasting"></a>
 ## 向下转型（Downcasting）
 
 某类型的一个常量或变量可能在幕后实际上属于一个子类。你可以相信，上面就是这种情况。你可以尝试向下转到它的子类型，用类型转换操作符(`as`)
 
-因为向下转型可能会失败，类型转型操作符带有两种不同形式。可选形式（ optional form） `as?` 返回一个你试图下转成的类型的可选值（optional value）。强制形式 `as` 把试图向下转型和强制解包（force-unwraps）结果作为一个混合动作。
+因为向下转型可能会失败，类型转型操作符带有两种不同形式。可选形式（ optional form） `as?` 返回一个你试图向下转换的类型的可选值（optional value）。强制形式 `as` 把试图向下转型和强制解包（force-unwraps）结果作为一个混合动作。
 
 当你不确定向下转型可以成功时，用类型转换的可选形式(`as?`)。可选形式的类型转换总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 `nil` 。这使你能够检查向下转型是否成功。
 
@@ -157,7 +156,7 @@ Swift为不确定类型提供了两种特殊类型别名：
 
 ### `AnyObject`类型
 
-当需要在工作中使用 Cocoa APIs，它一般接收一个`AnyObject[]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。
+当需要在工作中使用 Cocoa APIs，它一般接收一个`AnyObject[]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确数组的类型。但是，你常常可以确定仅包含从你知道的 API 信息提供的这样一个数组中的对象的类型。
 
 在这些情况下，你可以使用强制形式的类型转换(`as`)来下转在数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解析（optional unwrapping）。
 
@@ -212,7 +211,7 @@ things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 
 `things` 数组包含两个 `Int` 值，2个 `Double` 值，1个 `String` 值，一个元组 `(Double, Double)` ，Ivan Reitman 导演的电影“Ghostbusters”。
 
-你可以在 `switch` `cases`里用`is` 和 `as` 操作符来发觉只知道是 `Any` 或 `AnyObject`的常量或变量的类型。 下面的示例迭代 `things`数组中的每一项的并用`switch`语句查找每一项的类型。这几种`switch`语句的情形绑定它们匹配的值到一个规定类型的常量，让它们可以打印它们的值：
+你可以在 `switch` `cases`里用`is` 和 `as` 操作符来辨别 `Any` 或 `AnyObject`的常量或变量的类型。 下面的示例迭代 `things`数组中的每一项并用`switch`语句查找每一项的类型。这几种`switch`语句的分支绑定它们匹配的值到一个类型确定的常量中，并打印它们的值：
 
 ```swift
 for thing in things {
