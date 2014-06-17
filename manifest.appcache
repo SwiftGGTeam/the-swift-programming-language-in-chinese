@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402929590292
+# Revision 1402975982873
 
 CACHE:
 index.html
@@ -34,13 +34,13 @@ chapter3/06_Attributes.html
 chapter3/01_About_the_Language_Reference.html
 chapter3/03_Types.html
 chapter3/04_Expressions.html
+chapter3/05_Declarations.html
 chapter3/02_Lexical_Structure.html
 chapter3/07_Patterns.html
-chapter3/05_Declarations.html
 chapter3/08_Generic_Parameters_and_Arguments.html
-chapter3/09_Summary_of_the_Grammar.html
 chapter3/10_Statements.html
 chapter3/chapter3.html
+chapter3/09_Summary_of_the_Grammar.html
 gitbook/app.js
 gitbook/fonts/fontawesome/FontAwesome.otf
 gitbook/fonts/fontawesome/fontawesome-webfont.eot
