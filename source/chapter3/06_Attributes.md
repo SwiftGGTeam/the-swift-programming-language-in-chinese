@@ -1,16 +1,24 @@
+> 翻译：[Hawstein](https://github.com/Hawstein)  
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
+
 # 特性
+-----------------
+
+本页内容包括：
+
+- [声明特性](#declaration_attributes)
+- [类型特性](#type_attributes)
 
 特性提供了关于声明和类型的更多信息。在Swift中有两类特性，用于修饰声明的以及用于修饰类型的。例如，`required`特性，当应用于一个类的指定或便利初始化器声明时，表明它的每个子类都必须实现那个初始化器。再比如`noreturn`特性，当应用于函数或方法类型时，表明该函数或方法不会返回到它的调用者。
 
 通过以下方式指定一个特性：符号`@`后面跟特性名，如果包含参数，则把参数带上：
 
-```
-@attribute name
-@attribute name(attribute arguments)
-```
+> @`attribute name`  
+> @`attribute name`(`attribute arguments`)  
 
 有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。
 
+<a name="declaration_attributes"></a>
 ## 声明特性
 
 声明特性只能应用于声明。然而，你也可以将`noreturn`特性应用于函数或方法类型。
@@ -61,7 +69,7 @@
 
 `objc`特性有一个可选的参数，由标记符组成。当你想把`objc`所修饰的实体以一个不同的名字暴露给Objective-C，你就可以使用这个特性参数。你可以使用这个参数来命名类，协议，方法，getters，setters，以及初始化器。下面的例子把`ExampleClass`中`enabled`属性的getter暴露给Objective-C，名字是`isEnabled`，而不是它原来的属性名。
 
-```
+```swift
 @objc
 class ExampleClass {
     var enabled: Bool {
@@ -90,6 +98,7 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 
 `IBOutlet`和`IBInspectable`用于修饰一个类的属性声明；`IBAction`特性用于修饰一个类的方法声明；`IBDesignable`用于修饰类的声明。
 
+<a name="type_attributes"></a>
 ## 类型特性
 
 类型特性只能用于修饰类型。然而，你也可以用`noreturn`特性去修饰函数或方法声明。
@@ -102,14 +111,14 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 
 该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，`T`，是`@noreturn T`。
 
-> 特性的语法
-> attribute -> @ [attribute-name]() [attribute-argument-clause]()opt
-> attribute-name -> [identifier]()
-> attribute-argument-clause -> ( [balanced-tokens]()opt )
-> attributes -> [attribute]() [attributes]()opt
-> balanced-tokens -> [balanced-token]() [balanced-tokens]()opt
-> balanced-token -> ( [balanced-tokens]()opt )
-> balanced-token -> [ [balanced-tokens]()opt ]
-> balanced-token -> { [balanced-tokens]()opt }
-> balanced-token -> 任意标识符，关键字，字面量，或运算符
-> balanced-token -> 任意标点符号，除了(, ), [, ], {, 或 }
+> 特性语法  
+> *特性* → **@** [*特性名*](..\chapter3\06_Attributes.html#attribute_name) [*特性参数子句*](..\chapter3\06_Attributes.html#attribute_argument_clause) _可选_  
+> *特性名* → [*标识符*](LexicalStructure.html#identifier)  
+> *特性参数子句* → **(** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **)**  
+> *特性(Attributes)列表* → [*特色*](..\chapter3\06_Attributes.html#attribute) [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_  
+> *平衡令牌列表* → [*平衡令牌*](..\chapter3\06_Attributes.html#balanced_token) [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_  
+> *平衡令牌* → **(** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **)**  
+> *平衡令牌* → **[** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **]**  
+> *平衡令牌* → **{** [*平衡令牌列表*](..\chapter3\06_Attributes.html#balanced_tokens) _可选_ **}**  
+> *平衡令牌* → **任意标识符, 关键字, 字面量或运算符**  
+> *平衡令牌* → **任意标点除了(, ), [, ], {, 或 }**
