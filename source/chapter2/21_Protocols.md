@@ -66,7 +66,6 @@ protocol SomeProtocol {
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
-
 如下所示，通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
 
 ```swift
