@@ -393,7 +393,7 @@ and the original type parameter names are used to refer to
 the type parameters from the original definition.
 
 The following example extends the generic ``Stack`` type to add
-a computed property called ``topItem``,
+a read-only computed property called ``topItem``,
 which returns the top item on the stack without popping it from the stack:
 
 .. testcode:: genericStack
