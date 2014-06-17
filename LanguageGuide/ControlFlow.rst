@@ -743,8 +743,9 @@ and avoids executing more than one ``switch`` case by mistake.
 
 .. note::
 
-   You can still break out of a matched ``switch`` case
-   before that case has completed its execution if you need to.
+   Although ``break`` is not required in Swift,
+   you still can use a ``break`` statement to match and ignore a particular case,
+   or to break out of a matched case before that case has completed its execution.
    See :ref:`ControlFlow_BreakInASwitchStatement` for details.
 
 The body of each case *must* contain at least one executable statement.
