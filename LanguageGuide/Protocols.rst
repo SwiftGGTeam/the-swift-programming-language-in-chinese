@@ -794,7 +794,7 @@ from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.
 It then iterates through the array of board squares,
-and appends a geometric shape to represent each square:
+and appends a geometric shape to represent the contents of each square:
 
 * If the square's value is greater than ``0``, it is the base of a ladder,
   and is represented by ``▲``.
