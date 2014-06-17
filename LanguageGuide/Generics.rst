@@ -380,6 +380,47 @@ Because it is a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
+.. _Generics_ExtendingAGenericType:
+
+Extending a Generic Type
+------------------------
+
+When you extend a generic type,
+you do not provide a type parameter list as part of the extension's definition.
+Instead, the type parameter list from the *original* type definition
+is available within the body of the extension,
+and the original type parameter names are used to refer to
+the type parameters from the original definition.
+
+The following example extends the generic ``Stack`` type to add
+a computed property called ``topItem``,
+which returns the top item on the stack without popping it from the stack:
+
+.. testcode:: genericStack
+
+   -> extension Stack {
+         var topItem: T? {
+            return items.isEmpty ? nil : items[items.count - 1]
+         }
+      }
+
+The ``topItem`` property returns an optional value of type ``T``.
+If the stack is empty, ``topItem`` returns ``nil``;
+if the stack is not empty, ``topItem`` returns the final item in the ``items`` array.
+
+Note that this extension does not define a type parameter list.
+Instead, the ``Stack`` type's existing type parameter name, ``T``,
+is used within the extension to indicate the optional type of
+the ``topItem`` computed property.
+
+The ``topItem`` computed property can now be used with any ``Stack`` instance
+to “peek” at its top item without removing it:
+
+.. testcode:: genericStack
+
+   -> println("The top item on the stack is \(stackOfStrings.topItem).")
+   <- The top item on the stack is tres.
+
 .. _Generics_TypeConstraints:
 
 Type Constraints
@@ -894,9 +935,3 @@ all of the items in the two containers match.
    --------------------------
 
 .. TODO: Describe how Optional<T> works
-
-.. TODO: generics can be extended, and the syntax is:
-   extension Array {
-      // T is available for you to use in this context
-      func doStuff() -> T { ... }
-   }
