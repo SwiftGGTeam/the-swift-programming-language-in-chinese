@@ -118,8 +118,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 > 注意：
 协议方法支持`变长参数(variadic parameter)`，不支持`默认参数(default parameter)`。
 
-前置`class`关键字表示协议中的成员为`类成员`；当协议用于被`枚举`或`结构体`遵循时，则使用`static`关键字。如下所示：
-像类属性的要求一样，协议中定义类方法时也总是使用`class`关键字，即使类方法在`枚举`或`结构体`中实现时要求使用`static`关键字
+像类属性的要求一样，在协议中定义类方法时也总是使用`class`关键字，即使类方法在`枚举`或`结构体`中实现时要求使用`static`关键字。如下所示：
 ```swift
 protocol SomeProtocol {
 	class func someTypeMethod()
