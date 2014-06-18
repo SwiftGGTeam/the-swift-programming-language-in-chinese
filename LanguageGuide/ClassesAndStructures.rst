@@ -448,9 +448,9 @@ Use these operators to check whether two constants or variables refer to the sam
 .. testcode:: ClassesAndStructures
 
    -> if tenEighty === alsoTenEighty {
-         println("tenEighty and alsoTenEighty refer to the same Resolution instance.")
+         println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
       }
-   <- tenEighty and alsoTenEighty refer to the same Resolution instance.
+   <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
 Note that “identical to” (represented by three equals signs, or ``===``)
 does not mean the same thing as “equal to” (represented by two equals signs, or ``==``):
