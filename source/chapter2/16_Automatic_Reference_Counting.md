@@ -82,8 +82,8 @@ reference3 = reference1
 如果你通过给两个变量赋值`nil`的方式断开两个强引用（）包括最先的那个强引用），只留下一个强引用，`Person`实例不会被销毁：
 
 ```swift
+reference1 = nil
 reference2 = nil
-reference3 = nil
 ```
 
 ARC 会在第三个，也即最后一个强引用被断开的时候，销毁`Person`实例，这也意味着你不再使用这个`Person`实例：
