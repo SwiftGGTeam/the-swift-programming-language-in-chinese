@@ -576,6 +576,9 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 
    -> func alignRight(var string: String, count: Int, pad: Character) -> String {
          let amountToPad = count - countElements(string)
+         if amountToPad < 1 {
+            return string
+         }
          for _ in 1...amountToPad {
             string = pad + string
          }
@@ -603,7 +606,10 @@ and can be manipulated within the body of the function.
 The function starts by working out how many characters need to be added to the left of ``string``
 in order to right-align it within the overall string.
 This value is stored in a local constant called ``amountToPad``.
-The function then adds ``amountToPad`` copies of the ``pad`` character
+If no padding is needed (that is, if ``amountToPad`` is less than ``1``),
+the function simply returns the input value of ``string`` without any padding.
+
+Otherwise, the function adds ``amountToPad`` copies of the ``pad`` character
 to the left of the existing string and returns the result.
 It uses the ``string`` variable parameter for all its string manipulation.
 
