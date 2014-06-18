@@ -241,16 +241,19 @@ Swift provides two special type aliases for working with non-specific types:
 * ``Any`` can represent an instance of any type at all,
   apart from function types.
 
+.. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
+
+.. assertion:: anyCannotContainAFunction
+
+   // rdar://16406907
+   -> var a: Any = { println("any") }
+   xx assertion
+
 .. note::
 
    Use ``Any`` and ``AnyObject`` only when you explicitly need
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
-
-.. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
-
-.. FIXME: also rdar://problem/16879900
-   Assertion when assigning a global function to a constant of type Any
 
 AnyObject
 ~~~~~~~~~
