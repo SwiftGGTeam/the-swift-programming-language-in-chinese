@@ -67,8 +67,7 @@ protocol SomeProtocol {
 }
 ```
 
-用类来实现协议时，使用`class`关键字来表示该属性为类成员；用结构体或枚举实现协议时，则使用`static`关键字来表示：
-
+在协议中定义类属性 (type property)时使用`class`前缀关键词，即使在结构体或者枚举中实现该协议时是使用`static`关键词：
 ```swift
 protocol AnotherProtocol {
 	class var someTypeProperty: Int { get set }
