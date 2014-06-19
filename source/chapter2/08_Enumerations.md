@@ -68,7 +68,7 @@ var directionToHead = CompassPoint.West
 directionToHead = .East
 ```
 
-`directionToHead`的类型已知时，当设定它的值时，你可以不再写类型名。使用显示类型的枚举值可以让代码具有更好的可读性。
+`directionToHead`的类型已知时，当设定它的值时，你可以不再写类型名。使用显式类型的枚举值可以让代码具有更好的可读性。
 
 <a name="matching_enumeration_values_with_a_switch_statement"></a>
 ## 匹配枚举值和`Switch`语句
