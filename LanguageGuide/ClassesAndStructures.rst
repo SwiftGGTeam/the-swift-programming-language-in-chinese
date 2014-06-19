@@ -408,8 +408,7 @@ Because classes are reference types,
 it is possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same is not true for structures and enumerations,
-because they are value types
-and are always copied when they are assigned to a constant or variable,
+because they are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
 .. assertion:: structuresDontSupportTheIdentityOperators
@@ -556,285 +555,27 @@ not structures.
    its location is a structure, but it doesn't make sense for Window
    to be a value type, as it is not copied when passed around.
 
-.. _ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes:
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries:
 
-Assignment and Copy Behavior for Collection Types
--------------------------------------------------
+Assignment and Copy Behavior for Strings, Arrays, and Dictionaries
+------------------------------------------------------------------
 
-Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
-However, arrays have slightly different copying behavior from dictionaries and other structures
-when they are assigned to a constant or variable,
-and when they are passed to a function or method.
+Swift's ``String``, ``Array``, and ``Dictionary`` types are implemented as structures.
+This means that strings, arrays, and dictionaries are copied when they are assigned to
+a new constant or variable, or when they are passed to a function or method.
 
-The behavior described for ``Array`` and ``Dictionary`` below is different again from
-the behavior of ``NSArray`` and ``NSDictionary`` in Foundation,
+This behavior is different from ``NSString``, ``NSArray``, and ``NSDictionary`` in Foundation,
 which are implemented as classes, not structures.
-``NSArray`` and ``NSDictionary`` instances are always
+``NSString``, ``NSArray``, and ``NSDictionary`` instances are always
 assigned and passed around as a reference to an existing instance,
 rather than as a copy.
 
 .. note::
 
-   The descriptions below refer to the “copying” of
-   arrays, dictionaries, strings, and other values.
-   Where copying is mentioned,
-   the behavior you see in your code will always be as if a copy took place.
+   The description above refers to the “copying” of
+   strings, arrays, and dictionaries.
+   The behavior you see in your code will always be as if a copy took place.
    However, Swift only performs an *actual* copy behind the scenes
    when it is absolutely necessary to do so.
    Swift manages all value copying to ensure optimal performance,
    and you should not avoid assignment to try to preempt this optimization.
-
-.. _ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries:
-
-Assignment and Copy Behavior for Dictionaries
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Whenever you assign a ``Dictionary`` instance to a constant or variable,
-or pass a ``Dictionary`` instance as an argument to a function or method call,
-the dictionary is *copied* at the point that
-the assignment or call takes place.
-This process is described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
-
-If the keys and/or values stored in the ``Dictionary`` instance are value types
-(structures or enumerations),
-they too are copied when the assignment or call takes place.
-Conversely, if the keys and/or values are reference types
-(classes or functions),
-the references are copied, but not the class instances or functions that they refer to.
-This copy behavior for a dictionary's keys and values is the same as
-the copy behavior for a structure's stored properties when the structure is copied.
-
-The example below defines a dictionary called ``ages``,
-which stores the names and ages of four people.
-The ``ages`` dictionary is then assigned to a new variable called ``copiedAges``
-and is copied when this assignment takes place.
-After the assignment, ``ages`` and ``copiedAges`` are two separate dictionaries.
-
-.. testcode:: assignmentAndCopyForDictionaries
-
-   -> var ages = ["Peter": 23, "Wei": 35, "Anish": 65, "Katya": 19]
-   << // ages : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
-   -> var copiedAges = ages
-   << // copiedAges : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
-
-The keys for this dictionary are of type ``String``,
-and the values are of type ``Int``.
-Both types are value types in Swift,
-and so the keys and values are also copied when the dictionary copy takes place.
-
-You can prove that the ``ages`` dictionary has been copied
-by changing an age value in one of the dictionaries
-and checking the corresponding value in the other.
-If you set the value for ``"Peter"`` in the ``copiedAges`` dictionary to ``24``,
-the ``ages`` dictionary still returns the old value of ``23``
-from before the copy took place:
-
-.. testcode:: assignmentAndCopyForDictionaries
-
-   -> copiedAges["Peter"] = 24
-   -> println(ages["Peter"])
-   <- 23
-
-.. _ClassesAndStructures_AssignmentAndCopyBehaviorForArrays:
-
-Assignment and Copy Behavior for Arrays
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The assignment and copy behavior for Swift's ``Array`` type
-is more complex than for its ``Dictionary`` type.
-``Array`` provides C-like performance when you work with an array's contents
-and copies an array's contents only when copying is necessary.
-
-If you assign an ``Array`` instance to a constant or variable,
-or pass an ``Array`` instance as an argument to a function or method call,
-the contents of the array are *not* copied at the point that
-the assignment or call takes place.
-Instead, both arrays share the same sequence of element values.
-When you modify an element value through one array,
-the result is observable through the other.
-
-For arrays, copying only takes place when you perform an action
-that has the potential to modify the *length* of the array.
-This includes appending, inserting, or removing items,
-or using a ranged subscript to replace a range of items in the array.
-If and when array copying does take place,
-the copy behavior for an array's contents is the same as for a dictionary's keys and values,
-as described in :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries`.
-
-The example below assigns a new array of ``Int`` values to a variable called ``a``.
-This array is also assigned to two further variables called ``b`` and ``c``:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> var a = [1, 2, 3]
-   << // a : Array<Int> = [1, 2, 3]
-   -> var b = a
-   << // b : Array<Int> = [1, 2, 3]
-   -> var c = a
-   << // c : Array<Int> = [1, 2, 3]
-
-You can retrieve the first value in the array with subscript syntax
-on either ``a``, ``b``, or ``c``:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> println(a[0])
-   </ 1
-   -> println(b[0])
-   </ 1
-   -> println(c[0])
-   </ 1
-
-If you set an item in the array to a new value with subscript syntax,
-all three of ``a``, ``b``, and ``c`` will return the new value.
-Note that the array is not copied when you set a new value with subscript syntax,
-because setting a single value with subscript syntax
-does not have the potential to change the array's length:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> a[0] = 42
-   -> println(a[0])
-   </ 42
-   -> println(b[0])
-   </ 42
-   -> println(c[0])
-   </ 42
-
-However, if you append a new item to ``a``, you *do* modify the array's length.
-This prompts Swift to create a new copy of the array
-at the point that you append the new value.
-Henceforth, ``a`` is a separate, independent copy of the array.
-
-If you change a value in ``a`` after the copy is made,
-``a`` will return a different value from ``b`` and ``c``,
-which both still reference the original array contents from before the copy took place:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> a.append(4)
-   -> a[0] = 777
-   -> println(a[0])
-   </ 777
-   -> println(b[0])
-   </ 42
-   -> println(c[0])
-   </ 42
-
-.. _ClassesAndStructures_EnsuringThatAnArrayIsUnique:
-
-Ensuring That an Array Is Unique
-________________________________
-
-It can be useful to ensure that you have a unique copy of an array
-before performing an action on that array's contents,
-or before passing that array to a function or method.
-You ensure the uniqueness of an array reference
-by calling the ``unshare`` method on a variable of array type.
-(The ``unshare`` method cannot be called on a constant array.)
-
-If multiple variables currently refer to the same array,
-and you call the ``unshare`` method on one of those variables,
-the array is copied,
-so that the variable has its own independent copy of the array.
-However, no copying takes place if the variable
-is already the only reference to the array.
-
-At the end of the previous example,
-``b`` and ``c`` both reference the same array.
-Call the ``unshare`` method on ``b`` to make it become a unique copy:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> b.unshare()
-
-If you change the first value in ``b`` after calling the ``unshare`` method,
-all three arrays will now report a different value:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> b[0] = -105
-   -> println(a[0])
-   </ 777
-   -> println(b[0])
-   </ -105
-   -> println(c[0])
-   </ 42
-
-.. _ClassesAndStructures_CheckingWhetherTwoArraysShareTheSameElements:
-
-Checking Whether Two Arrays Share the Same Elements
-___________________________________________________
-
-Check whether two arrays or subarrays share the same storage and elements
-by comparing them with the identity operators (``===`` and ``!==``).
-
-The example below uses the “identical to” operator (``===``)
-to check whether ``b`` and ``c`` still share the same array elements:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> if b === c {
-         println("b and c still share the same array elements.")
-      } else {
-         println("b and c now refer to two independent sets of array elements.")
-      }
-   <- b and c now refer to two independent sets of array elements.
-
-Alternatively, use the identity operators to check whether two subarrays share the same elements.
-The example below compares two identical subarrays from ``b``
-and confirms that they refer to the same elements:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> if b[0...1] === b[0...1] {
-         println("These two subarrays share the same elements.")
-      } else {
-         println("These two subarrays do not share the same elements.")
-      }
-   <- These two subarrays share the same elements.
-
-.. _ClassesAndStructures_ForcingACopyOfAnArray:
-
-Forcing a Copy of an Array
-__________________________
-
-Force an explicit copy of an array by calling the array's ``copy`` method.
-This method performs a shallow copy of the array
-and returns a new array containing the copied items.
-
-The example below defines an array called ``names``,
-which stores the names of seven people.
-A new variable called ``copiedNames`` is set to the result of calling
-the ``copy`` method on the ``names`` array:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
-   << // names : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
-   -> var copiedNames = names.copy()
-   << // copiedNames : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
-
-You can prove that the ``names`` array has been copied
-by changing an item in one of the arrays
-and checking the corresponding item in the other.
-If you set the first item in the ``copiedNames`` array
-to ``"Mo"`` rather than ``"Mohsen"``,
-the ``names`` array still returns the old value of ``"Mohsen"``
-from before the copy took place:
-
-.. testcode:: assignmentAndCopyForArrays
-
-   -> copiedNames[0] = "Mo"
-   -> println(names[0])
-   <- Mohsen
-
-.. note::
-
-   If you simply need to be sure that your reference to an array's contents
-   is the only reference in existence,
-   call the ``unshare`` method, not the ``copy`` method.
-   The ``unshare`` method does not make a copy of the array
-   unless it is necessary to do so.
-   The ``copy`` method always copies the array,
-   even if it is already unshared.
