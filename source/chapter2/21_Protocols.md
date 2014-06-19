@@ -7,9 +7,9 @@
 本页包含内容：
 
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
-- [属性要求（Property Requirements）](#property_requirements)
-- [方法要求（Method Requirements）](#method_requirements)
-- [突变方法要求（Mutating Method Requirements）](#mutating_method_requirements)
+- [对属性的规定（Property Requirements）](#property_requirements)
+- [对方法的规定（Method Requirements）](#method_requirements)
+- [对突变方法的的规定（Mutating Method Requirements）](#mutating_method_requirements)
 - [协议类型（Protocols as Types）](#protocols_as_types)
 - [委托(代理)模式（Delegation）](#delegation)
 - [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
@@ -18,11 +18,11 @@
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
 - [协议合成（Protocol Composition）](#protocol_composition)
 - [检验协议的一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
-- [可选协议要求（Optional Protocol Requirements）](#optional_protocol_requirements)
+- [对可选协议的规定（Optional Protocol Requirements）](#optional_protocol_requirements)
 
-`协议(Protocol)`定义了用于完成某些特定任务或功能的方法，属性等的蓝图。协议实际上并不提供这些功能或任务的具体`实现(Implementation)`--而只用来描述这些实现应该做什么。类，结构体，枚举通过提供协议所要求的方法，属性的具体实现来`采用(adopt)`协议。任意能够满足协议要求的类型被称为协议的`遵循者`。
+`协议(Protocol)`用于定义完成某项任务或功能所必须的方法和属性，协议实际上并不提供这些功能或任务的具体`实现(Implementation)`--而只用来描述这些实现应该是什么样的。类，结构体，枚举通过提供协议所要求的方法，属性的具体实现来`采用(adopt)`协议。任意能够满足协议要求的类型被称为协议的`遵循者`。
 
-`协议`可以要求其`遵循者`提供特定的实例属性，实例方法，类方法，操作符或`下标(subscripts)`。
+`协议`可以要求其`遵循者`提供特定的实例属性，实例方法，类方法，操作符或`下标(subscripts)`等。
 
 <a name="protocol_syntax"></a>
 ## 协议的语法
@@ -67,7 +67,7 @@ protocol SomeProtocol {
 }
 ```
 
-如下所示，通常在协议的定义中使用`class`前缀表示该属性为类成员。在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
+如下所示，通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
 
 ```swift
 protocol AnotherProtocol {
@@ -81,7 +81,7 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed`协议定义了任何拥有全名的事物。它并不指定具体事物，而只是要求事物必须提供一个全名。任何`FullyNamed`类型都得有一个只读的`fullName`属性，类型为`String`。
+`FullyNamed`协议定义了任何拥有`fullName`的类型。它并不指定具体类型，而只是要求类型必须提供一个`fullName`。任何`FullyNamed`类型都得有一个只读的`fullName`属性，类型为`String`。
 
 如下所示，这是一个实现了`FullyNamed`协议的简单结构体:
 
@@ -93,7 +93,7 @@ let john = Person(fullName: "John Appleseed")
 //john.fullName 为 "John Appleseed"
 ```
 
-这个例子中定义了一个叫做`Person`的结构体，用来表示具有指定名字的人。在第一行代码中可以看出，它采用了`FullyNamed`协议作为定义的一部分。
+这个例子中定义了一个叫做`Person`的结构体，用来表示具有指定名字的人。从第一行代码中可以看出，它采用了`FullyNamed`协议。
 
 `Person`结构体的每一个实例都有一个叫做`fullName`，`String`类型的存储型属性，这正好匹配了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
 
@@ -125,7 +125,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 >注意：
 >协议中的方法支持`变长参数(variadic parameter)`，不支持`参数默认值(default value)`。
 
-如下所示，协议中类方法的定义与类属性的定义相似，在协议定义的方法前置`class`关键字来表示。当在`枚举`或`结构体`实现类方法时，需要使用`static`关键字作为前缀。
+如下所示，协议中类方法的定义与类属性的定义相似，在协议定义的方法前置`class`关键字来表示。当在`枚举`或`结构体`实现类方法时，需要使用`static`关键字来代替。
 
 ```swift
 protocol SomeProtocol {
@@ -213,9 +213,9 @@ lightSwitch.toggle()
 
 使用场景:  
 
-* `协议类型`作为函数，方法或构造器中的参数类型或返回值类型
-* `协议类型`作为常量，变量或属性的类型
-* `协议类型`作为数组，字典或其他容器中的元素类型
+* `协议类型`作为函数、方法或构造器中的参数类型或返回值类型
+* `协议类型`作为常量、变量或属性的类型
+* `协议类型`作为数组、字典或其他容器中的元素类型
 
 > 注意: 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用驼峰式写法
 
@@ -627,7 +627,7 @@ for object in objects {
 `objects`数组中元素的类型并不会因为`向下转型`而改变，它们仍然是`Circle`，`Country`，`Animal`类型。然而，当它们被赋值给`objectWithArea`常量时，则只被视为`HasArea`类型，因此只有`area`属性能够被访问。
 
 <a name="optional_protocol_requirements"></a>
-## 可选协议要求
+## 对可选协议的规定
 
 可选协议含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`@optional`关键字作为前缀来定义可选成员。
 
@@ -670,8 +670,9 @@ for object in objects {
 
 `increment`方法通过`可选链`，尝试从两种`可选成员`中获取`count`。
 	
-1。 由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用incrementForCount`方法。
-2。 即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记
+1. 由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。
+
+2. 即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记
 
 在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。
 
