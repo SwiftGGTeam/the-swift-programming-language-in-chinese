@@ -4,7 +4,7 @@
 # 协议
 -----------------
 
-本页包含内容：
+本页包含内容： 
 
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
 - [对属性的规定（Property Requirements）](#property_requirements)
