@@ -27,22 +27,30 @@ and enables you to catch any type mismatches early in your code's development.
 
 .. TODO: mention for i in indices(collection) { collection[i] }
 
+.. _CollectionTypes_MutabilityOfCollections:
+
+Mutability of Collections
+-------------------------
+
+If you create an array or a dictionary and assign it to a variable,
+the collection that is created will be :newTerm:`mutable`.
+This means that you can change (or :newTerm:`mutate`) the collection after it is created
+by adding, removing, or changing items in the collection.
+Conversely, if you assign an array or a dictionary to a constant,
+that array or dictionary is :newTerm:`immutable`,
+and its size and contents cannot be changed.
+
 .. note::
 
-   Swift's ``Array`` type exhibits different behavior to other types
-   when assigned to a constant or variable,
-   or when passed to a function or method.
-   For more information,
-   see :ref:`CollectionTypes_MutabilityOfCollections`
-   and :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
+   It is good practice to create immutable collections
+   in all cases where the collection does not need to change.
+   Doing so enables the Swift compiler to optimize the performance of
+   the collections you create.
 
 .. _CollectionTypes_Arrays:
 
 Arrays
 ------
-
-.. TODO: update this section to use (and eventually prefer) T[] syntax,
-   based on [Contributor 7746]'s feedback
 
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
 The same value can appear in an array multiple times at different positions.
@@ -414,7 +422,7 @@ the definition for a particular word.
 Swift dictionaries are specific about the types of keys and values they can store.
 They differ from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes,
 which can use any kind of object as their keys and values
-and do not provide any information about the nature of these objects.
+and do not provide any information about the nature of those objects.
 In Swift, the type of keys and values
 that a particular dictionary can store is always made clear,
 either through an explicit type annotation or through type inference.
@@ -473,7 +481,7 @@ and whose values are also of type ``String``”.
 
    The ``airports`` dictionary is declared as a variable (with the ``var`` introducer),
    and not a constant (with the ``let`` introducer),
-   because more airports will be added to the dictionary in the examples below.
+   because more airports are added to the dictionary in the examples below.
 
 The ``airports`` dictionary is initialized with
 a dictionary literal containing two key-value pairs.
@@ -686,7 +694,7 @@ to store human-readable names of integer values.
 Its keys are of type ``Int``, and its values are of type ``String``.
 
 If the context already provides type information,
-create an empty dictionary with an empty dictionary literal,
+you can create an empty dictionary with an empty dictionary literal,
 which is written as ``[:]``
 (a colon inside a pair of square brackets):
 
@@ -706,41 +714,3 @@ which is written as ``[:]``
    Behind the scenes,
    Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
    For more on generic types and collections, see :doc:`Generics`.
-
-.. _CollectionTypes_MutabilityOfCollections:
-
-Mutability of Collections
--------------------------
-
-Arrays and dictionaries store multiple values together in a single collection.
-If you create an array or a dictionary and assign it to a variable,
-the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`)
-the size of the collection after it is created
-by adding more items to the collection,
-or by removing existing items from the ones it already contains.
-Conversely, if you assign an array or a dictionary to a constant,
-that array or dictionary is :newTerm:`immutable`,
-and its size cannot be changed.
-
-For dictionaries, immutability also means that you cannot replace the value
-for an existing key in the dictionary.
-An immutable dictionary's contents cannot be changed once they are set.
-
-Immutability has a slightly different meaning for arrays, however.
-You are still not allowed to perform any action
-that has the potential to change the size of an immutable array,
-but you *are* allowed to set a new value for an existing index in the array.
-This enables Swift's ``Array`` type to provide optimal performance for array operations
-when the size of an array is fixed.
-
-The mutability behavior of Swift's ``Array`` type also affects how array instances
-are assigned and modified.
-For more information, see :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
-
-.. note::
-
-   It is good practice to create immutable collections
-   in all cases where the collection's size does not need to change.
-   Doing so enables the Swift compiler to optimize the performance of
-   the collections you create.
