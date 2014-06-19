@@ -17,7 +17,7 @@
 
 此外，枚举成员可以指定任何类型的相关值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。
 
-在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多传统上只被类（class)所支持的特征，例如计算型属性（computed properties)，用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始成员值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
+在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始成员值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
 欲了解更多相关功能，请参见[属性（Properties）](10_Properties.html)，[方法（Methods）](11_Methods.html)，[构造过程（Initialization）](14_Initialization.html)，[扩展（Extensions）](20_Extensions.html)和[协议（Protocols）](21_Protocols.html)。
 
