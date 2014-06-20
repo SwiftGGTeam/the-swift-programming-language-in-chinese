@@ -21,4 +21,7 @@ Date        Notes
             even if a structure's stored properties do not have default values.
             
             Added an example of :ref:`Generics_ExtendingAGenericType`.
+----------  --------------------------------------------------------------------------
+2014-06-02  New document that describes Swift,
+            Apple’s new programming language for building iOS and OS X apps.
 ==========  ==========================================================================
