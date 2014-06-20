@@ -275,7 +275,7 @@ let basicRect = Rect()
 // basicRect 的原点是 (0.0, 0.0)，尺寸是 (0.0, 0.0)
 ```
 
-第二个`Rect`构造器`init(origin:size:)`，在功能上跟结构体在没有自定义构造器时获得的逐一成员构造器是一样的。这个构造器只是简单的将`origin`和`size`的参数值赋给对应的存储型属性：
+第二个`Rect`构造器`init(origin:size:)`，在功能上跟结构体在没有自定义构造器时获得的逐一成员构造器是一样的。这个构造器只是简单地将`origin`和`size`的参数值赋给对应的存储型属性：
 
 ```swift
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
