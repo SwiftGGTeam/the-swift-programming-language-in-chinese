@@ -285,11 +285,11 @@ let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
 
 第三个`Rect`构造器`init(center:size:)`稍微复杂一点。它先通过`center`和`size`的值计算出`origin`的坐标。然后再调用（或代理给）`init(origin:size:)`构造器来将新的`origin`和`size`值赋值到对应的属性中：
 
-let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ```swift
-size: Size(width: 3.0, height: 3.0))
-```
+let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+    size: Size(width: 3.0, height: 3.0))
 // centerRect 的原点是 (2.5, 2.5)，尺寸是 (3.0, 3.0)
+```
 
 构造器`init(center:size:)`可以自己将`origin`和`size`的新值赋值到对应的属性中。然而尽量利用现有的构造器和它所提供的功能来实现`init(center:size:)`的功能，是更方便、更清晰和更直观的方法。
 
