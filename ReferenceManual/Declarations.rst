@@ -878,7 +878,7 @@ that is automatically incremented from the raw value of the previous case.
           case A, B, C = 5, D
        }
 
-In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
+In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value of
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
