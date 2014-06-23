@@ -24,7 +24,7 @@ by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
 Unlike C, Swift lets you perform remainder (``%``) calculations on floating-point numbers.
-Swift also provides two range operators (``a..b`` and ``a...b``) not found in C,
+Swift also provides two range operators (``a..<b`` and ``a...b``) not found in C,
 as a shortcut for expressing a range of values.
 
 This chapter describes the common operators in Swift.
@@ -547,7 +547,7 @@ For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
 Half-Closed Range Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`half-closed range operator` (``a..b``)
+The :newTerm:`half-closed range operator` (``a..<b``)
 defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
 It is said to be :newTerm:`half-closed`
@@ -563,7 +563,7 @@ where it is useful to count up to (but not including) the length of the list:
    << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
    -> let count = names.count
    << // count : Int = 4
-   -> for i in 0..count {
+   -> for i in 0..<count {
          println("Person \(i + 1) is called \(names[i])")
       }
    </ Person 1 is called Anna
@@ -572,7 +572,7 @@ where it is useful to count up to (but not including) the length of the list:
    </ Person 4 is called Jack
 
 Note that the array contains four items,
-but ``0..count`` only counts as far as ``3``
+but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
 For more on arrays, see :ref:`CollectionTypes_Arrays`.

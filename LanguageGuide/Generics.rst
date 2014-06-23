@@ -827,7 +827,7 @@ This requirement is expressed through a combination of type constraints and wher
          }
    ---
          // check each pair of items to see if they are equivalent
-         for i in 0..someContainer.count {
+         for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                return false
             }
