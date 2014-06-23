@@ -238,7 +238,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 >注意：  
 假如你想通过默认构造器、逐一对象构造器以及你自己定制的构造器为值类型创建实例，我们建议你将自己定制的构造器写到扩展（`extension`）中，而不是跟值类型定义混在一起。想查看更多内容，请查看[扩展](../chapter2/20_Extensions.html)章节。
 
-下面例子将定义一个结构体`Rect`，用来展现几何矩形。这个例子需要两个辅助的结构体`Size`和`Point`，它们各自为其所有的属性提供了初始值`0.0`。
+下面例子将定义一个结构体`Rect`，用来代表几何矩形。这个例子需要两个辅助的结构体`Size`和`Point`，它们各自为其所有的属性提供了初始值`0.0`。
 
 ```swift
 struct Size {
@@ -249,7 +249,7 @@ struct Point {
 }
 ```
 
-你可以通过以下三种方式为`Rect`创建实例--使用默认的0值来初始化`origin`和`size`属性；使用特定的`origin`和`size`实例来初始化；使用特定的`center`和`size`来初始化。在下面`Rect`结构体定义中，我们为着三种方式提供了三个自定义的构造器：
+你可以通过以下三种方式为`Rect`创建实例--使用默认的0值来初始化`origin`和`size`属性；使用特定的`origin`和`size`实例来初始化；使用特定的`center`和`size`来初始化。在下面`Rect`结构体定义中，我们为这三种方式提供了三个自定义的构造器：
 
 ```swift
 struct Rect {
@@ -275,7 +275,7 @@ let basicRect = Rect()
 // basicRect 的原点是 (0.0, 0.0)，尺寸是 (0.0, 0.0)
 ```
 
-第二个`Rect`构造器`init(origin:size:)`，在功能上跟结构体在没有自定义构造器时获得的逐一成员构造器是一样的。这个构造器只是简单的将`origin`和`size`的参数值赋给对应的存储型属性：
+第二个`Rect`构造器`init(origin:size:)`，在功能上跟结构体在没有自定义构造器时获得的逐一成员构造器是一样的。这个构造器只是简单地将`origin`和`size`的参数值赋给对应的存储型属性：
 
 ```swift
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
@@ -285,11 +285,11 @@ let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
 
 第三个`Rect`构造器`init(center:size:)`稍微复杂一点。它先通过`center`和`size`的值计算出`origin`的坐标。然后再调用（或代理给）`init(origin:size:)`构造器来将新的`origin`和`size`值赋值到对应的属性中：
 
-let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ```swift
-size: Size(width: 3.0, height: 3.0))
-```
+let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+    size: Size(width: 3.0, height: 3.0))
 // centerRect 的原点是 (2.5, 2.5)，尺寸是 (3.0, 3.0)
+```
 
 构造器`init(center:size:)`可以自己将`origin`和`size`的新值赋值到对应的属性中。然而尽量利用现有的构造器和它所提供的功能来实现`init(center:size:)`的功能，是更方便、更清晰和更直观的方法。
 
@@ -311,7 +311,7 @@ Swift 提供了两种类型的类构造器来确保所有类实例中存储型�
 
 便利构造器是类中比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入的实例。
 
-你应当只在必要的时候为类提供便利构造器，比方说某种情况下通过使用便利构造器来快捷调用某个指定构造器，能够节省更多开发时间并让类的构造过程更清、晰明。
+你应当只在必要的时候为类提供便利构造器，比方说某种情况下通过使用便利构造器来快捷调用某个指定构造器，能够节省更多开发时间并让类的构造过程更清晰明了。
 
 <a name="initialization_chain"></a>
 ### 构造器链
