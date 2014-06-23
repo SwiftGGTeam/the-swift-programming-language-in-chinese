@@ -170,7 +170,7 @@ cheeseQuestion.response = "Yes, I do like cheese.
 >注意：  
 对某个类实例来说，它的常量属性只能在定义它的类的构造过程中修改；不能在子类中修改。
 
-你可以修改上面的`SurveyQuestion`示例，用常量属性替代变量属性`text`，指明问题内容`text`在其创建之后不会再被修改。尽管`text`属性现在是常量，我们仍然可以在其类的构造器中修改它的值：
+你可以修改上面的`SurveyQuestion`示例，用常量属性替代变量属性`text`，指明问题内容`text`在其创建之后不会再被修改。尽管`text`属性现在是常量，我们仍然可以在其类的构造器中设置它的值：
 
 ```swift
 class SurveyQuestion {
