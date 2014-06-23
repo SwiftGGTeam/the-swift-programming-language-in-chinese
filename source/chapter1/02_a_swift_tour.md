@@ -1,4 +1,4 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb)
+> 翻译：[numbbbbb](https://github.com/numbbbbb)  
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
 
 # Swift 初见
@@ -25,8 +25,8 @@ println("Hello, world")
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
-> 注意：
-> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+> 注意：  
+> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。  
 > <a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese/raw/gh-pages/source/chapter1/GuidedTour.playground.zip">打开Playground</a>
 
 <a name="simple_values"></a>
@@ -50,7 +50,7 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 ```
 
-> 练习：
+> 练习：  
 > 创建一个常量，显式指定类型为`Float`并指定初始值为4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
@@ -60,7 +60,7 @@ let label = "The width is"
 let width = 94
 let widthLabel = label + String(width)
 ```
-> 练习：
+> 练习：  
 > 删除最后一行中的`String`，错误提示是什么？
 
 有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：
@@ -72,7 +72,7 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
-> 练习：
+> 练习：  
 > 使用`\()`来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
 使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。
@@ -136,7 +136,7 @@ if let name = optionalName {
 }
 ```
 
-> 练习：
+> 练习：  
 > 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给greeting赋一个不同的值。
 
 如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。
@@ -157,7 +157,7 @@ default:
 }
 ```
 
-> 练习：
+> 练习：  
 > 删除`default`语句，看看会有什么错误？
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
@@ -181,7 +181,7 @@ for (kind, numbers) in interestingNumbers {
 largest
 ```
 
-> 练习：
+> 练习：  
 > 添加另一个变量来记录哪种类型的数字是最大的。
 
 使用`while`来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。
@@ -230,7 +230,7 @@ func greet(name: String, day: String) -> String {
 greet("Bob", "Tuesday")
 ```
 
-> 练习：
+> 练习：  
 > 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
 
 使用一个元组来返回多个值。
@@ -256,7 +256,7 @@ sumOf()
 sumOf(42, 597, 12)
 ```
 
-> 练习：
+> 练习：  
 > 写一个计算参数平均值的函数。
 
 函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。
@@ -314,7 +314,7 @@ numbers.map({
 })
 ```
 
-> 练习：
+> 练习：  
 > 重写闭包，对所有奇数返回0。
 
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
@@ -343,7 +343,7 @@ class Shape {
 }
 ```
 
-> 练习：
+> 练习：  
 > 使用`let`添加一个常量属性，再添加一个接收一个参数的方法。
 
 要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。
@@ -402,7 +402,7 @@ test.area()
 test.simpleDescription()
 ```
 
-> 练习：
+> 练习：  
 > 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，实现`area`和`describe`方法。
 
 属性可以有 getter 和 setter 。
@@ -521,7 +521,7 @@ let ace = Rank.Ace
 let aceRawValue = ace.toRaw()
 ```
 
-> 练习：
+> 练习：  
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
 在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
@@ -557,7 +557,7 @@ let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 ```
 
-> 练习：
+> 练习：  
 > 给`Suit`添加一个`color`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
 
 注意，有两种方式可以引用`Hearts`成员：给`hearts`常量赋值时，枚举成员`Suit.Hearts`需要用全名来引用，因为常量没有显式指定类型。在`switch`里，枚举成员使用缩写`.Hearts`来引用，因为`self`的值已经知道是一个`suit`。已知变量类型的情况下你可以使用缩写。
@@ -578,7 +578,7 @@ let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
-> 练习：
+> 练习：  
 > 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
@@ -602,7 +602,7 @@ case let .Error(error):
 }
 ```
 
-> 练习：
+> 练习：  
 > 给`ServerResponse`和`switch`添加第三种情况。
 
 注意如何从`ServerResponse`中提取日升和日落时间。
@@ -644,7 +644,7 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
-> 练习：
+> 练习：  
 > 写一个实现这个协议的枚举。
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
@@ -663,7 +663,7 @@ extension Int: ExampleProtocol {
 7.simpleDescription
 ```
 
-> 练习：
+> 练习：  
 > 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
 你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
@@ -720,7 +720,7 @@ func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Ele
 anyCommonElements([1, 2, 3], [3])
 ```
 
-> 练习：
+> 练习：  
 > 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
 简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
