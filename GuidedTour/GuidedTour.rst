@@ -73,7 +73,7 @@ Providing a value when you create a constant or variable
 lets the compiler infer its type.
 In the example above,
 the compiler infers that ``myVariable`` is an integer
-because its initial value is a integer.
+because its initial value is an integer.
 
 If the initial value doesn't provide enough information
 (or if there is no initial value),
