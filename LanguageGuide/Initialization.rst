@@ -5,7 +5,7 @@ Initialization
 a class, structure, or enumeration for use.
 This process involves setting an initial value for each stored property on that instance
 and performing any other setup or initialization that is required
-before the new instance is ready to for use.
+before the new instance is ready for use.
 
 You implement this initialization process by defining :newTerm:`initializers`,
 which are like special methods that can be called
