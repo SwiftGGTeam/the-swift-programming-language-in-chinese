@@ -20,7 +20,7 @@ arrays, dictionaries, ranges, strings, and other sequences.
 Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
-Cases can match many different types of pattern,
+Cases can match many different patterns,
 including range matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
 for use within the case's body,
