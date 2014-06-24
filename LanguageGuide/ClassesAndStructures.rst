@@ -239,7 +239,7 @@ Initializers are described in more detail in :doc:`Initialization`.
 Structures and Enumerations Are Value Types
 -------------------------------------------
 
-A :newTerm:`value type` is a type that is *copied*
+A :newTerm:`value type` is a type whose value is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
