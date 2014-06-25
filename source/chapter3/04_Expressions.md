@@ -193,7 +193,6 @@ let y2: SomeType = x    // Type information from an annotation
 
 'is' 运算符在“运行时（runtime）”会做检查。 成功会返回true, 否则 false
 
-The check must not be known to be true or false at compile time. The following are invalid:
 上述检查在“编译时（compile time）”不能使用。 例如下面的使用是错误的：
 
 ```swift
