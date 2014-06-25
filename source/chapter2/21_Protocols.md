@@ -390,7 +390,7 @@ protocol TextRepresentable {
 
 ```swift
 extension Dice: TextRepresentable {
-	cun asText() -> String {
+	func asText() -> String {
 		return "A \(sides)-sided dice"
 	}
 }
@@ -428,14 +428,14 @@ struct Hamster {
 		return "A hamster named \(name)"
 	}
 }
-extension Hamster: TextRepresentabl {}
+extension Hamster: TextRepresentable {}
 ```
 
 从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用
 
 ```swift
 let simonTheHamster = Hamster(name: "Simon")
-let somethingTextRepresentable: TextRepresentabl = simonTheHamester
+let somethingTextRepresentable: TextRepresentable = simonTheHamester
 println(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
@@ -483,7 +483,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-`遵循``PrettyTextRepresentable`协议的同时，也需要`遵循`TextRepresentable`协议。
+遵循`PrettyTextRepresentable`协议的同时，也需要遵循`TextRepresentable`协议。
 
 如下所示，用`扩展`为`SnakesAndLadders`遵循`PrettyTextRepresentable`协议:
 
@@ -575,7 +575,7 @@ wishHappyBirthday(birthdayPerson)
 class Circle: HasArea {
     let pi = 3.1415927
     var radius: Double
-    var area:≈radius }
+    var area: Double { return pi * radius * radius }
     init(radius: Double) { self.radius = radius }
 }
 class Country: HasArea {
@@ -676,7 +676,7 @@ for object in objects {
 
 在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。
 
-当`incrementForCount`不能被调用时，尝试使用`可选属性``fixedIncrement`来代替。
+当`incrementForCount`不能被调用时，尝试使用可选属性`fixedIncrement`来代替。
 
 `ThreeSource`实现了`CounterDataSource`协议，如下所示:
 
