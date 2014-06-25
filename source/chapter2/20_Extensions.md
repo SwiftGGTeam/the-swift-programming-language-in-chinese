@@ -96,11 +96,8 @@ println("A marathon is \(aMarathon) meters long")
 扩展能向类中添加新的便利构造器，但是它们不能向类中添加新的指定构造器或析构函数。指定构造器和析构函数必须总是由原始的类实现来提供。
 
 > 注意：  
-如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。  
-正如在值类型的构造器授权中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
+如果你使用扩展向一个值类型添加一个构造器，在该值类型已经向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers）时，你可以在值类型的扩展构造器中调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。
 
-
-如果你使用扩展向一个值类型添加一个构造器，如果该值类型已经向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么你可以在值类型的扩展构造器中调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。  
 正如在值类型的构造器委托中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
 
 
