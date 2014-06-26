@@ -127,7 +127,6 @@ Swift 标准库提供了如下的二元运算符：
 <a name="assignment_operator"></a>
 ## 赋值表达式（Assignment Operator）
 
-The assigment operator sets a new value for a given expression. It has the following form:
 赋值表达式会对某个给定的表达式赋值。 它有如下的形式；
 
 > `expression` = `value`
@@ -231,7 +230,7 @@ let y2: SomeType = x    // Type information from an annotation
 \__COLUMN__ | Int | 所在的列数
 \__FUNCTION__ | String | 所在的function 的名字
 
-在某个函数（function）中，`__FUNCTION__` 会返回当前函数的名字。 在某个方法（method）中，它会返回当前方法的名字。 在某个property 的getter/setter中会返回这个属性的名字。 在init/subscript中 只有的特殊成员（member）中会返回这个keyword的名字，在某个文件的顶端（the top level of a file），它返回的是当前module的名字。
+在某个函数（function）中，`__FUNCTION__` 会返回当前函数的名字。 在某个方法（method）中，它会返回当前方法的名字。 在某个property 的getter/setter中会返回这个属性的名字。 在特殊的成员如init/subscript中 会返回这个关键字的名字，在某个文件的顶端（the top level of a file），它返回的是当前module的名字。
 
 一个array literal，是一个有序的值的集合。 它的形式是：
 
