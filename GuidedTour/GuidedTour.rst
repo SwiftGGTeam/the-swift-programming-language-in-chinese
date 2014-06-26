@@ -337,7 +337,7 @@ ensuring that the loop is run at least once.
    << // m : Int = 128
 
 You can keep an index in a loop ---
-either by using ``..`` to make a range of indexes
+either by using ``..<`` to make a range of indexes
 or by writing an explicit initialization, condition, and increment.
 These two loops do the same thing:
 
@@ -345,7 +345,7 @@ These two loops do the same thing:
 
    -> var firstForLoop = 0
    << // firstForLoop : Int = 0
-   -> for i in 0..4 {
+   -> for i in 0..<4 {
           firstForLoop += i
       }
    -> firstForLoop
@@ -359,7 +359,7 @@ These two loops do the same thing:
    -> secondForLoop
    << // secondForLoop : Int = 6
 
-Use ``..`` to make a range that omits its upper value,
+Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
 
 Functions and Closures
@@ -1066,7 +1066,7 @@ to make a generic function or type.
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
            var result = ItemType[]()
-           for i in 0..times {
+           for i in 0..<times {
                 result += item
            }
            return result
