@@ -119,7 +119,7 @@ The Swift standard library provides the following binary operators:
     - ``^`` Bitwise XOR
 
 * Range (No associativity, precedence level 135)
-    - ``..`` Half-closed range
+    - ``..<`` Half-closed range
     - ``...`` Closed range
 
 * Cast (No associativity, precedence level 132)
