@@ -158,7 +158,7 @@ class SurveyQuestion {
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
 // 输出 "Do you like cheese?"
-cheeseQuestion.response = "Yes, I do like cheese.
+cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
 调查问题在问题提出之后，我们才能得到回答。所以我们将属性回答`response`声明为`String?`类型，或者说是可选字符串类型`optional String`。当`SurveyQuestion`实例化时，它将自动赋值为空`nil`，表明暂时还不存在此字符串。
