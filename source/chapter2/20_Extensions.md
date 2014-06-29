@@ -275,7 +275,7 @@ extension Character {
 
 ```swift
 func printLetterKinds(word: String) {
-    println("'\\(word)' is made up of the following kinds of letters:")
+    println("'\(word)' is made up of the following kinds of letters:")
     for character in word {
         switch character.kind {
         case .Vowel:
