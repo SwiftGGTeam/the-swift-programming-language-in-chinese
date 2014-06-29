@@ -289,13 +289,13 @@ protocol DiceGameDelegate {
 ```swift
 class SnakesAndLadders: DiceGame {
 	let finalSquare = 25
-	let dic = Dice(sides: 6, generator: LinearCongruentialGenerator())
+	let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
 	var square = 0
 	var board: Int[]
 	init() {
 		board = Int[](count: finalSquare + 1, repeatedValue: 0)
-		board[03] = +08; board[06] = +11; borad[09] = +09; board[10] = +02
-		borad[14] = -10; board[19] = -11; borad[22] = -02; board[24] = -08
+		board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+		board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 	}
  	var delegate: DiceGameDelegate?
  	func play() {
@@ -314,7 +314,7 @@ class SnakesAndLadders: DiceGame {
  			square += board[square]
  			}
  		}
- 		delegate?.gameDIdEnd(self)
+ 		delegate?.gameDidEnd(self)
  	}
 }
 ```
