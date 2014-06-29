@@ -230,7 +230,7 @@ class Dice {
 		self.generator = generator
 	}
 	func roll() -> Int {
-		return Int(generator.random() * Double(sides)) +1
+		return Int(generator.random() * Double(sides)) + 1
 	}
 }
 ```
