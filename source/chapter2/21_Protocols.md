@@ -407,7 +407,7 @@ println(d12.asText())
 `SnakesAndLadders`类也可以通过`扩展`的方式来遵循协议：
 
 ```swift
-extension SnakeAndLadders: TextRepresentable {
+extension SnakesAndLadders: TextRepresentable {
 	func asText() -> String {
 		return "A game of Snakes and Ladders with \(finalSquare) squares"
 	}
