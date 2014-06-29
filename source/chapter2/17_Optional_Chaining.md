@@ -211,7 +211,7 @@ if john.residence?.printNumberOfRooms() {
 <a name="calling_subscripts_through_optional_chaining"></a>
 ##使用可选链调用子脚本
 
-你可以使用可选链来尝试从子脚本获取值并检查子脚本的调用是否成功，然而，你不能通过可选链来设置子代码。
+你可以使用可选链来尝试从子脚本获取值并检查子脚本的调用是否成功，然而，你不能通过可选链来设置下标脚本。
 
 > 注意：  
 当你使用可选链来获取子脚本的时候，你应该将问号放在子脚本括号的前面而不是后面。可选链的问号一般直接跟在表达语句的后面。
@@ -227,7 +227,7 @@ if let firstRoomName = john.residence?[0].name {
 // 打印 "Unable to retrieve the first room name."。
 ```
 
-在子代码调用中可选链的问号直接跟在`john.residence`的后面，在子脚本括号的前面，因为`john.residence`是可选链试图获得的可选值。
+在下标脚本调用中可选链的问号直接跟在`john.residence`的后面，在子脚本括号的前面，因为`john.residence`是可选链试图获得的可选值。
 
 如果你创建一个`Residence`实例给`john.residence`，且在他的`rooms`数组中有一个或多个`Room`实例，那么你可以使用可选链通过`Residence`子脚本来获取在`rooms`数组中的实例了：
 
