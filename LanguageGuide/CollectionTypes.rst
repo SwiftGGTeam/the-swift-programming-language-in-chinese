@@ -73,7 +73,7 @@ Array Type Shorthand Syntax
 
 The type of a Swift array is written in full as ``Array<SomeType>``,
 where ``SomeType`` is the type that the array is allowed to store.
-You can also write the type of an array in shorthand form as ``SomeType[]``.
+You can also write the type of an array in shorthand form as ``[SomeType]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred,
 and is used throughout this guide when referring to the type of an array.
@@ -96,12 +96,12 @@ The example below creates an array called ``shoppingList`` to store ``String`` v
 
 .. testcode:: arrays
 
-   -> var shoppingList: String[] = ["Eggs", "Milk"]
-   << // shoppingList : String[] = ["Eggs", "Milk"]
+   -> var shoppingList: [String] = ["Eggs", "Milk"]
+   << // shoppingList : [String] = ["Eggs", "Milk"]
    // shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
-“an array of ``String`` values”, written as ``String[]``.
+“an array of ``String`` values”, written as ``[String]``.
 Because this particular array has specified a value type of ``String``,
 it is *only* allowed to store ``String`` values.
 Here, the ``shoppingList`` array is initialized with two ``String`` values
@@ -127,10 +127,10 @@ The initialization of ``shoppingList`` could have been written in a shorter form
 .. testcode:: arraysInferred
 
    -> var shoppingList = ["Eggs", "Milk"]
-   << // shoppingList : Array<String> = ["Eggs", "Milk"]
+   << // shoppingList : [String] = ["Eggs", "Milk"]
 
 Because all values in the array literal are of the same type,
-Swift can infer that ``String[]`` is
+Swift can infer that ``[String]`` is
 the correct type to use for the ``shoppingList`` variable.
 
 .. _CollectionTypes_AccessingAndModifyingAnArray:
@@ -339,13 +339,13 @@ using initializer syntax:
 
 .. testcode:: arraysEmpty
 
-   -> var someInts = Int[]()
-   << // someInts : Int[] = []
-   -> println("someInts is of type Int[] with \(someInts.count) items.")
-   <- someInts is of type Int[] with 0 items.
+   -> var someInts = [Int]()
+   << // someInts : [(Int)] = []
+   -> println("someInts is of type [Int] with \(someInts.count) items.")
+   <- someInts is of type [Int] with 0 items.
 
-Note that the type of the ``someInts`` variable is inferred to be ``Int[]``,
-because it is set to the output of an ``Int[]`` initializer.
+Note that the type of the ``someInts`` variable is inferred to be ``[Int]``,
+because it is set to the output of an ``[Int]`` initializer.
 
 Alternatively, if the context already provides type information,
 such as a function argument or an already-typed variable or constant,
@@ -359,7 +359,7 @@ which is written as ``[]``
    /> someInts now contains \(someInts.count) value of type Int
    </ someInts now contains 1 value of type Int
    -> someInts = []
-   // someInts is now an empty array, but is still of type Int[]
+   // someInts is now an empty array, but is still of type [Int]
 
 Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
@@ -369,9 +369,9 @@ and a default value of the appropriate type (called ``repeatedValue``):
 
 .. testcode:: arraysEmpty
 
-   -> var threeDoubles = Double[](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : Double[] = [0.0, 0.0, 0.0]
-   // threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
+   -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
+   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
+   // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
 Thanks to type inference, you don't need to specify
 the type to be stored in the array when using this initializer,
@@ -379,10 +379,10 @@ because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
-   /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as Double[], and equals [2.5, 2.5, 2.5]
+   -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
+   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
+   /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
 
 Finally, you can create a new array by adding together two existing arrays of compatible type
 with the addition operator (``+``).
@@ -391,11 +391,11 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : Double[] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
-   /> sixDoubles is inferred as Double[], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
-   </ sixDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
+   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
-.. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
+.. TODO: func find<T: Equatable>(array: [T], value: T) -> Int?
    This is defined in Algorithm.swift,
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
@@ -419,19 +419,30 @@ You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.
 
-Swift dictionaries are specific about the types of keys and values they can store.
-They differ from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes,
-which can use any kind of object as their keys and values
-and do not provide any information about the nature of those objects.
-In Swift, the type of keys and values
-that a particular dictionary can store is always made clear,
-either through an explicit type annotation or through type inference.
+.. note::
 
-Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``,
+   Swift dictionaries are specific about the types of keys and values they can store.
+   They differ from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes,
+   which can use any kind of object as their keys and values
+   and do not provide any information about the nature of those objects.
+   In Swift, the type of keys and values
+   that a particular dictionary can store is always made clear,
+   either through an explicit type annotation or through type inference.
+
+.. _CollectionTypes_DictionaryTypeShorthandSyntax:
+
+Dictionary Type Shorthand Syntax
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The type of a Swift dictionary is written in full as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of value that can be used as a dictionary key,
 and ``ValueType`` is the type of value that the dictionary stores for those keys.
+You can also write the type of a dictionary in shorthand form as ``[KeyType: ValueType]``.
+Although the two forms are functionally identical,
+the shorthand form is preferred,
+and is used throughout this guide when referring to the type of a dictionary.
 
-The only restriction is that ``KeyType`` must be :newTerm:`hashable` ---
+The only restriction on a dictionary's type is that ``KeyType`` must be :newTerm:`hashable` ---
 that is, it must provide a way to make itself uniquely representable.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and all of these types can be used as the keys of a dictionary.
@@ -470,8 +481,8 @@ and the values are airport names:
 
 .. testcode:: dictionaries
 
-   -> var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : Dictionary<String, String> = ["DUB": "Dublin", "TYO": "Tokyo"]
+   -> var airports: [String: String] = ["TYO": "Tokyo", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
 
 The ``airports`` dictionary is declared as having a type of ``Dictionary<String, String>``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -502,11 +513,11 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : Dictionary<String, String> = ["DUB": "Dublin", "TYO": "Tokyo"]
+   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
-Swift can infer that ``Dictionary<String, String>`` is
+Swift can infer that ``[String: String]`` is
 the correct type to use for the ``airports`` dictionary.
 
 .. _CollectionTypes_AccessingAndModifyingADictionary:
@@ -685,11 +696,11 @@ you can create an empty ``Dictionary`` of a certain type by using initializer sy
 
 .. testcode:: dictionariesEmpty
 
-   -> var namesOfIntegers = Dictionary<Int, String>()
-   << // namesOfIntegers : Dictionary<Int, String> = [:]
-   // namesOfIntegers is an empty Dictionary<Int, String>
+   -> var namesOfIntegers = [Int: String]()
+   << // namesOfIntegers : [Int : String] = [:]
+   // namesOfIntegers is an empty [Int: String] dictionary
 
-This example creates an empty dictionary of type ``Int``, ``String``
+This example creates an empty dictionary of type ``[Int: String]``
 to store human-readable names of integer values.
 Its keys are of type ``Int``, and its values are of type ``String``.
 
@@ -704,7 +715,7 @@ which is written as ``[:]``
    /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
    </ namesOfIntegers now contains 1 key-value pair
    -> namesOfIntegers = [:]
-   // namesOfIntegers is once again an empty dictionary of type Int, String
+   // namesOfIntegers is once again an empty dictionary of type [Int: String]
 
 .. TODO: Mention that "==" will consider two dictionaries to be the same
    if they have the same count, and every element in lhs is also in rhs
