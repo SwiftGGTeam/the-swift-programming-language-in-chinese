@@ -544,9 +544,9 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:18: error: could not find an overload for '==' that accepts the supplied arguments
+   !! <REPL Input>:3:12: error: 'T' is not convertible to '_ArrayCastKind'
    !!              if value == valueToFind {
-   !!                 ~~~~~~^~~~~~~~~~~~~~
+   !!                 ^
 
 This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
