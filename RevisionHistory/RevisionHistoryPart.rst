@@ -1,5 +1,5 @@
-Document Revision History
-=========================
+Revision History
+================
 
 .. toctree::
    :maxdepth: 1
