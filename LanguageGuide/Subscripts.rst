@@ -238,9 +238,9 @@ and ``3.2`` in the bottom left position
 The ``Matrix`` subscript's getter and setter both contain an assertion
 to check that the subscript's  ``row`` and ``column`` values are valid.
 To assist with these assertions,
-``Matrix`` includes a convenience method called ``indexIsValid``,
-which checks whether the requested ``row`` or ``column``
-is outside the bounds of the matrix:
+``Matrix`` includes a convenience method called ``indexIsValidForRow(_:column:)``,
+which checks whether the requested ``row`` and ``column``
+are inside the bounds of the matrix:
 
 .. testcode:: matrixSubscript
 
