@@ -145,9 +145,9 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: could not find an overload for '+=' that accepts the supplied arguments
+   !! <REPL Input>:1:1: error: 'String' is not convertible to '@lvalue UInt8'
    !! constantString += " and another Highlander"
-   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! ^
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
