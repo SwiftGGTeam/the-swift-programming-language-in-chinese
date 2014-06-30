@@ -419,9 +419,12 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = V4REPL1S (has 2 children)
    -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !! <REPL Input>:1:7: error: could not find an overload for '===' that accepts the supplied arguments
+   !! <REPL Input>:1:4: error: type 'S' does not conform to protocol 'AnyObject'
    !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !! ~~~^~~~~~
+   !! ^
+   !! Swift.lhs:1:5: note: in initialization of parameter 'lhs'
+   !! let lhs: AnyObject?
+   !! ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -431,9 +434,12 @@ or passed to a function.)
    -> let e2 = E.B
    << // e2 : E = (Enum Value)
    -> if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !! <REPL Input>:1:7: error: could not find an overload for '===' that accepts the supplied arguments
+   !! <REPL Input>:1:4: error: type 'E' does not conform to protocol 'AnyObject'
    !! if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !! ~~~^~~~~~
+   !! ^
+   !! Swift.lhs:1:5: note: in initialization of parameter 'lhs'
+   !! let lhs: AnyObject?
+   !! ^
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
@@ -473,9 +479,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = C4REPL1C (has 2 children)
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:7: error: could not find an overload for '==' that accepts the supplied arguments
+   !! <REPL Input>:1:4: error: 'C' is not convertible to '_ArrayCastKind'
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! ~~~^~~~~
+   !! ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -485,9 +491,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = V4REPL1S (has 2 children)
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:7: error: could not find an overload for '==' that accepts the supplied arguments
+   !! <REPL Input>:1:4: error: 'S' is not convertible to '_ArrayCastKind'
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! ~~~^~~~~
+   !! ^
 
 .. TODO: This needs clarifying with regards to function references.
 
