@@ -293,95 +293,28 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two type-casting operators,
-the ``as`` operator and the ``is`` operator.
+There are three type-casting operators,
+the ``is`` operator, the ``as?`` operator,
+and the ``as`` operator.
 They have the following form:
 
 .. syntax-outline::
 
-   <#expression#> as <#type#>
-   <#expression#> as? <#type#>
-   <#expression#> is <#type#>
+    <#expression#> is <#type#>
+    <#expression#> as? <#type#>
+    <#expression#> as <#type#>
 
-The ``as`` operator
-performs a cast of the *expression*
-to the specified *type*.
-It behaves as follows:
+The ``is`` operator checks at runtime whether the *expression*
+can be downcast to the specified *type*.
+It returns ``true`` if the *expression* can be downcast to the specified *type*;
+otherwise, it returns ``false``.
+If casting to the specified *type*
+is guaranteed to succeed or fail,
+a compile-time error is raised.
+For example, ``10 is Int`` and ``10 is String``
+both raise compile-time errors.
 
-* If conversion to the specified *type*
-  is guaranteed to succeed,
-  the value of the *expression* is returned
-  as an instance of the specified *type*.
-  An example is casting from a subclass to a superclass.
-
-* If conversion to the specified *type*
-  is guaranteed to fail,
-  a compile-time error is raised.
-
-* Otherwise, if it's not known at compile time
-  whether the conversion will succeed,
-  the type of the cast expresion is an optional of the specified *type*.
-  At runtime, if the cast succeeds,
-  the value of *expression* is wrapped in an optional and returned;
-  otherwise, the value returned is ``nil``.
-  An example is casting from a superclass to a subclass.
-
-.. testcode:: type-casting
-
-    -> class SomeSuperType {}
-    -> class SomeType: SomeSuperType {}
-    -> class SomeChildType: SomeType {}
-    -> let s = SomeType()
-    << // s : SomeType = <SomeType instance>
-    ---
-    -> let x = s as SomeSuperType  // known to succeed; type is SomeSuperType
-    << // y : SomeSuperType = <SomeSuperType instance>
-    -> let y = s as Int            // known to fail; compile-time error
-    !! <REPL Input>:1:11: error: cannot convert the expression's type '$T1' to type '$T2'
-    !! let y = s as Int            // known to fail; compile-time error
-    !!         ~~^~~~~~
-    -> let z = s as SomeChildType  // might fail at runtime; type is SomeChildType?
-    << // z : SomeChildType? = nil
-
-Specifying a type with ``as`` provides the same information
-to the compiler as a type annotation,
-as shown in the following example:
-
-.. testcode:: type-casting-2
-
-    >> class SomeType {}
-    >> let x = SomeType()
-    -> let y1 = x as SomeType  // Type information from 'as'
-    << // y1 : SomeType = <SomeType instance>
-    -> let y2: SomeType = x    // Type information from an annotation
-    << // y2 : SomeType = <SomeType instance>
-
-.. NOTE: The following text is no longer relevant,
-    because now that T! is a type, x as T! no longer means
-    the same thing as (x as T)!. Leaving the old prose in case this changes again.
-
-    If the type specified after ``as``
-    is followed by an exclamation mark (``!``),
-    the entire ``as`` expression is understood as a forced-value expression.
-    For example, the expression ``x as SomeType!``
-    is understood as ``(x as SomeType)!``
-    and not as ``x as (SomeType!)``.
-
-The ``is`` operator checks at runtime
-to see whether the *expression*
-is of the specified *type*.
-If so, it returns ``true``; otherwise, it returns ``false``.
-
-.. If the bugs are fixed, this can be reworded:
-    The ``is`` operator checks at runtime
-    to see whether the *expression*
-    can be cast to the specified *type*
-    If so, it returns ``true``; otherwise, it returns ``false``.
-
-The check must not be known to be true or false at compile time.
-The following are invalid:
-
-.. testcode::
+.. assertion::
 
     -> "hello" is String
     !! <REPL Input>:1:9: error: 'is' test is always true
@@ -392,13 +325,36 @@ The following are invalid:
     !! "hello" is Int
     !! ~~~~~~~~^~~~~~
 
+.. If the bugs are fixed, this can be reworded:
+    The ``is`` operator checks at runtime
+    to see whether the *expression*
+    can be cast to the specified *type*
+    If so, it returns ``true``; otherwise, it returns ``false``.
+
+    See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
+    See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
+
+The ``as?`` operator
+performs a conditional cast of the *expression*
+to the specified *type*.
+The ``as?`` operator returns an optional of the specified *type*.
+At runtime, if the cast succeeds,
+the value of *expression* is wrapped in an optional and returned;
+otherwise, the value returned is ``nil``.
+If casting to the specified *type*
+is guaranteed to fail,
+a compile-time error is raised.
+For example, casting to a type that's neither a subclass or superclass
+of the type of the *expression* is an error.
+
+The ``as`` operator performs a forced cast of the *expression* to the specified *type*.
+The ``as`` operator returns a value of the specified *type*, not an optional type.
+If the cast fails, a runtime error is raised.
+The behavior of ``x as T`` is the same as the behavior of ``(x as? T)!``.
+
 For more information about type casting
-and to see more examples that use the type-casting operators,
+and to see examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
-
-.. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
-
-.. See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
 .. langref-grammar
 
@@ -409,7 +365,9 @@ see :doc:`../LanguageGuide/TypeCasting`.
 
     Grammar of a type-casting operator
 
-    type-casting-operator --> ``is`` type | ``as`` ``?``-OPT type
+    type-casting-operator --> ``is`` type
+    type-casting-operator --> ``as`` type
+    type-casting-operator --> ``as`` ``?`` type
 
 
 .. _Expressions_PrimaryExpressions:
