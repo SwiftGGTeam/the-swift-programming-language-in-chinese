@@ -1034,7 +1034,7 @@ to create a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : Array<ShoppingListItem> = [C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children)]
+   << // breakfastList : [ShoppingListItem] = [C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children)]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
@@ -1140,8 +1140,8 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
 .. testcode:: checkers
 
    -> struct Checkerboard {
-         let boardColors: Bool[] = {
-            var temporaryBoard = Bool[]()
+         let boardColors: [Bool] = {
+            var temporaryBoard = [Bool]()
             var isBlack = false
             for i in 1...10 {
                for j in 1...10 {

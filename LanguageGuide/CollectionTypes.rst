@@ -478,7 +478,7 @@ and the values are airport names:
    -> var airports: [String: String] = ["TYO": "Tokyo", "DUB": "Dublin"]
    << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
 
-The ``airports`` dictionary is declared as having a type of ``Dictionary<String, String>``,
+The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
 and whose values are also of type ``String``”.
 

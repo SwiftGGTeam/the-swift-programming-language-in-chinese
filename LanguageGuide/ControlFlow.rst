@@ -122,7 +122,7 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
 .. testcode:: forLoops
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
          println("Hello, \(name)!")
       }
@@ -142,7 +142,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : [String : Int] = ["spider": 8, "ant": 6, "cat": 4]
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")
       }
@@ -332,8 +332,8 @@ The board is initialized with 26 zero ``Int`` values, not 25
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](count: finalSquare + 1, repeatedValue: 0)
-   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -475,8 +475,8 @@ are initialized in exactly the same way as with a ``while`` loop:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](count: finalSquare + 1, repeatedValue: 0)
-   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
@@ -1256,8 +1256,8 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](count: finalSquare + 1, repeatedValue: 0)
-   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0

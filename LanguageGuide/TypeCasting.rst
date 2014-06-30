@@ -82,7 +82,7 @@ and so it infers a type of ``MediaItem[]`` for the ``library`` array:
          Song(name: "The One And Only", artist: "Chesney Hawkes"),
          Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
-   << // library : Array<MediaItem> = [C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL4Song (has 2 children)]
+   << // library : [MediaItem] = [C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL4Song (has 2 children)]
    // the type of "library" is inferred to be MediaItem[]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
@@ -259,7 +259,7 @@ AnyObject
 ~~~~~~~~~
 
 When working with Cocoa APIs, it is common to receive
-an array with a type of ``AnyObject[]``, or “an array of values of any object type”.
+an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
 This is because Objective-C does not have explicitly typed arrays.
 However, you can often be confident about the type of objects contained in such an array
 just from the information you know about the API that provided the array.
@@ -268,17 +268,17 @@ In these situations, you can use the forced version of the type cast operator (`
 to downcast each item in the array to a more specific class type than ``AnyObject``,
 without the need for optional unwrapping.
 
-The example below defines an array of type ``AnyObject[]``
+The example below defines an array of type ``[AnyObject]``
 and populates this array with three instances of the ``Movie`` class:
 
 .. testcode:: typeCasting
 
-   -> let someObjects: AnyObject[] = [
+   -> let someObjects: [AnyObject] = [
          Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
          Movie(name: "Moon", director: "Duncan Jones"),
          Movie(name: "Alien", director: "Ridley Scott")
       ]
-   << // someObjects : AnyObject[] = [C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children)]
+   << // someObjects : [AnyObject] = [C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children)]
 
 Because this array is known to contain only ``Movie`` instances,
 you can downcast and unwrap directly to a non-optional ``Movie``
@@ -295,12 +295,12 @@ with the forced version of the type cast operator (``as``):
    </ Movie: 'Alien', dir. Ridley Scott
 
 For an even shorter form of this loop,
-downcast the ``someObjects`` array to a type of ``Movie[]``
+downcast the ``someObjects`` array to a type of ``[Movie]``
 instead of downcasting each item:
 
 .. testcode:: typeCasting
 
-   -> for movie in someObjects as Movie[] {
+   -> for movie in someObjects as [Movie] {
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
@@ -316,8 +316,8 @@ The example creates an array called ``things``, which can store values of type `
 
 .. testcode:: typeCasting
 
-   -> var things = Any[]()
-   << // things : Any[] = []
+   -> var things = [Any]()
+   << // things : [(Any)] = []
    ---
    -> things.append(0)
    -> things.append(0.0)

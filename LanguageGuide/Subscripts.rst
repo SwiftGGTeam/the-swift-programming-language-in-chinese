@@ -117,12 +117,12 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : [String : Int] = ["spider": 8, "ant": 6, "cat": 4]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
 and initializes it with a dictionary literal containing three key-value pairs.
-The type of the ``numberOfLegs`` dictionary is inferred to be ``Dictionary<String, Int>``.
+The type of the ``numberOfLegs`` dictionary is inferred to be ``[String: Int]``.
 After creating the dictionary,
 this example uses subscript assignment to add
 a ``String`` key of ``"bird"`` and an ``Int`` value of ``2`` to the dictionary.
@@ -169,7 +169,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
 
    -> struct Matrix {
          let rows: Int, columns: Int
-         var grid: Double[]
+         var grid: [Double]
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns

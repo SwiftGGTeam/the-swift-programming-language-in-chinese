@@ -169,13 +169,13 @@ The ``Person`` class is defined in the same way as before:
 
 The ``Residence`` class is more complex than before.
 This time, the ``Residence`` class defines a variable property called ``rooms``,
-which is initialized with an empty array of type ``Room[]``:
+which is initialized with an empty array of type ``[Room]``:
 
 .. testcode:: optionalChaining
    :compile: true
 
    -> class Residence {
-         var rooms = Room[]()
+         var rooms = [Room]()
          var numberOfRooms: Int {
             return rooms.count
          }

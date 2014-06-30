@@ -461,9 +461,9 @@ and to notify a ``DiceGameDelegate`` about its progress:
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
-         var board: Int[]
+         var board: [Int]
          init() {
-            board = Int[](count: finalSquare + 1, repeatedValue: 0)
+            board = [Int](count: finalSquare + 1, repeatedValue: 0)
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -704,7 +704,7 @@ This example creates an array of ``TextRepresentable`` things:
 .. testcode:: protocols
    :compile: true
 
-   -> let things: TextRepresentable[] = [game, d12, simonTheHamster]
+   -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
 It is now possible to iterate over the items in the array,
 and print each item's textual representation:
@@ -958,12 +958,12 @@ can be used to initialize an array that stores values of type ``AnyObject``:
 
 .. testcode:: protocolConformance
 
-   -> let objects: AnyObject[] = [
+   -> let objects: [AnyObject] = [
          Circle(radius: 2.0),
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : AnyObject[] = [C4REPL6Circle (has 2 children), C4REPL7Country (has 1 child), C4REPL6Animal (has 1 child)]
+   << // objects : [AnyObject] = [C4REPL6Circle (has 2 children), C4REPL7Country (has 1 child), C4REPL6Animal (has 1 child)]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;

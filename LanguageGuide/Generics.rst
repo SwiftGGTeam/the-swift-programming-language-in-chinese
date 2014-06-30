@@ -281,7 +281,7 @@ in this case for a stack of ``Int`` values:
 .. testcode:: genericStack
 
    -> struct IntStack {
-         var items = Int[]()
+         var items = [Int]()
          mutating func push(item: Int) {
             items.append(item)
          }
@@ -313,7 +313,7 @@ Here's a generic version of the same code:
 .. testcode:: genericStack
 
    -> struct Stack<T> {
-         var items = T[]()
+         var items = [T]()
          mutating func push(item: T) {
             items.append(item)
          }
@@ -502,7 +502,7 @@ or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
-   -> func findStringIndex(array: String[], valueToFind: String) -> Int? {
+   -> func findStringIndex(array: [String], valueToFind: String) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -516,7 +516,7 @@ The ``findStringIndex`` function can be used to find a string value in an array 
 .. testcode:: typeConstraints
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   << // strings : Array<String> = ["cat", "dog", "llama", "parakeet", "terrapin"]
+   << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
    -> if let foundIndex = findStringIndex(strings, "llama") {
          println("The index of llama is \(foundIndex)")
       }
@@ -536,7 +536,7 @@ for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
-   -> func findIndex<T>(array: T[], valueToFind: T) -> Int? {
+   -> func findIndex<T>(array: [T], valueToFind: T) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -578,7 +578,7 @@ as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
+   -> func findIndex<T: Equatable>(array: [T], valueToFind: T) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -688,7 +688,7 @@ adapted to conform to the ``Container`` protocol:
 
    -> struct IntStack: Container {
          // original IntStack implementation
-         var items = Int[]()
+         var items = [Int]()
          mutating func push(item: Int) {
             items.append(item)
          }
@@ -733,7 +733,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
    -> struct Stack<T>: Container {
          // original Stack<T> implementation
-         var items = T[]()
+         var items = [T]()
          mutating func push(item: T) {
             items.append(item)
          }
@@ -899,7 +899,7 @@ Here's how the ``allItemsMatch`` function looks in action:
    -> stackOfStrings.push("tres")
    ---
    -> var arrayOfStrings = ["uno", "dos", "tres"]
-   << // arrayOfStrings : Array<String> = ["uno", "dos", "tres"]
+   << // arrayOfStrings : [String] = ["uno", "dos", "tres"]
    ---
    -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
          println("All items match.")

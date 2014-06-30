@@ -560,7 +560,7 @@ where it is useful to count up to (but not including) the length of the list:
 .. testcode:: rangeOperators
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> let count = names.count
    << // count : Int = 4
    -> for i in 0..<count {
