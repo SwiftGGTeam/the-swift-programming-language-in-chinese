@@ -664,13 +664,13 @@ with the ``keys`` or ``values`` property:
 
 .. testcode:: dictionariesInferred
 
-   -> let airportCodes = Array(airports.keys)
-   << // airportCodes : Array<String> = ["TYO", "LHR"]
+   -> let airportCodes = [String](airports.keys)
+   << // airportCodes : [(String)] = ["TYO", "LHR"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
    </ airportCodes is ["TYO", "LHR"]
    ---
-   -> let airportNames = Array(airports.values)
-   << // airportNames : Array<String> = ["Tokyo", "London Heathrow"]
+   -> let airportNames = [String](airports.values)
+   << // airportNames : [(String)] = ["Tokyo", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Tokyo", "London Heathrow"]
 
