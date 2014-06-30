@@ -469,7 +469,7 @@ The last expression in the dictionary can be followed by an optional comma.
 An empty dictionary literal is written as
 a colon inside a pair of brackets (``[:]``)
 to distinguish it from an empty array literal.
-The value of a dictionary literal has type ``Dictionary<KeyType, ValueType>``,
+The value of a dictionary literal has type ``[KeyType: ValueType]``,
 where ``KeyType`` is the type of its key expressions
 and ``ValueType`` is the type of its value expressions.
 If there are expressions of multiple types,

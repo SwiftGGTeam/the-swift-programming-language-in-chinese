@@ -44,7 +44,7 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type
+    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type
 
 
 .. _Types_TypeAnnotation:
@@ -340,6 +340,62 @@ see :ref:`CollectionTypes_Arrays`.
 
     array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
 
+
+.. _Types_DictionaryType:
+
+Dictionary Type
+---------------
+
+The Swift language provides the following syntactic sugar for the Swift standard library
+``Dictionary<KeyType, ValueType>`` type:
+
+.. syntax-outline::
+
+    [<#key type#>: <#value type#>]
+
+In other words, the following two declarations are equivalent:
+
+.. testcode:: dictionary-type
+
+    -> let someDictionary: [String: Int] = ["Alex": 31 "Paul": 39]
+    << // someDictionary : [String: Int] = ["Alex": 31 "Paul": 39]
+    -> let someDictionary: Dictionary<String, Int> = ["Alex": 31 "Paul": 34]
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'someDictionary'
+    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31 "Paul": 34]
+    !!     ^
+    !! <REPL Input>:1:5: note: 'someDictionary' previously declared here
+    !! let someDictionary = ["Alex": 31 "Paul": 34]
+    !!     ^
+
+In both cases, the constant ``someDictionary``
+is declared as dictionary with strings as keys and integers as values.
+
+The values of a dictionary can be accessed through subscripting
+by specifying the corresponding key in
+square brackets: ``someDictionary["Alex"]`` refers to the value associated
+with the key ``"Alex"``.
+The subscript returns an optional value of the dictionary's value type.
+If the specified key isn't contained in the dictionary,
+the subscript returns ``nil``.
+
+As the above example also shows, you can use similar syntax to create a dictionary literal.
+Empty dictionary literals are written using using a colon inside an empty
+pair of square brackets and can be used to create an empty dictionary of specified
+key and value types.
+
+.. testcode::
+
+    -> var emptyDictionary: [String: Double] = [:]
+    << // emptyDictionary : [String: Double] = [:]
+
+The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
+as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+
+.. syntax-grammar::
+
+    Grammar of a dictionary type
+
+    dictionary-type --> ``[`` type ``:`` type ``]``
 
 .. _Types_OptionalType:
 
