@@ -12,6 +12,14 @@ Date        Notes
               Also clarified the
               :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries`.
 
+            * :ref:`CollectionTypes_ArrayTypeShorthandSyntax` is now written as
+              ``[SomeType]`` rather than ``SomeType[]``.
+
+            * Added a new section about :ref:`CollectionTypes_DictionaryTypeShorthandSyntax`,
+              which is written as ``[KeyType: ValueType]``.
+
+            * Added a new section about :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+
             * Examples of :ref:`Closures_ClosureExpressions` now use
               the global ``sorted`` function rather than the global ``sort`` function,
               to reflect the new array value semantics.
