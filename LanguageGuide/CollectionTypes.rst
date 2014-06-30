@@ -18,6 +18,12 @@ Swift's use of explicitly typed collections ensures that
 your code is always clear about the types of values it can work with
 and enables you to catch any type mismatches early in your code's development.
 
+.. note::
+
+   Behind the scenes,
+   Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
+   For more on generic types and collections, see :doc:`Generics`.
+
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
    Dictionary is not yet bridged to NSDictionary ---
    the work for this is in rdar://16014066,
@@ -437,23 +443,11 @@ Dictionary Type Shorthand Syntax
 The type of a Swift dictionary is written in full as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of value that can be used as a dictionary key,
 and ``ValueType`` is the type of value that the dictionary stores for those keys.
+
 You can also write the type of a dictionary in shorthand form as ``[KeyType: ValueType]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred,
 and is used throughout this guide when referring to the type of a dictionary.
-
-The only restriction on a dictionary's type is that ``KeyType`` must be :newTerm:`hashable` ---
-that is, it must provide a way to make itself uniquely representable.
-All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
-are hashable by default, and all of these types can be used as the keys of a dictionary.
-Enumeration member values without associated values (as described in :doc:`Enumerations`)
-are also hashable by default.
-
-.. QUESTION: is there anything else that should be on this list?
-
-.. TODO You can enable your own custom types to be used as dictionary keys
-   by making them conform to the ``Hashable`` protocol.
-   Add a note to this effect as and when we have documentation for how to do so.
 
 .. _CollectionTypes_DictionaryLiterals:
 
@@ -719,9 +713,31 @@ which is written as ``[:]``
 
 .. TODO: Mention that "==" will consider two dictionaries to be the same
    if they have the same count, and every element in lhs is also in rhs
-   
+
+.. _CollectionTypes_HashValuesForDictionaryKeyTypes:
+
+Hash Values for Dictionary Key Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A type must be :newTerm:`hashable` in order to be used as a dictionary's key type ---
+that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
+A hash value is an ``Int`` value that is the same for all objects that compare equal,
+such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
+
+All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
+are hashable by default, and all of these types can be used as the keys of a dictionary.
+Enumeration member values without associated values (as described in :doc:`Enumerations`)
+are also hashable by default.
+
 .. note::
 
-   Behind the scenes,
-   Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
-   For more on generic types and collections, see :doc:`Generics`.
+   You can use your own custom types as dictionary key types
+   by making them conform to the ``Hashable`` protocol from Swift's standard library.
+   Types that conform to the ``Hashable`` protocol must provide
+   a gettable ``Int`` property called ``hashValue``,
+   and must also provide an implementation of the “is equal” operator (``==``).
+   The value returned by a type's ``hashValue`` property
+   is not required to be the same across different executions of the same program,
+   or in different programs.
+   
+   For more information about conforming to protocols, see :doc:`Protocols`.
