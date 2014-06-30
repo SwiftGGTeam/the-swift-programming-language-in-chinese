@@ -984,13 +984,6 @@ it conforms to the ``HasArea`` protocol:
             println("Something that doesn't have an area")
          }
       }
-   !! <REPL Input>:1:5: warning: constant 'object' inferred to have type 'AnyObject', which may be unexpected
-   !! for object in objects {
-   !!     ^
-   !! <REPL Input>:1:5: note: add an explicit type annotation to silence this warning
-   !! for object in objects {
-   !!     ^
-   !!            : AnyObject
    </ Area is 12.5663708
    </ Area is 243610.0
    </ Something that doesn't have an area
@@ -1015,9 +1008,6 @@ and so only their ``area`` property can be accessed.
    which make the example far less focused than I'd like.
    The problem is, I can't use strings within an @objc protocol
    without also having to import Foundation, so it's numbers or bust, I'm afraid.
-
-.. QUESTION: I'm deliberately choosing to eat the AnyObject warnings here.
-   Is this the right approach, given that they will be visible in Xcode too?
 
 .. _Protocols_OptionalProtocolRequirements:
 

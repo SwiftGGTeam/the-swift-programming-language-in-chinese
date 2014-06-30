@@ -290,13 +290,6 @@ with the forced version of the type cast operator (``as``):
          let movie = object as Movie
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
-   !! <REPL Input>:1:5: warning: constant 'object' inferred to have type 'AnyObject', which may be unexpected
-   !! for object in someObjects {
-   !!     ^
-   !! <REPL Input>:1:5: note: add an explicit type annotation to silence this warning
-   !! for object in someObjects {
-   !!     ^
-   !!            : AnyObject
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
    </ Movie: 'Moon', dir. Duncan Jones
    </ Movie: 'Alien', dir. Ridley Scott
