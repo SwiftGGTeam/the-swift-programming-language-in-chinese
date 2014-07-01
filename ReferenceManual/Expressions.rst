@@ -452,7 +452,7 @@ It has the following form:
 The last expression in the array can be followed by an optional comma.
 An empty array literal is written
 as an empty pair of brackets (``[]``).
-The value of an array literal has type ``T[]``,
+The value of an array literal has type ``[T]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
