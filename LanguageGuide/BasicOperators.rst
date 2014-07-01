@@ -175,6 +175,18 @@ and returns the value that is left over
    However, its behavior in Swift for negative numbers means that it is,
    strictly speaking, a remainder rather than a modulo operation.
 
+.. assertion:: percentOperatorIsRemainderNotModulo
+
+   -> for i in -5...0 {
+         println(i % 4)
+      }
+   << -1
+   << 0
+   << -3
+   << -2
+   << -1
+   << 0
+
 Here's how the remainder operator works.
 To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9``:
 
