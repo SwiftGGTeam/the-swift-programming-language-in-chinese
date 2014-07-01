@@ -71,7 +71,7 @@ The type of the ``library`` array is inferred
 by initializing it with the contents of an array literal.
 Swift's type checker is able to deduce that ``Movie`` and ``Song`` have
 a common superclass of ``MediaItem``,
-and so it infers a type of ``MediaItem[]`` for the ``library`` array:
+and so it infers a type of ``[MediaItem]`` for the ``library`` array:
 
 .. testcode:: typeCasting
 
@@ -83,7 +83,7 @@ and so it infers a type of ``MediaItem[]`` for the ``library`` array:
          Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
    << // library : [MediaItem] = [C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL4Song (has 2 children)]
-   // the type of "library" is inferred to be MediaItem[]
+   // the type of "library" is inferred to be [MediaItem]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
 However, if you iterate over the contents of this array,

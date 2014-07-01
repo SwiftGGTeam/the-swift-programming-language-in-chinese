@@ -160,8 +160,8 @@ use the initializer syntax.
 
 .. testcode:: guided-tour
 
-   -> let emptyArray = String[]()
-   << // emptyArray : String[] = []
+   -> let emptyArray = [String]()
+   << // emptyArray : [String] = []
    -> let emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
@@ -457,7 +457,7 @@ A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
 
-    -> func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+    -> func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
            for item in list {
                if condition(item) {
                    return true
@@ -1069,15 +1069,15 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-           var result = ItemType[]()
+    -> func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
+           var result = [ItemType]()
            for i in 0..<times {
                 result += item
            }
            return result
        }
     -> repeat("knock", 4)
-    <$ : String[] = ["knock", "knock", "knock", "knock"]
+    <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.

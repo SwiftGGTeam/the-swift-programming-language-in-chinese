@@ -1046,7 +1046,7 @@ to create a new ``ShoppingListItem`` instance:
 
 Here, a new array called ``breakfastList`` is created from
 an array literal containing three new ``ShoppingListItem`` instances.
-The type of the array is inferred to be ``ShoppingListItem[]``.
+The type of the array is inferred to be ``[ShoppingListItem]``.
 After the array is created,
 the name of the ``ShoppingListItem`` at the start of the array
 is changed from ``"[Unnamed]"`` to ``"Orange juice"``

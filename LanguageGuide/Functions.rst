@@ -514,7 +514,7 @@ The values passed to a variadic parameter are made available within the function
 as an array of the appropriate type.
 For example, a variadic parameter with a name of ``numbers`` and a type of ``Double...``
 is made available within the function's body as
-a constant array called ``numbers`` of type ``Double[]``.
+a constant array called ``numbers`` of type ``[Double]``.
 
 The example below calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length:

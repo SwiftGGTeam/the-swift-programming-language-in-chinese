@@ -209,7 +209,7 @@ Syntactically,
 a variadic parameter consists of a base type name followed immediately by three dots (``...``),
 as in ``Int...``. A variadic parameter is treated as an array that contains elements
 of the base type name. For instance, the variadic parameter ``Int...`` is treated
-as ``Int[]``. For an example that uses a variadic parameter,
+as ``[Int]``. For an example that uses a variadic parameter,
 see :ref:`Functions_VariadicParameters`.
 
 To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
