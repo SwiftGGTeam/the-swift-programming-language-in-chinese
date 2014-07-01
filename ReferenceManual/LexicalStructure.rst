@@ -468,8 +468,8 @@ which represents a 32-bit floating-point number.
     decimal-fraction --> ``.`` decimal-literal
     decimal-exponent --> floating-point-e sign-OPT decimal-literal
 
-    hexadecimal-fraction --> ``.`` hexadecimal-literal-OPT
-    hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-literal
+    hexadecimal-fraction --> ``.`` hexadecimal-literal-characters-OPT
+    hexadecimal-exponent --> floating-point-p sign-OPT decimal-literal
 
     floating-point-e --> ``e`` | ``E``
     floating-point-p --> ``p`` | ``P``
