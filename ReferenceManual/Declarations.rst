@@ -1071,7 +1071,7 @@ see :doc:`../LanguageGuide/ClassesAndStructures`.
 
 A class type can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
-The *superclass* appears first in the **type-inheritance-clause**,
+The *superclass* appears first after the *class name* and colon,
 followed by any *adopted protocols*.
 
 As discussed in :ref:`Declarations_InitializerDeclaration`,
@@ -1589,7 +1589,7 @@ Extension declarations begin with the keyword ``extension`` and have the followi
 
 .. syntax-outline::
 
-    extension <#type#>: <#adopted protocols#> {
+    extension <#type name#>: <#adopted protocols#> {
        <#declarations#>
     }
 
@@ -1605,8 +1605,7 @@ see :doc:`../LanguageGuide/Extensions`.
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
-and therefore the **type-inheritance-clause** in an extension declaration
-contains only a list of protocols.
+and therefore the you can specify only a list of protocols after the *type name* and colon.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
