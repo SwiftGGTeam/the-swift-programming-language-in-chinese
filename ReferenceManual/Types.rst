@@ -376,7 +376,7 @@ In other words, the following two declarations are equivalent:
     !!     ^
 
 In both cases, the constant ``someDictionary``
-is declared as dictionary with strings as keys and integers as values.
+is declared as a dictionary with strings as keys and integers as values.
 
 The values of a dictionary can be accessed through subscripting
 by specifying the corresponding key in
