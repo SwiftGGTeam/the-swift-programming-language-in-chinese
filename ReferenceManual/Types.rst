@@ -279,13 +279,18 @@ the curried function ``addTwoNumbers()()`` as the following nested function:
 Array Type
 ----------
 
-The Swift language uses square brackets (``[]``) immediately after the name of a type
-as syntactic sugar for the named type ``Array<T>``, which is defined in the
-Swift standard library. In other words, the following two declarations are equivalent:
+The Swift language provides the following syntactic sugar for the Swift standard library
+``Array<T>`` type:
+
+.. syntax-outline::
+
+    [<#type#>]
+
+In other words, the following two declarations are equivalent:
 
 .. testcode:: array-type
 
-    -> let someArray: String[] = ["Alex", "Brian", "Dave"]
+    -> let someArray: [String] = ["Alex", "Brian", "Dave"]
     << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
     -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
@@ -296,26 +301,29 @@ Swift standard library. In other words, the following two declarations are equiv
     !!     ^
 
 In both cases, the constant ``someArray``
-is declared as an array of strings. The elements of an array can be accessed using
-square brackets as well: ``someArray[0]`` refers to the element at index 0, ``"Alex"``.
+is declared as an array of strings. The elements of an array can be accessed
+through subscripting by specifying a valid index value in square brackets:
+``someArray[0]`` refers to the element at index 0, ``"Alex"``.
 
-As the above example also shows, you can use square brackets to create
-an array using an array literal. Empty array literals are written using an empty
+As the above example also shows, you can use similar syntax to create an array literal.
+Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
 .. testcode::
 
-    -> var emptyArray: Double[] = []
-    << // emptyArray : Double[] = []
+    -> var emptyArray: [Double] = []
+    << // emptyArray : [Double] = []
 
-You can create multidimensional arrays by chaining multiple sets of square brackets
-to the name of the base type of the elements. For example, you can create
+You can create multidimensional arrays by nesting pairs of square brackets,
+where the name of the base type of the elements is contained in the innermost
+pair of square brackets.
+For example, you can create
 a three-dimensional array of integers using three sets of square brackets:
 
 .. testcode::
 
-    -> var array3D: Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    << // array3D : Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+    -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+    << // array3D : [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 When accessing the elements in a multidimensional array,
 the left-most subscript index refers to the element at that index in the outermost
@@ -338,7 +346,7 @@ see :ref:`CollectionTypes_Arrays`.
 
     Grammar of an array type
 
-    array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
+    array-type --> ``[`` type ``]``
 
 
 .. _Types_DictionaryType:
@@ -391,11 +399,15 @@ key and value types.
 The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
 as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
 
+For a detailed discussion of the Swift standard library ``Dictionary`` type,
+see :ref:`CollectionTypes_Dictionaries`.
+
 .. syntax-grammar::
 
     Grammar of a dictionary type
 
     dictionary-type --> ``[`` type ``:`` type ``]``
+
 
 .. _Types_OptionalType:
 
