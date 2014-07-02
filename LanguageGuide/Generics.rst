@@ -418,7 +418,9 @@ to “peek” at its top item without removing it:
 
 .. testcode:: genericStack
 
-   -> println("The top item on the stack is \(stackOfStrings.topItem).")
+   -> if let topItem = stackOfStrings.topItem {
+         println("The top item on the stack is \(topItem).")
+      }
    <- The top item on the stack is tres.
 
 .. _Generics_TypeConstraints:
@@ -600,7 +602,7 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
    -> let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
-   << // stringIndex : Int? = 2
+   << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
 

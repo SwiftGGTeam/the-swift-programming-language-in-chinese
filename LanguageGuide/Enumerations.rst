@@ -352,7 +352,7 @@ This example identifies Uranus from its raw value of ``7``:
 .. testcode:: rawValues
 
    -> let possiblePlanet = Planet.fromRaw(7)
-   << // possiblePlanet : Planet? = (Enum Value)
+   << // possiblePlanet : Planet? = Optional((Enum Value))
    // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 Not all possible ``Int`` values will find a matching planet, however.

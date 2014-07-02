@@ -955,7 +955,7 @@ The example below uses the ``toInt`` method to try to convert a ``String`` into 
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
    -> let convertedNumber = possibleNumber.toInt()
-   << // convertedNumber : Int? = 123
+   << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt`` method might fail,
@@ -1072,7 +1072,7 @@ by assigning it the special value ``nil``:
 .. testcode:: optionals
 
    -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = 404
+   << // serverResponseCode : Int? = Optional(404)
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
@@ -1137,7 +1137,7 @@ an optional ``String`` and an implicitly unwrapped optional ``String``:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
-   << // possibleString : String? = An optional string.
+   << // possibleString : String? = Optional("An optional string.")
    -> println(possibleString!) // requires an exclamation mark to access its value
    <- An optional string.
    ---
