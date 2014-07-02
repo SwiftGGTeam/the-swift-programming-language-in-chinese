@@ -219,7 +219,7 @@ you call its initializer using external names for each of the three color compon
 
 Note that it is not possible to call this initializer
 without using the external names.
-External names must always be used in an intializer if they are defined,
+External names must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
 .. testcode:: externalParameterNames
