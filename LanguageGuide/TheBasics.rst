@@ -114,9 +114,6 @@ to indicate that the variable can store ``String`` values:
    :compile: true
 
    -> var welcomeMessage: String
-   >> welcomeMessage = "hello"
-   >> println(welcomeMessage)
-   << hello
 
 The colon in the declaration means *“…of type…,”*
 so the code above can be read as:
@@ -128,11 +125,20 @@ Think of it as meaning “the type of thing” (or “the kind of thing”) that
 
 The ``welcomeMessage`` variable can now be set to any string value without error:
 
-.. testcode:: constantsAndVariables
+.. testcode:: typeAnnotations
+   :compile: true
 
-   >> var welcomeMessage = "Hello"
-   << // welcomeMessage : String = "Hello"
    -> welcomeMessage = "Hello"
+   >> println(welcomeMessage)
+   << Hello
+
+You can define multiple related variables of the same type on a single line,
+separated by commas, with a single type annotation after the final variable name:
+
+.. testcode:: typeAnnotations
+   :compile: true
+
+   -> var red, green, blue: Double
 
 .. note::
 
