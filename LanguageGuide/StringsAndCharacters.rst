@@ -60,17 +60,13 @@ String literals can include the following special characters:
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
-* Single-byte Unicode scalars, written as ``\xnn``,
-  where ``nn`` is two hexadecimal digits
-* Two-byte Unicode scalars, written as ``\unnnn``,
-  where ``nnnn`` is four hexadecimal digits
-* Four-byte Unicode scalars, written as ``\Unnnnnnnn``,
-  where ``nnnnnnnn`` is eight hexadecimal digits
+* Unicode scalars, written as ``\u{n}``,
+  where ``n`` is between one and eight hexadecimal digits
 
-The code below shows an example of each kind of special character.
+The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
 The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the three different Unicode scalar character formats:
+demonstrate the Unicode scalar character format:
 
 .. testcode:: specialCharacters
 
@@ -78,11 +74,11 @@ demonstrate the three different Unicode scalar character formats:
    << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
    >> println(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\x24"        // $,  Unicode scalar U+0024
+   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
    << // dollarSign : String = "$"
-   -> let blackHeart = "\u2665"      // ♥,  Unicode scalar U+2665
+   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
    << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
+   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
 .. what about SNOWMAN WITHOUT SNOW?

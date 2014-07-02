@@ -6,6 +6,11 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-07-21  * Updated the :ref:`StringsAndCharacters_Literals` section
+              to note that Unicode scalars inside string literals
+              are now written as ``\u{n}``,
+              where ``n`` is between one and eight hexadecimal digits.
+----------  --------------------------------------------------------------------------
 2014-07-07  * Swift's ``Array`` type now has full value semantics.
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`
               and :ref:`CollectionTypes_Arrays` to reflect the new approach.
