@@ -20,9 +20,44 @@ Extensions in Swift can:
 
 .. note::
 
-   If you define an extension to add new functionality to an existing type,
-   the new functionality will be available on all existing instances of that type,
-   even if they were created before the extension was defined.
+   Extensions can add new functionality to a type,
+   but they cannot override existing functionality.
+
+.. assertion:: extensionsCannotOverrideExistingBehavior
+   :compile: true
+
+   -> class C {
+         var x = 0
+         func foo() {}
+      }
+   -> extension C {
+         override var x: Int {
+            didSet {
+               println("new x is \(x)")
+            }
+         }
+         override func foo() {
+            println("called overridden foo")
+         }
+      }
+      !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
+      !! override var x: Int {
+      !! ^
+      !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
+      !! var x = 0
+      !! ^
+      !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
+      !! override func foo() {
+      !! ~~~~~~~~      ^
+      !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
+      !! override func foo() {
+      !! ^
+      !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
+      !! func foo() {}
+      !! ^
+      !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
+      !! override var x: Int {
+      !! ~~~~~~~~     ^
 
 .. QUESTION: What are the rules for overloading via extensions?
 
@@ -54,6 +89,12 @@ the protocol names are written in exactly the same way as for a class or structu
 
 Adding protocol conformance in this way is described in
 :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+
+.. note::
+
+   If you define an extension to add new functionality to an existing type,
+   the new functionality will be available on all existing instances of that type,
+   even if they were created before the extension was defined.
 
 .. _Extensions_ComputedProperties:
 
