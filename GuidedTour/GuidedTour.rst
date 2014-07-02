@@ -516,8 +516,10 @@ can appear immediately after the parentheses.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = sorted([1, 5, 3, 12, 2]) { $0 > $1 }
-    <$ : Array<Int> = [12, 5, 3, 2, 1]
+    -> let sortedNumbers = sorted(numbers) { $0 > $1 }
+    <$ : Array<Int> = [20, 19, 12, 7]
+
+.. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
