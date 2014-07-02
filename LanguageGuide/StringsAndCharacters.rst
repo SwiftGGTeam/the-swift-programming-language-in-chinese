@@ -257,13 +257,8 @@ and pass in a string as the function's sole parameter:
    the number of 16-bit code units within the string's UTF-16 representation
    and not the number of Unicode characters within the string.
    To reflect this fact,
-   the ``length`` property from ``NSString`` is called ``utf16count``
+   the ``length`` property from ``NSString`` is called ``utf16Count``
    when it is accessed on a Swift ``String`` value.
-
-.. FIXME: the capitalization of utf16count
-   is inconsistent with Cocoa's capitalization approach.
-   Update this section when it is fixed, as per <rdar://problem/17016806>
-   NSString's length property is imported as utf16count, but should be utf16Count.
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
