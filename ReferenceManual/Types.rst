@@ -177,7 +177,7 @@ and consists of a parameter and return type separated by an arrow (``->``):
     <#parameter type#> -> <#return type#>
 
 Because the *parameter type* and the *return type* can be a tuple type,
-function types support functions and methods that take multiple paramaters
+function types support functions and methods that take multiple parameters
 and return multiple values.
 
 You can apply the ``auto_closure`` attribute to a function type that has a parameter

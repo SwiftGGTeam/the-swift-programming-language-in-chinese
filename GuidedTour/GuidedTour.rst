@@ -506,7 +506,9 @@ of their only statement.
 
 .. testcode:: guided-tour
 
-    -> numbers.map({ number in 3 * number })
+    -> let mappedNumbers = numbers.map({ number in 3 * number })
+    -> mappedNumbers
+    <$ : Array<Int> = [60, 57, 21, 36]
     <$ : Array<Int> = [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
@@ -516,8 +518,12 @@ can appear immediately after the parentheses.
 
 .. testcode:: guided-tour
 
-    -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
-    <$ : Array<Int> = [12, 5, 3, 2, 1]
+    -> let sortedNumbers = sorted(numbers) { $0 > $1 }
+    -> sortedNumbers
+    <$ : Array<Int> = [20, 19, 12, 7]
+    <$ : Array<Int> = [20, 19, 12, 7]
+
+.. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
