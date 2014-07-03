@@ -10,6 +10,8 @@ Date        Notes
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
               where ``n`` is between one and eight hexadecimal digits.
+
+            * Added a new section about :ref:`Initialization_InitializerParametersWithoutExternalNames`.
 ----------  --------------------------------------------------------------------------
 2014-07-07  * Swift's ``Array`` type now has full value semantics.
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`

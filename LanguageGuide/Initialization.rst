@@ -137,7 +137,7 @@ with a value from a different temperature scale:
 .. testcode:: initialization
 
    -> struct Celsius {
-         var temperatureInCelsius: Double = 0.0
+         var temperatureInCelsius: Double
          init(fromFahrenheit fahrenheit: Double) {
             temperatureInCelsius = (fahrenheit - 32.0) / 1.8
          }
@@ -184,41 +184,45 @@ for *every* parameter in an initializer if you don't provide an external name yo
 This automatic external name is the same as the local name,
 as if you had written a hash symbol before every initialization parameter.
 
-.. note::
-
-   If you do not want to provide an external name for a parameter in an initializer,
-   provide an underscore (``_``) as an explicit external name for that parameter
-   to override the default behavior described above.
-
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
 These properties store a value between ``0.0`` and ``1.0``
 to indicate the amount of red, green, and blue in the color.
 
 ``Color`` provides an initializer with
-three appropriately named parameters of type ``Double``:
+three appropriately named parameters of type ``Double``
+for its red, green, and blue components.
+``Color`` also provides a second initializer with a single ``white`` parameter,
+which is used to provide the same value for all three color components.
 
 .. testcode:: externalParameterNames
 
    -> struct Color {
-         let red = 0.0, green = 0.0, blue = 0.0
+         let red, green, blue: Double
          init(red: Double, green: Double, blue: Double) {
             self.red   = red
             self.green = green
             self.blue  = blue
          }
+         init(white: Double) {
+            red   = white
+            green = white
+            blue  = white
+         }
       }
 
-Whenever you create a new ``Color`` instance,
-you call its initializer using external names for each of the three color components:
+Both initializers can be used to create a new ``Color`` instance,
+by providing named values for each initializer parameter:
 
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
    << // magenta : Color = V4REPL5Color (has 3 children)
+   -> let halfGray = Color(white: 0.5)
+   << // halfGray : Color = V4REPL5Color (has 3 children)
 
-Note that it is not possible to call this initializer
-without using the external names.
+Note that it is not possible to call these initializers
+without using external parameter names.
 External names must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
@@ -230,6 +234,43 @@ and omitting them is a compile-time error:
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
    !! red: green:  blue:
+
+.. _Initialization_InitializerParametersWithoutExternalNames:
+
+Initializer Parameters Without External Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you do not want to use an external name for an initializer parameter,
+write an underscore (``_``) instead of an explicit external name for that parameter
+to override the default behavior.
+
+Here's an expanded version of the ``Celsius`` example from earlier,
+with an additional initializer to create a new ``Celsius`` instance
+from a ``Double`` value that is already in the Celsius scale:
+
+.. testcode:: initializersWithoutExternalParameterNames
+
+   -> struct Celsius {
+         var temperatureInCelsius: Double
+         init(fromFahrenheit fahrenheit: Double) {
+            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+         }
+         init(fromKelvin kelvin: Double) {
+            temperatureInCelsius = kelvin - 273.15
+         }
+         init(_ celsius: Double) {
+            temperatureInCelsius = celsius
+         }
+      }
+   -> let bodyTemperature = Celsius(37.0)
+   << // bodyTemperature : Celsius = V4REPL7Celsius (has 1 child)
+   /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
+   </ bodyTemperature.temperatureInCelsius is 37.0
+
+The initializer call ``Celsius(37.0)`` is clear in its intent
+without the need for an external parameter name.
+It is therefore appropriate to write this initializer as ``init(_ celsius: Double)``
+so that it can be called by providing an unnamed ``Double`` value.
 
 .. _Initialization_OptionalPropertyTypes:
 
