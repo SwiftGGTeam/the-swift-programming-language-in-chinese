@@ -288,6 +288,9 @@ at the end of each case’s code.
 You use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
+Dictionaries are an unordered collection,
+so their keys and values are iterated over
+in an arbitrary order.
 
 .. testcode:: guided-tour
 
