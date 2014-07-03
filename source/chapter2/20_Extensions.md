@@ -81,7 +81,7 @@ println("Three feet is \(threeFeet) meters")
 ```swift
 let aMarathon = 42.km + 195.m
 println("A marathon is \(aMarathon) meters long")
-// 打印输出："A marathon is 42495.0 meters long"
+// 打印输出："A marathon is 42195.0 meters long"
 ```
 
 
