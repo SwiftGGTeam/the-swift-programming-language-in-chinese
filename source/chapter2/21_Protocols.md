@@ -353,7 +353,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 `DiceGameTracker`实现了`DiceGameDelegate`协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时，`numberOfTurns`属性被赋值为0; 在每新一轮中递加; 游戏结束后，输出打印游戏的总轮数。
 
-`gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。
+`gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakesAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。
 
 `DiceGameTracker`的运行情况，如下所示:
 
