@@ -62,7 +62,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 
 ```swift
 protocol SomeProtocol {
-	var musBeSettable : Int { get set }
+	var mustBeSettable : Int { get set }
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
