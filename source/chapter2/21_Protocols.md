@@ -73,9 +73,11 @@ protocol SomeProtocol {
 protocol AnotherProtocol {
 	class var someTypeProperty: Int { get set }
 }
+```
 
 如下所示，这是一个含有一个实例属性要求的协议:
 
+```swift
 protocol FullyNamed {
 	var fullName: String { get }
 }
@@ -135,7 +137,7 @@ protocol SomeProtocol {
 
 如下所示，定义了含有一个实例方法的的协议。
 
-```
+```swift
 protocol RandomNumberGenerator {
 	func random() -> Double
 }
