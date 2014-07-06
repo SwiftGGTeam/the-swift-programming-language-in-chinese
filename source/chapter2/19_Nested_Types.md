@@ -94,4 +94,3 @@ let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
 
 对于上面这个例子，这样可以使`Suit`, `Rank`, 和 `Values`的名字尽可能的短，因为它们的名字会自然的由被定义的上下文来限定。
 
-preview
