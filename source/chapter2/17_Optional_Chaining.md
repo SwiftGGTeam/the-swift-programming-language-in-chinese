@@ -211,7 +211,7 @@ if john.residence?.printNumberOfRooms() {
 <a name="calling_subscripts_through_optional_chaining"></a>
 ##使用可选链调用下标脚本
 
-你可以使用可选链来尝试从下标脚本获取值并检查下标脚本的调用是否成功，然而，你不能通过可选链来设置子代码。
+你可以使用可选链来尝试从下标脚本获取值并检查下标脚本的调用是否成功，然而，你不能通过可选链来设置下标脚本。
 
 > 注意：  
 当你使用可选链来获取下标脚本的时候，你应该将问号放在下标脚本括号的前面而不是后面。可选链的问号一般直接跟在表达语句的后面。
@@ -227,7 +227,7 @@ if let firstRoomName = john.residence?[0].name {
 // 打印 "Unable to retrieve the first room name."。
 ```
 
-在子代码调用中可选链的问号直接跟在`john.residence`的后面，在下标脚本括号的前面，因为`john.residence`是可选链试图获得的可选值。
+在下标脚本调用中可选链的问号直接跟在`john.residence`的后面，在下标脚本括号的前面，因为`john.residence`是可选链试图获得的可选值。
 
 如果你创建一个`Residence`实例给`john.residence`，且在他的`rooms`数组中有一个或多个`Room`实例，那么你可以使用可选链通过`Residence`下标脚本来获取在`rooms`数组中的实例了：
 
@@ -248,7 +248,7 @@ if let firstRoomName = john.residence?[0].name {
 <a name="linking_multiple_levels_of_chaining"></a>
 ##连接多层链接
 
-你可以将多层可选链连接在一起，可以掘取模型内更下层的属性方法和子脚本。然而多层可选链不能再添加比已经返回的可选值更多的层。
+你可以将多层可选链连接在一起，可以掘取模型内更下层的属性方法和下标脚本。然而多层可选链不能再添加比已经返回的可选值更多的层。
 也就是说：
 
 如果你试图获得的类型不是可选类型，由于使用了可选链它将变成可选类型。
