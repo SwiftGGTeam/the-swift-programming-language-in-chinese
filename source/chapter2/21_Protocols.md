@@ -106,7 +106,7 @@ class Starship: FullyNamed {
 	var prefix: String?
 	var name: String
 	init(name: String, prefix: String? = nil ) {
-		self.anme = name
+		self.name = name
 		self.prefix = prefix
 	}
 	var fullName: String {
