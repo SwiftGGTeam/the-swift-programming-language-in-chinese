@@ -89,7 +89,7 @@ println("There are now \(Bank.coinsInBank) coins left   in the bank")
 
 ```swift
 playerOne!.winCoins(2_000)
-println("PlayerOne won 2000 coins & now has \ (playerOne!.coinsInPurse) coins")
+println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
 // 输出 "PlayerOne won 2000 coins & now has 2100 coins"
 println("The bank now only has \(Bank.coinsInBank) coins left")
 // 输出 "The bank now only has 7900 coins left"
