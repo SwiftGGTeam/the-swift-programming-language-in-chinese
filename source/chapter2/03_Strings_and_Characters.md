@@ -47,7 +47,7 @@ let someString = "Some string literal value"
 ```
 
 > 注意：  
-`someString`变量通过字符串字面量进行初始化，Swift 因此推断该变量为`String`类型。
+`someString`常量通过字符串字面量进行初始化，Swift 因此推断该常量为`String`类型。
 
 字符串字面量可以包含以下特殊字符：
 
