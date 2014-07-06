@@ -607,7 +607,7 @@ let objects: AnyObject[] = [
 
 `objects`数组使用字面量初始化，数组包含一个`radius`为2。0的`Circle`的实例，一个保存了英国面积的`Country`实例和一个`legs`为4的`Animal`实例。
 
-如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循`了`HasArea`协议:
+如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了`HasArea`协议:
 
 ```swift
 for object in objects {
