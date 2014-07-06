@@ -186,7 +186,7 @@ class SurveyQuestion {
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
 // 输出 "How about beets?"
-beetsQuestion.response = "I also like beets. (But not with cheese.)
+beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
 <a name="default_initializers"></a>
