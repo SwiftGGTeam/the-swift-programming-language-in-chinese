@@ -881,7 +881,7 @@ If they contain a different number of items, there is no way that they can match
 and the function returns ``false``.
 
 After making this check, the function iterates over all of the items in ``someContainer``
-with a ``for``-``in`` loop and the half-closed range operator (``..``).
+with a ``for``-``in`` loop and the half-open range operator (``..<``).
 For each item, the function checks whether the item from ``someContainer`` is not equal to
 the corresponding item in ``anotherContainer``.
 If the two items are not equal, then the two containers do not match,

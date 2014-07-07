@@ -554,18 +554,18 @@ such as with a ``for``-``in`` loop:
 
 For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
 
-.. _BasicOperators_HalfClosedRangeOperator:
+.. _BasicOperators_HalfOpenRangeOperator:
 
-Half-Closed Range Operator
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Half-Open Range Operator
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`half-closed range operator` (``a..<b``)
+The :newTerm:`half-open range operator` (``a..<b``)
 defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
-It is said to be :newTerm:`half-closed`
+It is said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
 
-Half-closed ranges are particularly useful when you work with
+Half-open ranges are particularly useful when you work with
 zero-based lists such as arrays,
 where it is useful to count up to (but not including) the length of the list:
 
@@ -586,7 +586,7 @@ where it is useful to count up to (but not including) the length of the list:
 Note that the array contains four items,
 but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
-because it is a half-closed range.
+because it is a half-open range.
 For more on arrays, see :ref:`CollectionTypes_Arrays`.
 
 .. _BasicOperators_LogicalOperators:

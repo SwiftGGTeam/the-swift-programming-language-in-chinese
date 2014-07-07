@@ -36,7 +36,7 @@ Date        Notes
               even if a structure's stored properties do not have default values.
 
             * Updated to ``..<`` rather than ``..``
-              for the :ref:`BasicOperators_HalfClosedRangeOperator`.
+              for the :ref:`BasicOperators_HalfOpenRangeOperator`.
 
             * Added an example of :ref:`Generics_ExtendingAGenericType`.
 ----------  --------------------------------------------------------------------------
