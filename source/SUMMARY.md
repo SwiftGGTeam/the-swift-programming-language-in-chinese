@@ -21,7 +21,7 @@
    * [析构过程](chapter2/15_Deinitialization.md)
    * [自动引用计数](chapter2/16_Automatic_Reference_Counting.md)
    * [可选链](chapter2/17_Optional_Chaining.md)
-   * [类型检查](chapter2/18_Type_Casting.md)
+   * [类型转换](chapter2/18_Type_Casting.md)
    * [嵌套类型](chapter2/19_Nested_Types.md)
    * [扩展](chapter2/20_Extensions.md)
    * [协议](chapter2/21_Protocols.md)

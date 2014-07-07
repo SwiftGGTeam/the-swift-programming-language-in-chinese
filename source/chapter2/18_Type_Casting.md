@@ -1,4 +1,4 @@
-> 翻译：[xiehurricane](https://github.com/xiehurricane)  
+> 翻译：[xiehurricane](https://github.com/xiehurricane)
 > 校对：[happyming](https://github.com/happyming)
 
 # 类型转换（Type Casting）
@@ -12,7 +12,7 @@
 - [`Any`和`AnyObject`的类型转换](#type_casting_for_any_and_anyobject)
 
 
-_类型转换_是一种检查类实例的方式，并且或者也是让实例作为它的父类或者子类的一种方式。
+_类型转换_可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
 类型转换在 Swift 中使用`is` 和 `as`操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
@@ -141,7 +141,7 @@ for item in library {
 
 若向下转型成功，然后`movie`的属性将用于打印一个`Movie`实例的描述，包括它的导演的名字`director`。当`Song`被找到时，一个相近的原理被用来检测 `Song` 实例和打印它的描述。
 
-> 注意：  
+> 注意：
 转换没有真的改变实例或它的值。潜在的根本的实例保持不变；只是简单地把它作为它被转换成的类来使用。
 
 <a name="type_casting_for_any_and_anyobject"></a>
@@ -152,7 +152,7 @@ Swift为不确定类型提供了两种特殊类型别名：
 * `AnyObject`可以代表任何class类型的实例。
 * `Any`可以表示任何类型，除了方法类型（function types）。
 
-> 注意：  
+> 注意：
 只有当你明确的需要它的行为和功能时才使用`Any`和`AnyObject`。在你的代码里使用你期望的明确的类型总是更好的。
 
 ### `AnyObject`类型
@@ -248,5 +248,5 @@ for thing in things {
 ```
 
 
-> 注意：  
+> 注意：
 在一个switch语句的case中使用强制形式的类型转换操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 switch case 语句的内容中这种检查总是安全的。
