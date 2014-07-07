@@ -554,7 +554,7 @@ such as with a ``for``-``in`` loop:
 
 For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
 
-.. _BasicOperators_HalfOpenRangeOperator:
+.. _BasicOperators_HalfClosedRangeOperator:
 
 Half-Open Range Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~
