@@ -526,8 +526,20 @@ by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred
 
-   -> println("The dictionary of airports contains \(airports.count) items.")
-   <- The dictionary of airports contains 2 items.
+   -> println("The airports dictionary contains \(airports.count) items.")
+   <- The airports dictionary contains 2 items.
+
+Use the Boolean ``isEmpty`` property
+as a shortcut for checking whether the ``count`` property is equal to ``0``:
+
+.. testcode:: dictionariesInferred
+
+   -> if airports.isEmpty {
+         println("The airports dictionary is empty.")
+      } else {
+         println("The airports dictionary is not empty.")
+      }
+   <- The airports dictionary is not empty.
 
 You can add a new item to a dictionary with subscript syntax.
 Use a new key of the appropriate type as the subscript index,
