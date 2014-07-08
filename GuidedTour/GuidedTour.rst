@@ -387,15 +387,31 @@ from the function's return type.
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
 
-Use a tuple to return multiple values from a function.
+Use a tuple to make a compound value ---
+for example, return multiple values from a function.
 
 .. testcode:: guided-tour
 
-   -> func getGasPrices() -> (Double, Double, Double) {
-          return (3.59, 3.69, 3.79)
-      }
-   -> getGasPrices()
-   <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
+    -> func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+           var min = scores[0]
+           var max = scores[0]
+           var sum = 0
+
+           for score in scores {
+               if score > max {
+                   max = score
+               } else if score < min {
+                   min = score
+               }
+               sum += score
+           }
+
+           return (min, max, sum)
+       }
+    -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
+    << (3, 100, 116)
+    -> statistics.sum
+    << 116
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
