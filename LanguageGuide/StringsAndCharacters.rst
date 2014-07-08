@@ -439,27 +439,6 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
 
-.. _StringsAndCharacters_UppercaseAndLowercaseStrings:
-
-Uppercase and Lowercase Strings
--------------------------------
-
-You can access an uppercase or lowercase version of a string
-with its ``uppercaseString`` and ``lowercaseString`` properties:
-
-.. testcode:: uppercaseAndLowercase
-
-   -> let normal = "Could you help me, please?"
-   << // normal : String = "Could you help me, please?"
-   -> let shouty = normal.uppercaseString
-   << // shouty : String = "COULD YOU HELP ME, PLEASE?"
-   /> shouty is equal to \"\(shouty)\"
-   </ shouty is equal to "COULD YOU HELP ME, PLEASE?"
-   -> let whispered = normal.lowercaseString
-   << // whispered : String = "could you help me, please?"
-   /> whispered is equal to \"\(whispered)\"
-   </ whispered is equal to "could you help me, please?"
-
 .. _StringsAndCharacters_Unicode:
 
 Unicode
