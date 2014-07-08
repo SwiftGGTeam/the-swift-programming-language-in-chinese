@@ -508,10 +508,10 @@ place the optional chaining question mark *after* the method's parentheses:
 .. testcode:: optionalChaining
    :compile: true
 
-   -> if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
-         println("John's uppercase building identifier is \(upper).")
+   -> if john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+         println("John's building identifier begins with \"The\".")
       }
-   <- John's uppercase building identifier is THE LARCHES.
+   <- John's building identifier begins with "The".
 
 .. note::
 
