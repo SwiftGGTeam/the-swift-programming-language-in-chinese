@@ -716,7 +716,7 @@ Curried functions and methods have the following form:
 
 .. syntax-outline::
 
-    func <#function name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
+    func <#function name#>(<#parameter#>)(<#parameter#>) -> <#return type#> {
        <#statements#>
     }
 
