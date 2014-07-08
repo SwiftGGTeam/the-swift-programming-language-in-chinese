@@ -505,6 +505,7 @@ using the following escape sequences:
 * Carriage Return (``\r``)
 * Double Quote (``\"``)
 * Single Quote (``\'``)
+* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
 
 .. TR: Are \v and \f allowed for vertical tab and formfeed?
    We allow them as whitespace as of now --
@@ -515,11 +516,6 @@ using the following escape sequences:
    The behavior on C is platform dependent --
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
-
-Characters can also be expressed by ``\x`` followed by two hexadecimal digits,
-``\u`` followed by four hexadecimal digits,
-or ``\U`` followed by eight hexadecimal digits.
-The digits in these escape sequences identify a Unicode codepoint.
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
@@ -581,9 +577,8 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
     quoted-text-item --> Any Unicode extended grapheme cluster except ``"``, ``\``, U+000A, or U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
-    escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
-    escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+    escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
+    unicode-scalar-digits --> Between one and eight hexadecimal digits
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow

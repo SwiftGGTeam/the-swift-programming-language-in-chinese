@@ -32,7 +32,7 @@ This makes it easy to create custom string values for display, storage, and prin
    the entire ``NSString`` API is available to call on any ``String`` value you create,
    in addition to the ``String`` features described in this chapter.
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
-   
+
    For more information about using ``String`` with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
@@ -60,8 +60,8 @@ String literals can include the following special characters:
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
-* Unicode scalars, written as ``\u{n}``,
-  where ``n`` is between one and eight hexadecimal digits
+* Unicode scalars, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+  where *n* is between one and eight hexadecimal digits
 
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
@@ -616,8 +616,8 @@ such as with string interpolation:
    -> for scalar in dogString.unicodeScalars {
          println("\(scalar) ")
       }
-   </ D 
-   </ o 
-   </ g 
-   </ ! 
-   </ 🐶 
+   </ D
+   </ o
+   </ g
+   </ !
+   </ 🐶
