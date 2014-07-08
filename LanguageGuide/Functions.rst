@@ -231,41 +231,108 @@ Functions with Multiple Return Values
 You can use a tuple type as the return type for a function
 to return multiple values as part of one compound return value.
 
-The example below defines a function called ``count``,
-which counts the number of vowels, consonants, and other characters in a string,
-based on the standard set of vowels and consonants used in American English:
+The example below defines a function called ``minMax``,
+which finds the smallest and largest numbers in an array of ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
 
-   -> func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
-         var vowels = 0, consonants = 0, others = 0
-         for character in string {
-            switch String(character).lowercaseString {
-               case "a", "e", "i", "o", "u":
-                  ++vowels
-               case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-                  "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-                  ++consonants
-               default:
-                  ++others
+   -> func minMax(array: [Int]) -> (min: Int, max: Int) {
+         var currentMin = array[0]
+         var currentMax = array[0]
+         for value in array[1..<array.count] {
+            if value < currentMin {
+               currentMin = value
+            } else if value > currentMax {
+               currentMax = value
             }
          }
-         return (vowels, consonants, others)
+         return (currentMin, currentMax)
       }
 
-You can use this ``count`` function to count the characters in an arbitrary string,
-and to retrieve the counted totals as a tuple of three named ``Int`` values:
+The ``minMax`` function returns a tuple containing two ``Int`` values.
+These values are labeled ``min`` and ``max``
+so that they can be accessed by name when querying the function's return value.
+
+The body of the ``minMax`` function starts by setting
+two working variables called ``currentMin`` and ``currentMax``
+to the value of the first integer in the array.
+The function then iterates over the remaining values in the array
+and checks each value to see if it is smaller or larger than
+the values of ``currentMin`` and ``currentMax`` respectively.
+Finally, the overall minimum and maximum values are returned as
+a tuple of two ``Int`` values.
+
+Because the tuple's member values are named as part of the function's return type,
+they can be accessed with dot syntax to retrieve the minimum and maximum found values:
 
 .. testcode:: tupleTypesAsReturnTypes
 
-   -> let total = count("some arbitrary string!")
-   << // total : (vowels: Int, consonants: Int, others: Int) = (6, 13, 3)
-   -> println("\(total.vowels) vowels and \(total.consonants) consonants")
-   <- 6 vowels and 13 consonants
+   -> let bounds = minMax([8, -6, 2, 109, 3, 71])
+   << // bounds : (min: Int, max: Int) = (-6, 109)
+   -> println("min is \(bounds.min) and max is \(bounds.max)")
+   <- min is -6 and max is 109
 
 Note that the tuple's members do not need to be named
 at the point that the tuple is returned from the function,
 because their names are already specified as part of the function's return type.
+
+.. _Functions_OptionalTupleReturnTypes:
+
+Optional Tuple Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the tuple type to be returned from a function
+has the potential to have “no value” for the entire tuple,
+you can use an *optional* tuple return type to reflect the fact that
+the entire tuple can be ``nil``.
+You write an optional tuple return type by placing a question mark
+after the tuple type's closing parenthesis,
+such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
+
+.. note::
+
+   An optional tuple type such as ``(Int, Int)?``
+   is different from a tuple that contains optional types
+   such as ``(Int?, Int?)``.
+   With an optional tuple type, the entire tuple is optional,
+   not just each individual value within the tuple.
+
+The ``minMax`` function above returns a tuple containing two ``Int`` values.
+However, the function does not perform any safety checks on the array it is passed.
+If the ``array`` argument contains an empty array –
+that is, an array with a ``count`` of ``0`` –
+the ``minMax`` function, as defined above,
+will trigger a runtime error when attempting to access ``array[0]``.
+
+To handle this “empty array” scenario safely,
+write the ``minMax`` function with an optional tuple return type
+and return a value of ``nil`` when the array is empty:
+
+.. testcode:: tupleTypesAsReturnTypes2
+
+   -> func minMax(array: [Int]) -> (min: Int, max: Int)? {
+         if array.isEmpty { return nil }
+         var currentMin = array[0]
+         var currentMax = array[0]
+         for value in array[1..<array.count] {
+            if value < currentMin {
+               currentMin = value
+            } else if value > currentMax {
+               currentMax = value
+            }
+         }
+         return (currentMin, currentMax)
+      }
+
+You can use optional binding to check if this version of the ``minMax`` function
+returns an actual tuple value or ``nil``:
+
+.. testcode:: tupleTypesAsReturnTypes2
+
+   -> if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
+         println("min is \(bounds.min) and max is \(bounds.max)")
+      }
+   <- min is -6 and max is 109
 
 .. TODO: mention that you can pass a tuple as the entire set of arguments,
    as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
