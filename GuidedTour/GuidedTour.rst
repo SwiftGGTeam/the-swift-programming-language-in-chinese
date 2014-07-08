@@ -200,6 +200,13 @@ Braces around the body are required.
     -> teamScore
     << // teamScore : Int = 11
 
+.. note::
+
+   In the code above,
+   ``teamScore`` is written on a line by itself.
+   This is a simple way to see the value
+   of a variable inside a playground.
+
 ..
    -> let haveJellyBabies = true
    << // haveJellyBabies : Bool = true
