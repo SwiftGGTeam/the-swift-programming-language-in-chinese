@@ -1043,7 +1043,7 @@ which provides a textual description of a ``ShoppingListItem`` instance:
    -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
          var description: String {
-            var output = "\(quantity) x \(name.lowercaseString)"
+            var output = "\(quantity) x \(name)"
             output += purchased ? " ✔" : " ✘"
             return output
          }
@@ -1081,9 +1081,9 @@ to create a new ``ShoppingListItem`` instance:
    -> for item in breakfastList {
          println(item.description)
       }
-   </ 1 x orange juice ✔
-   </ 1 x bacon ✘
-   </ 6 x eggs ✘
+   </ 1 x Orange juice ✔
+   </ 1 x Bacon ✘
+   </ 6 x Eggs ✘
 
 Here, a new array called ``breakfastList`` is created from
 an array literal containing three new ``ShoppingListItem`` instances.
