@@ -804,7 +804,7 @@ Initializer Inheritance and Overriding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike subclasses in Objective-C,
-Swift subclasses do not not inherit their superclass initializers by default.
+Swift subclasses do not inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
 is automatically inherited by a more specialized subclass
 and is used to create a new instance of the subclass
@@ -835,7 +835,7 @@ Automatic Initializer Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As mentioned above,
-subclasses do not not inherit their superclass initializers by default.
+subclasses do not inherit their superclass initializers by default.
 However, superclass initializers *are* automatically inherited if certain conditions are met.
 In practice, this means that
 you do not need to write initializer overrides in many common scenarios,
