@@ -400,6 +400,8 @@ from the function's return type.
 
 Use a tuple to make a compound value ---
 for example, return multiple values from a function.
+The elements of a tuple can be referred to
+either by name or by number.
 
 .. testcode:: guided-tour
 
@@ -422,6 +424,8 @@ for example, return multiple values from a function.
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
     << (3, 100, 116)
     -> statistics.sum
+    << 116
+    -> statistics.2
     << 116
 
 Functions can also take a variable number of arguments,
