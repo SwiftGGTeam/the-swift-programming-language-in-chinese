@@ -14,7 +14,7 @@ A Swift Tour
    We apologize for the inconvenience.
 
 Tradition suggests that the first program in a new language
-should print the words “Hello, world” on the screen.
+should print the words “Hello, world!” on the screen.
 In Swift, this can be done in a single line:
 
 .. K&R uses “hello, world”.
@@ -22,7 +22,7 @@ In Swift, this can be done in a single line:
 
 .. testcode:: guided-tour
 
-   -> println("Hello, world")
+   -> println("Hello, world!")
    << Hello, world
 
 If you have written code in C or Objective-C,
