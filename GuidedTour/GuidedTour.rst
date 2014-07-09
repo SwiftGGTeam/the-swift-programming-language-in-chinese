@@ -283,6 +283,10 @@ and tests for equality.
    Try removing the default case.
    What error do you get?
 
+Notice how ``let`` can be used in a pattern
+to assign the value that matched that part of a pattern
+to a constant.
+
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
 Execution doesn't continue to the next case,
