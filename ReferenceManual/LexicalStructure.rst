@@ -39,7 +39,8 @@ Comments are treated as whitespace by the compiler.
 Single line comments begin with `//`
 and continue until the end of the line.
 Multiline comments begin with ``/*`` and end with ``*/``.
-Nesting is allowed, but the comment markers must be balanced.
+Nesting multiline comments is allowed,
+but the comment markers must be balanced.
 
 .. langref-grammar
 
