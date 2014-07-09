@@ -438,7 +438,7 @@ which evaluates to ``3.75``.
 Unlike with integer literals, negative floating-point numbers are expressed
 by applying the unary minus operator (``-``)
 to a floating-point literal, as in ``-42.0``. The result is an expression,
-not a floating-point integer literal.
+not a floating-point literal.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
