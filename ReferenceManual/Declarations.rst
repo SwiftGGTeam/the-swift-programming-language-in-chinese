@@ -1723,7 +1723,7 @@ Operator Declaration
 
 An :newTerm:`operator declaration` introduces a new infix, prefix,
 or postfix operator into your program
-and is declared using the contextual keyword ``operator``.
+and is declared using the keyword ``operator``.
 
 You can declare operators of three different fixities:
 infix, prefix, and postfix.
@@ -1732,7 +1732,7 @@ to its operands.
 
 There are three basic forms of an operator declaration,
 one for each fixity.
-The fixity of the operator is specified by including the contextual keyword
+The fixity of the operator is specified by including the context-sensitive keyword
 ``infix``, ``prefix``, or ``postfix`` between ``operator`` and the name of the operator.
 In each form, the name of the operator can contain only the operator characters
 defined in :ref:`LexicalStructure_Operators`.
@@ -1753,7 +1753,7 @@ Infix operators can optionally specify a precedence, associativity, or both.
 
 The :newTerm:`precedence` of an operator specifies how tightly an operator
 binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the contextual keyword ``precedence``
+You specify the precedence of an operator by writing the context-sensitive keyword ``precedence``
 followed by the *precedence level*.
 The *precedence level* can be any whole number (decimal integer) from 0 to 255;
 unlike decimal integer literals, it can't contain any underscore characters.
@@ -1765,8 +1765,8 @@ binds more tightly to its operands.
 
 The :newTerm:`associativity` of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the contextual keyword ``associativity``
-followed by the *associativity*, which is one of the contextual keywords ``left``, ``right``,
+You specify the associativity of an operator by writing the context-sensitive keyword ``associativity``
+followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
 or ``none``. Operators that are left-associative group left-to-right. For example,
 the subtraction operator (``-``) is left-associative,
 and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
