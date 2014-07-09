@@ -459,7 +459,7 @@ Unicode Terminology
 
 Every character in Unicode can be represented by one or more :newTerm:`unicode scalars`.
 A unicode scalar is a unique 21-bit number (and name) for a character or modifier,
-such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``"a"``),
+such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
 When a Unicode string is written to a text file or some other storage,
