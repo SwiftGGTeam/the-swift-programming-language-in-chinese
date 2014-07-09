@@ -479,7 +479,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = C4REPL1C (has 2 children)
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:4: error: 'C' is not convertible to '_ArrayCastKind'
+   !! <REPL Input>:1:4: error: 'C' is not convertible to 'MirrorDisposition'
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
    !! ^
 
@@ -491,7 +491,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = V4REPL1S (has 2 children)
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:4: error: 'S' is not convertible to '_ArrayCastKind'
+   !! <REPL Input>:1:4: error: 'S' is not convertible to 'MirrorDisposition'
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
    !! ^
 

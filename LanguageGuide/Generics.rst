@@ -546,7 +546,7 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:12: error: 'T' is not convertible to '_ArrayCastKind'
+   !! <REPL Input>:3:12: error: 'T' is not convertible to 'MirrorDisposition'
    !!              if value == valueToFind {
    !!                 ^
 
