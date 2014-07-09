@@ -681,7 +681,8 @@ that don't actually override any method in the superclass.
    called ``Circle``
    that takes a radius and a name
    as arguments to its initializer.
-   Implement an ``area`` and a ``describe`` method on the ``Circle`` class.
+   Implement an ``area`` and a ``simpleDescription`` method
+   on the ``Circle`` class.
 
 In addition to simple properties that are stored,
 properties can have a getter and a setter.
