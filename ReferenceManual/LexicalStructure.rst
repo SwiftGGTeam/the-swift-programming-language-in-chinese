@@ -570,7 +570,7 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
     Grammar of a string literal
 
-    string-literal --> ``"`` quoted-text ``"``
+    string-literal --> ``"`` quoted-text-OPT ``"``
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
