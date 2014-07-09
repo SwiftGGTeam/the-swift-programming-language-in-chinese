@@ -390,72 +390,61 @@ Extensions can add new nested types to existing classes, structures and enumerat
 
 .. testcode:: extensionsNestedTypes
 
-   -> extension Character {
+   -> extension Int {
          enum Kind {
-            case Vowel, Consonant, Other
+            case Negative, Zero, Positive
          }
          var kind: Kind {
-            switch String(self).lowercaseString {
-               case "a", "e", "i", "o", "u":
-                  return .Vowel
-               case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-                  "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-                  return .Consonant
+            switch self {
+               case 0:
+                  return .Zero
+               case let x where x > 0:
+                  return .Positive
                default:
-                  return .Other
+                  return .Negative
             }
          }
       }
 
-.. TODO: improve the fact that I have to convert character to a String
-   to get this to work, based on where we end up with uppercase / lowercase conversions,
-   particularly for the Character type.
-
-This example adds a new nested enumeration to ``Character``.
+This example adds a new nested enumeration to ``Int``.
 This enumeration, called ``Kind``,
-expresses the kind of letter that a particular character represents.
-Specifically, it expresses whether the character is
-a vowel or a consonant in a standard Latin script
-(without taking into account accents or regional variations),
-or whether it is another kind of character.
+expresses the kind of number that a particular integer represents.
+Specifically, it expresses whether the number is
+negative, zero, or positive.
 
-This example also adds a new computed instance property to ``Character``,
+This example also adds a new computed instance property to ``Int``,
 called ``kind``,
-which returns the appropriate ``Kind`` enumeration member for that character.
+which returns the appropriate ``Kind`` enumeration member for that integer.
 
-The nested enumeration can now be used with ``Character`` values:
+The nested enumeration can now be used with any ``Int`` value:
 
 .. testcode:: extensionsNestedTypes
 
-   -> func printLetterKinds(word: String) {
-         println("'\(word)' is made up of the following kinds of letters:")
-         for character in word {
-            switch character.kind {
-               case .Vowel:
-                  print("vowel ")
-               case .Consonant:
-                  print("consonant ")
-               case .Other:
-                  print("other ")
+   -> func printIntegerKinds(numbers: [Int]) {
+         for number in numbers {
+            switch number.kind {
+               case .Negative:
+                  print("- ")
+               case .Zero:
+                  print("0 ")
+               case .Positive:
+                  print("+ ")
             }
          }
          print("\n")
       }
-   -> printLetterKinds("Hello")
-   </ 'Hello' is made up of the following kinds of letters:
-   </ consonant vowel consonant consonant vowel
+   -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
+   <- + + - 0 - 0 + 
 
-This function, ``printLetterKinds``,
-takes an input ``String`` value and iterates over its characters.
-For each character, it considers the ``kind`` computed property for that character,
-and prints an appropriate description of that kind.
-The ``printLetterKinds`` function can then be called
-to print the kinds of letters in an entire word,
-as shown here for the word ``"Hello"``.
+This function, ``printIntegerKinds``,
+takes an input array of ``Int`` values and iterates over those values in turn.
+For each integer in the array,
+the function considers the ``kind`` computed property for that integer,
+and prints an appropriate description.
 
 .. note::
 
-   ``character.kind`` is already known to be of type ``Character.Kind``.
-   Because of this, all of the ``Character.Kind`` member values
+   ``number.kind`` is already known to be of type ``Int.Kind``.
+   Because of this, all of the ``Int.Kind`` member values
    can be written in shorthand form inside the ``switch`` statement,
-   such as ``.Vowel`` rather than ``Character.Kind.Vowel``.
+   such as ``.Negative`` rather than ``Int.Kind.Negative``.
