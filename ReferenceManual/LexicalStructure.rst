@@ -710,12 +710,13 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
 	Grammar of operators
 
 	operator --> operator-head operator-characters-OPT
+	operator --> dot-operator-head dot-operator-characters-OPT
 
-	operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``..``
+	operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~``
 	operator-head --> U+00A1--U+00A7
-	operator-head --> U+00A9--U+00AB
-	operator-head --> U+00AC--U+00AE
-	operator-head --> U+00B0--U+00B1, U+00B6, U+00BF, U+00D7, or U+00F7
+	operator-head --> U+00A9 or U+00AB
+	operator-head --> U+00AC or U+00AE
+	operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
 	operator-head --> U+2016--U+2017 or U+2020--U+2027
 	operator-head --> U+2030--U+203E
 	operator-head --> U+2041--U+2053
@@ -727,7 +728,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
 	operator-head --> U+3001--U+3003
 	operator-head --> U+3008--U+3030
 
-	operator-character --> operator-head | ``.``
+	operator-character --> operator-head
 	operator-character --> U+0300--U+036F
 	operator-character --> U+1DC0--U+1DFF
 	operator-character --> U+20D0--U+20FF
@@ -735,6 +736,10 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
 	operator-character --> U+FE20--U+FE2F
 	operator-character --> U+E0100--U+E01EF
 	operator-characters --> operator-character operator-characters-OPT
+
+	dot-operator-head --> ``..``
+	dot-operator-character --> ``.`` | operator-character
+	dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
 	binary-operator --> operator
     prefix-operator --> operator
