@@ -582,7 +582,7 @@ Using the default integer type in everyday situations means that
 integer constants and variables are immediately interoperable in your code
 and will match the inferred type for integer literal values.
 
-Use other integer types only when they are are specifically needed for the task at hand,
+Use other integer types only when they are specifically needed for the task at hand,
 because of explicitly-sized data from an external source,
 or for performance, memory usage, or other necessary optimization.
 Using explicitly-sized types in these situations
