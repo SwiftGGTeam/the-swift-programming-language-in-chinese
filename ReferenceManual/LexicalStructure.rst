@@ -438,7 +438,7 @@ followed by a hexadecimal exponent.
 The hexadecimal fraction consists of a decimal point
 followed by a sequence of hexadecimal digits.
 The exponent consists of an upper- or lowercase ``p`` prefix
-followed by sequence of decimal digits that indicates
+followed by a sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
 For example, ``0xFp2`` represents 15 × 2\ :superscript:`2`,
 which evaluates to ``60``.
