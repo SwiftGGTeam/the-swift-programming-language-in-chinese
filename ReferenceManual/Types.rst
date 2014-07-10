@@ -143,7 +143,7 @@ these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 If there is only one element inside the parentheses,
 the type is simply the type of that element.
 For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
-As a result, you can label a tuple element only when the tuple type has two
+As a result, you can name a tuple element only when the tuple type has two
 or more elements.
 
 .. langref-grammar
