@@ -602,15 +602,20 @@ Operators
 The Swift standard library defines a number of operators for your use,
 many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
 and :doc:`../LanguageGuide/AdvancedOperators`.
-The present section describes which characters can be used as operators.
+The present section describes which characters can be used to define custom operators.
 
-Operators are made up of one or more of the following characters:
+Custom operators can begin with one of the ASCII characters
 ``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
-``&``, ``|``, ``^``, ``~``, and ``.``.
-That said, the tokens
-``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
-and the unary prefix operator ``&`` are reserved.
-These tokens can't be overloaded, nor can they be used to define custom operators.
+``&``, ``|``, ``^``, or ``~``, or one of the Unicode characters
+defined in the grammar below. After the first character,
+combining Unicode characters are also allowed.
+You can also define custom operators as a sequence of two or more dots (for example, ``....``).
+
+.. note::
+
+	The tokens ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
+	and the unary prefix operator ``&`` are reserved.
+	These tokens can't be overloaded, nor can they be used to define custom operators.
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
@@ -637,12 +642,12 @@ and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
 There is one caveat to the rules above.
-If the ``!`` or ``?`` operator has no whitespace on the left,
+If the ``!`` or ``?`` predefined operator has no whitespace on the left,
 it is treated as a postfix operator,
 regardless of whether it has whitespace on the right.
-To use the ``?`` operator as syntactic sugar for the ``Optional`` type,
+To use the ``?`` as the optional-chaining operator,
 it must not have whitespace on the left.
-To use it in the conditional (``? :``) operator,
+To use it in the ternary conditional (``?`` ``:``) operator,
 it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
