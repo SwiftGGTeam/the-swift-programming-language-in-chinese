@@ -340,9 +340,9 @@ Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
 
 Underscores (``_``) are allowed between digits for readability,
-but are ignored and therefore don't affect the value of the literal.
+but they are ignored and therefore don't affect the value of the literal.
 Integer literals can begin with leading zeros (``0``),
-but are likewise ignored and don't affect the base or value of the literal.
+but they are likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default type of an integer literal is the Swift standard library type ``Int``.
