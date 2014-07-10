@@ -479,7 +479,7 @@ which represents a 32-bit floating-point number.
     decimal-fraction --> ``.`` decimal-literal
     decimal-exponent --> floating-point-e sign-OPT decimal-literal
 
-    hexadecimal-fraction --> ``.`` hexadecimal-literal-characters-OPT
+    hexadecimal-fraction --> ``.`` hexadecimal-digit hexadecimal-literal-characters-OPT
     hexadecimal-exponent --> floating-point-p sign-OPT decimal-literal
 
     floating-point-e --> ``e`` | ``E``
