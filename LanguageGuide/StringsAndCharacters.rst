@@ -55,37 +55,10 @@ A string literal can be used to provide an initial value for a constant or varia
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
 
-String literals can include the following special characters:
+.. note::
 
-* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
-  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
-  ``\"`` (double quote) and ``\'`` (single quote)
-* Unicode scalars, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is between one and eight hexadecimal digits
-
-The code below shows four examples of these special characters.
-The ``wiseWords`` constant contains two escaped double quote characters.
-The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the Unicode scalar character format:
-
-.. testcode:: specialCharacters
-
-   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> println(wiseWords)
-   </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
-   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
-
-.. what about SNOWMAN WITHOUT SNOW?
-   Unicode: U+26C4 U+FE0F, UTF-8: E2 9B 84 EF B8 8F
-   U+FE0F is the unicode variation selector.
-.. x how to construct a Character from a single-quote character literal
-.. x how to construct an empty Character
+   For information about using special characters in string literals,
+   see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -191,7 +164,6 @@ Working with Characters
 -----------------------
 
 Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
-Each ``Character`` value represents a single Unicode character.
 You can access the individual ``Character`` values in a string
 by iterating over that string with a ``for``-``in`` loop:
 
@@ -215,46 +187,6 @@ from a single-character string literal by providing a ``Character`` type annotat
 
    -> let yenSign: Character = "¥"
    << // yenSign : Character = ¥
-
-.. _StringsAndCharacters_CountingCharacters:
-
-Counting Characters
--------------------
-
-To retrieve a count of the characters in a string,
-call the global ``countElements`` function
-and pass in a string as the function's sole parameter:
-
-.. testcode:: characterCount
-
-   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
-   <- unusualMenagerie has 40 characters
-
-.. note::
-
-   Different Unicode characters
-   and different representations of the same Unicode character
-   can require different amounts of memory to store.
-   Because of this, characters in Swift do not each take up
-   the same amount of memory within a string's representation.
-   As a result, the length of a string cannot be calculated
-   without iterating through the string to consider each of its characters in turn.
-   If you are working with particularly long string values,
-   be aware that the ``countElements`` function
-   must iterate over the characters within a string
-   in order to calculate an accurate character count for that string.
-
-   Note also that the character count returned by ``countElements``
-   is not always the same as the ``length`` property of
-   an ``NSString`` that contains the same characters.
-   The length of an ``NSString`` is based on
-   the number of 16-bit code units within the string's UTF-16 representation
-   and not the number of Unicode characters within the string.
-   To reflect this fact,
-   the ``length`` property from ``NSString`` is called ``utf16Count``
-   when it is accessed on a Swift ``String`` value.
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
@@ -347,6 +279,339 @@ when it is included inside the string literal.
 
 .. TODO: add a bit here about making things Printable.
 
+.. _StringsAndCharacters_Unicode:
+
+Unicode
+-------
+
+:newTerm:`Unicode` is an international standard for encoding and representing text.
+It enables you to represent almost any character from any language in a standardized form,
+and to read and write those characters to and from an external source
+such as a text file or web page.
+
+.. _StringsAndCharacters_UnicodeTerminology:
+
+Unicode Terminology
+~~~~~~~~~~~~~~~~~~~
+
+A Unicode :newTerm:`scalar` is a unique 21-bit number (and name) for a character or modifier,
+such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
+or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
+
+.. note::
+
+   A Unicode scalar is a value in the range
+   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
+   Unicode scalars do not include the Unicode surrogate pair code points in the range
+   ``U+D800`` to ``U+DFFF``.
+
+A Unicode :newTerm:`extended grapheme cluster` is
+a sequence of one or more Unicode scalars
+that (when combined) produce a single human-readable character.
+Every instance of Swift's ``Character`` type stores a single extended grapheme cluster.
+
+.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
+
+Special Unicode Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+String literals can include the following special Unicode characters:
+
+* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
+  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
+  ``\"`` (double quote) and ``\'`` (single quote)
+* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+  where *n* is between one and eight hexadecimal digits
+
+The code below shows four examples of these special characters.
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
+demonstrate the Unicode scalar character format:
+
+.. testcode:: specialCharacters
+
+   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
+   >> println(wiseWords)
+   </ "Imagination is more important than knowledge" - Einstein
+   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+   << // dollarSign : String = "$"
+   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+   << // blackHeart : String = "♥"
+   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
+
+.. _StringsAndCharacters_CharactersAsUnicodeExtendedGraphemeClusters:
+
+Characters as Unicode Extended Grapheme Clusters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As described above in :ref:`StringsAndCharacters_UnicodeTerminology`.
+every ``Character`` value in Swift represents a single extended grapheme cluster.
+This means that a single ``Character`` value can be made up of
+more than one Unicode scalar behind the scenes.
+
+Here's an example.
+The letter ``é`` can be represented as the single Unicode scalar ``é``
+(``LATIN SMALL LETTER E WITH ACUTE``, or ``U+00E9``).
+However, the same letter can also be represented as a *pair* of scalars ---
+a standard letter ``e`` (``LATIN SMALL LETTER E``, or ``U+0065``),
+followed by the ``́`` scalar
+(``COMBINING ACUTE ACCENT``, or ``U+0301``).
+The ``COMBINING ACUTE ACCENT`` scalar modifies the scalar that precedes it,
+turning an ``e`` into an ``é`` when it is rendered by
+a Unicode-aware text-rendering system.
+
+In both cases, the letter ``é`` is represented as a single Swift ``Character`` value
+that represents an extended grapheme cluster.
+In the first case, the cluster contains a single scalar;
+in the second case, it is a cluster of two scalars:
+
+.. testcode:: graphemeClusters1
+
+   -> let eAcute: Character = "\u{E9}"                         // é
+   << // eAcute : Character = é
+   -> let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
+   << // combinedEAcute : Character = é
+   /> eAcute is \(eAcute), combinedEAcute is \(combinedEAcute)
+   </ eAcute is é, combinedEAcute is é
+
+Extended grapheme clusters are a flexible way to represent
+many different types of complex characters as a single ``Character`` value.
+For example, Hangul syllables from the Korean alphabet
+can be represented as either a precomposed or decomposed sequence:
+
+.. testcode:: graphemeClusters2
+
+   -> let precomposed: Character = "\u{d55c}"                  // 한
+   << // precomposed : Character = 한
+   -> let decomposed: Character = "\u{1112}\u{1161}\u{11ab}"   // ᄒ, ᅡ, ᆫ
+   << // decomposed : Character = 한
+   /> precomposed is \(precomposed), decomposed is \(decomposed)
+   </ precomposed is 한, decomposed is 한
+
+Scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD``)
+can be used to enclose other Unicode scalars as part of a single ``Character`` value:
+
+.. testcode:: graphemeClusters3
+
+   -> let enclosedEAcute: Character = "\u{E9}\u{20DD}"
+   << // enclosedEAcute : Character = é⃝
+   /> enclosedEAcute is \(enclosedEAcute)
+   </ enclosedEAcute is é⃝
+
+Unicode scalars for regional indicator symbols
+can be combined in pairs to make a single ``Character`` value,
+such as this combination of ``REGIONAL INDICATOR SYMBOL LETTER G`` (``U+1F1EC``)
+and ``REGIONAL INDICATOR SYMBOL LETTER B`` (``U+1F1E7``):
+
+.. testcode:: graphemeClusters4
+
+   -> let regionalIndicatorForGB: Character = "\u{1F1EC}\u{1F1E7}"
+   << // regionalIndicatorForGB : Character = 🇬🇧
+   /> regionalIndicatorForGB is \(regionalIndicatorForGB)
+   </ regionalIndicatorForGB is 🇬🇧
+
+.. _StringsAndCharacters_CountingCharacters:
+
+Counting Characters
+-------------------
+
+To retrieve a count of the ``Character`` values in a string,
+call the global ``countElements`` function
+and pass in a string as the function's sole parameter:
+
+.. testcode:: characterCount
+
+   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+   <- unusualMenagerie has 40 characters
+
+Swift's use of extended grapheme clusters for ``Character`` values
+means that string concatenation and modification does not always affect
+a string's character count in the way you might expect.
+
+For example, if you initialize a new string with the four-character word ``cafe``,
+and then append a ``COMBINING ACUTE ACCENT`` (``U+0301``) to the end of the string,
+the resulting string will still have a character count of ``4``,
+with a fourth character of ``é``, not ``e``:
+
+.. testcode:: characterCount
+
+   -> var word = "cafe"
+   << // word : String = "cafe"
+   -> println("the number of characters in \(word) is \(countElements(word))")
+   <- the number of characters in cafe is 4
+   ---
+   -> word += "\u{301}"
+   ---
+   -> println("the number of characters in \(word) is \(countElements(word))")
+   <- the number of characters in café is 4
+
+.. note::
+
+   Extended grapheme clusters can be composed of one or more Unicode scalars.
+   This means that different Unicode characters,
+   and different representations of the same Unicode character,
+   can require different amounts of memory to store.
+   Because of this, characters in Swift do not each take up
+   the same amount of memory within a string's representation.
+   As a result, the number of characters in a string cannot be calculated
+   without iterating through the string to determine
+   its extended grapheme cluster boundaries.
+   If you are working with particularly long string values,
+   be aware that the ``countElements`` function
+   must iterate over the Unicode scalars in the entire string
+   in order to calculate an accurate character count for that string.
+
+   Note also that the character count returned by ``countElements``
+   is not always the same as the ``length`` property of
+   an ``NSString`` that contains the same characters.
+   The length of an ``NSString`` is based on
+   the number of 16-bit code units within the string's UTF-16 representation
+   and not the number of Unicode extended grapheme clusters within the string.
+   To reflect this fact,
+   the ``length`` property from ``NSString`` is called ``utf16Count``
+   when it is accessed on a Swift ``String`` value.
+
+.. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
+
+Unicode Representations of Strings
+----------------------------------
+
+When a Unicode string is written to a text file or some other storage,
+the extended grapheme clusters in that string
+are encoded in one of several Unicode-defined formats.
+Each format encodes the string in small chunks known as :newTerm:`code units`.
+These include the UTF-8 format (which encodes a string as 8-bit code units)
+and the UTF-16 format (which encodes a string as 16-bit code units).
+
+Swift provides several different ways to access Unicode representations of strings.
+You can iterate over the string with a ``for``-``in`` statement,
+to access its individual ``Character`` values as Unicode extended grapheme clusters.
+This process is described in :ref:`StringsAndCharacters_WorkingWithCharacters`.
+
+Alternatively, access a ``String`` value
+in one of three other Unicode-compliant representations:
+
+* A collection of UTF-8 code units (accessed with the string's ``utf8`` property)
+* A collection of UTF-16 code units (accessed with the string's ``utf16`` property)
+* A collection of 21-bit Unicode scalar values
+  (accessed with the string's ``unicodeScalars`` property)
+
+Each example below shows a different representation of the following string,
+which is made up of the characters ``D``, ``o``, ``g``, ``!``,
+and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
+
+.. testcode:: unicodeRepresentations
+
+   -> let dogString = "Dog!🐶"
+   << // dogString : String = "Dog!🐶"
+
+.. _StringsAndCharacters_UTF8:
+
+UTF-8
+~~~~~
+
+You can access a UTF-8 representation of a ``String``
+by iterating over its ``utf8`` property.
+This property is of type ``UTF8View``,
+which is a collection of unsigned 8-bit (``UInt8``) values,
+one for each byte in the string's UTF-8 representation:
+
+.. testcode:: unicodeRepresentations
+
+   -> for codeUnit in dogString.utf8 {
+         print("\(codeUnit) ")
+      }
+   -> print("\n")
+   </ 68 111 103 33 240 159 144 182
+
+In the example above, the first four decimal ``codeUnit`` values
+(``68``, ``111``, ``103``, ``33``)
+represent the characters ``D``, ``o``, ``g``, and ``!``,
+whose UTF-8 representation is the same as their ASCII representation.
+The last four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
+are a four-byte UTF-8 representation of the ``DOG FACE`` character.
+
+.. TODO: contiguousUTF8()
+
+.. TODO: nulTerminatedUTF8()
+   (which returns a NativeArray, but handwave this for now)
+
+.. _StringsAndCharacters_UTF16:
+
+UTF-16
+~~~~~~
+
+You can access a UTF-16 representation of a ``String``
+by iterating over its ``utf16`` property.
+This property is of type ``UTF16View``,
+which is a collection of unsigned 16-bit (``UInt16``) values,
+one for each 16-bit code unit in the string's UTF-16 representation:
+
+.. testcode:: unicodeRepresentations
+
+   -> for codeUnit in dogString.utf16 {
+         print("\(codeUnit) ")
+      }
+   -> print("\n")
+   </ 68 111 103 33 55357 56374
+
+Again, the first four ``codeUnit`` values
+(``68``, ``111``, ``103``, ``33``)
+represent the characters ``D``, ``o``, ``g``, and ``!``,
+whose UTF-16 code units have the same values as in the string's UTF-8 representation.
+
+The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
+are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
+These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``)
+and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
+
+.. _StringsAndCharacters_UnicodeScalars:
+
+Unicode Scalars
+~~~~~~~~~~~~~~~
+
+You can access a Unicode scalar representation of a ``String`` value
+by iterating over its ``unicodeScalars`` property.
+This property is of type ``UnicodeScalarView``,
+which is a collection of values of type ``UnicodeScalar``.
+
+Each ``UnicodeScalar`` has a ``value`` property that returns
+the scalar's 21-bit value, represented within a ``UInt32`` value:
+
+.. testcode:: unicodeRepresentations
+
+   -> for scalar in dogString.unicodeScalars {
+         print("\(scalar.value) ")
+      }
+   -> print("\n")
+   </ 68 111 103 33 128054
+
+The ``value`` properties for the first four ``UnicodeScalar`` values
+(``68``, ``111``, ``103``, ``33``)
+once again represent the characters ``D``, ``o``, ``g``, and ``!``.
+The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
+is a decimal equivalent of the hexadecimal value ``1F436``,
+which is equivalent to the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
+
+As an alternative to querying their ``value`` properties,
+each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
+such as with string interpolation:
+
+.. testcode:: unicodeRepresentations
+
+   -> for scalar in dogString.unicodeScalars {
+         println("\(scalar) ")
+      }
+   </ D
+   </ o
+   </ g
+   </ !
+   </ 🐶
+
 .. _StringsAndCharacters_ComparingStrings:
 
 Comparing Strings
@@ -355,13 +620,25 @@ Comparing Strings
 Swift provides three ways to compare ``String`` values:
 string equality, prefix equality, and suffix equality.
 
+.. note::
+
+   These string comparison mechanisms all perform a scalar-by-scalar comparison of
+   the Unicode scalars within the string,
+   and not a character-by-character comparison of
+   the extended grapheme clusters that are represented by those Unicode scalars.
+   This means that the “equality” of two strings is based on an exact match between
+   their underlying Unicode scalars, not their characters.
+
 .. _StringsAndCharacters_StringEquality:
 
 String Equality
 ~~~~~~~~~~~~~~~
 
+String equality is checked with the “equal to” operator (``==``)
+and the “not equal to” operator (``!=``),
+as described in :ref:`BasicOperators_ComparisonOperators`.
 Two ``String`` values are considered equal if they contain
-exactly the same characters in the same order:
+exactly the same Unicode scalars in the same order:
 
 .. testcode:: stringEquality
 
@@ -382,7 +659,7 @@ Prefix and Suffix Equality
 To check whether a string has a particular string prefix or suffix,
 call the string's ``hasPrefix`` and ``hasSuffix`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
-Both methods perform a character-by-character comparison
+Both methods perform a Unicode scalar comparison
 between the base string and the prefix or suffix string.
 
 The examples below consider an array of strings representing
@@ -438,165 +715,3 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
       }
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
-
-.. _StringsAndCharacters_Unicode:
-
-Unicode
--------
-
-:newTerm:`Unicode` is an international standard for encoding and representing text.
-It enables you to represent almost any character from any language in a standardized form,
-and to read and write those characters to and from an external source
-such as a text file or web page.
-
-Swift's ``String`` and ``Character`` types are fully Unicode-compliant.
-They support a number of different Unicode encodings, as described below.
-
-.. _StringsAndCharacters_UnicodeTerminology:
-
-Unicode Terminology
-~~~~~~~~~~~~~~~~~~~
-
-Every character in Unicode can be represented by one or more :newTerm:`unicode scalars`.
-A unicode scalar is a unique 21-bit number (and name) for a character or modifier,
-such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
-or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
-
-When a Unicode string is written to a text file or some other storage,
-these unicode scalars are encoded in one of several Unicode-defined formats.
-Each format encodes the string in small chunks known as :newTerm:`code units`.
-These include the UTF-8 format (which encodes a string as 8-bit code units)
-and the UTF-16 format (which encodes a string as 16-bit code units).
-
-.. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
-
-Unicode Representations of Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Swift provides several different ways to access Unicode representations of strings.
-
-You can iterate over the string with a ``for``-``in`` statement,
-to access its individual ``Character`` values as Unicode characters.
-This process is described in :ref:`StringsAndCharacters_WorkingWithCharacters`.
-
-Alternatively, access a ``String`` value
-in one of three other Unicode-compliant representations:
-
-* A collection of UTF-8 code units (accessed with the string's ``utf8`` property)
-* A collection of UTF-16 code units (accessed with the string's ``utf16`` property)
-* A collection of 21-bit Unicode scalar values
-  (accessed with the string's ``unicodeScalars`` property)
-
-Each example below shows a different representation of the following string,
-which is made up of the characters ``D``, ``o``, ``g``, ``!``,
-and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
-
-.. testcode:: unicodeRepresentations
-
-   -> let dogString = "Dog!🐶"
-   << // dogString : String = "Dog!🐶"
-
-.. _StringsAndCharacters_UTF8:
-
-UTF-8
-_____
-
-You can access a UTF-8 representation of a ``String``
-by iterating over its ``utf8`` property.
-This property is of type ``UTF8View``,
-which is a collection of unsigned 8-bit (``UInt8``) values,
-one for each byte in the string's UTF-8 representation:
-
-.. testcode:: unicodeRepresentations
-
-   -> for codeUnit in dogString.utf8 {
-         print("\(codeUnit) ")
-      }
-   -> print("\n")
-   </ 68 111 103 33 240 159 144 182
-
-In the example above, the first four decimal ``codeUnit`` values
-(``68``, ``111``, ``103``, ``33``)
-represent the characters ``D``, ``o``, ``g``, and ``!``,
-whose UTF-8 representation is the same as their ASCII representation.
-The last four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
-are a four-byte UTF-8 representation of the ``DOG FACE`` character.
-
-.. TODO: contiguousUTF8()
-
-.. TODO: nulTerminatedUTF8()
-   (which returns a NativeArray, but handwave this for now)
-
-.. _StringsAndCharacters_UTF16:
-
-UTF-16
-______
-
-You can access a UTF-16 representation of a ``String``
-by iterating over its ``utf16`` property.
-This property is of type ``UTF16View``,
-which is a collection of unsigned 16-bit (``UInt16``) values,
-one for each 16-bit code unit in the string's UTF-16 representation:
-
-.. testcode:: unicodeRepresentations
-
-   -> for codeUnit in dogString.utf16 {
-         print("\(codeUnit) ")
-      }
-   -> print("\n")
-   </ 68 111 103 33 55357 56374
-
-Again, the first four ``codeUnit`` values
-(``68``, ``111``, ``103``, ``33``)
-represent the characters ``D``, ``o``, ``g``, and ``!``,
-whose UTF-16 code units have the same values as in the string's UTF-8 representation.
-
-The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
-are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
-These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``)
-and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
-
-.. _StringsAndCharacters_UnicodeScalars:
-
-Unicode Scalars
-_______________
-
-You can access a Unicode scalar representation of a ``String`` value
-by iterating over its ``unicodeScalars`` property.
-This property is of type ``UnicodeScalarView``,
-which is a collection of values of type ``UnicodeScalar``.
-A Unicode scalar is any 21-bit Unicode code point that is not
-a lead surrogate or trail surrogate code point.
-
-Each ``UnicodeScalar`` has a ``value`` property that returns
-the scalar's 21-bit value, represented within a ``UInt32`` value:
-
-.. testcode:: unicodeRepresentations
-
-   -> for scalar in dogString.unicodeScalars {
-         print("\(scalar.value) ")
-      }
-   -> print("\n")
-   </ 68 111 103 33 128054
-
-The ``value`` properties for the first four ``UnicodeScalar`` values
-(``68``, ``111``, ``103``, ``33``)
-once again represent the characters ``D``, ``o``, ``g``, and ``!``.
-The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
-is a decimal equivalent of the hexadecimal value ``1F436``,
-which is equivalent to the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
-
-As an alternative to querying their ``value`` properties,
-each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
-such as with string interpolation:
-
-.. testcode:: unicodeRepresentations
-
-   -> for scalar in dogString.unicodeScalars {
-         println("\(scalar) ")
-      }
-   </ D
-   </ o
-   </ g
-   </ !
-   </ 🐶
