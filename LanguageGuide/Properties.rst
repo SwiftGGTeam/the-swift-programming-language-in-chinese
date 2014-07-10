@@ -142,7 +142,7 @@ Lazy Stored Properties
 A :newTerm:`lazy stored property` is a property whose initial value is not calculated
 until the first time it is used.
 You indicate a lazy stored property by writing
-the ``@lazy`` attribute before its declaration.
+the ``lazy`` modifier before its declaration.
 
 .. note::
 
@@ -154,9 +154,9 @@ the ``@lazy`` attribute before its declaration.
 
 .. assertion:: lazyPropertiesMustAlwaysBeVariables
 
-   -> class C { @lazy let x = 0 }
-   !! <REPL Input>:1:11: error: 'lazy' attribute cannot be used on a let
-   !! class C { @lazy let x = 0 }
+   -> class C { lazy let x = 0 }
+   !! <REPL Input>:1:11: error: 'lazy' cannot be used on a let
+   !! class C { lazy let x = 0 }
    !! ^~~~~
    !!-
 
@@ -190,7 +190,7 @@ neither of which is shown in full:
       }
    ---
    -> class DataManager {
-         @lazy var importer = DataImporter()
+         lazy var importer = DataImporter()
          var data = [String]()
          // the DataManager class would provide data management functionality here
       }
@@ -221,7 +221,7 @@ when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
 if and when it is first used.
 
-Because it is marked with the ``@lazy`` attribute,
+Because it is marked with the ``lazy`` modifier,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
 such as when its ``fileName`` property is queried:
@@ -232,7 +232,7 @@ such as when its ``fileName`` property is queried:
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
-.. FIXME: Add a note to describe whether or not @lazy is thread-safe.
+.. FIXME: Add a note to describe whether or not lazy is thread-safe.
    This is as per <rdar://problem/17084977>
    ER: We should document whether lazy initialization is thread safe
 
@@ -470,13 +470,13 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
 .. assertion:: lazyPropertiesCannotHaveObservers
 
    -> class C {
-         @lazy var x: Int = 0 {
+         lazy var x: Int = 0 {
             willSet { println("C willSet x to \(newValue)") }
             didSet { println("C didSet x from \(oldValue)") }
          }
       }
-   !! <REPL Input>:2:6: error: @lazy properties may not have observers
-   !! @lazy var x: Int = 0 {
+   !! <REPL Input>:2:6: error: lazy properties may not have observers
+   !! lazy var x: Int = 0 {
    !! ^~~~~
    !!-
 
@@ -660,7 +660,7 @@ and are written in the same way as computed properties.
    Global constants and variables are always computed lazily,
    in a similar manner to :ref:`Properties_LazyStoredProperties`.
    Unlike lazy stored properties,
-   global constants and variables do not need to be marked with the ``@lazy`` attribute.
+   global constants and variables do not need to be marked with the ``lazy`` modifier.
 
    Local constants and variables are never computed lazily.
 

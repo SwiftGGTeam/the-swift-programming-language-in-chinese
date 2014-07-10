@@ -722,7 +722,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         @lazy var asHTML: () -> String = {
+         lazy var asHTML: () -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -871,7 +871,7 @@ if they are provided:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class SomeClass {
-      @lazy var someClosure: (Int, String) -> String = {
+      lazy var someClosure: (Int, String) -> String = {
             [unowned self] (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
@@ -891,14 +891,14 @@ followed by the ``in`` keyword:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class AnotherClass {
-      @lazy var someClosure: () -> String = {
+      lazy var someClosure: () -> String = {
             [unowned self] in
          // closure body goes here
    >>    return "foo"
       }
    >> }
 
-.. QUESTION: I have declared both of these closure properties as @lazy.
+.. QUESTION: I have declared both of these closure properties as lazy.
    Is this the right message to be sending?
 
 .. _AutomaticReferenceCounting_WeakAndUnownedReferencesForClosures:
@@ -933,7 +933,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         @lazy var asHTML: () -> String = {
+         lazy var asHTML: () -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
