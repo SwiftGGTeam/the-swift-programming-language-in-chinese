@@ -157,7 +157,7 @@ the ``lazy`` modifier before its declaration.
    -> class C { lazy let x = 0 }
    !! <REPL Input>:1:11: error: 'lazy' cannot be used on a let
    !! class C { lazy let x = 0 }
-   !! ^~~~~
+   !! ^~~~
    !!-
 
 Lazy properties are useful when the initial value for a property
@@ -477,7 +477,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
       }
    !! <REPL Input>:2:6: error: lazy properties may not have observers
    !! lazy var x: Int = 0 {
-   !! ^~~~~
+   !! ^~~~
    !!-
 
 .. assertion:: storedAndComputedInheritedPropertiesCanBeObserved
