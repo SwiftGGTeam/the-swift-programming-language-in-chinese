@@ -299,8 +299,8 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
 
 The ``minMax`` function above returns a tuple containing two ``Int`` values.
 However, the function does not perform any safety checks on the array it is passed.
-If the ``array`` argument contains an empty array –
-that is, an array with a ``count`` of ``0`` –
+If the ``array`` argument contains an empty array ---
+that is, an array with a ``count`` of ``0`` ---
 the ``minMax`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
