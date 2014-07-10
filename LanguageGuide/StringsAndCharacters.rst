@@ -288,27 +288,26 @@ Unicode
 It enables you to represent almost any character from any language in a standardized form,
 and to read and write those characters to and from an external source
 such as a text file or web page.
+Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
+as described in this section.
 
-.. _StringsAndCharacters_UnicodeTerminology:
+.. _StringsAndCharacters_UnicodeScalars:
 
-Unicode Terminology
-~~~~~~~~~~~~~~~~~~~
+Unicode Scalars
+~~~~~~~~~~~~~~~
 
-A Unicode :newTerm:`scalar` is a unique 21-bit number (and name) for a character or modifier,
+Behind the scenes,
+Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
+A Unicode scalar is a unique 21-bit number (and name) for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
 .. note::
 
-   A Unicode scalar is a value in the range
+   A Unicode scalar is any Unicode :newTerm:`code point` in the range
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
-   Unicode scalars do not include the Unicode surrogate pair code points in the range
-   ``U+D800`` to ``U+DFFF``.
-
-A Unicode :newTerm:`extended grapheme cluster` is
-a sequence of one or more Unicode scalars
-that (when combined) produce a single human-readable character.
-Every instance of Swift's ``Character`` type stores a single extended grapheme cluster.
+   Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points
+   in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
@@ -326,7 +325,7 @@ String literals can include the following special Unicode characters:
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
 The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the Unicode scalar character format:
+demonstrate the Unicode scalar format:
 
 .. testcode:: specialCharacters
 
@@ -341,15 +340,15 @@ demonstrate the Unicode scalar character format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
-.. _StringsAndCharacters_CharactersAsUnicodeExtendedGraphemeClusters:
+.. _StringsAndCharacters_ExtendedGraphemeClusters:
 
-Characters as Unicode Extended Grapheme Clusters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Extended Grapheme Clusters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As described above in :ref:`StringsAndCharacters_UnicodeTerminology`.
-every ``Character`` value in Swift represents a single extended grapheme cluster.
-This means that a single ``Character`` value can be made up of
-more than one Unicode scalar behind the scenes.
+Every instance of Swift's ``Character`` type represents
+a single :newTerm:`extended grapheme cluster`.
+An extended grapheme cluster is a sequence of one or more Unicode scalars
+that (when combined) produce a single human-readable character.
 
 Here's an example.
 The letter ``é`` can be represented as the single Unicode scalar ``é``
@@ -377,9 +376,10 @@ in the second case, it is a cluster of two scalars:
    </ eAcute is é, combinedEAcute is é
 
 Extended grapheme clusters are a flexible way to represent
-many different types of complex characters as a single ``Character`` value.
+many complex script characters as a single ``Character`` value.
 For example, Hangul syllables from the Korean alphabet
-can be represented as either a precomposed or decomposed sequence:
+can be represented as either a precomposed or decomposed sequence.
+Both of these representations qualify as a single ``Character`` value in Swift:
 
 .. testcode:: graphemeClusters2
 
@@ -390,8 +390,9 @@ can be represented as either a precomposed or decomposed sequence:
    /> precomposed is \(precomposed), decomposed is \(decomposed)
    </ precomposed is 한, decomposed is 한
 
-Scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD``)
-can be used to enclose other Unicode scalars as part of a single ``Character`` value:
+Extended grapheme clusters enable
+scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD``)
+to enclose other Unicode scalars as part of a single ``Character`` value:
 
 .. testcode:: graphemeClusters3
 
@@ -402,15 +403,15 @@ can be used to enclose other Unicode scalars as part of a single ``Character`` v
 
 Unicode scalars for regional indicator symbols
 can be combined in pairs to make a single ``Character`` value,
-such as this combination of ``REGIONAL INDICATOR SYMBOL LETTER G`` (``U+1F1EC``)
-and ``REGIONAL INDICATOR SYMBOL LETTER B`` (``U+1F1E7``):
+such as this combination of ``REGIONAL INDICATOR SYMBOL LETTER U`` (``U+1F1FA``)
+and ``REGIONAL INDICATOR SYMBOL LETTER S`` (``U+1F1F8``):
 
 .. testcode:: graphemeClusters4
 
-   -> let regionalIndicatorForGB: Character = "\u{1F1EC}\u{1F1E7}"
-   << // regionalIndicatorForGB : Character = 🇬🇧
-   /> regionalIndicatorForGB is \(regionalIndicatorForGB)
-   </ regionalIndicatorForGB is 🇬🇧
+   -> let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
+   << // regionalIndicatorForUS : Character = 🇺🇸
+   /> regionalIndicatorForUS is \(regionalIndicatorForUS)
+   </ regionalIndicatorForUS is 🇺🇸
 
 .. _StringsAndCharacters_CountingCharacters:
 
@@ -428,9 +429,9 @@ and pass in a string as the function's sole parameter:
    -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
    <- unusualMenagerie has 40 characters
 
-Swift's use of extended grapheme clusters for ``Character`` values
-means that string concatenation and modification does not always affect
-a string's character count in the way you might expect.
+Note that Swift's use of extended grapheme clusters for ``Character`` values
+means that string concatenation and modification may not always affect
+a string's character count.
 
 For example, if you initialize a new string with the four-character word ``cafe``,
 and then append a ``COMBINING ACUTE ACCENT`` (``U+0301``) to the end of the string,
@@ -444,7 +445,7 @@ with a fourth character of ``é``, not ``e``:
    -> println("the number of characters in \(word) is \(countElements(word))")
    <- the number of characters in cafe is 4
    ---
-   -> word += "\u{301}"
+   -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
    -> println("the number of characters in \(word) is \(countElements(word))")
    <- the number of characters in café is 4
@@ -452,8 +453,8 @@ with a fourth character of ``é``, not ``e``:
 .. note::
 
    Extended grapheme clusters can be composed of one or more Unicode scalars.
-   This means that different Unicode characters,
-   and different representations of the same Unicode character,
+   This means that different characters,
+   and different representations of the same character,
    can require different amounts of memory to store.
    Because of this, characters in Swift do not each take up
    the same amount of memory within a string's representation.
@@ -627,7 +628,7 @@ string equality, prefix equality, and suffix equality.
    and not a character-by-character comparison of
    the extended grapheme clusters that are represented by those Unicode scalars.
    This means that the “equality” of two strings is based on an exact match between
-   their underlying Unicode scalars, not their characters.
+   their underlying Unicode scalars, not their character representations.
 
 .. _StringsAndCharacters_StringEquality:
 
