@@ -291,7 +291,7 @@ such as a text file or web page.
 Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
 as described in this section.
 
-.. _StringsAndCharacters_UnicodeScalars:
+.. _StringsAndCharacters_StringsAreUnicodeScalars:
 
 Unicode Scalars
 ~~~~~~~~~~~~~~~
@@ -512,8 +512,8 @@ and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
 
 .. _StringsAndCharacters_UTF8:
 
-UTF-8
-~~~~~
+UTF-8 Representation
+~~~~~~~~~~~~~~~~~~~~
 
 You can access a UTF-8 representation of a ``String``
 by iterating over its ``utf8`` property.
@@ -543,8 +543,8 @@ are a four-byte UTF-8 representation of the ``DOG FACE`` character.
 
 .. _StringsAndCharacters_UTF16:
 
-UTF-16
-~~~~~~
+UTF-16 Representation
+~~~~~~~~~~~~~~~~~~~~~
 
 You can access a UTF-16 representation of a ``String``
 by iterating over its ``utf16`` property.
@@ -572,8 +572,8 @@ and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 
 .. _StringsAndCharacters_UnicodeScalars:
 
-Unicode Scalars
-~~~~~~~~~~~~~~~
+Unicode Scalar Representation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can access a Unicode scalar representation of a ``String`` value
 by iterating over its ``unicodeScalars`` property.
