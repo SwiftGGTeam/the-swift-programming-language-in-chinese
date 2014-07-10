@@ -625,10 +625,40 @@ string equality, prefix equality, and suffix equality.
 
    These string comparison mechanisms all perform a scalar-by-scalar comparison of
    the Unicode scalars within the string,
-   and not a character-by-character comparison of
-   the extended grapheme clusters that are represented by those Unicode scalars.
+   and not a normalized character-by-character comparison of
+   the extended grapheme clusters represented by those Unicode scalars.
    This means that the “equality” of two strings is based on an exact match between
-   their underlying Unicode scalars, not their character representations.
+   their underlying Unicode scalars.
+
+.. assertion:: characterComparisonUsesScalarsNotCharacters
+
+   -> let eAcute: Character = "\u{E9}"
+   << // eAcute : Character = é
+   -> let combinedEAcute: Character = "\u{65}\u{301}"
+   << // combinedEAcute : Character = é
+   -> if eAcute != combinedEAcute {
+         println("not equivalent, as expected")
+      } else {
+         println("equivalent, which is not expected")
+      }
+   <- not equivalent, as expected
+
+.. assertion:: stringComparisonUsesScalarsNotCharacters
+
+   -> let eAcute: Character = "\u{E9}"
+   << // eAcute : Character = é
+   -> let combinedEAcute: Character = "\u{65}\u{301}"
+   << // combinedEAcute : Character = é
+   -> let cafe1 = "caf" + eAcute
+   << // cafe1 : String = "café"
+   -> let cafe2 = "caf" + combinedEAcute
+   << // cafe2 : String = "café"
+   -> if cafe1 != cafe2 {
+         println("not equivalent, as expected")
+      } else {
+         println("equivalent, which is not expected")
+      }
+   <- not equivalent, as expected
 
 .. _StringsAndCharacters_StringEquality:
 
