@@ -460,17 +460,92 @@ Preventing Overrides
 
 You can prevent a method, property, or subscript from being overridden
 by marking it as :newTerm:`final`.
-Do this by writing the ``@final`` attribute before its introducer keyword
-(such as ``@final var``, ``@final func``, ``@final class func``, and ``@final subscript``).
+Do this by writing the ``final`` modifier before its introducer keyword
+(such as ``final var``, ``final func``, ``final class func``, and ``final subscript``).
 
 Any attempts to override a final method, property, or subscript in a subclass
 are reported as a compile-time error.
 Methods, properties or subscripts that you add to a class in an extension
 can also be marked as final within the extension's definition.
 
-You can mark an entire class as final by writing the ``@final`` attribute
-before the ``class`` keyword in its class definition (``@final class``).
+.. assertion:: finalPreventsOverriding
+
+   -> class C {
+         final var someVar = 0
+         final func someFunction() {
+            println("In someFunction")
+         }
+      }
+   -> class D : C {
+         override var someVar: Int {
+            get { return 1 }
+            set {}
+         }
+         override func someFunction() {
+            println("In overridden someFunction")
+         }
+      }
+   !! <REPL Input>:2:19: error: var overrides a 'final' var
+   !! override var someVar: Int {
+   !! ^
+   !! <REPL Input>:2:16: note: overridden declaration is here
+   !! final var someVar = 0
+   !! ^
+   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
+   !! override func someFunction() {
+   !! ^
+   !! <REPL Input>:3:17: note: overridden declaration is here
+   !! final func someFunction() {
+   !! ^
+
+You can mark an entire class as final by writing the ``final`` modifier
+before the ``class`` keyword in its class definition (``final class``).
 Any attempts to subclass a final class will be reported as a compile-time error.
+
+.. assertion:: finalClassPreventsOverriding
+
+   -> final class C {
+         var someVar = 0
+         func someFunction() {
+            println("In someFunction")
+         }
+      }
+   -> class D : C {
+         override var someVar: Int {
+            get { return 1 }
+            set {}
+         }
+         override func someFunction() {
+            println("In overridden someFunction")
+         }
+      }
+   !! <REPL Input>:2:19: error: var overrides a 'final' var
+   !! override var someVar: Int {
+   !! ^
+   !! <REPL Input>:2:10: note: overridden declaration is here
+   !! var someVar = 0
+   !! ^
+   !! <REPL Input>:2:19: error: var overrides a 'final' var
+   !! override var someVar: Int {
+   !! ^
+   !! <REPL Input>:2:10: note: overridden declaration is here
+   !! var someVar = 0
+   !! ^
+   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
+   !! override func someFunction() {
+   !! ^
+   !! <REPL Input>:3:11: note: overridden declaration is here
+   !! func someFunction() {
+   !! ^
+   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
+   !! override func someFunction() {
+   !! ^
+   !! <REPL Input>:3:11: note: overridden declaration is here
+   !! func someFunction() {
+   !! ^
+   !! <REPL Input>:1:7: error: inheritance from a final class 'C'
+   !! class D : C {
+   !! ^
 
 .. TODO: I should probably provide an example here.
 
