@@ -3,42 +3,118 @@ Access Control
 
 .. see swift/trunk/test/Sema/accessibility.swift for test cases
 
-.. include a full list of things that can have access control
 .. principle: no entity can be defined in terms of another entity that has less accessibility
-
-Access Control Levels
----------------------
-
-.. three levels of access: "private", "internal", and "public"
-.. private entities can only be accessed from within the source file where they are defined
-.. internal entities can be accessed anywhere within the module they are defined (cf with module == app target)
-.. public entities can be accessed from anywhere within the module and from any other context that imports the current module
-
-.. 'public' declarations can be accessed from any module
-.. 'internal' declarations (the default) can be accessed from within the current module
-.. 'private' declarations can be accessed only from within the current file
 .. the general principle is that an entity cannot be defined in terms of another entity with less accessibility
 
-.. if you're just developing an app, you may only need internal and never have to write anything else
-.. although you can still use private for your own tidiness if you wish
-.. if you're developing a framework, then public may also be useful
-.. as a general principle, you should avoid writing any access control modifiers unless you need to
-.. the defaults should help you with this
-.. note that if you're developing a custom framework, it'll be treated as a separate module
+:newTerm:`Access control` restricts access to parts of your code
+from code in other source files and modules.
+This enables you to hide the implementation details of your code,
+and to specify a preferred interface through with your code can be accessed and used.
 
-.. an app developer doesn't need to know about public except for unit tests; a framework developer does
-.. for public, you always have to mark it; nothing defaults to public
-.. although in enums, protocols, and extensions, the contents follow the wrapper
+Individual types (classes, structures, and enumerations)
+can be assigned specific access levels,
+as can any properties, methods, initializers, and subscripts implemented by those types.
+Protocols can also restrict access to a certain scope,
+and even a type's conformance to a protocol can be hidden in certain scopes if appropriate.
 
-.. a module is a unit of code distribution - code that is built and shipped together; a framework or an application, imported with "import"
-.. any target is its own module
+Despite offering considerable flexibility around access control,
+Swift avoids the need for you to specify access control in many cases
+by using appropriate default levels of access in different scenarios.
+Indeed, if you are writing a single-target app,
+you may not need to implement custom access control at all.
 
-.. can get optimization benefits from private:
-.. private does not imply ObjC; if you mark something private, and there's no dynamic / objc / IBOutlet, it's not exposed to ObjC, so the Swift code accessing that does so directly
-.. can also do the "not overridden, so make it final" check much more easily for private things
+Modules and Source Files
+------------------------
+
+Swift's access control model is based on the concept of modules and source files.
+
+A :newTerm:`module` is a single unit of code distribution ---
+a framework or application that is built and shipped as a single entity,
+and that can potentially be imported by another module with Swift's ``import`` keyword.
+
+Each build target (such as an app bundle or framework) in Xcode
+is treated as a separate module in Swift.
+If you group together some aspect of your app's code as a stand-alone framework ---
+perhaps to encapsulate and re-use that code across multiple applications ---
+everything you define within that framework will be part of a separate module
+when it is imported and used within an app or another framework.
+
+A :newTerm:`source file` is a single Swift source code file within a module
+(i.e. a single file within an app or framework).
+While it is traditional to define individual types in separate source files,
+a single source file can contain definitions for multiple types, functions, and so on.
+
+Access Levels
+-------------
+
+Swift provides three different :newTerm:`access levels` for entities within your code.
+These access levels are relative to the source file in which an entity is defined,
+and to the module that the source file belongs to.
+
+* :newTerm:`Public access`
+  enables entities to be used within any source file inside their defining module,
+  and also in any source file from another module that imports the defining module.
+
+* :newTerm:`Internal access`
+  enables entities to be used within any source file inside their defining module,
+  but not in any source file outside of that module.
+
+* :newTerm:`Private access`
+  means that entities are available within their defining source file only.
+
+Public, internal, and private access are typically used as follows:
+
+* Public access is used when specifying the public interface to a framework.
+* Internal access is used when defining an app or framework's internal structure.
+* Private access is used to hide the implementation details of
+  a specific piece of functionality.
+
+Default Access Levels
+~~~~~~~~~~~~~~~~~~~~~
+
+All definitions in your code
+(with a few specific exceptions, as described later in this chapter)
+have a default access level of “internal”
+if you do not specify a custom access level yourself.
+This default setting means that in many cases you do not need to specify
+an explicit access level at all.
+
+Access Levels For Single-Target Apps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you write a simple single-target app,
+the code in your app is typically self-contained,
+and does not need to be made available outside of the app's own module.
+The default access level of “internal” already matches this requirement,
+and means that you do not need to specify a custom access level if you do not wish to.
+
+Indeed, it is possible to write an entire app without ever specifying
+an explicit access level in your code.
+You may, however, wish to mark some parts of your code as “private”
+in order to hide their implementation details from other code within your app's own module.
+
+.. note::
+
+   You should not mark any declarations in a self-contained app as “public”,
+   because those declarations do not need to be made available outside of the app's module.
+
+Access Levels For Frameworks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you develop a framework,
+you mark the public-facing interface of that framework
+as “public” so that it can be viewed and accessed by other modules
+(such as an app that imports the framework).
+This public-facing interface is known as the :newTerm:`API`
+or :newTerm:`Application Programming Interface` for the framework.
+
+Any internal implementation details of your framework can still make use of
+the default access level of “internal”,
+or can be marked as “private” if you wish to hide them from
+other parts of the framework's internal code.
 
 Access Control Syntax
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. write the private / internal / public keyword after any attributes, but before the introducer
 .. show some examples
@@ -51,13 +127,6 @@ Access Context
 .. brief description of what "access scope" means in Swift (app, framework, file)
 .. the access context of an entity is the current file (if ``private``), the current module (if ``internal``), or the current program (if ``public``)
 .. a reference to an entity may only be written within the entity's accessibility context
-
-Access Control Defaults
------------------------
-
-.. by default, most entities in a source file have ``internal`` accessibility
-.. this optimizes for the most common case (a single-target application project) while not accidentally revealing entities to clients of a framework module
-.. our motivation behind making internal the default: if you are not adding public protocol conformance to public types, and don't want to make things private, then you should never need to actually write an access control modifier
 
 Types
 -----
