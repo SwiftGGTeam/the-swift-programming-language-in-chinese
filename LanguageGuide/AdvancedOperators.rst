@@ -854,9 +854,9 @@ You can declare and implement your own :newTerm:`custom operators` in addition t
 the standard operators provided by Swift.
 
 Custom operators can start with the characters ``/ = - + * % < > ! & | ^ . ~``,
-or Unicode math, symbol, arrow, dingbat, and line / box drawing characters.
+or Unicode math, symbol, arrow, dingbat, and line/box drawing characters.
 Their second and subsequent characters can be any of the above characters,
-and / or Unicode combining characters.
+and/or Unicode combining characters.
 (For more information on the full set of allowed operator characters,
 see :ref:`LexicalStructure_Operators`.)
 
