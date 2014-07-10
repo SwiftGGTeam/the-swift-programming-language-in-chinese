@@ -476,6 +476,140 @@ with a fourth character of ``é``, not ``e``:
    the ``length`` property from ``NSString`` is called ``utf16Count``
    when it is accessed on a Swift ``String`` value.
 
+.. _StringsAndCharacters_ComparingStrings:
+
+Comparing Strings
+-----------------
+
+Swift provides three ways to compare ``String`` values:
+string equality, prefix equality, and suffix equality.
+
+.. note::
+
+   These string comparison mechanisms all perform a scalar-by-scalar comparison of
+   the Unicode scalars within the string,
+   and not a normalized character-by-character comparison of
+   the extended grapheme clusters represented by those Unicode scalars.
+   This means that the “equality” of two strings is based on an exact match between
+   their underlying Unicode scalars.
+
+.. assertion:: characterComparisonUsesScalarsNotCharacters
+
+   -> let eAcute: Character = "\u{E9}"
+   << // eAcute : Character = é
+   -> let combinedEAcute: Character = "\u{65}\u{301}"
+   << // combinedEAcute : Character = é
+   -> if eAcute != combinedEAcute {
+         println("not equivalent, as expected")
+      } else {
+         println("equivalent, which is not expected")
+      }
+   <- not equivalent, as expected
+
+.. assertion:: stringComparisonUsesScalarsNotCharacters
+
+   -> let eAcute: Character = "\u{E9}"
+   << // eAcute : Character = é
+   -> let combinedEAcute: Character = "\u{65}\u{301}"
+   << // combinedEAcute : Character = é
+   -> let cafe1 = "caf" + eAcute
+   << // cafe1 : String = "café"
+   -> let cafe2 = "caf" + combinedEAcute
+   << // cafe2 : String = "café"
+   -> if cafe1 != cafe2 {
+         println("not equivalent, as expected")
+      } else {
+         println("equivalent, which is not expected")
+      }
+   <- not equivalent, as expected
+
+.. _StringsAndCharacters_StringEquality:
+
+String Equality
+~~~~~~~~~~~~~~~
+
+String equality is checked with the “equal to” operator (``==``)
+and the “not equal to” operator (``!=``),
+as described in :ref:`BasicOperators_ComparisonOperators`.
+Two ``String`` values are considered equal if they contain
+exactly the same Unicode scalars in the same order:
+
+.. testcode:: stringEquality
+
+   -> let quotation = "We're a lot alike, you and I."
+   << // quotation : String = "We\'re a lot alike, you and I."
+   -> let sameQuotation = "We're a lot alike, you and I."
+   << // sameQuotation : String = "We\'re a lot alike, you and I."
+   -> if quotation == sameQuotation {
+         println("These two strings are considered equal")
+      }
+   <- These two strings are considered equal
+
+.. _StringsAndCharacters_PrefixAndSuffixEquality:
+
+Prefix and Suffix Equality
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To check whether a string has a particular string prefix or suffix,
+call the string's ``hasPrefix`` and ``hasSuffix`` methods,
+both of which take a single argument of type ``String`` and return a Boolean value.
+Both methods perform a Unicode scalar comparison
+between the base string and the prefix or suffix string.
+
+The examples below consider an array of strings representing
+the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> let romeoAndJuliet = [
+         "Act 1 Scene 1: Verona, A public place",
+         "Act 1 Scene 2: Capulet's mansion",
+         "Act 1 Scene 3: A room in Capulet's mansion",
+         "Act 1 Scene 4: A street outside Capulet's mansion",
+         "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+         "Act 2 Scene 1: Outside Capulet's mansion",
+         "Act 2 Scene 2: Capulet's orchard",
+         "Act 2 Scene 3: Outside Friar Lawrence's cell",
+         "Act 2 Scene 4: A street in Verona",
+         "Act 2 Scene 5: Capulet's mansion",
+         "Act 2 Scene 6: Friar Lawrence's cell"
+      ]
+   << // romeoAndJuliet : [String] = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
+
+You can use the ``hasPrefix`` method with the ``romeoAndJuliet`` array
+to count the number of scenes in Act 1 of the play:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> var act1SceneCount = 0
+   << // act1SceneCount : Int = 0
+   -> for scene in romeoAndJuliet {
+         if scene.hasPrefix("Act 1 ") {
+            ++act1SceneCount
+         }
+      }
+   -> println("There are \(act1SceneCount) scenes in Act 1")
+   <- There are 5 scenes in Act 1
+
+Similarly, use the ``hasSuffix`` method to count the number of scenes
+that take place in or around Capulet's mansion and Friar Lawrence's cell:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> var mansionCount = 0
+   << // mansionCount : Int = 0
+   -> var cellCount = 0
+   << // cellCount : Int = 0
+   -> for scene in romeoAndJuliet {
+         if scene.hasSuffix("Capulet's mansion") {
+            ++mansionCount
+         } else if scene.hasSuffix("Friar Lawrence's cell") {
+            ++cellCount
+         }
+      }
+   -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
+   <- 6 mansion scenes; 2 cell scenes
+
 .. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
 
 Unicode Representations of Strings
@@ -612,137 +746,3 @@ such as with string interpolation:
    </ g
    </ !
    </ 🐶
-
-.. _StringsAndCharacters_ComparingStrings:
-
-Comparing Strings
------------------
-
-Swift provides three ways to compare ``String`` values:
-string equality, prefix equality, and suffix equality.
-
-.. note::
-
-   These string comparison mechanisms all perform a scalar-by-scalar comparison of
-   the Unicode scalars within the string,
-   and not a normalized character-by-character comparison of
-   the extended grapheme clusters represented by those Unicode scalars.
-   This means that the “equality” of two strings is based on an exact match between
-   their underlying Unicode scalars.
-
-.. assertion:: characterComparisonUsesScalarsNotCharacters
-
-   -> let eAcute: Character = "\u{E9}"
-   << // eAcute : Character = é
-   -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = é
-   -> if eAcute != combinedEAcute {
-         println("not equivalent, as expected")
-      } else {
-         println("equivalent, which is not expected")
-      }
-   <- not equivalent, as expected
-
-.. assertion:: stringComparisonUsesScalarsNotCharacters
-
-   -> let eAcute: Character = "\u{E9}"
-   << // eAcute : Character = é
-   -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = é
-   -> let cafe1 = "caf" + eAcute
-   << // cafe1 : String = "café"
-   -> let cafe2 = "caf" + combinedEAcute
-   << // cafe2 : String = "café"
-   -> if cafe1 != cafe2 {
-         println("not equivalent, as expected")
-      } else {
-         println("equivalent, which is not expected")
-      }
-   <- not equivalent, as expected
-
-.. _StringsAndCharacters_StringEquality:
-
-String Equality
-~~~~~~~~~~~~~~~
-
-String equality is checked with the “equal to” operator (``==``)
-and the “not equal to” operator (``!=``),
-as described in :ref:`BasicOperators_ComparisonOperators`.
-Two ``String`` values are considered equal if they contain
-exactly the same Unicode scalars in the same order:
-
-.. testcode:: stringEquality
-
-   -> let quotation = "We're a lot alike, you and I."
-   << // quotation : String = "We\'re a lot alike, you and I."
-   -> let sameQuotation = "We're a lot alike, you and I."
-   << // sameQuotation : String = "We\'re a lot alike, you and I."
-   -> if quotation == sameQuotation {
-         println("These two strings are considered equal")
-      }
-   <- These two strings are considered equal
-
-.. _StringsAndCharacters_PrefixAndSuffixEquality:
-
-Prefix and Suffix Equality
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To check whether a string has a particular string prefix or suffix,
-call the string's ``hasPrefix`` and ``hasSuffix`` methods,
-both of which take a single argument of type ``String`` and return a Boolean value.
-Both methods perform a Unicode scalar comparison
-between the base string and the prefix or suffix string.
-
-The examples below consider an array of strings representing
-the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
-
-.. testcode:: prefixesAndSuffixes
-
-   -> let romeoAndJuliet = [
-         "Act 1 Scene 1: Verona, A public place",
-         "Act 1 Scene 2: Capulet's mansion",
-         "Act 1 Scene 3: A room in Capulet's mansion",
-         "Act 1 Scene 4: A street outside Capulet's mansion",
-         "Act 1 Scene 5: The Great Hall in Capulet's mansion",
-         "Act 2 Scene 1: Outside Capulet's mansion",
-         "Act 2 Scene 2: Capulet's orchard",
-         "Act 2 Scene 3: Outside Friar Lawrence's cell",
-         "Act 2 Scene 4: A street in Verona",
-         "Act 2 Scene 5: Capulet's mansion",
-         "Act 2 Scene 6: Friar Lawrence's cell"
-      ]
-   << // romeoAndJuliet : [String] = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
-
-You can use the ``hasPrefix`` method with the ``romeoAndJuliet`` array
-to count the number of scenes in Act 1 of the play:
-
-.. testcode:: prefixesAndSuffixes
-
-   -> var act1SceneCount = 0
-   << // act1SceneCount : Int = 0
-   -> for scene in romeoAndJuliet {
-         if scene.hasPrefix("Act 1 ") {
-            ++act1SceneCount
-         }
-      }
-   -> println("There are \(act1SceneCount) scenes in Act 1")
-   <- There are 5 scenes in Act 1
-
-Similarly, use the ``hasSuffix`` method to count the number of scenes
-that take place in or around Capulet's mansion and Friar Lawrence's cell:
-
-.. testcode:: prefixesAndSuffixes
-
-   -> var mansionCount = 0
-   << // mansionCount : Int = 0
-   -> var cellCount = 0
-   << // cellCount : Int = 0
-   -> for scene in romeoAndJuliet {
-         if scene.hasSuffix("Capulet's mansion") {
-            ++mansionCount
-         } else if scene.hasSuffix("Friar Lawrence's cell") {
-            ++cellCount
-         }
-      }
-   -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-   <- 6 mansion scenes; 2 cell scenes
