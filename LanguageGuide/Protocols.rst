@@ -1025,7 +1025,7 @@ Optional Protocol Requirements
 
 You can define :newTerm:`optional requirements` for protocols,
 These requirements do not have to be implemented by types that conform to the protocol.
-Optional requirements are prefixed by the ``@optional`` keyword
+Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
 
 An optional protocol requirement can be called with optional chaining,
@@ -1065,8 +1065,8 @@ which has two optional requirements:
 .. testcode:: protocolConformance
 
    -> @objc protocol CounterDataSource {
-         @optional func incrementForCount(count: Int) -> Int
-         @optional var fixedIncrement: Int { get }
+         optional func incrementForCount(count: Int) -> Int
+         optional var fixedIncrement: Int { get }
       }
 
 The ``CounterDataSource`` protocol defines
