@@ -50,9 +50,6 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
-    declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
-    declaration-modifier --> ``class`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
-
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
 .. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
@@ -1827,3 +1824,77 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
 .. TR: I added this grammar from looking at ParseDecl.cpp and from trying
     to various permutations in the REPL. Is this a correct grammar?
+
+
+.. _Declarations_DeclarationModifiers:
+
+Declaration Modifiers
+---------------------
+
+:newTerm:`Declaration modifiers` are context-sensitive keywords that modify the behavior
+or meaning of a declaration. You specify a declaration modifier by writing the appropriate
+context-sensitive keyword between a declaration's attributes (if any) and the keyword
+that introduces the declaration.
+
+``final``
+    Apply this modifier to a class or to a property, method,
+    or subscript member of a class. It's applied to a class to indicate that the class
+    can't be subclassed. It's applied to a property, method, or subscript of a class
+    to indicate that that class member can't be overridden in any subclass.
+
+.. TODO: Dave may or may not include an example of how to use the 'final' attribute
+    in the guide. If he does, include the following sentence:
+    For an example of how to use the ``final`` attribute,
+    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+
+``lazy``
+    Apply this modifier to a stored variable property of a class or structure
+    to indicate that the property's initial value is calculated and stored at most
+    once, when the property is first accessed.
+    For an example of how to use the ``lazy`` modifier,
+    see :ref:`Properties_LazyStoredProperties`.
+
+``optional``
+    Apply this modifier to a protocol's property, method,
+    or subscript members to indicate that a conforming type isn't required
+    to implement those members.
+
+    You can apply the ``optional`` modifier only to protocols that are marked
+    with the ``objc`` attribute. As a result, only class types can adopt and conform
+    to a protocol that contains optional member requirements.
+    For more information about how to use the ``optional`` modifier
+    and for guidance about how to access optional protocol members---
+    for example, when you're not sure whether a conforming type implements them---
+    see :ref:`Protocols_OptionalProtocolRequirements`.
+
+.. TODO: Currently, you can't check for an optional initializer,
+    so we're leaving those out of the documentation, even though you can mark
+    an initializer with the @optional attribute. It's still being decided by the
+    compiler team. Update this section if they decide to make everything work
+    properly for optional initializer requirements.
+
+``required``
+    Apply this modifier to a designated or convenience initializer
+    of a class to indicate that every subclass must implement that initializer.
+
+    Required designated initializers must be implemented explicitly.
+    Required convenience initializers can be either implemented explicitly
+    or inherited when the subclass directly implements all of the superclass’s designated
+    initializers
+    (or when the subclass overrides the designated initializers with convenience initializers).
+
+``weak``
+    The ``weak`` modifier is applied to a variable or a stored variable property
+    to indicate that the variable or property has a weak reference to the
+    object stored as its value. The type of the variable or property
+    must be an optional class type. Use the ``weak`` modifier to avoid strong
+    reference cycles.
+    For an example and more information about the ``weak`` modifier,
+    see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
+
+.. syntax-grammar::
+
+    Grammar of a declaration modifier
+
+    declaration-modifier --> ``class`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
+    declaration-modifiers --> declaration-modifier declaration-modifiers-OPT

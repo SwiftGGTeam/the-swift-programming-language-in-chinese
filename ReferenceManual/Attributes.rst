@@ -4,10 +4,16 @@ Attributes
 :newTerm:`Attributes` provide more information about a declaration or type.
 There are two kinds of attributes in Swift, those that apply to declarations
 and those that apply to types.
-For instance, the ``required`` attribute---when applied to a designated or convenience initializer
-declaration of a class---indicates that every subclass must implement that initializer.
-And the ``noreturn`` attribute---when applied to a function or method type---indicates that
-the function or method doesn't return to its caller.
+
+.. NOTE: The first example isn't relevant anymore,
+    because ``required`` is now a CS-keyword and no longer an attribute.
+    I'm keeping this paragraph in a note so I can bring it back after
+    we have a suitable replacement attribute to include in the example.
+
+    For instance, the ``required`` attribute---when applied to a designated or convenience initializer
+    declaration of a class---indicates that every subclass must implement that initializer.
+    And the ``noreturn`` attribute---when applied to a function or method type---indicates that
+    the function or method doesn't return to its caller.
 
 You specify an attribute by writing the ``@`` symbol followed by the attribute's name
 and any arguments that the attribute accepts:
@@ -87,24 +93,6 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
-``final``
-    Apply this attribute to a class or to a property, method,
-    or subscript member of a class. It's applied to a class to indicate that the class
-    can't be subclassed. It's applied to a property, method, or subscript of a class
-    to indicate that that class member can't be overridden in any subclass.
-
-.. TODO: Dave may or may not include an example of how to use the 'final' attribute
-    in the guide. If he does, include the following sentence:
-    For an example of how to use the ``final`` attribute,
-    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
-
-``lazy``
-    Apply this attribute to a stored variable property of a class or structure
-    to indicate that the property's initial value is calculated and stored at most
-    once, when the property is first accessed.
-    For an example of how to use the ``lazy`` attribute,
-    see :ref:`Properties_LazyStoredProperties`.
-
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
@@ -176,46 +164,6 @@ the ``noreturn`` attribute to a function or method *type*.
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
-
-``optional``
-    Apply this attribute to a protocol's property, method,
-    or subscript members to indicate that a conforming type isn't required
-    to implement those members.
-
-    You can apply the ``optional`` attribute only to protocols that are marked
-    with the ``objc`` attribute. As a result, only class types can adopt and conform
-    to a protocol that contains optional member requirements.
-    For more information about how to use the ``optional`` attribute
-    and for guidance about how to access optional protocol members---
-    for example, when you're not sure whether a conforming type implements them---
-    see :ref:`Protocols_OptionalProtocolRequirements`.
-
-.. TODO: Currently, you can't check for an optional initializer,
-    so we're leaving those out of the documentation, even though you can mark
-    an initializer with the @optional attribute. It's still being decided by the
-    compiler team. Update this section if they decide to make everything work
-    properly for optional initializer requirements.
-
-``required``
-    Apply this attribute to a designated or convenience initializer
-    of a class to indicate that every subclass must implement that initializer.
-
-    Required designated initializers must be implemented explicitly.
-    Required convenience initializers can be either implemented explicitly
-    or inherited when the subclass directly implements all of the superclass’s designated
-    initializers
-    (or when the subclass overrides the designated initializers with convenience initializers).
-
-.. TODO: 'weak' is now a CS keyword. Probably need to find somewhere else to describe it.
-    If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-
-    ``weak``
-        The ``weak`` attribute is applied to a stored property, variable, or constant
-        to indicate that the property, variable, or constant has a weak reference to the
-        object stored as its value. The type of the property, variable, or constant
-        must be an optional class type. Use the ``weak`` attribute to avoid strong
-        reference cycles.
 
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
