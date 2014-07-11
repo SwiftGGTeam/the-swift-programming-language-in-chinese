@@ -369,7 +369,7 @@ A stored variable or property declared with observers has the following form:
        willSet(<#setter name#>) {
           <#statements#>
        }
-       didSet(<#setter name#> {
+       didSet(<#setter name#>) {
           <#statements#>
        }
     }
