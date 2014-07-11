@@ -678,7 +678,8 @@ Type Inference
 Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
-instead of writing ``var x: Int = 0``, you can omit the type completely and simply write ``var x = 0``---
+instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
+omitting the type completely ---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
 For instance, if you write ``let dict: Dictionary = ["A": 1]``,
