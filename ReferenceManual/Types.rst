@@ -322,8 +322,7 @@ a three-dimensional array of integers using three sets of square brackets:
 
 .. testcode::
 
-    -> var array3D = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    -> // The type of array3D is inferred to be [[[Int]]]
+    -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
     << // array3D : [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 When accessing the elements in a multidimensional array,
