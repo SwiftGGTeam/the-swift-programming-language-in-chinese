@@ -769,10 +769,10 @@ Multiple levels of currying are allowed.
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
-    parameter-name --> identifier | ``_``
+    external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
     default-argument-clause --> ``=`` expression
 
