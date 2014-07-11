@@ -187,7 +187,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     an expression made up of binary operators is represented
     as a flat list.
     This list is transformed into a tree
-    by applying operator precedence
+    by applying operator precedence.
     For example, the expression ``2 + 3 * 5``
     is initially understood as a flat list of five items,
     ``2``, ``+``, ``3``, ``*``, and ``5``.
