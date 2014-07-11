@@ -1831,9 +1831,9 @@ see :ref:`AdvancedOperators_CustomOperators`.
 Declaration Modifiers
 ---------------------
 
-:newTerm:`Declaration modifiers` are context-sensitive keywords that modify the behavior
+:newTerm:`Declaration modifiers` are keywords or context-sensitive keywords that modify the behavior
 or meaning of a declaration. You specify a declaration modifier by writing the appropriate
-context-sensitive keyword between a declaration's attributes (if any) and the keyword
+keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
 ``final``
