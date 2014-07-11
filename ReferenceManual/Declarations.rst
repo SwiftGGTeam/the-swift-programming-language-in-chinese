@@ -4,7 +4,7 @@ Declarations
 A :newTerm:`declaration` introduces a new name or construct into your program.
 For example, you use declarations to introduce functions and methods, variables and constants,
 and to define new, named enumeration, structure, class,
-and protocol types. You can also use a declaration to extend the the behavior
+and protocol types. You can also use a declaration to extend the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 
 In Swift, most declarations are also definitions in the sense that they are implemented
