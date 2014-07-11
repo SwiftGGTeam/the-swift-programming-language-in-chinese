@@ -9,19 +9,24 @@ Access Control
 :newTerm:`Access control` restricts access to parts of your code
 from code in other source files and modules.
 This enables you to hide the implementation details of your code,
-and to specify a preferred interface through with your code can be accessed and used.
+and to specify a preferred interface through which that code can be accessed and used.
 
 Individual types (classes, structures, and enumerations)
 can be assigned specific access levels,
-as can any properties, methods, initializers, and subscripts implemented by those types.
+as can properties, methods, initializers, and subscripts implemented by those types.
 Protocols can also restrict access to a certain scope,
-and even a type's conformance to a protocol can be hidden in certain scopes if appropriate.
+and a type's conformance to a protocol can be hidden in certain scopes if appropriate.
+(The various aspects of your code that can have access control applied to them
+are referred to as “entities” in the descriptions below.)
 
 Despite offering considerable flexibility around access control,
 Swift avoids the need for you to specify access control in many cases
 by using appropriate default levels of access in different scenarios.
 Indeed, if you are writing a single-target app,
-you may not need to implement custom access control at all.
+Swift's default access settings may mean that
+you do not need to implement custom access control at all.
+
+.. _AccessControl_ModulesAndSourceFiles:
 
 Modules and Source Files
 ------------------------
@@ -37,12 +42,14 @@ is treated as a separate module in Swift.
 If you group together some aspect of your app's code as a stand-alone framework ---
 perhaps to encapsulate and re-use that code across multiple applications ---
 everything you define within that framework will be part of a separate module
-when it is imported and used within an app or another framework.
+when it is imported and used within an app, or within another framework.
 
 A :newTerm:`source file` is a single Swift source code file within a module
 (i.e. a single file within an app or framework).
-While it is traditional to define individual types in separate source files,
+While it is common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
+
+.. _AccessControl_AccessLevels:
 
 Access Levels
 -------------
@@ -53,7 +60,7 @@ and to the module that the source file belongs to.
 
 * :newTerm:`Public access`
   enables entities to be used within any source file inside their defining module,
-  and also in any source file from another module that imports the defining module.
+  and also in a source file from another module that imports the defining module.
 
 * :newTerm:`Internal access`
   enables entities to be used within any source file inside their defining module,
@@ -69,6 +76,8 @@ Public, internal, and private access are typically used as follows:
 * Private access is used to hide the implementation details of
   a specific piece of functionality.
 
+.. _AccessControl_DefaultAccessLevels:
+
 Default Access Levels
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -79,6 +88,8 @@ if you do not specify a custom access level yourself.
 This default setting means that in many cases you do not need to specify
 an explicit access level at all.
 
+.. _AccessControl_AccessLevelsForSingleTargetApps:
+
 Access Levels For Single-Target Apps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -88,8 +99,8 @@ and does not need to be made available outside of the app's own module.
 The default access level of “internal” already matches this requirement,
 and means that you do not need to specify a custom access level if you do not wish to.
 
-Indeed, it is possible to write an entire app without ever specifying
-an explicit access level in your code.
+Indeed, it is possible to write an entire single-target app
+without ever specifying an explicit access level in your code.
 You may, however, wish to mark some parts of your code as “private”
 in order to hide their implementation details from other code within your app's own module.
 
@@ -98,13 +109,15 @@ in order to hide their implementation details from other code within your app's 
    You should not mark any declarations in a self-contained app as “public”,
    because those declarations do not need to be made available outside of the app's module.
 
+.. _AccessControl_AccessLevelsForFrameworks:
+
 Access Levels For Frameworks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you develop a framework,
 you mark the public-facing interface of that framework
 as “public” so that it can be viewed and accessed by other modules
-(such as an app that imports the framework).
+(such as by an app that imports the framework).
 This public-facing interface is known as the :newTerm:`API`
 or :newTerm:`Application Programming Interface` for the framework.
 
@@ -113,77 +126,241 @@ the default access level of “internal”,
 or can be marked as “private” if you wish to hide them from
 other parts of the framework's internal code.
 
+.. _AccessControl_AccessControlSyntax:
+
 Access Control Syntax
 ---------------------
 
-.. write the private / internal / public keyword after any attributes, but before the introducer
-.. show some examples
+Define the access level for an entity by placing
+one of the ``public``, ``internal``, or ``private`` keywords
+before the entity's introducer:
 
-Access Context
---------------
+.. testcode:: accessControlSyntax
 
-.. access to a particular entity is considered relative to the current access context
-.. describe what an access context is, with an example
-.. brief description of what "access scope" means in Swift (app, framework, file)
-.. the access context of an entity is the current file (if ``private``), the current module (if ``internal``), or the current program (if ``public``)
-.. a reference to an entity may only be written within the entity's accessibility context
+   -> public class SomePublicClass {}
+   -> internal class SomeInternalClass {}
+   -> private class SomePrivateClass {}
+   ---
+   -> public var somePublicVariable = 0
+   << // somePublicVariable : Int = 0
+   -> internal var someInternalConstant = 0
+   << // someInternalConstant : Int = 0
+   -> private func somePrivateFunction() {}
+
+As mentioned in Default Access Levels [link],
+the default global access level is “internal”,
+so ``SomeInternalClass`` and ``someInternalConstant`` can be written
+without an explicit access level modifier, as follows:
+
+.. testcode:: accessControlDefaulted
+
+   -> class SomeInternalClass {}
+   -> var someInternalConstant = 0
+   << // someInternalConstant : Int = 0
+
+.. _AccessControl_Types:
 
 Types
 -----
 
-.. can specify access control for an entire type
-.. a struct, enum, or class may be used as a type whenever it is accessible
+As shown above,
+you can specify an explicit access level for a custom type
+at the point that the type is defined.
+The new type can then be used wherever that access level permits.
+For example, if you define a ``private`` class,
+that class can only be used as the type of a property,
+or as a function parameter or return type,
+in the source file in which the ``private`` class was originally defined.
 
-.. (duplicated below) if the type's accessibility is ``private``, the accessibility of its members defaults to ``private``
-.. (duplicated below) if the type's accessibility is ``internal`` or ``public``, the accessibility of its members defaults to ``internal``
+The access control level of a type also affects
+the default access level of that type's members.
+If you define a type's access level as ``private``,
+the default access level of its properties, methods, subscripts, and initializers
+is also ``private``.
+Conversely, if you define a type's access level as ``internal`` or ``public``,
+the default access level of its properties, methods, subscripts, and initializers is ``internal``.
 
-.. a nominal type's accessibility is the same as the accessibility of the nominal declaration itself
+.. testcode:: accessControl, accessControlWrong
 
-.. a generic type's accessibility is the minimum of the accessibility of the base type and the accessibility of all generic argument types
+   -> public class somePublicClass {
+         var someInternalProperty = 0            // implicitly internal
+         private func somePrivateMethod() {}
+      }
+   ---
+   -> class SomeInternalClass {                  // implicitly internal
+         var someInternalProperty = 0            // implicitly internal
+         private subscript(index: Int) -> Int {
+            return 0
+         }
+      }
+   ---
+   -> private class SomePrivateClass {
+         var somePrivateProperty = 0             // implicitly private
+         func somePrivateMethod() {}
+      }
 
-.. a tuple type's accessibility is the minimum of the accessibility of its elements
+.. _AccessControl_TupleTypes:
 
-.. a function type's accessibility is the minimum accessibility of its input and return types (unless specified to be more private on the function itself?)
-.. conversely, a function type may not contain a type with a more private access level than the function's explicitly-specified level (r19519)
+Tuple Types
+~~~~~~~~~~~
 
-.. typealiases are distinct types for access control
-.. a typealias may have any accessibility less than or equal to the accessibility of the type it aliases (r19428)
-.. that is, a ``private`` typealias can refer to an ``public`` type, but not the other way around
-.. this includes associated types used to satisfy protocol conformances
+The access level for a tuple type is
+the minimum access level of all of the types used in that tuple.
+For example, if you compose a tuple from two different types,
+one of which is internal and one of which is private,
+the access level for that compound tuple type will be private.
 
-.. a global function, constant, or variable may have any accessibility less than or equal to the accessibility of its type (or compound type, for functions and tuples)
-.. that is, a ``private`` global constant can be defined in terms of a type that is ``public``, but not the other way around
+.. note::
+
+   Tuple types do not have a stand-alone definition in the way that
+   classes, structures, enumerations, and functions do.
+   A tuple type's access level is deduced automatically when the tuple type is used,
+   and cannot be specified explicitly.
+
+.. _AccessControl_FunctionTypes:
+
+Function Types
+~~~~~~~~~~~~~~
+
+The access level for a function type is calculated as
+the minimum access level of the function's parameter types and return type.
+You must specify the access level explicitly as part of the function's definition
+if the function's calculated access level does not match the contextual default.
+
+The example below defines a global function called ``someFunction``,
+without providing a specific access level modifier for the function itself.
+You might expect this function to have the default access level of ``internal``,
+but this is not the case.
+In fact, ``someFunction`` will not compile as written below:
+
+.. testcode:: accessControlWrong
+
+   -> func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+         // function implementation
+   >>    return (SomeInternalClass(), SomePrivateClass())
+      }
+   !! <REPL Input>:1:6: error: function must be declared private because its result uses a private type
+   !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+   !! ^                                     ~~~~~~~~~~~~~~~~
+   !! <REPL Input>:1:15: note: type declared here
+   !! private class SomePrivateClass {
+   !! ^
+
+The function's return type is
+a tuple type composed from two of the custom classes defined earlier.
+One of these classes was defined as ``internal``,
+and the other was defined as ``private``.
+Therefore, the overall access level of the compound tuple type is ``private``
+(the minimum access level of the tuple's constituent types).
+
+Because the function's return type is ``private``,
+the function's overall access level must be explicitly set to ``private``
+for the function declaration to be valid:
+
+.. testcode:: accessControl
+
+   -> private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+         // function implementation
+   >>    return (SomeInternalClass(), SomePrivateClass())
+      }
+
+It is not valid to mark the definition of ``someFunction``
+as ``public`` or ``internal``, or to use the default setting of ``internal``,
+because public or internal users of the function might not have appropriate access
+to the private class used in its return type.
+
+.. _AccessControl_TypeAliases:
+
+Type Aliases
+~~~~~~~~~~~~
+
+Any type aliases you define are treated as distinct types for the purposes of access control.
+A type alias can have an access level less than or equal to the access level of the type it aliases.
+For example, a ``private`` type alias can refer to an ``internal`` or ``public`` type,
+but a ``public`` type alias cannot refer to an ``internal`` or ``private`` type.
+This includes associated types used to satisfy protocol conformances.
+
+.. _AccessControl_GlobalConstantsAndVariables:
+
+Global Constants and Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A global constant or variable can be assigned an explicit access level
+that is less than or equal to the accessibility of its type.
+For example, a ``private`` constant or variable can be defined as having
+a type that is ``public`` or ``internal``.
+However, a ``public`` constant or variable cannot be defined as having
+a ``private`` or ``internal`` type,
+because that type might not be visibile to users of the ``public`` constant or variable.
+
+.. _AccessControl_EnumerationTypes:
+
+Enumeration Types
+~~~~~~~~~~~~~~~~~
+
+Members of an enumeration automatically receive the same access level as
+the enumeration they belong to.
+You cannot specify a different access level for individual enumeration members.
+
+In addition, the types used for any raw values or associated values in an enumeration
+must have an access level at least as high as the enumeration's access level.
+You cannot use a ``private`` type as the raw value type of
+an enumeration with an ``internal`` access level, say.
+
+.. _AccessControl_NestedTypes:
+
+Nested Types
+~~~~~~~~~~~~
 
 .. talk about the access defaults for nested functions and nested types
 .. local types (defined within a function) are always private
 
-Classes
-~~~~~~~
+.. _AccessControl_Subclassing:
 
-.. a class may be subclassed whenever it is accessible
-.. a class may have any accessibility less than or equal to the accessibility of its superclass
-.. a class member may be overridden whenever it is accessible
-.. public classes may not have private superclasses (r19588)
+Subclassing
+-----------
+
+You can subclass any class that is visible in your code.
+A subclass cannot have more visibility than its superclass, however ---
+for example, you cannot write a ``public`` subclass of an ``internal`` superclass.
+In addition, you can override any class member
+(that is, any method, property, subscript, or initializer)
+that is visible in your code.
+
+An override can make an inherited class member more public than its superclass version:
+
+.. testcode::
+
+   -> public class Public {
+         private func someMethod() {
+            println("Public someMethod()")
+         }
+      }
+   ---
+   -> internal class Internal : Public {
+         override internal func someMethod() {
+            println("Internal someMethod()")
+         }
+      }
+   -> let i = Internal()
+   -> i.someMethod()
 
 .. overriding can make something more public (go into more detail on what this means)
 
 .. you can make something more public if all the types are more private
 .. private members cannot override public members unless they are in a private class (see r19769)
 
-Enumerations
-~~~~~~~~~~~~
+.. _AccessControl_MethodsPropertiesSubscriptsAndInitializers:
 
-.. enumeration cases always have the same accessibility as the enclosing enumeration
-.. public enum cases cannot have private payloads, because you can't match them properly in switches (r19620)
-.. a public enum cannot have a private raw type (r19587)
-
-Initializers, Methods, Properties, and Subscripts
+Methods, Properties, Subscripts, and Initializers
 -------------------------------------------------
 
 .. an initializer, method, subscript, or property may have an access level less than or equal to the access level of its type (including the implicit 'Self' type)
 
 .. if the type's accessibility is ``private``, the accessibility of its members defaults to ``private``
 .. if the type's accessibility is ``internal`` or ``public``, the accessibility of its members defaults to ``internal``
+
+.. _AccessControl_PropertiesAndSubscripts:
 
 Properties and Subscripts
 -------------------------
@@ -195,6 +372,8 @@ Properties and Subscripts
 .. a property cannot be more public than its type (r19432)
 .. a subscript cannot be more public than its index or element type (r19446)
 
+.. _AccessControl_Initializers:
+
 Initializers
 ------------
 
@@ -205,10 +384,14 @@ Initializers
 .. the no-argument initializer will be internal always, regardless of the property's access (is this true even if the type is public?)
 .. an initializer may not use a type with a more private level than the initializer's own level (r19519)
 
+.. _AccessControl_Deinitializers:
+
 Deinitializers
 ~~~~~~~~~~~~~~
 
 .. deinitializers are only invoked by the runtime and always have the same accessibility as the enclosing class
+
+.. _AccessControl_Protocols:
 
 Protocols
 ---------
@@ -218,6 +401,8 @@ Protocols
 .. the accessibility of a requirement is the accessibility of the enclosing protocol, rather than ``internal``
 .. requirements may not be given less accessibility than the enclosing protocol
 .. a protocol may be used as a type whenever it is accessible
+
+.. _AccessControl_ProtocolConformance:
 
 Protocol Conformance
 ~~~~~~~~~~~~~~~~~~~~
@@ -231,6 +416,8 @@ Protocol Conformance
 .. a nominal can conform to a protocol whenever the protocol is accessible
 .. a type may conform to a protocol with less accessibility than the type itself
 
+.. _AccessControl_Extensions:
+
 Extensions
 ----------
 
@@ -240,3 +427,11 @@ Extensions
 .. an extension may be marked with an explicit accessibility modifier (e.g. ``private extension``), in which case the default accessibility of members within the extension is changed to match
 .. (presumably this can only make things less accessible, not more so?)
 .. extensions with explicit accessibility modifiers may not add new protocol conformances (see r19751)
+
+.. _AccessControl_Generics:
+
+Generics
+--------
+
+.. a generic type or function's accessibility is the minimum of the accessibility of the base type and the accessibility of all generic argument types (aka type parameter constraints?)
+
