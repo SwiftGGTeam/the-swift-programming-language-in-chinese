@@ -697,7 +697,7 @@ to capture a weak or unowned reference to the value.
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
 
 You can also bind an arbitrary expression
-to named values in the capture list.
+to a named value in the capture list.
 The expression is evaluated when the closure is formed,
 and captured with the specified strength.
 For example:
