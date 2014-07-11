@@ -50,8 +50,8 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
-    declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
-    declaration-specifier --> ``class`` | ``mutating`` | ``nonmutating`` | ``override`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
+    declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
+    declaration-modifier --> ``class`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
@@ -247,7 +247,7 @@ see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties
 
     Grammar of a constant declaration
 
-    constant-declaration --> attributes-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
+    constant-declaration --> attributes-OPT declaration-modifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
@@ -479,7 +479,7 @@ are discussed in :ref:`Properties_TypeProperties`.
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
-    variable-declaration-head --> attributes-OPT declaration-specifiers-OPT ``var``
+    variable-declaration-head --> attributes-OPT declaration-modifiers-OPT ``var``
     variable-name --> identifier
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
@@ -759,7 +759,7 @@ Multiple levels of currying are allowed.
 
     function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
 
-    function-head --> attributes-OPT declaration-specifiers-OPT ``func``
+    function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
     function-signature --> parameter-clauses function-result-OPT
