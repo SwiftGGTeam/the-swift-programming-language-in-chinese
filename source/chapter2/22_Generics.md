@@ -27,7 +27,7 @@
 这里是一个标准的，非泛型函数`swapTwoInts`,用来交换两个Int值：
 
 ```swift
-func swapTwoInts(inout a: Int, inout b: Int)
+func swapTwoInts(inout a: Int, inout b: Int) {
   let temporaryA = a
   a = b
   b = temporaryA
