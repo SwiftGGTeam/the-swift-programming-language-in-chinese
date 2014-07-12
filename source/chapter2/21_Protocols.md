@@ -573,7 +573,7 @@ wishHappyBirthday(birthdayPerson)
 
 > 注意: `@objc`用来表示协议是可选的，也可以用来表示暴露给`Objective-C`的代码，此外，`@objc`型协议只对`类`有效，因此只能在`类`中检查协议的一致性。详情查看*[Using Siwft with Cocoa and Objectivei-c](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。
 
-如下所示，定义了`Circle`和`Country`类，它们都遵循了`haxArea`协议
+如下所示，定义了`Circle`和`Country`类，它们都遵循了`hasArea`协议
 
 ```swift
 class Circle: HasArea {
