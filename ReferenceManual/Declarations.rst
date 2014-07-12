@@ -224,7 +224,7 @@ when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
 To declare a static constant property,
-mark the declaration with the ``static`` keyword. Static properties
+mark the declaration with the ``static`` declaration modifier. Static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class constant properties after they're implemented
@@ -271,8 +271,8 @@ the scope at which the variable is declared and the kind of variable you intend 
     You can also declare properties in the context of a protocol declaration,
     as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
 
-You can override a property in a subclass by prefixing the subclass's property declaration
-with the ``override`` keyword, as described in :ref:`Inheritance_Overriding`.
+You can override a property in a subclass by marking the subclass's property declaration
+with the ``override`` declaration modifier, as described in :ref:`Inheritance_Overriding`.
 
 .. _Declarations_StoredVariablesAndVariableStoredProperties:
 
@@ -421,9 +421,9 @@ see :ref:`Properties_PropertyObservers`.
 Class and Static Variable Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To declare a class computed property, mark the declaration with the ``class`` keyword.
+To declare a class computed property, mark the declaration with the ``class`` declaration modifier.
 To declare a static variable property,
-mark the declaration with the ``static`` keyword. Class and static properties
+mark the declaration with the ``static`` declaration modifier. Class and static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
@@ -505,7 +505,7 @@ Type Alias Declaration
 ----------------------
 
 A :newTerm:`type alias declaration` introduces a named alias of an existing type into your program.
-Type alias declarations begin with the keyword ``typealias`` and have the following form:
+Type alias declarations are declared using the keyword ``typealias`` and have the following form:
 
 .. syntax-outline::
 
@@ -529,7 +529,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     Grammar of a type alias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
-    typealias-head --> ``typealias`` typealias-name
+    typealias-head --> attributes-OPT declaration-modifiers-OPT ``typealias`` typealias-name
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -691,20 +691,18 @@ Special Kinds of Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Methods on an enumeration or a structure
-that modify ``self`` must be marked with the ``mutating`` keyword
-at the start of the function declaration.
+that modify ``self`` must be marked with the ``mutating`` declaration modifier.
 
 Methods that override a superclass method
-must be marked with the ``override`` keyword
-at the start of the function declaration.
-It's a compile-time error to override a method without the ``override`` keyword
-or to use the ``override`` keyword on a method
+must be marked with the ``override`` declaration modifier.
+It's a compile-time error to override a method without the ``override`` modifier
+or to use the ``override`` modifier on a method
 that doesn't override a superclass method.
 
 Methods associated with a type
 rather than an instance of a type
-must be marked with the ``static`` attribute for enumerations and structures
-or the ``class`` attribute for classes.
+must be marked with the ``static`` declaration modifier for enumerations and structures
+or the ``class`` declaration modifier for classes.
 
 Curried Functions and Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1075,13 +1073,13 @@ As discussed in :ref:`Declarations_InitializerDeclaration`,
 classes can have designated and convenience initializers.
 When you declare either kind of initializer,
 you can require any subclass to override it by marking the initializer
-with the ``required`` attribute.
+with the ``required`` declaration modifier.
 The designated initializer of a class must initialize all of the class's
 declared properties and it must do so before calling any of its superclass's
 designated initializers.
 
 A class can override properties, methods, and initializers of its superclass.
-Overridden methods and properties must be marked with the ``override`` keyword.
+Overridden methods and properties must be marked with the ``override`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -1120,7 +1118,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT declaration-modifiers-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -1170,12 +1168,12 @@ you can leave the body of the extension declaration empty.
 
 By default, types that conform to a protocol must implement all
 properties, methods, and subscripts declared in the protocol.
-That said, you can mark these protocol member declarations with the ``optional`` attribute
+That said, you can mark these protocol member declarations with the ``optional`` declaration modifier
 to specify that their implementation by a conforming type is optional.
-The ``optional`` attribute can be applied only to protocols that are marked
+The ``optional`` modifier can be applied only to protocols that are marked
 with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
-For more information about how to use the ``optional`` attribute
+For more information about how to use the ``optional`` declaration modifier
 and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
 see :ref:`Protocols_OptionalProtocolRequirements`.
@@ -1298,11 +1296,11 @@ For examples of conforming types that implement the method requirements of a pro
 see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the ``class`` keyword. Classes that implement
-this method also declare the method with the ``class`` keyword. Structures
-that implement it must declare the method with the ``static`` keyword instead.
+mark the method declaration with the ``class`` declaration modifier. Classes that implement
+this method also declare the method with the ``class`` modifier. Structures
+that implement it must declare the method with the ``static`` declaration modifier instead.
 If you're implementing the method in an extension,
-use the ``class`` keyword if you're extending a class and the ``static`` keyword
+use the ``class`` modifier if you're extending a class and the ``static`` modifier
 if you're extending a structure.
 
 See also :ref:`Declarations_FunctionDeclaration`.
@@ -1490,7 +1488,7 @@ Initializers in structures and enumerations can call other declared initializers
 to delegate part or all of the initialization process.
 
 To declare convenience initializers for a class,
-prefix the initializer declaration with the context-sensitive keyword ``convenience``.
+mark the initializer declaration with the ``convenience`` declaration modifier.
 
 .. syntax-outline::
 
@@ -1505,14 +1503,14 @@ initializer that ultimately initializes the class's properties.
 Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
-attribute to require that every subclass implement the initializer.
+declaration modifier to require that every subclass implement the initializer.
 Because designated initializers are not inherited by subclasses,
 they must be implemented directly.
 Required convenience initializers can be either implemented explicitly
 or inherited when the subclass directly implements all of the superclass’s designated
 initializers (or overrides the designated initializers with convenience initializers).
 Unlike methods, properties, and subscripts,
-you don't need to mark overridden initializers with the ``override`` keyword.
+you don't need to mark overridden initializers with the ``override`` declaration modifier.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -1528,7 +1526,7 @@ see :doc:`../LanguageGuide/Initialization`.
     Grammar of an initializer declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
-    initializer-head --> attributes-OPT ``convenience``-OPT ``init``
+    initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-body --> code-block
 
 
@@ -1582,7 +1580,7 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend the behavior of existing
 class, structure, and enumeration types.
-Extension declarations begin with the keyword ``extension`` and have the following form:
+Extension declarations are declared using the keyword ``extension`` and have the following form:
 
 .. syntax-outline::
 
@@ -1678,12 +1676,12 @@ That said, if you provide a setter clause, you must also provide a getter clause
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
-That type of the *setter name* must be the same as the *return type*.
+The type of the *setter name* must be the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
-you must mark the overridden subscript declaration with the ``override`` keyword.
+you must mark the overridden subscript declaration with the ``override`` declaration modifier.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
@@ -1709,7 +1707,7 @@ see :doc:`../LanguageGuide/Subscripts`.
     subscript-declaration --> subscript-head subscript-result code-block
     subscript-declaration --> subscript-head subscript-result getter-setter-block
     subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
-    subscript-head --> attributes-OPT ``subscript`` parameter-clause
+    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` parameter-clause
     subscript-result --> ``->`` attributes-OPT type
 
 
