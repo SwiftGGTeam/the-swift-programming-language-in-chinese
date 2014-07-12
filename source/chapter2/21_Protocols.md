@@ -573,7 +573,7 @@ wishHappyBirthday(birthdayPerson)
 
 > 注意: `@objc`用来表示协议是可选的，也可以用来表示暴露给`Objective-C`的代码，此外，`@objc`型协议只对`类`有效，因此只能在`类`中检查协议的一致性。详情查看*[Using Siwft with Cocoa and Objectivei-c](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。
 
-如下所示，定义了`Circle`和`Country`类，它们都遵循了`hasArea`协议
+如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议
 
 ```swift
 class Circle: HasArea {
@@ -588,7 +588,7 @@ class Country: HasArea {
 }
 ```
 
-`Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`haxArea`协议。
+`Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`HasArea`协议。
 
 如下所示，Animal是一个没有实现`HasArea`协议的类
 
