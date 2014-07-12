@@ -1896,5 +1896,5 @@ that introduces the declaration.
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT

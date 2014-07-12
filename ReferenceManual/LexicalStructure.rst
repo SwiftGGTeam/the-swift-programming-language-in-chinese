@@ -265,6 +265,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
+  ``dynamic``,
   ``didSet``,
   ``final``,
   ``get``,
