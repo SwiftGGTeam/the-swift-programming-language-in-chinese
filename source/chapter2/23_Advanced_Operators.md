@@ -239,7 +239,7 @@ signedUnderflow = signedUnderflow &- 1
 
 ### 除零溢出
 
-一个数除于0 `i / 0`，或者对0求余数 `i % 0`，就会产生一个错误。
+一个数除以0 `i / 0`，或者对0求余数 `i % 0`，就会产生一个错误。
 
 ```swift
 let x = 1
