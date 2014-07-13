@@ -333,35 +333,50 @@ Nested Types
 Subclassing
 -----------
 
-You can subclass any class that is visible in your code.
+You can subclass any class that is visible in a certain access scope.
 A subclass cannot have more visibility than its superclass, however ---
 for example, you cannot write a ``public`` subclass of an ``internal`` superclass.
+
 In addition, you can override any class member
-(that is, any method, property, subscript, or initializer)
-that is visible in your code.
+(method, property, subscript, or initializer)
+that is visible in a certain access scope.
 
-An override can make an inherited class member more public than its superclass version:
+An override can make an inherited class member more public than its superclass version.
+In the example below, class ``A`` is a public class with a private method called ``someMethod``.
+Class ``B`` is a subclass of ``A``, with a reduced access level of “internal”.
+Nonetheless, class ``B`` provides an override of ``someMethod``
+with an access level of “internal”, which is *higher* than the original implementation:
 
-.. testcode::
+.. testcode:: subclassingNoCall
 
-   -> public class Public {
-         private func someMethod() {
-            println("Public someMethod()")
-         }
+   -> public class A {
+         private func someMethod() {}
       }
    ---
-   -> internal class Internal : Public {
+   -> internal class B : A {
+         override internal func someMethod() {}
+      }
+
+It is even valid for a subclass member to call
+a superclass member with lower access permissions than itself,
+as long as the access control level restrictions are not broken:
+
+.. testcode:: subclassingWithCall
+
+   -> public class A {
+         private func someMethod() {}
+      }
+   ---
+   -> internal class B : A {
          override internal func someMethod() {
-            println("Internal someMethod()")
+            super.someMethod()
          }
       }
-   -> let i = Internal()
-   -> i.someMethod()
 
-.. overriding can make something more public (go into more detail on what this means)
-
-.. you can make something more public if all the types are more private
-.. private members cannot override public members unless they are in a private class (see r19769)
+Because class ``A`` and ``B`` are defined in the same source file,
+it is valid for the ``B`` implementation of ``someMethod`` to call
+the ``A`` implementation of ``someMethod``,
+even though the implementation from ``A`` is defined as private.
 
 .. _AccessControl_MethodsPropertiesSubscriptsAndInitializers:
 
