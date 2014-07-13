@@ -378,27 +378,88 @@ it is valid for the ``B`` implementation of ``someMethod`` to call
 the ``A`` implementation of ``someMethod``,
 even though the implementation from ``A`` is defined as private.
 
-.. _AccessControl_MethodsPropertiesSubscriptsAndInitializers:
+.. _AccessControl_ConstantsVariablesPropertiesAndSubscripts:
 
-Methods, Properties, Subscripts, and Initializers
--------------------------------------------------
+Constants, Variables, Properties, and Subscripts
+------------------------------------------------
 
-.. an initializer, method, subscript, or property may have an access level less than or equal to the access level of its type (including the implicit 'Self' type)
+A constant, variable, or property cannot be more public than its type.
+It is not valid to write a public property with a private type, for example.
+Similarly, a subscript cannot be more public than either its index type or return type.
 
-.. if the type's accessibility is ``private``, the accessibility of its members defaults to ``private``
-.. if the type's accessibility is ``internal`` or ``public``, the accessibility of its members defaults to ``internal``
+Getters and setters for constants, variables, properties, and subscripts
+automatically receive the same access level as
+the constant, variable, property, or subscript they belong to.
+If desired, a setter can be given a *lower* access level than its corresponding getter,
+to restrict the read-write scope of that variable, property, or subscript.
+This is indicated by writing ``private(set)`` or ``internal(set)``
+before the ``var`` or ``subscript`` introducer.
 
-.. _AccessControl_PropertiesAndSubscripts:
+.. note::
 
-Properties and Subscripts
--------------------------
+   This rule applies to stored properties as well as computed properties.
+   Even though you do not write an explicit getter and setter for a stored property,
+   Swift still synthesizes an implicit getter and setter for you
+   to provide access to the stored property's backing storage.
+   You can use ``private(set)`` and ``internal(set)`` to change the access level
+   of this synthesized setter in exactly the same was as for an explicit setter
+   in a computed property.
 
-.. getters and setters for properties and subscripts have the same access as the property or subscript
-.. setters may be explicitly annotated with an access level less than or equal to the access level of the property or subscript
-.. this is written as ``private(set)`` or ``internal(set)`` before the ``var`` introducer
-.. the same rules apply for getters and setters for global variables
-.. a property cannot be more public than its type (r19432)
-.. a subscript cannot be more public than its index or element type (r19446)
+The example below defines a structure called ``TrackedString``,
+which keeps track of the number of times that a string property is modified:
+
+.. testcode:: reducedSetterScope
+
+   -> struct TrackedString {
+         private(set) var numberOfEdits = 0
+         var value: String = "" {
+            didSet {
+               numberOfEdits++
+            }
+         }
+      }
+
+The ``TrackedString`` structure defines a stored string property called ``value``,
+with an initial value of the empty string, or ``""``.
+The structure also defines a stored integer property called ``numberOfEdits``,
+which is used to track the number of times that ``value`` is modified.
+This modification tracking is implemented with
+a ``didSet`` property observer on the ``value`` property,
+which increments ``numberOfEdits`` every time the ``value`` property is set to a new value.
+
+The ``TrackedString`` structure and the ``value`` property
+both receive the default access level of “internal”.
+However, the access level for the ``numberOfEdits`` property is treated differently.
+Even though it is a stored (rather than a computed) property,
+its setter is marked with a ``private(set)`` annotation
+to indicate that the property should only be settable from within the same source file.
+The property's getter still has the default access level of “internal”,
+but its setter is now private to the source file in which ``TrackedString`` is defined.
+This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
+but to present the property as a read-only property
+when it is used by other source files within the same module.
+
+If you create a ``TrackedString`` instance and modify its string value a few times,
+you can see the ``numberOfEdits`` property value change to match the number of modifications
+
+.. testcode:: reducedSetterScope
+
+   -> var stringToEdit = TrackedString()
+   << // stringToEdit : TrackedString = _TtV4REPL17TrackedString
+   -> stringToEdit.value = "This string will be tracked."
+   -> stringToEdit.value += " This edit will increment numberOfEdits."
+   -> stringToEdit.value += " So will this one."
+   -> println("The number of edits is \(stringToEdit.numberOfEdits)")
+   <- The number of edits is 3
+
+Although you can query the current value of the ``numberOfEdits`` property
+from within another source file,
+you are not able to *modify* the property from another source file.
+This protects the implementation details of the ``TrackedString`` edit-tracking functionality,
+while still providing convenient access to an aspect of that functionality.
+
+.. TODO: find a way to demonstrate this within the constraints of
+   a non-multi-file-based book.
 
 .. _AccessControl_Initializers:
 
