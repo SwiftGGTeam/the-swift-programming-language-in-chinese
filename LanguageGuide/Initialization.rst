@@ -1111,10 +1111,11 @@ shows that their default states have been set as expected.
 Required Initializers
 ~~~~~~~~~~~~~~~~~~~~~
  
-Apply the ``required`` modifier to a designated or convenience initializer of a class
-to indicate that every subclass of that class must implement that initializer.
+Write the ``required`` modifier before the definition of
+a designated or convenience initializer on a class
+to indicate that every subclass of that class must implement the required initializer.
  
-Even if an initializer is marked as ``required``,
+Even if an initializer is required,
 you may not have to provide an explicit implementation of that initializer,
 and may be able to satisfy the requirement with an inherited initializer instead.
 Requirements are satisfied based on the following two rules:
