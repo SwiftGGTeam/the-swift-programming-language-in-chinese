@@ -147,10 +147,10 @@ before the entity's introducer:
    << // someInternalConstant : Int = 0
    -> private func somePrivateFunction() {}
 
-As mentioned in Default Access Levels [link],
-the default global access level is “internal”,
-so ``SomeInternalClass`` and ``someInternalConstant`` can be written
-without an explicit access level modifier, as follows:
+The default global access level is ``internal``,
+as described in :ref:`AccessControl_DefaultAccessLevels`.
+This means that ``SomeInternalClass`` and ``someInternalConstant`` can be written
+without an explicit access level modifier:
 
 .. testcode:: accessControlDefaulted
 
@@ -163,10 +163,9 @@ without an explicit access level modifier, as follows:
 Types
 -----
 
-As shown above,
-you can specify an explicit access level for a custom type
+You can specify an explicit access level for a custom type
 at the point that the type is defined.
-The new type can then be used wherever that access level permits.
+The new type can then be used wherever its access level permits.
 For example, if you define a ``private`` class,
 that class can only be used as the type of a property,
 or as a function parameter or return type,
@@ -177,26 +176,27 @@ the default access level of that type's members.
 If you define a type's access level as ``private``,
 the default access level of its properties, methods, subscripts, and initializers
 is also ``private``.
-Conversely, if you define a type's access level as ``internal`` or ``public``,
-the default access level of its properties, methods, subscripts, and initializers is ``internal``.
+Conversely, if you define a type's access level as ``internal`` or ``public``
+(or use the default access level of ``internal``
+without specifying an access level explicitly),
+the default access level of the type's
+properties, methods, subscripts, and initializers is ``internal``.
 
 .. testcode:: accessControl, accessControlWrong
 
-   -> public class somePublicClass {
-         var someInternalProperty = 0            // implicitly internal
-         private func somePrivateMethod() {}
+   -> public class SomePublicClass {          // explicitly public class
+         var someInternalProperty = 0         // implicitly internal class member
+         private func somePrivateMethod() {}  // explicitly private class member
       }
    ---
-   -> class SomeInternalClass {                  // implicitly internal
-         var someInternalProperty = 0            // implicitly internal
-         private subscript(index: Int) -> Int {
-            return 0
-         }
+   -> class SomeInternalClass {               // implicitly internal class
+         var someInternalProperty = 0         // implicitly internal class member
+         private func somePrivateMethod() {}  // explicitly private class member
       }
    ---
-   -> private class SomePrivateClass {
-         var somePrivateProperty = 0             // implicitly private
-         func somePrivateMethod() {}
+   -> private class SomePrivateClass {        // explicitly private class
+         var somePrivateProperty = 0          // implicitly private class member
+         func somePrivateMethod() {}          // implicitly private class member
       }
 
 .. _AccessControl_TupleTypes:
@@ -243,18 +243,18 @@ In fact, ``someFunction`` will not compile as written below:
    !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
    !! ^                                     ~~~~~~~~~~~~~~~~
    !! <REPL Input>:1:15: note: type declared here
-   !! private class SomePrivateClass {
+   !! private class SomePrivateClass {        // explicitly private class
    !! ^
 
 The function's return type is
 a tuple type composed from two of the custom classes defined earlier.
-One of these classes was defined as ``internal``,
-and the other was defined as ``private``.
-Therefore, the overall access level of the compound tuple type is ``private``
+One of these classes was defined as internal,
+and the other was defined as private.
+Therefore, the overall access level of the compound tuple type is private
 (the minimum access level of the tuple's constituent types).
 
-Because the function's return type is ``private``,
-the function's overall access level must be explicitly set to ``private``
+Because the function's return type is private,
+the function's overall access level must be marked with the ``private`` keyword
 for the function declaration to be valid:
 
 .. testcode:: accessControl
@@ -291,7 +291,20 @@ For example, a ``private`` constant or variable can be defined as having
 a type that is ``public`` or ``internal``.
 However, a ``public`` constant or variable cannot be defined as having
 a ``private`` or ``internal`` type,
-because that type might not be visibile to users of the ``public`` constant or variable.
+because that type might not be visible to users of the ``public`` constant or variable.
+
+The following global constant and variable definitions are all valid:
+
+.. testcode:: accessControl
+
+   // okay - globalVariable is a private variable with an internally-scoped type
+   -> private var globalVariable = SomeInternalClass()
+   << // globalVariable : SomeInternalClass = _TtC4REPL17SomeInternalClass
+   ---
+   // okay - globalConstant is an (implicitly) internal constant
+   // with a publicly-scoped type
+   -> var globalConstant = SomePublicClass()
+   << // globalConstant : SomePublicClass = _TtC4REPL15SomePublicClass
 
 .. _AccessControl_EnumerationTypes:
 
