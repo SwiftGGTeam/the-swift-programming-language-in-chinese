@@ -328,7 +328,7 @@ For example, a ``private`` type alias can refer to an ``internal`` or ``public``
 but a ``public`` type alias cannot refer to an ``internal`` or ``private`` type.
 This includes associated types used to satisfy protocol conformances.
 
-.. sourcefile:: typeAliases_Module1
+.. sourcefile:: typeAliases
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}
@@ -372,11 +372,10 @@ Global Constants and Variables
 
 A global constant or variable can be assigned an explicit access level
 that is less than or equal to the accessibility of its type.
-For example, a ``private`` constant or variable can be defined as having
-a type that is ``public`` or ``internal``.
-However, a ``public`` constant or variable cannot be defined as having
-a ``private`` or ``internal`` type,
-because that type might not be visible to users of the ``public`` constant or variable.
+For example, a private constant or variable can be defined as having
+a type that is public or internal.
+However, a public constant or variable cannot be defined as having a private or internal type,
+because that type might not be visible to users of the public constant or variable.
 
 The following global constant and variable definitions are all valid:
 
@@ -713,7 +712,7 @@ but to present the property as a read-only property
 when it is used by other source files within the same module.
 
 If you create a ``TrackedString`` instance and modify its string value a few times,
-you can see the ``numberOfEdits`` property value change to match the number of modifications
+you can see the ``numberOfEdits`` property value change to match the number of modifications:
 
 .. testcode:: reducedSetterScope
 
@@ -746,36 +745,49 @@ The only exception is for initializers that are required by a superclass
 A required initializer on a subclass must have
 the same access level as the subclass itself.
 
-.. _AccessControl_DefaultInitializers:
-
-Default Initializers
-~~~~~~~~~~~~~~~~~~~~
-
-The default no-argument initializer for a structure or class (where available)
-has the same accessibility as the type it initializes.
-
-For a type that is defined as ``public``,
-the default no-argument initializer (when available) can only be accessed
-within the module in which the type is defined.
-If you want a public type to be initializable with a no-argument initializer
-from within another module,
-provide a custom implementation of a public no-argument initializer
-as part of the type's definition.
-
-The default memberwise initializer for a structure has
-the minimum access level of all of the structure's stored properties.
-In some cases, this can mean that the default memberwise initializer is not available
-in a particular access context, because one or more of those stored properties
-are more private than the access context allows.
-
-.. for modules, if you want a "public" initializer that matches the default initializers, you have to provide it yourself
-.. the no-argument initializer will be internal always, regardless of the property's access (is this true even if the type is public?)
-.. an initializer may not use a type with a more private level than the initializer's own level (r19519)
+As with function and method parameters,
+the types of an initializer's parameters cannot be more private than
+the initializer's own access level.
 
 .. note::
 
    Deinitializers always have the same access level as their enclosing class.
-   Deinitializers are always invoked by the Swift runtime, and cannot be called directly.
+   Deinitializers are invoked by the Swift runtime, and cannot be called directly.
+
+.. _AccessControl_DefaultInitializer:
+
+Default Initializer
+~~~~~~~~~~~~~~~~~~~
+
+Swift provides a :newTerm:`default initializer` (without any arguments)
+for any structure or base class
+that provides default values for all of its properties
+and does not provide at least one initializer itself.
+This default initializer is described in :ref:`Initialization_DefaultInitializers`.
+Where available, the default initializer
+has the same accessibility as the type it initializes.
+
+For a type that is defined as ``public``,
+the default initializer can only be accessed
+within the module in which the type is defined.
+If you want a public type to be initializable with a no-argument initializer
+when used in another module,
+provide a custom implementation of a public no-argument initializer
+as part of the type's definition.
+
+.. _AccessControl_DefaultMemberwiseInitializerForStructureTypes:
+
+Default Memberwise Initializer for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default memberwise initializer for a structure type is private unless
+all of the struct's stored properties are internal or public,
+in which case the initializer is internal.
+
+As with the default initializer above,
+if you want a public structure type to be initializable with a memberwise initializer
+when used in another module,
+you must provide a memberwise initializer yourself as part of the type's definition.
 
 .. _AccessControl_Protocols:
 
