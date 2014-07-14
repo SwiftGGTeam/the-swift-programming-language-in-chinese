@@ -1890,9 +1890,33 @@ that introduces the declaration.
     For an example and more information about the ``weak`` modifier,
     see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
 
+
+.. _Declarations_AccessControlLevels:
+
+Access Control Levels
+~~~~~~~~~~~~~~~~~~~~~
+
+
+``public``
+    .. write-me::
+
+``internal``
+    ..write-me::
+
+``private``
+    ..write-me::
+
+
 .. syntax-grammar::
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> access-level-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
+
+    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+    access-level-modifiers --> access-level-modifier access-level-modifiers-OPT
+

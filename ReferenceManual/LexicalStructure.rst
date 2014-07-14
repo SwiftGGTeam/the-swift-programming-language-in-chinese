@@ -287,8 +287,6 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``set``,
   ``Type``,
   ``unowned``,
-  ``unowned(safe)``,
-  ``unowned(unsafe)``,
   ``weak``
   and ``willSet``.
   Outside the context in which they appear in the grammar,
