@@ -57,16 +57,17 @@ the term *declaration* covers both declarations and definitions.
 
 .. _LexicalStructure_ModuleScope:
 
-Module Scope
-------------
+Top-Level Code
+--------------
 
-The module scope defines the code that's visible to other code in Swift source files
-that are part of the same module.
 The top-level code in a Swift source file consists of zero or more statements,
 declarations, and expressions.
-Variables, constants, and other named declarations that are declared
-at the top-level of a source file are visible to code
+By default, variables, constants, and other named declarations that are declared
+at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
+You can override this default behavior
+by marking the declaration with an access level modifier,
+as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
 
