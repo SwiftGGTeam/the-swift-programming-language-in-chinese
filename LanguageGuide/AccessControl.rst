@@ -353,13 +353,16 @@ with an access level of “internal”, which is *higher* than the original impl
          private func someMethod() {}
       }
    ---
-   -> internal class B : A {
+   -> internal class B: A {
          override internal func someMethod() {}
       }
 
 It is even valid for a subclass member to call
 a superclass member with lower access permissions than itself,
-as long as the access control level restrictions are not broken:
+as long as the call to the superclass's member takes place within
+an allowed access level context
+(i.e. within the same source file for a superclass private member call,
+or within the same module for a superclass internal member call):
 
 .. testcode:: subclassingWithCall
 
@@ -367,7 +370,7 @@ as long as the access control level restrictions are not broken:
          private func someMethod() {}
       }
    ---
-   -> internal class B : A {
+   -> internal class B: A {
          override internal func someMethod() {
             super.someMethod()
          }
@@ -386,6 +389,41 @@ Constants, Variables, Properties, and Subscripts
 A constant, variable, or property cannot be more public than its type.
 It is not valid to write a public property with a private type, for example.
 Similarly, a subscript cannot be more public than either its index type or return type.
+
+If a constant, variable, property, or subscript makes use of a private type,
+the constant, variable, property, or subscript must also be marked as ``private``:
+
+.. testcode:: accessControl
+
+   -> private var privateInstance = SomePrivateClass()
+   << // privateInstance : SomePrivateClass = _TtC4REPL16SomePrivateClass
+
+.. assertion:: useOfPrivateTypeRequiresPrivateKeyword
+
+   -> private class SomePrivateClass {}
+   -> let privateConstant = SomePrivateClass()
+   !! <REPL Input>:1:5: error: constant must be declared private because its type 'SomePrivateClass' uses a private type
+   !! let privateConstant = SomePrivateClass()
+   !! ^
+   -> var privateVariable = SomePrivateClass()
+   !! <REPL Input>:1:5: error: variable must be declared private because its type 'SomePrivateClass' uses a private type
+   !! var privateVariable = SomePrivateClass()
+   !! ^
+   -> class C {
+         var privateProperty = SomePrivateClass()
+         subscript(index: Int) -> SomePrivateClass {
+            return SomePrivateClass()
+         }
+      }
+   !! <REPL Input>:2:10: error: property must be declared private because its type 'SomePrivateClass' uses a private type
+   !! var privateProperty = SomePrivateClass()
+   !! ^
+   !! <REPL Input>:3:6: error: subscript must be declared private because its element type uses a private type
+   !! subscript(index: Int) -> SomePrivateClass {
+   !! ^                        ~~~~~~~~~~~~~~~~
+   !! <REPL Input>:1:15: note: type declared here
+   !! private class SomePrivateClass {}
+   !! ^
 
 Getters and setters for constants, variables, properties, and subscripts
 automatically receive the same access level as
@@ -445,7 +483,7 @@ you can see the ``numberOfEdits`` property value change to match the number of m
 .. testcode:: reducedSetterScope
 
    -> var stringToEdit = TrackedString()
-   << // stringToEdit : TrackedString = _TtV4REPL17TrackedString
+   << // stringToEdit : TrackedString = _TtV4REPL13TrackedString
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."
@@ -466,19 +504,43 @@ while still providing convenient access to an aspect of that functionality.
 Initializers
 ------------
 
-.. if an initializer is ``@required`` by a superclass, it must have at least as much accessibility as the subclass type itself (in order to satisfy the requirement defined by the superclass) (r19383)
-.. the implicit memberwise initializer for a structure has the minimum accessibility of all of the structure's stored properties (and is not provided if this is less than the current access context?)
-.. the implicit no-argument initializer for structures and classes has the same accessibility as the enclosing type
+Custom initializers can be assigned an access level less than or equal to
+the type that they initialize.
+The only exception is for initializers that are required by a superclass
+(as defined in :ref:`Initialization_RequiredInitializers`).
+A required initializer on a subclass must have
+the same access level as the subclass itself.
+
+.. _AccessControl_DefaultInitializers:
+
+Default Initializers
+~~~~~~~~~~~~~~~~~~~~
+
+The default no-argument initializer for a structure or class (where available)
+has the same accessibility as the type it initializes.
+
+For a type that is defined as ``public``,
+the default no-argument initializer (when available) can only be accessed
+within the module in which the type is defined.
+If you want a public type to be initializable with a no-argument initializer
+from within another module,
+provide a custom implementation of a public no-argument initializer
+as part of the type's definition.
+
+The default memberwise initializer for a structure has
+the minimum access level of all of the structure's stored properties.
+In some cases, this can mean that the default memberwise initializer is not available
+in a particular access context, because one or more of those stored properties
+are more private than the access context allows.
+
 .. for modules, if you want a "public" initializer that matches the default initializers, you have to provide it yourself
 .. the no-argument initializer will be internal always, regardless of the property's access (is this true even if the type is public?)
 .. an initializer may not use a type with a more private level than the initializer's own level (r19519)
 
-.. _AccessControl_Deinitializers:
+.. note::
 
-Deinitializers
-~~~~~~~~~~~~~~
-
-.. deinitializers are only invoked by the runtime and always have the same accessibility as the enclosing class
+   Deinitializers always have the same access level as their enclosing class.
+   Deinitializers are always invoked by the Swift runtime, and cannot be called directly.
 
 .. _AccessControl_Protocols:
 
