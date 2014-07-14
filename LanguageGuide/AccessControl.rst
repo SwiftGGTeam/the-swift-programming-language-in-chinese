@@ -634,7 +634,7 @@ before the ``var`` or ``subscript`` introducer.
    Swift still synthesizes an implicit getter and setter for you
    to provide access to the stored property's backing storage.
    You can use ``private(set)`` and ``internal(set)`` to change the access level
-   of this synthesized setter in exactly the same was as for an explicit setter
+   of this synthesized setter in exactly the same way as for an explicit setter
    in a computed property.
 
 The example below defines a structure called ``TrackedString``,
