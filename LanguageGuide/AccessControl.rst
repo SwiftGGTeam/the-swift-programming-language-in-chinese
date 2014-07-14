@@ -210,6 +210,54 @@ For example, if you compose a tuple from two different types,
 one of which is internal and one of which is private,
 the access level for that compound tuple type will be private.
 
+.. sourcefile:: tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private
+
+   -> public struct PublicStruct {}
+   -> internal struct InternalStruct {}
+   -> private struct PrivateStruct {}
+   -> public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
+         return (PublicStruct(), PublicStruct())
+      }
+   -> func returnInternalTuple() -> (PublicStruct, InternalStruct) {
+         return (PublicStruct(), InternalStruct())
+      }
+   -> private func returnPrivateTuple() -> (PublicStruct, PrivateStruct) {
+         return (PublicStruct(), PrivateStruct())
+      }
+
+.. sourcefile:: tupleTypes_Module1_PublicAndInternal
+
+   // tuples with (at least) internal members can be accessed within their own module
+   -> let publicTuple = returnPublicTuple()
+   -> let internalTuple = returnInternalTuple()
+
+.. sourcefile:: tupleTypes_Module1_Private
+
+   // a tuple with one or more private members can't be accessed from outside of its source file
+   -> let privateTuple = returnPrivateTuple()
+   !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnPrivateTuple'
+   !! let privateTuple = returnPrivateTuple()
+   !! ^
+
+.. sourcefile:: tupleTypes_Module2_Public
+
+   // a public tuple with all-public members can be used in another module
+   -> import tupleTypes_Module1
+   -> let publicTuple = returnPublicTuple()
+
+.. sourcefile:: tupleTypes_Module2_InternalAndPrivate
+
+   // tuples with internal or private members can't be used outside of their own module
+   -> import tupleTypes_Module1
+   -> let internalTuple = returnInternalTuple()
+   -> let privateTuple = returnPrivateTuple()
+   !! /tmp/sourcefile_0.swift:2:21: error: use of unresolved identifier 'returnInternalTuple'
+   !! let internalTuple = returnInternalTuple()
+   !! ^
+   !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnPrivateTuple'
+   !! let privateTuple = returnPrivateTuple()
+   !! ^
+
 .. note::
 
    Tuple types do not have a stand-alone definition in the way that
@@ -279,6 +327,43 @@ A type alias can have an access level less than or equal to the access level of 
 For example, a ``private`` type alias can refer to an ``internal`` or ``public`` type,
 but a ``public`` type alias cannot refer to an ``internal`` or ``private`` type.
 This includes associated types used to satisfy protocol conformances.
+
+.. sourcefile:: typeAliases_Module1
+
+   -> public struct PublicStruct {}
+   -> internal struct InternalStruct {}
+   -> private struct PrivateStruct {}
+   ---
+   -> public typealias PublicAliasOfPublicType = PublicStruct
+   -> internal typealias InternalAliasOfPublicType = PublicStruct
+   -> private typealias PrivateAliasOfPublicType = PublicStruct
+   ---
+   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+   -> internal typealias InternalAliasOfInternalType = InternalStruct
+   -> private typealias PrivateAliasOfInternalType = InternalStruct
+   ---
+   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
+   ---
+   !! /tmp/sourcefile_0.swift:7:18: error: type alias cannot be declared public because its underlying type uses an internal type
+   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+   !! ^                           ~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:2:17: note: type declared here
+   !! internal struct InternalStruct {}
+   !! ^
+   !! /tmp/sourcefile_0.swift:10:18: error: type alias cannot be declared public because its underlying type uses a private type
+   !! public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+   !! ^                          ~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !! private struct PrivateStruct {}
+   !! ^
+   !! /tmp/sourcefile_0.swift:11:20: error: type alias cannot be declared internal because its underlying type uses a private type
+   !! internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+   !! ^                            ~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !! private struct PrivateStruct {}
+   !! ^
 
 .. _AccessControl_GlobalConstantsAndVariables:
 
