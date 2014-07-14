@@ -36,7 +36,7 @@ and null (U+0000).
    not in order of Unicode codepoints.
 
 Comments are treated as whitespace by the compiler.
-Single line comments begin with `//`
+Single line comments begin with ``//``
 and continue until the end of the line.
 Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting multiline comments is allowed,
