@@ -17,14 +17,14 @@ as can properties, methods, initializers, and subscripts implemented by those ty
 Protocols can also restrict access to a certain scope,
 and a type's conformance to a protocol can be hidden in certain scopes if appropriate.
 (The various aspects of your code that can have access control applied to them
-are referred to as “entities” in the descriptions below.)
+are referred to as “entities” in the sections below.)
 
-Despite offering considerable flexibility around access control,
-Swift avoids the need for you to specify access control in many cases
+In addition to offering considerable flexibility around access control,
+Swift reduces the need for you to specify explicit access control levels
 by using appropriate default levels of access in different scenarios.
 Indeed, if you are writing a single-target app,
 Swift's default access settings may mean that
-you do not need to implement custom access control at all.
+you do not need to specify custom access control levels at all.
 
 .. _AccessControl_ModulesAndSourceFiles:
 
@@ -35,14 +35,16 @@ Swift's access control model is based on the concept of modules and source files
 
 A :newTerm:`module` is a single unit of code distribution ---
 a framework or application that is built and shipped as a single entity,
-and that can potentially be imported by another module with Swift's ``import`` keyword.
+and that can potentially be imported by another module
+by using Swift's ``import`` keyword.
 
 Each build target (such as an app bundle or framework) in Xcode
 is treated as a separate module in Swift.
 If you group together some aspect of your app's code as a stand-alone framework ---
 perhaps to encapsulate and re-use that code across multiple applications ---
-everything you define within that framework will be part of a separate module
-when it is imported and used within an app, or within another framework.
+then everything you define within that framework will be part of a separate module
+when it is imported and used within an app,
+or when it is used within another framework.
 
 A :newTerm:`source file` is a single Swift source code file within a module
 (i.e. a single file within an app or framework).
@@ -56,7 +58,7 @@ Access Levels
 
 Swift provides three different :newTerm:`access levels` for entities within your code.
 These access levels are relative to the source file in which an entity is defined,
-and to the module that the source file belongs to.
+and also relative to the module the source file belongs to.
 
 * :newTerm:`Public access`
   enables entities to be used within any source file inside their defining module,
@@ -86,7 +88,7 @@ All definitions in your code
 have a default access level of “internal”
 if you do not specify a custom access level yourself.
 This default setting means that in many cases you do not need to specify
-an explicit access level at all.
+an explicit access in your code.
 
 .. _AccessControl_AccessLevelsForSingleTargetApps:
 
@@ -121,10 +123,12 @@ as “public” so that it can be viewed and accessed by other modules
 This public-facing interface is known as the :newTerm:`API`
 or :newTerm:`Application Programming Interface` for the framework.
 
-Any internal implementation details of your framework can still make use of
-the default access level of “internal”,
-or can be marked as “private” if you wish to hide them from
-other parts of the framework's internal code.
+.. note::
+
+   Any internal implementation details of your framework can still make use of
+   the default access level of “internal”,
+   or can be marked as “private” if you wish to hide them from
+   other parts of the framework's internal code.
 
 .. _AccessControl_AccessControlSyntax:
 
@@ -150,7 +154,8 @@ before the entity's introducer:
 The default global access level is ``internal``,
 as described in :ref:`AccessControl_DefaultAccessLevels`.
 This means that ``SomeInternalClass`` and ``someInternalConstant`` can be written
-without an explicit access level modifier:
+without an explicit access level modifier if preferred,
+and will still have an access level of “internal”:
 
 .. testcode:: accessControlDefaulted
 
@@ -166,25 +171,26 @@ Types
 You can specify an explicit access level for a custom type
 at the point that the type is defined.
 The new type can then be used wherever its access level permits.
-For example, if you define a ``private`` class,
+For example, if you define a private class,
 that class can only be used as the type of a property,
 or as a function parameter or return type,
-in the source file in which the ``private`` class was originally defined.
+in the source file in which the private class was originally defined.
 
 The access control level of a type also affects
 the default access level of that type's members.
-If you define a type's access level as ``private``,
+If you define a type's access level as “private”,
 the default access level of its properties, methods, subscripts, and initializers
-is also ``private``.
-Conversely, if you define a type's access level as ``internal`` or ``public``
-(or use the default access level of ``internal``
+is also private.
+Conversely, if you define a type's access level as “internal” or “public”
+(or use the default access level of “internal”
 without specifying an access level explicitly),
 the default access level of the type's
-properties, methods, subscripts, and initializers is ``internal``.
+properties, methods, subscripts, and initializers is “internal”.
 
 .. testcode:: accessControl, accessControlWrong
 
    -> public class SomePublicClass {          // explicitly public class
+         public var somePublicProperty = 0    // explicitly public class member
          var someInternalProperty = 0         // implicitly internal class member
          private func somePrivateMethod() {}  // explicitly private class member
       }
@@ -206,9 +212,9 @@ Tuple Types
 
 The access level for a tuple type is
 the minimum access level of all of the types used in that tuple.
-For example, if you compose a tuple from two different types,
+If you compose a tuple from two different types,
 one of which is internal and one of which is private,
-the access level for that compound tuple type will be private.
+the access level for that compound tuple type will be “private”.
 
 .. sourcefile:: tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private
 
@@ -277,7 +283,7 @@ if the function's calculated access level does not match the contextual default.
 
 The example below defines a global function called ``someFunction``,
 without providing a specific access level modifier for the function itself.
-You might expect this function to have the default access level of ``internal``,
+You might expect this function to have the default access level of “internal”,
 but this is not the case.
 In fact, ``someFunction`` will not compile as written below:
 
@@ -296,9 +302,9 @@ In fact, ``someFunction`` will not compile as written below:
 
 The function's return type is
 a tuple type composed from two of the custom classes defined earlier.
-One of these classes was defined as internal,
-and the other was defined as private.
-Therefore, the overall access level of the compound tuple type is private
+One of these classes was defined as “internal”,
+and the other was defined as “private”.
+Therefore, the overall access level of the compound tuple type is “private”
 (the minimum access level of the tuple's constituent types).
 
 Because the function's return type is private,
@@ -313,57 +319,10 @@ for the function declaration to be valid:
       }
 
 It is not valid to mark the definition of ``someFunction``
-as ``public`` or ``internal``, or to use the default setting of ``internal``,
+with the ``public`` or ``internal`` keywords,
+or to use the default setting of “internal”,
 because public or internal users of the function might not have appropriate access
-to the private class used in its return type.
-
-.. _AccessControl_TypeAliases:
-
-Type Aliases
-~~~~~~~~~~~~
-
-Any type aliases you define are treated as distinct types for the purposes of access control.
-A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a ``private`` type alias can refer to an ``internal`` or ``public`` type,
-but a ``public`` type alias cannot refer to an ``internal`` or ``private`` type.
-This includes associated types used to satisfy protocol conformances.
-
-.. sourcefile:: typeAliases
-
-   -> public struct PublicStruct {}
-   -> internal struct InternalStruct {}
-   -> private struct PrivateStruct {}
-   ---
-   -> public typealias PublicAliasOfPublicType = PublicStruct
-   -> internal typealias InternalAliasOfPublicType = PublicStruct
-   -> private typealias PrivateAliasOfPublicType = PublicStruct
-   ---
-   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
-   -> internal typealias InternalAliasOfInternalType = InternalStruct
-   -> private typealias PrivateAliasOfInternalType = InternalStruct
-   ---
-   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
-   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
-   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
-   ---
-   !! /tmp/sourcefile_0.swift:7:18: error: type alias cannot be declared public because its underlying type uses an internal type
-   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
-   !! ^                           ~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:2:17: note: type declared here
-   !! internal struct InternalStruct {}
-   !! ^
-   !! /tmp/sourcefile_0.swift:10:18: error: type alias cannot be declared public because its underlying type uses a private type
-   !! public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
-   !! ^                          ~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
-   !! private struct PrivateStruct {}
-   !! ^
-   !! /tmp/sourcefile_0.swift:11:20: error: type alias cannot be declared internal because its underlying type uses a private type
-   !! internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
-   !! ^                            ~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
-   !! private struct PrivateStruct {}
-   !! ^
+to the private class used in the function's return type.
 
 .. _AccessControl_GlobalConstantsAndVariables:
 
@@ -569,7 +528,7 @@ Subclassing
 
 You can subclass any class that is visible in a certain access scope.
 A subclass cannot have more visibility than its superclass, however ---
-for example, you cannot write a ``public`` subclass of an ``internal`` superclass.
+for example, you cannot write a public subclass of an internal superclass.
 
 In addition, you can override any class member
 (method, property, subscript, or initializer)
@@ -579,7 +538,8 @@ An override can make an inherited class member more public than its superclass v
 In the example below, class ``A`` is a public class with a private method called ``someMethod``.
 Class ``B`` is a subclass of ``A``, with a reduced access level of “internal”.
 Nonetheless, class ``B`` provides an override of ``someMethod``
-with an access level of “internal”, which is *higher* than the original implementation:
+with an access level of “internal”, which is *higher* than
+the original implementation of ``someMethod``:
 
 .. testcode:: subclassingNoCall
 
@@ -692,7 +652,7 @@ which keeps track of the number of times that a string property is modified:
       }
 
 The ``TrackedString`` structure defines a stored string property called ``value``,
-with an initial value of the empty string, or ``""``.
+with an initial value of ``""`` (an empty string).
 The structure also defines a stored integer property called ``numberOfEdits``,
 which is used to track the number of times that ``value`` is modified.
 This modification tracking is implemented with
@@ -754,10 +714,10 @@ the initializer's own access level.
    Deinitializers always have the same access level as their enclosing class.
    Deinitializers are invoked by the Swift runtime, and cannot be called directly.
 
-.. _AccessControl_DefaultInitializer:
+.. _AccessControl_DefaultInitializers:
 
-Default Initializer
-~~~~~~~~~~~~~~~~~~~
+Default Initializers
+~~~~~~~~~~~~~~~~~~~~
 
 Swift provides a :newTerm:`default initializer` (without any arguments)
 for any structure or base class
@@ -775,10 +735,10 @@ when used in another module,
 provide a custom implementation of a public no-argument initializer
 as part of the type's definition.
 
-.. _AccessControl_DefaultMemberwiseInitializerForStructureTypes:
+.. _AccessControl_DefaultMemberwiseInitializersForStructureTypes:
 
-Default Memberwise Initializer for Structure Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Default Memberwise Initializers for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default memberwise initializer for a structure type is private unless
 all of the struct's stored properties are internal or public,
@@ -794,25 +754,186 @@ you must provide a memberwise initializer yourself as part of the type's definit
 Protocols
 ---------
 
-.. a protocol may have any accessibility less than or equal to the accessibility of the protocols it refines
-.. to put it another way, public protocols cannot refine private protocols - otherwise, how is an implementer to know all the requirements? (r19584)
-.. the accessibility of a requirement is the accessibility of the enclosing protocol, rather than ``internal``
-.. requirements may not be given less accessibility than the enclosing protocol
-.. a protocol may be used as a type whenever it is accessible
+Protocol types can be assigned an access level when they are defined.
+This enables you to create protocols that can only be adopted within
+a certain access scope.
+
+The access level of each requirement within a protocol definition
+is automatically set to the same access level as the protocol.
+You cannot set a protocol requirement to a different access level than
+the protocol it supports.
+This ensures that all of the protocol's requirements will be visible
+on any type that adopts the protocol.
+
+.. assertion:: protocolRequirementsCannotBeDifferentThanTheProtocol
+
+   -> public protocol PublicProtocol {
+         public var publicProperty: Int { get }
+         internal var internalProperty: Int { get }
+         private var privateProperty: Int { get }
+      }
+   !! <REPL Input>:2:6: error: 'public' attribute cannot be used in protocols
+   !! public var publicProperty: Int { get }
+   !! ^~~~~~
+   !!-
+   !! <REPL Input>:3:6: error: 'internal' attribute cannot be used in protocols
+   !! internal var internalProperty: Int { get }
+   !! ^~~~~~~~
+   !!-
+   !! <REPL Input>:4:6: error: 'private' attribute cannot be used in protocols
+   !! private var privateProperty: Int { get }
+   !! ^~~~~~~
+   !!-
+
+.. note::
+
+   If you define a public protocol,
+   the protocol's requirements default to requiring a “public” access level
+   for those requirements when they are implemented.
+   This behavior is different from other types,
+   where a “public” type definition implies
+   a default access level of “internal”.
+
+.. sourcefile:: protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private
+
+   -> public protocol PublicProtocol {
+         var publicProperty: Int { get }
+         func publicMethod()
+      }
+   -> internal protocol InternalProtocol {
+         var internalProperty: Int { get }
+         func internalMethod()
+      }
+   -> private protocol PrivateProtocol {
+         var privateProperty: Int { get }
+         func privateMethod()
+      }
+
+.. sourcefile:: protocols_Module1_PublicAndInternal
+
+   // these should all be allowed without problem
+   -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
+         public var publicProperty = 0
+         public func publicMethod() {}
+      }
+   -> internal class InternalClassConformingToPublicProtocol: PublicProtocol {
+         var publicProperty = 0
+         func publicMethod() {}
+      }
+   -> private class PrivateClassConformingToPublicProtocol: PublicProtocol {
+         var publicProperty = 0
+         func publicMethod() {}
+      }
+   ---
+   -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
+         var internalProperty = 0
+         func internalMethod() {}
+      }
+   -> internal class InternalClassConformingToInternalProtocol: InternalProtocol {
+         var internalProperty = 0
+         func internalMethod() {}
+      }
+   -> private class PrivateClassConformingToInternalProtocol: InternalProtocol {
+         var internalProperty = 0
+         func internalMethod() {}
+      }
+
+.. sourcefile:: protocols_Module1_Private
+
+   // these will fail, because PrivateProtocol is not visible outside of its file
+   -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+         var privateProperty = 0
+         func privateMethod() {}
+      }
+   !! /tmp/sourcefile_1.swift:1:54: error: use of undeclared type 'PrivateProtocol'
+   !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+   !! ^~~~~~~~~~~~~~~
+
+.. sourcefile:: protocols_Module2_Public
+
+   // these should all be allowed without problem
+   -> import protocols_Module1
+   -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
+         public var publicProperty = 0
+         public func publicMethod() {}
+      }
+   -> internal class InternalClassConformingToPublicProtocol: PublicProtocol {
+         var publicProperty = 0
+         func publicMethod() {}
+      }
+   -> private class PrivateClassConformingToPublicProtocol: PublicProtocol {
+         var publicProperty = 0
+         func publicMethod() {}
+      }
+
+.. sourcefile:: protocols_Module2_InternalAndPrivate
+
+   // these will both fail, becauswe InternalProtocol and PrivateProtocol
+   // are not visible to other modules
+   -> import protocols_Module1
+   -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
+         var internalProperty = 0
+         func internalMethod() {}
+      }
+   -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+         var privateProperty = 0
+         func privateMethod() {}
+      }
+   !! /tmp/sourcefile_0.swift:2:55: error: use of undeclared type 'InternalProtocol'
+   !! public class PublicClassConformingToInternalProtocol: InternalProtocol {
+   !! ^~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:6:54: error: use of undeclared type 'PrivateProtocol'
+   !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+   !! ^~~~~~~~~~~~~~~
+
+.. _AccessControl_ProtocolInheritance:
+
+Protocol Inheritance
+~~~~~~~~~~~~~~~~~~~~
+
+If you define a new protocol that inherits from an existing protocol,
+the new protocol can have at most the same access level as the protocol it inherits from.
+You cannot write a public protocol that inherits from an internal protocol, for example.
 
 .. _AccessControl_ProtocolConformance:
 
 Protocol Conformance
 ~~~~~~~~~~~~~~~~~~~~
 
-.. a type's conformance to a protocol also has a scope
-.. the accessibility of the conformance of type T to protocol P is equal to the minimum of T's accessibility and P's accessibility; that is, the conformance is accessible whenever both T and P are accessible
-.. if you can't see that a type conforms to a protocol, you can't use it as that protocol type, even if you can see all of the things that would otherwise enable it to satisfy the protocol's requirements
+A type can conform to a protocol with less accessibility than the type itself.
+For example, this enables you to define a public type that can be used anywhere,
+but whose conformance to a certain protocol can only be taken advantage of
+within the type's original defining module.
 
-.. if a type's member is used to satisfy a protocol requirement, it must have at least as much accessibility as the protocol conformance (otherwise it wouldn't be visible enough to satisfy it) (r19382)
-.. you can't specify private protocol conformance (what about internal)?
-.. a nominal can conform to a protocol whenever the protocol is accessible
-.. a type may conform to a protocol with less accessibility than the type itself
+The scope in which a type conforms to a particular protocol
+has an automatic access level equal to the minimum of the type's access level
+and the protocol's access level.
+If a type is public, but the protocol it conforms to is internal,
+the the fact that the type conforms to the protocol has an automatic access level of internal.
+
+.. note::
+
+   If you can't see that a type conforms to a protocol,
+   you cannot use that type as an instance of the protocol type,
+   even if you can see all of the type members that would otherwise enable
+   the type to satisfy the protocol requirements.
+   The actual protocol conformance must be visible in order for a type to be used
+   as an instance of a protocol type.
+
+When you write or extend a type to conform to a protocol,
+you must ensure that the type's implementation of each protocol requirement
+has at least the same access level as the type's conformance to that protocol.
+For example, if a public type conforms to an internal protocol ---
+giving a protocol conformance level of “internal” ---
+then the type's implementation of each protocol requirement must be at least “internal” too.
+
+.. note::
+
+   In Swift, as in Objective-C, protocol conformance is global ---
+   it is not possible for a type to conform to a protocol in two different ways
+   within the same program.
+   This means that if you write or extend a type to conform to a public protocol,
+   you must explicitly mark the implementation of each protocol requirement as ``public``.
 
 .. _AccessControl_Extensions:
 
@@ -833,3 +954,53 @@ Generics
 
 .. a generic type or function's accessibility is the minimum of the accessibility of the base type and the accessibility of all generic argument types (aka type parameter constraints?)
 
+.. _AccessControl_TypeAliases:
+
+Type Aliases
+------------
+
+Any type aliases you define are treated as distinct types for the purposes of access control.
+A type alias can have an access level less than or equal to the access level of the type it aliases.
+For example, a ``private`` type alias can refer to an ``internal`` or ``public`` type,
+but a ``public`` type alias cannot refer to an ``internal`` or ``private`` type.
+
+.. note::
+
+   This rule also applies to associated types used to satisfy protocol conformances.
+
+.. sourcefile:: typeAliases
+
+   -> public struct PublicStruct {}
+   -> internal struct InternalStruct {}
+   -> private struct PrivateStruct {}
+   ---
+   -> public typealias PublicAliasOfPublicType = PublicStruct
+   -> internal typealias InternalAliasOfPublicType = PublicStruct
+   -> private typealias PrivateAliasOfPublicType = PublicStruct
+   ---
+   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+   -> internal typealias InternalAliasOfInternalType = InternalStruct
+   -> private typealias PrivateAliasOfInternalType = InternalStruct
+   ---
+   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
+   ---
+   !! /tmp/sourcefile_0.swift:7:18: error: type alias cannot be declared public because its underlying type uses an internal type
+   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+   !! ^                           ~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:2:17: note: type declared here
+   !! internal struct InternalStruct {}
+   !! ^
+   !! /tmp/sourcefile_0.swift:10:18: error: type alias cannot be declared public because its underlying type uses a private type
+   !! public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+   !! ^                          ~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !! private struct PrivateStruct {}
+   !! ^
+   !! /tmp/sourcefile_0.swift:11:20: error: type alias cannot be declared internal because its underlying type uses a private type
+   !! internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+   !! ^                            ~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !! private struct PrivateStruct {}
+   !! ^
