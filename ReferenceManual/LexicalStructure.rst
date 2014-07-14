@@ -318,6 +318,7 @@ The following are examples of literals:
     Grammar of a literal
 
     literal --> integer-literal | floating-point-literal | string-literal
+    literal --> ``true`` | ``false`` | ``nil``
 
 
 .. _LexicalStructure_IntegerLiterals:
