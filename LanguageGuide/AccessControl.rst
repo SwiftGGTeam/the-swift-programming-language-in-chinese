@@ -391,6 +391,34 @@ The following global constant and variable definitions are all valid:
    -> var globalConstant = SomePublicClass()
    << // globalConstant : SomePublicClass = _TtC4REPL15SomePublicClass
 
+.. sourcefile:: globalConstantsAndVariables
+
+   -> public struct PublicStruct {}
+   -> internal struct InternalStruct {}
+   -> private struct PrivateStruct {}
+   ---
+   -> public var PublicVariableOfPublicType = PublicStruct()
+   -> internal var InternalVariableOfPublicType = PublicStruct()
+   -> private var PrivateVariableOfPublicType = PublicStruct()
+   ---
+   -> public var PublicVariableOfInternalType = InternalStruct ()    // not allowed
+   -> internal var InternalVariableOfInternalType = InternalStruct()
+   -> private var PrivateVariableOfInternalType = InternalStruct()
+   ---
+   -> public var PublicVariableOfPrivateType = PrivateStruct()       // not allowed
+   -> internal var InternalVariableOfPrivateType = PrivateStruct()   // not allowed
+   -> private var PrivateVariableOfPrivateType = PrivateStruct()
+   ---
+   !! /tmp/sourcefile_0.swift:7:12: error: variable cannot be declared public because its type 'InternalStruct' uses an internal type
+   !! public var PublicVariableOfInternalType = InternalStruct ()    // not allowed
+   !! ^
+   !! /tmp/sourcefile_0.swift:10:12: error: variable cannot be declared public because its type 'PrivateStruct' uses a private type
+   !! public var PublicVariableOfPrivateType = PrivateStruct()       // not allowed
+   !! ^
+   !! /tmp/sourcefile_0.swift:11:14: error: variable cannot be declared internal because its type 'PrivateStruct' uses a private type
+   !! internal var InternalVariableOfPrivateType = PrivateStruct()   // not allowed
+   !! ^
+
 .. _AccessControl_EnumerationTypes:
 
 Enumeration Types
@@ -399,6 +427,28 @@ Enumeration Types
 Members of an enumeration automatically receive the same access level as
 the enumeration they belong to.
 You cannot specify a different access level for individual enumeration members.
+
+.. TODO: add a test for the first assertion in the paragraph above.
+
+.. assertion:: enumerationMembersCantHaveAccessLevels
+
+   -> enum PublicEnum {
+         public case A
+         internal case B
+         private case C
+      }
+   !! <REPL Input>:2:6: error: 'public' attribute cannot be applied to this declaration
+   !! public case A
+   !! ^~~~~~
+   !!-
+   !! <REPL Input>:3:6: error: 'internal' attribute cannot be applied to this declaration
+   !! internal case B
+   !! ^~~~~~~~
+   !!-
+   !! <REPL Input>:4:6: error: 'private' attribute cannot be applied to this declaration
+   !! private case C
+   !! ^~~~~~~
+   !!-
 
 In addition, the types used for any raw values or associated values in an enumeration
 must have an access level at least as high as the enumeration's access level.
