@@ -894,17 +894,6 @@ is the minimum of the type's access level and the protocol's access level.
 If a type is public, but a protocol it conforms to is internal,
 the fact that the type conforms to the protocol is also “internal”.
 
-.. note::
-
-   If you can't see that a type conforms to a protocol,
-   you cannot use that type as an instance of the protocol's type,
-   even if you can see all of the type members that would otherwise enable
-   the type to satisfy the protocol requirements.
-   The actual protocol conformance must be visible in order for a type to be used
-   as an instance of a protocol type,
-   or as a generic type parameter or associated type
-   whose requirement is constrained by the protocol.
-
 When you write or extend a type to conform to a protocol,
 you must ensure that the type's implementation of each protocol requirement
 has at least the same access level as the type's conformance to that protocol.
