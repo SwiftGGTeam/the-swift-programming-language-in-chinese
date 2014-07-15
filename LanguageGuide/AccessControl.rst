@@ -9,8 +9,8 @@ and to specify a preferred interface through which that code can be accessed and
 Individual types (that is, classes, structures, and enumerations)
 can be assigned specific access levels,
 as can properties, methods, initializers, and subscripts belonging to those types.
-Protocols can also restrict access to a certain scope,
-and a type's conformance to a protocol can be hidden in certain scopes if appropriate.
+Protocols can also be restricted to a certain context,
+as can global constants, variables, and functions.
 
 In addition to offering considerable flexibility around access control,
 Swift reduces the need for you to specify explicit access control levels in many cases
@@ -76,8 +76,8 @@ Public, internal, and private access are typically used as follows:
 * Private access is used to hide the implementation details of
   a specific piece of functionality.
 
-Effectively, public access is the “most visible” access level
-and private access is the “least visible” (or most restrictive) access level.
+Effectively, public access is the “highest” access level
+and private access is the “lowest” (or most restrictive) access level.
 You are free to choose the most appropriate access level to use
 for different parts of your code.
 
@@ -88,15 +88,15 @@ Access Levels In Use
 
 The use of these three access levels in Swift follows an overall guiding principle:
 
-* No entity can be defined in terms of an entity that is less visible than itself.
+* No entity can be defined in terms of an entity with a lower access level.
 
 For example:
 
-* A public variable cannot be defined as having a private type,
-  because the private type might not be visible to users of the public variable.
-* A function cannot be more visible than its parameter types and return type,
+* A public variable cannot be defined as having an internal or private type,
+  because the type might not be available everywhere that the public variable is used.
+* A function cannot have a higher access level than its parameter types and return type,
   because the function could then be used in situations where
-  its constituent types were not visible to the surrounding code.
+  its constituent types are not available to the surrounding code.
 
 The specific implications of this guiding principle for different aspects of the language
 are covered in detail below.
@@ -128,11 +128,6 @@ Indeed, it is possible to write an entire single-target app
 without ever specifying an explicit access level in your code.
 You may, however, wish to mark some parts of your code as “private”
 in order to hide their implementation details from other code within the app's module.
-
-.. note::
-
-   You should not mark any declarations in a self-contained app as “public”,
-   because those declarations do not need to be made available outside of the app's module.
 
 .. _AccessControl_AccessLevelsForFrameworks:
 
@@ -172,7 +167,7 @@ before the entity's introducer:
    ---
    -> public var somePublicVariable = 0
    << // somePublicVariable : Int = 0
-   -> internal var someInternalConstant = 0
+   -> internal let someInternalConstant = 0
    << // someInternalConstant : Int = 0
    -> private func somePrivateFunction() {}
 
@@ -210,6 +205,15 @@ Conversely, if you define a type's access level as “internal” or “public�
 (or use the default access level of “internal”
 without specifying an access level explicitly),
 the default access level of the type's members will be “internal”.
+
+.. note::
+
+   As mentioned above,
+   a public type defaults to having internal members, not public members.
+   If you want a type member to be public, you must explicitly mark it as such.
+   This ensures that the public-facing API for a type is
+   something you opt in to publishing,
+   and avoids presenting the internal workings of a type as public API by mistake.
 
 .. testcode:: accessControl, accessControlWrong
 
@@ -353,33 +357,42 @@ to the private class used in the function's return type.
 Enumeration Types
 ~~~~~~~~~~~~~~~~~
 
-Members of an enumeration automatically receive the same access level as
+The individual cases of an enumeration automatically receive the same access level as
 the enumeration they belong to.
-You cannot specify a different access level for individual enumeration members.
+You cannot specify a different access level for individual enumeration cases.
 
-.. TODO: add a test for the first assertion in the paragraph above.
+In the example below,
+the ``CompassPoint`` enumeration has an explicit access level of “public”.
+The enumeration cases ``North``, ``South``, ``East``, and ``West``
+therefore also have an access level of “public”:
 
-.. assertion:: enumerationMembersCantHaveAccessLevels
+.. testcode:: enumerationCases
 
-   -> enum PublicEnum {
-         public case A
-         internal case B
-         private case C
+   -> public enum CompassPoint {
+         case North
+         case South
+         case East
+         case West
       }
-   !! <REPL Input>:2:6: error: 'public' attribute cannot be applied to this declaration
-   !! public case A
-   !! ^~~~~~
-   !!-
-   !! <REPL Input>:3:6: error: 'internal' attribute cannot be applied to this declaration
-   !! internal case B
-   !! ^~~~~~~~
-   !!-
-   !! <REPL Input>:4:6: error: 'private' attribute cannot be applied to this declaration
-   !! private case C
-   !! ^~~~~~~
-   !!-
 
-In addition, the types used for any raw values or associated values in an enumeration
+.. sourcefile:: enumerationCases_Module1
+
+   -> public enum CompassPoint {
+         case North
+         case South
+         case East
+         case West
+      }
+
+.. sourcefile:: enumerationCases_Module2
+
+   -> import enumerationCases_Module1
+   -> let north = CompassPoint.North
+
+Raw Values and Associated Values
+________________________________
+
+The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
 You cannot use a ``private`` type as the raw value type of
 an enumeration with an ``internal`` access level, say.
@@ -497,13 +510,13 @@ you must explicitly declare the nested type as public.
 Subclassing
 -----------
 
-You can subclass any class that is visible in the current access scope.
-A subclass cannot have more visibility than its superclass, however ---
+You can subclass any class that can be accessed in the current access context.
+A subclass cannot have a higher access level than its superclass ---
 for example, you cannot write a public subclass of an internal superclass.
 
 In addition, you can override any class member
 (method, property, initializer, or subscript)
-that is visible in a certain access scope.
+that is visible in a certain access context.
 
 An override can make an inherited class member more public than its superclass version.
 In the example below, class ``A`` is a public class with a private method called ``someMethod``.
@@ -543,8 +556,7 @@ or within the same module for a superclass internal member call):
 
 Because class ``A`` and ``B`` are defined in the same source file,
 it is valid for the ``B`` implementation of ``someMethod`` to call
-``super.someMethod()``,
-even though the implementation from ``A`` is defined as “private”.
+``super.someMethod()``.
 
 .. _AccessControl_ConstantsVariablesPropertiesAndSubscripts:
 
@@ -677,20 +689,13 @@ Initializers
 
 Custom initializers can be assigned an access level less than or equal to
 the type that they initialize.
-The only exception is for initializers that are required by a superclass
+The only exception is for required initializers
 (as defined in :ref:`Initialization_RequiredInitializers`).
-A required initializer on a subclass must have
-the same access level as the subclass itself.
+A required initializer must have the same access level as the class it belongs to.
 
 As with function and method parameters,
 the types of an initializer's parameters cannot be more private than
 the initializer's own access level.
-
-.. note::
-
-   Deinitializers always have the same access level as their enclosing class,
-   and their access level cannot be set explicitly.
-   Deinitializers are invoked by the Swift runtime, and cannot be called directly.
 
 .. _AccessControl_DefaultInitializers:
 
@@ -705,13 +710,14 @@ This default initializer is described in :ref:`Initialization_DefaultInitializer
 Where available, the default initializer
 has the same access level as the type it initializes.
 
-For a type that is defined as ``public``,
-the default initializer can only be accessed
-within the module in which the type is defined.
-If you want a public type to be initializable with a no-argument initializer
-when used in another module,
-you must provide a custom implementation of a public no-argument initializer
-as part of the type's definition.
+.. note::
+
+   For a type that is defined as ``public``,
+   the default initializer is considered “internal”.
+   If you want a public type to be initializable with a no-argument initializer
+   when used in another module,
+   you must provide a public no-argument initializer yourself
+   as part of the type's definition.
 
 .. _AccessControl_DefaultMemberwiseInitializersForStructureTypes:
 
@@ -719,8 +725,8 @@ Default Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default memberwise initializer for a structure type is considered “private”
-unless all of the structure's stored properties are internal or public.
-Where this is the case, the initializer has an “internal” access level instead.
+if any of the structure's stored properties are private.
+Otherwise, the initializer has an access level of “internal”.
 
 As with the default initializer above,
 if you want a public structure type to be initializable with a memberwise initializer
@@ -734,7 +740,7 @@ Protocols
 
 Protocol types can be assigned an access level at the point that they are defined.
 This enables you to create protocols that can only be adopted within
-a certain access scope.
+a certain access context.
 
 The access level of each requirement within a protocol definition
 is automatically set to the same access level as the protocol.
@@ -766,11 +772,11 @@ on any type that adopts the protocol.
 .. note::
 
    If you define a public protocol,
-   the protocol's requirements default to requiring a “public” access level
+   the protocol's requirements require a “public” access level
    for those requirements when they are implemented.
    This behavior is different from other types,
    where a “public” type definition implies
-   a default access level of “internal”.
+   an access level of “internal”.
 
 .. sourcefile:: protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private
 
@@ -881,9 +887,9 @@ Protocol Conformance
 A type can conform to a protocol with a lower access level than the type itself.
 For example, you can define a public type that can be used in other modules,
 but whose conformance to an internal protocol can only be used
-within the public type's defining module.
+within the internal protocol's defining module.
 
-The scope in which a type conforms to a particular protocol
+The context in which a type conforms to a particular protocol
 is the minimum of the type's access level and the protocol's access level.
 If a type is public, but a protocol it conforms to is internal,
 the fact that the type conforms to the protocol is also “internal”.
