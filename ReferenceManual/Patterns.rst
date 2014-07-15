@@ -177,7 +177,7 @@ an expression pattern:
 .. testcode::
 
     -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    << // points : Array<(Int, Int)> = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
           /* ... */
@@ -312,6 +312,7 @@ value with a range of integers in an ``Range`` object, as the following example 
 .. testcode:: expression-pattern
 
     -> let point = (1, 2)
+    << // point : (Int, Int) = (1, 2)
     -> switch point {
           case (0, 0):
              println("(0, 0) is at the origin.")

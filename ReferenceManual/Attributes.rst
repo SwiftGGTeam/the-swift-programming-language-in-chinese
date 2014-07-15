@@ -152,6 +152,7 @@ the ``noreturn`` attribute to a function or method *type*.
     .. testcode:: objc-attribute
        :compile: true
 
+       >> import Foundation
        -> @objc
           class ExampleClass {
              var enabled: Bool {

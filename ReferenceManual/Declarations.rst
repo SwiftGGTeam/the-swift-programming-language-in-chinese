@@ -206,7 +206,7 @@ in the initializer *expression*.
 .. testcode:: constant-decl
 
     -> let (firstNumber, secondNumber) = (10, 42)
-    << // (firstNumber, secondNumber): (Int, Int) = (10, 42)
+    << // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
@@ -617,6 +617,7 @@ For example:
           return y + String(x)
       }
    -> f(7, "hello")  // x and y have no name
+   << // r0 : String = "hello7"
    ---
    -> class C {
           func f(x: Int, y: String) -> String {
@@ -624,7 +625,9 @@ For example:
           }
       }
    -> let c = C()
+   << // c : C = _TtC4REPL1C
    -> c.f(7, y: "hello")  // x has no name, y has a name
+   << // r1 : String = "hello7"
 
 You can override the default behavior
 for how parameter names are used
