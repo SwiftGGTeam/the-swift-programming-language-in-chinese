@@ -901,7 +901,9 @@ the fact that the type conforms to the protocol is also “internal”.
    even if you can see all of the type members that would otherwise enable
    the type to satisfy the protocol requirements.
    The actual protocol conformance must be visible in order for a type to be used
-   as an instance of a protocol type.
+   as an instance of a protocol type,
+   or as a generic type parameter or associated type
+   whose requirement is constrained by the protocol.
 
 When you write or extend a type to conform to a protocol,
 you must ensure that the type's implementation of each protocol requirement
