@@ -887,12 +887,73 @@ then the type's implementation of each protocol requirement must be at least “
 Extensions
 ----------
 
-.. a struct, enum, or class may be extended whenever it is accessible
-.. members in an extension have the same default accessibility as members declared within the extended type
-.. (so presumably if the type was declared as a "private" type, then the extension members are "private" by default?)
-.. an extension may be marked with an explicit accessibility modifier (e.g. ``private extension``), in which case the default accessibility of members within the extension is changed to match
-.. (presumably this can only make things less accessible, not more so?)
-.. extensions with explicit accessibility modifiers may not add new protocol conformances (see r19751)
+A class, structure, or enumeration can be extended whenever it is visible.
+Any type members added in an extension have the same default access level as
+type members declared in the original type being extended.
+For example, if you extend a public type, any new type members you add
+will have a default access level of “internal”.
+
+Alternatively, you can mark an extension with an explicit access level modifier
+(e.g. ``private extension``)
+to set a new default access level for all members defined within the extension.
+This new default can still be overridden within the extension
+for individual type members.
+
+.. sourcefile:: extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private
+
+   -> public struct PublicStruct {
+         public init() {}
+         func implicitlyInternalMethodFromStruct() -> Int { return 0 }
+      }
+   -> extension PublicStruct {
+         func implicitlyInternalMethodFromExtension() -> Int { return 0 }
+      }
+   -> private extension PublicStruct {
+         func privateMethod() -> Int { return 0 }
+      }
+   -> var publicStructInSameFile = PublicStruct()
+   -> let sameFileA = publicStructInSameFile.implicitlyInternalMethodFromStruct()
+   -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
+   -> let sameFileC = publicStructInSameFile.privateMethod()
+
+.. sourcefile:: extensions_Module1_PublicAndInternal
+
+   -> var publicStructInDifferentFile = PublicStruct()
+   -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
+   -> let differentFileB = publicStructInDifferentFile.implicitlyInternalMethodFromExtension()
+
+.. sourcefile:: extensions_Module1_Private
+
+   -> var publicStructInDifferentFile = PublicStruct()
+   -> let differentFileC = publicStructInDifferentFile.privateMethod()
+   !! /tmp/sourcefile_1.swift:2:22: error: 'PublicStruct' does not have a member named 'privateMethod'
+   !! let differentFileC = publicStructInDifferentFile.privateMethod()
+   !! ^                           ~~~~~~~~~~~~~
+
+.. sourcefile:: extensions_Module2
+
+   -> import extensions_Module1
+   -> var publicStructInDifferentModule = PublicStruct()
+   -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
+   -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
+   -> let differentModuleC = publicStructInDifferentModule.privateMethod()
+   !! /tmp/sourcefile_0.swift:3:24: error: 'PublicStruct' does not have a member named 'implicitlyInternalMethodFromStruct'
+   !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
+   !! ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:4:24: error: 'PublicStruct' does not have a member named 'implicitlyInternalMethodFromExtension'
+   !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
+   !! ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:5:24: error: 'PublicStruct' does not have a member named 'privateMethod'
+   !! let differentModuleC = publicStructInDifferentModule.privateMethod()
+   !! ^                             ~~~~~~~~~~~~~
+
+Adding Protocol Conformance with an Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You cannot provide an explicit access level modifier for an extension
+if you are using that extension to add protocol conformance.
+Instead, the protocol's own access level is used to provide
+the default access level for each protocol requirement implementation within the extension.
 
 .. _AccessControl_Generics:
 
