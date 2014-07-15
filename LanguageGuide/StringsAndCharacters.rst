@@ -284,7 +284,8 @@ when it is included inside the string literal.
 Unicode
 -------
 
-:newTerm:`Unicode` is an international standard for encoding and representing text.
+:newTerm:`Unicode` is an international standard for
+encoding, representing, and processing text in different writing systems.
 It enables you to represent almost any character from any language in a standardized form,
 and to read and write those characters to and from an external source
 such as a text file or web page.
@@ -298,7 +299,8 @@ Unicode Scalars
 
 Behind the scenes,
 Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
-A Unicode scalar is a unique 21-bit number (and name) for a character or modifier,
+A Unicode scalar is a unique 21-bit number (and in some cases a name)
+for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
@@ -356,7 +358,7 @@ The letter ``é`` can be represented as the single Unicode scalar ``é``
 However, the same letter can also be represented as a *pair* of scalars ---
 a standard letter ``e`` (``LATIN SMALL LETTER E``, or ``U+0065``),
 followed by the ``COMBINING ACUTE ACCENT`` scalar (``U+0301``).
-The ``COMBINING ACUTE ACCENT`` scalar modifies the scalar that precedes it,
+The ``COMBINING ACUTE ACCENT`` scalar is graphically applied to the scalar that precedes it,
 turning an ``e`` into an ``é`` when it is rendered by
 a Unicode-aware text-rendering system.
 
@@ -382,9 +384,9 @@ Both of these representations qualify as a single ``Character`` value in Swift:
 
 .. testcode:: graphemeClusters2
 
-   -> let precomposed: Character = "\u{d55c}"                  // 한
+   -> let precomposed: Character = "\u{D55C}"                  // 한
    << // precomposed : Character = 한
-   -> let decomposed: Character = "\u{1112}\u{1161}\u{11ab}"   // ᄒ, ᅡ, ᆫ
+   -> let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
    << // decomposed : Character = 한
    /> precomposed is \(precomposed), decomposed is \(decomposed)
    </ precomposed is 한, decomposed is 한
@@ -615,11 +617,12 @@ Unicode Representations of Strings
 ----------------------------------
 
 When a Unicode string is written to a text file or some other storage,
-the extended grapheme clusters in that string
-are encoded in one of several Unicode-defined formats.
-Each format encodes the string in small chunks known as :newTerm:`code units`.
-These include the UTF-8 format (which encodes a string as 8-bit code units)
-and the UTF-16 format (which encodes a string as 16-bit code units).
+the Unicode scalars in that string are encoded in one of
+several Unicode-defined :newTerm:`encoding forms`.
+Each form encodes the string in small chunks known as :newTerm:`code units`.
+These include the UTF-8 encoding form (which encodes a string as 8-bit code units),
+the UTF-16 encoding form (which encodes a string as 16-bit code units),
+and the UTF-32 encoding form (which encodes a string as 32-bit code units).
 
 Swift provides several different ways to access Unicode representations of strings.
 You can iterate over the string with a ``for``-``in`` statement,
@@ -631,7 +634,8 @@ in one of three other Unicode-compliant representations:
 
 * A collection of UTF-8 code units (accessed with the string's ``utf8`` property)
 * A collection of UTF-16 code units (accessed with the string's ``utf16`` property)
-* A collection of 21-bit Unicode scalar values
+* A collection of 21-bit Unicode scalar values,
+  equivalent to the string's UTF-32 encoding form
   (accessed with the string's ``unicodeScalars`` property)
 
 Each example below shows a different representation of the following string,
@@ -650,7 +654,7 @@ UTF-8 Representation
 
 You can access a UTF-8 representation of a ``String``
 by iterating over its ``utf8`` property.
-This property is of type ``UTF8View``,
+This property is of type ``String.UTF8View``,
 which is a collection of unsigned 8-bit (``UInt8``) values,
 one for each byte in the string's UTF-8 representation:
 
@@ -681,7 +685,7 @@ UTF-16 Representation
 
 You can access a UTF-16 representation of a ``String``
 by iterating over its ``utf16`` property.
-This property is of type ``UTF16View``,
+This property is of type ``String.UTF16View``,
 which is a collection of unsigned 16-bit (``UInt16``) values,
 one for each 16-bit code unit in the string's UTF-16 representation:
 
@@ -696,12 +700,13 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 Again, the first four ``codeUnit`` values
 (``68``, ``111``, ``103``, ``33``)
 represent the characters ``D``, ``o``, ``g``, and ``!``,
-whose UTF-16 code units have the same values as in the string's UTF-8 representation.
+whose UTF-16 code units have the same values as in the string's UTF-8 representation
+(because these Unicode scalars represent ASCII characters).
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
-These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``)
-and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
+These values are a high-surrogate value of ``U+D83D`` (decimal value ``55357``)
+and a low-surrogate value of ``U+DC36`` (decimal value ``56374``).
 
 .. _StringsAndCharacters_UnicodeScalars:
 
@@ -729,7 +734,7 @@ The ``value`` properties for the first four ``UnicodeScalar`` values
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.
 The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
 is a decimal equivalent of the hexadecimal value ``1F436``,
-which is equivalent to the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
+which represents the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
 
 As an alternative to querying their ``value`` properties,
 each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
