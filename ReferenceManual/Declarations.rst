@@ -530,7 +530,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     Grammar of a type alias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
-    typealias-head --> attributes-OPT declaration-modifiers-OPT ``typealias`` typealias-name
+    typealias-head --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -924,7 +924,8 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attributes-OPT union-style-enum | attributes-OPT raw-value-style-enum
+    enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
+    enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
     union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
@@ -1036,7 +1037,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attributes-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -1119,7 +1120,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT declaration-modifiers-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -1218,7 +1219,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attributes-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
 
@@ -1630,7 +1631,7 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
