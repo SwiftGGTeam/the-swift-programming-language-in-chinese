@@ -43,13 +43,13 @@ Date        Notes
               multiple related variables can be defined on a single line
               with one type annotation.
             
-            * The ``@optional``, ``@lazy``, and ``@final`` attributes are now
-              the ``optional``, ``lazy``, and ``final`` modifiers.
+            * The ``@optional``, ``@lazy``, ``@final``, and ``@required`` attributes
+              are now the ``optional``, ``lazy``, ``final``, and ``required``
+              :ref:`Declarations_DeclarationModifiers`.
               
             * Updated the entire book to refer to ``..<`` as
               the :ref:`BasicOperators_HalfClosedRangeOperator`
-              (rather than the “half-closed range operator”)
-              for consistency with other languages.
+              (rather than the “half-closed range operator”).
               
             * Updated the :ref:`CollectionTypes_AccessingAndModifyingADictionary`
               section to note that ``Dictionary`` now has
