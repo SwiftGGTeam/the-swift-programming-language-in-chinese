@@ -355,8 +355,7 @@ The letter ``é`` can be represented as the single Unicode scalar ``é``
 (``LATIN SMALL LETTER E WITH ACUTE``, or ``U+00E9``).
 However, the same letter can also be represented as a *pair* of scalars ---
 a standard letter ``e`` (``LATIN SMALL LETTER E``, or ``U+0065``),
-followed by the ``́`` scalar
-(``COMBINING ACUTE ACCENT``, or ``U+0301``).
+followed by the ``COMBINING ACUTE ACCENT`` scalar (``U+0301``).
 The ``COMBINING ACUTE ACCENT`` scalar modifies the scalar that precedes it,
 turning an ``e`` into an ``é`` when it is rendered by
 a Unicode-aware text-rendering system.
