@@ -6,28 +6,46 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-07-21  * Updated the :ref:`StringsAndCharacters_Literals` section
+2014-07-21  * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
+
+            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter
+              to reflect the fact that Swift's ``Character`` type now represents
+              a single Unicode extended grapheme cluster.
+              Includes a new section on
+              :ref:`StringsAndCharacters_ExtendedGraphemeClusters`
+              and more information about
+              :ref:`StringsAndCharacters_StringsAreUnicodeScalars`
+              and :ref:`StringsAndCharacters_ComparingStrings`.
+
+            * Updated the :ref:`StringsAndCharacters_Literals` section
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
               where ``n`` is between one and eight hexadecimal digits.
-
-            * Added a new section about
-              :ref:`Initialization_InitializerParametersWithoutExternalNames`.
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
               
             * Swift's native ``String`` type no longer has
               an ``uppercaseString`` or ``lowercaseString`` property.
-              The corresponding section in :doc:`../LanguageGuide/StringsAndCharacters`
+              The corresponding section in
+              :doc:`../LanguageGuide/StringsAndCharacters`
               has been removed, and various code examples have been updated.
               
+            * Added a new section about
+              :ref:`Initialization_InitializerParametersWithoutExternalNames`.
+
+            * Added a new section about
+              :ref:`Initialization_RequiredInitializers`.
+
             * Added a new section about :ref:`Functions_OptionalTupleReturnTypes`.
               
             * Updated the :ref:`TheBasics_TypeAnnotations` section to note that
               multiple related variables can be defined on a single line
               with one type annotation.
             
+            * The ``@optional``, ``@lazy``, and ``@final`` attributes are now
+              the ``optional``, ``lazy``, and ``final`` modifiers.
+              
             * Updated the entire book to refer to ``..<`` as
               the :ref:`BasicOperators_HalfClosedRangeOperator`
               (rather than the “half-closed range operator”)
