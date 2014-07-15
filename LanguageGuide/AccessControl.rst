@@ -324,59 +324,6 @@ or to use the default setting of “internal”,
 because public or internal users of the function might not have appropriate access
 to the private class used in the function's return type.
 
-.. _AccessControl_GlobalConstantsAndVariables:
-
-Global Constants and Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A global constant or variable can be assigned an explicit access level
-that is less than or equal to the accessibility of its type.
-For example, a private constant or variable can be defined as having
-a type that is public or internal.
-However, a public constant or variable cannot be defined as having a private or internal type,
-because that type might not be visible to users of the public constant or variable.
-
-The following global constant and variable definitions are all valid:
-
-.. testcode:: accessControl
-
-   // okay - globalVariable is a private variable with an internally-scoped type
-   -> private var globalVariable = SomeInternalClass()
-   << // globalVariable : SomeInternalClass = _TtC4REPL17SomeInternalClass
-   ---
-   // okay - globalConstant is an (implicitly) internal constant
-   // with a publicly-scoped type
-   -> var globalConstant = SomePublicClass()
-   << // globalConstant : SomePublicClass = _TtC4REPL15SomePublicClass
-
-.. sourcefile:: globalConstantsAndVariables
-
-   -> public struct PublicStruct {}
-   -> internal struct InternalStruct {}
-   -> private struct PrivateStruct {}
-   ---
-   -> public var PublicVariableOfPublicType = PublicStruct()
-   -> internal var InternalVariableOfPublicType = PublicStruct()
-   -> private var PrivateVariableOfPublicType = PublicStruct()
-   ---
-   -> public var PublicVariableOfInternalType = InternalStruct ()    // not allowed
-   -> internal var InternalVariableOfInternalType = InternalStruct()
-   -> private var PrivateVariableOfInternalType = InternalStruct()
-   ---
-   -> public var PublicVariableOfPrivateType = PrivateStruct()       // not allowed
-   -> internal var InternalVariableOfPrivateType = PrivateStruct()   // not allowed
-   -> private var PrivateVariableOfPrivateType = PrivateStruct()
-   ---
-   !! /tmp/sourcefile_0.swift:7:12: error: variable cannot be declared public because its type 'InternalStruct' uses an internal type
-   !! public var PublicVariableOfInternalType = InternalStruct ()    // not allowed
-   !! ^
-   !! /tmp/sourcefile_0.swift:10:12: error: variable cannot be declared public because its type 'PrivateStruct' uses a private type
-   !! public var PublicVariableOfPrivateType = PrivateStruct()       // not allowed
-   !! ^
-   !! /tmp/sourcefile_0.swift:11:14: error: variable cannot be declared internal because its type 'PrivateStruct' uses a private type
-   !! internal var InternalVariableOfPrivateType = PrivateStruct()   // not allowed
-   !! ^
-
 .. _AccessControl_EnumerationTypes:
 
 Enumeration Types
