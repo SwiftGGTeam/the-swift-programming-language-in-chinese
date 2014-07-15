@@ -156,7 +156,7 @@ Access Control Syntax
 ---------------------
 
 Define the access level for an entity by placing
-one of the ``public``, ``internal``, or ``private`` keywords
+one of the ``public``, ``internal``, or ``private`` modifiers
 before the entity's introducer:
 
 .. testcode:: accessControlSyntax
@@ -336,7 +336,7 @@ Therefore, the overall access level of the compound tuple type is “private”
 (the minimum access level of the tuple's constituent types).
 
 Because the function's return type is private,
-the function's overall access level must be marked with the ``private`` keyword
+the function's overall access level must be marked with the ``private`` modifier
 for the function declaration to be valid:
 
 .. testcode:: accessControl
@@ -347,7 +347,7 @@ for the function declaration to be valid:
       }
 
 It is not valid to mark the definition of ``someFunction``
-with the ``public`` or ``internal`` keywords,
+with the ``public`` or ``internal`` modifiers,
 or to use the default setting of “internal”,
 because public or internal users of the function might not have appropriate access
 to the private class used in the function's return type.
@@ -575,7 +575,7 @@ the constant, variable, property, or subscript must also be marked as ``private`
    -> private var privateInstance = SomePrivateClass()
    << // privateInstance : SomePrivateClass = _TtC4REPL16SomePrivateClass
 
-.. assertion:: useOfPrivateTypeRequiresPrivateKeyword
+.. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
    -> private class SomePrivateClass {}
    -> let privateConstant = SomePrivateClass()
@@ -652,7 +652,7 @@ The ``TrackedString`` structure and the ``value`` property
 do not provide an explicit access level modifier,
 and so they both receive the default access level of “internal”.
 However, the access level for the ``numberOfEdits`` property
-is marked with a ``private(set)`` annotation
+is marked with a ``private(set)`` modifier
 to indicate that the property should only be settable from within the same source file.
 The property's getter still has the default access level of “internal”,
 but its setter is now private to the source file in which ``TrackedString`` is defined.
