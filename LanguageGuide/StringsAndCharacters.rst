@@ -639,13 +639,14 @@ in one of three other Unicode-compliant representations:
   (accessed with the string's ``unicodeScalars`` property)
 
 Each example below shows a different representation of the following string,
-which is made up of the characters ``D``, ``o``, ``g``, ``!``,
+which is made up of the characters ``D``, ``o``, ``g``,
+``‼`` (``DOUBLE EXCLAMATION MARK``, or Unicode scalar ``U+203C``),
 and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
 
 .. testcode:: unicodeRepresentations
 
-   -> let dogString = "Dog!🐶"
-   << // dogString : String = "Dog!🐶"
+   -> let dogString = "Dog‼🐶"
+   << // dogString : String = "Dog‼🐶"
 
 .. _StringsAndCharacters_UTF8:
 
@@ -664,12 +665,15 @@ one for each byte in the string's UTF-8 representation:
          print("\(codeUnit) ")
       }
    -> print("\n")
-   </ 68 111 103 33 240 159 144 182
+   </ 68 111 103 226 128 188 240 159 144 182
 
-In the example above, the first four decimal ``codeUnit`` values
-(``68``, ``111``, ``103``, ``33``)
-represent the characters ``D``, ``o``, ``g``, and ``!``,
+In the example above, the first three decimal ``codeUnit`` values
+(``68``, ``111``, ``103``)
+represent the characters ``D``, ``o``, and ``g``,
 whose UTF-8 representation is the same as their ASCII representation.
+The next three decimal ``codeUnit`` values
+(``226``, ``128``, ``188``)
+are a three-byte UTF-8 representation of the ``DOUBLE EXCLAMATION MARK`` character.
 The last four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
 are a four-byte UTF-8 representation of the ``DOG FACE`` character.
 
@@ -695,13 +699,19 @@ one for each 16-bit code unit in the string's UTF-16 representation:
          print("\(codeUnit) ")
       }
    -> print("\n")
-   </ 68 111 103 33 55357 56374
+   </ 68 111 103 8252 55357 56374
 
-Again, the first four ``codeUnit`` values
-(``68``, ``111``, ``103``, ``33``)
-represent the characters ``D``, ``o``, ``g``, and ``!``,
+Again, the first three ``codeUnit`` values
+(``68``, ``111``, ``103``)
+represent the characters ``D``, ``o``, and ``g``,
 whose UTF-16 code units have the same values as in the string's UTF-8 representation
 (because these Unicode scalars represent ASCII characters).
+
+The fourth ``codeUnit`` value (``8252``) is a decimal equivalent of
+the hexadecimal value ``203C``,
+which represents the Unicode scalar ``U+203C``
+for the ``DOUBLE EXCLAMATION MARK`` character.
+This character can be represented as a single code point in UTF-16.
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
@@ -727,11 +737,17 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
          print("\(scalar.value) ")
       }
    -> print("\n")
-   </ 68 111 103 33 128054
+   </ 68 111 103 8252 128054
 
-The ``value`` properties for the first four ``UnicodeScalar`` values
-(``68``, ``111``, ``103``, ``33``)
-once again represent the characters ``D``, ``o``, ``g``, and ``!``.
+The ``value`` properties for the first three ``UnicodeScalar`` values
+(``68``, ``111``, ``103``)
+once again represent the characters ``D``, ``o``, and ``g``.
+
+The fourth ``codeUnit`` value (``8252``) is again a decimal equivalent of
+the hexadecimal value ``203C``,
+which represents the Unicode scalar ``U+203C``
+for the ``DOUBLE EXCLAMATION MARK`` character.
+
 The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
 is a decimal equivalent of the hexadecimal value ``1F436``,
 which represents the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
@@ -748,5 +764,5 @@ such as with string interpolation:
    </ D
    </ o
    </ g
-   </ !
+   </ ‼
    </ 🐶
