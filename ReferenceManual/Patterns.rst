@@ -53,7 +53,7 @@ Wildcard Pattern
 
 A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
 (``_``). Use a wildcard pattern when you don't care about the values being
-matched against. For example, the following code iterates through the closed range ``1..3``,
+matched against. For example, the following code iterates through the closed range ``1...3``,
 ignoring the current value of the range on each iteration of the loop:
 
 .. testcode::
