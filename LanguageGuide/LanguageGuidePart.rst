@@ -26,4 +26,5 @@ Language Guide
    Extensions
    Protocols
    Generics
+   AccessControl
    AdvancedOperators
