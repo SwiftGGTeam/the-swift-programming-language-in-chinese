@@ -34,7 +34,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> declaration ``;``-OPT
     statement --> loop-statement ``;``-OPT
     statement --> branch-statement ``;``-OPT
-    statement --> labeled-statement
+    statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
 
