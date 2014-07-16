@@ -1732,8 +1732,8 @@ to its operands.
 
 There are three basic forms of an operator declaration,
 one for each fixity.
-The fixity of the operator is specified by including the context-sensitive keyword
-``infix``, ``prefix``, or ``postfix`` between ``operator`` and the name of the operator.
+The fixity of the operator is specified by marking the operator declaration with the
+``infix``, ``prefix``, or ``postfix`` declaration modifier before the ``operator`` keyword.
 In each form, the name of the operator can contain only the operator characters
 defined in :ref:`LexicalStructure_Operators`.
 
@@ -1741,7 +1741,7 @@ The following form declares a new infix operator:
 
 .. syntax-outline::
 
-    operator infix <#operator name#> {
+    infix operator <#operator name#> {
        precedence <#precedence level#>
        associativity <#associativity#>
     }
@@ -1782,7 +1782,7 @@ The following form declares a new prefix operator:
 
 .. syntax-outline::
 
-    operator prefix <#operator name#> {}
+    prefix operator <#operator name#> {}
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
 such as the prefix increment operator (``++``) is in the expression ``++i``.
@@ -1796,7 +1796,7 @@ The following form declares a new postfix operator:
 
 .. syntax-outline::
 
-    operator postfix <#operator name#> {}
+    postfix operator <#operator name#> {}
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
 such as the postfix increment operator (``++``) is in the expression ``i++``.
@@ -1806,6 +1806,11 @@ Postfix operators are nonassociative.
 
 After declaring a new operator,
 you implement it by declaring a function that has the same name as the operator.
+If you're implementing a prefix or postfix operator,
+you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+declaration modifier.
+If you're implementing an infix operator,
+you don't mark that function declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -1815,9 +1820,9 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    prefix-operator-declaration --> ``operator`` ``prefix`` operator ``{`` ``}``
-    postfix-operator-declaration --> ``operator`` ``postfix`` operator ``{`` ``}``
-    infix-operator-declaration --> ``operator`` ``infix`` operator ``{`` infix-operator-attributes-OPT ``}``
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator ``{`` ``}``
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
+    infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
 
     infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
