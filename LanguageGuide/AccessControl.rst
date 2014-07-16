@@ -6,9 +6,9 @@ from code in other source files and modules.
 This feature enables you to hide the implementation details of your code,
 and to specify a preferred interface through which that code can be accessed and used.
 
-Individual types (classes, structures, and enumerations)
-can be assigned specific access levels,
-as can properties, methods, initializers, and subscripts belonging to those types.
+You can assign specific access levels to individual types
+(classes, structures, and enumerations),
+as well as to properties, methods, initializers, and subscripts belonging to those types.
 Protocols can be restricted to a certain context,
 as can global constants, variables, and functions.
 
@@ -73,7 +73,7 @@ and also relative to the module that source file belongs to.
   Use private access to hide the implementation details of
   a specific piece of functionality.
 
-Effectively, public access is the highest access level
+Public access is the highest (least restrictive) access level
 and private access is the lowest (or most restrictive) access level.
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
@@ -117,8 +117,8 @@ When you write a simple single-target app,
 the code in your app is typically self-contained within the app
 and does not need to be made available outside of the app's module.
 The default access level of internal already matches this requirement.
-Therefore, you do not need to specify a custom access level if you do not wish to.
-You may, however, wish to mark some parts of your code as private
+Therefore, you do not need to specify a custom access level.
+You may, however, want to mark some parts of your code as private
 in order to hide their implementation details from other code within the app's module.
 
 .. _AccessControl_AccessLevelsForFrameworks:
@@ -137,9 +137,9 @@ This public-facing interface is the application programming interface
 
    Any internal implementation details of your framework can still use
    the default access level of internal,
-   or can be marked as private if you wish to hide them from
+   or can be marked as private if you want to hide them from
    other parts of the framework's internal code.
-   You only need to mark an entity as public if you want it to become
+   You need to mark an entity as public only if you want it to become
    part of your framework's API.
 
 .. _AccessControl_AccessControlSyntax:
@@ -180,8 +180,8 @@ and will still have an access level of internal:
 Custom Types
 ------------
 
-You can specify an explicit access level for a custom type
-at the point that you define the type.
+If you want to specify an explicit access level for a custom type,
+do so at the point that you define the type.
 The new type can then be used wherever its access level permits.
 For example, if you define a private class,
 that class can only be used as the type of a property,
@@ -203,7 +203,7 @@ the default access level of the type's members will be internal.
    As mentioned above,
    a public type defaults to having internal members, not public members.
    If you want a type member to be public, you must explicitly mark it as such.
-   This ensures that the public-facing API for a type is
+   This requirement ensures that the public-facing API for a type is
    something you opt in to publishing,
    and avoids presenting the internal workings of a type as public API by mistake.
 
@@ -231,7 +231,7 @@ Tuple Types
 ~~~~~~~~~~~
 
 The access level for a tuple type is
-the most restrictive access level of all of the types used in that tuple.
+the most restrictive access level of all types used in that tuple.
 For example, if you compose a tuple from two different types,
 one with internal access and one with private access,
 the access level for that compound tuple type will be private.
@@ -703,7 +703,7 @@ The default initializer has the same access level as the type it initializes.
 .. note::
 
    For a type that is defined as ``public``,
-   the default initializer is considered “internal”.
+   the default initializer is considered internal.
    If you want a public type to be initializable with a no-argument initializer
    when used in another module,
    you must provide a public no-argument initializer yourself
@@ -728,8 +728,8 @@ you must provide a public memberwise initializer yourself as part of the type's 
 Protocols
 ---------
 
-You can assign an access level to a protocol type
-at the point that the protocol type is defined.
+If you want to assign an explicit access level to a protocol type,
+do so at the point that you define the protocol.
 This enables you to create protocols that can only be adopted within
 a certain access context.
 
@@ -907,7 +907,7 @@ in which the class, structure, or enumeration is available.
 Any type members added in an extension have the same default access level as
 type members declared in the original type being extended.
 For example, if you extend a public type, any new type members you add
-will have a default access level of “internal”.
+will have a default access level of internal.
 
 Alternatively, you can mark an extension with an explicit access level modifier
 (for example, ``private extension``)
