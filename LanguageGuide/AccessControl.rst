@@ -747,15 +747,15 @@ on any type that adopts the protocol.
          internal var internalProperty: Int { get }
          private var privateProperty: Int { get }
       }
-   !! <REPL Input>:2:6: error: 'public' attribute cannot be used in protocols
+   !! <REPL Input>:2:6: error: 'public' modifier cannot be used in protocols
    !! public var publicProperty: Int { get }
    !! ^~~~~~
    !!-
-   !! <REPL Input>:3:6: error: 'internal' attribute cannot be used in protocols
+   !! <REPL Input>:3:6: error: 'internal' modifier cannot be used in protocols
    !! internal var internalProperty: Int { get }
    !! ^~~~~~~~
    !!-
-   !! <REPL Input>:4:6: error: 'private' attribute cannot be used in protocols
+   !! <REPL Input>:4:6: error: 'private' modifier cannot be used in protocols
    !! private var privateProperty: Int { get }
    !! ^~~~~~~
    !!-
