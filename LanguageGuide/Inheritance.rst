@@ -93,7 +93,7 @@ written as ``TypeName`` followed by empty parentheses:
 .. testcode:: inheritance
 
    -> let someVehicle = Vehicle()
-   << // someVehicle : Vehicle = C4REPL7Vehicle (has 2 children)
+   << // someVehicle : Vehicle = _TtC4REPL7Vehicle
 
 The initializer for ``Vehicle`` sets some initial property values
 (``numberOfWheels = 0`` and ``maxPassengers = 1``)
@@ -174,7 +174,7 @@ to see how its properties have been updated:
 .. testcode:: inheritance
 
    -> let bicycle = Bicycle()
-   << // bicycle : Bicycle = C4REPL7Bicycle (has 1 child)
+   << // bicycle : Bicycle = _TtC4REPL7Bicycle
    -> println("Bicycle: \(bicycle.description())")
    </ Bicycle: 2 wheels; up to 1 passengers
 
@@ -208,7 +208,7 @@ shows how its properties have been updated:
 .. testcode:: inheritance
 
    -> let tandem = Tandem()
-   << // tandem : Tandem = C4REPL6Tandem (has 1 child)
+   << // tandem : Tandem = _TtC4REPL6Tandem
    -> println("Tandem: \(tandem.description())")
    </ Tandem: 2 wheels; up to 2 passengers
 
@@ -310,7 +310,7 @@ you can see that the description has indeed changed:
 .. testcode:: inheritance
 
    -> let car = Car()
-   << // car : Car = C4REPL3Car (has 2 children)
+   << // car : Car = _TtC4REPL3Car
    -> println("Car: \(car.description())")
    </ Car: 4 wheels; up to 5 passengers; traveling at 0.0 mph
 
@@ -387,7 +387,7 @@ you see that the speed has been limited:
 .. testcode:: inheritance
 
    -> let limitedCar = SpeedLimitedCar()
-   << // limitedCar : SpeedLimitedCar = C4REPL15SpeedLimitedCar (has 1 child)
+   << // limitedCar : SpeedLimitedCar = _TtC4REPL15SpeedLimitedCar
    -> limitedCar.speed = 60.0
    -> println("SpeedLimitedCar: \(limitedCar.description())")
    </ SpeedLimitedCar: 4 wheels; up to 5 passengers; traveling at 40.0 mph
@@ -448,7 +448,7 @@ and a speed of ``35.0`` produces a gear of ``4``:
 .. testcode:: inheritance
 
    -> let automatic = AutomaticCar()
-   << // automatic : AutomaticCar = C4REPL12AutomaticCar (has 2 children)
+   << // automatic : AutomaticCar = _TtC4REPL12AutomaticCar
    -> automatic.speed = 35.0
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4

@@ -82,7 +82,7 @@ and so it infers a type of ``[MediaItem]`` for the ``library`` array:
          Song(name: "The One And Only", artist: "Chesney Hawkes"),
          Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
-   << // library : [MediaItem] = [C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL4Song (has 2 children)]
+   << // library : [MediaItem] = [_TtC4REPL5Movie, _TtC4REPL4Song, _TtC4REPL5Movie, _TtC4REPL4Song, _TtC4REPL4Song]
    // the type of "library" is inferred to be [MediaItem]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
@@ -278,7 +278,7 @@ and populates this array with three instances of the ``Movie`` class:
          Movie(name: "Moon", director: "Duncan Jones"),
          Movie(name: "Alien", director: "Ridley Scott")
       ]
-   << // someObjects : [AnyObject] = [C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children)]
+   << // someObjects : [AnyObject] = [_TtC4REPL5Movie, _TtC4REPL5Movie, _TtC4REPL5Movie]
 
 Because this array is known to contain only ``Movie`` instances,
 you can downcast and unwrap directly to a non-optional ``Movie``
