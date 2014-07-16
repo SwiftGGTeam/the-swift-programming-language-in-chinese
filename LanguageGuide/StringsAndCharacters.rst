@@ -711,7 +711,7 @@ The fourth ``codeUnit`` value (``8252``) is a decimal equivalent of
 the hexadecimal value ``203C``,
 which represents the Unicode scalar ``U+203C``
 for the ``DOUBLE EXCLAMATION MARK`` character.
-This character can be represented as a single code point in UTF-16.
+This character can be represented as a single code unit in UTF-16.
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
