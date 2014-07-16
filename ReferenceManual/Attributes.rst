@@ -163,7 +163,8 @@ the ``noreturn`` attribute to a function or method *type*.
           }
 
 .. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
+    provide a link to the relevant section.
+    Possibly link to Anna and Jack's guide too.
 
 ``UIApplicationMain``
     Apply this attribute to the app delegate class.
