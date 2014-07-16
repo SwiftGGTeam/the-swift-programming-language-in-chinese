@@ -24,13 +24,13 @@ Date        Notes
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
-              
+
             * Swift's native ``String`` type no longer has
               an ``uppercaseString`` or ``lowercaseString`` property.
               The corresponding section in
               :doc:`../LanguageGuide/StringsAndCharacters`
               has been removed, and various code examples have been updated.
-              
+
             * Added a new section about
               :ref:`Initialization_InitializerParametersWithoutExternalNames`.
 
@@ -38,25 +38,27 @@ Date        Notes
               :ref:`Initialization_RequiredInitializers`.
 
             * Added a new section about :ref:`Functions_OptionalTupleReturnTypes`.
-              
+
             * Updated the :ref:`TheBasics_TypeAnnotations` section to note that
               multiple related variables can be defined on a single line
               with one type annotation.
-            
+
             * The ``@optional``, ``@lazy``, ``@final``, and ``@required`` attributes
               are now the ``optional``, ``lazy``, ``final``, and ``required``
               :ref:`Declarations_DeclarationModifiers`.
-              
+
             * Updated the entire book to refer to ``..<`` as
               the :ref:`BasicOperators_HalfClosedRangeOperator`
               (rather than the “half-closed range operator”).
-              
+
             * Updated the :ref:`CollectionTypes_AccessingAndModifyingADictionary`
               section to note that ``Dictionary`` now has
               a Boolean ``isEmpty`` property.
-              
+
             * Clarified the full list of characters that can be used
               when defining :ref:`AdvancedOperators_CustomOperators`.
+
+            * ``nil`` and the Booleans ``true`` and ``false`` are now :ref:`LexicalStructure_Literals`.
 ----------  --------------------------------------------------------------------------
 2014-07-07  * Swift's ``Array`` type now has full value semantics.
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`
