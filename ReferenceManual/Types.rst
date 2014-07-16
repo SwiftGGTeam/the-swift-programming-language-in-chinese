@@ -442,7 +442,7 @@ Any type can be explicitly declared to be (or implicitly converted to) an option
 If you don't provide an initial value when you declare an
 optional variable or property, its value automatically defaults to ``nil``.
 
-Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
+Optionals conform to the ``BooleanType`` protocol and therefore may occur in a Boolean context.
 In that context,
 if an instance of an optional type ``T?`` contains any value of type ``T``
 (that is, its value is ``Optional.Some(T)``),
