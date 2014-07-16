@@ -1925,7 +1925,8 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 Each access-level modifier above optionally accepts a single argument,
 which consists of the keyword ``set`` enclosed in parentheses (for instance, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
-for the setter of a variable that's less than or equal to the access level of the variable itself,
+for the setter of a variable or subscript that's less than or equal
+to the access level of the variable or subscript itself,
 as discussed in :ref:`AccessControl_GettersAndSetters`.
 
 .. syntax-grammar::
