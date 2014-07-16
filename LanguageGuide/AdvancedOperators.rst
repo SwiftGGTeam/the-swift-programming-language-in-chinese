@@ -620,21 +620,15 @@ to add together instances of the ``Vector2D`` structure:
    -> struct Vector2D {
          var x = 0.0, y = 0.0
       }
-   -> @infix func + (left: Vector2D, right: Vector2D) -> Vector2D {
+   -> func + (left: Vector2D, right: Vector2D) -> Vector2D {
          return Vector2D(x: left.x + right.x, y: left.y + right.y)
       }
 
-The operator function is defined as a global function called ``+``,
-which takes two input parameters of type ``Vector2D``
+The operator function is defined as a global function
+with a function name that matches the operator to be overloaded (``+``).
+Because the arithmetic addition operator is a binary operator,
+this operator function takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
-You implement an infix operator by writing the ``@infix`` attribute
-before the ``func`` keyword when declaring the operator function.
-
-.. QUESTION: You can actually elide the @infix attribute for infix operator functions.
-   However, I've chosen to include it (and not mention that it can be elided)
-   for consistency with @prefix and @postfix below,
-   and for clarity of intent.
-   Is this the right choice?
 
 In this implementation, the input parameters are named ``left`` and ``right``
 to represent the ``Vector2D`` instances that will be on
@@ -677,19 +671,19 @@ They are :newTerm:`prefix` if they precede their target (such as ``-a``)
 and :newTerm:`postfix` operators if they follow their target (such as ``i++``).
 
 You implement a prefix or postfix unary operator by writing
-the ``@prefix`` or ``@postfix`` attribute
+the ``prefix`` or ``postfix`` modifier
 before the ``func`` keyword when declaring the operator function:
 
 .. testcode:: customOperators
 
-   -> @prefix func - (vector: Vector2D) -> Vector2D {
+   -> prefix func - (vector: Vector2D) -> Vector2D {
          return Vector2D(x: -vector.x, y: -vector.y)
       }
 
 The example above implements the unary minus operator
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
-and so this function has to be qualified with the ``@prefix`` attribute.
+and so this function has to be qualified with the ``prefix`` modifier.
 
 For simple numeric values, the unary minus operator converts
 positive numbers into their negative equivalent and vice versa.
@@ -720,9 +714,7 @@ Compound Assignment Operators
 :newTerm:`Compound assignment operators` combine assignment (``=``) with another operation.
 For example, the addition assignment operator (``+=``)
 combines addition and assignment into a single operation.
-Operator functions that implement compound assignment must be qualified with
-the ``@assignment`` attribute.
-You must also mark a compound assignment operator's left input parameter as ``inout``,
+You mark a compound assignment operator's left input parameter as ``inout``,
 because the parameter's value will be modified directly from within the operator function.
 
 The example below implements
@@ -730,14 +722,9 @@ an addition assignment operator function for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> @assignment func += (inout left: Vector2D, right: Vector2D) {
+   -> func += (inout left: Vector2D, right: Vector2D) {
          left = left + right
       }
-
-.. FIXME: This isn't actually true - you don't need to specify @assignment.
-   Nonetheless, our current policy is to specify it anyway.
-   This is being tracked in rdar://problem/16656024,
-   and this section should be updated based on the outcome of that radar.
 
 Because an addition operator was defined earlier,
 you don't need to reimplement the addition process here.
@@ -755,14 +742,13 @@ and uses it to set the left value to be the left value plus the right value:
    /> original now has values of (\(original.x), \(original.y))
    </ original now has values of (4.0, 6.0)
 
-You can combine the ``@assignment`` attribute with
-either the ``@prefix`` or ``@postfix`` attribute,
+You can combine assignment with either the ``prefix`` or ``postfix`` modifier,
 as in this implementation of the prefix increment operator (``++a``)
 for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> @prefix @assignment func ++ (inout vector: Vector2D) -> Vector2D {
+   -> prefix func ++ (inout vector: Vector2D) -> Vector2D {
          vector += Vector2D(x: 1.0, y: 1.0)
          return vector
       }
@@ -816,10 +802,10 @@ provide an implementation of the operators in the same way as for other infix op
 
 .. testcode:: customOperators
 
-   -> @infix func == (left: Vector2D, right: Vector2D) -> Bool {
+   -> func == (left: Vector2D, right: Vector2D) -> Bool {
          return (left.x == right.x) && (left.y == right.y)
       }
-   -> @infix func != (left: Vector2D, right: Vector2D) -> Bool {
+   -> func != (left: Vector2D, right: Vector2D) -> Bool {
          return !(left == right)
       }
 
@@ -861,11 +847,11 @@ and/or Unicode combining characters.
 see :ref:`LexicalStructure_Operators`.)
 
 New operators are declared at a global level using the ``operator`` keyword,
-and can be declared as ``prefix``, ``infix`` or ``postfix``:
+and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
 
-   -> operator prefix +++ {}
+   -> prefix operator +++ {}
 
 The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -877,7 +863,7 @@ by adding the vector to itself with the addition assignment operator defined ear
 
 .. testcode:: customOperators
 
-   -> @prefix @assignment func +++ (inout vector: Vector2D) -> Vector2D {
+   -> prefix func +++ (inout vector: Vector2D) -> Vector2D {
          vector += vector
          return vector
       }
@@ -925,7 +911,7 @@ with ``left`` associativity and a precedence of ``140``:
 
 .. testcode:: customOperators
 
-   -> operator infix +- { associativity left precedence 140 }
+   -> infix operator +- { associativity left precedence 140 }
    -> func +- (left: Vector2D, right: Vector2D) -> Vector2D {
          return Vector2D(x: left.x + right.x, y: left.y - right.y)
       }
