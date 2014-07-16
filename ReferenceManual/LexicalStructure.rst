@@ -761,13 +761,3 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
-
-.. Old Grammar: Grammar of operators
-    operator --> operator-character operator-OPT
-    operator-character --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``.``
-
-    binary-operator --> operator
-    prefix-operator --> operator
-    postfix-operator --> operator
-
-
