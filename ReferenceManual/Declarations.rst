@@ -1073,6 +1073,11 @@ A class type can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
 The *superclass* appears first after the *class name* and colon,
 followed by any *adopted protocols*.
+Generic classes can inherit from other generic and nongeneric classes,
+but a nongeneric class can inherit only from other nongeneric classes.
+When you write the name of a generic superclass class after the colon,
+you must include the full name of that generic class,
+including its generic parameter clause.
 
 As discussed in :ref:`Declarations_InitializerDeclaration`,
 classes can have designated and convenience initializers.

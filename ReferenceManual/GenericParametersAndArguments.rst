@@ -116,8 +116,6 @@ When you call an overloaded generic function or initializer,
 the compiler uses these constraints to resolve which overloaded function
 or initializer to invoke.
 
-You can subclass a generic class, but the subclass must also be a generic class.
-
 .. langref-grammar
 
     generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
