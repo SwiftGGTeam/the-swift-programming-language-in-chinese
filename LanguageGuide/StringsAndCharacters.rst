@@ -9,7 +9,7 @@ which in turn represents a collection of values of ``Character`` type.
 Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
-with a similar syntax to C strings.
+with a string literal syntax that is similar to C.
 String concatenation is as simple as
 adding together two strings with the ``+`` operator,
 and string mutability is managed by choosing between a constant or a variable,
@@ -299,8 +299,7 @@ Unicode Scalars
 
 Behind the scenes,
 Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
-A Unicode scalar is a unique 21-bit number (and in some cases a name)
-for a character or modifier,
+A Unicode scalar is a unique 21-bit number for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
@@ -310,6 +309,11 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
    Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points
    in the range ``U+D800`` to ``U+DFFF`` inclusive.
+
+Note that not all 21-bit Unicode scalars are assigned to a character ---
+some scalars are reserved for future assignment.
+Scalars that have been assigned to a character typically also have a name,
+such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
