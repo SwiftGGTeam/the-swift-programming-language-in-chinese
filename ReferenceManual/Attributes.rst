@@ -164,8 +164,28 @@ the ``noreturn`` attribute to a function or method *type*.
           }
 
 .. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
+    provide a link to the relevant section.
+    Possibly link to Anna and Jack's guide too.
 
+``UIApplicationMain``
+    Apply this attribute to a class
+    to indicate that it is the application delegate.
+    Using this attribute is equivalent to calling the
+    ``UIApplicationMain`` function and
+    passing this class's name as the name of the delegate class.
+
+    If you do not use this attribute,
+    supply a ``main.swift`` file with a ``main`` function
+    that calls the ``UIApplicationMain`` function.
+    For example,
+    if your app uses a custom subclass of ``UIApplication``
+    as its principle class,
+    call the ``UIApplicationMain`` function
+    instead of using this attribute.
+
+.. TODO: Replace the code voice above with the following:
+   `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
+   Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
