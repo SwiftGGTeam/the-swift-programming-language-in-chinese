@@ -321,7 +321,7 @@ In fact, ``someFunction`` will not compile as written below:
    !! ^
 
 The function's return type is
-a tuple type composed from two of the custom classes defined above in :ref:`AccessControl_Types`.
+a tuple type composed from two of the custom classes defined above in :ref:`AccessControl_CustomTypes`.
 One of these classes was defined as “internal”,
 and the other was defined as “private”.
 Therefore, the overall access level of the compound tuple type is “private”
