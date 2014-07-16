@@ -597,13 +597,13 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
    repetition in the quoted-text/escaped-character rule too.
 
 .. Now that single quotes are gone, we don't have a character literal.
-	Because we may one bring them back, here's the old grammar for them:
+   Because we may one bring them back, here's the old grammar for them:
 
-	textual-literal --> character-literal | string-literal
+   textual-literal --> character-literal | string-literal
 
-    character-literal --> ``'`` quoted-character ``'``
-    quoted-character --> escaped-character
-    quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
+   character-literal --> ``'`` quoted-character ``'``
+   quoted-character --> escaped-character
+   quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
 
 
 .. _LexicalStructure_Operators:
@@ -625,9 +625,9 @@ You can also define custom operators as a sequence of two or more dots (for exam
 
 .. note::
 
-	The tokens ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
-	and the unary prefix operator ``&`` are reserved.
-	These tokens can't be overloaded, nor can they be used to define custom operators.
+   The tokens ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
+   and the unary prefix operator ``&`` are reserved.
+   These tokens can't be overloaded, nor can they be used to define custom operators.
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
@@ -724,41 +724,41 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. syntax-grammar::
 
-	Grammar of operators
+    Grammar of operators
 
-	operator --> operator-head operator-characters-OPT
-	operator --> dot-operator-head dot-operator-characters-OPT
+    operator --> operator-head operator-characters-OPT
+    operator --> dot-operator-head dot-operator-characters-OPT
 
-	operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~``
-	operator-head --> U+00A1--U+00A7
-	operator-head --> U+00A9 or U+00AB
-	operator-head --> U+00AC or U+00AE
-	operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
-	operator-head --> U+2016--U+2017 or U+2020--U+2027
-	operator-head --> U+2030--U+203E
-	operator-head --> U+2041--U+2053
-	operator-head --> U+2055--U+205E
-	operator-head --> U+2190--U+23FF
-	operator-head --> U+2500--U+2775
-	operator-head --> U+2794--U+2BFF
-	operator-head --> U+2E00--U+2E7F
-	operator-head --> U+3001--U+3003
-	operator-head --> U+3008--U+3030
+    operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~``
+    operator-head --> U+00A1--U+00A7
+    operator-head --> U+00A9 or U+00AB
+    operator-head --> U+00AC or U+00AE
+    operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+    operator-head --> U+2016--U+2017 or U+2020--U+2027
+    operator-head --> U+2030--U+203E
+    operator-head --> U+2041--U+2053
+    operator-head --> U+2055--U+205E
+    operator-head --> U+2190--U+23FF
+    operator-head --> U+2500--U+2775
+    operator-head --> U+2794--U+2BFF
+    operator-head --> U+2E00--U+2E7F
+    operator-head --> U+3001--U+3003
+    operator-head --> U+3008--U+3030
 
-	operator-character --> operator-head
-	operator-character --> U+0300--U+036F
-	operator-character --> U+1DC0--U+1DFF
-	operator-character --> U+20D0--U+20FF
-	operator-character --> U+FE00--U+FE0F
-	operator-character --> U+FE20--U+FE2F
-	operator-character --> U+E0100--U+E01EF
-	operator-characters --> operator-character operator-characters-OPT
+    operator-character --> operator-head
+    operator-character --> U+0300--U+036F
+    operator-character --> U+1DC0--U+1DFF
+    operator-character --> U+20D0--U+20FF
+    operator-character --> U+FE00--U+FE0F
+    operator-character --> U+FE20--U+FE2F
+    operator-character --> U+E0100--U+E01EF
+    operator-characters --> operator-character operator-characters-OPT
 
-	dot-operator-head --> ``..``
-	dot-operator-character --> ``.`` | operator-character
-	dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
+    dot-operator-head --> ``..``
+    dot-operator-character --> ``.`` | operator-character
+    dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
-	binary-operator --> operator
+    binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
 
