@@ -57,16 +57,17 @@ the term *declaration* covers both declarations and definitions.
 
 .. _LexicalStructure_ModuleScope:
 
-Module Scope
-------------
+Top-Level Code
+--------------
 
-The module scope defines the code that's visible to other code in Swift source files
-that are part of the same module.
 The top-level code in a Swift source file consists of zero or more statements,
 declarations, and expressions.
-Variables, constants, and other named declarations that are declared
-at the top-level of a source file are visible to code
+By default, variables, constants, and other named declarations that are declared
+at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
+You can override this default behavior
+by marking the declaration with an access level modifier,
+as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
 
@@ -205,7 +206,7 @@ in the initializer *expression*.
 .. testcode:: constant-decl
 
     -> let (firstNumber, secondNumber) = (10, 42)
-    << // (firstNumber, secondNumber): (Int, Int) = (10, 42)
+    << // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
@@ -529,7 +530,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     Grammar of a type alias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
-    typealias-head --> attributes-OPT declaration-modifiers-OPT ``typealias`` typealias-name
+    typealias-head --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -616,6 +617,7 @@ For example:
           return y + String(x)
       }
    -> f(7, "hello")  // x and y have no name
+   << // r0 : String = "hello7"
    ---
    -> class C {
           func f(x: Int, y: String) -> String {
@@ -623,7 +625,9 @@ For example:
           }
       }
    -> let c = C()
+   << // c : C = _TtC4REPL1C
    -> c.f(7, y: "hello")  // x has no name, y has a name
+   << // r1 : String = "hello7"
 
 You can override the default behavior
 for how parameter names are used
@@ -923,7 +927,8 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attributes-OPT union-style-enum | attributes-OPT raw-value-style-enum
+    enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
+    enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
     union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
@@ -1035,7 +1040,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attributes-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -1118,7 +1123,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT declaration-modifiers-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -1217,7 +1222,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attributes-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
 
@@ -1629,7 +1634,7 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
@@ -1890,9 +1895,49 @@ that introduces the declaration.
     For an example and more information about the ``weak`` modifier,
     see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
 
+
+.. _Declarations_AccessControlLevels:
+
+Access Control Levels
+~~~~~~~~~~~~~~~~~~~~~
+
+Swift provides three levels of access control: public, internal, and private.
+You can mark a declaration with one of the access-level modifiers below
+to specify the declaration's access level.
+Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
+
+``public``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    by code in the same module as the declaration.
+    Declarations marked with the ``public`` access-level modifier can also be accessed
+    by code in a module that imports the module that contains that declaration.
+
+``internal``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code in the same module as the declaration.
+    By default,
+    most declarations are implicitly marked with the ``internal`` access-level modifier.
+
+``private``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code in the same source file as the declaration.
+
+Each access-level modifier above optionally accepts a single argument,
+which consists of the keyword ``set`` enclosed in parentheses (for instance, ``private(set)``).
+Use this form of an access-level modifier when you want to specify an access level
+for the setter of a variable that's less than or equal to the access level of the variable itself,
+as discussed in :ref:`AccessControl_GettersAndSetters`.
+
 .. syntax-grammar::
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> access-level-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
+
+    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+    access-level-modifiers --> access-level-modifier access-level-modifiers-OPT
+

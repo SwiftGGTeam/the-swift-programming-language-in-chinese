@@ -237,7 +237,7 @@ For example:
 .. testcode::
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = (test, 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
@@ -320,10 +320,10 @@ both raise compile-time errors.
     !! <REPL Input>:1:9: error: 'is' test is always true
     !! "hello" is String
     !!         ^
-    "hello" is Int
-    !! <REPL Input>:1:9: error: cannot convert the expression's type 'Bool' to type 'StringLiteralConvertible'
+    -> "hello" is Int
+    !! <REPL Input>:1:9: error: type 'Int' does not conform to protocol 'StringLiteralConvertible'
     !! "hello" is Int
-    !! ~~~~~~~~^~~~~~
+    !!         ^
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
@@ -554,7 +554,7 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = Point(1.0, 1.0)
+    << // somePoint : Point = _TtV4REPL5Point
     >> somePoint.moveByX(2.0, y: 3.0)
     >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
@@ -659,10 +659,11 @@ The following closure expressions are equivalent:
 
 .. testcode:: closure-expression-forms
 
+    >> func myFunction(f: (Int, Int) -> Int) {}
     -> myFunction {
            (x: Int, y: Int) -> Int in
            return x + y
-      }
+       }
     ---
     -> myFunction {
            (x, y) in
@@ -705,7 +706,7 @@ For example:
 .. testcode:: closure-expression-capture
 
     // Weak capture of "self.parent" as "parent"
-    myFunction { [weak parent = self.parent] in print(parent!.title) }
+    -> myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
@@ -754,7 +755,7 @@ For example:
 
     >> enum MyEnumeration { case SomeValue, AnotherValue }
     -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = <unprintable value>
+    << // x : MyEnumeration = (Enum Value)
     -> x = .AnotherValue
 
 .. langref-grammar
@@ -820,7 +821,7 @@ For example, in the following assignment
 .. testcode::
 
     >> var (x, _) = (10, 20)
-    << // (x, _) : (Int, Int) = (10, 20)
+    << // t : (Int, Int, Int) = (10, 20, 30)
     -> (x, _) = (10, 20)
     -> // x is 10, 20 is ignored
 
@@ -921,11 +922,12 @@ The following function calls are equivalent:
     >>    return f(x)
     >> }
     >> let x = 10
+    << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
     -> someFunction(x, {$0 == 13})
-    <$ : Bool = false
+    << // r0 : Bool = false
     -> someFunction(x) {$0 == 13}
-    <$ : Bool = false
+    << // r1 : Bool = false
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted.
@@ -939,7 +941,7 @@ the parentheses can be omitted.
     >>    }
     >> }
     >> let myData = Data()
-    << // myData : Data = <Data instance>
+    << // myData : Data = _TtC4REPL4Data
     // someFunction takes a closure as its only argument
     -> myData.someMethod() {$0 == 13}
     << // r0 : Bool = false
@@ -988,7 +990,7 @@ For example:
 
     >> class SomeClass { class func someClassFunction() {} }
     -> var x = SomeClass.someClassFunction // ok
-    << // x : () -> () = <opaque>
+    << // x : () -> () = (Function)
     -> var y = SomeClass.init              // error
     !! <REPL Input>:1:19: error: initializer cannot be referenced without arguments
     !! var y = SomeClass.init              // error
@@ -1278,7 +1280,7 @@ The following example shows the behavior
 of the example above
 without using optional chaining.
 
-.. testcode:: optional-chaining-if-let
+.. testcode:: optional-chaining
 
     -> if let unwrappedC = c {
           result = unwrappedC.property.performAction()

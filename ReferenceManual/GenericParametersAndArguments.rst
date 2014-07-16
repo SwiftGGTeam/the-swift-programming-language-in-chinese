@@ -174,11 +174,11 @@ a corresponding type parameter in the generic parameter clause of a generic type
 The result is a specialized version of that generic type. As an example,
 the Swift standard library defines a generic dictionary type as:
 
-.. testcode::
+.. code-block:: swift
 
-    -> struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
-          /* ... */
-       }
+    struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
+        /* ... */
+    }
 
 .. TODO: How are we supposed to wrap code lines like the above?
 

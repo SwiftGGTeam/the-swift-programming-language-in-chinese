@@ -249,6 +249,7 @@ the curried function ``addTwoNumbers()()`` as the following nested function:
     -> addTwoNumbers(4)(5) // Returns 9
     << // r0 : Int = 9
 
+
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
@@ -291,13 +292,13 @@ In other words, the following two declarations are equivalent:
 .. testcode:: array-type
 
     -> let someArray: [String] = ["Alex", "Brian", "Dave"]
-    << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
+    << // someArray : [String] = ["Alex", "Brian", "Dave"]
     -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
     !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
     !!     ^
     !! <REPL Input>:1:5: note: 'someArray' previously declared here
-    !! let someArray = ["Alex", "Brian", "Dave"]
+    !! let someArray: [String] = ["Alex", "Brian", "Dave"]
     !!     ^
 
 In both cases, the constant ``someArray``
@@ -365,14 +366,14 @@ In other words, the following two declarations are equivalent:
 
 .. testcode:: dictionary-type
 
-    -> let someDictionary: [String: Int] = ["Alex": 31 "Paul": 39]
-    << // someDictionary : [String: Int] = ["Alex": 31 "Paul": 39]
-    -> let someDictionary: Dictionary<String, Int> = ["Alex": 31 "Paul": 34]
+    -> let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+    << // someDictionary : [String : Int] = ["Paul": 39, "Alex": 31]
+    -> let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someDictionary'
-    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31 "Paul": 34]
+    !! let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
     !!     ^
     !! <REPL Input>:1:5: note: 'someDictionary' previously declared here
-    !! let someDictionary = ["Alex": 31 "Paul": 34]
+    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     !!     ^
 
 In both cases, the constant ``someDictionary``
@@ -394,7 +395,7 @@ key and value types.
 .. testcode::
 
     -> var emptyDictionary: [String: Double] = [:]
-    << // emptyDictionary : [String: Double] = [:]
+    << // emptyDictionary : [String : Double] = [:]
 
 The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
 as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
@@ -496,10 +497,10 @@ In other words, the following two declarations are equivalent:
     << // implicitlyUnwrappedString : String! = nil
     -> var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
     !! <REPL Input>:1:5: error: invalid redeclaration of 'implicitlyUnwrappedString'
-    !! var implicitlyUnwrappedString: String!
+    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
     !!     ^
     !! <REPL Input>:1:5: note: 'implicitlyUnwrappedString' previously declared here
-    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    !! var implicitlyUnwrappedString: String!
     !!     ^
 
 In both cases, the variable ``implicitlyUnwrappedString``
@@ -611,7 +612,7 @@ as the following example shows:
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = C4REPL12SomeSubClass (has 1 child)
+    << // someInstance : SomeBaseClass = _TtC4REPL12SomeSubClass
     -> // someInstance is of type SomeBaseClass at compile time, but
     -> // someInstance is of type SomeSubClass at runtime
     -> someInstance.dynamicType.printClassName()
