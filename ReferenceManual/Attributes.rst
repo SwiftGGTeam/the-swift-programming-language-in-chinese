@@ -46,13 +46,16 @@ the ``noreturn`` attribute to a function or method *type*.
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
-``assignment``
-    Apply this attribute to functions that overload
-    a compound assignment operator.
-    Functions that overload a compound assignment operator must mark
-    their initial input parameter as ``inout``.
-    For an example of how to use the ``assignment`` attribute,
-    see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
+.. NOTE: As of Beta 5, 'assignment' is removed from the language.
+    I'm keeping the prose here in case it comes back for some reason.
+
+    ``assignment``
+        Apply this attribute to functions that overload
+        a compound assignment operator.
+        Functions that overload a compound assignment operator must mark
+        their initial input parameter as ``inout``.
+        For an example of how to use the ``assignment`` attribute,
+        see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
 
 .. NOTE: ``assignment doesn't seem to be required as of r16459.
     Emailed swift-dev on 4/17/14 with the following example:
@@ -73,13 +76,18 @@ the ``noreturn`` attribute to a function or method *type*.
 
     Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
 
-``class_protocol``
-    Apply this attribute to a protocol to indicate
-    that the protocol can be adopted by class types only.
+.. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
+    I'm keeping the prose here in case it comes back for some reason.
+    Semantically, the it's replaced with a 'class' requirement,
+    e.g., @class_protocol protocol P {} --> protocol P: class {}
 
-    If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
-    is implicitly applied to that protocol; there's no need to mark the protocol with
-    the ``class_protocol`` attribute explicitly.
+    ``class_protocol``
+        Apply this attribute to a protocol to indicate
+        that the protocol can be adopted by class types only.
+
+        If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
+        is implicitly applied to that protocol; there's no need to mark the protocol with
+        the ``class_protocol`` attribute explicitly.
 
 .. Note: At the design meeting on June 17th,
     it was decided that we don't want people to be using "exported" at the moment.
