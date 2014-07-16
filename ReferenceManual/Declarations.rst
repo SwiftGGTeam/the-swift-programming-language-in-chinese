@@ -1901,16 +1901,32 @@ that introduces the declaration.
 Access Control Levels
 ~~~~~~~~~~~~~~~~~~~~~
 
+Swift provides three levels of access control: public, internal, and private.
+You can mark a declaration with one of the access-level modifiers below
+to specify the declaration's access level.
+Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
 ``public``
-    .. write-me::
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    by code in the same module as the declaration.
+    Declarations marked with the ``public`` access-level modifier can also be accessed
+    by code in a module that imports the module that contains that declaration.
 
 ``internal``
-    ..write-me::
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code in the same module as the declaration.
+    By default,
+    most declarations are implicitly marked with the ``internal`` access-level modifier.
 
 ``private``
-    ..write-me::
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code in the same source file as the declaration.
 
+Each access-level modifier above optionally accepts a single argument,
+which consists of the keyword ``set`` enclosed in parentheses (for instance, ``private(set)``).
+Use this form of an access-level modifier when you want to specify an access level
+for the setter of a variable that's less than or equal to the access level of the variable itself,
+as discussed in :ref:`AccessControl_GettersAndSetters`.
 
 .. syntax-grammar::
 
