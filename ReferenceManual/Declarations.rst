@@ -995,7 +995,7 @@ Structure declarations are declared using the keyword ``struct`` and have the fo
 
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-static properties, instance methods, static methods, initializers,
+static properties, instance methods, static methods, initializers, subscripts,
 type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain destructor or protocol declarations.
 For a discussion and several examples of structures
@@ -1062,7 +1062,7 @@ Class declarations are declared using the keyword ``class`` and have the followi
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 instance methods, class methods, initializers,
-a single destructor method, type aliases,
+a single destructor method, subscripts, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
@@ -1088,8 +1088,9 @@ The designated initializer of a class must initialize all of the class's
 declared properties and it must do so before calling any of its superclass's
 designated initializers.
 
-A class can override properties, methods, and initializers of its superclass.
-Overridden methods and properties must be marked with the ``override`` declaration modifier.
+A class can override properties, methods, subscripts, and initializers of its superclass.
+Overridden properties, methods, subscripts,
+and designated initializers must be marked with the ``override`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -1519,8 +1520,8 @@ they must be implemented directly.
 Required convenience initializers can be either implemented explicitly
 or inherited when the subclass directly implements all of the superclass’s designated
 initializers (or overrides the designated initializers with convenience initializers).
-Unlike methods, properties, and subscripts,
-you don't need to mark overridden initializers with the ``override`` declaration modifier.
+As with methods, properties, and subscripts,
+you need to mark overridden designated initializers with the ``override`` declaration modifier.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
