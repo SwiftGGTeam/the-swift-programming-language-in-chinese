@@ -174,7 +174,7 @@ the Swift standard library defines a generic dictionary type as:
 
 .. code-block:: swift
 
-    struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
+    struct Dictionary<KeyType: Hashable, ValueType>: CollectionType, DictionaryLiteralConvertible {
         /* ... */
     }
 
