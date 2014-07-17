@@ -736,6 +736,7 @@ For example, the following two declarations are equivalent:
        }
     ---
     -> addTwoNumbers(4)(5) // Returns 9
+    << // r0 : Int = 9
 
 Multiple levels of currying are allowed.
 
@@ -1091,6 +1092,11 @@ designated initializers.
 A class can override properties, methods, subscripts, and initializers of its superclass.
 Overridden properties, methods, subscripts,
 and designated initializers must be marked with the ``override`` declaration modifier.
+
+.. assertion:: designatedInitializersRequireOverride
+
+    -> class C { init() {} }
+    -> class D: C { override init() { super.init() } }
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
