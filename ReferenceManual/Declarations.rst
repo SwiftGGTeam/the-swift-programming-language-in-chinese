@@ -845,15 +845,15 @@ see :ref:`Enumerations_AssociatedValues`.
 
 .. _Declarations_EnumerationsWithRawCaseValues:
 
-Enumerations with Raw Cases Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enumerations with Cases of a Raw-Value Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#>: <#raw value type#> {
+    enum <#enumeration name#>: <#raw-value type#> {
         case <#enumeration case 1#> = <#raw value 1#>
         case <#enumeration case 2#> = <#raw value 2#>
     }
@@ -862,11 +862,11 @@ In this form, each case block consists of the keyword ``case``,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
-The type of these values is specified in the *raw value type* and must represent a literal
+The type of these values is specified in the *raw-value type* and must represent a literal
 integer, floating-point number, character, or string.
 
 Each case must have a unique name and be assigned a unique raw value.
-If the raw value type is specified as ``Int``
+If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
