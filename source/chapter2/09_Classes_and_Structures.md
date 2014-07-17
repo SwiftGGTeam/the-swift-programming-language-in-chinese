@@ -113,7 +113,7 @@ println("The width of someVideoMode is \(someVideoMode.resolution.width)")
 你也可以使用点语法为属性变量赋值：
 
 ```swift
-someVideoMode.resolution.width = 12880
+someVideoMode.resolution.width = 1280
 println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 // 输出 "The width of someVideoMode is now 1280"
 ```
