@@ -141,7 +141,7 @@ For-In Statement
 
 A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
-that conforms to the ``Sequence`` protocol.
+that conforms to the ``SequenceType`` protocol.
 
 A ``for``-``in`` statement has the following form:
 
@@ -153,7 +153,7 @@ A ``for``-``in`` statement has the following form:
 
 The ``generate`` method is called on the *collection* expression
 to obtain a value of a generator type---that is,
-a type that conforms to the ``Generator`` protocol.
+a type that conforms to the ``GeneratorType`` protocol.
 The program begins executing a loop
 by calling the ``next`` method on the stream.
 If the value returned is not ``None``,
