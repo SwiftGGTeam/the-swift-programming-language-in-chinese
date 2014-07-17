@@ -998,7 +998,7 @@ The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 static properties, instance methods, static methods, initializers, subscripts,
 type aliases, and even other structure, class, and enumeration declarations.
-Structure declarations can't contain destructor or protocol declarations.
+Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
 that include various kinds of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
@@ -1063,7 +1063,7 @@ Class declarations are declared using the keyword ``class`` and have the followi
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 instance methods, class methods, initializers,
-a single destructor method, subscripts, type aliases,
+a single deinitializer, subscripts, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
@@ -1619,8 +1619,8 @@ The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed static properties,
 instance methods, static and class methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
-Extension declarations can't contain destructor or protocol declarations,
-store properties, property observers, or other extension declarations.
+Extension declarations can't contain deinitializer or protocol declarations,
+stored properties, property observers, or other extension declarations.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
