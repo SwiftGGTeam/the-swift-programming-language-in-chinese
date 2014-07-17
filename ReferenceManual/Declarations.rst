@@ -1202,15 +1202,25 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
     properly for optional initializer requirements.
 
 To restrict the adoption of a protocol to class types only,
-mark the entire protocol declaration with the ``class_protocol`` attribute.
-Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
-can likewise be adopted only by a class type.
+mark the protocol with the ``class`` requirement
+by writing the ``class`` keyword as the first item in the *inherited protocols*
+list after the colon.
+For example, the following protocol can be adopted only by class types:
+
+.. testcode::
+
+    -> protocol SomeProtocol: class {
+           /* Protocol members go here */
+       }
+
+Any protocol that inherits from a protocol that's marked with the ``class`` requirement
+can likewise be adoped only by class types.
 
 .. note::
 
-    If a protocol is already marked with the ``objc`` attribute,
-    the ``class_protocol`` attribute is implicitly applied to that protocol;
-    there’s no need to mark the protocol with the ``class_protocol`` attribute explicitly.
+    If a protocol is marked with the ``objc`` attribute,
+    the ``class`` requirement is implicitly applied to that protocol;
+    there’s no need to mark the protocol with the ``class`` requirement explicitly.
 
 Protocols are named types, and thus they can appear in all the same places
 in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
