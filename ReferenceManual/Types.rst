@@ -634,26 +634,30 @@ Type Inheritance Clause
 -----------------------
 
 A type inheritance clause is used to specify which class a named type inherits from
-and which protocols a named type conforms to.
+and which protocols a named type conforms to. A type inheritance clause is also
+used to specify a ``class`` requirement on a protocol.
 A type inheritance clause begins with a colon (``:``),
-followed by a comma-separated list of type identifiers.
+followed by either a ``class`` requirement, a list of type identifiers, or both.
 
-Class types may inherit from a single superclass and conform to any number of protocols.
+Class types can inherit from a single superclass and conform to any number of protocols.
 When defining a class,
 the name of the superclass must appear first in the list of type identifiers,
 followed by any number of protocols the class must conform to.
 If the class does not inherit from another class,
-the list may begin with a protocol instead.
+the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
 see :doc:`../LanguageGuide/Inheritance`.
 
-Other named types may only inherit from or conform to a list of protocols.
-Protocol types may inherit from any number of other protocols.
+Other named types can only inherit from or conform to a list of protocols.
+Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
+As discussed in :ref:`Declarations_ProtocolDeclaration`,
+you can include the ``class`` keyword as the first item in the type inheritance clause
+to mark a protocol declaration with a ``class`` requirement.
 
-A type inheritance clause in an enumeration definition may be either a list of protocols,
+A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
 a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
@@ -667,8 +671,10 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ``:`` type-inheritance-list
+    type-inheritance-clause --> ``:`` class-requirement-OPT type-inheritance-list
+    type-inheritance-clause --> ``:`` class-requirement
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
+    class-requirement --> ``class`` ``,``-OPT
 
 .. _Types_TypeInference:
 
