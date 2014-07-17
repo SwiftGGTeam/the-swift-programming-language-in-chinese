@@ -799,7 +799,7 @@ and any number of declarations,
 including computed properties,
 instance methods, static methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
-Enumeration declarations can't contain destructor or protocol declarations.
+Enumeration declarations can't contain deinitializer or protocol declarations.
 
 Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
