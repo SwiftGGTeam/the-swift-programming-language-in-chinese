@@ -81,8 +81,8 @@ Swift 标准库提供了如下的二元运算符：
 - Comparative （无结合,优先级 130）
   - < 小于
   - <= 小于等于
-  - > 大于
-  - >= 大于等于
+  - &gt; 大于
+  - &gt;= 大于等于
   - == 等于
   - != 不等
   - === 恒等于
@@ -102,7 +102,7 @@ Swift 标准库提供了如下的二元运算符：
   - += Add and assign
   - -= Subtract and assign
   - <<= Left bit shift and assign
-  - >>= Right bit shift and assign
+  - &gt;&gt;= Right bit shift and assign
   - &= Bitwise AND and assign
   - ^= Bitwise XOR and assign
   - |= Bitwise OR and assign

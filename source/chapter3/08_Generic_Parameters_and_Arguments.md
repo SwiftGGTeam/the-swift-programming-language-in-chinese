@@ -30,7 +30,7 @@
 约束用于指明该类型形参继承自某个类或者遵守某个协议或协议的一部分。例如，在下面的泛型中，泛型形参`T: Comparable`表示任何用于替代类型形参`T`的类型实参必须满足`Comparable`协议。
 
 ```swift
-func simpleMin<T: COmparable>(x: T, y: T) -> T {
+func simpleMin<T: Comparable>(x: T, y: T) -> T {
     if x < y {
         return y
     }
