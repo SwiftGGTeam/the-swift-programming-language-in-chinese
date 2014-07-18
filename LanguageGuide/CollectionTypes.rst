@@ -379,9 +379,9 @@ and a default value of the appropriate type (called ``repeatedValue``):
    << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
    // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
-Thanks to type inference, you don't need to specify
-the type to be stored in the array when using this initializer,
-because it can be inferred from the default value:
+You can create a new array by adding together two existing arrays of compatible type
+with the addition operator (``+``).
+The new array's type is inferred from the type of the two arrays you add together:
 
 .. testcode:: arraysEmpty
 
@@ -389,13 +389,7 @@ because it can be inferred from the default value:
    << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
-
-Finally, you can create a new array by adding together two existing arrays of compatible type
-with the addition operator (``+``).
-The new array's type is inferred from the type of the two arrays you add together:
-
-.. testcode:: arraysEmpty
-
+   ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
    << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
    /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
