@@ -1627,7 +1627,7 @@ see :doc:`../LanguageGuide/Extensions`.
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
-and therefore the you can specify only a list of protocols after the *type name* and colon.
+and therefore you can specify only a list of protocols after the *type name* and colon.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
