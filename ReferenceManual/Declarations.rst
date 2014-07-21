@@ -1848,7 +1848,7 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> Digit 0 through 255
+    precedence-level --> A decimal integer between 0 and 255, inclusive
     associativity-clause --> ``associativity`` associativity
     associativity --> ``left`` | ``right`` | ``none``
 
