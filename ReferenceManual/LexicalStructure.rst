@@ -354,7 +354,7 @@ Integer literals can begin with leading zeros (``0``),
 but they are likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
-the default type of an integer literal is the Swift standard library type ``Int``.
+the default inferred type of an integer literal is the Swift standard library type ``Int``.
 The Swift standard library also defines types for various sizes of
 signed and unsigned integers,
 as described in :ref:`TheBasics_Integers`.
@@ -465,7 +465,7 @@ Floating-point literals can begin with leading zeros (``0``),
 but are likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
-the default type of a floating-point literal is the Swift standard library type ``Double``,
+the default inferred type of a floating-point literal is the Swift standard library type ``Double``,
 which represents a 64-bit floating-point number.
 The Swift standard library also defines a ``Float`` type,
 which represents a 32-bit floating-point number.
@@ -559,8 +559,9 @@ For example, all the following string literals have the same value:
    << // x : Int = 3
    << // r3 : String = "1 2 3"
 
-The default type of a string literal is ``String``. The characters that make up a string
-are of type ``Character``. For more information about the ``String`` and ``Character``
+The default inferred type of a string literal is ``String``.
+The default inferred type of the characters that make up a string
+is ``Character``. For more information about the ``String`` and ``Character``
 types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
 .. NOTE: We will have this as a single Unicode char, as well as Char which will be a
