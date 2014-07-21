@@ -1082,7 +1082,7 @@ the top-level declarations of that module.
 
     Grammar of an explicit member expression
 
-    explicit-member-expression --> postfix-expression ``.`` decimal-digit
+    explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
