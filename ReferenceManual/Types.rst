@@ -671,10 +671,11 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ``:`` class-requirement-OPT type-inheritance-list
+    type-inheritance-clause --> ``:`` class-requirement ``,`` type-inheritance-list
     type-inheritance-clause --> ``:`` class-requirement
+    type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
-    class-requirement --> ``class`` ``,``-OPT
+    class-requirement --> ``class``
 
 .. _Types_TypeInference:
 
