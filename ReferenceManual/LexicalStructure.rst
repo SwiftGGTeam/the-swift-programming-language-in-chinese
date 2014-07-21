@@ -294,27 +294,11 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   they can be used as identifiers.
 
 The following tokens are reserved as punctuation
-and can't be used as custom operators.
-
-- ``(``
-- ``)``
-- ``{``
-- ``}``
-- ``[``
-- ``]``
-- ``.``
-- ``,``
-- ``:``
-- ``;``
-- ``=``
-- ``@``
-- ``#``
-- ``&`` (as a prefix operator)
-- ``->``
-- :literal:`\``
-- ``!`` (as a postfix operator)
-- ``?``
-
+and can't be used as custom operators:
+``(``, ``)``, ``{``, ``}``, ``[``, ``]``,
+``.``, ``,``, ``:``, ``;``, ``=``, ``@``, ``#``,
+``&`` (as a prefix operator), ``->``, :literal:`\``,
+``!`` (as a postfix operator), and ``?``.
 
 .. _LexicalStructure_Literals:
 
