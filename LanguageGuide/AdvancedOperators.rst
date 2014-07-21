@@ -524,7 +524,7 @@ Precedence and Associativity
 ----------------------------
 
 Operator :newTerm:`precedence` gives some operators higher priority than others;
-these operators are calculated first.
+these operators are applied first.
 
 Operator :newTerm:`associativity` defines how operators of the same precedence
 are grouped together (or :newTerm:`associated`) ---
@@ -932,6 +932,21 @@ it has been given the same associativity and precedence values
 as default additive infix operators such as ``+`` and ``-``.
 For a complete list of the default Swift operator precedence
 and associativity settings, see :doc:`../ReferenceManual/Expressions`.
+
+.. note::
+
+   You do not specify a precedence when defining a prefix or postfix operator.
+   However, if you apply both a prefix and a postfix operator to the same operand,
+   the postfix operator will be applied first.
+
+.. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
+
+   -> prefix operator +++ {}
+   -> postfix operator --- {}
+   -> prefix func +++ (x: Int) -> Int { return x * 2 }
+   -> postfix func --- (x: Int) -> Int { return x - 1 }
+   -> +++1---
+   << // r0 : Int = 0
 
 .. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
    This is being tracked as rdar://16061044.
