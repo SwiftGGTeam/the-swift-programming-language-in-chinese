@@ -617,18 +617,18 @@ both of those constants or variables will refer to the same closure:
 .. TODO: Autoclosures
    ------------------
 
-.. TODO: var closure1: @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
+.. TODO: var closure1: @autoclosure () -> Int = 4  // Function producing 4 whenever it is called.
 
 .. TODO: from Assert.swift in stdlib/core:
    @transparent
    func assert(
-     condition: @auto_closure () -> Bool, message: StaticString = StaticString()
+     condition: @autoclosure () -> Bool, message: StaticString = StaticString()
    ) {
    }
-.. TODO: note that an @auto_closure's argument type must always be ()
+.. TODO: note that an @autoclosure's argument type must always be ()
    see also test/expr/closure/closures.swift
 
-.. TODO: The auto_closure attribute modifies a function type,
+.. TODO: The autoclosure attribute modifies a function type,
    changing the behavior of any assignment into (or initialization of) a value with the function type.
    Instead of requiring that the rvalue and lvalue have the same function type,
    an "auto closing" function type requires its initializer expression to have
@@ -636,5 +636,5 @@ both of those constants or variables will refer to the same closure:
    and it implicitly binds a closure over this expression.
    This is typically useful for function arguments that want to
    capture computation that can be run lazily.
-   auto_closure is only valid in a type of a syntactic function type
+   autoclosure is only valid in a type of a syntactic function type
    that is defined to take a syntactic empty tuple.
