@@ -5,6 +5,7 @@ The :newTerm:`lexical structure` of Swift describes what sequence of characters
 form valid tokens of the language.
 These valid tokens form the lowest-level building blocks of the language
 and are used to describe the rest of the language in subsequent chapters.
+A token consists of an identifier, keyword, punctuation, literal, or operator.
 
 In most cases, tokens are generated from the characters of a Swift source file
 by considering the longest possible substring from the input text,
@@ -151,10 +152,10 @@ These names are valid identifiers within the scope of the closure.
 
 .. _LexicalStructure_Keywords:
 
-Keywords
---------
+Keywords and Punctuation
+------------------------
 
-The following keywords are reserved and may not be used as identifiers,
+The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
 
@@ -291,6 +292,28 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
+
+The following tokens are reserved as punctuation
+and can't be used as custom operators.
+
+- ``(``
+- ``)``
+- ``{``
+- ``}``
+- ``[``
+- ``]``
+- ``.``
+- ``,``
+- ``:``
+- ``;``
+- ``=``
+- ``@``
+- ``#``
+- ``&`` (as a prefix operator)
+- ``->``
+- :literal:`\``
+- ``!`` (as a postfix operator)
+- ``?``
 
 
 .. _LexicalStructure_Literals:
@@ -626,8 +649,8 @@ You can also define custom operators as a sequence of two or more dots (for exam
 .. note::
 
    The tokens ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
-   and the unary prefix operator ``&`` are reserved.
-   These tokens can't be overloaded, nor can they be used to define custom operators.
+   and the prefix operator ``&`` are reserved.
+   These tokens can't be overloaded, nor can they be used as custom operators.
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
