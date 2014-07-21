@@ -233,12 +233,12 @@ attribute to a function or method *declaration*.
     var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}
     var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
 
-``auto_closure``
+``autoclosure``
     This attribute is used to delay the evaluation of an expression
     by automatically wrapping that expression in a closure with no arguments.
     Apply this attribute to a function or method type that takes no arguments
     and that returns the type of the expression.
-    For an example of how to use the ``auto_closure`` attribute,
+    For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Types_FunctionType`.
 
 ``noreturn``
@@ -256,7 +256,7 @@ attribute to a function or method *declaration*.
     attribute      ::= attribute-infix
     attribute      ::= attribute-resilience
     attribute      ::= attribute-inout
-    attribute      ::= attribute-auto_closure
+    attribute      ::= attribute-autoclosure
     attribute      ::= attribute-noreturn
 
 .. NOTE: LangRef grammar is way out of date.

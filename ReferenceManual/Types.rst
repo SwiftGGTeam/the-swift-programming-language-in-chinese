@@ -180,17 +180,17 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
 and return multiple values.
 
-You can apply the ``auto_closure`` attribute to a function type that has a parameter
+You can apply the ``autoclosure`` attribute to a function type that has a parameter
 type of ``()`` and that returns the type of an expression
 (see :ref:`Attributes_TypeAttributes`).
 An autoclosure function
 captures an implicit closure over the specified expression, instead of the expression
-itself. The following example uses the ``auto_closure`` attribute in defining
+itself. The following example uses the ``autoclosure`` attribute in defining
 a very simple assert function:
 
 .. testcode::
 
-    -> func simpleAssert(condition: @auto_closure () -> Bool, message: String) {
+    -> func simpleAssert(condition: @autoclosure () -> Bool, message: String) {
            if !condition() {
                println(message)
            }
@@ -201,7 +201,7 @@ a very simple assert function:
     <- testNumber isn't an even number.
 
 .. TODO: Add this back in after Dave updates the Guide with an autoclousre section:
-    "For an example of how to use the ``auto_closure`` attribute,
+    "For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Closures_Autoclosures`."
 
 A function type can have a variadic parameter as the last parameter in its *parameter type*.
