@@ -937,7 +937,7 @@ and associativity settings, see :doc:`../ReferenceManual/Expressions`.
 
    You do not specify a precedence when defining a prefix or postfix operator.
    However, if you apply both a prefix and a postfix operator to the same operand,
-   the postfix operator will be applied first.
+   the postfix operator is applied first.
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
 
