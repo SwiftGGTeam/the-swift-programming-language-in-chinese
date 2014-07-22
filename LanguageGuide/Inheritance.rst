@@ -520,32 +520,20 @@ Any attempts to subclass a final class will be reported as a compile-time error.
          }
       }
    !! <REPL Input>:2:19: error: var overrides a 'final' var
-   !! override var someVar: Int {
-   !! ^
+   !!      override var someVar: Int {
+   !!                   ^
    !! <REPL Input>:2:10: note: overridden declaration is here
-   !! var someVar = 0
-   !! ^
-   !! <REPL Input>:2:19: error: var overrides a 'final' var
-   !! override var someVar: Int {
-   !! ^
-   !! <REPL Input>:2:10: note: overridden declaration is here
-   !! var someVar = 0
-   !! ^
+   !!      var someVar = 0
+   !!          ^
    !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
-   !! override func someFunction() {
-   !! ^
+   !!      override func someFunction() {
+   !!                    ^
    !! <REPL Input>:3:11: note: overridden declaration is here
-   !! func someFunction() {
-   !! ^
-   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
-   !! override func someFunction() {
-   !! ^
-   !! <REPL Input>:3:11: note: overridden declaration is here
-   !! func someFunction() {
-   !! ^
+   !!      func someFunction() {
+   !!           ^
    !! <REPL Input>:1:7: error: inheritance from a final class 'C'
    !! class D : C {
-   !! ^
+   !!       ^
 
 .. TODO: I should probably provide an example here.
 
