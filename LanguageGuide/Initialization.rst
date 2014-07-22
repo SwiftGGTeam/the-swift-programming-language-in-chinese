@@ -1114,38 +1114,21 @@ Required Initializers
 Write the ``required`` modifier before the definition of
 a designated or convenience initializer on a class
 to indicate that every subclass of that class must implement the required initializer.
- 
-Even if an initializer is required,
-you may not have to provide an explicit implementation of that initializer,
-and may be able to satisfy the requirement with an inherited initializer instead.
-Requirements are satisfied based on the following two rules:
- 
-**Rule 1**
-  If your superclass has a required *designated* initializer,
-  you must provide an implementation of that initializer.
-  The requirement cannot be satisfied by an inherited initializer.
 
-.. assertion:: youMustExplicitlyImplementARequiredDesignatedInitialier
+.. note::
+
+   You do not have to provide an explicit implementation of a required initializer
+   if you can satisfy the requirement with an inherited initializer.
+
+.. assertion:: youCanSatisfyADesignatedInitializerWithAnInheritedInitializer
 
    -> class C {
          var x = 0
          required init(i: Int) {}
       }
    -> class D: C {
-         // C's required initializer would normally be inherited here
          var y = 0
       }
-   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
-   !! class D: C {
-   !!       ^
-   !! <REPL Input>:3:15: note: 'required' initializer with type '(i: Int)' not overridden
-   !!      required init(i: Int) {}
-   !!               ^
-
-**Rule 2**
-  If your superclass has a required *convenience* initializer,
-  you can satisfy the requirement with an inherited initializer,
-  even if the requirement started life as a designated initializer higher up the chain.
 
 .. assertion:: youCanSatisfyAConvenienceInitializerWithAnInheritedInitializer
 
