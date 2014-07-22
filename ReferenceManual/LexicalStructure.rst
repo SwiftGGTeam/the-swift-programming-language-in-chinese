@@ -324,7 +324,7 @@ The following are examples of literals:
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
 attempts to infer a type for the literal. For example,
-in the declaration ``var x: Int8 = 42``,
+in the declaration ``let x: Int8 = 42``,
 Swift uses the explicit type annotation (``: Int8``) to infer
 that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
@@ -332,7 +332,7 @@ Swift infers that the literal's type is one of the default literal types
 defined in the Swift Standard Library.
 The default types are ``Int`` for integer literals, ``Double`` for floating-point literals,
 ``String`` for string literals, and ``Bool`` for Boolean literals.
-For example, in the declaration ``var str = "Hello, world"``,
+For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
 
