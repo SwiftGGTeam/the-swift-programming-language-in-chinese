@@ -174,20 +174,14 @@ You can add a new item to the end of an array by calling the array's ``append`` 
    /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
    </ shoppingList now contains 3 items, and someone is making pancakes
 
-Alternatively, add a new item to the end of an array
+Alternatively, append an array of one or more compatible items
 with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
 
-   -> shoppingList += "Baking Powder"
+   -> shoppingList += ["Baking Powder"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 4 items
-
-You can also append an array of compatible items
-with the addition assignment operator (``+=``):
-
-.. testcode:: arraysInferred
-
    -> shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 7 items
