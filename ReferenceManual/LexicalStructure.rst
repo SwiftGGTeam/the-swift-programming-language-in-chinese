@@ -329,12 +329,23 @@ Swift uses the explicit type annotation (``: Int8``) to infer
 that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
 Swift infers that the literal's type is one of the default literal types
-defined in the Swift Standard Library.
+defined in the Swift standard library.
 The default types are ``Int`` for integer literals, ``Double`` for floating-point literals,
 ``String`` for string literals, and ``Bool`` for Boolean literals.
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
+
+When specifying the type annotation for a literal value,
+the annotation's type must be a type that can be instantiated from that literal value.
+That is, the type must conform to one of the following Swift standard library protocols:
+``IntegerLiteralConvertible`` for integer literals,
+``FloatingPointLiteralConvertible`` for floating-point literals,
+``StringLiteralConvertible`` for string literals, and
+``BooleanLiteralConvertible`` for Boolean literals.
+For example, ``Int8`` conforms to the ``IntegerLiteralConvertible`` protocol,
+and therefore it can be used in the type annotation for the integer literal ``42``
+in the declaration ``let x: Int8 = 42``.
 
 .. syntax-grammar::
 
