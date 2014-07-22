@@ -389,8 +389,8 @@ the actual items in the ``rooms`` array through optional chaining:
    :compile: true
 
    -> let johnsHouse = Residence()
-      johnsHouse.rooms += Room(name: "Living Room")
-      johnsHouse.rooms += Room(name: "Kitchen")
+      johnsHouse.rooms.append(Room(name: "Living Room"))
+      johnsHouse.rooms.append(Room(name: "Kitchen"))
       john.residence = johnsHouse
    ---
    -> if let firstRoomName = john.residence?[0].name {

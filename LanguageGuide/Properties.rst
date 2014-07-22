@@ -197,8 +197,8 @@ neither of which is shown in full:
    ---
    -> let manager = DataManager()
    << // manager : DataManager = _TtC4REPL11DataManager
-   -> manager.data += "Some data"
-   -> manager.data += "Some more data"
+   -> manager.data.append("Some data")
+   -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property has not yet been created
 
 The ``DataManager`` class has a stored property called ``data``,
