@@ -305,8 +305,9 @@ and can't be used as custom operators:
 Literals
 --------
 
-A :newTerm:`literal` is the source code representation of a value of an
-integer, floating-point number, or string type.
+A :newTerm:`literal` is the source code representation of a value of a type,
+such as a number or string.
+
 The following are examples of literals:
 
 .. testcode::
@@ -314,9 +315,26 @@ The following are examples of literals:
     -> 42               // Integer literal
     -> 3.14159          // Floating-point literal
     -> "Hello, world!"  // String literal
+    -> true             // Boolean literal
     << // r0 : Int = 42
     << // r1 : Double = 3.14159
     << // r2 : String = "Hello, world!"
+    << // r3 : Bool = true
+
+A literal doesn't have a type on its own.
+Instead, a literal is parsed as having infinite precision and Swift's type inference
+attempts to infer a type for the literal. For example,
+in the declaration ``var x: Int8 = 42``,
+Swift uses the explicit type annotation (``: Int8``) to infer
+that the type of the integer literal ``42`` is ``Int8``.
+If there isn't suitable type information available,
+Swift infers that the literal's type is one of the default literal types
+defined in the Swift Standard Library.
+The default types are ``Int`` for integer literals, ``Double`` for floating-point literals,
+``String`` for string literals, and ``Bool`` for Boolean literals.
+For example, in the declaration ``var str = "Hello, world"``,
+the default inferred type of the string
+literal ``"Hello, world"`` is ``String``.
 
 .. syntax-grammar::
 
