@@ -393,17 +393,6 @@ and can be accessed through dot syntax, but cannot be set to a different value.
    !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be a computed property
    !! let y: Int { get { return 42 } set {} }
    !! ^
-   !! /tmp/swifttest.swift:1:7: error: class 'C' has no initializers
-   !! class C {
-   !! ^
-   !! /tmp/swifttest.swift:2:8: note: stored property 'x' without initial value prevents synthesized initializers
-   !! let x: Int { return 42 }
-   !! ^
-   !! = 0
-   !! /tmp/swifttest.swift:3:8: note: stored property 'y' without initial value prevents synthesized initializers
-   !! let y: Int { get { return 42 } set {} }
-   !! ^
-   !! = 0
 
 You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
