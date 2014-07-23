@@ -865,14 +865,15 @@ In this form, each case block consists of the keyword ``case``,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
-The type of these values is specified in the *raw-value type* and must represent a literal
-integer, floating-point number, character, or string.
+The type of these values is specified in the *raw-value type* and must represent an
+integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
 and one of the following literal-convertible protocols:
 ``IntegerLiteralConvertible`` for integer literals,
 ``FloatingPointLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals, and
-``ExtendedGraphemeClusterLiteralConvertible`` for character literals.
+``StringLiteralConvertible`` for string literals that contain any number of characters, and
+``ExtendedGraphemeClusterLiteralConvertible`` for string literals
+that contain only a single character.
 
 Each case must have a unique name and be assigned a unique raw value.
 If the raw-value type is specified as ``Int``
