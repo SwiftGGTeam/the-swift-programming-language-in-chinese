@@ -829,7 +829,7 @@ enumeration cases of any type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#> <#adopted protocols#> {
+    enum <#enumeration name#>: <#adopted protocols#> {
         case <#enumeration case 1#>
         case <#enumeration case 2#>(<#associated value types#>)
     }
