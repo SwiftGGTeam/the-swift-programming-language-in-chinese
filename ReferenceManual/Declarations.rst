@@ -872,7 +872,7 @@ and one of the following literal-convertible protocols:
 ``IntegerLiteralConvertible`` for integer literals,
 ``FloatingPointLiteralConvertible`` for floating-point literals,
 ``StringLiteralConvertible`` for string literals, and
-``ExtendedGraphemeLiteralConvertible`` for character literals.
+``ExtendedGraphemeClusterLiteralConvertible`` for character literals.
 
 Each case must have a unique name and be assigned a unique raw value.
 If the raw-value type is specified as ``Int``
