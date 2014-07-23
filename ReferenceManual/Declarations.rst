@@ -801,6 +801,9 @@ instance methods, static methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
+Enumeration types can adopt any number of protocols, but can’t inherit from classes,
+structures, or other enumerations.
+
 Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
@@ -826,7 +829,7 @@ enumeration cases of any type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#> {
+    enum <#enumeration name#> <#adopted protocols#> {
         case <#enumeration case 1#>
         case <#enumeration case 2#>(<#associated value types#>)
     }
@@ -853,7 +856,7 @@ enumeration cases of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#>: <#raw-value type#> {
+    enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
         case <#enumeration case 1#> = <#raw value 1#>
         case <#enumeration case 2#> = <#raw value 2#>
     }
@@ -864,6 +867,12 @@ Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw-value type* and must represent a literal
 integer, floating-point number, character, or string.
+In particular, the *raw-value type* must conform to the ``Equatable`` protocol
+and one of the following literal-convertible protocols:
+``IntegerLiteralConvertible`` for integer literals,
+``FloatingPointLiteralConvertible`` for floating-point literals,
+``StringLiteralConvertible`` for string literals, and
+``ExtendedGraphemeLiteralConvertible`` for character literals.
 
 Each case must have a unique name and be assigned a unique raw value.
 If the raw-value type is specified as ``Int``
