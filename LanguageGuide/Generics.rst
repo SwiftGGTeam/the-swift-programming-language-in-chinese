@@ -290,7 +290,7 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = _TtV4REPL8IntStack
+   << // intStack : IntStack = REPL.IntStack
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -349,7 +349,7 @@ after the type name when creating a new instance with initializer syntax:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = _TtV4REPL5Stack
+   << // stackOfStrings : Stack<String> = REPL.Stack
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -895,7 +895,7 @@ Here's how the ``allItemsMatch`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = _TtV4REPL5Stack
+   << // stackOfStrings : Stack<String> = REPL.Stack
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")

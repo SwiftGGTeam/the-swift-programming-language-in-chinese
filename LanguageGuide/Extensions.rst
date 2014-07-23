@@ -214,10 +214,10 @@ These initializers can be used to create new ``Rect`` instances:
 .. testcode:: extensionsInitializers
 
    -> let defaultRect = Rect()
-   << // defaultRect : Rect = _TtV4REPL4Rect
+   << // defaultRect : Rect = REPL.Rect
    -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // memberwiseRect : Rect = _TtV4REPL4Rect
+   << // memberwiseRect : Rect = REPL.Rect
 
 You can extend the ``Rect`` structure to provide an additional initializer
 that takes a specific center point and size:
@@ -242,7 +242,7 @@ in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = _TtV4REPL4Rect
+   << // centerRect : Rect = REPL.Rect
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 

@@ -65,7 +65,7 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = _TtV4REPL10Fahrenheit
+   << // f : Fahrenheit = REPL.Fahrenheit
    -> println("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -146,11 +146,11 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = _TtV4REPL7Celsius
+   << // boilingPointOfWater : Celsius = REPL.Celsius
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = _TtV4REPL7Celsius
+   << // freezingPointOfWater : Celsius = REPL.Celsius
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -217,9 +217,9 @@ by providing named values for each initializer parameter:
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = _TtV4REPL5Color
+   << // magenta : Color = REPL.Color
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = _TtV4REPL5Color
+   << // halfGray : Color = REPL.Color
 
 Note that it is not possible to call these initializers
 without using external parameter names.
@@ -263,7 +263,7 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = _TtV4REPL7Celsius
+   << // bodyTemperature : Celsius = REPL.Celsius
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -301,7 +301,7 @@ with an optional ``String`` property called ``response``:
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
-   << // cheeseQuestion : SurveyQuestion = _TtC4REPL14SurveyQuestion
+   << // cheeseQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> cheeseQuestion.ask()
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
@@ -346,7 +346,7 @@ it can still be set within the class's initializer:
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
-   << // beetsQuestion : SurveyQuestion = _TtC4REPL14SurveyQuestion
+   << // beetsQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
@@ -375,7 +375,7 @@ of an item in a shopping list:
          var purchased = false
       }
    -> var item = ShoppingListItem()
-   << // item : ShoppingListItem = _TtC4REPL16ShoppingListItem
+   << // item : ShoppingListItem = REPL.ShoppingListItem
 
 Because all properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
@@ -407,7 +407,7 @@ This is true even if the structure's stored properties do not have default value
 
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
-   << // s : S = _TtV4REPL1S
+   << // s : S = REPL.S
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -429,7 +429,7 @@ which you can use to initialize a new ``Size`` instance:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = _TtV4REPL4Size
+   << // twoByTwo : Size = REPL.Size
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
@@ -525,7 +525,7 @@ from their property definitions:
 .. testcode:: valueDelegation
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = _TtV4REPL4Rect
+   << // basicRect : Rect = REPL.Rect
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -539,7 +539,7 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = _TtV4REPL4Rect
+   << // originRect : Rect = REPL.Rect
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -553,7 +553,7 @@ which stores the new origin and size values in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = _TtV4REPL4Rect
+   << // centerRect : Rect = REPL.Rect
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -932,7 +932,7 @@ This initializer can be used to create a new ``Food`` instance with a specific n
 .. testcode:: designatedConvenience
 
    -> let namedMeat = Food(name: "Bacon")
-   << // namedMeat : Food = _TtC4REPL4Food
+   << // namedMeat : Food = REPL.Food
    /> namedMeat's name is \"\(namedMeat.name)\"
    </ namedMeat's name is "Bacon"
 
@@ -952,7 +952,7 @@ a ``name`` value of ``[Unnamed]``:
 .. testcode:: designatedConvenience
 
    -> let mysteryMeat = Food()
-   << // mysteryMeat : Food = _TtC4REPL4Food
+   << // mysteryMeat : Food = REPL.Food
    /> mysteryMeat's name is \"\(mysteryMeat.name)\"
    </ mysteryMeat's name is "[Unnamed]"
 
@@ -1021,11 +1021,11 @@ All three of these initializers can be used to create new ``RecipeIngredient`` i
 .. testcode:: designatedConvenience
 
    -> let oneMysteryItem = RecipeIngredient()
-   << // oneMysteryItem : RecipeIngredient = _TtC4REPL16RecipeIngredient
+   << // oneMysteryItem : RecipeIngredient = REPL.RecipeIngredient
    -> let oneBacon = RecipeIngredient(name: "Bacon")
-   << // oneBacon : RecipeIngredient = _TtC4REPL16RecipeIngredient
+   << // oneBacon : RecipeIngredient = REPL.RecipeIngredient
    -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
-   << // sixEggs : RecipeIngredient = _TtC4REPL16RecipeIngredient
+   << // sixEggs : RecipeIngredient = REPL.RecipeIngredient
 
 The third and final class in the hierarchy is
 a subclass of ``RecipeIngredient`` called ``ShoppingListItem``.
@@ -1075,7 +1075,7 @@ to create a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : [ShoppingListItem] = [_TtC4REPL16ShoppingListItem, _TtC4REPL16ShoppingListItem, _TtC4REPL16ShoppingListItem]
+   << // breakfastList : [ShoppingListItem] = [REPL.ShoppingListItem, REPL.ShoppingListItem, REPL.ShoppingListItem]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
@@ -1250,7 +1250,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: checkers
 
    -> let board = Checkerboard()
-   << // board : Checkerboard = _TtV4REPL12Checkerboard
+   << // board : Checkerboard = REPL.Checkerboard
    -> println(board.squareIsBlackAtRow(0, column: 1))
    <- true
    -> println(board.squareIsBlackAtRow(9, column: 9))

@@ -105,7 +105,7 @@ You can use this initializer to initialize a new constant called ``theAceOfSpade
 .. testcode:: nestedTypes
 
    -> let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
-   << // theAceOfSpades : BlackjackCard = _TtV4REPL13BlackjackCard
+   << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard
    -> println("theAceOfSpades: \(theAceOfSpades.description)")
    <- theAceOfSpades: suit is ♠, value is 1 or 11
 

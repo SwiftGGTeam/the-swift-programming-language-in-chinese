@@ -38,11 +38,11 @@ and also to properties that a subclass inherits from its superclass.
          }
       }
    -> var c = C(); c.x = 42
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    <- C willSet x to 42
    <- C didSet x from 0
    -> var d = D(); d.x = 42
-   << // d : D = _TtC4REPL1D
+   << // d : D = REPL.D
    <- D willSet x to 42
    <- C willSet x to 42
    <- C didSet x from 0
@@ -76,7 +76,7 @@ whose range length cannot be changed once it is created:
          let length: Int
       }
    -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-   << // rangeOfThreeItems : FixedLengthRange = _TtV4REPL16FixedLengthRange
+   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange
    // the range represents integer values 0, 1, and 2
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
@@ -100,7 +100,7 @@ even if they were declared as variable properties:
 .. testcode:: storedProperties
 
    -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-   << // rangeOfFourItems : FixedLengthRange = _TtV4REPL16FixedLengthRange
+   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
    !! <REPL Input>:1:29: error: cannot assign to 'firstValue' in 'rangeOfFourItems'
@@ -196,7 +196,7 @@ neither of which is shown in full:
       }
    ---
    -> let manager = DataManager()
-   << // manager : DataManager = _TtC4REPL11DataManager
+   << // manager : DataManager = REPL.DataManager
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property has not yet been created
@@ -294,9 +294,9 @@ to retrieve and set other properties and values indirectly.
       }
    -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
          size: Size(width: 10.0, height: 10.0))
-   << // square : Rect = _TtV4REPL4Rect
+   << // square : Rect = REPL.Rect
    -> let initialSquareCenter = square.center
-   << // initialSquareCenter : Point = _TtV4REPL5Point
+   << // initialSquareCenter : Point = REPL.Point
    -> square.center = Point(x: 15.0, y: 15.0)
    -> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
@@ -406,7 +406,7 @@ by removing the ``get`` keyword and its braces:
          }
       }
    -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-   << // fourByFiveByTwo : Cuboid = _TtV4REPL6Cuboid
+   << // fourByFiveByTwo : Cuboid = REPL.Cuboid
    -> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0
 
@@ -442,7 +442,7 @@ even if the new value is the same as the property's current value.
 
    -> class C { var x: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } } }
    -> let c = C()
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    -> c.x = 24
    <- willSet
    <- didSet
@@ -530,7 +530,7 @@ or use the default parameter name of ``oldValue``.
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    -> c.x = 24
    <- willSet
    <- didSet
@@ -556,7 +556,7 @@ to keep track of a person's exercise during their daily routine.
          }
       }
    -> let stepCounter = StepCounter()
-   << // stepCounter : StepCounter = _TtC4REPL11StepCounter
+   << // stepCounter : StepCounter = REPL.StepCounter
    -> stepCounter.totalSteps = 200
    </ About to set totalSteps to 200
    </ Added 200 steps
@@ -594,7 +594,7 @@ and the default name of ``oldValue`` is used instead.
 
    -> class C { var x: Int = 0 { didSet { x = -273 } } }
    -> let c = C()
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    -> c.x = 24
    -> println(c.x)
    <- -273

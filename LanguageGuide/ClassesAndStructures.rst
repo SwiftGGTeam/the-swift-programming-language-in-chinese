@@ -146,9 +146,9 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = _TtV4REPL10Resolution
+   << // someResolution : Resolution = REPL.Resolution
    -> let someVideoMode = VideoMode()
-   << // someVideoMode : VideoMode = _TtC4REPL9VideoMode
+   << // someVideoMode : VideoMode = REPL.VideoMode
 
 Structures and classes both use initializer syntax for new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
@@ -217,7 +217,7 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = _TtV4REPL10Resolution
+   << // vga : Resolution = REPL.Resolution
 
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -261,9 +261,9 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = _TtV4REPL10Resolution
+   << // hd : Resolution = REPL.Resolution
    -> var cinema = hd
-   << // cinema : Resolution = _TtV4REPL10Resolution
+   << // cinema : Resolution = REPL.Resolution
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -349,7 +349,7 @@ Here's an example, using the ``VideoMode`` class defined above:
 .. testcode:: ClassesAndStructures
 
    -> let tenEighty = VideoMode()
-   << // tenEighty : VideoMode = _TtC4REPL9VideoMode
+   << // tenEighty : VideoMode = REPL.VideoMode
    -> tenEighty.resolution = hd
    -> tenEighty.interlaced = true
    -> tenEighty.name = "1080i"
@@ -367,7 +367,7 @@ and the frame rate of ``alsoTenEighty`` is modified:
 .. testcode:: ClassesAndStructures
 
    -> let alsoTenEighty = tenEighty
-   << // alsoTenEighty : VideoMode = _TtC4REPL9VideoMode
+   << // alsoTenEighty : VideoMode = REPL.VideoMode
    -> alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types,
@@ -415,9 +415,9 @@ or passed to a function.)
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = _TtV4REPL1S
+   << // s1 : S = REPL.S
    -> let s2 = S()
-   << // s2 : S = _TtV4REPL1S
+   << // s2 : S = REPL.S
    -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
    !! <REPL Input>:1:4: error: type 'S' does not conform to protocol 'AnyObject'
    !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
@@ -475,9 +475,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
    -> class C { var x = 0, y = 0 }
    -> let c1 = C()
-   << // c1 : C = _TtC4REPL1C
+   << // c1 : C = REPL.C
    -> let c2 = C()
-   << // c2 : C = _TtC4REPL1C
+   << // c2 : C = REPL.C
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
    !! <REPL Input>:1:4: error: 'C' is not convertible to 'MirrorDisposition'
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
@@ -487,9 +487,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = _TtV4REPL1S
+   << // s1 : S = REPL.S
    -> let s2 = S()
-   << // s2 : S = _TtV4REPL1S
+   << // s2 : S = REPL.S
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
    !! <REPL Input>:1:4: error: 'S' is not convertible to 'MirrorDisposition'
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }

@@ -790,7 +790,7 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(_TtC4REPL11HTMLElement)
+   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> println(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -963,7 +963,7 @@ You can create and print an ``HTMLElement`` instance as before:
 .. testcode:: unownedReferencesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(_TtC4REPL11HTMLElement)
+   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> println(paragraph!.asHTML())
    <- <p>hello, world</p>
 

@@ -565,7 +565,7 @@ the constant, variable, property, or subscript must also be marked as ``private`
 .. testcode:: accessControl
 
    -> private var privateInstance = SomePrivateClass()
-   << // privateInstance : SomePrivateClass = _TtC4REPL16SomePrivateClass
+   << // privateInstance : SomePrivateClass = REPL.SomePrivateClass
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
@@ -659,7 +659,7 @@ you can see the ``numberOfEdits`` property value update to match the number of m
 .. testcode:: reducedSetterScope
 
    -> var stringToEdit = TrackedString()
-   << // stringToEdit : TrackedString = _TtV4REPL13TrackedString
+   << // stringToEdit : TrackedString = REPL.TrackedString
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."

@@ -127,7 +127,7 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = _TtV4REPL6Person
+   << // john : Person = REPL.Person
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -158,7 +158,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
          }
       }
    -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-   << // ncc1701 : Starship = _TtC4REPL8Starship
+   << // ncc1701 : Starship = REPL.Starship
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
 
@@ -844,7 +844,7 @@ into a single protocol composition requirement on a function parameter:
          println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = _TtV4REPL6Person
+   << // birthdayPerson : Person = REPL.Person
    -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
@@ -963,7 +963,7 @@ can be used to initialize an array that stores values of type ``AnyObject``:
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : [AnyObject] = [_TtC4REPL6Circle, _TtC4REPL7Country, _TtC4REPL6Animal]
+   << // objects : [AnyObject] = [REPL.Circle, REPL.Country, REPL.Animal]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;
@@ -1162,7 +1162,7 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
 .. testcode:: protocolConformance
 
    -> var counter = Counter()
-   << // counter : Counter = _TtC4REPL7Counter
+   << // counter : Counter = REPL.Counter
    -> counter.dataSource = ThreeSource()
    -> for _ in 1...4 {
          counter.increment()
