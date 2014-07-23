@@ -931,7 +931,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
     union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
@@ -940,7 +940,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``:`` type-identifier ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
     raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
