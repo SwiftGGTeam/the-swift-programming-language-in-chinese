@@ -1232,10 +1232,10 @@ For example:
    /> x is now \(x)
    </ x is now 1
    ---
-   -> var list = ["a": [1, 2, 3], "b": [10, 20]]
-   -> list["a"]![0] = 100
-   /> list is now \(list)
-   </ list is now ["a": [100, 2, 3], "b": [10, 20]]
+   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+   -> someDictionary["a"]![0] = 100
+   /> someDictionary is now \(list)
+   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
 
 .. TR: In previous review, we noted that this also does downcast,
    but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
