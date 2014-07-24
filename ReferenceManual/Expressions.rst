@@ -1220,6 +1220,23 @@ the optional value is unwrapped
 and returned with the corresponding nonoptional type.
 Otherwise, a runtime error is raised.
 
+The unwrapped value of a forced-value expression can be modified,
+either by mutating the value itself,
+or by assigning to one of the value's members,
+For example:
+
+.. testcode:: optional-as-lvalue
+
+   -> var x: Int? = 0
+   -> x!++
+   /> x is now \(x)
+   </ x is now 1
+   ---
+   -> var list = ["a": [1, 2, 3], "b": [10, 20]]
+   -> list["a"]![0] = 100
+   /> list is now \(list)
+   </ list is now ["a": [100, 2, 3], "b": [10, 20]]
+
 .. TR: In previous review, we noted that this also does downcast,
    but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
     class A {}
