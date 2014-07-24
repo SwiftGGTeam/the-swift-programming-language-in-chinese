@@ -612,7 +612,7 @@ as the following example shows:
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = _TtC4REPL12SomeSubClass
+    << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // someInstance is of type SomeBaseClass at compile time, but
     -> // someInstance is of type SomeSubClass at runtime
     -> someInstance.dynamicType.printClassName()

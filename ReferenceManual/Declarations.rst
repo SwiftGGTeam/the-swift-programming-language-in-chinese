@@ -625,7 +625,7 @@ For example:
           }
       }
    -> let c = C()
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    -> c.f(7, y: "hello")  // x has no name, y has a name
    << // r1 : String = "hello7"
 

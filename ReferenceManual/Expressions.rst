@@ -951,7 +951,7 @@ the parentheses can be omitted.
     >>    }
     >> }
     >> let myData = Data()
-    << // myData : Data = _TtC4REPL4Data
+    << // myData : Data = REPL.Data
     // someFunction takes a closure as its only argument
     -> myData.someMethod() {$0 == 13}
     << // r0 : Bool = false
