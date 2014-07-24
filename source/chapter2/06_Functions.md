@@ -558,7 +558,7 @@ func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
     return backwards ? stepBackward : stepForward
 }
 var currentValue = -4
-let moveNearerToZero = chooseStepFunction(currentValue > 0)
+let moveNearerToZero = chooseStepFunction(currentValue < 0)
 // moveNearerToZero now refers to the nested stepForward() function
 while currentValue != 0 {
     println("\(currentValue)... ")
