@@ -232,12 +232,12 @@ to mark the value as optional.
 .. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
-   << // optionalString : String? = Hello
+   << // optionalString : String? = Optional("Hello")
    -> optionalString == nil
    <$ : Bool = false
    ---
    -> var optionalName: String? = "John Appleseed"
-   << // optionalName : String? = John Appleseed
+   << // optionalName : String? = Optional("John Appleseed")
    -> var greeting = "Hello!"
    << // greeting : String = "Hello!"
    -> if let name = optionalName {
@@ -598,7 +598,7 @@ the properties and methods of the instance.
 .. testcode:: guided-tour
 
     -> var shape = Shape()
-    << // shape : Shape = C4REPL5Shape (has 1 child)
+    << // shape : Shape = REPL.Shape
     -> shape.numberOfSides = 7
     -> var shapeDescription = shape.simpleDescription()
     << // shapeDescription : String = "A shape with 7 sides."
@@ -671,7 +671,7 @@ that don't actually override any method in the superclass.
            }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
-    << // test : Square = C4REPL6Square (has 2 children)
+    << // test : Square = REPL.Square
     -> test.area()
     <$ : Double = 27.04
     -> test.simpleDescription()
@@ -715,7 +715,7 @@ properties can have a getter and a setter.
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-    << // triangle : EquilateralTriangle = C4REPL19EquilateralTriangle (has 2 children)
+    << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
     -> triangle.perimeter
     <$ : Double = 9.3
     -> triangle.perimeter = 9.9
@@ -763,7 +763,7 @@ is always the same as the side length of its square.
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-   << // triangleAndSquare : TriangleAndSquare = C4REPL17TriangleAndSquare (has 2 children)
+   << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.triangle.sideLength
@@ -794,7 +794,7 @@ You can specify a second name, which is used inside the method.
            }
        }
     -> var counter = Counter()
-    << // counter : Counter = C4REPL7Counter (has 1 child)
+    << // counter : Counter = REPL.Counter
     -> counter.incrementBy(2, numberOfTimes: 7)
 
 When working with optional values,
@@ -810,9 +810,9 @@ the value of the whole expression is an optional value.
 .. testcode:: guided-tour
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
-    << // optionalSquare : Square? = C4REPL6Square (has 2 children)
+    << // optionalSquare : Square? = Optional(REPL.Square)
     -> let sideLength = optionalSquare?.sideLength
-    << // sideLength : Double? = 2.5
+    << // sideLength : Double? = Optional(2.5)
 
 Enumerations and Structures
 ---------------------------
@@ -936,7 +936,7 @@ but classes are passed by reference.
            }
        }
     -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = V4REPL4Card (has 2 children)
+    << // threeOfSpades : Card = REPL.Card
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1030,7 +1030,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var a = SimpleClass()
-    << // a : SimpleClass = C4REPL11SimpleClass (has 2 children)
+    << // a : SimpleClass = REPL.SimpleClass
     -> a.adjust()
     -> let aDescription = a.simpleDescription
     << // aDescription : String = "A very simple class.  Now 100% adjusted."
@@ -1042,7 +1042,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = V4REPL15SimpleStructure (has 1 child)
+    << // b : SimpleStructure = REPL.SimpleStructure
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
@@ -1092,7 +1092,7 @@ methods outside the protocol definition are not available.
 .. testcode:: guided-tour
 
     -> let protocolValue: ExampleProtocol = a
-    << // protocolValue : ExampleProtocol = C4REPL11SimpleClass (has 2 children)
+    << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> protocolValue.simpleDescription
     <$ : String = "A very simple class.  Now 100% adjusted"
     // protocolValue.anotherProperty  // Uncomment to see the error
