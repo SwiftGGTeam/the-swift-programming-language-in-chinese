@@ -25,7 +25,7 @@ In Swift, this can be done in a single line:
 .. testcode:: guided-tour
 
    -> println("Hello, world!")
-   << Hello, world
+   << Hello, world!
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -424,9 +424,9 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
-    << statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
+    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> statistics.sum
-    <$ : Int = 116
+    <$ : Int = 120
     -> statistics.2
     <$ : Int = 120
 
@@ -526,7 +526,7 @@ Use ``in`` to separate the arguments and return type from the body.
            let result = 3 * number
            return result
        })
-    <$ : [Int] = [60, 57, 21, 36]
+    <$ : Array<Int> = [60, 57, 21, 36]
 
 .. admonition:: Experiment
 
@@ -544,8 +544,8 @@ of their only statement.
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> mappedNumbers
-    <$ : [Int] = [60, 57, 21, 36]
-    <$ : [Int] = [60, 57, 21, 36]
+    <$ : Array<Int> = [60, 57, 21, 36]
+    <$ : Array<Int> = [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -556,8 +556,8 @@ can appear immediately after the parentheses.
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
     -> sortedNumbers
-    <$ : Array<Int> = [20, 19, 12, 7]
-    <$ : Array<Int> = [20, 19, 12, 7]
+    <$ : [Int] = [20, 19, 12, 7]
+    <$ : [Int] = [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
