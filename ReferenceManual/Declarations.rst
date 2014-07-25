@@ -1092,9 +1092,6 @@ including its generic parameter clause.
 
 As discussed in :ref:`Declarations_InitializerDeclaration`,
 classes can have designated and convenience initializers.
-When you declare either kind of initializer,
-you can require any subclass to override it by marking the initializer
-with the ``required`` declaration modifier.
 The designated initializer of a class must initialize all of the class's
 declared properties and it must do so before calling any of its superclass's
 designated initializers.
@@ -1108,13 +1105,16 @@ and designated initializers must be marked with the ``override`` declaration mod
     -> class C { init() {} }
     -> class D: C { override init() { super.init() } }
 
+To require that subclasses implement a superclass's initializer,
+mark the superclass's initializer with the ``required`` declaration modifier.
+The subclass's implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
 That said, if the current class overrides all of the superclass's
 designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
-
-.. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
 There are two ways create an instance of a previously declared class:
 
@@ -1361,6 +1361,10 @@ by including a protocol initializer declaration in the body of the protocol decl
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
 
+When a class implements an initializer to satisfy a protocol's initializer requirement,
+the initializer must be marked with the ``required`` declaration modifier
+if the class is not already marked with the ``final`` declaration modifier.
+
 See also :ref:`Declarations_InitializerDeclaration`.
 
 .. syntax-grammar::
@@ -1541,11 +1545,17 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 declaration modifier to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly.
-Required convenience initializers can be either implemented explicitly
-or inherited when the subclass directly implements all of the superclass’s designated
-initializers (or overrides the designated initializers with convenience initializers).
+A subclass’s implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
+By default, initializers declared in a superclass
+are not inherited by subclasses.
+That said, if a subclass initializes all of its stored properties with default values
+and doesn't define any initializers of its own,
+it inherits all of the superclass's initializers.
+If the subclass overrides all of the superclass’s designated initializers,
+it inherits the superclass’s convenience initializers.
+
 As with methods, properties, and subscripts,
 you need to mark overridden designated initializers with the ``override`` declaration modifier.
 
@@ -1916,12 +1926,8 @@ that introduces the declaration.
 ``required``
     Apply this modifier to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
-
-    Required designated initializers must be implemented explicitly.
-    Required convenience initializers can be either implemented explicitly
-    or inherited when the subclass directly implements all of the superclass’s designated
-    initializers
-    (or when the subclass overrides the designated initializers with convenience initializers).
+    The subclass's implementation of that initializer
+    must also be marked with the ``required`` modifier.
 
 ``weak``
     The ``weak`` modifier is applied to a variable or a stored variable property
