@@ -1115,7 +1115,7 @@ to make a generic function or type.
     -> func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
            var result = [ItemType]()
            for i in 0..<times {
-                result += item
+                result.append(item)
            }
            return result
        }
