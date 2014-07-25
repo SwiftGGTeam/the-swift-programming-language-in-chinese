@@ -147,14 +147,14 @@ the index or key in brackets.
 .. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
+    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : Dictionary<String, String> = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
+    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
@@ -163,7 +163,7 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = [String]()
-   << // emptyArray : [String] = []
+   << // emptyArray : [(String)] = []
    -> let emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
@@ -189,7 +189,7 @@ Braces around the body are required.
 .. testcode:: guided-tour
 
     -> let individualScores = [75, 43, 103, 87, 12]
-    << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
+    << // individualScores : [Int] = [75, 43, 103, 87, 12]
     -> var teamScore = 0
     << // teamScore : Int = 0
     -> for score in individualScores {
@@ -312,7 +312,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : Dictionary<String, Array<Int>> = ["Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8]]
+   << // interestingNumbers : [String : Array<Int>] = ["Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -505,7 +505,7 @@ A function can take another function as one of its arguments.
            return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
-    << // numbers : Array<Int> = [20, 19, 7, 12]
+    << // numbers : [Int] = [20, 19, 7, 12]
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
@@ -526,7 +526,7 @@ Use ``in`` to separate the arguments and return type from the body.
            let result = 3 * number
            return result
        })
-    <$ : Array<Int> = [60, 57, 21, 36]
+    <$ : [Int] = [60, 57, 21, 36]
 
 .. admonition:: Experiment
 
@@ -544,8 +544,8 @@ of their only statement.
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> mappedNumbers
-    <$ : Array<Int> = [60, 57, 21, 36]
-    <$ : Array<Int> = [60, 57, 21, 36]
+    <$ : [Int] = [60, 57, 21, 36]
+    <$ : [Int] = [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
