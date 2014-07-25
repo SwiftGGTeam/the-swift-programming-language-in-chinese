@@ -1094,7 +1094,7 @@ methods outside the protocol definition are not available.
     -> let protocolValue: ExampleProtocol = a
     << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> protocolValue.simpleDescription
-    <$ : String = "A very simple class.  Now 100% adjusted"
+    <$ : String = "A very simple class.  Now 100% adjusted."
     // protocolValue.anotherProperty  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
