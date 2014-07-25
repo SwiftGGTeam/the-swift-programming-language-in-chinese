@@ -424,11 +424,11 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
-    << (3, 100, 116)
+    << statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> statistics.sum
-    << 116
+    <$ : Int = 116
     -> statistics.2
-    << 116
+    <$ : Int = 120
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
