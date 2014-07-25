@@ -673,6 +673,51 @@ This restriction protects the implementation details of
 the ``TrackedString`` edit-tracking functionality,
 while still providing convenient access to an aspect of that functionality.
 
+Note that you can assign an explicit access level for both
+a getter and a setter if required.
+The example below shows a version of the ``TrackedString`` structure
+in which the structure is defined with an explicit access level of public.
+The structure's members (including the ``numberOfEdits`` property)
+therefore have an internal access level by default.
+You can make the structure's ``numberOfEdits`` property getter public,
+and its property setter private,
+by combining the ``public`` and ``private(set)`` access level modifiers:
+
+.. testcode:: reducedSetterScopePublic
+
+   -> public struct TrackedString {
+         public private(set) var numberOfEdits = 0
+         public var value: String = "" {
+            didSet {
+               numberOfEdits++
+            }
+         }
+         public init() {}
+      }
+
+.. sourcefile:: reducedSetterScopePublic_Module1
+
+   -> public struct TrackedString {
+         public private(set) var numberOfEdits = 0
+         public var value: String = "" {
+            didSet {
+               numberOfEdits++
+            }
+         }
+         public init() {}
+      }
+   // check that we can set its value with the private setter from the same file
+   -> var stringToEdit = TrackedString()
+   -> stringToEdit.numberOfEdits++
+
+.. sourcefile:: reducedSetterScopePublic_Module2
+
+   // check that we can retrieve its value with the public getter from a different module
+   -> import reducedSetterScopePublic_Module1
+   -> var stringToEdit = TrackedString()
+   -> stringToEdit.value = "This string will be tracked."
+   -> stringToEdit.numberOfEdits++
+
 .. _AccessControl_Initializers:
 
 Initializers
