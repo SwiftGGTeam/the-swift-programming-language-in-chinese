@@ -1559,6 +1559,12 @@ it inherits the superclass’s convenience initializers.
 As with methods, properties, and subscripts,
 you need to mark overridden designated initializers with the ``override`` declaration modifier.
 
+.. note::
+
+    If you mark an initializer with the ``required`` declaration modifier,
+    you don't also mark the initializer with the ``override`` modifier
+    when you override the required initializer in a subclass.
+
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
