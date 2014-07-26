@@ -970,7 +970,7 @@ on the purple diagonal line where ``x == -y``,
 or neither.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
-which temporarily take on the two tuple values from ``point``.
+which temporarily take on the two tuple values from ``yetAnotherPoint``.
 These constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``switch`` case matches the current value of ``point``
