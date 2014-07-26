@@ -779,7 +779,7 @@ such as the ``if`` statement:
 
 Conditional statements such as the ``if`` statement are covered in more detail in :doc:`ControlFlow`.
 
-Swift's type safety prevents non-Boolean values from being be substituted for ``Bool``.
+Swift's type safety prevents non-Boolean values from being substituted for ``Bool``.
 The following example reports a compile-time error:
 
 .. testcode:: booleansNotBooleanType
