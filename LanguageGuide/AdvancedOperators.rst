@@ -255,7 +255,7 @@ Similarly, the green component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0x00FF00``,
 which gives an output value of ``0x006600``.
 This output value is then shifted eight places to the right,
-giving a a value of ``0x66``, which has a decimal value of ``102``.
+giving a value of ``0x66``, which has a decimal value of ``102``.
 
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0x0000FF``,
