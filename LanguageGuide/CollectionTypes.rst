@@ -464,7 +464,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: [String: String] = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
+   << // airports : [String : String] = ["TYO": "Tokyo", "DUB": "Dublin"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -495,7 +495,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
+   << // airports : [String : String] = ["TYO": "Tokyo", "DUB": "Dublin"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
@@ -636,8 +636,8 @@ as part of the iteration:
    -> for (airportCode, airportName) in airports {
          println("\(airportCode): \(airportName)")
       }
-   </ TYO: Tokyo
    </ LHR: London Heathrow
+   </ TYO: Tokyo
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -649,14 +649,14 @@ by accessing its ``keys`` and ``values`` properties:
    -> for airportCode in airports.keys {
          println("Airport code: \(airportCode)")
       }
-   </ Airport code: TYO
    </ Airport code: LHR
+   </ Airport code: TYO
    ---
    -> for airportName in airports.values {
          println("Airport name: \(airportName)")
       }
-   </ Airport name: Tokyo
    </ Airport name: London Heathrow
+   </ Airport name: Tokyo
 
 If you need to use a dictionary's keys or values
 with an API that takes an ``Array`` instance, initialize a new array
@@ -665,14 +665,14 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["TYO", "LHR"]
+   << // airportCodes : [(String)] = ["LHR", "TYO"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
-   </ airportCodes is ["TYO", "LHR"]
+   </ airportCodes is ["LHR", "TYO"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["Tokyo", "London Heathrow"]
+   << // airportNames : [(String)] = ["London Heathrow", "Tokyo"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
-   </ airportNames is ["Tokyo", "London Heathrow"]
+   </ airportNames is ["London Heathrow", "Tokyo"]
 
 .. note::
 
