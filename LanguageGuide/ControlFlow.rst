@@ -1137,7 +1137,7 @@ It is not practical to list every possible ``Character`` value in the example ab
 so a ``default`` case provides a catchall for any characters that are not matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
-As soon as the ``default`` statement is matched,
+As soon as the ``default`` case is matched,
 the ``break`` statement ends the ``switch`` statement's execution,
 and code execution continues from the ``if let`` statement.
 
