@@ -454,7 +454,7 @@ The return value of ``john.residence?.address?.street`` is therefore also ``Stri
 even though two levels of optional chaining are applied in addition to
 the underlying optional type of the property.
 
-If you set an actual ``Address`` instance as the value for ``john.street.address``,
+If you set an actual ``Address`` instance as the value for ``john.residence.address``,
 and set an actual value for the address's ``street`` property,
 you can access the value of  property through the multi-level optional chaining:
 
