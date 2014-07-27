@@ -6,7 +6,7 @@
 
 本页包含内容：
 
-- [实例方法(Instance Methods](#instance_methods)
+- [实例方法(Instance Methods)](#instance_methods)
 - [类型方法(Type Methods)](#type_methods)
 
 **方法**是与某些特定类型相关联的函数。类、结构体、枚举都可以定义实例方法；实例方法为给定类型的实例封装了具体的任务与功能。类、结构体、枚举也可以定义类型方法；类型方法与类型本身相关联。类型方法与 Objective-C 中的类方法（class methods）相似。
