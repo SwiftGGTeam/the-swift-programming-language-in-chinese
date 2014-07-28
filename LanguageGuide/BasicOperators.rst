@@ -536,6 +536,22 @@ Closed Range Operator
 The :newTerm:`closed range operator` (``a...b``)
 defines a range that runs from ``a`` to ``b``,
 and includes the values ``a`` and ``b``.
+The value of ``a`` must not be greater than ``b``.
+
+.. assertion:: closedRangeStartCanBeLessThanEnd
+
+   -> let range = 1...2
+   << // range : Range<Int> = Range(1..<3)
+
+.. assertion:: closedRangeStartCanBeTheSameAsEnd
+
+   -> let range = 1...1
+   << // range : Range<Int> = Range(1..<2)
+
+.. assertion:: closedRangeStartCannotBeGreaterThanEnd
+
+   -> let range = 1...0
+   xx assertion
 
 The closed range operator is useful when iterating over a range
 in which you want all of the values to be used,
@@ -564,6 +580,23 @@ defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
 It is said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
+As with the closed range operator,
+the value of ``a`` must not be greater than ``b``.
+
+.. assertion:: halfOpenRangeStartCanBeLessThanEnd
+
+   -> let range = 1..<2
+   << // range : Range<Int> = Range(1..<2)
+
+.. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
+
+   -> let range = 1..<1
+   << // range : Range<Int> = Range(1..<1)
+
+.. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
+
+   -> let range = 1..<0
+   xx assertion
 
 Half-open ranges are particularly useful when you work with
 zero-based lists such as arrays,
