@@ -568,7 +568,7 @@ and so they are considered to be canonically equivalent:
 
 Conversely, ``LATIN CAPITAL LETTER A`` (``U+0041``, or ``"A"``),
 as used in English, is *not* equivalent to
-``CYRILLIC CAPITAL LETTER A`` (``U+1040``, or ``"А"``),
+``CYRILLIC CAPITAL LETTER A`` (``U+0410``, or ``"А"``),
 as used in Russian.
 The characters are visually similar,
 but do not have the same linguistic meaning:
@@ -576,10 +576,10 @@ but do not have the same linguistic meaning:
 .. testcode:: stringEquality
 
    -> let latinCapitalLetterA: Character = "\u{41}"
-   << // latinCapitalLetterA : Character = "A"
+   << // latinCapitalLetterA : Character = A
    ---
-   -> let cyrillicCapitalLetterA: Character = "\u{1040}"
-   << // cyrillicCapitalLetterA : Character = "А"
+   -> let cyrillicCapitalLetterA: Character = "\u{0410}"
+   << // cyrillicCapitalLetterA : Character = А
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
          println("These two characters are not equivalent")
