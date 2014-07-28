@@ -1249,6 +1249,15 @@ The assertion message can be omitted if desired, as in the following example:
    -> assert(age >= 0)
    xx assert
 
+.. assertion:: assertionsCannotUseStringInterpolation
+
+   -> let age = -3
+   << // age : Int = -3
+   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
+   !! <REPL Input>:1:8: error: 'Int' is not convertible to 'UInt8'
+   !! assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
+   !!        ^
+
 .. _TheBasics_WhenToUseAssertions:
 
 When to Use Assertions
