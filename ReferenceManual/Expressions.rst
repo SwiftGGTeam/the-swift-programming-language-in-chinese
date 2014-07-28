@@ -151,6 +151,10 @@ The Swift standard library provides the following binary operators:
 
   - ``||`` Logical OR
 
+* Nil Coalescing (Right associative, precedence level 110)
+
+  - ``??`` Nil coalescing
+
 * Ternary Conditional (Right associative, precedence level 100)
 
   - ``?`` ``:`` Ternary conditional
