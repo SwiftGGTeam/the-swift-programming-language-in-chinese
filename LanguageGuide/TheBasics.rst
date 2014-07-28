@@ -938,7 +938,7 @@ An optional says:
    the ability to return ``nil`` from a method that would otherwise return an object,
    with ``nil`` meaning “the absence of a valid object.”
    However, this only works for objects --- it doesn't work for
-   structs, basic C types, or enumeration values.
+   structures, basic C types, or enumeration values.
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``)
    to indicate the absence of a value.
@@ -973,14 +973,64 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value.
 It's either an ``Int``, or it's nothing at all.)
 
+.. _TheBasics_Nil:
+
+nil
+~~~
+
+You set an optional variable to a valueless state
+by assigning it the special value ``nil``:
+
+.. testcode:: optionals
+
+   -> var serverResponseCode: Int? = 404
+   << // serverResponseCode : Int? = Optional(404)
+   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
+   </ serverResponseCode contains an actual Int value of 404
+   -> serverResponseCode = nil
+   // serverResponseCode now contains no value
+
+.. note::
+
+   ``nil`` cannot be used with non-optional constants and variables.
+   If a constant or variable in your code needs to be able to cope with
+   the absence of a value under certain conditions,
+   always declare it as an optional value of the appropriate type.
+
+If you define an optional constant or variable without providing a default value,
+the constant or variable is automatically set to ``nil`` for you:
+
+.. testcode:: optionals
+
+   -> var surveyAnswer: String?
+   << // surveyAnswer : String? = nil
+   // surveyAnswer is automatically set to nil
+
+.. note::
+
+   Swift's ``nil`` is not the same as ``nil`` in Objective-C.
+   In Objective-C, ``nil`` is a pointer to a non-existent object.
+   In Swift, ``nil`` is not a pointer --- it is the absence of a value of a certain type.
+   Optionals of *any* type can be set to ``nil``, not just object types.
+
 .. _TheBasics_IfStatementsAndForcedUnwrapping:
 
 If Statements and Forced Unwrapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use an ``if`` statement to find out whether an optional contains a value.
-If an optional does have a value, it evaluates to ``true``;
-if it has no value at all, it evaluates to ``false``.
+You can use an ``if`` statement to find out whether an optional contains a value
+by comparing the optional against ``nil``.
+You perform this comparison with the “equal to” operator (``==``)
+or the “not equal to” operator (``!=``).
+
+If an optional has a value, it is considered to be “not equal to” ``nil``:
+
+.. testcode:: optionals
+
+   -> if convertedNumber != nil {
+         println("convertedNumber contains some integer value.")
+      }
+   <- convertedNumber contains some integer value.
 
 Once you're sure that the optional *does* contain a value,
 you can access its underlying value
@@ -991,12 +1041,10 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
 
 .. testcode:: optionals
 
-   -> if convertedNumber {
-         println("\(possibleNumber) has an integer value of \(convertedNumber!)")
-      } else {
-         println("\(possibleNumber) could not be converted to an integer")
+   -> if convertedNumber != nil {
+         println("convertedNumber has an integer value of \(convertedNumber!).")
       }
-   <- 123 has an integer value of 123
+   <- convertedNumber has an integer value of 123.
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
@@ -1067,46 +1115,6 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
-.. _TheBasics_Nil:
-
-nil
-~~~
-
-You set an optional variable to a valueless state
-by assigning it the special value ``nil``:
-
-.. testcode:: optionals
-
-   -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = Optional(404)
-   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
-   </ serverResponseCode contains an actual Int value of 404
-   -> serverResponseCode = nil
-   // serverResponseCode now contains no value
-
-.. note::
-
-   ``nil`` cannot be used with non-optional constants and variables.
-   If a constant or variable in your code needs to be able to cope with
-   the absence of a value under certain conditions,
-   always declare it as an optional value of the appropriate type.
-
-If you define an optional constant or variable without providing a default value,
-the constant or variable is automatically set to ``nil`` for you:
-
-.. testcode:: optionals
-
-   -> var surveyAnswer: String?
-   << // surveyAnswer : String? = nil
-   // surveyAnswer is automatically set to nil
-
-.. note::
-
-   Swift's ``nil`` is not the same as ``nil`` in Objective-C.
-   In Objective-C, ``nil`` is a pointer to a non-existent object.
-   In Swift, ``nil`` is not a pointer --- it is the absence of a value of a certain type.
-   Optionals of *any* type can be set to ``nil``, not just object types.
-
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
 Implicitly Unwrapped Optionals
@@ -1170,7 +1178,7 @@ to check if it contains a value:
 
 .. testcode:: implicitlyUnwrappedOptionals
 
-   -> if assumedString {
+   -> if assumedString != nil {
          println(assumedString)
       }
    <- An implicitly unwrapped optional string.
