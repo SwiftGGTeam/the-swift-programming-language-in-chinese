@@ -486,32 +486,49 @@ with a fourth character of ``é``, not ``e``:
 Comparing Strings
 -----------------
 
-Swift provides three ways to compare ``String`` values:
-string equality, prefix equality, and suffix equality.
+Swift provides three ways to compare textual values:
+string and character equality, prefix equality, and suffix equality.
 
-.. note::
+.. _StringsAndCharacters_StringEquality:
 
-   These string comparison mechanisms all perform a scalar-by-scalar comparison of
-   the Unicode scalars within the string,
-   and not a normalized character-by-character comparison of
-   the extended grapheme clusters represented by those Unicode scalars.
-   This means that the “equality” of two strings is based on an exact match between
-   their underlying Unicode scalars.
+String and Character Equality
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. assertion:: characterComparisonUsesScalarsNotCharacters
+String and character equality is checked with the “equal to” operator (``==``)
+and the “not equal to” operator (``!=``),
+as described in :ref:`BasicOperators_ComparisonOperators`:
+
+.. testcode:: stringEquality
+ 
+   -> let quotation = "We're a lot alike, you and I."
+   << // quotation : String = "We\'re a lot alike, you and I."
+   -> let sameQuotation = "We're a lot alike, you and I."
+   << // sameQuotation : String = "We\'re a lot alike, you and I."
+   -> if quotation == sameQuotation {
+         println("These two strings are considered equal")
+      }
+   <- These two strings are considered equal
+
+Two ``String`` values (or two ``Character`` values) are considered equal if
+their extended grapheme clusters are :newTerm:`canonically equivalent`.
+Extended grapheme clusters are canonically equivalent if they have
+the same linguistic meaning and appearance,
+even if they are composed from different Unicode scalars behind the scenes.
+
+.. assertion:: characterComparisonUsesCanonicalEquivalence
 
    -> let eAcute: Character = "\u{E9}"
    << // eAcute : Character = é
    -> let combinedEAcute: Character = "\u{65}\u{301}"
    << // combinedEAcute : Character = é
    -> if eAcute != combinedEAcute {
-         println("not equivalent, as expected")
+         println("not equivalent, which is not expected")
       } else {
-         println("equivalent, which is not expected")
+         println("equivalent, as expected")
       }
-   <- not equivalent, as expected
+   <- equivalent, as expected
 
-.. assertion:: stringComparisonUsesScalarsNotCharacters
+.. assertion:: stringComparisonUsesCanonicalEquivalence
 
    -> let eAcute: Character = "\u{E9}"
    << // eAcute : Character = é
@@ -522,33 +539,56 @@ string equality, prefix equality, and suffix equality.
    -> let cafe2 = "caf" + combinedEAcute
    << // cafe2 : String = "café"
    -> if cafe1 != cafe2 {
-         println("not equivalent, as expected")
+         println("not equivalent, which is not expected")
       } else {
-         println("equivalent, which is not expected")
+         println("equivalent, as expected")
       }
-   <- not equivalent, as expected
+   <- equivalent, as expected
 
-.. _StringsAndCharacters_StringEquality:
-
-String Equality
-~~~~~~~~~~~~~~~
-
-String equality is checked with the “equal to” operator (``==``)
-and the “not equal to” operator (``!=``),
-as described in :ref:`BasicOperators_ComparisonOperators`.
-Two ``String`` values are considered equal if they contain
-exactly the same Unicode scalars in the same order:
+For example, ``LATIN SMALL LETTER E WITH ACUTE`` (``U+00E9``)
+is canonically equivalent to ``LATIN SMALL LETTER E`` (``U+0065``)
+followed by ``COMBINING ACUTE ACCENT`` (``U+0301``).
+Both of these extended grapheme clusters are valid ways to represent the character ``é``,
+and so they are considered to be canonically equivalent:
 
 .. testcode:: stringEquality
 
-   -> let quotation = "We're a lot alike, you and I."
-   << // quotation : String = "We\'re a lot alike, you and I."
-   -> let sameQuotation = "We're a lot alike, you and I."
-   << // sameQuotation : String = "We\'re a lot alike, you and I."
-   -> if quotation == sameQuotation {
+   // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
+   -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
+   << // eAcuteQuestion : String = "Voulez-vous un café?"
+   ---
+   // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+   -> let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+   << // combinedEAcuteQuestion : String = "Voulez-vous un café?"
+   ---
+   -> if eAcuteQuestion == combinedEAcuteQuestion {
          println("These two strings are considered equal")
       }
    <- These two strings are considered equal
+
+Conversely, ``LATIN CAPITAL LETTER A`` (``U+0041``, or ``"A"``),
+as used in English, is *not* equivalent to
+``CYRILLIC CAPITAL LETTER A`` (``U+1040``, or ``"А"``),
+as used in Russian.
+The characters are visually similar,
+but do not have the same linguistic meaning:
+
+.. testcode:: stringEquality
+
+   -> let latinCapitalLetterA: Character = "\u{41}"
+   << // latinCapitalLetterA : Character = "A"
+   ---
+   -> let cyrillicCapitalLetterA: Character = "\u{1040}"
+   << // cyrillicCapitalLetterA : Character = "А"
+   ---
+   -> if latinCapitalLetterA != cyrillicCapitalLetterA {
+         println("These two characters are not equivalent")
+      }
+   <- These two characters are not equivalent
+
+.. note::
+
+   String and character comparisons in Swift are not locale-sensitive.
 
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
@@ -558,8 +598,40 @@ Prefix and Suffix Equality
 To check whether a string has a particular string prefix or suffix,
 call the string's ``hasPrefix`` and ``hasSuffix`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
-Both methods perform a Unicode scalar comparison
-between the base string and the prefix or suffix string.
+
+.. assertion:: prefixComparisonUsesScalarsNotCharacters
+
+   -> let ecole = "\u{E9}cole"
+   << // ecole : String = "école"
+   -> if ecole.hasPrefix("\u{E9}") {
+         println("has U+00E9 prefix, as expected")
+      } else {
+         println("does not have U+00E9 prefix, which is unexpected")
+      }
+   <- has U+00E9 prefix, as expected
+   -> if ecole.hasPrefix("\u{65}\u{301}") {
+         println("has U+0065 U+0301 prefix, which is unexpected")
+      } else {
+         println("does not have U+0065 U+0301 prefix, as expected")
+      }
+   <- does not have U+0065 U+0301 prefix, as expected
+
+.. assertion:: suffixComparisonUsesScalarsNotCharacters
+
+   -> let cafe = "caf\u{E9}"
+   << // cafe : String = "café"
+   -> if cafe.hasSuffix("\u{E9}") {
+         println("has U+00E9 suffix, as expected")
+      } else {
+         println("does not have U+00E9 suffix, which is unexpected")
+      }
+   <- has U+00E9 suffix, as expected
+   -> if cafe.hasSuffix("\u{65}\u{301}") {
+         println("has U+0065 U+0301 suffix, which is unexpected")
+      } else {
+         println("does not have U+0065 U+0301 suffix, as expected")
+      }
+   <- does not have U+0065 U+0301 suffix, as expected
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
@@ -614,6 +686,13 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
       }
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
+
+.. note::
+
+   The ``hasPrefix`` and ``hasSuffix`` methods
+   perform a character-by-character canonical equivalence comparison between
+   the extended grapheme clusters in each string,
+   as described in :ref:`StringsAndCharacters_StringEquality`.
 
 .. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
 
