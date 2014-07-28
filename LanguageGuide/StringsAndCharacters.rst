@@ -599,7 +599,7 @@ To check whether a string has a particular string prefix or suffix,
 call the string's ``hasPrefix`` and ``hasSuffix`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 
-.. assertion:: prefixComparisonUsesScalarsNotCharacters
+.. assertion:: prefixComparisonUsesCharactersNotScalars
 
    -> let ecole = "\u{E9}cole"
    << // ecole : String = "école"
@@ -610,13 +610,13 @@ both of which take a single argument of type ``String`` and return a Boolean val
       }
    <- has U+00E9 prefix, as expected
    -> if ecole.hasPrefix("\u{65}\u{301}") {
-         println("has U+0065 U+0301 prefix, which is unexpected")
+         println("has U+0065 U+0301 prefix, as expected")
       } else {
-         println("does not have U+0065 U+0301 prefix, as expected")
+         println("does not have U+0065 U+0301 prefix, which is unexpected")
       }
-   <- does not have U+0065 U+0301 prefix, as expected
+   <- has U+0065 U+0301 prefix, as expected
 
-.. assertion:: suffixComparisonUsesScalarsNotCharacters
+.. assertion:: suffixComparisonUsesCharactersNotScalars
 
    -> let cafe = "caf\u{E9}"
    << // cafe : String = "café"
@@ -627,11 +627,11 @@ both of which take a single argument of type ``String`` and return a Boolean val
       }
    <- has U+00E9 suffix, as expected
    -> if cafe.hasSuffix("\u{65}\u{301}") {
-         println("has U+0065 U+0301 suffix, which is unexpected")
+         println("has U+0065 U+0301 suffix, as expected")
       } else {
-         println("does not have U+0065 U+0301 suffix, as expected")
+         println("does not have U+0065 U+0301 suffix, which is unexpected")
       }
-   <- does not have U+0065 U+0301 suffix, as expected
+   <- has U+0065 U+0301 suffix, as expected
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
