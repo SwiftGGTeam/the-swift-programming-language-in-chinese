@@ -288,7 +288,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``set``,
   ``Type``,
   ``unowned``,
-  ``weak``
+  ``weak``,
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
