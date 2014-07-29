@@ -231,9 +231,9 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingName {
+            if buildingName != nil {
                return buildingName
-            } else if buildingNumber {
+            } else if buildingNumber != nil {
                return buildingNumber
             } else {
                return nil
@@ -327,7 +327,7 @@ or ``nil`` if was not:
 .. testcode:: optionalChaining
    :compile: true
 
-   -> if john.residence?.printNumberOfRooms() {
+   -> if john.residence?.printNumberOfRooms() != nil {
          println("It was possible to print the number of rooms.")
       } else {
          println("It was not possible to print the number of rooms.")
@@ -508,8 +508,13 @@ place the optional chaining question mark *after* the method's parentheses:
 .. testcode:: optionalChaining
    :compile: true
 
-   -> if john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
-         println("John's building identifier begins with \"The\".")
+   -> if let beginsWithThe =
+         john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+         if beginsWithThe {
+            println("John's building identifier begins with \"The\".")
+         } else {
+            println("John's building identifier does not begin with \"The\".")
+         }
       }
    <- John's building identifier begins with "The".
 
