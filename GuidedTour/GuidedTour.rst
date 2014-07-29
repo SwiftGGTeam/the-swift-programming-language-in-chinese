@@ -164,7 +164,7 @@ use the initializer syntax.
 
    -> let emptyArray = [String]()
    << // emptyArray : [(String)] = []
-   -> let emptyDictionary = Dictionary<String, Float>()
+   -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
 If type information can be inferred,
