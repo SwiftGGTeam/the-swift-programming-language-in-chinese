@@ -49,7 +49,15 @@ Initializers
 
 :newTerm:`Initializers` are called to create a new instance of a particular type.
 In its simplest form, an initializer is like an instance method with no parameters,
-written using the ``init`` keyword.
+written using the ``init`` keyword:
+
+.. testcode:: initializerSyntax
+
+   >> class Test {
+   -> init() {
+         // perform some initialization here
+      }
+   >> }
 
 The example below defines a new structure called ``Fahrenheit``
 to store temperatures expressed in the Fahrenheit scale.
