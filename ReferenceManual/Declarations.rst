@@ -1892,6 +1892,16 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+``dynamic``
+    Apply this modifier to any member of a class that can be represented by Objective-C.
+    When you mark a member declaration with the ``dynamic`` modifier,
+    access to that member is always dynamically dispatched using the Objective-C runtime.
+    Access to that member is never inlined or devirtualized by the compiler.
+
+    Because declarations marked with the ``dynamic`` modifier are dispatched
+    using the Objective-C runtime, they're implicitly marked with the
+    ``objc`` attribute.
+
 ``final``
     Apply this modifier to a class or to a property, method,
     or subscript member of a class. It's applied to a class to indicate that the class
