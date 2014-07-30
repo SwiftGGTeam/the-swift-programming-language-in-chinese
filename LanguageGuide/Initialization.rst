@@ -1014,6 +1014,41 @@ to see how its ``numberOfWheels`` property has been updated:
    -> println("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
+.. note::
+
+   Subclasses are only allowed to modify
+   *variable* properties of superclasses during initialization.
+   You can't modify inherited constant properties from a superclass.
+
+.. assertion:: YouCantModifyInheritedConstantPropertiesFromASuperclass
+
+   -> class C {
+         let constantProperty: Int
+         var variableProperty: Int
+         init() {
+            // this is fine - a class can set its own constant and variable properties during init
+            constantProperty = 0
+            variableProperty = 0
+         }
+      }
+   -> class D1: C {
+         override init() {
+            // this is fine - a subclass can set its superclass's variable properties during init
+            super.init()
+            variableProperty = 0
+         }
+      }
+   -> class D2: C {
+         override init() {
+            // this is wrong - a subclass cannot set its superclass's constant properties during init
+            super.init()
+            constantProperty = 0
+         }
+      }
+   !! <REPL Input>:5:26: error: cannot assign to 'constantProperty' in 'self'
+   !! constantProperty = 0
+   !! ~~~~~~~~~~~~~~~~ ^
+
 .. _Initialization_AutomaticInitializerInheritance:
 
 Automatic Initializer Inheritance
