@@ -175,7 +175,8 @@ or pass an argument to a function.
 
 .. testcode:: guided-tour
 
-   -> shoppingList = []   // Went shopping and bought everything.
+   -> shoppingList = []
+   -> occupations = [:]
 
 Control Flow
 ------------
