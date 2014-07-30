@@ -806,28 +806,95 @@ Initializer Inheritance and Overriding
 Unlike subclasses in Objective-C,
 Swift subclasses do not inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
-is automatically inherited by a more specialized subclass
+is inherited by a more specialized subclass
 and is used to create a new instance of the subclass
 that is not fully or correctly initialized.
 
-If you want your custom subclass to present
-one or more of the same initializers as its superclass ---
-perhaps to perform some customization during initialization ---
-you can provide an overriding implementation of the same initializer
-within your custom subclass.
+.. note::
 
-If the initializer you are overriding is a *designated* initializer,
-you can override its implementation in your subclass
-and call the superclass version of the initializer from within your overriding version.
+   Superclass initializers *are* inherited in certain circumstances,
+   but only when it is safe and appropriate to do so.
+   For more information, see :ref:`Initialization_AutomaticInitializerInheritance` below.
 
-If the initializer you are overriding is a *convenience* initializer,
-your override must call another designated initializer from its own subclass,
-as per the rules described above in :ref:`Initialization_InitializerChaining`.
+If you want a custom subclass to present
+one or more of the same initializers as its superclass,
+you can provide a custom implementation of those initializers within the subclass.
+
+When you write a subclass initializer that matches a superclass *designated* initializer,
+you are effectively providing an override of that designated initializer.
+Therefore, you must write the ``override`` keyword before the subclass's initializer definition.
+As with an overridden property, method or subscript,
+this prompts Swift to check that the superclass
+has a matching designated initializer to be overridden,
+and validates that the parameters for your overriding initializer have been specified as intended.
 
 .. note::
 
-   Unlike methods, properties, and subscripts,
-   you do not need to write the ``override`` keyword when overriding an initializer.
+   You always write the ``override`` keyword when overriding a superclass designated initializer,
+   even if your subclass's implementation of the initializer is a convenience initializer.
+
+.. assertion:: youHaveToWriteOverrideWhenOverridingADesignatedInitializer
+
+   -> class C {
+         init() {}
+      }
+   -> class D1: C {
+         // this is correct
+         override init() {}
+      }
+   -> class D2: C {
+         // this is not correct
+         init() {}
+      }
+   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !! init() {}
+   !! ^
+   !! override
+   !! <REPL Input>:2:6: note: overridden declaration is here
+   !! init() {}
+   !! ^
+
+Conversely, if you write a subclass initializer that matches a superclass *convenience* initializer,
+that superclass convenience initializer can never be called directly by your subclass,
+as per the rules described above in :ref:`Initialization_InitializerChaining`.
+Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer.
+As a result, you do not write the ``override`` keyword when providing
+a matching implementation of a superclass convenience initializer.
+
+.. assertion:: youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer
+
+   -> class C {
+         var i: Int
+         init(someInt: Int) {
+            i = someInt
+         }
+         convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   -> class D1: C {
+         // override for designated, so needs the override keyword
+         override init(someInt: Int) {
+            super.init(someInt: someInt)
+         }
+         // not technically an override, so does not need the override keyword
+         convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   -> class D2: C {
+         // override for designated, so needs the override keyword
+         override init(someInt: Int) {
+            super.init(someInt: someInt)
+         }
+         // this is not correct - "override" is not required
+         override convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   !! <REPL Input>:7:27: error: initializer does not override a designated initializer from its superclass
+   !! override convenience init() {
+   !! ~~~~~~~~             ^
 
 .. _Initialization_AutomaticInitializerInheritance:
 
@@ -970,7 +1037,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
             self.quantity = quantity
             super.init(name: name)
          }
-         convenience init(name: String) {
+         override convenience init(name: String) {
             self.init(name: name, quantity: 1)
          }
       }
@@ -999,11 +1066,17 @@ The definition of this convenience initializer makes
 ``RecipeIngredient`` instances quicker and more convenient to create,
 and avoids code duplication when creating
 several single-quantity ``RecipeIngredient`` instances.
-This convenience initializer simply delegates across to the class's designated initializer.
+This convenience initializer simply delegates across to the class's designated initializer,
+passing in a ``quantity`` value of ``1``.
 
-Note that the ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
+The ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
-Even though ``RecipeIngredient`` provides this initializer as a convenience initializer,
+Because this convenience initializer overrides a designated initializer from its superclass,
+it must be marked with the ``override`` keyword
+(as described in :ref:`Initialization_InitializerInheritanceAndOverriding`).
+
+Even though ``RecipeIngredient`` provides
+the ``init(name: String)`` initializer as a convenience initializer,
 ``RecipeIngredient`` has nonetheless provided an implementation of
 all of its superclass's designated initializers.
 Therefore, ``RecipeIngredient`` automatically inherits
