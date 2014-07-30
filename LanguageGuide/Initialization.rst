@@ -944,6 +944,68 @@ a matching implementation of a superclass convenience initializer.
    !! override convenience init() {
    !! ~~~~~~~~             ^
 
+The example below defines a base class called ``Vehicle``.
+This base class declares a stored property called ``numberOfWheels``,
+with a default ``Int`` value of ``0``.
+The ``numberOfWheels`` property is used by a computed property called ``description``
+to create a ``String`` description of the vehicle's characteristics:
+
+.. testcode:: initializerInheritance
+
+   -> class Vehicle {
+         var numberOfWheels = 0
+         var description: String {
+            return "\(numberOfWheels) wheel(s)"
+         }
+      }
+
+The ``Vehicle`` class provides a default value for its only stored property,
+and does not provide any custom initializers itself.
+As a result, it automatically receives a default initializer,
+as described in :ref:`Initialization_DefaultInitializers`.
+The default initializer (when available) is always a designated initializer for a class,
+and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` of ``0``:
+
+.. testcode:: initializerInheritance
+
+   -> let vehicle = Vehicle()
+   << // vehicle : Vehicle = REPL.Vehicle
+   -> println("Vehicle: \(vehicle.description)")
+   </ Vehicle: 0 wheel(s)
+
+The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
+
+.. testcode:: initializerInheritance
+
+   -> class Bicycle: Vehicle {
+         override init() {
+            super.init()
+            numberOfWheels = 2
+         }
+      }
+
+The ``Bicycle`` subclass defines a custom designated initializer, ``init()``.
+This designated initializer matches a designated initializer from the superclass of ``Bicycle``,
+and so the ``Bicycle`` version of this initializer is marked with the ``override`` keyword.
+
+The ``init()`` initializer for ``Bicycle`` starts by calling ``super.init()``,
+which calls the default initializer for the ``Bicycle`` class's superclass, ``Vehicle``.
+This ensures that the ``numberOfWheels`` inherited property is initialized by ``Vehicle``
+before ``Bicycle`` has the opportunity to modify the property.
+After calling ``super.init()``,
+the original value of ``numberOfWheels`` is replaced with a new value of ``2``.
+
+If you create an instance of ``Bicycle``,
+you can call its inherited ``description`` computed property
+to see how its ``numberOfWheels`` property has been updated:
+
+.. testcode:: initializerInheritance
+
+   -> let bicycle = Bicycle()
+   << // bicycle : Bicycle = REPL.Bicycle
+   -> println("Bicycle: \(bicycle.description)")
+   </ Bicycle: 2 wheel(s)
+
 .. _Initialization_AutomaticInitializerInheritance:
 
 Automatic Initializer Inheritance
