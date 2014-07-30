@@ -613,6 +613,30 @@ You do not have to provide convenience initializers if your class does not requi
 Create convenience initializers whenever a shortcut to a common initialization pattern
 will save time or make initialization of the class clearer in intent.
 
+.. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
+
+Syntax for Designated and Convenience Initializers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Designated initializers for classes are written in the same way as
+simple initializers for value types:
+
+.. syntax-outline::
+
+   init(<#parameters#>) {
+      <#statements#>
+   }
+
+Convenience initializers are written in the same style,
+but with the ``convenience`` keyword placed before the ``init`` keyword,
+separated by a space:
+
+.. syntax-outline::
+
+   convenience init(<#parameters#>) {
+      <#statements#>
+   }
+
 .. _Initialization_InitializerChaining:
 
 Initializer Chaining
@@ -935,30 +959,6 @@ These rules apply even if your subclass adds further convenience initializers.
 
 .. TODO: There are rare cases in which we automatically insert a call to super.init() for you.
    When is this? Either way, I need to mention it in here.
-
-.. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
-
-Syntax for Designated and Convenience Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Designated initializers for classes are written in the same way as
-simple initializers for value types:
-
-.. syntax-outline::
-
-   init(<#parameters#>) {
-      <#statements#>
-   }
-
-Convenience initializers are written in the same style,
-but with the ``convenience`` keyword placed before the ``init`` keyword,
-separated by a space:
-
-.. syntax-outline::
-
-   convenience init(<#parameters#>) {
-      <#statements#>
-   }
 
 .. _Initialization_DesignatedAndConvenienceInitializersInAction:
 
