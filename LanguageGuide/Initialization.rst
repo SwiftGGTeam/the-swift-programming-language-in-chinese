@@ -847,9 +847,12 @@ you can provide a custom implementation of those initializers within the subclas
 When you write a subclass initializer that matches a superclass *designated* initializer,
 you are effectively providing an override of that designated initializer.
 Therefore, you must write the ``override`` keyword before the subclass's initializer definition.
+This is true even if you are overriding a default initializer,
+as described in :ref:`Initialization_DefaultInitializers`.
+
 As with an overridden property, method or subscript,
-this prompts Swift to check that the superclass
-has a matching designated initializer to be overridden,
+the presence of the ``override`` keyword prompts Swift to check that
+the superclass has a matching designated initializer to be overridden,
 and validates that the parameters for your overriding initializer have been specified as intended.
 
 .. note::
@@ -876,6 +879,27 @@ and validates that the parameters for your overriding initializer have been spec
    !! override
    !! <REPL Input>:2:6: note: overridden declaration is here
    !! init() {}
+   !! ^
+
+.. assertion:: youHaveToWriteOverrideEvenWhenOverridingADefaultInitializer
+
+   -> class C {
+         var i = 0
+      }
+   -> class D1: C {
+         // this is correct
+         override init() {}
+      }
+   -> class D2: C {
+         // this is not correct
+         init() {}
+      }
+   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !! init() {}
+   !! ^
+   !! override
+   !! <REPL Input>:1:7: note: overridden declaration is here
+   !! class C {
    !! ^
 
 Conversely, if you write a subclass initializer that matches a superclass *convenience* initializer,
