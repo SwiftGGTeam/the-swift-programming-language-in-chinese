@@ -960,6 +960,8 @@ separated by a space:
       <#statements#>
    }
 
+.. _Initialization_DesignatedAndConvenienceInitializersInAction:
+
 Designated and Convenience Initializers in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
