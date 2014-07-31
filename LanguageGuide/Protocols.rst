@@ -16,12 +16,16 @@ instance properties, instance methods, type methods, operators, and subscripts.
 
 .. FIXME: Protocols should also be able to support initializers,
    and indeed you can currently write them,
-   but they don't work due to rdar://13695680.
-   I'll need to write about them if this is fixed by WWDC,
-   or at least mention them in the list above.
+   but they don't work due to
+   <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   I'll need to write about them once this is fixed.
    UPDATE: actually, they *can* be used right now,
    but only in a generic function, and not more generally with the protocol type.
    I'm not sure I should mention them in this chapter until they work more generally.
+
+.. TODO: When I add in the fact that protocols support initializers,
+   I should also mention that implementations of those initialiers
+   must be marked as "required" if the conforming class is non-final.
 
 .. _Protocols_ProtocolSyntax:
 
