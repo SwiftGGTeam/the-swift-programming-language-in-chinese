@@ -494,7 +494,7 @@ and updates the player's progress to move them to the next level.
 because the level is known to have been unlocked
 by the call to ``LevelTracker.unlockLevel`` on the previous line.)
 
-You can create a instance of the ``Player`` class for a new player,
+You can create an instance of the ``Player`` class for a new player,
 and see what happens when the player completes level one:
 
 .. testcode:: typeMethods

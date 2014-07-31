@@ -25,7 +25,7 @@ In Swift, this can be done in a single line:
 .. testcode:: guided-tour
 
    -> println("Hello, world!")
-   << Hello, world
+   << Hello, world!
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -147,14 +147,14 @@ the index or key in brackets.
 .. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
+    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : Dictionary<String, String> = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
+    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
@@ -163,8 +163,8 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = [String]()
-   << // emptyArray : [String] = []
-   -> let emptyDictionary = Dictionary<String, Float>()
+   << // emptyArray : [(String)] = []
+   -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
 If type information can be inferred,
@@ -175,7 +175,8 @@ or pass an argument to a function.
 
 .. testcode:: guided-tour
 
-   -> shoppingList = []   // Went shopping and bought everything.
+   -> shoppingList = []
+   -> occupations = [:]
 
 Control Flow
 ------------
@@ -189,7 +190,7 @@ Braces around the body are required.
 .. testcode:: guided-tour
 
     -> let individualScores = [75, 43, 103, 87, 12]
-    << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
+    << // individualScores : [Int] = [75, 43, 103, 87, 12]
     -> var teamScore = 0
     << // teamScore : Int = 0
     -> for score in individualScores {
@@ -232,12 +233,12 @@ to mark the value as optional.
 .. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
-   << // optionalString : String? = Hello
+   << // optionalString : String? = Optional("Hello")
    -> optionalString == nil
    <$ : Bool = false
    ---
    -> var optionalName: String? = "John Appleseed"
-   << // optionalName : String? = John Appleseed
+   << // optionalName : String? = Optional("John Appleseed")
    -> var greeting = "Hello!"
    << // greeting : String = "Hello!"
    -> if let name = optionalName {
@@ -312,7 +313,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : Dictionary<String, Array<Int>> = ["Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8]]
+   << // interestingNumbers : [String : Array<Int>] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -401,7 +402,7 @@ from the function's return type.
    Add a parameter to include today’s lunch special in the greeting.
 
 Use a tuple to make a compound value ---
-for example, return multiple values from a function.
+for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
 
@@ -424,11 +425,11 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
-    << (3, 100, 116)
+    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> statistics.sum
-    << 116
+    <$ : Int = 120
     -> statistics.2
-    << 116
+    <$ : Int = 120
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
@@ -505,7 +506,7 @@ A function can take another function as one of its arguments.
            return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
-    << // numbers : Array<Int> = [20, 19, 7, 12]
+    << // numbers : [Int] = [20, 19, 7, 12]
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
@@ -556,8 +557,8 @@ can appear immediately after the parentheses.
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
     -> sortedNumbers
-    <$ : Array<Int> = [20, 19, 12, 7]
-    <$ : Array<Int> = [20, 19, 12, 7]
+    <$ : [Int] = [20, 19, 12, 7]
+    <$ : [Int] = [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
@@ -598,7 +599,7 @@ the properties and methods of the instance.
 .. testcode:: guided-tour
 
     -> var shape = Shape()
-    << // shape : Shape = C4REPL5Shape (has 1 child)
+    << // shape : Shape = REPL.Shape
     -> shape.numberOfSides = 7
     -> var shapeDescription = shape.simpleDescription()
     << // shapeDescription : String = "A shape with 7 sides."
@@ -671,7 +672,7 @@ that don't actually override any method in the superclass.
            }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
-    << // test : Square = C4REPL6Square (has 2 children)
+    << // test : Square = REPL.Square
     -> test.area()
     <$ : Double = 27.04
     -> test.simpleDescription()
@@ -715,7 +716,7 @@ properties can have a getter and a setter.
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-    << // triangle : EquilateralTriangle = C4REPL19EquilateralTriangle (has 2 children)
+    << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
     -> triangle.perimeter
     <$ : Double = 9.3
     -> triangle.perimeter = 9.9
@@ -763,7 +764,7 @@ is always the same as the side length of its square.
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-   << // triangleAndSquare : TriangleAndSquare = C4REPL17TriangleAndSquare (has 2 children)
+   << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.triangle.sideLength
@@ -794,7 +795,7 @@ You can specify a second name, which is used inside the method.
            }
        }
     -> var counter = Counter()
-    << // counter : Counter = C4REPL7Counter (has 1 child)
+    << // counter : Counter = REPL.Counter
     -> counter.incrementBy(2, numberOfTimes: 7)
 
 When working with optional values,
@@ -810,9 +811,9 @@ the value of the whole expression is an optional value.
 .. testcode:: guided-tour
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
-    << // optionalSquare : Square? = C4REPL6Square (has 2 children)
+    << // optionalSquare : Square? = Optional(REPL.Square)
     -> let sideLength = optionalSquare?.sideLength
-    << // sideLength : Double? = 2.5
+    << // sideLength : Double? = Optional(2.5)
 
 Enumerations and Structures
 ---------------------------
@@ -936,7 +937,7 @@ but classes are passed by reference.
            }
        }
     -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = V4REPL4Card (has 2 children)
+    << // threeOfSpades : Card = REPL.Card
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1030,7 +1031,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var a = SimpleClass()
-    << // a : SimpleClass = C4REPL11SimpleClass (has 2 children)
+    << // a : SimpleClass = REPL.SimpleClass
     -> a.adjust()
     -> let aDescription = a.simpleDescription
     << // aDescription : String = "A very simple class.  Now 100% adjusted."
@@ -1042,7 +1043,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = V4REPL15SimpleStructure (has 1 child)
+    << // b : SimpleStructure = REPL.SimpleStructure
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
@@ -1092,9 +1093,9 @@ methods outside the protocol definition are not available.
 .. testcode:: guided-tour
 
     -> let protocolValue: ExampleProtocol = a
-    << // protocolValue : ExampleProtocol = C4REPL11SimpleClass (has 2 children)
+    << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> protocolValue.simpleDescription
-    <$ : String = "A very simple class.  Now 100% adjusted"
+    <$ : String = "A very simple class.  Now 100% adjusted."
     // protocolValue.anotherProperty  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
@@ -1115,7 +1116,7 @@ to make a generic function or type.
     -> func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
            var result = [ItemType]()
            for i in 0..<times {
-                result += item
+                result.append(item)
            }
            return result
        }
@@ -1147,7 +1148,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

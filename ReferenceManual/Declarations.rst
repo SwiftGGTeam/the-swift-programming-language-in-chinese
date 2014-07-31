@@ -625,7 +625,7 @@ For example:
           }
       }
    -> let c = C()
-   << // c : C = _TtC4REPL1C
+   << // c : C = REPL.C
    -> c.f(7, y: "hello")  // x has no name, y has a name
    << // r1 : String = "hello7"
 
@@ -801,6 +801,9 @@ instance methods, static methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
+Enumeration types can adopt any number of protocols, but can’t inherit from classes,
+structures, or other enumerations.
+
 Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
@@ -826,7 +829,7 @@ enumeration cases of any type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#> {
+    enum <#enumeration name#>: <#adopted protocols#> {
         case <#enumeration case 1#>
         case <#enumeration case 2#>(<#associated value types#>)
     }
@@ -853,7 +856,7 @@ enumeration cases of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#>: <#raw-value type#> {
+    enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
         case <#enumeration case 1#> = <#raw value 1#>
         case <#enumeration case 2#> = <#raw value 2#>
     }
@@ -862,8 +865,15 @@ In this form, each case block consists of the keyword ``case``,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
-The type of these values is specified in the *raw-value type* and must represent a literal
-integer, floating-point number, character, or string.
+The type of these values is specified in the *raw-value type* and must represent an
+integer, floating-point number, string, or single character.
+In particular, the *raw-value type* must conform to the ``Equatable`` protocol
+and one of the following literal-convertible protocols:
+``IntegerLiteralConvertible`` for integer literals,
+``FloatingPointLiteralConvertible`` for floating-point literals,
+``StringLiteralConvertible`` for string literals that contain any number of characters, and
+``ExtendedGraphemeClusterLiteralConvertible`` for string literals
+that contain only a single character.
 
 Each case must have a unique name and be assigned a unique raw value.
 If the raw-value type is specified as ``Int``
@@ -931,7 +941,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
     union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
@@ -940,7 +950,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT ``:`` type-identifier ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
     raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
@@ -1082,9 +1092,6 @@ including its generic parameter clause.
 
 As discussed in :ref:`Declarations_InitializerDeclaration`,
 classes can have designated and convenience initializers.
-When you declare either kind of initializer,
-you can require any subclass to override it by marking the initializer
-with the ``required`` declaration modifier.
 The designated initializer of a class must initialize all of the class's
 declared properties and it must do so before calling any of its superclass's
 designated initializers.
@@ -1098,13 +1105,16 @@ and designated initializers must be marked with the ``override`` declaration mod
     -> class C { init() {} }
     -> class D: C { override init() { super.init() } }
 
+To require that subclasses implement a superclass's initializer,
+mark the superclass's initializer with the ``required`` declaration modifier.
+The subclass's implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
 That said, if the current class overrides all of the superclass's
 designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
-
-.. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
 There are two ways create an instance of a previously declared class:
 
@@ -1351,6 +1361,10 @@ by including a protocol initializer declaration in the body of the protocol decl
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
 
+When a class implements an initializer to satisfy a protocol's initializer requirement,
+the initializer must be marked with the ``required`` declaration modifier
+if the class is not already marked with the ``final`` declaration modifier.
+
 See also :ref:`Declarations_InitializerDeclaration`.
 
 .. syntax-grammar::
@@ -1531,13 +1545,25 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 declaration modifier to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly.
-Required convenience initializers can be either implemented explicitly
-or inherited when the subclass directly implements all of the superclass’s designated
-initializers (or overrides the designated initializers with convenience initializers).
+A subclass’s implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
+By default, initializers declared in a superclass
+are not inherited by subclasses.
+That said, if a subclass initializes all of its stored properties with default values
+and doesn't define any initializers of its own,
+it inherits all of the superclass's initializers.
+If the subclass overrides all of the superclass’s designated initializers,
+it inherits the superclass’s convenience initializers.
+
 As with methods, properties, and subscripts,
 you need to mark overridden designated initializers with the ``override`` declaration modifier.
+
+.. note::
+
+    If you mark an initializer with the ``required`` declaration modifier,
+    you don't also mark the initializer with the ``override`` modifier
+    when you override the required initializer in a subclass.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -1866,6 +1892,16 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+``dynamic``
+    Apply this modifier to any member of a class that can be represented by Objective-C.
+    When you mark a member declaration with the ``dynamic`` modifier,
+    access to that member is always dynamically dispatched using the Objective-C runtime.
+    Access to that member is never inlined or devirtualized by the compiler.
+
+    Because declarations marked with the ``dynamic`` modifier are dispatched
+    using the Objective-C runtime, they're implicitly marked with the
+    ``objc`` attribute.
+
 ``final``
     Apply this modifier to a class or to a property, method,
     or subscript member of a class. It's applied to a class to indicate that the class
@@ -1906,12 +1942,8 @@ that introduces the declaration.
 ``required``
     Apply this modifier to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
-
-    Required designated initializers must be implemented explicitly.
-    Required convenience initializers can be either implemented explicitly
-    or inherited when the subclass directly implements all of the superclass’s designated
-    initializers
-    (or when the subclass overrides the designated initializers with convenience initializers).
+    The subclass's implementation of that initializer
+    must also be marked with the ``required`` modifier.
 
 ``weak``
     The ``weak`` modifier is applied to a variable or a stored variable property

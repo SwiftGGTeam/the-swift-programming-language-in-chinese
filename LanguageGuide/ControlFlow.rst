@@ -142,13 +142,13 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : [String : Int] = ["spider": 8, "cat": 4, "ant": 6]
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")
       }
    </ spiders have 8 legs
-   </ ants have 6 legs
    </ cats have 4 legs
+   </ ants have 6 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -970,7 +970,7 @@ on the purple diagonal line where ``x == -y``,
 or neither.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
-which temporarily take on the two tuple values from ``point``.
+which temporarily take on the two tuple values from ``yetAnotherPoint``.
 These constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``switch`` case matches the current value of ``point``
@@ -1137,7 +1137,7 @@ It is not practical to list every possible ``Character`` value in the example ab
 so a ``default`` case provides a catchall for any characters that are not matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
-As soon as the ``default`` statement is matched,
+As soon as the ``default`` case is matched,
 the ``break`` statement ends the ``switch`` statement's execution,
 and code execution continues from the ``if let`` statement.
 

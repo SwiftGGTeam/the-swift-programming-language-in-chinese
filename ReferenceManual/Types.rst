@@ -442,12 +442,6 @@ Any type can be explicitly declared to be (or implicitly converted to) an option
 If you don't provide an initial value when you declare an
 optional variable or property, its value automatically defaults to ``nil``.
 
-Optionals conform to the ``BooleanType`` protocol and therefore may occur in a Boolean context.
-In that context,
-if an instance of an optional type ``T?`` contains any value of type ``T``
-(that is, its value is ``Optional.Some(T)``),
-the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
-
 If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
@@ -513,7 +507,7 @@ optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
-it's value automatically defaults to ``nil``.
+its value automatically defaults to ``nil``.
 
 Because the value of an implicitly unwrapped optional is automatically unwrapped
 when you use it, there's no need to use the ``!`` operator to unwrap it. That said,
@@ -612,7 +606,7 @@ as the following example shows:
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = _TtC4REPL12SomeSubClass
+    << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // someInstance is of type SomeBaseClass at compile time, but
     -> // someInstance is of type SomeSubClass at runtime
     -> someInstance.dynamicType.printClassName()

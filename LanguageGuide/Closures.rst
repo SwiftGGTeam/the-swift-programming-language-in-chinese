@@ -196,7 +196,7 @@ Swift can infer the types of its parameters
 and the type of the value it returns
 from the type of the ``sorted`` function's second parameter.
 This parameter is expecting a function of type ``(String, String) -> Bool``.
-This means that the ``String``, ``String``, and ``Bool`` types do not need to be written
+This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
 the return arrow (``->``) and the parentheses around the names of the parameters
@@ -208,11 +208,12 @@ can also be omitted:
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-It is always possible to infer parameter types and return type
+It is always possible to infer the parameter types and return type
 when passing a closure to a function as an inline closure expression.
-As a result, you rarely need to write an inline closure in its fullest form.
+As a result, you never need to write an inline closure in its fullest form
+when the closure is used a function argument.
 
-Nonetheless, you can make the types explicit if you wish,
+Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
 In the case of the ``sorted`` function,
 the purpose of the closure is clear from the fact that sorting is taking place,
