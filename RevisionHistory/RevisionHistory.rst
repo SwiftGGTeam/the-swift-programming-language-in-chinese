@@ -6,14 +6,96 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-08-04  * Added information about the ``dynamic`` declaration modifier
+2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly equate to
+              ``true`` when they have a value and ``false`` when they do not,
+              to avoid confusion when working with optional ``Bool`` values.
+              Instead, make an explicit check against ``nil``
+              with the ``==`` or ``!=`` operators
+              to find out if an optional contains a value.
+
+            * Swift now has a :ref:`BasicOperators_NilCoalescingOperator`
+              (``a ?? b``), which unwraps an optional's value if it exists,
+              or returns a default value if the optional is ``nil``.
+
+            * Updated and expanded
+              the :ref:`StringsAndCharacters_ComparingStrings` section
+              to reflect and demonstrate that string and character comparison
+              and prefix / suffix comparison are now based on
+              Unicode canonical equivalence of extended grapheme clusters.
+
+            * You can now try to set a property's value, assign to a subscript,
+              or call a mutating method or operator through
+              :doc:`../LanguageGuide/OptionalChaining`.
+              The information about
+              :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining`
+              has been updated accordingly,
+              and the examples of checking for method call success in
+              :ref:`OptionalChaining_CallingMethodsThroughOptionalChaining`
+              have been expanded to show how to check for property setting success.
+
+            * Added a new section about
+              :ref:`OptionalChaining_AccessingSubscriptsOfOptionalType`
+              through optional chaining.
+
+            * Updated the :ref:`CollectionTypes_AccessingAndModifyingAnArray` section
+              to note that you can no longer append a single item to an array
+              with the ``+=`` operator.
+              Instead, use the ``append`` method,
+              or append a single-item array with the ``+=`` operator.
+
+            * Added a note that the start value ``a``
+              for the :ref:`BasicOperators_RangeOperators` ``a...b`` and ``a..<b``
+              must not be greater than the end value ``b``.
+
+            * Rewritten the :doc:`../LanguageGuide/Inheritance` chapter
+              to remove its introductory coverage of initializer overrides.
+              This chapter now focuses more on the addition of
+              new functionality in a subclass,
+              and the modification of existing functionality with overrides.
+              The chapter's example of
+              :ref:`Inheritance_OverridingPropertyGettersAndSetters`
+              has been rewritten to show how to override a ``description`` property.
+              (The examples of modifying an inherited property's default value
+              in a subclass initializer have been moved to
+              the :doc:`../LanguageGuide/Initialization` chapter.)
+
+            * Updated the
+              :ref:`Initialization_InitializerInheritanceAndOverriding` section
+              to note that overrides of a designated initializer
+              must now be marked with the ``override`` modifier.
+
+            * Updated the :ref:`Initialization_RequiredInitializers` section
+              to note that the ``required`` modifier is now written before
+              every subclass implementation of a required initializer,
+              and that the requirements for required initializers
+              can now be satisfied by automatically inherited initializers.
+
+            * Infix :ref:`AdvancedOperators_OperatorFunctions` no longer require
+              the ``@infix`` attribute.
+
+            * The ``@prefix`` and ``@postfix`` attributes
+              for :ref:`AdvancedOperators_PrefixAndPostfixOperators`
+              have been replaced by ``prefix`` and ``postfix`` declaration modifiers.
+
+            * Added a note about the order in which
+              :ref:`AdvancedOperators_PrefixAndPostfixOperators` are applied
+              when both a prefix and a postfix operator are applied to
+              the same operand.
+
+            * Operator functions for
+              :ref:`AdvancedOperators_CompoundAssignmentOperators` no longer use
+              the ``@assignment`` attribute when defining the function.
+
+            * The order in which modifiers are specified when defining 
+              :ref:`AdvancedOperators_CustomOperators` has changed.
+              You now write ``prefix operator`` rather than ``operator prefix``,
+              for example.
+
+            * Added information about the ``dynamic`` declaration modifier
               in :ref:`Declarations_DeclarationModifiers`.
 
-            * The ``Optional`` type no longer conform to the Swift standard library ``BooleanType``
-              protocol. As a result, you must explicitly test an optional value against ``nil``
-              when working with optionals in a Boolean context.
-
-            * Added information about how type inference works with :ref:`LexicalStructure_Literals`.
+            * Added information about how type inference works
+              with :ref:`LexicalStructure_Literals`.
 ----------  --------------------------------------------------------------------------
 2014-07-21  * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 
