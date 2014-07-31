@@ -196,7 +196,7 @@ Swift can infer the types of its parameters
 and the type of the value it returns
 from the type of the ``sorted`` function's second parameter.
 This parameter is expecting a function of type ``(String, String) -> Bool``.
-This means that the ``String``, ``String``, and ``Bool`` types do not need to be written
+This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
 the return arrow (``->``) and the parentheses around the names of the parameters
