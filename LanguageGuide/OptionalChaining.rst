@@ -431,9 +431,9 @@ the actual items in the ``rooms`` array through optional chaining:
 Accessing Subscripts of Optional Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a subscript returns a value of optional type ---
+If a subscript returns a value of optional type ---
 such as the key subscript of Swift's ``Dictionary`` type ---
-you can place a question mark *after* the subscript's closing brace
+place a question mark *after* the subscript's closing bracket
 to chain on its optional return value:
 
 .. testcode:: optionalChaining

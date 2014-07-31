@@ -855,7 +855,7 @@ you can provide a custom implementation of those initializers within the subclas
 When you write a subclass initializer that matches a superclass *designated* initializer,
 you are effectively providing an override of that designated initializer.
 Therefore, you must write the ``override`` modifier before the subclass's initializer definition.
-This is true even if you are overriding a default initializer,
+This is true even if you are overriding an automatically provided default initializer,
 as described in :ref:`Initialization_DefaultInitializers`.
 
 As with an overridden property, method or subscript,

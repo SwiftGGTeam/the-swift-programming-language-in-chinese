@@ -163,7 +163,7 @@ before the entity's introducer:
    << // someInternalConstant : Int = 0
    -> private func somePrivateFunction() {}
 
-Unless otherwise specified, the default global access level is internal,
+Unless otherwise specified, the default access level is internal,
 as described in :ref:`AccessControl_DefaultAccessLevels`.
 This means that ``SomeInternalClass`` and ``someInternalConstant`` can be written
 without an explicit access level modifier,
