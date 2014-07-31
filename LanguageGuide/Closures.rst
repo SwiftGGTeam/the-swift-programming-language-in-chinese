@@ -388,7 +388,7 @@ and that parameter is provided as a trailing closure:
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
-The ``map`` function calls the closure expression once for each item in the array.
+The ``map`` method calls the closure expression once for each item in the array.
 You do not need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
