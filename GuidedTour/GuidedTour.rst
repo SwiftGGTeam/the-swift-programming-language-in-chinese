@@ -402,7 +402,7 @@ from the function's return type.
    Add a parameter to include today’s lunch special in the greeting.
 
 Use a tuple to make a compound value ---
-for example, return multiple values from a function.
+for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
 
