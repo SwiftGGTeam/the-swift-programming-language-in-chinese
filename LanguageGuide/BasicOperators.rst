@@ -520,6 +520,76 @@ Use the ternary conditional operator with care, however.
 Its conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
+.. _BasicOperators_NilCoalescingOperator:
+
+Nil Coalescing Operator
+-----------------------
+
+The :newTerm:`nil coalescing operator` (``a ?? b``)
+unwraps an optional ``a`` if it contains a value,
+or returns a default value ``b`` if ``a`` is ``nil``.
+The expression ``a`` is always of an optional type.
+The expression ``b`` must match the type that is stored inside ``a``.
+
+The nil coalescing operator is shorthand for the code below:
+
+.. testcode:: nilCoalescingOperatorOutline
+
+   >> var a: Int?
+   << // a : Int? = nil
+   >> let b = 42
+   << // b : Int = 42
+   -> a != nil ? a! : b
+   << // r0 : Int = 42
+
+The code above uses the ternary conditional operator and forced unwrapping (``a!``)
+to access the value wrapped inside ``a`` when ``a`` is not ``nil``,
+and to return ``b`` otherwise.
+The nil coalescing operator provides a more elegant way to encapsulate
+this conditional checking and unwrapping in a concise and readable form.
+
+.. note::
+
+   If the value of ``a`` is non-``nil``,
+   the value of ``b`` will not be evaluated.
+   This is known as :newTerm:`short-circuit evaluation`.
+
+The example below uses the nil coalescing operator to choose between
+a default color name and an optional user-defined color name:
+
+.. testcode:: nilCoalescingOperator
+
+   -> let defaultColorName = "red"
+   << // defaultColorName : String = "red"
+   -> var userDefinedColorName: String?   // defaults to nil
+   << // userDefinedColorName : String? = nil
+   ---
+   -> var colorNameToUse = userDefinedColorName ?? defaultColorName
+   << // colorNameToUse : String = "red"
+   /> userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
+   </ userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
+
+The ``userDefinedColorName`` variable is defined as an optional ``String``,
+with a default value of ``nil``.
+Because ``userDefinedColorName`` is of an optional type,
+you can use the nil coalescing operator to consider its value.
+In the example above, the operator is used to determine
+an initial value for a ``String`` variable called ``colorNameToUse``.
+Because ``userDefinedColorName`` is ``nil``,
+the expression ``userDefinedColorName ?? defaultColorName`` returns
+the value of ``defaultColorName``, or ``"red"``.
+
+If you assign a non-``nil`` value to ``userDefinedColorName``,
+and perform the nil coalescing operator check again,
+the value wrapped inside ``userDefinedColorName`` is used instead of the default:
+
+.. testcode:: nilCoalescingOperator
+
+   -> userDefinedColorName = "green"
+   -> colorNameToUse = userDefinedColorName ?? defaultColorName
+   /> userDefinedColorName is not nil, so colorNameToUse is set to \"\(colorNameToUse)\"
+   </ userDefinedColorName is not nil, so colorNameToUse is set to "green"
+
 .. _BasicOperators_RangeOperators:
 
 Range Operators

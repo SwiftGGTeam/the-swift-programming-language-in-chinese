@@ -6,6 +6,15 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-08-04  * Added information about the ``dynamic`` declaration modifier
+              in :ref:`Declarations_DeclarationModifiers`.
+
+            * The ``Optional`` type no longer conform to the Swift standard library ``BooleanType``
+              protocol. As a result, you must explicitly test an optional value against ``nil``
+              when working with optionals in a Boolean context.
+
+            * Added information about how type inference works with :ref:`LexicalStructure_Literals`.
+----------  --------------------------------------------------------------------------
 2014-07-21  * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 
             * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter

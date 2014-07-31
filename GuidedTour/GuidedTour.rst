@@ -164,7 +164,7 @@ use the initializer syntax.
 
    -> let emptyArray = [String]()
    << // emptyArray : [(String)] = []
-   -> let emptyDictionary = Dictionary<String, Float>()
+   -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
 If type information can be inferred,
@@ -175,7 +175,8 @@ or pass an argument to a function.
 
 .. testcode:: guided-tour
 
-   -> shoppingList = []   // Went shopping and bought everything.
+   -> shoppingList = []
+   -> occupations = [:]
 
 Control Flow
 ------------

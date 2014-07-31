@@ -180,7 +180,12 @@ which is initialized with an empty array of type ``[Room]``:
             return rooms.count
          }
          subscript(i: Int) -> Room {
-            return rooms[i]
+            get {
+               return rooms[i]
+            }
+            set {
+               rooms[i] = newValue
+            }
          }
          func printNumberOfRooms() {
             println("The number of rooms is \(numberOfRooms)")
@@ -195,7 +200,7 @@ The computed ``numberOfRooms`` property simply returns
 the value of the ``count`` property from the ``rooms`` array.
 
 As a shortcut to accessing its ``rooms`` array,
-this version of ``Residence`` provides a read-only subscript that returns
+this version of ``Residence`` provides a read-write subscript that provides access to
 the room at the requested index in the ``rooms`` array.
 
 This version of ``Residence`` also provides a method called ``printNumberOfRooms``,
@@ -231,9 +236,9 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingName {
+            if buildingName != nil {
                return buildingName
-            } else if buildingNumber {
+            } else if buildingNumber != nil {
                return buildingNumber
             } else {
                return nil
@@ -256,18 +261,12 @@ or ``nil`` if neither property has a value.
 
 .. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
 
-Calling Properties Through Optional Chaining
---------------------------------------------
+Accessing Properties Through Optional Chaining
+----------------------------------------------
 
 As demonstrated in :ref:`OptionalChaining_OptionalChainingAsAnAlternativeToForcedUnwrapping`,
 you can use optional chaining to access a property on an optional value,
 and to check if that property access is successful.
-You cannot, however, set a property's value through optional chaining.
-
-.. FIXME: this "you cannot" is because of
-   <rdar://problem/16922562> Cannot assign through optional chaining,
-   which is a P1 to be fixed after WWDC.
-   The "you cannot" sentence should be removed once this is fixed.
 
 Use the classes defined above to create a new ``Person`` instance,
 and try to access its ``numberOfRooms`` property as before:
@@ -284,11 +283,21 @@ and try to access its ``numberOfRooms`` property as before:
    <- Unable to retrieve the number of rooms.
 
 Because ``john.residence`` is ``nil``,
-this optional chaining call fails in the same way as before, without error.
+this optional chaining call fails in the same way as before.
 
-.. QUESTION: this section is kind of duplication of the first section in this chapter,
-   but I think it's worth mentioning it specifically in this section
-   before giving a similar description for methods and subscripts.
+You can also attempt to set a property's value through optional chaining:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> let someAddress = Address()
+   -> someAddress.buildingNumber = "29"
+   -> someAddress.street = "Acacia Road"
+   -> john.residence?.address = someAddress
+
+In this example,
+the attempt to set the ``address`` property of ``john.residence`` will fail,
+because ``john.residence`` is currently ``nil``.
 
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
@@ -313,6 +322,7 @@ Here's how the method looks:
 This method does not specify a return type.
 However, functions and methods with no return type have an implicit return type of ``Void``,
 as described in :ref:`Functions_FunctionsWithoutReturnValues`.
+This means that they return a value of ``()``, or an empty tuple.
 
 If you call this method on an optional value with optional chaining,
 the method's return type will be ``Void?``, not ``Void``,
@@ -320,37 +330,44 @@ because return values are always of an optional type when called through optiona
 This enables you to use an ``if`` statement
 to check whether it was possible to call the ``printNumberOfRooms`` method,
 even though the method does not itself define a return value.
-The implicit return value from the ``printNumberOfRooms`` will be equal to ``Void``
-if the method was called succesfully through optional chaining,
-or ``nil`` if was not:
+Compare the return value from the ``printNumberOfRooms`` call against ``nil``
+to see if the method call was successful:
 
 .. testcode:: optionalChaining
    :compile: true
 
-   -> if john.residence?.printNumberOfRooms() {
+   -> if john.residence?.printNumberOfRooms() != nil {
          println("It was possible to print the number of rooms.")
       } else {
          println("It was not possible to print the number of rooms.")
       }
    <- It was not possible to print the number of rooms.
 
-.. TODO: this is a reasonably complex thing to get your head round.
-   Is this explanation detailed enough?
+The same is true if you attempt to set a property through optional chaining.
+The example above in :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining`
+attempts to set an ``address`` value for ``john.residence``,
+even though the ``residence`` property is ``nil``.
+Any attempt to set a property through optional chaining returns a value of type ``Void?``,
+which enables you to compare against ``nil`` to see if the property was set successfully:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if (john.residence?.address = someAddress) != nil {
+         println("It was possible to set the address.")
+      } else {
+         println("It was not possible to set the address.")
+      }
+   <- It was not possible to set the address.
 
 .. _OptionalChaining_CallingSubscriptsThroughOptionalChaining:
 
-Calling Subscripts Through Optional Chaining
---------------------------------------------
+Accessing Subscripts Through Optional Chaining
+----------------------------------------------
 
-You can use optional chaining to try to retrieve
+You can use optional chaining to try to retrieve and set
 a value from a subscript on an optional value,
 and to check whether that subscript call is successful.
-You cannot, however, set a subscript through optional chaining.
-
-.. FIXME: this "you cannot" is because of
-   <rdar://problem/16922562> Cannot assign through optional chaining,
-   which is a P1 to be fixed after WWDC.
-   The "you cannot" sentence should be removed once this is fixed.
 
 .. note::
 
@@ -380,6 +397,15 @@ is placed immediately after ``john.residence``, before the subscript brackets,
 because ``john.residence`` is the optional value
 on which optional chaining is being attempted.
 
+Similarly, you can try to set a new value through a subscript with optional chaining:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> john.residence?[0] = Room(name: "Bathroom")
+
+This subscript setting attempt also fails, because ``residence`` is currently ``nil``.
+
 If you create and assign an actual ``Residence`` instance to ``john.residence``,
 with one or more ``Room`` instances in its ``rooms`` array,
 you can use the ``Residence`` subscript to access
@@ -389,9 +415,9 @@ the actual items in the ``rooms`` array through optional chaining:
    :compile: true
 
    -> let johnsHouse = Residence()
-      johnsHouse.rooms.append(Room(name: "Living Room"))
-      johnsHouse.rooms.append(Room(name: "Kitchen"))
-      john.residence = johnsHouse
+   -> johnsHouse.rooms.append(Room(name: "Living Room"))
+   -> johnsHouse.rooms.append(Room(name: "Kitchen"))
+   -> john.residence = johnsHouse
    ---
    -> if let firstRoomName = john.residence?[0].name {
          println("The first room name is \(firstRoomName).")
@@ -399,6 +425,38 @@ the actual items in the ``rooms`` array through optional chaining:
          println("Unable to retrieve the first room name.")
       }
    <- The first room name is Living Room.
+
+.. _OptionalChaining_AccessingSubscriptsOfOptionalType:
+
+Accessing Subscripts of Optional Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a subscript returns a value of optional type ---
+such as the key subscript of Swift's ``Dictionary`` type ---
+you can place a question mark *after* the subscript's closing brace
+to chain on its optional return value:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> var testScores = ["Dave": [86, 82, 84], "Tim": [79, 94, 81]]
+   -> testScores["Dave"]?[0] = 91
+   -> testScores["Tim"]?[0]++
+   -> testScores["Brian"]?[0] = 72
+   >> let dave = "Dave"
+   >> let tim = "Tim"
+   /> the \"Dave\" array is now [\(testScores[dave]![0]), \(testScores[dave]![1]), \(testScores[dave]![2])] and the \"Tim\" array is now [\(testScores[tim]![0]), \(testScores[tim]![1]), \(testScores[tim]![2])]
+   </ the "Dave" array is now [91, 82, 84] and the "Tim" array is now [80, 94, 81]
+
+The example above defines a dictionary called ``testScores``,
+which contains two key-value pairs that map a ``String`` key to an array of ``Int`` values.
+The example uses optional chaining to set the first item in the ``"Dave"`` array to ``91``;
+to increment the first item in the ``"Tim"`` array by ``1``;
+and to try to set the first item in an array for a key of ``"Brian"``.
+The first two calls succeed, because the ``testScores`` dictionary
+contains keys for ``"Dave"`` and ``"Tim"``.
+The third call fails, because the ``testScores`` dictionary
+does not contain a key for ``"Brian"``.
 
 .. _OptionalChaining_LinkingMultipleLevelsOfChaining:
 
@@ -508,8 +566,13 @@ place the optional chaining question mark *after* the method's parentheses:
 .. testcode:: optionalChaining
    :compile: true
 
-   -> if john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
-         println("John's building identifier begins with \"The\".")
+   -> if let beginsWithThe =
+         john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+         if beginsWithThe {
+            println("John's building identifier begins with \"The\".")
+         } else {
+            println("John's building identifier does not begin with \"The\".")
+         }
       }
    <- John's building identifier begins with "The".
 
