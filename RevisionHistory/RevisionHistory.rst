@@ -86,7 +86,7 @@ Date        Notes
               :ref:`AdvancedOperators_CompoundAssignmentOperators` no longer use
               the ``@assignment`` attribute when defining the function.
 
-            * The order in which modifiers are specified when defining 
+            * The order in which modifiers are specified when defining
               :ref:`AdvancedOperators_CustomOperators` has changed.
               You now write ``prefix operator`` rather than ``operator prefix``,
               for example.
@@ -96,6 +96,8 @@ Date        Notes
 
             * Added information about how type inference works
               with :ref:`LexicalStructure_Literals`.
+
+            * Added more information about :ref:`Declarations_CurriedFunctions`.
 ----------  --------------------------------------------------------------------------
 2014-07-21  * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 
