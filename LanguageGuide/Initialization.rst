@@ -49,7 +49,15 @@ Initializers
 
 :newTerm:`Initializers` are called to create a new instance of a particular type.
 In its simplest form, an initializer is like an instance method with no parameters,
-written using the ``init`` keyword.
+written using the ``init`` keyword:
+
+.. testcode:: initializerSyntax
+
+   >> class Test {
+   -> init() {
+         // perform some initialization here
+      }
+   >> }
 
 The example below defines a new structure called ``Fahrenheit``
 to store temperatures expressed in the Fahrenheit scale.
@@ -613,6 +621,30 @@ You do not have to provide convenience initializers if your class does not requi
 Create convenience initializers whenever a shortcut to a common initialization pattern
 will save time or make initialization of the class clearer in intent.
 
+.. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
+
+Syntax for Designated and Convenience Initializers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Designated initializers for classes are written in the same way as
+simple initializers for value types:
+
+.. syntax-outline::
+
+   init(<#parameters#>) {
+      <#statements#>
+   }
+
+Convenience initializers are written in the same style,
+but with the ``convenience`` modifier placed before the ``init`` keyword,
+separated by a space:
+
+.. syntax-outline::
+
+   convenience init(<#parameters#>) {
+      <#statements#>
+   }
+
 .. _Initialization_InitializerChaining:
 
 Initializer Chaining
@@ -806,28 +838,216 @@ Initializer Inheritance and Overriding
 Unlike subclasses in Objective-C,
 Swift subclasses do not inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
-is automatically inherited by a more specialized subclass
+is inherited by a more specialized subclass
 and is used to create a new instance of the subclass
 that is not fully or correctly initialized.
 
-If you want your custom subclass to present
-one or more of the same initializers as its superclass ---
-perhaps to perform some customization during initialization ---
-you can provide an overriding implementation of the same initializer
-within your custom subclass.
+.. note::
 
-If the initializer you are overriding is a *designated* initializer,
-you can override its implementation in your subclass
-and call the superclass version of the initializer from within your overriding version.
+   Superclass initializers *are* inherited in certain circumstances,
+   but only when it is safe and appropriate to do so.
+   For more information, see :ref:`Initialization_AutomaticInitializerInheritance` below.
 
-If the initializer you are overriding is a *convenience* initializer,
-your override must call another designated initializer from its own subclass,
-as per the rules described above in :ref:`Initialization_InitializerChaining`.
+If you want a custom subclass to present
+one or more of the same initializers as its superclass,
+you can provide a custom implementation of those initializers within the subclass.
+
+When you write a subclass initializer that matches a superclass *designated* initializer,
+you are effectively providing an override of that designated initializer.
+Therefore, you must write the ``override`` modifier before the subclass's initializer definition.
+This is true even if you are overriding a default initializer,
+as described in :ref:`Initialization_DefaultInitializers`.
+
+As with an overridden property, method or subscript,
+the presence of the ``override`` modifier prompts Swift to check that
+the superclass has a matching designated initializer to be overridden,
+and validates that the parameters for your overriding initializer have been specified as intended.
 
 .. note::
 
-   Unlike methods, properties, and subscripts,
-   you do not need to write the ``override`` keyword when overriding an initializer.
+   You always write the ``override`` modifier when overriding a superclass designated initializer,
+   even if your subclass's implementation of the initializer is a convenience initializer.
+
+.. assertion:: youHaveToWriteOverrideWhenOverridingADesignatedInitializer
+
+   -> class C {
+         init() {}
+      }
+   -> class D1: C {
+         // this is correct
+         override init() {}
+      }
+   -> class D2: C {
+         // this is not correct
+         init() {}
+      }
+   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !! init() {}
+   !! ^
+   !! override
+   !! <REPL Input>:2:6: note: overridden declaration is here
+   !! init() {}
+   !! ^
+
+.. assertion:: youHaveToWriteOverrideEvenWhenOverridingADefaultInitializer
+
+   -> class C {
+         var i = 0
+      }
+   -> class D1: C {
+         // this is correct
+         override init() {}
+      }
+   -> class D2: C {
+         // this is not correct
+         init() {}
+      }
+   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !! init() {}
+   !! ^
+   !! override
+   !! <REPL Input>:1:7: note: overridden declaration is here
+   !! class C {
+   !! ^
+
+Conversely, if you write a subclass initializer that matches a superclass *convenience* initializer,
+that superclass convenience initializer can never be called directly by your subclass,
+as per the rules described above in :ref:`Initialization_InitializerChaining`.
+Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer.
+As a result, you do not write the ``override`` modifier when providing
+a matching implementation of a superclass convenience initializer.
+
+.. assertion:: youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer
+
+   -> class C {
+         var i: Int
+         init(someInt: Int) {
+            i = someInt
+         }
+         convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   -> class D1: C {
+         // override for designated, so needs the override modifier
+         override init(someInt: Int) {
+            super.init(someInt: someInt)
+         }
+         // not technically an override, so does not need the override modifier
+         convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   -> class D2: C {
+         // override for designated, so needs the override modifier
+         override init(someInt: Int) {
+            super.init(someInt: someInt)
+         }
+         // this is not correct - "override" is not required
+         override convenience init() {
+            self.init(someInt: 42)
+         }
+      }
+   !! <REPL Input>:7:27: error: initializer does not override a designated initializer from its superclass
+   !! override convenience init() {
+   !! ~~~~~~~~             ^
+
+The example below defines a base class called ``Vehicle``.
+This base class declares a stored property called ``numberOfWheels``,
+with a default ``Int`` value of ``0``.
+The ``numberOfWheels`` property is used by a computed property called ``description``
+to create a ``String`` description of the vehicle's characteristics:
+
+.. testcode:: initializerInheritance
+
+   -> class Vehicle {
+         var numberOfWheels = 0
+         var description: String {
+            return "\(numberOfWheels) wheel(s)"
+         }
+      }
+
+The ``Vehicle`` class provides a default value for its only stored property,
+and does not provide any custom initializers itself.
+As a result, it automatically receives a default initializer,
+as described in :ref:`Initialization_DefaultInitializers`.
+The default initializer (when available) is always a designated initializer for a class,
+and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` of ``0``:
+
+.. testcode:: initializerInheritance
+
+   -> let vehicle = Vehicle()
+   << // vehicle : Vehicle = REPL.Vehicle
+   -> println("Vehicle: \(vehicle.description)")
+   </ Vehicle: 0 wheel(s)
+
+The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
+
+.. testcode:: initializerInheritance
+
+   -> class Bicycle: Vehicle {
+         override init() {
+            super.init()
+            numberOfWheels = 2
+         }
+      }
+
+The ``Bicycle`` subclass defines a custom designated initializer, ``init()``.
+This designated initializer matches a designated initializer from the superclass of ``Bicycle``,
+and so the ``Bicycle`` version of this initializer is marked with the ``override`` modifier.
+
+The ``init()`` initializer for ``Bicycle`` starts by calling ``super.init()``,
+which calls the default initializer for the ``Bicycle`` class's superclass, ``Vehicle``.
+This ensures that the ``numberOfWheels`` inherited property is initialized by ``Vehicle``
+before ``Bicycle`` has the opportunity to modify the property.
+After calling ``super.init()``,
+the original value of ``numberOfWheels`` is replaced with a new value of ``2``.
+
+If you create an instance of ``Bicycle``,
+you can call its inherited ``description`` computed property
+to see how its ``numberOfWheels`` property has been updated:
+
+.. testcode:: initializerInheritance
+
+   -> let bicycle = Bicycle()
+   << // bicycle : Bicycle = REPL.Bicycle
+   -> println("Bicycle: \(bicycle.description)")
+   </ Bicycle: 2 wheel(s)
+
+.. note::
+
+   Subclasses are only allowed to modify
+   *variable* properties of superclasses during initialization.
+   You can't modify inherited constant properties from a superclass.
+
+.. assertion:: YouCantModifyInheritedConstantPropertiesFromASuperclass
+
+   -> class C {
+         let constantProperty: Int
+         var variableProperty: Int
+         init() {
+            // this is fine - a class can set its own constant and variable properties during init
+            constantProperty = 0
+            variableProperty = 0
+         }
+      }
+   -> class D1: C {
+         override init() {
+            // this is fine - a subclass can set its superclass's variable properties during init
+            super.init()
+            variableProperty = 0
+         }
+      }
+   -> class D2: C {
+         override init() {
+            // this is wrong - a subclass cannot set its superclass's constant properties during init
+            super.init()
+            constantProperty = 0
+         }
+      }
+   !! <REPL Input>:5:26: error: cannot assign to 'constantProperty' in 'self'
+   !! constantProperty = 0
+   !! ~~~~~~~~~~~~~~~~ ^
 
 .. _Initialization_AutomaticInitializerInheritance:
 
@@ -869,29 +1089,7 @@ These rules apply even if your subclass adds further convenience initializers.
 .. TODO: There are rare cases in which we automatically insert a call to super.init() for you.
    When is this? Either way, I need to mention it in here.
 
-.. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
-
-Syntax for Designated and Convenience Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Designated initializers for classes are written in the same way as
-simple initializers for value types:
-
-.. syntax-outline::
-
-   init(<#parameters#>) {
-      <#statements#>
-   }
-
-Convenience initializers are written in the same style,
-but with the ``convenience`` keyword placed before the ``init`` keyword,
-separated by a space:
-
-.. syntax-outline::
-
-   convenience init(<#parameters#>) {
-      <#statements#>
-   }
+.. _Initialization_DesignatedAndConvenienceInitializersInAction:
 
 Designated and Convenience Initializers in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -970,7 +1168,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
             self.quantity = quantity
             super.init(name: name)
          }
-         convenience init(name: String) {
+         override convenience init(name: String) {
             self.init(name: name, quantity: 1)
          }
       }
@@ -999,11 +1197,17 @@ The definition of this convenience initializer makes
 ``RecipeIngredient`` instances quicker and more convenient to create,
 and avoids code duplication when creating
 several single-quantity ``RecipeIngredient`` instances.
-This convenience initializer simply delegates across to the class's designated initializer.
+This convenience initializer simply delegates across to the class's designated initializer,
+passing in a ``quantity`` value of ``1``.
 
-Note that the ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
+The ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
-Even though ``RecipeIngredient`` provides this initializer as a convenience initializer,
+Because this convenience initializer overrides a designated initializer from its superclass,
+it must be marked with the ``override`` modifier
+(as described in :ref:`Initialization_InitializerInheritanceAndOverriding`).
+
+Even though ``RecipeIngredient`` provides
+the ``init(name: String)`` initializer as a convenience initializer,
 ``RecipeIngredient`` has nonetheless provided an implementation of
 all of its superclass's designated initializers.
 Therefore, ``RecipeIngredient`` automatically inherits
@@ -1111,16 +1315,85 @@ shows that their default states have been set as expected.
 Required Initializers
 ~~~~~~~~~~~~~~~~~~~~~
  
-Write the ``required`` modifier before the definition of
-a designated or convenience initializer on a class
-to indicate that every subclass of that class must implement the required initializer.
+Write the ``required`` modifier before the definition of a class initializer
+to indicate that every subclass of the class must implement that initializer:
+
+.. testcode:: requiredInitializers
+
+   -> class SomeClass {
+         required init() {
+            // initializer implementation goes here
+         }
+      }
+
+.. assertion:: requiredDesignatedInitializersMustBeImplementedBySubclasses
+
+   -> class C {
+         required init(i: Int) {}
+      }
+   -> class D: C {
+         init() {}
+      }
+   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
+   !! class D: C {
+   !!       ^
+   !! <REPL Input>:2:15: note: 'required' initializer 'init(i:)' not overridden
+   !!    required init(i: Int) {}
+   !!             ^
+
+.. assertion:: requiredConvenienceInitializersMustBeImplementedBySubclasses
+
+   -> class C {
+         init() {}
+         required convenience init(i: Int) {
+            self.init()
+         }
+      }
+   -> class D: C {
+         init(s: String) {}
+      }
+   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
+   !! class D: C {
+   !!       ^
+   !! <REPL Input>:3:27: note: 'required' initializer 'init(i:)' not overridden
+   !!    required convenience init(i: Int) {
+   !!                         ^
+
+You must also write the ``required`` modifier before
+every subclass implementation of a required initializer,
+to indicate that the initializer requirement applies to further subclasses in the chain.
+You do not write the ``override`` modifier when overriding a required designated initializer:
+
+.. testcode:: requiredInitializers
+
+   -> class SomeSubclass: SomeClass {
+         required init() {
+            // subclass implementation of the required initializer goes here
+         }
+      }
+
+.. assertion:: youCannotWriteOverrideWhenOverridingARequiredDesignatedInitializer
+
+   -> class C {
+         required init() {}
+      }
+   -> class D: C {
+         override required init() {}
+      }
+   !! <REPL Input>:2:24: error: 'override' is redundant on a 'required' initializer
+   !!    override required init() {}
+   !! ~~~~~~~~          ^
+   !!-
+   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !!    required init() {}
+   !!             ^
 
 .. note::
 
    You do not have to provide an explicit implementation of a required initializer
    if you can satisfy the requirement with an inherited initializer.
 
-.. assertion:: youCanSatisfyADesignatedInitializerWithAnInheritedInitializer
+.. assertion:: youCanSatisfyARequiredDesignatedInitializerWithAnInheritedInitializer
 
    -> class C {
          var x = 0
@@ -1130,7 +1403,7 @@ to indicate that every subclass of that class must implement the required initia
          var y = 0
       }
 
-.. assertion:: youCanSatisfyAConvenienceInitializerWithAnInheritedInitializer
+.. assertion:: youCanSatisfyARequiredConvenienceInitializerWithAnInheritedInitializer
 
    -> class C {
          var x = 0
@@ -1142,8 +1415,13 @@ to indicate that every subclass of that class must implement the required initia
    -> class D: C {
          var y = 0
       }
- 
-.. TODO: provide an example.
+
+.. FIXME: This section still does not describe why required initializers are useful.
+   This is because the reason for their usefulness -
+   construction through a metatype of some protocol type with an initializer requirement -
+   is currently broken due to
+   <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   See the corresponding FIXME in the Protocols chapter introduction too.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
 
