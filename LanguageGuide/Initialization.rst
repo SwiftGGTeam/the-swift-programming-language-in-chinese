@@ -636,7 +636,7 @@ simple initializers for value types:
    }
 
 Convenience initializers are written in the same style,
-but with the ``convenience`` keyword placed before the ``init`` keyword,
+but with the ``convenience`` modifier placed before the ``init`` keyword,
 separated by a space:
 
 .. syntax-outline::
@@ -854,18 +854,18 @@ you can provide a custom implementation of those initializers within the subclas
 
 When you write a subclass initializer that matches a superclass *designated* initializer,
 you are effectively providing an override of that designated initializer.
-Therefore, you must write the ``override`` keyword before the subclass's initializer definition.
+Therefore, you must write the ``override`` modifier before the subclass's initializer definition.
 This is true even if you are overriding a default initializer,
 as described in :ref:`Initialization_DefaultInitializers`.
 
 As with an overridden property, method or subscript,
-the presence of the ``override`` keyword prompts Swift to check that
+the presence of the ``override`` modifier prompts Swift to check that
 the superclass has a matching designated initializer to be overridden,
 and validates that the parameters for your overriding initializer have been specified as intended.
 
 .. note::
 
-   You always write the ``override`` keyword when overriding a superclass designated initializer,
+   You always write the ``override`` modifier when overriding a superclass designated initializer,
    even if your subclass's implementation of the initializer is a convenience initializer.
 
 .. assertion:: youHaveToWriteOverrideWhenOverridingADesignatedInitializer
@@ -914,7 +914,7 @@ Conversely, if you write a subclass initializer that matches a superclass *conve
 that superclass convenience initializer can never be called directly by your subclass,
 as per the rules described above in :ref:`Initialization_InitializerChaining`.
 Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer.
-As a result, you do not write the ``override`` keyword when providing
+As a result, you do not write the ``override`` modifier when providing
 a matching implementation of a superclass convenience initializer.
 
 .. assertion:: youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer
@@ -929,17 +929,17 @@ a matching implementation of a superclass convenience initializer.
          }
       }
    -> class D1: C {
-         // override for designated, so needs the override keyword
+         // override for designated, so needs the override modifier
          override init(someInt: Int) {
             super.init(someInt: someInt)
          }
-         // not technically an override, so does not need the override keyword
+         // not technically an override, so does not need the override modifier
          convenience init() {
             self.init(someInt: 42)
          }
       }
    -> class D2: C {
-         // override for designated, so needs the override keyword
+         // override for designated, so needs the override modifier
          override init(someInt: Int) {
             super.init(someInt: someInt)
          }
@@ -994,7 +994,7 @@ The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
 
 The ``Bicycle`` subclass defines a custom designated initializer, ``init()``.
 This designated initializer matches a designated initializer from the superclass of ``Bicycle``,
-and so the ``Bicycle`` version of this initializer is marked with the ``override`` keyword.
+and so the ``Bicycle`` version of this initializer is marked with the ``override`` modifier.
 
 The ``init()`` initializer for ``Bicycle`` starts by calling ``super.init()``,
 which calls the default initializer for the ``Bicycle`` class's superclass, ``Vehicle``.
@@ -1203,7 +1203,7 @@ passing in a ``quantity`` value of ``1``.
 The ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
 Because this convenience initializer overrides a designated initializer from its superclass,
-it must be marked with the ``override`` keyword
+it must be marked with the ``override`` modifier
 (as described in :ref:`Initialization_InitializerInheritanceAndOverriding`).
 
 Even though ``RecipeIngredient`` provides
