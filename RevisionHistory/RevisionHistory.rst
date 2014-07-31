@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly equate to
+2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly evaluate to
               ``true`` when they have a value and ``false`` when they do not,
               to avoid confusion when working with optional ``Bool`` values.
               Instead, make an explicit check against ``nil``
