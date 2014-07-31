@@ -47,7 +47,7 @@ Date        Notes
               for the :ref:`BasicOperators_RangeOperators` ``a...b`` and ``a..<b``
               must not be greater than the end value ``b``.
 
-            * Rewritten the :doc:`../LanguageGuide/Inheritance` chapter
+            * Rewrote the :doc:`../LanguageGuide/Inheritance` chapter
               to remove its introductory coverage of initializer overrides.
               This chapter now focuses more on the addition of
               new functionality in a subclass,
