@@ -1315,16 +1315,85 @@ shows that their default states have been set as expected.
 Required Initializers
 ~~~~~~~~~~~~~~~~~~~~~
  
-Write the ``required`` modifier before the definition of
-a designated or convenience initializer on a class
-to indicate that every subclass of that class must implement the required initializer.
+Write the ``required`` modifier before the definition of a class initializer
+to indicate that every subclass of the class must implement that initializer:
+
+.. testcode:: requiredInitializers
+
+   -> class SomeClass {
+         required init() {
+            // initializer implementation goes here
+         }
+      }
+
+.. assertion:: requiredDesignatedInitializersMustBeImplementedBySubclasses
+
+   -> class C {
+         required init(i: Int) {}
+      }
+   -> class D: C {
+         init() {}
+      }
+   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
+   !! class D: C {
+   !!       ^
+   !! <REPL Input>:2:15: note: 'required' initializer 'init(i:)' not overridden
+   !!    required init(i: Int) {}
+   !!             ^
+
+.. assertion:: requiredConvenienceInitializersMustBeImplementedBySubclasses
+
+   -> class C {
+         init() {}
+         required convenience init(i: Int) {
+            self.init()
+         }
+      }
+   -> class D: C {
+         init(s: String) {}
+      }
+   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
+   !! class D: C {
+   !!       ^
+   !! <REPL Input>:3:27: note: 'required' initializer 'init(i:)' not overridden
+   !!    required convenience init(i: Int) {
+   !!                         ^
+
+You must also write the ``required`` modifier before
+every subclass implementation of a required initializer,
+to indicate that the initializer requirement applies to further subclasses in the chain.
+You do not write the ``override`` modifier when overriding a required designated initializer:
+
+.. testcode:: requiredInitializers
+
+   -> class SomeSubclass: SomeClass {
+         required init() {
+            // subclass implementation of the required initializer goes here
+         }
+      }
+
+.. assertion:: youCannotWriteOverrideWhenOverridingARequiredDesignatedInitializer
+
+   -> class C {
+         required init() {}
+      }
+   -> class D: C {
+         override required init() {}
+      }
+   !! <REPL Input>:2:24: error: 'override' is redundant on a 'required' initializer
+   !!    override required init() {}
+   !! ~~~~~~~~          ^
+   !!-
+   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !!    required init() {}
+   !!             ^
 
 .. note::
 
    You do not have to provide an explicit implementation of a required initializer
    if you can satisfy the requirement with an inherited initializer.
 
-.. assertion:: youCanSatisfyADesignatedInitializerWithAnInheritedInitializer
+.. assertion:: youCanSatisfyARequiredDesignatedInitializerWithAnInheritedInitializer
 
    -> class C {
          var x = 0
@@ -1334,7 +1403,7 @@ to indicate that every subclass of that class must implement the required initia
          var y = 0
       }
 
-.. assertion:: youCanSatisfyAConvenienceInitializerWithAnInheritedInitializer
+.. assertion:: youCanSatisfyARequiredConvenienceInitializerWithAnInheritedInitializer
 
    -> class C {
          var x = 0
@@ -1346,8 +1415,13 @@ to indicate that every subclass of that class must implement the required initia
    -> class D: C {
          var y = 0
       }
- 
-.. TODO: provide an example.
+
+.. FIXME: This section still does not describe why required initializers are useful.
+   This is because the reason for their usefulness -
+   construction through a metatype of some protocol type with an initializer requirement -
+   is currently broken due to
+   <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   See the corresponding FIXME in the Protocols chapter introduction too.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
 
