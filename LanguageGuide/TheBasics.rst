@@ -1146,19 +1146,20 @@ An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a nonoptional value,
 without the need to unwrap the optional value each time it is accessed.
 The following example shows the difference in behavior between
-an optional ``String`` and an implicitly unwrapped optional ``String``:
+an optional string and an implicitly unwrapped optional string
+when accessing their wrapped value as an explicit ``String``:
 
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
    << // possibleString : String? = Optional("An optional string.")
-   -> println(possibleString!) // requires an exclamation mark to access its value
-   <- An optional string.
+   -> let forcedString: String = possibleString! // requires an exclamation mark
+   << // forcedString : String = "An optional string."
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
    << // assumedString : String! = An implicitly unwrapped optional string.
-   -> println(assumedString)  // no exclamation mark is needed to access its value
-   <- An implicitly unwrapped optional string.
+   -> let implicitString: String = assumedString // no need for an exclamation mark
+   << // implicitString : String = "An implicitly unwrapped optional string."
 
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be unwrapped automatically whenever it is used.
