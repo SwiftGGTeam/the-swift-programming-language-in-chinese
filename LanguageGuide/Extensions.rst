@@ -341,10 +341,11 @@ from the right of the number:
 .. testcode:: extensionsSubscripts
 
    -> extension Int {
-         subscript(digitIndex: Int) -> Int {
+         subscript(var digitIndex: Int) -> Int {
             var decimalBase = 1
-            for _ in 1...digitIndex {
+            while digitIndex > 0 {
                decimalBase *= 10
+               --digitIndex
             }
             return (self / decimalBase) % 10
          }

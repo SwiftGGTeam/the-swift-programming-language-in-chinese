@@ -216,39 +216,11 @@ To specify an in-out parameter, prefix the parameter type with the ``inout`` key
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
-The type of a curried function is equivalent to a nested function type.
-For example,
-the type of the curried function ``addTwoNumbers()()`` below is
-``Int -> Int -> Int``:
-
-.. testcode::
-
-    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> addTwoNumbers(4)(5) // Returns 9
-    !! <REPL Input>:1:18: error: missing argument label 'b:' in call
-    !! addTwoNumbers(4)(5) // Returns 9
-    !!                  ^
-    !!                  b:
-
 The function types of a curried function are grouped from right to left. For instance,
 the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
 that is, a function that takes an ``Int`` and returns
-another function that takes and return an ``Int``. For example, you can rewrite
-the curried function ``addTwoNumbers()()`` as the following nested function:
-
-.. testcode::
-
-    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
-          func addTheSecondNumber(b: Int) -> Int {
-             return a + b
-          }
-          return addTheSecondNumber
-       }
-    -> addTwoNumbers(4)(5) // Returns 9
-    << // r0 : Int = 9
-
+another function that takes and return an ``Int``.
+Curried function are described in :ref:`Declarations_CurriedFunctions`.
 
 .. langref-grammar
 
@@ -442,12 +414,6 @@ Any type can be explicitly declared to be (or implicitly converted to) an option
 If you don't provide an initial value when you declare an
 optional variable or property, its value automatically defaults to ``nil``.
 
-Optionals conform to the ``BooleanType`` protocol and therefore may occur in a Boolean context.
-In that context,
-if an instance of an optional type ``T?`` contains any value of type ``T``
-(that is, its value is ``Optional.Some(T)``),
-the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
-
 If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
@@ -513,7 +479,7 @@ optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
-it's value automatically defaults to ``nil``.
+its value automatically defaults to ``nil``.
 
 Because the value of an implicitly unwrapped optional is automatically unwrapped
 when you use it, there's no need to use the ``!`` operator to unwrap it. That said,

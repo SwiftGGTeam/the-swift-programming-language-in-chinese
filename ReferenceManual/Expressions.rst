@@ -151,6 +151,10 @@ The Swift standard library provides the following binary operators:
 
   - ``||`` Logical OR
 
+* Nil Coalescing (Right associative, precedence level 110)
+
+  - ``??`` Nil coalescing
+
 * Ternary Conditional (Right associative, precedence level 100)
 
   - ``?`` ``:`` Ternary conditional
@@ -170,6 +174,16 @@ The Swift standard library provides the following binary operators:
   - ``|=`` Bitwise OR and assign
   - ``&&=`` Logical AND and assign
   - ``||=`` Logical OR and assign
+
+.. assertion:: nilCoalescingOperator
+
+    -> var sequence: [Int] = []
+    << // sequence : [Int] = []
+    -> sequence.first ?? 0 // produces 0, because sequence.first is nil
+    <$ : Int 0
+    -> sequence.append(22)
+    -> sequence.first ?? 0 // produces 22, the value of sequence.first
+    <$ : Int 22
 
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
@@ -1222,7 +1236,7 @@ Otherwise, a runtime error is raised.
 
 The unwrapped value of a forced-value expression can be modified,
 either by mutating the value itself,
-or by assigning to one of the value's members,
+or by assigning to one of the value's members.
 For example:
 
 .. testcode:: optional-as-lvalue
@@ -1312,6 +1326,31 @@ without using optional chaining.
     -> if let unwrappedC = c {
           result = unwrappedC.property.performAction()
        }
+
+The unwrapped value of an optional-chaining expression can be modified,
+either by mutating the value itself,
+or by assigning to one of the value's members.
+If the value of the optional-chaining expression is ``nil``,
+the expression on the right hand side of the assignment operator
+is not evaluated.
+For example:
+
+.. testcode:: optional-chaining-as-lvalue
+
+   -> func someFunctionWithSideEffects() -> Int {
+         return 42
+      }
+   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+   ---
+   -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
+   // someFunctionWithSideEffects is not evaluated
+   /> someDictionary is still \(list)
+   </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
+   ---
+   -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
+   // someFunctionWithSideEffects is evaluated
+   /> someDictionary is now \(list)
+   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
 
 .. langref-grammar
 

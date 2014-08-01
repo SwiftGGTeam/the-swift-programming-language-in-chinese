@@ -164,7 +164,7 @@ use the initializer syntax.
 
    -> let emptyArray = [String]()
    << // emptyArray : [(String)] = []
-   -> let emptyDictionary = Dictionary<String, Float>()
+   -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : Dictionary<String, Float> = [:]
 
 If type information can be inferred,
@@ -175,7 +175,8 @@ or pass an argument to a function.
 
 .. testcode:: guided-tour
 
-   -> shoppingList = []   // Went shopping and bought everything.
+   -> shoppingList = []
+   -> occupations = [:]
 
 Control Flow
 ------------
@@ -312,7 +313,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8]]
+   << // interestingNumbers : [String : Array<Int>] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -401,7 +402,7 @@ from the function's return type.
    Add a parameter to include today’s lunch special in the greeting.
 
 Use a tuple to make a compound value ---
-for example, return multiple values from a function.
+for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
 
@@ -1147,7 +1148,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

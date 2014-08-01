@@ -708,10 +708,38 @@ rather than an instance of a type
 must be marked with the ``static`` declaration modifier for enumerations and structures
 or the ``class`` declaration modifier for classes.
 
-Curried Functions and Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Declarations_CurriedFunctions:
 
-Curried functions and methods have the following form:
+Curried Functions
+~~~~~~~~~~~~~~~~~
+
+You can rewrite a function that takes multiple parameters as an equivalent function
+that takes a single parameter and returns a function.
+The returned function takes the next parameter and returns another function.
+This continues until there are no remaining parameters,
+at which point the last function returns the return value of the original multiparameter function.
+The rewritten function is known as a :newTerm:`curried function`.
+For example, you can rewrite the ``addTwoInts`` function as the equivalent ``addTwoIntsCurried`` function:
+
+.. testcode:: curried-function
+
+    -> addTwoInts(a: Int, b: Int) -> Int {
+           return a + b
+       }
+    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+           func addTheOtherInt(b: Int) -> Int {
+               return a + b
+            }
+            return addTheOtherInt
+        }
+
+The ``addTwoInts`` function takes two integers and returns the result of adding them together.
+The ``addTwoIntsCurried`` function takes a single integer, and returns another function
+that takes the second integer and adds it to the first.
+(The nested function captures the value of the first integer argument from the enclosing
+function.)
+
+In Swift, you can write a curried function more concisely using the following syntax:
 
 .. syntax-outline::
 
@@ -719,26 +747,56 @@ Curried functions and methods have the following form:
        <#statements#>
     }
 
-A function declared this way is understood
-as a function whose return type is another function.
 For example, the following two declarations are equivalent:
+
+.. testcode:: curried-function-syntactic-sugar
+
+    -> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
+           return a + b
+       }
+    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+           func addTheOtherInt(b: Int) -> Int {
+               return a + b
+            }
+            return addTheOtherInt
+        }
+
+In order to use the ``addTwoIntsCurried`` function in the same way
+as the noncurried ``addTwoInts`` function,
+you must call the ``addTwoIntsCurried`` function with the first integer argument
+and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function
 
-    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
-          func addTheSecondNumber(b: Int) -> Int {
-             return a + b
-          }
-          return addTheSecondNumber
-       }
-    ---
-    -> addTwoNumbers(4)(5) // Returns 9
-    << // r0 : Int = 9
+    -> addTwoInts(4, 5)
+    << // r0: Int = 9
+    -> // returns a value of 9
+    -> addTwoIntsCurried(4)(5)
+    << // r1: Int = 9
+    -> // returns a value of 9
 
-Multiple levels of currying are allowed.
+Although you must provide the arguments to a noncurried function all at once in a single call,
+you can use the curried form of a function to provide arguments in several function calls,
+one at a time (even in different places in your code).
+This is known as :newTerm:`partial function application`.
+For example, you can apply the ``addTwoIntsCurried`` function to an integer argument ``1``
+and assign the result to the constant ``plusOne``:
+
+.. testcode:: curried-function
+
+    -> let plusOne = addTwoIntsCurried(1)
+    << // plusOne : Int -> Int = (Function)
+    -> // plusOne is a function of type Int -> Int
+
+Because ``plusOne`` refers to the ``addTwoIntsCurried`` function with its argument bound
+as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
+
+.. testcode:: curried-function
+
+    -> plusOne(10)
+    << // r2 : Int = 11
+    -> // returns a value of 11
+
 
 .. langref-grammar
 
@@ -1092,9 +1150,6 @@ including its generic parameter clause.
 
 As discussed in :ref:`Declarations_InitializerDeclaration`,
 classes can have designated and convenience initializers.
-When you declare either kind of initializer,
-you can require any subclass to override it by marking the initializer
-with the ``required`` declaration modifier.
 The designated initializer of a class must initialize all of the class's
 declared properties and it must do so before calling any of its superclass's
 designated initializers.
@@ -1108,13 +1163,16 @@ and designated initializers must be marked with the ``override`` declaration mod
     -> class C { init() {} }
     -> class D: C { override init() { super.init() } }
 
+To require that subclasses implement a superclass's initializer,
+mark the superclass's initializer with the ``required`` declaration modifier.
+The subclass's implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
 That said, if the current class overrides all of the superclass's
 designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
-
-.. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
 There are two ways create an instance of a previously declared class:
 
@@ -1361,6 +1419,10 @@ by including a protocol initializer declaration in the body of the protocol decl
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
 
+When a class implements an initializer to satisfy a protocol's initializer requirement,
+the initializer must be marked with the ``required`` declaration modifier
+if the class is not already marked with the ``final`` declaration modifier.
+
 See also :ref:`Declarations_InitializerDeclaration`.
 
 .. syntax-grammar::
@@ -1541,13 +1603,25 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 declaration modifier to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly.
-Required convenience initializers can be either implemented explicitly
-or inherited when the subclass directly implements all of the superclass’s designated
-initializers (or overrides the designated initializers with convenience initializers).
+A subclass’s implementation of that initializer
+must also be marked with the ``required`` declaration modifier.
+
+By default, initializers declared in a superclass
+are not inherited by subclasses.
+That said, if a subclass initializes all of its stored properties with default values
+and doesn't define any initializers of its own,
+it inherits all of the superclass's initializers.
+If the subclass overrides all of the superclass’s designated initializers,
+it inherits the superclass’s convenience initializers.
+
 As with methods, properties, and subscripts,
 you need to mark overridden designated initializers with the ``override`` declaration modifier.
+
+.. note::
+
+    If you mark an initializer with the ``required`` declaration modifier,
+    you don't also mark the initializer with the ``override`` modifier
+    when you override the required initializer in a subclass.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -1876,6 +1950,16 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+``dynamic``
+    Apply this modifier to any member of a class that can be represented by Objective-C.
+    When you mark a member declaration with the ``dynamic`` modifier,
+    access to that member is always dynamically dispatched using the Objective-C runtime.
+    Access to that member is never inlined or devirtualized by the compiler.
+
+    Because declarations marked with the ``dynamic`` modifier are dispatched
+    using the Objective-C runtime, they're implicitly marked with the
+    ``objc`` attribute.
+
 ``final``
     Apply this modifier to a class or to a property, method,
     or subscript member of a class. It's applied to a class to indicate that the class
@@ -1916,12 +2000,8 @@ that introduces the declaration.
 ``required``
     Apply this modifier to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
-
-    Required designated initializers must be implemented explicitly.
-    Required convenience initializers can be either implemented explicitly
-    or inherited when the subclass directly implements all of the superclass’s designated
-    initializers
-    (or when the subclass overrides the designated initializers with convenience initializers).
+    The subclass's implementation of that initializer
+    must also be marked with the ``required`` modifier.
 
 ``weak``
     The ``weak`` modifier is applied to a variable or a stored variable property
