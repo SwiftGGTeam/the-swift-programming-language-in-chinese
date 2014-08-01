@@ -563,8 +563,7 @@ making the parameter's purpose clear and unambiguous:
 
    You can opt out of this behavior by writing an underscore (``_``)
    instead of an explicit external name when you define the parameter.
-   However, external names for defaulted parameters are always preferred
-   where appropriate.
+   However, external names for defaulted parameters are preferred.
 
 .. _Functions_VariadicParameters:
 
