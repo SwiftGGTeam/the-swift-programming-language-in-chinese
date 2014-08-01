@@ -190,7 +190,7 @@ The self Property
 
 Every instance of a type has an implicit property called ``self``,
 which is exactly equivalent to the instance itself.
-You use this implicit ``self`` property to refer to the current instance
+You use the ``self`` property to refer to the current instance
 within its own instance methods.
 
 The ``increment`` method in the example above could have been written like this:
@@ -217,7 +217,7 @@ The main exception to this rule occurs when a parameter name for an instance met
 has the same name as a property of that instance.
 In this situation, the parameter name takes precedence,
 and it becomes necessary to refer to the property in a more qualified way.
-You use the implicit ``self`` property to
+You use the ``self`` property to
 distinguish between the parameter name and the property name.
 
 Here, ``self`` disambiguates between
