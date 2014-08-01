@@ -52,7 +52,7 @@ as one or more of their arguments.
 
 :newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
 Closure expressions provide several syntax optimizations
-for writing closures in their simplest form without loss of clarity or intent.
+for writing closures in a shortened form without loss of clarity or intent.
 The closure expression examples below illustrate these optimizations
 by refining a single example of the ``sorted`` function over several iterations,
 each of which expresses the same functionality in a more succinct way.
