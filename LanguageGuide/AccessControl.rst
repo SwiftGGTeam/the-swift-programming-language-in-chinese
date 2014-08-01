@@ -707,16 +707,29 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
          public init() {}
       }
    // check that we can set its value with the private setter from the same file
-   -> var stringToEdit = TrackedString()
-   -> stringToEdit.numberOfEdits++
+   -> var stringToEdit_Module1A = TrackedString()
+   -> let afterEdits = stringToEdit_Module1A.numberOfEdits++
+
+.. sourcefile:: reducedSetterScopePublic_Module1
+
+   // check that we can retrieve its value with the public getter from a different file in the same module
+   -> var stringToEdit_Module1B = TrackedString()
+   // check that we can't change its value from another file in the same module
+   -> let afterEdits = stringToEdit_Module1B.numberOfEdits++
+   !! /tmp/sourcefile_1.swift:2:40: error: 'Int' is not convertible to '@lvalue UInt8'
+   !! let afterEdits = stringToEdit_Module1B.numberOfEdits++
+   !! ^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
    // check that we can retrieve its value with the public getter from a different module
    -> import reducedSetterScopePublic_Module1
-   -> var stringToEdit = TrackedString()
-   -> stringToEdit.value = "This string will be tracked."
-   -> stringToEdit.numberOfEdits++
+   -> var stringToEdit_Module2 = TrackedString()
+   // check that we can't change its value from another module
+   -> let afterEdits = stringToEdit_Module2.numberOfEdits++
+   !! /tmp/sourcefile_0.swift:3:39: error: 'Int' is not convertible to '@lvalue UInt8'
+   !! let afterEdits = stringToEdit_Module2.numberOfEdits++
+   !! ^
 
 .. _AccessControl_Initializers:
 
