@@ -558,11 +558,8 @@ Calling the function multiple times shows this behavior in action:
    /> returns a value of \(r2)
    </ returns a value of 30
 
-If you create another incrementor, it will have its own stored reference to
-a new, separate ``runningTotal`` variable.
-In the example below,
-``incrementBySeven`` captures a reference to a new ``runningTotal`` variable,
-and this variable is unconnected to the one captured by ``incrementByTen``:
+If you create a second incrementor,
+it will have its own stored reference to a new, separate ``runningTotal`` variable:
 
 .. testcode:: closures
 
@@ -572,6 +569,13 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
    << // r3 : Int = 7
    /> returns a value of \(r3)
    </ returns a value of 7
+
+Calling the original incrementor (``incrementByTen``) again
+continues to increment its own ``runningTotal`` variable,
+and does not affect the variable captured by ``incrementBySeven``:
+
+.. testcode:: closures
+
    -> incrementByTen()
    << // r4 : Int = 40
    /> returns a value of \(r4)
