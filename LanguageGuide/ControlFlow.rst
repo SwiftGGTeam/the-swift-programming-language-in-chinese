@@ -993,7 +993,7 @@ Swift has four control transfer statements:
 * ``fallthrough``
 * ``return``
 
-The ``continue``, ``break`` and ``fallthrough`` statements are described below.
+The ``continue``, ``break``, and ``fallthrough`` statements are described below.
 The ``return`` statement is described in :doc:`Functions`.
 
 .. _ControlFlow_Continue:
