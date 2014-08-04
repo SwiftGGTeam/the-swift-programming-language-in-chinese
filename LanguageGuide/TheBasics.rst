@@ -1250,7 +1250,6 @@ If the value of ``age`` *is* negative, as in the code above,
 then ``age >= 0`` evaluates to ``false``,
 and the assertion is triggered, terminating the application.
 
-Assertion messages cannot use string interpolation.
 The assertion message can be omitted if desired, as in the following example:
 
 .. testcode:: assertions
@@ -1258,14 +1257,12 @@ The assertion message can be omitted if desired, as in the following example:
    -> assert(age >= 0)
    xx assert
 
-.. assertion:: assertionsCannotUseStringInterpolation
+.. assertion:: assertionsCanUseStringInterpolation
 
    -> let age = -3
    << // age : Int = -3
    -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
-   !! <REPL Input>:1:8: error: 'Int' is not convertible to 'UInt8'
-   !! assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
-   !!        ^
+   xx assert
 
 .. _TheBasics_WhenToUseAssertions:
 
