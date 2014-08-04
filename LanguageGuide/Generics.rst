@@ -546,9 +546,9 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:12: error: 'T' is not convertible to 'MirrorDisposition'
-   !!              if value == valueToFind {
-   !!                 ^
+   !! <REPL Input>:3:18: error: cannot invoke '==' with an argument list of type '(T, T)'
+   !!       if value == valueToFind {
+   !!          ~~~~~~^~~~~~~~~~~~~~
 
 This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.

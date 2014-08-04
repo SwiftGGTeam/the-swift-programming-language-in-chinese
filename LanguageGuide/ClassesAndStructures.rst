@@ -479,9 +479,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:4: error: 'C' is not convertible to 'MirrorDisposition'
+   !! <REPL Input>:1:7: error: cannot invoke '==' with an argument list of type '(C, C)'
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! ^
+   !! ~~~^~~~~
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -491,9 +491,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:4: error: 'S' is not convertible to 'MirrorDisposition'
+   !! <REPL Input>:1:7: error: cannot invoke '==' with an argument list of type '(S, S)'
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! ^
+   !! ~~~^~~~~
 
 .. TODO: This needs clarifying with regards to function references.
 
