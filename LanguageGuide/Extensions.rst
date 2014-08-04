@@ -40,24 +40,27 @@ Extensions in Swift can:
             println("called overridden foo")
          }
       }
-      !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
-      !! override var x: Int {
-      !! ^
-      !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
-      !! var x = 0
-      !! ^
-      !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
-      !! override func foo() {
-      !! ~~~~~~~~      ^
-      !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
-      !! override func foo() {
-      !! ^
-      !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
-      !! func foo() {}
-      !! ^
-      !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
-      !! override var x: Int {
-      !! ~~~~~~~~     ^
+   !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
+   !! override var x: Int {
+   !! ^
+   !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
+   !! var x = 0
+   !! ^
+   !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
+   !! override func foo() {
+   !! ~~~~~~~~      ^
+   !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
+   !! override func foo() {
+   !! ^
+   !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
+   !! func foo() {}
+   !! ^
+   !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
+   !! override var x: Int {
+   !! ~~~~~~~~     ^
+   !! /tmp/swifttest.swift:6:17: error: extensions may not contain stored properties
+   !! override var x: Int {
+   !! ^
 
 .. QUESTION: What are the rules for overloading via extensions?
 
@@ -158,6 +161,15 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    Extensions can add new computed properties, but they cannot add stored properties,
    or add property observers to existing properties.
+
+.. assertion:: extensionsCannotAddStoredProperties
+   :compile: true
+
+   -> class C {}
+   -> extension C { var x = 0 }
+   !! <REPL Input>:1:19: error: extensions may not contain stored properties
+   !! extension C { var x = 0 }
+   !!                   ^
 
 .. TODO: change this example to something more advisable / less contentious.
 

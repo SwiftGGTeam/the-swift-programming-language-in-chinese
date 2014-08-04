@@ -10,7 +10,7 @@ Stored properties are provided only by classes and structures.
 .. assertion:: enumerationsCantProvideStoredProperties
 
    -> enum E { case A, B; var x = 0 }
-   !! <REPL Input>:1:21: error: 'var' declarations without getter/setter not allowed here
+   !! <REPL Input>:1:25: error: enums may not contain stored properties
    !! enum E { case A, B; var x = 0 }
    !! ^
 
