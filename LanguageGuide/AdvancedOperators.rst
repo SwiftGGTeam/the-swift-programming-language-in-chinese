@@ -838,13 +838,8 @@ Custom Operators
 
 You can declare and implement your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
-
-Custom operators can start with the characters ``/ = - + * % < > ! & | ^ . ~``,
-or Unicode math, symbol, arrow, dingbat, and line/box drawing characters.
-Their second and subsequent characters can be any of the above characters,
-and/or Unicode combining characters.
-(For more information on the full set of allowed operator characters,
-see :ref:`LexicalStructure_Operators`.)
+For a list of characters that can be used to define custom operators,
+see :ref:`LexicalStructure_Operators`.
 
 New operators are declared at a global level using the ``operator`` keyword,
 and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
