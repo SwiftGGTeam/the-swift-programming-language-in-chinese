@@ -4,7 +4,14 @@
 <!-- -->
 > 如果你觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持我们最大的动力。
 
-# The Swift Programming Language 中文版
+<!-- -->
+> 关于文档中翻译错误，逻辑错误以及疑难问题答疑，请关注["@老码团队"](http://weibo.com/u/5241713117
+)官方微博，会有技术人员统一收集答疑
+
+
+# The Swift Programming Language 中文版####
+
+###@*当前语法支持Beta1*
 
 ###这一次，让中国和世界同步
 
