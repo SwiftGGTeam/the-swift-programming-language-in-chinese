@@ -278,15 +278,6 @@ is declared as an array of strings. The elements of an array can be accessed
 through subscripting by specifying a valid index value in square brackets:
 ``someArray[0]`` refers to the element at index 0, ``"Alex"``.
 
-As the above example also shows, you can use similar syntax to create an array literal.
-Empty array literals are written using an empty
-pair of square brackets and can be used to create an empty array of a specified type.
-
-.. testcode::
-
-    -> var emptyArray: [Double] = []
-    << // emptyArray : [Double] = []
-
 You can create multidimensional arrays by nesting pairs of square brackets,
 where the name of the base type of the elements is contained in the innermost
 pair of square brackets.
@@ -358,16 +349,6 @@ with the key ``"Alex"``.
 The subscript returns an optional value of the dictionary's value type.
 If the specified key isn't contained in the dictionary,
 the subscript returns ``nil``.
-
-As the above example also shows, you can use similar syntax to create a dictionary literal.
-Empty dictionary literals are written using using a colon inside an empty
-pair of square brackets and can be used to create an empty dictionary of specified
-key and value types.
-
-.. testcode::
-
-    -> var emptyDictionary: [String: Double] = [:]
-    << // emptyDictionary : [String : Double] = [:]
 
 The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
 as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.

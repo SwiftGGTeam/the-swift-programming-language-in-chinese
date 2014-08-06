@@ -474,12 +474,17 @@ It has the following form:
    [<#value 1#>, <#value 2#>, <#...#>]
 
 The last expression in the array can be followed by an optional comma.
-An empty array literal is written
-as an empty pair of brackets (``[]``).
 The value of an array literal has type ``[T]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
+Empty array literals are written using an empty
+pair of square brackets and can be used to create an empty array of a specified type.
+
+.. testcode::
+
+    -> var emptyArray: [Double] = []
+    << // emptyArray : [Double] = []
 
 A :newTerm:`dictionary literal` is
 an unordered collection of key-value pairs.
@@ -490,15 +495,23 @@ It has the following form:
    [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 
 The last expression in the dictionary can be followed by an optional comma.
-An empty dictionary literal is written as
-a colon inside a pair of brackets (``[:]``)
-to distinguish it from an empty array literal.
 The value of a dictionary literal has type ``[KeyType: ValueType]``,
 where ``KeyType`` is the type of its key expressions
 and ``ValueType`` is the type of its value expressions.
 If there are expressions of multiple types,
 ``KeyType`` and ``ValueType`` are the closest common supertype
 for their respective values.
+An empty dictionary literal is written as
+a colon inside a pair of brackets (``[:]``)
+to distinguish it from an empty array literal.
+You can use an empty dictionary literal to create an empty dictionary literal
+of specified key and value types.
+
+.. testcode::
+
+    -> var emptyDictionary: [String: Double] = [:]
+    << // emptyDictionary : [String : Double] = [:]
+
 
 .. langref-grammar
 
