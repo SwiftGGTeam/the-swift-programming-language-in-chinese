@@ -817,6 +817,48 @@ of any ``SnakesAndLadders`` instance:
    </ A game of Snakes and Ladders with 25 squares:
    </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 
+.. _Protocols_ClassOnlyProtocols:
+
+Class-Only Protocols
+--------------------
+
+You can limit protocol adoption to class types (and not structures or enumerations)
+by adding the ``class`` keyword to a protocol's inheritance list.
+The ``class`` keyword must always appear first in a protocol's inheritance list,
+before any inherited protocols:
+
+.. testcode:: classOnlyProtocols
+
+   >> protocol SomeInheritedProtocol {}
+   -> protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+         // class-only protocol definition goes here
+      }
+
+In the example above, ``SomeClassOnlyProtocol`` can only be adopted by class types.
+It is a compile-time error to write a structure or enumeration definition
+that tries to adopt ``SomeClassOnlyProtocol``.
+
+.. note::
+
+   Use a class-only protocol when the behavior defined by that protocol's requirements
+   assumes or requires that a conforming type has
+   reference semantics rather than value semantics.
+   For more on reference and value semantics,
+   see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
+   and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
+
+.. assertion:: classMustAppearFirstInTheInheritanceList
+
+   -> protocol P1 {}
+   -> protocol P2: class, P1 {}
+   -> protocol P3: P1, class {}
+   !! <REPL Input>:1:18: error: 'class' must come first in the requirement list
+   !! protocol P3: P1, class {}
+   !! ~~^~~~~
+   !! class,
+
+.. TODO: a Cacheable protocol might make a good example here?
+
 .. _Protocols_ProtocolComposition:
 
 Protocol Composition
