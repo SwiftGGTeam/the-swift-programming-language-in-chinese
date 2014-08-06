@@ -320,6 +320,123 @@ to match the ``Togglable`` protocol's requirements:
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .On
 
+.. _Protocols_InitializerRequirements:
+
+Initializer Requirements
+------------------------
+
+Protocols can require specific initializers
+to be implemented by conforming types.
+These initializers are written as part of the protocol's definition
+in exactly the same way as for normal initializers,
+but without curly braces or an initializer body:
+
+.. testcode:: initializers
+
+   -> protocol SomeProtocol {
+         init(someParameter: Int)
+      }
+
+.. _Protocols_ClassImplementationsOfProtocolInitializerRequirements:
+
+Class Implementations of Protocol Initializer Requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A protocol initializer requirement can be implemented by a conforming class
+as either a designated initializer or a convenience initializer.
+
+.. assertion:: protocolInitializerRequirementsCanBeImplementedAsDesignatedOrConvenience
+
+   -> protocol P {
+         init(x: Int)
+      }
+   -> class C1: P {
+         required init(x: Int) {}
+      }
+   -> class C2: P {
+         init() {}
+         required convenience init(x: Int) {
+            self.init()
+         }
+      }
+
+Any class that implements a protocol initializer requirement
+must mark its initializer implementation with the ``required`` modifier:
+
+.. testcode:: initializers
+
+   -> class SomeClass: SomeProtocol {
+         required init(someParameter: Int) {
+            // initializer implementation goes here
+         }
+      }
+
+This reflects the fact that the class and all of its subclasses
+must provide an implementation of the initializer requirement
+in order to conform to the protocol.
+Because the conforming class has to mark the initializer implementation
+with the ``required`` modifier,
+all subclasses of the conforming class must also implement the initializer
+and mark their implementations with the ``required`` modifier,
+as described in :ref:`Initialization_RequiredInitializers`.
+
+.. assertion:: protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass
+
+   -> protocol P {
+         init(s: String)
+      }
+   -> class C1: P {
+         required init(s: String) {}
+      }
+   -> class C2: P {
+         init(s: String) {}
+      }
+   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a `required` initializer in non-final class 'C2'
+   !! init(s: String) {}
+   !! ^
+   !! required
+
+.. assertion:: protocolInitializerRequirementsRequireTheRequiredModifierOnSubclasses
+
+   -> protocol P {
+         init(s: String)
+      }
+   -> class C: P {
+         required init(s: String) {}
+      }
+   -> class D1: C {
+         required init(s: String) { super.init(s: s) }
+      }
+   -> class D2: C {
+         init(s: String) { super.init(s: s) }
+      }
+   !! <REPL Input>:2:6: error: 'required' modifier must be present on all overrides of a required initializer
+   !! init(s: String) { super.init(s: s) }
+   !! ^
+   !! required
+   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !! required init(s: String) {}
+   !! ^
+
+.. note::
+
+   Classes that are marked with the ``final`` modifier
+   do not need to mark protocol initializer implementations with the ``required`` modifier,
+   because final classes cannot be subclassed.
+   For more on the ``final`` modifier, see :ref:`Inheritance_PreventingOverrides`.
+
+.. assertion:: finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements
+
+   -> protocol P {
+         init(s: String)
+      }
+   -> final class C1: P {
+         required init(s: String) {}
+      }
+   -> final class C2: P {
+         init(s: String) {}
+      }
+
 .. _Protocols_ProtocolsAsTypes:
 
 Protocols as Types
