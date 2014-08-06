@@ -1,14 +1,14 @@
 Control Flow
 ============
 
-Swift provides all the familiar control flow constructs of C-like languages.
+Swift provides all the familiar control flow statements from C-like languages.
 These include ``for`` and ``while`` loops to perform a task multiple times;
 ``if`` and ``switch`` statements
 to execute different branches of code based on certain conditions;
 and statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
 
-In addition to the traditional ``for``-``condition``-``increment`` loop found in C,
+In addition to the traditional ``for`` loop found in C,
 Swift adds a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
@@ -31,12 +31,12 @@ and complex matching conditions can be expressed with a ``where`` clause for eac
 For Loops
 ---------
 
-A ``for`` loop performs a set of statements a certain number of times.
-Swift provides two kinds of ``for`` loop:
+Swift provides two kinds of loop
+that perform a set of statements a certain number of times:
 
-* ``for``-``in`` performs a set of statements for each item in
+* The ``for``-``in`` loop performs a set of statements for each item in
   a range, sequence, collection, or progression.
-* ``for``-``condition``-``increment`` performs a set of statements until
+* The ``for`` loop performs a set of statements until
   a specific condition is met, typically by incrementing a counter each time the loop ends.
 
 .. _ControlFlow_ForIn:
@@ -117,7 +117,7 @@ The underscore character ``_``
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
-Use the ``for``-``in`` loop with an array to iterate over its items:
+Use a ``for``-``in`` loop with an array to iterate over its items:
 
 .. testcode:: forLoops
 
@@ -190,8 +190,8 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
 
 .. _ControlFlow_ForConditionIncrement:
 
-For-Condition-Increment
-~~~~~~~~~~~~~~~~~~~~~~~
+For
+~~~
 
 In addition to ``for``-``in`` loops,
 Swift supports traditional C-style ``for`` loops with a condition and an incrementer:
@@ -1008,8 +1008,8 @@ without leaving the loop altogether.
 
 .. note::
 
-   In a ``for``-``condition``-``increment`` loop,
-   the incrementer is still evaluated after calling the ``continue`` statement.
+   In a ``for`` loop with a condition and incrementer,
+   the loop's incrementer is still evaluated after calling the ``continue`` statement.
    The loop itself continues to work as usual;
    only the code within the loop's body is skipped.
 
