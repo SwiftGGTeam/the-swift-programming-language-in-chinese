@@ -1027,7 +1027,7 @@ to create a cryptic puzzle phrase:
             case "a", "e", "i", "o", "u", " ":
                continue
             default:
-               puzzleOutput += character
+               puzzleOutput.append(character)
          }
       }
    -> println(puzzleOutput)

@@ -114,9 +114,9 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:1: error: 'String' is not convertible to '@lvalue UInt8'
+   !! <REPL Input>:1:16: error: cannot invoke '+=' with an argument list of type '(String, StringLiteralConvertible)'
    !! constantString += " and another Highlander"
-   !! ^
+   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
@@ -193,52 +193,46 @@ from a single-character string literal by providing a ``Character`` type annotat
 Concatenating Strings and Characters
 ------------------------------------
 
-``String`` and ``Character`` values can be added together (or *concatenated*)
+``String`` values can be added together (or *concatenated*)
 with the addition operator (``+``) to create a new ``String`` value:
 
-.. testcode:: emptyStrings
+.. testcode:: concatenation
 
    -> let string1 = "hello"
    << // string1 : String = "hello"
    -> let string2 = " there"
    << // string2 : String = " there"
-   -> let character1: Character = "!"
-   << // character1 : Character = !
-   -> let character2: Character = "?"
-   << // character2 : Character = ?
-   ---
-   -> let stringPlusCharacter = string1 + character1        // equals "hello!"
-   << // stringPlusCharacter : String = "hello!"
-   -> let stringPlusString = string1 + string2              // equals "hello there"
-   << // stringPlusString : String = "hello there"
-   -> let characterPlusString = character1 + string1        // equals "!hello"
-   << // characterPlusString : String = "!hello"
-   -> let characterPlusCharacter = character1 + character2  // equals "!?"
-   << // characterPlusCharacter : String = "!?"
+   -> var welcome = string1 + string2
+   << // welcome : String = "hello there"
+   /> welcome now equals \"\(welcome)\"
+   </ welcome now equals "hello there"
 
-You can also append a ``String`` or ``Character`` value to
-an existing ``String`` variable with the addition assignment operator (``+=``):
+You can also append a ``String`` value to an existing ``String`` variable
+with the addition assignment operator (``+=``):
 
-.. testcode:: emptyStrings
+.. testcode:: concatenation
 
    -> var instruction = "look over"
    << // instruction : String = "look over"
    -> instruction += string2
    /> instruction now equals \"\(instruction)\"
    </ instruction now equals "look over there"
-   ---
-   -> var welcome = "good morning"
-   << // welcome : String = "good morning"
-   -> welcome += character1
+
+You can append a ``Character`` value to a ``String`` variable
+with the ``String`` type's ``append`` method:
+
+.. testcode:: concatenation
+
+   -> let exclamationMark: Character = "!"
+   << // exclamationMark : Character = !
+   -> welcome.append(exclamationMark)
    /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "good morning!"
+   </ welcome now equals "hello there!"
 
 .. note::
 
    You can't append a ``String`` or ``Character`` to an existing ``Character`` variable,
    because a ``Character`` value must contain a single character only.
-
-.. TODO: how to construct from length and Character (cf Array)
 
 .. _StringsAndCharacters_StringInterpolation:
 
@@ -530,13 +524,9 @@ even if they are composed from different Unicode scalars behind the scenes.
 
 .. assertion:: stringComparisonUsesCanonicalEquivalence
 
-   -> let eAcute: Character = "\u{E9}"
-   << // eAcute : Character = é
-   -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = é
-   -> let cafe1 = "caf" + eAcute
+   -> let cafe1 = "caf\u{E9}"
    << // cafe1 : String = "café"
-   -> let cafe2 = "caf" + combinedEAcute
+   -> let cafe2 = "caf\u{65}\u{301}"
    << // cafe2 : String = "café"
    -> if cafe1 != cafe2 {
          println("not equivalent, which is not expected")

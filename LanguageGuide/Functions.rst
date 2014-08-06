@@ -645,8 +645,9 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
          if amountToPad < 1 {
             return string
          }
+         let padString = String(pad)
          for _ in 1...amountToPad {
-            string = pad + string
+            string = padString + string
          }
          return string
       }
@@ -675,9 +676,13 @@ This value is stored in a local constant called ``amountToPad``.
 If no padding is needed (that is, if ``amountToPad`` is less than ``1``),
 the function simply returns the input value of ``string`` without any padding.
 
-Otherwise, the function adds ``amountToPad`` copies of the ``pad`` character
-to the left of the existing string and returns the result.
-It uses the ``string`` variable parameter for all its string manipulation.
+Otherwise, the function creates a new temporary ``String`` constant called ``padString``,
+initialized with the ``pad`` character,
+and adds ``amountToPad`` copies of ``padString``
+to the left of the existing string.
+(A ``String`` value cannot be added on to a ``Character`` value,
+and so the ``padString`` constant is used to ensure that
+both sides of the ``+`` operator are ``String`` values.)
 
 .. note::
 
