@@ -36,14 +36,98 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
-..  ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
-    Update from Ted:
-    "Let’s document this after WWDC, as details continue to evolve.
-    Some functionality will be in place before the conference, but this is mainly for API authors.
-    Since no Swift APIs will be published until at least 2.0, this isn’t even needed right now.
-    It mainly serves as plumbing right now to import the availability information from Clang."
+``availability``
+    Apply this attribute to any declaration to indicate the declaration's lifecycle
+    relative to certain platforms and operating system versions.
 
-    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
+    The ``availability`` attribute always appears
+    with a list of two or more comma-separated attribute arguments.
+    These arguments begin with one of the following platform names:
+    ``iOS``, ``iOSApplicationExtension``, ``OSX``, or
+    ``OSXApplicationExtension``. You can also use an asterisk (``*``) to indicate the
+    availability of the declaration on all of the platform names listed above.
+    The remaining arguments can appear in any order
+    and specify additional information about the declaration's lifecycle,
+    including important milestones.
+
+    * The ``unavailable`` argument indicates that the declaration isn't available on the specified platform.
+    * The ``introduced`` argument indicates the first version of the specified platform in which the declaration was introduced.
+      It has the following form:
+
+      The ``introduced`` argument has the following form:
+
+      .. syntax-outline::
+
+          introduced=<#version number#>
+
+      The *version number* consists of a positive integer or floating-point decimal number.
+    * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
+      It has the following form:
+
+      .. syntax-outline::
+
+          deprecated=<#version number#>
+
+      The *version number* consists of a positive integer or floating-point decimal number.
+    * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
+      When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
+      The ``obsoleted`` argument has the following form:
+
+      .. syntax-outline::
+
+          obsoleted=<#version number#>
+
+      The *version number* consists of a positive integer or floating-point decimal number.
+    * The ``message`` argument is used to provide a textual message that's displayed by the compiler
+      when emitting a warning or error about the use of a deprecated or obsoleted declaration.
+      It has the following form:
+
+      .. syntax-outline::
+
+          message=<#message#>
+
+      The *message* consists of a string literal.
+    * The ``renamed`` argument is used to provide a textual message
+      that indicates the new name for a declaration that's been renamed.
+      The new name is displayed by the compiler when emitting an error about the use of a renamed declaration.
+      It has the following form:
+
+      .. syntax-outline::
+
+          renamed=<#new name#>
+
+      The *new name* consists of a string literal.
+
+      You can use the ``renamed`` argument in conjunction with the ``unavailable``
+      argument and a type alias declaration to indicate to clients of your code
+      that a declaration has been renamed. For example, this is useful when the name
+      of a declaration is changed between releases of a framework or library.
+
+      .. testcode:: renamed1
+         :compile: true
+
+         -> // First release
+         -> protocol MyProtocol {
+                // protocol definition
+            }
+
+      .. testcode:: renamed2
+         :compile: true
+
+         -> // Subsequent release renames MyProtocol
+         -> protocol MyRenamedProtocol {
+                // protocol definition
+            }
+         ---
+         -> @availability(*, unavailable, renamed="MyRenamedProtocol")
+            typealias MyProtocol = MyRenamedProtocol
+
+    You can apply multiple ``availability`` attributes on a single declaration
+    to specify the declaration's availability on different platforms.
+    The compiler uses an ``availability`` attribute only when the attribute specifies
+    a platform that matches the current target platform.
+
+..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
 .. NOTE: As of Beta 5, 'assignment' is removed from the language.
