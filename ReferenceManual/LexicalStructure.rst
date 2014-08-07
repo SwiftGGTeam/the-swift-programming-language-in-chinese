@@ -298,7 +298,7 @@ and can't be used as custom operators:
 ``(``, ``)``, ``{``, ``}``, ``[``, ``]``,
 ``.``, ``,``, ``:``, ``;``, ``=``, ``@``, ``#``,
 ``&`` (as a prefix operator), ``->``, :literal:`\``,
-``?`` (as an infix and postfix operator), and ``!`` (as a postfix operator).
+``?``, and ``!`` (as a postfix operator).
 
 .. _LexicalStructure_Literals:
 
