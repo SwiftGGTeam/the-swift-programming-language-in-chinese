@@ -435,6 +435,29 @@ see :ref:`Initialization_RequiredInitializers`.
          init(s: String) {}
       }
 
+If a subclass overrides a designated initializer from a superclass,
+and also implements a matching initializer requirement from a protocol,
+mark the initializer implementation with both the ``required`` and ``override`` modifiers:
+
+.. testcode:: requiredOverrideInitializers
+
+   -> protocol SomeProtocol {
+         init()
+      }
+   ---
+   -> class SomeSuperClass {
+         init() {
+            // initializer implementation goes here
+         }
+      }
+   ---
+   -> class SomeSubClass: SomeSuperClass, SomeProtocol {
+         // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+         required override init() {
+            // initializer implementation goes here
+         }
+      }
+
 .. _Protocols_ProtocolsAsTypes:
 
 Protocols as Types
