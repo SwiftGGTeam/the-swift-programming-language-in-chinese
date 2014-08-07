@@ -327,7 +327,7 @@ Initializer Requirements
 
 Protocols can require specific initializers
 to be implemented by conforming types.
-These initializers are written as part of the protocol's definition
+You write these initializers as part of the protocol's definition
 in exactly the same way as for normal initializers,
 but without curly braces or an initializer body:
 
@@ -342,8 +342,18 @@ but without curly braces or an initializer body:
 Class Implementations of Protocol Initializer Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A protocol initializer requirement can be implemented by a conforming class
+You can implement a protocol initializer requirement on a conforming class
 as either a designated initializer or a convenience initializer.
+In both cases,
+you must mark the initializer implementation with the ``required`` modifier:
+
+.. testcode:: initializers
+
+   -> class SomeClass: SomeProtocol {
+         required init(someParameter: Int) {
+            // initializer implementation goes here
+         }
+      }
 
 .. assertion:: protocolInitializerRequirementsCanBeImplementedAsDesignatedOrConvenience
 
@@ -360,25 +370,13 @@ as either a designated initializer or a convenience initializer.
          }
       }
 
-Any class that implements a protocol initializer requirement
-must mark its initializer implementation with the ``required`` modifier:
+The use of the ``required`` modifier ensures that
+you provide an explicit or inherited implementation of the initializer requirement
+on all subclasses of the conforming class,
+such that they also conform to the protocol.
 
-.. testcode:: initializers
-
-   -> class SomeClass: SomeProtocol {
-         required init(someParameter: Int) {
-            // initializer implementation goes here
-         }
-      }
-
-This reflects the fact that the class and all of its subclasses
-must provide an implementation of the initializer requirement
-in order to conform to the protocol.
-Because the conforming class has to mark the initializer implementation
-with the ``required`` modifier,
-all subclasses of the conforming class must also implement the initializer
-and mark their implementations with the ``required`` modifier,
-as described in :ref:`Initialization_RequiredInitializers`.
+For more information on required initializers,
+see :ref:`Initialization_RequiredInitializers`.
 
 .. assertion:: protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass
 
@@ -420,8 +418,8 @@ as described in :ref:`Initialization_RequiredInitializers`.
 
 .. note::
 
-   Classes that are marked with the ``final`` modifier
-   do not need to mark protocol initializer implementations with the ``required`` modifier,
+   You do not need to mark protocol initializer implementations with the ``required`` modifier
+   on classes that are marked with the ``final`` modifier,
    because final classes cannot be subclassed.
    For more on the ``final`` modifier, see :ref:`Inheritance_PreventingOverrides`.
 
