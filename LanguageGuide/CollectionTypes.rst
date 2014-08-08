@@ -641,7 +641,7 @@ as part of the iteration:
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
-You can also retrieve an iteratable collection of a dictionary's keys or values
+You can also retrieve an iterable collection of a dictionary's keys or values
 by accessing its ``keys`` and ``values`` properties:
 
 .. testcode:: dictionariesInferred
