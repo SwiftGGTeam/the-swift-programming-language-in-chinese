@@ -144,6 +144,28 @@ Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
 
+.. REFERENCE
+   Shopping list is a reference to the book "Paper Towns" by John Green
+   and the song "The List" by Hank Green.
+   See <https://www.youtube.com/watch?v=4JUvTTm0whA>
+
+.. REFERENCE
+   Occupations is a reference to Firefly,
+   specifically to Mal's joke about Jayne's job on the ship.
+    
+
+   Can't find the specific episode,
+   but it shows up in several lists of Firefly "best of" quotes:
+
+   Mal: Jayne, you will keep a civil tongue in that mouth, or I will sew it shut. Is there an understanding between us?
+   Jayne: You don't pay me to talk pretty. [...]
+   Mal: Walk away from this table. Right now.
+   [Jayne loads his plate with food and leaves]
+   Simon: What *do* you pay him for?
+   Mal: What?
+   Simon: I was just wondering what his job is - on the ship.
+   Mal: Public relations.
+
 .. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
@@ -230,6 +252,11 @@ or contains ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
 
+.. REFERENCE
+   John Appleseed is a stock Apple fake name,
+   going back at least to the contacts database
+   that ships with the SDK in the simulator.
+
 .. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
@@ -265,6 +292,10 @@ Switches support any kind of data
 and a wide variety of comparison operations ---
 they aren't limited to integers
 and tests for equality.
+
+.. REFERENCE
+   The vegetables and foods made from vegetables
+   were just a convenient choice for a switch statement.
 
 .. testcode:: guided-tour
 
@@ -305,6 +336,12 @@ for each key-value pair.
 Dictionaries are an unordered collection,
 so their keys and values are iterated over
 in an arbitrary order.
+
+.. REFERENCE
+   Prime, square, and fibonacci numbers
+   are just convenient sets of numbers
+   that many developers are already familiar with
+   that we can use for some simple math.
 
 .. testcode:: guided-tour
 
@@ -387,6 +424,12 @@ Call a function by following its name
 with a list of arguments in parentheses.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
+
+.. REFERENCE
+   Bob is used as just a generic name,
+   but also a callout to Alex's dad.
+   Tuesday is used on the assumption that lots of folks would be reading
+   on the Tuesday after the WWDC keynote.
 
 .. testcode:: guided-tour
 
@@ -575,6 +618,13 @@ as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
 
+.. Shapes are used as the example object
+   because they're familiar and they have a sense of properties
+   and a sense of inheritence/subcategorization.
+   They're not a perfect fit --
+   they might be better off modeled as structures --
+   but that wouldn't let them inherit behavior.
+
 .. testcode:: guided-tour
 
     -> class Shape {
@@ -745,6 +795,11 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
+.. This triangle + square example could use improvement.
+   The goal is to show why you would want to use willSet,
+   but it was constrained by the fact that
+   we're working in the context of geometric shapes.
+
 .. testcode:: guided-tour
 
    -> class TriangleAndSquare {
@@ -817,6 +872,8 @@ the value of the whole expression is an optional value.
 
 Enumerations and Structures
 ---------------------------
+
+.. XXX Ended here XXX
 
 Use ``enum`` to create an enumeration.
 Like classes and all other named types,
