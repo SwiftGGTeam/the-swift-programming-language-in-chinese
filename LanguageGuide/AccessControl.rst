@@ -695,7 +695,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
          public init() {}
       }
 
-.. sourcefile:: reducedSetterScopePublic_Module1
+.. sourcefile:: reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed
 
    -> public struct TrackedString {
          public private(set) var numberOfEdits = 0
@@ -710,20 +710,25 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> var stringToEdit_Module1A = TrackedString()
    -> let afterEdits = stringToEdit_Module1A.numberOfEdits++
 
-.. sourcefile:: reducedSetterScopePublic_Module1
+.. sourcefile:: reducedSetterScopePublic_Module1_Allowed
 
-   // check that we can retrieve its value with the public getter from a different file in the same module
+   // check that we can retrieve its value with the public getter from another file in the same module
    -> var stringToEdit_Module1B = TrackedString()
-   // check that we can't change its value from another file in the same module
-   -> let afterEdits = stringToEdit_Module1B.numberOfEdits++
+   -> let retrievedValue = stringToEdit_Module1B.numberOfEdits
+
+.. sourcefile:: reducedSetterScopePublic_Module1_NotAllowed
+
+   // check that we can't set its value from another file in the same module
+   -> var stringToEdit_Module1C = TrackedString()
+   -> let afterEdits = stringToEdit_Module1C.numberOfEdits++
    !! /tmp/sourcefile_1.swift:2:53: error: cannot invoke '++' with an argument of type 'Int'
-   !! let afterEdits = stringToEdit_Module1B.numberOfEdits++
+   !! let afterEdits = stringToEdit_Module1C.numberOfEdits++
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
    // check that we can retrieve its value with the public getter from a different module
-   -> import reducedSetterScopePublic_Module1
+   -> import reducedSetterScopePublic_Module1_Allowed
    -> var stringToEdit_Module2 = TrackedString()
    // check that we can't change its value from another module
    -> let afterEdits = stringToEdit_Module2.numberOfEdits++
