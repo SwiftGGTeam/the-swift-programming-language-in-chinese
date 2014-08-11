@@ -39,4 +39,6 @@
    * [模式](chapter3/07_Patterns.md)
    * [泛型参数](chapter3/08_Generic_Parameters_and_Arguments.md)
    * [语法总结](chapter3/09_Summary_of_the_Grammar.md)
+* [苹果官方Blog官方翻译](chapter4/chapter4.md)
+   * [Access Control 权限控制的黑与白](chapter4/01_Access_Control.md)
 
