@@ -41,4 +41,4 @@
    * [语法总结](chapter3/09_Summary_of_the_Grammar.md)
 * [苹果官方Blog官方翻译](chapter4/chapter4.md)
    * [Access Control 权限控制的黑与白](chapter4/01_Access_Control.md)
-
+   * [造个类型不是梦-白话Swift类型创建](chapter4/02_Type_Custom.md)
