@@ -32,45 +32,46 @@
 	<td scope="row">2014-08-04</td>
     <td><ul class="list-bullet">
 		<li><p>
-  			<a href="TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_478" data-id="//apple_ref/doc/uid/TP40014097-CH5-XID_478">Optionals</a> no longer implicitly evaluate to <code>true</code> when they have a value and <code>false</code> when they do not, to avoid confusion when working with optional <code>Bool</code> values. Instead, make an explicit check against <code>nil</code> with the <code>==</code> or <code>!=</code> operators to find out if an optional contains a value.
+  			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_478">可选类型（Optionals）</a> 若有值时，不再隐式的转换为 <code>true</code>，同样，若无值时，也不再隐式的转换为 <code>false</code>, 这是为了避免在判别 optional <code>Bool</code> 的值时产生困惑。 替代的方案是，用<code>==</code> 或 <code>!=</code> 运算符显式地去判断Optinal是否是 <code>nil</code>，以确认其是否包含值。
 		</li>
 		<li><p>
-  			Swift now has a <a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_124" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_124">Nil Coalescing Operator</a> (<code>a ?? b</code>), which unwraps an optional’s value if it exists, or returns a default value if the optional is <code>nil</code>.
+  			Swift新增了一个 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_124" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_124">Nil合并运算符（Nil Coalescing Operator）</a> (<code>a ?? b</code>), 该表达式中，如果Optional <code>a</code>的值存在，则取得它并返回，若Optional <code>a</code>为<code>nil</code>，则返回默认值 <code>b</code>
 		</li>
 		<li><p>
-  			Updated and expanded the <a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_434">Comparing Strings</a> section to reflect and demonstrate that string and character comparison and prefix / suffix comparison are now based on Unicode canonical equivalence of extended grapheme clusters.
+			更新和扩展 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434">字符串的比较（Comparing Strings）</a> 章节，用以反映和展示'字符串和字符的比较'，以及'前缀（prefix）/后缀(postfix)比较'都开始基于扩展字符集(extended grapheme clusters)规范的等价比较.
 		</li>
 		<li><p>
-  			You can now try to set a property’s value, assign to a subscript, or call a mutating method or operator through <a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_356" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_356">Optional Chaining</a>. The information about <a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_360" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_360">Accessing Properties Through Optional Chaining</a> has been updated accordingly, and the examples of checking for method call success in <a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_361" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_361">Calling Methods Through Optional Chaining</a> have been expanded to show how to check for property setting success.
+			现在，你可以通过 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_356">可选链（Optional Chaining）</a>来：给属性设值，将其赋给一个下标脚注（subscript）; 或调用一个变异（mutating）方法或运算符。对此，章节——<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364">通过可选链访问属性（Accessing Properties Through Optional Chaining）</a>的内容已经被相应的更新。而章节——<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_361">通过可选链调用方法（Calling Methods Through Optional Chaining</a>中，关于检查方法调用是否成功的例子，已被扩展为展示如何检查一个属性是否被设值成功。 
+  	
 		</li>
 		<li><p>
-  			Added a new section about <a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_364">Accessing Subscripts of Optional Type</a> through optional chaining.
+  			在章节可选链中，增加一个新的小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364">访问可选类型的下标脚注（Accessing Subscripts of Optional Type）</a>
 		</li>
 		<li><p>
-  			Updated the <a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_176" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_176">Accessing and Modifying an Array</a> section to note that you can no longer append a single item to an array with the <code>+=</code> operator. Instead, use the <code>append</code> method, or append a single-item array with the <code>+=</code> operator.</li>
+  			更新章节 <a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_176" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_176">访问和修改数组(Accessing and Modifying an Array)</a> 以标示：从该版本起，不能再通过<code>+=</code> 运算符给一个数组添加一个新的项。. 对应的替代方案是, 使<code>append</code> 方法, 或者通过<code>+=</code>运算符来添加一个<b>只有一个项的数组</b>（single-item Array）.</li>
 		<li><p>
-  			Added a note that the start value <code>a</code> for the <a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_126" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_126">Range Operators</a> <code>a...b</code> and <code>a..&lt;b</code> must not be greater than the end value <code>b</code>.
+  			添加了一个提示：在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_126">范围运算符（Range Operators）</a>中，比如， <code>a...b</code> 和 <code>a..&lt;b</code> ，起始值<code>a</code>不能大于结束值<code>b</code>.
 		</li>
 		<li><p>
-  			Rewrote the <a href="Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293" data-id="//apple_ref/doc/uid/TP40014097-CH17-XID_293">Inheritance</a> chapter to remove its introductory coverage of initializer overrides. This chapter now focuses more on the addition of new functionality in a subclass, and the modification of existing functionality with overrides. The chapter’s example of <a href="Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_301" data-id="//apple_ref/doc/uid/TP40014097-CH17-XID_301">Overriding Property Getters and Setters</a> has been rewritten to show how to override a <code>description</code> property. (The examples of modifying an inherited property’s default value in a subclass initializer have been moved to the <a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_306" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_306">Initialization</a> chapter.)
+  			重写了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293">继承（Inheritance）</a> 这一章：删除了这一章中关于构造器覆盖的介绍性报道；转而将更多的注意力放到新增的部分——子类的新功能，以及如何通过覆盖修改已有的功能。另外，小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_301">重写对象）属性的的Getters和Setters（Overriding Property Getters and Setters）</a> 中的例子已经被替换为展示如何重写一个 <code>description</code> 属性. (而关于如何在子类的构造器中修改继承属性的默认值的例子，已经被移到继承 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293">继承（Initialization）</a> 这一章.)
 		</li>
 		<li><p>
-  			Updated the <a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_331" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_331">Initializer Inheritance and Overriding</a> section to note that overrides of a designated initializer must now be marked with the <code>override</code> modifier.
+  			更新了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_331">构造器的集成与覆盖（Initializer Inheritance and Overriding）</a> 小节以标示： 重写一个特定的构造器必须使用 <code>override</code> 修改器.
 		</li>
 		<li><p>
-  			Updated the <a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_339">Required Initializers</a> section to note that the <code>required</code> modifier is now written before every subclass implementation of a required initializer, and that the requirements for required initializers can now be satisfied by automatically inherited initializers.
+  			更新 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339"> Required构造器（Required Initializers） 小节以标示：<code>required</code> 修改器现在需要出现在所有子类的required构造器的声明中, 而required构造器的实现，现在可以仅使用自动集成的部分。
 		</li>
 		<li><p>
-  			Infix <a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_80" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_80">Operator Functions</a> no longer require the <code>@infix</code> attribute.
+  			中置（Infix）的 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_80">运算符函数（Operator Functions）</a> 不再需要<code>@infix</code> 属性.
 		</li>
 		<li><p>
-  			The <code>@prefix</code> and <code>@postfix</code> attributes for <a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">Prefix and Postfix Operators</a> have been replaced by <code>prefix</code> and <code>postfix</code> declaration modifiers.
+  			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html#//apple_ref/doc/uid/TP40014097-CH40-XID_1631">前置和后置运算符(Prefix and Postfix Operators)</a>的<code>@prefix</code> 和 <code>@postfix</code> 属性，已变更为 <code>prefix</code> 和 <code>postfix</code> 声明修改器（declaration modifiers）.
 		</li>
 			<li><p>
-  			Added a note about the order in which <a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">Prefix and Postfix Operators</a> are applied when both a prefix and a postfix operator are applied to the same operand.
+  			增加一条注解：当Prefix和postfix运算符被作用于同一个操作数时，关于<a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">前置和后置运算符(Prefix and Postfix Operators)</a>的顺序(postfix运算符会先被执行)
 		</li>
 		<li><p>
-  			Operator functions for <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_82" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_82">Compound Assignment Operators</a> no longer use the <code>@assignment</code> attribute when defining the function.
+  			在运算符函数（Operator functions）中， <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_82" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_82">组合赋值运算符（Compound Assignment Operators）</a> 不再使用 <code>@assignment</code> 属性来定义函数.
 		</li>
 		<li><p>
 			在这个版本中，在定义<a href="https://apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_85">自定义操作符（Custom Operators）</a> 时，<b>修改器（Modifiers）的出现顺序发生变化</b>。比如， 现在，你该编写 <code>prefix operator</code>， 而不是 <code>operator prefix</code>.
