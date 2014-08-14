@@ -86,18 +86,13 @@ shoppingList.append("Flour")
 // shoppingList 现在有3个数据项，有人在摊煎饼
 ```
 
-除此之外，使用加法赋值运算符（`+=`）也可以直接在数组后面添加数据项：
+除此之外，使用加法赋值运算符（`+=`）也可以直接在数组后面添加一个或多个拥有相同类型的数据项：
 
 ```swift
-shoppingList += "Baking Powder"
+shoppingList += ["Baking Powder"]
 // shoppingList 现在有四项了
-```
-
-我们也可以使用加法赋值运算符（`+=`）直接添加拥有相同类型数据的数组。
-
-```swift
-shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
-// shoppingList 现在有7项了
+shoppingList += ["Chocolate Spread","Cheese","Butter"]
+// shoppingList 现在有七项了
 ```
 
 可以直接使用下标语法来获取数组中的数据项，把我们需要的数据项的索引值放在直接放在数组名称的方括号中：
