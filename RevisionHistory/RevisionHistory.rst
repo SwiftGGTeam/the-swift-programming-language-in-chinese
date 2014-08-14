@@ -23,12 +23,6 @@ Date        Notes
               Use the ``String`` type's ``append`` method
               to append a single ``Character`` value onto the end of a string.
 
-            * Custom operators can now contain the ``?`` character.
-              Updated the :ref:`LexicalStructure_Operators` reference to describe
-              the revised rules.
-              Removed a duplicate description of the valid set of operator characters
-              from :ref:`AdvancedOperators_CustomOperators`.
-
             * Added information about the ``availability`` attribute to
               the :ref:`Attributes_DeclarationAttributes` section.
 ----------  --------------------------------------------------------------------------
