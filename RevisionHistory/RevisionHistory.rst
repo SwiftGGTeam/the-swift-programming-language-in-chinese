@@ -6,6 +6,32 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-08-18  * Added a new section about
+              :ref:`Protocols_InitializerRequirements` in protocols.
+
+            * Added a new section about :ref:`Protocols_ClassOnlyProtocols`.
+
+            * :ref:`TheBasics_Assertions` can now use string interpolation.
+              Removed a note to the contrary.
+
+            * Updated the
+              :ref:`StringsAndCharacters_ConcatenatingStringsAndCharacters` section
+              to reflect the fact that ``String`` and ``Character`` values
+              can no longer be combined with the addition operator (``+``)
+              or addition assignment operator (``+=``).
+              These operators are now used only with ``String`` values.
+              Use the ``String`` type's ``append`` method
+              to append a single ``Character`` value onto the end of a string.
+
+            * Custom operators can now contain the ``?`` character.
+              Updated the :ref:`LexicalStructure_Operators` reference to describe
+              the revised rules.
+              Removed a duplicate description of the valid set of operator characters
+              from :ref:`AdvancedOperators_CustomOperators`.
+
+            * Added information about the ``availability`` attribute to
+              the :ref:`Attributes_DeclarationAttributes` section.
+----------  --------------------------------------------------------------------------
 2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly evaluate to
               ``true`` when they have a value and ``false`` when they do not,
               to avoid confusion when working with optional ``Bool`` values.
