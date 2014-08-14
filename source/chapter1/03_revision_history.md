@@ -31,58 +31,59 @@
 	<tr>
 	<td scope="row">2014-08-04</td>
     <td><ul class="list-bullet">
-		<li class="item"><p class="para">
-  			<span class="x-name"><a href="TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_478" data-id="//apple_ref/doc/uid/TP40014097-CH5-XID_478">Optionals</a></span> no longer implicitly evaluate to <code class="code-voice">true</code> when they have a value and <code class="code-voice">false</code> when they do not, to avoid confusion when working with optional <code class="code-voice">Bool</code> values. Instead, make an explicit check against <code class="code-voice">nil</code> with the <code class="code-voice">==</code> or <code class="code-voice">!=</code> operators to find out if an optional contains a value.</p>
+		<li><p>
+  			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_478">可选类型（Optionals）</a> 若有值时，不再隐式的转换为 <code>true</code>，同样，若无值时，也不再隐式的转换为 <code>false</code>, 这是为了避免在判别 optional <code>Bool</code> 的值时产生困惑。 替代的方案是，用<code>==</code> 或 <code>!=</code> 运算符显式地去判断Optinal是否是 <code>nil</code>，以确认其是否包含值。
 		</li>
-		<li class="item"><p class="para">
-  			Swift now has a <span class="x-name"><a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_124" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_124">Nil Coalescing Operator</a></span> (<code class="code-voice">a ?? b</code>), which unwraps an optional’s value if it exists, or returns a default value if the optional is <code class="code-voice">nil</code>.</p>
+		<li><p>
+  			Swift新增了一个 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_124" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_124">Nil合并运算符（Nil Coalescing Operator）</a> (<code>a ?? b</code>), 该表达式中，如果Optional <code>a</code>的值存在，则取得它并返回，若Optional <code>a</code>为<code>nil</code>，则返回默认值 <code>b</code>
 		</li>
-		<li class="item"><p class="para">
-  			Updated and expanded the <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_434">Comparing Strings</a></span> section to reflect and demonstrate that string and character comparison and prefix / suffix comparison are now based on Unicode canonical equivalence of extended grapheme clusters.</p>
+		<li><p>
+			更新和扩展 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434">字符串的比较（Comparing Strings）</a> 章节，用以反映和展示'字符串和字符的比较'，以及'前缀（prefix）/后缀(postfix)比较'都开始基于扩展字符集(extended grapheme clusters)规范的等价比较.
 		</li>
-		<li class="item"><p class="para">
-  			You can now try to set a property’s value, assign to a subscript, or call a mutating method or operator through <span class="x-name"><a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_356" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_356">Optional Chaining</a></span>. The information about <span class="x-name"><a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_360" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_360">Accessing Properties Through Optional Chaining</a></span> has been updated accordingly, and the examples of checking for method call success in <span class="x-name"><a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_361" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_361">Calling Methods Through Optional Chaining</a></span> have been expanded to show how to check for property setting success.</p>
+		<li><p>
+			现在，你可以通过 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_356">可选链（Optional Chaining）</a>来：给属性设值，将其赋给一个下标脚注（subscript）; 或调用一个变异（mutating）方法或运算符。对此，章节——<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364">通过可选链访问属性（Accessing Properties Through Optional Chaining）</a>的内容已经被相应的更新。而章节——<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_361">通过可选链调用方法（Calling Methods Through Optional Chaining</a>中，关于检查方法调用是否成功的例子，已被扩展为展示如何检查一个属性是否被设值成功。 
+  	
 		</li>
-		<li class="item"><p class="para">
-  			Added a new section about <span class="x-name"><a href="OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364" data-id="//apple_ref/doc/uid/TP40014097-CH21-XID_364">Accessing Subscripts of Optional Type</a></span> through optional chaining.</p>
+		<li><p>
+  			在章节可选链中，增加一个新的小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_364">访问可选类型的下标脚注（Accessing Subscripts of Optional Type）</a>
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_176" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_176">Accessing and Modifying an Array</a></span> section to note that you can no longer append a single item to an array with the <code class="code-voice">+=</code> operator. Instead, use the <code class="code-voice">append</code> method, or append a single-item array with the <code class="code-voice">+=</code> operator.</p></li>
-		<li class="item"><p class="para">
-  			Added a note that the start value <code class="code-voice">a</code> for the <span class="x-name"><a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_126" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_126">Range Operators</a></span> <code class="code-voice">a...b</code> and <code class="code-voice">a..&lt;b</code> must not be greater than the end value <code class="code-voice">b</code>.</p>
+		<li><p>
+  			更新章节 <a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_176" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_176">访问和修改数组(Accessing and Modifying an Array)</a> 以标示：从该版本起，不能再通过<code>+=</code> 运算符给一个数组添加一个新的项。. 对应的替代方案是, 使<code>append</code> 方法, 或者通过<code>+=</code>运算符来添加一个<b>只有一个项的数组</b>（single-item Array）.</li>
+		<li><p>
+  			添加了一个提示：在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_126">范围运算符（Range Operators）</a>中，比如， <code>a...b</code> 和 <code>a..&lt;b</code> ，起始值<code>a</code>不能大于结束值<code>b</code>.
 		</li>
-		<li class="item"><p class="para">
-  			Rewrote the <span class="x-name"><a href="Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293" data-id="//apple_ref/doc/uid/TP40014097-CH17-XID_293">Inheritance</a></span> chapter to remove its introductory coverage of initializer overrides. This chapter now focuses more on the addition of new functionality in a subclass, and the modification of existing functionality with overrides. The chapter’s example of <span class="x-name"><a href="Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_301" data-id="//apple_ref/doc/uid/TP40014097-CH17-XID_301">Overriding Property Getters and Setters</a></span> has been rewritten to show how to override a <code class="code-voice">description</code> property. (The examples of modifying an inherited property’s default value in a subclass initializer have been moved to the <span class="x-name"><a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_306" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_306">Initialization</a></span> chapter.)</p>
+		<li><p>
+  			重写了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293">继承（Inheritance）</a> 这一章：删除了这一章中关于构造器覆盖的介绍性报道；转而将更多的注意力放到新增的部分——子类的新功能，以及如何通过覆盖修改已有的功能。另外，小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_301">重写对象）属性的的Getters和Setters（Overriding Property Getters and Setters）</a> 中的例子已经被替换为展示如何重写一个 <code>description</code> 属性. (而关于如何在子类的构造器中修改继承属性的默认值的例子，已经被移到继承 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Inheritance.html#//apple_ref/doc/uid/TP40014097-CH17-XID_293">继承（Initialization）</a> 这一章.)
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_331" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_331">Initializer Inheritance and Overriding</a></span> section to note that overrides of a designated initializer must now be marked with the <code class="code-voice">override</code> modifier.</p>
+		<li><p>
+  			更新了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_331">构造器的集成与覆盖（Initializer Inheritance and Overriding）</a> 小节以标示： 重写一个特定的构造器必须使用 <code>override</code> 修改器.
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_339">Required Initializers</a></span> section to note that the <code class="code-voice">required</code> modifier is now written before every subclass implementation of a required initializer, and that the requirements for required initializers can now be satisfied by automatically inherited initializers.</p>
+		<li><p>
+  			更新 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339"> Required构造器（Required Initializers） 小节以标示：<code>required</code> 修改器现在需要出现在所有子类的required构造器的声明中, 而required构造器的实现，现在可以仅使用自动集成的部分。
 		</li>
-		<li class="item"><p class="para">
-  			Infix <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_80" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_80">Operator Functions</a></span> no longer require the <code class="code-voice">@infix</code> attribute.</p>
+		<li><p>
+  			中置（Infix）的 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_80">运算符函数（Operator Functions）</a> 不再需要<code>@infix</code> 属性.
 		</li>
-		<li class="item"><p class="para">
-  			The <code class="code-voice">@prefix</code> and <code class="code-voice">@postfix</code> attributes for <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">Prefix and Postfix Operators</a></span> have been replaced by <code class="code-voice">prefix</code> and <code class="code-voice">postfix</code> declaration modifiers.</p>
+		<li><p>
+  			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html#//apple_ref/doc/uid/TP40014097-CH40-XID_1631">前置和后置运算符(Prefix and Postfix Operators)</a>的<code>@prefix</code> 和 <code>@postfix</code> 属性，已变更为 <code>prefix</code> 和 <code>postfix</code> 声明修改器（declaration modifiers）.
 		</li>
-			<li class="item"><p class="para">
-  			Added a note about the order in which <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">Prefix and Postfix Operators</a></span> are applied when both a prefix and a postfix operator are applied to the same operand.</p>
+			<li><p>
+  			增加一条注解：当Prefix和postfix运算符被作用于同一个操作数时，关于<a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_81" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_81">前置和后置运算符(Prefix and Postfix Operators)</a>的顺序(postfix运算符会先被执行)
 		</li>
-		<li class="item"><p class="para">
-  			Operator functions for <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_82" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_82">Compound Assignment Operators</a></span> no longer use the <code class="code-voice">@assignment</code> attribute when defining the function.</p>
+		<li><p>
+  			在运算符函数（Operator functions）中， <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_82" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_82">组合赋值运算符（Compound Assignment Operators）</a> 不再使用 <code>@assignment</code> 属性来定义函数.
 		</li>
-		<li class="item"><p class="para">
-  			The order in which modifiers are specified when defining <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_85" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_85">Custom Operators</a></span> has changed. You now write <code class="code-voice">prefix operator</code> rather than <code class="code-voice">operator prefix</code>, for example.</p>
+		<li><p>
+			在这个版本中，在定义<a href="https://apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_85">自定义操作符（Custom Operators）</a> 时，<b>修改器（Modifiers）的出现顺序发生变化</b>。比如， 现在，你该编写 <code>prefix operator</code>， 而不是 <code>operator prefix</code>.
 		</li>
-		<li class="item"><p class="para">
-  			Added information about the <code class="code-voice">dynamic</code> declaration modifier in <span class="x-name"><a href="Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_705" data-id="//apple_ref/doc/uid/TP40014097-CH34-XID_705">Declaration Modifiers</a></span>.</p>
+		<li><p>
+  			增加信息：关于<code>dynamic</code> 声明修改器（declaration modifier），于章节 <a href="Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_705" data-id="//apple_ref/doc/uid/TP40014097-CH34-XID_705">声明修改器（Declaration Modifiers）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Added information about how type inference works with <span class="x-name"><a href="LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_886" data-id="//apple_ref/doc/uid/TP40014097-CH30-XID_886">Literals</a></span>.</p>
+		<li><p>
+  			增加信息：关于类型推导（type inference）如何作用于字面量<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_886>Literals</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Added more information about <span class="x-name"><a href="Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_597" data-id="//apple_ref/doc/uid/TP40014097-CH34-XID_597">Curried Functions</a></span>.</p>
+		<li><p>
+  			为章节<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_597">Curried Functions</a>添加了更多的信息.
 		</li>
 		</ul>
 	</td>
@@ -102,47 +103,47 @@
 	<tr>
 	<td scope="row">2014-07-21</td>
     <td><ul class="list-bullet">
-		<li class="item"><p class="para">
-  			Added a new chapter about <span class="x-name"><a href="AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-XID_29" data-id="//apple_ref/doc/uid/TP40014097-CH41-XID_29">Access Control</a></span>.</p>
+		<li><p>
+  			加入新的章节  <a href=https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-XID_29">权限控制（Access Control）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_413" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_413">Strings and Characters</a></span> chapter to reflect the fact that Swift’s <code class="code-voice">Character</code> type now represents a single Unicode extended grapheme cluster. Includes a new section on <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_431" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_431">Extended Grapheme Clusters</a></span> and more information about <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_428" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_428">Unicode Scalars</a></span> and <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_434">Comparing Strings</a></span>.</p>
+		<li><p>
+  			更新了章节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_413">字符串和字符（Strings and Characters）</a> 用以表明，在Swift中，<code>Character</code> 类型现在代表的是扩展字符集(extended grapheme cluster)中的一个Unicode，为此，新增了小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_431">Extended Grapheme Clusters</a> 。同时，为小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_428">Unicode标量（Unicode Scalars）</a> 和 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_434">字符串比较（Comparing Strings）</a>增加了更多内容.
 		</li>
-		<li class="item"><p class="para">
-			Updated the <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_415" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_415">String Literals</a></span> section to note that Unicode scalars inside string literals are now written as <code class="code-voice">\u{n}</code>, where <code class="code-voice">n</code> is between one and eight hexadecimal digits.</p>
+		<li><p>
+			更新章节<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_856">字符串字面量（String Literals）</a>：在一个字符串中，Unicode标量（Unicode scalars） 以 <code>\u{n}</code>的形式来表示, <code>n</code> 是一个最大可以有8位的16进制数（hexadecimal digits）
 		</li>
-		<li class="item"><p class="para">
-  			The <code class="code-voice">NSString</code> <code class="code-voice">length</code> property is now mapped onto Swift’s native <code class="code-voice">String</code> type as <code class="code-voice">utf16Count</code>, not <code class="code-voice">utf16count</code>.</p>
+		<li><p>
+  			<code>NSString</code> <code>length</code> 属性已被映射到Swift的内建 <code>String</code>类型。（注意，这两属性的类型是<code>utf16<color="red">C</color>ount</code>,而非 <code>utf16count</code>）.
 		</li>
-		<li class="item"><p class="para">
-  			Swift’s native <code class="code-voice">String</code> type no longer has an <code class="code-voice">uppercaseString</code> or <code class="code-voice">lowercaseString</code> property. The corresponding section in <span class="x-name"><a href="StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_413" data-id="//apple_ref/doc/uid/TP40014097-CH7-XID_413">Strings and Characters</a></span> has been removed, and various code examples have been updated.</p>
+		<li><p>
+  			Swift的内建 <code>String</code> 类型不再拥有 <code>uppercaseString</code> 和 <code>lowercaseString</code> 属性.其对应部分在章节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_413">字符串和字符（Strings and Characters）</a>已经被删除, 并且各种对应的代码用例也已被更新.
 		</li>
-		<li class="item"><p class="para">
-  			Added a new section about <span class="x-name"><a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_315" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_315">Initializer Parameters Without External Names</a></span>.</p>
+		<li><p>
+  			加入新的章节  <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_315">没有外部名的构造器参数（Initializer Parameters Without External Names）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Added a new section about <span class="x-name"><a href="Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339" data-id="//apple_ref/doc/uid/TP40014097-CH18-XID_339">Required Initializers</a></span>.</p>
+		<li><p>
+  			加入新的章节  <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339"> Required构造器（Required Initializers）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Added a new section about <span class="x-name"><a href="Functions.html#//apple_ref/doc/uid/TP40014097-CH10-XID_252" data-id="//apple_ref/doc/uid/TP40014097-CH10-XID_252">Optional Tuple Return Types</a></span>.</p>
+		<li><p>
+  			加入新的章节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-XID_252">可选元祖（函数）返回类型 （Optional Tuple Return Types）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_453" data-id="//apple_ref/doc/uid/TP40014097-CH5-XID_453">Type Annotations</a></span> section to note that multiple related variables can be defined on a single line with one type annotation.</p>
+		<li><p>
+  			更新章节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_453">类型标注（Type Annotations）</a> ：多个相关变量可以用“类型标注”（type annotaion）在同一行中声明为同一类型。
 		</li>
-		<li class="item"><p class="para">
-  			The <code class="code-voice">@optional</code>, <code class="code-voice">@lazy</code>, <code class="code-voice">@final</code>, and <code class="code-voice">@required</code> attributes are now the <code class="code-voice">optional</code>, <code class="code-voice">lazy</code>, <code class="code-voice">final</code>, and <code class="code-voice">required</code> <span class="x-name"><a href="Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_705" data-id="//apple_ref/doc/uid/TP40014097-CH34-XID_705">Declaration Modifiers</a></span>.</p>
+		<li><p>
+  			 <code>@optional</code>, <code>@lazy</code>, <code>@final</code>,  <code>@required</code> 等关键字被更新为 <code>optional</code>, <code>lazy</code>, <code>final</code>, <code>required</code> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_705">参见声明修改器（Declaration Modifiers）</a>.
 		</li>
-		<li class="item"><p class="para">
-  			Updated the entire book to refer to <code class="code-voice">..&lt;</code> as the <span class="x-name"><a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_128" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_128">Half-Open Range Operator</a></span> (rather than the “half-closed range operator”).</p>
+		<li><p>
+  			更新整本书 —— 引用 <code>..&lt;</code> 作为<a href="BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_128" data-id="//apple_ref/doc/uid/TP40014097-CH6-XID_128">区间运算符（Half-Open Range Operator）</a> (取代原先的<code>..</code> ).
 		</li>
-		<li class="item"><p class="para">
-  			Updated the <span class="x-name"><a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_185" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_185">Accessing and Modifying a Dictionary</a></span> section to note that <code class="code-voice">Dictionary</code> now has a Boolean <code class="code-voice">isEmpty</code> property.</p>
+		<li><p>
+  			更新了小节 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_185">读取和修改字典（Accessing and Modifying a Dictionary）</a>：  <code>Dictionary</code> 现在早呢更加了一个 Boolean型的属性： <code>isEmpty</code> 
 		</li>
-			<li class="item"><p class="para">
-  			Clarified the full list of characters that can be used when defining <span class="x-name"><a href="AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_85" data-id="//apple_ref/doc/uid/TP40014097-CH27-XID_85">Custom Operators</a></span>.</p>
+		<li><p>
+  			解释了哪些字符（集）可被用来定义<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_85">自定义操作符 （Custom Operators）</a>
 		</li>
-		<li class="item"><p class="para">
-  			<code class="code-voice">nil</code> and the Booleans <code class="code-voice">true</code> and <code class="code-voice">false</code> are now <span class="x-name"><a href="LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_886" data-id="//apple_ref/doc/uid/TP40014097-CH30-XID_886">Literals</a></span>.</p>
+		<li><p>
+  			<code>nil</code> 和布尔运算中的 <code>true</code> 和 <code>false</code> 现在被定义为字面量<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_886">Literals</a>.
 		</li>
 	</ul></td>
 	</td>
@@ -162,27 +163,27 @@
 	<tr>
 	<td scope="row">2014-07-7</td>
     <td><ul class="list-bullet">
-		<li class="item"><p class="para">
-  			Swift’s <code class="code-voice">Array</code> type now has full value semantics. Updated the information about <span class="x-name"><a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_170" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_170">Mutability of Collections</a></span> and <span class="x-name"><a href="CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_172" data-id="//apple_ref/doc/uid/TP40014097-CH8-XID_172">Arrays</a></span> to reflect the new approach. Also clarified the <span class="x-name"><a href="ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_150" data-id="//apple_ref/doc/uid/TP40014097-CH13-XID_150">Assignment and Copy Behavior for Strings, Arrays, and Dictionaries</a></span>.</p>
+		<li><p>
+  			Swift 中的数组 （<code>Array</code>） 类型从现在起具备了完整的值语义。具体信息被更新到 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_170">集合的可变性（Mutability of Collections）</a> 和 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_172">数组（Arrays）</a> 两小节，以反映这个新的变化. 此外，还解释了如何 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_150">给Strings, Arrays和Dictionaries进行赋值和拷贝 （Assignment and Copy Behavior for Strings, Arrays, and Dictionaries）</a>.
 		</li>
-		<li class="item"><p class="para">
-			<span class="x-name"><a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_173">数组类型速记语法（Array Type Shorthand Syntax）</a></span> 从 <code>SomeType[]</code>.更新为<code>[SomeType]</code></p>
+		<li><p>
+			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_173">数组类型速记语法（Array Type Shorthand Syntax）</a> 从 <code>SomeType[]</code>.更新为<code>[SomeType]</code>
 		</li>
-		<li class="item"><p class="para">
-  			加入新的小节：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_182">字典类型的速记语法（Dictionary Type Shorthand Syntax)</a>.： <code>[KeyType: ValueType]</code>.</p>
+		<li><p>
+  			加入新的小节：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_182">字典类型的速记语法（Dictionary Type Shorthand Syntax)</a>.： <code>[KeyType: ValueType]</code>.
 		</li>
-		<li class="item"><p class="para">
-  			加入新的小节：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_189">字典键类型的哈希值（Hash Values for Dictionary Key Types)</a>.</p>
+		<li><p>
+  			加入新的小节：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_189">字典键类型的哈希值（Hash Values for Dictionary Key Types)</a>.
 		</li>
-		<li class="item"><p class="para">
- 			例子 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-XID_154">闭包表达式 (Closure Expressions)</a></span> 中使用新的全局函数 <code class="code-voice">sorted</code> 取代原先的全局函数 <code class="code-voice">sort</code> 去展示如何返回一个全新的数组.</p>
+		<li><p>
+ 			例子 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-XID_154">闭包表达式 (Closure Expressions)</a> 中使用新的全局函数 <code>sorted</code> 取代原先的全局函数 <code>sort</code> 去展示如何返回一个全新的数组.
 		</li>
-		<li class="item"><p class="para">
-			更新关于 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_320">结构体逐一成员构造器 （Memberwise Initializers for Structure Types）</a> 的描述：即使结构体的成员<b>没有默认值</b>，逐一成员构造器也可以自动获得。</p>
+		<li><p>
+			更新关于 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_320">结构体逐一成员构造器 （Memberwise Initializers for Structure Types）</a> 的描述：即使结构体的成员<b>没有默认值</b>，逐一成员构造器也可以自动获得。
 		</li>
-		<li class="item"><p class="para">
-			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_128">区间运算符（Half-Open Range Operator）</a>由<code>..</code>更新到<code class="code-voice">..<</code><p>
-		<li class="item"><p class="para">
+		<li><p>
+			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_128">区间运算符（Half-Open Range Operator）</a>由<code>..</code>更新到<code>..<</code><p>
+		<li><p>
 			添加一个例子 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_285">扩展一个泛型（Extending a Generic Type）</a>
 		</li>
 	</ul></td>
@@ -203,7 +204,7 @@
 	<tr>
 	<td scope="row">2014-07-7</td>
     <td><ul class="list-bullet">
-		<li class="item"><p class="para">
+		<li><p>
 			发布新的文档用以详述Swift - 苹果公司针对iOS和OS X应用的全新开发语言
 		</li>
 	</td>
@@ -223,7 +224,7 @@
 	<tr>
 	<td scope="row">2014-06-3</td>
     <td><ul class="list-bullet">
-		<li class="item"><p class="para">
+		<li><p>
 			苹果全球开发者大会WWDC2014召开，发布了苹果最新的开发语言Swift，并释放出XCode6 Beta1版本
 		</li>
 	</td>
