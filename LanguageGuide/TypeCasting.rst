@@ -195,7 +195,7 @@ to check the downcast each time through the loop:
 
 The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
-equally, it's also possible that it might a ``Song``,
+equally, it's also possible that it might be a ``Song``,
 or even just a base ``MediaItem``.
 Because of this uncertainty, the ``as?`` form of the type cast operator returns an *optional* value
 when attempting to downcast to a subclass type.
