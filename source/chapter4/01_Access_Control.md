@@ -81,4 +81,7 @@ Private（私有级别）的权限最严格，它可以用来隐藏某些功能�
 如果您想了解更多关于权限控制的内容，可以查看苹果官方最新的《The Swift Language》和《Using Swift with Cocoa and Objective-C》指南，
 这两本指南在iBooks里面可以下载更新喔。
 
-本文由翻译自Apple Swift Blog ：https://developer.apple.com/swift/blog/?id=5
+-----------------
+本章节不是老码的原创，老码认真的阅读了苹果的官方博客，且自己的练习总结，如果小伙伴们费了吃奶的劲还是看不懂，请找度娘谷歌，还是看不懂请到老码[官方微博](http://weibo.com/u/5241713117)咆哮。  
+
+##### 本文由翻译自Apple Swift Blog ：[Access Control](https://developer.apple.com/swift/blog/?id=5)

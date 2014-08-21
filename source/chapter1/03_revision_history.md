@@ -7,6 +7,7 @@
 
 本页内容包括：
 
+-   [XCode6 Beta6 Swift语法文档更新](#xcode6_beta6)
 -   [XCode6 Beta5 Swift语法文档更新](#xcode6_beta5)
 -   [XCode6 Beta4 Swift语法文档更新](#xcode6_beta4)
 -   [XCode6 Beta3 Swift语法文档更新](#xcode6_beta3)
@@ -16,6 +17,40 @@
 
 以下部分是针对XCode6每一次Beta版本直至正式版发布，Swift语法部分的更新归类
 
+<a name="xcode6_beta6"></a>
+### XCode6 Beta6中Swift语法更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-08-18</td>
+    <td><ul class="list-bullet">
+		<li><p>
+			在协议中关于<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_397">初始化需求</a>部分增加一个新的小节</p>
+		</li>
+		<li><p>
+			为<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_409">“类专有”协议集</a>增加了一个新的小节</p>
+		</li>
+		<li><p>
+			<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_494">断言</a>现在可以使用字符串内插语法，并删除了文档中有冲突的注释</p>
+		</li>
+		<li><p>
+			更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_428">连接字符串和字符</a>小节来说明一个事实，那就是字符串和字符不能再用<code>+</code>号运算符或者复合加法运算符<code>+=</code>连接，这两种运算符现在只能用于字符串相连。请使用<code>String</code>类型的<code>append</code>方法在一个字符串的尾部增加单个字符</p>
+		</li>
+		<li><p>
+			在<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-XID_516">属性声明</a>章节增加了关于<code>availability</code>属性的一些信息</p>
+		</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
 
 <a name="xcode6_beta5"></a>
 ### XCode6 Beta5中Swift语法更新
@@ -90,8 +125,10 @@
   </tr>
 </tbody>
 </table>
+
 <a name="xcode6_beta4"></a>
 #### XCode6 Beta4中Swift语法更新
+
 <table class="graybox" border="0" cellspacing="0" cellpadding="5">
 <thead>
 	<tr>
@@ -150,8 +187,10 @@
   </tr>
 </tbody>
 </table>
+
 <a name="xcode6_beta3"></a>
 #### XCode6 Beta3中Swift语法更新
+
 <table class="graybox" border="0" cellspacing="0" cellpadding="5">
 <thead>
 	<tr>
@@ -191,8 +230,10 @@
   </tr>
 </tbody>
 </table>
+
 <a name="xcode6_beta2"></a>
 #### XCode6 Beta2中Swift语法更新
+
 <table class="graybox" border="0" cellspacing="0" cellpadding="5">
 <thead>
 	<tr>
@@ -211,8 +252,10 @@
 	</tr>
 </tbody>
 </table>
+
 <a name="xcode6_beta1"></a>
 #### XCode6 Beta1中Swift语法更新
+
 <table class="graybox" border="0" cellspacing="0" cellpadding="5">
 <thead>
 	<tr>
