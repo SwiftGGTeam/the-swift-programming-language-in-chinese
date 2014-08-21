@@ -1,4 +1,4 @@
-> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
+> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)
 > 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
 # Access Control 权限控制的黑与白
@@ -40,7 +40,7 @@ Private（私有级别）的权限最严格，它可以用来隐藏某些功能�
 除了可以给整个声明设权限，Swift还允许大家在需要的时候，把某个属性（property）的取值权限比赋值权限设得更加开放。
 
 #####举个例子：
-
+```swift
 	public class ListItem {
 
 	// ListItem这个类，有两个公开的属性
@@ -68,7 +68,7 @@ Private（私有级别）的权限最严格，它可以用来隐藏某些功能�
 		return false
 		}
 	}
-
+```
 
 当我们使用Objective-C和Swift混合开发时，需要注意：
 
