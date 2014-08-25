@@ -46,3 +46,4 @@
    * [WWDC里面的那个“大炮打气球”](chapter4/03_Ballons.md)
    * [Swift与C语言指针友好合作](chapter4/04_Interacting_with_C_Pointers.md)
    * [引用类型和值类型的恩怨](chapter4/05_Value_and_Reference_Types.md)
+   * [访问控制和protected](chapter4/06_access_control_&_protected.md)

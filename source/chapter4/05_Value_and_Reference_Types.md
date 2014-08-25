@@ -9,9 +9,7 @@
 - [值类型与引用类型的区别](#difference-two)
 - [Mutation（修改）在安全中扮演的角色](#act-in=mutation)
 - [如何选择类型](#how-to-choose)
-- [支持Bool类型判断](#condition-by-bool)
-- [支持兼容各们各派的类型](#support-all-type)
-- [完善OCBool的布尔基因体系](#make-up-type)
+
 
 ### Swift里面的类型分为两种：
  
