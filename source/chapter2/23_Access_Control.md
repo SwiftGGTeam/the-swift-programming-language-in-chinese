@@ -1,6 +1,10 @@
 > 翻译：[JaceFu](http://www.devtalking.com/)  
 > 校对：[ChildhoodAndy](http://childhood.logdown.com)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 访问控制
 ------------------
 

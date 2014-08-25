@@ -1,6 +1,10 @@
 > 翻译：[shinyzhu](https://github.com/shinyzhu)  
 > 校对：[pp-prog](https://github.com/pp-prog)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 属性 (Properties)
 ---
 

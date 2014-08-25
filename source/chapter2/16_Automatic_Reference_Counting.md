@@ -1,6 +1,10 @@
 > 翻译：[TimothyYe](https://github.com/TimothyYe)  
 > 校对：[Hawstein](https://github.com/Hawstein)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 自动引用计数
 -----------------
 

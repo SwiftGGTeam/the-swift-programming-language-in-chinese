@@ -1,6 +1,10 @@
 > 翻译：[pp-prog](https://github.com/pp-prog)  
 > 校对：[zqp](https://github.com/zqp)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 方法（Methods）
 -----------------
 

@@ -1,6 +1,10 @@
 > 翻译：[xiehurricane](https://github.com/xiehurricane)
 > 校对：[happyming](https://github.com/happyming)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 类型转换（Type Casting）
 -----------------
 

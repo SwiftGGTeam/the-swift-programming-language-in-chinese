@@ -1,6 +1,10 @@
 > 翻译：[honghaoz](https://github.com/honghaoz)
 > 校对：[LunaticM](https://github.com/LunaticM)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 函数（Functions）
 -----------------
 

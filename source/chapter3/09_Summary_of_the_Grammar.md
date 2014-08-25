@@ -1,6 +1,10 @@
 > 翻译：[stanzhai](https://github.com/stanzhai)  
 > 校对：[xielingwang](https://github.com/xielingwang)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 语法总结
 _________________
 

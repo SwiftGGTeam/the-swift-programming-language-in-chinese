@@ -1,6 +1,10 @@
 > 翻译：[wh1100717](https://github.com/wh1100717)
 > 校对：[lyuka](https://github.com/lyuka)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 闭包（Closures）
 -----------------
 

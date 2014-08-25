@@ -1,6 +1,10 @@
 > 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)  
 > 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 控制流
 -----------------
 

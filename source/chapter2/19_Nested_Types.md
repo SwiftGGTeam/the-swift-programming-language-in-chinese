@@ -1,6 +1,10 @@
 > 翻译：[Lin-H](https://github.com/Lin-H)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 嵌套类型
 -----------------
 

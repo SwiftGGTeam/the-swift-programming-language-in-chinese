@@ -1,6 +1,10 @@
 > 翻译：[Hawstein](https://github.com/Hawstein)  
 > 校对：[menlongsheng](https://github.com/menlongsheng)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 继承（Inheritance）
 -------------------
 

@@ -1,6 +1,10 @@
 > 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
 > 校对：[老码团队翻译组-Jame](http://weibo.com/u/5241713117)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # Swift里的值类型与引用类型
 -----------------
 

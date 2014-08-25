@@ -1,6 +1,10 @@
 > 翻译：[dabing1022](https://github.com/dabing1022)  
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 # 关于语言附注
 -----------------

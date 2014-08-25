@@ -1,6 +1,11 @@
 > 翻译：[numbbbbb](https://github.com/numbbbbb)  
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
 # Swift 初见
 
 ---

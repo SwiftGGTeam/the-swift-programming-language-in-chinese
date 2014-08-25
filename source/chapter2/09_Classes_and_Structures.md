@@ -1,6 +1,10 @@
 > 翻译：[JaySurplus](https://github.com/JaySurplus)
 > 校对：[sg552](https://github.com/sg552)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # 类和结构体
 
 本页包含内容：

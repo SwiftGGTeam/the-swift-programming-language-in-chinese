@@ -1,6 +1,10 @@
 > 翻译：[成都老码团队翻译组-Ayra](http://weibo.com/littlekok/)  
 > 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
+<link rel="stylesheet" href="../assets/css/xcode.css">
+<script src="../assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # Swift 版本历史记录
 
 ---
