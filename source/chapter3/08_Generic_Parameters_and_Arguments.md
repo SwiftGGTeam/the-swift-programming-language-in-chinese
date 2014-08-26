@@ -1,10 +1,6 @@
 > 翻译：[fd5788](https://github.com/fd5788)  
 > 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 泛型参数
 ---------
 

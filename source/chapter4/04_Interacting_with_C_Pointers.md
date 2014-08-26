@@ -1,10 +1,6 @@
 > 翻译：[老码团队翻译组-Relly](http://weibo.com/penguinliong/)  
 > 校对：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117) 
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # Swift与C语言指针友好合作
 -----------------
 

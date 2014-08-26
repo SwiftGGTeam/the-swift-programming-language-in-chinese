@@ -1,10 +1,6 @@
 > 翻译：[zqp](https://github.com/zqp)  
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)  
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 集合类型 (Collection Types)
 -----------------
 

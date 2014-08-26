@@ -1,10 +1,6 @@
 > 翻译：[Hawstein](https://github.com/Hawstein)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 特性
 -----------------
 

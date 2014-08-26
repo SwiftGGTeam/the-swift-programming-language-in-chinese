@@ -1,10 +1,6 @@
 > 翻译：[bruce0505](https://github.com/bruce0505)  
 > 校对：[fd5788](https://github.com/fd5788)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 析构过程（Deinitialization）
 ---------------------------
 

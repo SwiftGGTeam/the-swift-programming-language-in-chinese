@@ -1,10 +1,6 @@
 > 翻译：[coverxit](https://github.com/coverxit)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 语句
 -----------------
 

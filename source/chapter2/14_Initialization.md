@@ -1,10 +1,6 @@
 > 翻译：[lifedim](https://github.com/lifedim)  
 > 校对：[lifedim](https://github.com/lifedim)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 构造过程（Initialization）
 
 -----------------

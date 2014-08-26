@@ -1,10 +1,6 @@
 > 翻译：[siemenliu](https://github.com/siemenliu)  
 > 校对：[zq54zquan](https://github.com/zq54zquan)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 
 # 下标脚本（Subscripts）
 -----------------

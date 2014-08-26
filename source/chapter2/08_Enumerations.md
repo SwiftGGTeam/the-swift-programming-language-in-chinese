@@ -1,10 +1,6 @@
 > 翻译：[yankuangshi](https://github.com/yankuangshi)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
-<link rel="stylesheet" href="../assets/css/xcode.css">
-<script src="../assets/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 # 枚举（Enumerations）
 ---
 
