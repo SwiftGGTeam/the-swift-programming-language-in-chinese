@@ -655,19 +655,15 @@ The present section describes which characters can be used to define custom oper
 
 Custom operators can begin with one of the ASCII characters
 ``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
-``&``, ``|``, ``^``, ``?``, or ``~``, or one of the Unicode characters
+``&``, ``|``, ``^``, or ``~``, or one of the Unicode characters
 defined in the grammar below. After the first character,
 combining Unicode characters are also allowed.
 You can also define custom operators as a sequence of two or more dots (for example, ``....``).
-Although you can define custom operators that contain a question mark character (``?``),
-they can't consist of a single question mark character only.
 
 .. note::
 
    The tokens ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
-   the prefix operators ``<``, ``&``, and ``?``,
-   the infix operator ``?``,
-   and the postfix operators ``>``, ``!``, and ``?`` are reserved.
+   and the prefix operator ``&`` are reserved.
    These tokens can't be overloaded, nor can they be used as custom operators.
 
 The whitespace around an operator is used to determine
@@ -770,7 +766,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator --> operator-head operator-characters-OPT
     operator --> dot-operator-head dot-operator-characters-OPT
 
-    operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``?``
+    operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~``
     operator-head --> U+00A1--U+00A7
     operator-head --> U+00A9 or U+00AB
     operator-head --> U+00AC or U+00AE
