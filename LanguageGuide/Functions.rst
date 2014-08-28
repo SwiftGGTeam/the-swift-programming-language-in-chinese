@@ -67,8 +67,8 @@ which is followed by the name of the type to return.
 The definition describes what the function does,
 what it expects to receive,
 and what it returns when it is done.
-The definition makes it easy for the function to be called
-elsewhere in your code in a clear and unambiguous way:
+The definition makes it easy for the function to be called unambiguously
+from elsewhere in your code:
 
 .. testcode:: definingAndCalling
 
@@ -324,7 +324,7 @@ and return a value of ``nil`` when the array is empty:
          return (currentMin, currentMax)
       }
 
-You can use optional binding to check if this version of the ``minMax`` function
+You can use optional binding to check whether this version of the ``minMax`` function
 returns an actual tuple value or ``nil``:
 
 .. testcode:: tupleTypesAsReturnTypes2
@@ -381,7 +381,7 @@ separated by a space:
 .. note::
 
    If you provide an external parameter name for a parameter,
-   that external name must *always* be used when calling the function.
+   that external name must *always* be used when you call the function.
 
 As an example, consider the following function,
 which joins two strings by inserting a third “joiner” string between them:
@@ -418,8 +418,7 @@ the second parameter has an external name of ``toString`` and a local name of ``
 and the third parameter has an external name of ``withJoiner``
 and a local name of ``joiner``.
 
-You can now use these external parameter names to call the function
-in a clear and unambiguous way:
+You can now use these external parameter names to call the function unambiguously:
 
 .. testcode:: externalParameterNames
 
@@ -437,7 +436,7 @@ while still providing a function body that is readable and clear in intent.
    Consider using external parameter names whenever the purpose of a function's arguments
    would be unclear to someone reading your code for the first time.
    You do not need to specify external parameter names
-   if the purpose of each parameter is clear and unambiguous when the function is called.
+   if the purpose of each parameter is unambiguous when the function is called.
 
 .. _Functions_ShorthandExternalParameterNames:
 
@@ -532,8 +531,7 @@ This ensures that the argument for that parameter is clear in purpose
 if a value is provided when the function is called.
 
 To make this process easier,
-Swift provides an automatic external name for any defaulted parameter you define,
-if you do not provide an external name yourself.
+Swift provides an automatic external name for any parameter that has a default value.
 The automatic external name is the same as the local name,
 as if you had written a hash symbol before the local name in your code.
 
@@ -548,7 +546,7 @@ but still provides a default value for its ``joiner`` parameter:
       }
 
 In this case, Swift automatically provides
-an external parameter name of ``joiner`` for the defaulted parameter.
+an external parameter name for the ``joiner`` parameter.
 The external name must therefore be provided when calling the function,
 making the parameter's purpose clear and unambiguous:
 
@@ -563,7 +561,7 @@ making the parameter's purpose clear and unambiguous:
 
    You can opt out of this behavior by writing an underscore (``_``)
    instead of an explicit external name when you define the parameter.
-   However, external names for defaulted parameters are preferred.
+   However, external names for parameters with default values are preferred.
 
 .. _Functions_VariadicParameters:
 
@@ -956,7 +954,7 @@ that will step in one direction or the other:
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the stepBackward() function
 
-The preceding example works out whether a positive or negative step is needed
+The preceding example determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,

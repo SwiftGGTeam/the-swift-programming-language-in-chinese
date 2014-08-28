@@ -551,7 +551,7 @@ this conditional checking and unwrapping in a concise and readable form.
 .. note::
 
    If the value of ``a`` is non-``nil``,
-   the value of ``b`` will not be evaluated.
+   the value of ``b`` is not evaluated.
    This is known as :newTerm:`short-circuit evaluation`.
 
 The example below uses the nil coalescing operator to choose between
@@ -579,7 +579,7 @@ Because ``userDefinedColorName`` is ``nil``,
 the expression ``userDefinedColorName ?? defaultColorName`` returns
 the value of ``defaultColorName``, or ``"red"``.
 
-If you assign a non-``nil`` value to ``userDefinedColorName``,
+If you assign a non-``nil`` value to ``userDefinedColorName``
 and perform the nil coalescing operator check again,
 the value wrapped inside ``userDefinedColorName`` is used instead of the default:
 
@@ -823,10 +823,10 @@ You can combine multiple logical operators to create longer compound expressions
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still operate on only two values,
 so this is actually three smaller expressions chained together.
-It can be read as:
+The example can be read as:
 
-If we've entered the correct door code and passed the retina scan;
-or if we have a valid door key;
+If we've entered the correct door code and passed the retina scan,
+or if we have a valid door key,
 or if we know the emergency override password,
 then allow access.
 

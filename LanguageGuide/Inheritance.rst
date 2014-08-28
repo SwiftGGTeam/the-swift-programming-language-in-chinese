@@ -353,7 +353,7 @@ which automatically selects an appropriate gear to use based on the current spee
 Whenever you set the ``currentSpeed`` property of an ``AutomaticCar`` instance,
 the property's ``didSet`` observer sets the instance's ``gear`` property to
 an appropriate choice of gear for the new speed.
-Specifically, the property observer chooses a gear which is
+Specifically, the property observer chooses a gear that is
 the new ``currentSpeed`` value divided by ``10``,
 rounded down to the nearest integer, plus ``1``.
 A speed of ``10.0`` produces a gear of ``1``,
@@ -378,8 +378,8 @@ Do this by writing the ``final`` modifier before
 the method, property, or subscript's introducer keyword
 (such as ``final var``, ``final func``, ``final class func``, and ``final subscript``).
 
-Any attempts to override a final method, property, or subscript in a subclass
-are reported as a compile-time error.
+Any attempt to override a final method, property, or subscript in a subclass
+is reported as a compile-time error.
 Methods, properties, or subscripts that you add to a class in an extension
 can also be marked as final within the extension's definition.
 
@@ -415,7 +415,7 @@ can also be marked as final within the extension's definition.
 
 You can mark an entire class as final by writing the ``final`` modifier
 before the ``class`` keyword in its class definition (``final class``).
-Any attempts to subclass a final class will be reported as a compile-time error.
+Any attempt to subclass a final class is reported as a compile-time error.
 
 .. assertion:: finalClassPreventsOverriding
 

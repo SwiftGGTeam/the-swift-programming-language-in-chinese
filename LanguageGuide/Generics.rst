@@ -8,7 +8,7 @@ and expresses its intent in a clear, abstracted manner.
 
 Generics are one of the most powerful features of Swift,
 and much of the Swift standard library is built with generic code.
-In fact, you've been using generics throughout this Language Guide,
+In fact, you've been using generics throughout the *Language Guide*,
 even if you didn't realize it.
 For example, Swift's ``Array`` and ``Dictionary`` types
 are both generic collections.
@@ -78,7 +78,7 @@ The only difference is the type of the values that they accept
 
 It would be much more useful, and considerably more flexible,
 to write a single function that could swap two values of *any* type.
-This is the kind of problem that generic code can solve.
+Generic code enables you to write such a function.
 (A generic version of these functions is defined below.)
 
 .. note::
@@ -191,10 +191,10 @@ Type parameters specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
 
-Once specified,
-a type parameter can be used to define the type of a function's parameters
-(such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function);
-or as the function's return type;
+Once you specify a type parameter,
+you can use it to define the type of a function's parameters
+(such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function),
+or as the function's return type,
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
 is replaced with an *actual* type whenever the function is called.
@@ -212,7 +212,7 @@ Naming Type Parameters
 ----------------------
 
 In simple cases where a generic function or generic type
-needs to refer to a single placeholder type
+refers to a single placeholder type
 (such as the ``swapTwoValues`` generic function above,
 or a generic collection that stores a single type, such as ``Array``),
 it is traditional to use the single-character name ``T`` for the type parameter.
@@ -220,7 +220,7 @@ However, you can use any valid identifier as the type parameter name.
 
 If you are defining more complex generic functions,
 or generic types with multiple parameters,
-it can be useful to provide more descriptive type parameter names.
+it is useful to provide more descriptive type parameter names.
 For example, Swift's ``Dictionary`` type has two type parameters ---
 one for its keys and one for its values.
 If you were writing ``Dictionary`` yourself,
@@ -342,9 +342,14 @@ In this case, ``T`` is used as a placeholder in three places:
 * To specify that the value returned by the ``pop`` method
   will be a value of type ``T``
 
-You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
-by writing the actual type to be used for this specific stack within angle brackets
-after the type name when creating a new instance with initializer syntax:
+Because it is a generic type,
+``Stack`` can be used to create a stack of *any* valid type in Swift,
+in a similar manner to ``Array`` and ``Dictionary``.
+
+You create a new ``Stack`` instance by writing
+the type to be stored in the stack within angle brackets.
+For example, to create a new stack of strings,
+you write ``Stack<String>()``:
 
 .. testcode:: genericStack
 
@@ -375,10 +380,6 @@ Here's how the stack looks after popping its top value:
 
 .. image:: ../images/stackPoppedOneString_2x.png
    :align: center
-
-Because it is a generic type,
-``Stack`` can be used to create a stack of *any* valid type in Swift,
-in a similar manner to ``Array`` and ``Dictionary``.
 
 .. _Generics_ExtendingAGenericType:
 
@@ -414,7 +415,7 @@ is used within the extension to indicate the optional type of
 the ``topItem`` computed property.
 
 The ``topItem`` computed property can now be used with any ``Stack`` instance
-to “peek” at its top item without removing it:
+to access and query its top item without removing it:
 
 .. testcode:: genericStack
 

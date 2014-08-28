@@ -439,22 +439,22 @@ to chain on its optional return value:
 .. testcode:: optionalChaining
    :compile: true
 
-   -> var testScores = ["Dave": [86, 82, 84], "Tim": [79, 94, 81]]
+   -> var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
    -> testScores["Dave"]?[0] = 91
-   -> testScores["Tim"]?[0]++
+   -> testScores["Bev"]?[0]++
    -> testScores["Brian"]?[0] = 72
    >> let dave = "Dave"
-   >> let tim = "Tim"
-   /> the \"Dave\" array is now [\(testScores[dave]![0]), \(testScores[dave]![1]), \(testScores[dave]![2])] and the \"Tim\" array is now [\(testScores[tim]![0]), \(testScores[tim]![1]), \(testScores[tim]![2])]
-   </ the "Dave" array is now [91, 82, 84] and the "Tim" array is now [80, 94, 81]
+   >> let bev = "Bev"
+   /> the \"Dave\" array is now [\(testScores[dave]![0]), \(testScores[dave]![1]), \(testScores[dave]![2])] and the \"Bev\" array is now [\(testScores[bev]![0]), \(testScores[bev]![1]), \(testScores[bev]![2])]
+   </ the "Dave" array is now [91, 82, 84] and the "Bev" array is now [80, 94, 81]
 
 The example above defines a dictionary called ``testScores``,
 which contains two key-value pairs that map a ``String`` key to an array of ``Int`` values.
 The example uses optional chaining to set the first item in the ``"Dave"`` array to ``91``;
-to increment the first item in the ``"Tim"`` array by ``1``;
+to increment the first item in the ``"Bev"`` array by ``1``;
 and to try to set the first item in an array for a key of ``"Brian"``.
 The first two calls succeed, because the ``testScores`` dictionary
-contains keys for ``"Dave"`` and ``"Tim"``.
+contains keys for ``"Dave"`` and ``"Bev"``.
 The third call fails, because the ``testScores`` dictionary
 does not contain a key for ``"Brian"``.
 
@@ -514,7 +514,7 @@ the underlying optional type of the property.
 
 If you set an actual ``Address`` instance as the value for ``john.residence.address``,
 and set an actual value for the address's ``street`` property,
-you can access the value of  property through the multi-level optional chaining:
+you can access the value of the ``street`` property through multilevel optional chaining:
 
 .. testcode:: optionalChaining
    :compile: true
@@ -539,7 +539,7 @@ before accessing the residence's ``address`` property.
 
 .. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
 
-Chaining on Methods With Optional Return Values
+Chaining on Methods with Optional Return Values
 -----------------------------------------------
 
 The previous example shows how to retrieve the value of

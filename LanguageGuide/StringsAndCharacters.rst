@@ -20,7 +20,7 @@ Swift's ``String`` type is a fast, modern string implementation.
 Every string is composed of encoding-independent Unicode characters,
 and provides support for accessing those characters in various Unicode representations.
 
-Strings can also be used to insert
+You can also use strings to insert
 constants, variables, literals, and expressions into longer strings,
 in a process known as string interpolation.
 This makes it easy to create custom string values for display, storage, and printing.
@@ -45,7 +45,7 @@ You can include predefined ``String`` values within your code as :newTerm:`strin
 A string literal is a fixed sequence of textual characters
 surrounded by a pair of double quotes (``""``).
 
-A string literal can be used to provide an initial value for a constant or variable:
+Use a string literal as an initial value for a constant or variable:
 
 .. testcode:: stringLiterals
 
@@ -82,7 +82,7 @@ or initialize a new ``String`` instance with initializer syntax:
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
 
-You can find out whether a ``String`` value is empty
+Find out whether a ``String`` value is empty
 by checking its Boolean ``isEmpty`` property:
 
 .. testcode:: emptyStrings
@@ -301,8 +301,8 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
    A Unicode scalar is any Unicode :newTerm:`code point` in the range
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
-   Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points
-   in the range ``U+D800`` to ``U+DFFF`` inclusive.
+   Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points,
+   which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
 Note that not all 21-bit Unicode scalars are assigned to a character ---
 some scalars are reserved for future assignment.

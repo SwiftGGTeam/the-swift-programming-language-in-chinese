@@ -348,7 +348,7 @@ Note that the type of the ``someInts`` variable is inferred to be ``[Int]``,
 because it is set to the output of an ``[Int]`` initializer.
 
 Alternatively, if the context already provides type information,
-such as a function argument or an already-typed variable or constant,
+such as a function argument or an already typed variable or constant,
 you can create an empty array with an empty array literal,
 which is written as ``[]``
 (an empty pair of square brackets):
@@ -482,8 +482,8 @@ The first pair has a key of ``"TYO"`` and a value of ``"Tokyo"``.
 The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
-This matches the type of the ``airports`` variable declaration
-(a dictionary with only ``String`` keys, and only ``String`` values)
+This key-value type matches the type of the ``airports`` variable declaration
+(a dictionary with only ``String`` keys, and only ``String`` values),
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
 
@@ -509,7 +509,7 @@ Accessing and Modifying a Dictionary
 
 You access and modify a dictionary through its methods and properties,
 or by using subscript syntax.
-As with an array, you can find out the number of items in a ``Dictionary``
+As with an array, you find out the number of items in a ``Dictionary``
 by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred

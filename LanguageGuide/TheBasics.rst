@@ -6,8 +6,8 @@ Nonetheless, many parts of Swift will be familiar
 from your experience of developing in C and Objective-C.
 
 Swift provides its own versions of all fundamental C and Objective-C types,
-including ``Int`` for integers; ``Double`` and ``Float`` for floating-point values;
-``Bool`` for Boolean values; and ``String`` for textual data.
+including ``Int`` for integers, ``Double`` and ``Float`` for floating-point values,
+``Bool`` for Boolean values, and ``String`` for textual data.
 Swift also provides powerful versions of the two primary collection types,
 ``Array`` and ``Dictionary``, as described in :doc:`CollectionTypes`.
 
@@ -18,10 +18,9 @@ Constants are used throughout Swift to make code safer and clearer in intent
 when you work with values that do not need to change.
 
 In addition to familiar types,
-Swift introduces advanced types not found in Objective-C.
-These include tuples,
-which enable you to create and pass around groupings of values.
-Tuples can return multiple values from a function as a single compound value.
+Swift introduces advanced types not found in Objective-C, such as tuples.
+Tuples enable you to create and pass around groupings of values.
+You can use a tuple to return multiple values from a function as a single compound value.
 
 Swift also introduces optional types,
 which handle the absence of a value.
@@ -36,7 +35,7 @@ Optionals are an example of the fact that Swift is a *type safe* language.
 Swift helps you to be clear about the types of values your code can work with.
 If part of your code expects a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
-This enables you to catch and fix errors as early as possible in the development process.
+This restriction enables you to catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
 
@@ -155,7 +154,7 @@ separated by commas, with a single type annotation after the final variable name
 Naming Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use almost any character you like for constant and variable names,
+Constant and variable names can contain almost any character,
 including Unicode characters:
 
 .. testcode:: constantsAndVariables
@@ -182,8 +181,8 @@ or a variable into a constant.
 .. note::
 
    If you need to give a constant or variable the same name as a reserved Swift keyword,
-   you can do so by surrounding the keyword with back ticks (`````) when using it as a name.
-   However, you should avoid using keywords as names unless you have absolutely no choice.
+   surround the keyword with back ticks (`````) when using it as a name.
+   However, avoid using keywords as names unless you have absolutely no choice.
 
 .. QUESTION: I've deliberately not given an example here,
    because I don't want to suggest that such an example is
@@ -229,7 +228,7 @@ You can print the current value of a constant or variable with the ``println`` f
 
 ``println`` is a global function that prints a value,
 followed by a line break, to an appropriate output.
-If you are working in Xcode, for example,
+In Xcode, for example,
 ``println`` prints its output in Xcode's “console” pane.
 (A second function, ``print``, performs the same task
 without appending a line break to the end of the value to be printed.)
@@ -287,8 +286,7 @@ Single-line comments begin with two forward-slashes (``//``):
 
    -> // this is a comment
 
-You can also write multiline comments,
-which start with a forward-slash followed by an asterisk (``/*``)
+Multiline comments start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
@@ -677,8 +675,8 @@ Here, the value of the constant ``three`` is used to create a new value of type 
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
-The reverse is also true for floating-point to integer conversion,
-in that an integer type can be initialized with a ``Double`` or ``Float`` value:
+Floating-point to integer conversion must also be made explicit.
+An integer type can be initialized with a ``Double`` or ``Float`` value:
 
 .. testcode:: typeConversion
 
@@ -947,7 +945,7 @@ An optional says:
    Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants.
 
-Here's an example.
+Here's an example of how optionals can be used to cope with the absence of a value.
 Swift's ``String`` type has a method called ``toInt``,
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
@@ -992,8 +990,8 @@ by assigning it the special value ``nil``:
 
 .. note::
 
-   ``nil`` cannot be used with non-optional constants and variables.
-   If a constant or variable in your code needs to be able to cope with
+   ``nil`` cannot be used with nonoptional constants and variables.
+   If a constant or variable in your code needs to work with
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
 
@@ -1009,7 +1007,7 @@ the constant or variable is automatically set to ``nil`` for you:
 .. note::
 
    Swift's ``nil`` is not the same as ``nil`` in Objective-C.
-   In Objective-C, ``nil`` is a pointer to a non-existent object.
+   In Objective-C, ``nil`` is a pointer to a nonexistent object.
    In Swift, ``nil`` is not a pointer --- it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
@@ -1076,7 +1074,8 @@ Write optional bindings for the ``if`` statement as follows:
       <#statements#>
    }
 
-You can rewrite the ``possibleNumber`` example from above
+You can rewrite the ``possibleNumber`` example from
+the :ref:`TheBasics_Optionals` section
 to use optional binding rather than forced unwrapping:
 
 .. testcode:: optionals
@@ -1088,7 +1087,7 @@ to use optional binding rather than forced unwrapping:
       }
    <- 123 has an integer value of 123
 
-This can be read as:
+This code can be read as:
 
 “If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
@@ -1196,7 +1195,7 @@ to check and unwrap its value in a single statement:
 
 .. note::
 
-   Implicitly unwrapped optionals should not be used when there is a possibility of
+   Do not use an implicitly unwrapped optional when there is a possibility of
    a variable becoming ``nil`` at a later point.
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.

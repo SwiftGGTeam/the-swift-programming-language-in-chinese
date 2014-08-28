@@ -654,13 +654,13 @@ To simplify the relationships between designated and convenience initializers,
 Swift applies the following three rules for delegation calls between initializers:
 
 **Rule 1**
-  Designated initializers must call a designated initializer from their immediate superclass.
+  A designated initializer must call a designated initializer from its immediate superclass.
 
 **Rule 2**
-  Convenience initializers must call another initializer available in the *same* class.
+  A convenience initializer must call another initializer from the *same* class.
 
 **Rule 3**
-  Convenience initializers must ultimately end up calling a designated initializer.
+  A convenience initializer must ultimately call a designated initializer.
 
 A simple way to remember this is:
 

@@ -81,7 +81,7 @@ that property requirement cannot be fulfilled by
 a constant stored property or a read-only computed property.
 If the protocol only requires a property to be gettable,
 the requirement can be satisfied by any kind of property,
-and it is valid for it also to be settable
+and it is valid for the property to be also settable
 if this is useful for your own code.
 
 Property requirements are always declared as variable properties,
@@ -99,7 +99,7 @@ and gettable properties are indicated by writing ``{ get }``.
 
 Always prefix type property requirements with the ``class`` keyword
 when you define them in a protocol.
-This is true even though type property requirements are prefixed with
+This rule pertains even though type property requirements are prefixed with
 the ``static`` keyword when implemented by a structure or enumeration:
 
 .. testcode:: instanceProperties
@@ -116,10 +116,10 @@ Here's an example of a protocol with a single instance property requirement:
          var fullName: String { get }
       }
 
-The ``FullyNamed`` protocol defines any kind of thing that has a fully-qualified name.
-It doesn't specify what *kind* of thing it must be ---
-it only specifies that the thing must be able to provide a full name for itself.
-It specifies this requirement by stating that any ``FullyNamed`` type must have
+The ``FullyNamed`` protocol requires a conforming type to provide a fully-qualified name.
+The protocol doesn't specify anything else about the nature of the conforming type ---
+it only specifies that the type must be able to provide a full name for itself.
+The protocol states that any ``FullyNamed`` type must have
 a gettable instance property called ``fullName``, which is of type ``String``.
 
 Here's an example of a simple structure that adopts and conforms to
@@ -693,8 +693,8 @@ which adopts the ``DiceGameDelegate`` protocol:
 
 ``DiceGameTracker`` implements all three methods required by ``DiceGameDelegate``.
 It uses these methods to keep track of the number of turns a game has taken.
-It resets a ``numberOfTurns`` property to zero when the game starts;
-increments it each time a new turn begins;
+It resets a ``numberOfTurns`` property to zero when the game starts,
+increments it each time a new turn begins,
 and prints out the total number of turns once the game has ended.
 
 The implementation of ``gameDidStart`` shown above uses the ``game`` parameter
