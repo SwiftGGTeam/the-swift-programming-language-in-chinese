@@ -359,7 +359,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 
 	let names = ["Anna", "Alex", "Brian", "Jack"]
 	let count = names.count
-	for i in 0..count {
+	for i in 0..<count {
 	    println("第 \(i + 1) 个人叫 \(names[i])")
 	}
 	// 第 1 个人叫 Anna
