@@ -368,7 +368,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	// 第 4 个人叫 Jack
 
 
-数组有4个元素，但`0..count`只数到3(最后一个元素的下标)，因为它是半开区间。关于数组，请查阅[数组](04_Collection_Types.html#arrays)。
+数组有4个元素，但`0..<count`只数到3(最后一个元素的下标)，因为它是半开区间。关于数组，请查阅[数组](04_Collection_Types.html#arrays)。
 
 <a name="logical_operators"></a>
 ## 逻辑运算
