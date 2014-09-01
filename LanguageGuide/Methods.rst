@@ -53,7 +53,7 @@ which can be used to count the number of times an action occurs:
 The ``Counter`` class defines three instance methods:
 
 * ``increment`` increments the counter by ``1``.
-* ``incrementBy(amount: Int)`` increments the counter by an specified integer amount.
+* ``incrementBy(amount: Int)`` increments the counter by a specified integer amount.
 * ``reset`` resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
