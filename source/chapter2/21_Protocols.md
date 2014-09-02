@@ -29,7 +29,7 @@
 
 `协议`的定义方式与`类，结构体，枚举`的定义都非常相似，如下所示:
 
-```swift
+```
 protocol SomeProtocol {
 	// 协议内容
 }
@@ -37,7 +37,7 @@ protocol SomeProtocol {
 
 在类型名称后加上`协议名称`，中间以冒号`:`分隔即可实现协议；实现多个协议时，各协议之间用逗号`,`分隔，如下所示:
 
-```swift
+```
 struct SomeStructure: FirstProtocol, AnotherProtocol {
 	// 结构体内容
 }
@@ -45,7 +45,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 
 如果一个类在含有`父类`的同时也采用了协议，应当把`父类`放在所有的`协议`之前，如下所示:
 
-```swift
+```
 class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 	// 类的内容
 }
@@ -60,7 +60,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 
 协议中的属性经常被加以`var`前缀声明其为变量属性，在声明后加上`{ set get }`来表示属性是可读写的，只读的属性则写作`{ get }`，如下所示:
 
-```swift
+```
 protocol SomeProtocol {
 	var mustBeSettable : Int { get set }
 	var doesNotNeedToBeSettable: Int { get }
@@ -69,7 +69,7 @@ protocol SomeProtocol {
 
 如下所示，通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
 
-```swift
+```
 protocol AnotherProtocol {
 	class var someTypeProperty: Int { get set }
 }
@@ -77,7 +77,7 @@ protocol AnotherProtocol {
 
 如下所示，这是一个含有一个实例属性要求的协议:
 
-```swift
+```
 protocol FullyNamed {
 	var fullName: String { get }
 }
@@ -87,7 +87,7 @@ protocol FullyNamed {
 
 如下所示，这是一个实现了`FullyNamed`协议的简单结构体:
 
-```swift
+```
 struct Person: FullyNamed{
 	var fullName: String
 }
@@ -101,7 +101,7 @@ let john = Person(fullName: "John Appleseed")
 
 这有一个更为复杂的类，它采用并实现了`FullyNamed`协议，如下所示:
 
-```swift
+```
 class Starship: FullyNamed {
 	var prefix: String?
 	var name: String
@@ -129,7 +129,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 如下所示，协议中类方法的定义与类属性的定义相似，在协议定义的方法前置`class`关键字来表示。当在`枚举`或`结构体`实现类方法时，需要使用`static`关键字来代替。
 
-```swift
+```
 protocol SomeProtocol {
 	class func someTypeMethod()
 }
@@ -137,7 +137,7 @@ protocol SomeProtocol {
 
 如下所示，定义了含有一个实例方法的的协议。
 
-```swift
+```
 protocol RandomNumberGenerator {
 	func random() -> Double
 }
@@ -150,7 +150,7 @@ protocol RandomNumberGenerator {
 如下所示，下边的是一个遵循了`RandomNumberGenerator`协议的类。该类实现了一个叫做*线性同余生成器(linear congruential generator)*的伪随机数算法。
 
 
-```swift
+```
 class LinearCongruentialGenerator: RandomNumberGenerator {
 	var lastRandom = 42.0
 	let m = 139968.0
@@ -181,7 +181,7 @@ println("And another one: \(generator.random())")
 
 如下所示，`Togglable`协议含有名为`toggle`的突变实例方法。根据名称推测，`toggle`方法应该是用于切换或恢复其`遵循者`实例或其属性的类型。
 
-```swift
+```
 protocol Togglable {
 	mutating func toggle()
 }
@@ -191,7 +191,7 @@ protocol Togglable {
 
 如下所示，`OnOffSwitch`枚举`遵循`了`Togglable`协议，`On`，`Off`两个成员用于表示当前状态。枚举的`toggle`方法被标记为`mutating`，用以匹配`Togglabel`协议的规定。
 
-```swift
+```
 enum OnOffSwitch: Togglable {
 	case Off, On
 	mutating func toggle() {
@@ -223,7 +223,7 @@ lightSwitch.toggle()
 
 如下所示，这个示例中将协议当做类型来使用
 
-```swift
+```
 class Dice {
 	let sides: Int
 	let generator: RandomNumberGenerator
@@ -247,7 +247,7 @@ class Dice {
 
 如下所示，这里展示了如何使用`LinearCongruentialGenerator`的实例作为随机数生成器创建一个六面骰子:
 
-```swift
+```
 var d6 = Dice(sides: 6,generator: LinearCongruentialGenerator())
 for _ in 1...5 {
 	println("Random dice roll is \(d6.roll())")
@@ -271,7 +271,7 @@ for _ in 1...5 {
 
 下文是两个基于骰子游戏的协议: 
 
-```swift
+```
 protocol DiceGame {
 	var dice: Dice { get }
 	func play()
@@ -288,7 +288,7 @@ protocol DiceGameDelegate {
 	
 如下所示，`SnakesAndLadders`是`Snakes and Ladders`(译者注:[Control Flow](2)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
 
-```swift
+```
 class SnakesAndLadders: DiceGame {
 	let finalSquare = 25
 	let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
@@ -333,7 +333,7 @@ class SnakesAndLadders: DiceGame {
 
 如下所示，`DiceGameTracker`遵循了`DiceGameDelegate`协议
 
-```swift
+```
 class DiceGameTracker: DiceGameDelegate {
     var numberOfTurns = 0
     func gameDidStart(game: DiceGame) {
@@ -361,7 +361,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 `DiceGameTracker`的运行情况，如下所示:
 
-```swift
+```
 let tracker = DiceGameTracker()
 let game = SnakesAndLadders()
 game.delegate = tracker
@@ -384,7 +384,7 @@ game.play()
 
 `TextRepresentable`协议含有一个`asText`，如下所示：
 
-```swift
+```
 protocol TextRepresentable {
 	func asText() -> String
 }
@@ -392,7 +392,7 @@ protocol TextRepresentable {
 
 通过`扩展`为上一节中提到的`Dice`类遵循`TextRepresentable`协议
 
-```swift
+```
 extension Dice: TextRepresentable {
 	func asText() -> String {
 		return "A \(sides)-sided dice"
@@ -402,7 +402,7 @@ extension Dice: TextRepresentable {
 
 从现在起，`Dice`类型的实例可被当作`TextRepresentable`类型：
 
-```swift
+```
 let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
 println(d12.asText())
 // 输出 "A 12-sided dice"
@@ -410,7 +410,7 @@ println(d12.asText())
 
 `SnakesAndLadders`类也可以通过`扩展`的方式来遵循协议：
 
-```swift
+```
 extension SnakesAndLadders: TextRepresentable {
 	func asText() -> String {
 		return "A game of Snakes and Ladders with \(finalSquare) squares"
@@ -425,7 +425,7 @@ println(game.asText())
 
 当一个类型已经实现了协议中的所有要求，却没有声明时，可以通过`扩展`来补充协议声明:
 
-```swift
+```
 struct Hamster {
 	var name: String
 	func asText() -> String {
@@ -437,7 +437,7 @@ extension Hamster: TextRepresentable {}
 
 从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用
 
-```swift
+```
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
 println(somethingTextRepresentable.asText())
@@ -451,13 +451,13 @@ println(somethingTextRepresentable.asText())
 
 协议类型可以被集合使用，表示集合中的元素均为协议类型:
 
-```swift
+```
 let things: TextRepresentable[] = [game,d12,simonTheHamster]
 ```
 
 如下所示，`things`数组可以被直接遍历，并调用其中元素的`asText()`函数:
 
-```swift
+```
 for thing in things {
 	println(thing.asText())
 }
@@ -473,7 +473,7 @@ for thing in things {
 
 协议能够继承一到多个其他协议。语法与类的继承相似，多个协议间用逗号`，`分隔
 
-```swift
+```
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
 	// 协议定义
 }
@@ -481,7 +481,7 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
 
 如下所示，`PrettyTextRepresentable`协议继承了`TextRepresentable`协议
 
-```swift
+```
 protocol PrettyTextRepresentable: TextRepresentable {
 	func asPrettyText() -> String
 }
@@ -491,7 +491,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 
 如下所示，用`扩展`为`SnakesAndLadders`遵循`PrettyTextRepresentable`协议:
 
-```swift
+```
 extension SnakesAndLadders: PrettyTextRepresentable {
     func asPrettyText() -> String {
         var output = asText() + ":\n"
@@ -518,7 +518,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 
 任意`SankesAndLadders`的实例都可以使用`asPrettyText()`方法。
 
-```swift
+```
 println(game.asPrettyText())
 // A game of Snakes and Ladders with 25 squares:
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
@@ -531,7 +531,7 @@ println(game.asPrettyText())
 
 举个例子：
 
-```swift
+```
 protocol Named {
     var name: String { get }
 }
@@ -565,7 +565,7 @@ wishHappyBirthday(birthdayPerson)
 * `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
 * `as`用以强制向下转型。  
 
-```swift
+```
 @objc protocol HasArea {
     var area: Double { get }
 }
@@ -575,7 +575,7 @@ wishHappyBirthday(birthdayPerson)
 
 如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议
 
-```swift
+```
 class Circle: HasArea {
     let pi = 3.1415927
     var radius: Double
@@ -592,7 +592,7 @@ class Country: HasArea {
 
 如下所示，Animal是一个没有实现`HasArea`协议的类
 
-```swift
+```
 class Animal {
 	var legs: Int
 	init(legs: Int) { self.legs = legs }
@@ -601,7 +601,7 @@ class Animal {
 
 `Circle，Country，Animal`并没有一个相同的基类，因而采用`AnyObject`类型的数组来装载在他们的实例，如下所示:
 
-```swift
+```
 let objects: AnyObject[] = [
 	Circle(radius: 2.0),
 	Country(area: 243_610),
@@ -613,7 +613,7 @@ let objects: AnyObject[] = [
 
 如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了`HasArea`协议:
 
-```swift
+```
 for object in objects {
     if let objectWithArea = object as? HasArea {
         println("Area is \(objectWithArea.area)")
@@ -643,7 +643,7 @@ for object in objects {
 
 如下所示，`Counter`类使用含有两个可选成员的`CounterDataSource`协议类型的外部数据源来提供`增量值(increment amount)`
 
-```swift
+```
 @objc protocol CounterDataSource {
     @optional func incrementForCount(count: Int) -> Int
     @optional var fixedIncrement: Int { get }
@@ -656,7 +656,7 @@ for object in objects {
 
 `Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示:
 
-```swift
+```
 @objc class Counter {
     var count = 0
     var dataSource: CounterDataSource?
@@ -690,7 +690,7 @@ for object in objects {
 
 使用`ThreeSource`作为数据源开实例化一个`Counter`:
 
-```swift
+```
 var counter = Counter()
 counter.dataSource = ThreeSource()
 for _ in 1...4 {
@@ -705,7 +705,7 @@ for _ in 1...4 {
 
 `TowardsZeroSource`实现了`CounterDataSource`协议中的`incrementForCount`方法，如下所示:
 
-```swift
+```
 class TowardsZeroSource: CounterDataSource {
 func incrementForCount(count: Int) -> Int {
         if count == 0 {
@@ -721,7 +721,7 @@ func incrementForCount(count: Int) -> Int {
 
 下边是执行的代码：
 
-```swift
+```
 counter.count = -4
 counter.dataSource = TowardsZeroSource()
 for _ in 1...5 {
