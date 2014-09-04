@@ -96,7 +96,7 @@ numberOfLegs["bird"] = 2
 ```swift
 struct Matrix {
     let rows: Int, columns: Int
-    var grid: Double[]
+    var grid: [Double]
     init(rows: Int, columns: Int) {
       self.rows = rows
       self.columns = columns
