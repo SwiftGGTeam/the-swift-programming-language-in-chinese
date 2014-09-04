@@ -23,6 +23,48 @@
 
 声明特性只能应用于声明。然而，你也可以将`noreturn`特性应用于函数或方法类型。
 
+`availability`
+
+
+将`availability`特性用于声明时，将表示该声明的生命周期会依赖于特定的平台和操作系统版本。
+
+`availability`特性总会与参数列表一同出现，该参数列表至少有两个参数，参数之间由逗号分隔。第一个参数由以下这些平台名字中的一个起头：iOS, iOSApplicationExtension, OSX, or OSXApplicationExtension。当然，你也可以用一个星号(*)来表示，该声明在上面提到的所有平台上都是有效的。剩下的参数，可以以任何顺序出现，并且可以附加关于声明生命周期的附加信息，包括重要的里程碑。
+
+
+- `unavailable`参数表示该声明在特定的平台上是无效的
+
+
+
+- `introduced`参数表示：特定的平台上，该声明被使用的第一个版本。格式如下:<p>`introduced=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
+
+
+- `deprecated`参数表示：特定的平台上，该声明被建议弃用的第一个版本。格式如下：
+<p>`deprecated=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
+
+
+- `obsoleted`参数表示：特定的平台上，该声明被弃用的第一个版本。格式如下：
+<p>`deprecated=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
+
+The message argument is used to provide a textual message that’s displayed by the compiler when emitting a warning or error about the use of a deprecated or obsoleted declaration. It has the following form:
+message=message
+The message consists of a string literal.
+The renamed argument is used to provide a textual message that indicates the new name for a declaration that’s been renamed. The new name is displayed by the compiler when emitting an error about the use of a renamed declaration. It has the following form:
+renamed=new name
+The new name consists of a string literal.
+You can use the renamed argument in conjunction with the unavailable argument and a type alias declaration to indicate to clients of your code that a declaration has been renamed. For example, this is useful when the name of a declaration is changed between releases of a framework or library.
+// First release
+protocol MyProtocol {
+    // protocol definition
+}
+// Subsequent release renames MyProtocol
+protocol MyRenamedProtocol {
+    // protocol definition
+}
+ 
+@availability(*, unavailable, renamed="MyRenamedProtocol")
+typealias MyProtocol = MyRenamedProtocol
+You can apply multiple availability attributes on a single declaration to specify the declaration’s availability on different platforms. The compiler uses an availability attribute only when the attribute specifies a platform that matches the current target platform.
+
 `assignment`
 
 该特性用于修饰重载了复合赋值运算符的函数。重载了复合赋值运算符的函数必需将它们的初始输入参数标记为`inout`。如何使用`assignment`特性的一个例子，请见：[复合赋值运算符]()。

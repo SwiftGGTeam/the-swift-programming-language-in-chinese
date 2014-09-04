@@ -9,13 +9,15 @@
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
 - [对属性的规定（Property Requirements）](#property_requirements)
 - [对方法的规定（Method Requirements）](#method_requirements)
-- [对突变方法的的规定（Mutating Method Requirements）](#mutating_method_requirements)
+- [对突变方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
+- [对构造器的规定（Initializer Requirements）](#initializer_requirements)
 - [协议类型（Protocols as Types）](#protocols_as_types)
 - [委托(代理)模式（Delegation）](#delegation)
 - [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
 - [通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [集合中的协议类型（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
+- [类专属协议（Class-Only Protocol）](#class_only_protocol)
 - [协议合成（Protocol Composition）](#protocol_composition)
 - [检验协议的一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
 - [对可选协议的规定（Optional Protocol Requirements）](#optional_protocol_requirements)
@@ -206,6 +208,60 @@ enum OnOffSwitch: Togglable {
 var lightSwitch = OnOffSwitch.Off
 lightSwitch.toggle()
 //lightSwitch 现在的值为 .On
+```
+
+<a name="initializer_requirements"></a>
+## 对构造器的规定
+
+协议可以要求它的遵循类型实现特定的构造器。你可以像书写普通的构造器那样，在协议的定义里写下构造器的需求，但不需要写花括号和构造器的实体：
+
+```swift
+protocol SomeProtocol {
+    init(someParameter: Int)
+}
+```
+
+**协议构造器规定在类中的实现**
+
+你可以在遵循该协议的类中实现构造器，并指定其为类的特定构造器或者便捷构造器。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
+
+```swift
+class SomeClass: SomeProtocol {
+    required init(someParameter: Int) {
+        //构造器实现
+    }
+}
+```
+
+使用`required`修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。
+
+关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`required`构造器 </a>
+
+>注意
+>
+>如果类已经被“final”修饰符所标示，你就不需要在协议构造器规定的实现中使用"required"修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
+
+如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
+
+```swift
+protocol SomeProtocol {
+    init()
+}
+
+
+class SomeSuperClass {
+    init() {
+        //协议定义
+    }
+}
+
+ 
+class SomeSubClass: SomeSuperClass, SomeProtocol {
+    // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+    required override init() {
+        // 构造器实现
+    }
+}
 ```
 
 <a name="protocols_as_types"></a>
@@ -523,6 +579,23 @@ println(game.asPrettyText())
 // A game of Snakes and Ladders with 25 squares:
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
+
+<a name="class_only_protocol"></a>
+## 类专属协议
+你可以在协议的继承列表中,通过添加“class”关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该“class”关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。
+
+```swift
+protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+    // class-only protocol definition goes here
+}
+```
+在以上例子中，协议SomeClassOnlyProtocol只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
+
+>注意
+>
+>当协议需求定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
+
+
 
 <a name="protocol_composition"></a>
 ## 协议合成
