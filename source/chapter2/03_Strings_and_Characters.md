@@ -167,30 +167,29 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 <a name="concatenating_strings_and_characters"></a>
 ## 连接字符串和字符 (Concatenating Strings and Characters)
 
-字符串和字符的值可以通过加法运算符（`+`）相加在一起并创建一个新的字符串值：
+字符串可以通过加法运算符（`+`）相加在一起（或称“串联”）并创建一个新的字符串：
 
 ```swift
 let string1 = "hello"
 let string2 = " there"
-let character1: Character = "!"
-let character2: Character = "?"
-
-let stringPlusCharacter = string1 + character1        // 等于 "hello!"
-let stringPlusString = string1 + string2              // 等于 "hello there"
-let characterPlusString = character1 + string1        // 等于 "!hello"
-let characterPlusCharacter = character1 + character2  // 等于 "!?"
+var welcome = string1 +　string２
+// welcome 现在等于 "hello there"
 ```
 
-您也可以通过加法赋值运算符 (`+=`) 将一个字符串或者字符添加到一个已经存在字符串变量上：
+您也可以通过加法赋值运算符 (`+=`) 将一个字符串添加到一个已经存在字符串变量上：
 
 ```swift
 var instruction = "look over"
 instruction += string2
-// instruction 现在等于 "look over there"
+// instruction 现在等于　"look over there"
 
-var welcome = "good morning"
-welcome += character1
-// welcome 现在等于 "good morning!"
+```
+你可以用将`append`方法将一个字符附加到一个字符串变量的尾部：
+
+```swift
+let exclamationMark: Character = "!"
+welcome.append(exclamationMark)
+// welcome 现在等于 "hello there!"
 ```
 
 > 注意：  
