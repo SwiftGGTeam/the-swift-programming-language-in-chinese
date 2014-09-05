@@ -27,31 +27,28 @@
 
 
 将`availability`特性用于声明时，将表示该声明的生命周期会依赖于特定的平台和操作系统版本。
-
 `availability`特性总会与参数列表一同出现，该参数列表至少有两个参数，参数之间由逗号分隔。第一个参数由以下这些平台名字中的一个起头：iOS, iOSApplicationExtension, OSX, or OSXApplicationExtension。当然，你也可以用一个星号(*)来表示，该声明在上面提到的所有平台上都是有效的。剩下的参数，可以以任何顺序出现，并且可以附加关于声明生命周期的附加信息，包括重要的里程碑。
-
 
 - `unavailable`参数表示该声明在特定的平台上是无效的
 
 
-
-- `introduced`参数表示：特定的平台上，该声明被使用的第一个版本。格式如下:<p>`introduced=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
-
+- `introduced`参数表示：特定的平台上，该声明被使用的第一个版本。格式如下:<p>`introduced=version number`<p>这里的`version number`由一个正的十进制整数或浮点数构成。
 
 - `deprecated`参数表示：特定的平台上，该声明被建议弃用的第一个版本。格式如下：
-<p>`deprecated=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
-
+<p>`deprecated=version number`<p>这里的`version number`由一个正的十进制整数或浮点数构成。
 
 - `obsoleted`参数表示：特定的平台上，该声明被弃用的第一个版本。格式如下：
-<p>`deprecated=version number`<p>这个version number由一个正的十进制整数或浮点数构成。
+<p>`deprecated=version number`<p>这里的`version number`由一个正的十进制整数或浮点数构成。
 
-The message argument is used to provide a textual message that’s displayed by the compiler when emitting a warning or error about the use of a deprecated or obsoleted declaration. It has the following form:
-message=message
-The message consists of a string literal.
-The renamed argument is used to provide a textual message that indicates the new name for a declaration that’s been renamed. The new name is displayed by the compiler when emitting an error about the use of a renamed declaration. It has the following form:
-renamed=new name
-The new name consists of a string literal.
-You can use the renamed argument in conjunction with the unavailable argument and a type alias declaration to indicate to clients of your code that a declaration has been renamed. For example, this is useful when the name of a declaration is changed between releases of a framework or library.
+- `message`参数用来提供文本信息，并在因使用建议弃用或者被弃用的声明而遇到警告或错误时，由编译器抛出。格式如下：
+<p>`message=message`<p>这里的`message`由一个字符串文字构成。
+
+- `renamed`参数用来提供文本信息，用以表示被重命名的声明的新名字。当使用这个重命名的声明遇到错误时，该新名字会被编译器显示出来。格式如下：
+<p>`renamed=new name`<p>这里的`new name`由一个字符串文字构成。
+
+你可以将`renamed`参数和`unavailable`参数以及类型别名声明组合使用，以向用户表示：在你的代码中，一个声明已经被重命名。当一个声明的名字在一个框架或者库的不同发布版本间发生变化时，这会相当管用。
+
+```swift
 // First release
 protocol MyProtocol {
     // protocol definition
@@ -63,29 +60,15 @@ protocol MyRenamedProtocol {
  
 @availability(*, unavailable, renamed="MyRenamedProtocol")
 typealias MyProtocol = MyRenamedProtocol
-You can apply multiple availability attributes on a single declaration to specify the declaration’s availability on different platforms. The compiler uses an availability attribute only when the attribute specifies a platform that matches the current target platform.
+```
 
-`assignment`
 
-该特性用于修饰重载了复合赋值运算符的函数。重载了复合赋值运算符的函数必需将它们的初始输入参数标记为`inout`。如何使用`assignment`特性的一个例子，请见：[复合赋值运算符]()。
-
-`class_protocol`
-
-该特性用于修饰一个协议表明该协议只能被类类型采用[待改：adopted]。
-
-如果你用`objc`特性修饰一个协议，`class_protocol`特性就会隐式地应用到该协议，因此无需显式地用`class_protocol`特性标记该协议。
+你可以在一个单独的声明上使用多个`availability`特性，以详细说明该声明在不同平台上的有效性。编译器只有在当前的目标平台和`availability`特性中指定的平台匹配时，才会使用`availability`特性
 
 `exported`
 
 该特性用于修饰导入声明，以此来导出已导入的模块，子模块，或当前模块的声明。如果另一个模块导入了当前模块，那么那个模块可以访问当前模块的导出项。
 
-`final`
-
-该特性用于修饰一个类或类中的属性，方法，以及下标成员。如果用它修饰一个类，那么这个类则不能被继承。如果用它修饰类中的属性，方法或下标，则表示在子类中，它们不能被重写。
-
-`lazy`
-
-该特性用于修饰类或结构体中的存储型变量属性，表示该属性的初始值最多只被计算和存储一次，且发生在第一次访问它时。如何使用`lazy`特性的一个例子，请见：[惰性存储型属性]()。
 
 `noreturn`
 
