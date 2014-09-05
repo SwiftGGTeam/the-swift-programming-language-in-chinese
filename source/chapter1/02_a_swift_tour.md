@@ -682,10 +682,10 @@ protocolValue.simpleDescription
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-    var result = ItemType[]()
-    for i in 0..times {
-        result += item
+func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
+    var result = [ItemType]()
+    for i in 0..<times {
+        result.append(item)
     }
     return result
 }
