@@ -6,6 +6,12 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-09-09  * Custom operators can now contain the ``?`` character.
+              Updated the :ref:`LexicalStructure_Operators` reference to describe
+              the revised rules.
+              Removed a duplicate description of the valid set of operator characters
+              from :ref:`AdvancedOperators_CustomOperators`.
+----------  --------------------------------------------------------------------------
 2014-08-18  * Added a new section about
               :ref:`Protocols_InitializerRequirements` in protocols.
 
