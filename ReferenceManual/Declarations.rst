@@ -1626,6 +1626,62 @@ you need to mark overridden designated initializers with the ``override`` declar
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
+.. _Declarations_FailableInitializers:
+
+Failable Initializers
+~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`failable initializer` is a type of initializer that produces an optional instance
+or an implicitly unwrapped optional instance of the type the initializer is declared on.
+As a result, a failable initializer can return ``nil`` to indicate that initialization failed.
+
+To declare a failable initializer that produces an optional instance,
+append a question mark to the ``init`` keyword in the initializer declaration (``init?``).
+To declare a failable initializer that produces an implicitly unwrapped optional instance,
+append an exclamation mark instead (``init!``). The example below shows the first kind of
+failable initializer.
+
+.. testcode:: failable
+
+    >> func someOperationThatCouldReturnNil() -> Int? { return 5 }
+    -> struct S {
+           // produces an optional instance of 'S'
+           init?(value: Int) {
+               if let x = value.someOperationThatCouldReturnNil() {
+                   // initialize 'self'
+                   self = x
+               } else {
+                   // discard 'self' and return 'nil'
+                   return nil
+               }
+           }
+       }
+
+You call a failable initializer in the same way as a nonfailable initializer,
+except that you must deal with the optionality of the result:
+
+.. testcode:: failable
+
+    -> if let actualInstance = S(value: 42) {
+           // do something with the instance of 'S'
+       } else {
+           // initialization of 'S' failed and the initializer returned 'nil'
+       }
+
+A failable initializer of a structure or an enumerations can return ``nil``
+at any point in the implementation of the initializer's body.
+A failable initializer of a class, however, can return ``nil`` only after all
+of the class's stored properties are initialized and ``self.init`` or ``super.init``
+is called (that is, any initializer delegation is performed).
+
+.. TODO: Confirm the following:
+    A ``nil`` return value is propagated through initializer delegation,
+    even for nonfailable initializers. Specifically,
+    if a nonfailable initializer delegates to a failable initializer,
+    and if the failable initializer returns ``nil``, then the nonfailable initializer
+    also returns ``nil``.
+
+
 .. langref-grammar
 
     decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
@@ -1638,6 +1694,8 @@ see :doc:`../LanguageGuide/Initialization`.
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
+    initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
+    initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
     initializer-body --> code-block
 
 
