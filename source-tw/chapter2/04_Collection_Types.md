@@ -1,5 +1,5 @@
 > 翻譯：[zqp](https://github.com/zqp)  
-> 校對：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)  
+> 校對：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai), [feiin](https://github.com/feiin)   
 
 # 集合類型 (Collection Types)
 -----------------
@@ -27,7 +27,7 @@ Swift 數組特定於它所存儲元素的類型。這與 Objective-C 的 NSArra
 <a name="array_type_shorthand_syntax"></a>
 ### 數組的簡單語法
 
-寫 Swift 數組應該遵循像`Array<SomeType>`這樣的形式，其中`SomeType`是這個數組中唯一允許存在的數據類型。 我們也可以使用像`SomeType[]`這樣的簡單語法。 儘管兩種形式在功能上是一樣的，但是推薦較短的那種，而且在本文中都會使用這種形式來使用數組。
+寫 Swift 數組應該遵循像`Array<SomeType>`這樣的形式，其中`SomeType`是這個數組中唯一允許存在的數據類型。 我們也可以使用像`[SomeType]`這樣的簡單語法。 儘管兩種形式在功能上是一樣的，但是推薦較短的那種，而且在本文中都會使用這種形式來使用數組。
 
 <a name="array_literals"></a>
 ### 數組構造語句
@@ -38,11 +38,11 @@ Swift 數組特定於它所存儲元素的類型。這與 Objective-C 的 NSArra
 下面這個例子創建了一個叫做`shoppingList`並且存儲字符串的數組：
 
 ```swift
-var shoppingList: String[] = ["Eggs", "Milk"]
+var shoppingList: [String] = ["Eggs", "Milk"]
 // shoppingList 已經被構造並且擁有兩個初始項。
 ```
 
-`shoppingList`變量被聲明為「字符串值類型的數組「，記作`String[]`。 因為這個數組被規定只有`String`一種數據結構，所以只有`String`類型可以在其中被存取。 在這裡，`shoppinglist`數組由兩個`String`值（`"Eggs"` 和`"Milk"`）構造，並且由字面量定義。
+`shoppingList`變量被聲明為「字符串值類型的數組「，記作`[String]`。 因為這個數組被規定只有`String`一種數據結構，所以只有`String`類型可以在其中被存取。 在這裡，`shoppinglist`數組由兩個`String`值（`"Eggs"` 和`"Milk"`）構造，並且由字面量定義。
 
 > 注意：  
 > `Shoppinglist`數組被聲明為變量（`var`關鍵字創建）而不是常量（`let`創建）是因為以後可能會有更多的數據項被插入其中。  
@@ -55,7 +55,7 @@ var shoppingList: String[] = ["Eggs", "Milk"]
 var shoppingList = ["Eggs", "Milk"]
 ```
 
-因為所有字面量中的值都是相同的類型，Swift 可以推斷出`String[]`是`shoppinglist`中變量的正確類型。
+因為所有字面量中的值都是相同的類型，Swift 可以推斷出`[String]`是`shoppinglist`中變量的正確類型。
 
 <a name="accessing_and_modifying_an_array"></a>
 ### 訪問和修改數組
@@ -198,12 +198,12 @@ for (index, value) in enumerate(shoppingList) {
 我們可以使用構造語法來創建一個由特定數據類型構成的空數組：
 
 ```swift
-var someInts = Int[]()
-println("someInts is of type Int[] with \(someInts.count) items。")
-// 打印 "someInts is of type Int[] with 0 items。"（someInts是0數據項的Int[]數組）
+var someInts = [Int]()
+println("someInts is of type [Int] with \(someInts.count) items。")
+// 打印 "someInts is of type [Int] with 0 items。"（someInts是0數據項的Int[]數組）
 ```
 
-注意`someInts`被設置為一個`Int[]`構造函數的輸出所以它的變量類型被定義為`Int[]`。
+注意`someInts`被設置為一個`[Int]`構造函數的輸出所以它的變量類型被定義為`[Int]`。
 
 除此之外，如果代碼上下文中提供了類型信息， 例如一個函數參數或者一個已經定義好類型的常量或者變量，我們可以使用空數組語句創建一個空數組，它的寫法很簡單：`[]`（一對空方括號）：
 
@@ -211,28 +211,28 @@ println("someInts is of type Int[] with \(someInts.count) items。")
 someInts.append(3)
 // someInts 現在包含一個INT值
 someInts = []
-// someInts 現在是空數組，但是仍然是Int[]類型的。
+// someInts 現在是空數組，但是仍然是[Int]類型的。
 ```
 
 Swift 中的`Array`類型還提供一個可以創建特定大小並且所有數據都被默認的構造方法。我們可以把準備加入新數組的數據項數量（`count`）和適當類型的初始值（`repeatedValue`）傳入數組構造函數：
 
 ```swift
-var threeDoubles = Double[](count: 3, repeatedValue:0.0)
-// threeDoubles 是一種 Double[]數組, 等於 [0.0, 0.0, 0.0]
+var threeDoubles = [Double](count: 3, repeatedValue:0.0)
+// threeDoubles 是一種 [Double]數組, 等於 [0.0, 0.0, 0.0]
 ```
 
 因為類型推斷的存在，我們使用這種構造方法的時候不需要特別指定數組中存儲的數據類型，因為類型可以從默認值推斷出來：
 
 ```swift
 var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
-// anotherThreeDoubles is inferred as Double[], and equals [2.5, 2.5, 2.5]
+// anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
 ```
 
 最後，我們可以使用加法操作符（`+`）來組合兩種已存在的相同類型數組。新數組的數據類型會被從兩個數組的數據類型中推斷出來：
 
 ```swift
 var sixDoubles = threeDoubles + anotherThreeDoubles
-// sixDoubles 被推斷為 Double[], 等於 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+// sixDoubles 被推斷為 [Double], 等於 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 ```
 
 <a name="dictionaries"></a>
