@@ -1674,12 +1674,12 @@ A failable initializer of a class, however, can return ``nil`` only after all
 of the class's stored properties are initialized and ``self.init`` or ``super.init``
 is called (that is, any initializer delegation is performed).
 
-.. TODO: Confirm the following:
-    A ``nil`` return value is propagated through initializer delegation,
-    even for nonfailable initializers. Specifically,
-    if a nonfailable initializer delegates to a failable initializer,
-    and if the failable initializer returns ``nil``, then the nonfailable initializer
-    also returns ``nil``.
+A nonfailable initializer can delegate only to other nonfailable initializers.
+Failable initializers can delegate to either nonfailable or failable initializers.
+In addition, a ``nil`` return value is propagated through failable initializer delegation.
+Specifically,
+if an initializer delegates to an initializer that fails,
+then the initializer that delegated also fails and implicitly returns ``nil``.
 
 
 .. langref-grammar
