@@ -61,7 +61,7 @@ rangeOfFourItems.firstValue = 6
 <a name="lazy_stored_properties"></a>
 ### 延迟存储属性
 
-延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`@lazy`来标示一个延迟存储属性。
+延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`lazy`来标示一个延迟存储属性。
 
 > 注意：  
 > 必须将延迟存储属性声明成变量（使用`var`关键字），因为属性的值在实例构造完成之前可能无法得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
@@ -81,14 +81,14 @@ class DataImporter {
 }
 
 class DataManager {
-    @lazy var importer = DataImporter()
-    var data = String[]()
+    lazy var importer = DataImporter()
+    var data = [String]()
     // 这是提供数据管理功能
 }
 
 let manager = DataManager()
-manager.data += "Some data"
-manager.data += "Some more data"
+manager.data.append("Some data")
+manager.data.append("Some more data")
 // DataImporter 实例的 importer 属性还没有被创建
 ```
 
@@ -98,7 +98,7 @@ manager.data += "Some more data"
 
 `DataManager`也可能不从文件中导入数据。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的是当用到`DataImporter`的时候才去创建它。
 
-由于使用了`@lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
+由于使用了`lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
 
 ```swift
 println(manager.importer.fileName)
@@ -109,7 +109,7 @@ println(manager.importer.fileName)
 <a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
-如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
 
 Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
 一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
@@ -285,7 +285,7 @@ stepCounter.totalSteps = 896
 另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器，计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
 
 > 注意：  
-> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`@lazy`特性。  
+> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`特性。  
 > 局部范围的常量或变量不会延迟计算。  
 
 <a name="type_properties"></a>
