@@ -464,7 +464,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: [String: String] = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["TYO": "Tokyo", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -495,7 +495,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["TYO": "Tokyo", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,

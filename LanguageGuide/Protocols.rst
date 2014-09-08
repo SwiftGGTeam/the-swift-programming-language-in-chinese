@@ -408,7 +408,7 @@ see :ref:`Initialization_RequiredInitializers`.
    -> class D2: C {
          init(s: String) { super.init(s: s) }
       }
-   !! <REPL Input>:2:6: error: override of required initializer missing 'required' modifier
+   !! <REPL Input>:2:6: error: 'required' modifier must be present on all overrides of a required initializer
    !! init(s: String) { super.init(s: s) }
    !! ^
    !! required

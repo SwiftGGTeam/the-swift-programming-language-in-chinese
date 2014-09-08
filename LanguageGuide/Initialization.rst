@@ -1334,10 +1334,10 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init() {}
       }
-   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
-   !! class D: C {
-   !!       ^
-   !! <REPL Input>:2:15: note: 'required' initializer 'init(i:)' not overridden
+   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !! }
+   !! ^
+   !! <REPL Input>:2:15: note: 'required' initializer is declared in superclass here
    !!    required init(i: Int) {}
    !!             ^
 
@@ -1352,10 +1352,10 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init(s: String) {}
       }
-   !! <REPL Input>:1:7: error: class 'D' does not implement its superclass's required members
-   !! class D: C {
-   !!       ^
-   !! <REPL Input>:3:27: note: 'required' initializer 'init(i:)' not overridden
+   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !! }
+   !! ^
+   !! <REPL Input>:3:27: note: 'required' initializer is declared in superclass here
    !!    required convenience init(i: Int) {
    !!                         ^
 
@@ -1380,7 +1380,7 @@ You do not write the ``override`` modifier when overriding a required designated
    -> class D: C {
          override required init() {}
       }
-   !! <REPL Input>:2:24: error: 'override' is redundant on a 'required' initializer
+   !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
    !! ~~~~~~~~          ^
    !!-

@@ -117,7 +117,7 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["spider": 8, "cat": 4, "ant": 6]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``

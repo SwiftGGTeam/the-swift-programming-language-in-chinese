@@ -358,7 +358,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : [Int : String] = [0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"]
+   << // digitNames : [Int : String] = [8: "Eight", 2: "Two", 4: "Four", 9: "Nine", 5: "Five", 6: "Six", 7: "Seven", 0: "Zero", 1: "One", 3: "Three"]
    -> let numbers = [16, 58, 510]
    << // numbers : [Int] = [16, 58, 510]
 
