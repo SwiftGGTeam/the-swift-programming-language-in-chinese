@@ -139,25 +139,6 @@ The addition operator is also supported for ``String`` concatenation:
    -> "hello, " + "world"  // equals "hello, world"
    << // r4 : String = "hello, world"
 
-Two ``Character`` values,
-or one ``Character`` value and one ``String`` value,
-can be added together to make a new ``String`` value:
-
-.. testcode:: arithmeticOperators
-
-   -> let dog: Character = "🐶"
-   << // dog : Character = 🐶
-   -> let cow: Character = "🐮"
-   << // cow : Character = 🐮
-   -> let dogCow = dog + cow
-   << // dogCow : String = "🐶🐮"
-   /> dogCow is equal to \"🐶🐮\"
-   </ dogCow is equal to "🐶🐮"
-
-See also :ref:`StringsAndCharacters_ConcatenatingStringsAndCharacters`.
-
-.. TODO: should I also mention array concatenation here once we have it?
-
 .. _BasicOperators_RemainderOperator:
 
 Remainder Operator
