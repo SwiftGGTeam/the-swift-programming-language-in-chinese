@@ -170,7 +170,7 @@ train.makeNoise()
 你可以将一个继承来的只读属性重写为一个读写属性，只需要你在重写版本的属性里提供 getter 和 setter 即可。但是，你不可以将一个继承来的读写属性重写为一个只读属性。
 
 > 注意：  
-如果你在重写属性中提供了 setter，那么你也一定要提供 getter。如果你不想在重写版本中的 getter 里修改继承来的属性值，你可以直接返回`super.someProperty`来返回继承来的值。正如下面的`SpeedLimitedCar`的例子所示。
+如果你在重写属性中提供了 setter，那么你也一定要提供 getter。如果你不想在重写版本中的 getter 里修改继承来的属性值，你可以直接通过`super.someProperty`来返回继承来的值，其中`someProperty`是你要重写的属性的名字。
 
 以下的例子定义了一个新类，叫`Car`，它是`Vehicle `的子类。这个类引入了一个新的存储属性叫做`gear `，默认为整数1。`Car`类重写了继承自`Vehicle `的description属性，提供自定义的，包含当前档位的描述：
 
