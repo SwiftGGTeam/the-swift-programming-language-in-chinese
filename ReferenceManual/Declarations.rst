@@ -1638,8 +1638,8 @@ As a result, a failable initializer can return ``nil`` to indicate that initiali
 To declare a failable initializer that produces an optional instance,
 append a question mark to the ``init`` keyword in the initializer declaration (``init?``).
 To declare a failable initializer that produces an implicitly unwrapped optional instance,
-append an exclamation mark instead (``init!``). The example below shows the first kind of
-failable initializer.
+append an exclamation mark instead (``init!``). The example below shows a
+failable initializer that produces an optional instance of a structure.
 
 .. testcode:: failable
 
@@ -1655,8 +1655,8 @@ failable initializer.
            }
        }
 
-You call a failable initializer in the same way as a nonfailable initializer,
-except that you must deal with the optionality of the result:
+You call a failable initializer in the same way that you call a nonfailable initializer,
+except that you must deal with the optionality of the result.
 
 .. testcode:: failable
 
@@ -1666,10 +1666,10 @@ except that you must deal with the optionality of the result:
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
 
-A failable initializer of a structure or an enumerations can return ``nil``
+A failable initializer of a structure or an enumeration can return ``nil``
 at any point in the implementation of the initializer's body.
 A failable initializer of a class, however, can return ``nil`` only after all
-of the class's stored properties are initialized and ``self.init`` or ``super.init``
+stored properties of that class are initialized and ``self.init`` or ``super.init``
 is called (that is, any initializer delegation is performed).
 
 A nonfailable initializer can delegate only to other nonfailable initializers.

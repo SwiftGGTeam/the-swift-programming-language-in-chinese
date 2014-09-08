@@ -6,7 +6,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-09-09  * Custom operators can now contain the ``?`` character.
+2014-09-09  * Added a new section about :ref:`Declarations_FailableInitializers`,
+              which can return ``nil`` to indicate that initialization failed.
+
+            * Custom operators can now contain the ``?`` character.
               Updated the :ref:`LexicalStructure_Operators` reference to describe
               the revised rules.
               Removed a duplicate description of the valid set of operator characters
