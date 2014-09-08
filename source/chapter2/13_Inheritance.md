@@ -25,7 +25,7 @@
 > 注意：  
 Swift 中的类并不是从一个通用的基类继承而来。如果你不为你定义的类指定一个超类的话，这个类就自动成为基类。
 
-下面的例子定义了一个叫`Vehicle`的基类。这个基类声明了一个名为`currentSpeed `，默认值是0.0的存储属性(属性类型推断为`Double `)。`currentSpeed `属性的值被一个`String` 类型的只读计算属性`description`使用，用来创建车辆的描述。
+下面的例子定义了一个叫`Vehicle`的基类。这个基类声明了一个名为`currentSpeed `，默认值是0.0的存储属性(属性类型推断为`Double `)。`currentSpeed `属性的值被一个`String` 类型的只读计算型属性`description`使用，用来创建车辆的描述。
 
 `Vehicle`基类也定义了一个名为`makeNoise`的方法。这个方法实际上不为`Vehicle`实例做任何事，但之后将会被`Vehicle`的子类定制
 
@@ -80,7 +80,7 @@ class Bicycle: Vehicle {
 
 新的`Bicycle`类自动获得`Vehicle`类的所有特性，比如 `currentSpeed `和`description`属性，还有它的`makeNoise`方法。
 
-除了它所继承的特性，`Bicycle`类还定义了一个默认值为`false`的存储属性`hasBasket`（属性推断为`Bool`）。
+除了它所继承的特性，`Bicycle`类还定义了一个默认值为`false`的存储型属性`hasBasket`（属性推断为`Bool`）。
 
 默认情况下，你创建任何新的`Bicycle`实例将不会有一个篮子，创建该实例之后，你可以为特定的`Bicycle`实例设置`hasBasket `属性为`ture`：
  
@@ -105,7 +105,7 @@ class Tandem: Bicycle {
 }
 ```
 
-`Tandem`从`Bicycle`继承了所有的属性与方法，这又使它同时继承了`Vehicle`的所有属性与方法。`Tandem`也增加了一个新的叫做`currentNumberOfPassengers`的存储属性，默认值为0。
+`Tandem`从`Bicycle`继承了所有的属性与方法，这又使它同时继承了`Vehicle`的所有属性与方法。`Tandem`也增加了一个新的叫做`currentNumberOfPassengers`的存储型属性，默认值为0。
 
 如果你创建了一个`Tandem`的实例，你可以使用它所有的新属性和继承的属性，还能查询从`Vehicle`继承来的只读属性`description `：
 
@@ -151,7 +151,7 @@ class Train: Vehicle {
 }
 ```
 
-如果你创建一个`Train `的新实例，并调用了它的`makeNoise `方法，你就会发现`Train `版本的方法被调用
+如果你创建一个`Train `的新实例，并调用了它的`makeNoise `方法，你就会发现`Train `版本的方法被调用：
 
 ```swift
 let train = Train()
@@ -172,7 +172,7 @@ train.makeNoise()
 > 注意：  
 如果你在重写属性中提供了 setter，那么你也一定要提供 getter。如果你不想在重写版本中的 getter 里修改继承来的属性值，你可以直接通过`super.someProperty`来返回继承来的值，其中`someProperty`是你要重写的属性的名字。
 
-以下的例子定义了一个新类，叫`Car`，它是`Vehicle `的子类。这个类引入了一个新的存储属性叫做`gear `，默认为整数1。`Car`类重写了继承自`Vehicle `的description属性，提供自定义的，包含当前档位的描述：
+以下的例子定义了一个新类，叫`Car`，它是`Vehicle `的子类。这个类引入了一个新的存储型属性叫做`gear `，默认为整数1。`Car`类重写了继承自`Vehicle `的description属性，提供自定义的，包含当前档位的描述：
 
 ```swift
 class Car: Vehicle {
