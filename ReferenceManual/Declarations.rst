@@ -1643,17 +1643,15 @@ failable initializer.
 
 .. testcode:: failable
 
-    >> func someOperationThatCouldReturnNil() -> Int? { return 5 }
-    -> struct S {
-           // produces an optional instance of 'S'
-           init?(value: Int) {
-               if let x = value.someOperationThatCouldReturnNil() {
-                   // initialize 'self'
-                   self = x
-               } else {
+    -> struct SomeStruct {
+           let string: String
+           // produces an optional instance of 'SomeStruct'
+           init?(input: String) {
+               if input.isEmpty {
                    // discard 'self' and return 'nil'
                    return nil
                }
+               string = input
            }
        }
 
@@ -1662,10 +1660,10 @@ except that you must deal with the optionality of the result:
 
 .. testcode:: failable
 
-    -> if let actualInstance = S(value: 42) {
-           // do something with the instance of 'S'
+    -> if let actualInstance = SomeStruct(input: "Hello") {
+           // do something with the instance of 'SomeStruct'
        } else {
-           // initialization of 'S' failed and the initializer returned 'nil'
+           // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
 
 A failable initializer of a structure or an enumerations can return ``nil``
