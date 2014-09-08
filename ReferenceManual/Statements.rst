@@ -670,7 +670,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 Return Statement
 ~~~~~~~~~~~~~~~~
 
-A ``return`` statement occurs only in the body of a function or method definition
+A ``return`` statement occurs in the body of a function or method definition
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
@@ -688,6 +688,11 @@ If the value of the expression does not match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
+
+.. note::
+
+    As described in :ref:`Declarations_FailableInitializers`, a special form of the ``return`` statement (``return nil``)
+    can be used in a failable initializer to indicate initialization failure.
 
 .. TODO: Discuss how the conversion takes place and what is allowed to be converted
     in the (yet to be written) chapter on subtyping and type conversions.
