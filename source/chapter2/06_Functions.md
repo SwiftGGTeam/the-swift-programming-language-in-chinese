@@ -349,8 +349,12 @@ arithmeticMean(3, 8, 19)
 ```swift
 func alignRight(var string: String, count: Int, pad: Character) -> String {
     let amountToPad = count - countElements(string)
+    if amountToPad < 1 {
+        return string
+    }
+    let padString = String(pad)
     for _ in 1...amountToPad {
-        string = pad + string
+        string = padString + string
     }
     return string
 }
