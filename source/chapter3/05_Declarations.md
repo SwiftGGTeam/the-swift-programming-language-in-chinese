@@ -22,6 +22,7 @@
 - [扩展声明](#extension_declaration)
 - [下标脚本声明](#subscript_declaration)
 - [运算符声明](#operator_declaration)
+- [声明修饰符](#declaration_modifiers)
 
 一条声明可以在你的程序里引入新的名字和构造。举例来说，你可以使用声明来引入函数和方法，变量和常量，或者来定义
 新的命名好的枚举，结构，类和协议类型。你也可以使用一条声明来延长一个已经存在的命名好的类型的行为。或者在你的
@@ -853,3 +854,70 @@ _中缀_运算符是二元运算符，它可以被置于两个操作数之间，
 > *优先级水平* → 数值 0 到 255  
 > *结和性子句* → **associativity** [*结和性*](..\chapter3\05_Declarations.html#associativity)  
 > *结和性* → **left** | **right** | **none**  
+
+
+<a name="declaration_modifiers"></a>
+## 声明修饰符
+
+
+声明修饰符是关键字或者说是上下文相关的关键字，它可以修改一个声明的行为或者含义。你可以在一个声明的特性和引进该声明的关键字之间，指定一个声明修饰符，并写下它的关键字或上下文相关的关键字。
+
+`dynamic`
+可以将该修饰符用于任何可以出现在Objective-C中的类成员上。当你将`dynamic`修饰符用于一个成员声明上时，对该成员的访问总是由Objective-C的实时系统动态地安排，而永远不会由编译器内联或去虚拟化。
+因为当一个声明被标识`dynamic`修饰符时，会由Objective-C的实时系统动态地安排，所以他们是被隐式的标识了`objc`特性的。
+
+`final`
+
+该修饰符用于修饰一个类或类中的属性，方法，以及下标成员。如果用它修饰一个类，那么这个类则不能被继承。如果用它修饰类中的属性，方法或下标，则表示在子类中，它们不能被重写。
+
+`lazy`
+
+该修饰符用于修饰类或结构体中的存储型变量属性，表示该属性的初始值最多只被计算和存储一次，且发生在第一次访问它时。如何使用`lazy`特性的一个例子，请见：[惰性存储型属性]()。
+
+`optional`
+
+该修饰符用于修饰一个类或类中的属性，方法，以及下标成员,表示遵循类型没有被要求实现这些成员。
+你只能将`optional`修饰符用于被`objc`标识的协议。这样一来，只有类类型可以适配或遵循拥有可选成员需求的协议。关于如何使用`optional`修饰符,以及如何访问可选协议成员的指导(比如，你不确定遵循类型是否已经实现了这些可选成员)，你可以参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_415">可选成员需求</a>一章
+
+`required`
+
+该修饰符用于修饰一个类的特定构造器或便捷构造器,表示该类所有的子类都需要实现该构造器。在子类实现该构造器时，同样必须使用`required`修饰符修饰该构造器。
+
+
+`weak`
+
+`weak`修饰符用于修饰一个变量或一个存储型变量属性，表示该变量或属性通过一个弱引用指向存储其值的对象。该变量或属性的类型必须是一个可选类类型。通过`weak`修饰符可避免强引用循环。关于`weak`修饰符的例子和更多信息，你可以参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_94">弱引用</a>一章
+
+### 权限控制的级别
+
+
+Swift提供了三个级别的权限控制：`public`, `internal`, 和 `private`。你可以给声明标识以下访问级别修饰符中的一个以指定声明的权限级别。权限控制在<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-XID_29">权限控制</a>一章有详细说明。
+
+`public`
+
+修饰符用于修饰声明时，表示该声明可被同一个模块中的代码访问。被`public`权限级别修饰符修饰的声明，还可被其他模块的代码访问，只要该模块注入了该声明所在的模块。
+
+`internal`
+
+修饰符用于修饰声明时，表示该声明只能被同一模块中的代码访问。默认的，绝大多数声明会被隐式的标识上`internal`权限级别修饰符
+
+
+`private`
+
+修饰符用于修饰声明时，表示该声明只能被同一源文件中的代码访问。
+
+
+以上的任意一个权限级别修饰符都可以有选择的带上一个参数，该参数由关键字`set`和一对括号组成（比如，`private(set)`）。当你想要指明一个变量或下标脚注的setter的访问级别要低于或等于该变量或下标脚注的实际访问级别时，使用这种格式的权限级别修饰符，就像<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-XID_49">Getters and Setters</a>一章中讨论的一样。
+
+>声明修饰符的语法
+
+>声明修饰符 → class­ | convenience­ | dynamic­ | final­ | infix­ | lazy­ | mutating­ | nonmutating­ | optional­ | override­ | postfix |­ prefix­ | required­ | static­ | unowned­ | unowned­(­safe­)­ | unowned­(­unsafe­)­ | weak­
+
+>声明修饰符 → 权限级别修饰符­
+>
+>权限级别修饰符 → internal­  internal­(­set­)­
+>
+>权限级别修饰符 → private­  private­(­set­)­
+>
+>权限级别修饰符 → public­  public­(­set­)­
+­
