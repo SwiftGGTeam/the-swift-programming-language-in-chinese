@@ -951,10 +951,15 @@ In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value 
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
-The raw value of an enumeration case can be accessed by calling its ``toRaw`` method,
-as in ``ExampleEnum.B.toRaw()``.
+Enumerations that have cases of a raw-value type implicitly conform to the
+``RawRepresentable`` protocol, defined in the Swift standard library.
+As a result, they have a ``rawValue`` property
+and a failable initializer with the signature ``init?(rawValue: RawType)``.
+You can use the ``rawValue`` property to access the raw value of an enumeration case,
+as in ``ExampleEnum.B.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
-by calling the ``fromRaw`` method, which returns an optional case.
+by calling the enumeration's failable initializer,
+as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
 For more information and to see examples of cases with raw value types,
 see :ref:`Enumerations_RawValues`.
 
