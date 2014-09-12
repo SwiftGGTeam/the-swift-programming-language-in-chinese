@@ -6,6 +6,13 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-09-15  * Enumerations with raw values
+              now have a ``rawValue`` property rather than a ``toRaw()`` method
+              and a failable initializer with a ``rawValue`` parameter
+              rather than a ``fromRaw()`` method.
+              For more information, see :ref:`Enumerations_RawValues`
+              and :ref:`Declarations_EnumerationsWithRawCaseValues`.
+----------  --------------------------------------------------------------------------
 2014-09-09  * Added a new section about :ref:`Declarations_FailableInitializers`,
               which can return ``nil`` to indicate that initialization failed.
 
