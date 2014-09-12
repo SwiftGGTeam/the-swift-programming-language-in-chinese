@@ -954,7 +954,7 @@ from ``5`` and is therefore ``6``.
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
 As a result, they have a ``rawValue`` property
-and a failable initializer with the signature ``init?(rawValue: RawType)``.
+and a failable initializer with the signature ``init?(rawValue: RawValue)``.
 You can use the ``rawValue`` property to access the raw value of an enumeration case,
 as in ``ExampleEnum.B.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
