@@ -854,15 +854,15 @@ enumerations can have methods associated with them.
    by comparing their raw values.
 
 In the example above,
-the raw value type of the enumeration is ``Int``,
+the raw-value type of the enumeration is ``Int``,
 so you only have to specify the first raw value.
 The rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
+Use the ``rawValue`` property to access the raw value of an enumeration member.
 
-Use the ``rawValue`` property
-and the ``init(rawValue:)`` initializer
-between the raw value and the enumeration value.
+Use the ``init?(rawValue:)`` initializer
+to make an instance of an enumeration from a raw value.
 
 .. testcode:: guided-tour
 
@@ -915,7 +915,7 @@ When assigning a value to the ``hearts`` constant,
 the enumeration member ``Suit.Hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
 Inside the switch,
-the enumeration is referred to by the abbreviated form ``.Hearts``
+the enumeration member is referred to by the abbreviated form ``.Hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
