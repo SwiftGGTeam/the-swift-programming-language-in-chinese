@@ -336,38 +336,53 @@ with raw integer values to represent each planet's order from the sun:
 
 Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
 
-Access the raw value of an enumeration member with its ``toRaw`` method:
+Access the raw value of an enumeration member with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
-   -> let earthsOrder = Planet.Earth.toRaw()
+   -> let earthsOrder = Planet.Earth.rawValue
    << // earthsOrder : Int = 3
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
 
-Use an enumeration's ``fromRaw`` method
-to try to find an enumeration member with a particular raw value.
+.. _Enumerations_InitializingFromARawValue:
+
+Initializing from a Raw Value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you define an enumeration with a raw value type,
+the enumeration automatically receives an initializer
+that takes a value of the raw value's type (as a parameter called ``rawValue``)
+and returns either an enumeration member or ``nil``.
+You can use this initializer to try to create a new instance of the enumeration.
+
 This example identifies Uranus from its raw value of ``7``:
 
 .. testcode:: rawValues
 
-   -> let possiblePlanet = Planet.fromRaw(7)
+   -> let possiblePlanet = Planet(rawValue: 7)
    << // possiblePlanet : Planet? = Optional((Enum Value))
    // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 Not all possible ``Int`` values will find a matching planet, however.
-Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
+Because of this, the raw value initializer always returns an *optional* enumeration member.
 In the example above, ``possiblePlanet`` is of type ``Planet?``,
 or “optional ``Planet``.”
 
-If you try to find a Planet with a position of ``9``,
-the optional ``Planet`` value returned by ``fromRaw`` will be ``nil``:
+.. note::
+
+   The raw value initializer is a failable initializer,
+   because not every raw value will return an enumeration member.
+   For more information, see :ref:`Declarations_FailableInitializers`.
+
+If you try to find a planet with a position of ``9``,
+the optional ``Planet`` value returned by the raw value initializer will be ``nil``:
 
 .. testcode:: rawValues
 
    -> let positionToFind = 9
    << // positionToFind : Int = 9
-   -> if let somePlanet = Planet.fromRaw(positionToFind) {
+   -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
             case .Earth:
                println("Mostly harmless")
@@ -380,8 +395,8 @@ the optional ``Planet`` value returned by ``fromRaw`` will be ``nil``:
    <- There isn't a planet at position 9
 
 This example uses optional binding to try to access a planet with a raw value of ``9``.
-The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``Planet``,
-and sets ``somePlanet`` to the contents of that optional ``Planet`` if it can be retrieved.
+The statement ``if let somePlanet = Planet(rawValue: 9)`` creates an optional ``Planet``,
+and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
 In this case, it is not possible to retrieve a planet with a position of ``9``,
 and so the ``else`` branch is executed instead.
 

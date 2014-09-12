@@ -49,7 +49,7 @@ which is nested within the ``Rank`` enumeration:
                   case .Jack, .Queen, .King:
                      return Values(first: 10, second: nil)
                   default:
-                     return Values(first: self.toRaw(), second: nil)
+                     return Values(first: self.rawValue, second: nil)
                }
             }
          }
@@ -57,7 +57,7 @@ which is nested within the ``Rank`` enumeration:
          // BlackjackCard properties and methods
          let rank: Rank, suit: Suit
          var description: String {
-            var output = "suit is \(suit.toRaw()),"
+            var output = "suit is \(suit.rawValue),"
             output += " value is \(rank.values.first)"
             if let second = rank.values.second {
                output += " or \(second)"
@@ -126,7 +126,7 @@ prefix its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
-   -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+   -> let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
    << // heartsSymbol : Character = ♡
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"
