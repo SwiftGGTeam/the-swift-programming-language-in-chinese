@@ -839,13 +839,13 @@ enumerations can have methods associated with them.
                    case .King:
                        return "king"
                    default:
-                       return String(self.toRaw())
+                       return String(self.rawValue)
                }
            }
        }
     -> let ace = Rank.Ace
     << // ace : Rank = (Enum Value)
-    -> let aceRawValue = ace.toRaw()
+    -> let aceRawValue = ace.rawValue
     <$ : Int = 1
 
 .. admonition:: Experiment
@@ -860,12 +860,13 @@ The rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
 
-Use the ``toRaw`` and ``fromRaw`` functions to convert
+Use the ``rawValue`` property
+and the ``init(rawValue:)`` initializer
 between the raw value and the enumeration value.
 
 .. testcode:: guided-tour
 
-    -> if let convertedRank = Rank.fromRaw(3) {
+    -> if let convertedRank = Rank(rawValue: 3) {
            let threeDescription = convertedRank.simpleDescription()
        }
 
