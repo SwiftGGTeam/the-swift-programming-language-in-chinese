@@ -350,7 +350,7 @@ Access the raw value of an enumeration member with its ``rawValue`` property:
 Initializing from a Raw Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you define an enumeration with a raw value type,
+If you define an enumeration with a raw-value type,
 the enumeration automatically receives an initializer
 that takes a value of the raw value's type (as a parameter called ``rawValue``)
 and returns either an enumeration member or ``nil``.

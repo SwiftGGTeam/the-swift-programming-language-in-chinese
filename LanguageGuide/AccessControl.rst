@@ -386,7 +386,7 @@ ________________________________
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
-You cannot use a ``private`` type as the raw value type of
+You cannot use a ``private`` type as the raw-value type of
 an enumeration with an ``internal`` access level, for example.
 
 .. _AccessControl_NestedTypes:
