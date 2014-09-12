@@ -951,6 +951,9 @@ a matching implementation of a superclass convenience initializer.
    !! <REPL Input>:7:27: error: initializer does not override a designated initializer from its superclass
    !! override convenience init() {
    !! ~~~~~~~~             ^
+   !! <REPL Input>:6:18: note: attempt to override convenience initializer here
+   !! convenience init() {
+   !! ^
 
 The example below defines a base class called ``Vehicle``.
 This base class declares a stored property called ``numberOfWheels``,
