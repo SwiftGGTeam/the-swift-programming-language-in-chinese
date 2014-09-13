@@ -157,7 +157,8 @@ the index or key in brackets.
    Can't find the specific episode,
    but it shows up in several lists of Firefly "best of" quotes:
 
-   Mal: Jayne, you will keep a civil tongue in that mouth, or I will sew it shut. Is there an understanding between us?
+   Mal: Jayne, you will keep a civil tongue in that mouth, or I will sew it shut.
+        Is there an understanding between us?
    Jayne: You don't pay me to talk pretty. [...]
    Mal: Walk away from this table. Right now.
    [Jayne loads his plate with food and leaves]
@@ -232,6 +233,10 @@ Braces around the body are required.
    This is a simple way to see the value
    of a variable inside a playground.
 
+.. REFERENCE
+   Jelly babies are a candy/sweet that was closely associated
+   with past incartations of the Doctor in Dr. Who.
+
 ..
    -> let haveJellyBabies = true
    << // haveJellyBabies : Bool = true
@@ -296,6 +301,8 @@ and tests for equality.
 .. REFERENCE
    The vegetables and foods made from vegetables
    were just a convenient choice for a switch statement.
+   They have various properties
+   and fit with the apples & oranges used in an earlier example.
 
 .. testcode:: guided-tour
 
@@ -371,6 +378,12 @@ in an arbitrary order.
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
+
+
+.. REFERENCE
+   This example is rather skeletal -- m and n are pretty boring.
+   I couldn't come up with anything suitably interesting at the time though,
+   so I just went ahead and used this.
 
 .. testcode:: guided-tour
 
@@ -448,6 +461,12 @@ Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
+
+.. REFERENCE
+   Min, max, and sum are convenient for this example
+   because they are all simple operations
+   that are performed on the same kind of data.
+   This gives the function a reason to return a tuple.
 
 .. testcode:: guided-tour
 
@@ -618,7 +637,8 @@ as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
 
-.. Shapes are used as the example object
+.. REFERENCE
+   Shapes are used as the example object
    because they're familiar and they have a sense of properties
    and a sense of inheritence/subcategorization.
    They're not a perfect fit --
@@ -873,11 +893,17 @@ the value of the whole expression is an optional value.
 Enumerations and Structures
 ---------------------------
 
-.. XXX Ended here XXX
-
 Use ``enum`` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
+
+.. REFERENCE
+   Playing cards work pretty well to demonstrate enumerations
+   because they have two aspects, suit and rank,
+   both of which come from a small finite set.
+   The deck used here is probably the most common,
+   at least through most of Europe and the Americas,
+   but there are many other regional variations.
 
 .. testcode:: guided-tour
 
@@ -1021,6 +1047,36 @@ the sunrise and sunset time from a server.
 The server either responds with the information
 or it responds with some error information.
 
+.. REFERENCE
+   The server response is a simple way to essentially re-implement Optional
+   while sidestepping the fact that I'm doing so.
+
+   "Out of cheese" is a reference to a Terry Pratchet book,
+   which features a computer named Hex.
+   Hex's other error messages include:
+
+        - Out of Cheese Error. Redo From Start.
+        - Mr. Jelly! Mr. Jelly! Error at Address Number 6, Treacle Mine Road.
+        - Melon melon melon
+        - +++ Wahhhhhhh! Mine! +++
+        - +++ Divide By Cucumber Error. Please Reinstall Universe And Reboot +++
+        - +++Whoops! Here comes the cheese! +++
+
+   These messages themselves are references to BASIC interpreters
+   (REDO FROM START) and old Hayes-compatible modems (+++).
+
+   The "out of cheese error" may be a reference to a military computer
+   although I can't find the source of this story anymore.
+   As the story goes, during the course of a rather wild party,
+   had one of its vacuum tube cabinets opened to provide heat to the room
+   and allegedly got a cheese tray bashed into it.
+   As the story goes, through coincidence,
+   the computer kept on working even though some of the tubes were broken
+   and had cheese splattered & melted all over them.
+   Tech were dispatched to make sure the computer was ok
+   and told add more cheese if necesary --
+   the boss didn't want an "out of cheese error" interrupting the calculation.
+
 .. testcode:: guided-tour
 
     -> enum ServerResponse {
@@ -1078,6 +1134,12 @@ Use ``protocol`` to declare a protocol.
        }
 
 Classes, enumerations, and structs can all adopt protocols.
+
+.. REFERENCE
+   The use of adjust() is totally a placeholder
+   for some more interesting operation.
+   Likewise for the struct and classes -- placeholders
+   for some more interesting data structure.
 
 .. testcode:: guided-tour
 
@@ -1168,6 +1230,11 @@ Generics
 
 Write a name inside angle brackets
 to make a generic function or type.
+
+.. REFERENCE
+   The four knocks is a reference to Dr Who series 4,
+   in which knocking four times is a running aspect
+   of the season's plot.
 
 .. testcode:: guided-tour
 
