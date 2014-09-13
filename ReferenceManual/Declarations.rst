@@ -960,7 +960,7 @@ as in ``ExampleEnum.B.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
 by calling the enumeration's failable initializer,
 as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
-For more information and to see examples of cases with raw value types,
+For more information and to see examples of cases with raw-value types,
 see :ref:`Enumerations_RawValues`.
 
 Accessing Enumeration Cases
@@ -980,11 +980,11 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
 
 .. NOTE: Note that you can require protocol adoption,
-    by using a protocol type as the raw value type,
+    by using a protocol type as the raw-value type,
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
-    You can have: <#raw value type, protocol conformance#>.
-    UPDATE: You can only have one raw value type specified.
+    You can have: <#raw-value type, protocol conformance#>.
+    UPDATE: You can only have one raw-value type specified.
     I changed the grammar to be more restrictive in light of this.
 
 .. langref-grammar
