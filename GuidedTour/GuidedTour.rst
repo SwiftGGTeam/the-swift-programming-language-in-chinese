@@ -144,6 +144,29 @@ Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
 
+.. REFERENCE
+   Shopping list is a reference to the book "Paper Towns" by John Green
+   and the song "The List" by Hank Green.
+   See <https://www.youtube.com/watch?v=4JUvTTm0whA>
+
+.. REFERENCE
+   Occupations is a reference to Firefly,
+   specifically to Mal's joke about Jayne's job on the ship.
+    
+
+   Can't find the specific episode,
+   but it shows up in several lists of Firefly "best of" quotes:
+
+   Mal: Jayne, you will keep a civil tongue in that mouth, or I will sew it shut.
+        Is there an understanding between us?
+   Jayne: You don't pay me to talk pretty. [...]
+   Mal: Walk away from this table. Right now.
+   [Jayne loads his plate with food and leaves]
+   Simon: What *do* you pay him for?
+   Mal: What?
+   Simon: I was just wondering what his job is - on the ship.
+   Mal: Public relations.
+
 .. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
@@ -210,6 +233,10 @@ Braces around the body are required.
    This is a simple way to see the value
    of a variable inside a playground.
 
+.. REFERENCE
+   Jelly babies are a candy/sweet that was closely associated
+   with past incartations of the Doctor in Dr. Who.
+
 ..
    -> let haveJellyBabies = true
    << // haveJellyBabies : Bool = true
@@ -229,6 +256,11 @@ An optional value either contains a value
 or contains ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
+
+.. REFERENCE
+   John Appleseed is a stock Apple fake name,
+   going back at least to the contacts database
+   that ships with the SDK in the simulator.
 
 .. testcode:: guided-tour
 
@@ -265,6 +297,12 @@ Switches support any kind of data
 and a wide variety of comparison operations ---
 they aren't limited to integers
 and tests for equality.
+
+.. REFERENCE
+   The vegetables and foods made from vegetables
+   were just a convenient choice for a switch statement.
+   They have various properties
+   and fit with the apples & oranges used in an earlier example.
 
 .. testcode:: guided-tour
 
@@ -306,6 +344,12 @@ Dictionaries are an unordered collection,
 so their keys and values are iterated over
 in an arbitrary order.
 
+.. REFERENCE
+   Prime, square, and fibonacci numbers
+   are just convenient sets of numbers
+   that many developers are already familiar with
+   that we can use for some simple math.
+
 .. testcode:: guided-tour
 
    -> let interestingNumbers = [
@@ -334,6 +378,12 @@ in an arbitrary order.
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
+
+
+.. REFERENCE
+   This example is rather skeletal -- m and n are pretty boring.
+   I couldn't come up with anything suitably interesting at the time though,
+   so I just went ahead and used this.
 
 .. testcode:: guided-tour
 
@@ -388,6 +438,12 @@ with a list of arguments in parentheses.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
 
+.. REFERENCE
+   Bob is used as just a generic name,
+   but also a callout to Alex's dad.
+   Tuesday is used on the assumption that lots of folks would be reading
+   on the Tuesday after the WWDC keynote.
+
 .. testcode:: guided-tour
 
     -> func greet(name: String, day: String) -> String {
@@ -405,6 +461,12 @@ Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
+
+.. REFERENCE
+   Min, max, and sum are convenient for this example
+   because they are all simple operations
+   that are performed on the same kind of data.
+   This gives the function a reason to return a tuple.
 
 .. testcode:: guided-tour
 
@@ -574,6 +636,14 @@ A property declaration in a class is written the same way
 as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
+
+.. REFERENCE
+   Shapes are used as the example object
+   because they're familiar and they have a sense of properties
+   and a sense of inheritence/subcategorization.
+   They're not a perfect fit --
+   they might be better off modeled as structures --
+   but that wouldn't let them inherit behavior.
 
 .. testcode:: guided-tour
 
@@ -745,6 +815,11 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
+.. This triangle + square example could use improvement.
+   The goal is to show why you would want to use willSet,
+   but it was constrained by the fact that
+   we're working in the context of geometric shapes.
+
 .. testcode:: guided-tour
 
    -> class TriangleAndSquare {
@@ -821,6 +896,14 @@ Enumerations and Structures
 Use ``enum`` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
+
+.. REFERENCE
+   Playing cards work pretty well to demonstrate enumerations
+   because they have two aspects, suit and rank,
+   both of which come from a small finite set.
+   The deck used here is probably the most common,
+   at least through most of Europe and the Americas,
+   but there are many other regional variations.
 
 .. testcode:: guided-tour
 
@@ -964,6 +1047,36 @@ the sunrise and sunset time from a server.
 The server either responds with the information
 or it responds with some error information.
 
+.. REFERENCE
+   The server response is a simple way to essentially re-implement Optional
+   while sidestepping the fact that I'm doing so.
+
+   "Out of cheese" is a reference to a Terry Pratchet book,
+   which features a computer named Hex.
+   Hex's other error messages include:
+
+        - Out of Cheese Error. Redo From Start.
+        - Mr. Jelly! Mr. Jelly! Error at Address Number 6, Treacle Mine Road.
+        - Melon melon melon
+        - +++ Wahhhhhhh! Mine! +++
+        - +++ Divide By Cucumber Error. Please Reinstall Universe And Reboot +++
+        - +++Whoops! Here comes the cheese! +++
+
+   These messages themselves are references to BASIC interpreters
+   (REDO FROM START) and old Hayes-compatible modems (+++).
+
+   The "out of cheese error" may be a reference to a military computer
+   although I can't find the source of this story anymore.
+   As the story goes, during the course of a rather wild party,
+   had one of its vacuum tube cabinets opened to provide heat to the room
+   and allegedly got a cheese tray bashed into it.
+   As the story goes, through coincidence,
+   the computer kept on working even though some of the tubes were broken
+   and had cheese splattered & melted all over them.
+   Tech were dispatched to make sure the computer was ok
+   and told add more cheese if necesary --
+   the boss didn't want an "out of cheese error" interrupting the calculation.
+
 .. testcode:: guided-tour
 
     -> enum ServerResponse {
@@ -1021,6 +1134,12 @@ Use ``protocol`` to declare a protocol.
        }
 
 Classes, enumerations, and structs can all adopt protocols.
+
+.. REFERENCE
+   The use of adjust() is totally a placeholder
+   for some more interesting operation.
+   Likewise for the struct and classes -- placeholders
+   for some more interesting data structure.
 
 .. testcode:: guided-tour
 
@@ -1111,6 +1230,11 @@ Generics
 
 Write a name inside angle brackets
 to make a generic function or type.
+
+.. REFERENCE
+   The four knocks is a reference to Dr Who series 4,
+   in which knocking four times is a running aspect
+   of the season's plot.
 
 .. testcode:: guided-tour
 
