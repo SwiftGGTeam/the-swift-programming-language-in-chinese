@@ -1068,14 +1068,16 @@ or it responds with some error information.
    The "out of cheese error" may be a reference to a military computer
    although I can't find the source of this story anymore.
    As the story goes, during the course of a rather wild party,
-   had one of its vacuum tube cabinets opened to provide heat to the room
-   and allegedly got a cheese tray bashed into it.
-   As the story goes, through coincidence,
+   one of the computer's vacuum tube cabinets
+   was opened to provide heat to a cold room in the winter.
+   As the story goes, through great coincidence,
+   when got a cheese tray bashed into it during the celebration,
    the computer kept on working even though some of the tubes were broken
    and had cheese splattered & melted all over them.
    Tech were dispatched to make sure the computer was ok
    and told add more cheese if necesary --
-   the boss didn't want an "out of cheese error" interrupting the calculation.
+   the officer in charge said that he didn't want
+   an "out of cheese error" interrupting the calculation.
 
 .. testcode:: guided-tour
 
