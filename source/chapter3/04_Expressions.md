@@ -73,7 +73,7 @@ Swift 标准库提供了如下的二元运算符：
   - | 按位或（Bitwise OR ）
   - ^ 按位异或（Bitwise XOR）
 - Range （无结合,优先级 135）
-  - .. 半闭值域 Half-closed range
+  - ..< 半闭值域 Half-closed range
   - ... 全闭值域 Closed range
 - 类型转换 （无结合,优先级 132）
   - is 类型检查（ type check）

@@ -200,11 +200,11 @@ do {
 m
 ```
 
-你可以在循環中使用`..`來表示範圍，也可以使用傳統的寫法，兩者是等價的：
+你可以在循環中使用`..<`來表示範圍，也可以使用傳統的寫法，兩者是等價的：
 
 ```swift
 var firstForLoop = 0
-for i in 0..3 {
+for i in 0..<3 {
     firstForLoop += i
 }
 firstForLoop
@@ -216,7 +216,7 @@ for var i = 0; i < 3; ++i {
 secondForLoop
 ```
 
-使用`..`創建的範圍不包含上界，如果想包含的話需要使用`...`。
+使用`..<`創建的範圍不包含上界，如果想包含的話需要使用`...`。
 
 <a name="functions_and_closures"></a>
 ## 函數和閉包
