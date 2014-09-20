@@ -289,7 +289,7 @@ increment(7)
 函数也可以当做参数传入另一个函数。
 
 ```swift
-func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
     for item in list {
         if condition(item) {
             return true
