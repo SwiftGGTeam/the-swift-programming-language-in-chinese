@@ -320,13 +320,15 @@ numbers.map({
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
 ```swift
-numbers.map({ number in 3 * number })
+let mappedNumbers = numbers.map({ number in 3 * number })
+mappedNumbers
 ```
 
 你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
 
 ```swift
-sort([1, 5, 3, 12, 2]) { $0 > $1 }
+let sortedNumbers = sorted(numbers) { $0 > $1 }
+sortedNumbers
 ```
 
 <a name="objects_and_classes"></a>
