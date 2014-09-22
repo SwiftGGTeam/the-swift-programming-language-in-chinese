@@ -1313,10 +1313,254 @@ shows that their default states have been set as expected.
 .. TODO: Feedback from Beto is that it would be useful to indicate the flow
    through these inherited initializers.
 
+.. _Initialization_FailableInitializers:
+ 
+Failable Initializers
+---------------------
+ 
+It is sometimes useful to define a class, structure, or enumeration
+for which initialization can fail.
+This failure might be triggered by invalid initialization parameter values,
+or the absence of a required external resource,
+or some other condition that prevents initialization from succeeding.
+
+To cope with initialization conditions that can fail,
+define one or more :newTerm:`failable initializers` as part of
+a class, structure, or enumeration definition.
+You write a failable initializer by placing a question mark after the ``init`` keyword
+(``init?``) as part of the initializer's definition.
+
+.. note::
+
+   You cannot define a failable and a non-failable initializer
+   with the same parameter types and names.
+
+.. assertion:: failableAndNonFailableInitializersCannotMatch
+
+   -> struct S {
+         let s: String
+         init(s: String) { self.s = s }
+         init?(s: String) { self.s = s }
+      }
+   !! <REPL Input>:4:12: error: invalid redeclaration of 'init(s:)'
+   !!            init?(s: String) { self.s = s }
+   !!            ^
+   !! <REPL Input>:3:12: note: 'init(s:)' previously declared here
+   !!            init(s: String) { self.s = s }
+   !!            ^
+
+A failable initializer always returns an *optional* value of the type it initializes.
+You write ``return nil`` within the initializer's definition
+to trigger an initialization failure.
+
+.. note::
+
+   Initialization failure is always triggered by writing ``return nil`` within an initializer,
+   even though you do not specify a return type as part of an initializer's definition.
+   ``nil`` is the only value that can be returned from a failable initializer.
+   You do not return a value if initialization succeeds.
+
+The example below defines a structure called ``Animal``,
+with a constant ``String`` property called ``species``.
+The ``Animal`` structure also defines a failable initializer
+with a single parameter called ``species``.
+This initializer checks if the ``species`` value passed to the initializer is an empty string.
+If an empty string is found, an initialization failure is triggered.
+Otherwise, the ``species`` property's value is set, and initialization succeeds:
+
+.. testcode:: failableInitializers
+
+   -> struct Animal {
+         let species: String
+         init?(species: String) {
+            if species.isEmpty { return nil }
+            self.species = species
+         }
+      }
+
+You can use this failable initializer to try to initialize a new ``Animal`` instance
+and to check if initialization succeeded:
+
+.. testcode:: failableInitializers
+
+   -> let someCreature = Animal(species: "Giraffe")
+   << // someCreature : Animal? = Optional(REPL.Animal)
+   // someCreature is of type Animal?, not Animal
+   ---
+   -> if let giraffe = someCreature {
+         println("An animal was initialized with a species of \(giraffe.species)")
+      }
+   <- An animal was initialized with a species of Giraffe
+
+If you pass an empty string value to the failable initializer's ``species`` parameter,
+the initializer returns ``nil`` and initialization fails:
+
+.. testcode:: failableInitializers
+
+   -> let anonymousCreature = Animal(species: "")
+   << // anonymousCreature : Animal? = nil
+   // anonymousCreature is of type Animal?, not Animal
+   ---
+   -> if anonymousCreature == nil {
+         println("The anonymous creature could not be initialized")
+      }
+   <- The anonymous creature could not be initialized
+
+.. note::
+
+   Checking for an empty ``String`` value (such as ``""`` rather than ``"Giraffe"``)
+   is not the same as checking for the absence of an *optional* ``String`` value.
+   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
+   However, it is not appropriate for an animal
+   to have an empty string as its ``species`` property.
+   To model this restriction,
+   the failable initializer checks for an empty string
+   and returns ``nil`` if an empty string is found.
+
+.. _Initialization_FailableInitializersForEnumerations:
+ 
+Failable Initializers for Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use a failable initializer to select an appropriate enumeration member
+based on one or more input parameters.
+The initializer can then fail if the provided input parameter
+does not match an appropriate enumeration member.
+
+The example below defines an enumeration called ``TemperatureUnit``,
+with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
+A failable initializer is used to find an appropriate enumeration member
+for a ``Character`` value representing a temperature symbol:
+
+.. testcode:: failableInitializers
+
+   -> enum TemperatureUnit {
+         case Kelvin, Celsius, Fahrenheit
+         init?(symbol: Character) {
+            switch symbol {
+               case "K":
+                  self = .Kelvin
+               case "C":
+                  self = .Celsius
+               case "F":
+                  self = .Fahrenheit
+               default:
+                  return nil
+            }
+         }
+      }
+
+You can use this failable initializer to choose
+an appropriate enumeration member for each of the three known states,
+and to return ``nil`` for an unknown state:
+
+.. testcode:: failableInitializers
+
+   -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
+   -> if fahrenheitUnit != nil {
+         println("This is a known temperature unit, so initialization succeeded.") 
+      }
+   <- This is a known temperature unit, so initialization succeeded.
+   ---
+   -> let unknownUnit = TemperatureUnit(symbol: "X")
+   -> if unknownUnit == nil {
+         println("This is an unknown temperature unit, so initialization failed.") 
+      }
+   <- This is an unknown temperature unit, so initialization failed.
+
+.. _Initialization_FailableInitializersForEnumerationsWithRawValues:
+
+Failable Initializers for Enumerations with Raw Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enumerations with raw values automatically receive a failable initializer,
+``init?(rawValue:)``,
+that takes a parameter called ``rawValue`` of the appropriate raw-value type
+and returns a matching enumeration member if one is found,
+or ``nil`` if no matching value exists.
+
+You can rewrite the ``TemperatureUnit`` example from above
+to use raw values of type ``Character``
+and to take advantage of this automatic raw-value type initializer:
+
+.. testcode:: failableInitializersForEnumerations
+
+   -> enum TemperatureUnit: Character {
+         case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
+      }
+   ---
+   -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
+   -> if fahrenheitUnit != nil {
+         println("This is a known temperature unit, so initialization succeeded.") 
+      }
+   <- This is a known temperature unit, so initialization succeeded.
+   ---
+   -> let unknownUnit = TemperatureUnit(rawValue: "X")
+   -> if unknownUnit == nil {
+         println("This is an unknown temperature unit, so initialization failed.") 
+      }
+   <- This is an unknown temperature unit, so initialization failed.
+
+.. _Initialization_FailableInitializerDelegation:
+
+Failable Initializer Delegation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A failable initializer for a value type (that is, a structure or enumeration)
+can return ``nil`` at any point within its initializer implementation.
+In the ``Animal`` structure example above,
+the initializer returns ``nil`` at the very start of its implementation,
+before the ``species`` property has been set,
+when an empty string is passed to the structure's failable initializer.
+
+For classes, however, a failable initializer can return ``nil`` only *after*
+all stored properties for that class have been set to an initial value
+and any initializer delegation has taken place.
+
+The example below shows how you can use an implicitly unwrapped optional property
+to satisfy this requirement within a failable class initializer:
+
+.. testcode:: failableInitializers
+
+   -> class Product {
+         let name: String!
+         init?(name: String) {
+            if name.isEmpty { return nil }
+            self.name = name
+         }
+      }
+
+The ``Product`` class is very similar to the ``Animal`` structure seen earlier.
+The ``Product`` class has
+a constant ``name`` property rather than a constant ``species`` property,
+but still uses a failable initializer to enforce the requirement that
+the property's value must be a non-empty string.
+
+Moreover, ``Product`` is a class, whereas ``Animal`` is a structure.
+This means that unlike ``Animal``,
+a failable initializer on the ``Product`` class must provide
+an initial value for the ``name`` property before returning ``nil``.
+
+In the example above,
+the ``name`` property of the ``Product`` class is defined as having
+an implicitly unwrapped optional string type (``String!``).
+Because it is of an optional type,
+this means that the ``name`` property has a default value of ``nil``.
+This in turn means that all of the properties of ``Product`` have an initial value.
+Asa result, the failable initializer for ``Product`` can return ``nil``
+before assigning the *actual* value of ``name`` within the initializer.
+
+.. _Initialization_ImplicitlyUnwrappedFailableInitializers:
+
+Implicitly Unwrapped Failable Initializers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[to write]
+
 .. _Initialization_RequiredInitializers:
  
 Required Initializers
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
  
 Write the ``required`` modifier before the definition of a class initializer
 to indicate that every subclass of the class must implement that initializer:
