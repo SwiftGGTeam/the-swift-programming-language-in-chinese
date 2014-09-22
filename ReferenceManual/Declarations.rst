@@ -1424,6 +1424,11 @@ by including a protocol initializer declaration in the body of the protocol decl
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
 
+A conforming type can satisfy a nonfailable protocol initializer requirement
+by implementing a nonfailable initializer only.
+A conforming type can satisfy a failable protocol initializer requirement
+by implementing either a nonfailable or failable initializer.
+
 When a class implements an initializer to satisfy a protocol's initializer requirement,
 the initializer must be marked with the ``required`` declaration modifier
 if the class is not already marked with the ``final`` declaration modifier.
