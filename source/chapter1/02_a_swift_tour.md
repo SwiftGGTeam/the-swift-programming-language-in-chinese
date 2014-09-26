@@ -93,14 +93,15 @@ occupations["Jayne"] = "Public Relations"
 要创建一个空数组或者字典，使用初始化语法。
 
 ```swift
-let emptyArray = String[]()
-let emptyDictionary = Dictionary<String, Float>()
+let emptyArray = [String]()
+let emptyDictionary = [String: Float]()
 ```
 
 如果类型信息可以被推断出来，你可以用`[]`和`[:]`来创建空数组和空字典——就像你声明变量或者给函数传参数的时候一样。
 
 ```swift
-shoppingList = []   // 去逛街并买点东西
+shoppingList = []
+occupations = [:]
 ```
 
 <a name="control_flow"></a>
