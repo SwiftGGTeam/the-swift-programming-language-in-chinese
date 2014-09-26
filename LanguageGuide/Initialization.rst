@@ -1019,9 +1019,8 @@ to see how its ``numberOfWheels`` property has been updated:
 
 .. note::
 
-   Subclasses are only allowed to modify
-   *variable* superclass properties during initialization.
-   Subclasses cannot modify inherited constant properties.
+   Subclasses can modify inherited variable properties during initialization,
+   but can not modify inherited constant properties.
 
 .. assertion:: YouCantModifyInheritedConstantPropertiesFromASuperclass
 
