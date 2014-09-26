@@ -202,7 +202,7 @@ when attempting to downcast to a subclass type.
 The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
 Downcasting to ``Movie`` fails when applied to
-the two ``Song`` instances in the library array.
+the ``Song`` instances in the library array.
 To cope with this, the example above uses optional binding
 to check whether the optional ``Movie`` actually contains a value
 (that is, to find out whether the downcast succeeded.)
