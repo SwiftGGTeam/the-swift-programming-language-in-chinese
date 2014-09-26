@@ -535,7 +535,7 @@ let convertedNumber = possibleNumber.toInt()
 当你确定可选类型_确实_包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的_强制解析（forced unwrapping）_：
 
 ```swift
-if convertedNumber {
+if convertedNumber != nil {
     println("\(possibleNumber) has an integer value of \(convertedNumber!)")
 } else {
     println("\(possibleNumber) could not be converted to an integer")

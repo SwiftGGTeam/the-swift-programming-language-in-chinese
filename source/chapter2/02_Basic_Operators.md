@@ -323,9 +323,9 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 
 另一种情况，分配一个非空值(`non-nil`)给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在`userDefaultColorName`中的值，而非默认值。
 
-	userDefinedColor = "green"
+	userDefinedColorName = "green"
 	colorNameToUse = userDefinedColorName ?? defaultColorName
-	//userDefinedColor非空，因此colorNameToUsede的值为绿色
+	//userDefinedColorName非空，因此colorNameToUsede的值为绿色
 
 <a name="range_operators"></a>
 ## 区间运算符
