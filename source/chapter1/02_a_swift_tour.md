@@ -234,13 +234,28 @@ greet("Bob", "Tuesday")
 > 练习：  
 > 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
 
-使用一个元组来返回多个值。
+使用元组来让一个函数返回多个值。该元组的元素可以用名称或数字来表示。
 
 ```swift
-func getGasPrices() -> (Double, Double, Double) {
-    return (3.59, 3.69, 3.79)
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+    
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+    
+    return (min, max, sum)
 }
-getGasPrices()
+let statistics = calculateStatistics([5, 3, 100, 3, 9])
+statistics.sum
+statistics.2
 ```
 
 函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
