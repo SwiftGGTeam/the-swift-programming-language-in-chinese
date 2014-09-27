@@ -403,7 +403,7 @@ class HTMLElement {
     let name: String
     let text: String?
 
-    @lazy var asHTML: () -> String = {
+    lazy var asHTML: () -> String = {
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
         } else {
@@ -479,7 +479,7 @@ Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self
 捕获列表放置在闭包参数列表和返回类型之前：
 
 ```swift
-@lazy var someClosure: (Int, String) -> String = {
+lazy var someClosure: (Int, String) -> String = {
     [unowned self] (index: Int, stringToProcess: String) -> String in
     // closure body goes here
 }
@@ -488,7 +488,7 @@ Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self
 如果闭包没有指定参数列表或者返回类型，则可以通过上下文推断，那么可以捕获列表放在闭包开始的地方，跟着是关键字`in`：
 
 ```swift
-@lazy var someClosure: () -> String = {
+lazy var someClosure: () -> String = {
     [unowned self] in
     // closure body goes here
 }
@@ -511,7 +511,7 @@ class HTMLElement {
     let name: String
     let text: String?
 
-    @lazy var asHTML: () -> String = {
+    lazy var asHTML: () -> String = {
         [unowned self] in
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
