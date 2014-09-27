@@ -246,6 +246,8 @@ Swift provides two special type aliases for working with non-specific types:
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
 
+.. _TypeCasting_AnyObject:
+
 AnyObject
 ~~~~~~~~~
 
@@ -298,11 +300,13 @@ instead of downcasting each item:
    </ Movie: 'Moon', dir. Duncan Jones
    </ Movie: 'Alien', dir. Ridley Scott
 
+.. _TypeCasting_Any:
+
 Any
 ~~~
 
 Here's an example of using ``Any`` to work with a mix of different types,
-including non-class types.
+including function types and non-class types.
 The example creates an array called ``things``, which can store values of type ``Any``:
 
 .. testcode:: typeCasting
@@ -317,11 +321,14 @@ The example creates an array called ``things``, which can store values of type `
    -> things.append("hello")
    -> things.append((3.0, 5.0))
    -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
+   -> things.append({ (name: String) -> String in "Hello, \(name)" })
 
 The ``things`` array contains
 two ``Int`` values, two ``Double`` values, a ``String`` value,
 a tuple of type ``(Double, Double)``,
-and the movie “Ghostbusters”, directed by Ivan Reitman.
+the movie “Ghostbusters”,
+and a closure expression that takes a ``String`` value
+and returns another ``String`` value.
 
 You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
 to discover the specific type of a constant or variable
@@ -351,6 +358,8 @@ a constant of the specified type to enable its value to be printed:
                println("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
                println("a movie called '\(movie.name)', dir. \(movie.director)")
+            case let stringConverter as String -> String:
+               println(stringConverter("Michael"))
             default:
                println("something else")
          }
@@ -363,6 +372,7 @@ a constant of the specified type to enable its value to be printed:
    </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
+   </ Hello, Michael
 
 .. note::
 

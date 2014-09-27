@@ -6,6 +6,11 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2014-10-10  * Constant and variables of type ``Any`` can now contain
+              function instances. Updated the :doc:`../LanguageGuide/TypeCasting`
+              example for :ref:`TypeCasting_Any` to show how to
+              check for and cast to a function type within a ``switch`` statement.
+----------  --------------------------------------------------------------------------
 2014-09-15  * Enumerations with raw values
               now have a ``rawValue`` property rather than a ``toRaw()`` method
               and a failable initializer with a ``rawValue`` parameter
