@@ -238,16 +238,7 @@ Type Casting for Any and AnyObject
 Swift provides two special type aliases for working with non-specific types:
 
 * ``AnyObject`` can represent an instance of any class type.
-* ``Any`` can represent an instance of any type at all,
-  apart from function types.
-
-.. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
-
-.. assertion:: anyCannotContainAFunction
-
-   // rdar://16406907
-   -> var a: Any = { println("any") }
-   xx assertion
+* ``Any`` can represent an instance of any type at all, including function types.
 
 .. note::
 
