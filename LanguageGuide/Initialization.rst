@@ -1342,10 +1342,10 @@ You write a failable initializer by placing a question mark after the ``init`` k
          init(s: String) { self.s = s }
          init?(s: String) { self.s = s }
       }
-   !! <REPL Input>:4:12: error: invalid redeclaration of 'init(s:)'
+   !! <REPL Input>:4:6: error: invalid redeclaration of 'init(s:)'
    !!            init?(s: String) { self.s = s }
    !!            ^
-   !! <REPL Input>:3:12: note: 'init(s:)' previously declared here
+   !! <REPL Input>:3:6: note: 'init(s:)' previously declared here
    !!            init(s: String) { self.s = s }
    !!            ^
 
@@ -1457,12 +1457,14 @@ and to return ``nil`` for an unknown state:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
+   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
          println("This is a known temperature unit, so initialization succeeded.") 
       }
    <- This is a known temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
+   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          println("This is an unknown temperature unit, so initialization failed.") 
       }
@@ -1490,12 +1492,14 @@ and to take advantage of this automatic raw-value type initializer:
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
+   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
          println("This is a known temperature unit, so initialization succeeded.") 
       }
    <- This is a known temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
+   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          println("This is an unknown temperature unit, so initialization failed.") 
       }

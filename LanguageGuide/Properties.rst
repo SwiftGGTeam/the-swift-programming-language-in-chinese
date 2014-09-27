@@ -387,10 +387,10 @@ and can be accessed through dot syntax, but cannot be set to a different value.
          let x: Int { return 42 }
          let y: Int { get { return 42 } set {} }
       }
-   !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be a computed property
+   !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be computed properties
    !! let x: Int { return 42 }
    !! ^
-   !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be a computed property
+   !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be computed properties
    !! let y: Int { get { return 42 } set {} }
    !! ^
 

@@ -40,6 +40,9 @@ Extensions in Swift can:
             println("called overridden foo")
          }
       }
+   !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
+   !! override var x: Int {
+   !! ~~~~~~~~     ^
    !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
    !! override var x: Int {
    !! ^
@@ -55,9 +58,6 @@ Extensions in Swift can:
    !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
    !! func foo() {}
    !! ^
-   !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
-   !! override var x: Int {
-   !! ~~~~~~~~     ^
    !! /tmp/swifttest.swift:6:17: error: extensions may not contain stored properties
    !! override var x: Int {
    !! ^
