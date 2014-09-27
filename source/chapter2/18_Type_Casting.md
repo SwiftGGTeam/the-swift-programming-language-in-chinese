@@ -16,7 +16,7 @@ _类型转换_可以判断实例的类型，也可以将实例看做是其父类
 
 类型转换在 Swift 中使用`is` 和 `as`操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用来检查一个类是否实现了某个协议，就像在 [Checking for Protocol Conformance](21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用来检查一个类是否实现了某个协议，就像在 [Checking for Protocol Conformance](Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_363)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
 ## 定义一个类层次作为例子
