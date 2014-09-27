@@ -32,7 +32,7 @@ Modules and Source Files
 Swift's access control model is based on the concept of modules and source files.
 
 A :newTerm:`module` is a single unit of code distribution ---
-a framework or application that is built and shipped as a single entity
+a framework or application that is built and shipped as a single unit
 and that can be imported by another module with Swift's ``import`` keyword.
 
 Each build target (such as an app bundle or framework) in Xcode
