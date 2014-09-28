@@ -1023,7 +1023,7 @@ to see how its ``numberOfWheels`` property has been updated:
    *variable* superclass properties during initialization.
    Subclasses cannot modify inherited constant properties.
 
-.. assertion:: YouCantModifyInheritedConstantPropertiesFromASuperclass
+.. assertion:: youCantModifyInheritedConstantPropertiesFromASuperclass
 
    -> class C {
          let constantProperty: Int
@@ -1327,8 +1327,8 @@ or some other condition that prevents initialization from succeeding.
 To cope with initialization conditions that can fail,
 define one or more :newTerm:`failable initializers` as part of
 a class, structure, or enumeration definition.
-You write a failable initializer by placing a question mark after the ``init`` keyword
-(``init?``) as part of the initializer's definition.
+You write a failable initializer
+by placing a question mark after the ``init`` keyword (``init?``).
 
 .. note::
 
@@ -1483,7 +1483,7 @@ or ``nil`` if no matching value exists.
 
 You can rewrite the ``TemperatureUnit`` example from above
 to use raw values of type ``Character``
-and to take advantage of this automatic raw-value type initializer:
+and to take advantage of the ``init?(rawValue:)`` initializer:
 
 .. testcode:: failableInitializersForEnumerations
 
@@ -1505,20 +1505,19 @@ and to take advantage of this automatic raw-value type initializer:
       }
    <- This is an unknown temperature unit, so initialization failed.
 
-.. _Initialization_FailableInitializerDelegation:
+.. _Initialization_FailableInitializersForClasses:
 
-Failable Initializer Delegation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Failable Initializers for Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A failable initializer for a value type (that is, a structure or enumeration)
 can return ``nil`` at any point within its initializer implementation.
 In the ``Animal`` structure example above,
 the initializer returns ``nil`` at the very start of its implementation,
-before the ``species`` property has been set,
-when an empty string is passed to the structure's failable initializer.
+before the ``species`` property has been set.
 
 For classes, however, a failable initializer can return ``nil`` only *after*
-all stored properties for that class have been set to an initial value
+all stored properties introduced by that class have been set to an initial value
 and any initializer delegation has taken place.
 
 The example below shows how you can use an implicitly unwrapped optional property
@@ -1534,32 +1533,400 @@ to satisfy this requirement within a failable class initializer:
          }
       }
 
-The ``Product`` class is very similar to the ``Animal`` structure seen earlier.
-The ``Product`` class has
-a constant ``name`` property rather than a constant ``species`` property,
-but still uses a failable initializer to enforce the requirement that
-the property's value must be a non-empty string.
+The ``Product`` class defined above is very similar to the ``Animal`` structure seen earlier.
+The ``Product`` class has a constant ``name`` property
+that must not be allowed to take an empty string value.
+To enforce the requirement,
+the ``Product`` class uses a failable initializer to ensure that
+the property's value is non-empty before allowing initialization to succeed.
 
-Moreover, ``Product`` is a class, whereas ``Animal`` is a structure.
+However, ``Product`` is a class, not a structure.
 This means that unlike ``Animal``,
-a failable initializer on the ``Product`` class must provide
-an initial value for the ``name`` property before returning ``nil``.
+any failable initializer for the ``Product`` class must provide
+an initial value for the ``name`` property *before* returning ``nil``.
 
 In the example above,
 the ``name`` property of the ``Product`` class is defined as having
 an implicitly unwrapped optional string type (``String!``).
 Because it is of an optional type,
-this means that the ``name`` property has a default value of ``nil``.
-This in turn means that all of the properties of ``Product`` have an initial value.
-Asa result, the failable initializer for ``Product`` can return ``nil``
-before assigning the *actual* value of ``name`` within the initializer.
+this means that the ``name`` property has a default value of ``nil``
+before it is assigned a specific value during initialization.
+This default value of ``nil`` turn means that
+all of the properties introduced by the ``Product`` class have a valid initial value.
+As a result, the failable initializer for ``Product``
+can return ``nil`` at the start of the initializer if it is passed an empty string,
+*before* assigning a specific value to the ``name`` property within the initializer.
+
+Because the ``name`` property is a constant,
+you can be confident that it will always contain
+a non-``nil`` value if initialization succeeds.
+Even though it is defined with an implicitly unwrapped optional type,
+you can always access its implicitly unwrapped value with confidence,
+without needing to check for a value of ``nil``:
+
+.. testcode:: failableInitializers
+
+   -> if let bowTie = Product(name: "bow tie") {
+         // no need to check if bowTie.name == nil
+         println("The product's name is \(bowTie.name)")
+      }
+   <- The product's name is bow tie
+
+.. _Initialization_PropagationOfInitializationFailure:
+
+Propagation of Initialization Failure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A failable initializer on a class, structure, or enumeration
+can delegate across to another failable initializer from the same class, structure, or enumeration.
+Similarly, a subclass failable initializer can delegate up to a superclass failable initializer.
+
+In either case, if you delegate to another initializer that causes initialization to fail,
+the entire initialization process fails immediately,
+and no further initialization code is executed.
+
+.. assertion:: delegatingAcrossInAStructurePropagatesInitializationFailureImmediately
+
+   -> struct S {
+         init?(string1: String) {
+            self.init(string2: string1)
+            println("Hello!") // this should never be printed, because initialization has already failed
+         }
+         init?(string2: String) { return nil }
+      }
+   -> let s = S(string1: "bing")
+   << // s : S? = nil
+
+.. assertion:: delegatingAcrossInAClassPropagatesInitializationFailureImmediately
+
+   -> class C {
+         convenience init?(string1: String) {
+            self.init(string2: string1)
+            println("Hello!") // this should never be printed, because initialization has already failed
+         }
+         init?(string2: String) { return nil }
+      }
+   -> let c = C(string1: "bing")
+   << // c : C? = nil
+
+.. assertion:: delegatingUpInAClassPropagatesInitializationFailureImmediately
+
+   -> class C {
+         init?(string1: String) { return nil }
+      }
+   -> class D: C {
+         init?(string2: String) {
+            super.init(string1: string2)
+            println("Hello!") // this should never be printed, because initialization has already failed
+         }
+      }
+   -> let d = D(string2: "bing")
+   << // d : D? = nil
+
+.. note::
+
+   A failable initializer can also delegate to a non-failable initializer.
+   Use this approach if you need to need to add a potential failure state
+   to an existing initialization process that does not otherwise fail.
+
+The example below defines a subclass of ``Product`` called ``CartItem``.
+The ``CartItem`` class models an item in an online shopping cart.
+``CartItem`` introduces a stored constant property called ``quantity``
+and ensures that this property always has a value of at least ``1``:
+
+.. testcode:: failableInitializers
+
+   -> class CartItem: Product {
+         let quantity: Int!
+         init?(name: String, quantity: Int) {
+            super.init(name: name)
+            if quantity < 1 { return nil }
+            self.quantity = quantity
+         }
+      }
+
+The ``quantity`` property has an implicitly unwrapped integer type (``Int!``).
+As with the ``name`` property from ``Product``,
+this means that the ``quantity`` property has a default value of ``nil``
+before it is assigned a specific value during initialization.
+
+The failable initializer for ``CartItem`` starts by delegating up to
+the ``init(name:)`` initializer from its superclass, ``Product``.
+This satisfies the requirement that a failable initializer
+must always perform initializer delegation before returning ``nil`` itself.
+
+If superclass initialization fails because of an empty ``name`` value,
+the entire initialization process fails immediately
+and no further initialization code is executed.
+If superclass initialization succeeds,
+the ``CartItem`` initializer validates that it has received
+a ``quantity`` value of ``1`` or more.
+This introduces a second point of potential initialization failure.
+
+If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
+initialization succeeds:
+
+.. testcode:: failableInitializers
+
+   -> if let twoSocks = CartItem(name: "sock", quantity: 2) {
+         println("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+      }
+   <- Item: sock, quantity: 2
+
+If you try to create a ``CartItem`` instance with a ``quantity`` value of ``0``,
+the ``CartItem`` initializer causes initialization to fail:
+
+.. testcode:: failableInitializers
+
+   -> if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
+         println("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+      } else {
+         println("Unable to initialize zero shirts")
+      }
+   <- Unable to initialize zero shirts
+
+Similarly, if you try to create a ``CartItem`` instance with an empty ``name`` value,
+the superclass ``Product`` initializer causes initialization to fail:
+
+.. testcode:: failableInitializers
+
+   -> if let oneUnnamed = CartItem(name: "", quantity: 1) {
+         println("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+      } else {
+         println("Unable to initialize one unnamed product")
+      }
+   <- Unable to initialize one unnamed product
+
+.. _Initialization_OverridingAFailableInitializer:
+
+Overriding a Failable Initializer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can override a superclass failable initializer in a subclass,
+just like any other initializer.
+
+If you wish, you can override a superclass failable initializer
+with a subclass *non*-failable initializer.
+This enables you to define a subclass for which initialization cannot fail,
+even though initialization of the superclass is allowed to fail.
+
+Note that if you override a failable superclass initializer with a non-failable subclass initializer,
+the subclass initializer cannot delegate up to the superclass initializer.
+A non-failable initializer can never delegate to a failable initializer.
+
+.. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
+
+.. note::
+
+   You can override a failable initializer with a non-failable initializer,
+   but not the other way around.
+
+.. assertion:: youCannotOverrideANonFailableInitializerWithAFailableInitializer
+
+   -> class C {
+         init() {}
+      }
+   -> class D: C {
+         override init?() {}
+      }
+   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a non-failable initializer
+   !!            override init?() {}
+   !!                     ^
+   !! <REPL Input>:2:6: note: non-failable initializer 'init()' overridden here
+   !!            init() {}
+   !!            ^
+
+The example below defines a class called ``Document``.
+This class models a document that can be be initialized with
+a ``name`` property that is either a non-empty string value or ``nil``,
+but not an empty string:
+
+.. testcode:: failableInitializers
+
+   -> class Document {
+         var name: String?
+         // this initializer creates a document with a nil name value
+         init() {}
+         // this initializer creates a document with a non-empty name value
+         init?(name: String) {
+            if name.isEmpty { return nil }
+            self.name = name
+         }
+      }
+
+The next example defines a subclass of ``Document`` called ``AutomaticallyNamedDocument``.
+The ``AutomaticallyNamedDocument`` subclass overrides
+both of the designated initializers introduced by ``Document``.
+These overrides ensure that an ``AutomaticallyNamedDocument`` instance has
+an initial ``name`` value of ``[Untitled]``
+if the instance is initialized without a name,
+or if an empty string is passed to the ``init(name:)`` initializer:
+
+.. testcode:: failableInitializers
+
+   -> class AutomaticallyNamedDocument: Document {
+         override init() {
+            super.init()
+            self.name = "[Untitled]"
+         }
+         override init(name: String) {
+            super.init()
+            if name.isEmpty {
+               self.name = "[Untitled]"
+            } else {
+               self.name = name
+            }
+         }
+      }
+
+The ``AutomaticallyNamedDocument`` overrides its superclass's
+failable ``init?(name:)`` initializer with a non-failable ``init(name:)`` initializer.
+Because ``AutomaticallyNamedDocument`` copes with the empty string case
+in a different way to its superclass,
+it does not need the failability of the superclass initializer,
+and so it provides a non-failable version of the initializer instead.
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
 Implicitly Unwrapped Failable Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[to write]
+You typically define a failable initializer
+as returning an optional value of the appropriate type
+by placing a question mark after the ``init`` keyword (``init?``).
+
+As an alternative, you can define a failable initializer as returning
+an implicitly unwrapped optional value of the appropriate type.
+Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
+instead of a question mark.
+
+The two forms of optionality can be used interchangeably.
+You can delegate from ``init?`` to ``init!`` and vice versa,
+and can override ``init?`` with ``init!`` and vice versa.
+In each case, the nature of the optionality after initialization is changed.
+
+.. assertion:: structuresCanDelegateAcrossFromOptionalToIUO
+
+   -> struct S {
+         init?(optional: Int) { self.init(iuo: optional) }
+         init!(iuo: Int) {}
+      }
+
+.. assertion:: structuresCanDelegateAcrossFromIUOToOptional
+
+   -> struct S {
+         init!(iuo: Int) { self.init(optional: iuo) }
+         init?(optional: Int) {}
+      }
+
+.. assertion:: classesCanDelegateAcrossFromOptionalToIUO
+
+   -> class C {
+         convenience init?(optional: Int) { self.init(iuo: optional) }
+         init!(iuo: Int) {}
+      }
+
+.. assertion:: classesCanDelegateAcrossFromIUOToOptional
+
+   -> class C {
+         convenience init!(iuo: Int) { self.init(optional: iuo) }
+         init?(optional: Int) {}
+      }
+
+.. assertion:: classesCanDelegateUpFromOptionalToIUO
+
+   -> class C {
+         init!(iuo: Int) {}
+      }
+   -> class D: C {
+         init?(optional: Int) { super.init(iuo: optional) }
+      }
+
+.. assertion:: classesCanDelegateUpFromIUOToOptional
+
+   -> class C {
+         init?(optional: Int) {}
+      }
+   -> class D: C {
+         init!(iuo: Int) { super.init(optional: iuo) }
+      }
+
+.. assertion:: classesCanOverrideOptionalWithIUO
+
+   -> class C {
+         init?(i: Int) {}
+      }
+   -> class D: C {
+         override init!(i: Int) { super.init(i: i) }
+      }
+
+.. assertion:: classesCanOverrideIUOWithOptional
+
+   -> class C {
+         init!(i: Int) {}
+      }
+   -> class D: C {
+         override init?(i: Int) { super.init(i: i) }
+      }
+
+.. note::
+
+   You can also delegate from a non-failing initializer to
+   an implicitly unwrapped failing initializer.
+   However, you will trigger an assertion
+   if the implicitly unwrapped failing initializer returns ``nil``.
+
+.. assertion:: structuresCanDelegateAcrossFromNonFailingToIUO
+
+   -> struct S {
+         init(nonFailing: Int) { self.init(iuo: nonFailing) }
+         init!(iuo: Int) {}
+      }
+
+.. assertion:: classesCanDelegateAcrossFromNonFailingToIUO
+
+   -> class C {
+         convenience init(nonFailing: Int) { self.init(iuo: nonFailing) }
+         init!(iuo: Int) {}
+      }
+
+.. assertion:: classesCanDelegateUpFromNonFailingToIUO
+
+   -> class C {
+         init!(iuo: Int) {}
+      }
+   -> class D: C {
+         init(nonFailing: Int) { super.init(iuo: nonFailing) }
+      }
+
+.. assertion:: structuresAssertWhenDelegatingAcrossFromNonFailingToNilIUO
+
+   -> struct S {
+         init(nonFailing: Int) { self.init(iuo: nonFailing) }
+         init!(iuo: Int) { return nil }
+      }
+   -> let s = S(nonFailing: 42)
+   xx assertion
+
+.. assertion:: classesAssertWhenDelegatingAcrossFromNonFailingToNilIUO
+
+   -> class C {
+         convenience init(nonFailing: Int) { self.init(iuo: nonFailing) }
+         init!(iuo: Int) { return nil }
+      }
+   -> let c = C(nonFailing: 42)
+   xx assertion
+
+.. assertion:: classesAssertWhenDelegatingUpFromNonFailingToNilIUO
+
+   -> class C {
+         init!(iuo: Int) { return nil }
+      }
+   -> class D: C {
+         init(nonFailing: Int) { super.init(iuo: nonFailing) }
+      }
+   -> let d = D(nonFailing: 42)
+   xx assertion
 
 .. _Initialization_RequiredInitializers:
  
