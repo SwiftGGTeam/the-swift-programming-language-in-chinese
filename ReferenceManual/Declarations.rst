@@ -1424,6 +1424,12 @@ by including a protocol initializer declaration in the body of the protocol decl
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
 
+A conforming type can satisfy a nonfailable protocol initializer requirement
+by implementing a nonfailable initializer or a failable initializer that produces
+an implicitly unwrapped optional instance.
+A conforming type can satisfy a failable protocol initializer requirement
+by implementing a nonfailable initializer or either kind of failable initializer.
+
 When a class implements an initializer to satisfy a protocol's initializer requirement,
 the initializer must be marked with the ``required`` declaration modifier
 if the class is not already marked with the ``final`` declaration modifier.
@@ -1677,12 +1683,17 @@ A failable initializer of a class, however, can return ``nil`` only after all
 stored properties of that class are initialized and ``self.init`` or ``super.init``
 is called (that is, any initializer delegation is performed).
 
-A nonfailable initializer can delegate only to other nonfailable initializers.
-Failable initializers can delegate to either nonfailable or failable initializers.
+A nonfailable initializer can delegate to another nonfailable initializer
+or to a failable initializer that produces an implicitly unwrapped optional instance.
+A failable initializer can delegate to a nonfailable initializer
+or either kind of failable initializer.
 In addition, a ``nil`` return value is propagated through failable initializer delegation.
 Specifically,
-if an initializer delegates to an initializer that fails,
+if a failable initializer delegates to an initializer that fails and returns ``nil``,
 then the initializer that delegated also fails and implicitly returns ``nil``.
+If a nonfailable initializer delegates to an initializer that fails and returns ``nil``,
+then a runtime error is raised
+(as if you used the ``!`` operator to unwrap an optional that has a ``nil`` value).
 
 
 .. langref-grammar

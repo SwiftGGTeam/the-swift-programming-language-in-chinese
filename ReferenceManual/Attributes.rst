@@ -198,6 +198,22 @@ the ``noreturn`` attribute to a function or method *type*.
     or method that is not. Similar rules apply when you implement a protocol
     method in a conforming type.
 
+``NSApplicationMain``
+    Apply this attribute to a class
+    to indicate that it is the application delegate.
+    Using this attribute is equivalent to calling the
+    ``NSApplicationMain`` function and
+    passing this class's name as the name of the delegate class.
+
+    If you do not use this attribute,
+    supply a ``main.swift`` file with a ``main`` function
+    that calls the ``NSApplicationMain`` function.
+    For example,
+    if your app uses a custom subclass of ``NSApplication``
+    as its principle class,
+    call the ``NSApplicationMain`` function
+    instead of using this attribute.
+
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
     This attribute causes the property's setter to be synthesized with a *copy*

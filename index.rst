@@ -16,3 +16,4 @@ Internal Chapters
     :maxdepth: 1
 
     ReplacementRules
+    SubmittingTSPL

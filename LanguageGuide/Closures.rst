@@ -211,7 +211,7 @@ can also be omitted:
 It is always possible to infer the parameter types and return type
 when passing a closure to a function as an inline closure expression.
 As a result, you never need to write an inline closure in its fullest form
-when the closure is used a function argument.
+when the closure is used as a function argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
