@@ -1321,7 +1321,7 @@ Failable Initializers
 It is sometimes useful to define a class, structure, or enumeration
 for which initialization can fail.
 This failure might be triggered by invalid initialization parameter values,
-or the absence of a required external resource,
+the absence of a required external resource,
 or some other condition that prevents initialization from succeeding.
 
 To cope with initialization conditions that can fail,
@@ -1349,16 +1349,17 @@ by placing a question mark after the ``init`` keyword (``init?``).
    !!            init(s: String) { self.s = s }
    !!            ^
 
-A failable initializer always returns an *optional* value of the type it initializes.
+A failable initializer always creates an *optional* value of the type it initializes.
 You write ``return nil`` within the initializer's definition
 to trigger an initialization failure.
 
 .. note::
 
-   Initialization failure is always triggered by writing ``return nil`` within an initializer,
-   even though you do not specify a return type as part of an initializer's definition.
-   ``nil`` is the only value that can be returned from a failable initializer.
-   You do not return a value if initialization succeeds.
+   Strictly speaking, initializers do not return a value.
+   Rather, their role is to ensure that ``self`` is fully and correctly initialized
+   by the time that initialization ends.
+   Although you write ``return nil`` to trigger an initialization failure,
+   you do not use the ``return`` keyword to indicate initialization success.
 
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
@@ -1393,7 +1394,7 @@ and to check if initialization succeeded:
    <- An animal was initialized with a species of Giraffe
 
 If you pass an empty string value to the failable initializer's ``species`` parameter,
-the initializer returns ``nil`` and initialization fails:
+the initializer triggers an initialization failure:
 
 .. testcode:: failableInitializers
 
@@ -1414,8 +1415,7 @@ the initializer returns ``nil`` and initialization fails:
    However, it is not appropriate for an animal
    to have an empty string as its ``species`` property.
    To model this restriction,
-   the failable initializer checks for an empty string
-   and returns ``nil`` if an empty string is found.
+   the failable initializer triggers an initialization failure if an empty string is found.
 
 .. _Initialization_FailableInitializersForEnumerations:
  
@@ -1451,8 +1451,8 @@ for a ``Character`` value representing a temperature symbol:
       }
 
 You can use this failable initializer to choose
-an appropriate enumeration member for each of the three known states,
-and to return ``nil`` for an unknown state:
+an appropriate enumeration member for the three known states,
+and to cause initialization to fail if the state is unknown:
 
 .. testcode:: failableInitializers
 
@@ -1478,8 +1478,8 @@ Failable Initializers for Enumerations with Raw Values
 Enumerations with raw values automatically receive a failable initializer,
 ``init?(rawValue:)``,
 that takes a parameter called ``rawValue`` of the appropriate raw-value type
-and returns a matching enumeration member if one is found,
-or ``nil`` if no matching value exists.
+and selects a matching enumeration member if one is found,
+or triggers an initialization failure if no matching value exists.
 
 You can rewrite the ``TemperatureUnit`` example from above
 to use raw values of type ``Character``
@@ -1511,13 +1511,13 @@ Failable Initializers for Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A failable initializer for a value type (that is, a structure or enumeration)
-can return ``nil`` at any point within its initializer implementation.
+can trigger an initialization failure at any point within its initializer implementation.
 In the ``Animal`` structure example above,
-the initializer returns ``nil`` at the very start of its implementation,
+the initializer triggers an initialization failure at the very start of its implementation,
 before the ``species`` property has been set.
 
-For classes, however, a failable initializer can return ``nil`` only *after*
-all stored properties introduced by that class have been set to an initial value
+For classes, however, a failable initializer can trigger an initialization failure
+only *after* all stored properties introduced by that class have been set to an initial value
 and any initializer delegation has taken place.
 
 The example below shows how you can use an implicitly unwrapped optional property
@@ -1536,14 +1536,14 @@ to satisfy this requirement within a failable class initializer:
 The ``Product`` class defined above is very similar to the ``Animal`` structure seen earlier.
 The ``Product`` class has a constant ``name`` property
 that must not be allowed to take an empty string value.
-To enforce the requirement,
+To enforce this requirement,
 the ``Product`` class uses a failable initializer to ensure that
 the property's value is non-empty before allowing initialization to succeed.
 
 However, ``Product`` is a class, not a structure.
 This means that unlike ``Animal``,
 any failable initializer for the ``Product`` class must provide
-an initial value for the ``name`` property *before* returning ``nil``.
+an initial value for the ``name`` property *before* triggering an initialization failure.
 
 In the example above,
 the ``name`` property of the ``Product`` class is defined as having
@@ -1554,7 +1554,7 @@ before it is assigned a specific value during initialization.
 This default value of ``nil`` turn means that
 all of the properties introduced by the ``Product`` class have a valid initial value.
 As a result, the failable initializer for ``Product``
-can return ``nil`` at the start of the initializer if it is passed an empty string,
+can trigger an initialization failure at the start of the initializer if it is passed an empty string,
 *before* assigning a specific value to the ``name`` property within the initializer.
 
 Because the ``name`` property is a constant,
@@ -1653,7 +1653,7 @@ before it is assigned a specific value during initialization.
 The failable initializer for ``CartItem`` starts by delegating up to
 the ``init(name:)`` initializer from its superclass, ``Product``.
 This satisfies the requirement that a failable initializer
-must always perform initializer delegation before returning ``nil`` itself.
+must always perform initializer delegation before triggering an initialization failure.
 
 If superclass initialization fails because of an empty ``name`` value,
 the entire initialization process fails immediately
@@ -1704,7 +1704,6 @@ Overriding a Failable Initializer
 
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
-
 If you wish, you can override a superclass failable initializer
 with a subclass *non*-failable initializer.
 This enables you to define a subclass for which initialization cannot fail,
@@ -1739,7 +1738,7 @@ A non-failable initializer can never delegate to a failable initializer.
 The example below defines a class called ``Document``.
 This class models a document that can be be initialized with
 a ``name`` property that is either a non-empty string value or ``nil``,
-but not an empty string:
+but cannot be an empty string:
 
 .. testcode:: failableInitializers
 
@@ -1758,7 +1757,7 @@ The next example defines a subclass of ``Document`` called ``AutomaticallyNamedD
 The ``AutomaticallyNamedDocument`` subclass overrides
 both of the designated initializers introduced by ``Document``.
 These overrides ensure that an ``AutomaticallyNamedDocument`` instance has
-an initial ``name`` value of ``[Untitled]``
+an initial ``name`` value of ``"[Untitled]"``
 if the instance is initialized without a name,
 or if an empty string is passed to the ``init(name:)`` initializer:
 
@@ -1792,11 +1791,11 @@ Implicitly Unwrapped Failable Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You typically define a failable initializer
-as returning an optional value of the appropriate type
+as creating an optional instance of the appropriate type
 by placing a question mark after the ``init`` keyword (``init?``).
 
-As an alternative, you can define a failable initializer as returning
-an implicitly unwrapped optional value of the appropriate type.
+As an alternative, you can define a failable initializer that creates
+an implicitly unwrapped optional instance of the appropriate type.
 Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
 instead of a question mark.
 
