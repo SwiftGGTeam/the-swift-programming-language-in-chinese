@@ -458,6 +458,67 @@ mark the initializer implementation with both the ``required`` and ``override`` 
          }
       }
 
+.. _Protocols_FailableInitializerRequirements:
+
+Failable Initializer Requirements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Protocols can define failable initializer requirements for conforming types,
+as defined in :ref:`Initialization_FailableInitializers`.
+
+A failable initializer requirement can be satisfied by
+a failable or non-failable initializer on a conforming type.
+A non-failable initializer requirement can be satisfied by
+a non-failable initializer or an implicitly unwrapped failable initializer.
+
+.. assertion:: failableRequirementCanBeSatisfiedByFailableInitializer
+
+   -> protocol P { init?(i: Int) }
+   -> class C: P { required init?(i: Int) {} }
+   -> struct S: P { init?(i: Int) {} }
+
+.. assertion:: failableRequirementCanBeSatisfiedByIUOInitializer
+
+   -> protocol P { init?(i: Int) }
+   -> class C: P { required init!(i: Int) {} }
+   -> struct S: P { init!(i: Int) {} }
+
+.. assertion:: iuoRequirementCanBeSatisfiedByFailableInitializer
+
+   -> protocol P { init!(i: Int) }
+   -> class C: P { required init?(i: Int) {} }
+   -> struct S: P { init?(i: Int) {} }
+
+.. assertion:: iuoRequirementCanBeSatisfiedByIUOInitializer
+
+   -> protocol P { init!(i: Int) }
+   -> class C: P { required init!(i: Int) {} }
+   -> struct S: P { init!(i: Int) {} }
+
+.. assertion:: failableRequirementCanBeSatisfiedByNonFailableInitializer
+
+   -> protocol P { init?(i: Int) }
+   -> class C: P { required init(i: Int) {} }
+   -> struct S: P { init(i: Int) {} }
+
+.. assertion:: iuoRequirementCanBeSatisfiedByNonFailableInitializer
+
+   -> protocol P { init!(i: Int) }
+   -> class C: P { required init(i: Int) {} }
+   -> struct S: P { init(i: Int) {} }
+
+.. assertion:: nonFailableRequirementCanBeSatisfiedByNonFailableInitializer
+
+   -> protocol P { init(i: Int) }
+   -> class C: P { required init(i: Int) {} }
+   -> struct S: P { init(i: Int) {} }
+
+.. assertion:: nonFailableRequirementCanBeSatisfiedByIUOInitializer
+
+   -> protocol P { init(i: Int) }
+   -> class C: P { required init!(i: Int) {} }
+   -> struct S: P { init!(i: Int) {} }
+
 .. _Protocols_ProtocolsAsTypes:
 
 Protocols as Types
