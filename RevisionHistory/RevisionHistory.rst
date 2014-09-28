@@ -6,10 +6,15 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-10-10  * Constant and variables of type ``Any`` can now contain
-              function instances. Updated the :doc:`../LanguageGuide/TypeCasting`
-              example for :ref:`TypeCasting_Any` to show how to
-              check for and cast to a function type within a ``switch`` statement.
+2014-10-10  * Added a full guide to :ref:`Initialization_FailableInitializers`.
+
+            * Added a description of :ref:`Protocols_FailableInitializerRequirements`
+              for protocols.
+
+            * Constant and variables of type ``Any`` can now contain
+              function instances. Updated the example for :ref:`TypeCasting_Any`
+              to show how to check for and cast to a function type
+              within a ``switch`` statement.
 ----------  --------------------------------------------------------------------------
 2014-09-15  * Enumerations with raw values
               now have a ``rawValue`` property rather than a ``toRaw()`` method
@@ -18,8 +23,9 @@ Date        Notes
               For more information, see :ref:`Enumerations_RawValues`
               and :ref:`Declarations_EnumerationsWithRawCaseValues`.
 ----------  --------------------------------------------------------------------------
-2014-09-09  * Added a new section about :ref:`Declarations_FailableInitializers`,
-              which can return ``nil`` to indicate that initialization failed.
+2014-09-09  * Added a new reference section about
+              :ref:`Declarations_FailableInitializers`,
+              which can trigger initialization failure.
 
             * Custom operators can now contain the ``?`` character.
               Updated the :ref:`LexicalStructure_Operators` reference to describe
