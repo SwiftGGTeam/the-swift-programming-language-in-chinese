@@ -1727,10 +1727,10 @@ A nonfailable initializer can never delegate to a failable initializer.
    -> class D: C {
          override init?() {}
       }
-   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a nonfailable initializer
+   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a non-failable initializer
    !!            override init?() {}
    !!                     ^
-   !! <REPL Input>:2:6: note: nonfailable initializer 'init()' overridden here
+   !! <REPL Input>:2:6: note: non-failable initializer 'init()' overridden here
    !!            init() {}
    !!            ^
 
