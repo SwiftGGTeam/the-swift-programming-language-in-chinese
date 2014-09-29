@@ -467,9 +467,9 @@ Protocols can define failable initializer requirements for conforming types,
 as defined in :ref:`Initialization_FailableInitializers`.
 
 A failable initializer requirement can be satisfied by
-a failable or non-failable initializer on a conforming type.
-A non-failable initializer requirement can be satisfied by
-a non-failable initializer or an implicitly unwrapped failable initializer.
+a failable or nonfailable initializer on a conforming type.
+A nonfailable initializer requirement can be satisfied by
+a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 .. assertion:: failableRequirementCanBeSatisfiedByFailableInitializer
 

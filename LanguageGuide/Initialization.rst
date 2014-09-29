@@ -1331,7 +1331,7 @@ by placing a question mark after the ``init`` keyword (``init?``).
 
 .. note::
 
-   You cannot define a failable and a non-failable initializer
+   You cannot define a failable and a nonfailable initializer
    with the same parameter types and names.
 
 .. assertion:: failableAndNonFailableInitializersCannotMatch
@@ -1349,8 +1349,8 @@ by placing a question mark after the ``init`` keyword (``init?``).
    !!            ^
 
 A failable initializer always creates an *optional* value of the type it initializes.
-You write ``return nil`` within the initializer's definition
-to trigger an initialization failure.
+You write ``return nil`` within a failable initializer
+to indicate a point at which initialization failure can be triggered.
 
 .. note::
 
@@ -1624,7 +1624,7 @@ and no further initialization code is executed.
 
 .. note::
 
-   A failable initializer can also delegate to a non-failable initializer.
+   A failable initializer can also delegate to a nonfailable initializer.
    Use this approach if you need to need to add a potential failure state
    to an existing initialization process that does not otherwise fail.
 
@@ -1708,15 +1708,15 @@ with a subclass *non*-failable initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
-Note that if you override a failable superclass initializer with a non-failable subclass initializer,
+Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
 the subclass initializer cannot delegate up to the superclass initializer.
-A non-failable initializer can never delegate to a failable initializer.
+A nonfailable initializer can never delegate to a failable initializer.
 
 .. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
 
 .. note::
 
-   You can override a failable initializer with a non-failable initializer,
+   You can override a failable initializer with a nonfailable initializer,
    but not the other way around.
 
 .. assertion:: youCannotOverrideANonFailableInitializerWithAFailableInitializer
@@ -1727,10 +1727,10 @@ A non-failable initializer can never delegate to a failable initializer.
    -> class D: C {
          override init?() {}
       }
-   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a non-failable initializer
+   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a nonfailable initializer
    !!            override init?() {}
    !!                     ^
-   !! <REPL Input>:2:6: note: non-failable initializer 'init()' overridden here
+   !! <REPL Input>:2:6: note: nonfailable initializer 'init()' overridden here
    !!            init() {}
    !!            ^
 
@@ -1778,11 +1778,11 @@ or if an empty string is passed to the ``init(name:)`` initializer:
       }
 
 The ``AutomaticallyNamedDocument`` overrides its superclass's
-failable ``init?(name:)`` initializer with a non-failable ``init(name:)`` initializer.
+failable ``init?(name:)`` initializer with a nonfailable ``init(name:)`` initializer.
 Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way to its superclass,
 it does not need the failability of the superclass initializer,
-and so it provides a non-failable version of the initializer instead.
+and so it provides a nonfailable version of the initializer instead.
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
