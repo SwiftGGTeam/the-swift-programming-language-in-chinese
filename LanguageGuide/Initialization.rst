@@ -518,7 +518,7 @@ three custom initializers that are part of the ``Rect`` structure's definition:
          }
       }
 
-The first ``Rect`` initializer, ``init()``, 
+The first ``Rect`` initializer, ``init()``,
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
@@ -780,7 +780,7 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 * This continues up the class inheritance chain until the top of the chain is reached.
 * Once the top of the chain is reached,
   and the final class in the chain has ensured that all of its stored properties have a value,
-  the instance's memory is considered to be fully initialized, and phase 1 is complete. 
+  the instance's memory is considered to be fully initialized, and phase 1 is complete.
 
 **Phase 2**
 
@@ -1313,10 +1313,10 @@ shows that their default states have been set as expected.
    through these inherited initializers.
 
 .. _Initialization_FailableInitializers:
- 
+
 Failable Initializers
 ---------------------
- 
+
 It is sometimes useful to define a class, structure, or enumeration
 for which initialization can fail.
 This failure might be triggered by invalid initialization parameter values,
@@ -1348,7 +1348,7 @@ by placing a question mark after the ``init`` keyword (``init?``).
    !!            init(s: String) { self.s = s }
    !!            ^
 
-A failable initializer always creates an *optional* value of the type it initializes.
+A failable initializer creates an *optional* value of the type it initializes.
 You write ``return nil`` within a failable initializer
 to indicate a point at which initialization failure can be triggered.
 
@@ -1408,23 +1408,23 @@ the initializer triggers an initialization failure:
 
 .. note::
 
-   Checking for an empty ``String`` value (such as ``""`` rather than ``"Giraffe"``)
-   is not the same as checking for the absence of an *optional* ``String`` value.
+   Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
+   is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
    In the example above, an empty string (``""``) is a valid, non-optional ``String``.
    However, it is not appropriate for an animal
-   to have an empty string as its ``species`` property.
+   to have an empty string as the value of its ``species`` property.
    To model this restriction,
    the failable initializer triggers an initialization failure if an empty string is found.
 
 .. _Initialization_FailableInitializersForEnumerations:
- 
+
 Failable Initializers for Enumerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a failable initializer to select an appropriate enumeration member
-based on one or more input parameters.
-The initializer can then fail if the provided input parameter
-does not match an appropriate enumeration member.
+based on one or more parameters.
+The initializer can then fail if the provided parameters
+do not match an appropriate enumeration member.
 
 The example below defines an enumeration called ``TemperatureUnit``,
 with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
@@ -1451,21 +1451,22 @@ for a ``Character`` value representing a temperature symbol:
 
 You can use this failable initializer to choose
 an appropriate enumeration member for the three known states,
-and to cause initialization to fail if the state is unknown:
+and to cause initialization to fail if the parameter does not match one of these
+defined states:
 
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a known temperature unit, so initialization succeeded.") 
+         println("This is a known temperature unit, so initialization succeeded.")
       }
    <- This is a known temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is an unknown temperature unit, so initialization failed.") 
+         println("This is an unknown temperature unit, so initialization failed.")
       }
    <- This is an unknown temperature unit, so initialization failed.
 
@@ -1493,14 +1494,14 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a known temperature unit, so initialization succeeded.") 
+         println("This is a known temperature unit, so initialization succeeded.")
       }
    <- This is a known temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is an unknown temperature unit, so initialization failed.") 
+         println("This is an unknown temperature unit, so initialization failed.")
       }
    <- This is an unknown temperature unit, so initialization failed.
 
@@ -1550,7 +1551,7 @@ an implicitly unwrapped optional string type (``String!``).
 Because it is of an optional type,
 this means that the ``name`` property has a default value of ``nil``
 before it is assigned a specific value during initialization.
-This default value of ``nil`` turn means that
+This default value of ``nil`` in turn means that
 all of the properties introduced by the ``Product`` class have a valid initial value.
 As a result, the failable initializer for ``Product``
 can trigger an initialization failure at the start of the initializer if it is passed an empty string,
@@ -1576,7 +1577,7 @@ without needing to check for a value of ``nil``:
 Propagation of Initialization Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A failable initializer on a class, structure, or enumeration
+A failable initializer of a class, structure, or enumeration
 can delegate across to another failable initializer from the same class, structure, or enumeration.
 Similarly, a subclass failable initializer can delegate up to a superclass failable initializer.
 
@@ -1625,7 +1626,7 @@ and no further initialization code is executed.
 .. note::
 
    A failable initializer can also delegate to a nonfailable initializer.
-   Use this approach if you need to need to add a potential failure state
+   Use this approach if you need to add a potential failure state
    to an existing initialization process that does not otherwise fail.
 
 The example below defines a subclass of ``Product`` called ``CartItem``.
@@ -1645,7 +1646,7 @@ and ensures that this property always has a value of at least ``1``:
       }
 
 The ``quantity`` property has an implicitly unwrapped integer type (``Int!``).
-As with the ``name`` property from ``Product``,
+As with the ``name`` property of the ``Product`` class,
 this means that the ``quantity`` property has a default value of ``nil``
 before it is assigned a specific value during initialization.
 
@@ -1654,13 +1655,12 @@ the ``init(name:)`` initializer from its superclass, ``Product``.
 This satisfies the requirement that a failable initializer
 must always perform initializer delegation before triggering an initialization failure.
 
-If superclass initialization fails because of an empty ``name`` value,
+If the superclass initialization fails because of an empty ``name`` value,
 the entire initialization process fails immediately
 and no further initialization code is executed.
-If superclass initialization succeeds,
+If the superclass initialization succeeds,
 the ``CartItem`` initializer validates that it has received
 a ``quantity`` value of ``1`` or more.
-This introduces a second point of potential initialization failure.
 
 If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
 initialization succeeds:
@@ -1703,7 +1703,7 @@ Overriding a Failable Initializer
 
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
-If you wish, you can override a superclass failable initializer
+Alternatively, you can override a superclass failable initializer
 with a subclass *non*-failable initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
@@ -1780,8 +1780,8 @@ or if an empty string is passed to the ``init(name:)`` initializer:
 The ``AutomaticallyNamedDocument`` overrides its superclass's
 failable ``init?(name:)`` initializer with a nonfailable ``init(name:)`` initializer.
 Because ``AutomaticallyNamedDocument`` copes with the empty string case
-in a different way to its superclass,
-it does not need the failability of the superclass initializer,
+in a different way than its superclass,
+its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
@@ -1790,18 +1790,15 @@ Implicitly Unwrapped Failable Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You typically define a failable initializer
-as creating an optional instance of the appropriate type
+that creates an optional instance of the appropriate type
 by placing a question mark after the ``init`` keyword (``init?``).
-
-As an alternative, you can define a failable initializer that creates
+Alternatively, you can define a failable initializer that creates
 an implicitly unwrapped optional instance of the appropriate type.
 Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
 instead of a question mark.
 
-The two forms of optionality can be used interchangeably.
 You can delegate from ``init?`` to ``init!`` and vice versa,
 and can override ``init?`` with ``init!`` and vice versa.
-In each case, the nature of the optionality after initialization is changed.
 
 .. assertion:: structuresCanDelegateAcrossFromOptionalToIUO
 
@@ -1869,7 +1866,7 @@ In each case, the nature of the optionality after initialization is changed.
 
 .. note::
 
-   You can also delegate from a non-failing initializer to
+   You can also delegate from a nonfailing initializer to
    an implicitly unwrapped failing initializer.
    However, you will trigger an assertion
    if the implicitly unwrapped failing initializer returns ``nil``.
@@ -1927,10 +1924,10 @@ In each case, the nature of the optionality after initialization is changed.
    xx assertion
 
 .. _Initialization_RequiredInitializers:
- 
+
 Required Initializers
 ---------------------
- 
+
 Write the ``required`` modifier before the definition of a class initializer
 to indicate that every subclass of the class must implement that initializer:
 
