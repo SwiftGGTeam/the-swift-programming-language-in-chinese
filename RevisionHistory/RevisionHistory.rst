@@ -11,7 +11,7 @@ Date        Notes
             * Added a description of :ref:`Protocols_FailableInitializerRequirements`
               for protocols.
 
-            * Constant and variables of type ``Any`` can now contain
+            * Constants and variables of type ``Any`` can now contain
               function instances. Updated the example for :ref:`TypeCasting_Any`
               to show how to check for and cast to a function type
               within a ``switch`` statement.
