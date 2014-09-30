@@ -1716,7 +1716,7 @@ A nonfailable initializer can never delegate to a failable initializer.
 
 .. note::
 
-   You can override a failable initializer with a nonfailable initializer,
+   You can override a failable initializer with a nonfailable initializer
    but not the other way around.
 
 .. assertion:: youCannotOverrideANonFailableInitializerWithAFailableInitializer
@@ -1798,7 +1798,7 @@ Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
 instead of a question mark.
 
 You can delegate from ``init?`` to ``init!`` and vice versa,
-and can override ``init?`` with ``init!`` and vice versa.
+and you can override ``init?`` with ``init!`` and vice versa.
 You can also delegate from ``init`` to ``init!``,
 although doing so will trigger an assertion
 if the ``init!`` initializer causes initialization to fail.
