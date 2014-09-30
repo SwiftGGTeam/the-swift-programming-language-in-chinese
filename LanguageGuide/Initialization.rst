@@ -1786,8 +1786,8 @@ and so it provides a nonfailable version of the initializer instead.
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
-Implicitly Unwrapped Failable Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The init! Failable Initializer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You typically define a failable initializer
 that creates an optional instance of the appropriate type
@@ -1799,6 +1799,9 @@ instead of a question mark.
 
 You can delegate from ``init?`` to ``init!`` and vice versa,
 and can override ``init?`` with ``init!`` and vice versa.
+You can also delegate from ``init`` to ``init!``,
+although doing so will trigger an assertion
+if the ``init!`` initializer causes initialization to fail.
 
 .. assertion:: structuresCanDelegateAcrossFromOptionalToIUO
 
@@ -1863,13 +1866,6 @@ and can override ``init?`` with ``init!`` and vice versa.
    -> class D: C {
          override init?(i: Int) { super.init(i: i) }
       }
-
-.. note::
-
-   You can also delegate from a nonfailing initializer to
-   an implicitly unwrapped failing initializer.
-   However, you will trigger an assertion
-   if the implicitly unwrapped failing initializer returns ``nil``.
 
 .. assertion:: structuresCanDelegateAcrossFromNonFailingToIUO
 
