@@ -1649,7 +1649,7 @@ As a result, a failable initializer can return ``nil`` to indicate that initiali
 To declare a failable initializer that produces an optional instance,
 append a question mark to the ``init`` keyword in the initializer declaration (``init?``).
 To declare a failable initializer that produces an implicitly unwrapped optional instance,
-append an exclamation mark instead (``init!``). The example below shows a
+append an exclamation mark instead (``init!``). The example below shows an ``init?``
 failable initializer that produces an optional instance of a structure.
 
 .. testcode:: failable
@@ -1666,7 +1666,7 @@ failable initializer that produces an optional instance of a structure.
            }
        }
 
-You call a failable initializer in the same way that you call a nonfailable initializer,
+You call an ``init?`` failable initializer in the same way that you call a nonfailable initializer,
 except that you must deal with the optionality of the result.
 
 .. testcode:: failable
@@ -1683,18 +1683,20 @@ A failable initializer of a class, however, can return ``nil`` only after all
 stored properties of that class are initialized and ``self.init`` or ``super.init``
 is called (that is, any initializer delegation is performed).
 
+A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
-or to a failable initializer that produces an implicitly unwrapped optional instance.
-A failable initializer can delegate to a nonfailable initializer
-or either kind of failable initializer.
-In addition, a ``nil`` return value is propagated through failable initializer delegation.
+or to an ``init!`` failable initializer.
+
+Initialization failure propagates through initializer delegation.
 Specifically,
 if a failable initializer delegates to an initializer that fails and returns ``nil``,
 then the initializer that delegated also fails and implicitly returns ``nil``.
-If a nonfailable initializer delegates to an initializer that fails and returns ``nil``,
+If a nonfailable initializer delegates to an ``init!`` failable initializer that fails and returns ``nil``,
 then a runtime error is raised
 (as if you used the ``!`` operator to unwrap an optional that has a ``nil`` value).
 
+For more information and to see examples of failable initializers,
+see :ref:`Initialization_FailableInitializers`.
 
 .. langref-grammar
 

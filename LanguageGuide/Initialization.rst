@@ -1450,25 +1450,25 @@ for a ``Character`` value representing a temperature symbol:
       }
 
 You can use this failable initializer to choose
-an appropriate enumeration member for the three known states,
+an appropriate enumeration member for the three possible states
 and to cause initialization to fail if the parameter does not match one of these
-defined states:
+states:
 
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a known temperature unit, so initialization succeeded.")
+         println("This is a defined temperature unit, so initialization succeeded.")
       }
-   <- This is a known temperature unit, so initialization succeeded.
+   <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is an unknown temperature unit, so initialization failed.")
+         println("This is not a defined temperature unit, so initialization failed.")
       }
-   <- This is an unknown temperature unit, so initialization failed.
+   <- This is not a defined temperature unit, so initialization failed.
 
 .. _Initialization_FailableInitializersForEnumerationsWithRawValues:
 
@@ -1494,16 +1494,16 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a known temperature unit, so initialization succeeded.")
+         println("This is a defined temperature unit, so initialization succeeded.")
       }
-   <- This is a known temperature unit, so initialization succeeded.
+   <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is an unknown temperature unit, so initialization failed.")
+         println("This is not a defined temperature unit, so initialization failed.")
       }
-   <- This is an unknown temperature unit, so initialization failed.
+   <- This is not a defined temperature unit, so initialization failed.
 
 .. _Initialization_FailableInitializersForClasses:
 
