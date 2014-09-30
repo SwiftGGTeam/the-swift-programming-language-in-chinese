@@ -1694,6 +1694,11 @@ If a nonfailable initializer delegates to an ``init!`` failable initializer that
 then a runtime error is raised
 (as if you used the ``!`` operator to unwrap an optional that has a ``nil`` value).
 
+A failable designated initializer can be overridden in a subclass
+by any kind of designated initializer.
+A nonfailable designated initializer can be overridden in a subclass
+by a nonfailable designated initializer only.
+
 For more information and to see examples of failable initializers,
 see :ref:`Initialization_FailableInitializers`.
 
