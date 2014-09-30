@@ -519,9 +519,11 @@ or use the default parameter name of ``oldValue``.
 .. note::
 
    ``willSet`` and ``didSet`` observers are not called when
-   a property is first initialized.
-   They are only called when the property's value is set
-   outside of an initialization context.
+   a property is set in an initializer before delegation takes place.
+   
+   For more information about initializer delegation,
+   see :ref:`Initialization_InitializerDelegationForValueTypes`
+   and :ref:`Initialization_InitializerChaining`.
 
 .. assertion:: observersAreNotCalledDuringInitialization
 

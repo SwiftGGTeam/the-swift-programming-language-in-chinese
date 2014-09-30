@@ -647,8 +647,8 @@ separated by a space:
 
 .. _Initialization_InitializerChaining:
 
-Initializer Chaining
-~~~~~~~~~~~~~~~~~~~~
+Initializer Delegation for Class Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To simplify the relationships between designated and convenience initializers,
 Swift applies the following three rules for delegation calls between initializers:
