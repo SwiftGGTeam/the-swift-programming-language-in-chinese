@@ -446,7 +446,7 @@ The closure can then refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
-The simplest form of a closure in Swift is a nested function,
+In Swift, the simplest form of a closure that can capture values is a nested function,
 written within the body of another function.
 A nested function can capture any of its outer function's arguments
 and can also capture any constants and variables defined within the outer function.
