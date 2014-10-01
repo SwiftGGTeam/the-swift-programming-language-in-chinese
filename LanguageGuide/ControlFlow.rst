@@ -78,13 +78,6 @@ As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
-.. note::
-
-   The ``index`` constant exists only within the scope of the loop.
-   If you want to check the value of ``index`` after the loop completes,
-   or if you want to work with its value as a variable rather than a constant,
-   you must declare it yourself before its use in the loop.
-
 .. TODO: note that you can use floating-point values with ranges too.
 
 If you don't need each value from the range,
@@ -692,7 +685,7 @@ in a similar manner to the branches of an ``if`` statement.
 The ``switch`` statement determines which branch should be selected.
 This is known as :newTerm:`switching` on the value that is being considered.
 
-Every ``switch`` statement must be :newTerm:`exhaustive`. 
+Every ``switch`` statement must be :newTerm:`exhaustive`.
 That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it is not appropriate to provide a ``switch`` case for every possible value,
