@@ -565,7 +565,7 @@ the constant, variable, property, or subscript must also be marked as ``private`
 .. testcode:: accessControl
 
    -> private var privateInstance = SomePrivateClass()
-   <~ // privateInstance : SomePrivateClass = REPL.(SomePrivateClass in 
+   <~ // privateInstance : SomePrivateClass = REPL.(SomePrivateClass in
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
@@ -756,21 +756,21 @@ the initializer's own access level.
 Default Initializers
 ~~~~~~~~~~~~~~~~~~~~
 
-Swift provides a :newTerm:`default initializer` without any arguments
+As described in :ref:`Initialization_DefaultInitializers`,
+Swift automatically provides a :newTerm:`default initializer` without any arguments
 for any structure or base class
 that provides default values for all of its properties
 and does not provide at least one initializer itself.
-This default initializer is described in :ref:`Initialization_DefaultInitializers`.
-The default initializer has the same access level as the type it initializes.
 
-.. note::
+A default initializer has the same access level as the type it initializes,
+unless that type is defined as ``public``.
+For a type that is defined as ``public``,
+the default initializer is considered internal.
+If you want a public type to be initializable with a no-argument initializer
+when used in another module,
+you must explicitly provide a public no-argument initializer yourself
+as part of the type's definition.
 
-   For a type that is defined as ``public``,
-   the default initializer is considered internal.
-   If you want a public type to be initializable with a no-argument initializer
-   when used in another module,
-   you must provide a public no-argument initializer yourself
-   as part of the type's definition.
 
 .. _AccessControl_DefaultMemberwiseInitializersForStructureTypes:
 
