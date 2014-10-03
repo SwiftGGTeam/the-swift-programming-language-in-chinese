@@ -39,7 +39,7 @@ each of which has the following form:
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A :newTerm:`type parameter` is simply the name
 of a placeholder type
-(for instance, ``T``, ``U``, ``V``, ``KeyType``, ``ValueType``, and so on).
+(for instance, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
 You have access to the type parameters (and any of their associated types) in the rest of the
 type, function, or initializer declaration, including in the signature of the function
 or initializer.
@@ -174,18 +174,18 @@ the Swift standard library defines a generic dictionary type as:
 
 .. code-block:: swift
 
-    struct Dictionary<KeyType: Hashable, ValueType>: CollectionType, DictionaryLiteralConvertible {
+    struct Dictionary<Key: Hashable, Value>: CollectionType, DictionaryLiteralConvertible {
         /* ... */
     }
 
 .. TODO: How are we supposed to wrap code lines like the above?
 
 The specialized version of the generic ``Dictionary`` type, ``Dictionary<String, Int>``
-is formed by replacing the generic parameters ``KeyType: Hashable`` and ``ValueType``
+is formed by replacing the generic parameters ``Key: Hashable`` and ``Value``
 with the concrete type arguments ``String`` and ``Int``. Each type argument must satisfy
 all the constraints of the generic parameter it replaces, including any additional
 requirements specified in a ``where`` clause. In the example above,
-the ``KeyType`` type parameter is constrained to conform to the ``Hashable`` protocol
+the ``Key`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.
 
 You can also replace a type parameter with a type argument that is itself

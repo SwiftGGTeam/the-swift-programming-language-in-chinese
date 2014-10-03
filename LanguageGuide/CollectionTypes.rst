@@ -428,11 +428,11 @@ the definition for a particular word.
 Dictionary Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The type of a Swift dictionary is written in full as ``Dictionary<KeyType, ValueType>``,
-where ``KeyType`` is the type of value that can be used as a dictionary key,
-and ``ValueType`` is the type of value that the dictionary stores for those keys.
+The type of a Swift dictionary is written in full as ``Dictionary<Key, Value>``,
+where ``Key`` is the type of value that can be used as a dictionary key,
+and ``Value`` is the type of value that the dictionary stores for those keys.
 
-You can also write the type of a dictionary in shorthand form as ``[KeyType: ValueType]``.
+You can also write the type of a dictionary in shorthand form as ``[Key: Value]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred,
 and is used throughout this guide when referring to the type of a dictionary.

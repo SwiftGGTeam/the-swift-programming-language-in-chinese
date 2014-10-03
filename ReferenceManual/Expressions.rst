@@ -495,11 +495,11 @@ It has the following form:
    [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 
 The last expression in the dictionary can be followed by an optional comma.
-The value of a dictionary literal has type ``[KeyType: ValueType]``,
-where ``KeyType`` is the type of its key expressions
-and ``ValueType`` is the type of its value expressions.
+The value of a dictionary literal has type ``[Key: Value]``,
+where ``Key`` is the type of its key expressions
+and ``Value`` is the type of its value expressions.
 If there are expressions of multiple types,
-``KeyType`` and ``ValueType`` are the closest common supertype
+``Key`` and ``Value`` are the closest common supertype
 for their respective values.
 An empty dictionary literal is written as
 a colon inside a pair of brackets (``[:]``)

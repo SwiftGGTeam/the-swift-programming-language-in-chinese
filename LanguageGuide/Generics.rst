@@ -224,13 +224,13 @@ it is useful to provide more descriptive type parameter names.
 For example, Swift's ``Dictionary`` type has two type parameters ---
 one for its keys and one for its values.
 If you were writing ``Dictionary`` yourself,
-you might name these two type parameters ``KeyType`` and ``ValueType``
+you might name these two type parameters ``Key`` and ``Value``
 to remind you of their purpose as you use them within your generic code.
 
 .. note::
 
    Always give type parameters ``UpperCamelCase`` names
-   (such as ``T`` and ``KeyType``)
+   (such as ``T`` and ``Key``)
    to indicate that they are a placeholder for a *type*, not a value.
 
 .. _Generics_GenericTypes:

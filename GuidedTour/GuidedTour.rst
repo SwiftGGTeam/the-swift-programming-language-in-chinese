@@ -1240,8 +1240,8 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
-           var result = [ItemType]()
+    -> func repeat<Item>(item: Item, times: Int) -> [Item] {
+           var result = [Item]()
            for i in 0..<times {
                 result.append(item)
            }

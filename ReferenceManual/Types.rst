@@ -319,7 +319,7 @@ Dictionary Type
 ---------------
 
 The Swift language provides the following syntactic sugar for the Swift standard library
-``Dictionary<KeyType, ValueType>`` type:
+``Dictionary<Key, Value>`` type:
 
 .. syntax-outline::
 
