@@ -393,7 +393,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
    This is defined in Algorithm.swift,
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
-   
+
 .. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
    This is defined in Array.swift.
    Likewise I'm holding off writing about it until NewArray lands.
@@ -463,8 +463,8 @@ and the values are airport names:
 
 .. testcode:: dictionaries
 
-   -> var airports: [String: String] = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
+   -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -478,7 +478,7 @@ and whose values are also of type ``String``”.
 
 The ``airports`` dictionary is initialized with
 a dictionary literal containing two key-value pairs.
-The first pair has a key of ``"TYO"`` and a value of ``"Tokyo"``.
+The first pair has a key of ``"YYZ"`` and a value of ``"Toronto Pearson"``.
 The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
@@ -494,8 +494,8 @@ The initialization of ``airports`` could have been be written in a shorter form 
 
 .. testcode:: dictionariesInferred
 
-   -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "TYO": "Tokyo"]
+   -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin","YYZ": "Toronto Pearson"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
@@ -569,7 +569,7 @@ or ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
 
-   -> if let oldValue = airports.updateValue("Dublin International", forKey: "DUB") {
+   -> if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
          println("The old value for DUB was \(oldValue).")
       }
    <- The old value for DUB was Dublin.
@@ -588,9 +588,9 @@ Otherwise, the subscript returns ``nil``:
       } else {
          println("That airport is not in the airports dictionary.")
       }
-   <- The name of the airport is Dublin International.
+   <- The name of the airport is Dublin Airport.
 
-You can use subscript syntax to remove a key-value pair from a dictionary 
+You can use subscript syntax to remove a key-value pair from a dictionary
 by assigning a value of ``nil`` for that key:
 
 .. testcode:: dictionariesInferred
@@ -619,7 +619,7 @@ or returns ``nil`` if no value existed:
       } else {
          println("The airports dictionary does not contain a value for DUB.")
       }
-   <- The removed airport's name is Dublin International.
+   <- The removed airport's name is Dublin Airport.
 
 .. _CollectionTypes_IteratingOverADictionary:
 
@@ -637,7 +637,7 @@ as part of the iteration:
          println("\(airportCode): \(airportName)")
       }
    </ LHR: London Heathrow
-   </ TYO: Tokyo
+   </ YYZ: Toronto Pearson
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -650,13 +650,13 @@ by accessing its ``keys`` and ``values`` properties:
          println("Airport code: \(airportCode)")
       }
    </ Airport code: LHR
-   </ Airport code: TYO
+   </ Airport code: YYZ
    ---
    -> for airportName in airports.values {
          println("Airport name: \(airportName)")
       }
    </ Airport name: London Heathrow
-   </ Airport name: Tokyo
+   </ Airport name: Toronto Pearson
 
 If you need to use a dictionary's keys or values
 with an API that takes an ``Array`` instance, initialize a new array
@@ -665,14 +665,14 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["LHR", "TYO"]
+   << // airportCodes : [(String)] = ["LHR", "YYZ"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
-   </ airportCodes is ["LHR", "TYO"]
+   </ airportCodes is ["LHR", "YYZ"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["London Heathrow", "Tokyo"]
+   << // airportNames : [(String)] = ["London Heathrow", "Toronto Pearson"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
-   </ airportNames is ["London Heathrow", "Tokyo"]
+   </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
 .. note::
 
@@ -739,5 +739,5 @@ are also hashable by default.
    The value returned by a type's ``hashValue`` property
    is not required to be the same across different executions of the same program,
    or in different programs.
-   
+
    For more information about conforming to protocols, see :doc:`Protocols`.
