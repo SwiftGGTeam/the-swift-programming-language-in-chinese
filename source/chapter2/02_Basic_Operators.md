@@ -192,8 +192,8 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 
 一元正号（`+`）不做任何改变地返回操作数的值。
 
-let minusSix = -6
-let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
+	let minusSix = -6
+	let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
 
 虽然一元`+`什么都不会改变，但当你在使用一元负号来表达负数时，你可以使用一元正号来表达正数，如此你的代码会具有对称美。
 
