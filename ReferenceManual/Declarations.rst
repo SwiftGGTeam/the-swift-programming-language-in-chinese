@@ -1449,7 +1449,7 @@ Protocol Subscript Declaration
 
 Protocols declare that conforming types must implement a subscript
 by including a protocol subscript declaration in the body of the protocol declaration.
-Protocol property declarations have a special form of a subscript declaration:
+Protocol subscript declarations have a special form of a subscript declaration:
 
 .. syntax-outline::
 
