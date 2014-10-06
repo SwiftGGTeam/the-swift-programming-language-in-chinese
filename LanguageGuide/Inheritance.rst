@@ -356,8 +356,7 @@ an appropriate choice of gear for the new speed.
 Specifically, the property observer chooses a gear that is
 the new ``currentSpeed`` value divided by ``10``,
 rounded down to the nearest integer, plus ``1``.
-A speed of ``10.0`` produces a gear of ``1``,
-and a speed of ``35.0`` produces a gear of ``4``:
+A speed of ``35.0`` produces a gear of ``4``:
 
 .. testcode:: inheritance
 
