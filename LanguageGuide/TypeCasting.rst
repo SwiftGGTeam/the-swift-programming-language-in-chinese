@@ -199,7 +199,7 @@ equally, it's also possible that it might be a ``Song``,
 or even just a base ``MediaItem``.
 Because of this uncertainty, the ``as?`` form of the type cast operator returns an *optional* value
 when attempting to downcast to a subclass type.
-The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
+The result of ``item as? movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
 Downcasting to ``Movie`` fails when applied to
 the ``Song`` instances in the library array.
