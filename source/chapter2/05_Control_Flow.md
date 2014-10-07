@@ -192,7 +192,7 @@ println("The loop statements were executed \(index) times")
 
 ```swift
 let finalSquare = 25
-var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+var board = [Int](count: finalSquare + 1, repeatedValue: 0)
 ```
 
 一些方块被设置成有蛇或者梯子的指定值。梯子底部的方块是一个正值，使你可以向上移动，蛇头处的方块是一个负值，会让你向下移动：
@@ -248,7 +248,7 @@ println("Game over!")
 
 ``` swift
 let finalSquare = 25
-var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+var board = [Int](count: finalSquare + 1, repeatedValue: 0)
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 var square = 0
