@@ -71,7 +71,7 @@ if let roomCount = john.residence?.numberOfRooms {
 
 这告诉 Swift 来链接可选`residence?`属性，如果`residence`存在则取回`numberOfRooms`的值。
 
-因为这种尝试获得`numberOfRooms`的操作有可能失败，可选链会返回`Int?`类型值，或者称作“可选`Int`”。当`residence`是空的时候（上例），选择`Int`将会为空，因此会出先无法访问`numberOfRooms`的情况。
+因为这种尝试获得`numberOfRooms`的操作有可能失败，可选链会返回`Int?`类型值，或者称作“可选`Int`”。当`residence`是空的时候（上例），选择`Int`将会为空，因此会出现无法访问`numberOfRooms`的情况。
 
 要注意的是，即使numberOfRooms是非可选`Int`（`Int?`）时这一点也成立。只要是通过可选链的请求就意味着最后`numberOfRooms`总是返回一个`Int?`而不是`Int`。
 
@@ -111,7 +111,7 @@ class Person {
 
 ```swift
 class Residence {
-    var rooms = Room[]()
+    var rooms = [Room]()
     var numberOfRooms: Int {
     return rooms.count
     }

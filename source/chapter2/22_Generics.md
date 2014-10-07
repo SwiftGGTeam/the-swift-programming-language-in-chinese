@@ -180,7 +180,7 @@ struct IntStack {
 
 ```swift
 struct Stack<T> {
-    var items = T[]()
+    var items = [T]()
     mutating func push(item: T) {
         items.append(item)
     }
@@ -254,7 +254,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
 
 ```swift
-func findStringIndex(array: String[], valueToFind: String) -> Int? {
+func findStringIndex(array: [String], valueToFind: String) -> Int? {
     for (index, value) in enumerate(array) {
         if value == valueToFind {
             return index
@@ -356,7 +356,7 @@ protocol Container {
 ```swift
 struct IntStack: Container {
     // IntStack的原始实现
-    var items = Int[]()
+    var items = [Int]()
     mutating func push(item: Int) {
         items.append(item)
     }
@@ -389,7 +389,7 @@ struct IntStack: Container {
 ```swift
 struct Stack<T>: Container {
     // original Stack<T> implementation
-    var items = T[]()
+    var items = [T]()
     mutating func push(item: T) {
         items.append(item)
     }
@@ -447,7 +447,7 @@ func allItemsMatch<
         }
 
         // 检查两个Container相应位置的元素彼此是否相等
-        for i in 0..someContainer.count {
+        for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                 return false
             }

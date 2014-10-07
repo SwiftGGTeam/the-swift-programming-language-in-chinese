@@ -52,9 +52,7 @@ let someString = "Some string literal value"
 字符串字面量可以包含以下特殊字符：
 
 * 转义字符`\0`(空字符)、`\\`(反斜线)、`\t`(水平制表符)、`\n`(换行符)、`\r`(回车符)、`\"`(双引号)、`\'`(单引号)。
-* 单字节 Unicode 标量，写成`\xnn`，其中`nn`为两位十六进制数。
-* 双字节 Unicode 标量，写成`\unnnn`，其中`nnnn`为四位十六进制数。
-* 四字节 Unicode 标量，写成`\Unnnnnnnn`，其中`nnnnnnnn`为八位十六进制数。
+* Unicode 标量，写成`\u{n}`(u为小写)，其中`n`为任意的一到八位十六进制数。
 
 下面的代码为各种特殊字符的使用示例。
 `wiseWords`常量包含了两个转移特殊字符 (双括号)；
@@ -63,9 +61,9 @@ let someString = "Some string literal value"
 ```swift
 let wiseWords = "\"我是要成为海贼王的男人\" - 路飞"
 // "我是要成为海贼王的男人" - 路飞
-let dollarSign = "\x24"             // $,  Unicode 标量 U+0024
-let blackHeart = "\u2665"           // ♥,  Unicode 标量 U+2665
-let sparklingHeart = "\U0001F496"  // 💖, Unicode 标量 U+1F496
+let dollarSign = "\u{24}"             // $,  Unicode 标量 U+0024
+let blackHeart = "\u{2665}"           // ♥,  Unicode 标量 U+2665
+let sparklingHeart = "\u{1F496}"  // 💖, Unicode 标量 U+1F496
 ```
 
 <a name="initializing_an_empty_string"></a>
@@ -172,7 +170,7 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 ```swift
 let string1 = "hello"
 let string2 = " there"
-var welcome = string1 +　string２
+var welcome = string1 +　string2
 // welcome 现在等于 "hello there"
 ```
 
@@ -296,6 +294,8 @@ println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 您可以通过字符串的`uppercaseString`和`lowercaseString`属性来访问大写/小写版本的字符串。
 
 ```swift
+import Foundation
+
 let normal = "Could you help me, please?"
 let shouty = normal.uppercaseString
 // shouty 值为 "COULD YOU HELP ME, PLEASE?"

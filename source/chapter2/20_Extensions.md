@@ -156,7 +156,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ```swift
 extension Int {
     func repetitions(task: () -> ()) {
-        for i in 0..self {
+        for i in 0..<self {
             task()
         }
     }
@@ -217,12 +217,13 @@ someInt.square()
 
 ```swift
 extension Int {
-    subscript(digitIndex: Int) -> Int {
+    subscript(var digitIndex: Int) -> Int {
         var decimalBase = 1
-            for _ in 1...digitIndex {
+            while digitIndex > 0 {
                 decimalBase *= 10
+                --digitIndex
             }
-        return (self / decimalBase) % 10
+            return (self / decimalBase) % 10
     }
 }
 746381295[0]

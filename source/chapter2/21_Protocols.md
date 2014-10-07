@@ -112,7 +112,7 @@ class Starship: FullyNamed {
 		self.prefix = prefix
 	}
 	var fullName: String {
-	return (prefix ? prefix! + " " : " ") + name
+	return (prefix != nil ? prefix! + " " : " ") + name
 	}
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
@@ -349,9 +349,9 @@ class SnakesAndLadders: DiceGame {
 	let finalSquare = 25
 	let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
 	var square = 0
-	var board: Int[]
+	var board: [Int]
 	init() {
-		board = Int[](count: finalSquare + 1, repeatedValue: 0)
+		board = [Int](count: finalSquare + 1, repeatedValue: 0)
 		board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 		board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 	}
@@ -508,7 +508,7 @@ println(somethingTextRepresentable.asText())
 协议类型可以被集合使用，表示集合中的元素均为协议类型:
 
 ```swift
-let things: TextRepresentable[] = [game,d12,simonTheHamster]
+let things: [TextRepresentable] = [game,d12,simonTheHamster]
 ```
 
 如下所示，`things`数组可以被直接遍历，并调用其中元素的`asText()`函数:
@@ -675,7 +675,7 @@ class Animal {
 `Circle，Country，Animal`并没有一个相同的基类，因而采用`AnyObject`类型的数组来装载在他们的实例，如下所示:
 
 ```swift
-let objects: AnyObject[] = [
+let objects: [AnyObject] = [
 	Circle(radius: 2.0),
 	Country(area: 243_610),
 	Animal(legs: 4)
@@ -718,8 +718,8 @@ for object in objects {
 
 ```swift
 @objc protocol CounterDataSource {
-    @optional func incrementForCount(count: Int) -> Int
-    @optional var fixedIncrement: Int { get }
+    optional func incrementForCount(count: Int) -> Int
+    optional var fixedIncrement: Int { get }
 }
 ```
 
