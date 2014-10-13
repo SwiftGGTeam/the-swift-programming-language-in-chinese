@@ -266,7 +266,7 @@ for use within the ``switch`` case's body:
       }
    <- QR code: ABCDEFGHIJKLMNOP.
 
-If all of the associated values for a enumeration member
+If all of the associated values for an enumeration member
 are extracted as constants, or if all are extracted as variables,
 you can place a single ``var`` or ``let`` annotation before the member name, for brevity:
 
