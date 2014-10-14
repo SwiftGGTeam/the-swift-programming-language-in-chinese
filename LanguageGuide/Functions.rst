@@ -612,11 +612,6 @@ The example below calculates the :newTerm:`arithmetic mean`
    place the variadic parameter after all the defaulted parameters
    at the very end of the list.
 
-.. FIXME: A function's variadic parameter cannot be referred to by name
-   when the function is called.
-   I've reported this as rdar://16387108;
-   if it doesn't get fixed, I should mention it here.
-
 .. _Functions_ConstantAndVariableParameters:
 
 Constant and Variable Parameters
