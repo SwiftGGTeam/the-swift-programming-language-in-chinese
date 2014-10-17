@@ -199,7 +199,7 @@ for movie in someObjects as Movie[] {
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括非`class`类型。它创建了一个可以存储`Any`类型的数组 `things`。
 
 ```swift
-var things = Any[]()
+var things = [Any]()
 
 things.append(0)
 things.append(0.0)
