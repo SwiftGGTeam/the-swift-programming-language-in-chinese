@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2014-10-10  * Added a full guide to :ref:`Initialization_FailableInitializers`.
+2014-10-16  * Added a full guide to :ref:`Initialization_FailableInitializers`.
 
             * Added a description of :ref:`Protocols_FailableInitializerRequirements`
               for protocols.
