@@ -200,7 +200,7 @@ func printNumberOfRooms(){
 如果你利用可选链调用此方法，这个方法的返回值类型将是`Void?`，而不是`Void`，因为当通过可选链调用方法时返回值总是可选类型（optional type）。即使这个方法本身没有定义返回值，你也可以使用`if`语句来检查是否能成功调用`printNumberOfRooms`方法：如果方法通过可选链调用成功，`printNumberOfRooms`的隐式返回值将会是`Void`，如果没有成功，将返回`nil`：
 
 ```swift
-if john.residence?.printNumberOfRooms() {
+if john.residence?.printNumberOfRooms?() {
     println("It was possible to print the number of rooms.")
 } else {
     println("It was not possible to print the number of rooms.")
