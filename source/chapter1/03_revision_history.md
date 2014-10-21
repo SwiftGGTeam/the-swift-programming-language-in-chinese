@@ -1,4 +1,4 @@
-> 翻译：[成都老码团队翻译组-Ayra](http://weibo.com/littlekok/)  
+> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)  
 > 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
 # Swift 版本历史记录
@@ -7,6 +7,10 @@
 
 本页内容包括：
 
+-   [XCode6.1 Swift语法文档更新](#xcode6_1)
+-   [XCode6.1 Beta2 Swift语法文档更新](#xcode6_1_Beta2)
+-   [XCode6.1 Beta1 Swift语法文档更新](#xcode6_1_Beta1)
+-   [XCode6 Beta7 Swift语法文档更新](#xcode6_beta7)
 -   [XCode6 Beta6 Swift语法文档更新](#xcode6_beta6)
 -   [XCode6 Beta5 Swift语法文档更新](#xcode6_beta5)
 -   [XCode6 Beta4 Swift语法文档更新](#xcode6_beta4)
@@ -16,6 +20,126 @@
 -   XCode6下载: [老码云盘下载](http://pan.baidu.com/disk/home#from=share_pan_logo&path=%252F%25E8%2580%2581%25E7%25A0%2581%25E4%25BA%2591%25E7%259B%2598-XCode6%252FXCode6-Beta5)
 
 以下部分是针对XCode6每一次Beta版本直至正式版发布，Swift语法部分的更新归类
+
+<a name="xcode6_1"></a>
+### XCode6.1中Swift语法更新
+
+***注意：苹果此时发布了统一的版本XCode6.1，其中将以前的XCode6.0.1和XCode6.1 Beta系列版本合并***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-10-10</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			增加了一个完整的关于<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html">失败构造器(Failable Initializers)</a>的指南文档
+        </li>
+	    <li><p>
+			增加了一个关于协议的<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html">失败构造器需求(Failable Initializer Requirements)</a>的描述
+        </li>
+		<li><p>
+			`Any`类型的常量或变量现在可以包含一个函数实例了。同时更新了<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html">`Any`</a>章节的案例用来演示如何在swith语句中检查和转换一个函数类型。
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_1_Beta2"></a>
+### XCode6.1 Beta2中Swift语法更新
+
+***注意：苹果此时发布了XCode6.0.1版本(也称为XCode6正式版)，此版本用于iOS的开发，同时也发布子版本XCode6.1 Beta2，此版本为OSX开发做准备，以下所述的更改仅对XCode6.1 Beta2有效***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-09-15</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			带有原始值的枚举类型增加了一个`rawValue`属性替代`toRaw()`方法，同时使用了一个以`rawValue`为参数的失败构造器来替代`fromRaw()`方法。更多的信息，请看<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html">原始值(Raw Values)</a>和<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">带原始值的枚举类型(Enumerations with Cases of a Raw-Value Type)</a>部分
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_1_Beta1"></a>
+### XCode6.1 Beta1中Swift语法更新
+
+***注意：苹果此时发布了XCode6 GM版本，此版本用于iOS的开发，同时也发布子版本XCode6.1 Beta1，此版本为OSX开发做准备，以下所述的更改仅对XCode6.1 Beta1有效***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-09-09</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			增加了一个新的关于<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">失败构造器(Failable Initializers)</a>的参考章节,失败构造器可以触发失败的构造过程
+        </li>
+	    <li><p>
+			自定义运算符现在可以包含`?`字符，更新的<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html">运算符(Operators)</a>章节描述了改进后的规则，并且从<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html">自定义运算符(Custom Operators)</a>章节删除了重复的运算符有效字符集合
+		</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_beta7"></a>
+### XCode6 Beta7中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode Beta7 Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-09-03</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			实现了内部库的修改和适配，主要包括如下：
+			1）大量内部类或者函数遵循Optional类型和协议
+			2）移除大部分函数返回类型隐式解封可选类型的使用
+        </li>
+	    <li><p>
+			对于泛型的类库函数或接口统一从T!更换为T？或T，这样使得语法更加严谨，明确了可能返回为空和不为空的情况
+		</li>
+        <li><p>
+			字符类型不能使用+运算法链接，可以以 `String(C1)+String(2)` 的方式实现字符间链接
+		</li>
+		<li><p>
+			重写了Sort函数，解决了栈溢出的问题
+		</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
 
 <a name="xcode6_beta6"></a>
 ### XCode6 Beta6中Swift语法更新
