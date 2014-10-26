@@ -531,12 +531,12 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.toRaw())
+            return String(self.rawValue())
         }
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.toRaw()
+let aceRawValue = ace.rawValue()
 ```
 
 > 练习：  
@@ -544,10 +544,10 @@ let aceRawValue = ace.toRaw()
 
 在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
 
-使用`toRaw`和`fromRaw`函数来在原始值和枚举值之间进行转换。
+使用'rawValue'在原始值和枚举值之间进行转换。
 
 ```swift
-if let convertedRank = Rank.fromRaw(3) {
+if let convertedRank = Rank(rawValue: 3) {
     let threeDescription = convertedRank.simpleDescription()
 }
 ```
