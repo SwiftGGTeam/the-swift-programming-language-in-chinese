@@ -1363,7 +1363,7 @@ For example:
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    // someFunctionWithSideEffects is evaluated
    /> someDictionary is now \(list)
-   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+   </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
 
 .. langref-grammar
 
