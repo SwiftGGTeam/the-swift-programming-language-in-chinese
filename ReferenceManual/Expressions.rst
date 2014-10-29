@@ -180,10 +180,10 @@ The Swift standard library provides the following binary operators:
     -> var sequence: [Int] = []
     << // sequence : [Int] = []
     -> sequence.first ?? 0 // produces 0, because sequence.first is nil
-    <$ : Int 0
+    <$ : Int = 0
     -> sequence.append(22)
     -> sequence.first ?? 0 // produces 22, the value of sequence.first
-    <$ : Int 22
+    <$ : Int = 22
 
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
@@ -258,7 +258,7 @@ Assignment is performed from each part of the *value*
 to the corresponding part of the *expression*.
 For example:
 
-.. testcode::
+.. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
     << // (a, _, (b, c)) : (String, Double, (Int, Int)) = (test, 9.45, (12, 3))
@@ -338,14 +338,14 @@ a compile-time error is raised.
 For example, ``10 is Int`` and ``10 is String``
 both raise compile-time errors.
 
-.. assertion::
+.. assertion:: triviallyTrueIsAndAs
 
     -> "hello" is String
     !! <REPL Input>:1:9: error: 'is' test is always true
     !! "hello" is String
     !!         ^
     -> "hello" is Int
-    !! <REPL Input>:1:9: error: type 'Int' does not conform to protocol 'StringLiteralConvertible'
+    !! <REPL Input>:1:9: error: 'Int' is not a subtype of 'String'
     !! "hello" is Int
     !!         ^
 
@@ -591,7 +591,7 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = _TtV4REPL5Point
+    << // somePoint : Point = REPL.Point
     >> somePoint.moveByX(2.0, y: 3.0)
     >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
@@ -788,7 +788,7 @@ It has the following form:
 
 For example:
 
-.. testcode::
+.. testcode:: implicitMemberEnum
 
     >> enum MyEnumeration { case SomeValue, AnotherValue }
     -> var x = MyEnumeration.SomeValue
@@ -855,12 +855,12 @@ is used to explicitly ignore a value during an assignment.
 For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
-.. testcode::
+.. testcode:: wildcardTuple
 
     >> var (x, _) = (10, 20)
-    << // t : (Int, Int, Int) = (10, 20, 30)
+    << // (x, _) : (Int, Int) = (10, 20)
     -> (x, _) = (10, 20)
-    -> // x is 10, 20 is ignored
+    -> // x is 10, and 20 is ignored
 
 .. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
 
@@ -1023,7 +1023,7 @@ to initialize a new instance of a type.
 Unlike functions, an initializer can't be used as a value.
 For example:
 
-.. testcode::
+.. testcode:: initExpression
 
     >> class SomeClass { class func someClassFunction() {} }
     -> var x = SomeClass.someClassFunction // ok
@@ -1036,8 +1036,8 @@ For example:
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
-.. testcode::
-
+.. testcode:: initExpression
+    >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
     ->     init() {
     ->         // subclass initialization goes here
@@ -1073,13 +1073,13 @@ The members of a named type are named
 as part of the type's declaration or extension.
 For example:
 
-.. testcode::
+.. testcode:: explicitMemberExpression
 
     -> class SomeClass {
            var someProperty = 42
        }
     -> let c = SomeClass()
-    << // c : SomeClass = <C instance>
+    << // c : SomeClass = REPL.SomeClass
     -> let y = c.someProperty  // Member access
     << // y : Int = 42
 
@@ -1170,9 +1170,9 @@ runtime type of the *expression*, as the following example shows:
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = C4REPL12SomeSubClass (has 1 child)
-    -> // someInstance is of type SomeBaseClass at compile time, but
-    -> // someInstance is of type SomeSubClass at runtime
+    << // someInstance : SomeBaseClass = REPL.SomeSubClass
+    -> // someInstance has a static type of SomeBaseClass at compile time, and
+    -> // it has a dynamc type of SomeSubClass at runtime
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 
