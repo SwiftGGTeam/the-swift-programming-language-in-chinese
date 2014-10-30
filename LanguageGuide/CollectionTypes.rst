@@ -495,7 +495,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin","YYZ": "Toronto Pearson"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
@@ -636,8 +636,8 @@ as part of the iteration:
    -> for (airportCode, airportName) in airports {
          println("\(airportCode): \(airportName)")
       }
-   </ LHR: London Heathrow
    </ YYZ: Toronto Pearson
+   </ LHR: London Heathrow
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -649,14 +649,14 @@ by accessing its ``keys`` and ``values`` properties:
    -> for airportCode in airports.keys {
          println("Airport code: \(airportCode)")
       }
-   </ Airport code: LHR
    </ Airport code: YYZ
+   </ Airport code: LHR
    ---
    -> for airportName in airports.values {
          println("Airport name: \(airportName)")
       }
-   </ Airport name: London Heathrow
    </ Airport name: Toronto Pearson
+   </ Airport name: London Heathrow
 
 If you need to use a dictionary's keys or values
 with an API that takes an ``Array`` instance, initialize a new array
@@ -665,14 +665,14 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["LHR", "YYZ"]
+   << // airportCodes : [(String)] = ["YYZ", "LHR"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
-   </ airportCodes is ["LHR", "YYZ"]
+   </ airportCodes is ["YYZ", "LHR"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["London Heathrow", "Toronto Pearson"]
+   << // airportNames : [(String)] = ["Toronto Pearson", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
-   </ airportNames is ["London Heathrow", "Toronto Pearson"]
+   </ airportNames is ["Toronto Pearson", "London Heathrow"]
 
 .. note::
 
