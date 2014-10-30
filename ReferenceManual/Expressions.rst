@@ -730,9 +730,16 @@ to capture a weak or unowned reference to the value.
 
 .. testcode:: closure-expression-weak
 
+    >> func myFunction(f: () -> ()) { f() }
+    >> class C {
+    >> let title = "Title"
+    >> func method() {
     -> myFunction { print(self.title) }                    // strong capture
     -> myFunction { [weak self] in print(self!.title) }    // weak capture
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
+    >> } }
+    >> C().method()
+    << TitleTitleTitle
 
 You can also bind an arbitrary expression
 to a named value in the capture list.
@@ -742,8 +749,16 @@ For example:
 
 .. testcode:: closure-expression-capture
 
+    >> func myFunction(f: () -> ()) { f() }
+    >> class P { let title = "Title" }
+    >> class C {
+    >> let parent = P()
+    >> func method() {
     // Weak capture of "self.parent" as "parent"
     -> myFunction { [weak parent = self.parent] in print(parent!.title) }
+    >> } }
+    >> C().method()
+    << Title
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
@@ -1255,14 +1270,17 @@ For example:
 .. testcode:: optional-as-lvalue
 
    -> var x: Int? = 0
+   << // x : Int? = Optional(0)
    -> x!++
-   /> x is now \(x)
+   <$ Int = 0
+   /> x is now \(x!)
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
-   /> someDictionary is now \(list)
-   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+   /> someDictionary is now \(someDictionary)
+   </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
 
 .. TR: In previous review, we noted that this also does downcast,
    but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
@@ -1351,20 +1369,23 @@ For example:
 .. testcode:: optional-chaining-as-lvalue
 
    -> func someFunctionWithSideEffects() -> Int {
-         return 42
+         return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
+   <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
-   /> someDictionary is still \(list)
-   </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
+   /> someDictionary is still \(someDictionary)
+   </ someDictionary is still [b: [10, 20], a: [1, 2, 3]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
-   // someFunctionWithSideEffects is evaluated
-   /> someDictionary is now \(list)
-   </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
-
+   <$ : ()? = Optional(())
+   /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
+   </ someFunctionWithSideEffects is evaluated and returns 42
+   /> someDictionary is now \(someDictionary)
+   </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix
