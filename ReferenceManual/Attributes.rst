@@ -210,7 +210,7 @@ the ``noreturn`` attribute to a function or method *type*.
     that calls the ``NSApplicationMain`` function.
     For example,
     if your app uses a custom subclass of ``NSApplication``
-    as its principle class,
+    as its principal class,
     call the ``NSApplicationMain`` function
     instead of using this attribute.
 
@@ -287,7 +287,7 @@ the ``noreturn`` attribute to a function or method *type*.
     that calls the ``UIApplicationMain`` function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
-    as its principle class,
+    as its principal class,
     call the ``UIApplicationMain`` function
     instead of using this attribute.
 
