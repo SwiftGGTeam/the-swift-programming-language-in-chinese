@@ -1334,9 +1334,9 @@ is nested inside other postfix expressions,
 only the outermost expression returns an optional type.
 In the example below,
 when ``c`` is not ``nil``,
-its value is unwrapped and used to evaluate
-both ``.property`` and ``.performAction()``,
-and the entire expression ``c?.property.performAction()``
+its value is unwrapped and used to evaluate ``.property``,
+the value of which is used to evaluate ``.performAction()``.
+The entire expression ``c?.property.performAction()``
 has a value of an optional type.
 
 .. testcode:: optional-chaining
