@@ -223,8 +223,8 @@ Braces around the body are required.
                teamScore += 1
            }
        }
-    -> teamScore
-    << // teamScore : Int = 11
+    -> println(teamScore)
+    << 11
 
 .. note::
 
@@ -367,8 +367,8 @@ in an arbitrary order.
               }
           }
       }
-   -> largest
-   << // largest : Int = 25
+   -> println(largest)
+   << 25
 
 .. admonition:: Experiment
 
@@ -392,16 +392,16 @@ ensuring that the loop is run at least once.
    -> while n < 100 {
           n = n * 2
       }
-   -> n
-   << // n : Int = 128
+   -> println(n)
+   << 128
    ---
    -> var m = 2
    << // m : Int = 2
    -> do {
           m = m * 2
       } while m < 100
-   -> m
-   << // m : Int = 128
+   -> println(m)
+   << 128
 
 You can keep an index in a loop ---
 either by using ``..<`` to make a range of indexes
@@ -415,16 +415,16 @@ These two loops do the same thing:
    -> for i in 0..<4 {
           firstForLoop += i
       }
-   -> firstForLoop
-   << // firstForLoop : Int = 6
+   -> println(firstForLoop)
+   << 6
    ---
    -> var secondForLoop = 0
    << // secondForLoop : Int = 0
    -> for var i = 0; i < 4; ++i {
           secondForLoop += i
       }
-   -> secondForLoop
-   << // secondForLoop : Int = 6
+   -> println(secondForLoop)
+   << 6
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
@@ -787,11 +787,11 @@ properties can have a getter and a setter.
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
     << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
-    -> triangle.perimeter
-    <$ : Double = 9.3
+    -> println(triangle.perimeter)
+    << 9.3
     -> triangle.perimeter = 9.9
-    -> triangle.sideLength
-    <$ : Double = 3.3
+    -> println(triangle.sideLength)
+    << 3.3
 
 In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.
@@ -840,13 +840,13 @@ is always the same as the side length of its square.
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
-   -> triangleAndSquare.square.sideLength
-   <$ : Double = 10.0
-   -> triangleAndSquare.triangle.sideLength
-   <$ : Double = 10.0
+   -> println(triangleAndSquare.square.sideLength)
+   << 10.0
+   -> println(triangleAndSquare.triangle.sideLength)
+   << 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> triangleAndSquare.triangle.sideLength
-   <$ : Double = 50.0
+   -> println(triangleAndSquare.triangle.sideLength)
+   << 50.0
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
