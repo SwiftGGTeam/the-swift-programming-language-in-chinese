@@ -1052,6 +1052,7 @@ You also use an initializer expression
 to delegate to the initializer of a superclass.
 
 .. testcode:: initExpression
+
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
     ->     init() {
