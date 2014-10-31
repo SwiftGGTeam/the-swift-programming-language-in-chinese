@@ -188,7 +188,7 @@ use the initializer syntax.
    -> let emptyArray = [String]()
    << // emptyArray : [(String)] = []
    -> let emptyDictionary = [String: Float]()
-   << // emptyDictionary : Dictionary<String, Float> = [:]
+   << // emptyDictionary : [String : Float] = [:]
 
 If type information can be inferred,
 you can write an empty array as ``[]``
@@ -357,7 +357,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
+   << // interestingNumbers : [String : Array<Int>] = ["Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -951,9 +951,9 @@ to make an instance of an enumeration from a raw value.
 
     -> if let convertedRank = Rank(rawValue: 3) {
            let threeDescription = convertedRank.simpleDescription()
-       }
-
-.. TODO: ^-- the above needs a test expectation
+    >> println(threeDescription)
+    << 3
+    -> }
 
 The member values of an enumeration are actual values,
 not just another way of writing their raw values.
