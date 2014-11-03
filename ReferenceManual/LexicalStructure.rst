@@ -310,16 +310,16 @@ such as a number or string.
 
 The following are examples of literals:
 
-.. testcode::
+.. testcode:: basic-literals
 
     -> 42               // Integer literal
     -> 3.14159          // Floating-point literal
     -> "Hello, world!"  // String literal
     -> true             // Boolean literal
-    << // r0 : Int = 42
-    << // r1 : Double = 3.14159
-    << // r2 : String = "Hello, world!"
-    << // r3 : Bool = true
+    <$ : Int = 42
+    <$ : Double = 3.14159
+    <$ : String = "Hello, world!"
+    <$ : Bool = true
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -576,17 +576,17 @@ that the ``String`` class has an initializer for.
 
 For example, all the following string literals have the same value:
 
-.. testcode::
+.. testcode:: string-literals
 
    -> "1 2 3"
-   << // r0 : String = "1 2 3"
+   <$ : String = "1 2 3"
    -> "1 2 \(3)"
-   << // r1 : String = "1 2 3"
+   <$ : String = "1 2 3"
    -> "1 2 \(1 + 2)"
-   << // r2 : String = "1 2 3"
+   <$ : String = "1 2 3"
    -> let x = 3; "1 2 \(x)"
    << // x : Int = 3
-   << // r3 : String = "1 2 3"
+   <$ : String = "1 2 3"
 
 The default inferred type of a string literal is ``String``.
 The default inferred type of the characters that make up a string
