@@ -56,7 +56,7 @@ A :newTerm:`type annotation` explicitly specifies the type of a variable or expr
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show:
 
-.. testcode::
+.. testcode:: type-annotation
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
     << // someTuple : (Double, Double) = (3.14159, 2.71828)
@@ -95,7 +95,7 @@ In the first case, a type identifier refers to a type alias of a named or compou
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
-.. testcode::
+.. testcode:: type-identifier
 
     -> typealias Point = (Int, Int)
     -> let origin: Point = (0, 0)
@@ -106,7 +106,7 @@ declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
 that is declared in the ``ExampleModule`` module.
 
-.. testcode::
+.. testcode:: type-identifier-dot
 
     -> var someValue: ExampleModule.MyType
     !! <REPL Input>:1:16: error: use of undeclared type 'ExampleModule'
@@ -188,7 +188,7 @@ captures an implicit closure over the specified expression, instead of the expre
 itself. The following example uses the ``autoclosure`` attribute in defining
 a very simple assert function:
 
-.. testcode::
+.. testcode:: function-autoclosure
 
     -> func simpleAssert(condition: @autoclosure () -> Bool, message: String) {
            if !condition() {
@@ -265,9 +265,9 @@ In other words, the following two declarations are equivalent:
 
     -> let someArray: [String] = ["Alex", "Brian", "Dave"]
     << // someArray : [String] = ["Alex", "Brian", "Dave"]
-    -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    -> let someArray: [String] = ["Alex", "Brian", "Dave"]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
-    !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    !! let someArray: [String] = ["Alex", "Brian", "Dave"]
     !!     ^
     !! <REPL Input>:1:5: note: 'someArray' previously declared here
     !! let someArray: [String] = ["Alex", "Brian", "Dave"]
@@ -284,7 +284,7 @@ pair of square brackets.
 For example, you can create
 a three-dimensional array of integers using three sets of square brackets:
 
-.. testcode::
+.. testcode:: array-3d
 
     -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
     << // array3D : [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
@@ -333,10 +333,10 @@ In other words, the following two declarations are equivalent:
     << // someDictionary : [String : Int] = ["Paul": 39, "Alex": 31]
     -> let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someDictionary'
-    !! let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     !!     ^
     !! <REPL Input>:1:5: note: 'someDictionary' previously declared here
-    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+    !! let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
     !!     ^
 
 In both cases, the constant ``someDictionary``
@@ -379,11 +379,10 @@ In other words, the following two declarations are equivalent:
     -> var optionalInteger: Optional<Int>
     !! <REPL Input>:1:5: error: invalid redeclaration of 'optionalInteger'
     !! var optionalInteger: Optional<Int>
-    !!     ^
+    !! ^
     !! <REPL Input>:1:5: note: 'optionalInteger' previously declared here
     !! var optionalInteger: Int?
-    !!     ^
-
+    !! ^
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -402,7 +401,7 @@ you can access that value using the postfix operator ``!``, as shown below:
 
     -> optionalInteger = 42
     -> optionalInteger! // 42
-    << // r0 : Int = 42
+    <$ : Int = 42
 
 Using the ``!`` operator to unwrap an optional
 that has a value of ``nil`` results in a runtime error.
@@ -438,13 +437,13 @@ the named type ``ImplicitlyUnwrappedOptional<T>``,
 which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
-.. testcode::
+.. testcode:: implictly-unwrapped-optional
 
     -> var implicitlyUnwrappedString: String!
     << // implicitlyUnwrappedString : String! = nil
-    -> var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    -> var implicitlyUnwrappedString: String!
     !! <REPL Input>:1:5: error: invalid redeclaration of 'implicitlyUnwrappedString'
-    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    !! var implicitlyUnwrappedString: String!
     !!     ^
     !! <REPL Input>:1:5: note: 'implicitlyUnwrappedString' previously declared here
     !! var implicitlyUnwrappedString: String!
@@ -546,7 +545,7 @@ at runtime. You can use a ``dynamicType`` expression with an instance
 of a type to access that instance's runtime type as a value,
 as the following example shows:
 
-.. testcode::
+.. testcode:: metatype-type
 
     -> class SomeBaseClass {
            class func printClassName() {
@@ -650,12 +649,12 @@ In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` instead of ``Double``.
 
-.. testcode::
+.. testcode:: type-inference
 
     -> let e = 2.71828 // The type of e is inferred to be Double.
     << // e : Double = 2.71828
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828007698059
+    << // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
