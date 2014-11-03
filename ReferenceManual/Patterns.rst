@@ -194,6 +194,10 @@ The parentheses around a tuple pattern that contains a single element have no ef
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
+.. FIXME: This test only passes if you run "make clean"
+   before running the tests.  Even then, it still sometimes fails
+   for totally random reasons.
+
 .. testcode:: single-element-tuple-pattern
 
     -> let a = 2        // a: Int = 2
@@ -212,7 +216,6 @@ equivalent:
     !! <REPL Input>:1:5: note: 'a' previously declared here
     !! let a = 2        // a: Int = 2
     !! ^
-
 
 .. langref-grammar
 
