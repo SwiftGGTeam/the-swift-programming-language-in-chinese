@@ -1055,7 +1055,7 @@ to delegate to the initializer of a superclass.
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
-    ->     init() {
+    ->     override init() {
     ->         // subclass initialization goes here
     ->         super.init()
     ->     }
