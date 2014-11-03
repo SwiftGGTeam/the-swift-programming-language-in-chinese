@@ -21,7 +21,7 @@
 
 在Swift中，```Dictionary```类没有类似```objectsForKeys```的函数，为了说明问题，我们动手加一个，并且使其成为操作字典值的通用方法。我们可以用```extension```来实现：
 
-```
+```swift
 extension Dictionary{
 	func valuesForKeys(keys:[K], notFoundMarker: V )->[V]{
 		//具体实现代码后面会写到
@@ -32,7 +32,7 @@ extension Dictionary{
 以上就是我们实现的Swift版本，这个和Objective-C版本有很大区别。在Swift中，因为其强类型的原因限制了返回的结果数组只能包含单一类型的元素，所以我们不能放```NSNull```在字符串数组中，但是，Swift有更好的选择，我们可以返回一个可选类型数据。我们所有的值都封包在可选类型中，而不是```NSNull```, 我们只用```nil```就可以了。
 
 
-```
+```swift
 extension Dictionary{
     func valuesForKeys(keys: [Key]) -> [Value?] {
         var result = [Value?]()
@@ -50,7 +50,7 @@ extension Dictionary{
 
 小伙伴们可能会问，为什么Swift中不需要实现这么一个API呢？其实其有更简单的实现，如下面代码所示：
 
-```
+```swift
 extension Dictionary {
 	func valuesForKeys(keys: [Key]) -> [Value?] {
 		return keys.map { self[$0] }
@@ -62,7 +62,7 @@ extension Dictionary {
 
 接下来，我们实验几个例子：
 
-```
+```swift
 var dic: Dictionary = [ "1": 2, "3":3, "4":5 ]
 
 var t = dic.valuesForKeys(["1", "4"]) 
@@ -80,7 +80,7 @@ t = dic.valuesForKeys([])
 
 现在，如果我们为每一个结果调用```last```方法，看下结果如何？
 
-```
+```swift
 var dic: Dictionary = [ "1": 2, "3":3, "4":5 ]
 
 var t = dic.valuesForKeys(["1", "4"]).last //结果为：Optional(Optional(5))
@@ -98,7 +98,7 @@ var t = dict.valuesForKeys([]).last
 
 我们回过头看看```last```属性的定义：
 
-```
+```swift
 var last:T? { get }
 ```
 
@@ -106,7 +106,7 @@ var last:T? { get }
 
 如果在Objective-C中重新调用上述方法，我们将使用```NSNull```作为占位符，Objective-C的调用语法如下所示：
 
-```
+```swift
 [dict valuesForKeys:@[@"1", @"4"] notFoundMarker:[NSNull null]].lastObject
 // 5
 [dict valuesForKeys:@[@"1", @"3"] notFoundMarker:[NSNull null]].lastObject
@@ -122,7 +122,7 @@ var last:T? { get }
 
 进一步封装，如果我字典中的某个或某些元素不存在，我们想提供一个默认值怎么办呢？实现方法很简单：
 
-```
+```swift
 extension Dictionary {
 	func valuesForKeys( keys:[Key], notFoundMarker: Value)->[Value]{
 		return self.valueForKeys(kes).map{ $0 ?? notFoundMarker }

@@ -38,13 +38,13 @@
 	<td scope="row">2014-10-10</td>
     <td><ul class="list-bullet">
 	    <li><p>
-			增加了一个完整的关于<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html">失败构造器(Failable Initializers)</a>的指南文档
+			增加了一个完整的关于<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html">失败构造器(Failable Initializers)</a>的指南文档
         </li>
 	    <li><p>
-			增加了一个关于协议的<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html">失败构造器需求(Failable Initializer Requirements)</a>的描述
+			增加了一个关于协议的<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html">失败构造器需求(Failable Initializer Requirements)</a>的描述
         </li>
 		<li><p>
-			`Any`类型的常量或变量现在可以包含一个函数实例了。同时更新了<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html">`Any`</a>章节的案例用来演示如何在swith语句中检查和转换一个函数类型。
+			`Any`类型的常量或变量现在可以包含一个函数实例了。同时更新了<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html">`Any`</a>章节的案例用来演示如何在swith语句中检查和转换一个函数类型。
         </li>
 		</ul>
 	</td>
@@ -69,7 +69,7 @@
 	<td scope="row">2014-09-15</td>
     <td><ul class="list-bullet">
 	    <li><p>
-			带有原始值的枚举类型增加了一个`rawValue`属性替代`toRaw()`方法，同时使用了一个以`rawValue`为参数的失败构造器来替代`fromRaw()`方法。更多的信息，请看<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html">原始值(Raw Values)</a>和<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">带原始值的枚举类型(Enumerations with Cases of a Raw-Value Type)</a>部分
+			带有原始值的枚举类型增加了一个`rawValue`属性替代`toRaw()`方法，同时使用了一个以`rawValue`为参数的失败构造器来替代`fromRaw()`方法。更多的信息，请看<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html">原始值(Raw Values)</a>和<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">带原始值的枚举类型(Enumerations with Cases of a Raw-Value Type)</a>部分
         </li>
 		</ul>
 	</td>
@@ -94,10 +94,10 @@
 	<td scope="row">2014-09-09</td>
     <td><ul class="list-bullet">
 	    <li><p>
-			增加了一个新的关于<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">失败构造器(Failable Initializers)</a>的参考章节,失败构造器可以触发失败的构造过程
+			增加了一个新的关于<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">失败构造器(Failable Initializers)</a>的参考章节,失败构造器可以触发失败的构造过程
         </li>
 	    <li><p>
-			自定义运算符现在可以包含`?`字符，更新的<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html">运算符(Operators)</a>章节描述了改进后的规则，并且从<a href="xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html">自定义运算符(Custom Operators)</a>章节删除了重复的运算符有效字符集合
+			自定义运算符现在可以包含`?`字符，更新的<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html">运算符(Operators)</a>章节描述了改进后的规则，并且从<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html">自定义运算符(Custom Operators)</a>章节删除了重复的运算符有效字符集合
 		</li>
 		</ul>
 	</td>

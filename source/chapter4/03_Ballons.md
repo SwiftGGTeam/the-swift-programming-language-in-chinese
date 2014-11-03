@@ -1,5 +1,5 @@
 > 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
-> 校对：[老码团队翻译组-Jame](http://weibo.com/u/5241713117)
+> 校对：[老码团队翻译组-](Jame)
 
 # WWDC里面的那个“大炮打气球”
 
@@ -15,8 +15,4 @@ Ballons不但展现了playgrounds许多很赞的特性，还让我们看到写�
 这个playground文件用到了SpriteKit的新特性，因此需要最新beta版本的Xcode 6和Yosemite系统来支持它运行。
 
 
------------------
-本章节不是老码的原创，老码认真的阅读了苹果的官方博客，且自己的练习总结，如果小伙伴们费了吃奶的劲还是看不懂，请找度娘谷歌，还是看不懂请到老码[官方微博](http://weibo.com/u/5241713117)咆哮。  
-
-##### 本文由翻译自Apple Swift Blog ：[Balloons](https://developer.apple.com/swift/blog/?id=9)
-
+本文由翻译自Apple Swift Blog的博文：[Ballons](https://developer.apple.com/swift/blog/?id=9) 
