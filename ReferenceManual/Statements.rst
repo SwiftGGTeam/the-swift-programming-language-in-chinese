@@ -403,7 +403,7 @@ matches one of the patterns of the case and the guard expression evaluates to ``
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
-.. testcode::
+.. testcode:: switch-case-statement
 
     >> switch (1, 1) {
     -> case let (x, y) where x == y:

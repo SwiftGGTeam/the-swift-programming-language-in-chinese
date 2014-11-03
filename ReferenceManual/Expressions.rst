@@ -481,7 +481,7 @@ If there are expressions of multiple types,
 Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
-.. testcode::
+.. testcode:: array-literal-brackets
 
     -> var emptyArray: [Double] = []
     << // emptyArray : [Double] = []
@@ -507,7 +507,7 @@ to distinguish it from an empty array literal.
 You can use an empty dictionary literal to create an empty dictionary literal
 of specified key and value types.
 
-.. testcode::
+.. testcode:: dictionary-literal-brackets
 
     -> var emptyDictionary: [String: Double] = [:]
     << // emptyDictionary : [String : Double] = [:]
@@ -569,7 +569,7 @@ another variable of the same name in scope,
 such as a function parameter.
 For example:
 
-.. testcode::
+.. testcode:: self-expression
 
     -> class SomeClass {
            var greeting: String
@@ -582,7 +582,7 @@ In a mutating method of a value type,
 you can assign a new instance of that value type to ``self``.
 For example:
 
-.. testcode::
+.. testcode:: self-expression
 
     -> struct Point {
           var x = 0.0, y = 0.0
@@ -1104,7 +1104,7 @@ are implicitly named using integers in the order they appear,
 starting from zero.
 For example:
 
-.. testcode::
+.. testcode:: explicit-member-expression
 
     -> var t = (10, 20, 30)
     << // t : (Int, Int, Int) = (10, 20, 30)
@@ -1173,7 +1173,7 @@ The *expression* can't be the name of a type.
 The entire ``dynamicType`` expression evaluates to the value of the
 runtime type of the *expression*, as the following example shows:
 
-.. testcode::
+.. testcode:: dynamic-type
 
     -> class SomeBaseClass {
            class func printClassName() {

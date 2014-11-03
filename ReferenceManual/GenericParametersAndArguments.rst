@@ -194,7 +194,7 @@ constraints and requirements). For example, you can replace the type parameter
 ``T`` in ``Array<T>`` with a specialized version of an array, ``Array<Int>``,
 to form an array whose elements are themselves arrays of integers.
 
-.. testcode::
+.. testcode:: array-of-arrays
 
     -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     << // arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]

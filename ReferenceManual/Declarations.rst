@@ -940,7 +940,7 @@ they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
-.. testcode::
+.. testcode:: raw-value-enum
 
     -> enum ExampleEnum: Int {
           case A, B, C = 5, D
@@ -1280,7 +1280,7 @@ by writing the ``class`` keyword as the first item in the *inherited protocols*
 list after the colon.
 For example, the following protocol can be adopted only by class types:
 
-.. testcode::
+.. testcode:: protocol-declaration
 
     -> protocol SomeProtocol: class {
            /* Protocol members go here */
