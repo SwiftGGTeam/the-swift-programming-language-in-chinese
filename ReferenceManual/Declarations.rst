@@ -723,7 +723,7 @@ For example, you can rewrite the ``addTwoInts`` function as the equivalent ``add
 
 .. testcode:: curried-function
 
-    -> addTwoInts(a: Int, b: Int) -> Int {
+    -> func addTwoInts(a: Int, b: Int) -> Int {
            return a + b
        }
     -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
