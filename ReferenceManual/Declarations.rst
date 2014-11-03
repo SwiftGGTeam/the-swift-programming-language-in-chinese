@@ -769,10 +769,10 @@ and then call its returned function with the second integer argument:
 .. testcode:: curried-function
 
     -> addTwoInts(4, 5)
-    << // r0: Int = 9
+    <$ : Int = 9
     -> // returns a value of 9
     -> addTwoIntsCurried(4)(5)
-    << // r1: Int = 9
+    <$ : Int = 9
     -> // returns a value of 9
 
 Although you must provide the arguments to a noncurried function all at once in a single call,
@@ -794,7 +794,7 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
 .. testcode:: curried-function
 
     -> plusOne(10)
-    << // r2 : Int = 11
+    <$ : Int = 11
     -> // returns a value of 11
 
 
