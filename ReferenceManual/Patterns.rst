@@ -56,7 +56,7 @@ A :newTerm:`wildcard pattern` matches and ignores any value and consists of an u
 matched against. For example, the following code iterates through the closed range ``1...3``,
 ignoring the current value of the range on each iteration of the loop:
 
-.. testcode::
+.. testcode:: wildcard-pattern
 
     -> for _ in 1...3 {
           // Do something three times.
@@ -83,7 +83,7 @@ variable or constant name.
 For example, in the following constant declaration, ``someValue`` is an identifier pattern
 that matches the value ``42`` of type ``Int``:
 
-.. testcode::
+.. testcode:: identifier-pattern
 
     -> let someValue = 42
     << // someValue : Int = 42
@@ -118,7 +118,7 @@ bind new named variables or constants to their matching values. For example,
 you can decompose the elements of a tuple and bind the value of each element to a
 corresponding identifier pattern.
 
-.. testcode::
+.. testcode:: value-binding-pattern
 
     -> let point = (3, 2)
     << // point : (Int, Int) = (3, 2)
@@ -174,7 +174,7 @@ identifier patterns, or other tuple patterns that contain those. For example, th
 following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
 an expression pattern:
 
-.. testcode::
+.. testcode:: tuple-pattern
 
     -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
@@ -182,29 +182,37 @@ an expression pattern:
     -> for (x, 0) in points {
           /* ... */
        }
+    !! <REPL Input>:1:9: error: expected pattern
+    !! for (x, 0) in points {
+    !! ^
+    !! <REPL Input>:1:9: error: expected ',' separator
+    !! for (x, 0) in points {
+    !! ^
+    !! ,
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
-.. testcode::
+.. testcode:: single-element-tuple-pattern
 
     -> let a = 2        // a: Int = 2
     << // a : Int = 2
     -> let (a) = 2      // a: Int = 2
     !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
     !! let (a) = 2      // a: Int = 2
-    !!      ^
+    !! ^
     !! <REPL Input>:1:5: note: 'a' previously declared here
     !! let a = 2        // a: Int = 2
-    !!     ^
+    !! ^
     -> let (a): Int = 2 // a: Int = 2
     !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
     !! let (a): Int = 2 // a: Int = 2
-    !!      ^
+    !! ^
     !! <REPL Input>:1:5: note: 'a' previously declared here
     !! let a = 2        // a: Int = 2
-    !!     ^
+    !! ^
+
 
 .. langref-grammar
 
