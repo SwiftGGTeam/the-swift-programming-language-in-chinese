@@ -194,28 +194,28 @@ The parentheses around a tuple pattern that contains a single element have no ef
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
-.. FIXME: This test only passes if you run "make clean"
-   before running the tests.  Even then, it still sometimes fails
-   for totally random reasons.
+.. This test needs to be compiled.
+   The error message in the REPL is unpredictable as of 
+   Swift version 1.1 (swift-600.0.54.20)
 
 .. testcode:: single-element-tuple-pattern
+   :compile: true
 
-    -> let a = 2        // a: Int = 2
-    << // a : Int = 2
-    -> let (a) = 2      // a: Int = 2
-    !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
-    !! let (a) = 2      // a: Int = 2
-    !! ^
-    !! <REPL Input>:1:5: note: 'a' previously declared here
-    !! let a = 2        // a: Int = 2
-    !! ^
-    -> let (a): Int = 2 // a: Int = 2
-    !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
-    !! let (a): Int = 2 // a: Int = 2
-    !! ^
-    !! <REPL Input>:1:5: note: 'a' previously declared here
-    !! let a = 2        // a: Int = 2
-    !! ^
+   -> let a = 2        // a: Int = 2
+   -> let (a) = 2      // a: Int = 2
+   -> let (a): Int = 2 // a: Int = 2
+   !! /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'a'
+   !! let (a) = 2      // a: Int = 2
+   !! ^
+   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !! let a = 2        // a: Int = 2
+   !! ^
+   !! /tmp/swifttest.swift:3:6: error: invalid redeclaration of 'a'
+   !! let (a): Int = 2 // a: Int = 2
+   !! ^
+   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !! let a = 2        // a: Int = 2
+   !! ^
 
 .. langref-grammar
 
