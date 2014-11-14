@@ -195,7 +195,7 @@ The pattern matches values of that single element's type. For example, the follo
 equivalent:
 
 .. This test needs to be compiled.
-   The error message in the REPL is unpredictable as of 
+   The error message in the REPL is unpredictable as of
    Swift version 1.1 (swift-600.0.54.20)
 
 .. testcode:: single-element-tuple-pattern
