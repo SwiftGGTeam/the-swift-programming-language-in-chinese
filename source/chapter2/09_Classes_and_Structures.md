@@ -279,9 +279,10 @@ if tenEighty === alsoTenTighty {
 <a name="assignment_and_copy_behavior_for_collection_types"></a>
 ## 集合（Collection）类型的赋值和拷贝行为
 
-Swift 中`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。然而当数组被赋予一个常量或变量，或被传递给一个函数或方法时，其拷贝行为与字典和其它结构体有些许不同。
+Swift 中`字符串（String）`,`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。这意味着String，Array，Dictionary类型数据被赋值给新的常量(或变量），或者被传入函数（或方法）中时，它们的值会发生拷贝行为（值传递方式）。
 
-以下对`数组`和`结构体`的行为描述与对`NSArray`和`NSDictionary`的行为描述在本质上不同，后者是以类的形式实现，前者是以结构体的形式实现。`NSArray`和`NSDictionary`实例总是以对已有实例引用,而不是拷贝的方式被赋值和传递。
+Objective-C中`字符串（NSString）`,`数组（NSArray）`和`字典（NSDictionary）`类型均以类的形式实现，这与Swfit中以值传递方式是不同的。NSString，NSArray，NSDictionary在发生赋值或者传入函数（或方法）时，不会发生值拷贝，而是传递已存在实例的引用。
+
 
 > 注意：
 以上是对于数组，字典，字符串和其它值的`拷贝`的描述。
