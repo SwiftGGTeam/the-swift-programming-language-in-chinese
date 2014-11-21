@@ -1353,11 +1353,17 @@ The following example shows the behavior
 of the example above
 without using optional chaining.
 
-.. testcode:: optional-chaining
+.. testcode:: optional-chaining-alt
 
-    -> if let unwrappedC = c {
-          result = unwrappedC.property.performAction()
-       }
+   >> class OtherClass { func performAction() -> Bool {return true} }
+   >> class SomeClass { var property: OtherClass = OtherClass() }
+   >> var c: SomeClass?
+   << // c : SomeClass? = nil
+   -> var result: Bool? = nil
+   << // result : Bool? = nil
+   -> if let unwrappedC = c {
+         result = unwrappedC.property.performAction()
+      }
 
 The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself,
