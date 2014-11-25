@@ -164,7 +164,7 @@ println("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX`，`moveByX`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字,这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量]("10_Properties.html")
+注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](10_Properties.html#global_and_local_variables)
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)

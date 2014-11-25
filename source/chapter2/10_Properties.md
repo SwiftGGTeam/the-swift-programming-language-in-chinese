@@ -9,7 +9,7 @@
 - [存储属性（Stored Properties）](#stored_properties)
 - [计算属性（Computed Properties）](#computed_properties)
 - [属性观察器（Property Observers）](#property_observers)
-- [全局变量和局部变量（Global and Local Variables）](global_and_local_variables)
+- [全局变量和局部变量（Global and Local Variables）](#global_and_local_variables)
 - [类型属性（Type Properties）](#type_properties)
 
 **属性**将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，计算属性计算（而不是存储）一个值。计算属性可以用于类、结构体和枚举里，存储属性只能用于类和结构体。
