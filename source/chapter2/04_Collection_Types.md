@@ -255,10 +255,10 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
 下面的例子创建了一个存储国际机场名称的字典。在这个字典中键是三个字母的国际航空运输相关代码，值是机场名称：
 
 ```swift
-var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
+var airports: [String:String] = ["TYO": "Tokyo", "DUB": "Dublin"]
 ```
 
-`airports`字典被定义为一种`Dictionary<String, String>`,它意味着这个字典的键和值都是`String`类型。
+`airports`字典被定义为一种 `[String: String]`,它意味着这个字典的键和值都是`String`类型。
 
 > 注意：  
 > `airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。  
@@ -283,6 +283,17 @@ var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
 ```swift
 println("The dictionary of airports contains \(airports.count) items.")
 // 打印 "The dictionary of airports contains 2 items."（这个字典有两个数据项）
+```
+
+可以使用布尔属性`isEmpty`来快捷的检查字典的`count`属性是否等于0。
+
+```swift
+if airports.isEmpty {
+    println("The airports dictionary is empty.")
+} else {
+    println("The airports dictionary is not empty.")
+}
+// 打印 "The airports dictionary is not empty.(这个字典不为空)"
 ```
 
 我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个合适类型的 key 作为下标索引，并且分配新的合适类型的值：
