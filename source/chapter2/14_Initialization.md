@@ -617,8 +617,8 @@ class SomeClass {
 
 ```swift
 struct Checkerboard {
-    let boardColors: Bool[] = {
-        var temporaryBoard = Bool[]()
+    let boardColors: [Bool] = {
+        var temporaryBoard = [Bool]()
         var isBlack = false
         for i in 1...10 {
             for j in 1...10 {
