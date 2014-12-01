@@ -409,7 +409,9 @@ Memberwise Initializers for Structure Types
 
 Structure types automatically receive a :newTerm:`memberwise initializer`
 if they do not define any of their own custom initializers.
-This is true even if the structure's stored properties do not have default values.
+Unlike a default initializer,
+the structure receives a memberwise initializer
+even if it has stored properties that do not have default values.
 
 .. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
 
