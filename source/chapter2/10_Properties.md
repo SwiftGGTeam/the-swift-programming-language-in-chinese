@@ -8,15 +8,15 @@
 
 - [存储属性（Stored Properties）](#stored_properties)
 - [计算属性（Computed Properties）](#computed_properties)
-- [属性监视器（Property Observers）](#property_observers)
-- [全局变量和局部变量（Global and Local Variables）](global_and_local_variables)
+- [属性观察器（Property Observers）](#property_observers)
+- [全局变量和局部变量（Global and Local Variables）](#global_and_local_variables)
 - [类型属性（Type Properties）](#type_properties)
 
 **属性**将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，计算属性计算（而不是存储）一个值。计算属性可以用于类、结构体和枚举里，存储属性只能用于类和结构体。
 
 存储属性和计算属性通常用于特定类型的实例，但是，属性也可以直接用于类型本身，这种属性称为类型属性。
 
-另外，还可以定义属性监视器来监控属性值的变化，以此来触发一个自定义的操作。属性监视器可以添加到自己写的存储属性上，也可以添加到从父类继承的属性上。
+另外，还可以定义属性观察器来监控属性值的变化，以此来触发一个自定义的操作。属性观察器可以添加到自己写的存储属性上，也可以添加到从父类继承的属性上。
 
 <a name="stored_properties"></a>
 ## 存储属性
@@ -61,7 +61,7 @@ rangeOfFourItems.firstValue = 6
 <a name="lazy_stored_properties"></a>
 ### 延迟存储属性
 
-延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`@lazy`来标示一个延迟存储属性。
+延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`lazy`来标示一个延迟存储属性。
 
 > 注意：  
 > 必须将延迟存储属性声明成变量（使用`var`关键字），因为属性的值在实例构造完成之前可能无法得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
@@ -81,14 +81,14 @@ class DataImporter {
 }
 
 class DataManager {
-    @lazy var importer = DataImporter()
-    var data = String[]()
+    lazy var importer = DataImporter()
+    var data = [String]()
     // 这是提供数据管理功能
 }
 
 let manager = DataManager()
-manager.data += "Some data"
-manager.data += "Some more data"
+manager.data.append("Some data")
+manager.data.append("Some more data")
 // DataImporter 实例的 importer 属性还没有被创建
 ```
 
@@ -98,7 +98,7 @@ manager.data += "Some more data"
 
 `DataManager`也可能不从文件中导入数据。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的是当用到`DataImporter`的时候才去创建它。
 
-由于使用了`@lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
+由于使用了`lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
 
 ```swift
 println(manager.importer.fileName)
@@ -109,7 +109,7 @@ println(manager.importer.fileName)
 <a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
-如果您有过 Objective-C 经验，应该知道有两种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
 
 Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
 一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
@@ -193,14 +193,10 @@ struct AlternativeRect {
 
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
-<<<<<<< HEAD
-> 注意：  
-> 必须使用`var`关键字定义计算属性，包括只读计算属性，因为他们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。  
-=======
 > 注意：
 >
 > 必须使用`var`关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
+
 
 只读计算属性的声明可以去掉`get`关键字和花括号：
 
@@ -219,32 +215,27 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性，还有一个名为`volume`的只读计算属性用来返回立方体的体积。设置`volume`的值毫无意义，因为通过`width`、`height`和`depth`就能算出`volume`。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
 <a name="property_observers"></a>
-## 属性监视器
+## 属性观察器
 
-*属性监视器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性监视器，甚至新的值和现在的值相同的时候也不例外。
+*属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，甚至新的值和现在的值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载请参考[继承](chapter/13_Inheritance.html)一章的[重载](chapter/13_Inheritance.html#overriding)。
+可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重载请参考[继承](chapter/13_Inheritance.html)一章的[重载](chapter/13_Inheritance.html#overriding)。
 
 > 注意：  
-> 不需要为无法重载的计算属性添加属性监视器，因为可以通过 setter 直接监控和响应值的变化。  
+> 不需要为无法重载的计算属性添加属性观察器，因为可以通过 setter 直接监控和响应值的变化。  
 
-可以为属性添加如下的一个或全部监视器：
+可以为属性添加如下的一个或全部观察器：
 
 - `willSet`在设置新的值之前调用
 - `didSet`在新的值被设置之后立即调用
 
-`willSet`监视器会将新的属性值作为固定参数传入，在`willSet`的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称`newValue`表示。
+`willSet`观察器会将新的属性值作为固定参数传入，在`willSet`的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称`newValue`表示。
 
-类似地，`didSet`监视器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
+类似地，`didSet`观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
-<<<<<<< HEAD
-> 注意：  
-> `willSet`和`didSet`监视器在属性初始化过程中不会被调用，他们只会当属性的值在初始化之外的地方被设置时被调用。  
-=======
 > 注意：
 >
-> `willSet`和`didSet`监视器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
->>>>>>> a516af6a531a104ec88da0d236ecf389a5ec72af
+> `willSet`和`didSet`观察器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
 
 这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数，可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
@@ -273,28 +264,28 @@ stepCounter.totalSteps = 896
 // Added 536 steps
 ```
 
-`StepCounter`类定义了一个`Int`类型的属性`totalSteps`，它是一个存储属性，包含`willSet`和`didSet`监视器。
+`StepCounter`类定义了一个`Int`类型的属性`totalSteps`，它是一个存储属性，包含`willSet`和`didSet`观察器。
 
-当`totalSteps`设置新值的时候，它的`willSet`和`didSet`监视器都会被调用，甚至当新的值和现在的值完全相同也会调用。
+当`totalSteps`设置新值的时候，它的`willSet`和`didSet`观察器都会被调用，甚至当新的值和现在的值完全相同也会调用。
 
-例子中的`willSet`监视器将表示新值的参数自定义为`newTotalSteps`，这个监视器只是简单的将新的值输出。
+例子中的`willSet`观察器将表示新值的参数自定义为`newTotalSteps`，这个观察器只是简单的将新的值输出。
 
-`didSet`监视器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
+`didSet`观察器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
 
 > 注意：  
-> 如果在`didSet`监视器里为属性赋值，这个值会替换监视器之前设置的值。  
+> 如果在`didSet`观察器里为属性赋值，这个值会替换观察器之前设置的值。  
 
 <a name="global_and_local_variables"></a>
 ##全局变量和局部变量
 
-计算属性和属性监视器所描述的模式也可以用于*全局变量*和*局部变量*，全局变量是在函数、方法、闭包或任何类型之外定义的变量，局部变量是在函数、方法或闭包内部定义的变量。
+计算属性和属性观察器所描述的模式也可以用于*全局变量*和*局部变量*，全局变量是在函数、方法、闭包或任何类型之外定义的变量，局部变量是在函数、方法或闭包内部定义的变量。
 
 前面章节提到的全局或局部变量都属于存储型变量，跟存储属性类似，它提供特定类型的存储空间，并允许读取和写入。
 
-另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义监视器，计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
+另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器，计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
 
 > 注意：  
-> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`@lazy`特性。  
+> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`特性。  
 > 局部范围的常量或变量不会延迟计算。  
 
 <a name="type_properties"></a>
@@ -392,13 +383,13 @@ struct AudioChannel {
 
 `AudioChannel`也定义了一个名为`currentLevel`的实例存储属性，表示当前声道现在的电平值，取值为 0 到 10。
 
-属性`currentLevel`包含`didSet`属性监视器来检查每次新设置后的属性值，有如下两个检查：
+属性`currentLevel`包含`didSet`属性观察器来检查每次新设置后的属性值，有如下两个检查：
 
-- 如果`currentLevel`的新值大于允许的阈值`thresholdLevel`，属性监视器将`currentLevel`的值限定为阈值`thresholdLevel`。
-- 如果修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性监视器将新值保存在静态属性`maxInputLevelForAllChannels`中。
+- 如果`currentLevel`的新值大于允许的阈值`thresholdLevel`，属性观察器将`currentLevel`的值限定为阈值`thresholdLevel`。
+- 如果修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性观察器将新值保存在静态属性`maxInputLevelForAllChannels`中。
 
 > 注意：  
-> 在第一个检查过程中，`didSet`属性监视器将`currentLevel`设置成了不同的值，但这时不会再次调用属性监视器。  
+> 在第一个检查过程中，`didSet`属性观察器将`currentLevel`设置成了不同的值，但这时不会再次调用属性观察器。  
 
 可以使用结构体`AudioChannel`来创建表示立体声系统的两个声道`leftChannel`和`rightChannel`：
 

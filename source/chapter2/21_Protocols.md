@@ -9,20 +9,22 @@
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
 - [对属性的规定（Property Requirements）](#property_requirements)
 - [对方法的规定（Method Requirements）](#method_requirements)
-- [对突变方法的的规定（Mutating Method Requirements）](#mutating_method_requirements)
+- [对突变方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
+- [对构造器的规定（Initializer Requirements）](#initializer_requirements)
 - [协议类型（Protocols as Types）](#protocols_as_types)
 - [委托(代理)模式（Delegation）](#delegation)
 - [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
 - [通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [集合中的协议类型（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
+- [类专属协议（Class-Only Protocol）](#class_only_protocol)
 - [协议合成（Protocol Composition）](#protocol_composition)
 - [检验协议的一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
 - [对可选协议的规定（Optional Protocol Requirements）](#optional_protocol_requirements)
 
 `协议(Protocol)`用于定义完成某项任务或功能所必须的方法和属性，协议实际上并不提供这些功能或任务的具体`实现(Implementation)`--而只用来描述这些实现应该是什么样的。类，结构体，枚举通过提供协议所要求的方法，属性的具体实现来`采用(adopt)`协议。任意能够满足协议要求的类型被称为协议的`遵循者`。
 
-`协议`可以要求其`遵循者`提供特定的实例属性，实例方法，类方法，操作符或`下标(subscripts)`等。
+`协议`可以要求其`遵循者`提供特定的实例属性，实例方法，类方法，操作符或下标脚本等。
 
 <a name="protocol_syntax"></a>
 ## 协议的语法
@@ -62,7 +64,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 
 ```swift
 protocol SomeProtocol {
-	var musBeSettable : Int { get set }
+	var mustBeSettable : Int { get set }
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
@@ -73,9 +75,11 @@ protocol SomeProtocol {
 protocol AnotherProtocol {
 	class var someTypeProperty: Int { get set }
 }
+```
 
 如下所示，这是一个含有一个实例属性要求的协议:
 
+```swift
 protocol FullyNamed {
 	var fullName: String { get }
 }
@@ -104,11 +108,11 @@ class Starship: FullyNamed {
 	var prefix: String?
 	var name: String
 	init(name: String, prefix: String? = nil ) {
-		self.anme = name
+		self.name = name
 		self.prefix = prefix
 	}
 	var fullName: String {
-	return (prefix ? prefix ! + " " : " ") + name
+	return (prefix != nil ? prefix! + " " : " ") + name
 	}
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
@@ -135,7 +139,7 @@ protocol SomeProtocol {
 
 如下所示，定义了含有一个实例方法的的协议。
 
-```
+```swift
 protocol RandomNumberGenerator {
 	func random() -> Double
 }
@@ -206,6 +210,60 @@ lightSwitch.toggle()
 //lightSwitch 现在的值为 .On
 ```
 
+<a name="initializer_requirements"></a>
+## 对构造器的规定
+
+协议可以要求它的遵循类型实现特定的构造器。你可以像书写普通的构造器那样，在协议的定义里写下构造器的需求，但不需要写花括号和构造器的实体：
+
+```swift
+protocol SomeProtocol {
+    init(someParameter: Int)
+}
+```
+
+**协议构造器规定在类中的实现**
+
+你可以在遵循该协议的类中实现构造器，并指定其为类的特定构造器或者便捷构造器。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
+
+```swift
+class SomeClass: SomeProtocol {
+    required init(someParameter: Int) {
+        //构造器实现
+    }
+}
+```
+
+使用`required`修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。
+
+关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`required`构造器 </a>
+
+>注意
+>
+>如果类已经被“final”修饰符所标示，你就不需要在协议构造器规定的实现中使用"required"修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
+
+如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
+
+```swift
+protocol SomeProtocol {
+    init()
+}
+
+
+class SomeSuperClass {
+    init() {
+        //协议定义
+    }
+}
+
+ 
+class SomeSubClass: SomeSuperClass, SomeProtocol {
+    // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+    required override init() {
+        // 构造器实现
+    }
+}
+```
+
 <a name="protocols_as_types"></a>
 ## 协议类型
 
@@ -230,7 +288,7 @@ class Dice {
 		self.generator = generator
 	}
 	func roll() -> Int {
-		return Int(generator.random() * Double(sides)) +1
+		return Int(generator.random() * Double(sides)) + 1
 	}
 }
 ```
@@ -289,13 +347,13 @@ protocol DiceGameDelegate {
 ```swift
 class SnakesAndLadders: DiceGame {
 	let finalSquare = 25
-	let dic = Dice(sides: 6, generator: LinearCongruentialGenerator())
+	let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
 	var square = 0
-	var board: Int[]
+	var board: [Int]
 	init() {
-		board = Int[](count: finalSquare + 1, repeatedValue: 0)
-		board[03] = +08; board[06] = +11; borad[09] = +09; board[10] = +02
-		borad[14] = -10; board[19] = -11; borad[22] = -02; board[24] = -08
+		board = [Int](count: finalSquare + 1, repeatedValue: 0)
+		board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+		board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 	}
  	var delegate: DiceGameDelegate?
  	func play() {
@@ -314,7 +372,7 @@ class SnakesAndLadders: DiceGame {
  			square += board[square]
  			}
  		}
- 		delegate?.gameDIdEnd(self)
+ 		delegate?.gameDidEnd(self)
  	}
 }
 ```
@@ -353,7 +411,9 @@ class DiceGameTracker: DiceGameDelegate {
 
 `DiceGameTracker`实现了`DiceGameDelegate`协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时，`numberOfTurns`属性被赋值为0; 在每新一轮中递加; 游戏结束后，输出打印游戏的总轮数。
 
-`gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。
+`gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。当然了，这些方法也可以在类型转换之后调用。在上例代码中，通过`is`操作符检查`game`是否为 `SnakesAndLadders`类型的实例，如果是，则打印出相应的内容。
+
+无论当前进行的是何种游戏，`game`都遵循`DiceGame`协议以确保`game`含有`dice`属性，因此在`gameDidStart`方法中可以通过传入的`game`参数来访问`dice`属性，进而打印出`dice`的`sides`属性的值。
 
 `DiceGameTracker`的运行情况，如下所示:
 
@@ -374,7 +434,7 @@ game.play()
 <a name="adding_protocol_conformance_with_an_extension"></a>
 ## 在扩展中添加协议成员
 
-即便无法修改源代码，依然可以通过`扩展(Extension)`来扩充已存在类型(*译者注: 类，结构体，枚举等*)。`扩展`可以为已存在的类型添加`属性`，`方法`，`下标`，`协议`等成员。详情请在[扩展](4)章节中查看。
+即便无法修改源代码，依然可以通过`扩展(Extension)`来扩充已存在类型(*译者注: 类，结构体，枚举等*)。`扩展`可以为已存在的类型添加`属性`，`方法`，`下标脚本`，`协议`等成员。详情请在[扩展](4)章节中查看。
 
 > 注意: 通过`扩展`为已存在的类型`遵循`协议时，该类型的所有实例也会随之添加协议中的方法
 
@@ -390,7 +450,7 @@ protocol TextRepresentable {
 
 ```swift
 extension Dice: TextRepresentable {
-	cun asText() -> String {
+	func asText() -> String {
 		return "A \(sides)-sided dice"
 	}
 }
@@ -407,7 +467,7 @@ println(d12.asText())
 `SnakesAndLadders`类也可以通过`扩展`的方式来遵循协议：
 
 ```swift
-extension SnakeAndLadders: TextRepresentable {
+extension SnakesAndLadders: TextRepresentable {
 	func asText() -> String {
 		return "A game of Snakes and Ladders with \(finalSquare) squares"
 	}
@@ -428,19 +488,19 @@ struct Hamster {
 		return "A hamster named \(name)"
 	}
 }
-extension Hamster: TextRepresentabl {}
+extension Hamster: TextRepresentable {}
 ```
 
 从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用
 
 ```swift
 let simonTheHamster = Hamster(name: "Simon")
-let somethingTextRepresentable: TextRepresentabl = simonTheHamester
+let somethingTextRepresentable: TextRepresentable = simonTheHamster
 println(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
 
-> 注意: 即时满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出明显的协议声明
+> 注意: 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出明显的协议声明
 
 <a name="collections_of_protocol_types"></a>
 ## 集合中的协议类型
@@ -448,7 +508,7 @@ println(somethingTextRepresentable.asText())
 协议类型可以被集合使用，表示集合中的元素均为协议类型:
 
 ```swift
-let things: TextRepresentable[] = [game,d12,simoTheHamster]
+let things: [TextRepresentable] = [game,d12,simonTheHamster]
 ```
 
 如下所示，`things`数组可以被直接遍历，并调用其中元素的`asText()`函数:
@@ -483,7 +543,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-`遵循``PrettyTextRepresentable`协议的同时，也需要`遵循`TextRepresentable`协议。
+遵循`PrettyTextRepresentable`协议的同时，也需要遵循`TextRepresentable`协议。
 
 如下所示，用`扩展`为`SnakesAndLadders`遵循`PrettyTextRepresentable`协议:
 
@@ -519,6 +579,23 @@ println(game.asPrettyText())
 // A game of Snakes and Ladders with 25 squares:
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
+
+<a name="class_only_protocol"></a>
+## 类专属协议
+你可以在协议的继承列表中,通过添加“class”关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该“class”关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。
+
+```swift
+protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+    // class-only protocol definition goes here
+}
+```
+在以上例子中，协议SomeClassOnlyProtocol只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
+
+>注意
+>
+>当协议需求定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
+
+
 
 <a name="protocol_composition"></a>
 ## 协议合成
@@ -569,13 +646,13 @@ wishHappyBirthday(birthdayPerson)
 
 > 注意: `@objc`用来表示协议是可选的，也可以用来表示暴露给`Objective-C`的代码，此外，`@objc`型协议只对`类`有效，因此只能在`类`中检查协议的一致性。详情查看*[Using Siwft with Cocoa and Objectivei-c](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。
 
-如下所示，定义了`Circle`和`Country`类，它们都遵循了`haxArea`协议
+如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议
 
 ```swift
 class Circle: HasArea {
     let pi = 3.1415927
     var radius: Double
-    var area:≈radius }
+    var area: Double { return pi * radius * radius }
     init(radius: Double) { self.radius = radius }
 }
 class Country: HasArea {
@@ -584,7 +661,7 @@ class Country: HasArea {
 }
 ```
 
-`Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`haxArea`协议。
+`Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`HasArea`协议。
 
 如下所示，Animal是一个没有实现`HasArea`协议的类
 
@@ -598,7 +675,7 @@ class Animal {
 `Circle，Country，Animal`并没有一个相同的基类，因而采用`AnyObject`类型的数组来装载在他们的实例，如下所示:
 
 ```swift
-let objects: AnyObject[] = [
+let objects: [AnyObject] = [
 	Circle(radius: 2.0),
 	Country(area: 243_610),
 	Animal(legs: 4)
@@ -607,7 +684,7 @@ let objects: AnyObject[] = [
 
 `objects`数组使用字面量初始化，数组包含一个`radius`为2。0的`Circle`的实例，一个保存了英国面积的`Country`实例和一个`legs`为4的`Animal`实例。
 
-如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循`了`HasArea`协议:
+如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了`HasArea`协议:
 
 ```swift
 for object in objects {
@@ -641,8 +718,8 @@ for object in objects {
 
 ```swift
 @objc protocol CounterDataSource {
-    @optional func incrementForCount(count: Int) -> Int
-    @optional var fixedIncrement: Int { get }
+    optional func incrementForCount(count: Int) -> Int
+    optional var fixedIncrement: Int { get }
 }
 ```
 
@@ -676,7 +753,7 @@ for object in objects {
 
 在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。
 
-当`incrementForCount`不能被调用时，尝试使用`可选属性``fixedIncrement`来代替。
+当`incrementForCount`不能被调用时，尝试使用可选属性`fixedIncrement`来代替。
 
 `ThreeSource`实现了`CounterDataSource`协议，如下所示:
 

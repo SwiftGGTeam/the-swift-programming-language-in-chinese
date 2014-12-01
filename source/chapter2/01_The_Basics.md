@@ -20,17 +20,17 @@
 - [可选](#optionals)
 - [断言](#assertions)
 
-Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
+Swift 是一门进行 iOS 和 OS X 应用开发的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
-Swift 的类型是在 C 和 Objective-C 的基础上提出的，`Int`是整型；`Double`和`Float`是浮点型；`Bool`是布尔型；`String`是字符串。Swift 还有两个有用的集合类型，`Array`和`Dictionary`，请参考[集合类型](04_Collection_Types.html)。
+Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整型值；`Double`和`Float`表示浮点型值；`Bool`是布尔型值；`String`是文本型数据。Swift 还提供了两个基本的集合类型，`Array`和`Dictionary`，详见[集合类型](04_Collection_Types.html)。
 
-就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，值不可变的变量有着广泛的应用，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更好地表达你的意图。
+就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，广泛的使用着值不可变的变量，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更清晰地表达你的意图。
 
-除了我们熟悉的类型，Swift 还增加了 Objective-C 中没有的类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。
+除了我们熟悉的类型，Swift 还增加了 Objective-C 中没有的高阶数据类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。
 
 Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示“那儿有一个值，并且它等于 x ”或者“那儿没有值”。可选有点像在 Objective-C 中使用`nil`，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的`nil`指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。
 
-Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个`String`，类型安全会阻止你不小心传入一个`Int`。你可以在开发阶段尽早发现并修正错误。
+Swift 是一门类型安全的语言，可选类型就是一个很好的例子。Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个`String`，类型安全会阻止你不小心传入一个`Int`。你可以在开发阶段尽早发现并修正错误。
 
 <a name="constants_and_variables"></a>
 ## 常量和变量
@@ -442,7 +442,7 @@ if i == 1 {
 <a name="tuples"></a>
 ## 元组
 
-_元组（tuples）_把多个值组合成一个复合值。元组内的值可以使任意类型，并不要求是相同类型。
+_元组（tuples）_把多个值组合成一个复合值。元组内的值可以是任意类型，并不要求是相同类型。
 
 下面这个例子中，`(404, "Not Found")`是一个描述 _HTTP 状态码（HTTP status code）_的元组。HTTP 状态码是当你请求网页的时候 web 服务器返回的一个特殊值。如果你请求的网页不存在就会返回一个`404 Not Found`状态码。
 
@@ -535,7 +535,7 @@ let convertedNumber = possibleNumber.toInt()
 当你确定可选类型_确实_包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的_强制解析（forced unwrapping）_：
 
 ```swift
-if convertedNumber {
+if convertedNumber != nil {
     println("\(possibleNumber) has an integer value of \(convertedNumber!)")
 } else {
     println("\(possibleNumber) could not be converted to an integer")
@@ -657,7 +657,7 @@ if let definiteString = assumedString {
 <a name="assertions"></a>
 ## 断言
 
-可选类型可以让你判断值是否存在，你可以在代码中优雅地处理值缺失的情况。然而，在某些情况下，如果值缺失或者值并不满足特定的条件，你的代码可能并不需要继续执行。这时，你可以在你的代码中触发一个_断言（assertion）_来结束代码运行并通过调试来找到值缺失的原因。
+可选类型可以让你判断值是否存在，你可以在代码中优雅地处理值缺失的情况。然而，在某些情况下，如果值缺失或者值并不满足特定的条件，你的代码可能没办法继续执行。这时，你可以在你的代码中触发一个_断言（assertion）_来结束代码运行并通过调试来找到值缺失的原因。
 
 ### 使用断言进行调试
 
@@ -673,9 +673,9 @@ assert(age >= 0, "A person's age cannot be less than zero")
 // 因为 age < 0，所以断言会触发
 ```
 
-在这个例子中，只有`age >= 0`为`true`的时候代码运行才会继续，也就是说，当`age`的值非负的时候。如果`age`的值是负数，就像代码中那样，`age >= 0`为`false`，断言被触发，结束应用。
+在这个例子中，只有`age >= 0`为`true`的时候，即`age`的值非负的时候，代码运行才会继续。如果`age`的值是负数，就像代码中那样，`age >= 0`为`false`，断言被触发，结束应用。
 
-断言信息不能使用字符串插值。断言信息可以省略，就像这样：
+断言信息如果不需要，可以被省略，就像这样：
 
 ```swift
 assert(age >= 0)

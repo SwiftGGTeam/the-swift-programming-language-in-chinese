@@ -81,7 +81,7 @@ println("Three feet is \(threeFeet) meters")
 ```swift
 let aMarathon = 42.km + 195.m
 println("A marathon is \(aMarathon) meters long")
-// 打印输出："A marathon is 42495.0 meters long"
+// 打印输出："A marathon is 42195.0 meters long"
 ```
 
 
@@ -96,8 +96,10 @@ println("A marathon is \(aMarathon) meters long")
 扩展能向类中添加新的便利构造器，但是它们不能向类中添加新的指定构造器或析构函数。指定构造器和析构函数必须总是由原始的类实现来提供。
 
 > 注意：  
-如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。  
-正如在值类型的构造器授权中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
+如果你使用扩展向一个值类型添加一个构造器，在该值类型已经向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers）时，你可以在值类型的扩展构造器中调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。
+>
+正如在[值类型的构造器代理](14_Initialization.html#initializer_delegation_for_value_types)中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
+
 
 下面的例子定义了一个用于描述几何矩形的定制结构体`Rect`。这个例子同时定义了两个辅助结构体`Size`和`Point`，它们都把`0.0`作为所有属性的默认值：
 
@@ -154,7 +156,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ```swift
 extension Int {
     func repetitions(task: () -> ()) {
-        for i in 0..self {
+        for i in 0..<self {
             task()
         }
     }
@@ -215,12 +217,13 @@ someInt.square()
 
 ```swift
 extension Int {
-    subscript(digitIndex: Int) -> Int {
+    subscript(var digitIndex: Int) -> Int {
         var decimalBase = 1
-            for _ in 1...digitIndex {
+            while digitIndex > 0 {
                 decimalBase *= 10
+                --digitIndex
             }
-        return (self / decimalBase) % 10
+            return (self / decimalBase) % 10
     }
 }
 746381295[0]
@@ -267,13 +270,13 @@ extension Character {
 
 该例子向`Character`添加了新的嵌套枚举。这个名为`Kind`的枚举表示特定字符的类型。具体来说，就是表示一个标准的拉丁脚本中的字符是元音还是辅音（不考虑口语和地方变种），或者是其它类型。
 
-这个类子还向`Character`添加了一个新的计算实例属性，即`kind`，用来返回合适的`Kind`枚举成员。
+这个例子还向`Character`添加了一个新的计算实例属性，即`kind`，用来返回合适的`Kind`枚举成员。
 
 现在，这个嵌套枚举可以和一个`Character`值联合使用了：
 
 ```swift
 func printLetterKinds(word: String) {
-    println("'\\(word)' is made up of the following kinds of letters:")
+    println("'\(word)' is made up of the following kinds of letters:")
     for character in word {
         switch character.kind {
         case .Vowel:

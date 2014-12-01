@@ -52,7 +52,7 @@ enum CompassPoint {
 
 ```swift
 enum Planet {
-  case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Nepturn
+  case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
 }
 ```
 

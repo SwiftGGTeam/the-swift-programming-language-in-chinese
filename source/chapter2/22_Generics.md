@@ -27,7 +27,7 @@
 这里是一个标准的，非泛型函数`swapTwoInts`,用来交换两个Int值：
 
 ```swift
-func swapTwoInts(inout a: Int, inout b: Int)
+func swapTwoInts(inout a: Int, inout b: Int) {
   let temporaryA = a
   a = b
   b = temporaryA
@@ -91,9 +91,9 @@ func swapTwoValues<T>(inout a: T, inout b: T)
 ```
 
 
-这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`In`、`String`或`Doubl`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
+这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`Int`、`String`或`Double`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
 
-另外一个不同之处在于这个泛型函数名后面跟着的展位类型名字（T）是用尖括号括起来的（`<T>`）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
+另外一个不同之处在于这个泛型函数名后面跟着的占位类型名字（T）是用尖括号括起来的（`<T>`）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
 
 `swapTwoValues`函数除了要求传入的两个任何类型值是同一类型外，也可以作为`swapTwoInts`函数被调用。每次`swapTwoValues`被调用，T所代表的类型值都会传给函数。
 
@@ -180,7 +180,7 @@ struct IntStack {
 
 ```swift
 struct Stack<T> {
-    var items = T[]()
+    var items = [T]()
     mutating func push(item: T) {
         items.append(item)
     }
@@ -254,7 +254,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
 
 ```swift
-func findStringIndex(array: String[], valueToFind: String) -> Int? {
+func findStringIndex(array: [String], valueToFind: String) -> Int? {
     for (index, value) in enumerate(array) {
         if value == valueToFind {
             return index
@@ -320,9 +320,9 @@ let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
 ```
 
 <a name="associated_types"></a>
-##关联类型
+##关联类型(Associated Types)
 
-当定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分是非常有用的。一个关联类型给定作用于协议部分的类型一个节点名（或*别名*）。作用于关联类型上实际类型是不需要指定的，直到该协议接受。关联类型被指定为`typealias`关键字。
+当定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分是非常有用的。一个关联类型作为协议的一部分，给定了类型的一个占位名（或别名）。作用于关联类型上实际类型在协议被实现前是不需要指定的。关联类型被指定为`typealias`关键字。
 
 ### 关联类型行为
 
@@ -343,27 +343,27 @@ protocol Container {
 - 必须可能通过使用`count`属性获取容器里items的数量，并返回一个`Int`值；
 - 必须可能通过容器的`Int`索引值下标可以检索到每一个item。
 
-这个协议没有指定容器里item是如何存储的或何种类型是允许的。这个协议只指定三个任何遵循`Container`类型所必须支持的功能点。一个遵循的类型也可以提供其他额外的功能，只要满足这三个条件。
+这个协议没有指定容器里item是如何存储的或何种类型是允许的。这个协议只指定三个任何遵循`Container`类型所必须支持的功能点。一个遵循的类型在满足这三个条件的情况下也可以提供其他额外的功能。
 
 任何遵循`Container`协议的类型必须指定存储在其里面的值类型，必须保证只有正确类型的items可以加进容器里，必须明确可以通过其下标返回item类型。
 
 为了定义这三个条件，`Container`协议需要一个方法指定容器里的元素将会保留，而不需要知道特定容器的类型。`Container`协议需要指定任何通过`append`方法添加到容器里的值和容器里元素是相同类型，并且通过容器下标返回的容器元素类型的值的类型是相同类型。
 
-为了达到此目的，`Container`协议声明了一个ItemType的关联类型，写作`typealias ItemType`。这个协议不会定义`ItemType`是什么的别名，这个信息留给了任何遵循协议的类型来提供。尽管如此，`ItemType`别名支持一种方法识别在一个容器里的items类型，以及定义一种使用在`append`方法和下标中的类型，以便保证任何期望的`Container`的行为是强制性的。
+为了达到此目的，`Container`协议声明了一个ItemType的关联类型，写作`typealias ItemType`。这个协议不会定义`ItemType`是什么的别名，这个信息将由任何遵循协议的类型来提供。尽管如此，`ItemType`别名提供了一种识别Container中Items类型的方法，并且用于`append`方法和`subscript`方法的类型定义，以便保证任何`Container`期望的行为能够被执行。
 
-这里是一个早前IntStack类型的非泛型版本，适用于遵循Container协议：
+这里是一个早前IntStack类型的非泛型版本，遵循Container协议：
 
 ```swift
 struct IntStack: Container {
-    // original IntStack implementation
-    var items = Int[]()
+    // IntStack的原始实现
+    var items = [Int]()
     mutating func push(item: Int) {
         items.append(item)
     }
     mutating func pop() -> Int {
         return items.removeLast()
     }
-    // conformance to the Container protocol
+    // 遵循Container协议的实现
     typealias ItemType = Int
     mutating func append(item: Int) {
         self.push(item)
@@ -389,7 +389,7 @@ struct IntStack: Container {
 ```swift
 struct Stack<T>: Container {
     // original Stack<T> implementation
-    var items = T[]()
+    var items = [T]()
     mutating func push(item: T) {
         items.append(item)
     }
@@ -427,13 +427,13 @@ extension Array: Container {}
 <a name="where_clauses"></a>
 ## Where 语句
 
-[类型约束](#type_constraints)中描述的类型约束确保你定义关于类型参数的需求和一泛型函数或类型有关联。
+[类型约束](#type_constraints)能够确保类型符合泛型函数或类的定义约束。
 
-对于关联类型的定义需求也是非常有用的。你可以通过这样去定义*where语句*作为一个类型参数队列的一部分。一个`where`语句使你能够要求一个关联类型遵循一个特定的协议，以及（或）那个特定的类型参数和关联类型可以是相同的。你可写一个`where`语句，通过紧随放置`where`关键字在类型参数队列后面，其后跟着一个或者多个针对关联类型的约束，以及（或）一个或多个类型和关联类型的等于关系。
+对关联类型定义约束是非常有用的。你可以在参数列表中通过*where*语句定义参数的约束。一个`where`语句能够使一个关联类型遵循一个特定的协议，以及（或）那个特定的类型参数和关联类型可以是相同的。你可以写一个`where`语句，紧跟在在类型参数列表后面，where语句后跟一个或者多个针对关联类型的约束，以及（或）一个或多个类型和关联类型间的等价(equality)关系。
 
-下面的列子定义了一个名为`allItemsMatch`的泛型函数，用来检查是否两个`Container`单例包含具有相同顺序的相同元素。如果匹配到所有的元素，那么返回一个为`true`的`Boolean`值，反之，则相反。
+下面的例子定义了一个名为`allItemsMatch`的泛型函数，用来检查两个`Container`实例是否包含相同顺序的相同元素。如果所有的元素能够匹配，那么返回一个为`true`的`Boolean`值，反之则为`false`。
 
-这两个容器可以被检查出是否是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和`where`语句结合来表示：
+被检查的两个`Container`可以不是相同类型的容器（虽然它们可以是），但它们确实拥有相同类型的元素。这个需求通过一个类型约束和`where`语句结合来表示：
 
 ```swift
 func allItemsMatch<
@@ -441,19 +441,19 @@ func allItemsMatch<
     where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
     (someContainer: C1, anotherContainer: C2) -> Bool {
 
-        // check that both containers contain the same number of items
+        // 检查两个Container的元素个数是否相同
         if someContainer.count != anotherContainer.count {
             return false
         }
 
-        // check each pair of items to see if they are equivalent
-        for i in 0..someContainer.count {
+        // 检查两个Container相应位置的元素彼此是否相等
+        for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                 return false
             }
         }
 
-        // all items match, so return true
+        // 如果所有元素检查都相同则返回true
         return true
 
 }
@@ -506,7 +506,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 // 输出 "All items match."
 ```
 
- 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
+ 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。因此你可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
 
   [1]: ../chapter2/06_Functions.html
   [2]: https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png

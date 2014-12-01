@@ -93,14 +93,15 @@ occupations["Jayne"] = "Public Relations"
 要创建一个空数组或者字典，使用初始化语法。
 
 ```swift
-let emptyArray = String[]()
-let emptyDictionary = Dictionary<String, Float>()
+let emptyArray = [String]()
+let emptyDictionary = [String: Float]()
 ```
 
 如果类型信息可以被推断出来，你可以用`[]`和`[:]`来创建空数组和空字典——就像你声明变量或者给函数传参数的时候一样。
 
 ```swift
-shoppingList = []   // 去逛街并买点东西
+shoppingList = []
+occupations = [:]
 ```
 
 <a name="control_flow"></a>
@@ -162,7 +163,7 @@ default:
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
-你可以使用`for-in`来遍历字典，需要两个变量来表示每个键值对。
+你可以使用`for-in`来遍历字典，需要两个变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
 
 ```swift
 let interestingNumbers = [
@@ -200,23 +201,23 @@ do {
 m
 ```
 
-你可以在循环中使用`..`来表示范围，也可以使用传统的写法，两者是等价的：
+你可以在循环中使用`..<`来表示范围，也可以使用传统的写法，两者是等价的：
 
 ```swift
 var firstForLoop = 0
-for i in 0..3 {
+for i in 0..<4 {
     firstForLoop += i
 }
 firstForLoop
 
 var secondForLoop = 0
-for var i = 0; i < 3; ++i {
-    secondForLoop += 1
+for var i = 0; i < 4; ++i {
+    secondForLoop += i
 }
 secondForLoop
 ```
 
-使用`..`创建的范围不包含上界，如果想包含的话需要使用`...`。
+使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
 
 <a name="functions_and_closures"></a>
 ## 函数和闭包
@@ -233,13 +234,28 @@ greet("Bob", "Tuesday")
 > 练习：  
 > 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
 
-使用一个元组来返回多个值。
+使用元组来让一个函数返回多个值。该元组的元素可以用名称或数字来表示。
 
 ```swift
-func getGasPrices() -> (Double, Double, Double) {
-    return (3.59, 3.69, 3.79)
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+    
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+    
+    return (min, max, sum)
 }
-getGasPrices()
+let statistics = calculateStatistics([5, 3, 100, 3, 9])
+statistics.sum
+statistics.2
 ```
 
 函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
@@ -289,7 +305,7 @@ increment(7)
 函数也可以当做参数传入另一个函数。
 
 ```swift
-func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
     for item in list {
         if condition(item) {
             return true
@@ -320,13 +336,15 @@ numbers.map({
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
 ```swift
-numbers.map({ number in 3 * number })
+let mappedNumbers = numbers.map({ number in 3 * number })
+mappedNumbers
 ```
 
 你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
 
 ```swift
-sort([1, 5, 3, 12, 2]) { $0 > $1 }
+let sortedNumbers = sorted(numbers) { $0 > $1 }
+sortedNumbers
 ```
 
 <a name="objects_and_classes"></a>
@@ -513,12 +531,12 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.toRaw())
+            return String(self.rawValue())
         }
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.toRaw()
+let aceRawValue = ace.rawValue()
 ```
 
 > 练习：  
@@ -526,10 +544,10 @@ let aceRawValue = ace.toRaw()
 
 在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
 
-使用`toRaw`和`fromRaw`函数来在原始值和枚举值之间进行转换。
+使用'rawValue'在原始值和枚举值之间进行转换。
 
 ```swift
-if let convertedRank = Rank.fromRaw(3) {
+if let convertedRank = Rank(rawValue: 3) {
     let threeDescription = convertedRank.simpleDescription()
 }
 ```
@@ -570,8 +588,7 @@ struct Card {
     var rank: Rank
     var suit: Suit
     func simpleDescription() -> String {
-        return "The \(rank.simpleDescription()) of \
-        (suit.simpleDescription())"
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
     }
 }
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
@@ -682,10 +699,10 @@ protocolValue.simpleDescription
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-    var result = ItemType[]()
-    for i in 0..times {
-        result += item
+func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
+    var result = [ItemType]()
+    for i in 0..<times {
+        result.append(item)
     }
     return result
 }
@@ -707,7 +724,7 @@ possibleInteger = .Some(100)
 在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
 
 ```swift
-func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
+func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
             if lhsItem == rhsItem {

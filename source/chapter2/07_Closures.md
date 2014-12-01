@@ -1,4 +1,4 @@
-> 翻译：[wh1100717](https://github.com/wh1100717)  
+> 翻译：[wh1100717](https://github.com/wh1100717)
 > 校对：[lyuka](https://github.com/lyuka)
 
 # 闭包（Closures）
@@ -17,8 +17,8 @@ Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他�
 闭包可以捕获和存储其所在上下文中任意常量和变量的引用。
 这就是所谓的闭合并包裹着这些常量和变量，俗称闭包。Swift 会为您管理在捕获过程中涉及到的所有内存操作。
 
-> 注意：  
-> 如果您不熟悉捕获（capturing）这个概念也不用担心，您可以在 [值捕获](#capturing_values) 章节对其进行详细了解。  
+> 注意：
+> 如果您不熟悉捕获（capturing）这个概念也不用担心，您可以在 [值捕获](#capturing_values) 章节对其进行详细了解。
 
 在[函数](../chapter2/06_Functions.html) 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
 
@@ -41,25 +41,25 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 
 闭包表达式是一种利用简洁语法构建内联闭包的方式。
 闭包表达式提供了一些语法优化，使得撰写闭包变得简单明了。
-下面闭包表达式的例子通过使用几次迭代展示了`sort`函数定义和语法优化的方式。
+下面闭包表达式的例子通过使用几次迭代展示了`sorted`函数定义和语法优化的方式。
 每一次迭代都用更简洁的方式描述了相同的功能。
 
-<a name="the_sort_function"></a>
-### sort 函数（The Sort Function）
+<a name="the_sorted_function"></a>
+### sorted 函数（The Sorted Function）
 
-Swift 标准库提供了`sort`函数，会根据您提供的基于输出类型排序的闭包函数将已知类型数组中的值进行排序。
+Swift 标准库提供了`sorted`函数，会根据您提供的基于输出类型排序的闭包函数将已知类型数组中的值进行排序。
 一旦排序完成，函数会返回一个与原数组大小相同的新数组，该数组中包含已经正确排序的同类型元素。
 
-下面的闭包表达式示例使用`sort`函数对一个`String`类型的数组进行字母逆序排序，以下是初始数组值：
+下面的闭包表达式示例使用`sorted`函数对一个`String`类型的数组进行字母逆序排序，以下是初始数组值：
 
 ```swift
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 ```
 
-`sort`函数需要传入两个参数：
+`sorted`函数需要传入两个参数：
 
 * 已知类型的数组
-* 闭包函数，该闭包函数需要传入与数组类型相同的两个值，并返回一个布尔类型值来告诉`sort`函数当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
+* 闭包函数，该闭包函数需要传入与数组类型相同的两个值，并返回一个布尔类型值来告诉`sorted`函数当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
 
 该例子对一个`String`类型的数组进行排序，因此排序闭包函数类型需为`(String, String) -> Bool`。
 
@@ -69,14 +69,14 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 func backwards(s1: String, s2: String) -> Bool {
     return s1 > s2
 }
-var reversed = sort(names, backwards)
+var reversed = sorted(names, backwards)
 // reversed 为 ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 ```
 
 如果第一个字符串 (`s1`) 大于第二个字符串 (`s2`)，`backwards`函数返回`true`，表示在新的数组中`s1`应该出现在`s2`前。
 对于字符串中的字符来说，“大于” 表示 “按照字母顺序较晚出现”。
 这意味着字母`"B"`大于字母`"A"`，字符串`"Tom"`大于字符串`"Tim"`。
-其将进行字母逆序排序，`"Barry"`将会排在`"Alex"`之后。
+其将进行字母逆序排序，`"Barry"`将会排在`"Alex"`之前。
 
 然而，这是一个相当冗长的方式，本质上只是写了一个单表达式函数 (a > b)。
 在下面的例子中，利用闭合表达式语法可以更好的构造一个内联排序闭包。
@@ -99,7 +99,7 @@ var reversed = sort(names, backwards)
 下面的例子展示了之前`backwards`函数对应的闭包表达式版本的代码：
 
 ```swift
-reversed = sort(names, { (s1: String, s2: String) -> Bool in
+reversed = sorted(names, { (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 ```
@@ -114,20 +114,20 @@ reversed = sort(names, { (s1: String, s2: String) -> Bool in
 因为这个闭包的函数体部分如此短以至于可以将其改写成一行代码：
 
 ```swift
-reversed = sort(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 ```
 
-这说明`sort`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）。
+这说明`sorted`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）。
 
 <a name="inferring_type_from_context"></a>
 ### 根据上下文推断类型（Inferring Type From Context）
 
-因为排序闭包函数是作为`sort`函数的参数进行传入的，Swift可以推断其参数和返回值的类型。
-`sort`期望第二个参数是类型为`(String, String) -> Bool`的函数，因此实际上`String`,`String`和`Bool`类型并不需要作为闭包表达式定义中的一部分。
+因为排序闭包函数是作为`sorted`函数的参数进行传入的，Swift可以推断其参数和返回值的类型。
+`sorted`期望第二个参数是类型为`(String, String) -> Bool`的函数，因此实际上`String`,`String`和`Bool`类型并不需要作为闭包表达式定义中的一部分。
 因为所有的类型都可以被正确推断，返回箭头 (`->`) 和围绕在参数周围的括号也可以被省略：
 
 ```swift
-reversed = sort(names, { s1, s2 in return s1 > s2 } )
+reversed = sorted(names, { s1, s2 in return s1 > s2 } )
 ```
 
 实际上任何情况下，通过内联闭包表达式构造的闭包作为参数传递给函数时，都可以推断出闭包的参数和返回值类型，这意味着您几乎不需要利用完整格式构造任何内联闭包。
@@ -138,10 +138,10 @@ reversed = sort(names, { s1, s2 in return s1 > s2 } )
 单行表达式闭包可以通过隐藏`return`关键字来隐式返回单行表达式的结果，如上版本的例子可以改写为：
 
 ```swift
-reversed = sort(names, { s1, s2 in s1 > s2 } )
+reversed = sorted(names, { s1, s2 in s1 > s2 } )
 ```
 
-在这个例子中，`sort`函数的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
+在这个例子中，`sorted`函数的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
 因为闭包函数体只包含了一个单一表达式 (`s1 > s2`)，该表达式返回`Bool`类型值，因此这里没有歧义，`return`关键字可以省略。
 
 <a name="shorthand_argument_names"></a>
@@ -153,7 +153,7 @@ Swift 自动为内联函数提供了参数名称缩写功能，您可以直接�
 `in`关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
 
 ```swift
-reversed = sort(names, { $0 > $1 } )
+reversed = sorted(names, { $0 > $1 } )
 ```
 
 在这个例子中，`$0`和`$1`表示闭包中第一个和第二个`String`类型的参数。
@@ -163,11 +163,11 @@ reversed = sort(names, { $0 > $1 } )
 
 实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。
 Swift 的`String`类型定义了关于大于号 (`>`) 的字符串实现，其作为一个函数接受两个`String`类型的参数并返回`Bool`类型的值。
-而这正好与`sort`函数的第二个参数需要的函数类型相符合。
+而这正好与`sorted`函数的第二个参数需要的函数类型相符合。
 因此，您可以简单地传递一个大于号，Swift可以自动推断出您想使用大于号的字符串函数实现：
 
 ```swift
-reversed = sort(names, >)
+reversed = sorted(names, >)
 ```
 
 更多关于运算符表达式的内容请查看 [运算符函数](../chapter2/23_Advanced_Operators.html#operator_functions)。
@@ -195,13 +195,13 @@ someFunctionThatTakesAClosure() {
 }
 ```
 
-> 注意：  
-> 如果函数只需要闭包表达式一个参数，当您使用尾随闭包时，您甚至可以把`()`省略掉。  
+> 注意：
+> 如果函数只需要闭包表达式一个参数，当您使用尾随闭包时，您甚至可以把`()`省略掉。
 
-在上例中作为`sort`函数参数的字符串排序闭包可以改写为：
+在上例中作为`sorted`函数参数的字符串排序闭包可以改写为：
 
 ```swift
-reversed = sort(names) { $0 > $1 }
+reversed = sorted(names) { $0 > $1 }
 ```
 
 当闭包非常长以至于不能在一行中进行书写时，尾随闭包变得非常有用。
@@ -249,10 +249,10 @@ let strings = numbers.map {
 闭包表达式在每次被调用的时候创建了一个字符串并返回。
 其使用求余运算符 (number % 10) 计算最后一位数字并利用`digitNames`字典获取所映射的字符串。
 
-> 注意：  
-> 字典`digitNames`下标后跟着一个叹号 (!)，因为字典下标返回一个可选值 (optional value)，表明即使该 key 不存在也不会查找失败。  
-> 在上例中，它保证了`number % 10`可以总是作为一个`digitNames`字典的有效下标 key。  
-> 因此叹号可以用于强制解析 (force-unwrap) 存储在可选下标项中的`String`类型值。  
+> 注意：
+> 字典`digitNames`下标后跟着一个叹号 (!)，因为字典下标返回一个可选值 (optional value)，表明即使该 key 不存在也不会查找失败。
+> 在上例中，它保证了`number % 10`可以总是作为一个`digitNames`字典的有效下标 key。
+> 因此叹号可以用于强制解析 (force-unwrap) 存储在可选下标项中的`String`类型值。
 
 从`digitNames`字典中获取的字符串被添加到输出的前部，逆序建立了一个字符串版本的数字。
 （在表达式`number % 10`中，如果number为16，则返回6，58返回8，510返回0）。
@@ -319,10 +319,10 @@ func incrementor() -> Int {
 
 然而，因为每次调用该函数的时候都会修改`runningTotal`的值，`incrementor`捕获了当前`runningTotal`变量的引用，而不是仅仅复制该变量的初始值。捕获一个引用保证了当`makeIncrementor`结束时候并不会消失，也保证了当下一次执行`incrementor`函数时，`runningTotal`可以继续增加。
 
-> 注意：  
-> Swift 会决定捕获引用还是拷贝值。  
-> 您不需要标注`amount`或者`runningTotal`来声明在嵌入的`incrementor`函数中的使用方式。  
-> Swift 同时也处理`runingTotal`变量的内存管理操作，如果不再被`incrementor`函数使用，则会被清除。  
+> 注意：
+> Swift 会决定捕获引用还是拷贝值。
+> 您不需要标注`amount`或者`runningTotal`来声明在嵌入的`incrementor`函数中的使用方式。
+> Swift 同时也处理`runingTotal`变量的内存管理操作，如果不再被`incrementor`函数使用，则会被清除。
 
 下面代码为一个使用`makeIncrementor`的例子：
 
@@ -353,9 +353,9 @@ incrementByTen()
 // 返回的值为40
 ```
 
-> 注意：  
-> 如果您将闭包赋值给一个类实例的属性，并且该闭包通过指向该实例或其成员来捕获了该实例，您将创建一个在闭包和实例间的强引用环。  
-> Swift 使用捕获列表来打破这种强引用环。更多信息，请参考 [闭包引起的循环强引用](../chapter2/16_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)。  
+> 注意：
+> 如果您将闭包赋值给一个类实例的属性，并且该闭包通过指向该实例或其成员来捕获了该实例，您将创建一个在闭包和实例间的强引用环。
+> Swift 使用捕获列表来打破这种强引用环。更多信息，请参考 [闭包引起的循环强引用](../chapter2/16_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)。
 
 <a name="closures_are_reference_types"></a>
 ## 闭包是引用类型（Closures Are Reference Types）

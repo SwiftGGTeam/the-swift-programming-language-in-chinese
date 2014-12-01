@@ -6,7 +6,7 @@
 
 本页包含内容：
 
-- [实例方法(Instance Methods](#instance_methods)
+- [实例方法(Instance Methods)](#instance_methods)
 - [类型方法(Type Methods)](#type_methods)
 
 **方法**是与某些特定类型相关联的函数。类、结构体、枚举都可以定义实例方法；实例方法为给定类型的实例封装了具体的任务与功能。类、结构体、枚举也可以定义类型方法；类型方法与类型本身相关联。类型方法与 Objective-C 中的类方法（class methods）相似。
@@ -164,7 +164,7 @@ println("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX`，`moveByX`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字,这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量]("10_Properties.html")
+注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](10_Properties.html#global_and_local_variables)
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)

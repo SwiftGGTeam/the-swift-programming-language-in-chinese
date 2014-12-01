@@ -1,4 +1,4 @@
-> 翻译：[JaySurplus](https://github.com/JaySurplus)  
+> 翻译：[JaySurplus](https://github.com/JaySurplus)
 > 校对：[sg552](https://github.com/sg552)
 
 # 类和结构体
@@ -15,7 +15,7 @@
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
 
->  注意：  
+>  注意：
 通常一个`类`的实例被称为`对象`。然而在Swift 中，类和结构体的关系要比在其他语言中更加的密切，本章中所讨论的大部分功能都可以用在类和结构体上。因此，我们会主要使用`实例`而不是`对象`。
 
 <a name="comparing_classes_and_structures"></a>
@@ -41,7 +41,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 更多信息请参见[继承](http://)，[类型转换](http://)，[初始化](http://)，和[自动引用计数](http://)。
 
-> 注意：  
+> 注意：
 结构体总是通过被复制的方式在代码中传递，因此请不要使用引用计数。
 
 ### 定义
@@ -57,7 +57,7 @@ struct SomeStructure {
 }
 ```
 
->  注意：  
+>  注意：
 在你每次定义一个新类或者结构体的时候，实际上你是有效地定义了一个新的 Swift 类型。因此请使用 `UpperCamelCase` 这种方式来命名（如 `SomeClass` 和`SomeStructure`等），以便符合标准Swift 类型的大写命名风格（如`String`，`Int`和`Bool`）。相反的，请使用`lowerCamelCase`这种方式为属性和方法命名（如`framerate`和`incrementCount`），以便和类区分。
 
 以下是定义结构体和定义类的示例：
@@ -65,7 +65,7 @@ struct SomeStructure {
 ```swift
 struct Resolution {
 	var width = 0
-	var heigth = 0
+	var height = 0
 }
 class VideoMode {
 	var resolution = Resolution()
@@ -103,7 +103,7 @@ println("The width of someResolution is \(someResolution.width)")
 
 在上面的例子中，`someResolution.width`引用`someResolution`的`width`属性，返回`width`的初始值`0`。
 
-你也可以访问子属性，如何`VideoMode`中`Resolution`属性的`width`属性：
+你也可以访问子属性，如`VideoMode`中`Resolution`属性的`width`属性：
 
 ```swift
 println("The width of someVideoMode is \(someVideoMode.resolution.width)")
@@ -113,12 +113,12 @@ println("The width of someVideoMode is \(someVideoMode.resolution.width)")
 你也可以使用点语法为属性变量赋值：
 
 ```swift
-someVideoMode.resolution.width = 12880
+someVideoMode.resolution.width = 1280
 println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 // 输出 "The width of someVideoMode is now 1280"
 ```
 
->  注意：  
+>  注意：
 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新设置`resolution`属性。
 
 ### 结构体类型的成员逐一构造器(Memberwise Initializers for structure Types)
@@ -126,7 +126,7 @@ println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
 ```swift
-let vga = resolution(width:640, heigth: 480)
+let vga = Resolution(width:640, height: 480)
 ```
 
 与结构体不同，类实例没有默认的成员逐一构造器。[构造过程](14_Initialization.html)章节会对构造器进行更详细的讨论。
@@ -279,165 +279,12 @@ if tenEighty === alsoTenTighty {
 <a name="assignment_and_copy_behavior_for_collection_types"></a>
 ## 集合（Collection）类型的赋值和拷贝行为
 
-Swift 中`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。然而当数组被赋予一个常量或变量，或被传递给一个函数或方法时，其拷贝行为与字典和其它结构体有些许不同。
+Swift 中`字符串（String）`,`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。这意味着String，Array，Dictionary类型数据被赋值给新的常量(或变量），或者被传入函数（或方法）中时，它们的值会发生拷贝行为（值传递方式）。
 
-以下对`数组`和`结构体`的行为描述与对`NSArray`和`NSDictionary`的行为描述在本质上不同，后者是以类的形式实现，前者是以结构体的形式实现。`NSArray`和`NSDictionary`实例总是以对已有实例引用,而不是拷贝的方式被赋值和传递。
+Objective-C中`字符串（NSString）`,`数组（NSArray）`和`字典（NSDictionary）`类型均以类的形式实现，这与Swfit中以值传递方式是不同的。NSString，NSArray，NSDictionary在发生赋值或者传入函数（或方法）时，不会发生值拷贝，而是传递已存在实例的引用。
 
-> 注意：  
-以下是对于数组，字典，字符串和其它值的`拷贝`的描述。
+
+> 注意：
+以上是对于数组，字典，字符串和其它值的`拷贝`的描述。
 在你的代码中，拷贝好像是确实是在有拷贝行为的地方产生过。然而，在 Swift 的后台中，只有确有必要，`实际（actual）`拷贝才会被执行。Swift 管理所有的值拷贝以确保性能最优化的性能，所以你也没有必要去避免赋值以保证最优性能。（实际赋值由系统管理优化）
-
-### 字典类型的赋值和拷贝行为
-
-无论何时将一个`字典`实例赋给一个常量或变量，或者传递给一个函数或方法，这个字典会即会在赋值或调用发生时被拷贝。在章节[结构体和枚举是值类型](#structures_and_enumerations_are_value_types)中将会对此过程进行详细介绍。
-
-如果`字典`实例中所储存的键（keys）和/或值（values）是值类型（结构体或枚举），当赋值或调用发生时，它们都会被拷贝。相反，如果键（keys）和/或值（values）是引用类型，被拷贝的将会是引用，而不是被它们引用的类实例或函数。`字典`的键和值的拷贝行为与结构体所储存的属性的拷贝行为相同。
-
-下面的示例定义了一个名为`ages`的字典，其中储存了四个人的名字和年龄。`ages`字典被赋予了一个名为`copiedAges`的新变量，同时`ages`在赋值的过程中被拷贝。赋值结束后，`ages`和`copiedAges`成为两个相互独立的字典。
-
-```swift
-var ages = ["Peter": 23, "Wei": 35, "Anish": 65, "Katya": 19]
-var copiedAges = ages
-```
-
-这个字典的键（keys）是`字符串（String）`类型，值（values）是`整（Int）`类型。这两种类型在Swift 中都是值类型（value types），所以当字典被拷贝时，两者都会被拷贝。
-
-我们可以通过改变一个字典中的年龄值（age value），检查另一个字典中所对应的值，来证明`ages`字典确实是被拷贝了。如果在`copiedAges`字典中将`Peter`的值设为`24`，那么`ages`字典仍然会返回修改前的值`23`：
-
-```swift
-copiedAges["Peter"] = 24
-println(ages["Peter"])
-// 输出 "23"
-```
-
-### 数组的赋值和拷贝行为
-
-在Swift 中，`数组（Arrays）`类型的赋值和拷贝行为要比`字典（Dictionary）`类型的复杂的多。当操作数组内容时，`数组（Array）`能提供接近C语言的的性能，并且拷贝行为只有在必要时才会发生。
-
-如果你将一个`数组（Array）`实例赋给一个变量或常量，或者将其作为参数传递给函数或方法调用，在事件发生时数组的内容`不`会被拷贝。相反，数组公用相同的元素序列。当你在一个数组内修改某一元素，修改结果也会在另一数组显示。
-
-对数组来说，拷贝行为仅仅当操作有可能修改数组`长度`时才会发生。这种行为包括了附加（appending）,插入（inserting）,删除（removing）或者使用范围下标（ranged subscript）去替换这一范围内的元素。只有当数组拷贝确要发生时，数组内容的行为规则与字典中键值的相同，参见章节[集合（collection）类型的赋值与复制行为](#assignment_and_copy_behavior_for_collection_types。
-
-下面的示例将一个`整数（Int）`数组赋给了一个名为`a`的变量，继而又被赋给了变量`b`和`c`：
-
-```swift
-var a = [1, 2, 3]
-var b = a
-var c = a
-```
-
-我们可以在`a`,`b`,`c`上使用下标语法以得到数组的第一个元素：
-
-```swift
-println(a[0])
-// 1
-println(b[0])
-// 1
-println(c[0])
-// 1
-```
-
-如果通过下标语法修改数组中某一元素的值，那么`a`,`b`,`c`中的相应值都会发生改变。请注意当你用下标语法修改某一值时，并没有拷贝行为伴随发生，因为下表语法修改值时没有改变数组长度的可能：
-
-```swift
-a[0] = 42
-println(a[0])
-// 42
-println(b[0])
-// 42
-println(c[0])
-// 42
-```
-
-然而，当你给`a`附加新元素时，数组的长度`会`改变。
-当附加元素这一事件发生时，Swift 会创建这个数组的一个拷贝。从此以后，`a`将会是原数组的一个独立拷贝。
-
-拷贝发生后，如果再修改`a`中元素值的话，`a`将会返回与`b`，`c`不同的结果，因为后两者引用的是原来的数组：
-
-```swift
-a.append(4)
-a[0] = 777
-println(a[0])
-// 777
-println(b[0])
-// 42
-println(c[0])
-// 42
-```
-
-### 确保数组的唯一性
-
-在操作一个数组，或将其传递给函数以及方法调用之前是很有必要先确定这个数组是有一个唯一拷贝的。通过在数组变量上调用`unshare`方法来确定数组引用的唯一性。（当数组赋给常量时，不能调用`unshare`方法）
-
-如果一个数组被多个变量引用，在其中的一个变量上调用`unshare`方法，则会拷贝此数组，此时这个变量将会有属于它自己的独立数组拷贝。当数组仅被一个变量引用时，则不会有拷贝发生。
-
-在上一个示例的最后，`b`和`c`都引用了同一个数组。此时在`b`上调用`unshare`方法则会将`b`变成一个唯一个拷贝：
-
-```swift
-b.unshare()
-```
-
-在`unshare`方法调用后再修改`b`中第一个元素的值，这三个数组（`a`,`b`,`c`）会返回不同的三个值：
-
-```swift
-b[0] = -105
-println(a[0])
-// 77
-println(b[0])
-// -105
-println(c[0])
-// 42
-```
-
-
-### 判定两个数组是否共用相同元素
-
-我们通过使用恒等运算符（identity operators）（ === 和 !==）来判定两个数组或子数组共用相同的储存空间或元素。
-
-下面这个示例使用了“等同（identical to）” 运算符（===） 来判定`b`和`c`是否共用相同的数组元素：
-
-```swift
-if b === c {
-	println("b and c still share the same array elements.")
-} else {
-	println("b and c now refer to two independent sets of array elements.")
-}
-```
-
-```swift
-// 输出 "b and c now refer totwo independent sets of array elements."
-```
-
-此外，我们还可以使用恒等运算符来判定两个子数组是否共用相同的元素。下面这个示例中，比较了`b`的两个相等的子数组，并且确定了这两个子数组都引用相同的元素：
-
-```swift
-if b[0...1] === b[0...1] {
-	println("These two subarrays share the same elements.")
-} else {
-	println("These two subarrays do not share the same elements.")
-}
-// 输出 "These two subarrays share the same elements."
-```
-
-### 强制复制数组
-
-我们通过调用数组的`copy`方法进行强制显式复制。这个方法对数组进行了浅拷贝（shallow copy），并且返回一个包含此拷贝数组的新数组。
-
-下面这个示例中定义了一个`names`数组，其包含了七个人名。还定义了一个`copiedNames`变量，用以储存在`names`上调用`copy`方法所返回的结果：
-
-```swift
-var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
-var copiedNames = names.copy()
-```
-
-我们可以通过修改数组中某一个元素，并且检查另一个数组中对应元素的方法来判定`names`数组确已被复制。如果你将`copiedNames`中第一个元素从"`Mohsen`"修改为"`Mo`",则`names`数组返回的仍是拷贝发生前的"`Mohsen`"：
-
-```swift
-copiedName[0] = "Mo"
-println(name[0])
-// 输出 "Mohsen"
-```
-
-> 注意：  
-如果你仅需要确保你对数组的引用是唯一引用，请调用`unshare`方法，而不是`copy`方法。`unshare`方法仅会在确有必要时才会创建数组拷贝。`copy`方法会在任何时候都创建一个新的拷贝，即使引用已经是唯一引用。
 

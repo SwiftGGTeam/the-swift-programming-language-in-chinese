@@ -59,7 +59,7 @@ println("The default temperature is \(f.temperature)° Fahrenheit")
 如前所述，你可以在构造器中为存储型属性设置初始值；同样，你也可以在属性声明时为其设置默认值。
 
 >注意：  
-如果一个属性总是使用同一个初始值，可以为其设置一个默认值。无论定义默认值还是在构造器中赋值，最终它们实现的效果是一样的，只不过默认值跟属性构造过程结合的更紧密。使用默认值能让你的构造器更简洁、更清晰，且能通过默认值自动推导出属性的类型；同时，它也能让你充分利用默认构造器、构造器继承（后续章节将讲到）等特性。
+如果一个属性总是使用同一个初始值，可以为其设置一个默认值。无论定义默认值还是在构造器中赋值，最终它们实现的效果是一样的，只不过默认值将属性的初始化和属性的声明结合的更紧密。使用默认值能让你的构造器更简洁、更清晰，且能通过默认值自动推导出属性的类型；同时，它也能让你充分利用默认构造器、构造器继承（后续章节将讲到）等特性。
 
 你可以使用更简单的方式在定义结构体`Fahrenheit`时为属性`temperature`设置默认值：
 
@@ -158,7 +158,7 @@ class SurveyQuestion {
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
 // 输出 "Do you like cheese?"
-cheeseQuestion.response = "Yes, I do like cheese.
+cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
 调查问题在问题提出之后，我们才能得到回答。所以我们将属性回答`response`声明为`String?`类型，或者说是可选字符串类型`optional String`。当`SurveyQuestion`实例化时，它将自动赋值为空`nil`，表明暂时还不存在此字符串。
@@ -186,7 +186,7 @@ class SurveyQuestion {
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
 // 输出 "How about beets?"
-beetsQuestion.response = "I also like beets. (But not with cheese.)
+beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
 <a name="default_initializers"></a>
@@ -375,7 +375,9 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 #### 安全检查 4
 
-构造器在第一阶段构造完成之前，不能调用任何实例方法、不能读取任何实例属性的值，也不能引用`self`的值。
+构造器在第一阶段构造完成之前，不能调用任何实例方法、不能读取任何实例属性的值，`self`的值不能被引用。
+
+类实例在第一阶段结束以前并不是完全有效，仅能访问属性和调用方法，一旦完成第一阶段，该实例才会声明为有效实例。
 
 以下是两段式构造过程中基于上述安全检查的构造流程展示：
 
@@ -513,7 +515,7 @@ class RecipeIngredient: Food {
         self.quantity = quantity
         super.init(name: name)
     }
-    convenience init(name: String) {
+    override convenience init(name: String) {
         self.init(name: name, quantity: 1)
     }
 }
@@ -527,7 +529,7 @@ class RecipeIngredient: Food {
 
 `RecipeIngredient`也定义了一个便利构造器`init(name: String)`，它只通过`name`来创建`RecipeIngredient`的实例。这个便利构造器假设任意`RecipeIngredient`实例的`quantity`为1，所以不需要显示指明数量即可创建出实例。这个便利构造器的定义可以让创建实例更加方便和快捷，并且避免了使用重复的代码来创建多个`quantity`为 1 的`RecipeIngredient`实例。这个便利构造器只是简单的将任务代理给了同一类里提供的指定构造器。
 
-注意，`RecipeIngredient`的便利构造器`init(name: String)`使用了跟`Food`中指定构造器`init(name: String)`相同的参数。尽管`RecipeIngredient`这个构造器是便利构造器，`RecipeIngredient`依然提供了对所有父类指定构造器的实现。因此，`RecipeIngredient`也能自动继承了所有父类的便利构造器。
+注意，`RecipeIngredient`的便利构造器`init(name: String)`使用了跟`Food`中指定构造器`init(name: String)`相同的参数。因为这个便利构造器重写要父类的指定构造器`init(name: String)`，必须在前面使用使用`override`标识。
 
 在这个例子中，`RecipeIngredient`的父类是`Food`，它有一个便利构造器`init()`。这个构造器因此也被`RecipeIngredient`继承。这个继承的`init()`函数版本跟`Food`提供的版本是一样的，除了它是将任务代理给`RecipeIngredient`版本的`init(name: String)`而不是`Food`提供的版本。
 
@@ -617,8 +619,8 @@ class SomeClass {
 
 ```swift
 struct Checkerboard {
-    let boardColors: Bool[] = {
-        var temporaryBoard = Bool[]()
+    let boardColors: [Bool] = {
+        var temporaryBoard = [Bool]()
         var isBlack = false
         for i in 1...10 {
             for j in 1...10 {
