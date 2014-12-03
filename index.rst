@@ -8,12 +8,3 @@ Contents
     LanguageGuide/LanguageGuidePart
     ReferenceManual/ReferenceManualPart
     RevisionHistory/RevisionHistoryPart
-
-Internal Chapters
-=================
-
-.. toctree::
-    :maxdepth: 1
-
-    ReplacementRules
-    SubmittingTSPL
