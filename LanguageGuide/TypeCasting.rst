@@ -149,7 +149,7 @@ with the :newTerm:`type cast operator` (``as``).
 Because downcasting can fail,
 the type cast operator comes in two different forms.
 The optional form, ``as?``, returns an optional value of the type you are trying to downcast to.
-The forced form, ``as``, attempts the downcast and force-unwraps the result
+The forced form, ``as!``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
 Use the optional form of the type cast operator (``as?``)
@@ -158,7 +158,7 @@ This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
 This enables you to check for a successful downcast.
 
-Use the forced form of the type cast operator (``as``)
+Use the forced form of the type cast operator (``as!``)
 only when you are sure that the downcast will always succeed.
 This form of the operator will trigger a runtime error
 if you try to downcast to an incorrect class type.
@@ -275,12 +275,12 @@ and populates this array with three instances of the ``Movie`` class:
 
 Because this array is known to contain only ``Movie`` instances,
 you can downcast and unwrap directly to a non-optional ``Movie``
-with the forced version of the type cast operator (``as``):
+with the forced version of the type cast operator (``as!``):
 
 .. testcode:: typeCasting
 
    -> for object in someObjects {
-         let movie = object as Movie
+         let movie = object as! Movie
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
@@ -293,7 +293,7 @@ instead of downcasting each item:
 
 .. testcode:: typeCasting
 
-   -> for movie in someObjects as [Movie] {
+   -> for movie in someObjects as! [Movie] {
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
