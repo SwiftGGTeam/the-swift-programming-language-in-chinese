@@ -371,10 +371,10 @@ a compile-time error is raised.
 For example, casting to a type that's neither a subclass or superclass
 of the type of the *expression* is an error.
 
-The ``as`` operator performs a forced cast of the *expression* to the specified *type*.
-The ``as`` operator returns a value of the specified *type*, not an optional type.
+The ``as!`` operator performs a forced cast of the *expression* to the specified *type*.
+The ``as!`` operator returns a value of the specified *type*, not an optional type.
 If the cast fails, a runtime error is raised.
-The behavior of ``x as T`` is the same as the behavior of ``(x as? T)!``.
+The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
 
 For more information about type casting
 and to see examples that use the type-casting operators,
@@ -390,7 +390,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
     Grammar of a type-casting operator
 
     type-casting-operator --> ``is`` type
-    type-casting-operator --> ``as`` type
+    type-casting-operator --> ``as`` ``!`` type
     type-casting-operator --> ``as`` ``?`` type
 
 
