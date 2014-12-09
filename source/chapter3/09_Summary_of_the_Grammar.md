@@ -476,7 +476,7 @@ _________________
 > *字面量表达式* → [*数组字面量*](..\chapter3\04_Expressions.html#array_literal) | [*字典字面量*](..\chapter3\04_Expressions.html#dictionary_literal)  
 > *字面量表达式* → **&#95;&#95;FILE&#95;&#95;** | **&#95;&#95;LINE&#95;&#95;** | **&#95;&#95;COLUMN&#95;&#95;** | **&#95;&#95;FUNCTION&#95;&#95;**  
 > *数组字面量* → **[** [*数组字面量项列表*](..\chapter3\04_Expressions.html#array_literal_items) _可选_ **]**  
-> *数组字面量项列表* → [*数组字面量项*](..\chapter3\04_Expressions.html#array_literal_item) **,** _可选_ | [*数组字面量项*](..\chapter3\04_Expressions.html#array_literal_item) **,** [*数组字面量项列表*](..\chapter3\04_Expressions.html#array_literal_items)  
+> *数组字面量项列���* → [*数组字面量项*](..\chapter3\04_Expressions.html#array_literal_item) **,** _可选_ | [*数组字面量项*](..\chapter3\04_Expressions.html#array_literal_item) **,** [*数组字面量项列表*](..\chapter3\04_Expressions.html#array_literal_items)  
 > *数组字面量项* → [*表达式*](..\chapter3\04_Expressions.html#expression)  
 > *字典字面量* → **[** [*字典字面量项列表*](..\chapter3\04_Expressions.html#dictionary_literal_items) **]** | **[** **:** **]**  
 > *字典字面量项列表* → [*字典字面量项*](..\chapter3\04_Expressions.html#dictionary_literal_item) **,** _可选_ | [*字典字面量项*](..\chapter3\04_Expressions.html#dictionary_literal_item) **,** [*字典字面量项列表*](..\chapter3\04_Expressions.html#dictionary_literal_items)  
@@ -616,7 +616,7 @@ _________________
 <!-- -->
 
 > 字面量语法  
-> *字面量* → [*整型字面量*](..\chapter3\02_Lexical_Structure.html#integer_literal) | [*浮点数字面量*](..\chapter3\02_Lexical_Structure.html#floating_point_literal) | [*字符串字面量*](..\chapter3\02_Lexical_Structure.html#string_literal)  
+> *字面量* → [*整型字面量*](..\chapter3\02_Lexical_Structure.html#integer_literal) | [*浮点数字面量*](..\chapter3\02_Lexical_Structure.html#floating_point_literal) | [*字符串常量*](..\chapter3\02_Lexical_Structure.html#string_literal)  
 
 <!-- -->
 
@@ -659,7 +659,7 @@ _________________
 <!-- -->
 
 > 字符型字面量语法  
-> *字符串字面量* → **"** [*引用文本*](..\chapter3\02_Lexical_Structure.html#quoted_text) **"**  
+> *字符串常量* → **"** [*引用文本*](..\chapter3\02_Lexical_Structure.html#quoted_text) **"**  
 > *引用文本* → [*引用文本条目*](..\chapter3\02_Lexical_Structure.html#quoted_text_item) [*引用文本*](..\chapter3\02_Lexical_Structure.html#quoted_text) _可选_  
 > *引用文本条目* → [*转义字符*](..\chapter3\02_Lexical_Structure.html#escaped_character)  
 > *引用文本条目* → **\(** [*表达式*](..\chapter3\04_Expressions.html#expression) **)**  

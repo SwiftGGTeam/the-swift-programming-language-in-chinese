@@ -81,7 +81,7 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 ```
 
 > 字面量语法  
-> *字面量* → [*整型字面量*](LexicalStructure.html#integer_literal) | [*浮点数字面量*](LexicalStructure.html#floating_point_literal) | [*字符串字面量*](LexicalStructure.html#string_literal)  
+> *字面量* → [*整型字面量*](LexicalStructure.html#integer_literal) | [*浮点数字面量*](LexicalStructure.html#floating_point_literal) | [*字符串常量*](LexicalStructure.html#string_literal)  
 
 ### 整型字面量
 
@@ -117,7 +117,7 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 > *十进制数字* → 数值 0 到 9  
 > *十进制数字列表* → [*十进制数字*](LexicalStructure.html#decimal_digit) [*十进制数字列表*](LexicalStructure.html#decimal_digits) _可选_  
 > *十进制字符* → [*十进制数字*](LexicalStructure.html#decimal_digit) | **_**  
-> *十进制字符列表* → [*十进制字符*](LexicalStructure.html#decimal_literal_character) [*十进制字符列表*](LexicalStructure.html#decimal_literal_characters) _可选_  
+> *十进制字符列表* → [*十进制字符*](LexicalStructure.html#decimal_literal_character) [*十进制字符列表*](LexicalStructure.html#decimal_literal_characters) _���选_  
 > *十六进制字面量* → **0x** [*十六进制数字*](LexicalStructure.html#hexadecimal_digit) [*十六进制字面量字符列表*](LexicalStructure.html#hexadecimal_literal_characters) _可选_  
 > *十六进制数字* → 数值 0 到 9, a through f, or A through F  
 > *十六进制字符* → [*十六进制数字*](LexicalStructure.html#hexadecimal_digit) | **_**  
@@ -197,7 +197,7 @@ var x = 3; "1 2 \(x)"
 文本型字面量的默认类型为 `String`。组成字符串的字符类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_368)。
 
 > 字符型字面量语法  
-> *字符串字面量* → **"** [*引用文本*](LexicalStructure.html#quoted_text) **"**  
+> *字符串常量* → **"** [*引用文本*](LexicalStructure.html#quoted_text) **"**  
 > *引用文本* → [*引用文本条目*](LexicalStructure.html#quoted_text_item) [*引用文本*](LexicalStructure.html#quoted_text) _可选_  
 > *引用文本条目* → [*转义字符*](LexicalStructure.html#escaped_character)  
 > *引用文本条目* → **\(** [*表达式*](..\chapter3\04_Expressions.html#expression) **)**  
@@ -228,7 +228,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在特定构成中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个标记，剩余部分以同样的方式会被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 被看作单字符标记，而不会被误解为移位运算符 `>>`。
 
-要学习如何自定义新的运算符，请参考 [自定义操作符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48) 和 [运算符声明](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_644)。学习如何重写现有运算符，请参考 [运算符方法](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43)。
+要学习如何自定义新的运算符，请参考 [自定义操作符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48) 和 [运算符声明](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_644)。学习如何重写现有运算符，请参考 [运算符方法](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43)���
 
 > 运算符语法语法  
 > *运算符* → [*运算符字符*](LexicalStructure.html#operator_character) [*运算符*](LexicalStructure.html#operator) _可选_  
