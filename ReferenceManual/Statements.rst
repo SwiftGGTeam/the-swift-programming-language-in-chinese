@@ -347,7 +347,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of an if statement
 
     if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | declaration
+    if-condition --> expression | value-binding-pattern
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
