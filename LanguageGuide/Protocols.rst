@@ -1132,7 +1132,7 @@ follows exactly the same syntax as checking for and casting to a type:
 * The ``as?`` version of the downcast operator returns
   an optional value of the protocol's type,
   and this value is ``nil`` if the instance does not conform to that protocol.
-* The ``as`` version of the downcast operator forces the downcast to the protocol type
+* The ``as!`` version of the downcast operator forces the downcast to the protocol type
   and triggers a runtime error if the downcast does not succeed.
 
 This example defines a protocol called ``HasArea``,
