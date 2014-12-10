@@ -644,5 +644,5 @@ let board = Checkerboard()
 println(board.squareIsBlackAtRow(0, column: 1))
 // 输出 "true"
 println(board.squareIsBlackAtRow(9, column: 9))
-// 输出 "false"
+// 输出 "true"
 ```
