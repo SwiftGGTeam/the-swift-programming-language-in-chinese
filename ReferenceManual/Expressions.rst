@@ -319,7 +319,7 @@ Type-Casting Operators
 
 There are three type-casting operators,
 the ``is`` operator, the ``as?`` operator,
-and the ``as`` operator.
+and the ``as!`` operator.
 They have the following form:
 
 .. syntax-outline::
