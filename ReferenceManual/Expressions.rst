@@ -1283,15 +1283,6 @@ For example:
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
 
-.. TR: In previous review, we noted that this also does downcast,
-   but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
-    class A {}
-    class B: A {}
-    let l: Array<A> = [B(), A(), A()]
-    var item: B = l[0] !        // Doesn't parse -- waiting for more expression
-    var item: B = l[0]!         // Doesn't typecheck
-    var item = l[0] as B!       // Ok
-
 .. langref-grammar
 
     expr-force-value ::= expr-postfix '!'
