@@ -326,7 +326,7 @@ They have the following form:
 
     <#expression#> is <#type#>
     <#expression#> as? <#type#>
-    <#expression#> as <#type#>
+    <#expression#> as! <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
 can be downcast to the specified *type*.
