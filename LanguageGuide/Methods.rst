@@ -161,7 +161,7 @@ a hash symbol (``#``) before the ``numberOfTimes`` parameter:
    !! ^
    !!-
 
-The default behavior described above mean that method definitions in Swift
+The default behavior described above means that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
 
