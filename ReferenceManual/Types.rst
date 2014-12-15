@@ -339,6 +339,12 @@ In other words, the following two declarations are equivalent:
     !! let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
     !!     ^
 
+.. FIXME The above test is unstable.  Most of the time, the REPL handles the
+   declarations in the order that they appear, but sometimes it gets them
+   backwards.  This means that it complains about the first form [String: Int]
+   being a redefinition of the second form Dectionary<String, Int>, which makes
+   the error messages not match.
+
 In both cases, the constant ``someDictionary``
 is declared as a dictionary with strings as keys and integers as values.
 
@@ -383,6 +389,13 @@ In other words, the following two declarations are equivalent:
     !! <REPL Input>:1:5: note: 'optionalInteger' previously declared here
     !! var optionalInteger: Int?
     !! ^
+
+.. FIXME The above test is unstable.  Most of the time, the REPL handles the
+   declarations in the order that they appear, but sometimes it gets them
+   backwards.  This means that it complains about the first form Int?  being a
+   redefinition of the second form Optional<Int>, which makes the error
+   messages not match -- and then the REPL crashes, which makes the rest of the
+   tests in this group this fail.
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
