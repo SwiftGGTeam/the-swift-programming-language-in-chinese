@@ -67,9 +67,9 @@ to the function or initializer.
 
 .. testcode:: generic-params
 
-    -> simpleMin(17, 42) // T is inferred to be Int
+    -> simpleMax(17, 42) // T is inferred to be Int
     << // r0 : Int = 42
-    -> simpleMin(3.14159, 2.71828) // T is inferred to be Double
+    -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
     << // r1 : Double = 3.14159
 
 
