@@ -342,7 +342,7 @@ In other words, the following two declarations are equivalent:
 .. FIXME The above test is unstable.  Most of the time, the REPL handles the
    declarations in the order that they appear, but sometimes it gets them
    backwards.  This means that it complains about the first form [String: Int]
-   being a redefinition of the second form Dectionary<String, Int>, which makes
+   being a redefinition of the second form Dictionary<String, Int>, which makes
    the error messages not match.
 
 In both cases, the constant ``someDictionary``
