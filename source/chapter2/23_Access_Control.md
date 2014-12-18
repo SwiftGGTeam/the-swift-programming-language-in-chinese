@@ -47,7 +47,7 @@ Swift 中的访问控制模型基于模块和源文件这两个概念。
 
 模块指的是`Framework`或`App bundle`。在 Swift 中，可以用`import`关键字引入自己的工程。  
 
-在 Swift 中，`Framewordk`或`App bundle`被作为模块处理。如果你是为了实现某个通用的功能，或者是为了封装一些常用方法而将代码打包成`Framework`，这个`Framework`在 Swift 中就被称为模块。不论它被引入到某个 App 工程或者其他的`Framework`，它里面的一切（属性、函数等）都属于这个模块。  
+在 Swift 中，`Framework`或`App bundle`被作为模块处理。如果你是为了实现某个通用的功能，或者是为了封装一些常用方法而将代码打包成`Framework`，这个`Framework`在 Swift 中就被称为模块。不论它被引入到某个 App 工程或者其他的`Framework`，它里面的一切（属性、函数等）都属于这个模块。  
 
 源文件指的是 Swift 中的`Swift File`，就是编写 Swift 代码的文件，它通常属于一个模块。通常一个源文件包含一个`类`，在`类`中又包含`函数`、`属性`等类型。
 
