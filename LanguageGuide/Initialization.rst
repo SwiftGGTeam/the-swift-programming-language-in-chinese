@@ -1737,7 +1737,7 @@ A nonfailable initializer can never delegate to a failable initializer.
    !!            ^
 
 The example below defines a class called ``Document``.
-This class models a document that can be be initialized with
+This class models a document that can be initialized with
 a ``name`` property that is either a non-empty string value or ``nil``,
 but cannot be an empty string:
 
