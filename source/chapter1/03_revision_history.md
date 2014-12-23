@@ -7,6 +7,10 @@
 
 本页内容包括：
 
+-   [XCode6.2 Beta3 Swift语法文档更新](#xcode6_2_Beta3)
+-   [XCode6.2 Beta2 Swift语法文档更新](#xcode6_2_Beta2)
+-   [XCode6.2 Beta1 Swift语法文档更新](#xcode6_2_Beta1)
+-   [XCode6.1.1 Swift语法文档更新](#xcode6_1_1)
 -   [XCode6.1 Swift语法文档更新](#xcode6_1)
 -   [XCode6.1 Beta2 Swift语法文档更新](#xcode6_1_Beta2)
 -   [XCode6.1 Beta1 Swift语法文档更新](#xcode6_1_Beta1)
@@ -20,6 +24,134 @@
 -   XCode6下载: [老码云盘下载](http://pan.baidu.com/disk/home#from=share_pan_logo&path=%252F%25E8%2580%2581%25E7%25A0%2581%25E4%25BA%2591%25E7%259B%2598-XCode6%252FXCode6-Beta5)
 
 以下部分是针对XCode6每一次Beta版本直至正式版发布，Swift语法部分的更新归类
+
+<a name="xcode6_2_Beta3"></a>
+### XCode6.2 Beta3中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode6.2 Beta3 Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-12-19</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			在对Watch App做消息通知模拟调试时，第一个payload.apns文件将会被默认选择
+        </li>
+ 		<li><p>
+			在为Watch App使用asset catalog时，38mm和42mm尺寸的图片就会被使用
+        </li>
+ 		<li><p>
+			在做Watch App开发时,@IBAction属性支持WKInterfaceSwitch和WKInterfaceSlider Swift类型了
+        </li>
+		<li><p>
+			现在可以通过Device窗口安装，删除和访问App容器中的数据了。
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_2_Beta2"></a>
+### XCode6.2 Beta2中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode6.2 Beta2 Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-12-10</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			现在在Interface Builder中可以针对特定的Device设备自定义Watch应用的Layout布局了
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_2_Beta1"></a>
+### XCode6.2 Beta1中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode6.2 Beta1 Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-11-28</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			XCode6.2包含了iOS8.2 SDK，该SDK中包含WatchKit用来开发Apple Watch应用。
+        </li>
+	    <li><p>
+			在工具集中增加了对WatchKit的支持：
+			1）UI设计工具增加了Apple Watch应用的界面组件，通知和小部件。
+			2）增加了调试和性能统计功能
+			3）增加Apple Watch应用的模拟器帮助调试应用功能
+		</li>
+        <li><p>
+			为了使Apple Watch应用能够正常工作，一些具体的参数必须设置：
+			1）WatchKit中扩展配置文件Info.plist中的NSExtensionAttributes配置项WKAppBundleIdentifier必须和WatchKit App中的通用配置文件中的属性CFBundleIdentifier项目保持一致。2）WatchKit中的CFBundleIdentifier配置项必须和WKCompanionAppBundleIdentifier中的配置项保持一致
+		</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_1_1"></a>
+### XCode6.1.1中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode6.1.1 Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2014-12-2</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			在SourceKit中一些导致Crash的常见问题被修复，比如名字冲突和遗留废弃数据的问题等。
+        </li>
+	    <li><p>
+			把纯正的Swift类对象实例赋值给AnyObject量不会再Crash了。
+		</li>
+        <li><p>
+			在泛型使用场景下，遵循了协议类要求的构造器方法或者类型方法可以直接调用继承类中的方法了。
+		</li>
+		<li><p>
+			修正了InterfaceBuild中如果图片名字含有“/”时，会在OSX10.10上Crash或者无法打开的问题
+		</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
 
 <a name="xcode6_1"></a>
 ### XCode6.1中Swift语法更新
