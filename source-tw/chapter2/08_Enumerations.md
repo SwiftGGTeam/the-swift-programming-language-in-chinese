@@ -214,27 +214,27 @@ enum Planet: Int {
 
 自動遞增意味著`Planet.Venus`的原始值是`2`，依次類推。
 
-使用枚舉成員的`toRaw`方法可以訪問該枚舉成員的原始值：
+使用枚舉成員的`rawValue`屬性可以訪問該枚舉成員的原始值：
 
 ```swift
-let earthsOrder = Planet.Earth.toRaw()
+let earthsOrder = Planet.Earth.rawValue
 // earthsOrder is 3
 ```
 
-使用枚舉的`fromRaw`方法來試圖找到具有特定原始值的枚舉成員。這個例子通過原始值`7`識別`Uranus`：
+通過參數為`rawValue`構造函數創建特定原始值的枚舉。這個例子通過原始值`7`識別`Uranus`：
 
 ```swift
-let possiblePlanet = Planet.fromRaw(7)
+let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet is of type Planet? and equals Planet.Uranus
 ```
 
-然而，並非所有可能的`Int`值都可以找到一個匹配的行星。正因為如此，`fromRaw`方法可以返回一個***可選***的枚舉成員。在上面的例子中，`possiblePlanet`是`Planet?`類型，或「可選的`Planet`」。
+然而，並非所有可能的`Int`值都可以找到壹個匹配的行星。正因為如此，構造函數可以返回壹個***可選***的枚舉成員。在上面的例子中，`possiblePlanet`是`Planet?`類型，或“可選的`Planet`”。
 
-如果你試圖尋找一個位置為9的行星，通過`fromRaw`返回的可選`Planet`值將是`nil`：
+如果妳試圖尋找壹個位置為9的行星，通過參數為`rawValue`構造函數返回的可選`Planet`值將是`nil`：
 
 ```swift
 let positionToFind = 9
-if let somePlanet = Planet.fromRaw(positionToFind) {
+if let somePlanet = Planet(rawValue: positionToFind) {
     switch somePlanet {
     case .Earth:
         println("Mostly harmless")
@@ -247,5 +247,5 @@ if let somePlanet = Planet.fromRaw(positionToFind) {
 // 輸出 "There isn't a planet at position 9
 ```
 
-這個範例使用可選綁定（optional binding），通過原始值`9`試圖訪問一個行星。`if let somePlanet = Planet.fromRaw(9)`語句獲得一個可選`Planet`，如果可選`Planet`可以被獲得，把`somePlanet`設置成該可選`Planet`的內容。在這個範例中，無法檢索到位置為`9`的行星，所以`else`分支被執行。
+這個範例使用可選綁定（optional binding），通過原始值`9`試圖訪問一個行星。`if let somePlanet = Planet(rawValue: 9)`語句獲得一個可選`Planet`，如果可選`Planet`可以被獲得，把`somePlanet`設置成該可選`Planet`的內容。在這個範例中，無法檢索到位置為`9`的行星，所以`else`分支被執行。
 

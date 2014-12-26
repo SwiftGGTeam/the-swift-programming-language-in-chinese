@@ -1,4 +1,4 @@
-> 翻译：[yankuangshi](https://github.com/yankuangshi)  
+	> 翻译：[yankuangshi](https://github.com/yankuangshi)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 # 枚举（Enumerations）
@@ -214,27 +214,27 @@ enum Planet: Int {
 
 自动递增意味着`Planet.Venus`的原始值是`2`，依次类推。
 
-使用枚举成员的`toRaw`方法可以访问该枚举成员的原始值：
+使用枚举成员的`rawValue`属性可以访问该枚举成员的原始值：
 
 ```swift
-let earthsOrder = Planet.Earth.toRaw()
+let earthsOrder = Planet.Earth.rawValue
 // earthsOrder is 3
 ```
 
-使用枚举的`fromRaw`方法来试图找到具有特定原始值的枚举成员。这个例子通过原始值`7`识别`Uranus`：
+通过参数为`rawValue`构造函数创建特定原始值的枚举。这个例子通过原始值`7`识别`Uranus`：
 
 ```swift
-let possiblePlanet = Planet.fromRaw(7)
+let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet is of type Planet? and equals Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，`fromRaw`方法可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
-如果你试图寻找一个位置为9的行星，通过`fromRaw`返回的可选`Planet`值将是`nil`：
+如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
 ```swift
 let positionToFind = 9
-if let somePlanet = Planet.fromRaw(positionToFind) {
+if let somePlanet = Planet(rawValue: positionToFind) {
     switch somePlanet {
     case .Earth:
         println("Mostly harmless")
@@ -247,5 +247,5 @@ if let somePlanet = Planet.fromRaw(positionToFind) {
 // 输出 "There isn't a planet at position 9
 ```
 
-这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet.fromRaw(9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
+这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
 
