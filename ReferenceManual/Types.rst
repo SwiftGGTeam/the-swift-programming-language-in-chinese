@@ -263,15 +263,22 @@ In other words, the following two declarations are equivalent:
 
 .. testcode:: array-type
 
-    -> let someArray: [String] = ["Alex", "Brian", "Dave"]
-    << // someArray : [String] = ["Alex", "Brian", "Dave"]
+    -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
     -> let someArray: [String] = ["Alex", "Brian", "Dave"]
     !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
     !! let someArray: [String] = ["Alex", "Brian", "Dave"]
     !!     ^
     !! <REPL Input>:1:5: note: 'someArray' previously declared here
-    !! let someArray: [String] = ["Alex", "Brian", "Dave"]
+    !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
     !!     ^
+
+.. FIXME The above test is unstable.  Most of the time, the REPL handles the
+   declarations in the order that they appear, but sometimes it gets them
+   backwards.  This means that it complains about the first form [String]
+   being a redefinition of the second form Array, which makes
+   the error messages not match.
+
 
 In both cases, the constant ``someArray``
 is declared as an array of strings. The elements of an array can be accessed
