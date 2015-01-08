@@ -184,12 +184,8 @@ to be implemented by conforming types.
 These methods are written as part of the protocol's definition
 in exactly the same way as for normal instance and type methods,
 but without curly braces or a method body.
+Default values cannot be specified for method parameters within a protocol's definition. 
 Variadic parameters are allowed, subject to the same rules as for normal methods.
-
-.. note::
-
-   Protocols use the same syntax as normal methods,
-   but are not allowed to specify default values for method parameters.
 
 As with type property requirements,
 you always prefix type method requirements with the ``class`` keyword
