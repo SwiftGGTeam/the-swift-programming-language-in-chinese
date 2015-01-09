@@ -254,8 +254,8 @@ to mark the value as optional.
 
    -> var optionalString: String? = "Hello"
    << // optionalString : String? = Optional("Hello")
-   -> optionalString == nil
-   <$ : Bool = false
+   -> println(optionalString == nil)
+   << false
    ---
    -> var optionalName: String? = "John Appleseed"
    << // optionalName : String? = Optional("John Appleseed")
@@ -476,10 +476,10 @@ either by name or by number.
        }
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
-    -> statistics.sum
-    <$ : Int = 120
-    -> statistics.2
-    <$ : Int = 120
+    -> println(statistics.sum)
+    << 120
+    -> println(statistics.2)
+    << 120
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
@@ -594,9 +594,9 @@ of their only statement.
 .. testcode:: guided-tour
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
-    -> mappedNumbers
+    -> println(mappedNumbers)
     <$ : Array<Int> = [60, 57, 21, 36]
-    <$ : Array<Int> = [60, 57, 21, 36]
+    << [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -606,9 +606,9 @@ can appear immediately after the parentheses.
 .. testcode:: guided-tour
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
-    -> sortedNumbers
+    -> println(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
-    <$ : [Int] = [20, 19, 12, 7]
+    << [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
@@ -1185,8 +1185,8 @@ or even to a type that you imported from a library or framework.
                self += 42
            }
         }
-    -> 7.simpleDescription
-    <$ : String = "The number 7"
+    -> println(7.simpleDescription)
+    << The number 7
 
 .. admonition:: Experiment
 
@@ -1204,9 +1204,9 @@ methods outside the protocol definition are not available.
 
     -> let protocolValue: ExampleProtocol = a
     << // protocolValue : ExampleProtocol = REPL.SimpleClass
-    -> protocolValue.simpleDescription
-    <$ : String = "A very simple class.  Now 100% adjusted."
-    // protocolValue.anotherProperty  // Uncomment to see the error
+    -> println(protocolValue.simpleDescription)
+    << A very simple class.  Now 100% adjusted.
+    // println(protocolValue.anotherProperty)  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
 has a runtime type of ``SimpleClass``,
