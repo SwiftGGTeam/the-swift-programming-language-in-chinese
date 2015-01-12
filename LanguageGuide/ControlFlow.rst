@@ -78,8 +78,6 @@ As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
-.. TODO: note that you can use floating-point values with ranges too.
-
 If you don't need each value from a sequence,
 you can ignore the values by using an underscore in place of a variable name:
 
