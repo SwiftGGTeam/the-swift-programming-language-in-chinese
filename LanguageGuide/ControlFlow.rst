@@ -786,11 +786,11 @@ and can be written over multiple lines if the list is long:
 
 .. _ControlFlow_RangeMatching:
 
-Range Matching
-______________
+Interval Matching
+_________________
 
-Values in ``switch`` cases can be checked for their inclusion in a range.
-This example uses number ranges
+Values in ``switch`` cases can be checked for their inclusion in an interval.
+This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
 .. testcode:: rangeMatching
