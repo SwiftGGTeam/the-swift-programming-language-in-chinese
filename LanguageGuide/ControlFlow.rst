@@ -793,7 +793,7 @@ Values in ``switch`` cases can be checked for their inclusion in an interval.
 This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
-.. testcode:: rangeMatching
+.. testcode:: intervalMatching
    :compile: true
 
    -> let count = 3_000_000_000_000
