@@ -35,7 +35,7 @@ Swift provides two kinds of loop
 that perform a set of statements a certain number of times:
 
 * The ``for``-``in`` loop performs a set of statements for each item in
-  a range, sequence, collection, or progression.
+  a sequence.
 * The ``for`` loop performs a set of statements until
   a specific condition is met, typically by incrementing a counter each time the loop ends.
 
@@ -44,7 +44,7 @@ that perform a set of statements a certain number of times:
 For-In
 ~~~~~~
 
-You use the ``for``-``in`` loop to iterate over collections of items,
+You use the ``for``-``in`` loop to iterate over a sequence,
 such as ranges of numbers, items in an array, or characters in a string.
 
 This example prints the first few entries in the five-times-table:
@@ -60,8 +60,8 @@ This example prints the first few entries in the five-times-table:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-The collection of items being iterated is
-a closed range of numbers from ``1`` to ``5`` inclusive,
+The sequence being iterated is
+a range of numbers from ``1`` to ``5``, inclusive,
 as indicated by the use of the closed range operator (``...``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
@@ -80,7 +80,7 @@ without the need for a ``let`` declaration keyword.
 
 .. TODO: note that you can use floating-point values with ranges too.
 
-If you don't need each value from the range,
+If you don't need each value from a sequence,
 you can ignore the values by using an underscore in place of a variable name:
 
 .. testcode:: forLoops
