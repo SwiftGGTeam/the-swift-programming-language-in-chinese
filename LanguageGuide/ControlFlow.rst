@@ -21,7 +21,7 @@ Swift's ``switch`` statement is also considerably more powerful than its counter
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
-including range matches, tuples, and casts to a specific type.
+including interval matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
 for use within the case's body,
 and complex matching conditions can be expressed with a ``where`` clause for each case.
@@ -837,7 +837,7 @@ Tuples
 ______
 
 You can use tuples to test multiple values in the same ``switch`` statement.
-Each element of the tuple can be tested against a different value or range of values.
+Each element of the tuple can be tested against a different value or interval of values.
 Alternatively, use the underscore (``_``) identifier to match any possible value.
 
 The example below takes an (x, y) point,
