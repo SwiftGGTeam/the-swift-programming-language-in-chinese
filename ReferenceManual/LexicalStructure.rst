@@ -351,12 +351,14 @@ in the declaration ``let x: Int8 = 42``.
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal | string-literal
-    literal --> ``true`` | ``false`` | ``nil``
+	literal --> numeric-literal | string-literal | boolean-literal | nil-literal
+
+	numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
+	boolean-literal --> ``true`` | ``false``
+	nil-literal --> ``nil``
 
 
 .. _LexicalStructure_IntegerLiterals:
-
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
@@ -483,10 +485,8 @@ which evaluates to ``60``.
 Similarly, ``0xFp-2`` represents 15 × 2\ :superscript:`-2`,
 which evaluates to ``3.75``.
 
-Unlike with integer literals, negative floating-point numbers are expressed
-by applying the unary minus operator (``-``)
-to a floating-point literal, as in ``-42.0``. The result is an expression,
-not a floating-point literal.
+Negative floating-point literals are expressed by prepending a minus sign (``-``)
+to a floating-point literal, as in ``-42.5``.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
