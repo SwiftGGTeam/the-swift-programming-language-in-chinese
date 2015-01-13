@@ -470,16 +470,15 @@ the value comes from the call site, not the declaration.
 
 .. testcode:: specialLiteral
 
-    -> func f(string: String = __FUNCTION__) {
+    -> func logger(string: String = __FUNCTION__) {
            println(string)
        }
-    -> func g() {
-          f() // Prints "g()".
+    -> func myFunction() {
+          logger() // Prints "myFunction()".
        }
     ---
-    -> g()
-    << g()
-
+    -> myFunction()
+    << myFunction()
 
 An :newTerm:`array literal` is
 an ordered collection of values.
