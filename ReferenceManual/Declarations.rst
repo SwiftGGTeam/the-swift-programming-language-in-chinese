@@ -681,6 +681,7 @@ see :ref:`Functions_VariadicParameters`.
 
 A parameter with an equals sign (``=``) and an expression after its type
 is understood to have a default value of the given expression.
+The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
 the default value is used instead.
 If the parameter is not omitted,
@@ -690,6 +691,22 @@ to a function with a single default parameter named ``x``,
 but ``f(7)`` is invalid because it provides a value without a name.
 
 .. TODO: Flesh out the above example into a code listing.
+
+.. assertion:: default-args-evaluated-at-call-site
+
+    -> func shout() -> Int {
+           println("evaluated")
+           return 10
+       }
+    -> func foo(x: Int = shout()) { println("x is \(x)") }
+    -> foo(x: 100)
+    << x is 100
+    -> foo()
+    << evaluated
+    << x is 10
+    -> foo()
+    << evaluated
+    << x is 10
 
 Special Kinds of Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~
