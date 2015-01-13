@@ -465,6 +465,22 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
+When used as the default value of a function or method,
+the value comes from the call site, not the declaration.
+
+.. testcode:: specialLiteral
+
+    -> func f(string: String = __FUNCTION__) {
+           println(string)
+       }
+    -> func g() {
+          f() // Prints "g()".
+       }
+    ---
+    -> g()
+    << g()
+
+
 An :newTerm:`array literal` is
 an ordered collection of values.
 It has the following form:
