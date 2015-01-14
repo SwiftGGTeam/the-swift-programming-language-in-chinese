@@ -317,16 +317,21 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are three type-casting operators,
-the ``is`` operator, the ``as?`` operator,
-and the ``as!`` operator.
+There are four type-casting operators:
+the downcast check operator (``is``),
+the conditional downcast operator (``as?``),
+the forced downcast operator (``as!``),
+and the upcast operator (``as``).
 They have the following form:
+
+.. TODO: Get feedback from Brian/[Contributor 9265] on name for "is" operator
 
 .. syntax-outline::
 
     <#expression#> is <#type#>
     <#expression#> as? <#type#>
     <#expression#> as! <#type#>
+    <#expression#> as <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
 can be downcast to the specified *type*.
@@ -375,6 +380,10 @@ The ``as!`` operator performs a forced cast of the *expression* to the specified
 The ``as!`` operator returns a value of the specified *type*, not an optional type.
 If the cast fails, a runtime error is raised.
 The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
+
+The ``as`` operator performs a type cast
+that is guaranteed to suceed,
+such as upcasting from a subtype to a supertype.
 
 For more information about type casting
 and to see examples that use the type-casting operators,
