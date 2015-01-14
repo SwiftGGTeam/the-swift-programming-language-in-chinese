@@ -128,8 +128,10 @@ The Swift standard library provides the following binary operators:
 
 * Cast (No associativity, precedence level 132)
 
-  - ``is`` Type check
-  - ``as`` Type cast
+  - ``is`` Downcast check
+  - ``as?`` Conditional downcast
+  - ``as!`` Forced downcast
+  - ``as`` Upcast
 
 * Comparative (No associativity, precedence level 130)
 
