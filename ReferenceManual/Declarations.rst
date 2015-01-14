@@ -686,11 +686,19 @@ If the parameter is omitted when calling the function,
 the default value is used instead.
 If the parameter is not omitted,
 it must have its name in the function call.
-For example, ``f()`` and ``f(x: 7)`` are both valid calls
-to a function with a single default parameter named ``x``,
-but ``f(7)`` is invalid because it provides a value without a name.
 
-.. TODO: Flesh out the above example into a code listing.
+.. testcode:: default-args-and-labels
+
+   -> func f(x: Int = 42) -> Int { return x }
+   -> f()       // Valid, uses default value
+   -> f(x: 7)   // Valid, name and value provided
+   -> f(7)      // Invalid, value provided without its name
+   <$ : Int = 42
+   <$ : Int = 7
+   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !! f(7)      // Invalid, value provided without its name
+   !!   ^
+   !!   x:
 
 .. assertion:: default-args-evaluated-at-call-site
 
