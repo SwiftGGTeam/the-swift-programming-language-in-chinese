@@ -483,6 +483,18 @@ when the default value expression is evaluated at the call site.
     ---
     -> myFunction()
     << myFunction()
+    >> func noNamedArgs(i: Int, j: Int) { logFunctionName() }
+    >> noNamedArgs(1, 2)
+    << noNamedArgs
+    >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
+    namedArgs(1, withJay: 2)
+    << namedArgs(_:withJay:)
+
+.. Additional hidden tests above illustrate
+   the somewhat irregular rules used by __FUNCTION__
+   to write out the name of a function.
+   In particular, the rule used for functions with no named arguments
+   doesn't match the display in Xcode or our documentation.
 
 An :newTerm:`array literal` is
 an ordered collection of values.
