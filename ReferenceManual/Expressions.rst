@@ -474,11 +474,11 @@ when the default value expression is evaluated at the call site.
 
 .. testcode:: special-literal-evaluated-at-call-site
 
-    -> func logger(string: String = __FUNCTION__) {
+    -> func logFunctionName(string: String = __FUNCTION__) {
            println(string)
        }
     -> func myFunction() {
-          logger() // Prints "myFunction()".
+          logFunctionName() // Prints "myFunction()".
        }
     ---
     -> myFunction()
