@@ -230,6 +230,18 @@ whenever a ``Song`` is found in the library.
    to introduce type casting in a pattern matching context
    and to set up the crazy Any example at the end of the chapter.
 
+
+.. TODO...
+
+    .. _TypeCasting_Upcasting:
+
+    Upcasting
+    ---------
+
+    - The opposite of downcasting
+    - Lets you treat a subclass as if it were instance of superclass
+    - Need an example of why you would do this...
+
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject
