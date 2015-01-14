@@ -399,8 +399,9 @@ see :doc:`../LanguageGuide/TypeCasting`.
     Grammar of a type-casting operator
 
     type-casting-operator --> ``is`` type
-    type-casting-operator --> ``as`` ``!`` type
     type-casting-operator --> ``as`` ``?`` type
+    type-casting-operator --> ``as`` ``!`` type
+    type-casting-operator --> ``as`` type
 
 
 .. _Expressions_PrimaryExpressions:
