@@ -550,16 +550,16 @@ You can also use subscript syntax to change the value associated with a particul
    </ the value for "LHR" has been changed to "London Heathrow"
 
 As an alternative to subscripting,
-use a dictionary's ``updateValue(forKey:)`` method
+use a dictionary's ``updateValue(_:forKey:)`` method
 to set or update the value for a particular key.
-Like the subscript examples above, the ``updateValue(forKey:)`` method
+Like the subscript examples above, the ``updateValue(_:forKey:)`` method
 sets a value for a key if none exists,
 or updates the value if that key already exists.
 Unlike a subscript, however,
-the ``updateValue(forKey:)`` method returns the *old* value after performing an update.
+the ``updateValue(_:forKey:)`` method returns the *old* value after performing an update.
 This enables you to check whether or not an update took place.
 
-The ``updateValue(forKey:)`` method returns an optional value
+The ``updateValue(_:forKey:)`` method returns an optional value
 of the dictionary's value type.
 For a dictionary that stores ``String`` values, for example,
 the method returns a value of type ``String?``,
