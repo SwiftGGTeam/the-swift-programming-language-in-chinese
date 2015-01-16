@@ -451,95 +451,95 @@ written within the body of another function.
 A nested function can capture any of its outer function's arguments
 and can also capture any constants and variables defined within the outer function.
 
-Here's an example of a function called ``makeIncrementor``,
-which contains a nested function called ``incrementor``.
-The nested ``incrementor`` function captures two values,
+Here's an example of a function called ``makeIncrementer``,
+which contains a nested function called ``incrementer``.
+The nested ``incrementer`` function captures two values,
 ``runningTotal`` and ``amount``,
 from its surrounding context.
 After capturing these values,
-``incrementor`` is returned by ``makeIncrementor`` as a closure
+``incrementer`` is returned by ``makeIncrementer`` as a closure
 that increments ``runningTotal`` by ``amount`` each time it is called.
 
 .. testcode:: closures
 
-   -> func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+   -> func makeIncrementer(forIncrement amount: Int) -> () -> Int {
          var runningTotal = 0
-         func incrementor() -> Int {
+         func incrementer() -> Int {
             runningTotal += amount
             return runningTotal
          }
-         return incrementor
+         return incrementer
       }
 
-The return type of ``makeIncrementor`` is ``() -> Int``.
+The return type of ``makeIncrementer`` is ``() -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
 and returns an ``Int`` value each time it is called.
 To learn how functions can return other functions,
 see :ref:`Functions_FunctionTypesAsReturnTypes`.
 
-The ``makeIncrementor`` function defines an integer variable called ``runningTotal``,
-to store the current running total of the incrementor that will be returned.
+The ``makeIncrementer`` function defines an integer variable called ``runningTotal``,
+to store the current running total of the incrementer that will be returned.
 This variable is initialized with a value of ``0``.
 
-The ``makeIncrementor`` function has a single ``Int`` parameter
+The ``makeIncrementer`` function has a single ``Int`` parameter
 with an external name of ``forIncrement``, and a local name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
-each time the returned incrementor function is called.
+each time the returned incrementer function is called.
 
-``makeIncrementor`` defines a nested function called ``incrementor``,
+``makeIncrementer`` defines a nested function called ``incrementer``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
 When considered in isolation,
-the nested ``incrementor`` function might seem unusual:
+the nested ``incrementer`` function might seem unusual:
 
 .. testcode:: closuresPullout
 
-   -> func incrementor() -> Int {
+   -> func incrementer() -> Int {
    >>    var runningTotal = 0
    >>    var amount = 1
          runningTotal += amount
          return runningTotal
       }
 
-The ``incrementor`` function doesn't have any parameters,
+The ``incrementer`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
 from its surrounding function
 and using them within its own function body.
 
 Because it does not modify ``amount``,
-``incrementor`` actually captures and stores a *copy* of the value stored in ``amount``.
-This value is stored along with the new ``incrementor`` function.
+``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
+This value is stored along with the new ``incrementer`` function.
 
 However, because it modifies the ``runningTotal`` variable each time it is called,
-``incrementor`` captures a *reference* to the current ``runningTotal`` variable,
+``incrementer`` captures a *reference* to the current ``runningTotal`` variable,
 and not just a copy of its initial value.
 Capturing a reference ensures that ``runningTotal`` does not disappear
-when the call to ``makeIncrementor`` ends,
+when the call to ``makeIncrementer`` ends,
 and ensures that ``runningTotal`` will continue to be available
-the next time that the incrementor function is called.
+the next time that the incrementer function is called.
 
 .. note::
 
    Swift determines what should be captured by reference
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementor`` function.
+   to say that they can be used within the nested ``incrementer`` function.
    Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the incrementor function.
+   when it is no longer needed by the incrementer function.
 
-Here's an example of ``makeIncrementor`` in action:
+Here's an example of ``makeIncrementer`` in action:
 
 .. testcode:: closures
 
-   -> let incrementByTen = makeIncrementor(forIncrement: 10)
+   -> let incrementByTen = makeIncrementer(forIncrement: 10)
    << // incrementByTen : () -> Int = (Function)
 
 This example sets a constant called ``incrementByTen``
-to refer to an incrementor function that adds ``10`` to
+to refer to an incrementer function that adds ``10`` to
 its ``runningTotal`` variable each time it is called.
 Calling the function multiple times shows this behavior in action:
 
@@ -558,19 +558,19 @@ Calling the function multiple times shows this behavior in action:
    /> returns a value of \(r2)
    </ returns a value of 30
 
-If you create a second incrementor,
+If you create a second incrementer,
 it will have its own stored reference to a new, separate ``runningTotal`` variable:
 
 .. testcode:: closures
 
-   -> let incrementBySeven = makeIncrementor(forIncrement: 7)
+   -> let incrementBySeven = makeIncrementer(forIncrement: 7)
    << // incrementBySeven : () -> Int = (Function)
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
    </ returns a value of 7
 
-Calling the original incrementor (``incrementByTen``) again
+Calling the original incrementer (``incrementByTen``) again
 continues to increment its own ``runningTotal`` variable,
 and does not affect the variable captured by ``incrementBySeven``:
 
