@@ -386,6 +386,21 @@ The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
 The ``as`` operator performs a type cast
 that is guaranteed to succeed,
 such as upcasting from a subtype to a supertype.
+It can be used to explicitly specify the type of an expression
+without creating an intermediate temporary variable.
+The following approaches are equivalent:
+
+.. testcode:: explicit-type-with-as-operator
+
+   -> func f(any: Any) { }
+   -> let x = 10
+   << // x : Int = 10
+   ---
+   -> let y: Any = x
+   << // y : Any = 10
+   -> f(y)
+   ---
+   -> f(x as Any)
 
 For more information about type casting
 and to see examples that use the type-casting operators,
