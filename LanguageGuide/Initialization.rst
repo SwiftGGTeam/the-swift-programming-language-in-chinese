@@ -525,7 +525,7 @@ is functionally the same as the default initializer that the structure would hav
 if it did not have its own custom initializers.
 This initializer has an empty body,
 represented by an empty pair of curly braces ``{}``,
-and does not perfom any initialization.
+and does not perform any initialization.
 Calling this initializer returns a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
 the default values of ``Point(x: 0.0, y: 0.0)``

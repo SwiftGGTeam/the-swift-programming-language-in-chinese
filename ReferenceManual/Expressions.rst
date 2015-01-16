@@ -240,7 +240,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 Assignment Operator
 ~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`assigment operator` sets a new value
+The :newTerm:`assignment operator` sets a new value
 for a given expression.
 It has the following form:
 

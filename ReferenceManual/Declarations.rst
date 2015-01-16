@@ -1308,7 +1308,7 @@ For example, the following protocol can be adopted only by class types:
        }
 
 Any protocol that inherits from a protocol that's marked with the ``class`` requirement
-can likewise be adoped only by class types.
+can likewise be adopted only by class types.
 
 .. note::
 
