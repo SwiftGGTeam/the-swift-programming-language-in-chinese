@@ -384,7 +384,7 @@ If the cast fails, a runtime error is raised.
 The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
 
 The ``as`` operator performs a type cast
-that is guaranteed to suceed,
+that is guaranteed to succeed,
 such as upcasting from a subtype to a supertype.
 
 For more information about type casting
