@@ -276,7 +276,7 @@ The following example adds a new instance method called ``repetitions`` to the `
 
    -> extension Int {
          func repetitions(task: () -> ()) {
-            for i in 0..<self {
+            for _ in 0..<self {
                task()
             }
          }
