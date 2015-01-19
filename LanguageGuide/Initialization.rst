@@ -2144,3 +2144,58 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
    <- true
    -> println(board.squareIsBlackAtRow(9, column: 9))
    <- false
+
+Global Variable & Static Member Initialization
+----------------------------------------------
+
+.. TODO: This entire section is just a rough draft, with placeholder code examples
+
+Global variables are lazily initialized.
+Given the following expression:
+
+.. testcode:: lazyGlobalInitialization
+
+	-> class Foo {}
+	-> let x = Foo()
+	<< // x: Foo = {}
+	
+.. TODO: Do we need to introduce Grand Central Dispatch first?
+		 Is mention of dispatch_once better as a note?
+	
+An instance of ``Foo`` is only initialized the first time ``x`` is accessed.
+Initialization is performed using ``dispatch_once`` to ensure this happens atomically.
+
+``static`` variables in structures and enumerations 
+are initialized in the same manner:
+
+.. testcode:: lazyGlobalInitialization
+
+	-> struct Bar {
+	      static let bar = Bar()
+	   }
+	-> enum Baz {
+	      case A, B, C
+		  
+	      static let baz = .A
+	   }
+
+.. TODO: Class variables are not yet supported,
+		 which makes shared instances rather awkward...
+
+Classes can provide a public, lazily-initialized shared instance of itself 
+using a computed property and private struct variable: 
+
+.. testcode:: lazyGlobalInitialization
+
+   -> public class Manager {
+	     private struct Shared {
+	     	static let instance = Manager()
+	     }
+	     
+	     public class var sharedInstance: Manager {
+	     	return Shared.instance
+	     }
+	  }
+
+	  // sharedInstance is lazily initialized on first use
+      Manager.sharedInstance
