@@ -241,7 +241,7 @@ You can use ``if`` and ``let`` together
 to work with values that might be missing.
 These values are represented as optionals.
 An optional value either contains a value
-or contains ``nil`` to indicate that the value is missing.
+or contains ``nil`` to indicate that a value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
 
