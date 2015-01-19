@@ -415,9 +415,7 @@ and can store numbers that are much larger or smaller than can be stored in an `
 Swift provides two signed floating-point number types:
 
 * ``Double`` represents a 64-bit floating-point number.
-  Use it when floating-point values must be very large or particularly precise.
 * ``Float`` represents a 32-bit floating-point number.
-  Use it when floating-point values do not require 64-bit precision.
 
 .. note::
 
@@ -425,6 +423,10 @@ Swift provides two signed floating-point number types:
    whereas the precision of ``Float`` can be as little as 6 decimal digits.
    The appropriate floating-point type to use depends on the nature and range of
    values you need to work with in your code.
+   In situations where either type would be appropriate, ``Double`` is preferred.
+
+.. TODO: Explicitly mention situations where Float is appropriate,
+	 	 such as when optimizing for storage size of collections?
 
 .. TODO: mention infinity, -infinity etc.
 
