@@ -325,8 +325,11 @@ when a new instance of ``SurveyQuestion`` is initialized.
 Modifying Constant Properties During Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can modify the value of a constant property at any point during initialization,
+You can assign a value to a constant property 
+at any point during initialization,
 as long as it is set to a definite value by the time initialization finishes.
+Once a constant property is assigned a value,
+it can't be further modified.
 
 .. note::
 
