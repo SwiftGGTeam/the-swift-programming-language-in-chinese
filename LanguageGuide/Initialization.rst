@@ -331,6 +331,19 @@ as long as it is set to a definite value by the time initialization finishes.
 Once a constant property is assigned a value,
 it can't be further modified.
 
+.. TODO: Implement test code that generates correct failure in REPL
+
+.. testcode:: constantPropertyAssignment
+
+   >> struct A {
+         let a: Int
+         init() {
+            a = 1
+            a = 2
+         }
+      }
+   !! (Unknown REPL error)
+
 .. note::
 
    For class instances,
