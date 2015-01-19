@@ -333,7 +333,7 @@ it can't be further modified.
 
 .. TODO: Implement test code that generates correct failure in REPL
 
-.. testcode:: constantPropertyAssignment
+.. assertion:: constantPropertyAssignment
 
    >> struct A {
          let a: Int
