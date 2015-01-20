@@ -148,11 +148,11 @@ with a :newTerm:`type cast operator` (``as?`` or ``as!``).
 
 Because downcasting can fail,
 the type cast operator comes in two different forms.
-The optional form, ``as?``, returns an optional value of the type you are trying to downcast to.
+The conditional form, ``as?``, returns an optional value of the type you are trying to downcast to.
 The forced form, ``as!``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
-Use the optional form of the type cast operator (``as?``)
+Use the conditional form of the type cast operator (``as?``)
 when you are not sure if the downcast will succeed.
 This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
@@ -174,7 +174,7 @@ for use in the description.
 In this example, each item in the array might be a ``Movie``,
 or it might be a ``Song``.
 You don't know in advance which actual class to use for each item,
-and so it is appropriate to use the optional form of the type cast operator (``as?``)
+and so it is appropriate to use the conditional form of the type cast operator (``as?``)
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
