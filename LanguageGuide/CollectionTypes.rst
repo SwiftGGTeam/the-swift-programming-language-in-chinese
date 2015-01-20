@@ -70,6 +70,8 @@ The same value can appear in an array multiple times at different positions.
    In Swift, the type of values
    that a particular array can store is always made clear,
    either through an explicit type annotation or through type inference.
+   
+   For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -421,6 +423,8 @@ the definition for a particular word.
    In Swift, the type of keys and values
    that a particular dictionary can store is always made clear,
    either through an explicit type annotation or through type inference.
+   
+   For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
