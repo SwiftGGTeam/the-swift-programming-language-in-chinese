@@ -68,8 +68,6 @@ and do not provide any information about the nature of the objects they return.
 In Swift, the type of values that a particular array can store is always made clear,
 either through an explicit type annotation, or through type inference,
 and does not have to be a class type.
-If you create an array of ``Int`` values, for example,
-you can't insert any value other than ``Int`` values into that array.
 Swift arrays are type safe, and are always clear about what they may contain.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
