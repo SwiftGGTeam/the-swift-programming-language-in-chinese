@@ -128,7 +128,7 @@ The Swift standard library provides the following binary operators:
 
 * Cast (No associativity, precedence level 132)
 
-  - ``is`` Downcast check
+  - ``is`` Type check
   - ``as?`` Conditional downcast
   - ``as!`` Forced downcast
   - ``as`` Upcast
@@ -320,7 +320,7 @@ Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 There are four type-casting operators:
-the downcast check operator (``is``),
+the type check operator (``is``),
 the conditional downcast operator (``as?``),
 the forced downcast operator (``as!``),
 and the upcast operator (``as``).
@@ -339,22 +339,13 @@ The ``is`` operator checks at runtime whether the *expression*
 can be downcast to the specified *type*.
 It returns ``true`` if the *expression* can be downcast to the specified *type*;
 otherwise, it returns ``false``.
-If casting to the specified *type*
-is guaranteed to succeed or fail,
-a compile-time error is raised.
-For example, ``10 is Int`` and ``10 is String``
-both raise compile-time errors.
 
 .. assertion:: triviallyTrueIsAndAs
 
     -> "hello" is String
-    !! <REPL Input>:1:9: error: 'is' test is always true
-    !! "hello" is String
-    !!         ^
+    << true
     -> "hello" is Int
-    !! <REPL Input>:1:9: error: 'Int' is not a subtype of 'String'
-    !! "hello" is Int
-    !!         ^
+    << false
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
@@ -362,7 +353,6 @@ both raise compile-time errors.
     can be cast to the specified *type*
     If so, it returns ``true``; otherwise, it returns ``false``.
 
-    See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
     See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
 The ``as?`` operator
