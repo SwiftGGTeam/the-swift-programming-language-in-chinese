@@ -122,7 +122,7 @@ Customizing Initialization
 
 You can customize the initialization process
 with input parameters and optional property types,
-or by modifying constant properties during initialization,
+or by assigning constant properties during initialization,
 as described in the following sections.
 
 .. _Initialization_InitializationParameters:
@@ -322,7 +322,7 @@ when a new instance of ``SurveyQuestion`` is initialized.
 
 .. _Initialization_ModifyingConstantPropertiesDuringInitialization:
 
-Modifying Constant Properties During Initialization
+Assigning Constant Properties During Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can assign a value to a constant property 
