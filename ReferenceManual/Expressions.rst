@@ -129,9 +129,7 @@ The Swift standard library provides the following binary operators:
 * Cast (No associativity, precedence level 132)
 
   - ``is`` Type check
-  - ``as?`` Conditional downcast
-  - ``as!`` Forced downcast
-  - ``as`` Upcast
+  - ``as``, ``as?``, and ``as!`` Type cast
 
 * Comparative (No associativity, precedence level 130)
 
@@ -320,20 +318,19 @@ Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 There are four type-casting operators:
-the type check operator (``is``),
-the conditional downcast operator (``as?``),
-the forced downcast operator (``as!``),
-and the upcast operator (``as``).
-They have the following form:
+the ``is`` operator,
+the ``as`` operator,
+the ``as?`` operator,
+and the ``as!`` operator.
 
-.. TODO: Get feedback from Brian/[Contributor 9265] on name for "is" operator
+They have the following form:
 
 .. syntax-outline::
 
     <#expression#> is <#type#>
+    <#expression#> as <#type#>
     <#expression#> as? <#type#>
     <#expression#> as! <#type#>
-    <#expression#> as <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
 can be downcast to the specified *type*.
@@ -355,6 +352,33 @@ otherwise, it returns ``false``.
 
     See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
+The ``as`` operator performs a cast
+that is guaranteed to succeed.
+
+.. FIXME
+
+..  explicitly specifies the type of an expression
+    without the need to create an intermediate temporary variable.
+    This can be used, for example, to perform an upcast.
+    The following approaches are equivalent:
+
+.. testcode:: explicit-type-with-as-operator
+
+   -> func f(any: Any) { println("Function for Any") }
+   -> func f(int: Int) { println("Function for Int") }
+   -> let x = 10
+   << // x : Int = 10
+   ---
+   -> let y: Any = x
+   << // y : Any = 10
+   -> f(y)
+   << Function for Any
+   ---
+   -> f(x as Any)
+   << Function for Any
+
+.. TODO: Make this a "Prints foo" chevron
+
 The ``as?`` operator
 performs a conditional cast of the *expression*
 to the specified *type*.
@@ -363,7 +387,7 @@ At runtime, if the cast succeeds,
 the value of *expression* is wrapped in an optional and returned;
 otherwise, the value returned is ``nil``.
 If casting to the specified *type*
-is guaranteed to fail,
+is guaranteed to fail or is guaranteed to succeed,
 a compile-time error is raised.
 For example, casting to a type that's neither a subclass or superclass
 of the type of the *expression* is an error.
@@ -372,25 +396,6 @@ The ``as!`` operator performs a forced cast of the *expression* to the specified
 The ``as!`` operator returns a value of the specified *type*, not an optional type.
 If the cast fails, a runtime error is raised.
 The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
-
-The ``as`` operator performs a type cast
-that is guaranteed to succeed,
-such as upcasting from a subtype to a supertype.
-It can be used to explicitly specify the type of an expression
-without creating an intermediate temporary variable.
-The following approaches are equivalent:
-
-.. testcode:: explicit-type-with-as-operator
-
-   -> func f(any: Any) { }
-   -> let x = 10
-   << // x : Int = 10
-   ---
-   -> let y: Any = x
-   << // y : Any = 10
-   -> f(y)
-   ---
-   -> f(x as Any)
 
 For more information about type casting
 and to see examples that use the type-casting operators,
@@ -406,9 +411,9 @@ see :doc:`../LanguageGuide/TypeCasting`.
     Grammar of a type-casting operator
 
     type-casting-operator --> ``is`` type
+    type-casting-operator --> ``as`` type
     type-casting-operator --> ``as`` ``?`` type
     type-casting-operator --> ``as`` ``!`` type
-    type-casting-operator --> ``as`` type
 
 
 .. _Expressions_PrimaryExpressions:
