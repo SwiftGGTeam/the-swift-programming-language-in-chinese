@@ -21,7 +21,7 @@ Swift's ``switch`` statement is also considerably more powerful than its counter
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
-including range matches, tuples, and casts to a specific type.
+including interval matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
 for use within the case's body,
 and complex matching conditions can be expressed with a ``where`` clause for each case.
@@ -35,7 +35,7 @@ Swift provides two kinds of loop
 that perform a set of statements a certain number of times:
 
 * The ``for``-``in`` loop performs a set of statements for each item in
-  a range, sequence, collection, or progression.
+  a sequence.
 * The ``for`` loop performs a set of statements until
   a specific condition is met, typically by incrementing a counter each time the loop ends.
 
@@ -44,7 +44,7 @@ that perform a set of statements a certain number of times:
 For-In
 ~~~~~~
 
-You use the ``for``-``in`` loop to iterate over collections of items,
+You use the ``for``-``in`` loop to iterate over a sequence,
 such as ranges of numbers, items in an array, or characters in a string.
 
 This example prints the first few entries in the five-times-table:
@@ -60,8 +60,8 @@ This example prints the first few entries in the five-times-table:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-The collection of items being iterated is
-a closed range of numbers from ``1`` to ``5`` inclusive,
+The sequence being iterated is
+a range of numbers from ``1`` to ``5``, inclusive,
 as indicated by the use of the closed range operator (``...``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
@@ -78,9 +78,7 @@ As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
-.. TODO: note that you can use floating-point values with ranges too.
-
-If you don't need each value from the range,
+If you don't need each value from a sequence,
 you can ignore the values by using an underscore in place of a variable name:
 
 .. testcode:: forLoops
@@ -786,14 +784,14 @@ and can be written over multiple lines if the list is long:
 
 .. _ControlFlow_RangeMatching:
 
-Range Matching
-______________
+Interval Matching
+_________________
 
-Values in ``switch`` cases can be checked for their inclusion in a range.
-This example uses number ranges
+Values in ``switch`` cases can be checked for their inclusion in an interval.
+This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
-.. testcode:: rangeMatching
+.. testcode:: intervalMatching
    :compile: true
 
    -> let count = 3_000_000_000_000
@@ -820,13 +818,24 @@ to provide a natural-language count for numbers of any size:
 
 .. TODO: Add a description for this example.
 
+.. note::
+
+	Both the closed range operator (``...``) 
+	and half-open range operator (``..<``) 
+	functions are overloaded to return either an 
+	``IntervalType`` or ``Range``.
+	An interval can determine whether it contains a particular element,
+	such as when matching a ``switch`` statement ``case``.
+	A range is a collection of consecutive values,
+	which can be iterated on in a ``for-in`` statement.
+
 .. _ControlFlow_Tuples:
 
 Tuples
 ______
 
 You can use tuples to test multiple values in the same ``switch`` statement.
-Each element of the tuple can be tested against a different value or range of values.
+Each element of the tuple can be tested against a different value or interval of values.
 Alternatively, use the underscore (``_``) identifier to match any possible value.
 
 The example below takes an (x, y) point,
