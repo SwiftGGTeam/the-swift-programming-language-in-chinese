@@ -340,9 +340,15 @@ otherwise, it returns ``false``.
 .. assertion:: triviallyTrueIsAndAs
 
     -> "hello" is String
-    << true
     -> "hello" is Int
-    << false
+    <$ : Bool = true
+    <$ : Bool = false
+    !! <REPL Input>:1:9: warning: 'is' test is always true
+    !! "hello" is String
+    !! ^
+    !! <REPL Input>:1:9: warning: downcast from 'String' to unrelated type 'Int' always fails
+    !! "hello" is Int
+    !! ~~~~~~~ ^  ~~~
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
