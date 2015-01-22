@@ -365,8 +365,9 @@ that is guaranteed to succeed.
 
 ..  explicitly specifies the type of an expression
     without the need to create an intermediate temporary variable.
-    This can be used, for example, to perform an upcast.
-    The following approaches are equivalent:
+
+This operator can be used, for example, to perform an upcast.
+The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
@@ -374,16 +375,16 @@ that is guaranteed to succeed.
    -> func f(int: Int) { println("Function for Int") }
    -> let x = 10
    << // x : Int = 10
+   -> f(x)
+   <- Function for Int
    ---
    -> let y: Any = x
    << // y : Any = 10
    -> f(y)
-   << Function for Any
+   <- Function for Any
    ---
    -> f(x as Any)
-   << Function for Any
-
-.. TODO: Make this a "Prints foo" chevron
+   <- Function for Any
 
 The ``as?`` operator
 performs a conditional cast of the *expression*
