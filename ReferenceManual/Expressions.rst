@@ -359,14 +359,11 @@ otherwise, it returns ``false``.
     See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
 The ``as`` operator performs a cast
-that is guaranteed to succeed.
-
-.. FIXME
-
-..  explicitly specifies the type of an expression
-    without the need to create an intermediate temporary variable.
-
-This operator can be used, for example, to perform an upcast.
+when it is known at compile time
+that the cast always succeeds,
+such as upcasting or bridging.
+Upcasting lets you use an expression as an instance of its type's supertype,
+without using an intermediate variable.
 The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
@@ -386,6 +383,14 @@ The following approaches are equivalent:
    -> f(x as Any)
    <- Function for Any
 
+Bridging lets you use an expression of
+a Swift Standard Library type such as ``String``
+as its corresponding Foundation type such as ``NSString``
+without needing to create a new instance.
+For more information on bridging,
+see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+
 The ``as?`` operator
 performs a conditional cast of the *expression*
 to the specified *type*.
@@ -396,8 +401,6 @@ otherwise, the value returned is ``nil``.
 If casting to the specified *type*
 is guaranteed to fail or is guaranteed to succeed,
 a compile-time error is raised.
-For example, casting to a type that's neither a subclass or superclass
-of the type of the *expression* is an error.
 
 The ``as!`` operator performs a forced cast of the *expression* to the specified *type*.
 The ``as!`` operator returns a value of the specified *type*, not an optional type.
