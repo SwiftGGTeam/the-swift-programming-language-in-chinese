@@ -2,7 +2,7 @@ Control Flow
 ============
 
 Swift provides all the familiar control flow statements from C-like languages.
-These include ``for`` and ``while`` loops 
+These include ``for`` and ``while`` loops
 to perform a task multiple times,
 ``if`` and ``switch`` statements
 to execute different branches of code based on certain conditions,
@@ -147,8 +147,8 @@ The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
 
-In addition to arrays and dictionaries,
-you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string.
+In addition to using the ``for``-``in`` loop to iterate over arrays and dictionaries,
+you can also use it to iterate over the ``Character`` values in a string.
 
 .. testcode:: forLoops
 
@@ -534,7 +534,7 @@ and has no effect.
    << after diceRoll, square is 27
    << Game over!
 
-After the code checks for snakes and ladders, 
+After the code checks for snakes and ladders,
 the dice is rolled and the player is moved forward by ``diceRoll`` squares.
 The current loop execution then ends.
 
@@ -821,9 +821,9 @@ to provide a natural-language count for numbers of any size:
 
 .. note::
 
-	Both the closed range operator (``...``) 
-	and half-open range operator (``..<``) 
-	functions are overloaded to return either an 
+	Both the closed range operator (``...``)
+	and half-open range operator (``..<``)
+	functions are overloaded to return either an
 	``IntervalType`` or ``Range``.
 	An interval can determine whether it contains a particular element,
 	such as when matching a ``switch`` statement ``case``.
@@ -1347,7 +1347,7 @@ to reflect that you must land exactly on square 25.
 
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
-a ``switch`` statement is used to consider the result of the move,
+the loop uses a ``switch`` statement to consider the result of the move,
 and to determine whether the move is allowed:
 
 * If the dice roll will move the player onto the final square,
