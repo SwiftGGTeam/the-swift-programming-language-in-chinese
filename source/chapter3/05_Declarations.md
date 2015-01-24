@@ -365,31 +365,67 @@ f()和f(x:7)都是只有一个变量x的函数的有效调用，但是f(7)是非
 
 ###柯里化函数和方法(Curried Functions and Methods)
 
-柯里化函数或方法有着如下的形式：
+你可以重写一个带有多个参数的函数使它等同于一个只有一个参数并且返回一个函数的函数，这个返回函数携带下一个参数并且返回另外一个函数，一直持续到再没有剩余的参数，此时要返回的函数返回原来的多参函数要返回的原始值。这个重写的函数被称为“柯里化函数”。例如，你可以为```addTwoInts```重写一个等价的```addTwoIntsCurried```的函数。
+
+```swift
+func addTwoInts(a: Int, b: Int) -> Int {
+    return a + b
+}
+
+func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+    func addTheOtherInt(b: Int) -> Int {
+        return a + b
+    }
+    return addTheOtherInt
+}
+```
+
+这个```addTwoInts```函数带有两个整型值并且返回他们的和。```addTwoIntsCurried```函数带有一个整型值，并且返回另外一个带有第二个整型值的函数并使其和第一个整型值相加（这个内嵌的函数从包含它的函数中捕获第一个整型参数的值）。
+
+在Swift中，你可以通过以下语法非常简明的写一个柯里化函数：
 
 > func `function name`(`parameters`)(`parameters`) -> `return type` {  
 >     `statements`  
 > }  
+> 
 
-以这种形式定义的函数的返回值是另一个函数。举例来说，下面的两个声明是等价的:
+举例来说，下面的两个声明是等价的:
 
 ```swift
-func addTwoNumbers(a: Int)(b: Int) -> Int {
+func addTwoIntsCurried(a: Int)(b: Int) -> Int {
     return a + b
 }
-func addTwoNumbers(a: Int) -> (Int -> Int) {
-    func addTheSecondNumber(b: Int) -> Int {
+
+func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+    func addTheOtherInt(b: Int) -> Int {
         return a + b
     }
-    return addTheSecondNumber
+    return addTheOtherInt
 }
 ```
 
+为了像使用非柯里化函数一样的方式使用```addTwoIntsCurried```函数，你必须用第一个整型参数调用```addTwoIntsCurried```,紧接着用第二个整型参数调用其返回的函数：
+
 ```swift
-addTwoNumbers(4)(5) // Returns 9
+addTwoInts(4, 5)
+//返回值为9
+addTwoIntsCurried(4)(5)
+//返回值为9
 ```
 
-多级柯里化应用如下
+虽然你在每次调用一个非柯里化函数时必须提供所有的参数，你可以使用函数的柯里化形式把参数分配在多次函数调用中，称之为“偏函数应用”，例如你可以为```addTwoIntsCurried```函数使用参数```1```然后把返回的结果赋值给常量```plusOne```：
+
+```swift
+let plusOne = addTwoIntsCurried(1)
+// plusOne 是类型为 Int -> Int的函数
+```
+
+因为```plusOne```是函数```addTwoIntsCurried```绑定参数为```1```时结果，所以可以调用```plusOne```并且传入一个整型使其和```1```相加。
+
+```swift
+plusOne(10)
+// 返回值为11
+```
 
 > 函数声明语法  
 > *函数声明* → [*函数头*](..\chapter3\05_Declarations.html#function_head) [*函数名*](..\chapter3\05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](..\chapter3\05_Declarations.html#function_signature) [*函数体*](..\chapter3\05_Declarations.html#function_body)  
