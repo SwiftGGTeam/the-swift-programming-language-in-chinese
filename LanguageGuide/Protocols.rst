@@ -1136,32 +1136,9 @@ with a single property requirement of a gettable ``Double`` property called ``ar
 
 .. testcode:: protocolConformance
 
-   -> @objc protocol HasArea {
+   -> protocol HasArea {
          var area: Double { get }
       }
-
-.. note::
-
-   You can check for protocol conformance only
-   if your protocol is marked with the ``@objc`` attribute,
-   as seen for the ``HasArea`` protocol above.
-   This attribute indicates that
-   the protocol should be exposed to Objective-C code and is described in
-   `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-   Even if you are not interoperating with Objective-C,
-   you need to mark your protocols with the ``@objc`` attribute
-   if you want to be able to check for protocol conformance.
-
-   Note also that ``@objc`` protocols can be adopted only by classes,
-   and not by structures or enumerations.
-   If you mark your protocol as ``@objc`` in order to check for conformance,
-   you will be able to apply that protocol only to class types.
-
-.. QUESTION: is this acceptable wording for this limitation?
-
-.. TODO: remove this note when this limitation is lifted in the future.
-
-.. TODO: make this section link to the interop guide.
 
 Here are two classes, ``Circle`` and ``Country``,
 both of which conform to the ``HasArea`` protocol:
@@ -1250,6 +1227,9 @@ and so only their ``area`` property can be accessed.
    The problem is, I can't use strings within an @objc protocol
    without also having to import Foundation, so it's numbers or bust, I'm afraid.
 
+.. TODO: Since the restrictions on @objc of the previous TODO are now lifted,
+   Should the previous examples be revisited?
+
 .. _Protocols_OptionalProtocolRequirements:
 
 Optional Protocol Requirements
@@ -1329,7 +1309,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> @objc class Counter {
+   -> class Counter {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
