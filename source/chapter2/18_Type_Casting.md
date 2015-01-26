@@ -208,6 +208,7 @@ things.append(3.14159)
 things.append("hello")
 things.append((3.0, 5.0))
 things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
+things.append({ (name: String) -> String in "Hello, \(name)" })
 ```
 
 `things` 数组包含两个 `Int` 值，2个 `Double` 值，1个 `String` 值，一个元组 `(Double, Double)` ，Ivan Reitman 导演的电影“Ghostbusters”。
@@ -233,6 +234,8 @@ for thing in things {
         println("an (x, y) point at \(x), \(y)")
     case let movie as Movie:
         println("a movie called '\(movie.name)', dir. \(movie.director)")
+    case let stringConverter as String -> String:
+        println(stringConverter("Michael"))
     default:
         println("something else")
     }
@@ -245,6 +248,7 @@ for thing in things {
 // a string value of "hello"
 // an (x, y) point at 3.0, 5.0
 // a movie called 'Ghostbusters', dir. Ivan Reitman
+// Hello, Michael
 ```
 
 
