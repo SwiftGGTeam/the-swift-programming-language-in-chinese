@@ -997,8 +997,8 @@ by assigning it the special value ``nil``:
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
 
-If you define an optional constant or variable without providing a default value,
-the constant or variable is automatically set to ``nil`` for you:
+If you define an optional variable without providing a default value,
+the variable is automatically set to ``nil`` for you:
 
 .. testcode:: optionals
 
