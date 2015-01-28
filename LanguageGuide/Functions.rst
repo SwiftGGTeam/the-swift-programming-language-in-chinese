@@ -793,6 +793,7 @@ The original values of the stored properties ``point.x`` and ``point.y``
 are modified by the ``scale`` function,
 without changing the reference to ``point`` itself.
 
+.. TODO: Add note about optimizing to call-by-reference parameter can mutate a stored property in-place, whereas computed properties fall back to a writeback scheme?
 .. TODO: Add note about mixing inout and non-inout parameters?
 
 .. _Functions_FunctionTypes:
