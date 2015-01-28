@@ -760,8 +760,40 @@ even though they were originally defined outside of the function.
    In-out parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
 
-.. TODO: you can pass a sub-property of something as an inout reference.
-   Would be great to show an example of this as a way to avoid temporary variables.
+In-out parameters can also be used to modify
+the value of stored and computed properties for class and structure instances.
+For more on classes and structures, see :ref:`ClassesAndStructures`.
+
+For example, a ``scale`` function could be written with an in-out parameter
+to multiply the ``x`` and ``y`` values stored in a ``Point`` structure
+by a specified ``factor``.
+
+.. testcode:: inoutParameters
+
+   -> struct Point {
+          var x: Double
+          var y: Double
+      }
+   ---
+   -> var somePoint = Point(x: 2.0, y: -3.0)
+   << somePoint: Point = { x = 2 y = -3 }
+   -> println("somePoint is (\(somePoint.x), \(somePoint.y))")
+   <- somePoint is (2.0, -3.0)
+   ---
+   -> func scale(inout point: Point, factor: Double) {
+          point.x *= factor
+          point.y *= factor
+      }
+   ---
+   -> scale(&somePoint, 2.0)
+   -> println("somePoint is (\(somePoint.x), \(somePoint.y))")
+   <- somePoint is (4.0, -6.0)
+
+The original values of the stored properties ``point.x`` and ``point.y``
+are modified by the ``scale`` function,
+without changing the reference to ``point`` itself.
+
+.. TODO: Add note about mixing inout and non-inout parameters?
 
 .. _Functions_FunctionTypes:
 
@@ -914,7 +946,7 @@ You do this by writing a complete function type
 immediately after the return arrow (``->``) of the returning function.
 
 The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
-The ``stepForward`` function returns a value one more than its input value, 
+The ``stepForward`` function returns a value one more than its input value,
 and the ``stepBackward`` function returns a value one less than its input value.
 Both functions have a type of ``(Int) -> Int``:
 
