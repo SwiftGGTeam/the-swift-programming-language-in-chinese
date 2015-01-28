@@ -761,7 +761,7 @@ even though they were originally defined outside of the function.
    outside of the scope of its function body.
 
 In-out parameters can also be used to modify
-the value of stored and computed properties for class and structure instances.
+the value of stored or computed properties for class and structure instances.
 For more on classes and structures, see :ref:`ClassesAndStructures`.
 
 For example, a ``scale`` function could be written with an in-out parameter
