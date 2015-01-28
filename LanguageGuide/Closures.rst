@@ -530,7 +530,7 @@ This value is stored along with the new ``incrementer`` function.
    You don't need to annotate ``amount`` or ``runningTotal``
    to say that they can be used within the nested ``incrementer`` function.
    Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the incrementer function.
+   when it is no longer needed by the ``incrementer`` function.
 
 Here's an example of ``makeIncrementer`` in action:
 
