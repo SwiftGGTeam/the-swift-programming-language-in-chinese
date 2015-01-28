@@ -463,7 +463,7 @@ In other words, the following two declarations are equivalent:
     << // implicitlyUnwrappedString : String! = nil
     -> var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
     !! <REPL Input>:1:5: error: invalid redeclaration of 'implicitlyUnwrappedString'
-    !! var implicitlyUnwrappedString: String!
+    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
     !!     ^
     !! <REPL Input>:1:5: note: 'implicitlyUnwrappedString' previously declared here
     !! var implicitlyUnwrappedString: String!
