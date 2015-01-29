@@ -457,7 +457,7 @@ because variables of a non-optional type cannot be set to ``nil``.
 
 .. note::
 
-   If you try to access an unowned reference 
+   If you try to access an unowned reference
    after the instance that it references is deallocated,
    you will trigger a runtime error.
    Use unowned references only when you are sure that
@@ -871,8 +871,9 @@ if they are provided:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class SomeClass {
+   >> var delegate: AnyObject?
       lazy var someClosure: (Int, String) -> String = {
-            [unowned self] (index: Int, stringToProcess: String) -> String in
+            [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
@@ -891,8 +892,9 @@ followed by the ``in`` keyword:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class AnotherClass {
+   >> var delegate: AnyObject?
       lazy var someClosure: () -> String = {
-            [unowned self] in
+            [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
       }
