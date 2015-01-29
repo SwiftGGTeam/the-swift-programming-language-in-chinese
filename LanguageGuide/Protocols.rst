@@ -185,7 +185,7 @@ These methods are written as part of the protocol's definition
 in exactly the same way as for normal instance and type methods,
 but without curly braces or a method body.
 Variadic parameters are allowed, subject to the same rules as for normal methods.
-Default values, however, cannot be specified for method parameters within a protocol's definition. 
+Default values, however, cannot be specified for method parameters within a protocol's definition.
 
 As with type property requirements,
 you always prefix type method requirements with the ``class`` keyword
@@ -272,11 +272,11 @@ and satisfy that method requirement.
 
 The example below defines a protocol called ``Togglable``,
 which defines a single instance method requirement called ``toggle``.
-As its name suggests, the ``toggle`` method is intended to
+As its name suggests, the ``toggle()`` method is intended to
 toggle or invert the state of any conforming type,
 typically by modifying a property of that type.
 
-The ``toggle`` method is marked with the ``mutating`` keyword
+The ``toggle()`` method is marked with the ``mutating`` keyword
 as part of the ``Togglable`` protocol definition,
 to indicate that the method is expected to mutate the state of a conforming instance
 when it is called:
@@ -289,7 +289,7 @@ when it is called:
 
 If you implement the ``Togglable`` protocol for a structure or enumeration,
 that structure or enumeration can conform to the protocol
-by providing an implementation of the ``toggle`` method
+by providing an implementation of the ``toggle()`` method
 that is also marked as ``mutating``.
 
 The example below defines an enumeration called ``OnOffSwitch``.
@@ -579,11 +579,11 @@ when initializing a new ``Dice`` instance.
 
 ``Dice`` provides one instance method, ``roll``,
 which returns an integer value between 1 and the number of sides on the dice.
-This method calls the generator's ``random`` method to create
+This method calls the generator's ``random()`` method to create
 a new random number between ``0.0`` and ``1.0``,
 and uses this random number to create a dice roll value within the correct range.
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
-it is guaranteed to have a ``random`` method to call.
+it is guaranteed to have a ``random()`` method to call.
 
 .. QUESTION: would it be better to show Dice using a RandomNumberGenerator
    as a data source, a la UITableViewDataSource etc.?
@@ -692,7 +692,7 @@ see the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter.
 
 This version of the game is wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
-It provides a gettable ``dice`` property and a ``play`` method
+It provides a gettable ``dice`` property and a ``play()`` method
 in order to conform to the protocol.
 (The ``dice`` property is declared as a constant property
 because it does not need to change after initialization,
@@ -711,11 +711,11 @@ Thereafter, the game instantiator has the option to set the property to a suitab
 
 ``DiceGameDelegate`` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
-the ``play`` method above, and are called when
+the ``play()`` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
 
 Because the ``delegate`` property is an *optional* ``DiceGameDelegate``,
-the ``play`` method uses optional chaining each time it calls a method on the delegate.
+the ``play()`` method uses optional chaining each time it calls a method on the delegate.
 If the ``delegate`` property is nil,
 these delegate calls fail gracefully and without error.
 If the ``delegate`` property is non-nil,
@@ -768,7 +768,7 @@ and prints an appropriate message if so.
 ``gameDidStart`` also accesses the ``dice`` property of the passed ``game`` parameter.
 Because ``game`` is known to conform to the ``DiceGame`` protocol,
 it is guaranteed to have a ``dice`` property,
-and so the ``gameDidStart`` method is able to access and print the dice's ``sides`` property,
+and so the ``gameDidStart(_:)`` method is able to access and print the dice's ``sides`` property,
 regardless of what kind of game is being played.
 
 Here's how ``DiceGameTracker`` looks in action:
@@ -922,7 +922,7 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have an ``asText`` method,
+and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
 it is safe to call ``thing.asText`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
@@ -985,10 +985,10 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
       }
 
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol
-and provides an implementation of the ``asPrettyText`` method
+and provides an implementation of the ``asPrettyText()`` method
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
-and so the ``asPrettyText`` implementation starts by calling the ``asText`` method
+and so the ``asPrettyText`` implementation starts by calling the ``asText()`` method
 from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.
@@ -1151,7 +1151,7 @@ with a single property requirement of a gettable ``Double`` property called ``ar
    Even if you are not interoperating with Objective-C,
    you need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.
-   
+
    Note also that ``@objc`` protocols can be adopted only by classes,
    and not by structures or enumerations.
    If you mark your protocol as ``@objc`` in order to check for conformance,
@@ -1288,7 +1288,7 @@ to reflect the fact that the optional requirement may not have been implemented.
    Even if you are not interoperating with Objective-C,
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
-   
+
    Note also that ``@objc`` protocols can be adopted only by classes,
    and not by structures or enumerations.
    If you mark your protocol as ``@objc`` in order to specify optional requirements,
@@ -1345,9 +1345,9 @@ The ``Counter`` class stores its current value in a variable property called ``c
 The ``Counter`` class also defines a method called ``increment``,
 which increments the ``count`` property every time the method is called.
 
-The ``increment`` method first tries to retrieve an increment amount
-by looking for an implementation of the ``incrementForCount`` method on its data source.
-The ``increment`` method uses optional chaining to try to call ``incrementForCount``,
+The ``increment()`` method first tries to retrieve an increment amount
+by looking for an implementation of the ``incrementForCount(_:)`` method on its data source.
+The ``increment()`` method uses optional chaining to try to call ``incrementForCount(_:)``,
 and passes the current ``count`` value as the method's single argument.
 
 Note *two* levels of optional chaining at play here.
@@ -1376,10 +1376,10 @@ and the method returned a value ---
 the unwrapped ``amount`` is added onto the stored ``count`` property,
 and incrementation is complete.
 
-If it is *not* possible to retrieve a value from the ``incrementForCount`` method ---
+If it is *not* possible to retrieve a value from the ``incrementForCount(_:)`` method ---
 either because ``dataSource`` is nil,
 or because the data source does not implement ``incrementForCount`` ---
-then the ``increment`` method tries to retrieve a value
+then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
 and so its name is also written using optional chaining with a question mark on the end,
@@ -1409,16 +1409,16 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
          counter.increment()
          println(counter.count)
       }
-   </ 3 
-   </ 6 
-   </ 9 
-   </ 12 
+   </ 3
+   </ 6
+   </ 9
+   </ 12
 
 The code above creates a new ``Counter`` instance;
 sets its data source to be a new ``ThreeSource`` instance;
-and calls the counter's ``increment`` method four times.
+and calls the counter's ``increment()`` method four times.
 As expected, the counter's ``count`` property increases by three
-each time ``increment`` is called.
+each time ``increment()`` is called.
 
 Here's a more complex data source called ``TowardsZeroSource``,
 which makes a ``Counter`` instance count up or down towards zero
@@ -1439,7 +1439,7 @@ from its current ``count`` value:
       }
 
 The ``TowardsZeroSource`` class implements
-the optional ``incrementForCount`` method from the ``CounterDataSource`` protocol
+the optional ``incrementForCount(_:)`` method from the ``CounterDataSource`` protocol
 and uses the ``count`` argument value to work out which direction to count in.
 If ``count`` is already zero, the method returns ``0``
 to indicate that no further counting should take place.
@@ -1456,11 +1456,11 @@ Once the counter reaches zero, no more counting takes place:
          counter.increment()
          println(counter.count)
       }
-   </ -3 
-   </ -2 
-   </ -1 
-   </ 0 
-   </ 0 
+   </ -3
+   </ -2
+   </ -1
+   </ 0
+   </ 0
 
 .. TODO: Other things to be included
 .. ---------------------------------

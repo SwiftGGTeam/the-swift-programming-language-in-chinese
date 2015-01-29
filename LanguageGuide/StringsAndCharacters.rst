@@ -219,7 +219,7 @@ with the addition assignment operator (``+=``):
    </ instruction now equals "look over there"
 
 You can append a ``Character`` value to a ``String`` variable
-with the ``String`` type's ``append`` method:
+with the ``String`` type's ``append()`` method:
 
 .. testcode:: concatenation
 
@@ -300,7 +300,7 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 .. note::
 
    A Unicode scalar is any Unicode :newTerm:`code point` in the range
-   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
+   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
    Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points,
    which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
@@ -493,7 +493,7 @@ and the “not equal to” operator (``!=``),
 as described in :ref:`BasicOperators_ComparisonOperators`:
 
 .. testcode:: stringEquality
- 
+
    -> let quotation = "We're a lot alike, you and I."
    << // quotation : String = "We\'re a lot alike, you and I."
    -> let sameQuotation = "We're a lot alike, you and I."
@@ -586,7 +586,7 @@ Prefix and Suffix Equality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To check whether a string has a particular string prefix or suffix,
-call the string's ``hasPrefix`` and ``hasSuffix`` methods,
+call the string's ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 
 .. assertion:: prefixComparisonUsesCharactersNotScalars
@@ -643,7 +643,7 @@ the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
       ]
    << // romeoAndJuliet : [String] = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
 
-You can use the ``hasPrefix`` method with the ``romeoAndJuliet`` array
+You can use the ``hasPrefix(_:)`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
 
 .. testcode:: prefixesAndSuffixes
@@ -658,7 +658,7 @@ to count the number of scenes in Act 1 of the play:
    -> println("There are \(act1SceneCount) scenes in Act 1")
    <- There are 5 scenes in Act 1
 
-Similarly, use the ``hasSuffix`` method to count the number of scenes
+Similarly, use the ``hasSuffix(_:)`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. testcode:: prefixesAndSuffixes
@@ -679,7 +679,7 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. note::
 
-   The ``hasPrefix`` and ``hasSuffix`` methods
+   The ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods
    perform a character-by-character canonical equivalence comparison between
    the extended grapheme clusters in each string,
    as described in :ref:`StringsAndCharacters_StringEquality`.

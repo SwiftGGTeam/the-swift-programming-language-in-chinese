@@ -47,7 +47,7 @@ Date        Notes
               can no longer be combined with the addition operator (``+``)
               or addition assignment operator (``+=``).
               These operators are now used only with ``String`` values.
-              Use the ``String`` type's ``append`` method
+              Use the ``String`` type's ``append(_:)`` method
               to append a single ``Character`` value onto the end of a string.
 
             * Added information about the ``availability`` attribute to
@@ -87,7 +87,7 @@ Date        Notes
             * Updated the :ref:`CollectionTypes_AccessingAndModifyingAnArray` section
               to note that you can no longer append a single item to an array
               with the ``+=`` operator.
-              Instead, use the ``append`` method,
+              Instead, use the ``append(_:)`` method,
               or append a single-item array with the ``+=`` operator.
 
             * Added a note that the start value ``a``

@@ -742,7 +742,7 @@ that don't actually override any method in the superclass.
    called ``Circle``
    that takes a radius and a name
    as arguments to its initializer.
-   Implement an ``area`` and a ``simpleDescription`` method
+   Implement an ``area()`` and a ``simpleDescription()`` method
    on the ``Circle`` class.
 
 In addition to simple properties that are stored,
@@ -973,7 +973,7 @@ you don't have to provide one.
 
 .. admonition:: Experiment
 
-   Add a ``color`` method to ``Suit`` that returns "black"
+   Add a ``color()`` method to ``Suit`` that returns "black"
    for spades and clubs, and returns "red" for hearts and diamonds.
 
 .. Suits are in Bridge order, which matches Unicode order.

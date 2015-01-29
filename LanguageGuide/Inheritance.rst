@@ -109,7 +109,7 @@ with a superclass of ``Vehicle``:
       }
 
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
-such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise`` method.
+such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise()`` method.
 
 In addition to the characteristics it inherits,
 the ``Bicycle`` class defines a new stored property,
@@ -218,7 +218,7 @@ You can override an inherited instance or class method
 to provide a tailored or alternative implementation of the method within your subclass.
 
 The following example defines a new subclass of ``Vehicle`` called ``Train``,
-which overrides the ``makeNoise`` method that ``Train`` inherits from ``Vehicle``:
+which overrides the ``makeNoise()`` method that ``Train`` inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
@@ -228,7 +228,7 @@ which overrides the ``makeNoise`` method that ``Train`` inherits from ``Vehicle`
          }
       }
 
-If you create a new instance of ``Train`` and call its ``makeNoise`` method,
+If you create a new instance of ``Train`` and call its ``makeNoise()`` method,
 you can see that the ``Train`` subclass version of the method is called:
 
 .. testcode:: inheritance
@@ -280,7 +280,7 @@ The following example defines a new class called ``Car``,
 which is a subclass of ``Vehicle``.
 The ``Car`` class introduces a new stored property called ``gear``,
 with a default integer value of ``1``.
-The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,  
+The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,
 to provide a custom description that includes the current gear:
 
 .. testcode:: inheritance

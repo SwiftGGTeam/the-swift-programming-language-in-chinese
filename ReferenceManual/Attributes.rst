@@ -217,7 +217,7 @@ the ``noreturn`` attribute to a function or method *type*.
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
     This attribute causes the property's setter to be synthesized with a *copy*
-    of the property's value---returned by the ``copyWithZone`` method---instead of the
+    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
     value of the property itself.
     The type of the property must conform to the ``NSCopying`` protocol.
 
