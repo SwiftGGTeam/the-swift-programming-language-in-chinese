@@ -457,7 +457,7 @@ because variables of a non-optional type cannot be set to ``nil``.
 
 .. note::
 
-   If you try to access an unowned reference 
+   If you try to access an unowned reference
    after the instance that it references is deallocated,
    you will trigger a runtime error.
    Use unowned references only when you are sure that
@@ -851,8 +851,8 @@ the relationships between the different parts of your code.
 
 .. note::
 
-   Swift requires you to write ``self.someProperty`` or ``self.someMethod``
-   (rather than just ``someProperty`` or ``someMethod``)
+   Swift requires you to write ``self.someProperty`` or ``self.someMethod()``
+   (rather than just ``someProperty`` or ``someMethod()``)
    whenever you refer to a member of ``self`` within a closure.
    This helps you remember that it's possible to capture ``self`` by accident.
 

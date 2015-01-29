@@ -511,11 +511,11 @@ In addition, you can override any class member
 that is visible in a certain access context.
 
 An override can make an inherited class member more accessible than its superclass version.
-In the example below, class ``A`` is a public class with a private method called ``someMethod``.
+In the example below, class ``A`` is a public class with a private method called ``someMethod()``.
 Class ``B`` is a subclass of ``A``, with a reduced access level of “internal”.
-Nonetheless, class ``B`` provides an override of ``someMethod``
+Nonetheless, class ``B`` provides an override of ``someMethod()``
 with an access level of “internal”, which is *higher* than
-the original implementation of ``someMethod``:
+the original implementation of ``someMethod()``:
 
 .. testcode:: subclassingNoCall
 
@@ -547,7 +547,7 @@ or within the same module as the superclass for an internal member call):
       }
 
 Because superclass ``A`` and subclass ``B`` are defined in the same source file,
-it is valid for the ``B`` implementation of ``someMethod`` to call
+it is valid for the ``B`` implementation of ``someMethod()`` to call
 ``super.someMethod()``.
 
 .. _AccessControl_ConstantsVariablesPropertiesAndSubscripts:
