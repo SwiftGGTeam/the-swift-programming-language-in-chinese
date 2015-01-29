@@ -202,7 +202,7 @@ Where this is appropriate,
 you access the superclass version of a method, property, or subscript
 by using the ``super`` prefix:
 
-* An overridden method named ``someMethod`` can call the superclass version of ``someMethod``
+* An overridden method named ``someMethod()`` can call the superclass version of ``someMethod()``
   by calling ``super.someMethod()`` within the overriding method implementation.
 * An overridden property called ``someProperty`` can access the superclass version of ``someProperty``
   as ``super.someProperty`` within the overriding getter or setter implementation.
