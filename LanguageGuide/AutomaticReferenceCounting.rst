@@ -879,11 +879,6 @@ if they are provided:
       }
    >> }
 
-.. FIXME: change this example to remove the type annotation
-   and infer the type from the closure's parameter list and return type
-   once the following issue is fixed:
-   <rdar://problem/16973787> Cannot infer function type from a lazy closure that uses self
-
 If a closure does not specify a parameter list or return type
 because they can be inferred from context,
 place the capture list at the very start of the closure,
