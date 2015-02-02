@@ -60,6 +60,53 @@ but the comment markers must be balanced.
    No other syntactic category refers to this one,
    and the prose is sufficient to define it completely.
 
+.. _LexicalStructure_CommentDocumentation:
+
+Inline Documentation
+~~~~~~~~~~~~~~~~~~~~
+
+Comments can also be used as :newTerm:`inline documentation`.
+Single line documentation comments begin with ``///``
+and continue until a carriage return (U+000D) or line feed (U+000A).
+Multiline documentation comments begin with ``/**`` and end with ``*/``.
+
+.. TODO: Explicitly mention reStructuredText formatting?
+
+The ``:param:`` and ``:returns:`` annotations
+can be added to multiline documentation comments
+to provide structured information about the
+parameters and return type of functions.
+
+.. TODO: Use real example
+
+.. testcode:: documentationComments
+
+    -> /// TODO
+       struct Foo {
+          /// TODO
+          var bar: Int
+
+          /**
+             TODO
+
+             :param: a TODO
+             :param: b TODO
+
+             :returns: TODO
+          */
+          func baz(a: Int, b: Int) -> String {
+             // ...
+          }
+       }
+
+.. langref-grammar
+
+    documentation    ::= ///.*[\n\r]
+    documentation    ::= /** .... */
+
+    annotation       ::= ':param:'
+    annotation       ::= ':returns:'
+
 .. _LexicalStructure_Identifiers:
 
 Identifiers
