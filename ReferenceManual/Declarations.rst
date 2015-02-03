@@ -275,6 +275,68 @@ the scope at which the variable is declared and the kind of variable you intend 
 You can override a property in a subclass by marking the subclass's property declaration
 with the ``override`` declaration modifier, as described in :ref:`Inheritance_Overriding`.
 
+
+.. _Declarations_OptionalBinding:
+
+Optional Binding
+~~~~~~~~~~~~~~~~
+
+.. TODO: Replace with new explanation
+
+You use :newTerm:`optional binding` to find out whether an optional contains a value,
+and if so, to make that value available as a temporary constant or variable.
+
+Optional binding can be used with ``if`` and ``while`` statements
+to check for a value inside an optional,
+and to extract that value into a constant or variable,
+as part of a single action.
+
+.. note::
+
+    You can optionally add a guard expression to
+    optional binding ``if`` and ``while`` statements and ``switch`` cases,
+    as described in :ref:`Expressions_GuardExpressions`.
+
+``if`` Statements
++++++++++++++++++
+
+Write optional binding for an ``if`` statement as follows:
+
+.. syntax-outline::
+
+   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
+      <#statements#>
+   } else if let <#constantName#> = <#someOptional#> {
+      <#statements#>
+   }
+
+``while`` Statements
+++++++++++++++++++++
+
+.. syntax-outline::
+
+   while let <#constantName#> = <#someOptional#>,
+             <#anotherConstantName#> = <#someOtherOptional#> {
+      <#statements#>
+   }
+
+``switch`` Statement Cases
+++++++++++++++++++++++++++
+
+.. syntax-outline::
+
+   switch (<#someOptional#>, <#someOtherOptional#>) {
+   case let (<#constantName#>, <#anotherConstantName#>):
+      <#statements#>
+   default:
+      <#statements#>
+   }
+
+.. TODO: Add explanations
+.. TODO: Add syntax grammar
+.. TODO: Add cross-references throughout Reference and Guide
+
+
 .. _Declarations_StoredVariablesAndVariableStoredProperties:
 
 Stored Variables and Stored Variable Properties
@@ -1656,6 +1718,7 @@ you need to mark overridden designated initializers with the ``override`` declar
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
+
 
 .. _Declarations_FailableInitializers:
 

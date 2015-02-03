@@ -922,6 +922,105 @@ is ``Int``, not ``(Int)``.
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
+.. _Expressions_GuardExpressions:
+
+Guard Expression
+~~~~~~~~~~~~~~~~
+
+.. QUESTION: Should we note relationship to ``where`` clause in generic parameter constraints?
+
+A :newTerm:`guard expression` is introduced by the keyword ``where``
+followed by an expression.
+It is used to provide an additional condition
+before a pattern in a ``switch`` case is matched
+or a value binding pattern in an ``if`` condition is evaluated.
+
+
+If a guard expression is present, the *statements* within the relevant branch
+
+``where`` Statments
++++++++++++++++++++
+
+.. testcode:: while-let-where-statement
+
+    -> var generator = SequenceOf<Int>([1, 2, 3, 4, 5]).generate()
+       while var number = generator.next() where number < 3 {
+          // ...
+       }
+
+
+``if`` Statements
++++++++++++++++++
+
+.. testcode:: if-let-where-statement
+
+    >> var a: Int? = 1
+    >> var b: Int? = 1
+    -> if let x = a, y = b where x == y {
+          // ...
+       }
+
+.. syntax-outline::
+
+    if let <#constant 1#> = <#optional 1#>,
+           <#constant 2#> = <#optional 2#> where <#condition 1#> {
+       <#statements#>
+    } else if let <#constant 1#> = <#optional 1#> where <#condition 2#> {
+       <#statements#>
+    } else {
+       <#statements#>
+    }
+
+``switch`` Statement Cases
+++++++++++++++++++++++++++
+
+For instance, a *control expression* matches the case in the example below
+only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
+
+.. testcode:: switch-case-statement
+
+    >> switch (1, 1) {
+    -> case let (x, y) where x == y:
+    >> break
+    >> default: break
+    >> }
+
+
+As the above example shows, patterns in a case can also bind constants
+using the keyword ``let`` (they can also bind variables using the keyword ``var``).
+These constants (or variables) can then be referenced in a corresponding guard expression
+and throughout the rest of the code within the scope of the case.
+
+That said, if the case contains multiple patterns that match the control expression,
+none of those patterns can contain constant or variable bindings.
+
+.. syntax-outline::
+
+    switch <#control expression#> {
+       case <#pattern 1#> where <#condition 1#>:
+          <#statements#>
+       case <#pattern 1#> where <#condition 2#>:
+          <#statements#>
+       case <#pattern 2#> where <#condition 3#>,
+            <#pattern 3#> where <#condition 4#>:
+          <#statements#>
+       default:
+          <#statements#>
+    }
+
+
+.. syntax-grammar::
+
+    Grammar of guard expressions
+
+    guard-clause --> ``where`` guard-expression
+    guard-expression --> expression
+
+    if-condition --> value-binding-pattern guard-clause-OPT
+    if-condition --> value-binding-pattern ``,`` value-binding-pattern guard-clause-OPT
+
+    case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
+
 
 .. _Expressions_WildcardExpression:
 

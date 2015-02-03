@@ -204,7 +204,7 @@ the *statements* in a ``while`` statement can be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
 the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`TheBasics_OptionalBinding`.
+as discussed in :ref:`Declarations_OptionalBinding`.
 
 .. langref-grammar
 
@@ -249,7 +249,7 @@ the *statements* in a ``do``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`TheBasics_OptionalBinding`.
+as discussed in :ref:`Declarations_OptionalBinding`.
 
 .. langref-grammar
 
@@ -334,7 +334,7 @@ An ``if`` statement chained together in this way has the following form:
 
 The value of any condition in an ``if`` statement must have a type that conforms to
 the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`TheBasics_OptionalBinding`.
+as discussed in :ref:`Declarations_OptionalBinding`.
 
 .. langref-grammar
 
@@ -366,10 +366,7 @@ A ``switch`` statement has the following form:
     switch <#control expression#> {
        case <#pattern 1#>:
           <#statements#>
-       case <#pattern 2#> where <#condition#>:
-          <#statements#>
-       case <#pattern 3#> where <#condition#>,
-            <#pattern 4#> where <#condition#>:
+       case <#pattern 2#>, <#pattern 3#>:
           <#statements#>
        default:
           <#statements#>
@@ -392,31 +389,6 @@ The value of the *control expression* can even be matched to the value of a case
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
-
-A ``switch`` case can optionally contain a guard expression after each pattern.
-A :newTerm:`guard expression` is introduced by the keyword ``where`` followed by an expression,
-and is used to provide an additional condition
-before a pattern in a case is considered matched to the *control expression*.
-If a guard expression is present, the *statements* within the relevant case
-are executed only if the value of the *control expression*
-matches one of the patterns of the case and the guard expression evaluates to ``true``.
-For instance, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
-
-.. testcode:: switch-case-statement
-
-    >> switch (1, 1) {
-    -> case let (x, y) where x == y:
-    >> break
-    >> default: break
-    >> }
-
-As the above example shows, patterns in a case can also bind constants
-using the keyword ``let`` (they can also bind variables using the keyword ``var``).
-These constants (or variables) can then be referenced in a corresponding guard expression
-and throughout the rest of the code within the scope of the case.
-That said, if the case contains multiple patterns that match the control expression,
-none of those patterns can contain constant or variable bindings.
 
 A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
 The code within a default case is executed only if no other cases match the control expression.
@@ -483,9 +455,6 @@ see :ref:`Statements_FallthroughStatement` below.
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
     default-label --> ``default`` ``:``
-
-    guard-clause --> ``where`` guard-expression
-    guard-expression --> expression
 
 
 .. _Statements_LabeledStatement:
