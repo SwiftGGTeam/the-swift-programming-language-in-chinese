@@ -61,16 +61,17 @@ Arrays
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
 The same value can appear in an array multiple times at different positions.
 
-Swift arrays are specific about the kinds of values they can store.
-They differ from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
-which can store any kind of object
-and do not provide any information about the nature of the objects they return.
-In Swift, the type of values that a particular array can store is always made clear,
-either through an explicit type annotation, or through type inference,
-and does not have to be a class type.
-If you create an array of ``Int`` values, for example,
-you can't insert any value other than ``Int`` values into that array.
-Swift arrays are type safe, and are always clear about what they may contain.
+.. note::
+
+   Swift arrays are specific about the kinds of values they can store.
+   They differ from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
+   which can store any kind of object
+   and do not provide any information about the nature of the objects they return.
+   In Swift, the type of values
+   that a particular array can store is always made clear,
+   either through an explicit type annotation or through type inference.
+   
+   For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -422,6 +423,8 @@ the definition for a particular word.
    In Swift, the type of keys and values
    that a particular dictionary can store is always made clear,
    either through an explicit type annotation or through type inference.
+   
+   For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
