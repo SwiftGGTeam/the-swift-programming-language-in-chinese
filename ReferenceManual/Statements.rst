@@ -359,7 +359,7 @@ Switch Statement
 A ``switch`` statement allows certain blocks of code to be executed
 depending on the value of a control expression.
 
-A switch statement has the following form:
+A ``switch`` statement has the following form:
 
 .. syntax-outline::
 
