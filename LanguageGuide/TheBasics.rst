@@ -1119,6 +1119,15 @@ would be made available as a variable rather than a constant.
 Multiple values may be optionally bound in a single ``if`` statement
 with a comma-separated list of assignment expressions.
 
+.. assertion:: useOfMultipleValueOptionalBinding
+
+   -> let a: String? = "1"
+      let b: String? = "2"
+      if let x = a, y = b {
+         println(x, y)
+      }
+   <- (1, 2)
+
 .. syntax-outline::
 
    if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
