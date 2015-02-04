@@ -890,6 +890,28 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
+an expression surrounded by parentheses.
+It is used to explicitly specify the precedence of operations.
+The type of the parenthesized expression is the type of that value.
+For example,
+the type of the parenthesized expression ``(1)``
+is ``Int``, not ``(Int)``.
+
+.. See "Tuple Expression" below for langref grammar.
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression ``)``
+
+
+.. _Expressions_TupleExpression:
+
+Tuple Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`tuple expression` consists of
 a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
@@ -899,13 +921,11 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Use parenthesized expressions to create tuples
-and to pass arguments to a function call.
-If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value.
-For example,
-the type of the parenthesized expression ``(1)``
-is ``Int``, not ``(Int)``.
+.. FIXME Explicitly call out that the type of a tuple expression is a tuple type?
+
+A tuple expression can contain zero expressions,
+or it can contain two or more expressions.
+A single expression inside parentheses is a parenthesized expression.
 
 .. langref-grammar
 
@@ -918,8 +938,8 @@ is ``Int``, not ``(Int)``.
 
     Grammar of a parenthesized expression
 
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
+    parenthesized-expression --> ``(`` ``)`` | ``(`` expression-element-list ``)``
+    expression-element-list --> expression-element ``,`` expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
 
