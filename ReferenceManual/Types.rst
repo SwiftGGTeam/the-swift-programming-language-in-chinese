@@ -139,12 +139,10 @@ the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
-``Void`` is a typealias for the empty tuple type, ``()``.
-If there is only one element inside the parentheses,
-the type is simply the type of that element.
-For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
-As a result, you can name a tuple element only when the tuple type has two
-or more elements.
+All tuple types contain two or more types,
+except for ``Void`` which is a typealias for the empty tuple type, ``()``.
+A single parenthesized type is the same as that type without parentheses.
+For example, ``(Int)`` is equivalent to ``Int``.
 
 .. langref-grammar
 
