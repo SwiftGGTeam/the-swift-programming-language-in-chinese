@@ -71,7 +71,7 @@ The same value can appear in an array multiple times at different positions.
    that a particular array can store is always made clear,
    either through an explicit type annotation or through type inference.
    
-   For more about working with typed collections, see :ref:`TypeCasting`.
+   For more about working with typed collections, see :doc:`TypeCasting`.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -424,7 +424,7 @@ the definition for a particular word.
    that a particular dictionary can store is always made clear,
    either through an explicit type annotation or through type inference.
    
-   For more about working with typed collections, see :ref:`TypeCasting`.
+   For more about working with typed collections, see :doc:`TypeCasting`.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
