@@ -215,7 +215,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of a while statement
 
     while-statement --> ``while`` while-condition  code-block
-    while-condition --> expression | declaration
+    while-condition --> expression | value-binding-pattern
 
 
 .. _Statements_Do-WhileStatement:
@@ -259,7 +259,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of a do-while statement
 
-    do-while-statement --> ``do`` code-block ``while`` while-condition
+    do-while-statement --> ``do`` code-block ``while`` expression
 
 
 .. _Statements_BranchStatements:

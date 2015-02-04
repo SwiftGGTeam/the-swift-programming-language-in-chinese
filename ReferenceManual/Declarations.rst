@@ -492,7 +492,7 @@ are discussed in :ref:`Properties_TypeProperties`.
     setter-keyword-clause --> attributes-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
-    willSet-didSet-block --> ``{`` didSet-clause willSet-clause ``}``
+    willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
     willSet-clause --> attributes-OPT ``willSet`` setter-name-OPT code-block
     didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 
