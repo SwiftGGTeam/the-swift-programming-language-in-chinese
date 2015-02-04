@@ -325,24 +325,24 @@ when a new instance of ``SurveyQuestion`` is initialized.
 Assigning Constant Properties During Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can assign a value to a constant property 
+You can assign a value to a constant property
 at any point during initialization,
 as long as it is set to a definite value by the time initialization finishes.
 Once a constant property is assigned a value,
 it can't be further modified.
 
-.. TODO: Implement test code that generates correct failure in REPL
-
 .. assertion:: constantPropertyAssignment
 
-   >> struct A {
-         let a: Int
+   >> struct S {
+         let c: Int
          init() {
-            a = 1
-            a = 2
+            self.c = 1
+            self.c = 2
          }
       }
-   !! (Unknown REPL error)
+   !! repl.swift:5:20: error: immutable value 'self.c' may only be initialized once
+   !!             self.c = 2
+   !!                    ^
 
 .. note::
 
