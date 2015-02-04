@@ -344,6 +344,18 @@ it can't be further modified.
    !!             self.c = 2
    !!                    ^
 
+.. assertion:: constantPropertyAssignmentWithInitialValue
+
+   >> struct S {
+         let c: Int = 0
+         init() {
+            self.c = 1
+         }
+      }
+   !! repl.swift:4:20: error: cannot assign to 'c' in 'self'
+   !!             self.c = 1
+   !!             ~~~~~~ ^
+
 .. note::
 
    For class instances,
