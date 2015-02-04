@@ -457,6 +457,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> parenthesized-expression
+    primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
 
