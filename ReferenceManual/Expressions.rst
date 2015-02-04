@@ -1072,8 +1072,11 @@ the parentheses can be omitted.
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression
-    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-arguments
+    function-call-expression --> postfix-expression function-call-arguments-OPT trailing-closure
+    function-call-arguments --> ``(`` function-argument-list-OPT ``)``
+    function-argument-list --> function-argument | function-argument ``,`` function-argument-list
+    function-argument --> expression | identifier ``:`` expression | operator
     trailing-closure --> closure-expression
 
 .. Multiple trailing closures in LangRef is an error,
