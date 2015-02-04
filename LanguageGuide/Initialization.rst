@@ -122,7 +122,7 @@ Customizing Initialization
 
 You can customize the initialization process
 with input parameters and optional property types,
-or by modifying constant properties during initialization,
+or by assigning constant properties during initialization,
 as described in the following sections.
 
 .. _Initialization_InitializationParameters:
@@ -322,11 +322,39 @@ when a new instance of ``SurveyQuestion`` is initialized.
 
 .. _Initialization_ModifyingConstantPropertiesDuringInitialization:
 
-Modifying Constant Properties During Initialization
+Assigning Constant Properties During Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can modify the value of a constant property at any point during initialization,
+You can assign a value to a constant property
+at any point during initialization,
 as long as it is set to a definite value by the time initialization finishes.
+Once a constant property is assigned a value,
+it can't be further modified.
+
+.. assertion:: constantPropertyAssignment
+
+   >> struct S {
+         let c: Int
+         init() {
+            self.c = 1
+            self.c = 2
+         }
+      }
+   !! repl.swift:5:20: error: immutable value 'self.c' may only be initialized once
+   !!             self.c = 2
+   !!                    ^
+
+.. assertion:: constantPropertyAssignmentWithInitialValue
+
+   >> struct S {
+         let c: Int = 0
+         init() {
+            self.c = 1
+         }
+      }
+   !! repl.swift:4:20: error: cannot assign to 'c' in 'self'
+   !!             self.c = 1
+   !!             ~~~~~~ ^
 
 .. note::
 
