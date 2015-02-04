@@ -24,11 +24,6 @@ and enables you to catch any type mismatches early in your code's development.
    Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
    For more on generic types and collections, see :doc:`Generics`.
 
-.. TODO: should I mention about bridging to NSArray / NSDictionary?
-   Dictionary is not yet bridged to NSDictionary ---
-   the work for this is in rdar://16014066,
-   which is currently scheduled (but I'd say unlikely) for the March milestone
-
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 
 .. TODO: mention for i in indices(collection) { collection[i] }
@@ -70,7 +65,7 @@ The same value can appear in an array multiple times at different positions.
    In Swift, the type of values
    that a particular array can store is always made clear,
    either through an explicit type annotation or through type inference.
-   
+
    For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
@@ -423,7 +418,7 @@ the definition for a particular word.
    In Swift, the type of keys and values
    that a particular dictionary can store is always made clear,
    either through an explicit type annotation or through type inference.
-   
+
    For more about working with typed collections, see :ref:`TypeCasting`.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
