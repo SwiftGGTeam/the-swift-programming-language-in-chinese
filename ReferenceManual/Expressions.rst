@@ -1370,9 +1370,8 @@ It has the following form:
 
     <#expression#>?
 
-On its own, the postfix ``?`` operator
-simply returns the value of its argument as an optional.
-
+Optional-chaining expressions must appear within a postfix expression,
+and they cause the postfix expression to be evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
@@ -1445,6 +1444,7 @@ For example:
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix
