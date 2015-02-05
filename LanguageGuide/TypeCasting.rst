@@ -234,6 +234,7 @@ whenever a ``Song`` is found in the library.
    an example that isn't excessively contrived.
    The reference shows the behavior in a contrived example.
 
+
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject
@@ -249,6 +250,7 @@ Swift provides two special type aliases for working with non-specific types:
    Use ``Any`` and ``AnyObject`` only when you explicitly need
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
+
 
 .. _TypeCasting_AnyObject:
 
@@ -395,3 +397,56 @@ a constant of the specified type to enable its value to be printed:
    I can't think of an example where it's useful.
    However, it does display different behavior from downcasting,
    in that upcasting always works, and so it doesn't return an optional.
+
+.. _TypeCasting_TypeCastingForAnyAndAnyObject:
+
+Type Casting to Bridged Cocoa Classes
+-------------------------------------
+
+Many of Swift's built-in types are bridged to Foundation classes:
+
+==============  ===================
+Swift Type      Bridged Cocoa Class
+==============  ===================
+``Array``       ``NSArray``
+--------------  -------------------
+``Bool``        ``NSNumber``
+--------------  -------------------
+``Dictionary``  ``NSDictionary``
+--------------  -------------------
+``Double``      ``NSNumber``
+--------------  -------------------
+``Float``       ``NSNumber``
+--------------  -------------------
+``Int``         ``NSNumber``
+--------------  -------------------
+``Set``         ``NSSet``
+--------------  -------------------
+``String``      ``NSString``
+==============  ===================
+
+When interacting with Cocoa APIs, any parameter
+
+Objective-C does not have explicitly
+
+Swift types can be cast to their corresponding Foundation class in order to use Cocoa APIs.
+
+.. TODO: Real example
+
+.. testcode:: bridgedCocoaClasses
+   :compile: true
+   >> import Foundation
+
+   let array = [1, 2, 3]
+   (array as NSArray).componentsJoinedByString(", ")
+
+.. note::
+
+   Because Objective-C does not have explicitly typed collections,
+   conversion from a Swift ``Array``, ``Set`` or ``Dictionary``
+   to an ``NSArray``, ``NSSet`` or ``NSDictionary``
+   erases any generic type information.
+   For example, a value of type ``[Int]`` cast (``as``) to ``NSArray``
+   will be ``[AnyObject]`` without a forced cast (``as!``) to ``[Int]``.
+
+.. TODO:
