@@ -1370,8 +1370,6 @@ It has the following form:
 
     <#optionalExpression#>?.<#postfixExpression#>
 
-Postfix expressions that contain an optional-chaining expression
-are evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
