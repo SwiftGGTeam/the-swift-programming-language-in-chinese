@@ -418,7 +418,7 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-call the global ``count`` function
+call the global ``count(_:)`` function
 and pass in a string as the function's sole parameter:
 
 .. testcode:: characterCount
@@ -461,11 +461,11 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``count`` function
+   be aware that the ``count(_:)`` function
    must iterate over the Unicode scalars in the entire string
    in order to calculate an accurate character count for that string.
 
-   Note also that the character count returned by ``count``
+   Note also that the character count returned by the ``count(_:)`` function
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
