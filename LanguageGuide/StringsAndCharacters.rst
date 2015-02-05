@@ -27,10 +27,10 @@ This makes it easy to create custom string values for display, storage, and prin
 
 .. note::
 
-   Swift's ``String`` type is bridged seamlessly to Foundation's ``NSString`` class.
+   Swift's ``String`` type is bridged to Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa or Cocoa Touch,
-   the entire ``NSString`` API is available to call on any ``String`` value you create,
-   in addition to the ``String`` features described in this chapter.
+   the entire ``NSString`` API is available to call on any ``String`` value you create
+   when type cast to ``NSString``, as described in :ref:`_TypeCasting_AnyObject`.
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
 
    For more information about using ``String`` with Foundation and Cocoa,
@@ -300,7 +300,7 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 .. note::
 
    A Unicode scalar is any Unicode :newTerm:`code point` in the range
-   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive. 
+   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
    Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points,
    which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
@@ -493,7 +493,7 @@ and the “not equal to” operator (``!=``),
 as described in :ref:`BasicOperators_ComparisonOperators`:
 
 .. testcode:: stringEquality
- 
+
    -> let quotation = "We're a lot alike, you and I."
    << // quotation : String = "We\'re a lot alike, you and I."
    -> let sameQuotation = "We're a lot alike, you and I."
