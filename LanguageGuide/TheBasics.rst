@@ -1116,7 +1116,7 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
-Multiple optional bindings can appear in in a single ``if`` statement
+Multiple optional bindings can appear in a single ``if`` statement
 as a comma-separated list of assignment expressions.
 
 .. assertion:: useOfMultipleValueOptionalBinding
