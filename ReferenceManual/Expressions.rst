@@ -1370,9 +1370,6 @@ It has the following form:
 
     <#expression#>?
 
-On its own, the postfix ``?`` operator
-simply returns the value of its argument as an optional.
-
 Optional-chaining expressions must appear within a postfix expression,
 and they cause the postfix expression to be evaluated in a special way.
 If the optional-chaining expression is ``nil``,
