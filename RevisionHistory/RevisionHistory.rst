@@ -6,6 +6,24 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-02-09  * Constants can now be declared without being initialized
+              in local function scope.
+              They must have a set value before first use.
+              For more information, see :ref:`Declarations_ConstantDeclaration`.
+
+            * Constant properties can now only assign a value once in an initializer.
+              For more information,
+              see :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`
+
+            * Multiple optional bindings can now appear in a single ``if`` statement
+              as a comma-separated list of assignment expressions.
+              For more information, see :ref:`TheBasics_OptionalBinding`.
+
+            * A :ref:`Expression_OptionalChainingOperator`
+              must appear within a postfix expression.
+
+            * Protocol casts are no longer limited to ``@objc`` protocols.
+----------  --------------------------------------------------------------------------
 2014-10-16  * Added a full guide to :ref:`Initialization_FailableInitializers`.
 
             * Added a description of :ref:`Protocols_FailableInitializerRequirements`
