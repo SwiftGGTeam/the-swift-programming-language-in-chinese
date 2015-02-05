@@ -1368,10 +1368,7 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?
-
-On its own, the postfix ``?`` operator
-simply returns the value of its argument as an optional.
+    <#optionalExpression#>?.<#postfixExpression#>
 
 Postfix expressions that contain an optional-chaining expression
 are evaluated in a special way.
@@ -1447,6 +1444,7 @@ For example:
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix
