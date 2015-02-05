@@ -1068,7 +1068,7 @@ and to extract that value into a constant or variable,
 as part of a single action.
 ``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
-Write optional bindings for the ``if`` statement as follows:
+Write an optional binding for an ``if`` statement as follows:
 
 .. syntax-outline::
 
@@ -1115,6 +1115,24 @@ would be made available as a variable rather than a constant.
    If you want to work with the optional's value outside of this code block,
    declare a constant or variable yourself
    before the ``if`` statement begins.
+
+Multiple optional bindings can appear in in a single ``if`` statement
+as a comma-separated list of assignment expressions.
+
+.. assertion:: useOfMultipleValueOptionalBinding
+
+   -> let a: String? = "1"
+      let b: String? = "2"
+      if let x = a, y = b {
+         println(x, y)
+      }
+   <- (1, 2)
+
+.. syntax-outline::
+
+   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
+      <#statements#>
+   }
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
