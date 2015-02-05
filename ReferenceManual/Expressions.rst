@@ -202,7 +202,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
    applies the operator precedence to make a more typical parse tree.
    At some point, we will probably have to document the syntax around
    creating operators.  This may need to be discussed in the Language Guide
-   in respect to the spacing rules -- ``x + y * z`` is different than
+   in respect to the spacing rules -- ``x + y * z`` is different from
    ``x + y* z``.
 
 .. note::

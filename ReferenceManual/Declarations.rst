@@ -641,7 +641,7 @@ with one of the following forms:
 
 A second name before the local parameter name
 gives the parameter an external name,
-which can be different than the local parameter name.
+which can be different from the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
