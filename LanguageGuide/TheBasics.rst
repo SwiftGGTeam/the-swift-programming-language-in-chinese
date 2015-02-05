@@ -1068,7 +1068,7 @@ and to extract that value into a constant or variable,
 as part of a single action.
 ``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
-Write optional binding for an ``if`` statement as follows:
+Write an optional binding for an ``if`` statement as follows:
 
 .. syntax-outline::
 
