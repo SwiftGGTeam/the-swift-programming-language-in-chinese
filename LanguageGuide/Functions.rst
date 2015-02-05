@@ -193,7 +193,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(stringToPrint: String) -> Int {
          println(stringToPrint)
-         return countElements(stringToPrint)
+         return count(stringToPrint)
       }
    -> func printWithoutCounting(stringToPrint: String) {
          printAndCount(stringToPrint)
@@ -634,7 +634,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 .. testcode:: constantAndVariableParameters
 
    -> func alignRight(var string: String, count: Int, pad: Character) -> String {
-         let amountToPad = count - countElements(string)
+         let amountToPad = count - count(string)
          if amountToPad < 1 {
             return string
          }
@@ -914,7 +914,7 @@ You do this by writing a complete function type
 immediately after the return arrow (``->``) of the returning function.
 
 The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
-The ``stepForward`` function returns a value one more than its input value, 
+The ``stepForward`` function returns a value one more than its input value,
 and the ``stepBackward`` function returns a value one less than its input value.
 Both functions have a type of ``(Int) -> Int``:
 

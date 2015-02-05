@@ -418,14 +418,14 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-call the global ``countElements`` function
+call the global ``count`` function
 and pass in a string as the function's sole parameter:
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+   -> println("unusualMenagerie has \(count(unusualMenagerie)) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -441,12 +441,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> println("the number of characters in \(word) is \(countElements(word))")
+   -> println("the number of characters in \(word) is \(count(word))")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> println("the number of characters in \(word) is \(countElements(word))")
+   -> println("the number of characters in \(word) is \(count(word))")
    <- the number of characters in café is 4
 
 .. note::
@@ -461,11 +461,11 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``countElements`` function
+   be aware that the ``count`` function
    must iterate over the Unicode scalars in the entire string
    in order to calculate an accurate character count for that string.
 
-   Note also that the character count returned by ``countElements``
+   Note also that the character count returned by ``count``
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
