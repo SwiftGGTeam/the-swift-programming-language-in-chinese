@@ -1373,8 +1373,6 @@ It has the following form:
 On its own, the postfix ``?`` operator
 simply returns the value of its argument as an optional.
 
-Postfix expressions that contain an optional-chaining expression
-are evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
