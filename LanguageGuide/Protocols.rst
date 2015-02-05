@@ -185,7 +185,7 @@ These methods are written as part of the protocol's definition
 in exactly the same way as for normal instance and type methods,
 but without curly braces or a method body.
 Variadic parameters are allowed, subject to the same rules as for normal methods.
-Default values, however, cannot be specified for method parameters within a protocol's definition. 
+Default values, however, cannot be specified for method parameters within a protocol's definition.
 
 As with type property requirements,
 you always prefix type method requirements with the ``class`` keyword
@@ -1151,7 +1151,7 @@ with a single property requirement of a gettable ``Double`` property called ``ar
    Even if you are not interoperating with Objective-C,
    you need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.
-   
+
    Note also that ``@objc`` protocols can be adopted only by classes,
    and not by structures or enumerations.
    If you mark your protocol as ``@objc`` in order to check for conformance,
@@ -1288,7 +1288,7 @@ to reflect the fact that the optional requirement may not have been implemented.
    Even if you are not interoperating with Objective-C,
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
-   
+
    Note also that ``@objc`` protocols can be adopted only by classes,
    and not by structures or enumerations.
    If you mark your protocol as ``@objc`` in order to specify optional requirements,
@@ -1335,7 +1335,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
          func increment() {
             if let amount = dataSource?.incrementForCount?(count) {
                count += amount
-            } else if let amount = dataSource?.fixedIncrement? {
+            } else if let amount = dataSource?.fixedIncrement {
                count += amount
             }
          }
@@ -1409,10 +1409,10 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
          counter.increment()
          println(counter.count)
       }
-   </ 3 
-   </ 6 
-   </ 9 
-   </ 12 
+   </ 3
+   </ 6
+   </ 9
+   </ 12
 
 The code above creates a new ``Counter`` instance;
 sets its data source to be a new ``ThreeSource`` instance;
@@ -1456,11 +1456,11 @@ Once the counter reaches zero, no more counting takes place:
          counter.increment()
          println(counter.count)
       }
-   </ -3 
-   </ -2 
-   </ -1 
-   </ 0 
-   </ 0 
+   </ -3
+   </ -2
+   </ -1
+   </ 0
+   </ 0
 
 .. TODO: Other things to be included
 .. ---------------------------------
