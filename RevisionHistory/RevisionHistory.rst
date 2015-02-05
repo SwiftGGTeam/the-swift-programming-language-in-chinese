@@ -23,6 +23,11 @@ Date        Notes
               must appear within a postfix expression.
 
             * Protocol casts are no longer limited to ``@objc`` protocols.
+
+            * Type casts that can fail at runtime
+              now use the ``as?`` or ``as!`` operator,
+              and type casts that are guaranteed not to fail use the ``as`` operator.
+              For more information, see :ref:`Expressions_Type-CastingOperators`.
 ----------  --------------------------------------------------------------------------
 2014-10-16  * Added a full guide to :ref:`Initialization_FailableInitializers`.
 
