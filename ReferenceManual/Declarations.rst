@@ -2063,7 +2063,7 @@ that introduces the declaration.
     Apply this modifier to a class or to a property, method,
     or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
-    to indicate that that class member can't be overridden in any subclass.
+    to indicate that a class member can't be overridden in any subclass.
 
 .. TODO: Dave may or may not include an example of how to use the 'final' attribute
     in the guide. If he does, include the following sentence:

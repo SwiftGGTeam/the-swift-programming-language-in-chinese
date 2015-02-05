@@ -285,7 +285,7 @@ For example:
 
 In the example above,
 ``let b = ++a`` increments ``a`` *before* returning its value.
-This is why both ``a`` and ``b`` are equal to to the new value of ``1``.
+This is why both ``a`` and ``b`` are equal to the new value of ``1``.
 
 However, ``let c = a++`` increments ``a`` *after* returning its value.
 This means that ``c`` gets the old value of ``1``,
