@@ -257,9 +257,9 @@ Similarly, a stack allows items to be removed only from the end of the collectio
    The concept of a stack is used by the ``UINavigationController`` class
    to model the view controllers in its navigation hierarchy.
    You call the ``UINavigationController`` class
-   ``pushViewController:animated:`` method to add (or push)
+   ``pushViewController(_:animated:)`` method to add (or push)
    a view controller on to the navigation stack,
-   and its ``popViewControllerAnimated:`` method to remove (or pop)
+   and its ``popViewControllerAnimated(_:)`` method to remove (or pop)
    a view controller from the navigation stack.
    A stack is a useful collection model whenever you need a strict
    “last in, first out” approach to managing a collection.
@@ -337,9 +337,9 @@ In this case, ``T`` is used as a placeholder in three places:
 
 * To create a property called ``items``,
   which is initialized with an empty array of values of type ``T``
-* To specify that the ``push`` method has a single parameter called ``item``,
+* To specify that the ``push(_:)`` method has a single parameter called ``item``,
   which must be of type ``T``
-* To specify that the value returned by the ``pop`` method
+* To specify that the value returned by the ``pop()`` method
   will be a value of type ``T``
 
 Because it is a generic type,
@@ -645,7 +645,7 @@ which declares an associated type called ``ItemType``:
 The ``Container`` protocol defines three required capabilities
 that any container must provide:
 
-* It must be possible to add a new item to the container with an ``append`` method.
+* It must be possible to add a new item to the container with an ``append(_:)`` method.
 * It must be possible to access a count of the items in the container
   through a ``count`` property that returns an ``Int`` value.
 * It must be possible to retrieve each item in the container with a subscript
@@ -669,7 +669,7 @@ the ``Container`` protocol needs a way to refer to
 the type of the elements that a container will hold,
 without knowing what that type is for a specific container.
 The ``Container`` protocol needs to specify that
-any value passed to the ``append`` method
+any value passed to the ``append(_:)`` method
 must have the same type as the container's element type,
 and that the value returned by the container's subscript
 will be of the same type as the container's element type.
@@ -681,7 +681,7 @@ The protocol does not define what ``ItemType`` is an alias *for* ---
 that information is left for any conforming type to provide.
 Nonetheless, the ``ItemType`` alias provides a way to refer to
 the type of the items in a ``Container``,
-and to define a type for use with the ``append`` method and subscript,
+and to define a type for use with the ``append(_:)`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
 
 Here's a version of the non-generic ``IntStack`` type from earlier,
@@ -725,7 +725,7 @@ you don't actually need to declare a concrete ``ItemType`` of ``Int``
 as part of the definition of ``IntStack``.
 Because ``IntStack`` conforms to all of the requirements of the ``Container`` protocol,
 Swift can infer the appropriate ``ItemType`` to use,
-simply by looking at the type of the ``append`` method's ``item`` parameter
+simply by looking at the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
 Indeed, if you delete the ``typealias ItemType = Int`` line from the code above,
 everything still works, because it is clear what type should be used for ``ItemType``.
@@ -756,7 +756,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
       }
 
 This time, the placeholder type parameter ``T`` is used as
-the type of the ``append`` method's ``item`` parameter
+the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
 Swift can therefore infer that ``T`` is the appropriate type to use
 as the ``ItemType`` for this particular container.
@@ -770,7 +770,7 @@ You can extend an existing type to add conformance to a protocol,
 as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 This includes a protocol with an associated type.
 
-Swift's ``Array`` type already provides an ``append`` method,
+Swift's ``Array`` type already provides an ``append(_:)`` method,
 a ``count`` property, and a subscript with an ``Int`` index to retrieve its elements.
 These three capabilities match the requirements of the ``Container`` protocol.
 This means that you can extend ``Array`` to conform to the ``Container`` protocol
@@ -782,7 +782,7 @@ as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
 
    -> extension Array: Container {}
 
-Array's existing ``append`` method and subscript enable Swift to infer
+Array's existing ``append(_:)`` method and subscript enable Swift to infer
 the appropriate type to use for ``ItemType``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.

@@ -151,11 +151,11 @@ A ``for``-``in`` statement has the following form:
        <#statements#>
     }
 
-The ``generate`` method is called on the *collection* expression
+The ``generate()`` method is called on the *collection* expression
 to obtain a value of a generator type---that is,
 a type that conforms to the ``GeneratorType`` protocol.
 The program begins executing a loop
-by calling the ``next`` method on the stream.
+by calling the ``next()`` method on the stream.
 If the value returned is not ``None``,
 it is assigned to the *item* pattern,
 the program executes the *statements*,

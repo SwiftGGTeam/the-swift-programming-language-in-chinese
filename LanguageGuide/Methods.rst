@@ -25,7 +25,7 @@ They support the functionality of those instances,
 either by providing ways to access and modify instance properties,
 or by providing functionality related to the instance's purpose.
 Instance methods have exactly the same syntax as functions,
-as described in :doc:`Functions`. 
+as described in :doc:`Functions`.
 
 You write an instance method within the opening and closing braces of the type it belongs to.
 An instance method has implicit access to all other instance methods and properties of that type.
@@ -97,7 +97,7 @@ Methods in Swift are very similar to their counterparts in Objective-C.
 As in Objective-C, the name of a method in Swift typically refers to
 the method's first parameter using a preposition such as
 ``with``, ``for``, or ``by``,
-as seen in the ``incrementBy`` method from the preceding ``Counter`` class example.
+as seen in the ``incrementBy(_:)`` method from the preceding ``Counter`` class example.
 The use of a preposition enables the method to be read as a sentence when it is called.
 Swift makes this established method naming convention easy to write
 by using a different default approach for method parameters
@@ -112,7 +112,7 @@ you will be familiar with from writing Objective-C methods,
 and makes for expressive method calls without the need to qualify your parameter names.
 
 Consider this alternative version of the ``Counter`` class,
-which defines a more complex form of the ``incrementBy`` method:
+which defines a more complex form of the ``incrementBy(_:)`` method:
 
 .. testcode:: externalParameterNames
 
@@ -123,7 +123,7 @@ which defines a more complex form of the ``incrementBy`` method:
          }
       }
 
-This ``incrementBy`` method has two parameters ---
+This ``incrementBy(_:numberOfTimes:)`` method has two parameters ---
 ``amount`` and ``numberOfTimes``.
 By default, Swift treats ``amount`` as a local name only,
 but treats ``numberOfTimes`` as both a local *and* an external name.
@@ -193,7 +193,7 @@ which is exactly equivalent to the instance itself.
 You use the ``self`` property to refer to the current instance
 within its own instance methods.
 
-The ``increment`` method in the example above could have been written like this:
+The ``increment()`` method in the example above could have been written like this:
 
 .. testcode:: instanceMethodsIncrement
 
@@ -250,7 +250,7 @@ Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
 .. TODO: find out why.
-.. TODO: once I actually know why, explain it. 
+.. TODO: once I actually know why, explain it.
 
 However, if you need to modify the properties of your structure or enumeration
 within a particular method,
@@ -279,7 +279,7 @@ before the ``func`` keyword for that method:
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveByX`` method,
+The ``Point`` structure above defines a mutating ``moveByX(_:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -327,7 +327,7 @@ The ``Point`` example shown above could have been written in the following way i
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveByX`` method creates a brand new structure
+This version of the mutating ``moveByX(_:y:)`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -360,7 +360,7 @@ a different member from the same enumeration:
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
 (``Off``, ``Low`` and ``High``)
-every time its ``next`` method is called.
+every time its ``next()`` method is called.
 
 .. _Methods_TypeMethods:
 
@@ -464,7 +464,7 @@ To help manage the ``currentLevel`` property,
 ``LevelTracker`` defines an instance method called ``advanceToLevel``.
 Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
-The ``advanceToLevel`` method returns a Boolean value to indicate
+The ``advanceToLevel(_:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
