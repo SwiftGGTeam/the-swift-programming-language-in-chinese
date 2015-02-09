@@ -30,7 +30,7 @@ This makes it easy to create custom string values for display, storage, and prin
    Swift's ``String`` type is bridged to Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa or Cocoa Touch,
    the entire ``NSString`` API is available to call on any ``String`` value you create
-   when type cast to ``NSString``, as described in :ref:`_TypeCasting_AnyObject`.
+   when type cast to ``NSString``, as described in :ref:`TypeCasting_AnyObject`.
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
 
    For more information about using ``String`` with Foundation and Cocoa,
