@@ -969,8 +969,10 @@ You can extend a class, structure, or enumeration in any access context
 in which the class, structure, or enumeration is available.
 Any type members added in an extension have the same default access level as
 type members declared in the original type being extended.
-For example, if you extend a public type, any new type members you add
+If you extend a public or internal type, any new type members you add
 will have a default access level of internal.
+If you extend a private type, any new type members you add
+will have a default access level of private.
 
 Alternatively, you can mark an extension with an explicit access level modifier
 (for example, ``private extension``)
