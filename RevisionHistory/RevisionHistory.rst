@@ -11,9 +11,9 @@ Date        Notes
               They must have a set value before first use.
               For more information, see :ref:`Declarations_ConstantDeclaration`.
 
-            * Constant properties can now only assign a value once in an initializer.
+            * In an initializer, constant properties can now only assign a value once.
               For more information,
-              see :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`
+              see :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
 
             * Multiple optional bindings can now appear in a single ``if`` statement
               as a comma-separated list of assignment expressions.
