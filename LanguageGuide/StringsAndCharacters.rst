@@ -320,7 +320,8 @@ String literals can include the following special Unicode characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is between one and eight hexadecimal digits
+  where *n* is a hexadecimal number between ``0`` and ``10FFFF``,
+  the range of Unicode's codespace
 
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
