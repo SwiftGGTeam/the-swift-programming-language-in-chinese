@@ -1265,6 +1265,10 @@ to reflect the fact that the optional requirement may not have been implemented.
 
    Optional protocol requirements can only be specified
    if your protocol is marked with the ``@objc`` attribute.
+
+   This attribute indicates that
+   the protocol should be exposed to Objective-C code and is described in
+   `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    Even if you are not interoperating with Objective-C,
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
@@ -1309,7 +1313,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> class Counter {
+   -> @objc class Counter {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
