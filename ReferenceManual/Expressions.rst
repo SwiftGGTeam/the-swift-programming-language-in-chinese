@@ -108,8 +108,6 @@ The Swift standard library provides the following binary operators:
   - ``/`` Divide
   - ``%`` Remainder
   - ``&*`` Multiply, ignoring overflow
-  - ``&/`` Divide, ignoring overflow
-  - ``&%`` Remainder, ignoring overflow
   - ``&`` Bitwise AND
 
 * Additive (Left associative, precedence level 140)
