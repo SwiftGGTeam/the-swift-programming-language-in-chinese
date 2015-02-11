@@ -215,7 +215,20 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of a while statement
 
     while-statement --> ``while`` while-condition  code-block
-    while-condition --> expression | value-binding-pattern
+    while-condition --> expression | optional-binding-list
+
+    optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
+    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT guard-clause-OPT
+    optional-binding-head --> ``let`` identifier-pattern initializer | ``var`` identifier-pattern initializer
+    optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
+    optional-binding-continuation --> identifier-pattern initializer | optional-binding-head
+
+.. NOTE: We considered the following simpler grammar for optional-binding-list:
+
+    optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
+    optional-binding-clause --> pattern-initializer-list guard-clause-OPT
+
+    We opted for the more complex grammar, because the simpler version overproduced.
 
 
 .. _Statements_Do-WhileStatement:
@@ -347,7 +360,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of an if statement
 
     if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | value-binding-pattern
+    if-condition --> expression | optional-binding-list
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
