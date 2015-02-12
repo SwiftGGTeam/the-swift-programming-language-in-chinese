@@ -129,6 +129,10 @@ The Swift standard library provides the following binary operators:
   - ``is`` Type check
   - ``as``, ``as?``, and ``as!`` Type cast
 
+* Nil Coalescing (Right associative, precedence level 131)
+
+  - ``??`` Nil coalescing
+
 * Comparative (No associativity, precedence level 130)
 
   - ``<`` Less than
@@ -148,10 +152,6 @@ The Swift standard library provides the following binary operators:
 * Disjunctive (Left associative, precedence level 110)
 
   - ``||`` Logical OR
-
-* Nil Coalescing (Right associative, precedence level 110)
-
-  - ``??`` Nil coalescing
 
 * Ternary Conditional (Right associative, precedence level 100)
 
