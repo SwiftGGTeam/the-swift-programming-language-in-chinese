@@ -749,6 +749,26 @@ The example below shows the syntax for stored and computed type properties:
          }
       }
 
+.. assertion:: classComputedTypePropertiesAreOverrideable
+
+   -> class A { class var cp: String { return "A" } }
+   -> class B: A { override class var cp: String { return "B" } }
+   -> A.cp
+   << // $R0: String = "A"
+   -> B.cp
+   << // $R1: String = "B"
+
+.. assertion:: staticComputedTypePropertiesAreFinal
+
+   -> class A { static var cp: String { return "A" } }
+   -> class B: A { override static var cp: String { return "B" } }
+   !! <REPL Input>:2:34: error: class var overrides a 'final' class var
+   !! class B: A { override static var cp: String { return "B" } }
+   !!                                  ^
+   !! <REPL Input>:1:22: note: overridden declaration is here
+   !! class A { static var cp: String { return "A" } }
+   !!                      ^
+
 .. note::
 
    The computed type property examples above are for read-only computed type properties,
