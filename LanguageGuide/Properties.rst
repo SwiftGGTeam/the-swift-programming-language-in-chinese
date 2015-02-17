@@ -423,7 +423,7 @@ to enable external users to discover its current calculated volume.
 .. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
-   
+
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 .. TODO: Add an example of a computed property for an enumeration
@@ -520,7 +520,7 @@ or use the default parameter name of ``oldValue``.
 
    ``willSet`` and ``didSet`` observers are not called when
    a property is set in an initializer before delegation takes place.
-   
+
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
    and :ref:`Initialization_InitializerChaining`.
@@ -716,8 +716,9 @@ In Swift, however, type properties are written as part of the type's definition,
 within the type's outer curly braces,
 and each type property is explicitly scoped to the type it supports.
 
-You define type properties for value types with the ``static`` keyword,
-and type properties for class types with the ``class`` keyword.
+You define type properties with the ``static`` keyword.
+For class types, you can also use the ``class`` keyword
+for computed type properties to allow subclasses to override the superclass's implementation.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
@@ -737,7 +738,12 @@ The example below shows the syntax for stored and computed type properties:
          }
       }
    -> class SomeClass {
-         class var computedTypeProperty: Int {
+         static var storedTypeProperty = "Some value."
+         static var computedTypeProperty: Int {
+            // return an Int value here
+   >>       return 42
+         }
+         class var overrideableComputedTypeProperty: Int {
             // return an Int value here
    >>       return 42
          }
