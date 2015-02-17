@@ -6,6 +6,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-02-09  * ``@autoclosure`` is now an attribute of the parameter declaration,
+              not its type.
+              For more information, see :ref:`Attributes_DeclarationAttributes`.
+----------  --------------------------------------------------------------------------
 2015-02-09  * Constants can now be declared without being initialized
               in local function scope.
               They must have a set value before first use.
