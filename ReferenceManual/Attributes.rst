@@ -335,8 +335,6 @@ to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
 
-.. _Attributes_TypeAttributes:
-
 ..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
     ``objc_block`` // Not documenting.
