@@ -188,15 +188,13 @@ Variadic parameters are allowed, subject to the same rules as for normal methods
 Default values, however, cannot be specified for method parameters within a protocol's definition.
 
 As with type property requirements,
-you always prefix type method requirements with the ``class`` keyword
-when they are defined in a protocol.
-This is true even though type method requirements are prefixed with
-the ``static`` keyword when implemented by a structure or enumeration:
+you always prefix type method requirements with the ``static`` keyword
+when they are defined in a protocol:
 
 .. testcode:: typeMethods
 
    -> protocol SomeProtocol {
-         class func someTypeMethod()
+         static func someTypeMethod()
       }
 
 The following example defines a protocol with a single instance method requirement:
