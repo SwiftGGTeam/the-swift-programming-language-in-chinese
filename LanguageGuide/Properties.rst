@@ -717,8 +717,9 @@ within the type's outer curly braces,
 and each type property is explicitly scoped to the type it supports.
 
 You define type properties with the ``static`` keyword.
-For class types, you can also use the ``class`` keyword
-for computed type properties to allow subclasses to override the superclass's implementation.
+For computed type properties for class types,
+you can use the ``class`` keyword instead
+to allow subclasses to override the superclass’s implementation.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
