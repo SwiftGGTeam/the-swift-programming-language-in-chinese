@@ -275,7 +275,7 @@ While Loops
 A ``while`` loop performs a set of statements until a condition becomes ``false``.
 These kinds of loops are best used when
 the number of iterations is not known before the first iteration begins.
-Swift provides two kinds of ``while`` loops.
+Swift provides two kinds of ``while`` loops:
 
 * ``while`` evaluates its condition at the start of each pass through the loop.
 * ``do``-``while`` evaluates its condition at the end of each pass through the loop.
@@ -311,14 +311,12 @@ The rules of the game are as follows:
 * If your turn ends at the bottom of a ladder, you move up that ladder.
 * If your turn ends at the head of a snake, you move down that snake.
 
-.. TODO: update this description to match the look of the final artwork.
-
 The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
 The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indices ``0`` through ``25``):
+(one each at indices ``0`` through ``25``).
 
 .. testcode:: snakesAndLadders1
 
@@ -485,8 +483,7 @@ and so it isn't possible to win the game by moving up a ladder.
 Therefore, it's safe to check for a snake or a ladder as the first action in the loop.
 
 At the start of the game, the player is on “square zero”.
-``board[0]`` always equals ``0``,
-and has no effect.
+``board[0]`` always equals ``0`` and has no effect.
 
 .. testcode:: snakesAndLadders2
 
@@ -627,7 +624,7 @@ to consider additional clauses.
       }
    <- It's really warm. Don't forget to wear sunscreen.
 
-Here, an additional ``if`` statement is added to respond to particularly warm temperatures.
+Here, an additional ``if`` statement was added to respond to particularly warm temperatures.
 The final ``else`` clause remains,
 and it prints a response for any temperatures that are neither too warm nor too cold.
 
@@ -766,7 +763,7 @@ does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
-Multiple matches for a single ``switch`` case can be separated by commas,
+Multiple matches for a single ``switch`` case can be separated by commas
 and can be written over multiple lines if the list is long.
 
 .. syntax-outline::
@@ -864,7 +861,7 @@ and categorizes it on the graph that follows the example.
 .. image:: ../images/coordinateGraphSimple_2x.png
    :align: center
 
-The ``switch`` statement determines if the point is
+The ``switch`` statement determines whether the point is
 at the origin (0, 0)
 on the red x-axis,
 on the orange y-axis,
@@ -1210,8 +1207,8 @@ the number ``5`` is correctly identified as a prime number.
 Labeled Statements
 ~~~~~~~~~~~~~~~~~~
 
-You can nest loops and ``switch`` statements
-inside other loops and ``switch`` statements in Swift
+In Swift, you can nest loops and ``switch`` statements
+inside other loops and ``switch`` statements
 to create complex control flow structures.
 However, loops and ``switch`` statements can both use the ``break`` statement
 to end their execution prematurely.
@@ -1222,7 +1219,7 @@ it can be useful to be explicit about which loop the ``continue`` statement
 should affect.
 
 To achieve these aims,
-you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`,
+you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`
 and use this label with the ``break`` statement or ``continue`` statement
 to end or continue the execution of the labeled statement.
 
@@ -1347,7 +1344,7 @@ to reflect that you must land exactly on square 25.
 
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
-the loop uses a ``switch`` statement to consider the result of the move,
+the loop uses a ``switch`` statement to consider the result of the move
 and to determine whether the move is allowed:
 
 * If the dice roll will move the player onto the final square,
