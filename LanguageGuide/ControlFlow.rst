@@ -317,7 +317,7 @@ Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
 The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indices ``0`` through ``25`` inclusive):
+(one each at indexes ``0`` through ``25`` inclusive):
 
 .. testcode:: snakesAndLadders1
 
