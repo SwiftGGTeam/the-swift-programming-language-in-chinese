@@ -382,7 +382,7 @@ The following approaches are equivalent:
    <- Function for Any
 
 Bridging lets you use an expression of
-a Swift Standard Library type such as ``String``
+a Swift standard library type such as ``String``
 as its corresponding Foundation type such as ``NSString``
 without needing to create a new instance.
 For more information on bridging,
