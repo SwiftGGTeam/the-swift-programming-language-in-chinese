@@ -796,7 +796,7 @@ and then call its returned function with the second integer argument:
     -> addTwoInts(4, 5)
     <$ : Int = 9
     -> // returns a value of 9
-    -> addTwoIntsCurried(4)(5)
+    -> addTwoIntsCurried(4)(b: 5)
     <$ : Int = 9
     -> // returns a value of 9
 
@@ -818,7 +818,7 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
 
 .. testcode:: curried-function
 
-    -> plusOne(10)
+    -> plusOne(b: 10)
     <$ : Int = 11
     -> // returns a value of 11
 
