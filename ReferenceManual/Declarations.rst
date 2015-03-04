@@ -384,8 +384,8 @@ observers to any inherited property (whether stored or computed) by overriding
 the property within a subclass, as described in :ref:`Inheritance_OverridingPropertyObservers`.
 
 The initializer *expression* is optional in the context of a class or structure declaration,
-but required elsewhere. The type annotation is required in all variable declarations that
-include observers, regardless of the context in which they are declared.
+but required elsewhere. The *type* annotation is optional
+when the type can be inferred from the initializer *expression*.
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -475,6 +475,7 @@ are discussed in :ref:`Properties_TypeProperties`.
     variable-declaration --> variable-declaration-head variable-name type-annotation code-block
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-block
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
+    variable-declaration --> variable-declaration-head variable-name initializer willSet-didSet-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
     variable-declaration-head --> attributes-OPT declaration-modifiers-OPT ``var``
