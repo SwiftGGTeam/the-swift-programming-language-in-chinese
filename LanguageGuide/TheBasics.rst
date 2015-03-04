@@ -1251,6 +1251,11 @@ you can see exactly where the invalid state occurred
 and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
+.. note::
+
+   Assertions are disabled when compiling with an optimization level,
+   such as when building with an application target's default Release configuration.
+
 You write an assertion by calling the global ``assert`` function.
 You pass the ``assert`` function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
