@@ -1157,7 +1157,7 @@ Class declarations are declared using the keyword ``class`` and have the followi
 
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-instance methods, class methods, initializers,
+instance methods, type methods, initializers,
 a single deinitializer, subscripts, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
@@ -1801,7 +1801,7 @@ Extension declarations are declared using the keyword ``extension`` and have the
 
 The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed static properties,
-instance methods, static and class methods, initializers, subscript declarations,
+instance methods, static and type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.

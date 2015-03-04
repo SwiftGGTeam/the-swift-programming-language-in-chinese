@@ -170,7 +170,7 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method, instance property, class property, or subscript
+an instance method, type method, instance property, type property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
@@ -214,7 +214,7 @@ by using the ``super`` prefix:
 Overriding Methods
 ~~~~~~~~~~~~~~~~~~
 
-You can override an inherited instance or class method
+You can override an inherited instance or type method
 to provide a tailored or alternative implementation of the method within your subclass.
 
 The following example defines a new subclass of ``Vehicle`` called ``Train``,

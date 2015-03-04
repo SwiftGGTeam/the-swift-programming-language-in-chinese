@@ -621,7 +621,7 @@ It has the following forms:
 .. TODO: Come back and explain the second to last form (i.e., self(arg: value)).
 
 In an initializer, subscript, or instance method, ``self`` refers to the current
-instance of the type in which it occurs. In a static or class method,
+instance of the type in which it occurs. In a type method,
 ``self`` refers to the current type in which it occurs.
 
 The ``self`` expression is used to specify scope when accessing members,
@@ -853,7 +853,7 @@ Implicit Member Expression
 
 An :newTerm:`implicit member expression`
 is an abbreviated way to access a member of a type,
-such as an enumeration case or a class method,
+such as an enumeration case or a type method,
 in a context where type inference
 can determine the implied type.
 It has the following form:
