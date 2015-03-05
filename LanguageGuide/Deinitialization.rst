@@ -57,7 +57,7 @@ This example defines two new types, ``Bank`` and ``Player``, for a simple game.
 The ``Bank`` structure manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
 There can only ever be one ``Bank`` in the game,
-and so the ``Bank`` is implemented as a structure with static properties and methods
+and so the ``Bank`` is implemented as a structure with type properties and methods
 to store and manage its current state:
 
 .. testcode:: deinitializer

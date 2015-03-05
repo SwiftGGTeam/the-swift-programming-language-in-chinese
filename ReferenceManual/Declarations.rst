@@ -224,8 +224,8 @@ The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
-To declare a static constant property,
-mark the declaration with the ``static`` declaration modifier. Static properties
+To declare a constant type property,
+mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class constant properties after they're implemented
@@ -424,7 +424,7 @@ Class and Static Variable Properties
 
 To declare a class computed property, mark the declaration with the ``class`` declaration modifier.
 To declare a static variable property,
-mark the declaration with the ``static`` declaration modifier. Class and static properties
+mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
@@ -881,7 +881,7 @@ The body of an enumeration declared using either form contains
 zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
 including computed properties,
-instance methods, static methods, initializers, type aliases,
+instance methods, type methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
@@ -1091,7 +1091,7 @@ Structure declarations are declared using the keyword ``struct`` and have the fo
 
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-static properties, instance methods, static methods, initializers, subscripts,
+type properties, instance methods, type methods, initializers, subscripts,
 type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
@@ -1387,7 +1387,7 @@ see :ref:`Protocols_PropertyRequirements`.
     you can't declare static or class properties in a protocol declaration.
     Add the following text back in after we get the ability to do 'class' properties:
 
-    To declare a class or static property requirement in a protocol declaration,
+    To declare a type property requirement in a protocol declaration,
     mark the property declaration with the ``class`` keyword. Classes that implement
     this property also declare the property with the ``class`` keyword. Structures
     that implement it must declare the property with the ``static`` keyword instead.
@@ -1800,8 +1800,8 @@ Extension declarations are declared using the keyword ``extension`` and have the
     }
 
 The body of an extension declaration contains zero or more *declarations*.
-These *declarations* can include computed properties, computed static properties,
-instance methods, static and type methods, initializers, subscript declarations,
+These *declarations* can include computed properties, computed type properties,
+instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.

@@ -423,7 +423,7 @@ to enable external users to discover its current calculated volume.
 .. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
-   
+
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 .. TODO: Add an example of a computed property for an enumeration
@@ -520,7 +520,7 @@ or use the default parameter name of ``oldValue``.
 
    ``willSet`` and ``didSet`` observers are not called when
    a property is set in an initializer before delegation takes place.
-   
+
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
    and :ref:`Initialization_InitializerChaining`.
@@ -832,7 +832,7 @@ This observer performs two checks:
 * If the new value of ``currentLevel`` (after any capping) is higher than
   any value previously received by *any* ``AudioChannel`` instance,
   the property observer stores the new ``currentLevel`` value in
-  the ``maxInputLevelForAllChannels`` static property.
+  the ``maxInputLevelForAllChannels`` type property.
 
 .. note::
 
