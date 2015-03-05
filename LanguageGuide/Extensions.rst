@@ -11,7 +11,7 @@ Extensions are similar to categories in Objective-C.
 
 Extensions in Swift can:
 
-* Add computed properties and computed static properties
+* Add computed properties and computed type properties
 * Define instance methods and type methods
 * Provide new initializers
 * Define subscripts
