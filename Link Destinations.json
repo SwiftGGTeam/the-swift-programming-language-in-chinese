@@ -205,6 +205,7 @@
     "declarations-structuredeclaration": "ID367", 
     "declarations-subscriptdeclaration": "ID379", 
     "declarations-typealiasdeclaration": "ID361", 
+    "declarations-typevariableproperties": "ID483", 
     "declarations-variabledeclaration": "ID356", 
     "deinitialization-deinitializersinaction": "ID144", 
     "deinitialization-howdeinitializationworks": "ID143", 
@@ -507,5 +508,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 483
+  "next_id": 484
 }
