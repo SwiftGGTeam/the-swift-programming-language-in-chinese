@@ -812,9 +812,15 @@ or if we know the emergency override password,
 then allow access.
 
 Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
-the first two mini-expressions are ``false``.
+the first two subexpressions are ``false``.
 However, the emergency override password is known,
 so the overall compound expression still evaluates to ``true``.
+
+.. note::
+
+   The Swift logical operators ``&&`` and ``||`` are left-associative,
+   meaning that compound expressions with multiple logical operators will
+   evaluate the leftmost subexpression first.
 
 .. _BasicOperators_Explicit Parentheses:
 
