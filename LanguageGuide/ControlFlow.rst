@@ -103,7 +103,7 @@ It multiplies a starting value of ``1``
 by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
-it simply executes the loop the correct number of times.
+the code simply executes the loop the correct number of times.
 The underscore character ``_``
 (used in place of a loop variable)
 causes the individual values to be ignored
@@ -821,7 +821,7 @@ to provide a natural-language count for numbers of any size:
 	Both the closed range operator (``...``)
 	and half-open range operator (``..<``)
 	functions are overloaded to return either an
-	``IntervalType`` or ``Range``.
+	interval (``IntervalType``) or a range (``Range``).
 	An interval can determine whether it contains a particular element,
 	such as when matching a ``switch`` statement ``case``.
 	A range is a collection of consecutive values,
