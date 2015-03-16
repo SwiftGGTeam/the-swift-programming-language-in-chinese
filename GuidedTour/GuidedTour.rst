@@ -214,13 +214,6 @@ Braces around the body are required.
     -> println(teamScore)
     << 11
 
-.. note::
-
-   In the code above,
-   ``teamScore`` is written on a line by itself.
-   This is a simple way to see the value
-   of a variable inside a playground.
-
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
    with past incartations of the Doctor in Dr. Who.
