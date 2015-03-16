@@ -819,7 +819,7 @@ so the overall compound expression still evaluates to ``true``.
 .. note::
 
    The Swift logical operators ``&&`` and ``||`` are left-associative,
-   meaning that compound expressions with multiple logical operators will
+   meaning that compound expressions with multiple logical operators
    evaluate the leftmost subexpression first.
 
 .. _BasicOperators_Explicit Parentheses:
