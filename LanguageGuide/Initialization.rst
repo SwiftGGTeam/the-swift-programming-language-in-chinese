@@ -1669,9 +1669,9 @@ and ensures that this property always has a value of at least ``1``:
    -> class CartItem: Product {
          let quantity: Int!
          init?(name: String, quantity: Int) {
+            self.quantity = quantity
             super.init(name: name)
             if quantity < 1 { return nil }
-            self.quantity = quantity
          }
       }
 
