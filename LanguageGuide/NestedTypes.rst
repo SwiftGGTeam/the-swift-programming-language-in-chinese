@@ -127,10 +127,10 @@ prefix its name with the name of the type it is nested within:
 .. testcode:: nestedTypes
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
-   << // heartsSymbol : Character = ♡
+   << // heartsSymbol : Character = "♡"
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"
 
-For the example above, 
+For the example above,
 this enables the names of ``Suit``, ``Rank``, and ``Values`` to be kept deliberately short,
 because their names are naturally qualified by the context in which they are defined.
