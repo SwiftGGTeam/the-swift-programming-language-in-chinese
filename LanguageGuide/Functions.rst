@@ -632,8 +632,8 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 
 .. testcode:: constantAndVariableParameters
 
-   -> func alignRight(var string: String, count: Int, pad: Character) -> String {
-         let amountToPad = count - count(string)
+   -> func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
+         let amountToPad = totalLength - count(string)
          if amountToPad < 1 {
             return string
          }
