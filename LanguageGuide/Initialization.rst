@@ -1558,8 +1558,8 @@ to satisfy this requirement within a failable class initializer:
    -> class Product {
          let name: String!
          init?(name: String) {
-            if name.isEmpty { return nil }
             self.name = name
+            if name.isEmpty { return nil }
          }
       }
 
@@ -1777,8 +1777,8 @@ but cannot be an empty string:
          init() {}
          // this initializer creates a document with a non-empty name value
          init?(name: String) {
-            if name.isEmpty { return nil }
             self.name = name
+            if name.isEmpty { return nil }
          }
       }
 
