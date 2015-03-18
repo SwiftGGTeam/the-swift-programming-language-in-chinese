@@ -344,7 +344,7 @@ otherwise, it returns ``false``.
     !! <REPL Input>:1:9: warning: 'is' test is always true
     !! "hello" is String
     !! ^
-    !! <REPL Input>:1:9: warning: downcast from 'String' to unrelated type 'Int' always fails
+    !! <REPL Input>:1:9: warning: cast from 'String' to unrelated type 'Int' always fails
     !! "hello" is Int
     !! ~~~~~~~ ^  ~~~
 
