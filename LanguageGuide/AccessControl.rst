@@ -721,9 +721,9 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !! /tmp/sourcefile_1.swift:2:53: error: cannot invoke '++' with an argument of type 'Int'
+   !! /tmp/sourcefile_1.swift:2:40: error: unary operator '++' cannot be applied to an operand of type 'Int'
    !! let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+   !!                                                     ^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
@@ -734,7 +734,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> let afterEdits = stringToEdit_Module2.numberOfEdits++
    !! /tmp/sourcefile_0.swift:3:52: error: cannot invoke '++' with an argument of type 'Int'
    !! let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+   !!                                                    ^
 
 .. _AccessControl_Initializers:
 
