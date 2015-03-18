@@ -340,7 +340,7 @@ it can't be further modified.
             self.c = 2
          }
       }
-   !! repl.swift:5:20: error: immutable value 'self.c' may only be initialized once
+   !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
    !!             self.c = 2
    !!                    ^
 
@@ -352,7 +352,7 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! repl.swift:4:20: error: cannot assign to 'c' in 'self'
+   !! <REPL Input>:4:16: error: cannot assign to 'c' in 'self'
    !!             self.c = 1
    !!             ~~~~~~ ^
 
