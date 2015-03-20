@@ -183,7 +183,8 @@ Date        Notes
             * Updated the :ref:`StringsAndCharacters_Literals` section
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
-              where ``n`` is between one and eight hexadecimal digits.
+              where ``n`` is a hexadecimal number between 0 and 10FFFF,
+              the range of Unicode's codespace.
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
