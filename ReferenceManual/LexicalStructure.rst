@@ -647,7 +647,11 @@ The present section describes which characters can be used to define custom oper
 Custom operators can begin with one of the ASCII characters
 ``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
 ``&``, ``|``, ``^``, ``?``, or ``~``, or one of the Unicode characters
-defined in the grammar below. After the first character,
+defined in the grammar below
+(which include characters from the
+*Mathematical Operators*, *Miscellaneous Symbols*, and *Dingbats*
+Unicode blocks, among others).
+After the first character,
 combining Unicode characters are also allowed.
 You can also define custom operators as a sequence of two or more dots (for example, ``....``).
 Although you can define custom operators that contain a question mark character (``?``),
