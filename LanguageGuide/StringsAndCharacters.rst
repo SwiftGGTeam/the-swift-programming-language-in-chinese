@@ -311,17 +311,36 @@ such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
-Special Unicode Characters in String Literals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Special Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-String literals can include the following special Unicode characters:
+String literals can include the following special characters:
 
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a hexadecimal number between ``0`` and ``10FFFF``,
+  where *n* is a 1 – 8 digit hexadecimal number
+  with a value between ``0`` and ``10FFFF``,
   the range of Unicode's codespace
+
+.. assertion:: stringLiteralUnicodeScalar
+
+   -> "\u{0}"
+   <- <REPL Input>: String = ""
+   -> "\u{00000000}"
+   <- <REPL Input>: String = ""
+   -> "\u{000000000}"
+   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+"\u{000000000}"
+   !! "\u{000000000}"
+   !! ^
+   -> "\u{10FFFF}"
+   <- <REPL Input>: String = "􏿿"
+   -> "\u{110000}"
+   !! <REPL Input>:2:2: error: invalid unicode scalar
+   !! "\u{110000}"
+   !! ^
 
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
