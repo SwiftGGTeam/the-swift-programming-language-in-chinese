@@ -927,27 +927,17 @@ is ``Int``, not ``(Int)``.
 Guard Expression
 ~~~~~~~~~~~~~~~~
 
-.. QUESTION: Should we note relationship to ``where`` clause in generic parameter constraints?
-
 A :newTerm:`guard expression` is introduced by the keyword ``where``
 followed by an expression.
 It is used to provide an additional condition
-before a pattern in a ``switch`` case is matched
-or a value binding pattern in an ``if`` condition is evaluated.
+before an optional binding declaration is evaluated for
+an ``if`` or ``while`` statement or a ``switch`` statement case.
 
+Constants or variables in an optional binding expression
+can be referenced in a corresponding guard expression
+and throughout the rest of the code within the scope of the case.
 
-If a guard expression is present, the *statements* within the relevant branch
-
-``where`` Statments
-+++++++++++++++++++
-
-.. testcode:: while-let-where-statement
-
-    -> var generator = SequenceOf<Int>([1, 2, 3, 4, 5]).generate()
-       while var number = generator.next() where number < 3 {
-          // ...
-       }
-
+.. QUESTION: Should we note relationship to ``where`` clause in generic parameter constraints?
 
 ``if`` Statements
 +++++++++++++++++
@@ -960,22 +950,62 @@ If a guard expression is present, the *statements* within the relevant branch
           // ...
        }
 
+In the example above, the ``if`` statement branch will only be executed if
+both constants bind to values, and those values are equal.
+Here, the guard expression is equivalent to the following nested ``if`` statement:
+
+.. testcode:: if-let-where-statement
+
+    -> if let x = a, y = b {
+          if x == y {
+             // ...
+          }
+       }
+
 .. syntax-outline::
 
-    if let <#constant 1#> = <#optional 1#>,
-           <#constant 2#> = <#optional 2#> where <#condition 1#> {
-       <#statements#>
-    } else if let <#constant 1#> = <#optional 1#> where <#condition 2#> {
-       <#statements#>
-    } else {
-       <#statements#>
-    }
+   if let <#constantName#> = <#someOptional#>,
+          <#anotherConstantName#> = <#someOtherOptional#> where <#condition#> {
+      <#statements#>
+   } else if var <#variableName#> = <#someOptional#> where <#anotherCondition#> {
+      <#statements#>
+   }
+
+
+``while`` Statments
++++++++++++++++++++
+
+.. testcode:: while-let-where-statement
+
+    -> var generator = SequenceOf<Int>([1, 2, 3, 4, 5]).generate()
+       while var number = generator.next() where number < 3 {
+          // ...
+       }
+
+The above example binds a variable for each iteration of the loop,
+and terminates if that variable does not have a value that is less than ``3``.
+Here, the guard expression is equivalent to the following ``if`` statement:
+
+.. testcode:: while-let-where-statement
+
+    -> while var number = generator.next() {
+          if number < 3 {
+             break
+          } else {
+             // ...
+          }
+       }
+
+.. syntax-outline::
+
+   while let <#constantName#> = <#someOptional#>,
+         var <#variableName#> = <#someOtherOptional#>
+         where <#condition#> {
+      <#statements#>
+   }
 
 ``switch`` Statement Cases
 ++++++++++++++++++++++++++
-
-For instance, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
 
@@ -985,29 +1015,35 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
     >> default: break
     >> }
 
+In the example above, the case will only evaluate
+if both constants  bind to the values considered by the ``switch`` statement,
+and those values are equal.
+Here, the guard expression is equivalent to the following ``if`` statement:
 
-As the above example shows, patterns in a case can also bind constants
-using the keyword ``let`` (they can also bind variables using the keyword ``var``).
-These constants (or variables) can then be referenced in a corresponding guard expression
-and throughout the rest of the code within the scope of the case.
+.. testcode:: switch-case-statement
 
-That said, if the case contains multiple patterns that match the control expression,
+    >> switch (1, 1) {
+    -> case let (x, y):
+    ->   if x == y {
+            // ...
+         }
+    >> break
+    >> default: break
+    >> }
+
+If a case contains multiple patterns that match the control expression,
 none of those patterns can contain constant or variable bindings.
 
 .. syntax-outline::
 
-    switch <#control expression#> {
-       case <#pattern 1#> where <#condition 1#>:
-          <#statements#>
-       case <#pattern 1#> where <#condition 2#>:
-          <#statements#>
-       case <#pattern 2#> where <#condition 3#>,
-            <#pattern 3#> where <#condition 4#>:
-          <#statements#>
-       default:
-          <#statements#>
-    }
-
+   switch <#someOptional#> {
+   case let <#constantName#> where <#condition#>:
+      <#statements#>
+   case var <#variableName#> where <#anotherCondition#>:
+      <#statements#>
+   default:
+      <#statements#>
+   }
 
 .. syntax-grammar::
 
@@ -1018,6 +1054,9 @@ none of those patterns can contain constant or variable bindings.
 
     if-condition --> value-binding-pattern guard-clause-OPT
     if-condition --> value-binding-pattern ``,`` value-binding-pattern guard-clause-OPT
+
+    while-condition --> value-binding-pattern guard-clause-OPT
+    while-condition --> value-binding-pattern ``,`` value-binding-pattern guard-clause-OPT
 
     case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
 

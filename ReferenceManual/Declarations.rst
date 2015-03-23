@@ -281,15 +281,10 @@ with the ``override`` declaration modifier, as described in :ref:`Inheritance_Ov
 Optional Binding
 ~~~~~~~~~~~~~~~~
 
-.. TODO: Replace with new explanation
-
-You use :newTerm:`optional binding` to find out whether an optional contains a value,
-and if so, to make that value available as a temporary constant or variable.
-
-Optional binding can be used with ``if`` and ``while`` statements
-to check for a value inside an optional,
-and to extract that value into a constant or variable,
-as part of a single action.
+Optional binding can be used with ``if`` and ``while`` statements and ``switch`` cases
+to find out whether an optional contains a value,
+and if so, to extract that value into a temporary constant or variable
+and execute the relevant branch.
 
 .. note::
 
@@ -304,29 +299,36 @@ Write optional binding for an ``if`` statement as follows:
 
 .. syntax-outline::
 
-   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
+   if let <#constantName#> = <#someOptional#>,
+          <#anotherConstantName#> = <#someOtherOptional#> {
       <#statements#>
-   } else if let <#constantName#> = <#someOptional#> {
+   } else if var <#variableName#> = <#someOptional#> {
       <#statements#>
    }
 
 ``while`` Statements
 ++++++++++++++++++++
 
+Write optional binding for a ``while`` statement as follows:
+
 .. syntax-outline::
 
    while let <#constantName#> = <#someOptional#>,
-             <#anotherConstantName#> = <#someOtherOptional#> {
+         var <#variableName#> = <#someOtherOptional#> {
       <#statements#>
    }
 
 ``switch`` Statement Cases
 ++++++++++++++++++++++++++
 
+Write optional binding for ``switch`` statement cases as follows:
+
 .. syntax-outline::
 
    switch (<#someOptional#>, <#someOtherOptional#>) {
    case let (<#constantName#>, <#anotherConstantName#>):
+      <#statements#>
+   case (let <#constantName#>, var <#variableName#>):
       <#statements#>
    default:
       <#statements#>
