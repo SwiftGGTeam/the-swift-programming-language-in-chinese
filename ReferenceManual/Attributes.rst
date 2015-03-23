@@ -36,15 +36,6 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a function or method type that takes no arguments
-    and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well.
-    For an example of how to use the ``autoclosure`` attribute,
-    see :ref:`Types_FunctionType`.
-
 ``availability``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
     relative to certain platforms and operating system versions.
@@ -194,14 +185,6 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
-``noescape``
-    Apply this attribute to a function or method type
-    to indicate that it will not be stored for later execution.
-    Because of this, the function or method type is
-    guaranteed not to outlive the lifetime of the call,
-    and explicit use of ``self.`` for properties or methods is not required.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well.
-
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
@@ -214,9 +197,6 @@ the ``noreturn`` attribute to a function or method *type*.
     a function or method that is marked with the ``noreturn`` attribute with a function
     or method that is not. Similar rules apply when you implement a protocol
     method in a conforming type.
-
-    You can also apply this attribute to the type of a function or method
-    to indicate that the function or method doesn't return to its caller.
 
 ``NSApplicationMain``
     Apply this attribute to a class
@@ -334,6 +314,34 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
+.. _Attributes_TypeAttributes:
+
+Type Attributes
+~~~~~~~~~~~~~~~
+
+You can apply type attributes to types only. However, you can also apply the ``noreturn``
+attribute to a function or method *declaration*.
+
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a function or method type that takes no arguments
+    and that returns the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well.
+    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
+
+``noescape``
+    Apply this attribute to a function or method type
+    to indicate that it will not be stored for later execution,
+    such that it is guaranteed not to outlive the lifetime of the call.
+    Function or method type with the ``noescape`` declaration
+    do not require explicit use of ``self.`` for properties or methods.
+
+``noreturn``
+    Apply this attribute to the type of a function or method
+    to indicate that the function or method doesn't return to its caller.
+    You can also mark a function or method declaration with this attribute to indicate that
+    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
 
 ..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
