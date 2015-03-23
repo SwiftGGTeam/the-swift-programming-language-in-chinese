@@ -327,7 +327,8 @@ attribute to a function or method *declaration*.
     by automatically wrapping that expression in a closure with no arguments.
     Apply this attribute to a function or method type that takes no arguments
     and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
 
 ``noescape``
