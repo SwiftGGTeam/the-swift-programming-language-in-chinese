@@ -308,7 +308,7 @@ You can use optional chaining to call a method on an optional value,
 and to check whether that method call is successful.
 You can do this even if that method does not define a return value.
 
-The ``printNumberOfRooms`` method on the ``Residence`` class
+The ``printNumberOfRooms()`` method on the ``Residence`` class
 prints the current value of ``numberOfRooms``.
 Here's how the method looks:
 
@@ -328,7 +328,7 @@ If you call this method on an optional value with optional chaining,
 the method's return type will be ``Void?``, not ``Void``,
 because return values are always of an optional type when called through optional chaining.
 This enables you to use an ``if`` statement
-to check whether it was possible to call the ``printNumberOfRooms`` method,
+to check whether it was possible to call the ``printNumberOfRooms()`` method,
 even though the method does not itself define a return value.
 Compare the return value from the ``printNumberOfRooms`` call against ``nil``
 to see if the method call was successful:
@@ -547,7 +547,7 @@ a property of optional type through optional chaining.
 You can also use optional chaining to call a method that returns a value of optional type,
 and to chain on that method's return value if needed.
 
-The example below calls the ``Address`` class's ``buildingIdentifier`` method
+The example below calls the ``Address`` class's ``buildingIdentifier()`` method
 through optional chaining. This method returns a value of type ``String?``.
 As described above, the ultimate return type of this method call after optional chaining
 is also ``String?``:
@@ -581,8 +581,8 @@ place the optional chaining question mark *after* the method's parentheses:
    In the example above,
    you place the optional chaining question mark *after* the parentheses,
    because the optional value you are chaining on is
-   the ``buildingIdentifier`` method's return value,
-   and not the ``buildingIdentifier`` method itself.
+   the ``buildingIdentifier()`` method's return value,
+   and not the ``buildingIdentifier()`` method itself.
 
 .. TODO: add an example of chaining on a property of optional function type.
    This can then be tied in to a revised description of how

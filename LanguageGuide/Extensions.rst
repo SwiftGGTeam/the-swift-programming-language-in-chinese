@@ -11,7 +11,7 @@ Extensions are similar to categories in Objective-C.
 
 Extensions in Swift can:
 
-* Add computed properties and computed static properties
+* Add computed properties and computed type properties
 * Define instance methods and type methods
 * Provide new initializers
 * Define subscripts
@@ -282,11 +282,11 @@ The following example adds a new instance method called ``repetitions`` to the `
          }
       }
 
-The ``repetitions`` method takes a single argument of type ``() -> ()``,
+The ``repetitions(_:)`` method takes a single argument of type ``() -> ()``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``repetitions`` method on any integer number
+you can call the ``repetitions(_:)`` method on any integer number
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
@@ -447,7 +447,7 @@ The nested enumeration can now be used with any ``Int`` value:
          print("\n")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-   <- + + - 0 - 0 + 
+   <- + + - 0 - 0 +
 
 This function, ``printIntegerKinds``,
 takes an input array of ``Int`` values and iterates over those values in turn.

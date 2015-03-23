@@ -285,7 +285,7 @@ For example:
 
 In the example above,
 ``let b = ++a`` increments ``a`` *before* returning its value.
-This is why both ``a`` and ``b`` are equal to to the new value of ``1``.
+This is why both ``a`` and ``b`` are equal to the new value of ``1``.
 
 However, ``let c = a++`` increments ``a`` *after* returning its value.
 This means that ``c`` gets the old value of ``1``,
@@ -812,9 +812,15 @@ or if we know the emergency override password,
 then allow access.
 
 Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
-the first two mini-expressions are ``false``.
+the first two subexpressions are ``false``.
 However, the emergency override password is known,
 so the overall compound expression still evaluates to ``true``.
+
+.. note::
+
+   The Swift logical operators ``&&`` and ``||`` are left-associative,
+   meaning that compound expressions with multiple logical operators
+   evaluate the leftmost subexpression first.
 
 .. _BasicOperators_Explicit Parentheses:
 

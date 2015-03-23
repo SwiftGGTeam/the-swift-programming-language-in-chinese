@@ -66,7 +66,6 @@
     "accesscontrol-tupletypes": "ID12", 
     "accesscontrol-typealiases": "ID27", 
     "accessing-enumeration-cases": "ID474", 
-    "adding-protocol-conformance-with-an-extension": "ID469", 
     "advancedoperators-bitwiseandoperator": "ID31", 
     "advancedoperators-bitwiseleftandrightshiftoperators": "ID34", 
     "advancedoperators-bitwisenotoperator": "ID30", 
@@ -205,6 +204,7 @@
     "declarations-structuredeclaration": "ID367", 
     "declarations-subscriptdeclaration": "ID379", 
     "declarations-typealiasdeclaration": "ID361", 
+    "declarations-typevariableproperties": "ID483", 
     "declarations-variabledeclaration": "ID356", 
     "deinitialization-deinitializersinaction": "ID144", 
     "deinitialization-howdeinitializationworks": "ID143", 
@@ -267,7 +267,6 @@
     "genericparametersandarguments-genericargumentclause": "ID409", 
     "genericparametersandarguments-genericparameterclause": "ID407", 
     "genericparametersandarguments-whereclauses": "ID408", 
-    "generics": "ID467", 
     "generics-associatedtypes": "ID189", 
     "generics-associatedtypesinaction": "ID190", 
     "generics-extendingagenerictype": "ID185", 
@@ -507,5 +506,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 483
+  "next_id": 484
 }

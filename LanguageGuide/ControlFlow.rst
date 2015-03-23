@@ -126,7 +126,7 @@ You can also iterate over a dictionary to access its key-value pairs.
 Each item in the dictionary is returned as a ``(key, value)`` tuple
 when the dictionary is iterated,
 and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
-for use within in the body of the ``for``-``in`` loop.
+for use within the body of the ``for``-``in`` loop.
 Here, the dictionary's keys are decomposed into a constant called ``animalName``,
 and the dictionary's values are decomposed into a constant called ``legCount``:
 
@@ -317,7 +317,7 @@ Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
 The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indices ``0`` through ``25`` inclusive):
+(one each at indexes ``0`` through ``25`` inclusive):
 
 .. testcode:: snakesAndLadders1
 
@@ -820,9 +820,9 @@ to provide a natural-language count for numbers of any size:
 
 .. note::
 
-	Both the closed range operator (``...``) 
-	and half-open range operator (``..<``) 
-	functions are overloaded to return either an 
+	Both the closed range operator (``...``)
+	and half-open range operator (``..<``)
+	functions are overloaded to return either an
 	``IntervalType`` or ``Range``.
 	An interval can determine whether it contains a particular element,
 	such as when matching a ``switch`` statement ``case``.

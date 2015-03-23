@@ -38,7 +38,7 @@ and null (U+0000).
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with ``//``
-and continue until a carriage return (U+000D) or line feed (U+000A).
+and continue until a line feed (U+000A)  or carriage return (U+000D).
 Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting multiline comments is allowed,
 but the comment markers must be balanced.
@@ -593,15 +593,6 @@ The default inferred type of the characters that make up a string
 is ``Character``. For more information about the ``String`` and ``Character``
 types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
-.. NOTE: We will have this as a single Unicode char, as well as Char which will be a
-   single Unicode grapheme cluster.  Watch for changes around this and the
-   single/double quotes grammar coming after WWDC.  For now, it might be best
-   to just not document the single quoted character literal, because we know
-   that it's going to change.  If we can't make it work right, it's possible we
-   would just delete single quoted strings.  Right now, iterating over a String
-   returns a sequence of UnicodeScalar values.  In the fullness of time, it
-   should return a sequence of Char values.
-
 .. langref-grammar
 
     character_literal ::= '[^'\\\n\r]|character_escape'
@@ -623,7 +614,7 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
-    quoted-text-item --> Any Unicode extended grapheme cluster except ``"``, ``\``, U+000A, or U+000D
+    quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
@@ -640,7 +631,7 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
    character-literal --> ``'`` quoted-character ``'``
    quoted-character --> escaped-character
-   quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
+   quoted-character --> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 
 
 .. _LexicalStructure_Operators:

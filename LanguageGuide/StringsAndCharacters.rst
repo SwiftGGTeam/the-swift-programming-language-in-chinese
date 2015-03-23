@@ -30,7 +30,7 @@ This makes it easy to create custom string values for display, storage, and prin
    Swift's ``String`` type is bridged to Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa or Cocoa Touch,
    the entire ``NSString`` API is available to call on any ``String`` value you create
-   when type cast to ``NSString``, as described in :ref:`_TypeCasting_AnyObject`.
+   when type cast to ``NSString``, as described in :ref:`TypeCasting_AnyObject`.
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
 
    For more information about using ``String`` with Foundation and Cocoa,
@@ -42,7 +42,7 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters
+A string literal is a fixed sequence of textual characters or Unicode scalars
 surrounded by a pair of double quotes (``""``).
 
 Use a string literal as an initial value for a constant or variable:
@@ -219,7 +219,7 @@ with the addition assignment operator (``+=``):
    </ instruction now equals "look over there"
 
 You can append a ``Character`` value to a ``String`` variable
-with the ``String`` type's ``append`` method:
+with the ``String`` type's ``append()`` method:
 
 .. testcode:: concatenation
 
@@ -311,16 +311,36 @@ such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
-Special Unicode Characters in String Literals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Special Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-String literals can include the following special Unicode characters:
+String literals can include the following special characters:
 
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is between one and eight hexadecimal digits
+  where *n* is a 1 – 8 digit hexadecimal number
+  with a value between ``0`` and ``10FFFF``,
+  the range of Unicode's codespace
+
+.. assertion:: stringLiteralUnicodeScalar
+
+   -> "\u{0}"
+   <- <REPL Input>: String = ""
+   -> "\u{00000000}"
+   <- <REPL Input>: String = ""
+   -> "\u{000000000}"
+   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+"\u{000000000}"
+   !! "\u{000000000}"
+   !! ^
+   -> "\u{10FFFF}"
+   <- <REPL Input>: String = "􏿿"
+   -> "\u{110000}"
+   !! <REPL Input>:2:2: error: invalid unicode scalar
+   !! "\u{110000}"
+   !! ^
 
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
@@ -418,14 +438,14 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-call the global ``countElements`` function
+call the global ``count(_:)`` function
 and pass in a string as the function's sole parameter:
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+   -> println("unusualMenagerie has \(count(unusualMenagerie)) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -441,12 +461,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> println("the number of characters in \(word) is \(countElements(word))")
+   -> println("the number of characters in \(word) is \(count(word))")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> println("the number of characters in \(word) is \(countElements(word))")
+   -> println("the number of characters in \(word) is \(count(word))")
    <- the number of characters in café is 4
 
 .. note::
@@ -461,11 +481,11 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``countElements`` function
+   be aware that the ``count(_:)`` function
    must iterate over the Unicode scalars in the entire string
    in order to calculate an accurate character count for that string.
 
-   Note also that the character count returned by ``countElements``
+   Note also that the character count returned by the ``count(_:)`` function
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
@@ -586,7 +606,7 @@ Prefix and Suffix Equality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To check whether a string has a particular string prefix or suffix,
-call the string's ``hasPrefix`` and ``hasSuffix`` methods,
+call the string's ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 
 .. assertion:: prefixComparisonUsesCharactersNotScalars
@@ -643,7 +663,7 @@ the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
       ]
    << // romeoAndJuliet : [String] = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
 
-You can use the ``hasPrefix`` method with the ``romeoAndJuliet`` array
+You can use the ``hasPrefix(_:)`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
 
 .. testcode:: prefixesAndSuffixes
@@ -658,7 +678,7 @@ to count the number of scenes in Act 1 of the play:
    -> println("There are \(act1SceneCount) scenes in Act 1")
    <- There are 5 scenes in Act 1
 
-Similarly, use the ``hasSuffix`` method to count the number of scenes
+Similarly, use the ``hasSuffix(_:)`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. testcode:: prefixesAndSuffixes
@@ -679,7 +699,7 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. note::
 
-   The ``hasPrefix`` and ``hasSuffix`` methods
+   The ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods
    perform a character-by-character canonical equivalence comparison between
    the extended grapheme clusters in each string,
    as described in :ref:`StringsAndCharacters_StringEquality`.

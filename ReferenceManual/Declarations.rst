@@ -224,8 +224,8 @@ The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
-To declare a static constant property,
-mark the declaration with the ``static`` declaration modifier. Static properties
+To declare a constant type property,
+mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class constant properties after they're implemented
@@ -384,8 +384,8 @@ observers to any inherited property (whether stored or computed) by overriding
 the property within a subclass, as described in :ref:`Inheritance_OverridingPropertyObservers`.
 
 The initializer *expression* is optional in the context of a class or structure declaration,
-but required elsewhere. The type annotation is required in all variable declarations that
-include observers, regardless of the context in which they are declared.
+but required elsewhere. The *type* annotation is optional
+when the type can be inferred from the initializer *expression*.
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -417,14 +417,14 @@ For more information and to see an example of how to use property observers,
 see :ref:`Properties_PropertyObservers`.
 
 
-.. _Declarations_StaticVariableProperties:
+.. _Declarations_TypeVariableProperties:
 
-Class and Static Variable Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Class and Type Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To declare a class computed property, mark the declaration with the ``class`` declaration modifier.
-To declare a static variable property,
-mark the declaration with the ``static`` declaration modifier. Class and static properties
+To declare a type variable property,
+mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
@@ -475,6 +475,7 @@ are discussed in :ref:`Properties_TypeProperties`.
     variable-declaration --> variable-declaration-head variable-name type-annotation code-block
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-block
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
+    variable-declaration --> variable-declaration-head variable-name initializer willSet-didSet-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
     variable-declaration-head --> attributes-OPT declaration-modifiers-OPT ``var``
@@ -641,7 +642,7 @@ with one of the following forms:
 
 A second name before the local parameter name
 gives the parameter an external name,
-which can be different than the local parameter name.
+which can be different from the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
@@ -796,7 +797,7 @@ and then call its returned function with the second integer argument:
     -> addTwoInts(4, 5)
     <$ : Int = 9
     -> // returns a value of 9
-    -> addTwoIntsCurried(4)(5)
+    -> addTwoIntsCurried(4)(b: 5)
     <$ : Int = 9
     -> // returns a value of 9
 
@@ -818,7 +819,7 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
 
 .. testcode:: curried-function
 
-    -> plusOne(10)
+    -> plusOne(b: 10)
     <$ : Int = 11
     -> // returns a value of 11
 
@@ -880,7 +881,7 @@ The body of an enumeration declared using either form contains
 zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
 including computed properties,
-instance methods, static methods, initializers, type aliases,
+instance methods, type methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
@@ -1090,7 +1091,7 @@ Structure declarations are declared using the keyword ``struct`` and have the fo
 
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-static properties, instance methods, static methods, initializers, subscripts,
+type properties, instance methods, type methods, initializers, subscripts,
 type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
@@ -1156,7 +1157,7 @@ Class declarations are declared using the keyword ``class`` and have the followi
 
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-instance methods, class methods, initializers,
+instance methods, type methods, initializers,
 a single deinitializer, subscripts, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
@@ -1386,7 +1387,7 @@ see :ref:`Protocols_PropertyRequirements`.
     you can't declare static or class properties in a protocol declaration.
     Add the following text back in after we get the ability to do 'class' properties:
 
-    To declare a class or static property requirement in a protocol declaration,
+    To declare a type property requirement in a protocol declaration,
     mark the property declaration with the ``class`` keyword. Classes that implement
     this property also declare the property with the ``class`` keyword. Structures
     that implement it must declare the property with the ``static`` keyword instead.
@@ -1799,8 +1800,8 @@ Extension declarations are declared using the keyword ``extension`` and have the
     }
 
 The body of an extension declaration contains zero or more *declarations*.
-These *declarations* can include computed properties, computed static properties,
-instance methods, static and class methods, initializers, subscript declarations,
+These *declarations* can include computed properties, computed type properties,
+instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
@@ -2063,7 +2064,7 @@ that introduces the declaration.
     Apply this modifier to a class or to a property, method,
     or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
-    to indicate that that class member can't be overridden in any subclass.
+    to indicate that a class member can't be overridden in any subclass.
 
 .. TODO: Dave may or may not include an example of how to use the 'final' attribute
     in the guide. If he does, include the following sentence:

@@ -162,7 +162,7 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
       }
    <- The shopping list is not empty.
 
-You can add a new item to the end of an array by calling the array's ``append`` method:
+You can add a new item to the end of an array by calling the array's ``append(_:)`` method:
 
 .. testcode:: arraysInferred
 
@@ -232,7 +232,7 @@ with ``"Bananas"`` and ``"Apples"``:
    because String is a value type?
 
 To insert an item into the array at a specified index,
-call the array's ``insert(atIndex:)`` method:
+call the array's ``insert(_:atIndex:)`` method:
 
 .. testcode:: arraysInferred
 
@@ -242,11 +242,11 @@ call the array's ``insert(atIndex:)`` method:
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert`` method inserts a new item with a value of ``"Maple Syrup"``
+This call to the ``insert(_:atIndex:)`` method inserts a new item with a value of ``"Maple Syrup"``
 at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
-Similarly, you remove an item from the array with the ``removeAtIndex`` method.
+Similarly, you remove an item from the array with the ``removeAtIndex(_:)`` method.
 This method removes the item at the specified index and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
@@ -270,9 +270,9 @@ and so the value at index ``0`` is once again equal to ``"Six eggs"``:
    </ firstItem is now equal to "Six eggs"
 
 If you want to remove the final item from an array,
-use the ``removeLast`` method rather than the ``removeAtIndex`` method
+use the ``removeLast()`` method rather than the ``removeAtIndex(_:)`` method
 to avoid the need to query the array's ``count`` property.
-Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
+Like the ``removeAtIndex(_:)`` method, ``removeLast()`` returns the removed item:
 
 .. testcode:: arraysInferred
 
@@ -605,7 +605,7 @@ by assigning a value of ``nil`` for that key:
    << APL has now been removed from the dictionary
 
 Alternatively, remove a key-value pair from a dictionary
-with the ``removeValueForKey`` method.
+with the ``removeValueForKey(_:)`` method.
 This method removes the key-value pair if it exists
 and returns the removed value,
 or returns ``nil`` if no value existed:

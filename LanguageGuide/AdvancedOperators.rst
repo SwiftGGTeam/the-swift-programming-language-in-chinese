@@ -380,15 +380,13 @@ gives you much more flexibility when coding for boundary value conditions.
 However, when you specifically want an overflow condition
 to truncate the number of available bits,
 you can opt in to this behavior rather than triggering an error.
-Swift provides five arithmetic :newTerm:`overflow operators` that opt in to
+Swift provides three arithmetic :newTerm:`overflow operators` that opt in to
 the overflow behavior for integer calculations.
 These operators all begin with an ampersand (``&``):
 
 * Overflow addition (``&+``)
 * Overflow subtraction (``&-``)
 * Overflow multiplication (``&*``)
-* Overflow division (``&/``)
-* Overflow remainder (``&%``)
 
 .. _AdvancedOperators_ValueOverflow:
 
@@ -480,43 +478,6 @@ is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
-.. _AdvancedOperators_DivisionByZero:
-
-Division by Zero
-~~~~~~~~~~~~~~~~
-
-Dividing a number by zero (``i / 0``),
-or trying to calculate remainder by zero (``i % 0``),
-causes an error:
-
-.. testcode:: overflowOperatorsDivZeroError
-
-   -> let x = 1
-   << // x : Int = 1
-   -> let y = x / 0
-   !! <REPL Input>:1:11: error: division by zero
-   !! let y = x / 0
-   !!           ^
- 
-However, the overflow versions of these operators (``&/`` and ``&%``)
-return a value of zero if you divide by zero:
-
-.. testcode:: overflowOperatorsAllowedDivZero
-
-   -> let x = 1
-   << // x : Int = 1
-   -> let y = x &/ 0
-   << // y : Int = 0
-   /> y is equal to \(y)
-   </ y is equal to 0
-
-.. NOTE: currently, this testcode block must be the last in the overflowOperators group,
-   as otherwise the stack trace crash from the division-by-zero will mean that
-   subsequent blocks in the group won't get tested.
-
-.. FIXME: update this example code to check for a true error,
-   rather than a stack trace,
-   once rdar://15804939 has been fixed.
 
 .. _AdvancedOperators_PrecedenceAndAssociativity:
 

@@ -217,7 +217,7 @@ the ``noreturn`` attribute to a function or method *type*.
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
     This attribute causes the property's setter to be synthesized with a *copy*
-    of the property's value---returned by the ``copyWithZone`` method---instead of the
+    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
     value of the property itself.
     The type of the property must conform to the ``NSCopying`` protocol.
 
@@ -235,9 +235,11 @@ the ``noreturn`` attribute to a function or method *type*.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols, properties and methods
-    (including getters and setters) of classes and protocols, initializers,
-    deinitializers, and subscripts. The ``objc`` attribute tells the compiler
+    for example, non-nested classes, protocols,
+    nongeneric enumerations (constrained to integer raw-value types),
+    properties and methods (including getters and setters) of classes and protocols,
+    initializers, deinitializers, and subscripts.
+    The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
     If you apply the ``objc`` attribute to a class or protocol, it's
@@ -246,6 +248,12 @@ the ``noreturn`` attribute to a function or method *type*.
     that inherits from another class marked with the ``objc`` attribute.
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't.
+
+    If you apply the ``objc`` attribute to an enumeration,
+    each enumeration case is exposed to Objective-C code
+    as the concatenation of the enumeration name and the case name.
+    For example, a case named ``Venus`` in a Swift ``Planet`` enumeration
+    is exposed to Objective-C code as a case named ``PlanetVenus``.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
     which consists of an identifier.

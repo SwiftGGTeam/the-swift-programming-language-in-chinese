@@ -954,7 +954,7 @@ However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below uses the ``toInt`` method to try to convert a ``String`` into an ``Int``:
+The example below uses the ``toInt()`` method to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -964,7 +964,7 @@ The example below uses the ``toInt`` method to try to convert a ``String`` into 
    << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt`` method might fail,
+Because the ``toInt()`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -1068,7 +1068,7 @@ and to extract that value into a constant or variable,
 as part of a single action.
 ``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
-Write optional bindings for the ``if`` statement as follows:
+Write an optional binding for an ``if`` statement as follows:
 
 .. syntax-outline::
 
@@ -1115,6 +1115,24 @@ would be made available as a variable rather than a constant.
    If you want to work with the optional's value outside of this code block,
    declare a constant or variable yourself
    before the ``if`` statement begins.
+
+Multiple optional bindings can appear in a single ``if`` statement
+as a comma-separated list of assignment expressions.
+
+.. assertion:: useOfMultipleValueOptionalBinding
+
+   -> let a: String? = "1"
+      let b: String? = "2"
+      if let x = a, y = b {
+         println(x, y)
+      }
+   <- (1, 2)
+
+.. syntax-outline::
+
+   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
+      <#statements#>
+   }
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 

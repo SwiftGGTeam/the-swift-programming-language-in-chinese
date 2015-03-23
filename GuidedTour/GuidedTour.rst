@@ -214,13 +214,6 @@ Braces around the body are required.
     -> println(teamScore)
     << 11
 
-.. note::
-
-   In the code above,
-   ``teamScore`` is written on a line by itself.
-   This is a simple way to see the value
-   of a variable inside a playground.
-
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
    with past incartations of the Doctor in Dr. Who.
@@ -742,7 +735,7 @@ that don't actually override any method in the superclass.
    called ``Circle``
    that takes a radius and a name
    as arguments to its initializer.
-   Implement an ``area`` and a ``simpleDescription`` method
+   Implement an ``area()`` and a ``simpleDescription()`` method
    on the ``Circle`` class.
 
 In addition to simple properties that are stored,
@@ -973,7 +966,7 @@ you don't have to provide one.
 
 .. admonition:: Experiment
 
-   Add a ``color`` method to ``Suit`` that returns "black"
+   Add a ``color()`` method to ``Suit`` that returns "black"
    for spades and clubs, and returns "red" for hearts and diamonds.
 
 .. Suits are in Bridge order, which matches Unicode order.

@@ -6,6 +6,29 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-02-09  * Constants can now be declared without being initialized
+              in local function scope.
+              They must have a set value before first use.
+              For more information, see :ref:`Declarations_ConstantDeclaration`.
+
+            * In an initializer, constant properties can now only assign a value once.
+              For more information,
+              see :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
+
+            * Multiple optional bindings can now appear in a single ``if`` statement
+              as a comma-separated list of assignment expressions.
+              For more information, see :ref:`TheBasics_OptionalBinding`.
+
+            * A :ref:`Expression_OptionalChainingOperator`
+              must appear within a postfix expression.
+
+            * Protocol casts are no longer limited to ``@objc`` protocols.
+
+            * Type casts that can fail at runtime
+              now use the ``as?`` or ``as!`` operator,
+              and type casts that are guaranteed not to fail use the ``as`` operator.
+              For more information, see :ref:`Expressions_Type-CastingOperators`.
+----------  --------------------------------------------------------------------------
 2014-10-16  * Added a full guide to :ref:`Initialization_FailableInitializers`.
 
             * Added a description of :ref:`Protocols_FailableInitializerRequirements`
@@ -47,7 +70,7 @@ Date        Notes
               can no longer be combined with the addition operator (``+``)
               or addition assignment operator (``+=``).
               These operators are now used only with ``String`` values.
-              Use the ``String`` type's ``append`` method
+              Use the ``String`` type's ``append(_:)`` method
               to append a single ``Character`` value onto the end of a string.
 
             * Added information about the ``availability`` attribute to
@@ -87,7 +110,7 @@ Date        Notes
             * Updated the :ref:`CollectionTypes_AccessingAndModifyingAnArray` section
               to note that you can no longer append a single item to an array
               with the ``+=`` operator.
-              Instead, use the ``append`` method,
+              Instead, use the ``append(_:)`` method,
               or append a single-item array with the ``+=`` operator.
 
             * Added a note that the start value ``a``
@@ -160,7 +183,8 @@ Date        Notes
             * Updated the :ref:`StringsAndCharacters_Literals` section
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
-              where ``n`` is between one and eight hexadecimal digits.
+              where ``n`` is a hexadecimal number between 0 and 10FFFF,
+              the range of Unicode's codespace.
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
