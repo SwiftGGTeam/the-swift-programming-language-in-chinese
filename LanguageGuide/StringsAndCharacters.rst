@@ -472,8 +472,8 @@ with a fourth character of ``é``, not ``e``:
 .. note::
 
    Extended grapheme clusters can be composed of one or more Unicode scalars.
-   This means that different characters,
-   and different representations of the same character,
+   This means that different characters—
+   and different representations of the same character—
    can require different amounts of memory to store.
    Because of this, characters in Swift do not each take up
    the same amount of memory within a string's representation.
@@ -485,7 +485,7 @@ with a fourth character of ``é``, not ``e``:
    must iterate over the Unicode scalars in the entire string
    in order to calculate an accurate character count for that string.
 
-   Note also that the character count returned by the ``count(_:)`` function
+   The character count returned by the ``count(_:)`` function
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
@@ -494,6 +494,94 @@ with a fourth character of ``é``, not ``e``:
    To reflect this fact,
    the ``length`` property from ``NSString`` is called ``utf16Count``
    when it is accessed on a Swift ``String`` value.
+
+.. _StringsAndCharacters_StringIndexes:
+
+Accessing and Modifying a String
+--------------------------------
+
+For more on Swift collection types, see :doc:`CollectionTypes`.
+
+.. _StringsAndCharacters_StringIndexes:
+
+String Indexes
+~~~~~~~~~~~~~~
+
+Each ``String`` value has an associated :newterm:`index type`,
+which corresponds to the positions of each ``Character`` it contains.
+
+.. note::
+
+   Swift's ``String`` type cannot be indexed by integer values.
+   As mentioned above,
+   different characters can require different amounts of memory to store,
+   so to determine which ``Character`` is at a particular position,
+   you must iterate over each Unicode scalar from the start of the ``String``.
+
+Use the ``startIndex`` property to access
+the position of the first ``Character`` of a ``String``,
+and the ``endIndex`` property to access
+the posision of the last.
+If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
+
+.. testcode:: stringIndex
+
+   -> let greeting = "السلام عليكم"
+   <- greeting: String = "السلام عليكم"
+   -> println(greeting.startIndex)
+   </ 0
+   -> println(greeting.endIndex)
+   </ 12
+
+.. assertion:: emptyStringIndexes
+
+   -> let emptyString = ""
+   <- emptyString: String = ""
+   -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
+   <- <REPL>: Bool = true
+
+You can use subscript syntax to access
+the ``Character`` at a particular ``String`` index:
+
+.. testcode:: stringIndex
+
+   -> greeting[greeting.startIndex]
+   <- <REPL>: Character = "ا"
+
+Because string indexes are not of ``Integer`` type,
+basic arithmetic operators like ``+`` and ``-`` cannot be used.
+A ``String`` index can access
+its immediately preceding index by calling the ``predecessor()`` method,
+and its immediately succeeding index by calling the ``successor()`` method.
+Any index in a ``String`` can be accessed from any other
+by chaining these methods together,
+or by using the global ``advance(start:n:)`` function.
+Attempting to access an index outside of a string's range
+will trigger a runtime error.
+
+.. testcode:: stringIndex
+
+   -> greeting[greeting.startIndex.successor()]
+   <- <REPL>: Character = "ل"
+   -> greeting[greeting.endIndex.predecessor()]
+   <- <REPL>: Character = "م"
+   -> let index = advance(greeting.startIndex, 7)
+      greeting[index]
+   <- <REPL>: Character = "ع"
+   -> greeting.endIndex.successor() // fatal error: can not increment endIndex
+   !! fatal error: can not increment endIndex
+
+Use the global function ``indicies(_:)`` to create a ``Range`` of all of the
+indexes used to access individual characters in a string.
+
+.. testcode:: stringIndex
+
+   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
+   -> for index in indices(greeting) {
+          print("\(greeting[index]) ")
+      }
+      println("\n")
+   </ ‎ا ل س ل ا م   ع ل ي ك م
 
 .. _StringsAndCharacters_ComparingStrings:
 
