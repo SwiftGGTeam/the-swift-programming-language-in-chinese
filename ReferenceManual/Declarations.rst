@@ -876,7 +876,10 @@ Enumeration Declaration
 
 An :newTerm:`enumeration declaration` introduces a named enumeration type into your program.
 
-Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
+Enumeration declarations have two basic forms and
+are declared at global scope
+or in the context of another class, structure, or enumeration
+using the keyword ``enum``.
 The body of an enumeration declared using either form contains
 zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
@@ -1081,7 +1084,9 @@ Structure Declaration
 ---------------------
 
 A :newTerm:`structure declaration` introduces a named structure type into your program.
-Structure declarations are declared using the keyword ``struct`` and have the following form:
+Structure declarations are declared at global scope
+or in the context of another class, structure, or enumeration
+using the keyword ``struct`` and have the following form:
 
 .. syntax-outline::
 
@@ -1147,7 +1152,9 @@ Class Declaration
 -----------------
 
 A :newTerm:`class declaration` introduces a named class type into your program.
-Class declarations are declared using the keyword ``class`` and have the following form:
+Class declarations are declared at global scope
+or in the context of another class, structure, or enumeration
+using the keyword ``class`` and have the following form:
 
 .. syntax-outline::
 
@@ -1241,7 +1248,8 @@ Protocol Declaration
 --------------------
 
 A :newTerm:`protocol declaration` introduces a named protocol type into your program.
-Protocol declarations are declared using the keyword ``protocol`` and have the following form:
+Protocol declarations are declared at global scope
+using the keyword ``protocol`` and have the following form:
 
 .. syntax-outline::
 
