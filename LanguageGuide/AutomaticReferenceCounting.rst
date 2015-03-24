@@ -862,7 +862,8 @@ Defining a Capture List
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
-with a reference to a class instance (such as ``self`` or ``someInstance``).
+with a reference to a class instance (such as ``self``)
+or a variable initialized with some value (such as ``delegate = self.delegate!``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
