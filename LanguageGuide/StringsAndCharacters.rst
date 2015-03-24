@@ -500,7 +500,8 @@ with a fourth character of ``é``, not ``e``:
 Accessing and Modifying a String
 --------------------------------
 
-For more on Swift collection types, see :doc:`CollectionTypes`.
+You access and modify a string through its methods and properties,
+or by using subscript syntax.
 
 .. _StringsAndCharacters_StringIndexes:
 
@@ -550,7 +551,7 @@ the ``Character`` at a particular ``String`` index:
 
 Because string indexes are not of ``Integer`` type,
 basic arithmetic operators like ``+`` and ``-`` cannot be used.
-A ``String`` index can access
+Instead, a ``String`` index can access
 its immediately preceding index by calling the ``predecessor()`` method,
 and its immediately succeeding index by calling the ``successor()`` method.
 Any index in a ``String`` can be accessed from any other
@@ -582,6 +583,52 @@ indexes used to access individual characters in a string.
       }
       println("\n")
    </ ‎ا ل س ل ا م   ع ل ي ك م
+
+.. _StringsAndCharacters_InsertAndRemove:
+
+Insert and Remove
+~~~~~~~~~~~~~~~~~
+
+.. TODO: Replace with real example
+
+To insert a character into a string at a specified index,
+use the ``insert(_:atIndex:)`` method.
+
+.. testcode:: stringInsertionAndRemoval
+
+   -> var string = "hello"
+   <- string: String = "hello"
+   -> string.insert("!", atIndex: string.endIndex)
+      println(string)
+   -> hello!
+
+To insert another string at a specified index,
+use the ``splice(_:atIndex:)`` method.
+
+.. testcode:: stringInsertionAndRemoval
+
+   -> string.splice(", world", atIndex: string.endIndex.predecessor())
+      println(string)
+   <- hello, world!
+
+To remove a character from a string at a specified index,
+use the ``removeAtIndex(_:)`` method.
+
+.. testcode:: stringInsertionAndRemoval
+
+   -> string.removeAtIndex(string.endIndex.predecessor())
+   <- <REPL>: Character = "!"
+   -> println(string)
+   <- "hello, world"
+
+To remove a substring at a specified range,
+use the ``removeRange(_:)`` method:
+
+   -> let range = Range(start: advance(string.endIndex, -8), end: string.endIndex)
+      string.removeRange(range)
+      println(string)
+   <- "hello"
+
 
 .. _StringsAndCharacters_ComparingStrings:
 
