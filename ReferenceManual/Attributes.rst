@@ -54,8 +54,6 @@ the ``noreturn`` attribute to a function or method *type*.
     * The ``introduced`` argument indicates the first version of the specified platform in which the declaration was introduced.
       It has the following form:
 
-      The ``introduced`` argument has the following form:
-
       .. syntax-outline::
 
           introduced=<#version number#>
@@ -71,7 +69,7 @@ the ``noreturn`` attribute to a function or method *type*.
       The *version number* consists of a positive integer or floating-point decimal number.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
-      The ``obsoleted`` argument has the following form:
+      It has the following form:
 
       .. syntax-outline::
 
