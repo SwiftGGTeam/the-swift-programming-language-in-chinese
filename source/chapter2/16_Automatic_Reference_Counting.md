@@ -462,7 +462,7 @@ println(paragraph!.asHTML())
 paragraph = nil
 ```
 
-注意`HTMLElementdeinitializer`中的消息并没有别打印，证明了`HTMLElement`实例并没有被销毁。
+注意`HTMLElementdeinitializer`中的消息并没有被打印，证明了`HTMLElement`实例并没有被销毁。
 
 <a name="resolving_strong_reference_cycles_for_closures"></a>
 ##解决闭包引起的循环强引用
