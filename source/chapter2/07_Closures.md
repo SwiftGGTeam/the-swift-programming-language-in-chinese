@@ -237,7 +237,7 @@ let strings = numbers.map {
     }
     return output
 }
-// strings 常量被推断为字符串类型数组，即 String[]
+// strings 常量被推断为字符串类型数组，即 [String]
 // 其值为 ["OneSix", "FiveEight", "FiveOneZero"]
 ```
 
