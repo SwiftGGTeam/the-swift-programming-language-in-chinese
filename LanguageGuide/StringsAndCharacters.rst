@@ -321,8 +321,7 @@ String literals can include the following special characters:
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
   where *n* is a 1 – 8 digit hexadecimal number
-  with a value between ``0`` and ``10FFFF``,
-  the range of Unicode's codespace
+  with a value equal to a valid Unicode code point
 
 .. assertion:: stringLiteralUnicodeScalar
 
