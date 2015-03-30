@@ -42,7 +42,7 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters or Unicode scalars
+A string literal is a fixed sequence of textual characters
 surrounded by a pair of double quotes (``""``).
 
 Use a string literal as an initial value for a constant or variable:
