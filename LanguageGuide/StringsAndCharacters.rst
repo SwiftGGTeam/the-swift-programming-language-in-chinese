@@ -163,7 +163,8 @@ when working with strings as value types.
 Working with Characters
 -----------------------
 
-Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
+Swift's ``String`` type represents a collection of ``Character`` values
+in a specified order.
 You can access the individual ``Character`` values in a string
 by iterating over that string with a ``for``-``in`` loop:
 
@@ -185,8 +186,19 @@ from a single-character string literal by providing a ``Character`` type annotat
 
 .. testcode:: characters
 
-   -> let yenSign: Character = "¥"
-   << // yenSign : Character = ¥
+   -> let exclamationMark: Character = "!"
+   << // exclamationMark : Character = !
+
+``String`` values can be constructed by passing an array of ``Character`` values
+as an argument to its initializer:
+
+.. testcode:: characters
+
+   -> let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+      let catString = String(catCharacters)
+      println(catString)
+   <- Cat!🐱
+
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
@@ -515,7 +527,7 @@ which corresponds to the positions of each ``Character`` it contains.
    Swift's ``String`` type cannot be indexed by integer values.
    As mentioned above,
    different characters can require different amounts of memory to store,
-   so to determine which ``Character`` is at a particular position,
+   so in order to determine which ``Character`` is at a particular position,
    you must iterate over each Unicode scalar from the start of the ``String``.
 
 Use the ``startIndex`` property to access
@@ -526,12 +538,12 @@ If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
 .. testcode:: stringIndex
 
-   -> let greeting = "السلام عليكم"
-   <- greeting: String = "السلام عليكم"
+   -> let greeting = "Guten Tag"
+   <- greeting: String = "Guten Tag"
    -> println(greeting.startIndex)
    </ 0
    -> println(greeting.endIndex)
-   </ 12
+   </ 9
 
 .. assertion:: emptyStringIndexes
 
@@ -546,7 +558,7 @@ the ``Character`` at a particular ``String`` index:
 .. testcode:: stringIndex
 
    -> greeting[greeting.startIndex]
-   <- <REPL>: Character = "ا"
+   <- <REPL>: Character = "G"
 
 Because string indexes are not of ``Integer`` type,
 basic arithmetic operators like ``+`` and ``-`` cannot be used.
@@ -562,12 +574,12 @@ will trigger a runtime error.
 .. testcode:: stringIndex
 
    -> greeting[greeting.startIndex.successor()]
-   <- <REPL>: Character = "ل"
+   <- <REPL>: Character = "u"
    -> greeting[greeting.endIndex.predecessor()]
-   <- <REPL>: Character = "م"
+   <- <REPL>: Character = "g"
    -> let index = advance(greeting.startIndex, 7)
-      greeting[index]
-   <- <REPL>: Character = "ع"
+   -> greeting[index]
+   <- <REPL>: Character = "a"
    -> greeting.endIndex.successor() // fatal error: can not increment endIndex
    !! fatal error: can not increment endIndex
 
@@ -576,12 +588,41 @@ indexes used to access individual characters in a string.
 
 .. testcode:: stringIndex
 
-   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
    -> for index in indices(greeting) {
-          print("\(greeting[index]) ")
+         print("\(greeting[index]) ")
       }
       println("\n")
-   </ ‎ا ل س ل ا م   ع ل ي ك م
+   <- G u t e n   T a g
+
+.. _StringsAndCharacters_Index:
+
+Text Directionality
+~~~~~~~~~~~~~~~~~~~
+
+Swift Strings automatically support scripts written right-to-left,
+such as Arabic, Hebrew, Persian, and Urdu.
+
+.. testcode:: stringDirectionality
+
+   -> let welcome = "أهلاً و سهلاً"
+   <- welcome: String = "أهلاً و سهلاً"
+   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
+   -> for index in indices(welcome) {
+          print("\(welcome[index]) ")
+      }
+      println("\n")
+   </ ‎أ ه ل اً   و   س ه ل اً
+
+``String`` values may also contain a mix of left-to-right and right-to-left scripts:
+
+.. testcode:: stringDirectionality
+
+   -> let introduction = "השם שלי Alex. נעים מאוד."
+   <- introduction: String = "שמי Alex. נעים מאוד."
+   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
+   -> for index in indices(introduction) {
+          println("\(introduction[index]) ")
+      }
 
 .. _StringsAndCharacters_InsertAndRemove:
 
@@ -623,11 +664,14 @@ use the ``removeAtIndex(_:)`` method.
 To remove a substring at a specified range,
 use the ``removeRange(_:)`` method:
 
+.. testcode:: stringInsertionAndRemoval
+
    -> let range = Range(start: advance(string.endIndex, -8), end: string.endIndex)
       string.removeRange(range)
       println(string)
    <- "hello"
 
+.. TODO: Find and Replace section, once the standard library supports finding substrings
 
 .. _StringsAndCharacters_ComparingStrings:
 
