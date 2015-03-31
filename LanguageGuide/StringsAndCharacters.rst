@@ -528,7 +528,7 @@ which corresponds to the positions of each ``Character`` it contains.
    As mentioned above,
    different characters can require different amounts of memory to store,
    so in order to determine which ``Character`` is at a particular position,
-   you must iterate over each Unicode scalar from the start of the ``String``.
+   you must iterate over each Unicode scalar from the start or end of the ``String``.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``,
@@ -560,12 +560,12 @@ the ``Character`` at a particular ``String`` index:
    -> greeting[greeting.startIndex]
    <- <REPL>: Character = "G"
 
-Because string indexes are not of ``Integer`` type,
+Because string indexes are not integers,
 basic arithmetic operators like ``+`` and ``-`` cannot be used.
 Instead, a ``String`` index can access
 its immediately preceding index by calling the ``predecessor()`` method,
 and its immediately succeeding index by calling the ``successor()`` method.
-Any index in a ``String`` can be accessed from any other
+Any index in a ``String`` can be accessed from any other index
 by chaining these methods together,
 or by using the global ``advance(start:n:)`` function.
 Attempting to access an index outside of a string's range
@@ -617,7 +617,7 @@ such as Arabic, Hebrew, Persian, and Urdu.
 
 .. testcode:: stringDirectionality
 
-   -> let introduction = "השם שלי Alex. נעים מאוד."
+   -> let introduction = "שלי Alex. נעים מאוד."
    <- introduction: String = "שמי Alex. נעים מאוד."
    >> print("\u{200E}") // LEFT-TO-RIGHT MARK
    -> for index in indices(introduction) {
@@ -666,7 +666,7 @@ use the ``removeRange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> let range = Range(start: advance(string.endIndex, -8), end: string.endIndex)
+   -> let range = advance(string.endIndex, -8)..<string.endIndex
       string.removeRange(range)
       println(string)
    <- "hello"
