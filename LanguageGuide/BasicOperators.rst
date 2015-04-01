@@ -633,6 +633,8 @@ It is said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
 As with the closed range operator,
 the value of ``a`` must not be greater than ``b``.
+If the value of ``a`` is equal to ``b``,
+then the resulting range will be empty.
 
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
 
