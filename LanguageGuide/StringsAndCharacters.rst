@@ -599,16 +599,16 @@ indexes used to access individual characters in a string.
 Text Directionality
 ~~~~~~~~~~~~~~~~~~~
 
-Swift Strings automatically support scripts written right-to-left,
+Swift Strings support scripts written right-to-left,
 such as Arabic, Hebrew, Persian, and Urdu.
 
 .. testcode:: stringDirectionality
 
    -> let welcome = "أهلاً و سهلاً"
    <- welcome: String = "أهلاً و سهلاً"
-   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
    -> for index in indices(welcome) {
-          print("\(welcome[index]) ")
+   >>    print("\u{200E}") // LEFT-TO-RIGHT MARK
+         print("\(welcome[index]) ")
       }
       println("\n")
    </ ‎أ ه ل اً   و   س ه ل اً
@@ -619,10 +619,12 @@ such as Arabic, Hebrew, Persian, and Urdu.
 
    -> let introduction = "שלי Alex. נעים מאוד."
    <- introduction: String = "שמי Alex. נעים מאוד."
-   >> print("\u{200E}") // LEFT-TO-RIGHT MARK
    -> for index in indices(introduction) {
-          println("\(introduction[index]) ")
+   >>    print("\u{200E}") // LEFT-TO-RIGHT MARK
+         print("\(introduction[index]) ")
       }
+      println("\n")
+   </ ‎ש ‎ל ‎י ‎  ‎A ‎l ‎e ‎x ‎. ‎  ‎נ ‎ע ‎י ‎ם ‎  ‎מ ‎א ‎ו ‎ד ‎.
 
 .. _StringsAndCharacters_InsertAndRemove:
 
