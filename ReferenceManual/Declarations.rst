@@ -1241,7 +1241,8 @@ Protocol Declaration
 --------------------
 
 A :newTerm:`protocol declaration` introduces a named protocol type into your program.
-Protocol declarations are declared using the keyword ``protocol`` and have the following form:
+Protocol declarations are declared at global scope
+using the keyword ``protocol`` and have the following form:
 
 .. syntax-outline::
 
@@ -1256,6 +1257,8 @@ implement certain properties, methods, initializers, and subscripts.
 Protocols can also declare special kinds of type aliases,
 called :newTerm:`associated types`, that can specify relationships
 among the various declarations of the protocol.
+Protocol declarations can't contain
+class, structure, enumeration, or other protocol declarations.
 The *protocol member declarations* are discussed in detail below.
 
 Protocol types can inherit from any number of other protocols.
