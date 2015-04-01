@@ -396,7 +396,7 @@ Value Overflow
 Here's an example of what happens when an unsigned value is allowed to overflow,
 using the overflow addition operator (``&+``):
 
-.. testcode:: overflowOperatorsWillOverflow
+.. testcode:: overflowOperatorsWillOverflowInPositiveDirection
 
    -> var willOverflow = UInt8.max
    << // willOverflow : UInt8 = 255
@@ -418,11 +418,6 @@ after the overflow addition is ``00000000``, or zero:
 .. image:: ../images/overflowAddition_2x.png
    :align: center
 
-.. _AdvancedOperators_ValueUnderflow:
-
-Value Underflow
-~~~~~~~~~~~~~~~
-
 Numbers can also become too small to fit in their type's maximum bounds.
 Here's an example.
 
@@ -437,17 +432,17 @@ or ``255`` in decimal:
 
 Here's how that looks in Swift code:
 
-.. testcode:: overflowOperatorsWillUnderflow
+.. testcode:: overflowOperatorsWillOverflowInNegativeDirection
 
-   -> var willUnderflow = UInt8.min
-   << // willUnderflow : UInt8 = 0
-   /> willUnderflow equals \(willUnderflow), which is the smallest value a UInt8 can hold
-   </ willUnderflow equals 0, which is the smallest value a UInt8 can hold
-   -> willUnderflow = willUnderflow &- 1
-   /> willUnderflow is now equal to \(willUnderflow)
-   </ willUnderflow is now equal to 255
+   -> var willOverflow = UInt8.min
+   << // willOverflow : UInt8 = 0
+   /> willOverflow equals \(willOverflow), which is the smallest value a UInt8 can hold
+   </ willOverflow equals 0, which is the smallest value a UInt8 can hold
+   -> willOverflow = willOverflow &- 1
+   /> willOverflow is now equal to \(willOverflow)
+   </ willOverflow is now equal to 255
 
-A similar underflow occurs for signed integers.
+A similar overflow in the negative direction occurs for signed integers.
 All subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted,
 as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
@@ -463,20 +458,22 @@ the largest positive value that an ``Int8`` can hold:
 
 Here's the same thing in Swift code:
 
-.. testcode:: overflowOperatorsWillUnderflow
+.. testcode:: overflowOperatorsWillOverflowInNegativeDirection
 
-   -> var signedUnderflow = Int8.min
-   << // signedUnderflow : Int8 = -128
-   /> signedUnderflow equals \(signedUnderflow), which is the smallest value an Int8 can hold
-   </ signedUnderflow equals -128, which is the smallest value an Int8 can hold
-   -> signedUnderflow = signedUnderflow &- 1
-   /> signedUnderflow is now equal to \(signedUnderflow)
-   </ signedUnderflow is now equal to 127
+   -> var signedOverflow = Int8.min
+   << // signedOverflow : Int8 = -128
+   /> signedOverflow equals \(signedOverflow), which is the smallest value an Int8 can hold
+   </ signedOverflow equals -128, which is the smallest value an Int8 can hold
+   -> signedOverflow = signedOverflow &- 1
+   /> signedOverflow is now equal to \(signedOverflow)
+   </ signedOverflow is now equal to 127
 
-The end result of the overflow and underflow behavior described above
+The end result of the overflow behavior described above
 is that for both signed and unsigned integers,
-overflow always wraps around from the largest valid integer value back to the smallest,
-and underflow always wraps around from the smallest value to the largest.
+overflow in the positive direction
+always wraps around from the largest valid integer value back to the smallest,
+and overflow in the negative direction
+always wraps around from the smallest value to the largest.
 
 
 .. _AdvancedOperators_PrecedenceAndAssociativity:
