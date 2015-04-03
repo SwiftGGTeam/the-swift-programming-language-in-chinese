@@ -215,7 +215,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of a while statement
 
     while-statement --> ``while`` while-condition  code-block
-    while-condition --> expression | optional-binding-list
+    while-condition --> expression | expression-OPT optional-binding-list
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
     optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT guard-clause-OPT
@@ -360,7 +360,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of an if statement
 
     if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | optional-binding-list
+    if-condition --> expression | expression-OPT optional-binding-list
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
