@@ -425,12 +425,6 @@ Something similar happens when
 an unsigned integer is allowed to overflow in the negative direction.
 Here's an example using the overflow subtraction operator (``&-``):
 
-The minimum value that a ``UInt8`` can hold is zero,
-or ``00000000`` in binary.
-If you subtract ``1`` from ``00000000`` using the overflow subtraction operator (``&-``),
-the number will overflow and wrap around to ``11111111``,
-or ``255`` in decimal:
-
 .. testcode:: overflowOperatorsWillOverflowInNegativeDirection
 
    -> var unsignedOverflow = UInt8.min
@@ -441,6 +435,12 @@ or ``255`` in decimal:
    /> unsignedOverflow is now equal to \(unsignedOverflow)
    </ unsignedOverflow is now equal to 255
 
+The minimum value that a ``UInt8`` can hold is zero,
+or ``00000000`` in binary.
+If you subtract ``1`` from ``00000000`` using the overflow subtraction operator (``&-``),
+the number will overflow and wrap around to ``11111111``,
+or ``255`` in decimal:
+
 .. image:: ../images/overflowUnsignedSubtraction_2x.png
    :align: center
 
@@ -448,17 +448,6 @@ Overflow also occurs for signed integers.
 All addition and subtraction for signed integers is performed in bitwise fashion,
 with the sign bit included as part of the numbers being added or subtracted,
 as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
-For example, the minimum value that an ``Int8`` can hold is ``-128``,
-or ``10000000`` in binary.
-Subtracting ``1`` from this binary number with the overflow operator
-gives a binary value of ``01111111``,
-which toggles the sign bit and gives positive ``127``,
-the maximum positive value that an ``Int8`` can hold:
-
-.. image:: ../images/overflowSignedSubtraction_2x.png
-   :align: center
-
-Here's the same thing in Swift code:
 
 .. testcode:: overflowOperatorsWillOverflowSigned
 
@@ -469,6 +458,16 @@ Here's the same thing in Swift code:
    -> signedOverflow = signedOverflow &- 1
    /> signedOverflow is now equal to \(signedOverflow)
    </ signedOverflow is now equal to 127
+
+The minimum value that an ``Int8`` can hold is ``-128``,
+or ``10000000`` in binary.
+Subtracting ``1`` from this binary number with the overflow operator
+gives a binary value of ``01111111``,
+which toggles the sign bit and gives positive ``127``,
+the maximum positive value that an ``Int8`` can hold:
+
+.. image:: ../images/overflowSignedSubtraction_2x.png
+   :align: center
 
 The end result of the overflow behavior described above
 is that for both signed and unsigned integers,
