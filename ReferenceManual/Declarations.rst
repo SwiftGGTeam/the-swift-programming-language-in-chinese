@@ -419,10 +419,11 @@ see :ref:`Properties_PropertyObservers`.
 
 .. _Declarations_TypeVariableProperties:
 
-Class and Type Variable Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-To declare a class computed property, mark the declaration with the ``class`` declaration modifier.
+To declare a class computed property,
+mark the declaration with the ``class`` declaration modifier.
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
