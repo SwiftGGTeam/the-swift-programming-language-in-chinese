@@ -340,7 +340,7 @@ to class declarations.
 .. _Attributes_TypeAttributes:
 
 Type Attributes
-~~~~~~~~~~~~~~~
+---------------
 
 You can apply type attributes to types only. However, you can also apply the ``noreturn``
 attribute to a function or method *declaration*.
