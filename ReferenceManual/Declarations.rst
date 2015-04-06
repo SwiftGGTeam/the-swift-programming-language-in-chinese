@@ -1421,8 +1421,8 @@ For examples of conforming types that implement the method requirements of a pro
 see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the ``class`` declaration modifier. Classes that implement
-this method also declare the method with the ``class`` modifier. Structures
+mark the method declaration with the ``static`` declaration modifier. Classes that implement
+this method declare the method with the ``class`` modifier. Structures
 that implement it must declare the method with the ``static`` declaration modifier instead.
 If you're implementing the method in an extension,
 use the ``class`` modifier if you're extending a class and the ``static`` modifier
