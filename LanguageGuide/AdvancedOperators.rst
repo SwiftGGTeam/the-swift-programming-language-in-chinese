@@ -365,8 +365,8 @@ causes an error:
 
    -> var potentialOverflow = Int16.max
    << // potentialOverflow : Int16 = 32767
-   /> potentialOverflow equals \(potentialOverflow), which is the largest value an Int16 can hold
-   </ potentialOverflow equals 32767, which is the largest value an Int16 can hold
+   /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
+   </ potentialOverflow equals 32767, which is the maximum value an Int16 can hold
    -> potentialOverflow += 1
    xx overflow
    // this causes an error
@@ -393,90 +393,87 @@ These operators all begin with an ampersand (``&``):
 Value Overflow
 ~~~~~~~~~~~~~~
 
-Here's an example of what happens when an unsigned value is allowed to overflow,
+Numbers can overflow in both the positive and negative direction.
+
+Here's an example of what happens when
+an unsigned integer is allowed to overflow in the positive direction,
 using the overflow addition operator (``&+``):
 
-.. testcode:: overflowOperatorsWillOverflow
+.. testcode:: overflowOperatorsWillOverflowInPositiveDirection
 
-   -> var willOverflow = UInt8.max
-   << // willOverflow : UInt8 = 255
-   /> willOverflow equals \(willOverflow), which is the largest value a UInt8 can hold
-   </ willOverflow equals 255, which is the largest value a UInt8 can hold
-   -> willOverflow = willOverflow &+ 1
-   /> willOverflow is now equal to \(willOverflow)
-   </ willOverflow is now equal to 0
+   -> var unsignedOverflow = UInt8.max
+   << // unsignedOverflow : UInt8 = 255
+   /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
+   </ unsignedOverflow equals 255, which is the maximum value a UInt8 can hold
+   -> unsignedOverflow = unsignedOverflow &+ 1
+   /> unsignedOverflow is now equal to \(unsignedOverflow)
+   </ unsignedOverflow is now equal to 0
 
-The variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
+The variable ``unsignedOverflow`` is initialized with the maximum value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
 It is then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8``
-after the overflow addition is ``00000000``, or zero:
+after the overflow addition is ``00000000``, or zero.
 
 .. image:: ../images/overflowAddition_2x.png
    :align: center
 
-.. _AdvancedOperators_ValueUnderflow:
+Something similar happens when
+an unsigned integer is allowed to overflow in the negative direction.
+Here's an example using the overflow subtraction operator (``&-``):
 
-Value Underflow
-~~~~~~~~~~~~~~~
+.. testcode:: overflowOperatorsWillOverflowInNegativeDirection
 
-Numbers can also become too small to fit in their type's maximum bounds.
-Here's an example.
+   -> var unsignedOverflow = UInt8.min
+   << // unsignedOverflow : UInt8 = 0
+   /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
+   </ unsignedOverflow equals 0, which is the minimum value a UInt8 can hold
+   -> unsignedOverflow = unsignedOverflow &- 1
+   /> unsignedOverflow is now equal to \(unsignedOverflow)
+   </ unsignedOverflow is now equal to 255
 
-The *smallest* value that a UInt8 can hold is ``0``
-(which is ``00000000`` in eight-bit binary form).
-If you subtract ``1`` from ``00000000`` using the overflow subtraction operator,
-the number will overflow back round to ``11111111``,
-or ``255`` in decimal:
+The minimum value that a ``UInt8`` can hold is zero,
+or ``00000000`` in binary.
+If you subtract ``1`` from ``00000000`` using the overflow subtraction operator (``&-``),
+the number will overflow and wrap around to ``11111111``,
+or ``255`` in decimal.
 
 .. image:: ../images/overflowUnsignedSubtraction_2x.png
    :align: center
 
-Here's how that looks in Swift code:
-
-.. testcode:: overflowOperatorsWillUnderflow
-
-   -> var willUnderflow = UInt8.min
-   << // willUnderflow : UInt8 = 0
-   /> willUnderflow equals \(willUnderflow), which is the smallest value a UInt8 can hold
-   </ willUnderflow equals 0, which is the smallest value a UInt8 can hold
-   -> willUnderflow = willUnderflow &- 1
-   /> willUnderflow is now equal to \(willUnderflow)
-   </ willUnderflow is now equal to 255
-
-A similar underflow occurs for signed integers.
-All subtraction for signed integers is performed as straight binary subtraction,
-with the sign bit included as part of the numbers being subtracted,
+Overflow also occurs for signed integers.
+All addition and subtraction for signed integers is performed in bitwise fashion,
+with the sign bit included as part of the numbers being added or subtracted,
 as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
-The smallest number that an ``Int8`` can hold is ``-128``,
-which is ``10000000`` in binary.
+
+.. testcode:: overflowOperatorsWillOverflowSigned
+
+   -> var signedOverflow = Int8.min
+   << // signedOverflow : Int8 = -128
+   /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
+   </ signedOverflow equals -128, which is the minimum value an Int8 can hold
+   -> signedOverflow = signedOverflow &- 1
+   /> signedOverflow is now equal to \(signedOverflow)
+   </ signedOverflow is now equal to 127
+
+The minimum value that an ``Int8`` can hold is ``-128``,
+or ``10000000`` in binary.
 Subtracting ``1`` from this binary number with the overflow operator
 gives a binary value of ``01111111``,
 which toggles the sign bit and gives positive ``127``,
-the largest positive value that an ``Int8`` can hold:
+the maximum positive value that an ``Int8`` can hold.
 
 .. image:: ../images/overflowSignedSubtraction_2x.png
    :align: center
 
-Here's the same thing in Swift code:
-
-.. testcode:: overflowOperatorsWillUnderflow
-
-   -> var signedUnderflow = Int8.min
-   << // signedUnderflow : Int8 = -128
-   /> signedUnderflow equals \(signedUnderflow), which is the smallest value an Int8 can hold
-   </ signedUnderflow equals -128, which is the smallest value an Int8 can hold
-   -> signedUnderflow = signedUnderflow &- 1
-   /> signedUnderflow is now equal to \(signedUnderflow)
-   </ signedUnderflow is now equal to 127
-
-The end result of the overflow and underflow behavior described above
-is that for both signed and unsigned integers,
-overflow always wraps around from the largest valid integer value back to the smallest,
-and underflow always wraps around from the smallest value to the largest.
+For both signed and unsigned integers,
+overflow in the positive direction
+wraps around from the maximum valid integer value back to the minimum,
+and overflow in the negative direction
+wraps around from the minimum value to the maximum.
 
 
 .. _AdvancedOperators_PrecedenceAndAssociativity:
