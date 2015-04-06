@@ -469,9 +469,8 @@ the maximum positive value that an ``Int8`` can hold:
 .. image:: ../images/overflowSignedSubtraction_2x.png
    :align: center
 
-The end result of the overflow behavior described above
-is that for both signed and unsigned integers,
-Overflow in the positive direction
+For both signed and unsigned integers,
+overflow in the positive direction
 wraps around from the maximum valid integer value back to the minimum,
 and overflow in the negative direction
 wraps around from the minimum value to the maximum.
