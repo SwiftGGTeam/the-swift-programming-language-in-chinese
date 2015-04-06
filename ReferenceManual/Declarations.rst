@@ -430,7 +430,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. note::
 
-   In a class declaration, the ``static`` declaration modifier has the same effect as
+   In a class declaration, the keyword ``static`` has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
 
 .. TODO: Discuss class properties after they're implemented
