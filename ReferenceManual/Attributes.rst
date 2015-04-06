@@ -185,6 +185,23 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a parameter declaration for
+    a function or method type that takes no arguments
+    and that returns the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
+    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
+
+``noescape``
+    Apply this attribute to a function or method declaration
+    to indicate that a parameter it will not be stored for later execution,
+    such that it is guaranteed not to outlive the lifetime of the call.
+    Function type parameters with the ``noescape`` declaration attribute
+    do not require explicit use of ``self.`` for properties or methods.
+
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
@@ -321,22 +338,6 @@ Type Attributes
 
 You can apply type attributes to types only. However, you can also apply the ``noreturn``
 attribute to a function or method *declaration*.
-
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a function or method type that takes no arguments
-    and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
-    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
-
-``noescape``
-    Apply this attribute to a function or method type
-    to indicate that it will not be stored for later execution,
-    such that it is guaranteed not to outlive the lifetime of the call.
-    Function or method type with the ``noescape`` declaration
-    do not require explicit use of ``self.`` for properties or methods.
 
 ``noreturn``
     Apply this attribute to the type of a function or method
