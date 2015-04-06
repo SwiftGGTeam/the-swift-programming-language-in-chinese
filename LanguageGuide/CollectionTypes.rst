@@ -610,6 +610,9 @@ such as combining two sets together,
 determining which values two sets have in common,
 or determining whether two sets contain all, some, or none of the same values.
 
+
+.. _CollectionTypes_ConstructingSets:
+
 Constructing Sets
 ~~~~~~~~~~~~~~~~~
 
