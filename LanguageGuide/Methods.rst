@@ -371,10 +371,10 @@ Instance methods, as described above,
 are methods that are called on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
-You indicate type methods for classes by writing
-the keyword ``class`` before the method's ``func`` keyword,
-and type methods for structures and enumerations by writing
+You indicate type methods by writing
 the keyword ``static`` before the method's ``func`` keyword.
+Classes may also use the ``class`` keyword
+to allow subclasses to override the superclass’s implementation of that method.
 
 .. note::
 
