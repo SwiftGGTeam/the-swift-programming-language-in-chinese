@@ -146,6 +146,7 @@
     "collectiontypes-arrays": "ID107", 
     "collectiontypes-arraytypeshorthandsyntax": "ID108", 
     "collectiontypes-comparingsets": "ID492", 
+    "collectiontypes-constructingsets": "ID499", 
     "collectiontypes-creatingandinitializinganarray": "ID112", 
     "collectiontypes-creatingandinitializingaset": "ID486", 
     "collectiontypes-creatinganemptydictionary": "ID118", 
@@ -517,5 +518,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 499
+  "next_id": 500
 }
