@@ -470,11 +470,6 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres: Set<String> = {
-        [0] = "Rock"
-        [1] = "Classical"
-        [2] = "Hip hop"
-      }
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -595,9 +590,9 @@ which returns an ordered collection of the provided sequence.
 	-> for genre in sorted(favoriteGenres) {
          println("\(genre)")
       }
-   <- "Classical"
-   <- "Hip hop"
-   <- "[Tool J]"
+   <- Classical
+   <- Hip hop
+   <- [Tool J]
 
 
 .. _CollectionTypes_PerformingSetOperations:
