@@ -228,17 +228,6 @@ The loop is executed as follows:
    execution returns to step 2,
    and the condition expression is evaluated again.
 
-The loop format and execution process described above
-is shorthand for (and equivalent to) the outline below:
-
-.. syntax-outline::
-
-   <#initialization#>
-   while <#condition#> {
-      <#statements#>
-      <#increment#>
-   }
-
 Constants and variables declared within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the ``for`` loop itself.
