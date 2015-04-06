@@ -515,8 +515,8 @@ Because it modifies the ``runningTotal`` variable each time it is called,
 and not just a copy of its initial value.
 Capturing a reference ensures that ``runningTotal`` does not disappear
 when the call to ``makeIncrementer`` ends,
-and ensures that ``runningTotal`` will continue to be available
-the next time that the incrementer function is called.
+and ensures that ``runningTotal`` is available
+the next time the ``incrementer`` function is called..
 
 However, because it does not modify ``amount``,
 and ``amount`` is not mutated outside it,
