@@ -108,8 +108,6 @@ The Swift standard library provides the following binary operators:
   - ``/`` Divide
   - ``%`` Remainder
   - ``&*`` Multiply, ignoring overflow
-  - ``&/`` Divide, ignoring overflow
-  - ``&%`` Remainder, ignoring overflow
   - ``&`` Bitwise AND
 
 * Additive (Left associative, precedence level 140)
@@ -131,6 +129,10 @@ The Swift standard library provides the following binary operators:
   - ``is`` Type check
   - ``as``, ``as?``, and ``as!`` Type cast
 
+* Nil Coalescing (Right associative, precedence level 131)
+
+  - ``??`` Nil coalescing
+
 * Comparative (No associativity, precedence level 130)
 
   - ``<`` Less than
@@ -150,10 +152,6 @@ The Swift standard library provides the following binary operators:
 * Disjunctive (Left associative, precedence level 110)
 
   - ``||`` Logical OR
-
-* Nil Coalescing (Right associative, precedence level 110)
-
-  - ``??`` Nil coalescing
 
 * Ternary Conditional (Right associative, precedence level 100)
 
@@ -202,7 +200,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
    applies the operator precedence to make a more typical parse tree.
    At some point, we will probably have to document the syntax around
    creating operators.  This may need to be discussed in the Language Guide
-   in respect to the spacing rules -- ``x + y * z`` is different than
+   in respect to the spacing rules -- ``x + y * z`` is different from
    ``x + y* z``.
 
 .. note::
@@ -384,7 +382,7 @@ The following approaches are equivalent:
    <- Function for Any
 
 Bridging lets you use an expression of
-a Swift Standard Library type such as ``String``
+a Swift standard library type such as ``String``
 as its corresponding Foundation type such as ``NSString``
 without needing to create a new instance.
 For more information on bridging,
@@ -623,7 +621,7 @@ It has the following forms:
 .. TODO: Come back and explain the second to last form (i.e., self(arg: value)).
 
 In an initializer, subscript, or instance method, ``self`` refers to the current
-instance of the type in which it occurs. In a static or class method,
+instance of the type in which it occurs. In a type method,
 ``self`` refers to the current type in which it occurs.
 
 The ``self`` expression is used to specify scope when accessing members,
@@ -855,7 +853,7 @@ Implicit Member Expression
 
 An :newTerm:`implicit member expression`
 is an abbreviated way to access a member of a type,
-such as an enumeration case or a class method,
+such as an enumeration case or a type method,
 in a context where type inference
 can determine the implied type.
 It has the following form:
@@ -1508,11 +1506,8 @@ It has the following form:
 
     <#expression#>?
 
-On its own, the postfix ``?`` operator
-simply returns the value of its argument as an optional.
-
-Postfix expressions that contain an optional-chaining expression
-are evaluated in a special way.
+Optional-chaining expressions must appear within a postfix expression,
+and they cause the postfix expression to be evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
@@ -1585,6 +1580,7 @@ For example:
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix

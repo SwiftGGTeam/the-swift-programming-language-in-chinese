@@ -954,7 +954,7 @@ However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below uses the ``toInt`` method to try to convert a ``String`` into an ``Int``:
+The example below uses the ``toInt()`` method to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -964,7 +964,7 @@ The example below uses the ``toInt`` method to try to convert a ``String`` into 
    << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt`` method might fail,
+Because the ``toInt()`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -997,8 +997,8 @@ by assigning it the special value ``nil``:
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
 
-If you define an optional constant or variable without providing a default value,
-the constant or variable is automatically set to ``nil`` for you:
+If you define an optional variable without providing a default value,
+the variable is automatically set to ``nil`` for you:
 
 .. testcode:: optionals
 
