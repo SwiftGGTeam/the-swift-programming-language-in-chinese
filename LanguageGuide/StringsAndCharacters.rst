@@ -595,38 +595,6 @@ indexes used to access individual characters in a string.
       println("\n")
    <- G u t e n   T a g
 
-.. _StringsAndCharacters_Index:
-
-Text Directionality
-~~~~~~~~~~~~~~~~~~~
-
-Swift Strings support scripts written right-to-left,
-such as Arabic, Hebrew, Persian, and Urdu.
-
-.. testcode:: stringDirectionality
-
-   -> let welcome = "أهلاً و سهلاً"
-   <- welcome: String = "أهلاً و سهلاً"
-   -> for index in indices(welcome) {
-   >>    print("\u{200E}") // LEFT-TO-RIGHT MARK
-         print("\(welcome[index]) ")
-      }
-      println("\n")
-   </ ‎أ ه ل اً   و   س ه ل اً
-
-``String`` values may also contain a mix of left-to-right and right-to-left scripts:
-
-.. testcode:: stringDirectionality
-
-   -> let introduction = "שלי Alex. נעים מאוד."
-   <- introduction: String = "שמי Alex. נעים מאוד."
-   -> for index in indices(introduction) {
-   >>    print("\u{200E}") // LEFT-TO-RIGHT MARK
-         print("\(introduction[index]) ")
-      }
-      println("\n")
-   </ ‎ש ‎ל ‎י ‎  ‎A ‎l ‎e ‎x ‎. ‎  ‎נ ‎ע ‎י ‎ם ‎  ‎מ ‎א ‎ו ‎ד ‎.
-
 .. _StringsAndCharacters_InsertAndRemove:
 
 Insert and Remove
