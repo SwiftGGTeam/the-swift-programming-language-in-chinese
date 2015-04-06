@@ -416,7 +416,7 @@ This pushes its binary representation just over the size that a ``UInt8`` can ho
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8``
-after the overflow addition is ``00000000``, or zero:
+after the overflow addition is ``00000000``, or zero.
 
 .. image:: ../images/overflowAddition_2x.png
    :align: center
@@ -439,7 +439,7 @@ The minimum value that a ``UInt8`` can hold is zero,
 or ``00000000`` in binary.
 If you subtract ``1`` from ``00000000`` using the overflow subtraction operator (``&-``),
 the number will overflow and wrap around to ``11111111``,
-or ``255`` in decimal:
+or ``255`` in decimal.
 
 .. image:: ../images/overflowUnsignedSubtraction_2x.png
    :align: center
@@ -464,7 +464,7 @@ or ``10000000`` in binary.
 Subtracting ``1`` from this binary number with the overflow operator
 gives a binary value of ``01111111``,
 which toggles the sign bit and gives positive ``127``,
-the maximum positive value that an ``Int8`` can hold:
+the maximum positive value that an ``Int8`` can hold.
 
 .. image:: ../images/overflowSignedSubtraction_2x.png
    :align: center
