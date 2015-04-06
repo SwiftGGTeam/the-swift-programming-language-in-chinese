@@ -287,7 +287,7 @@ Date        Notes
             * Added a new section about :ref:`CollectionTypes_DictionaryTypeShorthandSyntax`,
               which is written as ``[KeyType: ValueType]``.
 
-            * Added a new section about :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+            * Added a new section about :ref:`CollectionTypes_HashValuesForSetTypes`.
 
             * Examples of :ref:`Closures_ClosureExpressions` now use
               the global ``sorted`` function rather than the global ``sort`` function,
