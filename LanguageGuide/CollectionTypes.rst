@@ -737,7 +737,6 @@ the definition for a particular word.
    For more information about using ``Dictionary`` with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
 Dictionary Type Shorthand Syntax
