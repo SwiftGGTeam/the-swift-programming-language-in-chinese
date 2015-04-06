@@ -6,6 +6,8 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-03-09  * Added a new guide section about :ref:`CollectionTypes_Sets`.
+----------  --------------------------------------------------------------------------
 2015-02-09  * Constants can now be declared without being initialized
               in local function scope.
               They must have a set value before first use.
@@ -19,7 +21,7 @@ Date        Notes
               as a comma-separated list of assignment expressions.
               For more information, see :ref:`TheBasics_OptionalBinding`.
 
-            * A :ref:`Expression_OptionalChainingOperator`
+            * An :ref:`Expression_OptionalChainingOperator`
               must appear within a postfix expression.
 
             * Protocol casts are no longer limited to ``@objc`` protocols.
