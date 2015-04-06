@@ -597,20 +597,18 @@ indexes used to access individual characters in a string.
 
 .. _StringsAndCharacters_InsertAndRemove:
 
-Insert and Remove
-~~~~~~~~~~~~~~~~~
-
-.. TODO: Replace with real example
+Inserting and Removing
+~~~~~~~~~~~~~~~~~~~~~~
 
 To insert a character into a string at a specified index,
 use the ``insert(_:atIndex:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> var string = "hello"
-   <- string: String = "hello"
-   -> string.insert("!", atIndex: string.endIndex)
-      println(string)
+   -> var welcome = "hello"
+   <- welcome: String = "hello"
+   -> welcome.insert("!", atIndex: welcome.endIndex)
+      println(welcome)
    -> hello!
 
 To insert another string at a specified index,
@@ -618,28 +616,28 @@ use the ``splice(_:atIndex:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> string.splice(", world", atIndex: string.endIndex.predecessor())
-      println(string)
-   <- hello, world!
+   -> welcome.splice(" there", atIndex: welcome.endIndex.predecessor())
+      println(welcome)
+   <- hello there!
 
 To remove a character from a string at a specified index,
 use the ``removeAtIndex(_:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> string.removeAtIndex(string.endIndex.predecessor())
+   -> welcome.removeAtIndex(welcome.endIndex.predecessor())
    <- <REPL>: Character = "!"
-   -> println(string)
-   <- "hello, world"
+   -> println(welcome)
+   <- "hello there"
 
 To remove a substring at a specified range,
 use the ``removeRange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> let range = advance(string.endIndex, -8)..<string.endIndex
-      string.removeRange(range)
-      println(string)
+   -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
+      welcome.removeRange(range)
+      println(welcome)
    <- "hello"
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
