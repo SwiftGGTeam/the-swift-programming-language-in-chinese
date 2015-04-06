@@ -520,6 +520,7 @@ String Indexes
 ~~~~~~~~~~~~~~
 
 Each ``String`` value has an associated :newterm:`index type`,
+``String.Index``,
 which corresponds to the positions of each ``Character`` it contains.
 
 .. note::
