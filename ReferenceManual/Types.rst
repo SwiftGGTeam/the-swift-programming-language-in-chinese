@@ -181,7 +181,7 @@ function types support functions and methods that take multiple parameters
 and return multiple values.
 
 You can apply the ``autoclosure`` attribute to a parameter declaration for a function type
-that has a parameter type of ``()`` and that returns the type of an expression.
+that has a parameter type of ``()`` and that returns the type of an expression
 (see :ref:`Attributes_DeclarationAttributes`).
 An autoclosure function
 captures an implicit closure over the specified expression, instead of the expression
