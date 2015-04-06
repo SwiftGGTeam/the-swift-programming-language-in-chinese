@@ -506,7 +506,7 @@ with a fourth character of ``é``, not ``e``:
    the ``length`` property from ``NSString`` is called ``utf16Count``
    when it is accessed on a Swift ``String`` value.
 
-.. _StringsAndCharacters_StringIndexes:
+.. _StringsAndCharacters_AccessingAndModifyingAString:
 
 Accessing and Modifying a String
 --------------------------------
@@ -595,7 +595,7 @@ indexes used to access individual characters in a string.
       println("\n")
    <- G u t e n   T a g
 
-.. _StringsAndCharacters_InsertAndRemove:
+.. _StringsAndCharacters_InsertingAndRemoving:
 
 Inserting and Removing
 ~~~~~~~~~~~~~~~~~~~~~~
