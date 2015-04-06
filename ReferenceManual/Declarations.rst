@@ -428,6 +428,11 @@ Classes may mark type computed properties  with the ``class`` declaration modifi
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
+.. note::
+
+   In a class declaration, the keyword ``static`` has the same effect as
+   marking the declaration with both the ``class`` and ``final`` declaration modifiers.
+
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)
     Update: we now have class computed properties. We'll get class stored properites
