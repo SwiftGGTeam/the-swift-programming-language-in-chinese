@@ -523,13 +523,11 @@ Each ``String`` value has an associated :newterm:`index type`,
 ``String.Index``,
 which corresponds to the positions of each ``Character`` it contains.
 
-.. note::
-
-   Swift's ``String`` type cannot be indexed by integer values.
-   As mentioned above,
-   different characters can require different amounts of memory to store,
-   so in order to determine which ``Character`` is at a particular position,
-   you must iterate over each Unicode scalar from the start or end of the ``String``.
+As mentioned above,
+different characters can require different amounts of memory to store,
+so in order to determine which ``Character`` is at a particular position,
+you must iterate over each Unicode scalar from the start or end of that ``String``.
+For this reason, Swift strings cannot be indexed by integer values.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``,
@@ -561,9 +559,7 @@ the ``Character`` at a particular ``String`` index:
    -> greeting[greeting.startIndex]
    <- <REPL>: Character = "G"
 
-Because string indexes are not integers,
-basic arithmetic operators like ``+`` and ``-`` cannot be used.
-Instead, a ``String`` index can access
+A ``String.Index`` value can access
 its immediately preceding index by calling the ``predecessor()`` method,
 and its immediately succeeding index by calling the ``successor()`` method.
 Any index in a ``String`` can be accessed from any other index
