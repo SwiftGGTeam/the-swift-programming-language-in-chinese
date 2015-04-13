@@ -587,7 +587,7 @@ which returns an ordered collection of the provided sequence.
 
 .. testcode:: setIteration
 
-	-> for genre in sorted(favoriteGenres) {
+   -> for genre in sorted(favoriteGenres) {
          println("\(genre)")
       }
    <- Classical
