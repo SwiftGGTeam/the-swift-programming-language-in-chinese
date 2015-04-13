@@ -839,7 +839,7 @@ as a way to initialize the ``airports`` dictionary with two initial items.
 As with arrays,
 you don't have to write the type of the dictionary
 if you're initializing it with a dictionary literal whose keys and values have consistent types.
-The initialization of ``airports`` could have been be written in a shorter form instead:
+The initialization of ``airports`` could have been written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
 
