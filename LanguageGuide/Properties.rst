@@ -787,9 +787,6 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-   -> println(SomeClass.computedTypeProperty)
-   <- 42
-   ---
    -> println(SomeStructure.storedTypeProperty)
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
