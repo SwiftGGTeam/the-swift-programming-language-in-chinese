@@ -799,6 +799,8 @@ to provide a natural-language count for numbers of any size:
             naturalCount = "hundreds of"
          case 1000...999_999:
             naturalCount = "thousands of"
+         case 1_000_000...999_999_999:
+            naturalCount = "millions of"
          default:
             naturalCount = "millions and millions of"
       }
