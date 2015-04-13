@@ -248,7 +248,7 @@ if tenEighty === alsoTenTighty {
 * “等价于”表示两个类类型（class type）的常量或者变量引用同一个类实例。
 * “等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。
 
-当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[运算符函数(Operator Functions)](23_Advanced_Operators.html#operator_functions)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
+当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[运算符函数(Operator Functions)](24_Advanced_Operators.html#operator_functions)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
 
 ### 指针
 
