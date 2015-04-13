@@ -336,7 +336,7 @@ can be written outside of the ``sorted`` function's parentheses as a trailing cl
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map`` method
+As an example, Swift's ``Array`` type has a ``map(_:)`` method
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
@@ -344,10 +344,10 @@ The nature of the mapping and the type of the returned value
 is left up to the closure to specify.
 
 After applying the provided closure to each array element,
-the ``map`` method returns a new array containing all of the new mapped values,
+the ``map(_:)`` method returns a new array containing all of the new mapped values,
 in the same order as their corresponding values in the original array.
 
-Here's how you can use the ``map`` method with a trailing closure
+Here's how you can use the ``map(_:)`` method with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
 The array ``[16, 58, 510]`` is used to create the new array
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
@@ -367,9 +367,9 @@ the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
 You can now use the ``numbers`` array to create an array of ``String`` values,
-by passing a closure expression to the array's ``map`` method as a trailing closure.
+by passing a closure expression to the array's ``map(_:)`` method as a trailing closure.
 Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
-because the ``map`` method has only one parameter,
+because the ``map(_:)`` method has only one parameter,
 and that parameter is provided as a trailing closure:
 
 .. testcode:: arrayMap
@@ -388,7 +388,7 @@ and that parameter is provided as a trailing closure:
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
-The ``map`` method calls the closure expression once for each item in the array.
+The ``map(_:)`` method calls the closure expression once for each item in the array.
 You do not need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
@@ -510,17 +510,18 @@ It does this by capturing the *existing* values of ``runningTotal`` and ``amount
 from its surrounding function
 and using them within its own function body.
 
-Because it does not modify ``amount``,
-``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
-This value is stored along with the new ``incrementer`` function.
-
-However, because it modifies the ``runningTotal`` variable each time it is called,
+Because it modifies the ``runningTotal`` variable each time it is called,
 ``incrementer`` captures a *reference* to the current ``runningTotal`` variable,
 and not just a copy of its initial value.
 Capturing a reference ensures that ``runningTotal`` does not disappear
 when the call to ``makeIncrementer`` ends,
-and ensures that ``runningTotal`` will continue to be available
-the next time that the incrementer function is called.
+and ensures that ``runningTotal`` is available
+the next time the ``incrementer`` function is called..
+
+However, because it does not modify ``amount``,
+and ``amount`` is not mutated outside it,
+``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
+This value is stored along with the new ``incrementer`` function.
 
 .. note::
 
@@ -529,7 +530,7 @@ the next time that the incrementer function is called.
    You don't need to annotate ``amount`` or ``runningTotal``
    to say that they can be used within the nested ``incrementer`` function.
    Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the incrementer function.
+   when it is no longer needed by the ``incrementer`` function.
 
 Here's an example of ``makeIncrementer`` in action:
 

@@ -511,11 +511,11 @@ In addition, you can override any class member
 that is visible in a certain access context.
 
 An override can make an inherited class member more accessible than its superclass version.
-In the example below, class ``A`` is a public class with a private method called ``someMethod``.
+In the example below, class ``A`` is a public class with a private method called ``someMethod()``.
 Class ``B`` is a subclass of ``A``, with a reduced access level of “internal”.
-Nonetheless, class ``B`` provides an override of ``someMethod``
+Nonetheless, class ``B`` provides an override of ``someMethod()``
 with an access level of “internal”, which is *higher* than
-the original implementation of ``someMethod``:
+the original implementation of ``someMethod()``:
 
 .. testcode:: subclassingNoCall
 
@@ -547,7 +547,7 @@ or within the same module as the superclass for an internal member call):
       }
 
 Because superclass ``A`` and subclass ``B`` are defined in the same source file,
-it is valid for the ``B`` implementation of ``someMethod`` to call
+it is valid for the ``B`` implementation of ``someMethod()`` to call
 ``super.someMethod()``.
 
 .. _AccessControl_ConstantsVariablesPropertiesAndSubscripts:
@@ -828,7 +828,7 @@ on any type that adopts the protocol.
    If you define a public protocol,
    the protocol's requirements require a public access level
    for those requirements when they are implemented.
-   This behavior is different than other types,
+   This behavior is different from other types,
    where a public type definition implies
    an access level of internal for the type's members.
 
@@ -969,8 +969,10 @@ You can extend a class, structure, or enumeration in any access context
 in which the class, structure, or enumeration is available.
 Any type members added in an extension have the same default access level as
 type members declared in the original type being extended.
-For example, if you extend a public type, any new type members you add
+If you extend a public or internal type, any new type members you add
 will have a default access level of internal.
+If you extend a private type, any new type members you add
+will have a default access level of private.
 
 Alternatively, you can mark an extension with an explicit access level modifier
 (for example, ``private extension``)

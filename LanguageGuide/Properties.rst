@@ -423,7 +423,7 @@ to enable external users to discover its current calculated volume.
 .. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
-   
+
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 .. TODO: Add an example of a computed property for an enumeration
@@ -520,7 +520,7 @@ or use the default parameter name of ``oldValue``.
 
    ``willSet`` and ``didSet`` observers are not called when
    a property is set in an initializer before delegation takes place.
-   
+
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
    and :ref:`Initialization_InitializerChaining`.
@@ -716,8 +716,10 @@ In Swift, however, type properties are written as part of the type's definition,
 within the type's outer curly braces,
 and each type property is explicitly scoped to the type it supports.
 
-You define type properties for value types with the ``static`` keyword,
-and type properties for class types with the ``class`` keyword.
+You define type properties with the ``static`` keyword.
+For computed type properties for class types,
+you can use the ``class`` keyword instead
+to allow subclasses to override the superclass’s implementation.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
@@ -737,11 +739,36 @@ The example below shows the syntax for stored and computed type properties:
          }
       }
    -> class SomeClass {
-         class var computedTypeProperty: Int {
+         static var storedTypeProperty = "Some value."
+         static var computedTypeProperty: Int {
+            // return an Int value here
+   >>       return 42
+         }
+         class var overrideableComputedTypeProperty: Int {
             // return an Int value here
    >>       return 42
          }
       }
+
+.. assertion:: classComputedTypePropertiesAreOverrideable
+
+   -> class A { class var cp: String { return "A" } }
+   -> class B: A { override class var cp: String { return "B" } }
+   -> A.cp
+   << // $R0: String = "A"
+   -> B.cp
+   << // $R1: String = "B"
+
+.. assertion:: staticComputedTypePropertiesAreFinal
+
+   -> class A { static var cp: String { return "A" } }
+   -> class B: A { override static var cp: String { return "B" } }
+   !! <REPL Input>:2:34: error: class var overrides a 'final' class var
+   !! class B: A { override static var cp: String { return "B" } }
+   !!                                  ^
+   !! <REPL Input>:1:22: note: overridden declaration is here
+   !! class A { static var cp: String { return "A" } }
+   !!                      ^
 
 .. note::
 
@@ -832,7 +859,7 @@ This observer performs two checks:
 * If the new value of ``currentLevel`` (after any capping) is higher than
   any value previously received by *any* ``AudioChannel`` instance,
   the property observer stores the new ``currentLevel`` value in
-  the ``maxInputLevelForAllChannels`` static property.
+  the ``maxInputLevelForAllChannels`` type property.
 
 .. note::
 

@@ -144,21 +144,21 @@ A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes.
 Where you believe this is the case,
 you can try to :newTerm:`downcast` to the subclass type
-with the :newTerm:`type cast operator` (``as``).
+with a :newTerm:`type cast operator` (``as?`` or ``as!``).
 
 Because downcasting can fail,
 the type cast operator comes in two different forms.
-The optional form, ``as?``, returns an optional value of the type you are trying to downcast to.
-The forced form, ``as``, attempts the downcast and force-unwraps the result
+The conditional form, ``as?``, returns an optional value of the type you are trying to downcast to.
+The forced form, ``as!``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
-Use the optional form of the type cast operator (``as?``)
+Use the conditional form of the type cast operator (``as?``)
 when you are not sure if the downcast will succeed.
 This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
 This enables you to check for a successful downcast.
 
-Use the forced form of the type cast operator (``as``)
+Use the forced form of the type cast operator (``as!``)
 only when you are sure that the downcast will always succeed.
 This form of the operator will trigger a runtime error
 if you try to downcast to an incorrect class type.
@@ -174,7 +174,7 @@ for use in the description.
 In this example, each item in the array might be a ``Movie``,
 or it might be a ``Song``.
 You don't know in advance which actual class to use for each item,
-and so it is appropriate to use the optional form of the type cast operator (``as?``)
+and so it is appropriate to use the conditional form of the type cast operator (``as?``)
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
@@ -230,6 +230,11 @@ whenever a ``Song`` is found in the library.
    to introduce type casting in a pattern matching context
    and to set up the crazy Any example at the end of the chapter.
 
+.. No section on upcasting because nobody can come up with
+   an example that isn't excessively contrived.
+   The reference shows the behavior in a contrived example.
+
+
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject
@@ -245,6 +250,7 @@ Swift provides two special type aliases for working with non-specific types:
    Use ``Any`` and ``AnyObject`` only when you explicitly need
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
+
 
 .. _TypeCasting_AnyObject:
 
@@ -275,12 +281,12 @@ and populates this array with three instances of the ``Movie`` class:
 
 Because this array is known to contain only ``Movie`` instances,
 you can downcast and unwrap directly to a non-optional ``Movie``
-with the forced version of the type cast operator (``as``):
+with the forced version of the type cast operator (``as!``):
 
 .. testcode:: typeCasting
 
    -> for object in someObjects {
-         let movie = object as Movie
+         let movie = object as! Movie
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
@@ -293,7 +299,7 @@ instead of downcasting each item:
 
 .. testcode:: typeCasting
 
-   -> for movie in someObjects as [Movie] {
+   -> for movie in someObjects as! [Movie] {
          println("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick

@@ -180,9 +180,9 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
 and return multiple values.
 
-You can apply the ``autoclosure`` attribute to a function type that has a parameter
-type of ``()`` and that returns the type of an expression
-(see :ref:`Attributes_TypeAttributes`).
+You can apply the ``autoclosure`` attribute to a parameter declaration for a function type
+that has a parameter type of ``()`` and that returns the type of an expression
+(see :ref:`Attributes_DeclarationAttributes`).
 An autoclosure function
 captures an implicit closure over the specified expression, instead of the expression
 itself. The following example uses the ``autoclosure`` attribute in defining
@@ -190,7 +190,7 @@ a very simple assert function:
 
 .. testcode:: function-autoclosure
 
-    -> func simpleAssert(condition: @autoclosure () -> Bool, message: String) {
+    -> func simpleAssert(@autoclosure condition: () -> Bool, message: String) {
            if !condition() {
                println(message)
            }
@@ -363,8 +363,10 @@ The subscript returns an optional value of the dictionary's value type.
 If the specified key isn't contained in the dictionary,
 the subscript returns ``nil``.
 
-The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
-as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol.
+
+.. Used to have an xref to :ref:`CollectionTypes_HashValuesForSetTypes` here.
+   But it doesnt really work now that the Hashable content moved from Dictionary to Set.
 
 For a detailed discussion of the Swift standard library ``Dictionary`` type,
 see :ref:`CollectionTypes_Dictionaries`.

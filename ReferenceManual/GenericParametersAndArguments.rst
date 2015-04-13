@@ -145,7 +145,7 @@ or initializer to invoke.
 
     conformance-requirement --> type-identifier ``:`` type-identifier
     conformance-requirement --> type-identifier ``:`` protocol-composition-type
-    same-type-requirement --> type-identifier ``==`` type-identifier
+    same-type-requirement --> type-identifier ``==`` type
 
 .. NOTE: A conformance requirement can only have one type after the colon,
     otherwise, you'd have a syntactic ambiguity

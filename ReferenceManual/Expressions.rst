@@ -108,8 +108,6 @@ The Swift standard library provides the following binary operators:
   - ``/`` Divide
   - ``%`` Remainder
   - ``&*`` Multiply, ignoring overflow
-  - ``&/`` Divide, ignoring overflow
-  - ``&%`` Remainder, ignoring overflow
   - ``&`` Bitwise AND
 
 * Additive (Left associative, precedence level 140)
@@ -129,7 +127,11 @@ The Swift standard library provides the following binary operators:
 * Cast (No associativity, precedence level 132)
 
   - ``is`` Type check
-  - ``as`` Type cast
+  - ``as``, ``as?``, and ``as!`` Type cast
+
+* Nil Coalescing (Right associative, precedence level 131)
+
+  - ``??`` Nil coalescing
 
 * Comparative (No associativity, precedence level 130)
 
@@ -150,10 +152,6 @@ The Swift standard library provides the following binary operators:
 * Disjunctive (Left associative, precedence level 110)
 
   - ``||`` Logical OR
-
-* Nil Coalescing (Right associative, precedence level 110)
-
-  - ``??`` Nil coalescing
 
 * Ternary Conditional (Right associative, precedence level 100)
 
@@ -202,7 +200,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
    applies the operator precedence to make a more typical parse tree.
    At some point, we will probably have to document the syntax around
    creating operators.  This may need to be discussed in the Language Guide
-   in respect to the spacing rules -- ``x + y * z`` is different than
+   in respect to the spacing rules -- ``x + y * z`` is different from
    ``x + y* z``.
 
 .. note::
@@ -317,37 +315,38 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are three type-casting operators,
-the ``is`` operator, the ``as?`` operator,
-and the ``as`` operator.
+There are four type-casting operators:
+the ``is`` operator,
+the ``as`` operator,
+the ``as?`` operator,
+and the ``as!`` operator.
+
 They have the following form:
 
 .. syntax-outline::
 
     <#expression#> is <#type#>
-    <#expression#> as? <#type#>
     <#expression#> as <#type#>
+    <#expression#> as? <#type#>
+    <#expression#> as! <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
 can be downcast to the specified *type*.
 It returns ``true`` if the *expression* can be downcast to the specified *type*;
 otherwise, it returns ``false``.
-If casting to the specified *type*
-is guaranteed to succeed or fail,
-a compile-time error is raised.
-For example, ``10 is Int`` and ``10 is String``
-both raise compile-time errors.
 
 .. assertion:: triviallyTrueIsAndAs
 
     -> "hello" is String
-    !! <REPL Input>:1:9: error: 'is' test is always true
-    !! "hello" is String
-    !!         ^
     -> "hello" is Int
-    !! <REPL Input>:1:9: error: 'Int' is not a subtype of 'String'
+    <$ : Bool = true
+    <$ : Bool = false
+    !! <REPL Input>:1:9: warning: 'is' test is always true
+    !! "hello" is String
+    !! ^
+    !! <REPL Input>:1:9: warning: downcast from 'String' to unrelated type 'Int' always fails
     !! "hello" is Int
-    !!         ^
+    !! ~~~~~~~ ^  ~~~
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
@@ -355,8 +354,40 @@ both raise compile-time errors.
     can be cast to the specified *type*
     If so, it returns ``true``; otherwise, it returns ``false``.
 
-    See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
     See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
+
+The ``as`` operator performs a cast
+when it is known at compile time
+that the cast always succeeds,
+such as upcasting or bridging.
+Upcasting lets you use an expression as an instance of its type's supertype,
+without using an intermediate variable.
+The following approaches are equivalent:
+
+.. testcode:: explicit-type-with-as-operator
+
+   -> func f(any: Any) { println("Function for Any") }
+   -> func f(int: Int) { println("Function for Int") }
+   -> let x = 10
+   << // x : Int = 10
+   -> f(x)
+   <- Function for Int
+   ---
+   -> let y: Any = x
+   << // y : Any = 10
+   -> f(y)
+   <- Function for Any
+   ---
+   -> f(x as Any)
+   <- Function for Any
+
+Bridging lets you use an expression of
+a Swift standard library type such as ``String``
+as its corresponding Foundation type such as ``NSString``
+without needing to create a new instance.
+For more information on bridging,
+see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 The ``as?`` operator
 performs a conditional cast of the *expression*
@@ -366,15 +397,13 @@ At runtime, if the cast succeeds,
 the value of *expression* is wrapped in an optional and returned;
 otherwise, the value returned is ``nil``.
 If casting to the specified *type*
-is guaranteed to fail,
+is guaranteed to fail or is guaranteed to succeed,
 a compile-time error is raised.
-For example, casting to a type that's neither a subclass or superclass
-of the type of the *expression* is an error.
 
-The ``as`` operator performs a forced cast of the *expression* to the specified *type*.
-The ``as`` operator returns a value of the specified *type*, not an optional type.
+The ``as!`` operator performs a forced cast of the *expression* to the specified *type*.
+The ``as!`` operator returns a value of the specified *type*, not an optional type.
 If the cast fails, a runtime error is raised.
-The behavior of ``x as T`` is the same as the behavior of ``(x as? T)!``.
+The behavior of ``x as! T`` is the same as the behavior of ``(x as? T)!``.
 
 For more information about type casting
 and to see examples that use the type-casting operators,
@@ -392,6 +421,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
     type-casting-operator --> ``is`` type
     type-casting-operator --> ``as`` type
     type-casting-operator --> ``as`` ``?`` type
+    type-casting-operator --> ``as`` ``!`` type
 
 
 .. _Expressions_PrimaryExpressions:
@@ -591,7 +621,7 @@ It has the following forms:
 .. TODO: Come back and explain the second to last form (i.e., self(arg: value)).
 
 In an initializer, subscript, or instance method, ``self`` refers to the current
-instance of the type in which it occurs. In a static or class method,
+instance of the type in which it occurs. In a type method,
 ``self`` refers to the current type in which it occurs.
 
 The ``self`` expression is used to specify scope when accessing members,
@@ -823,7 +853,7 @@ Implicit Member Expression
 
 An :newTerm:`implicit member expression`
 is an abbreviated way to access a member of a type,
-such as an enumeration case or a class method,
+such as an enumeration case or a type method,
 in a context where type inference
 can determine the implied type.
 It has the following form:
@@ -1314,15 +1344,6 @@ For example:
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
 
-.. TR: In previous review, we noted that this also does downcast,
-   but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
-    class A {}
-    class B: A {}
-    let l: Array<A> = [B(), A(), A()]
-    var item: B = l[0] !        // Doesn't parse -- waiting for more expression
-    var item: B = l[0]!         // Doesn't typecheck
-    var item = l[0] as B!       // Ok
-
 .. langref-grammar
 
     expr-force-value ::= expr-postfix '!'
@@ -1347,11 +1368,8 @@ It has the following form:
 
     <#expression#>?
 
-On its own, the postfix ``?`` operator
-simply returns the value of its argument as an optional.
-
-Postfix expressions that contain an optional-chaining expression
-are evaluated in a special way.
+Optional-chaining expressions must appear within a postfix expression,
+and they cause the postfix expression to be evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
@@ -1424,6 +1442,7 @@ For example:
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix

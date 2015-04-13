@@ -193,7 +193,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(stringToPrint: String) -> Int {
          println(stringToPrint)
-         return countElements(stringToPrint)
+         return count(stringToPrint)
       }
    -> func printWithoutCounting(stringToPrint: String) {
          printAndCount(stringToPrint)
@@ -299,8 +299,7 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
 
 The ``minMax`` function above returns a tuple containing two ``Int`` values.
 However, the function does not perform any safety checks on the array it is passed.
-If the ``array`` argument contains an empty array ---
-that is, an array with a ``count`` of ``0`` ---
+If the ``array`` argument contains an empty array,
 the ``minMax`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
@@ -634,7 +633,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 .. testcode:: constantAndVariableParameters
 
    -> func alignRight(var string: String, count: Int, pad: Character) -> String {
-         let amountToPad = count - countElements(string)
+         let amountToPad = count - count(string)
          if amountToPad < 1 {
             return string
          }
@@ -914,7 +913,7 @@ You do this by writing a complete function type
 immediately after the return arrow (``->``) of the returning function.
 
 The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
-The ``stepForward`` function returns a value one more than its input value, 
+The ``stepForward`` function returns a value one more than its input value,
 and the ``stepBackward`` function returns a value one less than its input value.
 Both functions have a type of ``(Int) -> Int``:
 

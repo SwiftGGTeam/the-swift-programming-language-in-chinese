@@ -109,7 +109,7 @@ with a superclass of ``Vehicle``:
       }
 
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
-such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise`` method.
+such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise()`` method.
 
 In addition to the characteristics it inherits,
 the ``Bicycle`` class defines a new stored property,
@@ -170,7 +170,7 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method, instance property, class property, or subscript
+an instance method, type method, instance property, type property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
@@ -202,7 +202,7 @@ Where this is appropriate,
 you access the superclass version of a method, property, or subscript
 by using the ``super`` prefix:
 
-* An overridden method named ``someMethod`` can call the superclass version of ``someMethod``
+* An overridden method named ``someMethod()`` can call the superclass version of ``someMethod()``
   by calling ``super.someMethod()`` within the overriding method implementation.
 * An overridden property called ``someProperty`` can access the superclass version of ``someProperty``
   as ``super.someProperty`` within the overriding getter or setter implementation.
@@ -214,11 +214,11 @@ by using the ``super`` prefix:
 Overriding Methods
 ~~~~~~~~~~~~~~~~~~
 
-You can override an inherited instance or class method
+You can override an inherited instance or type method
 to provide a tailored or alternative implementation of the method within your subclass.
 
 The following example defines a new subclass of ``Vehicle`` called ``Train``,
-which overrides the ``makeNoise`` method that ``Train`` inherits from ``Vehicle``:
+which overrides the ``makeNoise()`` method that ``Train`` inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
@@ -228,7 +228,7 @@ which overrides the ``makeNoise`` method that ``Train`` inherits from ``Vehicle`
          }
       }
 
-If you create a new instance of ``Train`` and call its ``makeNoise`` method,
+If you create a new instance of ``Train`` and call its ``makeNoise()`` method,
 you can see that the ``Train`` subclass version of the method is called:
 
 .. testcode:: inheritance
@@ -280,7 +280,7 @@ The following example defines a new class called ``Car``,
 which is a subclass of ``Vehicle``.
 The ``Car`` class introduces a new stored property called ``gear``,
 with a default integer value of ``1``.
-The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,  
+The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,
 to provide a custom description that includes the current gear:
 
 .. testcode:: inheritance

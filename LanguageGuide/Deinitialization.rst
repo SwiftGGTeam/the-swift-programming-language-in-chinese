@@ -57,7 +57,7 @@ This example defines two new types, ``Bank`` and ``Player``, for a simple game.
 The ``Bank`` structure manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
 There can only ever be one ``Bank`` in the game,
-and so the ``Bank`` is implemented as a structure with static properties and methods
+and so the ``Bank`` is implemented as a structure with type properties and methods
 to store and manage its current state:
 
 .. testcode:: deinitializer
@@ -75,19 +75,19 @@ to store and manage its current state:
       }
 
 ``Bank`` keeps track of the current number of coins it holds with its ``coinsInBank`` property.
-It also offers two methods --- ``vendCoins`` and ``receiveCoins`` ---
+It also offers two methods --- ``vendCoins(_:)`` and ``receiveCoins(_:)`` ---
 to handle the distribution and collection of coins.
 
-``vendCoins`` checks that there are enough coins in the bank before distributing them.
+``vendCoins(_:)`` checks that there are enough coins in the bank before distributing them.
 If there are not enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
-``vendCoins`` declares ``numberOfCoinsToVend`` as a variable parameter,
+``vendCoins(_:)`` declares ``numberOfCoinsToVend`` as a variable parameter,
 so that the number can be modified within the method's body
 without the need to declare a new variable.
 It returns an integer value to indicate the actual number of coins that were provided.
 
-The ``receiveCoins`` method simply adds the received number of coins back into the bank's coin store.
+The ``receiveCoins(_:)`` method simply adds the received number of coins back into the bank's coin store.
 
 The ``Player`` class describes a player in the game.
 Each player has a certain number of coins stored in their purse at any time.
@@ -113,7 +113,7 @@ a specified number of coins from the bank during initialization,
 although a ``Player`` instance may receive fewer than that number
 if not enough coins are available.
 
-The ``Player`` class defines a ``winCoins`` method,
+The ``Player`` class defines a ``winCoins(_:)`` method,
 which retrieves a certain number of coins from the bank
 and adds them to the player's purse.
 The ``Player`` class also implements a deinitializer,
@@ -136,7 +136,7 @@ The optional lets you track whether there is currently a player in the game.
 
 Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
-and whenever its ``winCoins`` method is called:
+and whenever its ``winCoins(_:)`` method is called:
 
 .. testcode:: deinitializer
 
