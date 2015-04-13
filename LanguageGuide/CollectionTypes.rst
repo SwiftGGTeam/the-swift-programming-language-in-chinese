@@ -572,7 +572,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 .. testcode:: setIteration
 
    -> for genre in favoriteGenres {
-         println("\(value)")
+         println("\(genre)")
       }
    </ Classical
    </ [Tool J]
