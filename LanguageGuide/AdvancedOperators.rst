@@ -264,11 +264,6 @@ There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
 
-.. QUESTION: I've used UInt32 values here,
-   but this would also work with an inferred Int.
-   Which is a better example? (I've chosen not to use Int so far,
-   as this section is about unsigned shifts.)
-
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
 Shifting Behavior for Signed Integers
