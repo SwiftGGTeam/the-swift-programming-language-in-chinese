@@ -122,15 +122,6 @@ you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
 
-.. QUESTION: the same is actually true for computed properties of structures too
-   (which surprised me, as they don't have storage).
-   Does this mean I should mention it again later on?
-   For now, I've deliberately said "properties" rather than "stored properties"
-   in the first paragraph of this section, to set expectations.
-   (I've also asked whether this is intentional, in rdar://16338553.)
-
-.. TODO: see the explanation in rdar://16338553, and write about it here.
-
 .. _Properties_LazyStoredProperties:
 
 Lazy Stored Properties
