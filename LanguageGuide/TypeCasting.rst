@@ -386,7 +386,3 @@ a constant of the specified type to enable its value to be printed:
    the forced version of the type cast operator (``as``, not ``as?``)
    to check and cast to a specific type.
    This check is always safe within the context of a ``switch`` case statement.
-
-.. TODO: this section needs to address the question of "a constant or variable having a type"
-   as distinct from "a class instance having a type".
-   This is also relevant in a protocol context.
