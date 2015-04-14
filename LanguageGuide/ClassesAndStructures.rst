@@ -137,10 +137,6 @@ only describe what a ``Resolution`` or ``VideoMode`` will look like.
 They themselves do not describe a specific resolution or video mode.
 To do that, you need to create an instance of the structure or class.
 
-.. QUESTION: this isn't strictly true.
-   You could argue that the Resolution structure definition describes a resolution of (0, 0),
-   not that this would be a valid resolution.
-
 The syntax for creating instances is very similar for both structures and classes:
 
 .. testcode:: ClassesAndStructures
