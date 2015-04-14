@@ -656,9 +656,6 @@ performs this operation on both the ``x`` and ``y`` properties:
    /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
    </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
-.. QUESTION: is this the first time I will have introduced attributes?
-   If so, do they need more qualification?
-
 .. _AdvancedOperators_CompoundAssignmentOperators:
 
 Compound Assignment Operators
