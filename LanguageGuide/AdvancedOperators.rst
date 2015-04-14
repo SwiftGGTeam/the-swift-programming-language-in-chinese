@@ -159,8 +159,6 @@ and are set to ``0`` in the output value:
    -> let outputBits = firstBits ^ otherBits  // equals 00010001
    << // outputBits : UInt8 = 17
 
-.. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
-
 .. _AdvancedOperators_BitwiseLeftAndRightShiftOperators:
 
 Bitwise Left and Right Shift Operators
