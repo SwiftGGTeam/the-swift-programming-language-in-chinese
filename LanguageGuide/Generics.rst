@@ -322,8 +322,6 @@ Here's a generic version of the same code:
          }
       }
 
-.. QUESTION: should Stack's pop() method include bounds checking?
-
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
 but with a placeholder type parameter called ``T``
