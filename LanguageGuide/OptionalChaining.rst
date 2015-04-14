@@ -237,27 +237,21 @@ The third property, ``street``, is used to name the street for that address:
          var street: String?
          func buildingIdentifier() -> String? {
             if buildingName != nil {
-               return buildingName
-            } else if buildingNumber != nil {
-               return buildingNumber
+                return buildingName
+            } else if buildingNumber != nil && street != nil {
+                return "\(buildingNumber) \(street)"
             } else {
-               return nil
+                return nil
             }
          }
       }
 
-The ``Address`` class also provides a method called ``buildingIdentifier``,
+The ``Address`` class also provides a method called ``buildingIdentifier()``,
 which has a return type of ``String?``.
-This method checks the ``buildingName`` and ``buildingNumber`` properties
+This method checks the properties of the address
 and returns ``buildingName`` if it has a value,
-or ``buildingNumber`` if it has a value,
-or ``nil`` if neither property has a value.
-
-.. QUESTION: you could write this in a shorter form by just returning buildingNumber
-   if buildingName is nil. However, I think the code above is clearer in intent.
-   What do others think?
-   I could always call this out, of course,
-   but this preamble section is already pretty long.
+or ``buildingNumber`` concatenated with ``street`` if both have values,
+or ``nil`` otherwise.
 
 .. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
 
