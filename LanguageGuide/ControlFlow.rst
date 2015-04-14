@@ -160,9 +160,6 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
    </ l
    </ o
 
-.. TODO: provide some advice on how to iterate over a Dictionary in order
-   (perhaps sorted by key), using a predicate or array sort or some kind.
-
 .. TODO: inclue the note below once we have some documentation for Sequence:
    The examples above use a ``for``-``in`` loop to iterate
    ranges, arrays, dictionaries, and strings.
