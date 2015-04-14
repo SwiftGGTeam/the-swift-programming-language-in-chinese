@@ -1234,8 +1234,6 @@ to make a generic function or type.
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. TODO: Add testcode expectation lines.
-
 .. testcode:: guided-tour
 
     // Reimplement the Swift standard library's optional type
