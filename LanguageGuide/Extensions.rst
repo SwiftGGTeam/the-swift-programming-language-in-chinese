@@ -62,8 +62,6 @@ Extensions in Swift can:
    !! override var x: Int {
    !! ^
 
-.. TODO: Talk about extending enumerations to have additional member values
-
 Extension Syntax
 ----------------
 
