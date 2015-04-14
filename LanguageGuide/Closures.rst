@@ -97,15 +97,15 @@ and to pass it in as the ``sorted`` function's second parameter:
 
 .. testcode:: closureSyntax
 
-   -> func backwards(s1: String, s2: String) -> Bool {
+   -> func isOrderedAscending(s1: String, s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversed = sorted(names, backwards)
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-   // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> var ascending = sorted(names, isOrderedAscending)
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   // ascending is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
-the ``backwards`` function will return ``true``,
+the ``isOrderedAscending(_:_:)`` function will return ``true``,
 indicating that ``s1`` should appear before ``s2`` in the sorted array.
 For characters in strings,
 “greater than” means “appears later in the alphabet than”.
@@ -145,22 +145,19 @@ Tuples can also be used as parameter types and return types.
 .. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
 
-.. QUESTION: is "reversed" the right name to use here?
-   it's a backwards sort, not a reversed version of the original array
-
-The example below shows a closure expression version of the ``backwards`` function
+The example below shows a closure expression version of the ``isOrderedAscending(_:_:)`` function
 from earlier:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { (s1: String, s2: String) -> Bool in
+   -> ascending = sorted(names, { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
-is identical to the declaration from the ``backwards`` function.
+is identical to the declaration from the ``isOrderedAscending(_:_:)`` function.
 In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
 However, for the inline closure expression,
 the parameters and return type are written *inside* the curly braces,
@@ -176,9 +173,9 @@ it can even be written on a single line:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sorted`` function has remained the same.
 A pair of parentheses still wrap the entire set of arguments for the function.
@@ -202,9 +199,9 @@ can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { s1, s2 in return s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names, { s1, s2 in return s1 > s2 } )
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer the parameter types and return type
 when passing a closure to a function as an inline closure expression.
@@ -230,9 +227,9 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { s1, s2 in s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names, { s1, s2 in s1 > s2 } )
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, the function type of the ``sorted`` function's second argument
 makes it clear that a ``Bool`` value must be returned by the closure.
@@ -258,9 +255,9 @@ because the closure expression is made up entirely of its body:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { $0 > $1 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names, { $0 > $1 } )
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` arguments.
 
@@ -281,9 +278,9 @@ and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, >)
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names, >)
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 For more about operator functions, see :ref:`AdvancedOperators_OperatorFunctions`.
 
@@ -328,9 +325,9 @@ can be written outside of the ``sorted`` function's parentheses as a trailing cl
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names) { $0 > $1 }
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> ascending = sorted(names) { $0 > $1 }
+   >> ascending
+   << // ascending : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
