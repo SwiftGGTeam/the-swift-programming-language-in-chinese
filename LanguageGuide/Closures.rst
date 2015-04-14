@@ -145,8 +145,6 @@ Tuples can also be used as parameter types and return types.
 .. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
 
-.. QUESTION: should I be using names.sorted or sorted(names)?
-
 .. QUESTION: is "reversed" the right name to use here?
    it's a backwards sort, not a reversed version of the original array
 
