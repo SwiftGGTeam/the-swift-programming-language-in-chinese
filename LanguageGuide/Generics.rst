@@ -921,10 +921,6 @@ with these two containers as its arguments.
 In the example above, the ``allItemsMatch`` function correctly reports that
 all of the items in the two containers match.
 
-.. QUESTION: swift/stdlib/core/Algorithm.swift contains a function called equal,
-   which provides essentially this functionality for two Sequences.
-   Should I mention this fact, and if so, how?
-
 .. TODO: Subscripts
    ----------------
 
