@@ -896,9 +896,6 @@ followed by the ``in`` keyword:
       }
    >> }
 
-.. QUESTION: I have declared both of these closure properties as lazy.
-   Is this the right message to be sending?
-
 .. _AutomaticReferenceCounting_WeakAndUnownedReferencesForClosures:
 
 Weak and Unowned References
