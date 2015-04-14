@@ -720,8 +720,6 @@ This can be read as:
 “A function type that has two parameters, both of type ``Int``,
 and that returns a value of type ``Int``.”
 
-.. QUESTION: does their "type" also include the parameter label names?
-
 Here's another example, for a function with no parameters or return value:
 
 .. testcode:: functionTypes
