@@ -230,7 +230,7 @@ whenever a ``Song`` is found in the library.
    to introduce type casting in a pattern matching context
    and to set up the crazy Any example at the end of the chapter.
 
-.. No section on upcasting because nobody can come up with
+.. TODO: No section on upcasting because nobody can come up with
    an example that isn't excessively contrived.
    The reference shows the behavior in a contrived example.
 
@@ -390,8 +390,3 @@ a constant of the specified type to enable its value to be printed:
 .. TODO: this section needs to address the question of "a constant or variable having a type"
    as distinct from "a class instance having a type".
    This is also relevant in a protocol context.
-
-.. QUESTION: should I mention upcasting here?
-   I can't think of an example where it's useful.
-   However, it does display different behavior from downcasting,
-   in that upcasting always works, and so it doesn't return an optional.
