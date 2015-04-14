@@ -157,11 +157,6 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
    as long as they conform to the ``Sequence`` protocol.
    <link to Sequence definition>
 
-.. QUESTION: are there any plans for enums to conform to Sequence?
-   If so, they might make for a good example.
-   What would the syntax be if they did?
-   'for planet in Planet'?
-
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
 
