@@ -40,7 +40,7 @@ which can be used to count the number of times an action occurs:
    -> class Counter {
          var count = 0
          func increment() {
-            count++
+            ++count
          }
          func incrementBy(amount: Int) {
             count += amount
@@ -76,9 +76,6 @@ You call instance methods with the same dot syntax as properties:
    -> counter.reset()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 0
-
-.. QUESTION: I've used count++ rather than ++count here.
-   Is this consistent with my advice and usage elsewhere?
 
 .. _Methods_LocalAndExternalNamesForMethods:
 
