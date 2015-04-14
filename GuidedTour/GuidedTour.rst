@@ -1273,13 +1273,6 @@ or to require a class to have a particular superclass.
    to make a function that returns an array
    of the elements that any two sequences have in common.
 
-..
-  TODO: dig into this error
-  let l1 = [1: 100, 2: 200]
-  let l2 = [(1, 100), (4, 5)]
-  anyCommonElements(l1, l2)
-  ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
-
 In the simple cases,
 you can omit ``where`` and simply
 write the protocol or class name after a colon.
