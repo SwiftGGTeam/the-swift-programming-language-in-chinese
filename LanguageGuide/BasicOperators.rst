@@ -296,13 +296,6 @@ it is recommended that you use ``++i`` and ``--i`` in all cases,
 because they have the typical expected behavior of modifying ``i``
 and returning the result.
 
-.. QUESTION: is this good advice
-   (given the general prevalence of i++ in the world),
-   and indeed is it even advice we need to bother giving
-   (given that lots of people might disagree or not care)?
-
-.. QUESTION: if so, have I followed this advice throughout the book?
-
 .. _BasicOperators_UnaryMinusOperator:
 
 Unary Minus Operator
