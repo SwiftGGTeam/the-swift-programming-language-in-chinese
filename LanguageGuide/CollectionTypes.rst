@@ -287,10 +287,6 @@ with ``"Bananas"`` and ``"Apples"``:
 
    You can't use subscript syntax to append a new item to the end of an array.
 
-.. QUESTION: should I note here that you can't set the firstItem variable
-   and expect the value in the array to change,
-   because String is a value type?
-
 To insert an item into the array at a specified index,
 call the array's ``insert(_:atIndex:)`` method:
 
