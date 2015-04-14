@@ -64,8 +64,6 @@ For more details, see :ref:`Protocols_Extensions`.
    !! func foo() {}
    !! ^
 
-.. TODO: Talk about extending enumerations to have additional member values
-
 Extension Syntax
 ----------------
 
