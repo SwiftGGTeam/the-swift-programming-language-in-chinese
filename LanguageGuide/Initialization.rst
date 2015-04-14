@@ -425,11 +425,6 @@ to create a new instance of the class with initializer syntax,
 written as ``ShoppingListItem()``,
 and assigns this new instance to a variable called ``item``.
 
-.. QUESTION: How is this affected by inheritance?
-   If I am a subclass of a superclass that defines a designated initializer,
-   I (the subclass) presumably don't get a default initializer,
-   because I am obliged to delegate up to my parent's default initializer.
-
 .. _Initialization_MemberwiseInitializersForStructureTypes:
 
 Memberwise Initializers for Structure Types
