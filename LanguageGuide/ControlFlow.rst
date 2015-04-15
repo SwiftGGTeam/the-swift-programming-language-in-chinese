@@ -12,11 +12,6 @@ In addition to the traditional ``for`` loop found in C,
 Swift adds a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-.. TODO: add the text below once we have some documentation about Sequence:
-   The ``for``-``in`` loop can even be used with your own custom types
-   if they conform to the ``Sequence`` protocol.
-   <link>
-
 Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
