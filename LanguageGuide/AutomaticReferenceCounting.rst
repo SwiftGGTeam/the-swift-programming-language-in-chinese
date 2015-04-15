@@ -426,9 +426,6 @@ print their “deinitialized” messages
 after the ``john`` and ``unit4A`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
-.. TODO: weak references can also be implicitly unchecked optionals.
-   I should mention this here, but when would it be appropriate to use them?
-
 .. TODO: Feedback from [Contributor 7746] to be incorporated here:
    “In the ARC section, at the end of the weak pointer section,
    it is worth mentioning that trying to use weak pointers as a cache
