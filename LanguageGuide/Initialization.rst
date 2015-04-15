@@ -18,10 +18,6 @@ Instances of class types can also implement a :newTerm:`deinitializer`,
 which performs any custom cleanup just before an instance of that class is deallocated.
 For more information about deinitializers, see :doc:`Deinitialization`.
 
-.. TODO: mention that you can't construct a class instance from a class metatype value,
-   because you can't be sure that a subclass will definitely provide the constructor ---
-   see doug's notes from r14175 for more info
-
 .. _Initialization_SettingInitialValuesForStoredProperties:
 
 Setting Initial Values for Stored Properties
