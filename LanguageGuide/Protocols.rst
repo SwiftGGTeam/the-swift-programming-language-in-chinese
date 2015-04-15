@@ -644,10 +644,6 @@ by any game that involves dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type to track the progress of a ``DiceGame``.
 
-.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
-   the right thing to advise for delegates written in Swift?
-   It looks a little odd in the syntax above.
-
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
 to adopt the ``DiceGame`` protocol;
