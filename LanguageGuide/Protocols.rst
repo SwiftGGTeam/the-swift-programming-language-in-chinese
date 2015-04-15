@@ -580,9 +580,6 @@ and uses this random number to create a dice roll value within the correct range
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
 it is guaranteed to have a ``random()`` method to call.
 
-.. QUESTION: would it be better to show Dice using a RandomNumberGenerator
-   as a data source, a la UITableViewDataSource etc.?
-
 .. TODO: mention that you can only do RandomNumberGenerator-like things
    with this property, because the property is only known to be a
    RandomNumberGenerator.
