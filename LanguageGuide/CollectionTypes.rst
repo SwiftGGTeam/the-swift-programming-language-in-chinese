@@ -407,9 +407,6 @@ or when you need to ensure that an item only appears once.
    For more information about using ``Set`` with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-.. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
-
-
 .. _CollectionTypes_SetTypeShorthandSyntax:
 
 Set Type Syntax
