@@ -184,11 +184,6 @@ or a variable into a constant.
    surround the keyword with back ticks (`````) when using it as a name.
    However, avoid using keywords as names unless you have absolutely no choice.
 
-.. QUESTION: I've deliberately not given an example here,
-   because I don't want to suggest that such an example is
-   a good example of when you *should* use a keyword as a name.
-   Is this the right approach to take?
-
 You can change the value of an existing variable to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
