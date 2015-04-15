@@ -22,9 +22,6 @@ automatically made available for other code to use.
    instances of *either* a class or a structure type.
    Because of this, the more general term :newTerm:`instance` is used.
 
-.. TODO: add a note here about public and private interfaces,
-   once we know how these will be declared in Swift.
-
 .. _ClassesAndStructures_ComparingClassesAndStructures:
 
 Comparing Classes and Structures
