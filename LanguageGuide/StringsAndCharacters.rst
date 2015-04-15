@@ -78,10 +78,6 @@ or initialize a new ``String`` instance with initializer syntax:
    << // anotherEmptyString : String = ""
    // these two strings are both empty, and are equivalent to each other
 
-.. QUESTION: I've made both of these variables,
-   because you'd be likely to use them as such if they start out empty.
-   Is this the correct approach to take here?
-
 Find out whether a ``String`` value is empty
 by checking its Boolean ``isEmpty`` property:
 
