@@ -363,8 +363,6 @@ Like the ``removeAtIndex(_:)`` method, ``removeLast()`` returns the removed item
    /> the apples constant is now equal to the removed \"\(apples)\" string
    </ the apples constant is now equal to the removed "Apples" string
 
-.. TODO: write about the algorithmic methods on Array.
-
 .. _CollectionTypes_IteratingOverAnArray:
 
 Iterating Over an Array
