@@ -1273,10 +1273,6 @@ to reflect the fact that the optional requirement may not have been implemented.
    If you mark your protocol as ``@objc`` in order to specify optional requirements,
    you will only be able to apply that protocol to class types.
 
-.. QUESTION: is this acceptable wording for this limitation?
-
-.. TODO: remove this note when this limitation is lifted in the future.
-
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
 This data source is defined by the ``CounterDataSource`` protocol,
