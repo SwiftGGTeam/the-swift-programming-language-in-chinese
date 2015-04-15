@@ -466,14 +466,6 @@ Floating-Point Literals
 By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
 
-.. TODO: Confirm that using a Unicode special x operator below
-   rather thas just the letter x is correct.
-   This is used in the Guide too.
-   APSG entry on 'x' says to use it in screen resolutions
-   such as 600 x 800, but doesn't comment on this specific usage.
-   Developer Publications SG entry on 'x' says:
-   Used in place of a multiplication sign or the word by to describe dimensions: a 50 x 50 pixel resolution.
-
 Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
 The decimal fraction consists of a decimal point (``.``)
