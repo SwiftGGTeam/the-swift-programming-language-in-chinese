@@ -170,7 +170,7 @@ Swift 的`String`类型定义了关于大于号 (`>`) 的字符串实现，其�
 reversed = sorted(names, >)
 ```
 
-更多关于运算符表达式的内容请查看 [运算符函数](../chapter2/23_Advanced_Operators.html#operator_functions)。
+更多关于运算符表达式的内容请查看 [运算符函数](../chapter2/24_Advanced_Operators.html#operator_functions)。
 
 <a name="trailing_closures"></a>
 ## 尾随闭包（Trailing Closures）
