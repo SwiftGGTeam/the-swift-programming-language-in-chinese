@@ -158,7 +158,7 @@ and the bank has only 7,900 coins left.
    -> print("The bank now has \(Bank.coinsInBank) coins")
    <- The bank now has 10000 coins
 
-.. This code doesn't work in a playground.  See <rdar://problem/17190159>
+.. FIXME: This code doesn't work in a playground.  See <rdar://problem/17190159>
    playground loggers retain objects, preventing deinit from running
 
 The player has now left the game.
