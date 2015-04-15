@@ -293,8 +293,6 @@ enumeration members can come prepopulated with default values
 (called :newTerm:`raw values`),
 which are all of the same type.
 
-.. QUESTION: it's not really "in addition to", it's "alternatively" - does this matter?
-
 Here's an example that stores raw ASCII values alongside named enumeration members:
 
 .. testcode:: rawValues
