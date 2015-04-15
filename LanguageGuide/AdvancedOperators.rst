@@ -726,14 +726,6 @@ and returns the result:
    Similarly, the ternary conditional operator
    (``a ? b : c``) cannot be overloaded.
 
-.. QUESTION: some of the standard operators (such as equation and comparison)
-   are implemented as part of a protocol (such as Equatable and Comparable).
-   You don't seem to need to declare conformance to these protocols
-   in order to implement the operator functions, however.
-   Is that correct? Can you get != for free after implementing == , for example?
-   UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
-   like Equatable to provide a default implementation of != if you implement ==
-
 .. _AdvancedOperators_EquivalenceOperators:
 
 Equivalence Operators
