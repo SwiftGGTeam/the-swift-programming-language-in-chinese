@@ -275,8 +275,6 @@ The rules of the game are as follows:
 * If your turn ends at the bottom of a ladder, you move up that ladder.
 * If your turn ends at the head of a snake, you move down that snake.
 
-.. TODO: update this description to match the look of the final artwork.
-
 The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
