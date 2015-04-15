@@ -54,15 +54,15 @@ Deinitializers in Action
 
 Here's an example of a deinitializer in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
-The ``Bank`` structure manages a made-up currency,
+The ``Bank`` class manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
 There can only ever be one ``Bank`` in the game,
-and so the ``Bank`` is implemented as a structure with type properties and methods
+and so the ``Bank`` is implemented as a class with type properties and methods
 to store and manage its current state:
 
 .. testcode:: deinitializer
 
-   -> struct Bank {
+   -> class Bank {
          static var coinsInBank = 10_000
          static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
             numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
@@ -170,6 +170,3 @@ No other properties or variables are still referring to the ``Player`` instance,
 and so it is deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.
-
-.. TODO: switch Bank to be a class rather than a structure
-   once we have support for class-level properties.
