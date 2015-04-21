@@ -7,10 +7,13 @@
 
 本页内容包括：
 
+-   [XCode6.4 Beta Swift语法文档更新](#xcode6_4_Beta)
+-   [XCode6.3正式版 Swift语法文档更新](#xcode6_3)
+-   [XCode6.2正式版 Swift语法文档更新](#xcode6_2)
 -   [XCode6.2 Beta3 Swift语法文档更新](#xcode6_2_Beta3)
 -   [XCode6.2 Beta2 Swift语法文档更新](#xcode6_2_Beta2)
 -   [XCode6.2 Beta1 Swift语法文档更新](#xcode6_2_Beta1)
--   [XCode6.1.1 Swift语法文档更新](#xcode6_1_1)
+-   [XCode6.1.1正式版 Swift语法文档更新](#xcode6_1_1)
 -   [XCode6.1 Swift语法文档更新](#xcode6_1)
 -   [XCode6.1 Beta2 Swift语法文档更新](#xcode6_1_Beta2)
 -   [XCode6.1 Beta1 Swift语法文档更新](#xcode6_1_Beta1)
@@ -24,6 +27,134 @@
 -   XCode6下载: [老码云盘下载](http://pan.baidu.com/disk/home#from=share_pan_logo&path=%252F%25E8%2580%2581%25E7%25A0%2581%25E4%25BA%2591%25E7%259B%2598-XCode6%252FXCode6-Beta5)
 
 以下部分是针对XCode6每一次Beta版本直至正式版发布，Swift语法部分的更新归类
+
+<a name="xcode6_4_Beta"></a>
+### XCode6.4 Beta中Swift语法更新
+
+***注意：苹果在这个版本发布后没有及时的更新Swift Programming Language文档,以下是[老码团队](http://weibo.com/u/5241713117)通过XCode6.4 Beta Release Note总结的更改说明：***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2015-04-13</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			XCode6.4包含了对于构建和调试基于iOS8.4 App的支持
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_3"></a>
+### XCode6.3中Swift语法更新
+***注意：苹果此时发布了统一的版本XCode6.3，其中将以前的XCode6.3 Beta系列版本合并, 而XCode6.3共计发布了4次Beta版本，[老码团队](http://weibo.com/u/5241713117)通过Release Note总结的详细更改说明请参看:[Swift语法更新记录表格](https://docs.baihui.com/sheet/published.do?rid=mxpis6d36a8b7bc254c36ae2a808c64c2361e)***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2015-4-8</td>
+    <td><ul class="list-bullet">
+			<li><p>
+				Swift现在自身提供了一个<code>Set</code>集合类型，更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-ID484">集合</a>
+			</li>
+			<li><p>
+				<code>@autoclosure</code>现在是一个参数声明的属性，而不是参数类型的属性。这里还有一个新的参数声明属性<code>@noescape</code>。更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">属性声明</a>
+			</li>
+			<li><p>
+				对于类型属性和方法现在可以使用<code>static</code>关键字作为声明描述符，更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID483">类型变量属性</a>
+			</li>
+			<li><p>
+				Swift现在包含一个<code>as?</code>和<code>as!</code>的向下可失败类型转换运算符。更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID283">协议遵循性检查</a>
+			</li>
+			<li><p>
+				增加了一个新的指导章节，它是关于<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID495">字符串索引</a>的
+			</li>
+			<li><p>
+				从<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID37">溢出运算符</a>中移除了溢出除运算符(<code>&/</code>)和求余溢出运算符(<code>&%</code>)
+			</li>
+			<li><p>
+				更新了常量和常量属性在声明和构造时的规则，更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID355">常量声明</a>
+			</li>
+			<li><p>
+				更新了字符串字面量中Unicode标量集的定义，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID295">字符串字面量中的特殊字符</a>
+			</li>
+			<li><p>
+				更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-ID73">区间运算符</a>章节来提示当半开区间运算符含有相同的起止索引时，其区间为空。
+			</li>
+			<li><p>
+				更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID104">闭包引用类型</a>章节来澄清对于变量的捕获规则
+			</li>
+			<li><p>
+				更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID38">值溢出</a>章节来澄清有符号整数和无符号整数的溢出行为
+			</li>
+			<li><p>
+				更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID369">协议声明</a>章节来澄清协议声明时的作用域和成员
+			</li>
+			<li><p>
+				更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID58">捕获列表</a>章节来澄清对于闭包捕获列表中的弱引用和无主引用的使用语法。
+			</li>
+			<li><p>
+			    更新了<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-ID418">运算符</a>章节来明确指明一些例子来说明自定义运算符所支持的特性，如数学运算符，各种符号，Unicode符号块等
+			</li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
+
+<a name="xcode6_2"></a>
+### XCode6.2正式版中Swift语法更新
+
+***注意：苹果此时发布了统一的版本XCode6.2，其中将以前的XCode6.2 Beta系列版本合并***
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+	<tr>
+		<th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	<tr>
+	<td scope="row">2015-02-09</td>
+    <td><ul class="list-bullet">
+	    <li><p>
+			在函数作用域中的常量声明时可以不被初始化，它必须在第一次使用前被赋值。更多的信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID355">常量声明</a>
+        </li>
+ 		<li><p>
+			在构造器中，常量属性有且仅能被赋值一次。更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID212">在构造过程中给常量属性赋值</a>
+        </li>
+ 		<li><p>
+			多个可选绑定现在可以在<code>if</code>语句后面以逗号分隔的赋值列表的方式出现，更多信息，请看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID333">可选绑定</a>
+        </li>
+		<li><p>
+			一个<a link="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID405">可选链表达式</a>必须出现在后缀表达式中
+		</li>
+		<li><p>
+			协议类型转换不再局限于<code>@obj</code>修饰的协议了
+        </li>
+		<li><p>
+			在运行时可能会失败的类型转换可以使用<code>as?</code>和<code>as!</code>运算符，而确保不会失败的类型转换现在使用<code>as</code>运算符。更多信息，请看<a link="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID388">类型转换运算符</a>必
+        </li>
+		</ul>
+	</td>
+  </tr>
+</tbody>
+</table>
 
 <a name="xcode6_2_Beta3"></a>
 ### XCode6.2 Beta3中Swift语法更新
@@ -48,7 +179,7 @@
 			在为Watch App使用asset catalog时，38mm和42mm尺寸的图片就会被使用
         </li>
  		<li><p>
-			在做Watch App开发时,@IBAction属性支持WKInterfaceSwitch和WKInterfaceSlider Swift类型了
+			在做Watch App开发时,<code>@IBAction</code>属性支持<code>WKInterfaceSwitch</code>和<code>WKInterfaceSlider</code> Swift类型了
         </li>
 		<li><p>
 			现在可以通过Device窗口安装，删除和访问App容器中的数据了。
@@ -111,7 +242,7 @@
 		</li>
         <li><p>
 			为了使Apple Watch应用能够正常工作，一些具体的参数必须设置：
-			1）WatchKit中扩展配置文件Info.plist中的NSExtensionAttributes配置项WKAppBundleIdentifier必须和WatchKit App中的通用配置文件中的属性CFBundleIdentifier项目保持一致。2）WatchKit中的CFBundleIdentifier配置项必须和WKCompanionAppBundleIdentifier中的配置项保持一致
+			1）WatchKit中扩展配置文件Info.plist中的<code>NSExtensionAttributes</code>配置项WKAppBundleIdentifier必须和WatchKit App中的通用配置文件中的属性<code>CFBundleIdentifier</code>项目保持一致。2）WatchKit中的<code>CFBundleIdentifier</code>配置项必须和<code>WKCompanionAppBundleIdentifier</code>中的配置项保持一致
 		</li>
 		</ul>
 	</td>
@@ -167,7 +298,7 @@
 </thead>
 <tbody>
 	<tr>
-	<td scope="row">2014-10-10</td>
+	<td scope="row">2014-10-16</td>
     <td><ul class="list-bullet">
 	    <li><p>
 			增加了一个完整的关于<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html">失败构造器(Failable Initializers)</a>的指南文档
@@ -201,7 +332,7 @@
 	<td scope="row">2014-09-15</td>
     <td><ul class="list-bullet">
 	    <li><p>
-			带有原始值的枚举类型增加了一个`rawValue`属性替代`toRaw()`方法，同时使用了一个以`rawValue`为参数的失败构造器来替代`fromRaw()`方法。更多的信息，请看<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html">原始值(Raw Values)</a>和<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">带原始值的枚举类型(Enumerations with Cases of a Raw-Value Type)</a>部分
+			带有原始值的枚举类型增加了一个<code>rawValue</code>属性替代<code>toRaw()</code>方法，同时使用了一个以<code>rawValue</code>为参数的失败构造器来替代<code>fromRaw()</code>方法。更多的信息，请看<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html">原始值(Raw Values)</a>和<a href="http://developer.apple.com/library/etc/redirect/xcode/devtools/419f35/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html">带原始值的枚举类型(Enumerations with Cases of a Raw-Value Type)</a>部分
         </li>
 		</ul>
 	</td>
@@ -259,13 +390,13 @@
 			2）移除大部分函数返回类型隐式解封可选类型的使用
         </li>
 	    <li><p>
-			对于泛型的类库函数或接口统一从T!更换为T？或T，这样使得语法更加严谨，明确了可能返回为空和不为空的情况
+			对于泛型的类库函数或接口统一从<code>T!</code>更换为<code>T？</code>或<code>T</code>，这样使得语法更加严谨，明确了可能返回为空和不为空的情况
 		</li>
         <li><p>
-			字符类型不能使用+运算法链接，可以以 `String(C1)+String(2)` 的方式实现字符间链接
+			字符类型不能使用+运算法链接，可以以<code>String(C1)+String(2)</code> 的方式实现字符间链接
 		</li>
 		<li><p>
-			重写了Sort函数，解决了栈溢出的问题
+			重写了<code>Sort</code>函数，解决了栈溢出的问题
 		</li>
 		</ul>
 	</td>
