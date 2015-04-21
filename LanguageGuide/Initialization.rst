@@ -1558,8 +1558,8 @@ to satisfy this requirement within a failable class initializer:
    -> class Product {
          let name: String!
          init?(name: String) {
-            if name.isEmpty { return nil }
             self.name = name
+            if name.isEmpty { return nil }
          }
       }
 
@@ -1669,9 +1669,9 @@ and ensures that this property always has a value of at least ``1``:
    -> class CartItem: Product {
          let quantity: Int!
          init?(name: String, quantity: Int) {
+            self.quantity = quantity
             super.init(name: name)
             if quantity < 1 { return nil }
-            self.quantity = quantity
          }
       }
 
@@ -1777,8 +1777,8 @@ but cannot be an empty string:
          init() {}
          // this initializer creates a document with a non-empty name value
          init?(name: String) {
-            if name.isEmpty { return nil }
             self.name = name
+            if name.isEmpty { return nil }
          }
       }
 

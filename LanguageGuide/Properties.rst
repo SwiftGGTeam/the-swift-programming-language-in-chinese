@@ -859,7 +859,7 @@ This observer performs two checks:
 * If the new value of ``currentLevel`` (after any capping) is higher than
   any value previously received by *any* ``AudioChannel`` instance,
   the property observer stores the new ``currentLevel`` value in
-  the ``maxInputLevelForAllChannels`` static property.
+  the ``maxInputLevelForAllChannels`` type property.
 
 .. note::
 

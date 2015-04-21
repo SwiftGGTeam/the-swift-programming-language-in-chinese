@@ -54,8 +54,6 @@ the ``noreturn`` attribute to a function or method *type*.
     * The ``introduced`` argument indicates the first version of the specified platform in which the declaration was introduced.
       It has the following form:
 
-      The ``introduced`` argument has the following form:
-
       .. syntax-outline::
 
           introduced=<#version number#>
@@ -71,7 +69,7 @@ the ``noreturn`` attribute to a function or method *type*.
       The *version number* consists of a positive integer or floating-point decimal number.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
-      The ``obsoleted`` argument has the following form:
+      It has the following form:
 
       .. syntax-outline::
 
@@ -185,6 +183,23 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a parameter declaration for
+    a function or method type that takes no arguments
+    and that returns the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
+    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
+
+``noescape``
+    Apply this attribute to a function or method declaration
+    to indicate that a parameter it will not be stored for later execution,
+    such that it is guaranteed not to outlive the lifetime of the call.
+    Function type parameters with the ``noescape`` declaration attribute
+    do not require explicit use of ``self.`` for properties or methods.
+
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
@@ -235,9 +250,11 @@ the ``noreturn`` attribute to a function or method *type*.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols, properties and methods
-    (including getters and setters) of classes and protocols, initializers,
-    deinitializers, and subscripts. The ``objc`` attribute tells the compiler
+    for example, non-nested classes, protocols,
+    nongeneric enumerations (constrained to integer raw-value types),
+    properties and methods (including getters and setters) of classes and protocols,
+    initializers, deinitializers, and subscripts.
+    The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
     If you apply the ``objc`` attribute to a class or protocol, it's
@@ -246,6 +263,12 @@ the ``noreturn`` attribute to a function or method *type*.
     that inherits from another class marked with the ``objc`` attribute.
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't.
+
+    If you apply the ``objc`` attribute to an enumeration,
+    each enumeration case is exposed to Objective-C code
+    as the concatenation of the enumeration name and the case name.
+    For example, a case named ``Venus`` in a Swift ``Planet`` enumeration
+    is exposed to Objective-C code as a case named ``PlanetVenus``.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
     which consists of an identifier.
@@ -314,7 +337,6 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-
 .. _Attributes_TypeAttributes:
 
 Type Attributes
@@ -322,6 +344,12 @@ Type Attributes
 
 You can apply type attributes to types only. However, you can also apply the ``noreturn``
 attribute to a function or method *declaration*.
+
+``noreturn``
+    Apply this attribute to the type of a function or method
+    to indicate that the function or method doesn't return to its caller.
+    You can also mark a function or method declaration with this attribute to indicate that
+    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
 
 ..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
@@ -333,19 +361,6 @@ attribute to a function or method *declaration*.
     var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}
     var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
 
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a function or method type that takes no arguments
-    and that returns the type of the expression.
-    For an example of how to use the ``autoclosure`` attribute,
-    see :ref:`Types_FunctionType`.
-
-``noreturn``
-    Apply this attribute to the type of a function or method
-    to indicate that the function or method doesn't return to its caller.
-    You can also mark a function or method declaration with this attribute to indicate that
-    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
 
 .. langref-grammar
 

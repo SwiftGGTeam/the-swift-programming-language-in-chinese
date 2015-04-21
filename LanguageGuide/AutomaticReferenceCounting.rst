@@ -862,7 +862,8 @@ Defining a Capture List
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
-with a reference to a class instance (such as ``self`` or ``someInstance``).
+with a reference to a class instance (such as ``self``)
+or a variable initialized with some value (such as ``delegate = self.delegate!``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
@@ -871,17 +872,13 @@ if they are provided:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class SomeClass {
+   >> var delegate: AnyObject?
       lazy var someClosure: (Int, String) -> String = {
-            [unowned self] (index: Int, stringToProcess: String) -> String in
+            [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
    >> }
-
-.. FIXME: change this example to remove the type annotation
-   and infer the type from the closure's parameter list and return type
-   once the following issue is fixed:
-   <rdar://problem/16973787> Cannot infer function type from a lazy closure that uses self
 
 If a closure does not specify a parameter list or return type
 because they can be inferred from context,
@@ -891,8 +888,9 @@ followed by the ``in`` keyword:
 .. testcode:: strongReferenceCyclesForClosures
 
    >> class AnotherClass {
+   >> var delegate: AnyObject?
       lazy var someClosure: () -> String = {
-            [unowned self] in
+            [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
       }

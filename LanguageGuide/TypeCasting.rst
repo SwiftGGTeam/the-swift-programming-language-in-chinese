@@ -234,6 +234,7 @@ whenever a ``Song`` is found in the library.
    an example that isn't excessively contrived.
    The reference shows the behavior in a contrived example.
 
+
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject
@@ -249,6 +250,7 @@ Swift provides two special type aliases for working with non-specific types:
    Use ``Any`` and ``AnyObject`` only when you explicitly need
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
+
 
 .. _TypeCasting_AnyObject:
 

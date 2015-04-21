@@ -40,7 +40,7 @@ which can be used to count the number of times an action occurs:
    -> class Counter {
          var count = 0
          func increment() {
-            count++
+            ++count
          }
          func incrementBy(amount: Int) {
             count += amount
@@ -76,9 +76,6 @@ You call instance methods with the same dot syntax as properties:
    -> counter.reset()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 0
-
-.. QUESTION: I've used count++ rather than ++count here.
-   Is this consistent with my advice and usage elsewhere?
 
 .. _Methods_LocalAndExternalNamesForMethods:
 
@@ -400,15 +397,15 @@ the implicit ``self`` property refers to the type itself,
 rather than an instance of that type.
 For structures and enumerations,
 this means that you can use ``self`` to disambiguate between
-static properties and static method parameters,
+type properties and type method parameters,
 just as you do for instance properties and instance method parameters.
 
 More generally, any unqualified method and property names that you use
 within the body of a type method will refer to other type-level methods and properties.
 A type method can call another type method with the other method's name,
 without needing to prefix it with the type name.
-Similarly, type methods on structures and enumerations can access static properties
-by using the static property's name without a type name prefix.
+Similarly, type methods on structures and enumerations can access type properties
+by using the type property's name without a type name prefix.
 
 The example below defines a structure called ``LevelTracker``,
 which tracks a player's progress through the different levels or stages of a game.
@@ -418,7 +415,7 @@ but can store information for multiple players on a single device.
 All of the game's levels (apart from level one) are locked when the game is first played.
 Every time a player finishes a level,
 that level is unlocked for all players on the device.
-The ``LevelTracker`` structure uses static properties and methods
+The ``LevelTracker`` structure uses type properties and methods
 to keep track of which levels of the game have been unlocked.
 It also tracks the current level for an individual player.
 
@@ -444,7 +441,7 @@ It also tracks the current level for an individual player.
       }
 
 The ``LevelTracker`` structure keeps track of the highest level that any player has unlocked.
-This value is stored in a static property called ``highestUnlockedLevel``.
+This value is stored in a type property called ``highestUnlockedLevel``.
 
 ``LevelTracker`` also defines two type functions to work with
 the ``highestUnlockedLevel`` property.
@@ -452,10 +449,10 @@ The first is a type function called ``unlockLevel``,
 which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
 The second is a convenience type function called ``levelIsUnlocked``,
 which returns ``true`` if a particular level number is already unlocked.
-(Note that these type methods can access the ``highestUnlockedLevel`` static property
+(Note that these type methods can access the ``highestUnlockedLevel`` type property
 without your needing to write it as ``LevelTracker.highestUnlockedLevel``.)
 
-In addition to its static property and type methods,
+In addition to its type property and type methods,
 ``LevelTracker`` tracks an individual player's progress through the game.
 It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.

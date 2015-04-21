@@ -6,6 +6,57 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-04-08  * Swift now has a native ``Set`` collection type.
+              For more information, see :ref:`CollectionTypes_Sets`.
+
+            * ``@autoclosure`` is now an attribute of the parameter declaration,
+              not its type.
+              There is also a new ``@noescape`` parameter declaration attribute.
+              For more information, see :ref:`Attributes_DeclarationAttributes`.
+
+            * Type methods and properties now use the ``static`` keyword
+              as a declaration modifier.
+              For more information see :ref:`Declarations_TypeVariableProperties`.
+
+            * Swift now includes the ``as?`` and ``as!`` failable downcast operators.
+              For more information,
+              see :ref:`Protocols_CheckingForProtocolConformance`.
+
+            * Added a new guide section about
+              :ref:`StringsAndCharacters_StringIndexes`.
+
+            * Removed the overflow division (``&/``) and
+              overflow remainder (``&%``) operators
+              from :ref:`AdvancedOperators_OverflowOperators`.
+
+            * Updated the rules for constant and
+              constant property declaration and initialization.
+              For more information, see :ref:`Declarations_ConstantDeclaration`.
+
+            * Updated the definition of Unicode scalars in string literals.
+              See :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+
+            * Updated :ref:`BasicOperators_RangeOperators` to note that
+              a half-open range with the same start and end index will be empty.
+
+            * Updated :ref:`Closures_ClosuresAreReferenceTypes` to clarify
+              the capturing rules for variables.
+
+            * Updated :ref:`AdvancedOperators_ValueOverflow` to clarify
+              the overflow behavior of signed and unsigned integers
+
+            * Updated :ref:`Declarations_ProtocolDeclaration` to clarify
+              protocol declaration scope and members.
+
+            * Updated :ref:`AutomaticReferenceCounting_DefiningACaptureList`
+              to clarify the syntax for
+              weak and unowned references in closure capture lists.
+
+            * Updated :ref:`LexicalStructure_Operators` to explicitly mention
+              examples of supported characters for custom operators,
+              such as those in the Mathematical Operators, Miscellaneous Symbols,
+              and Dingbats Unicode blocks.
+----------  --------------------------------------------------------------------------
 2015-02-09  * Constants can now be declared without being initialized
               in local function scope.
               They must have a set value before first use.
@@ -19,7 +70,7 @@ Date        Notes
               as a comma-separated list of assignment expressions.
               For more information, see :ref:`TheBasics_OptionalBinding`.
 
-            * A :ref:`Expression_OptionalChainingOperator`
+            * An :ref:`Expression_OptionalChainingOperator`
               must appear within a postfix expression.
 
             * Protocol casts are no longer limited to ``@objc`` protocols.
@@ -183,7 +234,8 @@ Date        Notes
             * Updated the :ref:`StringsAndCharacters_Literals` section
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
-              where ``n`` is between one and eight hexadecimal digits.
+              where ``n`` is a hexadecimal number between 0 and 10FFFF,
+              the range of Unicode's codespace.
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
@@ -235,7 +287,7 @@ Date        Notes
             * Added a new section about :ref:`CollectionTypes_DictionaryTypeShorthandSyntax`,
               which is written as ``[KeyType: ValueType]``.
 
-            * Added a new section about :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+            * Added a new section about :ref:`CollectionTypes_HashValuesForSetTypes`.
 
             * Examples of :ref:`Closures_ClosureExpressions` now use
               the global ``sorted`` function rather than the global ``sort`` function,

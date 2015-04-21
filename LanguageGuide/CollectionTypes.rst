@@ -1,49 +1,46 @@
 Collection Types
 ================
 
-Swift provides two :newTerm:`collection types`, known as arrays and dictionaries,
+Swift provides three primary :newTerm:`collection types`,
+known as arrays, sets, and dictionaries,
 for storing collections of values.
-Arrays store ordered lists of values of the same type.
-Dictionaries store unordered collections of values of the same type,
-which can be referenced and looked up through a unique identifier
-(also known as a key).
+Arrays are ordered collections of values.
+Sets are unordered collections of distinct values.
+Dictionaries are unordered collections of key-value associations.
 
-Arrays and dictionaries in Swift are always clear about the types of values
+Arrays, sets, and dictionaries in Swift are always clear about the types of values
 and keys that they can store.
 This means that you cannot insert a value of the wrong type
-into an array or dictionary by mistake.
+into a collection by mistake.
 It also means you can be confident about the types of values
-you will retrieve from an array or dictionary.
-Swift's use of explicitly typed collections ensures that
-your code is always clear about the types of values it can work with
+you will retrieve from a collection.
+Swift's use of typed arrays, sets, and dictionaries ensures that
+your code is always clear about the types of values a collection can work with
 and enables you to catch any type mismatches early in your code's development.
 
 .. note::
 
-   Behind the scenes,
-   Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
+   Swift's array, set, and dictionary types are implemented as :newTerm:`generic collections`.
    For more on generic types and collections, see :doc:`Generics`.
-
-.. TODO: should I mention about bridging to NSArray / NSDictionary?
-   Dictionary is not yet bridged to NSDictionary ---
-   the work for this is in rdar://16014066,
-   which is currently scheduled (but I'd say unlikely) for the March milestone
 
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 
 .. TODO: mention for i in indices(collection) { collection[i] }
+
+.. TODO: discuss collection equality
+
 
 .. _CollectionTypes_MutabilityOfCollections:
 
 Mutability of Collections
 -------------------------
 
-If you create an array or a dictionary and assign it to a variable,
+If you create an array, a set, or a dictionary and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
 This means that you can change (or :newTerm:`mutate`) the collection after it is created
 by adding, removing, or changing items in the collection.
-Conversely, if you assign an array or a dictionary to a constant,
-that array or dictionary is :newTerm:`immutable`,
+Conversely, if you assign an array, a set, or a dictionary to a constant,
+that collection is :newTerm:`immutable`,
 and its size and contents cannot be changed.
 
 .. note::
@@ -58,20 +55,15 @@ and its size and contents cannot be changed.
 Arrays
 ------
 
-An :newTerm:`array` stores multiple values of the same type in an ordered list.
+An :newTerm:`array` stores values of the same type in an ordered list.
 The same value can appear in an array multiple times at different positions.
 
 .. note::
 
-   Swift arrays are specific about the kinds of values they can store.
-   They differ from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
-   which can store any kind of object
-   and do not provide any information about the nature of the objects they return.
-   In Swift, the type of values
-   that a particular array can store is always made clear,
-   either through an explicit type annotation or through type inference.
-   
-   For more about working with typed collections, see :doc:`TypeCasting`.
+   Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
+
+   For more information about using ``Array`` with Foundation and Cocoa,
+   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -79,18 +71,88 @@ Array Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The type of a Swift array is written in full as ``Array<SomeType>``,
-where ``SomeType`` is the type that the array is allowed to store.
+where ``SomeType`` is the type of values the array is allowed to store.
 You can also write the type of an array in shorthand form as ``[SomeType]``.
 Although the two forms are functionally identical,
-the shorthand form is preferred,
+the shorthand form is preferred
 and is used throughout this guide when referring to the type of an array.
+
+.. _CollectionTypes_CreatingAndInitializingAnArray:
+
+Creating and Initializing an Array
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can create an empty array of a certain type
+using initializer syntax:
+
+.. testcode:: arraysEmpty
+
+   -> var someInts = [Int]()
+   << // someInts : [(Int)] = []
+   -> println("someInts is of type [Int] with \(someInts.count) items.")
+   <- someInts is of type [Int] with 0 items.
+
+Note that the type of the ``someInts`` variable is inferred to be ``[Int]``
+from the type of the initializer.
+
+Alternatively, if the context already provides type information,
+such as a function argument or an already typed variable or constant,
+you can create an empty array with an empty array literal,
+which is written as ``[]``
+(an empty pair of square brackets):
+
+.. testcode:: arraysEmpty
+
+   -> someInts.append(3)
+   /> someInts now contains \(someInts.count) value of type Int
+   </ someInts now contains 1 value of type Int
+   -> someInts = []
+   // someInts is now an empty array, but is still of type [Int]
+
+Swift's ``Array`` type also provides
+an initializer for creating an array of a certain size
+with all of its values set to a provided default value.
+You pass this initializer the number of items to be added to the new array (called ``count``)
+and a default value of the appropriate type (called ``repeatedValue``):
+
+.. testcode:: arraysEmpty
+
+   -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
+   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
+   // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
+
+You can create a new array by adding together two existing arrays with compatible types
+with the addition operator (``+``).
+The new array's type is inferred from the type of the two arrays you add together:
+
+.. testcode:: arraysEmpty
+
+   -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
+   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
+   /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
+   ---
+   -> var sixDoubles = threeDoubles + anotherThreeDoubles
+   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
+   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+
+.. TODO: func find<T: Equatable>(array: [T], value: T) -> Int?
+   This is defined in Algorithm.swift,
+   and gives a way to find the index of a value in an array if it exists.
+   I'm holding off writing about it until NewArray lands.
+
+.. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
+   This is defined in Array.swift.
+   Likewise I'm holding off writing about it until NewArray lands.
+
 
 .. _CollectionTypes_ArrayLiterals:
 
 Array Literals
 ~~~~~~~~~~~~~~
 
-You can initialize an array with an :newTerm:`array literal`,
+You can also initialize an array with an :newTerm:`array literal`,
 which is a shorthand way to write one or more values as an array collection.
 An array literal is written as a list of values, separated by commas,
 surrounded by a pair of square brackets:
@@ -108,9 +170,9 @@ The example below creates an array called ``shoppingList`` to store ``String`` v
    // shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
-“an array of ``String`` values”, written as ``[String]``.
+“an array of string values”, written as ``[String]``.
 Because this particular array has specified a value type of ``String``,
-it is *only* allowed to store ``String`` values.
+it is allowed to store ``String`` values only.
 Here, the ``shoppingList`` array is initialized with two ``String`` values
 (``"Eggs"`` and ``"Milk"``), written within an array literal.
 
@@ -139,6 +201,7 @@ The initialization of ``shoppingList`` could have been written in a shorter form
 Because all values in the array literal are of the same type,
 Swift can infer that ``[String]`` is
 the correct type to use for the ``shoppingList`` variable.
+
 
 .. _CollectionTypes_AccessingAndModifyingAnArray:
 
@@ -223,14 +286,6 @@ with ``"Bananas"`` and ``"Apples"``:
 .. note::
 
    You can't use subscript syntax to append a new item to the end of an array.
-   If you try to use subscript syntax to retrieve or set a value for an index
-   that is outside of an array's existing bounds,
-   you will trigger a runtime error.
-   However, you can check that an index is valid before using it,
-   by comparing it to the array's ``count`` property.
-   Except when ``count`` is ``0`` (meaning the array is empty),
-   the largest valid index in an array will always be ``count - 1``,
-   because arrays are indexed from zero.
 
 .. QUESTION: should I note here that you can't set the firstItem variable
    and expect the value in the array to change,
@@ -264,6 +319,17 @@ This method removes the item at the specified index and returns the removed item
    </ shoppingList now contains 6 items, and no Maple Syrup
    /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
    </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
+
+.. note::
+
+   If you try to access or modify a value for an index
+   that is outside of an array's existing bounds,
+   you will trigger a runtime error.
+   However, you can check that an index is valid before using it,
+   by comparing it to the array's ``count`` property.
+   Except when ``count`` is ``0`` (meaning the array is empty),
+   the largest valid index in an array will always be ``count - 1``,
+   because arrays are indexed from zero.
 
 Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
@@ -329,84 +395,332 @@ as part of the iteration:
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
-.. _CollectionTypes_CreatingAndInitializingAnArray:
 
-Creating and Initializing an Array
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _CollectionTypes_Sets:
 
-You can create an empty array of a certain type
-(without setting any initial values)
+Sets
+----
+
+A :newTerm:`set` stores distinct values of the same type
+in a collection with no defined ordering.
+You can use sets as an alternative to arrays when the order of items is not important,
+or when you need to ensure that an item only appears once.
+
+.. note::
+
+   Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
+
+   For more information about using ``Set`` with Foundation and Cocoa,
+   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+
+.. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
+
+
+.. _CollectionTypes_SetTypeShorthandSyntax:
+
+Set Type Syntax
+~~~~~~~~~~~~~~~
+
+The type of a Swift set is written as ``Set<SomeType>``,
+where ``SomeType`` is the type that the set is allowed to store.
+Unlike arrays, sets do not have an equivalent shorthand form.
+
+
+.. _CollectionTypes_CreatingAndInitializingASet:
+
+Creating and Initializing a Set
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can create an empty set of a certain type
 using initializer syntax:
 
-.. testcode:: arraysEmpty
+.. testcode:: setsEmpty
 
-   -> var someInts = [Int]()
-   << // someInts : [(Int)] = []
-   -> println("someInts is of type [Int] with \(someInts.count) items.")
-   <- someInts is of type [Int] with 0 items.
+   -> var letters = Set<Character>()
+   << // letters : Set<Character> = []
+   -> println("letters is of type Set<Character> with \(letters.count) items.")
+   <- letters is of type Set<Character> with 0 items.
 
-Note that the type of the ``someInts`` variable is inferred to be ``[Int]``,
-because it is set to the output of an ``[Int]`` initializer.
+Note that the type of the ``letters`` variable is inferred to be ``Set<Character>``,
+from the type of the initializer.
 
 Alternatively, if the context already provides type information,
 such as a function argument or an already typed variable or constant,
-you can create an empty array with an empty array literal,
-which is written as ``[]``
-(an empty pair of square brackets):
+you can create an empty set with an empty array literal:
 
-.. testcode:: arraysEmpty
+.. testcode:: setsEmpty
 
-   -> someInts.append(3)
-   /> someInts now contains \(someInts.count) value of type Int
-   </ someInts now contains 1 value of type Int
-   -> someInts = []
-   // someInts is now an empty array, but is still of type [Int]
+   -> letters.insert("a")
+   /> letters now contains \(letters.count) value of type Character
+   </ letters now contains 1 value of type Character
+   -> letters = []
+   // letters is now an empty set, but is still of type Set<Character>
 
-Swift's ``Array`` type also provides
-an initializer for creating an array of a certain size
-with all of its values set to a provided default value.
-You pass this initializer the number of items to be added to the new array (called ``count``)
-and a default value of the appropriate type (called ``repeatedValue``):
 
-.. testcode:: arraysEmpty
+.. _CollectionTypes_SetWithArrayLiterals:
 
-   -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
-   // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
+Sets with Array Literals
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can create a new array by adding together two existing arrays of compatible type
-with the addition operator (``+``).
-The new array's type is inferred from the type of the two arrays you add together:
+You can also initialize a set with an array literal,
+as a shorthand way to write one or more values as a set collection.
 
-.. testcode:: arraysEmpty
+The example below creates a set called ``favoriteGenres`` to store ``String`` values:
 
-   -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
-   /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
-   ---
-   -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
-   /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
-   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+.. testcode:: sets
 
-.. TODO: func find<T: Equatable>(array: [T], value: T) -> Int?
-   This is defined in Algorithm.swift,
-   and gives a way to find the index of a value in an array if it exists.
-   I'm holding off writing about it until NewArray lands.
+   -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+   // favoriteGenres has been initialized with three initial items
 
-.. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
-   This is defined in Array.swift.
-   Likewise I'm holding off writing about it until NewArray lands.
+The ``favoriteGenres`` variable is declared as
+“a set of ``String`` values”, written as ``Set<String>``.
+Because this particular set has specified a value type of ``String``,
+it is *only* allowed to store ``String`` values.
+Here, the ``favoriteGenres`` set is initialized with three ``String`` values
+(``"Rock"``, ``"Classical"``, and ``"Hip hop"``), written within an array literal.
 
-.. TODO: talk about what it means to say that Array x == Array y
+.. note::
+
+   The ``favoriteGenres`` set is declared as a variable (with the ``var`` introducer)
+   and not a constant (with the ``let`` introducer)
+   because items are added and removed in the examples below.
+
+A set type cannot be inferred from an array literal alone,
+so the type ``Set`` must be explicitly declared.
+However, because of Swift's type inference,
+you don't have to write the type of the set
+if you're initializing it with an array literal containing values of the same type.
+The initialization of ``favoriteGenres`` could have been written in a shorter form instead:
+
+.. testcode:: setsInferred
+
+   -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+
+Because all values in the array literal are of the same type,
+Swift can infer that ``Set<String>`` is
+the correct type to use for the ``favoriteGenres`` variable.
+
+.. _CollectionTypes_AccessingAndModifyingASet:
+
+Accessing and Modifying a Set
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You access and modify a set through its methods and properties.
+
+To find out the number of items in a set,
+check its read-only ``count`` property:
+
+.. testcode:: setUsage
+
+   -> println("I have \(favoriteGenres.count) favorite music genres.")
+   <- "I have 3 favorite music genres."
+
+Use the Boolean ``isEmpty`` property
+as a shortcut for checking whether the ``count`` property is equal to ``0``:
+
+.. testcode:: setUsage
+
+   -> if favoriteGenres.isEmpty {
+         println("As far as music goes, I'm not picky.")
+      } else {
+         println("I have particular music preferences.")
+      }
+   <- I have particular music preferences.
+
+You can add a new item into a set by calling the set's ``insert(_:)`` method:
+
+.. testcode:: setUsage
+
+   -> favoriteGenres.insert("[Tool J]")
+   /> favoriteGenres now contains \(favoriteGenres.count) items
+   </ favoriteGenres now contains 4 items
+
+You can remove an item from a set by calling the set's ``remove(_:)`` method,
+which removes the item if it's a member of the set,
+and returns the removed value,
+or returns ``nil`` if the set did not contain it.
+Alternatively, all items in a set can be removed with its ``removeAll()`` method.
+
+.. testcode:: setUsage
+
+   -> if let removedGenre = favoriteGenres.remove("Rock") {
+         println("\(removedValue)? I'm over it.")
+      } else {
+         println("I never much cared for that.")
+      }
+   <- Rock? I'm over it.
+
+To check whether a set contains a particular item, use the ``contains(_:)`` method.
+
+.. testcode:: setUsage
+
+   -> if favoriteGenres.contains("Funk") {
+          println("I get up on the good foot.")
+      } else {
+          println("It's too funky in here.")
+      }
+   <- It's too funky in here.
+
+
+.. _CollectionTypes_IteratingOverASet:
+
+Iterating Over a Set
+~~~~~~~~~~~~~~~~~~~~
+
+You can iterate over the values in a set with a ``for``-``in`` loop.
+
+.. testcode:: setIteration
+
+   -> for genre in favoriteGenres {
+         println("\(genre)")
+      }
+   </ Classical
+   </ [Tool J]
+   </ Hip hop
+
+For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
+
+Swift's ``Set`` type does not have a defined ordering.
+To iterate over the values of a set in a specific order,
+use the global ``sorted`` function,
+which returns an ordered collection of the provided sequence.
+
+.. testcode:: setIteration
+
+   -> for genre in sorted(favoriteGenres) {
+         println("\(genre)")
+      }
+   <- Classical
+   <- Hip hop
+   <- [Tool J]
+
+
+.. _CollectionTypes_PerformingSetOperations:
+
+Performing Set Operations
+-------------------------
+
+You can efficiently perform fundamental set operations,
+such as combining two sets together,
+determining which values two sets have in common,
+or determining whether two sets contain all, some, or none of the same values.
+
+
+.. _CollectionTypes_ConstructingSets:
+
+Constructing Sets
+~~~~~~~~~~~~~~~~~
+
+The illustration below depicts two sets--``a`` and ``b``--
+with the results of various set operations represented by the shaded regions.
+
+.. image:: ../images/setVennDiagram_2x.png
+   :align: center
+
+* Use the ``union(_:)`` method to create a new set with all of the values in both sets.
+* Use the ``subtract(_:)`` method to create a new set with values not in the specified set.
+* Use the ``intersect(_:)`` method to create a new set with only the values common to both sets.
+* Use the ``exclusiveOr(_:)`` method to create a new set with values in either set, but not both.
+
+.. testcode:: setOperations
+
+   -> let oddDigits: Set = [1, 3, 5, 7, 9]
+      let evenDigits: Set = [0, 2, 4, 6, 8]
+      let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+   -> sorted(oddDigits.union(evenDigits))
+   // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+   -> sorted(oddDigits.intersect(evenDigits))
+   // []
+   -> sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+   // [1, 9]
+   -> sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+   // [1, 2, 9]
+
+
+.. _CollectionTypes_ComparingSets:
+
+Comparing Sets
+~~~~~~~~~~~~~~
+
+The illustration below depicts three sets--``a``, ``b`` and ``c``--
+with overlapping regions representing elements shared between sets.
+Set ``a`` is a :newTerm:`superset` of set ``b``,
+because ``a`` contains all elements in ``b``.
+Conversely, set ``b`` is a :newTerm:`subset` of set ``a``,
+because all elements in ``b`` are also contained by ``a``.
+Set ``b`` and set ``c`` are :newTerm:`disjoint` with one another,
+because they share no elements in common.
+
+.. image:: ../images/setEulerDiagram_2x.png
+   :align: center
+
+* Use the “is equal” operator (``==``) to determine whether two sets contain all of the same values.
+* Use the ``isSubsetOf(_:)`` method to determine whether all of the values of a set are contained in the specified set, or .
+* Use the ``isSupersetOf(_:)`` method to determine whether a set contains all of the values in a specified set, or .
+* Use the ``isStrictSubsetOf(_:)`` or ``isStrictSupersetOf(_:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
+* Use the ``isDisjointWith(_:)`` method to determine whether two sets have any values in common.
+
+.. testcode:: setOperations
+
+   -> let houseAnimals: Set = ["🐶", "🐱"]
+      let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+      let cityAnimals: Set = ["🐦", "🐭"]
+   -> houseAnimals.isSubsetOf(farmAnimals)
+   // true
+   -> farmAnimals.isSuperSetOf(houseAnimals)
+   // true
+   -> farmAnimals.isDisjointWith(cityAnimals)
+   // true
+
+
+.. _CollectionTypes_HashValuesForSetTypes:
+
+Hash Values for Set Types
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A type must be :newTerm:`hashable` in order to be stored in a set ---
+that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
+A hash value is an ``Int`` value that is the same for all objects that compare equal,
+such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
+
+All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
+are hashable by default, and can be used as set value types or dictionary key types.
+Enumeration member values without associated values
+(as described in :doc:`Enumerations`)
+are also hashable by default.
+
+.. note::
+
+   You can use your own custom types as set value types or dictionary key types
+   by making them conform to the ``Hashable`` protocol from Swift's standard library.
+   Types that conform to the ``Hashable`` protocol must provide
+   a gettable ``Int`` property called ``hashValue``.
+   The value returned by a type's ``hashValue`` property
+   is not required to be the same across different executions of the same program,
+   or in different programs.
+
+   Because the ``Hashable`` protocol conforms to ``Equatable``,
+   conforming types must must also provide an implementation of the “is equal” operator (``==``).
+   The ``Equatable`` protocol requires
+   any conforming implementation of ``==`` to be an equivalence relation.
+   That is, an implementation of ``==`` must satisfy the following three conditions,
+   for all values ``a``, ``b``, and ``c``:
+
+   * ``a == a`` (Reflexivity)
+   * ``a == b`` implies ``b == a`` (Symmetry)
+   * ``a == b && b == c`` implies ``a == c`` (Transitivity)
+
+   For more information about conforming to protocols, see :doc:`Protocols`.
+
 
 .. _CollectionTypes_Dictionaries:
 
 Dictionaries
 ------------
 
-A :newTerm:`dictionary` is a container that stores multiple values of the same type.
+A :newTerm:`dictionary` stores associations between
+keys of the same type and values of the same type
+in an collection with no defined ordering.
 Each value is associated with a unique :newTerm:`key`,
 which acts as an identifier for that value within the dictionary.
 Unlike items in an array, items in a dictionary do not have a specified order.
@@ -416,15 +730,10 @@ the definition for a particular word.
 
 .. note::
 
-   Swift dictionaries are specific about the types of keys and values they can store.
-   They differ from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes,
-   which can use any kind of object as their keys and values
-   and do not provide any information about the nature of those objects.
-   In Swift, the type of keys and values
-   that a particular dictionary can store is always made clear,
-   either through an explicit type annotation or through type inference.
-   
-   For more about working with typed collections, see :doc:`TypeCasting`.
+   Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
+
+   For more information about using ``Dictionary`` with Foundation and Cocoa,
+   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
@@ -435,17 +744,54 @@ The type of a Swift dictionary is written in full as ``Dictionary<Key, Value>``,
 where ``Key`` is the type of value that can be used as a dictionary key,
 and ``Value`` is the type of value that the dictionary stores for those keys.
 
+.. note::
+   A dictionary ``Key`` type must conform to the ``Hashable`` protocol,
+   like a set's value type.
+
 You can also write the type of a dictionary in shorthand form as ``[Key: Value]``.
 Although the two forms are functionally identical,
-the shorthand form is preferred,
+the shorthand form is preferred
 and is used throughout this guide when referring to the type of a dictionary.
+
+
+.. _CollectionTypes_CreatingAnEmptyDictionary:
+
+Creating an Empty Dictionary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As with arrays,
+you can create an empty ``Dictionary`` of a certain type by using initializer syntax:
+
+.. testcode:: dictionariesEmpty
+
+   -> var namesOfIntegers = [Int: String]()
+   << // namesOfIntegers : [Int : String] = [:]
+   // namesOfIntegers is an empty [Int: String] dictionary
+
+This example creates an empty dictionary of type ``[Int: String]``
+to store human-readable names of integer values.
+Its keys are of type ``Int``, and its values are of type ``String``.
+
+If the context already provides type information,
+you can create an empty dictionary with an empty dictionary literal,
+which is written as ``[:]``
+(a colon inside a pair of square brackets):
+
+.. testcode:: dictionariesEmpty
+
+   -> namesOfIntegers[16] = "sixteen"
+   /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
+   </ namesOfIntegers now contains 1 key-value pair
+   -> namesOfIntegers = [:]
+   // namesOfIntegers is once again an empty dictionary of type [Int: String]
+
 
 .. _CollectionTypes_DictionaryLiterals:
 
 Dictionary Literals
 ~~~~~~~~~~~~~~~~~~~
 
-You can initialize a dictionary with a :newTerm:`dictionary literal`,
+You can also initialize a dictionary with a :newTerm:`dictionary literal`,
 which has a similar syntax to the array literal seen earlier.
 A dictionary literal is a shorthand way to write
 one or more key-value pairs as a ``Dictionary`` collection.
@@ -493,7 +839,7 @@ as a way to initialize the ``airports`` dictionary with two initial items.
 As with arrays,
 you don't have to write the type of the dictionary
 if you're initializing it with a dictionary literal whose keys and values have consistent types.
-The initialization of ``airports`` could have been be written in a shorter form instead:
+The initialization of ``airports`` could have been written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
 
@@ -504,6 +850,7 @@ Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
 Swift can infer that ``[String: String]`` is
 the correct type to use for the ``airports`` dictionary.
+
 
 .. _CollectionTypes_AccessingAndModifyingADictionary:
 
@@ -677,70 +1024,6 @@ with the ``keys`` or ``values`` property:
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Toronto Pearson", "London Heathrow"]
 
-.. note::
-
-   Swift's ``Dictionary`` type is an unordered collection.
-   The order in which keys, values, and key-value pairs are retrieved
-   when iterating over a dictionary is not specified.
-
-.. _CollectionTypes_CreatingAnEmptyDictionary:
-
-Creating an Empty Dictionary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-As with arrays,
-you can create an empty ``Dictionary`` of a certain type by using initializer syntax:
-
-.. testcode:: dictionariesEmpty
-
-   -> var namesOfIntegers = [Int: String]()
-   << // namesOfIntegers : [Int : String] = [:]
-   // namesOfIntegers is an empty [Int: String] dictionary
-
-This example creates an empty dictionary of type ``[Int: String]``
-to store human-readable names of integer values.
-Its keys are of type ``Int``, and its values are of type ``String``.
-
-If the context already provides type information,
-you can create an empty dictionary with an empty dictionary literal,
-which is written as ``[:]``
-(a colon inside a pair of square brackets):
-
-.. testcode:: dictionariesEmpty
-
-   -> namesOfIntegers[16] = "sixteen"
-   /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
-   </ namesOfIntegers now contains 1 key-value pair
-   -> namesOfIntegers = [:]
-   // namesOfIntegers is once again an empty dictionary of type [Int: String]
-
-.. TODO: Mention that "==" will consider two dictionaries to be the same
-   if they have the same count, and every element in lhs is also in rhs
-
-.. _CollectionTypes_HashValuesForDictionaryKeyTypes:
-
-Hash Values for Dictionary Key Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A type must be :newTerm:`hashable` in order to be used as a dictionary's key type ---
-that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
-A hash value is an ``Int`` value that is the same for all objects that compare equal,
-such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
-
-All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
-are hashable by default, and all of these types can be used as the keys of a dictionary.
-Enumeration member values without associated values (as described in :doc:`Enumerations`)
-are also hashable by default.
-
-.. note::
-
-   You can use your own custom types as dictionary key types
-   by making them conform to the ``Hashable`` protocol from Swift's standard library.
-   Types that conform to the ``Hashable`` protocol must provide
-   a gettable ``Int`` property called ``hashValue``,
-   and must also provide an implementation of the “is equal” operator (``==``).
-   The value returned by a type's ``hashValue`` property
-   is not required to be the same across different executions of the same program,
-   or in different programs.
-
-   For more information about conforming to protocols, see :doc:`Protocols`.
+Swift's ``Dictionary`` type does not have a defined ordering.
+To iterate over the keys or values of a dictionary in a specific order,
+use the global ``sorted`` function on its ``keys`` or ``values`` property.

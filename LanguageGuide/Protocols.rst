@@ -97,15 +97,15 @@ and gettable properties are indicated by writing ``{ get }``.
          var doesNotNeedToBeSettable: Int { get }
       }
 
-Always prefix type property requirements with the ``class`` keyword
+Always prefix type property requirements with the ``static`` keyword
 when you define them in a protocol.
-This rule pertains even though type property requirements are prefixed with
-the ``static`` keyword when implemented by a structure or enumeration:
+This rule pertains even though type property requirements can be prefixed with
+the ``class`` or ``static`` keyword when implemented by a class:
 
 .. testcode:: instanceProperties
 
    -> protocol AnotherProtocol {
-         class var someTypeProperty: Int { get set }
+         static var someTypeProperty: Int { get set }
       }
 
 Here's an example of a protocol with a single instance property requirement:
@@ -189,7 +189,9 @@ Default values, however, cannot be specified for method parameters within a prot
 
 As with type property requirements,
 you always prefix type method requirements with the ``static`` keyword
-when they are defined in a protocol:
+when they are defined in a protocol.
+This is true even though type method requirements are prefixed with
+the ``class`` or ``static`` keyword when implemented by a class:
 
 .. testcode:: typeMethods
 

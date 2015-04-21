@@ -633,6 +633,8 @@ It is said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
 As with the closed range operator,
 the value of ``a`` must not be greater than ``b``.
+If the value of ``a`` is equal to ``b``,
+then the resulting range will be empty.
 
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
 
@@ -812,9 +814,15 @@ or if we know the emergency override password,
 then allow access.
 
 Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
-the first two mini-expressions are ``false``.
+the first two subexpressions are ``false``.
 However, the emergency override password is known,
 so the overall compound expression still evaluates to ``true``.
+
+.. note::
+
+   The Swift logical operators ``&&`` and ``||`` are left-associative,
+   meaning that compound expressions with multiple logical operators
+   evaluate the leftmost subexpression first.
 
 .. _BasicOperators_Explicit Parentheses:
 

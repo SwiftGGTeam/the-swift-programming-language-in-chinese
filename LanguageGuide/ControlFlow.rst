@@ -228,17 +228,6 @@ The loop is executed as follows:
    execution returns to step 2,
    and the condition expression is evaluated again.
 
-The loop format and execution process described above
-is shorthand for (and equivalent to) the outline below:
-
-.. syntax-outline::
-
-   <#initialization#>
-   while <#condition#> {
-      <#statements#>
-      <#increment#>
-   }
-
 Constants and variables declared within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the ``for`` loop itself.
@@ -317,7 +306,7 @@ Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
 The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indices ``0`` through ``25`` inclusive):
+(one each at indexes ``0`` through ``25`` inclusive):
 
 .. testcode:: snakesAndLadders1
 
