@@ -363,8 +363,10 @@ The subscript returns an optional value of the dictionary's value type.
 If the specified key isn't contained in the dictionary,
 the subscript returns ``nil``.
 
-The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol,
-as described in :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+The key type of a dictionary must conform to the Swift standard library ``Hashable`` protocol.
+
+.. Used to have an xref to :ref:`CollectionTypes_HashValuesForSetTypes` here.
+   But it doesnt really work now that the Hashable content moved from Dictionary to Set.
 
 For a detailed discussion of the Swift standard library ``Dictionary`` type,
 see :ref:`CollectionTypes_Dictionaries`.

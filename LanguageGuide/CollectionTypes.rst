@@ -470,11 +470,6 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres: Set<String> = {
-        [0] = "Rock"
-        [1] = "Classical"
-        [2] = "Hip hop"
-      }
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -577,7 +572,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 .. testcode:: setIteration
 
    -> for genre in favoriteGenres {
-         println("\(value)")
+         println("\(genre)")
       }
    </ Classical
    </ [Tool J]
@@ -592,12 +587,12 @@ which returns an ordered collection of the provided sequence.
 
 .. testcode:: setIteration
 
-	-> for genre in sorted(favoriteGenres) {
+   -> for genre in sorted(favoriteGenres) {
          println("\(genre)")
       }
-   <- "Classical"
-   <- "Hip hop"
-   <- "[Tool J]"
+   <- Classical
+   <- Hip hop
+   <- [Tool J]
 
 
 .. _CollectionTypes_PerformingSetOperations:
@@ -609,6 +604,9 @@ You can efficiently perform fundamental set operations,
 such as combining two sets together,
 determining which values two sets have in common,
 or determining whether two sets contain all, some, or none of the same values.
+
+
+.. _CollectionTypes_ConstructingSets:
 
 Constructing Sets
 ~~~~~~~~~~~~~~~~~
@@ -841,7 +839,7 @@ as a way to initialize the ``airports`` dictionary with two initial items.
 As with arrays,
 you don't have to write the type of the dictionary
 if you're initializing it with a dictionary literal whose keys and values have consistent types.
-The initialization of ``airports`` could have been be written in a shorter form instead:
+The initialization of ``airports`` could have been written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
 

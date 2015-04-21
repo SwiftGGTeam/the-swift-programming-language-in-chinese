@@ -483,13 +483,19 @@ see :ref:`Properties_PropertyObservers`.
 
 .. _Declarations_TypeVariableProperties:
 
-Class and Type Variable Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-To declare a class computed property, mark the declaration with the ``class`` declaration modifier.
 To declare a type variable property,
-mark the declaration with the ``static`` declaration modifier. Type properties
-are discussed in :ref:`Properties_TypeProperties`.
+mark the declaration with the ``static`` declaration modifier.
+Classes may mark type computed properties  with the ``class`` declaration modifier instead
+to allow subclasses to override the superclass’s implementation.
+Type properties are discussed in :ref:`Properties_TypeProperties`.
+
+.. note::
+
+   In a class declaration, the keyword ``static`` has the same effect as
+   marking the declaration with both the ``class`` and ``final`` declaration modifiers.
 
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)

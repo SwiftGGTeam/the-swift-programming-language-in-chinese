@@ -332,7 +332,7 @@ String literals can include the following special characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a 1 – 8 digit hexadecimal number
+  where *n* is a 1--8 digit hexadecimal number
   with a value equal to a valid Unicode code point
 
 .. assertion:: stringLiteralUnicodeScalar
@@ -342,8 +342,7 @@ String literals can include the following special characters:
    -> "\u{00000000}"
    <- <REPL Input>: String = ""
    -> "\u{000000000}"
-   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
-"\u{000000000}"
+   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits "\u{000000000}"
    !! "\u{000000000}"
    !! ^
    -> "\u{10FFFF}"
@@ -506,7 +505,7 @@ with a fourth character of ``é``, not ``e``:
    the ``length`` property from ``NSString`` is called ``utf16Count``
    when it is accessed on a Swift ``String`` value.
 
-.. _StringsAndCharacters_StringIndexes:
+.. _StringsAndCharacters_AccessingAndModifyingAString:
 
 Accessing and Modifying a String
 --------------------------------
@@ -595,7 +594,7 @@ indexes used to access individual characters in a string.
       println("\n")
    <- G u t e n   T a g
 
-.. _StringsAndCharacters_InsertAndRemove:
+.. _StringsAndCharacters_InsertingAndRemoving:
 
 Inserting and Removing
 ~~~~~~~~~~~~~~~~~~~~~~
