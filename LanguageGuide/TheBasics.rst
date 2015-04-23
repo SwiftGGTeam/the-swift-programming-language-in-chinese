@@ -1122,9 +1122,9 @@ as a comma-separated list of assignment expressions.
 .. assertion:: useOfMultipleValueOptionalBinding
 
    -> let a: String? = "1"
-   <- a: String? = "1"
-      let b: String? = "2"
-   <- b: String? = "2"
+   << // a : String? = Optional("1")
+   -> let b: String? = "2"
+   << // b : String? = Optional("2")
    -> if let x = a, y = b {
          println(x, y)
       }
