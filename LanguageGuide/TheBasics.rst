@@ -1116,8 +1116,8 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
-Multiple values may be optionally bound in a single ``if`` statement
-with a comma-separated list of assignment expressions.
+You can also write optional binding for multiple values in a single ``if`` statement
+with a comma-separated list of assignment expressions:
 
 .. assertion:: useOfMultipleValueOptionalBinding
 
@@ -1133,6 +1133,7 @@ with a comma-separated list of assignment expressions.
    if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
       <#statements#>
    }
+
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
