@@ -633,6 +633,113 @@ In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
 and so no message is printed.
 
+.. _ControlFlow_IfLet:
+
+If Let
+______
+
+As mentioned in :ref:`TheBasics_OptionalBinding`,
+an ``if`` statement may determine whether an optional contains a value,
+and if so, assign that value to a constant or variable within the relevant branch.
+
+The following example checks whether there is a weather advisory,
+and, if there is, prints it:
+
+.. REFERENCE
+
+   Significant Weather Advisories are issued by the National Weather Service.
+   These bulletins are transmitted in ALL CAPS.
+
+.. testcode:: ifLet
+
+   >> var weatherAdvisory: String? = "A STRONG THUNDERSTORM WAS LOCATED OVER PITTSBURGH"
+   -> if let advisory = weatherAdvisory {
+         println("⚠️ \(advisory)")
+      }
+   <- "⚠️ A STRONG THUNDERSTORM WAS LOCATED OVER PITTSBURGH"
+
+Here, ``weatherAdvisory`` is an optional ``String`` value.
+The statement ``if let advisory = weatherAdvisory``
+treats the presence of a value for ``weatherAdvisory``
+as the condition for executing a set of statements.
+If ``weatherAdvisory`` has a value,
+it is assigned to ``advisory`` as a non-optional ``String`` value
+that can be accessed inside the the relevant branch.
+This allows the value of ``weatherAdvisory`` to be accessed
+without force unwrapping with the ``!`` suffix.
+
+You can provide a leading condition to an ``if`` statement with optional binding:
+
+.. testcoe:: ifLet
+
+   >> let shouldPrintAdvisory = false
+   -> if shouldPrintAdvisory, let advisory = weatherAdvisory {
+          println("⚠️ \(advisory)")
+      }
+
+In this example, ``shouldPrintAdvisory`` is a ``Bool`` value.
+If this leading condition is ``false``,
+the ``if`` statement will stop evaluating before the optional binding expression.
+That is, the ``println`` function will only be called
+if both ``shouldPrintAdvisory == true`` and ``weatherAdvisory != nil``.
+
+.. _ControlFlow_IfLetWhere:
+
+If Let Where
+____________
+
+Additionally,
+an ``if`` statement with optional binding can use a ``where`` :newterm:`guard clause`
+to check for additional conditions.
+The main difference between a guard clause and a leading condition is that
+a guard clause can reference optionally bound constants or variables,
+while a leading condition cannot.
+A leading condition is always evaluated first,
+whereas a guard clause is evaluated last,
+and only if all optionally bound constants and variables are assigned values.
+
+Here's an example of an ``if`` statement with optional binding as well as
+both a leading condition and a guard expression:
+
+.. REFERENCE
+
+   Barometric measurements of changes in atmospheric pressure have been used
+   since the 19th century in weather forecasting.
+   A drop in pressure indicates the approach of a low pressure system,
+   which is associated with stormy and hotter weather.
+   A rise in pressure indicates the approach of a high pressure system,
+   which generally makes for fairer, dryer, and colder weather.
+   The magnitude of change indicates the intensity of the weather effect.
+   The rate of change is correlated with how long these effects will last.
+
+.. testCode:: ifLetWhere
+
+   >> let temperatureInFahrenheit = 50
+   >> var barometricReadingAnHourAgo: Double? = 30.0
+   >> var barometricReadingNow: Double? = 28.5
+   -> if temperatureInFahrenheit > 32,
+          let previousPressure = barometricReadingAnHourAgo,
+              currentPressure = barometricReadingNow
+          where previousPressure - currentPressure > 1.0 // hPa
+      {
+          println("There's a chance of rain. Be sure to bring an umbrella.")
+      }
+   <- "There's a chance of rain. Be sure to bring an umbrella."
+
+Measurements of barometric pressure over time are used to forecast the weather.
+A rapid drop in atmospheric pressure (greater than 1 hPa, or *hectopascals*, change over an hour)
+indicates the approach of a low pressure system,
+which increases the likelihood for precipitation.
+
+First, ``temperatureInFahrenheit`` is checked to see if it is above 32,
+which is roughly the temperature at which precipitation would fall as rain rather than snow.
+Next, ``barometricReadingAnHourAgo`` and ``barometricReadingNow``,
+which are both optional ``Double`` values,
+are optionally bound to ``previousPressure`` and ``currentPressure``.
+Finally, the ``where`` guard clause uses ``previousPressure`` and ``currentPressure``
+to determine whether the change in pressure over time indicates an increased likelihood in precipitation.
+Only if all of these conditions are met is the ``println`` function function called.
+
 .. _ControlFlow_Switch:
 
 Switch
@@ -934,7 +1041,8 @@ Any changes to that variable would only have an effect within the body of the ca
 Where
 _____
 
-A ``switch`` case can use a ``where`` clause to check for additional conditions.
+Like an ``if`` statement with optional binding,
+a ``switch`` case can use a ``where`` guard clause to check for additional conditions.
 
 The example below categorizes an (x, y) point on the following graph:
 
