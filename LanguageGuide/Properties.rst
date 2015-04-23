@@ -755,15 +755,15 @@ The example below shows the syntax for stored and computed type properties:
    -> class A { class var cp: String { return "A" } }
    -> class B: A { override class var cp: String { return "B" } }
    -> A.cp
-   << // $R0: String = "A"
+   << // r0 : String = "A"
    -> B.cp
-   << // $R1: String = "B"
+   << // r1 : String = "B"
 
 .. assertion:: staticComputedTypePropertiesAreFinal
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:2:34: error: class var overrides a 'final' class var
+   !! <REPL Input>:1:34: error: class var overrides a 'final' class var
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
    !! <REPL Input>:1:22: note: overridden declaration is here
