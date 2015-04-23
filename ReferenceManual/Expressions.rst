@@ -935,8 +935,6 @@ Constants or variables in an optional binding expression
 can be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 
-.. QUESTION: Should we note relationship to ``where`` clause in generic parameter constraints?
-
 ``if`` Statements
 _________________
 
