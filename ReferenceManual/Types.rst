@@ -471,6 +471,13 @@ In other words, the following two declarations are equivalent:
     !! var implicitlyUnwrappedString: String!
     !!     ^
 
+.. FIXME The above test is unstable.  Most of the time, the REPL handles the
+   declarations in the order that they appear, but sometimes it gets them
+   backwards.  This means that it complains about the first form String!  being a
+   redefinition of the second form ImplicitlyUnwrappedOptional<String>, which makes the error
+   messages not match -- and then the REPL crashes, which makes the rest of the
+   tests in this group this fail.
+
 In both cases, the variable ``implicitlyUnwrappedString``
 is declared to have the type of an implicitly unwrapped optional string.
 Note that no whitespace may appear between the type and the ``!``.

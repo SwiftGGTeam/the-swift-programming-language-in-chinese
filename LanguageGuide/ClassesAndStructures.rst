@@ -419,12 +419,9 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = REPL.S
    -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !! <REPL Input>:1:4: error: type 'S' does not conform to protocol 'AnyObject'
+   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two S operands
    !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !! ^
-   !! Swift.lhs:1:5: note: in initialization of parameter 'lhs'
-   !! let lhs: AnyObject?
-   !! ^
+   !!    ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -434,12 +431,9 @@ or passed to a function.)
    -> let e2 = E.B
    << // e2 : E = (Enum Value)
    -> if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !! <REPL Input>:1:4: error: type 'E' does not conform to protocol 'AnyObject'
+   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two E operands
    !! if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !! ^
-   !! Swift.lhs:1:5: note: in initialization of parameter 'lhs'
-   !! let lhs: AnyObject?
-   !! ^
+   !!    ^
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
@@ -479,9 +473,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:7: error: cannot invoke '==' with an argument list of type '(C, C)'
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two C operands
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! ~~~^~~~~
+   !!    ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -491,9 +485,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:7: error: cannot invoke '==' with an argument list of type '(S, S)'
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two S operands
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! ~~~^~~~~
+   !!    ^
 
 .. TODO: This needs clarifying with regards to function references.
 

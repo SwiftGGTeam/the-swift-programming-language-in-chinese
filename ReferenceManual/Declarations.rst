@@ -800,6 +800,9 @@ and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function
 
+    >> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
+           return a + b
+       }
     -> addTwoInts(4, 5)
     <$ : Int = 9
     -> // returns a value of 9

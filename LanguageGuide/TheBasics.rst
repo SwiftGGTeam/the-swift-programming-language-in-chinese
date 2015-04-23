@@ -611,7 +611,7 @@ is reported as an error when your code is compiled:
    -> let tooBig: Int8 = Int8.max + 1
    !! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
    !! let tooBig: Int8 = Int8.max + 1
-   !!                      ^
+   !!                    ~~~~~~~~ ^ ~
    // Int8 cannot store a number larger than its maximum value,
    // and so this will also report an error
 
@@ -1122,8 +1122,10 @@ as a comma-separated list of assignment expressions.
 .. assertion:: useOfMultipleValueOptionalBinding
 
    -> let a: String? = "1"
+   <- a: String? = "1"
       let b: String? = "2"
-      if let x = a, y = b {
+   <- b: String? = "2"
+   -> if let x = a, y = b {
          println(x, y)
       }
    <- (1, 2)

@@ -114,9 +114,9 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: cannot invoke '+=' with an argument list of type '(String, StringLiteralConvertible)'
+   !! <REPL Input>:1:16: error: binary operator '+=' cannot be applied to two String operands
    !! constantString += " and another Highlander"
-   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !!                ^
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
@@ -236,7 +236,7 @@ with the ``String`` type's ``append()`` method:
 .. testcode:: concatenation
 
    -> let exclamationMark: Character = "!"
-   << // exclamationMark : Character = !
+   << // exclamationMark : Character = "!"
    -> welcome.append(exclamationMark)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
@@ -398,9 +398,9 @@ in the second case, it is a cluster of two scalars:
 .. testcode:: graphemeClusters1
 
    -> let eAcute: Character = "\u{E9}"                         // é
-   << // eAcute : Character = é
+   << // eAcute : Character = "é"
    -> let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
-   << // combinedEAcute : Character = é
+   << // combinedEAcute : Character = "é"
    /> eAcute is \(eAcute), combinedEAcute is \(combinedEAcute)
    </ eAcute is é, combinedEAcute is é
 
@@ -413,9 +413,9 @@ Both of these representations qualify as a single ``Character`` value in Swift:
 .. testcode:: graphemeClusters2
 
    -> let precomposed: Character = "\u{D55C}"                  // 한
-   << // precomposed : Character = 한
+   << // precomposed : Character = "한"
    -> let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
-   << // decomposed : Character = 한
+   << // decomposed : Character = "한"
    /> precomposed is \(precomposed), decomposed is \(decomposed)
    </ precomposed is 한, decomposed is 한
 
@@ -426,7 +426,7 @@ to enclose other Unicode scalars as part of a single ``Character`` value:
 .. testcode:: graphemeClusters3
 
    -> let enclosedEAcute: Character = "\u{E9}\u{20DD}"
-   << // enclosedEAcute : Character = é⃝
+   << // enclosedEAcute : Character = "é⃝"
    /> enclosedEAcute is \(enclosedEAcute)
    </ enclosedEAcute is é⃝
 
@@ -438,7 +438,7 @@ and ``REGIONAL INDICATOR SYMBOL LETTER S`` (``U+1F1F8``):
 .. testcode:: graphemeClusters4
 
    -> let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
-   << // regionalIndicatorForUS : Character = 🇺🇸
+   << // regionalIndicatorForUS : Character = "🇺🇸"
    /> regionalIndicatorForUS is \(regionalIndicatorForUS)
    </ regionalIndicatorForUS is 🇺🇸
 
@@ -679,9 +679,9 @@ even if they are composed from different Unicode scalars behind the scenes.
 .. assertion:: characterComparisonUsesCanonicalEquivalence
 
    -> let eAcute: Character = "\u{E9}"
-   << // eAcute : Character = é
+   << // eAcute : Character = "é"
    -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = é
+   << // combinedEAcute : Character = "é"
    -> if eAcute != combinedEAcute {
          println("not equivalent, which is not expected")
       } else {
@@ -733,10 +733,10 @@ but do not have the same linguistic meaning:
 .. testcode:: stringEquality
 
    -> let latinCapitalLetterA: Character = "\u{41}"
-   << // latinCapitalLetterA : Character = A
+   << // latinCapitalLetterA : Character = "A"
    ---
    -> let cyrillicCapitalLetterA: Character = "\u{0410}"
-   << // cyrillicCapitalLetterA : Character = А
+   << // cyrillicCapitalLetterA : Character = "А"
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
          println("These two characters are not equivalent")

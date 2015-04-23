@@ -354,7 +354,7 @@ you write ``Stack<String>()``:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -547,9 +547,9 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:18: error: cannot invoke '==' with an argument list of type '(T, T)'
+   !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two T operands
    !!       if value == valueToFind {
-   !!          ~~~~~~^~~~~~~~~~~~~~
+   !!                ^
 
 This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
@@ -896,7 +896,7 @@ Here's how the ``allItemsMatch`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")

@@ -686,7 +686,7 @@ a single lowercase character called ``someCharacter``:
 .. testcode:: switch
 
    -> let someCharacter: Character = "e"
-   << // someCharacter : Character = e
+   << // someCharacter : Character = "e"
    -> switch someCharacter {
          case "a", "e", "i", "o", "u":
             println("\(someCharacter) is a vowel")
@@ -734,7 +734,7 @@ It is not valid to write the following code, because the first case is empty:
 .. testcode:: noFallthrough
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = a
+   << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
          case "a":
          case "A":
@@ -1086,7 +1086,7 @@ Multiple values are covered in a single ``switch`` case for brevity:
 .. testcode:: breakInASwitchStatement
 
    -> let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
-   << // numberSymbol : Character = 三
+   << // numberSymbol : Character = "三"
    -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = nil
    -> switch numberSymbol {

@@ -58,9 +58,6 @@ Extensions in Swift can:
    !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
    !! func foo() {}
    !! ^
-   !! /tmp/swifttest.swift:6:17: error: extensions may not contain stored properties
-   !! override var x: Int {
-   !! ^
 
 .. QUESTION: What are the rules for overloading via extensions?
 
