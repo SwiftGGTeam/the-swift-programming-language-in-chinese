@@ -612,8 +612,8 @@ use the ``insert(_:atIndex:)`` method.
    -> var welcome = "hello"
    << // welcome : String = "hello"
    -> welcome.insert("!", atIndex: welcome.endIndex)
-      println(welcome)
-   <- hello!
+   /> welcome now equals \"\(welcome)\"
+   </ welcome now equals "hello!"
 
 To insert another string at a specified index,
 use the ``splice(_:atIndex:)`` method.
@@ -621,8 +621,8 @@ use the ``splice(_:atIndex:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> welcome.splice(" there", atIndex: welcome.endIndex.predecessor())
-      println(welcome)
-   <- hello there!
+   /> welcome now equals \"\(welcome)\"
+   </ welcome now equals "hello there!"
 
 To remove a character from a string at a specified index,
 use the ``removeAtIndex(_:)`` method.
@@ -631,9 +631,8 @@ use the ``removeAtIndex(_:)`` method.
 
    -> welcome.removeAtIndex(welcome.endIndex.predecessor())
    << // r0 : Character = "!"
-   // !
-   -> println(welcome)
-   <- hello there
+   /> welcome now equals \"\(welcome)\"
+   </ welcome now equals "hello there"
 
 To remove a substring at a specified range,
 use the ``removeRange(_:)`` method:
@@ -643,8 +642,8 @@ use the ``removeRange(_:)`` method:
    -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
    << // range : Range<String.Index> = Range(5..<11)
    -> welcome.removeRange(range)
-      println(welcome)
-   <- hello
+   /> welcome now equals \"\(welcome)\"
+   </ welcome now equals "hello"
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
 
