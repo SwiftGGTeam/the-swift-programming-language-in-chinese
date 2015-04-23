@@ -547,7 +547,7 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two T operands
+   !! <REPL Input>:3:12: error: binary operator '==' cannot be applied to two T operands
    !!       if value == valueToFind {
    !!                ^
 
