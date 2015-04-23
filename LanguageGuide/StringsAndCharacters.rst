@@ -114,9 +114,12 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: binary operator '+=' cannot be applied to two String operands
+   !! <REPL Input>:1:1: error: binary operator '+=' cannot be applied to two String operands
    !! constantString += " and another Highlander"
    !!                ^
+   !! <REPL Input>:1:1: note: overloads for '+=' exist with these partially matching parameter lists: (inout String, String)
+   !! constantString += " and another Highlander"
+   !! ^
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
@@ -187,7 +190,7 @@ from a single-character string literal by providing a ``Character`` type annotat
 .. testcode:: characters
 
    -> let exclamationMark: Character = "!"
-   << // exclamationMark : Character = !
+   << // exclamationMark : Character = "!"
 
 ``String`` values can be constructed by passing an array of ``Character`` values
 as an argument to its initializer:
@@ -195,8 +198,10 @@ as an argument to its initializer:
 .. testcode:: characters
 
    -> let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
-      let catString = String(catCharacters)
-      println(catString)
+   << // catCharacters : [Character] = ["C", "a", "t", "!", "🐱"]
+   -> let catString = String(catCharacters)
+   << // catString : String = "Cat!🐱"
+   -> println(catString)
    <- Cat!🐱
 
 
@@ -338,17 +343,17 @@ String literals can include the following special characters:
 .. assertion:: stringLiteralUnicodeScalar
 
    -> "\u{0}"
-   <- <REPL Input>: String = ""
+   << // r0 : String = "\0"
    -> "\u{00000000}"
-   <- <REPL Input>: String = ""
+   << // r1 : String = "\0"
    -> "\u{000000000}"
-   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits "\u{000000000}"
+   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
    !! "\u{000000000}"
    !! ^
    -> "\u{10FFFF}"
-   <- <REPL Input>: String = "􏿿"
+   << // r2 : String = "􏿿"
    -> "\u{110000}"
-   !! <REPL Input>:2:2: error: invalid unicode scalar
+   !! <REPL Input>:1:2: error: invalid unicode scalar
    !! "\u{110000}"
    !! ^
 
@@ -537,7 +542,7 @@ If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 .. testcode:: stringIndex
 
    -> let greeting = "Guten Tag"
-   <- greeting: String = "Guten Tag"
+   << // greeting : String = "Guten Tag"
    -> println(greeting.startIndex)
    </ 0
    -> println(greeting.endIndex)
@@ -546,9 +551,9 @@ If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 .. assertion:: emptyStringIndexes
 
    -> let emptyString = ""
-   <- emptyString: String = ""
+   << // emptyString : String = ""
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
-   <- <REPL>: Bool = true
+   << // r0 : Bool = true
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index:
@@ -605,7 +610,7 @@ use the ``insert(_:atIndex:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> var welcome = "hello"
-   << welcome: String = "hello"
+   << // welcome: String = "hello"
    -> welcome.insert("!", atIndex: welcome.endIndex)
       println(welcome)
    <- hello!
@@ -625,7 +630,7 @@ use the ``removeAtIndex(_:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> welcome.removeAtIndex(welcome.endIndex.predecessor())
-   << <REPL>: Character = "!"
+   << // r0: Character = "!"
    </ !
    -> println(welcome)
    <- hello there
@@ -636,8 +641,10 @@ use the ``removeRange(_:)`` method:
 .. testcode:: stringInsertionAndRemoval
 
    -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
-      welcome.removeRange(range)
-      println(welcome)
+   << // range : Range<String.Index> = Range(5..<11)
+   -> welcome.removeRange(range)
+   << // r1 : String = "world"
+   -> println(welcome)
    <- hello
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
