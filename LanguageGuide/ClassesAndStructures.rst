@@ -473,7 +473,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two C operands
+   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two C operands
    !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
    !!    ^
 
@@ -485,7 +485,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S
    -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two S operands
+   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two S operands
    !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
    !!    ^
 
