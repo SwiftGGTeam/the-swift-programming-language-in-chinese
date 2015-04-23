@@ -1076,8 +1076,6 @@ For example, in the following assignment
     -> (x, _) = (10, 20)
     -> // x is 10, and 20 is ignored
 
-.. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
-
 .. syntax-grammar::
 
     Grammar of a wildcard expression
