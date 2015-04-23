@@ -635,12 +635,16 @@ with the results of various set operations represented by the shaded regions.
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
    << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    -> sorted(oddDigits.union(evenDigits))
+   << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    -> sorted(oddDigits.intersect(evenDigits))
+   << // r1 : [Int] = []
    // []
    -> sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+   << // r2 : [Int] = [1, 9]
    // [1, 9]
    -> sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+   << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
 
@@ -676,10 +680,13 @@ because they share no elements in common.
    -> let cityAnimals: Set = ["🐦", "🐭"]
    << // cityAnimals : Set<String> = Set(["🐦", "🐭"])
    -> houseAnimals.isSubsetOf(farmAnimals)
+   << // r4 : Bool = true
    // true
    -> farmAnimals.isSupersetOf(houseAnimals)
+   << // r5 : Bool = true
    // true
    -> farmAnimals.isDisjointWith(cityAnimals)
+   << // r6 : Bool = true
    // true
 
 
