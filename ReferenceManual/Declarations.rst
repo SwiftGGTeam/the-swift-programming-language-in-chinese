@@ -798,10 +798,13 @@ as the noncurried ``addTwoInts`` function,
 you must call the ``addTwoIntsCurried`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
-.. testcode:: curried-function
+.. testcode:: curried-function-usage
 
-    >> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
-           return a + b
+    >> func addTwoInts(a: Int, b: Int) -> Int {
+          return a + b
+       }
+       func addTwoIntsCurried(a: Int)(b: Int) -> Int {
+          return a + b
        }
     -> addTwoInts(4, 5)
     <$ : Int = 9
@@ -828,7 +831,7 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
 
 .. testcode:: curried-function
 
-    -> plusOne(b: 10)
+    -> plusOne(10)
     <$ : Int = 11
     -> // returns a value of 11
 
