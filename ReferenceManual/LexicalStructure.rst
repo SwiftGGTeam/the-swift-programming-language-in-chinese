@@ -467,9 +467,9 @@ followed by a sequence of decimal digits.
 The exponent consists of an upper- or lowercase ``e`` prefix
 followed by a sequence of decimal digits that indicates
 what power of 10 the value preceding the ``e`` is multiplied by.
-For example, ``1.25e2`` represents 1.25 × 10\ :superscript:`2`,
+For example, ``1.25e2`` represents 1.25 x 10\ :superscript:`2`,
 which evaluates to ``125.0``.
-Similarly, ``1.25e-2`` represents 1.25 × 10\ :superscript:`-2`,
+Similarly, ``1.25e-2`` represents 1.25 x 10\ :superscript:`-2`,
 which evaluates to ``0.0125``.
 
 Hexadecimal floating-point literals consist of a ``0x`` prefix,
@@ -480,9 +480,9 @@ followed by a sequence of hexadecimal digits.
 The exponent consists of an upper- or lowercase ``p`` prefix
 followed by a sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
-For example, ``0xFp2`` represents 15 × 2\ :superscript:`2`,
+For example, ``0xFp2`` represents 15 x 2\ :superscript:`2`,
 which evaluates to ``60``.
-Similarly, ``0xFp-2`` represents 15 × 2\ :superscript:`-2`,
+Similarly, ``0xFp-2`` represents 15 x 2\ :superscript:`-2`,
 which evaluates to ``3.75``.
 
 Negative floating-point literals are expressed by prepending a minus sign (``-``)
