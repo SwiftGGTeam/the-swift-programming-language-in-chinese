@@ -610,7 +610,7 @@ use the ``insert(_:atIndex:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> var welcome = "hello"
-   << // welcome: String = "hello"
+   << // welcome : String = "hello"
    -> welcome.insert("!", atIndex: welcome.endIndex)
       println(welcome)
    <- hello!
@@ -630,8 +630,8 @@ use the ``removeAtIndex(_:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> welcome.removeAtIndex(welcome.endIndex.predecessor())
-   << // r0: Character = "!"
-   </ !
+   << // r0 : Character = "!"
+   // !
    -> println(welcome)
    <- hello there
 
@@ -643,8 +643,7 @@ use the ``removeRange(_:)`` method:
    -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
    << // range : Range<String.Index> = Range(5..<11)
    -> welcome.removeRange(range)
-   << // r1 : String = "world"
-   -> println(welcome)
+      println(welcome)
    <- hello
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
