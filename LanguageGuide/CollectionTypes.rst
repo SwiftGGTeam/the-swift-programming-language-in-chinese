@@ -437,7 +437,7 @@ using initializer syntax:
 .. testcode:: setsEmpty
 
    -> var letters = Set<Character>()
-   << // letters : Set<Character> = []
+   << // letters : Set<Character> = Set([])
    -> println("letters is of type Set<Character> with \(letters.count) items.")
    <- letters is of type Set<Character> with 0 items.
 
@@ -470,6 +470,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -495,6 +496,7 @@ The initialization of ``favoriteGenres`` could have been written in a shorter fo
 .. testcode:: setsInferred
 
    -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``Set<String>`` is
@@ -512,8 +514,10 @@ check its read-only ``count`` property:
 
 .. testcode:: setUsage
 
+   >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
    -> println("I have \(favoriteGenres.count) favorite music genres.")
-   <- "I have 3 favorite music genres."
+   <- I have 3 favorite music genres.
 
 Use the Boolean ``isEmpty`` property
 as a shortcut for checking whether the ``count`` property is equal to ``0``:
@@ -544,7 +548,7 @@ Alternatively, all items in a set can be removed with its ``removeAll()`` method
 .. testcode:: setUsage
 
    -> if let removedGenre = favoriteGenres.remove("Rock") {
-         println("\(removedValue)? I'm over it.")
+         println("\(removedGenre)? I'm over it.")
       } else {
          println("I never much cared for that.")
       }
@@ -569,7 +573,7 @@ Iterating Over a Set
 
 You can iterate over the values in a set with a ``for``-``in`` loop.
 
-.. testcode:: setIteration
+.. testcode:: setUsage
 
    -> for genre in favoriteGenres {
          println("\(genre)")
@@ -585,14 +589,14 @@ To iterate over the values of a set in a specific order,
 use the global ``sorted`` function,
 which returns an ordered collection of the provided sequence.
 
-.. testcode:: setIteration
+.. testcode:: setUsage
 
    -> for genre in sorted(favoriteGenres) {
          println("\(genre)")
       }
-   <- Classical
-   <- Hip hop
-   <- [Tool J]
+   </ Classical
+   </ Hip hop
+   </ [Tool J]
 
 
 .. _CollectionTypes_PerformingSetOperations:
@@ -625,8 +629,11 @@ with the results of various set operations represented by the shaded regions.
 .. testcode:: setOperations
 
    -> let oddDigits: Set = [1, 3, 5, 7, 9]
-      let evenDigits: Set = [0, 2, 4, 6, 8]
-      let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+   << // oddDigits : Set<Int> = Set([5, 7, 3, 1, 9])
+   -> let evenDigits: Set = [0, 2, 4, 6, 8]
+   << // evenDigits : Set<Int> = Set([6, 2, 0, 4, 8])
+   -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+   << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    -> sorted(oddDigits.union(evenDigits))
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    -> sorted(oddDigits.intersect(evenDigits))
@@ -663,11 +670,14 @@ because they share no elements in common.
 .. testcode:: setOperations
 
    -> let houseAnimals: Set = ["🐶", "🐱"]
-      let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-      let cityAnimals: Set = ["🐦", "🐭"]
+   << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
+   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
+   -> let cityAnimals: Set = ["🐦", "🐭"]
+   << // cityAnimals : Set<String> = Set(["🐦", "🐭"])
    -> houseAnimals.isSubsetOf(farmAnimals)
    // true
-   -> farmAnimals.isSuperSetOf(houseAnimals)
+   -> farmAnimals.isSupersetOf(houseAnimals)
    // true
    -> farmAnimals.isDisjointWith(cityAnimals)
    // true
