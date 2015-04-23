@@ -421,7 +421,7 @@ the program executes only the code within the first matching case in source orde
 .. _Statements_SwitchStatementsMustBeExhaustive:
 
 Switch Statements Must Be Exhaustive
-++++++++++++++++++++++++++++++++++++
+____________________________________
 
 In Swift,
 every possible value of the control expression’s type
@@ -434,7 +434,7 @@ you can include a default case to satisfy the requirement.
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
 
 Execution Does Not Fall Through Cases Implicitly
-++++++++++++++++++++++++++++++++++++++++++++++++
+________________________________________________
 
 After the code within a matched case has finished executing,
 the program exits from the ``switch`` statement.

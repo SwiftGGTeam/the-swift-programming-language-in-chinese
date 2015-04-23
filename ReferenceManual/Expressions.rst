@@ -938,7 +938,7 @@ and throughout the rest of the code within the scope of the case.
 .. QUESTION: Should we note relationship to ``where`` clause in generic parameter constraints?
 
 ``if`` Statements
-+++++++++++++++++
+_________________
 
 .. testcode:: if-let-where-statement
 
@@ -971,7 +971,7 @@ Here, the guard expression is equivalent to the following nested ``if`` statemen
 
 
 ``while`` Statments
-+++++++++++++++++++
+___________________
 
 .. testcode:: while-let-where-statement
 
@@ -1003,7 +1003,7 @@ Here, the guard expression is equivalent to the following ``if`` statement:
    }
 
 ``switch`` Statement Cases
-++++++++++++++++++++++++++
+__________________________
 
 .. testcode:: switch-case-statement
 

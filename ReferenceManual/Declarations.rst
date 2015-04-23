@@ -293,7 +293,7 @@ and execute the relevant branch.
     as described in :ref:`Expressions_GuardExpressions`.
 
 ``if`` Statements
-+++++++++++++++++
+_________________
 
 Write optional binding for an ``if`` statement as follows:
 
@@ -307,7 +307,7 @@ Write optional binding for an ``if`` statement as follows:
    }
 
 ``while`` Statements
-++++++++++++++++++++
+____________________
 
 Write optional binding for a ``while`` statement as follows:
 
@@ -319,7 +319,7 @@ Write optional binding for a ``while`` statement as follows:
    }
 
 ``switch`` Statement Cases
-++++++++++++++++++++++++++
+__________________________
 
 Write optional binding for ``switch`` statement cases as follows:
 
