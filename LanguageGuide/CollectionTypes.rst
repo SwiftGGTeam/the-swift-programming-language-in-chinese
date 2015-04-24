@@ -667,8 +667,8 @@ because they share no elements in common.
    :align: center
 
 * Use the “is equal” operator (``==``) to determine whether two sets contain all of the same values.
-* Use the ``isSubsetOf(_:)`` method to determine whether all of the values of a set are contained in the specified set, or .
-* Use the ``isSupersetOf(_:)`` method to determine whether a set contains all of the values in a specified set, or .
+* Use the ``isSubsetOf(_:)`` method to determine whether all of the values of a set are contained in the specified set.
+* Use the ``isSupersetOf(_:)`` method to determine whether a set contains all of the values in a specified set.
 * Use the ``isStrictSubsetOf(_:)`` or ``isStrictSupersetOf(_:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
 * Use the ``isDisjointWith(_:)`` method to determine whether two sets have any values in common.
 
