@@ -689,7 +689,7 @@ If Let Where
 ____________
 
 Additionally,
-an ``if`` statement with optional binding can use a ``where`` :newterm:`guard clause`
+an ``if`` statement with optional binding can use a ``where`` :newTerm:`guard clause`
 to check for additional conditions.
 The main difference between a guard clause and a leading condition is that
 a guard clause can reference optionally bound constants or variables,
