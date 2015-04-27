@@ -670,7 +670,7 @@ without force unwrapping with the ``!`` suffix.
 
 You can provide a leading condition to an ``if`` statement with optional binding:
 
-.. testcoe:: ifLet
+.. testcode:: ifLet
 
    >> let shouldPrintAdvisory = false
    -> if shouldPrintAdvisory, let advisory = weatherAdvisory {
@@ -712,7 +712,7 @@ both a leading condition and a guard expression:
    The magnitude of change indicates the intensity of the weather effect.
    The rate of change is correlated with how long these effects will last.
 
-.. testCode:: ifLetWhere
+.. testcode:: ifLetWhere
 
    >> let temperatureInFahrenheit = 50
    >> var barometricReadingAnHourAgo: Double? = 30.0
