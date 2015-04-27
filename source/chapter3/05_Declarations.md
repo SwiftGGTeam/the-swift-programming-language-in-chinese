@@ -226,9 +226,13 @@ willset监视器初始名为newvalue，didset监视器初始名为oldvalue。
 
 获得更多信息，查看如何使用属性监视器的例子，请查看属性监视器(prpperty observers)一节。
 
-###类和静态变量属性
+###类型变量属性
 
-class关键字用来声明类的计算型属性。static关键字用来声明类的静态变量属性。类和静态变量在类型属性(type properties)中有详细讨论。
+为了声明一个类型变量属性，要用```static```声明描述符标记该声明。类可能需要```class```声明描述符去标记类的类型计算属性从而允许子类可以覆盖父类的实现。类型属性在[类型属性](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID264)章节讨论。
+
+>>注意
+>>
+>在一个类声明中，关键字```static```与把一个声明同时标记为```class```和```final```的效果相同
 
 > 变量声明语法  
 > *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  

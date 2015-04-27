@@ -65,16 +65,25 @@ typealias MyProtocol = MyRenamedProtocol
 
 你可以在一个单独的声明上使用多个`availability`特性，以详细说明该声明在不同平台上的有效性。编译器只有在当前的目标平台和`availability`特性中指定的平台匹配时，才会使用`availability`特性
 
-`exported`
+`autoclosure`
 
-该特性用于修饰导入声明，以此来导出已导入的模块，子模块，或当前模块的声明。如果另一个模块导入了当前模块，那么那个模块可以访问当前模块的导出项。
+这个属性通过把表达式自动封装成不带参数的闭包来延迟表达式的计算。这个属性使用在函数参数声明或者不带参数但是返回表达式类型的方法类型上。含有```autoclosure```属性的声明同时也具有```noescape```的特性，除非传递一个可选的参数属性```escaping```，请看[函数类型](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449)。
 
+`noescape`
+
+在函数或者方法声明上使用该属性表示参数将不会被存储用作后续的计算，其用来确保不会超出函数调用的声明周期。使用```noescape```声明属性的函数类型不需要显式的使用```self```,对于其属性或者方法来说。
 
 `noreturn`
 
 该特性用于修饰函数或方法声明，表明该函数或方法的对应类型，`T`，是`@noreturn T`。你可以用这个特性修饰函数或方法的类型，这样一来，函数或方法就不会返回到它的调用者中去。
 
 对于一个没有用`noreturn`特性标记的函数或方法，你可以将它重写(override)为用该特性标记的。相反，对于一个已经用`noreturn`特性标记的函数或方法，你则不可以将它重写为没使用该特性标记的。相同的规则试用于当你在一个comforming类型中实现一个协议方法时。
+
+`NSApplicationMain`
+在类上使用该属性表示该类是应用程序委托类，使用该属性与调用```NSApplicationMain```函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
+
+如果你不想使用这个属性，可以提供一个```main.swift```文件，并且提供一个```main```函数去调用```NSApplicationMain```函数。比如，如果你的应用程序使用一个派生于```NSApplication```的自定义子类作为主要类，你可以调用```NSApplicationMain```函数而不是使用该属性。
+
 
 `NSCopying`
 

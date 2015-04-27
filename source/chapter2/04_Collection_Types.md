@@ -7,6 +7,7 @@
 本页包含内容：
 
 - [数组（Arrays）](#arrays)
+- [集合(Sets)](#sets)
 - [字典（Dictionaries）](#dictionaries)
 - [集合的可变性（Mutability of Collections）](#mutability_of_collections)
 
@@ -229,6 +230,219 @@ var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
 var sixDoubles = threeDoubles + anotherThreeDoubles
 // sixDoubles 被推断为 [Double], 等于 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 ```
+<a name="sets"></a>
+## 集合
+
+集合用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以把集合当做是数组另一形式。
+
+> 注意：  
+> Swift的<code>Set</code>类型被桥接到<code>Fundation</code>中的<code>NSSet</code>类  
+> 关于使用<code>Fundation</code>和<code>Cocoa</code>中集合的知识，请看<a link="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216">Swift与Cocoa和Objective-C使用</a>
+
+<a name="set_type_syntax"></a>
+### Set类型语法
+
+Swift中的<code>Set</code>类型被写为```Set<SomeType>```,这里的```SomeType```表示```Set```中允许存储的类型，和数组不同的是，集合没有等价的简化形式。
+
+<a name="create_and_initializing_a_set"></a>
+### 创建和构造一个Set
+
+你可以通过构造器语法创建一个特定类型的空集合：
+
+```swift
+var letters = Set<Character>()
+println("letters is of type Set<Character> with \(letters.count) items.")
+// 打印 "letters is of type Set<Character> with 0 items."
+```
+
+注意这里的```letters```变量的类型来自于构造器的类型，其为```Set<Character>```。
+
+另外，如果上下文提供了类型信息，比如作为函数的参数或者已知类型的变量或常量，你可以通过一个空的数组字面量创建一个空的```Set```：
+
+```swift
+letters.insert("a")
+// letters现在含有1个Character类型的值
+letters = []
+// letters现在是一个空的Set, 但是它依然是Set<Character>类型
+```
+
+<a name="sets_with_arrays_literals"></a>
+### 集合与数组字面量
+
+你可以使用一个数组字面量来构造一个集合，并且可以使用简化形式写一个或者多个值作为集合元素。
+
+下面的例子创建一个称之为```favoriteGenres```的集合来存储```String```类型的值：
+
+```swift
+var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+// favoriteGenres被构造成含有三个初始值的集合
+```
+
+这个```favoriteGenres```变量被声明为“一个```String```值的集合”，写为```Set<String>```。由于这个特定的集合含有指定```String```类型的值，所以它只允许存储```String```类型值。这里的```favoriteGenres```变量有三个```String```类型的初始值("```Rock```","```Classical```"和"```Hip hop```"),并以数组字面量的方式出现。
+
+> 注意：  
+> ```favoriteGenres```被声明为一个变量(拥有```var```标示符)而不是一个常量(拥有```let```标示符),因为它里面的元素将会在下面的例子中被增加或者移除。
+
+一个```Set```类型不能从数组中字面量中独立地被推断出来，因此```Set```类型必须显式声明。然而，由于Swift的类型推导功能，如果你想使用一个数组字面量构造一个Set并且该数组字面量中的所有元素类型相同，那么你无须写出```Set```的具体类型。```favoriteGenres```的构造形式可以采用简化的方式代替：
+
+```swift
+var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+```
+
+由于数组字面量中的所有元素类型相同，Swift可以推断出```Set<String>```作为```favoriteGenres```变量的正确类型。
+
+<a name="accesing_and_modifying_a_set"></a>
+### 访问和修改一个Set
+
+你可以通过```Set```的属性和方法来访问和修改一个```Set```.
+
+为了找出一个```Set```中元素的数量，可以使用其只读属性```count```:
+
+```swift
+println("I have \(favoriteGenres.count) favorite music genres.")
+// 打印 ""I have 3 favorite music genres.""
+```
+
+使用布尔属性```isEmpty```作为一个缩写形式去检查```count```属性是否为```0```:
+
+```swift
+if favoriteGenres.isEmpty {
+    println("As far as music goes, I'm not picky.")
+} else {
+    println("I have particular music preferences.")
+}
+// 打印 "I have particular music preferences."
+```
+
+你可以通过调用```Set```的``` insert(_:) ```方法添加一个新的元素：
+
+```swift
+favoriteGenres.insert("Jazz")
+// favoriteGenres 现在包含4个元素
+```
+
+你可以通过调用```Set```的```remove(_:)```方法去删除一个元素，如果该值是该```Set```的一个元素则删除该元素并且返回被删除的元素值，否认如果该```Set```不包含该值，则返回```nil```。另外，```Set```中的所有元素可以通过它的```removeAll()```方法删除。
+
+```swift
+if let removedGenre = favoriteGenres.remove("Rock") {
+    println("\(removedValue)? I'm over it.")
+} else {
+    println("I never much cared for that.")
+}
+// 打印 "Rock? I'm over it."
+```
+
+使用```contains(_:)```方法去检查```Set```中是否包含一个特定的值。
+
+```swift
+if favoriteGenres.contains("Funk") {
+    println("I get up on the good foot.")
+} else {
+    println("It's too funky in here.")
+}
+// 打印 "It's too funky in here."
+```
+
+<a name="iterating_over_a_set"></a>
+### 遍历一个Set
+
+你可以在一个```for-in```循环中遍历一个```Set```中的所有值。
+
+```swift
+for genre in favoriteGenres {
+    println("\(value)")
+}
+// Classical
+// Jazz
+// Hip hop
+```
+
+更多关于```for-in```循环信息，请看<a link="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID121">For循环</a>
+
+Swift的```Set```类型没有确定的顺序，为了按照特定顺序来遍历一个```Set```中值可以使用全局```sorted```函数，它将根据提供的序列返回一个排序的集合.
+
+```swift
+-> for genre in sorted(favoriteGenres) {
+    println("\(genre)")
+}
+// prints "Classical"
+// prints "Hip hop"
+// prints "Jazz
+```
+
+<a name="performing_set_operations"></a>
+### 完成集合操作
+
+你可以高效的完成```Set```的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
+
+<a name="constructing_sets"></a>
+#### 构造集合
+
+下面的插图描述了两个集合-```a```和```b```-以及通过阴影部分的区域显示集合各种操作的结果。
+
+![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setVennDiagram_2x.png)
+
+* 使用```union(_:)```方法根据两个集合的值创建一个新的集合。
+* 使用```subtract(_:)```方法根据不在该集合中的值创建一个新的集合。
+* 使用```intersect(_:)```方法根据两个集合中都包含的值创建的一个新的集合。
+* 使用```exclusiveOr(_:)```方法根据值在一个集合中但不在两个集合中的值创建一个新的集合。
+
+```swift
+let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+sorted(oddDigits.union(evenDigits))
+// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+sorted(oddDigits.intersect(evenDigits))
+// []
+sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+// [1, 9]
+sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+// [1, 2, 9]
+```
+
+<a name="comparing_sets"></a>
+#### 集合比较
+
+下面的插图描述了三个集合-```a```,```b```和```c```,以及通过悬浮区域表述集合间共享的元素。Set ```a```是Set ```b```的父集合，因为```a```包含了```b```中所有的元素，相反的，Set ```b```是```a```的子集合，因为属于```b```的元素也被```a```包含。Set ```b```和Set ```c```彼此不关联，因为它们之间没有共同的元素。
+
+![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
+
+* 使用“是否等”运算符(```=```)来判断两个集合是否包含相同的值。
+* 使用```isSubsetOf(_:)```方法来判断一个集合中的值是否也被包含在另外一个集合中。
+* 使用```isSupersetOf(_:)```方法来判断一个集合中包含的值是另一个集合中所有的值。
+* 使用```isStrictSubsetOf(_:)```或者```isStrictSupersetOf(_:)```方法来判断一个集合是否是另外一个集合的子集合或者父集合并且和特定集合不相等。
+* 使用```isDisjointWith(_:)```方法来判断两个结合是否不含有相同的值。
+
+```swift
+let houseAnimals: Set = ["🐶", "🐱"]
+let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+let cityAnimals: Set = ["🐦", "🐭"]
+houseAnimals.isSubsetOf(farmAnimals)
+// true
+farmAnimals.isSuperSetOf(houseAnimals)
+// true
+farmAnimals.isDisjointWith(cityAnimals)
+// true
+```
+
+<a name="hash_values_for_set_types"></a>
+#### Set类型的哈希值
+
+为了存储在集合中，该类型必须是可哈希化的-也就是说，该类型必须提供一个方法来计算它的哈希值。一个哈希值是```Int```类型的，它和其他的对象相同，其被用来比较相等与否，比如```a==b```,它遵循的是``` a.hashValue == b.hashValue```。
+
+Swift的所有基本类型(比如```String```,```Int```,```Double```和```Bool```)默认都是可哈希化的，它可以作为集合的值或者字典的键值类型。没有关联值的枚举成员值(在[枚举部分](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID145)有讲述)默认也是可哈希化的。
+
+>注意
+>你可以使用你自定义的类型作为集合的值或者是字典的键值类型，但你需要使你的自定义类型服从Swift标准库中的```Hashable```协议。服从```Hashable```协议的类型需要提供一个类型为```Int```的取值访问器属性```hashValue```。这个由类型的```hashValue```返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
+>因为```hashable```协议服从于```Equatable```协议，所以遵循该协议的类型也必须提供一个"是否等"运算符(```==```)的实现。这个```Equatable```协议需要任何遵循的```==```的实现都是一种相等的关系。也就是说，对于```a,b,c```三个值来说，```==```的实现必须满足下面三种情况：
+
+* ```a==a```(自反性)
+* ```a==b```意味着```b==a```(对称性)
+* ```a==b&&b==c```意味着```a==c```(传递性)
+
+关于协议遵循的更多信息，请看[协议](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID267)
+
 
 <a name="dictionaries"></a>
 ## 字典
