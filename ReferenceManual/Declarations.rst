@@ -185,6 +185,14 @@ Constant declarations are declared using the keyword ``let`` and have the follow
 
     let <#constant name#>: <#type#> = <#expression#>
 
+To declare a constant type property,
+mark the declaration with the ``static`` declaration modifier.
+Type properties are discussed in :ref:`Properties_TypeProperties`.
+
+.. syntax-outline::
+
+    static let <#constant name#>: <#type#> = <#expression#>
+
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
 after the value of a constant is set, it cannot be changed.
@@ -223,10 +231,6 @@ Both constants can now be used independently:
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
-
-To declare a constant type property,
-mark the declaration with the ``static`` declaration modifier.
-Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
