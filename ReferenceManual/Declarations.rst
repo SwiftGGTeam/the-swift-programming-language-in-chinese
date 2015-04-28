@@ -235,8 +235,6 @@ as described in :ref:`Types_TypeInference`.
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
-.. TODO: Need to discuss class and static constant properties.
-
 .. langref-grammar
 
     decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
