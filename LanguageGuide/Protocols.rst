@@ -190,7 +190,7 @@ Default values, however, cannot be specified for method parameters within a prot
 As with type property requirements,
 you always prefix type method requirements with the ``static`` keyword
 when they are defined in a protocol.
-This is true even though type method requirements are prefixed with
+This is true even though type method requirements can be prefixed with
 the ``class`` or ``static`` keyword when implemented by a class:
 
 .. testcode:: typeMethods

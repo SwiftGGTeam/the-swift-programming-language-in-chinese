@@ -225,11 +225,8 @@ when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
 To declare a constant type property,
-mark the declaration with the ``static`` declaration modifier. Type properties
-are discussed in :ref:`Properties_TypeProperties`.
-
-.. TODO: Discuss class constant properties after they're implemented
-    (probably not until after 1.0)
+mark the declaration with the ``static`` declaration modifier.
+Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
@@ -424,7 +421,7 @@ Type Variable Properties
 
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier.
-Classes may mark type computed properties  with the ``class`` declaration modifier instead
+Classes may mark computed type properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
@@ -432,11 +429,6 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
    In a class declaration, the keyword ``static`` has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
-
-.. TODO: Discuss class properties after they're implemented
-    (probably not until after 1.0)
-    Update: we now have class computed properties. We'll get class stored properites
-    sometime after WWDC.
 
 .. TODO: Need to discuss static variable properties in more detail.
 
@@ -1427,12 +1419,9 @@ For examples of conforming types that implement the method requirements of a pro
 see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the ``static`` declaration modifier. Classes that implement
-this method declare the method with the ``class`` modifier. Structures
-that implement it must declare the method with the ``static`` declaration modifier instead.
-If you're implementing the method in an extension,
-use the ``class`` modifier if you're extending a class and the ``static`` modifier
-if you're extending a structure.
+mark the method declaration with the ``static`` declaration modifier.
+Classes may also use the ``class`` keyword
+to allow subclasses to override the superclass’s implementation of that method.
 
 See also :ref:`Declarations_FunctionDeclaration`.
 
