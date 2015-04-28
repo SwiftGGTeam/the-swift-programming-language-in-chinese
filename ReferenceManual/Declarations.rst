@@ -198,7 +198,7 @@ and the value of the initializer *expression*;
 after the value of a constant is set, it cannot be changed.
 That said, if a constant is initialized with a class object,
 the object itself can change,
-but the binding between the constant name and the object it refers to can't.
+but the binding between the constant and the object it refers to can't.
 
 When a constant is declared at global scope,
 it must be initialized with a value.
