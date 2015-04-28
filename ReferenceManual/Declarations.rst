@@ -581,6 +581,17 @@ the return type can be omitted as follows:
        <#statements#>
     }
 
+Type method declarations within a class, structure, or enumeration declaration
+are marked with the ``static`` keyword.
+Classes may mark type methods with the ``class`` declaration modifier instead
+to allow subclasses to override the superclass’s implementation.
+
+.. syntax-outline::
+
+    static func <#function name#>(<#parameters#>) -> <#return type#> {
+       <#statements#>
+    }
+
 The type of each parameter must be included ---
 it can't be inferred.
 Although the parameters to a function are constants by default,
@@ -1086,7 +1097,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` literal
-
 
 
 .. _Declarations_StructureDeclaration:
