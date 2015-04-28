@@ -422,16 +422,31 @@ Type Variable Properties
 
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier.
+
+.. syntax-outline::
+
+    static var <#variable name#>: <#type#> = <#expression#>
+
 Classes may mark computed type properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
+
+.. syntax-outline::
+
+    class var <#variable name#>: <#type#> {
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
+    }
+
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. note::
 
    In a class declaration, the keyword ``static`` has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
-
-.. TODO: Need to discuss static variable properties in more detail.
 
 .. langref-grammar
     decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
