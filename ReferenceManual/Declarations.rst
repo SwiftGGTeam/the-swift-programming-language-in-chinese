@@ -1367,34 +1367,30 @@ declaration:
 
     var <#property name#>: <#type#> { get set }
 
+To declare a type property requirement in a protocol declaration,
+mark the property declaration with the ``static`` keyword.
+
+.. syntax-outline::
+
+    static var <#type property name#>: <#type#> { get set }
+
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
 that conform to the protocol. As a result, you don't implement the getter or setter
 directly in the protocol in which it is declared.
 
-The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
+The getter and setter requirements
+can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
 a conforming type can implement it with a stored variable property
 or a computed property that is both readable and writeable
-(that is, one that implements both a getter and a setter). However,
-that property declaration can't be implemented as a constant property
-or a read-only computed property. If a property declaration includes
-only the ``get`` keyword, it can be implemented as any kind of property.
+(that is, one that implements both a getter and a setter).
+However,that property declaration can't be implemented as a constant property
+or a read-only computed property.
+If a property declaration includes only the ``get`` keyword,
+it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
 see :ref:`Protocols_PropertyRequirements`.
-
-.. TODO:
-    Because we're not going to have 'class' properties for 1.0,
-    you can't declare static or class properties in a protocol declaration.
-    Add the following text back in after we get the ability to do 'class' properties:
-
-    To declare a type property requirement in a protocol declaration,
-    mark the property declaration with the ``class`` keyword. Classes that implement
-    this property also declare the property with the ``class`` keyword. Structures
-    that implement it must declare the property with the ``static`` keyword instead.
-    If you're implementing the property in an extension,
-    use the ``class`` keyword if you're extending a class and the ``static`` keyword
-    if you're extending a structure.
 
 See also :ref:`Declarations_VariableDeclaration`.
 
@@ -1413,15 +1409,23 @@ Protocol Method Declaration
 Protocols declare that conforming types must implement a method
 by including a protocol method declaration in the body of the protocol declaration.
 Protocol method declarations have the same form as
-function declarations, with two exceptions: They don't include a function body,
+function declarations, with two exceptions:
+They don't include a function body,
 and you can't provide any default parameter values as part of the function declaration.
-For examples of conforming types that implement the method requirements of a protocol,
-see :ref:`Protocols_MethodRequirements`.
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameter#>)(<#parameter#>) -> <#return type#>
 
 To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``static`` declaration modifier.
-Classes may also use the ``class`` keyword
-to allow subclasses to override the superclass’s implementation of that method.
+
+.. syntax-outline::
+
+    static func <#function name#>(<#parameter#>)(<#parameter#>) -> <#return type#>
+
+For examples of conforming types that implement the method requirements of a protocol,
+see :ref:`Protocols_MethodRequirements`.
 
 See also :ref:`Declarations_FunctionDeclaration`.
 
