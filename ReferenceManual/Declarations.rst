@@ -185,9 +185,8 @@ Constant declarations are declared using the keyword ``let`` and have the follow
 
     let <#constant name#>: <#type#> = <#expression#>
 
-To declare a constant type property,
+To declare a type constant,
 mark the declaration with the ``static`` declaration modifier.
-Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. syntax-outline::
 
