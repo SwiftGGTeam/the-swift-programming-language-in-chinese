@@ -195,7 +195,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
 ``noescape``
     Apply this attribute to a function or method declaration
-    to indicate that a parameter it will not be stored for later execution,
+    to indicate that a parameter will not be stored for later execution,
     such that it is guaranteed not to outlive the lifetime of the call.
     Function type parameters with the ``noescape`` declaration attribute
     do not require explicit use of ``self.`` for properties or methods.
