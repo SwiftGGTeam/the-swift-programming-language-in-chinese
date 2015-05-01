@@ -536,7 +536,7 @@ For this reason, Swift strings cannot be indexed by integer values.
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``,
 and the ``endIndex`` property to access
-the posision of the last.
+the position of the last.
 If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
 .. testcode:: stringIndex
