@@ -433,7 +433,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
    In a class declaration, the keyword ``static`` has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
 
-.. TODO: Discuss class properties after they're implemented
+.. TODO: Discuss type properties after they're implemented
     (probably not until after 1.0)
     Update: we now have class computed properties. We'll get class stored properites
     sometime after WWDC.
@@ -1399,7 +1399,7 @@ see :ref:`Protocols_PropertyRequirements`.
 
 .. TODO:
     Because we're not going to have 'class' properties for 1.0,
-    you can't declare static or class properties in a protocol declaration.
+    you can't declare static or type properties in a protocol declaration.
     Add the following text back in after we get the ability to do 'class' properties:
 
     To declare a type property requirement in a protocol declaration,

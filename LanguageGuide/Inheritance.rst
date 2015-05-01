@@ -243,7 +243,7 @@ you can see that the ``Train`` subclass version of the method is called:
 Overriding Properties
 ~~~~~~~~~~~~~~~~~~~~~
 
-You can override an inherited instance or class property
+You can override an inherited instance or type property
 to provide your own custom getter and setter for that property,
 or to add property observers to enable the overriding property
 to observe when the underlying property value changes.
