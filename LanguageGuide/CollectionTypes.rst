@@ -739,7 +739,7 @@ Dictionaries
 
 A :newTerm:`dictionary` stores associations between
 keys of the same type and values of the same type
-in an collection with no defined ordering.
+in a collection with no defined ordering.
 Each value is associated with a unique :newTerm:`key`,
 which acts as an identifier for that value within the dictionary.
 Unlike items in an array, items in a dictionary do not have a specified order.
