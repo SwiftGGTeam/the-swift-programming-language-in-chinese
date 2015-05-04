@@ -617,7 +617,7 @@ and the ``City`` class has a ``country`` property:
 
    -> class Country {
          let name: String
-         let capitalCity: City!
+         var capitalCity: City!
          init(name: String, capitalName: String) {
             self.name = name
             self.capitalCity = City(name: capitalName, country: self)
