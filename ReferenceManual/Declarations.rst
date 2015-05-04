@@ -794,7 +794,7 @@ For example, the following two declarations are equivalent:
         }
 
 In order to use the ``addTwoIntsCurried(_:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(_:_:)`` function,
+as the non-curried ``addTwoInts(_:_:)`` function,
 you must call the ``addTwoIntsCurried(_:)(b:)`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
@@ -813,7 +813,7 @@ and then call its returned function with the second integer argument:
     <$ : Int = 9
     -> // returns a value of 9
 
-Although you must provide the arguments to a noncurried function all at once in a single call,
+Although you must provide the arguments to a non-curried function all at once in a single call,
 you can use the curried form of a function to provide arguments in several function calls,
 one at a time (even in different places in your code).
 This is known as :newTerm:`partial function application`.
