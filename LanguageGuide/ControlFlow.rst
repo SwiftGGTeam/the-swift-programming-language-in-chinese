@@ -780,30 +780,37 @@ Values in ``switch`` cases can be checked for their inclusion in an interval.
 This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
+.. REFERENCE
+   There are 200–400 billion stars in the Milky Way.
+
 .. testcode:: intervalMatching
    :compile: true
 
-   -> let count = 3_000_000_000_000
+   -> let approximateCount = 300_000_000_000
    -> let countedThings = "stars in the Milky Way"
    -> var naturalCount: String
-   -> switch count {
-         case 0:
-            naturalCount = "no"
-         case 1...3:
-            naturalCount = "a few"
-         case 4...9:
-            naturalCount = "several"
-         case 10...99:
-            naturalCount = "tens of"
-         case 100...999:
-            naturalCount = "hundreds of"
-         case 1000...999_999:
-            naturalCount = "thousands of"
-         default:
-            naturalCount = "millions and millions of"
+   -> switch approximateCount {
+      case 0:
+          naturalCount = "no"
+      case 1..<5:
+          naturalCount = "a few"
+      case 5..<10:
+          naturalCount = "several"
+      case 10..<100:
+          naturalCount = "tens of"
+      case 100..<1000:
+          naturalCount = "hundreds of"
+      case 1000..<1_000_000:
+          naturalCount = "thousands of"
+      case 1_000_000..<1_000_000_000:
+          naturalCount = "millions of"
+      case 1_000_000_000..<1_000_000_000_000:
+          naturalCount = "billions of"
+      default:
+          naturalCount = "many, many"
       }
    -> println("There are \(naturalCount) \(countedThings).")
-   <- There are millions and millions of stars in the Milky Way.
+   <- There are billions of stars in the Milky Way.
 
 .. TODO: Add a description for this example.
 
