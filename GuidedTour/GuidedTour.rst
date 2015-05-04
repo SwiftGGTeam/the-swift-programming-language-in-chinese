@@ -22,7 +22,7 @@ You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
-so you don't need a ``main`` function.
+so you don't need a ``main()`` function.
 You also don't need to write semicolons
 at the end of every statement.
 
@@ -1272,7 +1272,7 @@ or to require a class to have a particular superclass.
 
 .. admonition:: Experiment
 
-   Modify the ``anyCommonElements`` function
+   Modify the ``anyCommonElements(_:_:)`` function
    to make a function that returns an array
    of the elements that any two sequences have in common.
 

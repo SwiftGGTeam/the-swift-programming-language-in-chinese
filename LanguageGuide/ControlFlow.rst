@@ -69,7 +69,7 @@ In this case, the loop contains only one statement,
 which prints an entry from the five-times-table for the current value of ``index``.
 After the statement is executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
-and the ``println`` function is called again.
+and the ``println(_:)`` function is called again.
 This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
@@ -920,7 +920,7 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 Once the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``println`` function.
+Here, they are used as shorthand for printing the values with the ``println(_:)`` function.
 
 Note that this ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
@@ -1188,7 +1188,7 @@ There are no other specific cases,
 and so ``integerToDescribe`` is matched by the catchall ``default`` case.
 
 After the ``switch`` statement has finished executing,
-the number's description is printed using the ``println`` function.
+the number's description is printed using the ``println(_:)`` function.
 In this example,
 the number ``5`` is correctly identified as a prime number.
 
