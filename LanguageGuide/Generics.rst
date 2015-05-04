@@ -37,7 +37,7 @@ which swaps two ``Int`` values:
 This function makes use of in-out parameters to swap the values of ``a`` and ``b``,
 as described in :ref:`Functions_InOutParameters`.
 
-The ``swapTwoInts`` function swaps the original value of ``b`` into ``a``,
+The ``swapTwoInts(_:_:)`` function swaps the original value of ``b`` into ``a``,
 and the original value of ``a`` into ``b``.
 You can call this function to swap the values in two ``Int`` variables:
 
@@ -51,11 +51,11 @@ You can call this function to swap the values in two ``Int`` variables:
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
-The ``swapTwoInts`` function is useful, but it can only be used with ``Int`` values.
+The ``swapTwoInts(_:_:)`` function is useful, but it can only be used with ``Int`` values.
 If you want to swap two ``String`` values,
 or two ``Double`` values,
 you have to write more functions,
-such as the ``swapTwoStrings`` and ``swapTwoDoubles`` functions shown below:
+such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown below:
 
 .. testcode:: whyGenerics
 
@@ -72,7 +72,7 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles`` functions shown below:
       }
 
 You may have noticed that the bodies of
-the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles`` functions are identical.
+the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles(_:_:)`` functions are identical.
 The only difference is the type of the values that they accept
 (``Int``, ``String``, and ``Double``).
 
@@ -99,7 +99,7 @@ Generic Functions
 -----------------
 
 :newTerm:`Generic functions` can work with any type.
-Here's a generic version of the ``swapTwoInts`` function from above,
+Here's a generic version of the ``swapTwoInts(_:_:)`` function from above,
 called ``swapTwoValues``:
 
 .. testcode:: genericFunctions
@@ -110,8 +110,8 @@ called ``swapTwoValues``:
          b = temporaryA
       }
 
-The body of the ``swapTwoValues`` function
-is identical to the body of the ``swapTwoInts`` function.
+The body of the ``swapTwoValues(_:_:)`` function
+is identical to the body of the ``swapTwoInts(_:_:)`` function.
 However, the first line of ``swapTwoValues``
 is slightly different from ``swapTwoInts``.
 Here's how the first lines compare:
@@ -138,15 +138,15 @@ The placeholder type name doesn't say anything about what ``T`` must be,
 but it *does* say that both ``a`` and ``b`` must be of the same type ``T``,
 whatever ``T`` represents.
 The actual type to use in place of ``T``
-will be determined each time the ``swapTwoValues`` function is called.
+will be determined each time the ``swapTwoValues(_:_:)`` function is called.
 
 The other difference is that the generic function's name (``swapTwoValues``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
-within the ``swapTwoValues`` function definition.
+within the ``swapTwoValues(_:_:)`` function definition.
 Because ``T`` is a placeholder, Swift does not look for an actual type called ``T``.
 
-The ``swapTwoValues`` function can now be called in the same way as ``swapTwoInts``,
+The ``swapTwoValues(_:_:)`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
 as long as both of those values are of the same type as each other.
 Each time ``swapTwoValues`` is called,
@@ -174,11 +174,11 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 
 .. note::
 
-   The ``swapTwoValues`` function defined above is inspired by
+   The ``swapTwoValues(_:_:)`` function defined above is inspired by
    a generic function called ``swap``, which is part of the Swift standard library,
    and is automatically made available for you to use in your apps.
-   If you need the behavior of the ``swapTwoValues`` function in your own code,
-   you can use Swift's existing ``swap`` function rather than providing your own implementation.
+   If you need the behavior of the ``swapTwoValues(_:_:)`` function in your own code,
+   you can use Swift's existing ``swap(_:_:)`` function rather than providing your own implementation.
 
 .. _Generics_TypeParameters:
 
@@ -193,7 +193,7 @@ between a pair of matching angle brackets (such as ``<T>``).
 
 Once you specify a type parameter,
 you can use it to define the type of a function's parameters
-(such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function),
+(such as the ``a`` and ``b`` parameters of the ``swapTwoValues(_:_:)`` function),
 or as the function's return type,
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
@@ -429,7 +429,7 @@ to access and query its top item without removing it:
 Type Constraints
 ----------------
 
-The ``swapTwoValues`` function and the ``Stack`` type can work with any type.
+The ``swapTwoValues(_:_:)`` function and the ``Stack`` type can work with any type.
 However, it is sometimes useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
@@ -499,7 +499,7 @@ Type Constraints in Action
 Here's a non-generic function called ``findStringIndex``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
-The ``findStringIndex`` function returns an optional ``Int`` value,
+The ``findStringIndex(_:_:)`` function returns an optional ``Int`` value,
 which will be the index of the first matching string in the array if it is found,
 or ``nil`` if the string cannot be found:
 
@@ -514,7 +514,7 @@ or ``nil`` if the string cannot be found:
          return nil
       }
 
-The ``findStringIndex`` function can be used to find a string value in an array of strings:
+The ``findStringIndex(_:_:)`` function can be used to find a string value in an array of strings:
 
 .. testcode:: typeConstraints
 
@@ -574,7 +574,7 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findIndex`` function,
+Any type that is ``Equatable`` can be used safely with the ``findIndex(_:_:)`` function,
 because it is guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
@@ -593,7 +593,7 @@ as part of the type parameter's definition when you define the function:
 The single type parameter for ``findIndex`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
-The ``findIndex`` function now compiles successfully
+The ``findIndex(_:_:)`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
@@ -873,10 +873,10 @@ The third and fourth requirements combine to mean that
 the items in ``anotherContainer`` can *also* be checked with the ``!=`` operator,
 because they are exactly the same type as the items in ``someContainer``.
 
-These requirements enable the ``allItemsMatch`` function to compare the two containers,
+These requirements enable the ``allItemsMatch(_:_:)`` function to compare the two containers,
 even if they are of a different container type.
 
-The ``allItemsMatch`` function starts by checking that
+The ``allItemsMatch(_:_:)`` function starts by checking that
 both containers contain the same number of items.
 If they contain a different number of items, there is no way that they can match,
 and the function returns ``false``.
@@ -891,7 +891,7 @@ and the function returns ``false``.
 If the loop finishes without finding a mismatch,
 the two containers match, and the function returns ``true``.
 
-Here's how the ``allItemsMatch`` function looks in action:
+Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 
 .. testcode:: associatedTypes
 
@@ -918,9 +918,9 @@ an array literal containing the same three strings as the stack.
 Even though the stack and the array are of a different type,
 they both conform to the ``Container`` protocol,
 and both contain the same type of values.
-You can therefore call the ``allItemsMatch`` function
+You can therefore call the ``allItemsMatch(_:_:)`` function
 with these two containers as its arguments.
-In the example above, the ``allItemsMatch`` function correctly reports that
+In the example above, the ``allItemsMatch(_:_:)`` function correctly reports that
 all of the items in the two containers match.
 
 .. QUESTION: swift/stdlib/core/Algorithm.swift contains a function called equal,

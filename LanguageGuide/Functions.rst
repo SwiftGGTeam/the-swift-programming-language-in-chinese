@@ -77,20 +77,20 @@ from elsewhere in your code:
    -> println(sayHello("Brian"))
    <- Hello, Brian!
 
-You call the ``sayHello`` function by passing it a ``String`` argument value in parentheses,
+You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
 such as ``sayHello("Anna")``.
 Because the function returns a ``String`` value,
-``sayHello`` can be wrapped in a call to the ``println`` function
+``sayHello`` can be wrapped in a call to the ``println(_:)`` function
 to print that string and see its return value, as shown above.
 
-The body of the ``sayHello`` function starts by
+The body of the ``sayHello(_:)`` function starts by
 defining a new ``String`` constant called ``greeting``
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
 the function finishes its execution and returns the current value of ``greeting``.
 
-You can call the ``sayHello`` function multiple times with different input values.
+You can call the ``sayHello(_:)`` function multiple times with different input values.
 The example above shows what happens if it is called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
@@ -162,7 +162,7 @@ Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions are not required to define a return type.
-Here's a version of the ``sayHello`` function,
+Here's a version of the ``sayHello(_:)`` function,
 called ``sayGoodbye``,
 which prints its own ``String`` value rather than returning it:
 
@@ -180,7 +180,7 @@ or a return type.
 
 .. note::
 
-   Strictly speaking, the ``sayGoodbye`` function *does* still return a value,
+   Strictly speaking, the ``sayGoodbye(_:)`` function *does* still return a value,
    even though no return value is defined.
    Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
@@ -249,11 +249,11 @@ which finds the smallest and largest numbers in an array of ``Int`` values:
          return (currentMin, currentMax)
       }
 
-The ``minMax`` function returns a tuple containing two ``Int`` values.
+The ``minMax(_:)`` function returns a tuple containing two ``Int`` values.
 These values are labeled ``min`` and ``max``
 so that they can be accessed by name when querying the function's return value.
 
-The body of the ``minMax`` function starts by setting
+The body of the ``minMax(_:)`` function starts by setting
 two working variables called ``currentMin`` and ``currentMax``
 to the value of the first integer in the array.
 The function then iterates over the remaining values in the array
@@ -297,14 +297,14 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    With an optional tuple type, the entire tuple is optional,
    not just each individual value within the tuple.
 
-The ``minMax`` function above returns a tuple containing two ``Int`` values.
+The ``minMax(_:)`` function above returns a tuple containing two ``Int`` values.
 However, the function does not perform any safety checks on the array it is passed.
 If the ``array`` argument contains an empty array,
-the ``minMax`` function, as defined above,
+the ``minMax(_:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
 To handle this “empty array” scenario safely,
-write the ``minMax`` function with an optional tuple return type
+write the ``minMax(_:)`` function with an optional tuple return type
 and return a value of ``nil`` when the array is empty:
 
 .. testcode:: tupleTypesAsReturnTypes2
@@ -323,7 +323,7 @@ and return a value of ``nil`` when the array is empty:
          return (currentMin, currentMax)
       }
 
-You can use optional binding to check whether this version of the ``minMax`` function
+You can use optional binding to check whether this version of the ``minMax(_:)`` function
 returns an actual tuple value or ``nil``:
 
 .. testcode:: tupleTypesAsReturnTypes2
@@ -402,7 +402,7 @@ the purpose of the three strings that you pass to the function is unclear:
    </ returns "hello, world"
 
 To make the purpose of these ``String`` values clearer,
-define external parameter names for each ``join`` function parameter:
+define external parameter names for each ``join(_:_:_:)`` function parameter:
 
 .. testcode:: externalParameterNames
 
@@ -411,7 +411,7 @@ define external parameter names for each ``join`` function parameter:
          return s1 + joiner + s2
       }
 
-In this version of the ``join`` function,
+In this version of the ``join(_:_:_:)`` function,
 the first parameter has an external name of ``string`` and a local name of ``s1``;
 the second parameter has an external name of ``toString`` and a local name of ``s2``;
 and the third parameter has an external name of ``withJoiner``
@@ -426,7 +426,7 @@ You can now use these external parameter names to call the function unambiguousl
    /> returns \"\(r1)\"
    </ returns "hello, world"
 
-The use of external parameter names enables this second version of the ``join`` function
+The use of external parameter names enables this second version of the ``join(_:_:_:)`` function
 to be called in an expressive, sentence-like manner by users of the function,
 while still providing a function body that is readable and clear in intent.
 
@@ -489,7 +489,7 @@ If a default value is defined, you can omit that parameter when calling the func
    use the same order for their non-default arguments,
    and makes it clear that the same function is being called in each case.
 
-Here's a version of the ``join`` function from earlier,
+Here's a version of the ``join(_:_:_:)`` function from earlier,
 which provides a default value for its ``joiner`` parameter:
 
 .. testcode:: defaultParameterValues
@@ -499,7 +499,7 @@ which provides a default value for its ``joiner`` parameter:
          return s1 + joiner + s2
       }
 
-If a string value for ``joiner`` is provided when the ``join`` function is called,
+If a string value for ``joiner`` is provided when the ``join(_:_:_:)`` function is called,
 that string value is used to join the two strings together, as before:
 
 .. testcode:: defaultParameterValues
@@ -534,7 +534,7 @@ Swift provides an automatic external name for any parameter that has a default v
 The automatic external name is the same as the local name,
 as if you had written a hash symbol before the local name in your code.
 
-Here's a version of the ``join`` function from earlier,
+Here's a version of the ``join(_:_:_:)`` function from earlier,
 which does not provide external names for any of its parameters,
 but still provides a default value for its ``joiner`` parameter:
 
@@ -657,7 +657,7 @@ which aligns an input string to the right edge of a longer output string.
 Any space on the left is filled with a specified padding character.
 In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
 
-The ``alignRight`` function defines the input parameter ``string`` to be a variable parameter.
+The ``alignRight(_:_:_:)`` function defines the input parameter ``string`` to be a variable parameter.
 This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
@@ -725,16 +725,16 @@ which has two in-out integer parameters called ``a`` and ``b``:
          b = temporaryA
       }
 
-The ``swapTwoInts`` function simply swaps the value of ``b`` into ``a``,
+The ``swapTwoInts(_:_:)`` function simply swaps the value of ``b`` into ``a``,
 and the value of ``a`` into ``b``.
 The function performs this swap by storing the value of ``a`` in
 a temporary constant called ``temporaryA``, assigning the value of ``b`` to ``a``,
 and then assigning ``temporaryA`` to ``b``.
 
-You can call the ``swapTwoInts`` function with two variables of type ``Int``
+You can call the ``swapTwoInts(_:_:)`` function with two variables of type ``Int``
 to swap their values.
 Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
-when they are passed to the ``swapTwoInts`` function:
+when they are passed to the ``swapTwoInts(_:_:)`` function:
 
 .. testcode:: inoutParameters
 
@@ -748,7 +748,7 @@ when they are passed to the ``swapTwoInts`` function:
 
 The example above shows that
 the original values of ``someInt`` and ``anotherInt``
-are modified by the ``swapTwoInts`` function,
+are modified by the ``swapTwoInts(_:_:)`` function,
 even though they were originally defined outside of the function.
 
 .. note::
@@ -835,7 +835,7 @@ which has a type of ‘a function that takes two ``Int`` values,
 and returns an ``Int`` value.’
 Set this new variable to refer to the function called ``addTwoInts``.”
 
-The ``addTwoInts`` function has the same type as the ``mathFunction`` variable,
+The ``addTwoInts(_:_:)`` function has the same type as the ``mathFunction`` variable,
 and so this assignment is allowed by Swift's type-checker.
 
 You can now call the assigned function with the name ``mathFunction``:
@@ -893,7 +893,7 @@ The second and third parameters are called ``a`` and ``b``, and are both of type
 These are used as the two input values for the provided math function.
 
 When ``printMathResult`` is called,
-it is passed the ``addTwoInts`` function, and the integer values ``3`` and ``5``.
+it is passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
 The role of ``printMathResult`` is to print the result of
@@ -913,8 +913,8 @@ You do this by writing a complete function type
 immediately after the return arrow (``->``) of the returning function.
 
 The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
-The ``stepForward`` function returns a value one more than its input value,
-and the ``stepBackward`` function returns a value one less than its input value.
+The ``stepForward(_:)`` function returns a value one more than its input value,
+and the ``stepBackward(_:)`` function returns a value one less than its input value.
 Both functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
@@ -928,7 +928,7 @@ Both functions have a type of ``(Int) -> Int``:
 
 Here's a function called ``chooseStepFunction``,
 whose return type is “a function of type ``(Int) -> Int``”.
-``chooseStepFunction`` returns the ``stepForward`` function or the ``stepBackward`` function
+``chooseStepFunction`` returns the ``stepForward(_:)`` function or the ``stepBackward(_:)`` function
 based on a Boolean parameter called ``backwards``:
 
 .. testcode:: functionTypes
@@ -952,7 +952,7 @@ The preceding example determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,
-causing ``chooseStepFunction`` to return the ``stepBackward`` function.
+causing ``chooseStepFunction`` to return the ``stepBackward(_:)`` function.
 A reference to the returned function is stored in a constant called ``moveNearerToZero``.
 
 Now that ``moveNearerToZero`` refers to the correct function,

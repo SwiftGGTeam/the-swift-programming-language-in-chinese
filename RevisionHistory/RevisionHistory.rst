@@ -290,7 +290,8 @@ Date        Notes
             * Added a new section about :ref:`CollectionTypes_HashValuesForSetTypes`.
 
             * Examples of :ref:`Closures_ClosureExpressions` now use
-              the global ``sorted`` function rather than the global ``sort`` function,
+              the global ``sorted(_:_:)`` function
+              rather than the global ``sort(_:_:)`` function,
               to reflect the new array value semantics.
 
             * Updated the information about :ref:`Initialization_MemberwiseInitializersForStructureTypes`

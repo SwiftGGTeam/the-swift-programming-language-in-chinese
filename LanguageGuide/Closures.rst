@@ -54,7 +54,7 @@ as one or more of their arguments.
 Closure expressions provide several syntax optimizations
 for writing closures in a shortened form without loss of clarity or intent.
 The closure expression examples below illustrate these optimizations
-by refining a single example of the ``sorted`` function over several iterations,
+by refining a single example of the ``sorted(_:_:)`` function over several iterations,
 each of which expresses the same functionality in a more succinct way.
 
 .. _Closures_TheSortedFunction:
@@ -66,11 +66,11 @@ Swift's standard library provides a function called ``sorted``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
-the ``sorted`` function returns a new array of the same type and size as the old one,
+the ``sorted(_:_:)`` function returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted`` function.
+The original array is not modified by the ``sorted(_:_:)`` function.
 
-The closure expression examples below use the ``sorted`` function
+The closure expression examples below use the ``sorted(_:_:)`` function
 to sort an array of ``String`` values in reverse alphabetical order.
 Here's the initial array to be sorted:
 
@@ -79,7 +79,7 @@ Here's the initial array to be sorted:
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
    << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-The ``sorted`` function takes two arguments:
+The ``sorted(_:_:)`` function takes two arguments:
 
 * An array of values of a known type.
 * A closure that takes two arguments of the same type as the array's contents,
@@ -93,7 +93,7 @@ This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
 One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as the ``sorted`` function's second parameter:
+and to pass it in as the ``sorted(_:_:)`` function's second parameter:
 
 .. testcode:: closureSyntax
 
@@ -105,7 +105,7 @@ and to pass it in as the ``sorted`` function's second parameter:
    // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
-the ``backwards`` function will return ``true``,
+the ``backwards(_:_:)`` function will return ``true``,
 indicating that ``s1`` should appear before ``s2`` in the sorted array.
 For characters in strings,
 “greater than” means “appears later in the alphabet than”.
@@ -150,7 +150,7 @@ Tuples can also be used as parameter types and return types.
 .. QUESTION: is "reversed" the right name to use here?
    it's a backwards sort, not a reversed version of the original array
 
-The example below shows a closure expression version of the ``backwards`` function
+The example below shows a closure expression version of the ``backwards(_:_:)`` function
 from earlier:
 
 .. testcode:: closureSyntax
@@ -162,7 +162,7 @@ from earlier:
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
-is identical to the declaration from the ``backwards`` function.
+is identical to the declaration from the ``backwards(_:_:)`` function.
 In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
 However, for the inline closure expression,
 the parameters and return type are written *inside* the curly braces,
@@ -182,7 +182,7 @@ it can even be written on a single line:
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-This illustrates that the overall call to the ``sorted`` function has remained the same.
+This illustrates that the overall call to the ``sorted(_:_:)`` function has remained the same.
 A pair of parentheses still wrap the entire set of arguments for the function.
 However, one of those arguments is now an inline closure.
 
@@ -194,7 +194,7 @@ Inferring Type From Context
 Because the sorting closure is passed as an argument to a function,
 Swift can infer the types of its parameters
 and the type of the value it returns
-from the type of the ``sorted`` function's second parameter.
+from the type of the ``sorted(_:_:)`` function's second parameter.
 This parameter is expecting a function of type ``(String, String) -> Bool``.
 This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
@@ -215,7 +215,7 @@ when the closure is used as a function argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
-In the case of the ``sorted`` function,
+In the case of the ``sorted(_:_:)`` function,
 the purpose of the closure is clear from the fact that sorting is taking place,
 and it is safe for a reader to assume that
 the closure is likely to be working with ``String`` values,
@@ -236,7 +236,7 @@ as in this version of the previous example:
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Here, the function type of the ``sorted`` function's second argument
+Here, the function type of the ``sorted(_:_:)`` function's second argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
@@ -276,7 +276,7 @@ Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
 as a function that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed for the ``sorted`` function's
+This exactly matches the function type needed for the ``sorted(_:_:)`` function's
 second parameter.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
@@ -326,7 +326,7 @@ that is written outside of (and *after*) the parentheses of the function call it
    after the function's name when you call the function.
 
 The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
-can be written outside of the ``sorted`` function's parentheses as a trailing closure:
+can be written outside of the ``sorted(_:_:)`` function's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
@@ -427,13 +427,13 @@ so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
 The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
-and is added to the output array by the ``map`` function.
+and is added to the output array by the ``map(_:_:)`` function.
 
 The use of trailing closure syntax in the example above
 neatly encapsulates the closure's functionality
 immediately after the function that closure supports,
 without needing to wrap the entire closure within
-the ``map`` function's outer parentheses.
+the ``map(_:_:)`` function's outer parentheses.
 
 .. _Closures_CapturingValues:
 
@@ -453,7 +453,7 @@ and can also capture any constants and variables defined within the outer functi
 
 Here's an example of a function called ``makeIncrementer``,
 which contains a nested function called ``incrementer``.
-The nested ``incrementer`` function captures two values,
+The nested ``incrementer()`` function captures two values,
 ``runningTotal`` and ``amount``,
 from its surrounding context.
 After capturing these values,
@@ -478,11 +478,11 @@ and returns an ``Int`` value each time it is called.
 To learn how functions can return other functions,
 see :ref:`Functions_FunctionTypesAsReturnTypes`.
 
-The ``makeIncrementer`` function defines an integer variable called ``runningTotal``,
+The ``makeIncrementer(forIncrement:)`` function defines an integer variable called ``runningTotal``,
 to store the current running total of the incrementer that will be returned.
 This variable is initialized with a value of ``0``.
 
-The ``makeIncrementer`` function has a single ``Int`` parameter
+The ``makeIncrementer(forIncrement:)`` function has a single ``Int`` parameter
 with an external name of ``forIncrement``, and a local name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
@@ -493,7 +493,7 @@ which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
 When considered in isolation,
-the nested ``incrementer`` function might seem unusual:
+the nested ``incrementer()`` function might seem unusual:
 
 .. testcode:: closuresPullout
 
@@ -504,7 +504,7 @@ the nested ``incrementer`` function might seem unusual:
          return runningTotal
       }
 
-The ``incrementer`` function doesn't have any parameters,
+The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
 from its surrounding function
@@ -516,21 +516,21 @@ and not just a copy of its initial value.
 Capturing a reference ensures that ``runningTotal`` does not disappear
 when the call to ``makeIncrementer`` ends,
 and ensures that ``runningTotal`` is available
-the next time the ``incrementer`` function is called..
+the next time the ``incrementer()`` function is called..
 
 However, because it does not modify ``amount``,
 and ``amount`` is not mutated outside it,
 ``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
-This value is stored along with the new ``incrementer`` function.
+This value is stored along with the new ``incrementer()`` function.
 
 .. note::
 
    Swift determines what should be captured by reference
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementer`` function.
+   to say that they can be used within the nested ``incrementer()`` function.
    Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the ``incrementer`` function.
+   when it is no longer needed by the ``incrementer()`` function.
 
 Here's an example of ``makeIncrementer`` in action:
 

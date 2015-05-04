@@ -751,7 +751,7 @@ The returned function takes the next parameter and returns another function.
 This continues until there are no remaining parameters,
 at which point the last function returns the return value of the original multiparameter function.
 The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts`` function as the equivalent ``addTwoIntsCurried`` function:
+For example, you can rewrite the ``addTwoInts(_:_:)`` function as the equivalent ``addTwoIntsCurried(_:)(_:)`` function:
 
 .. testcode:: curried-function
 
@@ -765,8 +765,8 @@ For example, you can rewrite the ``addTwoInts`` function as the equivalent ``add
             return addTheOtherInt
         }
 
-The ``addTwoInts`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried`` function takes a single integer, and returns another function
+The ``addTwoInts(_:_:)`` function takes two integers and returns the result of adding them together.
+The ``addTwoIntsCurried(_:)(_:)`` function takes a single integer, and returns another function
 that takes the second integer and adds it to the first.
 (The nested function captures the value of the first integer argument from the enclosing
 function.)
@@ -793,9 +793,9 @@ For example, the following two declarations are equivalent:
             return addTheOtherInt
         }
 
-In order to use the ``addTwoIntsCurried`` function in the same way
-as the noncurried ``addTwoInts`` function,
-you must call the ``addTwoIntsCurried`` function with the first integer argument
+In order to use the ``addTwoIntsCurried(_:)(_:)`` function in the same way
+as the noncurried ``addTwoInts(_:_:)`` function,
+you must call the ``addTwoIntsCurried(_:)(_:)`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function-usage
@@ -817,7 +817,7 @@ Although you must provide the arguments to a noncurried function all at once in 
 you can use the curried form of a function to provide arguments in several function calls,
 one at a time (even in different places in your code).
 This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried`` function to an integer argument ``1``
+For example, you can apply the ``addTwoIntsCurried(_:)(_:)`` function to an integer argument ``1``
 and assign the result to the constant ``plusOne``:
 
 .. testcode:: curried-function
@@ -826,7 +826,7 @@ and assign the result to the constant ``plusOne``:
     << // plusOne : Int -> Int = (Function)
     -> // plusOne is a function of type Int -> Int
 
-Because ``plusOne`` refers to the ``addTwoIntsCurried`` function with its argument bound
+Because ``plusOne`` refers to the ``addTwoIntsCurried(_:)(_:)`` function with its argument bound
 as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
 
 .. testcode:: curried-function

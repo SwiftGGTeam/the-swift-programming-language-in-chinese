@@ -1103,9 +1103,9 @@ It doesn't matter what specific type is passed to the function,
 as long as it conforms to both of the required protocols.
 
 The example then creates a new ``Person`` instance called ``birthdayPerson``
-and passes this new instance to the ``wishHappyBirthday`` function.
+and passes this new instance to the ``wishHappyBirthday(_:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
-and the ``wishHappyBirthday`` function is able to print its birthday greeting.
+and the ``wishHappyBirthday(_:)`` function is able to print its birthday greeting.
 
 .. note::
 

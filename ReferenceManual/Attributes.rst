@@ -217,12 +217,12 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to a class
     to indicate that it is the application delegate.
     Using this attribute is equivalent to calling the
-    ``NSApplicationMain`` function and
+    ``NSApplicationMain(_:_:)`` function and
     passing this class's name as the name of the delegate class.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main`` function
-    that calls the ``NSApplicationMain`` function.
+    supply a ``main.swift`` file with a ``main()`` function
+    that calls the ``NSApplicationMain(_:_:)`` function.
     For example,
     if your app uses a custom subclass of ``NSApplication``
     as its principal class,
@@ -307,11 +307,11 @@ the ``noreturn`` attribute to a function or method *type*.
 
     If you do not use this attribute,
     supply a ``main.swift`` file with a ``main`` function
-    that calls the ``UIApplicationMain`` function.
+    that calls the ``UIApplicationMain(_:_:_:)`` function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
     as its principal class,
-    call the ``UIApplicationMain`` function
+    call the ``UIApplicationMain(_:_:_:)`` function
     instead of using this attribute.
 
 .. TODO: Replace the code voice above with the following:

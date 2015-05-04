@@ -219,7 +219,7 @@ Attempting to do so is reported as an error when your code is compiled:
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can print the current value of a constant or variable with the ``println`` function:
+You can print the current value of a constant or variable with the ``println(_:)`` function:
 
 .. testcode:: constantsAndVariables
 
@@ -243,14 +243,14 @@ without appending a line break to the end of the value to be printed.)
    Strictly speaking, you can't print the value of *any* constant or variable ---
    you can only print values of types for which String has a constructor.
 
-The ``println`` function prints any ``String`` value you pass to it:
+The ``println(_:)`` function prints any ``String`` value you pass to it:
 
 .. testcode:: constantsAndVariables
 
    -> println("This is a string")
    <- This is a string
 
-The ``println`` function can print more complex logging messages,
+The ``println(_:)`` function can print more complex logging messages,
 in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
@@ -1253,8 +1253,8 @@ you can see exactly where the invalid state occurred
 and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-You write an assertion by calling the global ``assert`` function.
-You pass the ``assert`` function an expression that evaluates to ``true`` or ``false``
+You write an assertion by calling the global ``assert(_:_:)`` function.
+You pass the ``assert(_:_:)`` function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions

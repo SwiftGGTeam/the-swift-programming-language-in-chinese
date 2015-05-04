@@ -376,8 +376,8 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Bananas
 
 If you need the integer index of each item as well as its value,
-use the global ``enumerate`` function to iterate over the array instead.
-The ``enumerate`` function returns a tuple for each item in the array
+use the global ``enumerate(_:)`` function to iterate over the array instead.
+The ``enumerate(_:)`` function returns a tuple for each item in the array
 composed of the index and the value for that item.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
@@ -586,7 +586,7 @@ For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
-use the global ``sorted`` function,
+use the global ``sorted(_:_:)`` function,
 which returns an ordered collection of the provided sequence.
 
 .. testcode:: setUsage
@@ -1045,4 +1045,4 @@ with the ``keys`` or ``values`` property:
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
-use the global ``sorted`` function on its ``keys`` or ``values`` property.
+use the global ``sorted(_:_:)`` function on its ``keys`` or ``values`` property.
