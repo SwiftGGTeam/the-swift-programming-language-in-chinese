@@ -724,7 +724,7 @@ both a leading condition and a guard expression:
       {
           println("There's a chance of rain. Be sure to bring an umbrella.")
       }
-   <- "There's a chance of rain. Be sure to bring an umbrella."
+   << "There's a chance of rain. Be sure to bring an umbrella."
 
 Measurements of barometric pressure over time are used to forecast the weather.
 A rapid drop in atmospheric pressure (greater than 1 hPa, or *hectopascals*, change over an hour)
