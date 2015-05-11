@@ -142,6 +142,7 @@ A comma is allowed after the last element.
    Occupations is a reference to Firefly,
    specifically to Mal's joke about Jayne's job on the ship.
     
+   
 
    Can't find the specific episode,
    but it shows up in several lists of Firefly "best of" quotes:
