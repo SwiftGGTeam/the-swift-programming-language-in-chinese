@@ -809,7 +809,7 @@ Here's another example, for a function with no parameters or return value:
    >> printHelloWorld
    << // r2 : () -> () = (Function)
 
-The type of this function is ``() -> ()``,
+The type of this function is ``Void -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
 Functions that don't specify a return value always return ``Void``,
 which is equivalent to an empty tuple in Swift, shown as ``()``.

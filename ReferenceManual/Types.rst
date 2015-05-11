@@ -190,7 +190,7 @@ a very simple assert function:
 
 .. testcode:: function-autoclosure
 
-    -> func simpleAssert(@autoclosure condition: () -> Bool, message: String) {
+    -> func simpleAssert(@autoclosure condition: Void -> Bool, message: String) {
            if !condition() {
                println(message)
            }

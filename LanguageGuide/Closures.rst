@@ -302,7 +302,7 @@ that is written outside of (and *after*) the parentheses of the function call it
 
 .. testcode:: closureSyntax
 
-   -> func someFunctionThatTakesAClosure(closure: () -> ()) {
+   -> func someFunctionThatTakesAClosure(closure: Void -> Void) {
          // function body goes here
       }
    ---
@@ -462,7 +462,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
 
 .. testcode:: closures
 
-   -> func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+   -> func makeIncrementer(forIncrement amount: Int) -> Void -> Int {
          var runningTotal = 0
          func incrementer() -> Int {
             runningTotal += amount
@@ -471,7 +471,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
          return incrementer
       }
 
-The return type of ``makeIncrementer`` is ``() -> Int``.
+The return type of ``makeIncrementer`` is ``Void -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
 and returns an ``Int`` value each time it is called.

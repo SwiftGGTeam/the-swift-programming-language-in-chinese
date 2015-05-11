@@ -791,7 +791,7 @@ to capture a weak or unowned reference to the value.
 
 .. testcode:: closure-expression-weak
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: Void -> Void) { f() }
     >> class C {
     >> let title = "Title"
     >> func method() {
@@ -810,7 +810,7 @@ For example:
 
 .. testcode:: closure-expression-capture
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: Void -> Void) { f() }
     >> class P { let title = "Title" }
     >> class C {
     >> let parent = P()
