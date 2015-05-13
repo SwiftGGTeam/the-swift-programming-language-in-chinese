@@ -36,6 +36,17 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a parameter declaration for
+    a function or method type that takes no arguments
+    and that returns the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
+    For an example of how to use the ``autoclosure`` attribute,
+    see :ref:`Types_FunctionType`.
+
 ``availability``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
     relative to certain platforms and operating system versions.
@@ -183,15 +194,55 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a parameter declaration for
-    a function or method type that takes no arguments
-    and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
-    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
+``objc``
+    Apply this attribute to any declaration that can be represented in Objective-C---
+    for example, non-nested classes, protocols,
+    nongeneric enumerations (constrained to integer raw-value types),
+    properties and methods (including getters and setters) of classes and protocols,
+    initializers, deinitializers, and subscripts.
+    The ``objc`` attribute tells the compiler
+    that a declaration is available to use in Objective-C code.
+
+    If you apply the ``objc`` attribute to a class or protocol, it's
+    implicitly applied to the members of that class or protocol.
+    The compiler also implicitly adds the ``objc`` attribute to a class
+    that inherits from another class marked with the ``objc`` attribute.
+    Protocols marked with the ``objc`` attribute can't inherit
+    from protocols that aren't.
+
+    If you apply the ``objc`` attribute to an enumeration,
+    each enumeration case is exposed to Objective-C code
+    as the concatenation of the enumeration name and the case name.
+    For example, a case named ``Venus`` in a Swift ``Planet`` enumeration
+    is exposed to Objective-C code as a case named ``PlanetVenus``.
+
+    The ``objc`` attribute optionally accepts a single attribute argument,
+    which consists of an identifier.
+    Use this attribute when you want to expose a different
+    name to Objective-C for the entity the ``objc`` attribute applies to.
+    You can use this argument to name classes, protocols, methods,
+    getters, setters, and initializers. The example below exposes
+    the getter for the ``enabled`` property of the ``ExampleClass``
+    to Objective-C code as ``isEnabled``
+    rather than just as the name of the property itself.
+
+    .. testcode:: objc-attribute
+       :compile: true
+
+       >> import Foundation
+       -> @objc
+          class ExampleClass {
+             var enabled: Bool {
+                @objc(isEnabled) get {
+                   // Return the appropriate value
+       >>          return true
+                }
+             }
+          }
+
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section.
+    Possibly link to Anna and Jack's guide too.
 
 ``noescape``
     Apply this attribute to a function or method declaration
@@ -275,56 +326,6 @@ the ``noreturn`` attribute to a function or method *type*.
     ``NSManagedObject`` to indicate that the storage and implementation of the
     property are provided dynamically by Core Data at runtime
     based on the associated entity description.
-
-``objc``
-    Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols,
-    nongeneric enumerations (constrained to integer raw-value types),
-    properties and methods (including getters and setters) of classes and protocols,
-    initializers, deinitializers, and subscripts.
-    The ``objc`` attribute tells the compiler
-    that a declaration is available to use in Objective-C code.
-
-    If you apply the ``objc`` attribute to a class or protocol, it's
-    implicitly applied to the members of that class or protocol.
-    The compiler also implicitly adds the ``objc`` attribute to a class
-    that inherits from another class marked with the ``objc`` attribute.
-    Protocols marked with the ``objc`` attribute can't inherit
-    from protocols that aren't.
-
-    If you apply the ``objc`` attribute to an enumeration,
-    each enumeration case is exposed to Objective-C code
-    as the concatenation of the enumeration name and the case name.
-    For example, a case named ``Venus`` in a Swift ``Planet`` enumeration
-    is exposed to Objective-C code as a case named ``PlanetVenus``.
-
-    The ``objc`` attribute optionally accepts a single attribute argument,
-    which consists of an identifier.
-    Use this attribute when you want to expose a different
-    name to Objective-C for the entity the ``objc`` attribute applies to.
-    You can use this argument to name classes, protocols, methods,
-    getters, setters, and initializers. The example below exposes
-    the getter for the ``enabled`` property of the ``ExampleClass``
-    to Objective-C code as ``isEnabled``
-    rather than just as the name of the property itself.
-
-    .. testcode:: objc-attribute
-       :compile: true
-
-       >> import Foundation
-       -> @objc
-          class ExampleClass {
-             var enabled: Bool {
-                @objc(isEnabled) get {
-                   // Return the appropriate value
-       >>          return true
-                }
-             }
-          }
-
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-    Possibly link to Anna and Jack's guide too.
 
 ``UIApplicationMain``
     Apply this attribute to a class
