@@ -438,6 +438,15 @@ performs a single pass through the loop block first,
 *before* considering the loop's condition.
 It then continues to repeat the loop until the condition is ``false``.
 
+.. TODO: Update reference for Error Handling once merged
+
+.. note::
+
+   The ``repeat``-``while`` loop in Swift is analogous to
+   a ``do``-``while`` loop in other languages.
+   Swift uses the ``do`` keyword to scope error handling code.
+   For more information, see :ref:`ErrorHandling_Catching`.
+
 Here's the general form of a ``repeat``-``while`` loop:
 
 .. syntax-outline::
