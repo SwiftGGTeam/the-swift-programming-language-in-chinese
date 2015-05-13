@@ -48,7 +48,7 @@ You can call this function to swap the values in two ``Int`` variables:
    -> var anotherInt = 107
    << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
-   -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+   -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
 The ``swapTwoInts(_:_:)`` function is useful, but it can only be used with ``Int`` values.
@@ -295,7 +295,7 @@ in this case for a stack of ``Int`` values:
    >> intStack.push(2)
    >> intStack.push(3)
    >> intStack.push(4)
-   >> println("the stack now contains \(intStack.items.count) integers")
+   >> print("the stack now contains \(intStack.items.count) integers")
    << the stack now contains 4 integers
 
 This structure uses an ``Array`` property called ``items`` to store the values in the stack.
@@ -420,7 +420,7 @@ to access and query its top item without removing it:
 .. testcode:: genericStack
 
    -> if let topItem = stackOfStrings.topItem {
-         println("The top item on the stack is \(topItem).")
+         print("The top item on the stack is \(topItem).")
       }
    <- The top item on the stack is tres.
 
@@ -521,7 +521,7 @@ The ``findStringIndex(_:_:)`` function can be used to find a string value in an 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
    -> if let foundIndex = findStringIndex(strings, "llama") {
-         println("The index of llama is \(foundIndex)")
+         print("The index of llama is \(foundIndex)")
       }
    <- The index of llama is 2
 
@@ -905,9 +905,9 @@ Here's how the ``allItemsMatch(_:_:)`` function looks in action:
    << // arrayOfStrings : [String] = ["uno", "dos", "tres"]
    ---
    -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
-         println("All items match.")
+         print("All items match.")
       } else {
-         println("Not all items match.")
+         print("Not all items match.")
       }
    <- All items match.
 

@@ -366,8 +366,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { println("Function for Any") }
-   -> func f(int: Int) { println("Function for Int") }
+   -> func f(any: Any) { print("Function for Any") }
+   -> func f(int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
@@ -505,7 +505,7 @@ when the default value expression is evaluated at the call site.
 .. testcode:: special-literal-evaluated-at-call-site
 
     -> func logFunctionName(string: String = __FUNCTION__) {
-           println(string)
+           print(string)
        }
     -> func myFunction() {
           logFunctionName() // Prints "myFunction()".
@@ -654,7 +654,7 @@ For example:
     >> var somePoint = Point(x: 1.0, y: 1.0)
     << // somePoint : Point = REPL.Point
     >> somePoint.moveByX(2.0, y: 3.0)
-    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
@@ -1238,12 +1238,12 @@ runtime type of the *expression*, as the following example shows:
 
     -> class SomeBaseClass {
            class func printClassName() {
-               println("SomeBaseClass")
+               print("SomeBaseClass")
            }
        }
     -> class SomeSubClass: SomeBaseClass {
            override class func printClassName() {
-               println("SomeSubClass")
+               print("SomeSubClass")
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()

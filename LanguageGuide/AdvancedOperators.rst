@@ -785,7 +785,7 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
    << // anotherTwoThree : Vector2D = REPL.Vector2D
    -> if twoThree == anotherTwoThree {
-         println("These two vectors are equivalent.")
+         print("These two vectors are equivalent.")
       }
    <- These two vectors are equivalent.
 

@@ -159,7 +159,7 @@ and returns the value that is left over
 .. assertion:: percentOperatorIsRemainderNotModulo
 
    -> for i in -5...0 {
-         println(i % 4)
+         print(i % 4)
       }
    << -1
    << 0
@@ -415,9 +415,9 @@ such as the ``if`` statement:
    -> let name = "world"
    << // name : String = "world"
    -> if name == "world" {
-         println("hello, world")
+         print("hello, world")
       } else {
-         println("I'm sorry \(name), but I don't recognize you")
+         print("I'm sorry \(name), but I don't recognize you")
       }
    << hello, world
    // prints "hello, world", because name is indeed equal to "world"
@@ -611,7 +611,7 @@ such as with a ``for``-``in`` loop:
 .. testcode:: rangeOperators
 
    -> for index in 1...5 {
-         println("\(index) times 5 is \(index * 5)")
+         print("\(index) times 5 is \(index * 5)")
       }
    </ 1 times 5 is 5
    </ 2 times 5 is 10
@@ -662,7 +662,7 @@ where it is useful to count up to (but not including) the length of the list:
    -> let count = names.count
    << // count : Int = 4
    -> for i in 0..<count {
-         println("Person \(i + 1) is called \(names[i])")
+         print("Person \(i + 1) is called \(names[i])")
       }
    </ Person 1 is called Anna
    </ Person 2 is called Alex
@@ -706,7 +706,7 @@ It can be read as “not ``a``”, as seen in the following example:
    -> let allowedEntry = false
    << // allowedEntry : Bool = false
    -> if !allowedEntry {
-         println("ACCESS DENIED")
+         print("ACCESS DENIED")
       }
    <- ACCESS DENIED
 
@@ -744,9 +744,9 @@ and only allows access if both values are ``true``:
    -> let passedRetinaScan = false
    << // passedRetinaScan : Bool = false
    -> if enteredDoorCode && passedRetinaScan {
-         println("Welcome!")
+         print("Welcome!")
       } else {
-         println("ACCESS DENIED")
+         print("ACCESS DENIED")
       }
    <- ACCESS DENIED
 
@@ -781,9 +781,9 @@ and access is allowed:
    -> let knowsOverridePassword = true
    << // knowsOverridePassword : Bool = true
    -> if hasDoorKey || knowsOverridePassword {
-         println("Welcome!")
+         print("Welcome!")
       } else {
-         println("ACCESS DENIED")
+         print("ACCESS DENIED")
       }
    <- Welcome!
 
@@ -797,9 +797,9 @@ You can combine multiple logical operators to create longer compound expressions
 .. testcode:: logicalOperators
 
    -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-         println("Welcome!")
+         print("Welcome!")
       } else {
-         println("ACCESS DENIED")
+         print("ACCESS DENIED")
       }
    <- Welcome!
 
@@ -838,9 +838,9 @@ to make its intent explicit:
 .. testcode:: logicalOperators
 
    -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-         println("Welcome!")
+         print("Welcome!")
       } else {
-         println("ACCESS DENIED")
+         print("ACCESS DENIED")
       }
    <- Welcome!
 

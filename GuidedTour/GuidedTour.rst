@@ -12,7 +12,7 @@ In Swift, this can be done in a single line:
 
 .. testcode:: guided-tour
 
-   -> println("Hello, world!")
+   -> print("Hello, world!")
    << Hello, world!
 
 If you have written code in C or Objective-C,
@@ -213,7 +213,7 @@ Braces around the body are required.
                teamScore += 1
            }
        }
-    -> println(teamScore)
+    -> print(teamScore)
     << 11
 
 .. REFERENCE
@@ -249,7 +249,7 @@ to mark the value as optional.
 
    -> var optionalString: String? = "Hello"
    << // optionalString : String? = Optional("Hello")
-   -> println(optionalString == nil)
+   -> print(optionalString == nil)
    << false
    ---
    -> var optionalName: String? = "John Appleseed"
@@ -350,7 +350,7 @@ in an arbitrary order.
               }
           }
       }
-   -> println(largest)
+   -> print(largest)
    << 25
 
 .. admonition:: Experiment
@@ -375,7 +375,7 @@ ensuring that the loop is run at least once.
    -> while n < 100 {
           n = n * 2
       }
-   -> println(n)
+   -> print(n)
    << 128
    ---
    -> var m = 2
@@ -383,7 +383,7 @@ ensuring that the loop is run at least once.
    -> do {
           m = m * 2
       } while m < 100
-   -> println(m)
+   -> print(m)
    << 128
 
 You can keep an index in a loop ---
@@ -398,7 +398,7 @@ These two loops do the same thing:
    -> for i in 0..<4 {
           firstForLoop += i
       }
-   -> println(firstForLoop)
+   -> print(firstForLoop)
    << 6
    ---
    -> var secondForLoop = 0
@@ -406,7 +406,7 @@ These two loops do the same thing:
    -> for var i = 0; i < 4; ++i {
           secondForLoop += i
       }
-   -> println(secondForLoop)
+   -> print(secondForLoop)
    << 6
 
 Use ``..<`` to make a range that omits its upper value,
@@ -471,9 +471,9 @@ either by name or by number.
        }
     -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
-    -> println(statistics.sum)
+    -> print(statistics.sum)
     << 120
-    -> println(statistics.2)
+    -> print(statistics.2)
     << 120
 
 Functions can also take a variable number of arguments,
@@ -589,7 +589,7 @@ of their only statement.
 .. testcode:: guided-tour
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
-    -> println(mappedNumbers)
+    -> print(mappedNumbers)
     <$ : Array<Int> = [60, 57, 21, 36]
     << [60, 57, 21, 36]
 
@@ -601,7 +601,7 @@ can appear immediately after the parentheses.
 .. testcode:: guided-tour
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
-    -> println(sortedNumbers)
+    -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
 
@@ -770,10 +770,10 @@ properties can have a getter and a setter.
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
     << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
-    -> println(triangle.perimeter)
+    -> print(triangle.perimeter)
     << 9.3
     -> triangle.perimeter = 9.9
-    -> println(triangle.sideLength)
+    -> print(triangle.sideLength)
     << 3.3
 
 In the setter for ``perimeter``,
@@ -823,12 +823,12 @@ is always the same as the side length of its square.
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
-   -> println(triangleAndSquare.square.sideLength)
+   -> print(triangleAndSquare.square.sideLength)
    << 10.0
-   -> println(triangleAndSquare.triangle.sideLength)
+   -> print(triangleAndSquare.triangle.sideLength)
    << 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> println(triangleAndSquare.triangle.sideLength)
+   -> print(triangleAndSquare.triangle.sideLength)
    << 50.0
 
 .. Grammatically, these clauses are general to variables.
@@ -934,7 +934,7 @@ to make an instance of an enumeration from a raw value.
 
     -> if let convertedRank = Rank(rawValue: 3) {
            let threeDescription = convertedRank.simpleDescription()
-    >> println(threeDescription)
+    >> print(threeDescription)
     << 3
     -> }
 
@@ -1180,7 +1180,7 @@ or even to a type that you imported from a library or framework.
                self += 42
            }
         }
-    -> println(7.simpleDescription)
+    -> print(7.simpleDescription)
     << The number 7
 
 .. admonition:: Experiment
@@ -1199,9 +1199,9 @@ methods outside the protocol definition are not available.
 
     -> let protocolValue: ExampleProtocol = a
     << // protocolValue : ExampleProtocol = REPL.SimpleClass
-    -> println(protocolValue.simpleDescription)
+    -> print(protocolValue.simpleDescription)
     << A very simple class.  Now 100% adjusted.
-    // println(protocolValue.anotherProperty)  // Uncomment to see the error
+    // print(protocolValue.anotherProperty)  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
 has a runtime type of ``SimpleClass``,

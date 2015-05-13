@@ -33,11 +33,11 @@ Extensions in Swift can:
    -> extension C {
          override var x: Int {
             didSet {
-               println("new x is \(x)")
+               print("new x is \(x)")
             }
          }
          override func foo() {
-            println("called overridden foo")
+            print("called overridden foo")
          }
       }
    !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
@@ -116,11 +116,11 @@ to provide basic support for working with distance units:
       }
    -> let oneInch = 25.4.mm
    << // oneInch : Double = 0.0254
-   -> println("One inch is \(oneInch) meters")
+   -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
    << // threeFeet : Double = 0.914399970739201
-   -> println("Three feet is \(threeFeet) meters")
+   -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
 These computed properties express that a ``Double`` value
@@ -151,7 +151,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    -> let aMarathon = 42.km + 195.m
    << // aMarathon : Double = 42195.0
-   -> println("A marathon is \(aMarathon) meters long")
+   -> print("A marathon is \(aMarathon) meters long")
    <- A marathon is 42195.0 meters long
 
 .. note::
@@ -289,7 +289,7 @@ to perform a task that many number of times:
 .. testcode:: extensionsInstanceMethods
 
    -> 3.repetitions({
-         println("Hello!")
+         print("Hello!")
       })
    </ Hello!
    </ Hello!
@@ -300,7 +300,7 @@ Use trailing closure syntax to make the call more succinct:
 .. testcode:: extensionsInstanceMethods
 
    -> 3.repetitions {
-         println("Goodbye!")
+         print("Goodbye!")
       }
    </ Goodbye!
    </ Goodbye!
