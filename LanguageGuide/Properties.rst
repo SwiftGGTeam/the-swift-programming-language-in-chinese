@@ -518,8 +518,8 @@ or use the default parameter name of ``oldValue``.
 
 .. note::
 
-   ``willSet`` and ``didSet`` observers are not called when
-   a property is set in an initializer before delegation takes place.
+   ``willSet`` and ``didSet`` observers of superclass properties
+   are called when a property is set in a subclass initializer.
 
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
