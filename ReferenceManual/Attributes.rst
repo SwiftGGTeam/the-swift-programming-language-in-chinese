@@ -43,8 +43,15 @@ the ``noreturn`` attribute to a function or method *type*.
     The ``availability`` attribute always appears
     with a list of two or more comma-separated attribute arguments.
     These arguments begin with one of the following platform names:
-    ``iOS``, ``iOSApplicationExtension``, ``OSX``, or
-    ``OSXApplicationExtension``. You can also use an asterisk (``*``) to indicate the
+
+    * ``iOS``
+    * ``iOSApplicationExtension``
+    * ``OSX``
+    * ``OSXApplicationExtension``
+    * ``WatchOS``
+    * ``tvOS``
+
+    You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
     The remaining arguments can appear in any order
     and specify additional information about the declaration's lifecycle,
