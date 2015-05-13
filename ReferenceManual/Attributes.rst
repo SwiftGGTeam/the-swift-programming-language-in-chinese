@@ -213,6 +213,34 @@ the ``noreturn`` attribute to a function or method *type*.
     or method that is not. Similar rules apply when you implement a protocol
     method in a conforming type.
 
+``testable``
+    Apply this attribute to an entity with ``private`` or ``internal`` access
+    to indicate that it can be accessed by unit testing targets
+    as if it were declared with ``public`` access
+    when compiled with the ``-enable-testing`` flag.
+
+    .. testcode:: testable
+       :compile: true
+
+       -> @testable
+       -> private class MyClass {
+              // class definition
+          }
+
+    You can apply this annotation when ``public`` access would be impractical,
+    but otherwise necessary for the purposes of unit testing.
+
+    When applied to a structure, class, enumeration, or extension,
+    any member declarations that are not explicitly assigned ``private`` access
+    are also made ``testable``-public.
+
+    The ``testable`` annotation may also be applied to ``import`` declarations
+    to make ``testable``-public entities accessible to other modules.
+
+    .. syntax-outline::
+
+       @testable import <#Framework#>
+
 ``NSApplicationMain``
     Apply this attribute to a class
     to indicate that it is the application delegate.
