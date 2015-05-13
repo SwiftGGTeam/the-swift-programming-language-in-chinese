@@ -195,7 +195,7 @@ Control Flow
 ------------
 
 Use ``if`` and ``switch`` to make conditionals,
-and use ``for``-``in``, ``for``, ``while``, and ``do``-``while``
+and use ``for``-``in``, ``for``, ``while``, and ``repeat``-``while``
 to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
@@ -380,7 +380,7 @@ ensuring that the loop is run at least once.
    ---
    -> var m = 2
    << // m : Int = 2
-   -> do {
+   -> repeat {
           m = m * 2
       } while m < 100
    -> println(m)
