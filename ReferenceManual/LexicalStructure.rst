@@ -162,7 +162,6 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 .. langref-grammar
 
     keyword ::= 'class'
-    keyword ::= 'destructor'
     keyword ::= 'extension'
     keyword ::= 'import'
     keyword ::= 'init'
@@ -210,33 +209,35 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``func``,
   ``import``,
   ``init``,
-  ``internal``,
+  ``inout``,
   ``let``,
   ``operator``,
-  ``private``,
   ``protocol``,
-  ``public``,
-  ``static``,
   ``struct``,
   ``subscript``,
   ``typealias``,
-  and ``var``.
+  ``var``,
+  ``internal``,
+  ``private``,
+  ``public``,
+  and ``static``.
 
 * Keywords used in statements:
-  ``break``,
-  ``case``,
-  ``continue``,
-  ``default``,
+  ``if``,
   ``do``,
   ``else``,
-  ``fallthrough``,
   ``for``,
-  ``if``,
   ``in``,
+  ``repeat``,
+  ``while``,
   ``return``,
+  ``break``,
+  ``continue``,
+  ``fallthrough``,
   ``switch``,
-  ``where``,
-  and ``while``.
+  ``case``,
+  ``default``,
+  and ``where``.
 
 * Keywords used in expressions and types:
   ``as``,
@@ -244,14 +245,14 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``false``,
   ``is``,
   ``nil``,
+  ``super``,
   ``self``,
   ``Self``,
-  ``super``,
   ``true``,
-  ``__COLUMN__``,
   ``__FILE__``,
-  ``__FUNCTION__``,
-  and ``__LINE__``.
+  ``__LINE__``,
+  ``__COLUMN__``,
+  and ``__FUNCTION__``.
 
 .. langref-grammar
 
