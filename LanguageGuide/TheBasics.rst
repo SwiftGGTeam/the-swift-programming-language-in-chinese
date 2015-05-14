@@ -226,12 +226,12 @@ You can print the current value of a constant or variable with the ``print(_:)``
    -> print(friendlyWelcome)
    <- Bonjour!
 
-``print`` is a global function that prints a value,
+``print(_:)`` is a global function that prints a value,
 followed by a line break, to an appropriate output.
 In Xcode, for example,
-``print`` prints its output in Xcode's “console” pane.
-(A second function, ``print``, performs the same task
-without appending a line break to the end of the value to be printed.)
+the ``print(_:)`` function prints its output in Xcode's “console” pane.
+(An overload of the function, ``print(_:appendNewline:)``, performs the same task
+while optionally appending a line break to the end of the value to be printed.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
