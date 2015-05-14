@@ -8,8 +8,9 @@ from your experience of developing in C and Objective-C.
 Swift provides its own versions of all fundamental C and Objective-C types,
 including ``Int`` for integers, ``Double`` and ``Float`` for floating-point values,
 ``Bool`` for Boolean values, and ``String`` for textual data.
-Swift also provides powerful versions of the two primary collection types,
-``Array`` and ``Dictionary``, as described in :doc:`CollectionTypes`.
+Swift also provides powerful versions of the three primary collection types,
+``Array``, ``Set``, and ``Dictionary``,
+as described in :doc:`CollectionTypes`.
 
 Like C, Swift uses variables to store and refer to values by an identifying name.
 Swift also makes extensive use of variables whose values cannot be changed.
