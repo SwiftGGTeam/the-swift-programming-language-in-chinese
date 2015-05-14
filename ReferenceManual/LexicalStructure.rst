@@ -254,6 +254,9 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``__COLUMN__``,
   and ``__FUNCTION__``.
 
+* Keywords used in patterns:
+  ``_``.
+
 .. langref-grammar
 
     get
