@@ -531,12 +531,12 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.rawValue())
+            return String(self.rawValue)
         }
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.rawValue()
+let aceRawValue = ace.rawValue
 ```
 
 > 练习：  
