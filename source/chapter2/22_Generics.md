@@ -1,5 +1,5 @@
 
-> 翻译：[takalard](https://github.com/takalard)  
+> 翻译：[takalard](https://github.com/takalard)
 > 校对：[lifedim](https://github.com/lifedim)
 
 # 泛型
@@ -67,7 +67,7 @@ func swapTwoDoubles(inout a: Double, inout b: Double) {
 
 但实际应用中通常需要一个用处更强大并且尽可能的考虑到更多的灵活性单个函数，可以用来交换两个任何类型值，很幸运的是，泛型代码帮你解决了这种问题。（一个这种泛型函数后面已经定义好了。）
 
->注意：  
+>注意：
 在所有三个函数中，`a`和`b`的类型是一样的。如果`a`和`b`不是相同的类型，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个`String`类型的变量和一个`Double`类型的变量互相交换值。如果一定要做，Swift 将报编译错误。
 
 <a name="generic_functions"></a>
@@ -114,7 +114,7 @@ swapTwoValues(&someString, &anotherString)
 ```
 
 
->注意  
+>注意
 上面定义的函数`swapTwoValues`是受`swap`函数启发而实现的。`swap`函数存在于 Swift 标准库，并可以在其它类中任意使用。如果你在自己代码中需要类似`swapTwoValues`函数的功能，你可以使用已存在的交换函数`swap`函数。
 
 <a name="type_parameters"></a>
@@ -133,7 +133,7 @@ swapTwoValues(&someString, &anotherString)
 
 如果你使用多个参数定义更复杂的泛型函数或泛型类型，那么使用更多的描述类型参数是非常有用的。例如，Swift 字典（Dictionary）类型有两个类型参数，一个是键，另外一个是值。如果你自己写字典，你或许会定义这两个类型参数为`KeyType`和`ValueType`，用来记住它们在你的泛型代码中的作用。
 
->注意  
+>注意
 请始终使用大写字母开头的驼峰式命名法（例如`T`和`KeyType`）来给类型参数命名，以表明它们是类型的占位符，而非类型值。
 
 <a name="generic_types"></a>
@@ -144,10 +144,10 @@ swapTwoValues(&someString, &anotherString)
 
 这部分向你展示如何写一个泛型集类型--`Stack`（栈）。一个栈是一系列值域的集合，和`Array`（数组）类似，但其是一个比 Swift 的`Array`类型更多限制的集合。一个数组可以允许其里面任何位置的插入/删除操作，而栈，只允许在集合的末端添加新的项（如同*push*一个新值进栈）。同样的一个栈也只能从末端移除项（如同*pop*一个值出栈）。
 
->注意  
+>注意
 栈的概念已被`UINavigationController`类使用来模拟试图控制器的导航结构。你通过调用`UINavigationController`的`pushViewController:animated:`方法来为导航栈添加（add）新的试图控制器；而通过`popViewControllerAnimated:`的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的`后进先出`方式来管理集合，堆栈都是最实用的模型。
 
-下图展示了一个栈的压栈(push)/出栈(pop)的行为：  
+下图展示了一个栈的压栈(push)/出栈(pop)的行为：
 
 ![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png)
 
@@ -221,7 +221,7 @@ let fromTheTop = stackOfStrings.pop()
 // fromTheTop is equal to "cuatro", and the stack now contains 3 strings
 ```
 
-下图展示了如何从栈中pop一个值的过程：  
+下图展示了如何从栈中pop一个值的过程：
 ![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
 
 由于`Stack`是泛型类型，所以在 Swift 中其可以用来创建任何有效类型的栈，这种方式如同`Array`和`Dictionary`。
@@ -280,7 +280,7 @@ if let foundIndex = findStringIndex(strings, "llama") {
 这里展示如何写一个你或许期望的`findStringIndex`的泛型版本`findIndex`。请注意这个函数仍然返回`Int`，是不是有点迷惑呢，而不是泛型类型?那是因为函数返回的是一个可选的索引数，而不是从数组中得到的一个可选值。需要提醒的是，这个函数不会编译，原因在例子后面会说明：
 
 ```swift
-func findIndex<T>(array: T[], valueToFind: T) -> Int? {
+func findIndex<T>(array: [T], valueToFind: T) -> Int? {
     for (index, value) in enumerate(array) {
         if value == valueToFind {
             return index

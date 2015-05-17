@@ -150,7 +150,7 @@ for item in library {
 Swift为不确定类型提供了两种特殊类型别名：
 
 * `AnyObject`可以代表任何class类型的实例。
-* `Any`可以表示任何类型，除了方法类型（function types）。
+* `Any`可以表示任何类型，包括方法类型（function types）。
 
 > 注意：
 只有当你明确的需要它的行为和功能时才使用`Any`和`AnyObject`。在你的代码里使用你期望的明确的类型总是更好的。

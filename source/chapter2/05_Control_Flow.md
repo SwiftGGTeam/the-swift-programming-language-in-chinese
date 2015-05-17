@@ -1,4 +1,4 @@
-> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)  
+> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
 > 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
 # 控制流
@@ -47,7 +47,7 @@ for index in 1...5 {
 
 上面的例子中，`index`是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index`在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用`let`关键字声明。
 
->注意：  
+>注意：
 `index`常量只存在于循环的生命周期里。如果你想在循环完成后访问`index`的值，又或者想让`index`成为一个变量而不是常量，你必须在循环之前自己进行声明。
 
 如果你不需要知道区间内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
@@ -121,9 +121,9 @@ for var index = 0; index < 3; ++index {
 
 下面是一般情况下这种循环方式的格式：
 
-> for `initialization`; `condition`; `increment` {  
->     `statements`  
-> }  
+> for `initialization`; `condition`; `increment` {
+>     `statements`
+> }
 
 和 C 语言中一样，分号将循环的定义分为 3 个部分，不同的是，Swift 不需要使用圆括号将“initialization; condition; increment”包括起来。
 
@@ -136,11 +136,11 @@ for var index = 0; index < 3; ++index {
 
 上述描述和循环格式等同于：
 
-> `initialization`  
-> while `condition` {  
->     `statements`  
->     `increment`  
-> }  
+> `initialization`
+> while `condition` {
+>     `statements`
+>     `increment`
+> }
 
 在初始化表达式中声明的常量和变量（比如`var index = 0`）只在`for`循环的生命周期里有效。如果想在循环结束后访问`index`的值，你必须要在循环生命周期开始前声明`index`。
 
@@ -173,9 +173,9 @@ println("The loop statements were executed \(index) times")
 
 下面是一般情况下 `while` 循环格式：
 
-> while `condition` {  
->     `statements`  
-> }  
+> while `condition` {
+>     `statements`
+> }
 
 下面的例子来玩一个叫做_蛇和梯子（Snakes and Ladders）_的小游戏，也叫做_滑道和梯子（Chutes and Ladders）_：
 
@@ -240,9 +240,9 @@ println("Game over!")
 
 下面是一般情况下 `do-while`循环的格式：
 
-> do {  
->     `statements`  
-> } while `condition`  
+> do {
+>     `statements`
+> } while `condition`
 
 还是蛇和梯子的游戏，使用`do-while`循环来替代`while`循环。`finalSquare`、`board`、`square`和`diceRoll`的值初始化同`while`循环一样：
 
@@ -347,15 +347,15 @@ if temperatureInFahrenheit <= 32 {
 
 `switch`语句最简单的形式就是把某个值与一个或若干个相同类型的值作比较：
 
-> switch `some value to consider` {  
-> case `value 1`:  
->     `respond to value 1`  
-> case `value 2`,  
-> `value 3`:  
->     `respond to value 2 or 3`  
-> default:  
->     `otherwise, do something else`  
-> }  
+> switch `some value to consider` {
+> case `value 1`:
+>     `respond to value 1`
+> case `value 2`,
+> `value 3`:
+>     `respond to value 2 or 3`
+> default:
+>     `otherwise, do something else`
+> }
 
 `switch`语句都由*多个 case* 构成。为了匹配某些更特定的值，Swift 提供了几种更复杂的匹配模式，这些模式将在本节的稍后部分提到。
 
@@ -388,7 +388,7 @@ default:
 
 与 C 语言和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
-> 注意：  
+> 注意：
 你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
@@ -409,13 +409,13 @@ default:
 
 一个 case 也可以包含多个模式，用逗号把它们分开（如果太长了也可以分行写）：
 
-> switch `some value to consider` {  
-> case `value 1`,  
-> `value 2`:  
->     `statements`  
-> }  
+> switch `some value to consider` {
+> case `value 1`,
+> `value 2`:
+>     `statements`
+> }
 
-> 注意：  
+> 注意：
 如果想要贯穿至特定的 case 分支中，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)。
 
 <a name="range_matching"></a>
@@ -555,7 +555,7 @@ case let (x, y):
 
 `continue`语句告诉一个循环体立刻停止本次循环迭代，重新开始下次循环迭代。就好像在说“本次循环迭代我已经执行完了”，但是并不会离开整个循环体。
 
->注意：  
+>注意：
 在一个for条件递增（`for-condition-increment`）循环体中，在调用`continue`语句后，迭代增量仍然会被计算求值。循环体继续像往常一样工作，仅仅只是循环体中的执行代码会被跳过。
 
 下面的例子把一个小写字符串中的元音字母和空格字符移除，生成了一个含义模糊的短句：
@@ -594,7 +594,7 @@ println(puzzleOutput)
 
 这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
 
->注意：  
+>注意：
 当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你总是可以使用`break`来忽略某个分支。
 
 下面的例子通过`switch`来判断一个`Character`值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。
@@ -655,7 +655,7 @@ println(description)
 
 当`switch`代码块执行完后，使用`println`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
 
->注意：  
+>注意：
 `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码执行继续连接到下一个 case 中的执行代码，这和 C 语言标准中的`switch`语句特性是一样的。
 
 <a name="labeled_statements"></a>
@@ -667,9 +667,9 @@ println(description)
 
 产生一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，并且该标签后面还需带着一个冒号。下面是一个`while`循环体的语法，同样的规则适用于所有的循环体和`switch`代码块。
 
-> `label name`: while `condition` {  
->     `statements`  
-> }  
+> `label name`: while `condition` {
+>     `statements`
+> }
 
 下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是前面章节中_蛇和梯子_的改编版本。这次，游戏增加了一条额外的规则：
 
@@ -685,7 +685,7 @@ println(description)
 
 ```swift
 let finalSquare = 25
-var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+var board = [Int](count: finalSquare + 1, repeatedValue: 0)
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 var square = 0
@@ -721,6 +721,6 @@ println("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环的迭代，开始下一次循环迭代。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到`while`循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。
 
->注意：  
+>注意：
 如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`代码块而不是`while`循环体。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
