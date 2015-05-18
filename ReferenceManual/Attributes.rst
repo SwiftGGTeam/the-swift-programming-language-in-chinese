@@ -49,7 +49,6 @@ the ``noreturn`` attribute to a function or method *type*.
     * ``OSX``
     * ``OSXApplicationExtension``
     * ``WatchOS``
-    * ``tvOS``
 
     You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
