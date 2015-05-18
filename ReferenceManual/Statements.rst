@@ -218,7 +218,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     while-condition --> expression | expression-OPT optional-binding-list
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT guard-clause-OPT
+    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
     optional-binding-head --> ``let`` identifier-pattern initializer | ``var`` identifier-pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
     optional-binding-continuation --> identifier-pattern initializer | optional-binding-head
@@ -226,7 +226,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 .. NOTE: We considered the following simpler grammar for optional-binding-list:
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> pattern-initializer-list guard-clause-OPT
+    optional-binding-clause --> pattern-initializer-list where-clause-OPT
 
     We opted for the more complex grammar, because the simpler version overproduced.
 
@@ -494,11 +494,11 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-case --> case-label ``;`` | default-label ``;``
 
     case-label --> ``case`` case-item-list ``:``
-    case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
+    case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
     default-label --> ``default`` ``:``
 
-    guard-clause --> ``where`` guard-expression
-    guard-expression --> expression
+    where-clause --> ``where`` where-expression
+    where-expression --> expression
 
 
 .. _Statements_LabeledStatement:
