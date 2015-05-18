@@ -369,13 +369,10 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 Guard Statement
 ~~~~~~~~~~~~~~~
 
-A ``guard`` statement can be used in a function to ensure that
-a certain condition or optional binding expression
-is satisfied before continuing execution.
-If that condition is not satisfied, the function must either return or throw an error.
+A ``guard`` statement can be used to ensure that
+a certain condition is satisfied before continuing execution.
 
-Control transfer statements are discussed in :ref:`Statements_ReturnStatement` and
-:ref:`Statements_ThrowStatement` below.
+A ``guard`` statement has the following form:
 
 .. syntax-outline::
 
@@ -384,12 +381,31 @@ Control transfer statements are discussed in :ref:`Statements_ReturnStatement` a
        <#control transfer statement#>
     }
 
+Like an ``if`` statement,
+the value of any condition in an ``guard`` statement
+must have a type that conforms to the ``BooleanType`` protocol,
+and may be an optional binding declaration.
+Any constants or variables assigned a value
+from an optional binding declaration in a ``guard`` statement condition
+may be used in subsequent lines as if they were defined with non-optional values.
+
+Unlike an ``if`` statement,
+the ``else`` clause of a ``guard`` statement is always required,
+and must prevent execution from falling through
+by using one of the following control transfer statements:
+
+* ``return``
+* ``break``
+* ``continue``
+* ``throw``
+
+Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
+
 .. syntax-grammar::
 
     Grammar of a guard statement
 
-    guard-statement --> ``guard`` guard-condition else-clause
-    guard-condition --> expression | expression-OPT optional-binding-list
+    guard-statement --> ``guard`` if-condition else-clause
 
 .. _Statements_SwitchStatement:
 
