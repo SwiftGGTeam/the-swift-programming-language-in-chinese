@@ -34,6 +34,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> declaration ``;``-OPT
     statement --> loop-statement ``;``-OPT
     statement --> branch-statement ``;``-OPT
+    statement --> scope-introduction-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
@@ -499,6 +500,48 @@ see :ref:`Statements_FallthroughStatement` below.
 
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
+
+
+.. _Statements_ScopeIntroductionStatement:
+
+Scope Introduction Statement
+----------------------------
+
+You can introduce a new scope with a :newTerm::`scope introduction` statement
+using the ``do`` keyword.
+Constants and variables declared within an introduced scope
+can only be accessed within that scope.
+
+.. note::
+
+   Languages like C and Objective-C can introduce new scopes
+   by enclosing statements with curly braces (``{ ... }``).
+   Swift uses the ``do`` keyword to avoid confusion with closure literals.
+
+   The ``do`` keyword is used in other languages
+   to execute a block before evaluating the condition of a ``while`` statement.
+   This is analogous to the ``repeat``-``while`` loop in Swift.
+
+A ``do`` statement has the following form:
+
+.. syntax-outline::
+
+    do {
+       <#statements#>
+    }
+
+``do`` statements are most often used in conjunction
+with ``catch`` statements for the purposes of error handling.
+
+For more information and to see examples
+of how to use ``do`` statements to catch errors,
+see :ref:`ErrorHandling_Catching` in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+
+.. syntax-grammar::
+
+    Grammar of a scope introduction statement
+
+    scope-introduction-statement --> ``do`` ``{`` statements ``}``
 
 
 .. _Statements_LabeledStatement:
