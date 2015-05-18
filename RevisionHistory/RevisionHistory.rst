@@ -124,7 +124,7 @@ Date        Notes
               Use the ``String`` type's ``append(_:)`` method
               to append a single ``Character`` value onto the end of a string.
 
-            * Added information about the ``availability`` attribute to
+            * Added information about the ``available`` attribute to
               the :ref:`Attributes_DeclarationAttributes` section.
 ----------  --------------------------------------------------------------------------
 2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly evaluate to
