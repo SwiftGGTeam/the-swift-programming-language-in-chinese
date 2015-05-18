@@ -113,7 +113,7 @@ Creating an Array with a Default Value
 
 Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
-with all of its values set to a provided default value.
+with all of its values set to the same default value.
 You pass this initializer the number of items to be added to the new array (called ``count``)
 and a default value of the appropriate type (called ``repeatedValue``):
 
