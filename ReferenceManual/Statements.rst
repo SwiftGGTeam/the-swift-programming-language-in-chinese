@@ -294,6 +294,7 @@ and is discussed in :ref:`Statements_BreakStatement` below.
     Grammar of a branch statement
 
     branch-statement --> if-statement
+    branch-statement --> guard-statement
     branch-statement --> switch-statement
 
 
