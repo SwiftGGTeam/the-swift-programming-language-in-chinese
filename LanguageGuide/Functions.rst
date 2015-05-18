@@ -437,42 +437,6 @@ while still providing a function body that is readable and clear in intent.
    You do not need to specify external parameter names
    if the purpose of each parameter is unambiguous when the function is called.
 
-.. _Functions_ShorthandExternalParameterNames:
-
-Shorthand External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to provide an external parameter name for a function parameter,
-and the local parameter name is already an appropriate name to use,
-you do not need to write the same name twice for that parameter.
-Instead, write the name once, and prefix the name with a hash symbol (``#``).
-This tells Swift to use that name as both
-the local parameter name and the external parameter name.
-
-This example defines a function called ``containsCharacter``,
-which defines external parameter names for both of its parameters
-by placing a hash symbol before their local parameter names:
-
-.. testcode:: externalParameterNames
-
-   -> func containsCharacter(#string: String, #characterToFind: Character) -> Bool {
-         for character in string {
-            if character == characterToFind {
-               return true
-            }
-         }
-         return false
-      }
-
-This function's choice of parameter names makes for a clear, readable function body,
-while also enabling the function to be called without ambiguity:
-
-.. testcode:: externalParameterNames
-
-   -> let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
-   << // containsAVee : Bool = true
-   /> containsAVee equals \(containsAVee), because \"aardvark\" contains a \"v\"
-   </ containsAVee equals true, because "aardvark" contains a "v"
 
 .. _Functions_DefaultParameterValues:
 
