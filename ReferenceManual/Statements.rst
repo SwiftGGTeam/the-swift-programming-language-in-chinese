@@ -364,6 +364,28 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
+.. _Statements_GuardStatement:
+
+Guard Statement
+~~~~~~~~~~~~~~~
+
+A ``guard`` statement ensures that a certain condition is satisfied in a function
+before continuing execution.
+If that condition is not satisfied, the function must either return or throw an error.
+
+.. syntax-outline::
+
+    guard <#condition#> else {
+       <#non-fall-through statement#>
+    }
+
+.. syntax-grammar::
+
+    Grammar of a guard statement
+
+    guard-statement --> ``guard`` guard-condition else-clause
+    guard-condition --> expression | expression-OPT optional-binding-list
+
 .. _Statements_SwitchStatement:
 
 Switch Statement
