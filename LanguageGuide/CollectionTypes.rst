@@ -431,7 +431,7 @@ Hash Values for Set Types
 
 A type must be :newTerm:`hashable` in order to be stored in a set ---
 that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
-A hash value is an ``Int`` value that is the same for all objects that compare equal,
+A hash value is an ``Int`` value that is the same for all objects that compare equally,
 such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
 
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
