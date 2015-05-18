@@ -369,14 +369,19 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 Guard Statement
 ~~~~~~~~~~~~~~~
 
-A ``guard`` statement ensures that a certain condition is satisfied in a function
-before continuing execution.
+A ``guard`` statement can be used in a function to ensure that
+a certain condition or optional binding expression
+is satisfied before continuing execution.
 If that condition is not satisfied, the function must either return or throw an error.
+
+Control transfer statements are discussed in :ref:`Statements_ReturnStatement` and
+:ref:`Statements_ThrowStatement` below.
 
 .. syntax-outline::
 
     guard <#condition#> else {
-       <#non-fall-through statement#>
+       <#statements#>
+       <#control transfer statement#>
     }
 
 .. syntax-grammar::
