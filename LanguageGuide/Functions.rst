@@ -115,10 +115,10 @@ Function parameters and return values are extremely flexible in Swift.
 You can define anything from a simple utility function with a single unnamed parameter
 to a complex function with expressive parameter names and different parameter options.
 
-.. _Functions_MultipleInputParameters:
+.. _Functions_FunctionsWithMultipleParameters:
 
-Multiple Input Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Functions With Multiple Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can have multiple input parameters,
 which are written within the function's parentheses, separated by commas.
@@ -279,7 +279,7 @@ because their names are already specified as part of the function's return type.
 .. _Functions_OptionalTupleReturnTypes:
 
 Optional Tuple Return Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+___________________________
 
 If the tuple type to be returned from a function
 has the potential to have “no value” for the entire tuple,
