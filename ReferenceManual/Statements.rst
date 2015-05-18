@@ -57,7 +57,7 @@ Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
-and a ``do``-``while`` statement.
+and a ``repeat``-``while`` statement.
 
 Control flow in a loop statement can be changed by a ``break`` statement
 and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement` and
@@ -234,7 +234,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 .. _Statements_Repeat-WhileStatement:
 
 Repeat-While Statement
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 A ``repeat``-``while`` statement allows a block of code to be executed one or more times,
 as long as a condition remains true.
