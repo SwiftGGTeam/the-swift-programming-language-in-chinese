@@ -106,7 +106,7 @@ Documentation fields take the following form:
    /// - <#field#>: <#value#>
 
 The only exception is the ``Parameters`` field,
-which takes a nested list of parameters:
+which takes a nested list of parameter names and descriptions:
 
 .. syntax-outline::
 
