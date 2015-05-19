@@ -62,50 +62,121 @@ but the comment markers must be balanced.
 
 .. _LexicalStructure_CommentDocumentation:
 
-Inline Documentation
-~~~~~~~~~~~~~~~~~~~~
+Documentation Comments
+~~~~~~~~~~~~~~~~~~~~~~
 
-Comments can also be used as :newTerm:`inline documentation`.
+Comments can also be used as :newTerm:`documentation`.
 Single line documentation comments begin with ``///``
 and continue until a carriage return (U+000D) or line feed (U+000A).
 Multiline documentation comments begin with ``/**`` and end with ``*/``.
+Documentation comments precede the
+class, structure, enumeration, protocol,
+function, method, property, constant, or variable
+declaration which it documents.
 
-.. TODO: Explicitly mention reStructuredText formatting?
+Documentation comments begin with a brief comment
+summarizing the documented declaration,
+followed by zero or more documentation fields
+that provide structured information about the declaration.
+For example, a function may use documentation fields
+for its parameters and return value,
+as well as any preconditions or postconditions it might have.
 
-The ``:param:`` and ``:returns:`` annotations
-can be added to multiline documentation comments
-to provide structured information about the
-parameters and return type of functions.
+.. TODO Discuss Markdown formatting
 
-.. TODO: Use real example
+.. testcode:: documentation-comments
 
-.. testcode:: documentationComments
+   -> /// Calculates the quotient of two numbers.
+      ///
+      /// - Parameters:
+      ///   - a: The dividend.
+      ///   - b: The divisor.
+      /// - Returns: The quotient of the dividend and divisor.
+      /// - Precondition: b > 0
+      func div(a: Double, b: Double) -> Double {
+         /* */
+   >>    precondition(b > 0)
+   >>    return a / b
+      }
 
-    -> /// TODO
-       struct Foo {
-          /// TODO
-          var bar: Int
+Documentation fields take the following form:
 
-          /**
-             TODO
+.. syntax-outline::
 
-             :param: a TODO
-             :param: b TODO
+   /// - <#field#>: <#value#>
 
-             :returns: TODO
-          */
-          func baz(a: Int, b: Int) -> String {
-             // ...
-          }
-       }
+The only exception is the ``Parameters`` field,
+which takes a nested list of parameters:
+
+.. syntax-outline::
+
+   /// - Parameters:
+   ///   - <#parameter 1#>: <#description#>
+   ///   - <#parameter 2#>: <#description#>
+   ///   ...
+
+The following fields are recognized to provide structured information
+in documentation comments:
+
+``Attention``,
+``Author``,
+``Authors``,
+``Bug``,
+``Complexity``,
+``Copyright``,
+``Date``,
+``Experiment``,
+``Important``,
+``Invariant``,
+``Note``,
+``Parameters``,
+``Postcondition``,
+``Precondition``,
+``Remark``,
+``Remarks``,
+``Requires``,
+``Returns``,
+``SeeAlso``,
+``Since``,
+``TODO``,
+``Version``, and
+``Warning``
+
+.. note::
+
+   All documentation fields match in a case-insensitive manner.
+   For example,
+   ``remark``, ``Remark``, and ``REMARK``
+   are all valid and equivalent documentation fields.
 
 .. langref-grammar
 
     documentation    ::= ///.*[\n\r]
     documentation    ::= /** .... */
 
-    annotation       ::= ':param:'
-    annotation       ::= ':returns:'
+    documentation-field ::= 'attention'
+    documentation-field ::= 'author'
+    documentation-field ::= 'authors'
+    documentation-field ::= 'bug'
+    documentation-field ::= 'complexity'
+    documentation-field ::= 'copyright'
+    documentation-field ::= 'date'
+    documentation-field ::= 'experiment'
+    documentation-field ::= 'important'
+    documentation-field ::= 'invariant'
+    documentation-field ::= 'note'
+    documentation-field ::= 'parameters'
+    documentation-field ::= 'postcondition'
+    documentation-field ::= 'precondition'
+    documentation-field ::= 'remark'
+    documentation-field ::= 'remarks'
+    documentation-field ::= 'requires'
+    documentation-field ::= 'returns'
+    documentation-field ::= 'seeAlso'
+    documentation-field ::= 'since'
+    documentation-field ::= 'tODO'
+    documentation-field ::= 'version'
+    documentation-field ::= 'warning'
 
 .. _LexicalStructure_Identifiers:
 
