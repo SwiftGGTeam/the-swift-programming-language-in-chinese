@@ -265,9 +265,9 @@ the ``noreturn`` attribute to a function or method *type*.
     method in a conforming type.
 
 ``testable``
-    Apply this attribute to an entity with ``private`` or ``internal`` access
+    Apply this attribute to an entity with ``private`` or ``internal`` access level
     to indicate that it can be accessed by unit testing targets
-    as if it were declared with ``public`` access
+    as if it were declared with ``public`` access level
     when compiled with the ``--enable-testing`` flag.
 
     .. testcode:: testable
