@@ -268,7 +268,7 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to an entity with ``private`` or ``internal`` access
     to indicate that it can be accessed by unit testing targets
     as if it were declared with ``public`` access
-    when compiled with the ``-enable-testing`` flag.
+    when compiled with the ``--enable-testing`` flag.
 
     .. testcode:: testable
        :compile: true
