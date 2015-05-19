@@ -176,7 +176,7 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = [String]()
-   << // emptyArray : [(String)] = []
+   << // emptyArray : [String] = []
    -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : [String : Float] = [:]
 
@@ -195,7 +195,7 @@ Control Flow
 ------------
 
 Use ``if`` and ``switch`` to make conditionals,
-and use ``for``-``in``, ``for``, ``while``, and ``do``-``while``
+and use ``for``-``in``, ``for``, ``while``, and ``repeat``-``while``
 to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
@@ -380,7 +380,7 @@ ensuring that the loop is run at least once.
    ---
    -> var m = 2
    << // m : Int = 2
-   -> do {
+   -> repeat {
           m = m * 2
       } while m < 100
    -> println(m)
@@ -432,7 +432,7 @@ from the function's return type.
     -> func greet(name: String, day: String) -> String {
            return "Hello \(name), today is \(day)."
        }
-    -> greet("Bob", "Tuesday")
+    -> greet("Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
@@ -552,7 +552,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, lessThanTen)
+    -> hasAnyMatches(numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
@@ -1004,7 +1004,7 @@ but classes are passed by reference.
            }
        }
     -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = REPL.Card
+    << // threeOfSpades : Card = REPL.Card(rank: (Enum Value), suit: (Enum Value))
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1148,7 +1148,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = REPL.SimpleStructure
+    << // b : SimpleStructure = REPL.SimpleStructure(simpleDescription: "A simple structure")
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
@@ -1223,20 +1223,18 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeat<Item>(item: Item, times: Int) -> [Item] {
+    -> func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
-           for i in 0..<times {
+           for i in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> repeat("knock", 4)
+    -> repeatItem("knock", numberOfTimes:4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
-
-.. TODO: Add testcode expectation lines.
 
 .. testcode:: guided-tour
 
@@ -1258,7 +1256,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
