@@ -534,35 +534,10 @@ you must iterate over each Unicode scalar from the start or end of that ``String
 For this reason, Swift strings cannot be indexed by integer values.
 
 Use the ``startIndex`` property to access
-the position of the first ``Character`` of a ``String``,
-and the ``endIndex`` property to access
-the position of the last.
+the position of the first ``Character`` of a ``String``.
+The ``endIndex`` property returns
+the “past-the-end“ position of the last character,
 If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
-
-.. testcode:: stringIndex
-
-   -> let greeting = "Guten Tag"
-   << // greeting : String = "Guten Tag"
-   -> println(greeting.startIndex)
-   </ 0
-   -> println(greeting.endIndex)
-   </ 9
-
-.. assertion:: emptyStringIndexes
-
-   -> let emptyString = ""
-   << // emptyString : String = ""
-   -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
-   << // r0 : Bool = true
-
-You can use subscript syntax to access
-the ``Character`` at a particular ``String`` index:
-
-.. testcode:: stringIndex
-
-   -> greeting[greeting.startIndex]
-   << <REPL>: Character = "G"
-   </ G
 
 A ``String.Index`` value can access
 its immediately preceding index by calling the ``predecessor()`` method,
@@ -573,20 +548,39 @@ or by using the global ``advance(start:n:)`` function.
 Attempting to access an index outside of a string's range
 will trigger a runtime error.
 
+You can use subscript syntax to access
+the ``Character`` at a particular ``String`` index.
+Attempting to access a ``Character`` at an index outside of a string's range
+will trigger a runtime error.
+
 .. testcode:: stringIndex
 
-   -> greeting[greeting.startIndex.successor()]
-   << <REPL>: Character = "u"
-   </ u
+   -> let greeting = "Guten Tag"
+   << // greeting : String = "Guten Tag"
+   -> greeting[greeting.startIndex]
+   << <REPL>: Character = "G"
+   </ G
    -> greeting[greeting.endIndex.predecessor()]
    << <REPL>: Character = "g"
    </ g
+   -> greeting[greeting.startIndex.successor()]
+   << <REPL>: Character = "u"
+   </ u
    -> let index = advance(greeting.startIndex, 7)
    -> greeting[index]
    << <REPL>: Character = "a"
    </ a
-   -> greeting.endIndex.successor() // fatal error: can not increment endIndex
+   -> greeting[endIndex] // error
+   !! fatal error: Can't form a Character from an empty String
+   -> greeting.endIndex.successor() // error
    !! fatal error: can not increment endIndex
+
+.. assertion:: emptyStringIndexes
+
+   -> let emptyString = ""
+   << // emptyString : String = ""
+   -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
+   << // r0 : Bool = true
 
 Use the global function ``indicies(_:)`` to create a ``Range`` of all of the
 indexes used to access individual characters in a string.
