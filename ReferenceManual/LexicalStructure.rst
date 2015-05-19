@@ -93,11 +93,11 @@ as well as any preconditions or postconditions it might have.
       ///   - b: The divisor.
       /// - Returns: The quotient of the dividend and divisor.
       /// - Precondition: b > 0
-      func div(a: Double, b: Double) -> Double {
-         /* */
+      func div(a: Double, b: Double) -> Double
+   >>  {
    >>    precondition(b > 0)
    >>    return a / b
-      }
+   >>  }
 
 Documentation fields take the following form:
 
