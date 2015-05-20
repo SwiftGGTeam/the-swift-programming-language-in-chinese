@@ -84,17 +84,6 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 
 	"hello, " + "world"  // 等于 "hello, world"
 
-
-两个`Character`值或一个`String`和一个`Character`值，相加会生成一个新的`String`值：
-
-	let dog: Character = "d"
-	let cow: Character = "c"
-	let dogCow = dog + cow
-	// 译者注: 原来的引号内是很可爱的小狗和小牛, 但win os下不支持表情字符, 所以改成了普通字符
-	// dogCow 现在是 "dc"
-
-详情参见[字符，字符串的拼接](03_Strings_and_Characters.html#concatenating_strings_and_characters)。
-
 ### 求余运算符
 
 求余运算（`a % b`）是计算`b`的多少倍刚刚好可以容入`a`，返回多出来的那部分（余数）。
@@ -245,7 +234,7 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 	
 	let name = "world"
 	if name == "world" {
-	    println("hello, world")
+		println("hello, world")
 	} else {
 	    println("I'm sorry \(name), but I don't recognize you")
 	}
@@ -261,10 +250,10 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 
 三目运算符是以下代码的缩写形式：
 
-	if question: {
-	  answer1
+	if question {
+		answer1
 	} else {
-	  answer2
+		answer2
 	}
 
 这里有个计算表格行高的例子。如果有表头，那行高应比内容高度要高出50像素; 如果没有表头，只需高出20像素。
