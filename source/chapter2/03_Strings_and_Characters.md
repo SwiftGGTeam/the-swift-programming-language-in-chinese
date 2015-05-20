@@ -18,7 +18,7 @@
 - [字符串大小写](#uppercase_and_lowercase_strings)
 - [Unicode](#unicode)
 
-`String`是例如“hello, world”，“海贼王” 这样的有序的`Character`（字符）类型的值的集合，通过`String`类型来表示。
+`String`是例如"hello, world"，"海贼王"这样的有序的`Character`（字符）类型的值的集合，通过`String`类型来表示。
 
 Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode 的方式来处理代码中的文本信息。
 创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
@@ -285,7 +285,7 @@ for scene in romeoAndJuliet {
     }
 }
 println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-// 打印输出："6 mansion scenes; 2 cell scenes”
+// 打印输出："6 mansion scenes; 2 cell scenes"
 ```
 
 <a name="uppercase_and_lowercase_strings"></a>
