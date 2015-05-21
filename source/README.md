@@ -2,7 +2,7 @@
 > [Swift 开发者社区](http://swiftist.org)
 
 <!-- -->
-> 如果你觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持我们最大的动力。
+> 如果你觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持是我们最大的动力。
 
 <!-- -->
 > 关于文档中翻译错误，逻辑错误以及疑难问题答疑，请关注["@老码团队"](http://weibo.com/u/5241713117
