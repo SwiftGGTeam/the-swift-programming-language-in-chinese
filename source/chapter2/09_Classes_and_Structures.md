@@ -182,7 +182,7 @@ enum CompassPoint {
 var currentDirection = CompassPoint.West
 let rememberedDirection = currentDirection
 currentDirection = .East
-if rememberDirection == .West {
+if rememberedDirection == .West {
 	println("The remembered direction is still .West")
 }
 // 输出 "The remembered direction is still .West"
