@@ -230,7 +230,7 @@ You can print the current value of a constant or variable with the ``print(_:)``
 followed by a line break, to an appropriate output.
 In Xcode, for example,
 the ``print(_:)`` function prints its output in Xcode's “console” pane.
-(An overload of the function, ``print(_:appendNewline:)``, performs the same task
+(A related function, ``print(_:appendNewline:)``, performs the same task
 while optionally appending a line break to the end of the value to be printed.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
