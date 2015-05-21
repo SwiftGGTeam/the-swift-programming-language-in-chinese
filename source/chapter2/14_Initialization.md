@@ -118,11 +118,16 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 
 ```swift
 struct Color {
-    let red = 0.0, green = 0.0, blue = 0.0
+    let red, green, blue: Double
     init(red: Double, green: Double, blue: Double) {
         self.red   = red
         self.green = green
         self.blue  = blue
+    }
+    init(white: Double) {
+        red   = white
+        green = white
+        blue  = white
     }
 }
 ```
@@ -131,6 +136,7 @@ struct Color {
 
 ```swift
 let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+let halfGray = Color(white: 0.5)
 ```
 
 注意，如果不通过外部参数名字传值，你是没法调用这个构造器的。只要构造器定义了某个外部参数名，你就必须使用它，忽略它将导致编译错误：
