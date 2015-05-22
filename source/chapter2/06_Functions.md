@@ -36,7 +36,7 @@ func sayHello(personName: String) -> String {
 
 所有的这些信息汇总起来成为函数的定义，并以 `func` 作为前缀。指定函数返回类型时，用返回箭头 `->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
 
-该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么。这样的定义使的函数可以在别的地方以一种清晰的方式被调用：
+该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么。这样的定义使得函数可以在别的地方以一种清晰的方式被调用：
 
 ```swift
 println(sayHello("Anna"))
@@ -116,7 +116,7 @@ sayGoodbye("Dave")
 ```swift
 func printAndCount(stringToPrint: String) -> Int {
     println(stringToPrint)
-    return countElements(stringToPrint)
+    return count(stringToPrint)
 }
 func printWithoutCounting(stringToPrint: String) {
     printAndCount(stringToPrint)
@@ -348,7 +348,7 @@ arithmeticMean(3, 8, 19)
 
 ```swift
 func alignRight(var string: String, count: Int, pad: Character) -> String {
-    let amountToPad = count - countElements(string)
+    let amountToPad = count - count(string)
     if amountToPad < 1 {
         return string
     }
