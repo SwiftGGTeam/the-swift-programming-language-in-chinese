@@ -150,11 +150,11 @@ let yenSign: Character = "¥"
 <a name="counting_characters"></a>
 ## 计算字符数量 (Counting Characters)
 
-通过调用全局`countElements`函数，并将字符串作为参数进行传递，可以获取该字符串的字符数量。
+通过调用全局`count(_:)`函数，并将字符串作为参数进行传递，可以获取该字符串的字符数量。
 
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+println("unusualMenagerie has \(count(unusualMenagerie)) characters")
 // 打印输出："unusualMenagerie has 40 characters"
 ```
 
