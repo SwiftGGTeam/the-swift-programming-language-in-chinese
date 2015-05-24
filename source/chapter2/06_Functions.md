@@ -347,8 +347,8 @@ arithmeticMean(3, 8, 19)
 通过在参数名前加关键字 `var` 来定义变量参数：
 
 ```swift
-func alignRight(var string: String, count: Int, pad: Character) -> String {
-    let amountToPad = count - count(string)
+func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
+    let amountToPad = totalLength - count(string)
     if amountToPad < 1 {
         return string
     }
