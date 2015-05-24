@@ -519,6 +519,7 @@ Constrained Protocol Extensions
 
 .. testcode:: protocolExtension
 
+   >> import Darwin
    -> extension SequenceType where Generator.Element: Positioned {
           final var cumulativeDistance: Double {
               var distance = 0.0
