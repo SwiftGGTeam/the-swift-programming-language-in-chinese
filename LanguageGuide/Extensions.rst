@@ -470,19 +470,10 @@ Protocol Extensions
           let latitude: Double
           let longitude: Double
       }
-
-      protocol Positioned {
+   ---
+   -> protocol Positioned {
           var coordinates: Position { get }
       }
-   >> struct Place: Positioned {
-   >>     let name: String
-   >>     let coordinates: Position
-   >>
-   >>     init(name: String, coordinates: Position) {
-   >>         self.name = name
-   >>         self.coordinates = coordinates
-   >>     }
-   >> }
 
 .. testcode:: protocolExtension
 
@@ -509,6 +500,14 @@ Protocol Extensions
           }
       }
    ---
+   >> struct Place: Positioned {
+   >>     let name: String
+   >>     let coordinates: Position
+   >>     init(name: String, coordinates: Position) {
+   >>         self.name = name
+   >>         self.coordinates = coordinates
+   >>     }
+   >> }
    >> let mavericks = Place(name: "Maverick's Beach", coordinates: Position(latitude: 37.492673, longitude: -122.499522))
    >> let yosemite = Place(name: "Yosemite National Park", coordinates: Position(latitude: 37.85, longitude: -119.567777778))
    -> mavericks.haversineDistanceTo(yosemite)
