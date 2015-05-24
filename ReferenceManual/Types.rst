@@ -596,6 +596,11 @@ as the following example shows:
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 
+.. note::
+
+   You can't construct a class instance from a class metatype value,
+   because there is no guarantee that a subclass will provide that initializer.
+
 .. langref-grammar
 
     type-metatype ::= type-simple '.' 'metatype'
