@@ -557,21 +557,24 @@ which every type conforms to.
 Metatype Type
 -------------
 
-A metatype type refers to the type of any type, including class types, structure types,
-enumeration types, and protocol types.
+A metatype type refers to the type of any type,
+including class types, structure types, enumeration types, and protocol types.
 
-The metatype of a class, structure, or enumeration type is the name of that type
-followed by ``.Type``. The metatype of a protocol type---not the concrete type that
-conforms to the protocol at runtime---is the name of that protocol followed by ``.Protocol``.
+The metatype of a class, structure, or enumeration type is
+the name of that type followed by ``.Type``.
+The metatype of a protocol type --- not the concrete type that
+conforms to the protocol at runtime ---
+is the name of that protocol followed by ``.Protocol``.
 For example, the metatype of the class type ``SomeClass`` is ``SomeClass.Type``
 and the metatype of the protocol ``SomeProtocol`` is ``SomeProtocol.Protocol``.
 
 You can use the postfix ``self`` expression to access a type as a value.
 For example, ``SomeClass.self`` returns ``SomeClass`` itself,
-not an instance of ``SomeClass``. And ``SomeProtocol.self``
-returns ``SomeProtocol`` itself, not an instance of a type that conforms to ``SomeProtocol``
-at runtime. You can use a ``dynamicType`` expression with an instance
-of a type to access that instance's runtime type as a value,
+not an instance of ``SomeClass``.
+And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
+not an instance of a type that conforms to ``SomeProtocol`` at runtime.
+You can use a ``dynamicType`` expression with an instance of a type
+to access that instance's runtime type as a value,
 as the following example shows:
 
 .. testcode:: metatype-type
