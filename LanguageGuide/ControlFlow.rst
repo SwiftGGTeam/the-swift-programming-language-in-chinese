@@ -810,14 +810,14 @@ to provide a natural-language count for numbers of any size:
 
 .. note::
 
-	Both the closed range operator (``...``)
-	and half-open range operator (``..<``)
-	functions are overloaded to return either an
-	``IntervalType`` or ``Range``.
-	An interval can determine whether it contains a particular element,
-	such as when matching a ``switch`` statement ``case``.
-	A range is a collection of consecutive values,
-	which can be iterated on in a ``for-in`` statement.
+   Both the closed range operator (``...``)
+   and half-open range operator (``..<``)
+   functions are overloaded to return either an
+   ``IntervalType`` or ``Range``.
+   An interval can determine whether it contains a particular element,
+   such as when matching a ``switch`` statement ``case``.
+   A range is a collection of consecutive values,
+   which can be iterated on in a ``for-in`` statement.
 
 .. _ControlFlow_Tuples:
 
