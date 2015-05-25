@@ -726,25 +726,25 @@ The example below shows the syntax for stored and computed type properties:
 
    -> struct SomeStructure {
          static var storedTypeProperty = "Some value."
-         static var computedTypeProperty {
-            // return an Int value here
+         static var computedTypeProperty: Int {
+            // return a value here
    >>       return 42
          }
       }
    -> enum SomeEnumeration {
          static var storedTypeProperty = "Some value."
-         static var computedTypeProperty {
+         static var computedTypeProperty: Int {
             // return a value here
    >>       return 42
          }
       }
    -> class SomeClass {
          static var storedTypeProperty = "Some value."
-         static var computedTypeProperty {
+         static var computedTypeProperty: Int {
             // return a value here
    >>       return 42
          }
-         class var overrideableComputedTypeProperty {
+         class var overrideableComputedTypeProperty: Int {
             // return a value here
    >>       return 42
          }
