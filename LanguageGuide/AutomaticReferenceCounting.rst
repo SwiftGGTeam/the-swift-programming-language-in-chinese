@@ -429,11 +429,15 @@ This proves that the reference cycle has been broken.
 .. TODO: weak references can also be implicitly unchecked optionals.
    I should mention this here, but when would it be appropriate to use them?
 
-.. TODO: Feedback from [Contributor 7746] to be incorporated here:
-   “In the ARC section, at the end of the weak pointer section,
-   it is worth mentioning that trying to use weak pointers as a cache
-   (like you might do in a GC'd system) is doomed to failure:
-   values will be deallocated as soon as the last strong reference is removed.”
+.. note::
+
+   In garbage-collected (GC) systems,
+   weak pointers are sometimes used as an ad hoc caching mechanism,
+   because objects with no strong references are only deallocated
+   when memory pressure necessitates it.
+   However, with ARC, values are deallocated
+   as soon as their last strong reference is removed,
+   making them unsuitable for such a purpose.
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
