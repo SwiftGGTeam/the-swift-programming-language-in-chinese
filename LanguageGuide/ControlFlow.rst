@@ -781,36 +781,30 @@ This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
 .. REFERENCE
-   There are 200–400 billion stars in the Milky Way.
+   Saturn has 62 moons with confirmed orbits.
 
 .. testcode:: intervalMatching
    :compile: true
 
-   -> let approximateCount = 300_000_000_000
-   -> let countedThings = "stars in the Milky Way"
+   -> let approximateCount = 62
+   -> let countedThings = "moons orbiting Saturn"
    -> var naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
       case 1..<5:
           naturalCount = "a few"
-      case 5..<10:
+      case 5..<12:
           naturalCount = "several"
-      case 10..<100:
-          naturalCount = "tens of"
+      case 12..<100:
+          naturalCount = "dozens of"
       case 100..<1000:
           naturalCount = "hundreds of"
-      case 1000..<1_000_000:
-          naturalCount = "thousands of"
-      case 1_000_000..<1_000_000_000:
-          naturalCount = "millions of"
-      case 1_000_000_000..<1_000_000_000_000:
-          naturalCount = "billions of"
       default:
-          naturalCount = "many, many"
+          naturalCount = "many"
       }
    -> println("There are \(naturalCount) \(countedThings).")
-   <- There are billions of stars in the Milky Way.
+   <- There are dozens of moons orbiting Saturn.
 
 .. TODO: Add a description for this example.
 
