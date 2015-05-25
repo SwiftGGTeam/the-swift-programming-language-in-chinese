@@ -806,7 +806,11 @@ to provide a natural-language count for numbers of any size:
    -> println("There are \(naturalCount) \(countedThings).")
    <- There are dozens of moons orbiting Saturn.
 
-.. TODO: Add a description for this example.
+In the above example, ``approximateCount`` is evaluated in a ``switch`` statement.
+Each ``case`` compares that value to a number or interval.
+Because the value of ``approximateCount`` falls between 12 and 100,
+``naturalCount`` is assigned the value ``"dozens of"``,
+and execution is transferred out of the ``switch`` statement.
 
 .. note::
 
