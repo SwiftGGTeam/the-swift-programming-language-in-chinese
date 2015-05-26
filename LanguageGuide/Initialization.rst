@@ -343,6 +343,10 @@ it can't be further modified.
    !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
    !!             self.c = 2
    !!                    ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int
+   !! ^~~
+   !! var
 
 .. assertion:: constantPropertyAssignmentWithInitialValue
 
@@ -352,9 +356,17 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! <REPL Input>:4:16: error: cannot assign to 'c' in 'self'
+   !! <REPL Input>:4:16: error: immutable value 'self.c' may only be initialized once
    !!             self.c = 1
-   !!             ~~~~~~ ^
+   !!                  ^
+   !! <REPL Input>:2:10: note: initial value already provided in 'let' declaration
+   !! let c: Int = 0
+   !! ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int = 0
+   !! ^~~
+   !! var
+
 
 .. note::
 
