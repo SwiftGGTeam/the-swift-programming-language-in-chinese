@@ -290,7 +290,7 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = REPL.IntStack
+   << // intStack : IntStack = REPL.IntStack(items: [])
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -354,7 +354,7 @@ you write ``Stack<String>()``:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -896,7 +896,7 @@ Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
