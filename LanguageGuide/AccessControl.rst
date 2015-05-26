@@ -659,7 +659,7 @@ you can see the ``numberOfEdits`` property value update to match the number of m
 .. testcode:: reducedSetterScope
 
    -> var stringToEdit = TrackedString()
-   << // stringToEdit : TrackedString = REPL.TrackedString
+   << // stringToEdit : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."

@@ -602,11 +602,11 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 .. testcode:: customOperators
 
    -> let vector = Vector2D(x: 3.0, y: 1.0)
-   << // vector : Vector2D = REPL.Vector2D
+   << // vector : Vector2D = REPL.Vector2D(x: 3.0, y: 1.0)
    -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
-   << // anotherVector : Vector2D = REPL.Vector2D
+   << // anotherVector : Vector2D = REPL.Vector2D(x: 2.0, y: 4.0)
    -> let combinedVector = vector + anotherVector
-   << // combinedVector : Vector2D = REPL.Vector2D
+   << // combinedVector : Vector2D = REPL.Vector2D(x: 5.0, y: 5.0)
    /> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
    </ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
@@ -651,13 +651,13 @@ performs this operation on both the ``x`` and ``y`` properties:
 .. testcode:: customOperators
 
    -> let positive = Vector2D(x: 3.0, y: 4.0)
-   << // positive : Vector2D = REPL.Vector2D
+   << // positive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let negative = -positive
-   << // negative : Vector2D = REPL.Vector2D
+   << // negative : Vector2D = REPL.Vector2D(x: -3.0, y: -4.0)
    /> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
    </ negative is a Vector2D instance with values of (-3.0, -4.0)
    -> let alsoPositive = -negative
-   << // alsoPositive : Vector2D = REPL.Vector2D
+   << // alsoPositive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
    </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
@@ -693,9 +693,9 @@ and uses it to set the left value to be the left value plus the right value:
 .. testcode:: customOperators
 
    -> var original = Vector2D(x: 1.0, y: 2.0)
-   << // original : Vector2D = REPL.Vector2D
+   << // original : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
-   << // vectorToAdd : Vector2D = REPL.Vector2D
+   << // vectorToAdd : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> original += vectorToAdd
    /> original now has values of (\(original.x), \(original.y))
    </ original now has values of (4.0, 6.0)
@@ -720,9 +720,9 @@ and returns the result:
 .. testcode:: customOperators
 
    -> var toIncrement = Vector2D(x: 3.0, y: 4.0)
-   << // toIncrement : Vector2D = REPL.Vector2D
+   << // toIncrement : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let afterIncrement = ++toIncrement
-   << // afterIncrement : Vector2D = REPL.Vector2D
+   << // afterIncrement : Vector2D = REPL.Vector2D(x: 4.0, y: 5.0)
    /> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
    </ toIncrement now has values of (4.0, 5.0)
    /> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
@@ -781,9 +781,9 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
 .. testcode:: customOperators
 
    -> let twoThree = Vector2D(x: 2.0, y: 3.0)
-   << // twoThree : Vector2D = REPL.Vector2D
+   << // twoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
-   << // anotherTwoThree : Vector2D = REPL.Vector2D
+   << // anotherTwoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> if twoThree == anotherTwoThree {
          print("These two vectors are equivalent.")
       }
@@ -829,9 +829,9 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 .. testcode:: customOperators
 
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
-   << // toBeDoubled : Vector2D = REPL.Vector2D
+   << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
-   << // afterDoubling : Vector2D = REPL.Vector2D
+   << // afterDoubling : Vector2D = REPL.Vector2D(2.0, 8.0)
    /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
    </ toBeDoubled now has values of (2.0, 8.0)
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
@@ -869,11 +869,11 @@ with ``left`` associativity and a precedence of ``140``:
          return Vector2D(x: left.x + right.x, y: left.y - right.y)
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
-   << // firstVector : Vector2D = REPL.Vector2D
+   << // firstVector : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let secondVector = Vector2D(x: 3.0, y: 4.0)
-   << // secondVector : Vector2D = REPL.Vector2D
+   << // secondVector : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let plusMinusVector = firstVector +- secondVector
-   << // plusMinusVector : Vector2D = REPL.Vector2D
+   << // plusMinusVector : Vector2D = REPL.Vector2D(4.0, -2.0)
    /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
    </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
