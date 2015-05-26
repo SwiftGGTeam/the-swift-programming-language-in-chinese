@@ -552,7 +552,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, lessThanTen)
+    -> hasAnyMatches(numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
