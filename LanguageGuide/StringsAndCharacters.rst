@@ -621,7 +621,7 @@ use the ``splice(_:atIndex:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.splice(" there", atIndex: welcome.endIndex.predecessor())
+   -> welcome.splice(" there".characters, atIndex: welcome.endIndex.predecessor())
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -908,7 +908,7 @@ one for each byte in the string's UTF-8 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf8 {
-         print("\(codeUnit) ")
+         print("\(codeUnit) ", appendNewline: false)
       }
    -> print("\n")
    </ 68 111 103 226 128 188 240 159 144 182
@@ -942,7 +942,7 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf16 {
-         print("\(codeUnit) ")
+         print("\(codeUnit) ", appendNewline: false)
       }
    -> print("\n")
    </ 68 111 103 8252 55357 56374
@@ -980,7 +980,7 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         print("\(scalar.value) ")
+         print("\(scalar.value) ", appendNewline: false)
       }
    -> print("\n")
    </ 68 111 103 8252 128054
@@ -1005,10 +1005,6 @@ such as with string interpolation:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         print("\(scalar) ")
+         print("\(scalar) ", appendNewline: false)
       }
-   </ D
-   </ o
-   </ g
-   </ ‼
-   </ 🐶
+   </ D o g ‼ 🐶
