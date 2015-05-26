@@ -128,7 +128,7 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    :compile: true
 
    -> welcomeMessage = "Hello"
-   >> println(welcomeMessage)
+   >> print(welcomeMessage)
    << Hello
 
 You can define multiple related variables of the same type on a single line,
@@ -219,38 +219,38 @@ Attempting to do so is reported as an error when your code is compiled:
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can print the current value of a constant or variable with the ``println(_:)`` function:
+You can print the current value of a constant or variable with the ``print(_:)`` function:
 
 .. testcode:: constantsAndVariables
 
-   -> println(friendlyWelcome)
+   -> print(friendlyWelcome)
    <- Bonjour!
 
-``println`` is a global function that prints a value,
+``print(_:)`` is a global function that prints a value,
 followed by a line break, to an appropriate output.
 In Xcode, for example,
-``println`` prints its output in Xcode's “console” pane.
-(A second function, ``print``, performs the same task
-without appending a line break to the end of the value to be printed.)
+the ``print(_:)`` function prints its output in Xcode's “console” pane.
+(A related function, ``print(_:appendNewline:)``, performs the same task
+while optionally appending a line break to the end of the value to be printed.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
 
-.. NOTE: this is a deliberately simplistic description of what you can do with println().
+.. NOTE: this is a deliberately simplistic description of what you can do with print().
    It will be expanded later on.
 
 .. QUESTION: is this *too* simplistic?
    Strictly speaking, you can't print the value of *any* constant or variable ---
    you can only print values of types for which String has a constructor.
 
-The ``println(_:)`` function prints any ``String`` value you pass to it:
+The ``print(_:)`` function prints any ``String`` value you pass to it:
 
 .. testcode:: constantsAndVariables
 
-   -> println("This is a string")
+   -> print("This is a string")
    <- This is a string
 
-The ``println(_:)`` function can print more complex logging messages,
+The ``print(_:)`` function can print more complex logging messages,
 in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
@@ -261,7 +261,7 @@ Wrap the name in parentheses and escape it with a backslash before the opening p
 
 .. testcode:: constantsAndVariables
 
-   -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
+   -> print("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is Bonjour!
 
 .. note::
@@ -324,7 +324,7 @@ if you want to write multiple separate statements on a single line:
 
 .. testcode:: semiColons
 
-   -> let cat = "🐱"; println(cat)
+   -> let cat = "🐱"; print(cat)
    << // cat : String = "🐱"
    <- 🐱
 
@@ -771,9 +771,9 @@ such as the ``if`` statement:
 .. testcode:: booleans
 
    -> if turnipsAreDelicious {
-         println("Mmm, tasty turnips!")
+         print("Mmm, tasty turnips!")
       } else {
-         println("Eww, turnips are horrible.")
+         print("Eww, turnips are horrible.")
       }
    <- Eww, turnips are horrible.
 
@@ -857,9 +857,9 @@ which you then access as usual:
 
    -> let (statusCode, statusMessage) = http404Error
    << // (statusCode, statusMessage) : (Int, String) = (404, Not Found)
-   -> println("The status code is \(statusCode)")
+   -> print("The status code is \(statusCode)")
    <- The status code is 404
-   -> println("The status message is \(statusMessage)")
+   -> print("The status message is \(statusMessage)")
    <- The status message is Not Found
 
 If you only need some of the tuple's values,
@@ -870,7 +870,7 @@ when you decompose the tuple:
 
    -> let (justTheStatusCode, _) = http404Error
    << // (justTheStatusCode, _) : (Int, String) = (404, Not Found)
-   -> println("The status code is \(justTheStatusCode)")
+   -> print("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
 Alternatively,
@@ -878,9 +878,9 @@ access the individual element values in a tuple using index numbers starting at 
 
 .. testcode:: tuples
 
-   -> println("The status code is \(http404Error.0)")
+   -> print("The status code is \(http404Error.0)")
    <- The status code is 404
-   -> println("The status message is \(http404Error.1)")
+   -> print("The status message is \(http404Error.1)")
    <- The status message is Not Found
 
 You can name the individual elements in a tuple when the tuple is defined:
@@ -895,9 +895,9 @@ you can use the element names to access the values of those elements:
 
 .. testcode:: tuples
 
-   -> println("The status code is \(http200Status.statusCode)")
+   -> print("The status code is \(http200Status.statusCode)")
    <- The status code is 200
-   -> println("The status message is \(http200Status.description)")
+   -> print("The status message is \(http200Status.description)")
    <- The status message is OK
 
 Tuples are particularly useful as the return values of functions.
@@ -1028,7 +1028,7 @@ If an optional has a value, it is considered to be “not equal to” ``nil``:
 .. testcode:: optionals
 
    -> if convertedNumber != nil {
-         println("convertedNumber contains some integer value.")
+         print("convertedNumber contains some integer value.")
       }
    <- convertedNumber contains some integer value.
 
@@ -1042,7 +1042,7 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
 .. testcode:: optionals
 
    -> if convertedNumber != nil {
-         println("convertedNumber has an integer value of \(convertedNumber!).")
+         print("convertedNumber has an integer value of \(convertedNumber!).")
       }
    <- convertedNumber has an integer value of 123.
 
@@ -1083,9 +1083,9 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = possibleNumber.toInt() {
-         println("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+         print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
       } else {
-         println("\'\(possibleNumber)\' could not be converted to an integer")
+         print("\'\(possibleNumber)\' could not be converted to an integer")
       }
    <- '123' has an integer value of 123
 
@@ -1126,7 +1126,7 @@ as a comma-separated list of assignment expressions.
    -> let b: String? = "2"
    << // b : String? = Optional("2")
    -> if let x = a, y = b {
-         println(x, y)
+         print(x, y)
       }
    <- (1, 2)
 
@@ -1201,7 +1201,7 @@ to check if it contains a value:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if assumedString != nil {
-         println(assumedString)
+         print(assumedString)
       }
    <- An implicitly unwrapped optional string.
 
@@ -1211,7 +1211,7 @@ to check and unwrap its value in a single statement:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if let definiteString = assumedString {
-         println(definiteString)
+         print(definiteString)
       }
    <- An implicitly unwrapped optional string.
 

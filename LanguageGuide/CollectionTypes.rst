@@ -86,7 +86,7 @@ using initializer syntax:
 
    -> var someInts = [Int]()
    << // someInts : [(Int)] = []
-   -> println("someInts is of type [Int] with \(someInts.count) items.")
+   -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
 Note that the type of the ``someInts`` variable is inferred to be ``[Int]``
@@ -222,7 +222,7 @@ To find out the number of items in an array, check its read-only ``count`` prope
 
 .. testcode:: arraysInferred
 
-   -> println("The shopping list contains \(shoppingList.count) items.")
+   -> print("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
 Use the Boolean ``isEmpty`` property
@@ -231,9 +231,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: arraysInferred
 
    -> if shoppingList.isEmpty {
-         println("The shopping list is empty.")
+         print("The shopping list is empty.")
       } else {
-         println("The shopping list is not empty.")
+         print("The shopping list is not empty.")
       }
    <- The shopping list is not empty.
 
@@ -376,7 +376,7 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
 .. testcode:: arraysInferred
 
    -> for item in shoppingList {
-         println(item)
+         print(item)
       }
    </ Six eggs
    </ Milk
@@ -394,7 +394,7 @@ as part of the iteration:
 .. testcode:: arraysInferred
 
    -> for (index, value) in enumerate(shoppingList) {
-         println("Item \(index + 1): \(value)")
+         print("Item \(index + 1): \(value)")
       }
    </ Item 1: Six eggs
    </ Item 2: Milk
@@ -486,7 +486,7 @@ using initializer syntax:
 
    -> var letters = Set<Character>()
    << // letters : Set<Character> = Set([])
-   -> println("letters is of type Set<Character> with \(letters.count) items.")
+   -> print("letters is of type Set<Character> with \(letters.count) items.")
    <- letters is of type Set<Character> with 0 items.
 
 .. note::
@@ -566,7 +566,7 @@ check its read-only ``count`` property:
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
    << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
-   -> println("I have \(favoriteGenres.count) favorite music genres.")
+   -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
 Use the Boolean ``isEmpty`` property
@@ -575,9 +575,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: setUsage
 
    -> if favoriteGenres.isEmpty {
-         println("As far as music goes, I'm not picky.")
+         print("As far as music goes, I'm not picky.")
       } else {
-         println("I have particular music preferences.")
+         print("I have particular music preferences.")
       }
    <- I have particular music preferences.
 
@@ -598,9 +598,9 @@ Alternatively, all items in a set can be removed with its ``removeAll()`` method
 .. testcode:: setUsage
 
    -> if let removedGenre = favoriteGenres.remove("Rock") {
-         println("\(removedGenre)? I'm over it.")
+         print("\(removedGenre)? I'm over it.")
       } else {
-         println("I never much cared for that.")
+         print("I never much cared for that.")
       }
    <- Rock? I'm over it.
 
@@ -609,9 +609,9 @@ To check whether a set contains a particular item, use the ``contains(_:)`` meth
 .. testcode:: setUsage
 
    -> if favoriteGenres.contains("Funk") {
-          println("I get up on the good foot.")
+          print("I get up on the good foot.")
       } else {
-          println("It's too funky in here.")
+          print("It's too funky in here.")
       }
    <- It's too funky in here.
 
@@ -626,7 +626,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 .. testcode:: setUsage
 
    -> for genre in favoriteGenres {
-         println("\(genre)")
+         print("\(genre)")
       }
    </ Classical
    </ [Tool J]
@@ -642,7 +642,7 @@ which returns an ordered collection of the provided sequence.
 .. testcode:: setUsage
 
    -> for genre in sorted(favoriteGenres) {
-         println("\(genre)")
+         print("\(genre)")
       }
    </ Classical
    </ Hip hop
@@ -894,7 +894,7 @@ by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred
 
-   -> println("The airports dictionary contains \(airports.count) items.")
+   -> print("The airports dictionary contains \(airports.count) items.")
    <- The airports dictionary contains 2 items.
 
 Use the Boolean ``isEmpty`` property
@@ -903,9 +903,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: dictionariesInferred
 
    -> if airports.isEmpty {
-         println("The airports dictionary is empty.")
+         print("The airports dictionary is empty.")
       } else {
-         println("The airports dictionary is not empty.")
+         print("The airports dictionary is not empty.")
       }
    <- The airports dictionary is not empty.
 
@@ -950,7 +950,7 @@ or ``nil`` if no value existed:
 .. testcode:: dictionariesInferred
 
    -> if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
-         println("The old value for DUB was \(oldValue).")
+         print("The old value for DUB was \(oldValue).")
       }
    <- The old value for DUB was Dublin.
 
@@ -964,9 +964,9 @@ Otherwise, the subscript returns ``nil``:
 .. testcode:: dictionariesInferred
 
    -> if let airportName = airports["DUB"] {
-         println("The name of the airport is \(airportName).")
+         print("The name of the airport is \(airportName).")
       } else {
-         println("That airport is not in the airports dictionary.")
+         print("That airport is not in the airports dictionary.")
       }
    <- The name of the airport is Dublin Airport.
 
@@ -980,9 +980,9 @@ by assigning a value of ``nil`` for that key:
    -> airports["APL"] = nil
    // APL has now been removed from the dictionary
    >> if let deletedName = airports["APL"] {
-   >>    println("The key-value pair for APL has *not* been deleted, but it should have been!")
+   >>    print("The key-value pair for APL has *not* been deleted, but it should have been!")
    >> } else {
-   >>    println("APL has now been removed from the dictionary")
+   >>    print("APL has now been removed from the dictionary")
    >> }
    << APL has now been removed from the dictionary
 
@@ -995,9 +995,9 @@ or returns ``nil`` if no value existed:
 .. testcode:: dictionariesInferred
 
    -> if let removedValue = airports.removeValueForKey("DUB") {
-         println("The removed airport's name is \(removedValue).")
+         print("The removed airport's name is \(removedValue).")
       } else {
-         println("The airports dictionary does not contain a value for DUB.")
+         print("The airports dictionary does not contain a value for DUB.")
       }
    <- The removed airport's name is Dublin Airport.
 
@@ -1014,7 +1014,7 @@ as part of the iteration:
 .. testcode:: dictionariesInferred
 
    -> for (airportCode, airportName) in airports {
-         println("\(airportCode): \(airportName)")
+         print("\(airportCode): \(airportName)")
       }
    </ YYZ: Toronto Pearson
    </ LHR: London Heathrow
@@ -1027,13 +1027,13 @@ by accessing its ``keys`` and ``values`` properties:
 .. testcode:: dictionariesInferred
 
    -> for airportCode in airports.keys {
-         println("Airport code: \(airportCode)")
+         print("Airport code: \(airportCode)")
       }
    </ Airport code: YYZ
    </ Airport code: LHR
    ---
    -> for airportName in airports.values {
-         println("Airport name: \(airportName)")
+         print("Airport name: \(airportName)")
       }
    </ Airport name: Toronto Pearson
    </ Airport name: London Heathrow
