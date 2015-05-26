@@ -607,7 +607,7 @@ is reported as an error when your code is compiled:
 .. testcode:: constantsAndVariablesOverflowError
 
    -> let cannotBeNegative: UInt8 = -1
-   !! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
+   !! <REPL Input>:1:31: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
    !! let cannotBeNegative: UInt8 = -1
    !!                        ^
    // UInt8 cannot store negative numbers, and so this will report an error
@@ -838,7 +838,7 @@ A status code of ``404 Not Found`` is returned if you request a webpage that doe
 .. testcode:: tuples
 
    -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, Not Found)
+   << // http404Error : (Int, String) = (404, "Not Found")
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
@@ -859,7 +859,7 @@ which you then access as usual:
 .. testcode:: tuples
 
    -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, Not Found)
+   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
    -> print("The status code is \(statusCode)")
    <- The status code is 404
    -> print("The status message is \(statusMessage)")
@@ -872,7 +872,7 @@ when you decompose the tuple:
 .. testcode:: tuples
 
    -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, Not Found)
+   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
    -> print("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
@@ -891,7 +891,7 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (200, OK)
+   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
@@ -1131,7 +1131,7 @@ as a comma-separated list of assignment expressions.
    -> if let x = a, y = b {
          print(x, y)
       }
-   <- (1, 2)
+   <- ("1", "2")
 
 .. syntax-outline::
 
