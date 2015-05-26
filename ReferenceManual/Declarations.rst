@@ -276,69 +276,6 @@ You can override a property in a subclass by marking the subclass's property dec
 with the ``override`` declaration modifier, as described in :ref:`Inheritance_Overriding`.
 
 
-.. _Declarations_OptionalBinding:
-
-Optional Binding
-~~~~~~~~~~~~~~~~
-
-Optional binding can be used with ``if`` and ``while`` statements and ``switch`` cases
-to find out whether an optional contains a value,
-and if so, to extract that value into a temporary constant or variable
-and execute the relevant branch.
-
-.. note::
-
-    You can optionally add a guard expression to
-    optional binding ``if`` and ``while`` statements and ``switch`` cases,
-    as described in :ref:`Expressions_GuardExpressions`.
-
-``if`` Statements
-_________________
-
-Write optional binding for an ``if`` statement as follows:
-
-.. syntax-outline::
-
-   if let <#constantName#> = <#someOptional#>,
-          <#anotherConstantName#> = <#someOtherOptional#> {
-      <#statements#>
-   } else if var <#variableName#> = <#someOptional#> {
-      <#statements#>
-   }
-
-``while`` Statements
-____________________
-
-Write optional binding for a ``while`` statement as follows:
-
-.. syntax-outline::
-
-   while let <#constantName#> = <#someOptional#>,
-         var <#variableName#> = <#someOtherOptional#> {
-      <#statements#>
-   }
-
-``switch`` Statement Cases
-__________________________
-
-Write optional binding for ``switch`` statement cases as follows:
-
-.. syntax-outline::
-
-   switch (<#someOptional#>, <#someOtherOptional#>) {
-   case let (<#constantName#>, <#anotherConstantName#>):
-      <#statements#>
-   case (let <#constantName#>, var <#variableName#>):
-      <#statements#>
-   default:
-      <#statements#>
-   }
-
-.. TODO: Add explanations
-.. TODO: Add syntax grammar
-.. TODO: Add cross-references throughout Reference and Guide
-
-
 .. _Declarations_StoredVariablesAndVariableStoredProperties:
 
 Stored Variables and Stored Variable Properties
