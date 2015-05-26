@@ -146,7 +146,7 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = REPL.Resolution
+   << // someResolution : Resolution = REPL.Resolution(width: 0, height: 0)
    -> let someVideoMode = VideoMode()
    << // someVideoMode : VideoMode = REPL.VideoMode
 
@@ -217,7 +217,7 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = REPL.Resolution
+   << // vga : Resolution = REPL.Resolution(width: 640, height: 480)
 
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -261,9 +261,9 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = REPL.Resolution
+   << // hd : Resolution = REPL.Resolution(width: 1920, height: 1080)
    -> var cinema = hd
-   << // cinema : Resolution = REPL.Resolution
+   << // cinema : Resolution = REPL.Resolution(width: 1920, height: 1080)
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -318,9 +318,9 @@ The same behavior applies to enumerations:
          case North, South, East, West
       }
    -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = (Enum Value)
+   << // currentDirection : CompassPoint = REPL.CompassPoint.West
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = (Enum Value)
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
    -> currentDirection = .East
    -> if rememberedDirection == .West {
          print("The remembered direction is still .West")
@@ -415,9 +415,9 @@ or passed to a function.)
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S
+   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S
+   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two S operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
@@ -427,9 +427,9 @@ or passed to a function.)
 
    -> enum E { case A, B }
    -> let e1 = E.A
-   << // e1 : E = (Enum Value)
+   << // e1 : E = REPL.E.A
    -> let e2 = E.B
-   << // e2 : E = (Enum Value)
+   << // e2 : E = REPL.E.B
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two E operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
@@ -481,9 +481,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S
+   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S
+   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two S operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }

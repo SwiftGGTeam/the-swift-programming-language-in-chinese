@@ -131,7 +131,7 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = REPL.Person
+   << // john : Person = REPL.Person(fullName: "John Appleseed")
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -312,7 +312,7 @@ to match the ``Togglable`` protocol's requirements:
          }
       }
    -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = (Enum Value)
+   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.Off
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .On
 
@@ -1085,7 +1085,7 @@ into a single protocol composition requirement on a function parameter:
          print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = REPL.Person
+   << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
    -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
