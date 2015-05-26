@@ -781,49 +781,47 @@ This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
 .. REFERENCE
-   There are 200–400 billion stars in the Milky Way.
+   Saturn has 62 moons with confirmed orbits.
 
 .. testcode:: intervalMatching
    :compile: true
 
-   -> let approximateCount = 300_000_000_000
-   -> let countedThings = "stars in the Milky Way"
+   -> let approximateCount = 62
+   -> let countedThings = "moons orbiting Saturn"
    -> var naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
       case 1..<5:
           naturalCount = "a few"
-      case 5..<10:
+      case 5..<12:
           naturalCount = "several"
-      case 10..<100:
-          naturalCount = "tens of"
+      case 12..<100:
+          naturalCount = "dozens of"
       case 100..<1000:
           naturalCount = "hundreds of"
-      case 1000..<1_000_000:
-          naturalCount = "thousands of"
-      case 1_000_000..<1_000_000_000:
-          naturalCount = "millions of"
-      case 1_000_000_000..<1_000_000_000_000:
-          naturalCount = "billions of"
       default:
-          naturalCount = "many, many"
+          naturalCount = "many"
       }
-   -> print("There are \(naturalCount) \(countedThings).")
-   <- There are billions of stars in the Milky Way.
+   -> println("There are \(naturalCount) \(countedThings).")
+   <- There are dozens of moons orbiting Saturn.
 
-.. TODO: Add a description for this example.
+In the above example, ``approximateCount`` is evaluated in a ``switch`` statement.
+Each ``case`` compares that value to a number or interval.
+Because the value of ``approximateCount`` falls between 12 and 100,
+``naturalCount`` is assigned the value ``"dozens of"``,
+and execution is transferred out of the ``switch`` statement.
 
 .. note::
 
-	Both the closed range operator (``...``)
-	and half-open range operator (``..<``)
-	functions are overloaded to return either an
-	``IntervalType`` or ``Range``.
-	An interval can determine whether it contains a particular element,
-	such as when matching a ``switch`` statement ``case``.
-	A range is a collection of consecutive values,
-	which can be iterated on in a ``for-in`` statement.
+   Both the closed range operator (``...``)
+   and half-open range operator (``..<``)
+   functions are overloaded to return either an
+   ``IntervalType`` or ``Range``.
+   An interval can determine whether it contains a particular element,
+   such as when matching a ``switch`` statement ``case``.
+   A range is a collection of consecutive values,
+   which can be iterated on in a ``for-in`` statement.
 
 .. _ControlFlow_Tuples:
 
