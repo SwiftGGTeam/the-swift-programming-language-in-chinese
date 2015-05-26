@@ -41,7 +41,7 @@ the ``noreturn`` attribute to a function or method *type*.
     relative to certain platforms and operating system versions.
 
     The ``available`` attribute always appears
-    with a list of two or more comma-separated attribute arguments.
+    with a list of one or more comma-separated attribute arguments.
     These arguments begin with one of the following platform names:
 
     * ``iOS``
@@ -52,6 +52,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
     You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
+
     The remaining arguments can appear in any order
     and specify additional information about the declaration's lifecycle,
     including important milestones.
@@ -130,6 +131,27 @@ the ``noreturn`` attribute to a function or method *type*.
     to specify the declaration's availability on different platforms.
     The compiler uses an ``available`` attribute only when the attribute specifies
     a platform that matches the current target platform.
+
+    If an ``available`` attribute only specifies an ``introduced`` argument
+    in addition to a platform name argument,
+    the following shorthand syntax can be used instead:
+
+    .. syntax-outline::
+
+        <#platform name#> <#version number#>
+
+    The shorthand syntax for ``available`` attributes allows for
+    availability for multiple platforms to be expressed concisely.
+    Although the two forms are functionally equivalent,
+    the shorthand form is preferred whenever possible.
+
+    .. testcode:: availableShorthand
+       :compile: true
+
+       -> @available(iOS 8.0, OSX 10.10, *)
+       -> class MyClass {
+              // class definition
+          }
 
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
