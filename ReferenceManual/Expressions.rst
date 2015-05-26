@@ -800,7 +800,9 @@ to capture a weak or unowned reference to the value.
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
-    << TitleTitleTitle
+    << Title
+    << Title
+    << Title
 
 You can also bind an arbitrary expression
 to a named value in the capture list.
