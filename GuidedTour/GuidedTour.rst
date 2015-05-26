@@ -1225,7 +1225,7 @@ to make a generic function or type.
 
     -> func replicate<Item>(item: Item, times: Int) -> [Item] {
            var result = [Item]()
-           for i in 0..<times {
+           for _ in 0..<times {
                 result.append(item)
            }
            return result
@@ -1258,7 +1258,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

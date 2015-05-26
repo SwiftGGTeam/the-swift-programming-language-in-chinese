@@ -114,10 +114,10 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:1: error: cannot pass 'let' value 'constantString' to mutating binary operator '+='
+   !! <REPL Input>:1:16: error: cannot pass 'let' value 'constantString' to mutating binary operator '+='
    !! constantString += " and another Highlander"
    !! ~~~~~~~~~~~~~~ ^
-   !! note: change 'let' to 'var' to make it mutable
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let constantString = "Highlander"
    !! ^~~
    !! var
