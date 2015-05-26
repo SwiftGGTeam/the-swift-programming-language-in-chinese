@@ -589,8 +589,9 @@ of their only statement.
 .. testcode:: guided-tour
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
+    << // mappedNumbers : [Int] = [60, 57, 21, 36]
     -> print(mappedNumbers)
-    << [60, 57, 21, 36]
+    <- [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -600,8 +601,9 @@ can appear immediately after the parentheses.
 .. testcode:: guided-tour
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
+    << // sortedNumbers : [Int] = [20, 19, 12, 7]
     -> print(sortedNumbers)
-    << [20, 19, 12, 7]
+    <- [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
