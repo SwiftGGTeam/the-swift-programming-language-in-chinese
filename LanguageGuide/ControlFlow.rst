@@ -803,7 +803,7 @@ to provide a natural-language count for numbers of any size:
       default:
           naturalCount = "many"
       }
-   -> println("There are \(naturalCount) \(countedThings).")
+   -> print("There are \(naturalCount) \(countedThings).")
    <- There are dozens of moons orbiting Saturn.
 
 In the above example, ``approximateCount`` is evaluated in a ``switch`` statement.
