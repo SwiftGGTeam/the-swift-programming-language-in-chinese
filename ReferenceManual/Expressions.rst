@@ -870,8 +870,9 @@ For example:
 
     >> enum MyEnumeration { case SomeValue, AnotherValue }
     -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = (Enum Value)
+    << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
     -> x = .AnotherValue
+    << // x : MyEnumeration = REPL.MyEnumeration.AnotherValue
 
 .. langref-grammar
 
