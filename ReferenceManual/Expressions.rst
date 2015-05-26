@@ -872,7 +872,6 @@ For example:
     -> var x = MyEnumeration.SomeValue
     << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
     -> x = .AnotherValue
-    << // x : MyEnumeration = REPL.MyEnumeration.AnotherValue
 
 .. langref-grammar
 

@@ -641,7 +641,7 @@ use the ``removeRange(_:)`` method:
 .. testcode:: stringInsertionAndRemoval
 
    -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
-   << // range : Range<String.Index> = Range(5..<11)
+   << // range : Range<Index> = Range(5..<11)
    -> welcome.removeRange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
@@ -910,7 +910,7 @@ one for each byte in the string's UTF-8 representation:
    -> for codeUnit in dogString.utf8 {
          print("\(codeUnit) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 226 128 188 240 159 144 182
 
 In the example above, the first three decimal ``codeUnit`` values
@@ -944,7 +944,7 @@ one for each 16-bit code unit in the string's UTF-16 representation:
    -> for codeUnit in dogString.utf16 {
          print("\(codeUnit) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 8252 55357 56374
 
 Again, the first three ``codeUnit`` values
@@ -982,7 +982,7 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
    -> for scalar in dogString.unicodeScalars {
          print("\(scalar.value) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 8252 128054
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
@@ -1007,4 +1007,5 @@ such as with string interpolation:
    -> for scalar in dogString.unicodeScalars {
          print("\(scalar) ", appendNewline: false)
       }
+   >> print("")
    </ D o g ‼ 🐶
