@@ -259,7 +259,7 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = (test, 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
@@ -517,7 +517,7 @@ when the default value expression is evaluated at the call site.
     >> noNamedArgs(1, 2)
     << noNamedArgs
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    namedArgs(1, withJay: 2)
+    >> namedArgs(1, withJay: 2)
     << namedArgs(_:withJay:)
 
 .. Additional hidden tests above illustrate
