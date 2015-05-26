@@ -1223,14 +1223,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeat<Item>(item: Item, times: Int) -> [Item] {
+    -> func replicate<Item>(item: Item, times: Int) -> [Item] {
            var result = [Item]()
            for i in 0..<times {
                 result.append(item)
            }
            return result
        }
-    -> repeat("knock", 4)
+    -> replicate("knock", times: 4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
