@@ -85,7 +85,7 @@ using initializer syntax:
 .. testcode:: arraysEmpty
 
    -> var someInts = [Int]()
-   << // someInts : [(Int)] = []
+   << // someInts : [Int] = []
    -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
@@ -120,7 +120,7 @@ and a default value of the appropriate type (called ``repeatedValue``):
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
+   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
    // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
 .. _CollectionTypes_CreatingAnArrayByAddingTwoArraysTogether:
@@ -135,12 +135,12 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
    /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
    </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
@@ -1045,12 +1045,12 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["YYZ", "LHR"]
+   << // airportCodes : [String] = ["YYZ", "LHR"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
    </ airportCodes is ["YYZ", "LHR"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["Toronto Pearson", "London Heathrow"]
+   << // airportNames : [String] = ["Toronto Pearson", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Toronto Pearson", "London Heathrow"]
 

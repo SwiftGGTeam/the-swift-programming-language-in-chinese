@@ -177,7 +177,7 @@ an expression pattern:
 .. testcode:: tuple-pattern
 
     -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    << // points : [Int, Int] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
           /* ... */

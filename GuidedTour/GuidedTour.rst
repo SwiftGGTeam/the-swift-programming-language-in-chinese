@@ -176,7 +176,7 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = [String]()
-   << // emptyArray : [(String)] = []
+   << // emptyArray : [String] = []
    -> let emptyDictionary = [String: Float]()
    << // emptyDictionary : [String : Float] = [:]
 
