@@ -562,7 +562,7 @@ a ``fallthrough`` statement, and a ``return`` statement.
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A ``break`` statement ends program execution of a loop or a ``switch`` statement.
+A ``break`` statement ends program execution of a loop or a conditional statement.
 A ``break`` statement can consist of only the keyword ``break``,
 or it can consist of the keyword ``break`` followed by the name of a statement label,
 as shown below.
@@ -573,14 +573,14 @@ as shown below.
     break <#label name#>
 
 When a ``break`` statement is followed by the name of a statement label,
-it ends program execution of the loop or ``switch`` statement named by that label.
+it ends program execution of the loop or conditional statement named by that label.
 
 When a ``break`` statement is not followed by the name of a statement label,
 it ends program execution of the ``switch`` statement or the innermost enclosing loop
 statement in which it occurs.
-
 In both cases, program control is then transferred to the first line
 of code following the enclosing loop or ``switch`` statement, if any.
+An unlabeled ``break`` statement is not allowed in an ``if``statement.
 
 For examples of how to use a ``break`` statement,
 see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
