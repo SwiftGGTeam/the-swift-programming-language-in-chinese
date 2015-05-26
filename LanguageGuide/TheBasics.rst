@@ -213,6 +213,9 @@ Attempting to do so is reported as an error when your code is compiled:
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let languageName = "Swift"
+   !! ^~~
 
 .. _TheBasics_PrintingConstantsAndVariables:
 
