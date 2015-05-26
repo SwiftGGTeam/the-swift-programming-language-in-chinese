@@ -151,7 +151,7 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
 
 .. testcode:: forLoops
 
-   -> for character in "Hello" {
+   -> for character in "Hello".characters {
          print(character)
       }
    </ H
