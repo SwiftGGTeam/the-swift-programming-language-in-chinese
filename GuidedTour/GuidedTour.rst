@@ -432,7 +432,7 @@ from the function's return type.
     -> func greet(name: String, day: String) -> String {
            return "Hello \(name), today is \(day)."
        }
-    -> greet("Bob", "Tuesday")
+    -> greet("Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
