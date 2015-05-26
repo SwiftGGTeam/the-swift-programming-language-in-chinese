@@ -499,7 +499,7 @@ Type Constraints in Action
 Here's a non-generic function called ``findStringIndex``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
-The ``findStringIndex(_:_:)`` function returns an optional ``Int`` value,
+The ``findStringIndex(_:valueToFind:)`` function returns an optional ``Int`` value,
 which will be the index of the first matching string in the array if it is found,
 or ``nil`` if the string cannot be found:
 
@@ -520,7 +520,7 @@ The ``findStringIndex(_:_:)`` function can be used to find a string value in an 
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   -> if let foundIndex = findStringIndex(strings, "llama") {
+   -> if let foundIndex = findStringIndex(strings, valueToFind: "llama") {
          print("The index of llama is \(foundIndex)")
       }
    <- The index of llama is 2
