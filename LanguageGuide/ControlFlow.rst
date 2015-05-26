@@ -1203,28 +1203,33 @@ the number ``5`` is correctly identified as a prime number.
 .. _ControlFlow_LabeledStatements:
 
 Labeled Statements
-~~~~~~~~~~~~~~~~~~
+------------------
 
-You can nest loops and ``switch`` statements
-inside other loops and ``switch`` statements in Swift
+You can nest loops and conditional statements
+inside other loops and conditional statements in Swift
 to create complex control flow structures.
-However, loops and ``switch`` statements can both use the ``break`` statement
+However, loops and conditional statements can both use the ``break`` statement
 to end their execution prematurely.
 Therefore, it is sometimes useful to be explicit about
-which loop or ``switch`` statement you want a ``break`` statement to terminate.
+which loop or conditional statement you want a ``break`` statement to terminate.
 Similarly, if you have multiple nested loops,
 it can be useful to be explicit about which loop the ``continue`` statement
 should affect.
 
 To achieve these aims,
-you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`,
+you can mark a loop statement or conditional statement with a :newTerm:`statement label`,
 and use this label with the ``break`` statement or ``continue`` statement
 to end or continue the execution of the labeled statement.
+
+.. note::
+
+   An unlabeled ``break`` statement is only allowed in a loop or ``switch`` statement.
+   An ``if`` statement requires a labeled ``break`` statement.
 
 A labeled statement is indicated by placing
 a label on the same line as the statement's introducer keyword, followed by a colon.
 Here's an example of this syntax for a ``while`` loop,
-although the principle is the same for all loops and ``switch`` statements:
+although the principle is the same for all loops and conditional statements:
 
 .. syntax-outline::
 
