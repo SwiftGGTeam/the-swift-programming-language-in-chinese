@@ -441,7 +441,7 @@ The nested enumeration can now be used with any ``Int`` value:
                   print("+ ", appendNewline: false)
             }
          }
-         print("\n")
+   >>    print("")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
    <- + + - 0 - 0 +
