@@ -454,14 +454,13 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-call the global ``count(_:)`` function
-and pass in a string as the function's sole parameter:
+call the ``count()`` method on a string's `characters` property.
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(count(unusualMenagerie)) characters")
+   -> print("unusualMenagerie has \(unusualMenagerie.characters.count()) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -477,12 +476,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(word.characters.count())")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> print("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(word.characters.count())")
    <- the number of characters in café is 4
 
 .. note::
@@ -497,11 +496,12 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``count(_:)`` function
+   be aware that the ``characters`` property
    must iterate over the Unicode scalars in the entire string
-   in order to calculate an accurate character count for that string.
+   in order to determine the characters for that string.
 
-   The character count returned by the ``count(_:)`` function
+   The character count returned by the ``count()`` method
+   of the ``characters`` property
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
