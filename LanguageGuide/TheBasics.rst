@@ -1327,6 +1327,7 @@ You can use an :newTerm:`import declaration` to gain access to
 symbols declared outside the current module.
 
 .. note::
+
    Import declarations are generally found at the beginning of a file,
    since external symbols are only accessible following an import declaration.
 
