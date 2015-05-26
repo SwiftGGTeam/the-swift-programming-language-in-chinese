@@ -1426,7 +1426,7 @@ and to check if initialization succeeded:
 .. testcode:: failableInitializers
 
    -> let someCreature = Animal(species: "Giraffe")
-   << // someCreature : Animal? = Optional(REPL.Animal)
+   << // someCreature : Animal? = Optional(REPL.Animal(species: "Giraffe"))
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
@@ -1499,7 +1499,7 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1534,7 +1534,7 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -2179,7 +2179,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: checkers
 
    -> let board = Checkerboard()
-   << // board : Checkerboard = REPL.Checkerboard
+   << // board : Checkerboard = REPL.Checkerboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
    -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
    -> print(board.squareIsBlackAtRow(9, column: 9))
