@@ -197,7 +197,7 @@ a very simple assert function:
        }
     -> let testNumber = 5
     << // testNumber : Int = 5
-    -> simpleAssert(testNumber % 2 == 0, "testNumber isn't an even number.")
+    -> simpleAssert(testNumber % 2 == 0, message: "testNumber isn't an even number.")
     <- testNumber isn't an even number.
 
 .. TODO: Add this back in after Dave updates the Guide with an autoclousre section:
