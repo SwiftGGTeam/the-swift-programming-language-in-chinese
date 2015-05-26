@@ -506,7 +506,7 @@ or ``nil`` if the string cannot be found:
 .. testcode:: typeConstraints
 
    -> func findStringIndex(array: [String], valueToFind: String) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -540,7 +540,7 @@ for reasons explained after the example:
 .. testcode:: typeConstraints
 
    -> func findIndex<T>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -582,7 +582,7 @@ as part of the type parameter's definition when you define the function:
 .. testcode:: typeConstraintsEquatable
 
    -> func findIndex<T: Equatable>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
