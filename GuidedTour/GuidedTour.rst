@@ -572,7 +572,7 @@ Use ``in`` to separate the arguments and return type from the body.
            let result = 3 * number
            return result
        })
-    <$ : Array<Int> = [60, 57, 21, 36]
+    << // r6 : [Int] = [60, 57, 21, 36]
 
 .. admonition:: Experiment
 
@@ -590,7 +590,6 @@ of their only statement.
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> print(mappedNumbers)
-    <$ : Array<Int> = [60, 57, 21, 36]
     << [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
@@ -602,7 +601,6 @@ can appear immediately after the parentheses.
 
     -> let sortedNumbers = sorted(numbers) { $0 > $1 }
     -> print(sortedNumbers)
-    <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
@@ -910,7 +908,7 @@ enumerations can have methods associated with them.
            }
        }
     -> let ace = Rank.Ace
-    << // ace : Rank = (Enum Value)
+    << // ace : Rank = REPL.Rank.Ace
     -> let aceRawValue = ace.rawValue
     <$ : Int = 1
 
@@ -962,7 +960,7 @@ you don't have to provide one.
            }
        }
     -> let hearts = Suit.Hearts
-    << // hearts : Suit = (Enum Value)
+    << // hearts : Suit = REPL.Suit.Hearts
     -> let heartsDescription = hearts.simpleDescription()
     << // heartsDescription : String = "hearts"
 
@@ -1004,7 +1002,7 @@ but classes are passed by reference.
            }
        }
     -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = REPL.Card
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.Three, suit: REPL.Suit.Spades)
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1070,9 +1068,9 @@ or it responds with some error information.
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = (Enum Value)
+    << // success : ServerResponse = REPL.ServerResponse
     -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = (Enum Value)
+    << // failure : ServerResponse = REPL.ServerResponse
     ---
     >> var test_response: String = ""
     << // test_response : String = ""
@@ -1148,7 +1146,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = REPL.SimpleStructure
+    << // b : SimpleStructure = REPL.SimpleStructure(simpleDescription: "A simple structure")
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
@@ -1246,7 +1244,7 @@ as well as classes, enumerations, and structures.
            case Some(T)
        }
     -> var possibleInteger: OptionalValue<Int> = .None
-    << // possibleInteger : OptionalValue<Int> = (Enum Value)
+    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
     -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name

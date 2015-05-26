@@ -290,7 +290,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point
+   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
    !! fixedPoint.moveByX(2.0, y: 3.0)

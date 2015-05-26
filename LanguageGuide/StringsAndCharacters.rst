@@ -121,9 +121,6 @@ or to a constant (in which case it cannot be modified):
    !! let constantString = "Highlander"
    !! ^~~
    !! var
-   !! <REPL Input>:1:1: note: overloads for '+=' exist with these partially matching parameter lists: (inout String, String)
-   !! constantString += " and another Highlander"
-   !! ^
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::

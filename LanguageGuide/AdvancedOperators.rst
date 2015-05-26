@@ -831,7 +831,7 @@ rather than adding ``Vector2D(1.0, 1.0)``:
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
    << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
-   << // afterDoubling : Vector2D = REPL.Vector2D(2.0, 8.0)
+   << // afterDoubling : Vector2D = REPL.Vector2D(x: 2.0, y: 8.0)
    /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
    </ toBeDoubled now has values of (2.0, 8.0)
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
@@ -873,7 +873,7 @@ with ``left`` associativity and a precedence of ``140``:
    -> let secondVector = Vector2D(x: 3.0, y: 4.0)
    << // secondVector : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let plusMinusVector = firstVector +- secondVector
-   << // plusMinusVector : Vector2D = REPL.Vector2D(4.0, -2.0)
+   << // plusMinusVector : Vector2D = REPL.Vector2D(x: 4.0, y: -2.0)
    /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
    </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 

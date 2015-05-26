@@ -851,7 +851,7 @@ in the same way as for non-function types:
 .. testcode:: functionTypes
 
    -> mathFunction = multiplyTwoInts
-   -> print("Result: \(mathFunction(2, 3))")
+      print("Result: \(mathFunction(2, 3))")
    <- Result: 6
 
 As with any other type,
