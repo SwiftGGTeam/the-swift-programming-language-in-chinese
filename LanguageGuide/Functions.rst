@@ -193,7 +193,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(stringToPrint: String) -> Int {
          print(stringToPrint)
-         return count(stringToPrint)
+         return stringToPrint.characters.count()
       }
    -> func printWithoutCounting(stringToPrint: String) {
          printAndCount(stringToPrint)
@@ -633,7 +633,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 .. testcode:: constantAndVariableParameters
 
    -> func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
-         let amountToPad = totalLength - count(string)
+         let amountToPad = totalLength - string.characters.count()
          if amountToPad < 1 {
             return string
          }
@@ -645,7 +645,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
       }
    -> let originalString = "hello"
    << // originalString : String = "hello"
-   -> let paddedString = alignRight(originalString, 10, "-")
+   -> let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
    << // paddedString : String = "-----hello"
    /> paddedString is equal to \"\(paddedString)\"
    </ paddedString is equal to "-----hello"
@@ -657,7 +657,7 @@ which aligns an input string to the right edge of a longer output string.
 Any space on the left is filled with a specified padding character.
 In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
 
-The ``alignRight(_:_:_:)`` function defines the input parameter ``string`` to be a variable parameter.
+The ``alignRight(_:totalLength:pad:)`` function defines the input parameter ``string`` to be a variable parameter.
 This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
@@ -719,7 +719,7 @@ which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
 
-   -> func swapTwoInts(inout a: Int, inout b: Int) {
+   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -774,12 +774,12 @@ For example:
 
 .. testcode:: functionTypes
 
-   -> func addTwoInts(a: Int, b: Int) -> Int {
+   -> func addTwoInts(a: Int, _ b: Int) -> Int {
          return a + b
       }
    >> addTwoInts
    << // r0 : (Int, Int) -> Int = (Function)
-   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+   -> func multiplyTwoInts(a: Int, _ b: Int) -> Int {
          return a * b
       }
    >> multiplyTwoInts
@@ -880,7 +880,7 @@ Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
 
-   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, _ b: Int) {
          print("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)

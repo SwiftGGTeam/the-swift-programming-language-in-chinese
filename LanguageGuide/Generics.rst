@@ -28,7 +28,7 @@ which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoInts(inout a: Int, inout b: Int) {
+   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -59,13 +59,13 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown belo
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoStrings(inout a: String, inout b: String) {
+   -> func swapTwoStrings(inout a: String, inout _ b: String) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
    ---
-   -> func swapTwoDoubles(inout a: Double, inout b: Double) {
+   -> func swapTwoDoubles(inout a: Double, inout _ b: Double) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -104,7 +104,7 @@ called ``swapTwoValues``:
 
 .. testcode:: genericFunctions
 
-   -> func swapTwoValues<T>(inout a: T, inout b: T) {
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -118,13 +118,13 @@ Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
 
-   -> func swapTwoInts(inout a: Int, inout b: Int)
+   -> func swapTwoInts(inout a: Int, inout _ b: Int)
    >> {
    >>    let temporaryA = a
    >>    a = b
    >>    b = temporaryA
    >> }
-   -> func swapTwoValues<T>(inout a: T, inout b: T)
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T)
    >> {
    >>    let temporaryA = a
    >>    a = b
