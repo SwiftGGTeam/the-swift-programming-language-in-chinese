@@ -385,15 +385,15 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Bananas
 
 If you need the integer index of each item as well as its value,
-use the global ``enumerate(_:)`` function to iterate over the array instead.
-The ``enumerate(_:)`` function returns a tuple for each item in the array
+use the ``enumerate()`` method to iterate over the array instead.
+The ``enumerate()`` method returns a tuple for each item in the array
 composed of the index and the value for that item.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: arraysInferred
 
-   -> for (index, value) in enumerate(shoppingList) {
+   -> for (index, value) in shoppingList.enumerate() {
          print("Item \(index + 1): \(value)")
       }
    </ Item 1: Six eggs
