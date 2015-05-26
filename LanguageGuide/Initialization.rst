@@ -73,7 +73,7 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = REPL.Fahrenheit
+   << // f : Fahrenheit = REPL.Fahrenheit(temperature: 32.0)
    -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -154,11 +154,11 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = REPL.Celsius
+   << // boilingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = REPL.Celsius
+   << // freezingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -225,9 +225,9 @@ by providing named values for each initializer parameter:
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = REPL.Color
+   << // magenta : Color = REPL.Color(red: 1.0, green: 0.0, blue: 1.0)
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = REPL.Color
+   << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
 without using external parameter names.
@@ -271,7 +271,7 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = REPL.Celsius
+   << // bodyTemperature : Celsius = REPL.Celsius(temperatureInCelsius: 37.0)
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -467,7 +467,7 @@ which you can use to initialize a new ``Size`` instance:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = REPL.Size
+   << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
