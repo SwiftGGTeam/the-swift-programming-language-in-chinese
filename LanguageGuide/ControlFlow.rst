@@ -1027,7 +1027,7 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
-   -> for character in puzzleInput {
+   -> for character in puzzleInput.characters {
          switch character {
             case "a", "e", "i", "o", "u", " ":
                continue
