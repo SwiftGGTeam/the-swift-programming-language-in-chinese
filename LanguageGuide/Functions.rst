@@ -177,8 +177,8 @@ Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions are not required to define a return type.
-Here's a version of the ``sayHello(_:)`` function,
-called ``sayGoodbye``,
+Here's a version of the ``sayHello`` function,
+called ``sayGoodbye(_:)``,
 which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
@@ -356,32 +356,30 @@ returns an actual tuple value or ``nil``:
 Function Parameter Names
 ------------------------
 
-All of the above functions define :newTerm:`parameter names` for their parameters:
+Function parameters have both an :newTerm:`external parameter name`
+and a :newTerm:`local parameter name`.
+An external parameter name is used to label arguments passed to a function call.
+A local parameter name is used in the implementation of the function.
 
 .. testcode:: functionParameterNames
 
-   -> func someFunction(parameterName: Int) {
-         // function body goes here, and can use parameterName
-         // to refer to the argument value for that parameter
+   -> func someFunction(firstParameterName: Int, secondParameterName: Int) {
+         // function body goes here
+         // firstParameterName and secondParameterName refer to
+         // the argument values for the first and second parameters
       }
+   -> someFunction(1, secondParameterName: 2)
 
-However, these parameter names are only used within
-the body of the function itself, and cannot be used when calling the function.
-These kinds of parameter names are known as :newTerm:`local parameter names`,
-because they are only available for use within the function's body.
+By default, the first parameter omits its external parameter name,
+and any subsequent parameters use their local parameter name as an external parameter name.
+All parameters must have unique local parameter names,
+but may share external parameter names in common.
 
 .. _Functions_ExternalParameterNames:
 
-External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~
+Specifying External Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes it's useful to name each parameter when you *call* a function,
-to indicate the purpose of each argument you pass to the function.
-
-If you want users of your function to provide parameter names
-when they call your function,
-define an :newTerm:`external parameter name` for each parameter,
-in addition to the local parameter name.
 You write an external parameter name before the local parameter name it supports,
 separated by a space:
 
@@ -397,52 +395,24 @@ separated by a space:
    If you provide an external parameter name for a parameter,
    that external name must *always* be used when you call the function.
 
-As an example, consider the following function,
-which joins two strings by inserting a third “joiner” string between them:
+Here's a version of the ``sayHello`` function
+that takes the names of two people
+and returns a greeting for both of them:
 
 .. testcode:: externalParameterNames
 
-   -> func join(s1: String, s2: String, joiner: String) -> String {
-         return s1 + joiner + s2
+   -> func sayHello(to person: String, and anotherPerson: String) -> String {
+          return "Hello \(person) and \(anotherPerson)!"
       }
+   -> sayHello(to: "Bill", and: "Ted")
+   <- Hello Bill and Ted!
 
-When you call this function,
-the purpose of the three strings that you pass to the function is unclear:
+By specifying external parameter names for both parameters,
+both the first and second arguments to the ``sayHello(to:and:)`` function
+must be labeled.
 
-.. testcode:: externalParameterNames
-
-   -> join("hello", "world", ", ")
-   << // r0 : String = "hello, world"
-   /> returns \"\(r0)\"
-   </ returns "hello, world"
-
-To make the purpose of these ``String`` values clearer,
-define external parameter names for each ``join(_:_:_:)`` function parameter:
-
-.. testcode:: externalParameterNames
-
-   -> func join(string s1: String, toString s2: String, withJoiner joiner: String)
-            -> String {
-         return s1 + joiner + s2
-      }
-
-In this version of the ``join(_:_:_:)`` function,
-the first parameter has an external name of ``string`` and a local name of ``s1``;
-the second parameter has an external name of ``toString`` and a local name of ``s2``;
-and the third parameter has an external name of ``withJoiner``
-and a local name of ``joiner``.
-
-You can now use these external parameter names to call the function unambiguously:
-
-.. testcode:: externalParameterNames
-
-   -> join(string: "hello", toString: "world", withJoiner: ", ")
-   << // r1 : String = "hello, world"
-   /> returns \"\(r1)\"
-   </ returns "hello, world"
-
-The use of external parameter names enables this second version of the ``join(_:_:_:)`` function
-to be called in an expressive, sentence-like manner by users of the function,
+The use of external parameter names can allow a function
+to be called in an expressive, sentence-like manner,
 while still providing a function body that is readable and clear in intent.
 
 .. note::
@@ -452,14 +422,46 @@ while still providing a function body that is readable and clear in intent.
    You do not need to specify external parameter names
    if the purpose of each parameter is unambiguous when the function is called.
 
+.. _Functions_OmittingParameterNames:
+
+Omitting External Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you do not want to use an external name for a function parameter,
+write an underscore (``_``) instead of an explicit external name for that parameter.
+
+.. testcode:: omittedExternalParameterNames
+
+   -> func someFunction(firstParameterName: Int, _ secondParameterName: Int) {
+         // function body goes here
+         // firstParameterName and secondParameterName refer to
+         // the argument values for the first and second parameters
+      }
+   -> someFunction(1, 2)
+
+.. note::
+
+   Because the first parameter omits its external parameter name by default,
+   explicitly writing an underscore is extraneous.
 
 .. _Functions_DefaultParameterValues:
 
 Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can define a :newTerm:`default value` for any parameter as part of a function's definition.
+You can define a :newTerm:`default value` for any parameter in a function
+by adding an assignment expression after that parameter's type.
 If a default value is defined, you can omit that parameter when calling the function.
+
+.. testcode:: omittedExternalParameterNames
+
+   -> func someFunction(parameterWithDefault: Int = 12) {
+         // function body goes here
+         // if no arguments are passed to the function call,
+         // value of parameterWithDefault is 42
+      }
+   -> someFunction(6) // parameterWithDefault is 6
+   -> someFunction() // parameterWithDefault is 12
 
 .. note::
 
@@ -467,79 +469,6 @@ If a default value is defined, you can omit that parameter when calling the func
    This ensures that all calls to the function
    use the same order for their non-default arguments,
    and makes it clear that the same function is being called in each case.
-
-Here's a version of the ``join(_:_:_:)`` function from earlier,
-which provides a default value for its ``joiner`` parameter:
-
-.. testcode:: defaultParameterValues
-
-   -> func join(string s1: String, toString s2: String,
-            withJoiner joiner: String = " ") -> String {
-         return s1 + joiner + s2
-      }
-
-If a string value for ``joiner`` is provided when the ``join(_:_:_:)`` function is called,
-that string value is used to join the two strings together, as before:
-
-.. testcode:: defaultParameterValues
-
-   -> join(string: "hello", toString: "world", withJoiner: "-")
-   << // r0 : String = "hello-world"
-   /> returns \"\(r0)\"
-   </ returns "hello-world"
-
-However, if no value of ``joiner`` is provided when the function is called,
-the default value of a single space (``" "``) is used instead:
-
-.. testcode:: defaultParameterValues
-
-   -> join(string: "hello", toString: "world")
-   << // r1 : String = "hello world"
-   /> returns \"\(r1)\"
-   </ returns "hello world"
-
-.. _Functions_ExternalNamesForParametersWithDefaultValues:
-
-External Names for Parameters with Default Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In most cases, it is useful to provide (and therefore require) an external name
-for any parameter with a default value.
-This ensures that the argument for that parameter is clear in purpose
-if a value is provided when the function is called.
-
-To make this process easier,
-Swift provides an automatic external name for any parameter that has a default value.
-The automatic external name is the same as the local name,
-as if you had written a hash symbol before the local name in your code.
-
-Here's a version of the ``join(_:_:_:)`` function from earlier,
-which does not provide external names for any of its parameters,
-but still provides a default value for its ``joiner`` parameter:
-
-.. testcode:: automaticExternalNamesForDefaultParameterValues
-
-   -> func join(s1: String, s2: String, joiner: String = " ") -> String {
-         return s1 + joiner + s2
-      }
-
-In this case, Swift automatically provides
-an external parameter name for the ``joiner`` parameter.
-The external name must therefore be provided when calling the function,
-making the parameter's purpose clear and unambiguous:
-
-.. testcode:: automaticExternalNamesForDefaultParameterValues
-
-   -> join("hello", "world", joiner: "-")
-   << // r0 : String = "hello-world"
-   /> returns \"\(r0)\"
-   </ returns "hello-world"
-
-.. note::
-
-   You can opt out of this behavior by writing an underscore (``_``)
-   instead of an explicit external name when you define the parameter.
-   However, external names for parameters with default values are preferred.
 
 .. _Functions_VariadicParameters:
 
