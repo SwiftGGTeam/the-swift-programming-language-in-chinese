@@ -645,7 +645,7 @@ The corresponding argument must have no name in function or method calls.
 
    -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
-   << // r0 : Int = 3
+   << // r0 : Int = 6
 
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -684,15 +684,15 @@ it must have its name in the function call.
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()       // Valid, uses default value
-   -> f(x: 7)   // Valid, name and value provided
-   -> f(7)      // Invalid, value provided without its name
+   -> f()  // Valid, uses default value
+   -> f(7) // Valid, value provided without its name
+   -> f(x: 7) // Invalid, name and value provided
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
-   !! f(7)      // Invalid, value provided without its name
-   !!   ^
-   !!   x:
+   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
+   !! f(x: 7) // Invalid, name and value provided
+   !! ^~~~
+   !!
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -738,22 +738,22 @@ The returned function takes the next parameter and returns another function.
 This continues until there are no remaining parameters,
 at which point the last function returns the return value of the original multiparameter function.
 The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(_:_:)`` function as the equivalent ``addTwoIntsCurried(_:)(b:)`` function:
+For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
 
 .. testcode:: curried-function
 
-    -> func addTwoInts(a: Int, b: Int) -> Int {
+    -> func addTwoInts(a a: Int, b: Int) -> Int {
            return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
            func addTheOtherInt(b: Int) -> Int {
                return a + b
             }
             return addTheOtherInt
         }
 
-The ``addTwoInts(_:_:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(_:)(b:)`` function takes a single integer, and returns another function
+The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
+The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
 that takes the second integer and adds it to the first.
 (The nested function captures the value of the first integer argument from the enclosing
 function.)
@@ -770,33 +770,33 @@ For example, the following two declarations are equivalent:
 
 .. testcode:: curried-function-syntactic-sugar
 
-    -> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
+    -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
            return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
            func addTheOtherInt(b: Int) -> Int {
                return a + b
             }
             return addTheOtherInt
         }
 
-In order to use the ``addTwoIntsCurried(_:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(_:_:)`` function,
-you must call the ``addTwoIntsCurried(_:)(b:)`` function with the first integer argument
+In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
+as the noncurried ``addTwoInts(a:b:)`` function,
+you must call the ``addTwoIntsCurried(a:)(b:)`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function-usage
 
-    >> func addTwoInts(a: Int, b: Int) -> Int {
+    >> func addTwoInts(a a: Int, b: Int) -> Int {
           return a + b
        }
-       func addTwoIntsCurried(a: Int)(b: Int) -> Int {
+       func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
           return a + b
        }
-    -> addTwoInts(4, 5)
+    -> addTwoInts(a: 4, b: 5)
     <$ : Int = 9
     -> // returns a value of 9
-    -> addTwoIntsCurried(4)(b: 5)
+    -> addTwoIntsCurried(a: 4)(b: 5)
     <$ : Int = 9
     -> // returns a value of 9
 
@@ -804,16 +804,16 @@ Although you must provide the arguments to a noncurried function all at once in 
 you can use the curried form of a function to provide arguments in several function calls,
 one at a time (even in different places in your code).
 This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(_:)(b:)`` function to an integer argument ``1``
+For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
 and assign the result to the constant ``plusOne``:
 
 .. testcode:: curried-function
 
-    -> let plusOne = addTwoIntsCurried(1)
+    -> let plusOne = addTwoIntsCurried(a: 1)
     << // plusOne : Int -> Int = (Function)
     -> // plusOne is a function of type Int -> Int
 
-Because ``plusOne`` refers to the ``addTwoIntsCurried(_:)(b:)`` function with its argument bound
+Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
 as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
 
 .. testcode:: curried-function
