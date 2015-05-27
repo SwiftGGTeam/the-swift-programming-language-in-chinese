@@ -149,7 +149,7 @@ This function takes a person's name
 and whether they have already been greeted as input,
 and returns an appropriate greeting for that person:
 
-.. testcode:: multipleInputParameters
+.. testcode:: definingAndCalling
 
    -> func sayHello(personName: String, alreadyGreeted: Bool) -> String {
           if alreadyGreeted {
@@ -158,8 +158,8 @@ and returns an appropriate greeting for that person:
               return sayHello(personName)
           }
       }
-   -> println(sayHello("Diana", alreadyGreeted: true))
-   <- Hello again, Diana!
+   -> println(sayHello("Tim", alreadyGreeted: true))
+   <- Hello again, Tim!
 
 You call the ``sayHello(_:alreadyGreeted:)`` function
 by passing it both a ``String`` argument value
@@ -405,7 +405,7 @@ and returns a greeting for both of them:
    -> func sayHello(to person: String, and anotherPerson: String) -> String {
           return "Hello \(person) and \(anotherPerson)!"
       }
-   -> sayHello(to: "Bill", and: "Ted")
+   -> print(sayHello(to: "Bill", and: "Ted"))
    <- Hello Bill and Ted!
 
 By specifying external parameter names for both parameters,
