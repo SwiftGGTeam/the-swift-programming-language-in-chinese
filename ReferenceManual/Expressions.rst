@@ -173,16 +173,6 @@ The Swift standard library provides the following binary operators:
   - ``&&=`` Logical AND and assign
   - ``||=`` Logical OR and assign
 
-.. assertion:: nilCoalescingOperator
-
-    -> var sequence: [Int] = []
-    << // sequence : [Int] = []
-    -> sequence.first ?? 0 // produces 0, because sequence.first is nil
-    <$ : Int = 0
-    -> sequence.append(22)
-    -> sequence.first ?? 0 // produces 22, the value of sequence.first
-    <$ : Int = 22
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
