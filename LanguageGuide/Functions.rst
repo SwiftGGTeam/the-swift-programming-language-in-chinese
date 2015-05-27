@@ -145,16 +145,31 @@ Functions With Multiple Parameters
 Functions can have multiple input parameters,
 which are written within the function's parentheses, separated by commas.
 
-This function takes a start and an end index for a half-open range,
-and works out how many elements the range contains:
+This function takes a person's name
+and whether they have already been greeted as input,
+and returns an appropriate greeting for that person:
 
 .. testcode:: multipleInputParameters
 
-   -> func halfOpenRangeLength(start: Int, end: Int) -> Int {
-         return end - start
+   -> func sayHello(personName: String, alreadyGreeted: Bool) -> String {
+          if alreadyGreeted {
+              return sayHelloAgain(personName)
+          } else {
+              return sayHello(personName)
+          }
       }
-   -> println(halfOpenRangeLength(1, 10))
-   <- 9
+   -> println(sayHello("Diana", alreadyGreeted: true))
+   <- Hello again, Diana!
+
+You call the ``sayHello(_:alreadyGreeted:)`` function
+by passing it both a ``String`` argument value
+and a ``Bool`` argument value labeled ``alreadyGreeted``
+in parentheses, separated by commas.
+
+When calling a function with more than one parameter,
+any argument after the first is labeled according to its corresponding parameter name.
+Function parameter naming is described in more detail
+in :ref:`Functions_FunctionParameterNames`.
 
 .. _Functions_FunctionsWithoutReturnValues:
 
