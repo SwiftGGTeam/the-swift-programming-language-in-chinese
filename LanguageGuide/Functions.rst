@@ -370,10 +370,11 @@ A local parameter name is used in the implementation of the function.
       }
    -> someFunction(1, secondParameterName: 2)
 
-By default, the first parameter omits its external parameter name,
-and any subsequent parameters use their local parameter name as an external parameter name.
-All parameters must have unique local parameter names,
-but may share external parameter names in common.
+By default, the first parameter omits its external name,
+and the second and subsequent parameters
+use their local name as their external name.
+All parameters must have unique local names,
+but may share external parameter in common.
 
 .. _Functions_ExternalParameterNames:
 
