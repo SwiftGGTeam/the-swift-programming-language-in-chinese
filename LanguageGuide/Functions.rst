@@ -158,7 +158,7 @@ and returns an appropriate greeting for that person:
               return sayHello(personName)
           }
       }
-   -> println(sayHello("Tim", alreadyGreeted: true))
+   -> print(sayHello("Tim", alreadyGreeted: true))
    <- Hello again, Tim!
 
 You call the ``sayHello(_:alreadyGreeted:)`` function

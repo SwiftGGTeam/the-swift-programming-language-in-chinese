@@ -513,12 +513,12 @@ when the default value expression is evaluated at the call site.
     ---
     -> myFunction()
     << myFunction()
-    >> func noNamedArgs(i: Int, j: Int) { logFunctionName() }
-    >> noNamedArgs(1, 2)
+    >> func namedArgs(i i: Int, j: Int) { logFunctionName() }
+    >> noNamedArgs(i: 1, j: 2)
     << noNamedArgs
-    >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    >> namedArgs(1, withJay: 2)
-    << namedArgs(_:withJay:)
+    >> func omittedNamedArgs(i: Int, _ j: Int) { logFunctionName() }
+    >> namedArgs(1, 2)
+    << namedArgs(_:_:)
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by __FUNCTION__
@@ -1039,7 +1039,7 @@ The following function calls are equivalent:
     >> let x = 10
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x, {$0 == 13})
+    -> someFunction(x, f: {$0 == 13})
     << // r0 : Bool = false
     -> someFunction(x) {$0 == 13}
     << // r1 : Bool = false

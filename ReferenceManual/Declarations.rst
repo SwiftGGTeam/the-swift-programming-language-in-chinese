@@ -685,14 +685,13 @@ it must have its name in the function call.
 
    -> func f(x: Int = 42) -> Int { return x }
    -> f()  // Valid, uses default value
-   -> f(7) // Valid, value provided without its name
-   -> f(x: 7) // Invalid, name and value provided
    <$ : Int = 42
+   -> f(7) // Valid, value provided without its name
    <$ : Int = 7
+   -> f(x: 7) // Invalid, name and value provided
    !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
    !! f(x: 7) // Invalid, name and value provided
    !! ^~~~
-   !!
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -701,7 +700,7 @@ it must have its name in the function call.
            return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(x: 100)
+    -> foo(100)
     << x is 100
     -> foo()
     << evaluated
