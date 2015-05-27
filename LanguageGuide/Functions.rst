@@ -225,7 +225,7 @@ but the returned value is not used.
 
 .. _Functions_FunctionsWithMultipleReturnValues:
 
-Functions with Multiple Return Values
+Functions With Multiple Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a tuple type as the return type for a function
