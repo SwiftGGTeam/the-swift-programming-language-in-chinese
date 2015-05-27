@@ -45,21 +45,13 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following prefix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-* ``!`` Logical NOT
-* ``~`` Bitwise NOT
-* ``+`` Unary plus
-* ``-`` Unary minus
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
-In addition to the standard library operators listed above,
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
 as an in-out argument to a function call expression.
 For more information and to see an example,
@@ -93,88 +85,11 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-The Swift standard library provides the following binary operators:
-
-.. The following comes from stdlib/core/Policy.swift
-
-* Exponentiative (No associativity, precedence level 160)
-
-  - ``<<`` Bitwise left shift
-  - ``>>`` Bitwise right shift
-
-* Multiplicative (Left associative, precedence level 150)
-
-  - ``*`` Multiply
-  - ``/`` Divide
-  - ``%`` Remainder
-  - ``&*`` Multiply, ignoring overflow
-  - ``&`` Bitwise AND
-
-* Additive (Left associative, precedence level 140)
-
-  - ``+`` Add
-  - ``-`` Subtract
-  - ``&+`` Add with overflow
-  - ``&-`` Subtract with overflow
-  - ``|`` Bitwise OR
-  - ``^`` Bitwise XOR
-
-* Range (No associativity, precedence level 135)
-
-  - ``..<`` Half-open range
-  - ``...`` Closed range
-
-* Cast (No associativity, precedence level 132)
-
-  - ``is`` Type check
-  - ``as``, ``as?``, and ``as!`` Type cast
-
-* Nil Coalescing (Right associative, precedence level 131)
-
-  - ``??`` Nil coalescing
-
-* Comparative (No associativity, precedence level 130)
-
-  - ``<`` Less than
-  - ``<=`` Less than or equal
-  - ``>`` Greater than
-  - ``>=`` Greater than or equal
-  - ``==`` Equal
-  - ``!=`` Not equal
-  - ``===`` Identical
-  - ``!==`` Not identical
-  - ``~=`` Pattern match
-
-* Conjunctive (Left associative, precedence level 120)
-
-  - ``&&`` Logical AND
-
-* Disjunctive (Left associative, precedence level 110)
-
-  - ``||`` Logical OR
-
-* Ternary Conditional (Right associative, precedence level 100)
-
-  - ``?`` ``:`` Ternary conditional
-
-* Assignment (Right associative, precedence level 90)
-
-  - ``=`` Assign
-  - ``*=`` Multiply and assign
-  - ``/=`` Divide and assign
-  - ``%=`` Remainder and assign
-  - ``+=`` Add and assign
-  - ``-=`` Subtract and assign
-  - ``<<=`` Left bit shift and assign
-  - ``>>=`` Right bit shift and assign
-  - ``&=`` Bitwise AND and assign
-  - ``^=`` Bitwise XOR and assign
-  - ``|=`` Bitwise OR and assign
-  - ``&&=`` Logical AND and assign
-  - ``||=`` Logical OR and assign
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -947,15 +862,11 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following postfix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. langref-grammar
 
