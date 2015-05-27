@@ -607,34 +607,20 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-For function parameters,
-the parameter name is used within the function body,
-but is not used when calling the function.
-For method parameters,
-the parameter name is used as within the function body,
-and is also used as a label for the argument when calling the method.
-The name of a method's first parameter
-is used only within the function body,
-like the parameter of a function.
+A parameter has a local name,
+which is used within the function body,
+as well as an external name,
+which is used as a label for the argument when calling the method.
+By default, the external name of the first parameter is omitted,
+and the second and subsequent parameters
+use their local names as external names.
 For example:
 
-.. testcode:: func-simple-param
+.. testcode:: default-parameter-names
 
-   -> func f(x: Int, y: String) -> String {
-          return y + String(x)
-      }
-   -> f(7, "hello")  // x and y have no name
-   << // r0 : String = "hello7"
-   ---
-   -> class C {
-          func f(x: Int, y: String) -> String {
-              return y + String(x)
-          }
-      }
-   -> let c = C()
-   << // c : C = REPL.C
-   -> c.f(7, y: "hello")  // x has no name, y has a name
-   << // r1 : String = "hello7"
+   -> func f(x: Int, y: Int) -> Int { return x + y }
+   -> f(1, y: 2) // y is labeled, x is not
+   << // r0 : Int = 3
 
 You can override the default behavior
 for how parameter names are used
@@ -643,23 +629,23 @@ with one of the following forms:
 .. syntax-outline::
 
     <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
     _ <#local parameter name#>: <#parameter type#>
 
-A second name before the local parameter name
+A name before the local parameter name
 gives the parameter an external name,
 which can be different from the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
-A hash symbol (``#``) before a parameter name
-indicates that the name should be used as both an external and a local parameter name.
-It has the same meaning as writing the local parameter name twice.
-The corresponding argument must have this name in function or method calls.
-
 An underscore (``_``) before a local parameter name
 gives that parameter no name to be used in function calls.
 The corresponding argument must have no name in function or method calls.
+
+.. testcode:: overridden-parameter-names
+
+   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
+   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
+   << // r0 : Int = 3
 
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -671,12 +657,13 @@ using the following forms:
 
 .. syntax-outline::
 
+    <#parameter type#>
     _ : <#parameter type#>
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
-A parameter named with an underscore (``_``) is explicitly ignored
-and can't be accessed within the body of the function.
+A parameter without a name or named with an underscore (``_``)
+is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
