@@ -226,7 +226,7 @@ println("AutomaticCar: \(automatic.description)")
 <a name="preventing_overrides"></a>
 ## 防止重写
 
-你可以通过把方法，属性或下标脚本标记为*`final`*来防止它们被重写，只需要在声明关键字前加上`@final`特性即可。（例如：`final var`, `final func`, `final class func`, 以及 `final subscript`）
+你可以通过把方法，属性或下标脚本标记为*`final`*来防止它们被重写，只需要在声明关键字前加上`final`特性即可。（例如：`final var`, `final func`, `final class func`, 以及 `final subscript`）
 
 如果你重写了`final`方法，属性或下标脚本，在编译时会报错。在扩展中，你添加到类里的方法，属性或下标脚本也可以在扩展的定义里标记为 final。
 
