@@ -981,10 +981,10 @@ For example:
 
 .. _Expressions_ForcedTryExpression:
 
-Forced Try Expression
+Forced-Try Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`forced try expression`
+A :newTerm:`forced-try expression`
 is used to evaluate an expression that you are certain will not throw an error.
 
 It has the following form:
