@@ -979,6 +979,34 @@ For example:
 
     try-expression --> ``try`` expression
 
+.. _Expressions_ForcedTryExpression:
+
+Forced Try Expression
+~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`forced try expression`
+is used to evaluate an expression that you are certain will not throw an error.
+
+It has the following form:
+
+.. syntax-outline::
+
+   try! <#expression#>
+
+For example:
+
+.. testcode:: tryExpression
+
+    -> func functionCanButWillNotThrow() throws {}
+    -> try! functionCanButWillNotThrow()
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    forced-try-expression --> ``try!`` expression
+
+
 .. _Expressions_PostfixExpressions:
 
 Postfix Expressions
