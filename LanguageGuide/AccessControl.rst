@@ -76,6 +76,15 @@ and also relative to the module that source file belongs to.
 Public access is the highest (least restrictive) access level
 and private access is the lowest (or most restrictive) access level.
 
+.. note::
+
+   Private access in Swift differs from private access in most other languages,
+   as it's scoped to the enclosing source file rather than to the enclosing declaration.
+   This means that a type can access any private entities
+   that are defined in the same source file as itself,
+   but an extension cannot access that type's private members
+   if it's defined in a separate source file.
+
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
 Guiding Principle of Access Levels
