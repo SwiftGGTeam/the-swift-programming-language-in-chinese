@@ -147,12 +147,19 @@
     "collectiontypes-arraytypeshorthandsyntax": "ID108", 
     "collectiontypes-comparingsets": "ID492", 
     "collectiontypes-constructingsets": "ID499", 
+    "collectiontypes-creatingadictionarywithadictionaryliteral": "ID507", 
+    "collectiontypes-creatinganarraybyaddingtwoarraystogether": "ID502", 
+    "collectiontypes-creatinganarraywithadefaultvalue": "ID501", 
     "collectiontypes-creatingandinitializinganarray": "ID112", 
+    "collectiontypes-creatingandinitializinganemptyset": "ID503", 
     "collectiontypes-creatingandinitializingaset": "ID486", 
+    "collectiontypes-creatinganemptyarray": "ID500", 
     "collectiontypes-creatinganemptydictionary": "ID118", 
+    "collectiontypes-creatingasetwithanarrayliteral": "ID504", 
     "collectiontypes-dictionaries": "ID113", 
     "collectiontypes-dictionaryliterals": "ID115", 
     "collectiontypes-dictionarytypeshorthandsyntax": "ID114", 
+    "collectiontypes-fundamentalsetoperations": "ID505", 
     "collectiontypes-hashvaluesfordictionarykeytypes": "ID119", 
     "collectiontypes-hashvaluesforsettypes": "ID493", 
     "collectiontypes-iteratingoveradictionary": "ID117", 
@@ -160,6 +167,7 @@
     "collectiontypes-iteratingoveraset": "ID489", 
     "collectiontypes-mutabilityofcollections": "ID106", 
     "collectiontypes-performingsetoperations": "ID490", 
+    "collectiontypes-setmembershipandequality": "ID506", 
     "collectiontypes-sets": "ID484", 
     "collectiontypes-settypeshorthandsyntax": "ID485", 
     "collectiontypes-setwitharrayliterals": "ID487", 
@@ -518,5 +526,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 500
+  "next_id": 508
 }
