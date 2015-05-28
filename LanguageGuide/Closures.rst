@@ -302,7 +302,7 @@ that is written outside of (and *after*) the parentheses of the function call it
 
 .. testcode:: closureSyntax
 
-   -> func someFunctionThatTakesAClosure(closure: Void -> Void) {
+   -> func someFunctionThatTakesAClosure(closure: () -> Void) {
          // function body goes here
       }
    ---

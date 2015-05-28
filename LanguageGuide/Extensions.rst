@@ -272,14 +272,14 @@ The following example adds a new instance method called ``repetitions`` to the `
 .. testcode:: extensionsInstanceMethods
 
    -> extension Int {
-         func repetitions(task: Void -> Void) {
+         func repetitions(task: () -> Void) {
             for _ in 0..<self {
                task()
             }
          }
       }
 
-The ``repetitions(_:)`` method takes a single argument of type ``Void -> Void``,
+The ``repetitions(_:)`` method takes a single argument of type ``() -> Void``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
