@@ -250,8 +250,7 @@ The ``print(_:)`` function prints any ``String`` value you pass to it:
    -> print("This is a string")
    <- This is a string
 
-The ``print(_:)`` function can print more complex logging messages,
-in a similar manner to Cocoa's ``NSLog`` function.
+The ``print(_:)`` function can print more complex logging messages.
 These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include the name of a constant or variable
