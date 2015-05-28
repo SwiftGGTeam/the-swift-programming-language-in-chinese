@@ -138,7 +138,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
     .. syntax-outline::
 
-        @available(<#platform name#> <#version number#>)
+        @available(<#platform name#> <#version number#>, *)
 
     The shorthand syntax for ``available`` attributes allows for
     availability for multiple platforms to be expressed concisely.
