@@ -93,7 +93,6 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
    A function cannot be overloaded based solely on whether the function throws.
    However, a function can be overloaded based on whether an function parameter throws.
-   For curried functions, the ``throws`` keyword only applies to the innermost function.
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
