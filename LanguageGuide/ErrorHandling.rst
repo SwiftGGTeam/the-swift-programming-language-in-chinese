@@ -33,8 +33,8 @@ if necessary --- communicate it to the user.
    For more information about error handling with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-ErrorType
----------
+Representing Errors
+-------------------
 
 In Swift, errors are represented by
 instances of types conforming to the ``ErrorType`` protocol.
@@ -134,7 +134,7 @@ an error is thrown if incrementing the volume would exceed the maximum allowed v
 Because ``throw`` immediately transfers program control,
 the ``volume`` variable is not incremented in the case of an error.
 
-Rethrows
+rethrows
 ~~~~~~~~
 
 A function that takes a function parameter that throws
@@ -227,7 +227,7 @@ and evaluates each ``catch`` clause until a matching pattern is found.
 If no error is thrown,
 the return value of ``increaseVolume()`` is assigned to ``newVolume``.
 
-Forced Try Expression
+Forced-Try Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
 To indicate that a function declared with the ``throws`` keyword
@@ -248,7 +248,7 @@ and treat the expression as if it did not throw.
    ---
    -> try! willNotActuallyThrowAnError()
 
-If an error is thrown by a function wrapped in a forced try statement,
+If an error is thrown by a function wrapped in a forced-try statement,
 a runtime error is triggered.
 
 Deferring Statements During Error Handling
