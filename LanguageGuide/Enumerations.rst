@@ -121,13 +121,13 @@ You can match individual enumeration values with a ``switch`` statement:
    -> directionToHead = .South
    -> switch directionToHead {
          case .North:
-            println("Lots of planets have a north")
+            print("Lots of planets have a north")
          case .South:
-            println("Watch out for penguins")
+            print("Watch out for penguins")
          case .East:
-            println("Where the sun rises")
+            print("Where the sun rises")
          case .West:
-            println("Where the skies are blue")
+            print("Where the skies are blue")
       }
    <- Watch out for penguins
 
@@ -157,9 +157,9 @@ you can provide a ``default`` case to cover any members that are not addressed e
    << // somePlanet : Planet = (Enum Value)
    -> switch somePlanet {
          case .Earth:
-            println("Mostly harmless")
+            print("Mostly harmless")
          default:
-            println("Not a safe place for humans")
+            print("Not a safe place for humans")
       }
    <- Mostly harmless
 
@@ -260,9 +260,9 @@ for use within the ``switch`` case's body:
 
    -> switch productBarcode {
          case .UPCA(let numberSystem, let manufacturer, let product, let check):
-            println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
+            print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
          case .QRCode(let productCode):
-            println("QR code: \(productCode).")
+            print("QR code: \(productCode).")
       }
    <- QR code: ABCDEFGHIJKLMNOP.
 
@@ -274,9 +274,9 @@ you can place a single ``var`` or ``let`` annotation before the member name, for
 
    -> switch productBarcode {
          case let .UPCA(numberSystem, manufacturer, product, check):
-            println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
+            print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
          case let .QRCode(productCode):
-            println("QR code: \(productCode).")
+            print("QR code: \(productCode).")
       }
    <- QR code: ABCDEFGHIJKLMNOP.
 
@@ -385,12 +385,12 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
    -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
             case .Earth:
-               println("Mostly harmless")
+               print("Mostly harmless")
             default:
-               println("Not a safe place for humans")
+               print("Not a safe place for humans")
          }
       } else {
-         println("There isn't a planet at position \(positionToFind)")
+         print("There isn't a planet at position \(positionToFind)")
       }
    <- There isn't a planet at position 9
 

@@ -52,7 +52,7 @@ This example prints the first few entries in the five-times-table:
 .. testcode:: forLoops
 
    -> for index in 1...5 {
-         println("\(index) times 5 is \(index * 5)")
+         print("\(index) times 5 is \(index * 5)")
       }
    </ 1 times 5 is 5
    </ 2 times 5 is 10
@@ -69,7 +69,7 @@ In this case, the loop contains only one statement,
 which prints an entry from the five-times-table for the current value of ``index``.
 After the statement is executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
-and the ``println(_:)`` function is called again.
+and the ``print(_:)`` function is called again.
 This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
@@ -92,7 +92,7 @@ you can ignore the values by using an underscore in place of a variable name:
    -> for _ in 1...power {
          answer *= base
       }
-   -> println("\(base) to the power of \(power) is \(answer)")
+   -> print("\(base) to the power of \(power) is \(answer)")
    <- 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
@@ -115,7 +115,7 @@ Use a ``for``-``in`` loop with an array to iterate over its items:
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
    << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
-         println("Hello, \(name)!")
+         print("Hello, \(name)!")
       }
    </ Hello, Anna!
    </ Hello, Alex!
@@ -135,7 +135,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> for (animalName, legCount) in numberOfLegs {
-         println("\(animalName)s have \(legCount) legs")
+         print("\(animalName)s have \(legCount) legs")
       }
    </ ants have 6 legs
    </ cats have 4 legs
@@ -152,7 +152,7 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
 .. testcode:: forLoops
 
    -> for character in "Hello" {
-         println(character)
+         print(character)
       }
    </ H
    </ e
@@ -190,7 +190,7 @@ Swift supports traditional C-style ``for`` loops with a condition and an increme
 .. testcode:: forLoops
 
    -> for var index = 0; index < 3; ++index {
-         println("index is \(index)")
+         print("index is \(index)")
       }
    </ index is 0
    </ index is 1
@@ -239,12 +239,12 @@ you must declare ``index`` before the loop's scope begins:
 
    -> var index: Int
    -> for index = 0; index < 3; ++index {
-         println("index is \(index)")
+         print("index is \(index)")
       }
    </ index is 0
    </ index is 1
    </ index is 2
-   -> println("The loop statements were executed \(index) times")
+   -> print("The loop statements were executed \(index) times")
    <- The loop statements were executed 3 times
 
 Note that the final value of ``index`` after this loop is completed is ``3``, not ``2``.
@@ -348,17 +348,17 @@ The first dice roll always moves the player on to the board:
    -> while square < finalSquare {
          // roll the dice
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
-   >>    println("after diceRoll, square is \(square)")
+   >>    print("after diceRoll, square is \(square)")
          if square < board.count {
             // if we're still on the board, move up or down for a snake or a ladder
             square += board[square]
-   >>       println("after snakes or ladders, square is \(square)")
+   >>       print("after snakes or ladders, square is \(square)")
          }
       }
-   -> println("Game over!")
+   -> print("Game over!")
    << diceRoll is 1
    << after diceRoll, square is 1
    << after snakes or ladders, square is 1
@@ -479,15 +479,15 @@ and has no effect:
    -> do {
          // move up or down for a snake or ladder
          square += board[square]
-   >>      println("after snakes or ladders, square is \(square)")
+   >>      print("after snakes or ladders, square is \(square)")
          // roll the dice
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
-   >>    println("after diceRoll, square is \(square)")
+   >>    print("after diceRoll, square is \(square)")
    -> } while square < finalSquare
-   -> println("Game over!")
+   -> print("Game over!")
    << after snakes or ladders, square is 0
    << diceRoll is 1
    << after diceRoll, square is 1
@@ -567,7 +567,7 @@ It executes a set of statements only if that condition is ``true``:
    -> var temperatureInFahrenheit = 30
    << // temperatureInFahrenheit : Int = 30
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       }
    <- It's very cold. Consider wearing a scarf.
 
@@ -587,9 +587,9 @@ These statements are indicated by the ``else`` keyword:
 
    -> temperatureInFahrenheit = 40
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else {
-         println("It's not that cold. Wear a t-shirt.")
+         print("It's not that cold. Wear a t-shirt.")
       }
    <- It's not that cold. Wear a t-shirt.
 
@@ -605,11 +605,11 @@ to consider additional clauses:
 
    -> temperatureInFahrenheit = 90
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else if temperatureInFahrenheit >= 86 {
-         println("It's really warm. Don't forget to wear sunscreen.")
+         print("It's really warm. Don't forget to wear sunscreen.")
       } else {
-         println("It's not that cold. Wear a t-shirt.")
+         print("It's not that cold. Wear a t-shirt.")
       }
    <- It's really warm. Don't forget to wear sunscreen.
 
@@ -624,9 +624,9 @@ and can be excluded if the set of conditions does not need to be complete:
 
    -> temperatureInFahrenheit = 72
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else if temperatureInFahrenheit >= 86 {
-         println("It's really warm. Don't forget to wear sunscreen.")
+         print("It's really warm. Don't forget to wear sunscreen.")
       }
 
 In this example,
@@ -689,12 +689,12 @@ a single lowercase character called ``someCharacter``:
    << // someCharacter : Character = "e"
    -> switch someCharacter {
          case "a", "e", "i", "o", "u":
-            println("\(someCharacter) is a vowel")
+            print("\(someCharacter) is a vowel")
          case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
             "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            println("\(someCharacter) is a consonant")
+            print("\(someCharacter) is a consonant")
          default:
-            println("\(someCharacter) is not a vowel or a consonant")
+            print("\(someCharacter) is not a vowel or a consonant")
       }
    <- e is a vowel
 
@@ -738,9 +738,9 @@ It is not valid to write the following code, because the first case is empty:
    -> switch anotherCharacter {
          case "a":
          case "A":
-            println("The letter A")
+            print("The letter A")
          default:
-            println("Not the letter A")
+            print("Not the letter A")
       }
    !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
    !!          case "a":
@@ -803,7 +803,7 @@ to provide a natural-language count for numbers of any size:
       default:
           naturalCount = "many"
       }
-   -> println("There are \(naturalCount) \(countedThings).")
+   -> print("There are \(naturalCount) \(countedThings).")
    <- There are dozens of moons orbiting Saturn.
 
 In the above example, ``approximateCount`` is evaluated in a ``switch`` statement.
@@ -842,15 +842,15 @@ and categorizes it on the graph that follows the example:
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
-            println("(0, 0) is at the origin")
+            print("(0, 0) is at the origin")
          case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
+            print("(\(somePoint.0), 0) is on the x-axis")
          case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
+            print("(0, \(somePoint.1)) is on the y-axis")
          case (-2...2, -2...2):
-            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            print("(\(somePoint.0), \(somePoint.1)) is inside the box")
          default:
-            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+            print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
       }
    <- (1, 1) is inside the box
 
@@ -891,11 +891,11 @@ and categorizes it on the graph that follows:
    << // anotherPoint : (Int, Int) = (2, 0)
    -> switch anotherPoint {
          case (let x, 0):
-            println("on the x-axis with an x value of \(x)")
+            print("on the x-axis with an x value of \(x)")
          case (0, let y):
-            println("on the y-axis with a y value of \(y)")
+            print("on the y-axis with a y value of \(y)")
          case let (x, y):
-            println("somewhere else at (\(x), \(y))")
+            print("somewhere else at (\(x), \(y))")
       }
    <- on the x-axis with an x value of 2
 
@@ -918,7 +918,7 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 Once the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``println(_:)`` function.
+Here, they are used as shorthand for printing the values with the ``print(_:)`` function.
 
 Note that this ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
@@ -949,11 +949,11 @@ The example below categorizes an (x, y) point on the following graph:
    << // yetAnotherPoint : (Int, Int) = (1, -1)
    -> switch yetAnotherPoint {
          case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the line x == y")
+            print("(\(x), \(y)) is on the line x == y")
          case let (x, y) where x == -y:
-            println("(\(x), \(y)) is on the line x == -y")
+            print("(\(x), \(y)) is on the line x == -y")
          case let (x, y):
-            println("(\(x), \(y)) is just some arbitrary point")
+            print("(\(x), \(y)) is just some arbitrary point")
       }
    <- (1, -1) is on the line x == -y
 
@@ -1026,7 +1026,7 @@ to create a cryptic puzzle phrase:
                puzzleOutput.append(character)
          }
       }
-   -> println(puzzleOutput)
+   -> print(puzzleOutput)
    <- grtmndsthnklk
 
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
@@ -1107,9 +1107,9 @@ Multiple values are covered in a single ``switch`` case for brevity:
             break
       }
    -> if let integerValue = possibleIntegerValue {
-         println("The integer value of \(numberSymbol) is \(integerValue).")
+         print("The integer value of \(numberSymbol) is \(integerValue).")
       } else {
-         println("An integer value could not be found for \(numberSymbol).")
+         print("An integer value could not be found for \(numberSymbol).")
       }
    <- The integer value of 三 is 3.
 
@@ -1167,7 +1167,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
          default:
             description += " an integer."
       }
-   -> println(description)
+   -> print(description)
    <- The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``
@@ -1186,7 +1186,7 @@ There are no other specific cases,
 and so ``integerToDescribe`` is matched by the catchall ``default`` case.
 
 After the ``switch`` statement has finished executing,
-the number's description is printed using the ``println(_:)`` function.
+the number's description is printed using the ``print(_:)`` function.
 In this example,
 the number ``5`` is correctly identified as a prime number.
 
@@ -1273,25 +1273,25 @@ to reflect that you must land exactly on square 25:
 
    -> gameLoop: while square != finalSquare {
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          switch square + diceRoll {
             case finalSquare:
                // diceRoll will move us to the final square, so the game is over
-   >>          println("finalSquare, game is over")
+   >>          print("finalSquare, game is over")
                break gameLoop
             case let newSquare where newSquare > finalSquare:
                // diceRoll will move us beyond the final square, so roll again
-   >>          println("move too far, roll again")
+   >>          print("move too far, roll again")
                continue gameLoop
             default:
                // this is a valid move, so find out its effect
                square += diceRoll
-   >>          println("after diceRoll, square is \(square)")
+   >>          print("after diceRoll, square is \(square)")
                square += board[square]
-   >>          println("after snakes or ladders, square is \(square)")
+   >>          print("after snakes or ladders, square is \(square)")
          }
       }
-   -> println("Game over!")
+   -> print("Game over!")
    << diceRoll is 1
    << after diceRoll, square is 1
    << after snakes or ladders, square is 1

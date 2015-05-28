@@ -27,14 +27,14 @@ and also to properties that a subclass inherits from its superclass.
 
    -> class C {
          var x: Int = 0 {
-            willSet { println("C willSet x to \(newValue)") }
-            didSet { println("C didSet x from \(oldValue)") }
+            willSet { print("C willSet x to \(newValue)") }
+            didSet { print("C didSet x from \(oldValue)") }
          }
       }
    -> class D: C {
          override var x: Int {
-            willSet { println("D willSet x to \(newValue)") }
-            didSet { println("D didSet x from \(oldValue)") }
+            willSet { print("D willSet x to \(newValue)") }
+            didSet { print("D didSet x from \(oldValue)") }
          }
       }
    -> var c = C(); c.x = 42
@@ -185,7 +185,7 @@ neither of which is shown in full:
          var fileName = "data.txt"
          // the DataImporter class would provide data importing functionality here
    >>    init() {
-   >>       println("the DataImporter instance for the importer property has now been created")
+   >>       print("the DataImporter instance for the importer property has now been created")
    >>    }
       }
    ---
@@ -228,7 +228,7 @@ such as when its ``fileName`` property is queried:
 
 .. testcode:: lazyProperties
 
-   -> println(manager.importer.fileName)
+   -> print(manager.importer.fileName)
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
@@ -298,7 +298,7 @@ to retrieve and set other properties and values indirectly.
    -> let initialSquareCenter = square.center
    << // initialSquareCenter : Point = REPL.Point
    -> square.center = Point(x: 15.0, y: 15.0)
-   -> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+   -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
 
 This example defines three structures for working with geometric shapes:
@@ -407,7 +407,7 @@ by removing the ``get`` keyword and its braces:
       }
    -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
    << // fourByFiveByTwo : Cuboid = REPL.Cuboid
-   -> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+   -> print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
@@ -440,7 +440,7 @@ even if the new value is the same as the property's current value.
 
 .. assertion:: observersAreCalledEvenIfNewValueIsTheSameAsOldValue
 
-   -> class C { var x: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } } }
+   -> class C { var x: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } } }
    -> let c = C()
    << // c : C = REPL.C
    -> c.x = 24
@@ -460,8 +460,8 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
 
    -> class C {
          lazy var x: Int = 0 {
-            willSet { println("C willSet x to \(newValue)") }
-            didSet { println("C didSet x from \(oldValue)") }
+            willSet { print("C willSet x to \(newValue)") }
+            didSet { print("C didSet x from \(oldValue)") }
          }
       }
    !! <REPL Input>:2:6: error: lazy properties may not have observers
@@ -478,12 +478,12 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
       }
    -> class D: C {
          override var x: Int {
-            willSet { println("D willSet x to \(newValue)") }
-            didSet { println("D didSet x from \(oldValue)") }
+            willSet { print("D willSet x to \(newValue)") }
+            didSet { print("D didSet x from \(oldValue)") }
          }
          override var y: Int {
-            willSet { println("D willSet y to \(newValue)") }
-            didSet { println("D didSet y from \(oldValue)") }
+            willSet { print("D willSet y to \(newValue)") }
+            didSet { print("D didSet y from \(oldValue)") }
          }
       }
    -> var d = D()
@@ -528,7 +528,7 @@ or use the default parameter name of ``oldValue``.
 .. assertion:: observersAreNotCalledDuringInitialization
 
    -> class C {
-         var x: Int { willSet { println("willSet") } didSet { println("didSet") } }
+         var x: Int { willSet { print("willSet") } didSet { print("didSet") } }
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
@@ -548,11 +548,11 @@ to keep track of a person's exercise during their daily routine.
    -> class StepCounter {
          var totalSteps: Int = 0 {
             willSet(newTotalSteps) {
-               println("About to set totalSteps to \(newTotalSteps)")
+               print("About to set totalSteps to \(newTotalSteps)")
             }
             didSet {
                if totalSteps > oldValue  {
-                  println("Added \(totalSteps - oldValue) steps")
+                  print("Added \(totalSteps - oldValue) steps")
                }
             }
          }
@@ -598,7 +598,7 @@ and the default name of ``oldValue`` is used instead.
    -> let c = C()
    << // c : C = REPL.C
    -> c.x = 24
-   -> println(c.x)
+   -> print(c.x)
    <- -273
 
 .. TODO: If you add a property observer to a stored property of structure type,
@@ -632,16 +632,16 @@ and are written in the same way as computed properties.
 .. assertion:: computedVariables
    :compile: true
 
-   -> var a: Int { get { return 42 } set { println("set a to \(newValue)") } }
+   -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
    -> a = 37
    <- set a to 37
-   -> println(a)
+   -> print(a)
    <- 42
 
 .. assertion:: observersForStoredVariables
    :compile: true
 
-   -> var a: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } }
+   -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
    -> a = 42
    <- willSet
    <- didSet
@@ -783,10 +783,10 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-   -> println(SomeStructure.storedTypeProperty)
+   -> print(SomeStructure.storedTypeProperty)
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
-   -> println(SomeStructure.storedTypeProperty)
+   -> print(SomeStructure.storedTypeProperty)
    <- Another value.
    -> println(SomeEnumeration.computedTypeProperty)
    <- 6
@@ -882,9 +882,9 @@ is updated to equal ``7``:
    :compile: true
 
    -> leftChannel.currentLevel = 7
-   -> println(leftChannel.currentLevel)
+   -> print(leftChannel.currentLevel)
    <- 7
-   -> println(AudioChannel.maxInputLevelForAllChannels)
+   -> print(AudioChannel.maxInputLevelForAllChannels)
    <- 7
 
 If you try to set the ``currentLevel`` of the *right* channel to ``11``,
@@ -896,7 +896,7 @@ and the ``maxInputLevelForAllChannels`` type property is updated to equal ``10``
    :compile: true
 
    -> rightChannel.currentLevel = 11
-   -> println(rightChannel.currentLevel)
+   -> print(rightChannel.currentLevel)
    <- 10
-   -> println(AudioChannel.maxInputLevelForAllChannels)
+   -> print(AudioChannel.maxInputLevelForAllChannels)
    <- 10

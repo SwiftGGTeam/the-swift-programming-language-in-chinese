@@ -88,7 +88,7 @@ by checking its Boolean ``isEmpty`` property:
 .. testcode:: emptyStrings
 
    -> if emptyString.isEmpty {
-         println("Nothing to see here")
+         print("Nothing to see here")
       }
    <- Nothing to see here
 
@@ -174,7 +174,7 @@ by iterating over that string with a ``for``-``in`` loop:
 .. testcode:: characters
 
    -> for character in "Dog!🐶" {
-         println(character)
+         print(character)
       }
    </ D
    </ o
@@ -201,7 +201,7 @@ as an argument to its initializer:
    << // catCharacters : [Character] = ["C", "a", "t", "!", "🐱"]
    -> let catString = String(catCharacters)
    << // catString : String = "Cat!🐱"
-   -> println(catString)
+   -> print(catString)
    <- Cat!🐱
 
 
@@ -366,7 +366,7 @@ demonstrate the Unicode scalar format:
 
    -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
    << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> println(wiseWords)
+   >> print(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
    -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
    << // dollarSign : String = "$"
@@ -460,7 +460,7 @@ and pass in a string as the function's sole parameter:
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> println("unusualMenagerie has \(count(unusualMenagerie)) characters")
+   -> print("unusualMenagerie has \(count(unusualMenagerie)) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -476,12 +476,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> println("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(count(word))")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> println("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(count(word))")
    <- the number of characters in café is 4
 
 .. note::
@@ -543,9 +543,9 @@ If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
    -> let greeting = "Guten Tag"
    << // greeting : String = "Guten Tag"
-   -> println(greeting.startIndex)
+   -> print(greeting.startIndex)
    </ 0
-   -> println(greeting.endIndex)
+   -> print(greeting.endIndex)
    </ 9
 
 .. assertion:: emptyStringIndexes
@@ -596,7 +596,7 @@ indexes used to access individual characters in a string.
    -> for index in indices(greeting) {
          print("\(greeting[index]) ")
       }
-      println("\n")
+      print("\n")
    <- G u t e n   T a g
 
 .. _StringsAndCharacters_InsertingAndRemoving:
@@ -671,7 +671,7 @@ as described in :ref:`BasicOperators_ComparisonOperators`:
    -> let sameQuotation = "We're a lot alike, you and I."
    << // sameQuotation : String = "We\'re a lot alike, you and I."
    -> if quotation == sameQuotation {
-         println("These two strings are considered equal")
+         print("These two strings are considered equal")
       }
    <- These two strings are considered equal
 
@@ -688,9 +688,9 @@ even if they are composed from different Unicode scalars behind the scenes.
    -> let combinedEAcute: Character = "\u{65}\u{301}"
    << // combinedEAcute : Character = "é"
    -> if eAcute != combinedEAcute {
-         println("not equivalent, which is not expected")
+         print("not equivalent, which is not expected")
       } else {
-         println("equivalent, as expected")
+         print("equivalent, as expected")
       }
    <- equivalent, as expected
 
@@ -701,9 +701,9 @@ even if they are composed from different Unicode scalars behind the scenes.
    -> let cafe2 = "caf\u{65}\u{301}"
    << // cafe2 : String = "café"
    -> if cafe1 != cafe2 {
-         println("not equivalent, which is not expected")
+         print("not equivalent, which is not expected")
       } else {
-         println("equivalent, as expected")
+         print("equivalent, as expected")
       }
    <- equivalent, as expected
 
@@ -724,7 +724,7 @@ and so they are considered to be canonically equivalent:
    << // combinedEAcuteQuestion : String = "Voulez-vous un café?"
    ---
    -> if eAcuteQuestion == combinedEAcuteQuestion {
-         println("These two strings are considered equal")
+         print("These two strings are considered equal")
       }
    <- These two strings are considered equal
 
@@ -744,7 +744,7 @@ but do not have the same linguistic meaning:
    << // cyrillicCapitalLetterA : Character = "А"
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         println("These two characters are not equivalent")
+         print("These two characters are not equivalent")
       }
    <- These two characters are not equivalent
 
@@ -766,15 +766,15 @@ both of which take a single argument of type ``String`` and return a Boolean val
    -> let ecole = "\u{E9}cole"
    << // ecole : String = "école"
    -> if ecole.hasPrefix("\u{E9}") {
-         println("has U+00E9 prefix, as expected")
+         print("has U+00E9 prefix, as expected")
       } else {
-         println("does not have U+00E9 prefix, which is unexpected")
+         print("does not have U+00E9 prefix, which is unexpected")
       }
    <- has U+00E9 prefix, as expected
    -> if ecole.hasPrefix("\u{65}\u{301}") {
-         println("has U+0065 U+0301 prefix, as expected")
+         print("has U+0065 U+0301 prefix, as expected")
       } else {
-         println("does not have U+0065 U+0301 prefix, which is unexpected")
+         print("does not have U+0065 U+0301 prefix, which is unexpected")
       }
    <- has U+0065 U+0301 prefix, as expected
 
@@ -783,15 +783,15 @@ both of which take a single argument of type ``String`` and return a Boolean val
    -> let cafe = "caf\u{E9}"
    << // cafe : String = "café"
    -> if cafe.hasSuffix("\u{E9}") {
-         println("has U+00E9 suffix, as expected")
+         print("has U+00E9 suffix, as expected")
       } else {
-         println("does not have U+00E9 suffix, which is unexpected")
+         print("does not have U+00E9 suffix, which is unexpected")
       }
    <- has U+00E9 suffix, as expected
    -> if cafe.hasSuffix("\u{65}\u{301}") {
-         println("has U+0065 U+0301 suffix, as expected")
+         print("has U+0065 U+0301 suffix, as expected")
       } else {
-         println("does not have U+0065 U+0301 suffix, which is unexpected")
+         print("does not have U+0065 U+0301 suffix, which is unexpected")
       }
    <- has U+0065 U+0301 suffix, as expected
 
@@ -827,7 +827,7 @@ to count the number of scenes in Act 1 of the play:
             ++act1SceneCount
          }
       }
-   -> println("There are \(act1SceneCount) scenes in Act 1")
+   -> print("There are \(act1SceneCount) scenes in Act 1")
    <- There are 5 scenes in Act 1
 
 Similarly, use the ``hasSuffix(_:)`` method to count the number of scenes
@@ -846,7 +846,7 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
             ++cellCount
          }
       }
-   -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
+   -> print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
 
 .. note::
@@ -1013,7 +1013,7 @@ such as with string interpolation:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         println("\(scalar) ")
+         print("\(scalar) ")
       }
    </ D
    </ o

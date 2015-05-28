@@ -124,9 +124,9 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
 
    -> var playerOne: Player? = Player(coins: 100)
    << // playerOne : Player? = Optional(REPL.Player)
-   -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+   -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins
-   -> println("There are now \(Bank.coinsInBank) coins left in the bank")
+   -> print("There are now \(Bank.coinsInBank) coins left in the bank")
    <- There are now 9900 coins left in the bank
 
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
@@ -141,9 +141,9 @@ and whenever its ``winCoins(_:)`` method is called:
 .. testcode:: deinitializer
 
    -> playerOne!.winCoins(2_000)
-   -> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+   -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
    <- PlayerOne won 2000 coins & now has 2100 coins
-   -> println("The bank now only has \(Bank.coinsInBank) coins left")
+   -> print("The bank now only has \(Bank.coinsInBank) coins left")
    <- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
@@ -153,9 +153,9 @@ and the bank has only 7,900 coins left.
 .. testcode:: deinitializer
 
    -> playerOne = nil
-   -> println("PlayerOne has left the game")
+   -> print("PlayerOne has left the game")
    <- PlayerOne has left the game
-   -> println("The bank now has \(Bank.coinsInBank) coins")
+   -> print("The bank now has \(Bank.coinsInBank) coins")
    <- The bank now has 10000 coins
 
 .. This code doesn't work in a playground.  See <rdar://problem/17190159>

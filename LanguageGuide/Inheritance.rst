@@ -71,7 +71,7 @@ a human-readable description of the vehicle's current speed:
 
 .. testcode:: inheritance
 
-   -> println("Vehicle: \(someVehicle.description)")
+   -> print("Vehicle: \(someVehicle.description)")
    </ Vehicle: traveling at 0.0 miles per hour
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
@@ -132,7 +132,7 @@ and query the instance's inherited ``description`` property:
 .. testcode:: inheritance
 
    -> bicycle.currentSpeed = 15.0
-   -> println("Bicycle: \(bicycle.description)")
+   -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: traveling at 15.0 miles per hour
 
 Subclasses can themselves be subclassed.
@@ -161,7 +161,7 @@ and query the read-only ``description`` property it inherits from ``Vehicle``:
    -> tandem.hasBasket = true
    -> tandem.currentNumberOfPassengers = 2
    -> tandem.currentSpeed = 22.0
-   -> println("Tandem: \(tandem.description)")
+   -> print("Tandem: \(tandem.description)")
    </ Tandem: traveling at 22.0 miles per hour
 
 .. _Inheritance_Overriding:
@@ -224,7 +224,7 @@ which overrides the ``makeNoise()`` method that ``Train`` inherits from ``Vehicl
 
    -> class Train: Vehicle {
          override func makeNoise() {
-            println("Choo Choo")
+            print("Choo Choo")
          }
       }
 
@@ -308,7 +308,7 @@ the tailored description defined within the ``Car`` class:
    << // car : Car = REPL.Car
    -> car.currentSpeed = 25.0
    -> car.gear = 3
-   -> println("Car: \(car.description)")
+   -> print("Car: \(car.description)")
    </ Car: traveling at 25.0 miles per hour in gear 3
 
 .. _Inheritance_OverridingPropertyObservers:
@@ -363,7 +363,7 @@ A speed of ``35.0`` produces a gear of ``4``:
    -> let automatic = AutomaticCar()
    << // automatic : AutomaticCar = REPL.AutomaticCar
    -> automatic.currentSpeed = 35.0
-   -> println("AutomaticCar: \(automatic.description)")
+   -> print("AutomaticCar: \(automatic.description)")
    </ AutomaticCar: traveling at 35.0 miles per hour in gear 4
 
 .. _Inheritance_PreventingOverrides:
@@ -387,7 +387,7 @@ can also be marked as final within the extension's definition.
    -> class C {
          final var someVar = 0
          final func someFunction() {
-            println("In someFunction")
+            print("In someFunction")
          }
       }
    -> class D : C {
@@ -396,7 +396,7 @@ can also be marked as final within the extension's definition.
             set {}
          }
          override func someFunction() {
-            println("In overridden someFunction")
+            print("In overridden someFunction")
          }
       }
    !! <REPL Input>:2:19: error: var overrides a 'final' var
@@ -421,7 +421,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
    -> final class C {
          var someVar = 0
          func someFunction() {
-            println("In someFunction")
+            print("In someFunction")
          }
       }
    -> class D : C {
@@ -430,7 +430,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
             set {}
          }
          override func someFunction() {
-            println("In overridden someFunction")
+            print("In overridden someFunction")
          }
       }
    !! <REPL Input>:2:19: error: var overrides a 'final' var
