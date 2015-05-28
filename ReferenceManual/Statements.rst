@@ -370,7 +370,23 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     if-condition --> expression
     if-condition --> expression ``,`` optional-binding-list
     if-condition --> optional-binding-list
+    if-condition --> availability-condition
     else-clause --> ``else`` code-block | ``else`` if-statement
+
+    availability-condition --> ``#availabile`` ``(`` availability-arguments ``)``
+    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
+    availability-argument --> platform-name platform-version
+    availability-argument --> *
+
+    platform-name --> ``iOS`` | ``iOSApplicationExtension``
+    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-version --> 
+
+
+
+.. FIXME Is watchOS a supported platform here?
+
+
 
 
 .. _Statements_GuardStatement:
