@@ -216,6 +216,7 @@ Attempting to do so is reported as an error when your code is compiled:
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let languageName = "Swift"
    !! ^~~
+   !! var
 
 .. _TheBasics_PrintingConstantsAndVariables:
 
@@ -951,23 +952,23 @@ An optional says:
    without the need for special constants.
 
 Here's an example of how optionals can be used to cope with the absence of a value.
-Swift's ``String`` type has a method called ``toInt``,
-which tries to convert a ``String`` value into an ``Int`` value.
+Swift's ``Int`` type has an initializer that takes a ``String`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below uses the ``toInt()`` method to try to convert a ``String`` into an ``Int``:
+The example below uses a failable initializer to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
+   :compile: true
 
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
-   -> let convertedNumber = possibleNumber.toInt()
+   -> let convertedNumber = Int(possibleNumber)
    << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt()`` method might fail,
+Because the initializer might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -985,14 +986,15 @@ You set an optional variable to a valueless state
 by assigning it the special value ``nil``:
 
 .. testcode:: optionals
+   :compile: true
 
    -> var serverResponseCode: Int? = 404
    << // serverResponseCode : Int? = Optional(404)
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
-   // serverResponseCode now contains no value
    << // serverResponseCode : Int? = nil
+   // serverResponseCode now contains no value
 
 .. note::
 
@@ -1005,6 +1007,7 @@ If you define an optional variable without providing a default value,
 the variable is automatically set to ``nil`` for you:
 
 .. testcode:: optionals
+   :compile: true
 
    -> var surveyAnswer: String?
    << // surveyAnswer : String? = nil
@@ -1030,6 +1033,7 @@ or the “not equal to” operator (``!=``).
 If an optional has a value, it is considered to be “not equal to” ``nil``:
 
 .. testcode:: optionals
+   :compile: true
 
    -> if convertedNumber != nil {
          print("convertedNumber contains some integer value.")
@@ -1044,6 +1048,7 @@ The exclamation mark effectively says,
 This is known as :newTerm:`forced unwrapping` of the optional's value:
 
 .. testcode:: optionals
+   :compile: true
 
    -> if convertedNumber != nil {
          print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -1085,8 +1090,9 @@ the :ref:`TheBasics_Optionals` section
 to use optional binding rather than forced unwrapping:
 
 .. testcode:: optionals
+   :compile: true
 
-   -> if let actualNumber = possibleNumber.toInt() {
+   -> if let actualNumber = Int(possibleNumber) {
          print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
       } else {
          print("\'\(possibleNumber)\' could not be converted to an integer")
@@ -1095,7 +1101,7 @@ to use optional binding rather than forced unwrapping:
 
 This code can be read as:
 
-“If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
+“If the optional ``Int`` returned by ``Int(possibleNumber)`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
 If the conversion is successful,

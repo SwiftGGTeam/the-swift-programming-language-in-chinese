@@ -514,11 +514,11 @@ when the default value expression is evaluated at the call site.
     -> myFunction()
     << myFunction()
     >> func namedArgs(i i: Int, j: Int) { logFunctionName() }
-    >> noNamedArgs(i: 1, j: 2)
-    << noNamedArgs
-    >> func omittedNamedArgs(i: Int, _ j: Int) { logFunctionName() }
-    >> namedArgs(1, 2)
-    << namedArgs(_:_:)
+    >> namedArgs(i: 1, j: 2)
+    << namedArgs(i:j:)
+    >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
+    >> noNamedArgs(1, 2)
+    << noNamedArgs(_:_:)
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by __FUNCTION__

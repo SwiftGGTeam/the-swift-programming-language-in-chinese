@@ -682,17 +682,14 @@ made up of the parameter types and the return type of the function.
 For example:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func addTwoInts(a: Int, _ b: Int) -> Int {
          return a + b
       }
-   >> addTwoInts
-   << // r0 : (Int, Int) -> Int = (Function)
    -> func multiplyTwoInts(a: Int, _ b: Int) -> Int {
          return a * b
       }
-   >> multiplyTwoInts
-   << // r1 : (Int, Int) -> Int = (Function)
 
 This example defines two simple mathematical functions
 called ``addTwoInts`` and ``multiplyTwoInts``.
@@ -711,12 +708,11 @@ and that returns a value of type ``Int``.”
 Here's another example, for a function with no parameters or return value:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func printHelloWorld() {
          print("hello, world")
       }
-   >> printHelloWorld
-   << // r2 : () -> () = (Function)
 
 The type of this function is ``() -> ()``,
 or “a function that has no parameters, and returns ``Void``.”
@@ -733,6 +729,7 @@ For example, you can define a constant or variable to be of a function type
 and assign an appropriate function to that variable:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
    << // mathFunction : (Int, Int) -> Int = (Function)
@@ -750,6 +747,7 @@ and so this assignment is allowed by Swift's type-checker.
 You can now call the assigned function with the name ``mathFunction``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> print("Result: \(mathFunction(2, 3))")
    <- Result: 5
@@ -758,6 +756,7 @@ A different function with the same matching type can be assigned to the same var
 in the same way as for non-function types:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> mathFunction = multiplyTwoInts
       print("Result: \(mathFunction(2, 3))")
@@ -768,6 +767,7 @@ you can leave it to Swift to infer the function type
 when you assign a function to a constant or variable:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> let anotherMathFunction = addTwoInts
    << // anotherMathFunction : (Int, Int) -> Int = (Function)
@@ -788,8 +788,9 @@ for the function's caller to provide when the function is called.
 Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
+   :compile: true
 
-   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, _ b: Int) {
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
          print("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)
@@ -827,6 +828,7 @@ and the ``stepBackward(_:)`` function returns a value one less than its input va
 Both functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func stepForward(input: Int) -> Int {
          return input + 1
@@ -841,6 +843,7 @@ whose return type is “a function of type ``(Int) -> Int``”.
 based on a Boolean parameter called ``backwards``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
          return backwards ? stepBackward : stepForward
@@ -850,6 +853,7 @@ You can now use ``chooseStepFunction`` to obtain a function
 that will step in one direction or the other:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> var currentValue = 3
    << // currentValue : Int = 3
@@ -868,6 +872,7 @@ Now that ``moveNearerToZero`` refers to the correct function,
 it can be used to count to zero:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> print("Counting to zero:")
    </ Counting to zero:
