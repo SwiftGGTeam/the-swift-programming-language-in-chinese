@@ -232,9 +232,13 @@ such as when its ``fileName`` property is queried:
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
-.. FIXME: Add a note to describe whether or not lazy is thread-safe.
-   This is as per <rdar://problem/17084977>
-   ER: We should document whether lazy initialization is thread safe
+.. note::
+
+   Lazy properties are not :newterm:`thread-safe`.
+   That is, if a property marked with the ``lazy`` modifier
+   is accessed by multiple threads simultaneously
+   and the property has not yet been initialized,
+   there is no guarantee that the property will be initialized only once.
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
