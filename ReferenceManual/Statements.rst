@@ -360,8 +360,9 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of an if statement
 
     if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | expression-OPT optional-binding-list
+    if-condition --> expression | expression-OPT optional-binding-list where-clause-OPT
     else-clause --> ``else`` code-block | ``else`` if-statement
+    where-clause --> ``where`` expression
 
 
 .. _Statements_SwitchStatement:
