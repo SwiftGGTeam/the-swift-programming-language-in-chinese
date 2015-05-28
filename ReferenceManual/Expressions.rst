@@ -946,6 +946,38 @@ For example, in the following assignment
 
     wildcard-expression --> ``_``
 
+.. _Expressions_TryExpression:
+
+Try Expression
+--------------
+
+A :newTerm:`try expression`
+is used to evaluate an expression that can throw an error.
+
+It has the following form:
+
+.. syntax-outline::
+
+   try <#expression#>
+
+For example:
+
+.. testcode:: tryExpression
+
+    -> func functionCanThrow() throws {}
+    -> do {
+          try functionCanThrow()
+          print("No Error Thrown")
+       } catch {
+          print("Error Thrown")
+       }
+    << No Error Thrown
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    try-expression --> ``try`` expression
 
 .. _Expressions_PostfixExpressions:
 
