@@ -41,7 +41,7 @@ the ``noreturn`` attribute to a function or method *type*.
     relative to certain platforms and operating system versions.
 
     The ``available`` attribute always appears
-    with a list of one or more comma-separated attribute arguments.
+    with a list of two or more comma-separated attribute arguments.
     These arguments begin with one of the following platform names:
 
     * ``iOS``
