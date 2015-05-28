@@ -9,18 +9,19 @@ recoverable errors at runtime.
 
 .. TODO Refactor and expand optionals discussion into separate chapter.
 
-Some functions cannot be guaranteed to always complete execution or produce a useful output.
+Some functions and methods
+cannot be guaranteed to always complete execution or produce a useful output.
 Optionals are often used to represent the absence of a value,
-but in situations where a function may fail for a number of different reasons,
+but when a function fails,
 it's often useful to understand what caused the failure,
-so that your code may respond accordingly.
+so that your code can respond accordingly.
 
 As an example, consider the task of reading and processing data from a file on disk.
-There are a number of ways that this could fail, including
+There are a number of ways that this task can fail, including
 the file not existing at the specified path,
 the file not having read permissions, or
-the file not being encoded in a compatible format,
-Being able to distinguish between these different situations
+the file not being encoded in a compatible format.
+Distinguishing among these different situations
 allows a program to resolve and recover from the error, and ---
 if necessary --- communicate it to the user.
 
@@ -41,7 +42,7 @@ instances of types conforming to the ``ErrorType`` protocol.
 Swift enumerations automatically conform to ``ErrorType``,
 making them particularly well-suited to modeling
 a group of related error conditions.
-Associated values for enumeration cases can be used to provide
+Using associated values for enumeration cases provides
 more specific information about the nature of a particular error.
 
 For example, here's how you might represent the error conditions
@@ -59,12 +60,12 @@ In this example, a vending machine can fail for the following reasons:
 
 * ``InvalidSelection``: The requested item is not a valid selection.
 * ``InsufficientFunds``: The requested item's cost is greater than the provided funds.
-  The associated ``Double`` value is used to represent the balance
+  The associated ``Double`` value represents the balance
   required to complete the transaction.
 * ``OutOfStock``: The request item is out of stock.
 
-Throwing
---------
+Throwing Errors
+---------------
 
 A function type indicates that it manages an error condition
 by including the ``throws`` keyword in its declaration.
@@ -85,15 +86,14 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    Whether a function throws is considered part of its type.
    Function types that cannot throw are subtypes of function types that can throw.
 
-   A throwing method cannot override a non-throwing method
-   or satisfy a non-throwing protocol requirement.
-   However, a non-throwing method can override a throwing method
-   or satisfy a throwing protocol requirement.
+   A method that throws cannot override a method that doesn't throw,
+   nor can it satisfy a protocol requirement for a method that doesn't throw.
+   However, a method that doesn't throw can override a method that does throw,
+   and can satisfy a protocol requirement for a method that does throw.
 
-   A function cannot be overloaded based solely on whether the functions throw.
-   However, a function may be overloaded based on whether an function parameter throws.
-
-   For curried functions, ``throws`` only applies to the innermost function.
+   A function cannot be overloaded based solely on whether the function throws.
+   However, a function can be overloaded based on whether an function parameter throws.
+   For curried functions, the ``throws`` keyword only applies to the innermost function.
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
@@ -138,10 +138,10 @@ the ``volume`` variable is not incremented in the case of an error.
 Rethrows
 ~~~~~~~~
 
-A function that takes a throwing function parameter
+A function that takes a function parameter that throws
 can be declared with the ``rethrows`` keyword
 to indicate that,
-while the function itself does not throw errors,
+although the function itself does not throw errors,
 errors thrown by a function parameter will be propagated to the caller.
 
 .. TODO Example
@@ -156,25 +156,26 @@ errors thrown by a function parameter will be propagated to the caller.
 
    A ``rethrows`` function is considered to throw,
    except in the case where a direct call is made and
-   none of the arguments are throwing functions.
+   none of the function arguments throw.
 
-   A throwing method cannot override a ``rethrows`` method,
-   which cannot override a non-throwing method.
-   However, a throwing method can be overridden by a ``rethrows`` method,
-   which can be overridden by a non-throwing method.
-   The same rules apply for satisfying protocol requirements.
+   A method that throws cannot override a method that rethrows,
+   and a rethrows method cannot override a method that doesn't throw.
+   However, a method that throws can be overridden by method that rethrows,
+   a method that rethrows can be overridden by a method that doesn't throw.
+   The same rules apply for methods satisfying protocol requirements
+   for methods that rethrow, throw, or don't throw.
 
 
-Catching
---------
+Catching and Handling Errors
+----------------------------
 
 Statements and expressions that can implicitly throw
-must be executed in a ``try`` statement,
+must be executed in a ``try`` expression,
 which consists of the ``try`` keyword
 followed by a statement or expression that can implicitly throw.
 
 If an error is thrown,
-that error is propagated to the outer scope of the ``try`` statement
+that error is propagated to the outer scope of the ``try`` expression
 until it is handled by a ``catch`` clause.
 A ``catch`` clause consists of the ``catch`` keyword
 followed by a pattern to match the error against and a set of statements to execute.
@@ -218,22 +219,23 @@ See :doc:`../ReferenceManual/Patterns` for more information about pattern matchi
       }
 
 In the above example,
-the throwing function ``increaseVolume()`` is called.
+the function ``increaseVolume()`` is called.
 Because the function can throw an error,
-it is executed in a ``try`` statement.
+it is executed in a ``try`` expression.
 If an error is thrown by ``increaseVolume()``,
 execution immediately transfers out of the ``do`` statement,
 and evaluates each ``catch`` clause until a matching pattern is found.
 If no error is thrown,
 the return value of ``increaseVolume()`` is assigned to ``newVolume``.
 
-Forced Try Statement
-~~~~~~~~~~~~~~~~~~~~
+Forced Try Expression
+~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a throwing function will not actually throw an error at runtime,
-append a ``!`` to the ``try`` keyword of a ``try`` statement.
+To indicate that a function declared with the ``throws`` keyword
+will not actually throw an error at runtime,
+append an exclamation point (``!``) to the ``try`` keyword of a ``try`` expression.
 Doing so will disable any compiler checks for error handling,
-and treat the expression as if it were nonthrowing.
+and treat the expression as if it did not throw.
 
 .. testcode:: forceTryStatement
 
@@ -247,11 +249,11 @@ and treat the expression as if it were nonthrowing.
    ---
    -> try! willNotActuallyThrowAnError()
 
-If an error is thrown at by a function wrapped in a forced try statement,
+If an error is thrown by a function wrapped in a forced try statement,
 a runtime error is triggered.
 
-Defer
-~~~~~
+Deferring Statements During Error Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``defer`` statement defers execution until the current scope is exited.
 It consists of the ``defer`` keyword and the statements to be executed later.
@@ -262,7 +264,7 @@ or a statement that would otherwise cause the function to terminate early.
 You use a ``defer`` statement to do any necessary cleanup
 that should be performed regardless of whether an error occurred or not.
 Examples include closing any open file descriptors
-and freeing any manually-allocated memory.
+and freeing any manually allocated memory.
 
 .. TODO Example
 
@@ -282,28 +284,4 @@ and freeing any manually-allocated memory.
 The above example uses a ``defer`` statement
 to ensure that the ``open(_:)`` function
 has a corresponding call to ``close(_:)``.
-This happens regardless of whether an error is thrown or not.
-
-This usage of the ``defer`` statement is equivalent to the following:
-
-.. TODO Example
-
-.. testcode:: deferEquivalent
-
-   -> func processFile(filename: String) throws {
-         if exists(filename) {
-            let file = open(filename)
-
-            do {
-               while let line = try file.readline() {
-                  /* */
-               }
-
-               close(filename)
-            } catch let error {
-               close(filename)
-
-               throw error
-            }
-         }
-      }
+This statement is executed regardless of whether an error is thrown or not.
