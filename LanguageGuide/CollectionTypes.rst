@@ -8,6 +8,9 @@ Arrays are ordered collections of values.
 Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
+.. image:: ../images/CollectionTypes_intro_2x.png
+   :align: center
+
 Arrays, sets, and dictionaries in Swift are always clear about
 the types of values and keys that they can store.
 This means that you cannot insert a value of the wrong type
