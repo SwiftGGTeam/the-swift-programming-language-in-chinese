@@ -234,8 +234,7 @@ such as when its ``fileName`` property is queried:
 
 .. note::
 
-   Lazy properties are not :newterm:`thread-safe`.
-   That is, if a property marked with the ``lazy`` modifier
+   If a property marked with the ``lazy`` modifier
    is accessed by multiple threads simultaneously
    and the property has not yet been initialized,
    there is no guarantee that the property will be initialized only once.
