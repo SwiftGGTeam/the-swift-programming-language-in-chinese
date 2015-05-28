@@ -904,6 +904,9 @@ This property is of type ``String.UTF8View``,
 which is a collection of unsigned 8-bit (``UInt8``) values,
 one for each byte in the string's UTF-8 representation:
 
+.. image:: ../images/UTF8_2x.png
+   :align: center
+
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf8 {
@@ -937,6 +940,9 @@ by iterating over its ``utf16`` property.
 This property is of type ``String.UTF16View``,
 which is a collection of unsigned 16-bit (``UInt16``) values,
 one for each 16-bit code unit in the string's UTF-16 representation:
+
+.. image:: ../images/UTF16_2x.png
+   :align: center
 
 .. testcode:: unicodeRepresentations
 
@@ -975,6 +981,9 @@ which is a collection of values of type ``UnicodeScalar``.
 
 Each ``UnicodeScalar`` has a ``value`` property that returns
 the scalar's 21-bit value, represented within a ``UInt32`` value:
+
+.. image:: ../images/UnicodeScalar_2x.png
+   :align: center
 
 .. testcode:: unicodeRepresentations
 
