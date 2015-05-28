@@ -722,7 +722,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -889,7 +889,7 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
+      lazy var someClosure: Void -> String = {
             [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
@@ -931,7 +931,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
