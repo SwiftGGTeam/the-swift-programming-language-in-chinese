@@ -628,7 +628,7 @@ by specifying one or more parameters as :newTerm:`variable parameters` instead.
 Variable parameters are available as variables rather than as constants,
 and give a new modifiable copy of the parameter's value for your function to work with.
 
-Define variable parameters by prefixing the parameter name with the keyword ``var``:
+Define variable parameters by prefixing the parameter name with the ``var`` keyword:
 
 .. testcode:: constantAndVariableParameters
 

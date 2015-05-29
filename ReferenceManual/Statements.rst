@@ -426,13 +426,13 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
     >> }
 
 As the above example shows, patterns in a case can also bind constants
-using the keyword ``let`` (they can also bind variables using the keyword ``var``).
+using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
 These constants (or variables) can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
 none of those patterns can contain constant or variable bindings.
 
-A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
+A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
 which must appear at the end of the ``switch`` statement.
@@ -470,7 +470,7 @@ the program exits from the ``switch`` statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
-which simply consists of the keyword ``fallthrough``,
+which simply consists of the ``fallthrough`` keyword,
 in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
@@ -744,7 +744,7 @@ A ``throw`` statement causes a program to end execution of the current scope
 and begin error propagation to its enclosing scope.
 Error propagation continues until the error is handled by a ``catch`` clause.
 
-A ``throw`` statement consists of the keyword ``throw``
+A ``throw`` statement consists of the ``throw`` keyword,
 followed by an expression, as shown below.
 
 .. syntax-outline::
