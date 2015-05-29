@@ -170,7 +170,7 @@ Catching and Handling Errors
 
 Statements and expressions that can implicitly throw
 must be executed in a ``try`` expression,
-which consists of the ``try`` keyword
+which consists of the ``try`` keyword,
 followed by a statement or expression that can implicitly throw.
 
 If an error is thrown,

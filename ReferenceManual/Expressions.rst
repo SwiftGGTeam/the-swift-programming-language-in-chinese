@@ -745,7 +745,7 @@ that allow closures to be written more concisely:
 
 * A closure may omit names for its parameters.
   Its parameters are then implicitly named
-  ``$`` followed by their position:
+  ``$``, followed by their position:
   ``$0``, ``$1``, ``$2``, and so on.
 
 * A closure that consists of only a single expression
@@ -1064,7 +1064,7 @@ Function Call Expression
 .. TODO: After we rewrite function decls,
    revisit this section to make sure that the names for things match.
 
-A :newTerm:`function call expression` consists of a function name
+A :newTerm:`function call expression` consists of a function name,
 followed by a comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 

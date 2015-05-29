@@ -36,9 +36,9 @@ each of which has the following form:
 
     <#type parameter#>: <#constraint#>
 
-A generic parameter consists of a *type parameter* followed by
-an optional *constraint*. A :newTerm:`type parameter` is simply the name
-of a placeholder type
+A generic parameter consists of a *type parameter*,
+followed by an optional *constraint*.
+A :newTerm:`type parameter` is simply the name of a placeholder type
 (for instance, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
 You have access to the type parameters (and any of their associated types) in the rest of the
 type, function, or initializer declaration, including in the signature of the function
@@ -80,7 +80,7 @@ Where Clauses
 
 You can specify additional requirements on type parameters and their associated types
 by including a ``where`` clause after the *generic parameter list*.
-A ``where`` clause consists of the keyword ``where``,
+A ``where`` clause consists of the ``where`` keyword,
 followed by a comma-separated list of one or more *requirements*.
 
 The *requirements* in a ``where`` clause specify that a type parameter inherits from

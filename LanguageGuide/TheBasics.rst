@@ -286,7 +286,7 @@ Single-line comments begin with two forward-slashes (``//``):
 
    -> // this is a comment
 
-Multiline comments start with a forward-slash followed by an asterisk (``/*``)
+Multiline comments start with a forward-slash, followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments

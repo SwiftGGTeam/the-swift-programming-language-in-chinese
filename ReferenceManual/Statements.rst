@@ -407,7 +407,8 @@ For examples of how to use these various types of values in ``switch`` statement
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
 A ``switch`` case can optionally contain a guard expression after each pattern.
-A :newTerm:`guard expression` is introduced by the keyword ``where`` followed by an expression,
+A :newTerm:`guard expression` is introduced by the ``where`` keyword,
+followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
 If a guard expression is present, the *statements* within the relevant case
@@ -565,8 +566,9 @@ Break Statement
 ~~~~~~~~~~~~~~~
 
 A ``break`` statement ends program execution of a loop or a ``switch`` statement.
-A ``break`` statement can consist of only the keyword ``break``,
-or it can consist of the keyword ``break`` followed by the name of a statement label,
+A ``break`` statement can consist of only the ``break`` keyword,
+or it can consist of the ``break`` keyword,
+followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -606,8 +608,9 @@ Continue Statement
 
 A ``continue`` statement ends program execution of the current iteration of a loop
 statement but does not stop execution of the loop statement.
-A ``continue`` statement can consist of only the keyword ``continue``,
-or it can consist of the keyword ``continue`` followed by the name of a statement label,
+A ``continue`` statement can consist of only the ``continue`` keyword,
+or it can consist of the ``continue`` keyword,
+followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -689,8 +692,10 @@ A ``return`` statement occurs in the body of a function or method definition
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
-A ``return`` statement can consist of only the keyword ``return``,
-or it can consist of the keyword ``return`` followed by an expression, as shown below.
+A ``return`` statement can consist of only the ``return`` keyword,
+or it can consist of the ``return`` keyword,
+followed by an expression,
+as shown below.
 
 .. syntax-outline::
 
