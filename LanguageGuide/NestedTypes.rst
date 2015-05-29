@@ -106,7 +106,7 @@ You can use this initializer to initialize a new constant called ``theAceOfSpade
 
    -> let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
    << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard
-   -> println("theAceOfSpades: \(theAceOfSpades.description)")
+   -> print("theAceOfSpades: \(theAceOfSpades.description)")
    <- theAceOfSpades: suit is ♠, value is 1 or 11
 
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,

@@ -69,10 +69,10 @@ which defines a stored constant property called ``name``:
          let name: String
          init(name: String) {
             self.name = name
-            println("\(name) is being initialized")
+            print("\(name) is being initialized")
          }
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
       }
 
@@ -177,14 +177,14 @@ which model a block of apartments and its residents:
          let name: String
          init(name: String) { self.name = name }
          var apartment: Apartment?
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class Apartment {
          let number: Int
          init(number: Int) { self.number = number }
          var tenant: Person?
-         deinit { println("Apartment #\(number) is being deinitialized") }
+         deinit { print("Apartment #\(number) is being deinitialized") }
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``
@@ -355,14 +355,14 @@ is declared as a weak reference:
          let name: String
          init(name: String) { self.name = name }
          var apartment: Apartment?
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class Apartment {
          let number: Int
          init(number: Int) { self.number = number }
          weak var tenant: Person?
-         deinit { println("Apartment #\(number) is being deinitialized") }
+         deinit { print("Apartment #\(number) is being deinitialized") }
       }
 
 The strong references from the two variables (``john`` and ``number73``)
@@ -502,7 +502,7 @@ to avoid a strong reference cycle:
          init(name: String) {
             self.name = name
          }
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class CreditCard {
@@ -512,7 +512,7 @@ to avoid a strong reference cycle:
             self.number = number
             self.customer = customer
          }
-         deinit { println("Card #\(number) is being deinitialized") }
+         deinit { print("Card #\(number) is being deinitialized") }
       }
 
 .. note::
@@ -669,7 +669,7 @@ without needing to use an exclamation mark to unwrap its optional value:
    :compile: true
 
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
-   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
    <- Canada's capital city is called Ottawa
 
 In the example above, the use of an implicitly unwrapped optional
@@ -722,7 +722,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -736,7 +736,7 @@ which provides a simple model for an individual element within an HTML document:
          }
    ---
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
    ---
       }
@@ -791,7 +791,7 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
-   -> println(paragraph!.asHTML())
+   -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
 .. note::
@@ -889,7 +889,7 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
+      lazy var someClosure: Void -> String = {
             [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
@@ -931,7 +931,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
@@ -946,7 +946,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          }
    ---
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
    ---
       }
@@ -962,7 +962,7 @@ You can create and print an ``HTMLElement`` instance as before:
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
-   -> println(paragraph!.asHTML())
+   -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
 Here's how the references look with the capture list in place:

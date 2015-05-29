@@ -125,7 +125,7 @@ corresponding identifier pattern.
     -> switch point {
           // Bind x and y to the elements of point.
           case let (x, y):
-             println("The point is at (\(x), \(y)).")
+             print("The point is at (\(x), \(y)).")
        }
     <- The point is at (3, 2).
 
@@ -326,11 +326,11 @@ value with a range of integers in an ``Range`` object, as the following example 
     << // point : (Int, Int) = (1, 2)
     -> switch point {
           case (0, 0):
-             println("(0, 0) is at the origin.")
+             print("(0, 0) is at the origin.")
           case (-2...2, -2...2):
-             println("(\(point.0), \(point.1)) is near the origin.")
+             print("(\(point.0), \(point.1)) is near the origin.")
           default:
-             println("The point is at (\(point.0), \(point.1)).")
+             print("The point is at (\(point.0), \(point.1)).")
        }
     <- (1, 2) is near the origin.
 
@@ -346,9 +346,9 @@ with a string representations of points.
        }
     -> switch point {
           case ("0", "0"):
-             println("(0, 0) is at the origin.")
+             print("(0, 0) is at the origin.")
           default:
-             println("The point is at (\(point.0), \(point.1)).")
+             print("The point is at (\(point.0), \(point.1)).")
        }
     <- The point is at (1, 2).
 

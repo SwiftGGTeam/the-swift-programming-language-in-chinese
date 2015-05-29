@@ -72,15 +72,15 @@ from elsewhere in your code:
 
 .. testcode:: definingAndCalling
 
-   -> println(sayHello("Anna"))
+   -> print(sayHello("Anna"))
    <- Hello, Anna!
-   -> println(sayHello("Brian"))
+   -> print(sayHello("Brian"))
    <- Hello, Brian!
 
 You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
 such as ``sayHello("Anna")``.
 Because the function returns a ``String`` value,
-``sayHello`` can be wrapped in a call to the ``println(_:)`` function
+``sayHello`` can be wrapped in a call to the ``print(_:)`` function
 to print that string and see its return value, as shown above.
 
 The body of the ``sayHello(_:)`` function starts by
@@ -103,7 +103,7 @@ combine the message creation and the return statement into one line:
    -> func sayHelloAgain(personName: String) -> String {
          return "Hello again, " + personName + "!"
       }
-   -> println(sayHelloAgain("Anna"))
+   -> print(sayHelloAgain("Anna"))
    <- Hello again, Anna!
 
 .. _Functions_FunctionParametersAndReturnValues:
@@ -131,7 +131,7 @@ and works out how many elements the range contains:
    -> func halfOpenRangeLength(start: Int, end: Int) -> Int {
          return end - start
       }
-   -> println(halfOpenRangeLength(1, 10))
+   -> print(halfOpenRangeLength(1, 10))
    <- 9
 
 .. _Functions_FunctionsWithoutParameters:
@@ -148,7 +148,7 @@ which always returns the same ``String`` message whenever it is called:
    -> func sayHelloWorld() -> String {
          return "hello, world"
       }
-   -> println(sayHelloWorld())
+   -> print(sayHelloWorld())
    <- hello, world
 
 The function definition still needs parentheses after the function's name,
@@ -169,7 +169,7 @@ which prints its own ``String`` value rather than returning it:
 .. testcode:: functionsWithoutReturnValues
 
    -> func sayGoodbye(personName: String) {
-         println("Goodbye, \(personName)!")
+         print("Goodbye, \(personName)!")
       }
    -> sayGoodbye("Dave")
    <- Goodbye, Dave!
@@ -192,7 +192,7 @@ The return value of a function can be ignored when it is called:
 .. testcode:: functionsWithoutReturnValues
 
    -> func printAndCount(stringToPrint: String) -> Int {
-         println(stringToPrint)
+         print(stringToPrint)
          return count(stringToPrint)
       }
    -> func printWithoutCounting(stringToPrint: String) {
@@ -269,7 +269,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 
    -> let bounds = minMax([8, -6, 2, 109, 3, 71])
    << // bounds : (min: Int, max: Int) = (-6, 109)
-   -> println("min is \(bounds.min) and max is \(bounds.max)")
+   -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
 Note that the tuple's members do not need to be named
@@ -329,7 +329,7 @@ returns an actual tuple value or ``nil``:
 .. testcode:: tupleTypesAsReturnTypes2
 
    -> if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
-         println("min is \(bounds.min) and max is \(bounds.max)")
+         print("min is \(bounds.min) and max is \(bounds.max)")
       }
    <- min is -6 and max is 109
 
@@ -743,7 +743,7 @@ when they are passed to the ``swapTwoInts(_:_:)`` function:
    -> var anotherInt = 107
    << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
-   -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+   -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
 The example above shows that
@@ -804,12 +804,12 @@ Here's another example, for a function with no parameters or return value:
 .. testcode:: functionTypes
 
    -> func printHelloWorld() {
-         println("hello, world")
+         print("hello, world")
       }
    >> printHelloWorld
    << // r2 : () -> () = (Function)
 
-The type of this function is ``() -> ()``,
+The type of this function is ``() -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
 Functions that don't specify a return value always return ``Void``,
 which is equivalent to an empty tuple in Swift, shown as ``()``.
@@ -842,7 +842,7 @@ You can now call the assigned function with the name ``mathFunction``:
 
 .. testcode:: functionTypes
 
-   -> println("Result: \(mathFunction(2, 3))")
+   -> print("Result: \(mathFunction(2, 3))")
    <- Result: 5
 
 A different function with the same matching type can be assigned to the same variable,
@@ -851,7 +851,7 @@ in the same way as for non-function types:
 .. testcode:: functionTypes
 
    -> mathFunction = multiplyTwoInts
-   -> println("Result: \(mathFunction(2, 3))")
+   -> print("Result: \(mathFunction(2, 3))")
    <- Result: 6
 
 As with any other type,
@@ -881,7 +881,7 @@ Here's an example to print the results of the math functions from above:
 .. testcode:: functionTypes
 
    -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
-         println("Result: \(mathFunction(a, b))")
+         print("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)
    <- Result: 8
@@ -960,13 +960,13 @@ it can be used to count to zero:
 
 .. testcode:: functionTypes
 
-   -> println("Counting to zero:")
+   -> print("Counting to zero:")
    </ Counting to zero:
    -> while currentValue != 0 {
-         println("\(currentValue)... ")
+         print("\(currentValue)... ")
          currentValue = moveNearerToZero(currentValue)
       }
-   -> println("zero!")
+   -> print("zero!")
    </ 3...
    </ 2...
    </ 1...
@@ -1003,10 +1003,10 @@ to use and return nested functions:
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
-         println("\(currentValue)... ")
+         print("\(currentValue)... ")
          currentValue = moveNearerToZero(currentValue)
       }
-   -> println("zero!")
+   -> print("zero!")
    </ -4...
    </ -3...
    </ -2...
