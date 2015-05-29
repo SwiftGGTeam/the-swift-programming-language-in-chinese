@@ -755,7 +755,7 @@ The value of a ``throw`` statement expression must have a type that conforms to
 the ``ErrorType`` protocol.
 
 For an example of how to use a ``throw`` statement,
-see :ref:`ErrorHandling_Throwing`
+see :ref:`ErrorHandling_Throw`
 in the :doc:`../LanguageGuide/ErrorHandling` chapter.
 
 .. langref-grammar
