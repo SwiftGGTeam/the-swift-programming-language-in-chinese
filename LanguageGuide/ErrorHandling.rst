@@ -85,14 +85,14 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
    Whether a function throws is considered part of its type.
    Function types that cannot throw are subtypes of function types that can throw.
+   A function cannot be overloaded based solely on whether the function throws.
+   However, a function can be overloaded based on whether a function parameter throws.
+   For curried functions, the ``throws`` keyword only applies to the innermost function.
 
    A method that throws cannot override a method that doesn't throw,
    nor can it satisfy a protocol requirement for a method that doesn't throw.
    However, a method that doesn't throw can override a method that does throw,
    and can satisfy a protocol requirement for a method that does throw.
-
-   A function cannot be overloaded based solely on whether the function throws.
-   However, a function can be overloaded based on whether an function parameter throws.
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
@@ -110,7 +110,7 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
 A function type that throws may trigger an error condition
 at any point in its execution with a ``throw`` statement,
-which consists of the ``throw`` keyword
+which consists of the ``throw`` keyword,
 followed by an instance of a type that conforms to the ``ErrorType`` protocol.
 
 .. TODO Original example
@@ -176,7 +176,7 @@ followed by a statement or expression that can implicitly throw.
 If an error is thrown,
 that error is propagated to the outer scope of the ``try`` expression
 until it is handled by a ``catch`` clause.
-A ``catch`` clause consists of the ``catch`` keyword
+A ``catch`` clause consists of the ``catch`` keyword,
 followed by a pattern to match the error against and a set of statements to execute.
 
 .. testcode:: catchStatementDeclaration
@@ -227,8 +227,8 @@ and evaluates each ``catch`` clause until a matching pattern is found.
 If no error is thrown,
 the return value of ``increaseVolume()`` is assigned to ``newVolume``.
 
-Forced-Try Expression
-~~~~~~~~~~~~~~~~~~~~~
+Disabling Compiler Checks for Error Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To indicate that a function declared with the ``throws`` keyword
 will not actually throw an error at runtime,
@@ -283,4 +283,4 @@ and freeing any manually allocated memory.
 The above example uses a ``defer`` statement
 to ensure that the ``open(_:)`` function
 has a corresponding call to ``close(_:)``.
-This statement is executed regardless of whether an error is thrown or not.
+This statement is executed regardless of whether an error is thrown.
