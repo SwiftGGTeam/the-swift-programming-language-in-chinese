@@ -128,7 +128,7 @@ Access Levels for Unit Test Targets
 
 When you write an app with a unit test target,
 the code in your app needs to be made available to that module in order to be tested.
-You may either mark interfaces with the ``@testable`` attribute
+You can mark interfaces with the ``@testable`` attribute
 to indicate that it can be accessed by unit testing targets
 as if it were declared with ``public`` access level.
 
