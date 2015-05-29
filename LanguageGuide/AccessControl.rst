@@ -121,6 +121,17 @@ Therefore, you do not need to specify a custom access level.
 You may, however, want to mark some parts of your code as private
 in order to hide their implementation details from other code within the app's module.
 
+.. _AccessControl_AccessLevelsForTestTargets:
+
+Access Levels for Unit Test Targets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you write an app with a unit test target,
+the code in your app needs to be made available to that module in order to be tested.
+You may either mark interfaces with the ``@testable`` attribute
+to indicate that it can be accessed by unit testing targets
+as if it were declared with ``public`` access level.
+
 .. _AccessControl_AccessLevelsForFrameworks:
 
 Access Levels for Frameworks
