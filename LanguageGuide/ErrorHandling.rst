@@ -33,6 +33,8 @@ if necessary --- communicate it to the user.
    For more information about error handling with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
+.. _ErrorHandling_Represent:
+
 Representing Errors
 -------------------
 
@@ -63,6 +65,8 @@ In this example, a vending machine can fail for the following reasons:
   The associated ``Double`` value represents the balance
   required to complete the transaction.
 * ``OutOfStock``: The request item is out of stock.
+
+.. _ErrorHandling_Throw:
 
 Throwing Errors
 ---------------
@@ -134,6 +138,8 @@ an error is thrown if incrementing the volume would exceed the maximum allowed v
 Because ``throw`` immediately transfers program control,
 the ``volume`` variable is not incremented in the case of an error.
 
+.. _ErrorHandling_Rethrow:
+
 rethrows
 ~~~~~~~~
 
@@ -164,6 +170,8 @@ errors thrown by a function parameter will be propagated to the caller.
    The same rules apply for methods satisfying protocol requirements
    for methods that rethrow, throw, or don't throw.
 
+
+.. _ErrorHandling_Catch:
 
 Catching and Handling Errors
 ----------------------------
@@ -227,6 +235,8 @@ and evaluates each ``catch`` clause until a matching pattern is found.
 If no error is thrown,
 the return value of ``increaseVolume()`` is assigned to ``newVolume``.
 
+.. _ErrorHandling_Force:
+
 Disabling Compiler Checks for Error Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -250,6 +260,8 @@ and treat the expression as if it did not throw.
 
 If an error is thrown by a function wrapped in a forced-try statement,
 a runtime error is triggered.
+
+.. _ErrorHandling_Defer:
 
 Deferring Statements During Error Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
