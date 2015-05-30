@@ -382,7 +382,7 @@ A ``guard`` statement has the following form:
        <#control transfer statement#>
     }
 
-The value of any condition in an ``guard`` statement
+The value of any condition in a ``guard`` statement
 must have a type that conforms to the ``BooleanType`` protocol.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
