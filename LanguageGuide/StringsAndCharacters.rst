@@ -143,14 +143,6 @@ In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
 Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
-.. note::
-
-   This behavior differs from that of ``NSString`` in Cocoa.
-   When you create an ``NSString`` instance in Cocoa,
-   and pass it to a function or method or assign it to a variable,
-   you are always passing or assigning a *reference* to the same single ``NSString``.
-   No copying of the string takes place, unless you specifically request it.
-
 Swift's copy-by-default ``String`` behavior ensures that
 when a function or method passes you a ``String`` value,
 it is clear that you own that exact ``String`` value,
