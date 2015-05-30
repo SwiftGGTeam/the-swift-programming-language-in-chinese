@@ -965,118 +965,6 @@ only if the ``where`` clause's condition evaluates to ``true`` for that value.
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
-.. _ControlFlow_Guard:
-
-Guard
-~~~~~
-
-A ``guard`` statement, like an ``if`` statement,
-executes statements depending on the Boolean value of an expression.
-You use a ``guard`` statement to require that a condition must be true
-in order for the code after it to be executed.
-If that condition is not met, the code inside the ``else`` branch
-lets you handle the violated condition by
-exiting out of the current block of code.
-
-.. testcode:: guard
-
-   -> func doubleSmallNumber(number: Int) -> String {
-          guard number < 10  else {
-              return "That's not a small number!"
-          }
-
-          let double = 2 * number
-          let result = "Double \(number) is \(double)."
-          return(result)
-      }
-   -> print(doubleSmallNumber(100))
-   <- That's not a small number!
-   -> print(doubleSmallNumber(3))
-   <- Double 3 is 6.
-
-
-
-..
-   -> func doubleLastNumber(numbers: [Int]) -> Int? {
-          guard let lastNumber = numbers.last else {
-              return nil
-          }
-          return lastNumber * 2
-      }
-   >> doubleLastNumber([])
-   <$ : Int? = nil
-   >> doubleLastNumber([1, 2, 3])
-   <$ : Int? = Optional(6)
-
-
-
-
-
-If the condition of a ``guard`` statement is false,
-the code inside the ``else`` statement runs;
-otherwise, code execution continues after the ``guard`` statement's closing brace.
-
-
-Guard statements make your code easier to read
-by letting you specify a condition that needs to be met
-in order for the following code to execute,
-and handling the case when that condition is not met inside an ``else`` block.
-You could do this using ``if`` statements,
-but that approach is harder to read
-because you have to write the code that's typically executed
-inside the body of the ``if`` statement.
-The following listing shows the same function written both ways:
-
-.. testcode:: guard
-
-   -> func addFirstAndLastWithIf(numbers: [Int]) -> Int? {
-          if let first = numbers.first {
-              if let last = numbers.last {
-                  return first + last
-              } else {
-                  return nil
-              }
-          } else {
-              return nil
-          }
-      }
-   >> addFirstAndLastWithIf([])
-   <$ : Int? = nil
-   >> addFirstAndLastWithIf([1, 2, 3])
-   <$ : Int? = Optional(4)
-   ---
-   -> func addFirstAndLastWithGuard(numbers: [Int]) -> Int? {
-          guard let first = numbers.first else {
-              return nil
-          }
-          guard let last = numbers.last else {
-              return nil
-          }
-          return first + last
-      }
-   >> addFirstAndLastWithGuard([])
-   <$ : Int? = nil
-   >> addFirstAndLastWithGuard([1, 2, 3])
-   <$ : Int? = Optional(4)
-
-The preceding example 
-
-The ``else`` block of a ``guard`` statement must exit out of the current block of code.
-It can use a flow control statement such as ``return``, ``break``, or ``continue``,
-or it can call a function that doesn't return such as ``fatalError()``.
-
-Notice that the path of execution is opposite:
-In the version that uses ``if``,
-the most common case where the list of numbers is not empty
-the ``lastNumber`` constant is available inside the first branch of the optional binding,
-but in the version that uses ``guard``
-the ``lastNumber`` constant is available on every line after the ``guard`` statement.
-
-Guard statements help make your code easier to read
-when you use them instead of putting the entire body of a function
-inside an optional binding
-or using nested optional bindings.
-
 .. _ControlFlow_ControlTransferStatements:
 
 Control Transfer Statements
@@ -1472,3 +1360,98 @@ and to work out if the move is allowed:
    However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
    Doing so is consistent with the label's use alongside the ``break`` statement,
    and helps make the game's logic clearer to read and understand.
+
+.. _ControlFlow_Guard:
+
+Early Exit
+----------
+
+A ``guard`` statement, like an ``if`` statement,
+executes statements depending on the Boolean value of an expression.
+You use a ``guard`` statement to require that a condition must be true
+in order for the code after it to be executed.
+If that condition is not met, the code inside the ``else`` branch
+lets you handle the violated condition by
+exiting out of the current block of code.
+
+.. testcode:: guard
+
+   -> func doubleSmallNumber(number: Int) -> String {
+          guard number < 10  else {
+              return "That's not a small number!"
+          }
+
+          let double = 2 * number
+          let result = "Double \(number) is \(double)."
+          return(result)
+      }
+   -> print(doubleSmallNumber(100))
+   <- That's not a small number!
+   -> print(doubleSmallNumber(3))
+   <- Double 3 is 6.
+
+If the condition of the ``guard`` statement is true,
+code execution continues after the ``guard`` statement's closing brace.
+Otherwise, the code inside the ``else`` statement runs
+
+
+Guard statements make your code easier to read
+by letting you specify a condition that needs to be met
+in order for the following code to execute,
+and handling the case when that condition is not met inside an ``else`` block.
+You could do this using ``if`` statements,
+but that approach is harder to read
+because you have to write the code that's typically executed
+inside the body of the ``if`` statement.
+The following listing shows the same function written both ways:
+
+.. testcode:: guard
+
+   -> func addFirstAndLastWithIf(numbers: [Int]) -> Int? {
+          if let first = numbers.first {
+              if let last = numbers.last {
+                  return first + last
+              } else {
+                  return nil
+              }
+          } else {
+              return nil
+          }
+      }
+   >> addFirstAndLastWithIf([])
+   <$ : Int? = nil
+   >> addFirstAndLastWithIf([1, 2, 3])
+   <$ : Int? = Optional(4)
+   ---
+   -> func addFirstAndLastWithGuard(numbers: [Int]) -> Int? {
+          guard let first = numbers.first else {
+              return nil
+          }
+          guard let last = numbers.last else {
+              return nil
+          }
+          return first + last
+      }
+   >> addFirstAndLastWithGuard([])
+   <$ : Int? = nil
+   >> addFirstAndLastWithGuard([1, 2, 3])
+   <$ : Int? = Optional(4)
+
+The preceding example 
+
+The ``else`` block of a ``guard`` statement must exit out of the current block of code.
+It can use a flow control statement such as ``return``, ``break``, or ``continue``,
+or it can call a function that doesn't return such as ``fatalError()``.
+
+Notice that the path of execution is opposite:
+In the version that uses ``if``,
+the most common case where the list of numbers is not empty
+the ``lastNumber`` constant is available inside the first branch of the optional binding,
+but in the version that uses ``guard``
+the ``lastNumber`` constant is available on every line after the ``guard`` statement.
+
+Guard statements help make your code easier to read
+when you use them instead of putting the entire body of a function
+inside an optional binding
+or using nested optional bindings.
+
