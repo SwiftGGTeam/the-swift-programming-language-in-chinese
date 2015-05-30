@@ -385,7 +385,7 @@ A ``guard`` statement has the following form:
     }
 
 Like an ``if`` statement,
-the value of any condition in an ``guard`` statement
+the value of any condition in a ``guard`` statement
 must have a type that conforms to the ``BooleanType`` protocol,
 and may be an optional binding declaration.
 Any constants or variables assigned a value
