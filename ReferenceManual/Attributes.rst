@@ -36,6 +36,17 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a parameter declaration for
+    a function or method type that takes no arguments
+    and that returns the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
+    For an example of how to use the ``autoclosure`` attribute,
+    see :ref:`Types_FunctionType`.
+
 ``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
     relative to certain platforms and operating system versions.
@@ -211,71 +222,6 @@ the ``noreturn`` attribute to a function or method *type*.
         If another module imports the current module, that other module can access
         the items exported by the current module.
 
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a parameter declaration for
-    a function or method type that takes no arguments
-    and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
-    For an example of how to use the ``autoclosure`` attribute, see :ref:`Types_FunctionType`.
-
-``noescape``
-    Apply this attribute to a function or method declaration
-    to indicate that a parameter will not be stored for later execution,
-    such that it is guaranteed not to outlive the lifetime of the call.
-    Function type parameters with the ``noescape`` declaration attribute
-    do not require explicit use of ``self.`` for properties or methods.
-
-``noreturn``
-    Apply this attribute to a function or method declaration
-    to indicate that the corresponding type of that function or method,
-    ``T``, is ``@noreturn T``.
-    You can mark a function or method type with this attribute to indicate that
-    the function or method doesn't return to its caller.
-
-    You can override a function or method that is not marked with the ``noreturn``
-    attribute with a function or method that is. That said, you can't override
-    a function or method that is marked with the ``noreturn`` attribute with a function
-    or method that is not. Similar rules apply when you implement a protocol
-    method in a conforming type.
-
-``NSApplicationMain``
-    Apply this attribute to a class
-    to indicate that it is the application delegate.
-    Using this attribute is equivalent to calling the
-    ``NSApplicationMain(_:_:)`` function and
-    passing this class's name as the name of the delegate class.
-
-    If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main()`` function
-    that calls the ``NSApplicationMain(_:_:)`` function.
-    For example,
-    if your app uses a custom subclass of ``NSApplication``
-    as its principal class,
-    call the ``NSApplicationMain`` function
-    instead of using this attribute.
-
-``NSCopying``
-    Apply this attribute to a stored variable property of a class.
-    This attribute causes the property's setter to be synthesized with a *copy*
-    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
-    value of the property itself.
-    The type of the property must conform to the ``NSCopying`` protocol.
-
-    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
-    property attribute.
-
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-
-``NSManaged``
-    Apply this attribute to a stored variable property of a class that inherits from
-    ``NSManagedObject`` to indicate that the storage and implementation of the
-    property are provided dynamically by Core Data at runtime
-    based on the associated entity description.
-
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
@@ -325,6 +271,89 @@ the ``noreturn`` attribute to a function or method *type*.
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
     Possibly link to Anna and Jack's guide too.
+
+``noescape``
+    Apply this attribute to a function or method declaration
+    to indicate that a parameter will not be stored for later execution,
+    such that it is guaranteed not to outlive the lifetime of the call.
+    Function type parameters with the ``noescape`` declaration attribute
+    do not require explicit use of ``self.`` for properties or methods.
+
+``noreturn``
+    Apply this attribute to a function or method declaration
+    to indicate that the corresponding type of that function or method,
+    ``T``, is ``@noreturn T``.
+    You can mark a function or method type with this attribute to indicate that
+    the function or method doesn't return to its caller.
+
+    You can override a function or method that is not marked with the ``noreturn``
+    attribute with a function or method that is. That said, you can't override
+    a function or method that is marked with the ``noreturn`` attribute with a function
+    or method that is not. Similar rules apply when you implement a protocol
+    method in a conforming type.
+
+``testable``
+    Apply this attribute to an entity with ``private`` or ``internal`` access level
+    to indicate that it can be accessed by unit testing targets
+    as if it were declared with ``public`` access level
+    when compiled with the ``--enable-testing`` flag.
+
+    .. testcode:: testable
+       :compile: true
+
+       -> @testable
+       -> private class MyClass {
+              // class definition
+          }
+
+    You can apply this annotation when ``public`` access would be impractical,
+    but otherwise necessary for the purposes of unit testing.
+
+    When applied to a structure, class, enumeration, or extension,
+    any member declarations that are not explicitly assigned ``private`` access
+    are also made ``testable``-public.
+
+    The ``testable`` annotation may also be applied to ``import`` declarations
+    to make ``testable``-public entities accessible to other modules.
+
+    .. syntax-outline::
+
+       @testable import <#Framework#>
+
+``NSApplicationMain``
+    Apply this attribute to a class
+    to indicate that it is the application delegate.
+    Using this attribute is equivalent to calling the
+    ``NSApplicationMain(_:_:)`` function and
+    passing this class's name as the name of the delegate class.
+
+    If you do not use this attribute,
+    supply a ``main.swift`` file with a ``main()`` function
+    that calls the ``NSApplicationMain(_:_:)`` function.
+    For example,
+    if your app uses a custom subclass of ``NSApplication``
+    as its principal class,
+    call the ``NSApplicationMain`` function
+    instead of using this attribute.
+
+``NSCopying``
+    Apply this attribute to a stored variable property of a class.
+    This attribute causes the property's setter to be synthesized with a *copy*
+    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
+    value of the property itself.
+    The type of the property must conform to the ``NSCopying`` protocol.
+
+    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
+    property attribute.
+
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section.
+
+``NSManaged``
+    Apply this attribute to a stored variable property of a class that inherits from
+    ``NSManagedObject`` to indicate that the storage and implementation of the
+    property are provided dynamically by Core Data at runtime
+    based on the associated entity description.
 
 ``UIApplicationMain``
     Apply this attribute to a class
