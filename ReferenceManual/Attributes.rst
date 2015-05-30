@@ -399,11 +399,41 @@ to class declarations.
 Type Attributes
 ---------------
 
-You can apply type attributes to types only. However, you can also apply the ``noreturn``
-attribute to a function or method *declaration*.
+You can apply type attributes to types only.
+However, you can also apply the ``noreturn`` attribute
+to a function or method *declaration*.
+
+``convention``
+   Apply this attribute to the type of a function
+   to indicate its calling conventions.
+
+   The ``convention`` attribute always appears
+   one of the following attribute arguments:
+
+   * ``swift``
+   * ``thin``
+   * ``c``
+   * ``block``
+
+   The ``convention`` attribute takes the following form:
+
+   .. syntax-outline::
+
+       @convention(<#argument#>)
+
+   * The ``swift`` argument is used to indicate a Swift function reference.
+     This is the standard calling convention for function values in Swif.
+   * The ``thin`` argument is used to indicate a ”thin” function reference, which uses
+     the Swift calling convention with no context or reference to ``self``.
+   * The ``c`` argument is used to indicate a C function reference.
+     The function value carries no context and uses the C calling convention.
+   * The ``block`` argument is used to indicate an Objective-C compatible block reference.
+     The function value is represented as a reference to the block object,
+     which is an ``id``-compatible Objective-C object that embeds its invocation
+     function within the object.
+     The invocation function uses the C calling convention.
 
 .. assertion::
-
 
    -> let f: Int -> Int = { $0 }
       let f_swift: @convention(swift) Int -> Int = { $0 }
@@ -412,10 +442,15 @@ attribute to a function or method *declaration*.
       let f_thin: @convention(thin) Int -> Int = { $0 }
 
    -> f(1)
+   <$ : Int = 1
    -> f_swift(1)
+   <$ : Int = 1
    -> f_block(1)
+   <$ : Int = 1
    -> f_c(1)
+   <$ : Int = 1
    -> f_thin(1)
+   <$ : Int = 1
 
 ``noreturn``
     Apply this attribute to the type of a function or method
