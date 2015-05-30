@@ -346,6 +346,45 @@ the ``noreturn`` attribute to a function or method *type*.
    `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
    Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
 
+``warn_unused_result``
+   Apply this attribute to a method or function declaration
+   to have the compiler emit a warning
+   when the method or function is called without using its result.
+
+   You can use this attribute to provide a warning message about incorrect
+   usage of a nonmutating method that has a mutating counterpart.
+
+   The ``warn_unused_result`` attribute optionally accepts
+   one of the two attribute arguments below.
+
+   * The ``message`` argument is used to provide a textual warning message
+     that's displayed when the function or method is called, but its result isn't used.
+     It has the following form:
+
+     .. syntax-outline::
+
+         message=<#message#>
+
+     The *message* consists of a string literal.
+
+   * The ``mutable_variant`` argument is used to provide the name of the mutating version
+     of the method that should be used if the nonmutating method is called on a mutable
+     value and the result isn't used.
+     It has the following form, where the *method name* consists of a string literal:
+
+     .. syntax-outline::
+
+         mutable_variant=<#method name#>
+
+     For example, the Swift standard library provides both
+     the mutating method ``sortInPlace()``
+     and the nonmutating method ``sort()`` to collections
+     whose generator element conforms to the ``Comparable`` protocol.
+     If you call the ``sort()`` method without using its result,
+     it's likely that you actually intended to use the mutating variant,
+     ``sortInPlace()`` instead.
+
+
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
 Declaration Attributes Used by Interface Builder
@@ -364,6 +403,7 @@ You apply the ``IBOutlet`` and ``IBInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
+
 
 .. _Attributes_TypeAttributes:
 
