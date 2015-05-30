@@ -6,6 +6,65 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-05-29  * Added the :ref:`LexicalStructure_CommentDocumentation` section
+              to the :doc:`../ReferenceManual/LexicalStructure` chapter.
+
+            * Updated the
+              :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
+              with a more precise definition of Unicode scalars.
+
+            * Updated the :ref:`Properties_TypeProperties` section
+              with information about stored and computed type properties
+              for classes, structures, and enumerations.
+
+            * Added the :ref:`TheBasics_ImportDeclarations` section
+              to the :doc:`../LanguageGuide/TheBasics` chapter.
+
+            * Updated the :ref:`Statements_BreakStatement` section
+              with information about labeled break statements.
+
+            * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
+              to the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Added the :ref:`../LanguageGuide/ErrorHandling` chapter.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about differences in weak references
+              between garbage collected systems and ARC.
+
+            * Updated the :ref:`BasicOperators_AssignmentOperator` section
+              with information about why chained assignment isn't supported.
+
+            * Added a note to the :ref:`Types_MetatypeType` section
+              about constructing instances from metatype values.
+
+            * Updated the :ref:`ControlFlow_RepeatWhile` section
+              with information about the the ``repeat``-``while`` loop.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              with information about the ``@available`` attribute.
+
+            * Updated a note in the :ref:`Properties_PropertyObservers` section
+              to clarify the behavior of ``willSet`` and ``didSet`` observers.
+
+            * Added a note to the :ref:`AccessControl_AccessLevels` section
+              with information about the scope of ``private`` access.
+
+            * Added the :doc:`../ReferenceManual/Directives` chapter.
+
+            * Added the :ref:`Statements_ScopeIntroductionStatement` section
+              to the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added the :ref:`Statements_GuardStatement` section
+              to the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added the :ref:`Extensions_ProtocolExtensions` section
+              to the :doc:`../LanguageGuide/Extensions` chapter.
+
+            * Updated the :ref:`Attributes_TypeAttributes` section
+              with information about the ``@convention`` attribute.
+----------  --------------------------------------------------------------------------
 2015-04-08  * Swift now has a native ``Set`` collection type.
               For more information, see :ref:`CollectionTypes_Sets`.
 
