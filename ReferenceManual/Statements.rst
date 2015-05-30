@@ -370,8 +370,8 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 Guard Statement
 ~~~~~~~~~~~~~~~
 
-A ``guard`` statement can be used to ensure that
-a certain condition is satisfied before continuing execution.
+A ``guard`` statement is used for early exit from a scope
+based on the evaluation of one or more conditions.
 
 A ``guard`` statement has the following form:
 
@@ -382,18 +382,16 @@ A ``guard`` statement has the following form:
        <#control transfer statement#>
     }
 
-Like an ``if`` statement,
-the value of any condition in an ``guard`` statement
+The value of any condition in an ``guard`` statement
 must have a type that conforms to the ``BooleanType`` protocol,
 and may be an optional binding declaration.
 Any constants or variables assigned a value
 from an optional binding declaration in a ``guard`` statement condition
 may be used in subsequent lines as if they were defined with non-optional values.
 
-Unlike an ``if`` statement,
-the ``else`` clause of a ``guard`` statement is always required,
-and must prevent execution from falling through
-by using one of the following control transfer statements:
+The ``else`` clause of a ``guard`` statement is required,
+and must transfer program control back to the enclosing scope
+using one of the following statements:
 
 * ``return``
 * ``break``
@@ -406,7 +404,7 @@ Control transfer statements are discussed in :ref:`Statements_ControlTransferSta
 
     Grammar of a guard statement
 
-    guard-statement --> ``guard`` if-condition else-clause
+    guard-statement --> ``guard`` if-condition ``else`` code-block
 
 .. _Statements_SwitchStatement:
 
