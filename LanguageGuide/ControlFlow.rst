@@ -544,14 +544,18 @@ You might want to run an extra piece of code when an error occurs,
 or to display a message when a value becomes too high or too low.
 To do this, you make parts of your code :newTerm:`conditional`.
 
-Swift provides two ways to add conditional branches to your code,
-known as the ``if`` statement and the ``switch`` statement.
+Swift provides three ways to add conditional branches to your code,
+known as the ``if`` statement,
+the ``switch`` statement,
+and the ``guard`` statement,
 Typically, you use the ``if`` statement
 to evaluate simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to
 more complex conditions with multiple possible permutations,
 and is useful in situations where pattern-matching can help select
 an appropriate code branch to execute.
+You use the ``guard`` statement to exit out of a block of code
+if some condition isn't met.
 
 .. _ControlFlow_If:
 
@@ -974,6 +978,88 @@ only if the ``where`` clause's condition evaluates to ``true`` for that value.
 
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+
+.. _ControlFlow_Guard:
+
+Guard
+-----
+
+A ``guard`` statement, like an ``if`` statement,
+checks whether a condition is true.
+Unlike an ``if`` statement,
+if the condition of a ``guard`` statement is false,
+its ``else`` branch must exit out of the current block of code.
+
+For example, the following two functions are equivalent:
+
+.. testcode:: guard
+
+   -> func doubleLastNumberWithIf(numbers: [Int]) -> Int? {
+          if let lastNumber = numbers.last {
+              return lastNumber * 2
+          } else {
+              return nil
+          }
+      }
+   >> doubleLastNumberWithIf([])
+   <$ : Int? = nil
+   >> doubleLastNumberWithIf([1, 2, 3])
+   <$ : Int? = Optional(6)
+   --
+   -> func doubleLastNumber(numbers: [Int]) -> Int? {
+          guard let lastNumber = numbers.last else {
+              return nil
+          }
+          return lastNumber * 2
+      }
+   >> doubleLastNumber([])
+   <$ : Int? = nil
+   >> doubleLastNumber([1, 2, 3])
+   <$ : Int? = Optional(6)
+
+Notice that the path of execution is opposite:
+In the version that uses ``if``,
+the most common case where the list of numbers is not empty
+the ``lastNumber`` constant is available inside the first branch of the optional binding,
+but in the version that uses ``guard``
+the ``lastNumber`` constant is available on every line after the ``guard`` statement.
+
+Guard statements help make your code easier to read
+when you use them instead of putting the entire body of a function
+inside an optional binding
+or using nested optional bindings.
+
+.. testcode::
+
+   -> func addFirstAndLastWithIf(numbers: [Int]) -> Int? {
+          if let firstNumber = numbers.first {
+              if let lastNumber = numbers.last {
+                  return firstNumber * lastNumber
+              } else {
+                  return nil
+              }
+          } else {
+              return nil
+          }
+      }
+   >> doubleLastNumberWithIf([])
+   <$ : Int? = nil
+   >> doubleLastNumberWithIf([1, 2, 3])
+   <$ : Int? = Optional(6)
+   --
+   -> func doubleLastNumber(numbers: [Int]) -> Int? {
+          guard let firstNumber = numbers.first else {
+              return nil
+          }
+          guard let lastNumber = numbers.last else {
+              return nil
+          }
+          return firstNumber * lastNumber
+      }
+   >> doubleLastNumber([])
+   <$ : Int? = nil
+   >> doubleLastNumber([1, 2, 3])
+   <$ : Int? = Optional(6)
 
 .. _ControlFlow_ControlTransferStatements:
 
