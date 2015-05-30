@@ -470,13 +470,13 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
     >> }
 
 As the above example shows, patterns in a case can also bind constants
-using the keyword ``let`` (they can also bind variables using the keyword ``var``).
-These constants (or variables) can then be referenced in a corresponding where expression
+using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
+These constants (or variables) can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
 none of those patterns can contain constant or variable bindings.
 
-A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
+A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
 which must appear at the end of the ``switch`` statement.
@@ -514,7 +514,7 @@ the program exits from the ``switch`` statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
-which simply consists of the keyword ``fallthrough``,
+which simply consists of the ``fallthrough`` keyword,
 in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
@@ -587,10 +587,11 @@ a ``fallthrough`` statement, and a ``return`` statement.
 
 .. langref-grammar
 
-    stmt-control-transfer ::= stmt-return
     stmt-control-transfer ::= stmt-break
     stmt-control-transfer ::= stmt-continue
     stmt-control-transfer ::= stmt-fallthrough
+    stmt-control-transfer ::= stmt-return
+    stmt-control-transfer ::= stmt-throw
 
 .. syntax-grammar::
 
@@ -600,6 +601,7 @@ a ``fallthrough`` statement, and a ``return`` statement.
     control-transfer-statement --> continue-statement
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
+    control-transfer-statement --> throw-statement
 
 
 .. _Statements_BreakStatement:
@@ -608,8 +610,9 @@ Break Statement
 ~~~~~~~~~~~~~~~
 
 A ``break`` statement ends program execution of a loop or a ``switch`` statement.
-A ``break`` statement can consist of only the keyword ``break``,
-or it can consist of the keyword ``break`` followed by the name of a statement label,
+A ``break`` statement can consist of only the ``break`` keyword,
+or it can consist of the ``break`` keyword,
+followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -649,8 +652,9 @@ Continue Statement
 
 A ``continue`` statement ends program execution of the current iteration of a loop
 statement but does not stop execution of the loop statement.
-A ``continue`` statement can consist of only the keyword ``continue``,
-or it can consist of the keyword ``continue`` followed by the name of a statement label,
+A ``continue`` statement can consist of only the ``continue`` keyword,
+or it can consist of the ``continue`` keyword,
+followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -732,8 +736,10 @@ A ``return`` statement occurs in the body of a function or method definition
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
-A ``return`` statement can consist of only the keyword ``return``,
-or it can consist of the keyword ``return`` followed by an expression, as shown below.
+A ``return`` statement can consist of only the ``return`` keyword,
+or it can consist of the ``return`` keyword,
+followed by an expression,
+as shown below.
 
 .. syntax-outline::
 
@@ -769,3 +775,39 @@ it can be used only to return from a function or method that does not return a v
     Grammar of a return statement
 
     return-statement --> ``return`` expression-OPT
+
+
+.. _Statements_ThrowStatement:
+
+Throw Statement
+~~~~~~~~~~~~~~~~
+
+A ``throw`` statement occurs in the body of a function, method, or closure definition
+that is declared to be throwable.
+A ``throw`` statement causes a program to end execution of the current scope
+and begin error propagation to its enclosing scope.
+Error propagation continues until the error is handled by a ``catch`` clause.
+
+A ``throw`` statement consists of the ``throw`` keyword,
+followed by an expression, as shown below.
+
+.. syntax-outline::
+
+    throw <#expression#>
+
+The value of a ``throw`` statement expression must have a type that conforms to
+the ``ErrorType`` protocol.
+
+For an example of how to use a ``throw`` statement,
+see :ref:`ErrorHandling_Throwing`
+in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+
+.. langref-grammar
+
+    stmt-throw ::= 'throw' expr
+
+.. syntax-grammar::
+
+    Grammar of a throw statement
+
+    throw-statement --> ``throw`` expression

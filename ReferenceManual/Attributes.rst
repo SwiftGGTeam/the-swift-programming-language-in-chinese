@@ -15,7 +15,7 @@ and those that apply to types.
     And the ``noreturn`` attribute---when applied to a function or method type---indicates that
     the function or method doesn't return to its caller.
 
-You specify an attribute by writing the ``@`` symbol followed by the attribute's name
+You specify an attribute by writing the ``@`` symbol, followed by the attribute's name
 and any arguments that the attribute accepts:
 
 .. syntax-outline::

@@ -460,11 +460,11 @@ but they can also be expressed in hexadecimal (with a ``0x`` prefix).
    Developer Publications SG entry on 'x' says:
    Used in place of a multiplication sign or the word by to describe dimensions: a 50 x 50 pixel resolution.
 
-Decimal floating-point literals consist of a sequence of decimal digits
+Decimal floating-point literals consist of a sequence of decimal digits,
 followed by either a decimal fraction, a decimal exponent, or both.
-The decimal fraction consists of a decimal point (``.``)
+The decimal fraction consists of a decimal point (``.``),
 followed by a sequence of decimal digits.
-The exponent consists of an upper- or lowercase ``e`` prefix
+The exponent consists of an upper- or lowercase ``e`` prefix,
 followed by a sequence of decimal digits that indicates
 what power of 10 the value preceding the ``e`` is multiplied by.
 For example, ``1.25e2`` represents 1.25 x 10\ :superscript:`2`,
@@ -475,9 +475,9 @@ which evaluates to ``0.0125``.
 Hexadecimal floating-point literals consist of a ``0x`` prefix,
 followed by an optional hexadecimal fraction,
 followed by a hexadecimal exponent.
-The hexadecimal fraction consists of a decimal point
+The hexadecimal fraction consists of a decimal point,
 followed by a sequence of hexadecimal digits.
-The exponent consists of an upper- or lowercase ``p`` prefix
+The exponent consists of an upper- or lowercase ``p`` prefix,
 followed by a sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
 For example, ``0xFp2`` represents 15 x 2\ :superscript:`2`,

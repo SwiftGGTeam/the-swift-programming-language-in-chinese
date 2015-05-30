@@ -650,7 +650,7 @@ that allow closures to be written more concisely:
 
 * A closure may omit names for its parameters.
   Its parameters are then implicitly named
-  ``$`` followed by their position:
+  ``$``, followed by their position:
   ``$0``, ``$1``, ``$2``, and so on.
 
 * A closure that consists of only a single expression
@@ -851,6 +851,66 @@ For example, in the following assignment
 
     wildcard-expression --> ``_``
 
+.. _Expressions_TryExpression:
+
+Try Expression
+--------------
+
+A :newTerm:`try expression`
+is used to evaluate an expression that can throw an error.
+
+It has the following form:
+
+.. syntax-outline::
+
+   try <#expression#>
+
+For example:
+
+.. testcode:: tryExpression
+
+    -> func functionCanThrow() throws {}
+    -> do {
+          try functionCanThrow()
+          print("No Error Thrown")
+       } catch {
+          print("Error Thrown")
+       }
+    << No Error Thrown
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    try-expression --> ``try`` expression
+
+.. _Expressions_ForcedTryExpression:
+
+Forced-Try Expression
+~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`forced-try expression`
+is used to evaluate an expression that you are certain will not throw an error.
+
+It has the following form:
+
+.. syntax-outline::
+
+   try! <#expression#>
+
+For example:
+
+.. testcode:: tryExpression
+
+    -> func functionCanButWillNotThrow() throws {}
+    -> try! functionCanButWillNotThrow()
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    forced-try-expression --> ``try!`` expression
+
 
 .. _Expressions_PostfixExpressions:
 
@@ -905,7 +965,7 @@ Function Call Expression
 .. TODO: After we rewrite function decls,
    revisit this section to make sure that the names for things match.
 
-A :newTerm:`function call expression` consists of a function name
+A :newTerm:`function call expression` consists of a function name,
 followed by a comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 

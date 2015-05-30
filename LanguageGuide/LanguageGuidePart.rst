@@ -21,6 +21,7 @@ Language Guide
    Deinitialization
    AutomaticReferenceCounting
    OptionalChaining
+   ErrorHandling
    TypeCasting
    NestedTypes
    Extensions
