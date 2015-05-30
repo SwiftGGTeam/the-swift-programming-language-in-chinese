@@ -779,7 +779,11 @@ For example:
 
 .. testcode:: typePropertySyntax
 
+<<<<<<< HEAD
    -> print(SomeStructure.storedTypeProperty)
+=======
+   -> println(SomeStructure.storedTypeProperty)
+>>>>>>> mattt-20329447-mismatch
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
    -> print(SomeStructure.storedTypeProperty)
