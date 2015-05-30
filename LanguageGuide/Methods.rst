@@ -87,8 +87,6 @@ and an external name (for use when calling the function),
 as described in :ref:`Functions_ExternalParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-However, the default behavior of local names and external names
-is different for functions and methods.
 
 Methods in Swift are very similar to their counterparts in Objective-C.
 As in Objective-C, the name of a method in Swift typically refers to
@@ -139,26 +137,7 @@ because its purpose is clear from the function name ``incrementBy``.
 The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
-This default behavior effectively treats the method as if you had written
-a hash symbol (``#``) before the ``numberOfTimes`` parameter:
-
-.. testcode:: externalParameterNamesComparison
-
-   >> class Counter {
-   >>    var count: Int = 0
-   >>    func incrementBy(amount: Int) {
-   >>       count += amount
-   >>    }
-   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
-         count += amount * numberOfTimes
-      }
-   >> }
-   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
-   !! ^
-   !!-
-
-The default behavior described above means that method definitions in Swift
+The behavior described above means that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
 
