@@ -284,7 +284,8 @@ Branch statements allow the program to execute certain parts of code
 depending on the value of one or more conditions.
 The values of the conditions specified in a branch statement
 control how the program branches and, therefore, what block of code is executed.
-Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
+Swift has three branch statements:
+an ``if`` statement, a ``guard`` statement, and a ``switch`` statement.
 
 Control flow in a ``switch`` statement can be changed by a ``break`` statement
 and is discussed in :ref:`Statements_BreakStatement` below.
