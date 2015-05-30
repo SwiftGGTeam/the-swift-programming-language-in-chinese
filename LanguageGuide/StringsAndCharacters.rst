@@ -55,6 +55,8 @@ Use a string literal as an initial value for a constant or variable:
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
 
+You can
+
 .. note::
 
    For information about using special characters in string literals,
@@ -166,14 +168,12 @@ when working with strings as value types.
 Working with Characters
 -----------------------
 
-Swift's ``String`` type represents a collection of ``Character`` values
-in a specified order.
-You can access the individual ``Character`` values in a string
-by iterating over that string with a ``for``-``in`` loop:
+You can access the individual ``Character`` values for a ``String``
+by iterating over its ``characters`` property with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
-   -> for character in "Dog!🐶" {
+   -> for character in "Dog!🐶".characters {
          print(character)
       }
    </ D
@@ -184,7 +184,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-Alternatively, create a stand-alone ``Character`` constant or variable
+Alternatively, you can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -203,7 +203,6 @@ as an argument to its initializer:
    << // catString : String = "Cat!🐱"
    -> print(catString)
    <- Cat!🐱
-
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
