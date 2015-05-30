@@ -228,6 +228,26 @@ the ``noreturn`` attribute to a function or method *type*.
     Function type parameters with the ``noescape`` declaration attribute
     do not require explicit use of ``self.`` for properties or methods.
 
+``nonobjc``
+    Apply this attribute to a
+    method, property, subscript, or initializer declaration
+    that can be represented in Objective-C.
+    The ``nonobjc`` attribute tells the compiler
+    that a declaration is not available to use in Objective-C code.
+
+    You use the ``nonobjc`` attribute to resolve circularity
+    for bridging methods in a class marked with the ``objc`` attribute,
+    and to allow overloading of methods and initializers
+    in an a class marked with the ``objc`` attribute.
+
+    A method marked with the ``nonobjc`` attribute
+    cannot override a method marked with the ``objc`` attribute.
+    However, a method marked with the ``objc`` attribute
+    can override a method marked with the ``nonobjc`` attribute.
+    Similarly, a method marked with the ``nonobjc`` attribute
+    cannot satisfy a protocol requirement
+    for a method marked with the ``@objc`` attribute.
+
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
@@ -419,11 +439,3 @@ attribute to a function or method *declaration*.
     balanced-token --> ``{`` balanced-tokens-OPT ``}``
     balanced-token --> Any identifier, keyword, literal, or operator
     balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-
-
-.. TODO:
-    Find out if there's a solution to the "!" inverted attributes problem.
-    It'd be nice if we didn't have to use ! for this meaning too.
-    If we decide to keep it, I'll need to update the grammar accordingly.
-    UPDATE: According to [Contributor 7746], we'll leave it in for now, so that we can
-    eventually use it for @!objc. We probably won't have @!objc before WWDC.
