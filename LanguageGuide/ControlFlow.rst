@@ -146,20 +146,6 @@ The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
 
-In addition to arrays and dictionaries,
-you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
-
-.. testcode:: forLoops
-
-   -> for character in "Hello" {
-         print(character)
-      }
-   </ H
-   </ e
-   </ l
-   </ l
-   </ o
-
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
@@ -1104,7 +1090,7 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
-   -> for character in puzzleInput {
+   -> for character in puzzleInput.characters {
          switch character {
             case "a", "e", "i", "o", "u", " ":
                continue
