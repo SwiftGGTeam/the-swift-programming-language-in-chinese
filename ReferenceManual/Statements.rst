@@ -218,7 +218,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     while-condition --> expression | expression-OPT optional-binding-list
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT guard-clause-OPT
+    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
     optional-binding-head --> ``let`` identifier-pattern initializer | ``var`` identifier-pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
     optional-binding-continuation --> identifier-pattern initializer | optional-binding-head
@@ -226,7 +226,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 .. NOTE: We considered the following simpler grammar for optional-binding-list:
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> pattern-initializer-list guard-clause-OPT
+    optional-binding-clause --> pattern-initializer-list where-clause-OPT
 
     We opted for the more complex grammar, because the simpler version overproduced.
 
@@ -294,6 +294,7 @@ and is discussed in :ref:`Statements_BreakStatement` below.
     Grammar of a branch statement
 
     branch-statement --> if-statement
+    branch-statement --> guard-statement
     branch-statement --> switch-statement
 
 
@@ -364,6 +365,56 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
+.. _Statements_GuardStatement:
+
+Guard Statement
+~~~~~~~~~~~~~~~
+
+A ``guard`` statement is used for early exit from a scope
+based on the evaluation of one or more conditions.
+
+A ``guard`` statement has the following form:
+
+.. syntax-outline::
+
+    guard <#condition#> else {
+       <#statements#>
+       <#control transfer statement#>
+    }
+
+The value of any condition in a ``guard`` statement
+must have a type that conforms to the ``BooleanType`` protocol.
+The condition can also be an optional binding declaration,
+as discussed in :ref:`TheBasics_OptionalBinding`.
+
+Any constants or variables assigned a value
+from an optional binding declaration in a ``guard`` statement condition
+can be used for the rest of the guard statement's enclosing scope.
+
+The ``else`` clause of a ``guard`` statement is required,
+and must either call a function marked with the ``noreturn`` attribute
+or transfer program control outside the guard statement's enclosing scope
+using one of the following statements:
+
+* ``return``
+* ``break``
+* ``continue``
+* ``throw``
+
+.. The function has to be marked @noterurn -- it's not sufficient to just be nonreturning.
+   For example, the following is invalid:
+
+   func foo() { fatalError() }
+   guard false else { foo() }
+
+Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
+
+.. syntax-grammar::
+
+    Grammar of a guard statement
+
+    guard-statement --> ``guard`` if-condition ``else`` code-block
+
 .. _Statements_SwitchStatement:
 
 Switch Statement
@@ -406,13 +457,13 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
-A ``switch`` case can optionally contain a guard expression after each pattern.
-A :newTerm:`guard expression` is introduced by the keyword ``where`` followed by an expression,
+A ``switch`` case can optionally contain a where clause after each pattern.
+A :newTerm:`where clause` is introduced by the keyword ``where`` followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
-If a guard expression is present, the *statements* within the relevant case
+If a where clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
-matches one of the patterns of the case and the guard expression evaluates to ``true``.
+matches one of the patterns of the case and the expression of the where clause evaluates to ``true``.
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
@@ -426,7 +477,7 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
 
 As the above example shows, patterns in a case can also bind constants
 using the keyword ``let`` (they can also bind variables using the keyword ``var``).
-These constants (or variables) can then be referenced in a corresponding guard expression
+These constants (or variables) can then be referenced in a corresponding where clause
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
 none of those patterns can contain constant or variable bindings.
@@ -494,11 +545,11 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-case --> case-label ``;`` | default-label ``;``
 
     case-label --> ``case`` case-item-list ``:``
-    case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
+    case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
     default-label --> ``default`` ``:``
 
-    guard-clause --> ``where`` guard-expression
-    guard-expression --> expression
+    where-clause --> ``where`` where-expression
+    where-expression --> expression
 
 
 .. _Statements_LabeledStatement:
