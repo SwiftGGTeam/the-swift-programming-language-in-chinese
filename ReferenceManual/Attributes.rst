@@ -351,18 +351,14 @@ the ``noreturn`` attribute to a function or method *type*.
    to have the compiler emit a warning
    when the method or function is called without using its result.
 
-   You use the ``warn_unused_result`` attribute to mitigate
-   incorrect usage of immutable ”in-place” methods and functions
-   that provide mutable counterparts.
+   You can use this attribute to provide a warning message about incorrect
+   usage of a nonmutating method that has a mutating counterpart.
 
    The ``warn_unused_result`` attribute optionally accepts
-   a list of one or more comma-separated attribute arguments.
-   The arguments can appear in any order
-   and specify additional information about the function declaration.
+   one of the two attribute arguments below.
 
-   * The ``message`` argument is used to provide a textual message
-     that's displayed by the compiler when emitting a warning
-     about calling of a method or function without using its result.
+   * The ``message`` argument is used to provide a textual warning message
+     that's displayed when the function or method is called, but its result isn't used.
      It has the following form:
 
      .. syntax-outline::
@@ -371,35 +367,23 @@ the ``noreturn`` attribute to a function or method *type*.
 
      The *message* consists of a string literal.
 
-   * The ``mutable_variant`` argument indicates
-     the existence of a mutable variant of the method or function.
-     If the method or function is called without using its result,
-     the compiler will suggest the use of the mutable variant instead.
-     It has the following form:
+   * The ``mutable_variant`` argument is used to provide the name of the mutating version
+     of the method that should be used if the nonmutating method is called on a mutable
+     value and the result isn't used.
+     It has the following form, where the *method name* consists of a string literal:
 
      .. syntax-outline::
 
-         mutable_variant=<#function name#>
+         mutable_variant=<#method name#>
 
-   For example, the Swift standard library provides both
-   the mutating method ``sortInPlace()``
-   and the nonmutating method ``sort()`` to collections
-   whose generator element conforms to the ``Comparable`` protocol.
-   If you call the ``sort()`` function without using its result,
-   it's likely that you actually intended to use the mutating variant,
-   ``sortInPlace()`` instead.
+     For example, the Swift standard library provides both
+     the mutating method ``sortInPlace()``
+     and the nonmutating method ``sort()`` to collections
+     whose generator element conforms to the ``Comparable`` protocol.
+     If you call the ``sort()`` method without using its result,
+     it's likely that you actually intended to use the mutating variant,
+     ``sortInPlace()`` instead.
 
-   .. testcode:: warn_unused_result
-
-      >> struct S {
-         typealias Element = String
-      -> mutating func sortInPlace()
-      >> {}
-      ---
-      -> @warn_unused_result(mutable_variant="sortInPlace")
-         func sort() -> [Element]
-      >> { return [] }
-      >> }
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
@@ -419,6 +403,7 @@ You apply the ``IBOutlet`` and ``IBInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
+
 
 .. _Attributes_TypeAttributes:
 
