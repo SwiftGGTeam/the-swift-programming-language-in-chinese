@@ -968,7 +968,7 @@ and so a ``default`` case is not needed to make the ``switch`` statement exhaust
 .. _ControlFlow_Guard:
 
 Guard
------
+~~~~~
 
 A ``guard`` statement, like an ``if`` statement,
 executes statements depending on the Boolean value of an expression.
