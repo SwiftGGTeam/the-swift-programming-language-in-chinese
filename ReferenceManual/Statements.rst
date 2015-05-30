@@ -287,7 +287,7 @@ control how the program branches and, therefore, what block of code is executed.
 Swift has three branch statements:
 an ``if`` statement, a ``guard`` statement, and a ``switch`` statement.
 
-Control flow in a ``switch`` statement can be changed by a ``break`` statement
+Control flow in an ``if`` statement or a ``switch`` statement can be changed by a ``break`` statement
 and is discussed in :ref:`Statements_BreakStatement` below.
 
 .. syntax-grammar::
@@ -558,7 +558,7 @@ see :ref:`Statements_FallthroughStatement` below.
 Labeled Statement
 -----------------
 
-You can prefix a loop statement or a ``switch`` statement
+You can prefix a loop statement, an ``if`` statement, or a ``switch`` statement
 with a :newTerm:`statement label`,
 which consists of the name of the label followed immediately by a colon (:).
 Use statement labels with ``break`` and ``continue`` statements to be explicit
@@ -577,7 +577,7 @@ see :ref:`ControlFlow_LabeledStatements` in the :doc:`../LanguageGuide/ControlFl
 
     Grammar of a labeled statement
 
-    labeled-statement --> statement-label loop-statement | statement-label switch-statement
+    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement
     statement-label --> label-name ``:``
     label-name --> identifier
 
@@ -614,7 +614,8 @@ a ``fallthrough`` statement, and a ``return`` statement.
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A ``break`` statement ends program execution of a loop or a ``switch`` statement.
+A ``break`` statement ends program execution of a loop,
+an ``if`` statement, or a ``switch`` statement.
 A ``break`` statement can consist of only the keyword ``break``,
 or it can consist of the keyword ``break`` followed by the name of a statement label,
 as shown below.
@@ -625,11 +626,13 @@ as shown below.
     break <#label name#>
 
 When a ``break`` statement is followed by the name of a statement label,
-it ends program execution of the loop or ``switch`` statement named by that label.
+it ends program execution of the loop,
+``if`` statement, or ``switch`` statement named by that label.
 
 When a ``break`` statement is not followed by the name of a statement label,
 it ends program execution of the ``switch`` statement or the innermost enclosing loop
 statement in which it occurs.
+You can't use an unlabeled ``break`` statement to break out of an ``if`` statement.
 
 In both cases, program control is then transferred to the first line
 of code following the enclosing loop or ``switch`` statement, if any.
