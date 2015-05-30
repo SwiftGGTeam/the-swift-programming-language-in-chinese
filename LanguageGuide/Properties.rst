@@ -713,9 +713,9 @@ within the type's outer curly braces,
 and each type property is explicitly scoped to the type it supports.
 
 You define type properties with the ``static`` keyword.
-For computed type properties for class types,
-you can use the ``class`` keyword instead
-to allow subclasses to override the superclass’s implementation.
+Classes may also use the ``class`` keyword
+with computed type properties
+to allow subclasses to override the superclass’s implementation of that property.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
@@ -779,11 +779,7 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-<<<<<<< HEAD
    -> print(SomeStructure.storedTypeProperty)
-=======
-   -> println(SomeStructure.storedTypeProperty)
->>>>>>> mattt-20329447-mismatch
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
    -> print(SomeStructure.storedTypeProperty)

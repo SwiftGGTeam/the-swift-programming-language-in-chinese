@@ -557,7 +557,6 @@ which every type conforms to.
 Metatype Type
 -------------
 
-<<<<<<< HEAD
 A metatype type refers to the type of any type, including class types, structure types,
 enumeration types, and protocol types.
 
@@ -566,16 +565,6 @@ immediately followed by ``.Type``.
 The metatype of a protocol type---not the concrete type that
 conforms to the protocol at runtime---is the name of that protocol,
 immediately followed by ``.Protocol``.
-=======
-A metatype type refers to the type of any type,
-including class types, structure types, enumeration types, and protocol types.
-
-The metatype of a class, structure, or enumeration type is
-the name of that type followed by ``.Type``.
-The metatype of a protocol type --- not the concrete type that
-conforms to the protocol at runtime ---
-is the name of that protocol followed by ``.Protocol``.
->>>>>>> mattt-20554176-metatype-initialization
 For example, the metatype of the class type ``SomeClass`` is ``SomeClass.Type``
 and the metatype of the protocol ``SomeProtocol`` is ``SomeProtocol.Protocol``.
 
