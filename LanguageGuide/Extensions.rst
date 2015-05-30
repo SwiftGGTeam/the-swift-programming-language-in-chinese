@@ -458,3 +458,129 @@ and prints an appropriate description.
    Because of this, all of the ``Int.Kind`` member values
    can be written in shorthand form inside the ``switch`` statement,
    such as ``.Negative`` rather than ``Int.Kind.Negative``.
+
+.. _Extensions_ProtocolExtensions:
+
+Protocol Extensions
+-------------------
+
+Protocols can be extended to provide “default implementations” for methods and properties
+to conforming types.
+This allows you to define behavior on protocols themselves,
+rather than in each type's individual conformance or a global function.
+
+In the example below,
+the ``Positioned`` protocol defines a ``coordinates`` property,
+which returns a tuple containing latitude and longitude coordinates.
+The ``Place`` structure adopts to the ``Positioned`` protocol,
+defining a ``name`` property
+in addition to the ``coordinates`` property required to conform to ``Positioned``.
+
+.. testcode:: protocolExtension
+
+   -> typealias Coordinates = (latitude: Double, longitude: Double)
+   -> protocol Positioned {
+         var coordinates: Coordinates { get }
+      }
+   ---
+   -> struct Place: Positioned {
+         let name: String
+         let coordinates: Coordinates
+      }
+
+Given two sets of coordinates,
+you can use the haversine formula
+to calculate the great-circle distances between those two locations.
+By creating an extension on the ``Positioned`` protocol
+that implements the ``haversineDistanceTo(_:)`` method,
+all conforming types automatically gain this method implementation.
+
+.. testcode:: protocolExtension
+
+   >> import Darwin
+   -> extension Positioned {
+          func haversineDistanceTo(destination: Positioned) -> Double {
+               func deg2rad(deg: Double) -> Double {
+                   return deg * M_PI / 180
+               }
+
+               let R = 6372.8 // approximation of the radius of Earth (in km)
+
+               let (φ1, λ1) = (deg2rad(self.coordinates.latitude), deg2rad(self.coordinates.longitude))
+               let (φ2, λ2) = (deg2rad(destination.coordinates.latitude), deg2rad(destination.coordinates.longitude))
+
+               let 𝛥φ = φ1 - φ2
+               let 𝛥λ = λ1 - λ2
+               let a = sin(𝛥φ / 2) * sin(𝛥φ / 2) +
+                       sin(𝛥λ / 2) * sin(𝛥λ / 2) * cos(φ2) * cos(φ1)
+               let c = 2 * asin(sqrt(a))
+
+               return c * R
+           }
+      }
+   ---
+   -> let mavericks = Place(name: "Maverick's Beach", coordinates: (latitude: 37.492673, longitude: -122.499522))
+   -> let yosemite = Place(name: "Yosemite National Park", coordinates: (latitude: 37.85, longitude: -119.567777778))
+   -> mavericks.haversineDistanceTo(yosemite)
+   // 260 km
+
+.. TODO: Show distance calculation between Person and Place?
+
+Constrained Protocol Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Protocol extensions can optionally be generically constrained,
+such that any methods or properties implemented
+will only be available to types that satisfy particular requirements.
+If a type satisfies the requirements for multiple constrained extensions
+that provide implementations for the same method or property,
+Swift will use the implementation corresponding the most specialized constraints.
+
+Constraints for a protocol extension are specified using a ``where`` clause,
+as described in :ref:`_Generics_WhereClauses`.
+
+For instance, the ``SequenceType`` protocol can be extended
+with a constraint on its associated ``Generator`` type's
+associated ``Element`` type,
+such that the values in the sequence must conform to
+the ``Positioned`` protocol from the example above.
+
+.. testcode:: protocolExtension
+
+   -> extension SequenceType where Generator.Element: Positioned {
+          var cumulativeDistance: Double {
+              var distance = 0.0
+              if case let elements = [Generator.Element](self)
+                 where elements.count >= 2
+              {
+                  for (destination, origin) in zip(elements, dropFirst(elements)) {
+                      distance += origin.haversineDistanceTo(destination)
+                  }
+              }
+
+              return distance
+          }
+      }
+
+The ``cumulativeDistance`` property computes the cumulative distance
+between each pair of elements in the sequence.
+Because every element in the sequence conforms to the ``Positioned`` protocol,
+the ``haversineDistanceTo(_:)`` method can be used to to perform this calculation.
+
+In the example below,
+an array of ``Place`` values is used to represent the stops on a trip around California.
+Because ``Array`` conforms to ``SequenceType``,
+and the array's elements conform to the ``Positioned`` protocol,
+the array can use the ``cumulativeDistance``
+to calculate the total distance that will be traveled over the course of the trip.
+
+.. testcode:: protocolExtension
+
+   >> let oxnard = Place(name: "Oxnard, CA", coordinates: (latitude: 34.1975, longitude: -119.1761111))
+   >> let ranchoCucamonga = Place(name: "Rancho Cucamonga, CA", coordinates: (latitude: 34.1063889, longitude: -117.5922222))
+   >> let weed = Place(name: "Weed, CA", coordinates: (latitude: 41.4226498, longitude: -122.3861269))
+   -> let trip = [oxnard, ranchoCucamonga, weed, yosemite]
+   -> print(" → ".join(trip.map({ $0.name })))
+   <- Oxnard, CA → Rancho Cucamonga, CA → Weed, CA → Yosemite National Park
+   -> trip.cumulativeDistance
+   // 1530 km
