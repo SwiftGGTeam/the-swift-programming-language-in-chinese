@@ -165,6 +165,8 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 .. langref-grammar
 
     keyword ::= 'class'
+    keyword ::= 'destructor'
+    keyword ::= 'do'
     keyword ::= 'extension'
     keyword ::= 'import'
     keyword ::= 'init'
@@ -182,7 +184,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
     keyword ::= 'case'
     keyword ::= 'continue'
     keyword ::= 'default'
-    keyword ::= 'do'
+    keyword ::= 'repeat'
     keyword ::= 'else'
     keyword ::= 'if'
     keyword ::= 'in'

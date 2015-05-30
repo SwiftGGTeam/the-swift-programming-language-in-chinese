@@ -34,6 +34,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> declaration ``;``-OPT
     statement --> loop-statement ``;``-OPT
     statement --> branch-statement ``;``-OPT
+    statement --> scope-introduction-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
@@ -57,7 +58,7 @@ Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
-and a ``do``-``while`` statement.
+and a ``repeat``-``while`` statement.
 
 Control flow in a loop statement can be changed by a ``break`` statement
 and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement` and
@@ -70,7 +71,7 @@ and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement
     loop-statement --> for-statement
     loop-statement --> for-in-statement
     loop-statement --> while-statement
-    loop-statement --> do-while-statement
+    loop-statement --> repeat-while-statement
 
 
 .. _Statements_ForStatement:
@@ -231,23 +232,23 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     We opted for the more complex grammar, because the simpler version overproduced.
 
 
-.. _Statements_Do-WhileStatement:
+.. _Statements_Repeat-WhileStatement:
 
-Do-While Statement
-~~~~~~~~~~~~~~~~~~
+Repeat-While Statement
+~~~~~~~~~~~~~~~~~~~~~~
 
-A ``do``-``while`` statement allows a block of code to be executed one or more times,
+A ``repeat``-``while`` statement allows a block of code to be executed one or more times,
 as long as a condition remains true.
 
-A ``do``-``while`` statement has the following form:
+A ``repeat``-``while`` statement has the following form:
 
 .. syntax-outline::
 
-    do {
+    repeat {
        <#statements#>
     } while <#condition#>
 
-A ``do``-``while`` statement is executed as follows:
+A ``repeat``-``while`` statement is executed as follows:
 
 1. The program executes the *statements*,
    and execution continues to step 2.
@@ -255,10 +256,10 @@ A ``do``-``while`` statement is executed as follows:
 2. The *condition* is evaluated.
 
    If ``true``, execution returns to step 1.
-   If ``false``, the program is finished executing the ``do``-``while`` statement.
+   If ``false``, the program is finished executing the ``repeat``-``while`` statement.
 
 Because the value of the *condition* is evaluated after the *statements* are executed,
-the *statements* in a ``do``-``while`` statement are executed at least once.
+the *statements* in a ``repeat``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
@@ -266,13 +267,13 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
 
-    stmt-do-while ::= 'do' brace-item-list 'while' expr
+    stmt-repeat-while ::= 'repeat' brace-item-list 'while' expr
 
 .. syntax-grammar::
 
-    Grammar of a do-while statement
+    Grammar of a repeat-while statement
 
-    do-while-statement --> ``do`` code-block ``while`` expression
+    repeat-while-statement --> ``repeat`` code-block ``while`` expression
 
 
 .. _Statements_BranchStatements:
@@ -544,6 +545,48 @@ see :ref:`Statements_FallthroughStatement` below.
 
     where-clause --> ``where`` where-expression
     where-expression --> expression
+
+
+.. _Statements_ScopeIntroductionStatement:
+
+Scope Introduction Statement
+----------------------------
+
+You can introduce a new scope with a :newTerm::`scope introduction` statement
+using the ``do`` keyword.
+Constants and variables declared within an introduced scope
+can only be accessed within that scope.
+
+.. note::
+
+   Languages like C and Objective-C can introduce new scopes
+   by enclosing statements with curly braces (``{ ... }``).
+   Swift uses the ``do`` keyword to avoid confusion with closure literals.
+
+   The ``do`` keyword is used in other languages
+   to execute a block before evaluating the condition of a ``while`` statement.
+   This is analogous to the ``repeat``-``while`` loop in Swift.
+
+A ``do`` statement has the following form:
+
+.. syntax-outline::
+
+    do {
+       <#statements#>
+    }
+
+``do`` statements are most often used in conjunction
+with ``catch`` statements for the purposes of error handling.
+
+For more information and to see examples
+of how to use ``do`` statements to catch errors,
+see :ref:`ErrorHandling_Catching` in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+
+.. syntax-grammar::
+
+    Grammar of a scope introduction statement
+
+    scope-introduction-statement --> ``do`` ``{`` statements ``}``
 
 
 .. _Statements_LabeledStatement:
