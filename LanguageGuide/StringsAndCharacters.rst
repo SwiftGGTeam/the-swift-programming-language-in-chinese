@@ -42,7 +42,7 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters
+A string literal is a fixed sequence of textual characters or Unicode scalars
 surrounded by a pair of double quotes (``""``).
 
 Use a string literal as an initial value for a constant or variable:
@@ -336,23 +336,25 @@ String literals can include the following special characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
+  where *n* is a 1 – 8 digit hexadecimal number
+  with a value between ``0`` and ``10FFFF``,
+  the range of Unicode's codespace
 
 .. assertion:: stringLiteralUnicodeScalar
 
    -> "\u{0}"
-   << // r0 : String = "\0"
+   <- <REPL Input>: String = ""
    -> "\u{00000000}"
-   << // r1 : String = "\0"
+   <- <REPL Input>: String = ""
    -> "\u{000000000}"
-   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+   !! <REPL Input>:2:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+"\u{000000000}"
    !! "\u{000000000}"
    !! ^
    -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
+   <- <REPL Input>: String = "􏿿"
    -> "\u{110000}"
-   !! <REPL Input>:1:2: error: invalid unicode scalar
+   !! <REPL Input>:2:2: error: invalid unicode scalar
    !! "\u{110000}"
    !! ^
 
