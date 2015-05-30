@@ -101,8 +101,19 @@ when the equal to operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
 Swift helps you to avoid these kinds of errors in your code.
 
-.. TODO: Should we mention that x = y = z is also not valid?
-   If so, is there a convincing argument as to why this is a good thing?
+Another consequence of this behavior
+is that chained assignment of values of the same type is not valid in Swift:
+
+.. testcode:: assignmentOperatorInvalid
+
+   >> var x = 1
+   >> var y = 2
+   >> var z = 3
+   -> x = y = z // this is not valid
+   !! <REPL Input>:4:7 error: cannot assign a value of type '()' to a value of type 'Int'
+
+This feature ensures code readability by eliminating ambiguity about
+how expressions are evaluated or how values are assigned.
 
 .. _BasicOperators_ArithmeticOperators:
 
