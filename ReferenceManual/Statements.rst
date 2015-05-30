@@ -383,20 +383,29 @@ A ``guard`` statement has the following form:
     }
 
 The value of any condition in an ``guard`` statement
-must have a type that conforms to the ``BooleanType`` protocol,
-and may be an optional binding declaration.
+must have a type that conforms to the ``BooleanType`` protocol.
+The condition can also be an optional binding declaration,
+as discussed in :ref:`TheBasics_OptionalBinding`.
+
 Any constants or variables assigned a value
 from an optional binding declaration in a ``guard`` statement condition
-may be used in subsequent lines as if they were defined with non-optional values.
+can be used for the rest of the guard statement's enclosing scope.
 
 The ``else`` clause of a ``guard`` statement is required,
-and must transfer program control back to the enclosing scope
+and must either call a function marked with the ``noreturn`` attribute
+or transfer program control outside the guard statement's enclosing scope
 using one of the following statements:
 
 * ``return``
 * ``break``
 * ``continue``
 * ``throw``
+
+.. The function has to be marked @noterurn -- it's not sufficient to just be nonreturning.
+   For example, the following is invalid:
+
+   func foo() { fatalError() }
+   guard false else { foo() }
 
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
 
