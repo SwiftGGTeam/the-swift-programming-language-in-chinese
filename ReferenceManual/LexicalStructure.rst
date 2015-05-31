@@ -231,6 +231,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``else``,
   ``for``,
   ``guard``,
+  ``if``,
   ``in``,
   ``repeat``,
   ``return``,
@@ -253,10 +254,10 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``throws``,
   ``true``,
   ``try``,
-  ``__FILE__``,
-  ``__LINE__``,
   ``__COLUMN__``,
-  and ``__FUNCTION__``.
+  ``__FILE__``,
+  ``__FUNCTION__``,
+  and ``__LINE__``.
 
 * Keywords used in patterns:
   ``_``.
