@@ -1369,89 +1369,99 @@ Early Exit
 A ``guard`` statement, like an ``if`` statement,
 executes statements depending on the Boolean value of an expression.
 You use a ``guard`` statement to require that a condition must be true
-in order for the code after it to be executed.
-If that condition is not met, the code inside the ``else`` branch
-lets you handle the violated condition by
-exiting out of the current block of code.
+in order for the code after the ``guard`` statement to be executed.
+...
+Unlike an ``if`` statement,
+the else comes first
+and all the stuff below the end of the else } is the "if" body
+
+the code block in the else is run if the expression is false,
+rather than if it's true
 
 .. testcode:: guard
 
    -> func doubleSmallNumber(number: Int) -> String {
-          guard number < 10  else {
+          guard number < 10 else {
               return "That's not a small number!"
           }
 
           let double = 2 * number
           let result = "Double \(number) is \(double)."
-          return(result)
+          return result
       }
    -> print(doubleSmallNumber(100))
    <- That's not a small number!
    -> print(doubleSmallNumber(3))
    <- Double 3 is 6.
 
-If the condition of the ``guard`` statement is true,
+   func doubleFirst(numbers: [Int]) -> Int? {
+       if let first = numbers.first else {
+           return first * 2
+       else {
+           return nil
+       }
+   }
+
+   func doubleFirst(numbers: [Int]) -> Int? {
+       guard let first = numbers.first else { return nil }
+       return first * 2
+   }
+
+If the ``guard`` statement's condition is met,
 code execution continues after the ``guard`` statement's closing brace.
-Otherwise, the code inside the ``else`` statement runs
+Any variables or constants that were assigned values
+using an optional binding as part of the condition
+are available for the rest of the code block
+that the ``guard`` statement appears in.
 
+If that condition is not met,
+the code inside the ``else`` branch is executed.
+That branch must transfer control to exit the code block
+that that ``guard`` statement appears in.
+It can do this with a control transfer statement
+such as ``return``, ``break``, or ``continue``,
+or it can call a function or method
+that doesn't return, such as ``fatalError()``.
 
-Guard statements make your code easier to read
-by letting you specify a condition that needs to be met
-in order for the following code to execute,
-and handling the case when that condition is not met inside an ``else`` block.
-You could do this using ``if`` statements,
-but that approach is harder to read
-because you have to write the code that's typically executed
-inside the body of the ``if`` statement.
-The following listing shows the same function written both ways:
+Using a ``guard`` statement for requirements 
+improves the readability of your code,
+compared to doing the same check with an ``if`` statement.
+It lets you write the code that's typically executed
+without wrapping it in an ``else`` block,
+and it lets you keep the code that handles a violated requirement
+next to the requirement.
+
+The following listing shows a function
+that uses the first number in the array as a scale factor,
+and multiplies all of the small numbers in the array
+by that scale factor.
 
 .. testcode:: guard
 
-   -> func addFirstAndLastWithIf(numbers: [Int]) -> Int? {
-          if let first = numbers.first {
-              if let last = numbers.last {
-                  return first + last
-              } else {
-                  return nil
-              }
-          } else {
-              return nil
-          }
-      }
-   >> addFirstAndLastWithIf([])
-   <$ : Int? = nil
-   >> addFirstAndLastWithIf([1, 2, 3])
-   <$ : Int? = Optional(4)
-   ---
-   -> func addFirstAndLastWithGuard(numbers: [Int]) -> Int? {
-          guard let first = numbers.first else {
-              return nil
-          }
-          guard let last = numbers.last else {
-              return nil
-          }
-          return first + last
-      }
-   >> addFirstAndLastWithGuard([])
-   <$ : Int? = nil
-   >> addFirstAndLastWithGuard([1, 2, 3])
-   <$ : Int? = Optional(4)
+    func multiplySmallNumbers(numbers: [Int]) -> [Int] {
+        var result = [Int]()
 
-The preceding example 
+        guard let scale = numbers.first else {
+            // The array is empty, so there's no scale factor, and there's
+            // nothing to multiply.
+            return result
+        }
 
-The ``else`` block of a ``guard`` statement must exit out of the current block of code.
-It can use a flow control statement such as ``return``, ``break``, or ``continue``,
-or it can call a function that doesn't return such as ``fatalError()``.
+        for number in numbers {
 
-Notice that the path of execution is opposite:
-In the version that uses ``if``,
-the most common case where the list of numbers is not empty
-the ``lastNumber`` constant is available inside the first branch of the optional binding,
-but in the version that uses ``guard``
-the ``lastNumber`` constant is available on every line after the ``guard`` statement.
+FIXME: if number > 10 continue
 
-Guard statements help make your code easier to read
-when you use them instead of putting the entire body of a function
-inside an optional binding
-or using nested optional bindings.
 
+            guard number < 10 else {
+                // Not a small number, so don't include it in the result.
+                continue
+            }
+            result.append(number * scale)
+        }
+
+        return result
+    }
+
+This example uses a ``guard`` statement in two ways:
+first, to unwrap an optional value or return,
+and second to skip over any large numbers in the array.
