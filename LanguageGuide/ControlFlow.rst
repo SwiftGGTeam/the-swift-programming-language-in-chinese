@@ -3,7 +3,7 @@ Control Flow
 
 Swift provides all the familiar control flow statements from C-like languages.
 These include ``for`` and ``while`` loops to perform a task multiple times;
-``if`` and ``switch`` statements
+``if``, ``guard``, and ``switch`` statements
 to execute different branches of code based on certain conditions;
 and statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
