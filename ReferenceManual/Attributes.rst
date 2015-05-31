@@ -382,9 +382,8 @@ to a function or method *declaration*.
    one of the following attribute arguments:
 
    * ``swift``
-   * ``thin``
-   * ``c``
    * ``block``
+   * ``c``
 
    The ``convention`` attribute takes the following form:
 
@@ -394,15 +393,21 @@ to a function or method *declaration*.
 
    * The ``swift`` argument is used to indicate a Swift function reference.
      This is the standard calling convention for function values in Swif.
-   * The ``thin`` argument is used to indicate a ”thin” function reference, which uses
-     the Swift calling convention with no context or reference to ``self``.
-   * The ``c`` argument is used to indicate a C function reference.
-     The function value carries no context and uses the C calling convention.
    * The ``block`` argument is used to indicate an Objective-C compatible block reference.
      The function value is represented as a reference to the block object,
      which is an ``id``-compatible Objective-C object that embeds its invocation
      function within the object.
      The invocation function uses the C calling convention.
+   * The ``c`` argument is used to indicate a C function reference.
+     The function value carries no context and uses the C calling convention.
+
+   A function with C function calling conventions can be used as
+   a function with Objective-C block calling conventions,
+   and a function with Objective-C block calling conventions can be used as
+   a function with Swift function calling conventions.
+   However, only nongeneric global functions, and
+   local functions or closure that don't capture any local variables,
+   can be used as a function with C function calling conventions.
 
 ``noreturn``
     Apply this attribute to the type of a function or method
