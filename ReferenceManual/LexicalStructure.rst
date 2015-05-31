@@ -159,10 +159,12 @@ The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
 
+.. NOTE: This list of language keywords and punctuation
+   is derived from the file "swift/include/swift/Parse/Tokens.def"
+
 .. langref-grammar
 
     keyword ::= 'class'
-    keyword ::= 'destructor'
     keyword ::= 'do'
     keyword ::= 'extension'
     keyword ::= 'import'
@@ -200,9 +202,6 @@ as described above in :ref:`LexicalStructure_Identifiers`.
     keyword ::= '__FILE__'
     keyword ::= '__LINE__'
 
-.. NOTE: The LangRef is out of date for keywords. The list of current keywords
-    is defined in the file: swift/inclue/swift/Parse/Tokens.def
-
 * Keywords used in declarations:
   ``class``,
   ``deinit``,
@@ -211,13 +210,12 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``func``,
   ``import``,
   ``init``,
+  ``inout``,
   ``internal``,
   ``let``,
   ``operator``,
   ``private``,
   ``protocol``,
-  ``public``,
-  ``static``,
   ``struct``,
   ``subscript``,
   ``typealias``,
@@ -228,11 +226,11 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``case``,
   ``continue``,
   ``default``,
+  ``defer``,
   ``do``,
   ``else``,
-  ``fallthrough``,
   ``for``,
-  ``if``,
+  ``guard``,
   ``in``,
   ``repeat``,
   ``return``,
@@ -242,18 +240,26 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 
 * Keywords used in expressions and types:
   ``as``,
+  ``catch``,
   ``dynamicType``,
   ``false``,
   ``is``,
   ``nil``,
+  ``rethrows``,
+  ``super``,
   ``self``,
   ``Self``,
-  ``super``,
+  ``throw``,
+  ``throws``,
   ``true``,
-  ``__COLUMN__``,
+  ``try``,
   ``__FILE__``,
-  ``__FUNCTION__``,
-  and ``__LINE__``.
+  ``__LINE__``,
+  ``__COLUMN__``,
+  and ``__FUNCTION__``.
+
+* Keywords used in patterns:
+  ``_``.
 
 .. langref-grammar
 
@@ -265,6 +271,9 @@ as described above in :ref:`LexicalStructure_Identifiers`.
     set
     type
 
+.. NOTE: This list of context-sensitive keywords
+   is derived from the file "swift/include/swift/AST/Attr.def"
+
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
@@ -273,7 +282,6 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``final``,
   ``get``,
   ``infix``,
-  ``inout``,
   ``lazy``,
   ``left``,
   ``mutating``,
