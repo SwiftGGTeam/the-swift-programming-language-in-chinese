@@ -1375,7 +1375,7 @@ in order for the code after the ``guard`` statement to be executed.
     the code block in the else is run if the expression is false,
     rather than if it's true
 
-.. testcode::
+.. testcode:: guard
 
     -> func greet(person: [String: String]) {
            guard let name = person["name"] else {
@@ -1383,9 +1383,21 @@ in order for the code after the ``guard`` statement to be executed.
            }
 
            print("Hello \(name)!")
+
+           guard let location = person["location"] else {
+               print("I hope the weather is nice near you.")
+               return
+           }
+
+           print("I hope the weather is nice in \(location).")
        }
-    >> greet(["name": "Clarus"])
-    << Hello Clarus"
+    ---
+    -> greet(["name": "John"])
+    <- Hello John!
+    <- I hope the weather is nice near you.
+    -> greet(["name": "Jane", "location": "Cupertino"])
+    <- Hello Jane!
+    <- I hope the weather is nice in Cupertino.
 
 If the ``guard`` statement's condition is met,
 code execution continues after the ``guard`` statement's closing brace.
@@ -1410,36 +1422,3 @@ It lets you write the code that's typically executed
 without wrapping it in an ``else`` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
-
-The following listing shows a function
-that uses the first number in the array as a scale factor,
-and multiplies all of the small numbers in the array
-by that scale factor.
-
-.. testcode:: guard
-
-    func multiplySmallNumbers(numbers: [Int]) -> [Int] {
-        var result = [Int]()
-
-        guard let scale = numbers.first else {
-            // The array is empty, so there's no scale factor, and there's
-            // nothing to multiply.
-            return result
-        }
-
-        for number in numbers {
-            guard number < 10 else {
-                // Not a small number, so don't include it in the result.
-                continue
-            }
-            result.append(number * scale)
-        }
-
-        return result
-    }
-
-.. FIXME if number > 10 continue -- weak use of guard
-
-This example uses a ``guard`` statement in two ways:
-first, to unwrap an optional value or return,
-and second to skip over any large numbers in the array.
