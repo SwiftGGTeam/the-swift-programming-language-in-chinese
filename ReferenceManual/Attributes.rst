@@ -378,23 +378,12 @@ to a function or method *declaration*.
    Apply this attribute to the type of a function
    to indicate its calling conventions.
 
-   The ``convention`` attribute always appears
+   The ``convention`` attribute always appears with
    one of the following attribute arguments:
 
-   * ``swift``
-   * ``thin``
-   * ``c``
-   * ``block``
-
-   The ``convention`` attribute takes the following form:
-
-   .. syntax-outline::
-
-       @convention(<#argument#>)
-
    * The ``swift`` argument is used to indicate a Swift function reference.
-     This is the standard calling convention for function values in Swif.
-   * The ``thin`` argument is used to indicate a ”thin” function reference, which uses
+     This is the standard calling convention for function values in Swift.
+   * The ``thin`` argument is used to indicate a "thin" function reference, which uses
      the Swift calling convention with no context or reference to ``self``.
    * The ``c`` argument is used to indicate a C function reference.
      The function value carries no context and uses the C calling convention.
