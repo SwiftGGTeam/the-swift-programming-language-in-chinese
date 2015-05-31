@@ -160,7 +160,7 @@ unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
 
 .. NOTE: This list of language keywords and punctuation
-   is derived from the file "swift/inclue/swift/Parse/Tokens.def"
+   is derived from the file "swift/include/swift/Parse/Tokens.def"
 
 .. langref-grammar
 
@@ -224,9 +224,11 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 
 * Keywords used in statements:
   ``if``,
+  ``defer``,
   ``do``,
   ``else``,
   ``for``,
+  ``guard``,
   ``in``,
   ``repeat``,
   ``while``,
@@ -241,14 +243,19 @@ as described above in :ref:`LexicalStructure_Identifiers`.
 
 * Keywords used in expressions and types:
   ``as``,
+  ``catch``,
   ``dynamicType``,
   ``false``,
   ``is``,
   ``nil``,
+  ``rethrows``,
   ``super``,
   ``self``,
   ``Self``,
+  ``throw``,
+  ``throws``,
   ``true``,
+  ``try``,
   ``__FILE__``,
   ``__LINE__``,
   ``__COLUMN__``,
@@ -267,7 +274,8 @@ as described above in :ref:`LexicalStructure_Identifiers`.
     set
     type
 
-.. QUESTION: How was this list of keywords derived?
+.. NOTE: This list of context-sensitive keywords
+   is derived from the file "swift/include/swift/AST/Attr.def"
 
 * Keywords reserved in particular contexts:
   ``associativity``,
