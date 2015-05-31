@@ -146,20 +146,6 @@ The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
 
-In addition to arrays and dictionaries,
-you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
-
-.. testcode:: forLoops
-
-   -> for character in "Hello" {
-         print(character)
-      }
-   </ H
-   </ e
-   </ l
-   </ l
-   </ o
-
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
@@ -1023,7 +1009,7 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
-   -> for character in puzzleInput {
+   -> for character in puzzleInput.characters {
          switch character {
             case "a", "e", "i", "o", "u", " ":
                continue
@@ -1379,3 +1365,69 @@ and to work out if the move is allowed:
    However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
    Doing so is consistent with the label's use alongside the ``break`` statement,
    and helps make the game's logic clearer to read and understand.
+
+.. _ControlFlow_Guard:
+
+Early Exit
+----------
+
+A ``guard`` statement, like an ``if`` statement,
+executes statements depending on the Boolean value of an expression.
+You use a ``guard`` statement to require that a condition must be true
+in order for the code after the ``guard`` statement to be executed.
+
+..
+    Unlike an ``if`` statement,
+    the else comes first
+    and all the stuff below the end of the else } is the "if" body
+    xx
+    the code block in the else is run if the expression is false,
+    rather than if it's true
+
+.. testcode:: guard
+
+    -> func greet(person: [String: String]) {
+           guard let name = person["name"] else {
+               return
+           }
+
+           print("Hello \(name)!")
+
+           guard let location = person["location"] else {
+               print("I hope the weather is nice near you.")
+               return
+           }
+
+           print("I hope the weather is nice in \(location).")
+       }
+    ---
+    -> greet(["name": "John"])
+    <- Hello John!
+    <- I hope the weather is nice near you.
+    -> greet(["name": "Jane", "location": "Cupertino"])
+    <- Hello Jane!
+    <- I hope the weather is nice in Cupertino.
+
+If the ``guard`` statement's condition is met,
+code execution continues after the ``guard`` statement's closing brace.
+Any variables or constants that were assigned values
+using an optional binding as part of the condition
+are available for the rest of the code block
+that the ``guard`` statement appears in.
+
+If that condition is not met,
+the code inside the ``else`` branch is executed.
+That branch must transfer control to exit the code block
+that that ``guard`` statement appears in.
+It can do this with a control transfer statement
+such as ``return``, ``break``, or ``continue``,
+or it can call a function or method
+that doesn't return, such as ``fatalError()``.
+
+Using a ``guard`` statement for requirements 
+improves the readability of your code,
+compared to doing the same check with an ``if`` statement.
+It lets you write the code that's typically executed
+without wrapping it in an ``else`` block,
+and it lets you keep the code that handles a violated requirement
+next to the requirement.
