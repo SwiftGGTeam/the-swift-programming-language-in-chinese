@@ -371,8 +371,8 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 Guard Statement
 ~~~~~~~~~~~~~~~
 
-A ``guard`` statement is used for early exit from a scope
-based on the evaluation of one or more conditions.
+A ``guard`` statement is used to transfer program control out of a scope
+if one or more conditions aren't met.
 
 A ``guard`` statement has the following form:
 
@@ -380,7 +380,6 @@ A ``guard`` statement has the following form:
 
     guard <#condition#> else {
        <#statements#>
-       <#control transfer statement#>
     }
 
 The value of any condition in a ``guard`` statement
