@@ -1366,42 +1366,26 @@ A ``guard`` statement, like an ``if`` statement,
 executes statements depending on the Boolean value of an expression.
 You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
-...
-Unlike an ``if`` statement,
-the else comes first
-and all the stuff below the end of the else } is the "if" body
 
-the code block in the else is run if the expression is false,
-rather than if it's true
+..
+    Unlike an ``if`` statement,
+    the else comes first
+    and all the stuff below the end of the else } is the "if" body
+    xx
+    the code block in the else is run if the expression is false,
+    rather than if it's true
 
-.. testcode:: guard
+.. testcode::
 
-   -> func doubleSmallNumber(number: Int) -> String {
-          guard number < 10 else {
-              return "That's not a small number!"
-          }
+    -> func greet(person: [String: String]) {
+           guard let name = person["name"] else {
+               return
+           }
 
-          let double = 2 * number
-          let result = "Double \(number) is \(double)."
-          return result
-      }
-   -> print(doubleSmallNumber(100))
-   <- That's not a small number!
-   -> print(doubleSmallNumber(3))
-   <- Double 3 is 6.
-
-   func doubleFirst(numbers: [Int]) -> Int? {
-       if let first = numbers.first else {
-           return first * 2
-       else {
-           return nil
+           print("Hello \(name)!")
        }
-   }
-
-   func doubleFirst(numbers: [Int]) -> Int? {
-       guard let first = numbers.first else { return nil }
-       return first * 2
-   }
+    >> greet(["name": "Clarus"])
+    << Hello Clarus"
 
 If the ``guard`` statement's condition is met,
 code execution continues after the ``guard`` statement's closing brace.
@@ -1444,10 +1428,6 @@ by that scale factor.
         }
 
         for number in numbers {
-
-FIXME: if number > 10 continue
-
-
             guard number < 10 else {
                 // Not a small number, so don't include it in the result.
                 continue
@@ -1457,6 +1437,8 @@ FIXME: if number > 10 continue
 
         return result
     }
+
+.. FIXME if number > 10 continue -- weak use of guard
 
 This example uses a ``guard`` statement in two ways:
 first, to unwrap an optional value or return,
