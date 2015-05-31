@@ -266,7 +266,7 @@ the number of iterations is not known before the first iteration begins.
 Swift provides two kinds of ``while`` loop:
 
 * ``while`` evaluates its condition at the start of each pass through the loop.
-* ``do``-``while`` evaluates its condition at the end of each pass through the loop.
+* ``repeat``-``while`` evaluates its condition at the end of each pass through the loop.
 
 .. _ControlFlow_While:
 
@@ -429,25 +429,30 @@ Instead, the loop is executed until a particular condition is satisfied.
 
 .. _ControlFlow_DoWhile:
 
-Do-While
-~~~~~~~~
+Repeat-While
+~~~~~~~~~~~~
 
 The other variation of the ``while`` loop,
-known as the ``do``-``while`` loop,
+known as the ``repeat``-``while`` loop,
 performs a single pass through the loop block first,
 *before* considering the loop's condition.
 It then continues to repeat the loop until the condition is ``false``.
 
-Here's the general form of a ``do``-``while`` loop:
+.. note::
+
+   The ``repeat``-``while`` loop in Swift is analogous to
+   a ``do``-``while`` loop in other languages.
+
+Here's the general form of a ``repeat``-``while`` loop:
 
 .. syntax-outline::
 
-   do {
+   repeat {
       <#statements#>
    } while <#condition#>
 
 Here's the *Snakes and Ladders* example again,
-written as a ``do``-``while`` loop rather than a ``while`` loop.
+written as a ``repeat``-``while`` loop rather than a ``while`` loop.
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in exactly the same way as with a ``while`` loop:
 
@@ -476,7 +481,7 @@ and has no effect:
 
 .. testcode:: snakesAndLadders2
 
-   -> do {
+   -> repeat {
          // move up or down for a snake or ladder
          square += board[square]
    >>      print("after snakes or ladders, square is \(square)")
@@ -526,9 +531,9 @@ The current loop execution then ends.
 
 The loop's condition (``while square < finalSquare``) is the same as before,
 but this time it is not evaluated until the *end* of the first run through the loop.
-The structure of the ``do``-``while`` loop is better suited to this game
+The structure of the ``repeat``-``while`` loop is better suited to this game
 than the ``while`` loop in the previous example.
-In the ``do``-``while`` loop above,
+In the ``repeat``-``while`` loop above,
 ``square += board[square]`` is always executed *immediately after*
 the loop's ``while`` condition confirms that ``square`` is still on the board.
 This behavior removes the need for the array bounds check

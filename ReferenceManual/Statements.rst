@@ -70,7 +70,7 @@ and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement
     loop-statement --> for-statement
     loop-statement --> for-in-statement
     loop-statement --> while-statement
-    loop-statement --> do-while-statement
+    loop-statement --> repeat-while-statement
 
 
 .. _Statements_ForStatement:
@@ -233,21 +233,21 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. _Statements_Do-WhileStatement:
 
-Do-While Statement
-~~~~~~~~~~~~~~~~~~
+Repeat-While Statement
+~~~~~~~~~~~~~~~~~~~~~~
 
-A ``do``-``while`` statement allows a block of code to be executed one or more times,
+A ``repeat``-``while`` statement allows a block of code to be executed one or more times,
 as long as a condition remains true.
 
-A ``do``-``while`` statement has the following form:
+A ``repeat``-``while`` statement has the following form:
 
 .. syntax-outline::
 
-    do {
+    repeat {
        <#statements#>
     } while <#condition#>
 
-A ``do``-``while`` statement is executed as follows:
+A ``repeat``-``while`` statement is executed as follows:
 
 1. The program executes the *statements*,
    and execution continues to step 2.
@@ -255,10 +255,10 @@ A ``do``-``while`` statement is executed as follows:
 2. The *condition* is evaluated.
 
    If ``true``, execution returns to step 1.
-   If ``false``, the program is finished executing the ``do``-``while`` statement.
+   If ``false``, the program is finished executing the ``repeat``-``while`` statement.
 
 Because the value of the *condition* is evaluated after the *statements* are executed,
-the *statements* in a ``do``-``while`` statement are executed at least once.
+the *statements* in a ``repeat``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
@@ -266,13 +266,13 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
 
-    stmt-do-while ::= 'do' brace-item-list 'while' expr
+    stmt-repeat-while ::= 'repeat' brace-item-list 'while' expr
 
 .. syntax-grammar::
 
-    Grammar of a do-while statement
+    Grammar of a repeat-while statement
 
-    do-while-statement --> ``do`` code-block ``while`` expression
+    repeat-while-statement --> ``repeat`` code-block ``while`` expression
 
 
 .. _Statements_BranchStatements:
