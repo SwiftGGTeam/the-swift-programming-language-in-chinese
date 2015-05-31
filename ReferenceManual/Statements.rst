@@ -231,10 +231,10 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     We opted for the more complex grammar, because the simpler version overproduced.
 
 
-.. _Statements_Repeat-WhileStatement:
+.. _Statements_Do-WhileStatement:
 
 Repeat-While Statement
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 A ``repeat``-``while`` statement allows a block of code to be executed one or more times,
 as long as a condition remains true.
