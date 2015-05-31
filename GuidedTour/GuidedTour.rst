@@ -597,10 +597,12 @@ You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
+When a closure is the only argument to a function,
+you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = sorted(numbers) { $0 > $1 }
+    -> let sortedNumbers = numbers.sort { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
