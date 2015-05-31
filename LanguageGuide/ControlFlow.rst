@@ -1431,3 +1431,52 @@ It lets you write the code that's typically executed
 without wrapping it in an ``else`` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
+
+.. _ControlFlow_Availible:
+
+Checking API Availability
+-------------------------
+
+The compiler uses availability information in the SDK
+to verify that all of the APIs used in your code
+are available on the deployment target specified by your project.
+Swift reports an error at compile-time
+if you try to use an API that isn't available.
+
+You can use ``#available`` in the condition of an ``if`` or ``guard`` statement
+to conditionally execute a block of code
+depending on whether the APIs you want to use are available at run time.
+
+For example, to use APIs that were introduced in iOS 8.0:
+
+.. testcode:: availability
+
+   -> if #available(iOS 8.0, *) {
+          // Use iOS 8.0 APIs
+      } else {
+          // Fall back to earlier iOS APIs
+      }
+
+
+
+.. FIXME Add prose to introduce the syntax-outline
+
+.. sytax-outline::
+
+   if #available(<#platform version#>, <#platform version#>, *) {
+       <#statement to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+
+For example, 
+
+The compiler recognizes the ``if #available`` construction
+when it is checking for API availibility,
+
+
+@available(iOS 9.0)
+cla
+
+so it doesn't complain about stuff there
+
+... guard

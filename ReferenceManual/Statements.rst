@@ -373,15 +373,16 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     if-condition --> availability-condition
     else-clause --> ``else`` code-block | ``else`` if-statement
 
-    availability-condition --> ``#availabile`` ``(`` availability-arguments ``)``
+    availability-condition --> ``#availible`` ``(`` availability-arguments ``)``
     availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
     availability-argument --> platform-name platform-version
     availability-argument --> *
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``OSX`` | ``OSXApplicationExtension``
-    platform-version --> 
+    platform-version --> decimal-digit | decimal-digit ``.`` platform-version
 
+.. FIXME does the parser expect a fixed/limited number of digits?
 
 
 .. FIXME Is watchOS a supported platform here?
