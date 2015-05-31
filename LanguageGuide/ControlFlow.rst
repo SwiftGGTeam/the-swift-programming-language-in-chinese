@@ -1457,7 +1457,26 @@ For example, to use APIs that were introduced in iOS 8.0:
           // Fall back to earlier iOS APIs
       }
 
+..  The compiler recognizes the ``if #available`` construction
+    when it is checking for API availibility,
+    and it doesn't whine about things
 
+    when used with 'guard' it refines the availablity for the remainder of the
+    block of code
+
+    you can do this on your own classes that depend on SDK versiosn
+
+    @available class Foo
+
+    guard #available {
+        fall back and return
+    }
+    let  f = Foo
+    do cool new stuff with Foo
+
+.. Some of the following probably moves to the reference:
+
+.. The #available only goes in guard/if -- not in other expressions
 
 .. FIXME Add prose to introduce the syntax-outline
 
@@ -1468,15 +1487,3 @@ For example, to use APIs that were introduced in iOS 8.0:
    } else {
        <#fallback statements to execute if the APIs are unavailable#>
 
-For example, 
-
-The compiler recognizes the ``if #available`` construction
-when it is checking for API availibility,
-
-
-@available(iOS 9.0)
-cla
-
-so it doesn't complain about stuff there
-
-... guard
