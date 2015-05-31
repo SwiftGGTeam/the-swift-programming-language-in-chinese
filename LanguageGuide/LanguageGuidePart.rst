@@ -26,6 +26,7 @@ Language Guide
    NestedTypes
    Extensions
    Protocols
+   PatternMatching
    Generics
    AccessControl
    AdvancedOperators
