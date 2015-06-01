@@ -588,7 +588,7 @@ will trigger a runtime error.
    -> greeting.endIndex.successor() // fatal error: can not increment endIndex
    !! fatal error: can not increment endIndex
 
-Use the global function ``indicies(_:)`` to create a ``Range`` of all of the
+Use the global function ``indices(_:)`` to create a ``Range`` of all of the
 indexes used to access individual characters in a string.
 
 .. testcode:: stringIndex
