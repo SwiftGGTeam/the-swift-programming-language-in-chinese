@@ -493,19 +493,16 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``count(_:)`` function
+   be aware that the ``characters`` property
    must iterate over the Unicode scalars in the entire string
    in order to calculate an accurate character count for that string.
 
-   The character count returned by the ``count(_:)`` function
+   The count of the characters returned by the ``characters`` property
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
    the number of 16-bit code units within the string's UTF-16 representation
    and not the number of Unicode extended grapheme clusters within the string.
-   To reflect this fact,
-   the ``length`` property from ``NSString`` is called ``utf16Count``
-   when it is accessed on a Swift ``String`` value.
 
 .. _StringsAndCharacters_AccessingAndModifyingAString:
 
