@@ -1447,10 +1447,10 @@ are available on the deployment target specified by your project.
 Swift reports an error at compile time
 if you try to use an API that isn't available.
 
-You use an ``#available(...)`` condition in an ``if`` or ``guard`` statement
+You use an :newTerm:`availability condition` in an ``if`` or ``guard`` statement
 to conditionally execute a block of code,
 depending on whether the APIs you want to use are available at run time.
-The compiler uses the information from the ``#available(...)`` condition
+The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
@@ -1461,14 +1461,14 @@ when it verifies that the APIs in that block of code are available.
           // Fall back to earlier iOS and OS X APIs
       }
 
-The ``#available(...)`` condition above specifies that on iOS,
+The availability condition above specifies that on iOS,
 the body of the ``if`` executes only on iOS 9 and later;
 on OS X, only on OS X v10.10 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
 In its general form,
-the ``#available(...)`` condition takes a list of platform names and versions.
+the availability condition takes a list of platform names and versions.
 You use ``iOS``, ``OSX``, and ``watchOS`` for the platform names.
 In addition to specifying major version numbers like iOS 8,
 you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
@@ -1476,7 +1476,7 @@ you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
 .. syntax-outline::
 
    if #available(<#platform name#> <#version#>, <#...#>, *) {
-       <#statement to execute if the APIs are available#>
+       <#statements to execute if the APIs are available#>
    } else {
        <#fallback statements to execute if the APIs are unavailable#>
    }

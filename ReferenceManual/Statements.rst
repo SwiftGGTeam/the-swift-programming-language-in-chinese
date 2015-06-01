@@ -794,6 +794,34 @@ it can be used only to return from a function or method that does not return a v
 Availability Condition
 ~~~~~~~~~~~~~~~~~~~~~~
 
+An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
+and ``guard`` statement to query the availability of APIs at run time,
+based on specified platforms arguments.
+
+An availability condition has the following form:
+
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statements to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+You use an availability condition to execute a block of code,
+depending on whether the APIs you want to use are available at run time.
+The compiler uses the information from the availability condition
+when it verifies that the APIs in that block of code are available.
+
+The availability condition takes a comma-separated list of platform names and versions.
+Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
+and include the corresponding version numbers.
+The last argument, ``*``, is required and specifies that on any other platform,
+the body of the code block guarded by the availability condition
+executes on the minimum deployment target specified by your target.
+
+Unlike Boolean conditions, you can't combine availability conditions using
+logical operators such as ``&&`` and ``||``.
 
 .. syntax-grammar::
 
