@@ -379,17 +379,7 @@ to a function or method *declaration*.
    to indicate its calling conventions.
 
    The ``convention`` attribute always appears with
-   one of the following attribute arguments:
-
-   * ``swift``
-   * ``block``
-   * ``c``
-
-   The ``convention`` attribute takes the following form:
-
-   .. syntax-outline::
-
-       @convention(<#argument#>)
+   one of the attribute arguments below.
 
    * The ``swift`` argument is used to indicate a Swift function reference.
      This is the standard calling convention for function values in Swift.
@@ -406,7 +396,7 @@ to a function or method *declaration*.
    and a function with Objective-C block calling conventions can be used as
    a function with Swift function calling conventions.
    However, only nongeneric global functions, and
-   local functions or closure that don't capture any local variables,
+   local functions or closures that don't capture any local variables,
    can be used as a function with C function calling conventions.
 
 ``noreturn``
