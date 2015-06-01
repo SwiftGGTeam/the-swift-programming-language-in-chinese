@@ -172,6 +172,7 @@
     "collectiontypes-settypeshorthandsyntax": "ID485", 
     "collectiontypes-setwitharrayliterals": "ID487", 
     "control-flow": "ID462", 
+    "controlflow-availible": "ID510", 
     "controlflow-break": "ID137", 
     "controlflow-breakinaloop": "ID138", 
     "controlflow-breakinaswitchstatement": "ID139", 
@@ -416,6 +417,7 @@
     "simple-values": "ID461", 
     "special-kinds-of-methods": "ID473", 
     "special-kinds-of-parameters": "ID472", 
+    "statements-availabilitycondition": "ID511", 
     "statements-branchstatements": "ID434", 
     "statements-breakstatement": "ID441", 
     "statements-continuestatement": "ID442", 
@@ -528,5 +530,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 510
+  "next_id": 512
 }
