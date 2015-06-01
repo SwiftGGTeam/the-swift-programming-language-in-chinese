@@ -149,11 +149,12 @@ Access Levels for Unit Test Targets
 
 When you write an app with a unit test target,
 the code in your app needs to be made available to that module in order to be tested.
-By default, only entities with the ``public`` modifier
+By default, only entities marked as public
 are accessible to other modules.
-However, if you compile a product module with testing enabled,
-a unit test target can access any declaration with the ``internal`` modifier as well
-by prepending ``@testable`` to the import statement for the product module.
+However, a unit test target can access any internal entity,
+if you mark the import declaration for a product module with the ``@testable`` attribute
+and compile that product module with testing enabled.
+
 
 .. _AccessControl_AccessControlSyntax:
 

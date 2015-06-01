@@ -267,8 +267,8 @@ the ``noreturn`` attribute to a function or method *type*.
 ``testable``
     Apply this attribute to ``import`` declarations
     for modules compiled with testing enabled
-    to access any entities with ``internal`` modifiers
-    as if they were declared with the ``public`` modifier.
+    to access any entities marked with the ``internal`` access level modifier
+    as if they were declared with the ``public`` access level modifier.
 
 ``NSApplicationMain``
     Apply this attribute to a class
