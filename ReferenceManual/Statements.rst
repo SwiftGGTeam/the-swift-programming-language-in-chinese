@@ -171,7 +171,7 @@ and it is finished executing the ``for``-``in`` statement.
 
     Grammar of a for-in statement
 
-    for-in-statement --> ``for`` pattern ``in`` expression code-block
+    for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression code-block where-clause-OPT
 
 
 .. _Statements_WhileStatement:
