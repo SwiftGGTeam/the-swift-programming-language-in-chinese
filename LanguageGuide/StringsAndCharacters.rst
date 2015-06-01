@@ -453,14 +453,13 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-call the global ``count(_:)`` function
-and pass in a string as the function's sole parameter:
+use the ``count`` property of the string's ``characters`` property:
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(count(unusualMenagerie)) characters")
+   -> print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -476,12 +475,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(word.characters.count)")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> print("the number of characters in \(word) is \(count(word))")
+   -> print("the number of characters in \(word) is \(word.characters.count)")
    <- the number of characters in café is 4
 
 .. note::
