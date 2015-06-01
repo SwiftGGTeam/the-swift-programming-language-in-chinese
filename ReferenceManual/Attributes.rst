@@ -312,12 +312,6 @@ the ``noreturn`` attribute to a function or method *type*.
     or method that is not. Similar rules apply when you implement a protocol
     method in a conforming type.
 
-``testable``
-    Apply this attribute to ``import`` declarations
-    for modules compiled with testing enabled
-    to access any entities marked with the ``internal`` access level modifier
-    as if they were declared with the ``public`` access level modifier.
-
 ``NSApplicationMain``
     Apply this attribute to a class
     to indicate that it is the application delegate.
@@ -352,6 +346,12 @@ the ``noreturn`` attribute to a function or method *type*.
     ``NSManagedObject`` to indicate that the storage and implementation of the
     property are provided dynamically by Core Data at runtime
     based on the associated entity description.
+
+``testable``
+    Apply this attribute to ``import`` declarations
+    for modules compiled with testing enabled
+    to access any entities marked with the ``internal`` access level modifier
+    as if they were declared with the ``public`` access level modifier.
 
 ``UIApplicationMain``
     Apply this attribute to a class
