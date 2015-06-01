@@ -185,7 +185,7 @@ A ``try`` statement acknowledges the error
 and allows it to continue propagation.
 
 If an error is thrown,
-that error is propagated to the outer scope of the ``try`` expression
+that error is propagated to its outer scope
 until it is handled by a ``catch`` clause.
 A ``catch`` clause consists of the ``catch`` keyword,
 followed by a pattern to match the error against and a set of statements to execute.
