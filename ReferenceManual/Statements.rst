@@ -214,11 +214,18 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of a while statement
 
-    while-statement --> ``while`` while-condition  code-block
-    while-condition --> expression | expression-OPT optional-binding-list
+    while-statement --> ``while`` condition-clause code-block
 
-    optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
+    condition-clause --> expression
+    condition-clause --> expression ``,`` condition-list
+    condition-clause --> condition-list
+    condition-clause --> availability-condition ``,`` expression
+
+    condition-list --> condition | condition ``,`` condition-list
+    condition -->  availability-condition | case-condition | optional-binding-condition
+    case-condition --> ``case`` pattern initializer where-clause-OPT
+
+    optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
     optional-binding-head --> ``let`` identifier-pattern initializer | ``var`` identifier-pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
     optional-binding-continuation --> identifier-pattern initializer | optional-binding-head
@@ -361,10 +368,8 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | expression-OPT optional-binding-list
+    if-statement --> ``if`` condition-clause code-block else-clause-OPT
     else-clause --> ``else`` code-block | ``else`` if-statement
-
 
 .. _Statements_GuardStatement:
 
@@ -413,7 +418,7 @@ Control transfer statements are discussed in :ref:`Statements_ControlTransferSta
 
     Grammar of a guard statement
 
-    guard-statement --> ``guard`` if-condition ``else`` code-block
+    guard-statement --> ``guard`` condition-clause ``else`` code-block
 
 .. _Statements_SwitchStatement:
 
