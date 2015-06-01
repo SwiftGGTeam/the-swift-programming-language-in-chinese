@@ -1375,14 +1375,9 @@ A ``guard`` statement, like an ``if`` statement,
 executes statements depending on the Boolean value of an expression.
 You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
-
-..
-    Unlike an ``if`` statement,
-    the else comes first
-    and all the stuff below the end of the else } is the "if" body
-    xx
-    the code block in the else is run if the expression is false,
-    rather than if it's true
+Unlike an ``if`` statement,
+a ``guard`` statement always has an ``else`` clause ---
+the code inside the ``else``` clause is executed if the condition is not true.
 
 .. testcode:: guard
 
