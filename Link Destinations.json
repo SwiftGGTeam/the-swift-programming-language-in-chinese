@@ -45,6 +45,7 @@
     "accesscontrol-accesslevels": "ID5", 
     "accesscontrol-accesslevelsforframeworks": "ID9", 
     "accesscontrol-accesslevelsforsingletargetapps": "ID8", 
+    "accesscontrol-accesslevelsfortesttargets": "ID512", 
     "accesscontrol-constantsvariablespropertiesandsubscripts": "ID17", 
     "accesscontrol-customtypes": "ID11", 
     "accesscontrol-defaultaccesslevels": "ID7", 
@@ -530,5 +531,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 512
+  "next_id": 513
 }
