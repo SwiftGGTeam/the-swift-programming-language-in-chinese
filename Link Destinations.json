@@ -172,7 +172,7 @@
     "collectiontypes-settypeshorthandsyntax": "ID485", 
     "collectiontypes-setwitharrayliterals": "ID487", 
     "control-flow": "ID462", 
-    "controlflow-availible": "ID510", 
+    "controlflow-available": "ID510", 
     "controlflow-break": "ID137", 
     "controlflow-breakinaloop": "ID138", 
     "controlflow-breakinaswitchstatement": "ID139", 

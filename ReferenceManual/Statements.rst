@@ -823,7 +823,7 @@ logical operators such as ``&&`` and ``||``.
 
     Grammar of an availability condition
 
-    availability-condition --> ``#availible`` ``(`` availability-arguments ``)``
+    availability-condition --> ``#available`` ``(`` availability-arguments ``)``
     availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
     availability-argument --> platform-name platform-version
     availability-argument --> ``*``

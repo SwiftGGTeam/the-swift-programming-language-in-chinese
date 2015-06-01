@@ -1427,7 +1427,7 @@ without wrapping it in an ``else`` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
 
-.. _ControlFlow_Availible:
+.. _ControlFlow_Available:
 
 Checking API Availability
 -------------------------
