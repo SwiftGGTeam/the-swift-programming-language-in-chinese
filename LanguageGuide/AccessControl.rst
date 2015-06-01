@@ -151,6 +151,20 @@ This public-facing interface is the application programming interface
    You need to mark an entity as public only if you want it to become
    part of your framework's API.
 
+.. _AccessControl_AccessLevelsForTestTargets:
+
+Access Levels for Unit Test Targets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you write an app with a unit test target,
+the code in your app needs to be made available to that module in order to be tested.
+By default, only entities marked as public
+are accessible to other modules.
+However, a unit test target can access any internal entity,
+if you mark the import declaration for a product module with the ``@testable`` attribute
+and compile that product module with testing enabled.
+
+
 .. _AccessControl_AccessControlSyntax:
 
 Access Control Syntax
