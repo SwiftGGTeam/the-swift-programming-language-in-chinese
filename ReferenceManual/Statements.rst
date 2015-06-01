@@ -215,7 +215,12 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of a while statement
 
     while-statement --> ``while`` while-condition  code-block
+
     while-condition --> expression | expression-OPT optional-binding-list
+
+    while-condition --> expression
+    while-condition --> expression ``,`` optional-binding-list
+    while-condition --> optional-binding-list
 
     optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
     optional-binding-clause --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
@@ -362,7 +367,10 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     Grammar of an if statement
 
     if-statement --> ``if`` if-condition code-block else-clause-OPT
-    if-condition --> expression | expression-OPT optional-binding-list
+    if-condition --> expression
+    if-condition --> expression ``,`` optional-binding-list
+    if-condition --> optional-binding-list
+    if-condition --> availability-condition
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 
@@ -778,3 +786,57 @@ it can be used only to return from a function or method that does not return a v
     Grammar of a return statement
 
     return-statement --> ``return`` expression-OPT
+
+
+.. _Statements_AvailabilityCondition:
+
+Availability Condition
+~~~~~~~~~~~~~~~~~~~~~~
+
+An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
+and ``guard`` statement to query the availability of APIs at run time,
+based on specified platforms arguments.
+
+An availability condition has the following form:
+
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statements to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+You use an availability condition to execute a block of code,
+depending on whether the APIs you want to use are available at run time.
+The compiler uses the information from the availability condition
+when it verifies that the APIs in that block of code are available.
+
+The availability condition takes a comma-separated list of platform names and versions.
+Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
+and include the corresponding version numbers.
+The ``*`` argument is required and specifies that on any other platform,
+the body of the code block guarded by the availability condition
+executes on the minimum deployment target specified by your target.
+
+Unlike Boolean conditions, you can't combine availability conditions using
+logical operators such as ``&&`` and ``||``.
+
+.. syntax-grammar::
+
+    Grammar of an availability condition
+
+    availability-condition --> ``#availible`` ``(`` availability-arguments ``)``
+    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
+    availability-argument --> platform-name platform-version
+    availability-argument --> ``*``
+
+    platform-name --> ``iOS`` | ``iOSApplicationExtension``
+    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``watchOS``
+    platform-version --> decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
+
+.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+
