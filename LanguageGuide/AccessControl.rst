@@ -121,17 +121,6 @@ Therefore, you do not need to specify a custom access level.
 You may, however, want to mark some parts of your code as private
 in order to hide their implementation details from other code within the app's module.
 
-.. _AccessControl_AccessLevelsForTestTargets:
-
-Access Levels for Unit Test Targets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When you write an app with a unit test target,
-the code in your app needs to be made available to that module in order to be tested.
-You can mark interfaces with the ``@testable`` attribute
-to indicate that it can be accessed by unit testing targets
-as if it were declared with ``public`` access level.
-
 .. _AccessControl_AccessLevelsForFrameworks:
 
 Access Levels for Frameworks
@@ -152,6 +141,19 @@ This public-facing interface is the application programming interface
    other parts of the framework's internal code.
    You need to mark an entity as public only if you want it to become
    part of your framework's API.
+
+.. _AccessControl_AccessLevelsForTestTargets:
+
+Access Levels for Unit Test Targets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you write an app with a unit test target,
+the code in your app needs to be made available to that module in order to be tested.
+By default, only entities with the ``public`` modifier
+are accessible to other modules.
+However, if you compile a product module with testing enabled,
+a unit test target can access any declaration with the ``internal`` modifier as well
+by prepending ``@testable`` to the import statement for the product module.
 
 .. _AccessControl_AccessControlSyntax:
 
