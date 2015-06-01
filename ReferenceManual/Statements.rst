@@ -373,19 +373,6 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     if-condition --> availability-condition
     else-clause --> ``else`` code-block | ``else`` if-statement
 
-    availability-condition --> ``#availible`` ``(`` availability-arguments ``)``
-    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
-    availability-argument --> platform-name platform-version
-    availability-argument --> *
-
-    platform-name --> ``iOS`` | ``iOSApplicationExtension``
-    platform-name --> ``OSX`` | ``OSXApplicationExtension``
-    platform-name --> ``watchOS``
-    platform-version --> decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
-
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
 
 .. _Statements_GuardStatement:
 
@@ -800,3 +787,28 @@ it can be used only to return from a function or method that does not return a v
     Grammar of a return statement
 
     return-statement --> ``return`` expression-OPT
+
+
+.. _Statements_AvailabilityCondition:
+
+Availability Condition
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of an availability condition
+
+    availability-condition --> ``#availible`` ``(`` availability-arguments ``,`` ``*`` ``)``
+    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
+    availability-argument --> platform-name platform-version
+
+    platform-name --> ``iOS`` | ``iOSApplicationExtension``
+    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``watchOS``
+    platform-version --> decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
+
+.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+
