@@ -239,9 +239,9 @@ a :newTerm:`linear congruential generator`:
          }
       }
    -> let generator = LinearCongruentialGenerator()
-   -> println("Here's a random number: \(generator.random())")
+   -> print("Here's a random number: \(generator.random())")
    <- Here's a random number: 0.37464991998171
-   -> println("And another one: \(generator.random())")
+   -> print("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
 .. _Protocols_MutatingMethodRequirements:
@@ -600,7 +600,7 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    -> for _ in 1...5 {
-         println("Random dice roll is \(d6.roll())")
+         print("Random dice roll is \(d6.roll())")
       }
    </ Random dice roll is 3
    </ Random dice roll is 5
@@ -735,16 +735,16 @@ which adopts the ``DiceGameDelegate`` protocol:
          func gameDidStart(game: DiceGame) {
             numberOfTurns = 0
             if game is SnakesAndLadders {
-               println("Started a new game of Snakes and Ladders")
+               print("Started a new game of Snakes and Ladders")
             }
-            println("The game is using a \(game.dice.sides)-sided dice")
+            print("The game is using a \(game.dice.sides)-sided dice")
          }
          func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
-            println("Rolled a \(diceRoll)")
+            print("Rolled a \(diceRoll)")
          }
          func gameDidEnd(game: DiceGame) {
-            println("The game lasted for \(numberOfTurns) turns")
+            print("The game lasted for \(numberOfTurns) turns")
          }
       }
 
@@ -838,7 +838,7 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
    :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
-   -> println(d12.asText())
+   -> print(d12.asText())
    <- A 12-sided dice
 
 Similarly, the ``SnakesAndLadders`` game class can be extended to
@@ -852,7 +852,7 @@ adopt and conform to the ``TextRepresentable`` protocol:
             return "A game of Snakes and Ladders with \(finalSquare) squares"
          }
       }
-   -> println(game.asText())
+   -> print(game.asText())
    <- A game of Snakes and Ladders with 25 squares
 
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
@@ -882,7 +882,7 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
 
    -> let simonTheHamster = Hamster(name: "Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
-   -> println(somethingTextRepresentable.asText())
+   -> print(somethingTextRepresentable.asText())
    <- A hamster named Simon
 
 .. note::
@@ -912,7 +912,7 @@ and print each item's textual representation:
    :compile: true
 
    -> for thing in things {
-         println(thing.asText())
+         print(thing.asText())
       }
    </ A game of Snakes and Ladders with 25 squares
    </ A 12-sided dice
@@ -1008,7 +1008,7 @@ of any ``SnakesAndLadders`` instance:
 .. testcode:: protocols
    :compile: true
 
-   -> println(game.asPrettyText())
+   -> print(game.asPrettyText())
    </ A game of Snakes and Ladders with 25 squares:
    </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 
@@ -1082,7 +1082,7 @@ into a single protocol composition requirement on a function parameter:
          var age: Int
       }
    -> func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-         println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+         print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
    << // birthdayPerson : Person = REPL.Person
@@ -1197,9 +1197,9 @@ it conforms to the ``HasArea`` protocol:
 
    -> for object in objects {
          if let objectWithArea = object as? HasArea {
-            println("Area is \(objectWithArea.area)")
+            print("Area is \(objectWithArea.area)")
          } else {
-            println("Something that doesn't have an area")
+            print("Something that doesn't have an area")
          }
       }
    </ Area is 12.5663708
@@ -1391,7 +1391,7 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
    -> counter.dataSource = ThreeSource()
    -> for _ in 1...4 {
          counter.increment()
-         println(counter.count)
+         print(counter.count)
       }
    </ 3
    </ 6
@@ -1438,7 +1438,7 @@ Once the counter reaches zero, no more counting takes place:
    -> counter.dataSource = TowardsZeroSource()
    -> for _ in 1...5 {
          counter.increment()
-         println(counter.count)
+         print(counter.count)
       }
    </ -3
    </ -2

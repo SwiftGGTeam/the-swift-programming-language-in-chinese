@@ -74,7 +74,7 @@ The ``Fahrenheit`` structure has one stored property,
       }
    -> var f = Fahrenheit()
    << // f : Fahrenheit = REPL.Fahrenheit
-   -> println("The default temperature is \(f.temperature)° Fahrenheit")
+   -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
 The structure defines a single initializer, ``init``, with no parameters,
@@ -305,7 +305,7 @@ with an optional ``String`` property called ``response``:
             self.text = text
          }
          func ask() {
-            println(text)
+            print(text)
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
@@ -378,7 +378,7 @@ it can still be set within the class's initializer:
             self.text = text
          }
          func ask() {
-            println(text)
+            print(text)
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
@@ -1011,7 +1011,7 @@ and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` o
 
    -> let vehicle = Vehicle()
    << // vehicle : Vehicle = REPL.Vehicle
-   -> println("Vehicle: \(vehicle.description)")
+   -> print("Vehicle: \(vehicle.description)")
    </ Vehicle: 0 wheel(s)
 
 The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
@@ -1044,7 +1044,7 @@ to see how its ``numberOfWheels`` property has been updated:
 
    -> let bicycle = Bicycle()
    << // bicycle : Bicycle = REPL.Bicycle
-   -> println("Bicycle: \(bicycle.description)")
+   -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
 .. note::
@@ -1315,7 +1315,7 @@ to create a new ``ShoppingListItem`` instance:
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
-         println(item.description)
+         print(item.description)
       }
    </ 1 x Orange juice ✔
    </ 1 x Bacon ✘
@@ -1418,7 +1418,7 @@ and to check if initialization succeeded:
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
-         println("An animal was initialized with a species of \(giraffe.species)")
+         print("An animal was initialized with a species of \(giraffe.species)")
       }
    <- An animal was initialized with a species of Giraffe
 
@@ -1432,7 +1432,7 @@ the initializer triggers an initialization failure:
    // anonymousCreature is of type Animal?, not Animal
    ---
    -> if anonymousCreature == nil {
-         println("The anonymous creature could not be initialized")
+         print("The anonymous creature could not be initialized")
       }
    <- The anonymous creature could not be initialized
 
@@ -1489,14 +1489,14 @@ states:
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a defined temperature unit, so initialization succeeded.")
+         print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is not a defined temperature unit, so initialization failed.")
+         print("This is not a defined temperature unit, so initialization failed.")
       }
    <- This is not a defined temperature unit, so initialization failed.
 
@@ -1524,14 +1524,14 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
    << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
    -> if fahrenheitUnit != nil {
-         println("This is a defined temperature unit, so initialization succeeded.")
+         print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is not a defined temperature unit, so initialization failed.")
+         print("This is not a defined temperature unit, so initialization failed.")
       }
    <- This is not a defined temperature unit, so initialization failed.
 
@@ -1598,7 +1598,7 @@ without needing to check for a value of ``nil``:
 
    -> if let bowTie = Product(name: "bow tie") {
          // no need to check if bowTie.name == nil
-         println("The product's name is \(bowTie.name)")
+         print("The product's name is \(bowTie.name)")
       }
    <- The product's name is bow tie
 
@@ -1620,7 +1620,7 @@ and no further initialization code is executed.
    -> struct S {
          init?(string1: String) {
             self.init(string2: string1)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
          init?(string2: String) { return nil }
       }
@@ -1632,7 +1632,7 @@ and no further initialization code is executed.
    -> class C {
          convenience init?(string1: String) {
             self.init(string2: string1)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
          init?(string2: String) { return nil }
       }
@@ -1647,7 +1647,7 @@ and no further initialization code is executed.
    -> class D: C {
          init?(string2: String) {
             super.init(string1: string2)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
       }
    -> let d = D(string2: "bing")
@@ -1698,7 +1698,7 @@ initialization succeeds:
 .. testcode:: failableInitializers
 
    -> if let twoSocks = CartItem(name: "sock", quantity: 2) {
-         println("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+         print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
       }
    <- Item: sock, quantity: 2
 
@@ -1708,9 +1708,9 @@ the ``CartItem`` initializer causes initialization to fail:
 .. testcode:: failableInitializers
 
    -> if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
-         println("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+         print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
       } else {
-         println("Unable to initialize zero shirts")
+         print("Unable to initialize zero shirts")
       }
    <- Unable to initialize zero shirts
 
@@ -1720,9 +1720,9 @@ the superclass ``Product`` initializer causes initialization to fail:
 .. testcode:: failableInitializers
 
    -> if let oneUnnamed = CartItem(name: "", quantity: 1) {
-         println("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+         print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
       } else {
-         println("Unable to initialize one unnamed product")
+         print("Unable to initialize one unnamed product")
       }
    <- Unable to initialize one unnamed product
 
@@ -2168,7 +2168,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 
    -> let board = Checkerboard()
    << // board : Checkerboard = REPL.Checkerboard
-   -> println(board.squareIsBlackAtRow(0, column: 1))
+   -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> println(board.squareIsBlackAtRow(9, column: 9))
+   -> print(board.squareIsBlackAtRow(9, column: 9))
    <- false

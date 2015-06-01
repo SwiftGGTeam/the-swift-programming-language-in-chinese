@@ -76,6 +76,15 @@ and also relative to the module that source file belongs to.
 Public access is the highest (least restrictive) access level
 and private access is the lowest (or most restrictive) access level.
 
+.. note::
+
+   Private access in Swift differs from private access in most other languages,
+   as it's scoped to the enclosing source file rather than to the enclosing declaration.
+   This means that a type can access any private entities
+   that are defined in the same source file as itself,
+   but an extension cannot access that type's private members
+   if it's defined in a separate source file.
+
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
 Guiding Principle of Access Levels
@@ -663,7 +672,7 @@ you can see the ``numberOfEdits`` property value update to match the number of m
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."
-   -> println("The number of edits is \(stringToEdit.numberOfEdits)")
+   -> print("The number of edits is \(stringToEdit.numberOfEdits)")
    <- The number of edits is 3
 
 Although you can query the current value of the ``numberOfEdits`` property

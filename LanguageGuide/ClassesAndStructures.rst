@@ -173,7 +173,7 @@ separated by a period (``.``), without any spaces:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The width of someResolution is \(someResolution.width)")
+   -> print("The width of someResolution is \(someResolution.width)")
    <- The width of someResolution is 0
 
 In this example,
@@ -185,7 +185,7 @@ such as the ``width`` property in the ``resolution`` property of a ``VideoMode``
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+   -> print("The width of someVideoMode is \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is 0
 
 You can also use dot syntax to assign a new value to a variable property:
@@ -193,7 +193,7 @@ You can also use dot syntax to assign a new value to a variable property:
 .. testcode:: ClassesAndStructures
 
    -> someVideoMode.resolution.width = 1280
-   -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+   -> print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
 .. note::
@@ -291,7 +291,7 @@ shows that it has indeed changed to be ``2048``:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("cinema is now \(cinema.width) pixels wide")
+   -> print("cinema is now \(cinema.width) pixels wide")
    <- cinema is now 2048 pixels wide
 
 However, the ``width`` property of the original ``hd`` instance
@@ -299,7 +299,7 @@ still has the old value of ``1920``:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("hd is still \(hd.width) pixels wide")
+   -> print("hd is still \(hd.width) pixels wide")
    <- hd is still 1920 pixels wide
 
 When ``cinema`` was given the current value of ``hd``,
@@ -323,7 +323,7 @@ The same behavior applies to enumerations:
    << // rememberedDirection : CompassPoint = (Enum Value)
    -> currentDirection = .East
    -> if rememberedDirection == .West {
-         println("The remembered direction is still .West")
+         print("The remembered direction is still .West")
       }
    <- The remembered direction is still .West
 
@@ -380,7 +380,7 @@ from the underlying ``VideoMode`` instance:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+   -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
 
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
@@ -418,9 +418,9 @@ or passed to a function.)
    << // s1 : S = REPL.S
    -> let s2 = S()
    << // s2 : S = REPL.S
-   -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
+   -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two S operands
-   !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
@@ -430,9 +430,9 @@ or passed to a function.)
    << // e1 : E = (Enum Value)
    -> let e2 = E.B
    << // e2 : E = (Enum Value)
-   -> if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
+   -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two E operands
-   !! if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ^
 
 It can sometimes be useful to find out if two constants or variables refer to
@@ -447,7 +447,7 @@ Use these operators to check whether two constants or variables refer to the sam
 .. testcode:: ClassesAndStructures
 
    -> if tenEighty === alsoTenEighty {
-         println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
+         print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
       }
    <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
@@ -472,9 +472,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    << // c1 : C = REPL.C
    -> let c2 = C()
    << // c2 : C = REPL.C
-   -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
+   -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two C operands
-   !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
+   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ^
 
 .. assertion:: structuresDontGetEqualityByDefault
@@ -484,9 +484,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    << // s1 : S = REPL.S
    -> let s2 = S()
    << // s2 : S = REPL.S
-   -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
+   -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two S operands
-   !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
+   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ^
 
 .. TODO: This needs clarifying with regards to function references.

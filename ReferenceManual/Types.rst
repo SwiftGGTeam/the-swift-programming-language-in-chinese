@@ -190,9 +190,9 @@ a very simple assert function:
 
 .. testcode:: function-autoclosure
 
-    -> func simpleAssert(@autoclosure condition: () -> Bool, message: String) {
+    -> func simpleAssert(@autoclosure condition: Void -> Bool, message: String) {
            if !condition() {
-               println(message)
+               print(message)
            }
        }
     -> let testNumber = 5
@@ -580,12 +580,12 @@ as the following example shows:
 
     -> class SomeBaseClass {
            class func printClassName() {
-               println("SomeBaseClass")
+               print("SomeBaseClass")
            }
        }
     -> class SomeSubClass: SomeBaseClass {
            override class func printClassName() {
-               println("SomeSubClass")
+               print("SomeSubClass")
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()

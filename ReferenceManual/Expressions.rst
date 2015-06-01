@@ -45,21 +45,13 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following prefix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-* ``!`` Logical NOT
-* ``~`` Bitwise NOT
-* ``+`` Unary plus
-* ``-`` Unary minus
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
-In addition to the standard library operators listed above,
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
 as an in-out argument to a function call expression.
 For more information and to see an example,
@@ -93,98 +85,11 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-The Swift standard library provides the following binary operators:
-
-.. The following comes from stdlib/core/Policy.swift
-
-* Exponentiative (No associativity, precedence level 160)
-
-  - ``<<`` Bitwise left shift
-  - ``>>`` Bitwise right shift
-
-* Multiplicative (Left associative, precedence level 150)
-
-  - ``*`` Multiply
-  - ``/`` Divide
-  - ``%`` Remainder
-  - ``&*`` Multiply, ignoring overflow
-  - ``&`` Bitwise AND
-
-* Additive (Left associative, precedence level 140)
-
-  - ``+`` Add
-  - ``-`` Subtract
-  - ``&+`` Add with overflow
-  - ``&-`` Subtract with overflow
-  - ``|`` Bitwise OR
-  - ``^`` Bitwise XOR
-
-* Range (No associativity, precedence level 135)
-
-  - ``..<`` Half-open range
-  - ``...`` Closed range
-
-* Cast (No associativity, precedence level 132)
-
-  - ``is`` Type check
-  - ``as``, ``as?``, and ``as!`` Type cast
-
-* Nil Coalescing (Right associative, precedence level 131)
-
-  - ``??`` Nil coalescing
-
-* Comparative (No associativity, precedence level 130)
-
-  - ``<`` Less than
-  - ``<=`` Less than or equal
-  - ``>`` Greater than
-  - ``>=`` Greater than or equal
-  - ``==`` Equal
-  - ``!=`` Not equal
-  - ``===`` Identical
-  - ``!==`` Not identical
-  - ``~=`` Pattern match
-
-* Conjunctive (Left associative, precedence level 120)
-
-  - ``&&`` Logical AND
-
-* Disjunctive (Left associative, precedence level 110)
-
-  - ``||`` Logical OR
-
-* Ternary Conditional (Right associative, precedence level 100)
-
-  - ``?`` ``:`` Ternary conditional
-
-* Assignment (Right associative, precedence level 90)
-
-  - ``=`` Assign
-  - ``*=`` Multiply and assign
-  - ``/=`` Divide and assign
-  - ``%=`` Remainder and assign
-  - ``+=`` Add and assign
-  - ``-=`` Subtract and assign
-  - ``<<=`` Left bit shift and assign
-  - ``>>=`` Right bit shift and assign
-  - ``&=`` Bitwise AND and assign
-  - ``^=`` Bitwise XOR and assign
-  - ``|=`` Bitwise OR and assign
-  - ``&&=`` Logical AND and assign
-  - ``||=`` Logical OR and assign
-
-.. assertion:: nilCoalescingOperator
-
-    -> var sequence: [Int] = []
-    << // sequence : [Int] = []
-    -> sequence.first ?? 0 // produces 0, because sequence.first is nil
-    <$ : Int = 0
-    -> sequence.append(22)
-    -> sequence.first ?? 0 // produces 22, the value of sequence.first
-    <$ : Int = 22
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -366,8 +271,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { println("Function for Any") }
-   -> func f(int: Int) { println("Function for Int") }
+   -> func f(any: Any) { print("Function for Any") }
+   -> func f(int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
@@ -505,7 +410,7 @@ when the default value expression is evaluated at the call site.
 .. testcode:: special-literal-evaluated-at-call-site
 
     -> func logFunctionName(string: String = __FUNCTION__) {
-           println(string)
+           print(string)
        }
     -> func myFunction() {
           logFunctionName() // Prints "myFunction()".
@@ -654,7 +559,7 @@ For example:
     >> var somePoint = Point(x: 1.0, y: 1.0)
     << // somePoint : Point = REPL.Point
     >> somePoint.moveByX(2.0, y: 3.0)
-    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
@@ -791,7 +696,7 @@ to capture a weak or unowned reference to the value.
 
 .. testcode:: closure-expression-weak
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: () -> Void) { f() }
     >> class C {
     >> let title = "Title"
     >> func method() {
@@ -810,7 +715,7 @@ For example:
 
 .. testcode:: closure-expression-capture
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: () -> Void) { f() }
     >> class P { let title = "Title" }
     >> class C {
     >> let parent = P()
@@ -1017,15 +922,11 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following postfix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. langref-grammar
 
@@ -1298,12 +1199,12 @@ runtime type of the *expression*, as the following example shows:
 
     -> class SomeBaseClass {
            class func printClassName() {
-               println("SomeBaseClass")
+               print("SomeBaseClass")
            }
        }
     -> class SomeSubClass: SomeBaseClass {
            override class func printClassName() {
-               println("SomeSubClass")
+               print("SomeSubClass")
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()

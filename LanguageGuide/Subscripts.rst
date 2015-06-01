@@ -78,7 +78,7 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
    << // threeTimesTable : TimesTable = REPL.TimesTable
-   -> println("six times three is \(threeTimesTable[6])")
+   -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
 In this example, a new instance of ``TimesTable`` is created
@@ -196,7 +196,7 @@ Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
 This initializer is described in more detail
-in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.
+in :ref:`CollectionTypes_CreatingAnEmptyArray`.
 
 You can construct a new ``Matrix`` instance by passing
 an appropriate row and column count to its initializer:
@@ -220,10 +220,10 @@ separated by a comma:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> matrix[0, 1] = 1.5
-   >> println(matrix[0, 1])
+   >> print(matrix[0, 1])
    << 1.5
    -> matrix[1, 0] = 3.2
-   >> println(matrix[1, 0])
+   >> print(matrix[1, 0])
    << 3.2
 
 These two statements call the subscript's setter to set

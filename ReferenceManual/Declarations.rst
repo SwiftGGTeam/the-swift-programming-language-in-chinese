@@ -215,9 +215,9 @@ Both constants can now be used independently:
 
 .. testcode:: constant-decl
 
-    -> println("The first number is \(firstNumber).")
+    -> print("The first number is \(firstNumber).")
     <- The first number is 10.
-    -> println("The second number is \(secondNumber).")
+    -> print("The second number is \(secondNumber).")
     <- The second number is 42.
 
 The type annotation (``:`` *type*) is optional in a constant declaration
@@ -710,10 +710,10 @@ it must have its name in the function call.
 .. assertion:: default-args-evaluated-at-call-site
 
     -> func shout() -> Int {
-           println("evaluated")
+           print("evaluated")
            return 10
        }
-    -> func foo(x: Int = shout()) { println("x is \(x)") }
+    -> func foo(x: Int = shout()) { print("x is \(x)") }
     -> foo(x: 100)
     << x is 100
     -> foo()
