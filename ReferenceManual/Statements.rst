@@ -380,14 +380,10 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``OSX`` | ``OSXApplicationExtension``
-    platform-version --> decimal-digit | decimal-digit ``.`` platform-version
-
-.. FIXME does the parser expect a fixed/limited number of digits?
-
-
-.. FIXME Is watchOS a supported platform here?
-
-
+    platform-name --> ``watchOS``
+    platform-version --> decimal-digit
+    platform-version --> decimal-digit ``.`` decimal-digit
+    platform-version --> decimal-digit ``.`` decimal-digit ``.`` decimal-digit
 
 
 .. _Statements_GuardStatement:

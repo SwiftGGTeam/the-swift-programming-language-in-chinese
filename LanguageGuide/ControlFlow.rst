@@ -1424,7 +1424,7 @@ such as ``return``, ``break``, or ``continue``,
 or it can call a function or method
 that doesn't return, such as ``fatalError()``.
 
-Using a ``guard`` statement for requirements 
+Using a ``guard`` statement for requirements
 improves the readability of your code,
 compared to doing the same check with an ``if`` statement.
 It lets you write the code that's typically executed
@@ -1437,34 +1437,60 @@ next to the requirement.
 Checking API Availability
 -------------------------
 
+Swift has built-in support for checking API availability,
+which ensures that you don't accidentally use APIs that are unavailable
+on a given deployment target.
+
 The compiler uses availability information in the SDK
 to verify that all of the APIs used in your code
 are available on the deployment target specified by your project.
-Swift reports an error at compile-time
+Swift reports an error at compile time
 if you try to use an API that isn't available.
 
-You can use ``#available`` in the condition of an ``if`` or ``guard`` statement
-to conditionally execute a block of code
+You use an ``#available(...)`` condition in an ``if`` or ``guard`` statement
+to conditionally execute a block of code,
 depending on whether the APIs you want to use are available at run time.
-
-For example, to use APIs that were introduced in iOS 8.0:
+The compiler uses the information from the ``#available(...)`` condition
+when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
 
-   -> if #available(iOS 8.0, *) {
-          // Use iOS 8.0 APIs
+   -> if #available(iOS 9, OSX 10.10, *) {
+          // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
       } else {
-          // Fall back to earlier iOS APIs
+          // Fall back to earlier iOS and OS X APIs
       }
 
-..  The compiler recognizes the ``if #available`` construction
-    when it is checking for API availibility,
-    and it doesn't whine about things
+The ``#available(...)`` condition above specifies that on iOS,
+the body of the ``if`` executes only on iOS 9 and later;
+on OS X, only on OS X v10.10 and later.
+The last argument, ``*``, is required and specifies that on any other platform,
+the body of the ``if`` executes on the minimum deployment target specified by your target.
 
-    when used with 'guard' it refines the availablity for the remainder of the
-    block of code
+In its general form,
+the ``#available(...)`` condition takes a list of platform names and versions.
+You use ``iOS``, ``OSX``, and ``watchOS`` for the platform names.
+In addition to specifying major version numbers like iOS 8,
+you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
 
-    you can do this on your own classes that depend on SDK versiosn
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statement to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+.. FIXME
+    Not a general purpose condition; can't combine with &&, etc.
+    Use can use it with if-let, and other Boolean conditions, using a comma
+
+
+.. FIXME
+    When used with 'guard' it refines the availablity for the remainder of the
+    block of code.
+
+    You can do this on your own classes that depend on SDK versiosn
 
     @available class Foo
 
@@ -1474,16 +1500,4 @@ For example, to use APIs that were introduced in iOS 8.0:
     let  f = Foo
     do cool new stuff with Foo
 
-.. Some of the following probably moves to the reference:
-
-.. The #available only goes in guard/if -- not in other expressions
-
-.. FIXME Add prose to introduce the syntax-outline
-
-.. sytax-outline::
-
-   if #available(<#platform version#>, <#platform version#>, *) {
-       <#statement to execute if the APIs are available#>
-   } else {
-       <#fallback statements to execute if the APIs are unavailable#>
 
