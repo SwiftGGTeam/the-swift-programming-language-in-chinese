@@ -28,7 +28,7 @@ if necessary --- communicate it to the user.
 .. note::
 
    Error handling in Swift is similar to exception handling in other languages,
-   and is bridged to Cocoa's ``NSError`` class in Objective-C.
+   and is bridged with Cocoa error handling in Objective-C.
 
    For more information about error handling with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
@@ -37,13 +37,14 @@ Representing Errors
 -------------------
 
 In Swift, errors are represented by
-instances of types conforming to the ``ErrorType`` protocol.
+values of types conforming to the ``ErrorType`` protocol.
 
-Swift enumerations automatically conform to ``ErrorType``,
-making them particularly well-suited to modeling
-a group of related error conditions.
-Using associated values for enumeration cases provides
-more specific information about the nature of a particular error.
+Swift enumerations are particularly well-suited to modeling
+a group of related error conditions,
+with associated values allowing for additional information
+about the nature of a error to be communicated.
+Because of this, Swift enumerations that declare conformance to ``ErrorType``
+automatically have the implementation of their conformance synthesized by the compiler.
 
 For example, here's how you might represent the error conditions
 of operating a vending machine:
@@ -147,7 +148,7 @@ errors thrown by a function parameter will be propagated to the caller.
 
 .. testcode:: rethrow
 
-   -> func foo(callback: Void throws -> Int) rethrows {
+   -> func functionWithCallback(callback: () throws -> Int) rethrows {
           try callback()
       }
 
@@ -168,10 +169,12 @@ errors thrown by a function parameter will be propagated to the caller.
 Catching and Handling Errors
 ----------------------------
 
-Statements and expressions that can implicitly throw
+Calls to methods and functions that can throw
 must be executed in a ``try`` expression,
 which consists of the ``try`` keyword,
 followed by a statement or expression that can implicitly throw.
+A ``try`` statement acknowledges the error
+and allows it to continue propagation.
 
 If an error is thrown,
 that error is propagated to the outer scope of the ``try`` expression
@@ -197,7 +200,9 @@ If such a determination can be made, the error is considered handled.
 Otherwise, the containing scope must handle the error,
 or the containing function must be declared with ``throws``.
 To ensure that an error is handled,
-use a ``catch`` clause with no pattern as a catch-all case.
+use a ``catch`` clause with a pattern that matches all errors.
+If a ``catch`` clause does not specify a pattern,
+the clause will match and bind any error to a local constant named ``error``.
 
 .. TODO Reference Pattern Matching chapter
 
@@ -209,11 +214,9 @@ See :doc:`../ReferenceManual/Patterns` for more information about pattern matchi
 
    -> do {
          let newVolume = try increaseVolume()
-      }
-      catch AudioOutputError.Overload {
+      } catch AudioOutputError.Overload {
          // Handle audio overload.
-      }
-      catch {
+      } catch {
          // Handle any other error.
       }
 
@@ -222,43 +225,53 @@ the function ``increaseVolume()`` is called.
 Because the function can throw an error,
 it is executed in a ``try`` expression.
 If an error is thrown by ``increaseVolume()``,
-execution immediately transfers out of the ``do`` statement,
-and evaluates each ``catch`` clause until a matching pattern is found.
+execution immediately transfers out of the ``do`` statement
+to the ``catch`` clauses,
+which decide whether or not to allow propagation to continue..
 If no error is thrown,
 the return value of ``increaseVolume()`` is assigned to ``newVolume``.
 
 Disabling Compiler Checks for Error Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a function declared with the ``throws`` keyword
-will not actually throw an error at runtime,
-append an exclamation point (``!``) to the ``try`` keyword of a ``try`` expression.
-Doing so will disable any compiler checks for error handling,
-and treat the expression as if it did not throw.
+To indicate that a call to a function declared with the ``throws`` keyword
+will not throw an error at runtime,
+execute it in a :newTerm:`forced-try` expression.
+Doing so will wrap the function call in an assertion,
+such that if an error is thrown,
+a runtime error is triggered.
+
+A forced-try expression takes the same form of a try expression,
+except with an exclamation mark (``!``) appended to the ``try`` keyword.
 
 .. testcode:: forceTryStatement
 
-   -> func willNotActuallyThrowAnError() throws {}
+   >> enum Error : ErrorType { case E }
+   >> let someError = Error.E
+   -> func willOnlyThrowIfTrue(value: Bool) throws {
+         if value { throw someError }
+      }
    ---
    -> do {
-         try willNotActuallyThrowAnError()
+         try willOnlyThrowIfTrue(false)
       } catch {
          // Handle Error
       }
    ---
-   -> try! willNotActuallyThrowAnError()
+   -> try! willOnlyThrowIfTrue(false)
 
-If an error is thrown by a function wrapped in a forced-try statement,
-a runtime error is triggered.
-
-Deferring Statements During Error Handling
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Specifying Clean-Up Actions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``defer`` statement defers execution until the current scope is exited.
 It consists of the ``defer`` keyword and the statements to be executed later.
-The deferred statements may not contain a control transfer statement,
-such as ``break`` or ``return``,
-or a statement that would otherwise cause the function to terminate early.
+The deferred statements may not contain any code
+that would transfer control out of the statements,
+such as a ``break`` or a ``return`` statement,
+or by throwing an error.
+Deferred actions are executed in reverse order of how they are specified ---
+that is, the code in the first ``defer`` statement executes
+after code in the second, and so on.
 
 You use a ``defer`` statement to do any necessary cleanup
 that should be performed regardless of whether an error occurred or not.
