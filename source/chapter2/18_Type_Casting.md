@@ -54,7 +54,7 @@ class Song: MediaItem {
 }
 ```
 
-最后一个代码段创建了一个数组常量 `library`，包含两个`Movie`实例和三个`Song`实例。`library`的类型是在它被初始化时根据它数组中所包含的内容推断来的。Swift 的类型检测器能够演绎出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `MediaItem[]` 类作为 `library` 的类型。
+最后一个代码段创建了一个数组常量 `library`，包含两个`Movie`实例和三个`Song`实例。`library`的类型是在它被初始化时根据它数组中所包含的内容推断来的。Swift 的类型检测器能够演绎出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `[MediaItem]` 类作为 `library` 的类型。
 
 ```swift
 let library = [
@@ -64,7 +64,7 @@ let library = [
     Song(name: "The One And Only", artist: "Chesney Hawkes"),
     Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
 ]
-// the type of "library" is inferred to be MediaItem[]
+// the type of "library" is inferred to be [MediaItem]
 ```
 
 在幕后`library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的，但是，若你迭代它，取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型的。为了让它们作为它们本来的类型工作，你需要检查它们的类型或者向下转换它们的类型到其它类型，就像下面描述的一样。
@@ -157,14 +157,14 @@ Swift为不确定类型提供了两种特殊类型别名：
 
 ### `AnyObject`类型
 
-当需要在工作中使用 Cocoa APIs，它一般接收一个`AnyObject[]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。
+当需要在工作中使用 Cocoa APIs，它一般接收一个`[AnyObject]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以确定包含在仅从你知道的 API 信息提供的这样一个数组中的对象的类型。
 
 在这些情况下，你可以使用强制形式的类型转换(`as`)来下转在数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解析（optional unwrapping）。
 
-下面的示例定义了一个 `AnyObject[]` 类型的数组并填入三个`Movie`类型的实例：
+下面的示例定义了一个 `[AnyObject]` 类型的数组并填入三个`Movie`类型的实例：
 
 ```swift
-let someObjects: AnyObject[] = [
+let someObjects: [AnyObject] = [
     Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
     Movie(name: "Moon", director: "Duncan Jones"),
     Movie(name: "Alien", director: "Ridley Scott")
@@ -183,10 +183,10 @@ for object in someObjects {
 // Movie: 'Alien', dir. Ridley Scott
 ```
 
-为了变为一个更短的形式，下转`someObjects`数组为`Movie[]`类型来代替下转每一项方式。
+为了变为一个更短的形式，下转`someObjects`数组为`[Movie]`类型来代替下转每一项方式。
 
 ```swift
-for movie in someObjects as Movie[] {
+for movie in someObjects as! [Movie] {
     println("Movie: '\(movie.name)', dir. \(movie.director)")
 }
 // Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
