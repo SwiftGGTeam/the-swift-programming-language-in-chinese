@@ -28,7 +28,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08 * Updated the
+2015-06-08  * Updated the
               :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
               with a more precise definition of Unicode scalars.
 
