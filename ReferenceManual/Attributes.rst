@@ -430,25 +430,40 @@ to class declarations.
 Type Attributes
 ---------------
 
-You can apply type attributes to types only. However, you can also apply the ``noreturn``
-attribute to a function or method *declaration*.
+You can apply type attributes to types only.
+However, you can also apply the ``noreturn`` attribute
+to a function or method *declaration*.
+
+``convention``
+   Apply this attribute to the type of a function
+   to indicate its calling conventions.
+
+   The ``convention`` attribute always appears with
+   one of the attribute arguments below.
+
+   * The ``swift`` argument is used to indicate a Swift function reference.
+     This is the standard calling convention for function values in Swift.
+   * The ``block`` argument is used to indicate an Objective-C compatible block reference.
+     The function value is represented as a reference to the block object,
+     which is an ``id``-compatible Objective-C object that embeds its invocation
+     function within the object.
+     The invocation function uses the C calling convention.
+   * The ``c`` argument is used to indicate a C function reference.
+     The function value carries no context and uses the C calling convention.
+
+   A function with C function calling conventions can be used as
+   a function with Objective-C block calling conventions,
+   and a function with Objective-C block calling conventions can be used as
+   a function with Swift function calling conventions.
+   However, only nongeneric global functions, and
+   local functions or closures that don't capture any local variables,
+   can be used as a function with C function calling conventions.
 
 ``noreturn``
     Apply this attribute to the type of a function or method
     to indicate that the function or method doesn't return to its caller.
     You can also mark a function or method declaration with this attribute to indicate that
     the corresponding type of that function or method, ``T``, is ``@noreturn T``.
-
-..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
-              type system at some point (for power users that need to tweak calling conventions).
-    ``objc_block`` // Not documenting.
-    ``thin`` // Mainly used for SIL at the moment. Not documenting for 1.0.
-    ``thick`` // Mainly used for SIL at the moment. Not documenting for 1.0.
-
-    // @thin and @cc are only accepted in SIL. (from attributes.swift test)
-    var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}
-    var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
-
 
 .. langref-grammar
 
