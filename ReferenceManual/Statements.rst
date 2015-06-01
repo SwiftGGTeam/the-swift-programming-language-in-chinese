@@ -381,10 +381,11 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``OSX`` | ``OSXApplicationExtension``
     platform-name --> ``watchOS``
-    platform-version --> decimal-digit
-    platform-version --> decimal-digit ``.`` decimal-digit
-    platform-version --> decimal-digit ``.`` decimal-digit ``.`` decimal-digit
+    platform-version --> decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
+.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
 
 .. _Statements_GuardStatement:
 
