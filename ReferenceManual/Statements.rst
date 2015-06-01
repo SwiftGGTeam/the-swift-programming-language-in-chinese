@@ -816,7 +816,7 @@ when it verifies that the APIs in that block of code are available.
 The availability condition takes a comma-separated list of platform names and versions.
 Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
 and include the corresponding version numbers.
-The last argument, ``*``, is required and specifies that on any other platform,
+The ``*`` argument is required and specifies that on any other platform,
 the body of the code block guarded by the availability condition
 executes on the minimum deployment target specified by your target.
 
@@ -827,9 +827,10 @@ logical operators such as ``&&`` and ``||``.
 
     Grammar of an availability condition
 
-    availability-condition --> ``#availible`` ``(`` availability-arguments ``,`` ``*`` ``)``
+    availability-condition --> ``#availible`` ``(`` availability-arguments ``)``
     availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
     availability-argument --> platform-name platform-version
+    availability-argument --> ``*``
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``OSX`` | ``OSXApplicationExtension``
