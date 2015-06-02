@@ -42,6 +42,9 @@ Date        Notes
             * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
               to the :doc:`../LanguageGuide/AccessControl` chapter.
 
+            * Added the :ref:`Patterns_OptionalPattern` section
+              to the :doc:`../ReferenceManual/Patterns` chapter.
+
             * Added a note to the
               :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
               section about differences in weak references
