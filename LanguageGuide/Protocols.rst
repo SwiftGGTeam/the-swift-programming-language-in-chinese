@@ -1446,6 +1446,121 @@ Once the counter reaches zero, no more counting takes place:
    </ 0
    </ 0
 
+.. _Protocols_Extensions:
+
+Protocol Extensions
+-------------------
+
+Protocols can be extended to provide method and property implementations
+to conforming types.
+This allows you to define behavior on protocols themselves,
+rather than in each type's individual conformance or a global function.
+
+For example, the ``RandomNumberGenerator`` protocol can be extended
+to provide a ``randomBool()`` method,
+which uses the result of the required ``random()`` method
+to return a random ``Bool`` value:
+
+.. testcode:: protocolConformance
+
+   extension RandomNumberGenerator {
+      func randomBool() -> Bool {
+         return random() > 0.5
+      }
+   }
+
+By creating an extension on the protocol,
+all conforming types automatically gains this method implementation
+without any additional modification.
+
+.. testcode:: protocolConformance
+
+   -> let generator = LinearCongruentialGenerator()
+   -> println("Here's a random number: \(generator.random())")
+   <- Here's a random number: 0.37464991998171
+   -> println("And here's a random Boolean: \(generator.randomBool())")
+   <- And here's a random Boolean: true
+
+Default Implementation
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can use protocol extensions to provide a default implementation
+to any method or property requirement of that protocol.
+If a conforming type provides its own implementation of a required method or property,
+that implementation will be used instead of the one provided by the extension.
+
+.. note::
+
+   Protocol requirements with default implementations provided by extensions
+   are distinct from optional protocol requirements,
+   Although conforming types do not have to provide their own implementation of either,
+   requirements with default implementations can be called without optional chaining.
+
+For example, the ``PrettyTextRepresentable`` protocol,
+which inherits the ``TextRepresentable`` protocol
+could provide a default implementation of its required ``asPrettyText()`` method
+to simply return the result of the ``asText()`` method:
+
+.. testcode:: protocols
+
+   extension PrettyTextRepresentable  {
+      func asPrettyText() -> String {
+         return asText()
+      }
+   }
+
+Generically Constrained Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Protocol extensions can be generically constrained,
+such that any methods or properties implemented
+will only be available to types that satisfy particular requirements.
+If a type satisfies the requirements for multiple constrained extensions
+that provide implementations for the same method or property,
+Swift will use the implementation corresponding the most specialized constraints.
+
+Constraints for a protocol extension are specified using a ``where`` clause,
+as described in :ref:`_Generics_WhereClauses`.
+
+For instance, the ``CollectionType`` protocol can be extended
+with a constraint on its associated ``Generator`` type's
+associated ``Element`` type,
+such that the values in the sequence must conform to
+the ``TextRepresentable`` protocol from the above example.
+
+.. testcode:: protocols
+
+   -> extension CollectionType where Generator.Element : TextRepresentable {
+          func asList() -> String {
+              return "(" + ", ".join(map({$0.asText()})) + ")"
+          }
+      }
+
+The ``asList()`` method takes
+the textual representation of each element in the collection
+and concatenates them into a comma-delimited list.
+
+Consider the ``Hamster`` structure from before,
+which conforms to the ``TextRepresentable`` protocol,
+and an array of ``Hamster`` values:
+
+.. testcode:: protocols
+
+   -> let murrayTheHamster = Hamster(name: "Murray")
+   -> let morganTheHamster = Hamster(name: "Morgan")
+   -> let mauriceTheHamster = Hamster(name: "Maurice")
+   -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+
+Because ``Array`` conforms to ``CollectionType``,
+and the array's elements conform to the ``TextRepresentable`` protocol,
+the array can use the ``asList()`` method
+to get a textual representation of its contents:
+
+.. testcode:: protocols
+
+   -> print(hamsters.asList())
+   <- (A hamster named Murray, A hamster named Morgan, A hamster named Maurice)
+
 .. TODO: Other things to be included
 .. ---------------------------------
 
