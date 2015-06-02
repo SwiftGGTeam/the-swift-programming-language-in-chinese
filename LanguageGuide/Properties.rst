@@ -798,9 +798,9 @@ For example:
    -> SomeStructure.storedTypeProperty = "Another value."
    -> print(SomeStructure.storedTypeProperty)
    <- Another value.
-   -> println(SomeEnumeration.computedTypeProperty)
+   -> print(SomeEnumeration.computedTypeProperty)
    <- 6
-   -> println(SomeClass.computedTypeProperty)
+   -> print(SomeClass.computedTypeProperty)
    <- 27
 
 The examples that follow use two stored type properties as part of a structure

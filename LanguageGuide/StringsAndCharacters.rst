@@ -549,18 +549,19 @@ will trigger a runtime error.
 
 .. testcode:: stringIndex
 
-   -> let greeting = "Guten Tag"
-   << // greeting : String = "Guten Tag"
+   -> let greeting = "Guten Tag!"
+   << // greeting : String = "Guten Tag!"
    -> greeting[greeting.startIndex]
-   << <REPL>: Character = "G"
-   </ G
+   <$ : Character = "G"
+   // G
    -> greeting[greeting.endIndex.predecessor()]
-   << <REPL>: Character = "g"
-   </ g
+   <$ : Character = "!"
+   // !
    -> greeting[greeting.startIndex.successor()]
-   << <REPL>: Character = "u"
-   </ u
+   <$ : Character = "u"
+   // u
    -> let index = advance(greeting.startIndex, 7)
+   << // index : Index = 7
    -> greeting[index]
    << <REPL>: Character = "a"
    </ a
@@ -574,18 +575,18 @@ will trigger a runtime error.
    -> let emptyString = ""
    << // emptyString : String = ""
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
-   << // r0 : Bool = true
+   <$ : Bool = true
 
-Use the global function ``indices(_:)`` to create a ``Range`` of all of the
+Use the ``indices`` property of the ``characters`` property to create a ``Range`` of all of the
 indexes used to access individual characters in a string.
 
 .. testcode:: stringIndex
 
-   -> for index in indices(greeting) {
-         print("\(greeting[index]) ")
+   -> for index in greeting.characters.indices {
+         print("\(greeting[index]) ", appendNewline: false)
       }
-      print("\n")
-   <- G u t e n   T a g
+   >> print("")
+   <- G u t e n   T a g !
 
 .. _StringsAndCharacters_InsertingAndRemoving:
 
