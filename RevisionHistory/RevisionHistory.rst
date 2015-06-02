@@ -3,7 +3,7 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-.. Not in this beta -- links are dead
+.. Not in this beta
 
             * Added the :ref:`LexicalStructure_CommentDocumentation` section
               to the :doc:`../ReferenceManual/LexicalStructure` chapter.
@@ -13,22 +13,22 @@ This table describes the changes to *The Swift Programming Language*.
 
             * Added the :ref:`../LanguageGuide/ErrorHandling` chapter.
 
-            * Updated the :ref:`ControlFlow_RepeatWhile` section
-              with information about the the ``repeat``-``while`` loop.
-
-            * Added the :doc:`../ReferenceManual/Directives` chapter.
-
-            * Added the :ref:`Statements_ScopeIntroductionStatement` section
-              to the :doc:`../ReferenceManual/Statements` chapter.
-
             * Added the :ref:`Extensions_ProtocolExtensions` section
               to the :doc:`../LanguageGuide/Extensions` chapter.
 
+            * Added a note to the :ref:`Types_MetatypeType` section
+              about constructing instances from metatype values.
+
+            * Updated the :ref:`BasicOperators_AssignmentOperator` section
+              with information about why chained assignment isn't supported.
 
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Updated the
+2015-06-08  * Updated the :ref:`ControlFlow_DoWhile` section
+              with information about the the ``repeat``-``while`` loop.
+
+            * Updated the
               :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
               with a more precise definition of Unicode scalars.
 
@@ -50,11 +50,10 @@ Date        Notes
               section about differences in weak references
               between garbage collected systems and ARC.
 
-            * Updated the :ref:`BasicOperators_AssignmentOperator` section
-              with information about why chained assignment isn't supported.
-
-            * Added a note to the :ref:`Types_MetatypeType` section
-              about constructing instances from metatype values.
+            * Added the :ref:`ControlFlow_Available` section
+              to the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_AvailabilityCondition` section
+              to the :doc:`../ReferenceManual/Statements` chapter.
 
             * Updated the :ref:`Attributes_DeclarationAttributes` section
               with information about the ``@available`` attribute.
@@ -65,7 +64,9 @@ Date        Notes
             * Added a note to the :ref:`AccessControl_AccessLevels` section
               with information about the scope of ``private`` access.
 
-            * Added the :ref:`Statements_GuardStatement` section
+            * Added the :ref:`ControlFlow_Guard` section
+              to the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_GuardStatement` section
               to the :doc:`../ReferenceManual/Statements` chapter.
 
             * Updated the :ref:`Attributes_TypeAttributes` section
