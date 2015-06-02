@@ -857,13 +857,17 @@ Try Expression
 --------------
 
 A :newTerm:`try expression`
-is used to evaluate an expression that can throw an error.
+is used to evaluate a function call that can throw an error.
 
 It has the following form:
 
 .. syntax-outline::
 
    try <#expression#>
+
+If a function call throws an error,
+a try expression acknowledges the error
+and allows it to continue propagation.
 
 For example:
 
@@ -897,6 +901,10 @@ It has the following form:
 .. syntax-outline::
 
    try! <#expression#>
+
+If a function call throws an error,
+a forced-try expression interrupts propagation and triggers a runtime error.
+As such, it is only appropriate as an assertion of an error not being thrown.
 
 For example:
 
