@@ -208,7 +208,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(stringToPrint: String) -> Int {
          print(stringToPrint)
-         return stringToPrint.characters.count()
+         return stringToPrint.characters.count
       }
    -> func printWithoutCounting(stringToPrint: String) {
          printAndCount(stringToPrint)
@@ -542,7 +542,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 .. testcode:: constantAndVariableParameters
 
    -> func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
-         let amountToPad = totalLength - string.characters.count()
+         let amountToPad = totalLength - string.characters.count
          if amountToPad < 1 {
             return string
          }
