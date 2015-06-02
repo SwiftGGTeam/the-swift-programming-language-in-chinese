@@ -114,12 +114,13 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:1: error: binary operator '+=' cannot be applied to two String operands
+   !! <REPL Input>:1:16: error: cannot pass 'let' value 'constantString' to mutating binary operator '+='
    !! constantString += " and another Highlander"
-   !!                ^
-   !! <REPL Input>:1:1: note: overloads for '+=' exist with these partially matching parameter lists: (inout String, String)
-   !! constantString += " and another Highlander"
-   !! ^
+   !! ~~~~~~~~~~~~~~ ^
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let constantString = "Highlander"
+   !! ^~~
+   !! var
    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
@@ -166,14 +167,12 @@ when working with strings as value types.
 Working with Characters
 -----------------------
 
-Swift's ``String`` type represents a collection of ``Character`` values
-in a specified order.
-You can access the individual ``Character`` values in a string
-by iterating over that string with a ``for``-``in`` loop:
+You can access the individual ``Character`` values for a ``String``
+by iterating over its ``characters`` property with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
-   -> for character in "Dog!🐶" {
+   -> for character in "Dog!🐶".characters {
          print(character)
       }
    </ D
@@ -184,7 +183,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-Alternatively, create a stand-alone ``Character`` constant or variable
+Alternatively, you can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -203,7 +202,6 @@ as an argument to its initializer:
    << // catString : String = "Cat!🐱"
    -> print(catString)
    <- Cat!🐱
-
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
@@ -497,7 +495,7 @@ with a fourth character of ``é``, not ``e``:
    If you are working with particularly long string values,
    be aware that the ``characters`` property
    must iterate over the Unicode scalars in the entire string
-   in order to calculate an accurate character count for that string.
+   in order to determine the characters for that string.
 
    The count of the characters returned by the ``characters`` property
    is not always the same as the ``length`` property of
@@ -610,7 +608,7 @@ use the ``splice(_:atIndex:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.splice(" there", atIndex: welcome.endIndex.predecessor())
+   -> welcome.splice(" there".characters, atIndex: welcome.endIndex.predecessor())
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -630,7 +628,7 @@ use the ``removeRange(_:)`` method:
 .. testcode:: stringInsertionAndRemoval
 
    -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
-   << // range : Range<String.Index> = Range(5..<11)
+   << // range : Range<Index> = Range(5..<11)
    -> welcome.removeRange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
@@ -900,9 +898,9 @@ one for each byte in the string's UTF-8 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf8 {
-         print("\(codeUnit) ")
+         print("\(codeUnit) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 226 128 188 240 159 144 182
 
 In the example above, the first three decimal ``codeUnit`` values
@@ -937,9 +935,9 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf16 {
-         print("\(codeUnit) ")
+         print("\(codeUnit) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 8252 55357 56374
 
 Again, the first three ``codeUnit`` values
@@ -978,9 +976,9 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         print("\(scalar.value) ")
+         print("\(scalar.value) ", appendNewline: false)
       }
-   -> print("\n")
+   >> print("")
    </ 68 111 103 8252 128054
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
@@ -1003,10 +1001,7 @@ such as with string interpolation:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         print("\(scalar) ")
+         print("\(scalar) ", appendNewline: false)
       }
-   </ D
-   </ o
-   </ g
-   </ ‼
-   </ 🐶
+   >> print("")
+   </ D o g ‼ 🐶

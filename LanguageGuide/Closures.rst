@@ -383,7 +383,7 @@ and that parameter is provided as a trailing closure:
          }
          return output
       }
-   << // strings : Array<String> = ["OneSix", "FiveEight", "FiveOneZero"]
+   << // strings : [String] = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type [String]
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
@@ -503,6 +503,10 @@ the nested ``incrementer()`` function might seem unusual:
          runningTotal += amount
          return runningTotal
       }
+   !! <REPL Input>:3:10: warning: variable 'amount' was never mutated; consider changing to 'let' constant
+   !! var amount = 1
+   !! ~~~ ^
+   !! let
 
 The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.

@@ -28,7 +28,7 @@ which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoInts(inout a: Int, inout b: Int) {
+   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -59,13 +59,13 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown belo
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoStrings(inout a: String, inout b: String) {
+   -> func swapTwoStrings(inout a: String, inout _ b: String) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
    ---
-   -> func swapTwoDoubles(inout a: Double, inout b: Double) {
+   -> func swapTwoDoubles(inout a: Double, inout _ b: Double) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -104,7 +104,7 @@ called ``swapTwoValues``:
 
 .. testcode:: genericFunctions
 
-   -> func swapTwoValues<T>(inout a: T, inout b: T) {
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -118,13 +118,13 @@ Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
 
-   -> func swapTwoInts(inout a: Int, inout b: Int)
+   -> func swapTwoInts(inout a: Int, inout _ b: Int)
    >> {
    >>    let temporaryA = a
    >>    a = b
    >>    b = temporaryA
    >> }
-   -> func swapTwoValues<T>(inout a: T, inout b: T)
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T)
    >> {
    >>    let temporaryA = a
    >>    a = b
@@ -290,7 +290,7 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = REPL.IntStack
+   << // intStack : IntStack = REPL.IntStack(items: [])
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -354,7 +354,7 @@ you write ``Stack<String>()``:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -499,14 +499,14 @@ Type Constraints in Action
 Here's a non-generic function called ``findStringIndex``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
-The ``findStringIndex(_:_:)`` function returns an optional ``Int`` value,
+The ``findStringIndex(_:valueToFind:)`` function returns an optional ``Int`` value,
 which will be the index of the first matching string in the array if it is found,
 or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
    -> func findStringIndex(array: [String], valueToFind: String) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -520,7 +520,7 @@ The ``findStringIndex(_:_:)`` function can be used to find a string value in an 
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   -> if let foundIndex = findStringIndex(strings, "llama") {
+   -> if let foundIndex = findStringIndex(strings, valueToFind: "llama") {
          print("The index of llama is \(foundIndex)")
       }
    <- The index of llama is 2
@@ -540,7 +540,7 @@ for reasons explained after the example:
 .. testcode:: typeConstraints
 
    -> func findIndex<T>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -582,7 +582,7 @@ as part of the type parameter's definition when you define the function:
 .. testcode:: typeConstraintsEquatable
 
    -> func findIndex<T: Equatable>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -598,11 +598,11 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 
 .. testcode:: typeConstraintsEquatable
 
-   -> let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
+   -> let doubleIndex = findIndex([3.14159, 0.1, 0.25], valueToFind: 9.3)
    << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
+   -> let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], valueToFind: "Andrea")
    << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
@@ -822,7 +822,7 @@ This requirement is expressed through a combination of type constraints and wher
    -> func allItemsMatch<
             C1: Container, C2: Container
             where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-            (someContainer: C1, anotherContainer: C2) -> Bool {
+            (someContainer: C1, _ anotherContainer: C2) -> Bool {
    ---
          // check that both containers contain the same number of items
          if someContainer.count != anotherContainer.count {
@@ -896,7 +896,7 @@ Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")

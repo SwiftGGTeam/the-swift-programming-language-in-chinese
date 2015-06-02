@@ -299,7 +299,7 @@ The board is initialized with 26 zero ``Int`` values, not 25
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -447,7 +447,7 @@ are initialized in exactly the same way as with a ``while`` loop:
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
@@ -1248,7 +1248,7 @@ are initialized in the same way as before:
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0

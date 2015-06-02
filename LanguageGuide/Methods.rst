@@ -87,8 +87,6 @@ and an external name (for use when calling the function),
 as described in :ref:`Functions_ExternalParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-However, the default behavior of local names and external names
-is different for functions and methods.
 
 Methods in Swift are very similar to their counterparts in Objective-C.
 As in Objective-C, the name of a method in Swift typically refers to
@@ -139,26 +137,7 @@ because its purpose is clear from the function name ``incrementBy``.
 The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
-This default behavior effectively treats the method as if you had written
-a hash symbol (``#``) before the ``numberOfTimes`` parameter:
-
-.. testcode:: externalParameterNamesComparison
-
-   >> class Counter {
-   >>    var count: Int = 0
-   >>    func incrementBy(amount: Int) {
-   >>       count += amount
-   >>    }
-   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
-         count += amount * numberOfTimes
-      }
-   >> }
-   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
-   !! ^
-   !!-
-
-The default behavior described above means that method definitions in Swift
+The behavior described above means that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
 
@@ -229,7 +208,7 @@ a method parameter called ``x`` and an instance property that is also called ``x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
    -> if somePoint.isToTheRightOfX(1.0) {
          print("This point is to the right of the line where x == 1.0")
       }
@@ -271,7 +250,7 @@ before the ``func`` keyword for that method:
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    -> somePoint.moveByX(2.0, y: 3.0)
    -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
@@ -290,7 +269,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point
+   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
    !! fixedPoint.moveByX(2.0, y: 3.0)
@@ -319,7 +298,7 @@ The ``Point`` example shown above could have been written in the following way i
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    >> somePoint.moveByX(2.0, y: 3.0)
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
@@ -348,7 +327,7 @@ a different member from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = (Enum Value)
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.Low
    -> ovenLight.next()
    // ovenLight is now equal to .High
    -> ovenLight.next()

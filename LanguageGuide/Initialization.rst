@@ -73,7 +73,7 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = REPL.Fahrenheit
+   << // f : Fahrenheit = REPL.Fahrenheit(temperature: 32.0)
    -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -154,11 +154,11 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = REPL.Celsius
+   << // boilingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = REPL.Celsius
+   << // freezingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -225,9 +225,9 @@ by providing named values for each initializer parameter:
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = REPL.Color
+   << // magenta : Color = REPL.Color(red: 1.0, green: 0.0, blue: 1.0)
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = REPL.Color
+   << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
 without using external parameter names.
@@ -271,7 +271,7 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = REPL.Celsius
+   << // bodyTemperature : Celsius = REPL.Celsius(temperatureInCelsius: 37.0)
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -343,6 +343,10 @@ it can't be further modified.
    !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
    !!             self.c = 2
    !!                    ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int
+   !! ^~~
+   !! var
 
 .. assertion:: constantPropertyAssignmentWithInitialValue
 
@@ -352,9 +356,17 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! <REPL Input>:4:16: error: cannot assign to 'c' in 'self'
+   !! <REPL Input>:4:16: error: immutable value 'self.c' may only be initialized once
    !!             self.c = 1
-   !!             ~~~~~~ ^
+   !!                  ^
+   !! <REPL Input>:2:10: note: initial value already provided in 'let' declaration
+   !! let c: Int = 0
+   !! ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int = 0
+   !! ^~~
+   !! var
+
 
 .. note::
 
@@ -445,7 +457,7 @@ even if it has stored properties that do not have default values.
 
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
-   << // s : S = REPL.S
+   << // s : S = REPL.S(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -467,7 +479,7 @@ which you can use to initialize a new ``Size`` instance:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = REPL.Size
+   << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
@@ -563,7 +575,7 @@ from their property definitions:
 .. testcode:: valueDelegation
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = REPL.Rect
+   << // basicRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -577,7 +589,7 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = REPL.Rect
+   << // originRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -591,7 +603,7 @@ which stores the new origin and size values in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect
+   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -1414,7 +1426,7 @@ and to check if initialization succeeded:
 .. testcode:: failableInitializers
 
    -> let someCreature = Animal(species: "Giraffe")
-   << // someCreature : Animal? = Optional(REPL.Animal)
+   << // someCreature : Animal? = Optional(REPL.Animal(species: "Giraffe"))
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
@@ -1487,7 +1499,7 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1522,7 +1534,7 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -2167,7 +2179,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: checkers
 
    -> let board = Checkerboard()
-   << // board : Checkerboard = REPL.Checkerboard
+   << // board : Checkerboard = REPL.Checkerboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
    -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
    -> print(board.squareIsBlackAtRow(9, column: 9))

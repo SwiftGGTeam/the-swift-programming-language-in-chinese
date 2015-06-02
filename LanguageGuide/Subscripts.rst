@@ -77,7 +77,7 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable
+   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -150,7 +150,7 @@ Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
 Subscripts can use variable parameters and variadic parameters,
-but cannot use in-out parameters or provide default parameter values. 
+but cannot use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -204,7 +204,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix
+   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
 
 The preceding example creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
