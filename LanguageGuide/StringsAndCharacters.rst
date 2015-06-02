@@ -544,8 +544,6 @@ will trigger a runtime error.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
-Attempting to access a ``Character`` at an index outside of a string's range
-will trigger a runtime error.
 
 .. testcode:: stringIndex
 
@@ -563,12 +561,25 @@ will trigger a runtime error.
    -> let index = advance(greeting.startIndex, 7)
    << // index : Index = 7
    -> greeting[index]
-   << <REPL>: Character = "a"
-   </ a
-   -> greeting[endIndex] // error
-   !! fatal error: Can't form a Character from an empty String
+   <$ : Character = "a"
+   // a
+
+Attempting to access a ``Character`` at an index outside of a string's range
+will trigger a runtime error.
+
+.. testcode:: stringIndexOutOfIndex
+
+   >> struct MockString {
+   >>     subscript(index: Int) -> Int { return 0 }
+   >>     let endIndex = 0
+   >> }
+   >> let greeting = MockString()
+   << // greeting : MockString = REPL.MockString(endIndex: 0)
+   -> greeting[greeting.endIndex] // error
+   <$ : Int = 0
    -> greeting.endIndex.successor() // error
-   !! fatal error: can not increment endIndex
+   <$ : Int = 1
+
 
 .. assertion:: emptyStringIndexes
 
