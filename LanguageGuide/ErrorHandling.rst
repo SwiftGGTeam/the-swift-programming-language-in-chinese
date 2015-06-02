@@ -51,7 +51,7 @@ automatically have the implementation of their conformance synthesized by the co
 For example, here's how you might represent the error conditions
 of operating a vending machine:
 
-.. testcode:: errorType
+.. testcode:: errorHandling
 
    -> enum VendingMachineError: ErrorType {
           case InvalidSelection
@@ -190,15 +190,16 @@ until it is handled by a ``catch`` clause.
 A ``catch`` clause consists of the ``catch`` keyword,
 followed by a pattern to match the error against and a set of statements to execute.
 
-.. testcode:: catchStatementDeclaration
+.. testcode:: errorHandling
 
+   >> func vend(item name: String) throws {}
    -> do {
-         try foo()
-      } catch let error as StandardError.IO {
-         // Handle I/O Error
-      } catch let error as StandardError {
-         // Handle other StandardError
-      } catch let error {
+         try vend("Candy Bar")
+      } catch VendingMachineError.InsufficientFunds(let balance) {
+         // Handle Insufficient Funds error
+      } catch VendingMachineError {
+         // Handle other Vending Machine error
+      } catch {
          // Handle any other error
       }
 
