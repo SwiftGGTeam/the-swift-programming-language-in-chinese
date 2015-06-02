@@ -11,15 +11,24 @@ two-element tuple. In addition to matching a pattern with a value,
 you can extract part or all of a composite value and bind each part
 to a constant or variable name.
 
-In Swift, patterns occur in variable and constant declarations (on their left-hand side),
-in ``for``-``in`` statements, and in ``switch`` statements (in their case labels).
-Although any pattern can occur in the case labels of a ``switch`` statement,
-in the other contexts,
-only wildcard patterns, identifier patterns, and patterns containing those two
-patterns can occur.
+In Swift, there are two basic kinds of patterns:
+those that successfully match any kind of value,
+and those that may fail to match a specified value at run time.
 
-You can specify a type annotation for a wildcard pattern, an identifier pattern,
-and a tuple pattern to constrain the pattern to match only values of a certain type.
+The first kind of pattern is used for destructuring values
+in simple variable, constant, and optional bindings.
+These include wildcard patterns, identifier patterns,
+and any value binding or tuple patterns containing
+them. You can specify a type annotation for these patterns
+to constrain them to match only values of a certain type.
+
+The second kind of pattern is used for full pattern matching,
+where the values you're trying to match against may not be there at run time.
+These include enumeration case patterns, optional patterns, expression patterns,
+and type-casting patterns. You use these patterns in a case label of a ``switch``
+statement, a catch clause of a ``do`` statement,
+or in the case condition of an ``if``, ``while``,
+``guard``, or ``for``-``in`` statement.
 
 .. langref-grammar
 
@@ -42,6 +51,7 @@ and a tuple pattern to constrain the pattern to match only values of a certain t
     pattern --> value-binding-pattern
     pattern --> tuple-pattern type-annotation-OPT
     pattern --> enum-case-pattern
+    pattern --> optional-pattern
     pattern --> type-casting-pattern
     pattern --> expression-pattern
 
@@ -170,8 +180,9 @@ element is of type ``String``.
 
 When a tuple pattern is used as the pattern in a ``for``-``in`` statement
 or in a variable or constant declaration, it can contain only wildcard patterns,
-identifier patterns, or other tuple patterns that contain those. For example, the
-following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
+identifier patterns, optional patterns, or other tuple patterns that contain those.
+For example,
+the following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
 an expression pattern:
 
 .. testcode:: tuple-pattern
@@ -239,8 +250,9 @@ Enumeration Case Pattern
 ------------------------
 
 An :newTerm:`enumeration case pattern` matches a case of an existing enumeration type.
-Enumeration case patterns appear only in ``switch`` statement
-case labels.
+Enumeration case patterns appear in ``switch`` statement
+case labels and in the case conditions of ``if``, ``while``, ``guard``, and ``for``-``in``
+statements.
 
 If the enumeration case you're trying to match has any associated values,
 the corresponding enumeration case pattern must specify a tuple pattern that contains
@@ -257,6 +269,57 @@ see :ref:`Enumerations_AssociatedValues`.
     Grammar of an enumeration case pattern
 
     enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
+
+
+.. _Patterns_OptionalPattern:
+
+Optional Pattern
+----------------
+
+An :newTerm:`optional pattern` matches values wrapped in a ``Some(T)`` case
+of an ``Optional<T>`` or ``ImplicitlyUnwrappedOptional<T>`` enumeration.
+Optional patterns consist of an identifier pattern followed immediately by a questions mark
+and appear in the same places as enumeration case patterns.
+
+Because optional patterns are syntactic sugar for ``Optional``
+and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+the following are equivalent:
+
+.. testcode:: optional-pattern
+
+   -> let someOptional: Int? = 42
+   << // someOptional : Int? = Optional(42)
+   -> // Match using an enumeration case pattern
+   -> if case .Some(let x) = someOptional {
+         print(x)
+      }
+   ---
+   -> // Match using an optional pattern
+   -> if case x? = someOptional {
+         print(x)
+      }
+
+The optional pattern provides a convenient way to
+iterate over an array of optional values in a ``for``-``in`` statement,
+executing the body of the loop only for non-``nil`` elements.
+
+.. testcode:: optional-pattern-for-in
+
+   -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+   << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
+   -> // Match only non-nil values
+   -> for case let number? in arrayOfOptionalInts {
+         print("Found a \(number)")
+      }
+   </ Found a 2
+   </ Found a 3
+   </ Found a 5
+
+.. syntax-grammar::
+
+    Grammar of an optional pattern
+
+    optional-pattern --> identifier-pattern ``?``
 
 
 .. _Patterns_Type-CastingPatterns:

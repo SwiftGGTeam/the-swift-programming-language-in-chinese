@@ -171,7 +171,7 @@ and it is finished executing the ``for``-``in`` statement.
 
     Grammar of a for-in statement
 
-    for-in-statement --> ``for`` pattern ``in`` expression code-block
+    for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression code-block where-clause-OPT
 
 
 .. _Statements_WhileStatement:
@@ -226,9 +226,9 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     case-condition --> ``case`` pattern initializer where-clause-OPT
 
     optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
-    optional-binding-head --> ``let`` identifier-pattern initializer | ``var`` identifier-pattern initializer
+    optional-binding-head --> ``let`` pattern initializer | ``var`` pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
-    optional-binding-continuation --> identifier-pattern initializer | optional-binding-head
+    optional-binding-continuation --> pattern initializer | optional-binding-head
 
 .. NOTE: We considered the following simpler grammar for optional-binding-list:
 
