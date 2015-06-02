@@ -639,12 +639,12 @@ For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
-use the global ``sorted(_:_:)`` function,
+use the ``sort(_:)`` method,
 which returns an ordered collection of the provided sequence.
 
 .. testcode:: setUsage
 
-   -> for genre in sorted(favoriteGenres) {
+   -> for genre in favoriteGenres.sort() {
          print("\(genre)")
       }
    </ Classical
@@ -688,16 +688,16 @@ with the results of various set operations represented by the shaded regions.
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
    << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    ---
-   -> sorted(oddDigits.union(evenDigits))
+   -> oddDigits.union(evenDigits).sort()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   -> sorted(oddDigits.intersect(evenDigits))
+   -> oddDigits.intersect(evenDigits).sort()
    << // r1 : [Int] = []
    // []
-   -> sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+   -> oddDigits.subtract(singleDigitPrimeNumbers).sort()
    << // r2 : [Int] = [1, 9]
    // [1, 9]
-   -> sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
    << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
@@ -1059,4 +1059,4 @@ with the ``keys`` or ``values`` property:
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
-use the global ``sorted(_:_:)`` function on its ``keys`` or ``values`` property.
+use the ``sort(_:)`` method on its ``keys`` or ``values`` property.

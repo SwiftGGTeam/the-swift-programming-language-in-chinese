@@ -405,11 +405,11 @@ the ``noreturn`` attribute to a function or method *type*.
 
      For example, the Swift standard library provides both
      the mutating method ``sortInPlace()``
-     and the nonmutating method ``sort()`` to collections
+     and the nonmutating method ``sort(_:)`` to collections
      whose generator element conforms to the ``Comparable`` protocol.
-     If you call the ``sort()`` method without using its result,
+     If you call the ``sort(_:)`` method without using its result,
      it's likely that you actually intended to use the mutating variant,
-     ``sortInPlace()`` instead.
+     ``sortInPlace(_:)`` instead.
 
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:

@@ -607,10 +607,6 @@ you can omit the parentheses entirely.
     -> print(sortedNumbers)
     <- [20, 19, 12, 7]
 
-.. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
-
-.. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
-
 .. Omitted curried functions and custom operators as "advanced" topics.
 
 Objects and Classes
