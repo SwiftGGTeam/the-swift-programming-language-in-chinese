@@ -101,15 +101,15 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
-   -> func foo() -> Int {}
+   -> func f() -> Int {}
    !! error: missing return in a function expected to return 'Int'
-   -> func foo() throws -> Int {} // Compiler Error
-   !! error: invalid redeclaration of foo()
+   -> func f() throws -> Int {} // Compiler Error
+   !! error: invalid redeclaration of f()
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
-   -> func bar(callback: Void -> Int) { }
-   -> func bar(callback: Void throws -> Int) { } // Allowed
+   -> func f(callback: Void -> Int) { }
+   -> func f(callback: Void throws -> Int) { } // Allowed
 
 .. TODO Add more assertions to test these behaviors
 
