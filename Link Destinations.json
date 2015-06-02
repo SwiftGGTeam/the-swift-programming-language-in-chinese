@@ -380,6 +380,7 @@
     "parameter-names": "ID471", 
     "patterns-enumerationcasepattern": "ID424", 
     "patterns-expressionpattern": "ID426", 
+    "patterns-optionalpattern": "ID513", 
     "patterns-tuplepattern": "ID423", 
     "patterns-type-castingpatterns": "ID425", 
     "patterns-value-bindingpattern": "ID422", 
@@ -531,5 +532,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 513
+  "next_id": 514
 }
