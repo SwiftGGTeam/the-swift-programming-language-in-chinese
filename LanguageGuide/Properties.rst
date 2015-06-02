@@ -727,26 +727,22 @@ The example below shows the syntax for stored and computed type properties:
    -> struct SomeStructure {
          static var storedTypeProperty = "Some value."
          static var computedTypeProperty: Int {
-            // return an Int value here
-   >>       return 42
+            return 1
          }
       }
    -> enum SomeEnumeration {
          static var storedTypeProperty = "Some value."
          static var computedTypeProperty: Int {
-            // return an Int value here
-   >>       return 42
+            return 6
          }
       }
    -> class SomeClass {
          static var storedTypeProperty = "Some value."
          static var computedTypeProperty: Int {
-            // return an Int value here
-   >>       return 42
+            return 27
          }
          class var overrideableComputedTypeProperty: Int {
-            // return an Int value here
-   >>       return 42
+            return 107
          }
       }
 
@@ -787,14 +783,15 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-   -> println(SomeClass.computedTypeProperty)
-   <- 42
-   ---
    -> println(SomeStructure.storedTypeProperty)
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
    -> println(SomeStructure.storedTypeProperty)
    <- Another value.
+   -> println(SomeEnumeration.computedTypeProperty)
+   <- 6
+   -> println(SomeClass.computedTypeProperty)
+   <- 27
 
 The examples that follow use two stored type properties as part of a structure
 that models an audio level meter for a number of audio channels.
