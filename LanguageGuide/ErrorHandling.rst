@@ -118,26 +118,58 @@ at any point in its execution with a ``throw`` statement,
 which consists of the ``throw`` keyword,
 followed by an instance of a type that conforms to the ``ErrorType`` protocol.
 
-.. TODO Original example
+In the example below,
+the ``vend(itemNamed:)`` function throws an error if
+the requested item is not available,
+is out of stock,
+or has a cost that exceeds the current deposited amount:
 
 .. testcode:: errorHandling
 
-   >> enum AudioOutputError {
-   >>    case Overload
-   >> }
-   >> var volume = 5
-   >> let maximumVolume = 11
-   -> func increaseVolume() throws -> Int {
-         if volume >= maximumVolume {
-            throw AudioOutputError.Overload
+   -> struct Item {
+         var name: String
+         var price: Double
+      }
+   ---
+   -> var inventory: [String: (item: Item, count: Int)]
+   >> inventory = [:]
+   -> var amountDeposited: Double
+   >> amountDeposited = 1.00
+   -> func vend(itemNamed name: String) throws -> Item {
+         guard case (let item, var count)? = inventory[name] else {
+             throw VendingMachineError.InvalidSelection
          }
-         return ++volume
+
+         guard count > 0 else {
+             throw VendingMachineError.OutOfStock
+         }
+
+         if amountDeposited > item.price {
+             amountDeposited -= item.price
+             inventory[item.name] = (item, --count)
+             return item
+         } else {
+             let amountRequired = item.price - amountDeposited
+             throw VendingMachineError.InsufficientFunds(required: amountRequired)
+         }
       }
 
-In the above example,
-an error is thrown if incrementing the volume would exceed the maximum allowed value.
-Because ``throw`` immediately transfers program control,
-the ``volume`` variable is not incremented in the case of an error.
+First, a ``guard`` statement is used to bind the ``item`` constant and ``count`` variable
+to the corresponding values in the current inventory.
+If the item is not in the inventory, the ``InvalidSelection`` error is thrown.
+Next, the availability of the requested item is determined by checking its count.
+If ``count`` is less than or equal to zero,
+an ``OutOfStock`` error is thrown.
+Finally, the price of the requested item is compared to the current deposited amount.
+If the deposited amount can cover the cost of the item,
+the price is deducted from the deposited amount,
+the count of the stock of the item is decremented in the inventory,
+and the function returns the requested item.
+Otherwise, the outstanding balance is calculated
+and used as an associated value for the thrown ``InsufficientFunds`` error.
+Because a ``throw`` statement immediately transfers program control,
+an item will only be vended if all of the requirements for purchase ---
+that is, a valid, in-stock selection with sufficient funds.
 
 .. _ErrorHandling_Rethrow:
 
@@ -152,7 +184,7 @@ errors thrown by a function parameter will be propagated to the caller.
 
 .. TODO Example
 
-.. testcode:: rethrow
+.. testcode:: rethrows
 
    -> func functionWithCallback(callback: () throws -> Int) rethrows {
           try callback()
@@ -184,24 +216,20 @@ followed by a statement or expression that can implicitly throw.
 A ``try`` statement acknowledges the error
 and allows it to continue propagation.
 
+.. syntax-outline::
+
+   do {
+      try <#function that throws#>
+      <#statements#>
+   } catch <#pattern#> {
+      <#statements#>
+   }
+
 If an error is thrown,
 that error is propagated to its outer scope
 until it is handled by a ``catch`` clause.
 A ``catch`` clause consists of the ``catch`` keyword,
 followed by a pattern to match the error against and a set of statements to execute.
-
-.. testcode:: errorHandling
-
-   >> func vend(item name: String) throws {}
-   -> do {
-         try vend("Candy Bar")
-      } catch VendingMachineError.InsufficientFunds(let balance) {
-         // Handle Insufficient Funds error
-      } catch VendingMachineError {
-         // Handle other Vending Machine error
-      } catch {
-         // Handle any other error
-      }
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
@@ -213,32 +241,32 @@ use a ``catch`` clause with a pattern that matches all errors.
 If a ``catch`` clause does not specify a pattern,
 the clause will match and bind any error to a local constant named ``error``.
 
-.. TODO Reference Pattern Matching chapter
-
 See :doc:`../ReferenceManual/Patterns` for more information about pattern matching.
-
-.. TODO Real example
 
 .. testcode:: errorHandling
 
    -> do {
-         let newVolume = try increaseVolume()
-      } catch AudioOutputError.Overload {
-         // Handle audio overload.
-      } catch {
-         // Handle any other error.
+          let snack = try vend(itemNamed: "Candy Bar")
+          // Enjoy delicious snack
+      } catch VendingMachineError.InvalidSelection {
+          print("Invalid Selection.")
+      } catch VendingMachineError.OutOfStock {
+          print("Out of Stock.")
+      } catch VendingMachineError.InsufficientFunds(let amountRequired) {
+          print("Insufficient funds. Please insert an additional $\(amountRequired).")
       }
 
 In the above example,
-the function ``increaseVolume()`` is called.
+the ``vend(itemNamed:)`` function is called.
 Because the function can throw an error,
 it is executed in a ``try`` expression.
-If an error is thrown by ``increaseVolume()``,
+If an error is thrown,
 execution immediately transfers out of the ``do`` statement
 to the ``catch`` clauses,
-which decide whether or not to allow propagation to continue..
+which decide whether or not to allow propagation to continue.
 If no error is thrown,
-the return value of ``increaseVolume()`` is assigned to ``newVolume``.
+the return value of ``vend(itemNamed:)`` is assigned to ``snack``,
+and the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Force:
 
