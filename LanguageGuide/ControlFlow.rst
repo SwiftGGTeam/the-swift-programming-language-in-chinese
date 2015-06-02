@@ -1455,6 +1455,9 @@ when it verifies that the APIs in that block of code are available.
       } else {
           // Fall back to earlier iOS and OS X APIs
       }
+   !! <REPL Input>:1:4: warning: unnecessary check for 'OSX'; minimum deployment target ensures guard will always be true
+   !! if #available(iOS 9, OSX 10.10, *) {
+   !! ^
 
 The availability condition above specifies that on iOS,
 the body of the ``if`` executes only on iOS 9 and later;
