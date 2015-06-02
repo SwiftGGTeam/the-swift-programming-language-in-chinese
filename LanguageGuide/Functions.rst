@@ -732,7 +732,6 @@ and assign an appropriate function to that variable:
    :compile: true
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
-   << // mathFunction : (Int, Int) -> Int = (Function)
 
 This can be read as:
 
@@ -770,8 +769,6 @@ when you assign a function to a constant or variable:
    :compile: true
 
    -> let anotherMathFunction = addTwoInts
-   << // anotherMathFunction : (Int, Int) -> Int = (Function)
-   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. TODO: talk about defining typealiases for function types somewhere?
 
@@ -856,9 +853,7 @@ that will step in one direction or the other:
    :compile: true
 
    -> var currentValue = 3
-   << // currentValue : Int = 3
-   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+      let moveNearerToZero = chooseStepFunction(currentValue > 0)
    // moveNearerToZero now refers to the stepBackward() function
 
 The preceding example determines whether a positive or negative step is needed

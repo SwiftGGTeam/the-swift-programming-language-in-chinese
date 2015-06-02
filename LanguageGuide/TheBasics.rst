@@ -960,7 +960,6 @@ but the string ``"hello, world"`` does not have an obvious numeric value to conv
 The example below uses a failable initializer to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
-   :compile: true
 
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
@@ -985,15 +984,13 @@ nil
 You set an optional variable to a valueless state
 by assigning it the special value ``nil``:
 
-.. testcode:: optionals
-   :compile: true
+.. testcode:: nil
 
    -> var serverResponseCode: Int? = 404
    << // serverResponseCode : Int? = Optional(404)
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
-   << // serverResponseCode : Int? = nil
    // serverResponseCode now contains no value
 
 .. note::
@@ -1006,8 +1003,7 @@ by assigning it the special value ``nil``:
 If you define an optional variable without providing a default value,
 the variable is automatically set to ``nil`` for you:
 
-.. testcode:: optionals
-   :compile: true
+.. testcode:: nil
 
    -> var surveyAnswer: String?
    << // surveyAnswer : String? = nil
@@ -1032,9 +1028,10 @@ or the “not equal to” operator (``!=``).
 
 If an optional has a value, it is considered to be “not equal to” ``nil``:
 
-.. testcode:: optionals
-   :compile: true
+.. testcode:: forcedUnwrapping
 
+   >> let convertedNumber: Int? = 123
+   << // convertedNumber : Int? = Optional(123)
    -> if convertedNumber != nil {
          print("convertedNumber contains some integer value.")
       }
@@ -1047,8 +1044,7 @@ The exclamation mark effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as :newTerm:`forced unwrapping` of the optional's value:
 
-.. testcode:: optionals
-   :compile: true
+.. testcode:: forcedUnwrapping
 
    -> if convertedNumber != nil {
          print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -1089,9 +1085,10 @@ You can rewrite the ``possibleNumber`` example from
 the :ref:`TheBasics_Optionals` section
 to use optional binding rather than forced unwrapping:
 
-.. testcode:: optionals
-   :compile: true
+.. testcode:: optionalBinding
 
+   >> let possibleNumber = "123"
+   << // possibleNumber : String = "123"
    -> if let actualNumber = Int(possibleNumber) {
          print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
       } else {

@@ -618,7 +618,7 @@ use the ``removeAtIndex(_:)`` method.
 .. testcode:: stringInsertionAndRemoval
 
    -> welcome.removeAtIndex(welcome.endIndex.predecessor())
-   << // r0 : Character = "!"
+   <$ : Character = "!"
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there"
 

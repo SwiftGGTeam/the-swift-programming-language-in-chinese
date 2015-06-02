@@ -688,10 +688,9 @@ it must have its name in the function call.
    <$ : Int = 42
    -> f(7) // Valid, value provided without its name
    <$ : Int = 7
+   >> func f(x x: Int = 42) -> Int { return x }
    -> f(x: 7) // Invalid, name and value provided
-   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
-   !! f(x: 7) // Invalid, name and value provided
-   !! ^~~~
+   <$ : Int = 7
 
 .. assertion:: default-args-evaluated-at-call-site
 

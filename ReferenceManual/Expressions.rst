@@ -423,7 +423,7 @@ when the default value expression is evaluated at the call site.
     << namedArgs(i:j:)
     >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
-    << noNamedArgs(_:_:)
+    << noNamedArgs
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by __FUNCTION__

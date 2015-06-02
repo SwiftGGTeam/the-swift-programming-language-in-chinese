@@ -293,11 +293,13 @@ the following are equivalent:
    -> if case .Some(let x) = someOptional {
          print(x)
       }
+   << 42
    ---
    -> // Match using an optional pattern
-   -> if case x? = someOptional {
+   -> if case let x? = someOptional {
          print(x)
       }
+   << 42
 
 The optional pattern provides a convenient way to
 iterate over an array of optional values in a ``for``-``in`` statement,
