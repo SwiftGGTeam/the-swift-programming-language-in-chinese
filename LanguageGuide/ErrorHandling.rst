@@ -3,21 +3,22 @@ Error Handling
 
 :newTerm:`Error handling` is the process of responding to
 and recovering from error conditions in your program.
-Swift provides a performant way to
-throw, catch, propagate, and manipulate
+Swift provides first-class support for
+throwing, catching, propagating, and manipulating
 recoverable errors at runtime.
 
 .. TODO Refactor and expand optionals discussion into separate chapter.
 
 Some functions and methods
-cannot be guaranteed to always complete execution or produce a useful output.
-Optionals are often used to represent the absence of a value,
+can't be guaranteed to always complete execution or produce a useful output.
+Optionals are used to represent the absence of a value,
 but when a function fails,
 it's often useful to understand what caused the failure,
 so that your code can respond accordingly.
+In Swift, these are called :newTerm:`throwing functions` and :newTerm:`throwing methods`.
 
 As an example, consider the task of reading and processing data from a file on disk.
-There are a number of ways that this task can fail, including
+There are a number of ways this task can fail, including
 the file not existing at the specified path,
 the file not having read permissions, or
 the file not being encoded in a compatible format.
@@ -27,11 +28,17 @@ if necessary --- communicate it to the user.
 
 .. note::
 
-   Error handling in Swift is similar to exception handling in other languages,
-   and is bridged with Cocoa error handling in Objective-C.
+   Error handling in Swift interoperates with error handling patterns
+   that use NSError in Cocoa and Objective-C.
+   For more information,
+   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_.
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-   For more information about error handling with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+.. NOTE:
+
+    If want to make a comparison to exception handling in other languages,
+    we'll need to take about performance and other subtle differences.
+    Leaving this discussion out for Xcode 7 beta 1.
 
 .. _ErrorHandling_Represent:
 
@@ -44,8 +51,8 @@ values of types conforming to the ``ErrorType`` protocol.
 Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
 with associated values allowing for additional information
-about the nature of a error to be communicated.
-Because of this, Swift enumerations that declare conformance to ``ErrorType``
+about the nature of an error to be communicated.
+Because of this, Swift enumerations adopt ``ErrorType``
 automatically have the implementation of their conformance synthesized by the compiler.
 
 For example, here's how you might represent the error conditions
@@ -61,32 +68,34 @@ of operating a vending machine:
 
 In this example, a vending machine can fail for the following reasons:
 
-* ``InvalidSelection``: The requested item is not a valid selection.
-* ``InsufficientFunds``: The requested item's cost is greater than the provided funds.
+* The requested item is not a valid selection, indicated by ``InvalidSelection``.
+* The requested item's cost is greater than the provided funds,
+  indicated by ``InsufficientFunds``.
   The associated ``Double`` value represents the balance
   required to complete the transaction.
-* ``OutOfStock``: The request item is out of stock.
+* The request item is out of stock, indicated by ``OutOfStock``.
 
 .. _ErrorHandling_Throw:
 
 Throwing Errors
 ---------------
 
-A function type indicates that it manages an error condition
-by including the ``throws`` keyword in its declaration.
-If a function type specifies an explicit return type,
-the ``throws`` keyword is placed before the return arrow (``->``).
+To indicate that a function or method can throw an error,
+you write the ``throws`` keyword in its declaration,
+after its parameters.
+If it specifies a return type,
+you write the ``throws`` keyword before the return arrow (``->``).
 A function, method, or closure cannot throw an error unless explicitly indicated.
 
 .. testcode:: throwingFunctionDeclaration
 
-   -> func canThrowErrors() throws -> Void
+   -> func canThrowErrors() throws -> String
    >> { }
    ---
-   -> func cannotThrowErrors() -> Void
+   -> func cannotThrowErrors() -> String
    >> { }
 
-.. note::
+.. FIXME (Move to reference)
 
    Whether a function throws is considered part of its type.
    Function types that cannot throw are subtypes of function types that can throw.
@@ -113,11 +122,8 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
 .. TODO Add more assertions to test these behaviors
 
-A function type that throws may trigger an error condition
-at any point in its execution with a ``throw`` statement,
-which consists of the ``throw`` keyword,
-followed by an instance of a type that conforms to the ``ErrorType`` protocol.
-
+At any point in the body of a throwing function,
+you can throw an error with a ``throw`` statement.
 In the example below,
 the ``vend(itemNamed:)`` function throws an error if
 the requested item is not available,
@@ -168,40 +174,45 @@ and the function returns the requested item.
 Otherwise, the outstanding balance is calculated
 and used as an associated value for the thrown ``InsufficientFunds`` error.
 Because a ``throw`` statement immediately transfers program control,
-an item will only be vended if all of the requirements for purchase ---
-that is, a valid, in-stock selection with sufficient funds.
+an item will be vended only if all of the requirements for purchase ---
+that is, a valid, in-stock selection with sufficient funds ---
+are met.
 
-.. _ErrorHandling_Rethrow:
+.. FIXME
 
-rethrows
-~~~~~~~~
+    Move this to the Reference
 
-A function that takes a function parameter that throws
-can be declared with the ``rethrows`` keyword
-to indicate that,
-although the function itself does not throw errors,
-errors thrown by a function parameter will be propagated to the caller.
+    .. _ErrorHandling_Rethrow:
 
-.. TODO Example
+    rethrows
+    ~~~~~~~~
 
-.. testcode:: rethrows
+    A function that takes a function parameter that throws
+    can be declared with the ``rethrows`` keyword
+    to indicate that,
+    although the function itself does not throw errors,
+    errors thrown by a function parameter will be propagated to the caller.
 
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
-          try callback()
-      }
+    .. TODO Example
 
-.. note::
+    .. testcode:: rethrows
 
-   A ``rethrows`` function is considered to throw,
-   except in the case where a direct call is made and
-   none of the function arguments throw.
+       -> func functionWithCallback(callback: () throws -> Int) rethrows {
+              try callback()
+          }
 
-   A method that throws cannot override a method that rethrows,
-   and a rethrows method cannot override a method that doesn't throw.
-   However, a method that throws can be overridden by method that rethrows,
-   a method that rethrows can be overridden by a method that doesn't throw.
-   The same rules apply for methods satisfying protocol requirements
-   for methods that rethrow, throw, or don't throw.
+    .. note::
+
+       A ``rethrows`` function is considered to throw,
+       except in the case where a direct call is made and
+       none of the function arguments throw.
+
+       A method that throws cannot override a method that rethrows,
+       and a rethrows method cannot override a method that doesn't throw.
+       However, a method that throws can be overridden by method that rethrows,
+       a method that rethrows can be overridden by a method that doesn't throw.
+       The same rules apply for methods satisfying protocol requirements
+       for methods that rethrow, throw, or don't throw.
 
 
 .. _ErrorHandling_Catch:
