@@ -90,10 +90,10 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 .. testcode:: throwingFunctionDeclaration
 
    -> func canThrowErrors() throws -> String
-   >> { }
+   >> { return "foo" }
    ---
    -> func cannotThrowErrors() -> String
-   >> { }
+   >> { return "foo" }
 
 .. FIXME (Move to reference)
 
@@ -111,9 +111,14 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
    -> func f() -> Int {}
-   !! error: missing return in a function expected to return 'Int'
+   !! <REPL Input>:1:18: error: missing return in a function expected to return 'Int'
+   !! func f() -> Int {}
+   !! ^
    -> func f() throws -> Int {} // Compiler Error
-   !! error: invalid redeclaration of f()
+   !! <REPL Input>:1:25: error: missing return in a function expected to return 'Int'
+   !! func f() throws -> Int {} // Compiler Error
+   !! ^
+   
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
@@ -133,31 +138,37 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    -> struct Item {
-         var name: String
          var price: Double
+         var count: Int
       }
    ---
-   -> var inventory: [String: (item: Item, count: Int)]
-   >> inventory = [:]
-   -> var amountDeposited: Double
-   >> amountDeposited = 1.00
-   -> func vend(itemNamed name: String) throws -> Item {
-         guard case (let item, var count)? = inventory[name] else {
-             throw VendingMachineError.InvalidSelection
-         }
+   -> var inventory = [
+          "Candy Bar": Item(price: 1.25, count: 7),
+          "Chips": Item(price: 1.00, count: 4),
+          "Pretzels": Item(price: 0.75, count: 11)
+      ]
+   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 1.0, count: 4), "Candy Bar": REPL.Item(price: 1.25, count: 7), "Pretzels": REPL.Item(price: 0.75, count: 11)]
+   -> var amountDeposited = 1.00
+   << // amountDeposited : Double = 1.0
+   ---
+   -> func vend(itemNamed name: String) throws {
+          guard var item = inventory[name] else {
+              throw VendingMachineError.InvalidSelection
+          }
 
-         guard count > 0 else {
-             throw VendingMachineError.OutOfStock
-         }
+          guard item.count > 0 else {
+              throw VendingMachineError.OutOfStock
+          }
 
-         if amountDeposited > item.price {
-             amountDeposited -= item.price
-             inventory[item.name] = (item, --count)
-             return item
-         } else {
-             let amountRequired = item.price - amountDeposited
-             throw VendingMachineError.InsufficientFunds(required: amountRequired)
-         }
+          if amountDeposited >= item.price {
+              // Dispense the snack
+              amountDeposited -= item.price
+              --item.count
+              inventory[name] = item
+          } else {
+              let amountRequired = item.price - amountDeposited
+              throw VendingMachineError.InsufficientFunds(required: amountRequired)
+          }
       }
 
 First, a ``guard`` statement is used to bind the ``item`` constant and ``count`` variable
@@ -177,6 +188,40 @@ Because a ``throw`` statement immediately transfers program control,
 an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
+
+When you call a throwing function, you write ``try`` in front of the call.
+This keyword calls out the fact that the function can throw an error
+and that the lines of code after the ``try`` might not be run.
+
+..
+    Calls to methods and functions that can throw
+    must be executed in a ``try`` expression,
+    which consists of the ``try`` keyword,
+    followed by a statement or expression that can implicitly throw.
+    A ``try`` statement acknowledges the error
+    and allows it to continue propagation.
+
+.. testcode:: errorHandling
+
+    -> let favoriteSnacks = [
+           "Alice": "Chips",
+           "Bob": "Licorice",
+           "Eve": "Pretzels",
+       ]
+    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
+    -> func buyFavoriteSnack(person: String) throws {
+           let snackName = favoriteSnacks[person] ?? "Candy Bar"
+           try vend(itemNamed: snackName)
+       }
+
+The ``buyFavoriteSnack`` function looks up the given person's favorite snack
+and tries to buy it for them.
+If they don't have a favorite snack listed, it tries to buy a candy bar.
+It calls the ``vend`` function, which is a throwing function,
+so the function call is marked with ``try`` in front of it.
+The ``buyFavoriteSnack`` function is also a throwing function,
+so any errors that the ``vend`` function throws
+propagate up to the point where the ``buyFavoriteSnack`` function was called.
 
 .. FIXME
 
@@ -220,12 +265,9 @@ are met.
 Catching and Handling Errors
 ----------------------------
 
-Calls to methods and functions that can throw
-must be executed in a ``try`` expression,
-which consists of the ``try`` keyword,
-followed by a statement or expression that can implicitly throw.
-A ``try`` statement acknowledges the error
-and allows it to continue propagation.
+You use a ``do``-``catch`` statement to catch errors and handle them.
+
+.. FIXME A little more intro.
 
 .. syntax-outline::
 
