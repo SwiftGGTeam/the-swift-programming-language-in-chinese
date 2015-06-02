@@ -941,9 +941,9 @@ The following function calls are equivalent:
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
     -> someFunction(x, f: {$0 == 13})
-    << // r0 : Bool = false
+    <$ : Bool = false
     -> someFunction(x) {$0 == 13}
-    << // r1 : Bool = false
+    <$ : Bool = false
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted.
@@ -960,9 +960,9 @@ the parentheses can be omitted.
     << // myData : Data = REPL.Data
     // someFunction takes a closure as its only argument
     -> myData.someMethod() {$0 == 13}
-    << // r0 : Bool = false
+    <$ : Bool = false
     -> myData.someMethod {$0 == 13}
-    << // r1 : Bool = false
+    <$ : Bool = false
 
 .. langref-grammar
 

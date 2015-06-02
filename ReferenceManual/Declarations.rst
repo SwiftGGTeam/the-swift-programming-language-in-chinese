@@ -620,7 +620,7 @@ For example:
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
    -> f(1, y: 2) // y is labeled, x is not
-   << // r0 : Int = 3
+   <$ : Int = 3
 
 You can override the default behavior
 for how parameter names are used
@@ -645,7 +645,7 @@ The corresponding argument must have no name in function or method calls.
 
    -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
-   << // r0 : Int = 6
+   <$ : Int = 6
 
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

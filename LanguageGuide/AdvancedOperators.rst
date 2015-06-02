@@ -210,15 +210,15 @@ Here's how bit shifting looks in Swift code:
    -> let shiftBits: UInt8 = 4   // 00000100 in binary
    << // shiftBits : UInt8 = 4
    -> shiftBits << 1             // 00001000
-   << // r0 : UInt8 = 8
+   <$ : UInt8 = 8
    -> shiftBits << 2             // 00010000
-   << // r1 : UInt8 = 16
+   <$ : UInt8 = 16
    -> shiftBits << 5             // 10000000
-   << // r2 : UInt8 = 128
+   <$ : UInt8 = 128
    -> shiftBits << 6             // 00000000
-   << // r3 : UInt8 = 0
+   <$ : UInt8 = 0
    -> shiftBits >> 2             // 00000001
-   << // r4 : UInt8 = 1
+   <$ : UInt8 = 1
 
 You can use bit shifting to encode and decode values within other data types:
 
@@ -499,7 +499,7 @@ Why does the following expression equal ``4``?
 .. testcode:: evaluationOrder
 
    -> 2 + 3 * 4 % 5
-   << // r0 : Int = 4
+   <$ : Int = 4
    /> this equals \(2 + 3 * 4 % 5)
    </ this equals 4
 
@@ -526,21 +526,21 @@ starting from their left:
 .. testcode:: evaluationOrder
 
    -> 2 + ((3 * 4) % 5)
-   << // r1 : Int = 4
+   <$ : Int = 4
 
 ``(3 * 4)`` is ``12``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
    -> 2 + (12 % 5)
-   << // r2 : Int = 4
+   <$ : Int = 4
 
 ``(12 % 5)`` is ``2``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
    -> 2 + 2
-   << // r3 : Int = 4
+   <$ : Int = 4
 
 This calculation yields the final answer of ``4``.
 
@@ -899,7 +899,7 @@ and associativity settings, see :doc:`../ReferenceManual/Expressions`.
    -> prefix func +++ (x: Int) -> Int { return x * 2 }
    -> postfix func --- (x: Int) -> Int { return x - 1 }
    -> +++1---
-   << // r0 : Int = 0
+   <$ : Int = 0
 
 .. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
    This is being tracked as rdar://16061044.

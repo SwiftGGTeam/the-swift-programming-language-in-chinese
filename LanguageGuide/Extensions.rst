@@ -360,19 +360,19 @@ from the right of the number:
          }
       }
    -> 746381295[0]
-   << // r0 : Int = 5
+   <$ : Int = 5
    /> returns \(r0)
    </ returns 5
    -> 746381295[1]
-   << // r1 : Int = 9
+   <$ : Int = 9
    /> returns \(r1)
    </ returns 9
    -> 746381295[2]
-   << // r2 : Int = 2
+   <$ : Int = 2
    /> returns \(r2)
    </ returns 2
    -> 746381295[8]
-   << // r3 : Int = 7
+   <$ : Int = 7
    /> returns \(r3)
    </ returns 7
 
@@ -383,11 +383,11 @@ as if the number had been padded with zeroes to the left:
 .. testcode:: extensionsSubscripts
 
    -> 746381295[9]
-   << // r4 : Int = 0
+   <$ : Int = 0
    /> returns \(r4), as if you had requested:
    </ returns 0, as if you had requested:
    -> 0746381295[9]
-   << // r5 : Int = 0
+   <$ : Int = 0
 
 .. TODO: provide an explanation of this example
 

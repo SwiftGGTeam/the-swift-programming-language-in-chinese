@@ -119,13 +119,13 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 .. testcode:: arithmeticOperators
 
    -> 1 + 2       // equals 3
-   << // r0 : Int = 3
+   <$ : Int = 3
    -> 5 - 3       // equals 2
-   << // r1 : Int = 2
+   <$ : Int = 2
    -> 2 * 3       // equals 6
-   << // r2 : Int = 6
+   <$ : Int = 6
    -> 10.0 / 2.5  // equals 4.0
-   << // r3 : Double = 4.0
+   <$ : Double = 4.0
 
 Unlike the arithmetic operators in C and Objective-C,
 the Swift arithmetic operators do not allow values to overflow by default.
@@ -137,7 +137,7 @@ The addition operator is also supported for ``String`` concatenation:
 .. testcode:: arithmeticOperators
 
    -> "hello, " + "world"  // equals "hello, world"
-   << // r4 : String = "hello, world"
+   <$ : String = "hello, world"
 
 .. _BasicOperators_RemainderOperator:
 
@@ -181,7 +181,7 @@ In Swift, this would be written as:
 .. testcode:: arithmeticOperators
 
    -> 9 % 4    // equals 1
-   << // r5 : Int = 1
+   <$ : Int = 1
 
 To determine the answer for ``a % b``,
 the ``%`` operator calculates the following equation
@@ -201,7 +201,7 @@ The same method is applied when calculating the remainder for a negative value o
 .. testcode:: arithmeticOperators
 
    -> -9 % 4   // equals -1
-   << // r6 : Int = -1
+   <$ : Int = -1
 
 Inserting ``-9`` and ``4`` into the equation yields:
 
@@ -223,7 +223,7 @@ Swift's remainder operator can also operate on floating-point numbers:
 .. testcode:: arithmeticOperators
 
    -> 8 % 2.5   // equals 0.5
-   << // r7 : Double = 0.5
+   <$ : Double = 0.5
 
 In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
@@ -246,7 +246,7 @@ You can use these operators with variables of any integer or floating-point type
    -> var i = 0
    << // i : Int = 0
    -> ++i      // i now equals 1
-   << // r8 : Int = 1
+   <$ : Int = 1
 
 Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
@@ -395,17 +395,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 .. testcode:: comparisonOperators
 
    -> 1 == 1   // true, because 1 is equal to 1
-   << // r0 : Bool = true
+   <$ : Bool = true
    -> 2 != 1   // true, because 2 is not equal to 1
-   << // r1 : Bool = true
+   <$ : Bool = true
    -> 2 > 1    // true, because 2 is greater than 1
-   << // r2 : Bool = true
+   <$ : Bool = true
    -> 1 < 2    // true, because 1 is less than 2
-   << // r3 : Bool = true
+   <$ : Bool = true
    -> 1 >= 1   // true, because 1 is greater than or equal to 1
-   << // r4 : Bool = true
+   <$ : Bool = true
    -> 2 <= 1   // false, because 2 is not less than or equal to 1
-   << // r5 : Bool = false
+   <$ : Bool = false
 
 Comparison operators are often used in conditional statements,
 such as the ``if`` statement:
@@ -521,7 +521,7 @@ The nil coalescing operator is shorthand for the code below:
    >> let b = 42
    << // b : Int = 42
    -> a != nil ? a! : b
-   << // r0 : Int = 42
+   <$ : Int = 42
 
 The code above uses the ternary conditional operator and forced unwrapping (``a!``)
 to access the value wrapped inside ``a`` when ``a`` is not ``nil``,

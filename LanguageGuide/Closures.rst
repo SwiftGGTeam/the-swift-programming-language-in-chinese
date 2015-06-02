@@ -546,15 +546,15 @@ Calling the function multiple times shows this behavior in action:
 .. testcode:: closures
 
    -> incrementByTen()
-   << // r0 : Int = 10
+   <$ : Int = 10
    /> returns a value of \(r0)
    </ returns a value of 10
    -> incrementByTen()
-   << // r1 : Int = 20
+   <$ : Int = 20
    /> returns a value of \(r1)
    </ returns a value of 20
    -> incrementByTen()
-   << // r2 : Int = 30
+   <$ : Int = 30
    /> returns a value of \(r2)
    </ returns a value of 30
 
@@ -566,7 +566,7 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
    -> let incrementBySeven = makeIncrementer(forIncrement: 7)
    << // incrementBySeven : Void -> Int = (Function)
    -> incrementBySeven()
-   << // r3 : Int = 7
+   <$ : Int = 7
    /> returns a value of \(r3)
    </ returns a value of 7
 
@@ -577,7 +577,7 @@ and does not affect the variable captured by ``incrementBySeven``:
 .. testcode:: closures
 
    -> incrementByTen()
-   << // r4 : Int = 40
+   <$ : Int = 40
    /> returns a value of \(r4)
    </ returns a value of 40
 
@@ -615,7 +615,7 @@ both of those constants or variables will refer to the same closure:
    -> let alsoIncrementByTen = incrementByTen
    << // alsoIncrementByTen : Void -> Int = (Function)
    -> alsoIncrementByTen()
-   << // r5 : Int = 50
+   <$ : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
 

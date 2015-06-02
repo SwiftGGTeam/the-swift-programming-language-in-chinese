@@ -216,7 +216,7 @@ The return value of a function can be ignored when it is called:
    -> printAndCount("hello, world")
    << hello, world
    // prints "hello, world" and returns a value of 12
-   << // r0 : Int = 12
+   <$ : Int = 12
    -> printWithoutCounting("hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
@@ -501,11 +501,11 @@ The example below calculates the :newTerm:`arithmetic mean`
          return total / Double(numbers.count)
       }
    -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r0 : Double = 3.0
+   <$ : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
    -> arithmeticMean(3, 8.25, 18.75)
-   << // r1 : Double = 10.0
+   <$ : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
 

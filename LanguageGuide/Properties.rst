@@ -761,9 +761,9 @@ The example below shows the syntax for stored and computed type properties:
    -> class A { class var cp: String { return "A" } }
    -> class B: A { override class var cp: String { return "B" } }
    -> A.cp
-   << // r0 : String = "A"
+   <$ : String = "A"
    -> B.cp
-   << // r1 : String = "B"
+   <$ : String = "B"
 
 .. assertion:: staticComputedTypePropertiesAreFinal
 

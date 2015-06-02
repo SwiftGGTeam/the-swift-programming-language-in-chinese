@@ -341,15 +341,15 @@ String literals can include the following special characters:
 .. assertion:: stringLiteralUnicodeScalar
 
    -> "\u{0}"
-   << // r0 : String = "\0"
+   <$ : String = "\0"
    -> "\u{00000000}"
-   << // r1 : String = "\0"
+   <$ : String = "\0"
    -> "\u{000000000}"
    !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
    !! "\u{000000000}"
    !! ^
    -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
+   <$ : String = "􏿿"
    -> "\u{110000}"
    !! <REPL Input>:1:2: error: invalid unicode scalar
    !! "\u{110000}"
