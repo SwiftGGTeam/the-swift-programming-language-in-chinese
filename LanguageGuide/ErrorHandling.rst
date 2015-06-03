@@ -31,7 +31,7 @@ if necessary --- communicate it to the user.
    Error handling in Swift interoperates with error handling patterns
    that use NSError in Cocoa and Objective-C.
    For more information,
-   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_.
+   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. NOTE:
@@ -193,14 +193,14 @@ and that the lines of code after the ``try`` might not be run.
            try vend(itemNamed: snackName)
        }
 
-The ``buyFavoriteSnack`` function looks up the given person's favorite snack
+The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
 and tries to buy it for them.
 If they don't have a favorite snack listed, it tries to buy a candy bar.
 It calls the ``vend`` function, which is a throwing function,
 so the function call is marked with ``try`` in front of it.
-The ``buyFavoriteSnack`` function is also a throwing function,
+The ``buyFavoriteSnack(_:)`` function is also a throwing function,
 so any errors that the ``vend`` function throws
-propagate up to the point where the ``buyFavoriteSnack`` function was called.
+propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
 
 .. _ErrorHandling_Catch:
 
@@ -236,7 +236,7 @@ use a ``catch`` clause with a pattern that matches all errors.
 If a ``catch`` clause does not specify a pattern,
 the clause will match and bind any error to a local constant named ``error``.
 For more information about pattern matching,
-see :doc:`../ReferenceManual/Patterns` for more information about pattern matching.
+see :doc:`../ReferenceManual/Patterns`.
 
 .. testcode:: errorHandling
 
@@ -253,31 +253,30 @@ see :doc:`../ReferenceManual/Patterns` for more information about pattern matchi
    << Insufficient funds. Please insert an additional $0.25.
 
 In the above example,
-the ``vend(itemNamed:)`` function is called.
-Because the function can throw an error,
-it is executed in a ``try`` expression.
+the ``vend(itemNamed:)`` function is called in a ``try`` expression,
+because it can throw an error.
 If an error is thrown,
-execution immediately transfers out of the ``do`` statement
-to the ``catch`` clauses,
-which decide whether or not to allow propagation to continue.
+execution immediately transfers to the ``catch`` clauses,
+which decide whether to allow propagation to continue.
 If no error is thrown,
 the return value of ``vend(itemNamed:)`` is assigned to ``snack``,
 and the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Force:
 
-Disabling Compiler Checks for Error Handling
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Disabling Error Propagation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a call to a function declared with the ``throws`` keyword
-will not throw an error at runtime,
-execute it in a :newTerm:`forced-try` expression.
-Doing so will wrap the function call in an assertion,
-such that if an error is thrown,
-a runtime error is triggered.
+There are some cases in which you know a throwing function or method won't,
+in fact, throw an error at run time.
+In these cases,
+you can call the throwing function or method in a :newTerm:`forced-try` expression,
+written, ``try!``,
+instead of a regular ``try`` expression.
 
-A forced-try expression takes the same form of a try expression,
-except with an exclamation mark (``!``) appended to the ``try`` keyword.
+Calling a throwing function or method with ``try!`` disables error propagation
+and wraps the call in a run-time assertion that no error will be thrown.
+If an error actually is thrown, you'll get a runtime error.
 
 .. testcode:: forceTryStatement
 
@@ -295,6 +294,7 @@ except with an exclamation mark (``!``) appended to the ``try`` keyword.
    << // someError : Error = REPL.Error.E
    ---
    -> try! willOnlyThrowIfTrue(false)
+
 
 .. _ErrorHandling_Defer:
 
