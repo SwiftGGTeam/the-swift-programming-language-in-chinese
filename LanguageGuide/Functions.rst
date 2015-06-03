@@ -156,7 +156,7 @@ even though it does not take any parameters.
 The function name is also followed by
 an empty pair of parentheses when the function is called.
 
-.. _Functions_MultipleInputParameters:
+.. _Functions_FunctionsWithMultipleInputParameters:
 
 Functions With Multiple Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

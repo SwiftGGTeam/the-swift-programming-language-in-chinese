@@ -271,6 +271,7 @@
     "functions-externalparameternames": "ID167", 
     "functions-functionparameternames": "ID166", 
     "functions-functionparametersandreturnvalues": "ID160", 
+    "functions-functionswithmultipleinputparameters": "ID517", 
     "functions-functionswithmultiplereturnvalues": "ID164", 
     "functions-functionswithoutparameters": "ID162", 
     "functions-functionswithoutreturnvalues": "ID163", 
@@ -280,6 +281,7 @@
     "functions-inoutparameters": "ID173", 
     "functions-multipleinputparameters": "ID161", 
     "functions-nestedfunctions": "ID178", 
+    "functions-omittingparameternames": "ID518", 
     "functions-optionaltuplereturntypes": "ID165", 
     "functions-shorthandexternalparameternames": "ID168", 
     "functions-usingfunctiontypes": "ID175", 
@@ -535,5 +537,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 517
+  "next_id": 519
 }
