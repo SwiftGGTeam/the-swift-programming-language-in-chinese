@@ -58,7 +58,7 @@ but will be customized by subclasses of ``Vehicle`` later on:
       }
 
 You create a new instance of ``Vehicle`` with :newTerm:`initializer syntax`,
-which is written as a ``TypeName``, followed by empty parentheses:
+which is written as a ``TypeName`` followed by empty parentheses:
 
 .. testcode:: inheritance
 

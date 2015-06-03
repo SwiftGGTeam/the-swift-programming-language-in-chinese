@@ -151,7 +151,7 @@ The syntax for creating instances is very similar for both structures and classe
    << // someVideoMode : VideoMode = REPL.VideoMode
 
 Structures and classes both use initializer syntax for new instances.
-The simplest form of initializer syntax uses the type name of the class or structure,
+The simplest form of initializer syntax uses the type name of the class or structure
 followed by empty parentheses, such as ``Resolution()`` or ``VideoMode()``.
 This creates a new instance of the class or structure,
 with any properties initialized to their default values.

@@ -129,7 +129,7 @@ Import Declaration
 An :newTerm:`import declaration` lets you access symbols
 that are declared outside the current file.
 The basic form imports the entire module;
-it consists of the ``import`` keyword, followed by a module name:
+it consists of the ``import`` keyword followed by a module name:
 
 .. syntax-outline::
 
