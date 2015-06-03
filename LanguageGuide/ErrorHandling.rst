@@ -359,6 +359,13 @@ except with an exclamation mark (``!``) appended to the ``try`` keyword.
 Specifying Clean-Up Actions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+You use a ``defer`` statement to execute a set of statements
+just before code execution leaves the current block of code.
+This lets you do any necessary cleanup
+that should be performed regardless of whether an error occurred or not.
+Examples include closing any open file descriptors
+and freeing any manually allocated memory.
+
 A ``defer`` statement defers execution until the current scope is exited.
 It consists of the ``defer`` keyword and the statements to be executed later.
 The deferred statements may not contain any code
@@ -369,10 +376,6 @@ Deferred actions are executed in reverse order of how they are specified ---
 that is, the code in the first ``defer`` statement executes
 after code in the second, and so on.
 
-You use a ``defer`` statement to do any necessary cleanup
-that should be performed regardless of whether an error occurred or not.
-Examples include closing any open file descriptors
-and freeing any manually allocated memory.
 
 .. TODO Example
 
