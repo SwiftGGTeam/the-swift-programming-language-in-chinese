@@ -293,13 +293,13 @@ To ensure that an error is handled,
 use a ``catch`` clause with a pattern that matches all errors.
 If a ``catch`` clause does not specify a pattern,
 the clause will match and bind any error to a local constant named ``error``.
-
-See :doc:`../ReferenceManual/Patterns` for more information about pattern matching.
+For more information about pattern matching,
+see :doc:`../ReferenceManual/Patterns` for more information about pattern matching.
 
 .. testcode:: errorHandling
 
    -> do {
-          let snack = try vend(itemNamed: "Candy Bar")
+          try vend(itemNamed: "Candy Bar")
           // Enjoy delicious snack
       } catch VendingMachineError.InvalidSelection {
           print("Invalid Selection.")
@@ -308,6 +308,7 @@ See :doc:`../ReferenceManual/Patterns` for more information about pattern matchi
       } catch VendingMachineError.InsufficientFunds(let amountRequired) {
           print("Insufficient funds. Please insert an additional $\(amountRequired).")
       }
+   << Insufficient funds. Please insert an additional $0.25.
 
 In the above example,
 the ``vend(itemNamed:)`` function is called.
@@ -349,6 +350,7 @@ except with an exclamation mark (``!``) appended to the ``try`` keyword.
       } catch {
          // Handle Error
       }
+   << // someError : Error = REPL.Error.E
    ---
    -> try! willOnlyThrowIfTrue(false)
 
@@ -376,12 +378,20 @@ and freeing any manually allocated memory.
 
 .. testcode:: defer
 
+   >> func exists(file: String) -> Bool { return true }
+   >> struct File {
+          func readline() -> String? { return nil }
+      }
+   >> func open(file: String) -> File { return File() }
+   >> func close(fileHandle: File) { }
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)
-            defer close(file)
+            defer {
+                close(file)
+            }
             while let line = try file.readline() {
-               /* */
+               /* Work with the file. */
             }
             // close(_:) occurs here, at the end of the formal scope.
          }
