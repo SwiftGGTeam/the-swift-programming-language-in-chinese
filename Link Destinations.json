@@ -397,6 +397,7 @@
     "properties-storedpropertiesofconstantstructureinstances": "ID256", 
     "properties-typeproperties": "ID264", 
     "properties-typepropertysyntax": "ID265", 
+    "protocols-addingconstraintstoprotocolextensions": "ID516", 
     "protocols-addingprotocolconformancewithanextension": "ID277", 
     "protocols-and-extensions": "ID466", 
     "protocols-checkingforprotocolconformance": "ID283", 
@@ -405,6 +406,7 @@
     "protocols-collectionsofprotocoltypes": "ID279", 
     "protocols-declaringprotocoladoptionwithanextension": "ID278", 
     "protocols-delegation": "ID276", 
+    "protocols-extensions": "ID514", 
     "protocols-failableinitializerrequirements": "ID274", 
     "protocols-initializerrequirements": "ID272", 
     "protocols-methodrequirements": "ID270", 
@@ -415,6 +417,7 @@
     "protocols-protocolinheritance": "ID280", 
     "protocols-protocolsastypes": "ID275", 
     "protocols-protocolsyntax": "ID268", 
+    "protocols-providingdefaultimplementations": "ID515", 
     "raw-values-and-associated-values": "ID468", 
     "simple-values": "ID461", 
     "special-kinds-of-methods": "ID473", 
@@ -532,5 +535,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 514
+  "next_id": 517
 }
