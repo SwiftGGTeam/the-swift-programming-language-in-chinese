@@ -4,15 +4,14 @@ Protocols
 A :newTerm:`protocol` defines a blueprint of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.
-The protocol doesn't actually provide an implementation for any of these requirements ---
-it only describes what an implementation will look like.
 The protocol can then be :newTerm:`adopted` by a class, structure, or enumeration
 to provide an actual implementation of those requirements.
 Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
-Protocols can require that conforming types have specific
-instance properties, instance methods, type methods, operators, and subscripts.
+In addition to specifying requirements that conforming types must implement,
+you can extend a protocol to implement some of these requirements
+or to implement additional functionality that conforming types can take advantage of.
 
 .. FIXME: Protocols should also be able to support initializers,
    and indeed you can currently write them,
@@ -22,10 +21,6 @@ instance properties, instance methods, type methods, operators, and subscripts.
    UPDATE: actually, they *can* be used right now,
    but only in a generic function, and not more generally with the protocol type.
    I'm not sure I should mention them in this chapter until they work more generally.
-
-.. TODO: When I add in the fact that protocols support initializers,
-   I should also mention that implementations of those initialiers
-   must be marked as "required" if the conforming class is non-final.
 
 .. _Protocols_ProtocolSyntax:
 
@@ -1445,6 +1440,131 @@ Once the counter reaches zero, no more counting takes place:
    </ -1
    </ 0
    </ 0
+
+.. _Protocols_Extensions:
+
+Protocol Extensions
+-------------------
+
+Protocols can be extended to provide method and property implementations
+to conforming types.
+This allows you to define behavior on protocols themselves,
+rather than in each type's individual conformance or in a global function.
+
+For example, the ``RandomNumberGenerator`` protocol can be extended
+to provide a ``randomBool()`` method,
+which uses the result of the required ``random()`` method
+to return a random ``Bool`` value:
+
+.. testcode:: protocolConformance
+
+   -> extension RandomNumberGenerator {
+         func randomBool() -> Bool {
+            return random() > 0.5
+         }
+      }
+
+By creating an extension on the protocol,
+all conforming types automatically gain this method implementation
+without any additional modification.
+
+.. testcode:: protocolConformance
+
+   -> let generator = LinearCongruentialGenerator()
+   -> print("Here's a random number: \(generator.random())")
+   <- Here's a random number: 0.37464991998171
+   -> print("And here's a random Boolean: \(generator.randomBool())")
+   <- And here's a random Boolean: true
+
+.. _Protocols_ProvidingDefaultImplementations:
+
+Providing Default Implementations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use protocol extensions to provide a default implementation
+to any method or property requirement of that protocol.
+If a conforming type provides its own implementation of a required method or property,
+that implementation will be used instead of the one provided by the extension.
+
+.. note::
+
+   Protocol requirements with default implementations provided by extensions
+   are distinct from optional protocol requirements.
+   Although conforming types don't have to provide their own implementation of either,
+   requirements with default implementations can be called without optional chaining.
+
+For example, the ``PrettyTextRepresentable`` protocol,
+which inherits the ``TextRepresentable`` protocol
+can provide a default implementation of its required ``asPrettyText()`` method
+to simply return the result of the ``asText()`` method:
+
+.. testcode:: protocols
+
+   -> extension PrettyTextRepresentable  {
+         func asPrettyText() -> String {
+            return asText()
+         }
+      }
+
+.. _Protocols_AddingConstraintsToProtocolExtensions:
+
+Adding Constraints to Protocol Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you define a protocol extension,
+you can specify constraints that conforming types
+must satisfy before the methods and properties of the extension are available.
+You write these constraints after the name of the protocol you're extending
+using a ``where`` clause,
+as described in :ref:`Generics_WhereClauses`.
+
+For instance,
+you can define an extension to the ``CollectionType`` protocol
+that applies to any collection whose elements conform
+to the ``TextRepresentable`` protocol from the example above.
+
+.. testcode:: protocols
+
+   -> extension CollectionType where Generator.Element : TextRepresentable {
+          func asList() -> String {
+              return "(" + ", ".join(map({$0.asText()})) + ")"
+          }
+      }
+
+The ``asList()`` method takes
+the textual representation of each element in the collection
+and concatenates them into a comma-separated list.
+
+Consider the ``Hamster`` structure from before,
+which conforms to the ``TextRepresentable`` protocol,
+and an array of ``Hamster`` values:
+
+.. testcode:: protocols
+
+   -> let murrayTheHamster = Hamster(name: "Murray")
+   -> let morganTheHamster = Hamster(name: "Morgan")
+   -> let mauriceTheHamster = Hamster(name: "Maurice")
+   -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+
+Because ``Array`` conforms to ``CollectionType``,
+and the array's elements conform to the ``TextRepresentable`` protocol,
+the array can use the ``asList()`` method
+to get a textual representation of its contents:
+
+.. testcode:: protocols
+
+   -> print(hamsters.asList())
+   <- (A hamster named Murray, A hamster named Morgan, A hamster named Maurice)
+
+.. note::
+
+    If a conforming type satisfies the requirements for multiple constrained extensions
+    that provide implementations for the same method or property,
+    Swift will use the implementation corresponding the most specialized constraints.
+
+    .. TODO: It would be great to pull this out of a note,
+       but we should wait until we have a better narrative that shows how this
+       works with some examples.
 
 .. TODO: Other things to be included
 .. ---------------------------------
