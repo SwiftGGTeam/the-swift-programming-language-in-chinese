@@ -13,9 +13,6 @@ This table describes the changes to *The Swift Programming Language*.
 
             * Added the :ref:`../LanguageGuide/ErrorHandling` chapter.
 
-            * Added the :ref:`Extensions_ProtocolExtensions` section
-              to the :doc:`../LanguageGuide/Extensions` chapter.
-
             * Added a note to the :ref:`Types_MetatypeType` section
               about constructing instances from metatype values.
 
@@ -25,7 +22,26 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Updated the :ref:`ControlFlow_DoWhile` section
+2015-06-08  * Added the :ref:`ControlFlow_Available` section
+              to the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_AvailabilityCondition` section
+              to the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added the :ref:`ControlFlow_Guard` section
+              to the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_GuardStatement` section
+              to the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added the :ref:`Extensions_ProtocolExtensions` section
+              to the :doc:`../LanguageGuide/Extensions` chapter.
+
+            * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
+              to the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Added the :ref:`Patterns_OptionalPattern` section
+              to the :doc:`../ReferenceManual/Patterns` chapter.
+
+            * Updated the :ref:`ControlFlow_DoWhile` section
               with information about the the ``repeat``-``while`` loop.
 
             * Updated the
@@ -39,21 +55,10 @@ Date        Notes
             * Updated the :ref:`Statements_BreakStatement` section
               with information about labeled break statements.
 
-            * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
-              to the :doc:`../LanguageGuide/AccessControl` chapter.
-
-            * Added the :ref:`Patterns_OptionalPattern` section
-              to the :doc:`../ReferenceManual/Patterns` chapter.
-
             * Added a note to the
               :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
               section about differences in weak references
               between garbage collected systems and ARC.
-
-            * Added the :ref:`ControlFlow_Available` section
-              to the :doc:`../LanguageGuide/ControlFlow` chapter
-              and the :ref:`Statements_AvailabilityCondition` section
-              to the :doc:`../ReferenceManual/Statements` chapter.
 
             * Updated the :ref:`Attributes_DeclarationAttributes` section
               with information about the ``@available`` attribute.
@@ -63,11 +68,6 @@ Date        Notes
 
             * Added a note to the :ref:`AccessControl_AccessLevels` section
               with information about the scope of ``private`` access.
-
-            * Added the :ref:`ControlFlow_Guard` section
-              to the :doc:`../LanguageGuide/ControlFlow` chapter
-              and the :ref:`Statements_GuardStatement` section
-              to the :doc:`../ReferenceManual/Statements` chapter.
 
             * Updated the :ref:`Attributes_TypeAttributes` section
               with information about the ``@convention`` attribute.
