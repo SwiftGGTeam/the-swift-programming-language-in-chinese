@@ -2,7 +2,7 @@ Extensions
 ==========
 
 :newTerm:`Extensions` add new functionality to an existing
-class, structure, or enumeration type.
+class, structure, enumeration, or protocol type.
 This includes the ability to extend types
 for which you do not have access to the original source code
 (known as :newTerm:`retroactive modeling`).
@@ -17,6 +17,11 @@ Extensions in Swift can:
 * Define subscripts
 * Define and use new nested types
 * Make an existing type conform to a protocol
+
+In Swift,
+you can even extend a protocol to provide implementations of its requirements
+or add additional functionality that conforming types can take advantage of.
+For more details, see :ref:`Protocols_Extensions`.
 
 .. note::
 
