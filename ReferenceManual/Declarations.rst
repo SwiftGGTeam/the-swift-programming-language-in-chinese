@@ -594,6 +594,8 @@ This kind of function is known as a :newTerm:`nested function`.
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
+.. _Declarations_ParameterNames:
+
 Parameter Names
 ~~~~~~~~~~~~~~~
 
@@ -607,34 +609,20 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-For function parameters,
-the parameter name is used within the function body,
-but is not used when calling the function.
-For method parameters,
-the parameter name is used as within the function body,
-and is also used as a label for the argument when calling the method.
-The name of a method's first parameter
-is used only within the function body,
-like the parameter of a function.
+A parameter has a local name,
+which is used within the function body,
+as well as an external name,
+which is used as a label for the argument when calling the method.
+By default, the external name of the first parameter is omitted,
+and the second and subsequent parameters
+use their local names as external names.
 For example:
 
-.. testcode:: func-simple-param
+.. testcode:: default-parameter-names
 
-   -> func f(x: Int, y: String) -> String {
-          return y + String(x)
-      }
-   -> f(7, "hello")  // x and y have no name
-   << // r0 : String = "hello7"
-   ---
-   -> class C {
-          func f(x: Int, y: String) -> String {
-              return y + String(x)
-          }
-      }
-   -> let c = C()
-   << // c : C = REPL.C
-   -> c.f(7, y: "hello")  // x has no name, y has a name
-   << // r1 : String = "hello7"
+   -> func f(x: Int, y: Int) -> Int { return x + y }
+   -> f(1, y: 2) // y is labeled, x is not
+   << // r0 : Int = 3
 
 You can override the default behavior
 for how parameter names are used
@@ -643,23 +631,25 @@ with one of the following forms:
 .. syntax-outline::
 
     <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
     _ <#local parameter name#>: <#parameter type#>
 
-A second name before the local parameter name
+A name before the local parameter name
 gives the parameter an external name,
 which can be different from the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
-A hash symbol (``#``) before a parameter name
-indicates that the name should be used as both an external and a local parameter name.
-It has the same meaning as writing the local parameter name twice.
-The corresponding argument must have this name in function or method calls.
-
 An underscore (``_``) before a local parameter name
 gives that parameter no name to be used in function calls.
 The corresponding argument must have no name in function or method calls.
+
+.. testcode:: overridden-parameter-names
+
+   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
+   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
+   << // r0 : Int = 6
+
+.. _Declarations_SpecialKindsOfParameters:
 
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -675,8 +665,8 @@ using the following forms:
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
-A parameter named with an underscore (``_``) is explicitly ignored
-and can't be accessed within the body of the function.
+An underscore (``_``) parameter
+is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
@@ -691,27 +681,24 @@ is understood to have a default value of the given expression.
 The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
 the default value is used instead.
-If the parameter is not omitted,
-it must have its name in the function call.
 
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()       // Valid, uses default value
-   -> f(x: 7)   // Valid, name and value provided
-   -> f(7)      // Invalid, value provided without its name
+   -> f()  // Valid, uses default value
+   -> f(7) // Valid, value provided without its name
+   -> f(x: 7) // Invalid, name and value provided
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
-   !! f(7)      // Invalid, value provided without its name
-   !!   ^
-   !!   x:
+   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
+   !! f(x: 7) // Invalid, name and value provided
+   !! ^~~~
 
 .. assertion:: default-args-evaluated-at-call-site
 
     -> func shout() -> Int {
-           print("evaluated")
-           return 10
+          print("evaluated")
+          return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
     -> foo(x: 100)
@@ -722,6 +709,8 @@ it must have its name in the function call.
     -> foo()
     << evaluated
     << x is 10
+
+.. _Declarations_SpecialKindsOfMethods:
 
 Special Kinds of Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -751,22 +740,22 @@ The returned function takes the next parameter and returns another function.
 This continues until there are no remaining parameters,
 at which point the last function returns the return value of the original multiparameter function.
 The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(_:_:)`` function as the equivalent ``addTwoIntsCurried(_:)(b:)`` function:
+For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
 
 .. testcode:: curried-function
 
-    -> func addTwoInts(a: Int, b: Int) -> Int {
-           return a + b
+    -> func addTwoInts(a a: Int, b: Int) -> Int {
+          return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
-The ``addTwoInts(_:_:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(_:)(b:)`` function takes a single integer, and returns another function
+The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
+The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
 that takes the second integer and adds it to the first.
 (The nested function captures the value of the first integer argument from the enclosing
 function.)
@@ -783,33 +772,33 @@ For example, the following two declarations are equivalent:
 
 .. testcode:: curried-function-syntactic-sugar
 
-    -> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
-           return a + b
+    -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
+          return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
-In order to use the ``addTwoIntsCurried(_:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(_:_:)`` function,
-you must call the ``addTwoIntsCurried(_:)(b:)`` function with the first integer argument
+In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
+as the noncurried ``addTwoInts(a:b:)`` function,
+you must call the ``addTwoIntsCurried(a:)(b:)`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function-usage
 
-    >> func addTwoInts(a: Int, b: Int) -> Int {
-          return a + b
-       }
-       func addTwoIntsCurried(a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> addTwoInts(4, 5)
+    >> func addTwoInts(a a: Int, b: Int) -> Int {
+    >>    return a + b
+    >> }
+    >> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
+    >>    return a + b
+    >> }
+    -> addTwoInts(a: 4, b: 5)
     <$ : Int = 9
     -> // returns a value of 9
-    -> addTwoIntsCurried(4)(b: 5)
+    -> addTwoIntsCurried(a: 4)(b: 5)
     <$ : Int = 9
     -> // returns a value of 9
 
@@ -817,16 +806,16 @@ Although you must provide the arguments to a noncurried function all at once in 
 you can use the curried form of a function to provide arguments in several function calls,
 one at a time (even in different places in your code).
 This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(_:)(b:)`` function to an integer argument ``1``
+For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
 and assign the result to the constant ``plusOne``:
 
 .. testcode:: curried-function
 
-    -> let plusOne = addTwoIntsCurried(1)
+    -> let plusOne = addTwoIntsCurried(a: 1)
     << // plusOne : Int -> Int = (Function)
     -> // plusOne is a function of type Int -> Int
 
-Because ``plusOne`` refers to the ``addTwoIntsCurried(_:)(b:)`` function with its argument bound
+Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
 as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
 
 .. testcode:: curried-function
@@ -865,8 +854,8 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
