@@ -594,6 +594,8 @@ This kind of function is known as a :newTerm:`nested function`.
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
+.. _Declarations_ParameterNames:
+
 Parameter Names
 ~~~~~~~~~~~~~~~
 
@@ -647,6 +649,8 @@ The corresponding argument must have no name in function or method calls.
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
    << // r0 : Int = 6
 
+.. _Declarations_SpecialKindsOfParameters:
+
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -657,12 +661,11 @@ using the following forms:
 
 .. syntax-outline::
 
-    <#parameter type#>
     _ : <#parameter type#>
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
-A parameter without a name or named with an underscore (``_``)
+An underscore (``_``) parameter
 is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
@@ -678,8 +681,6 @@ is understood to have a default value of the given expression.
 The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
 the default value is used instead.
-If the parameter is not omitted,
-it must have its name in the function call.
 
 .. testcode:: default-args-and-labels
 
@@ -692,13 +693,12 @@ it must have its name in the function call.
    !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
    !! f(x: 7) // Invalid, name and value provided
    !! ^~~~
-   !!
 
 .. assertion:: default-args-evaluated-at-call-site
 
     -> func shout() -> Int {
-           println("evaluated")
-           return 10
+          println("evaluated")
+          return 10
        }
     -> func foo(x: Int = shout()) { println("x is \(x)") }
     -> foo(x: 100)
@@ -709,6 +709,8 @@ it must have its name in the function call.
     -> foo()
     << evaluated
     << x is 10
+
+.. _Declarations_SpecialKindsOfMethods:
 
 Special Kinds of Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -743,14 +745,14 @@ For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent
 .. testcode:: curried-function
 
     -> func addTwoInts(a a: Int, b: Int) -> Int {
-           return a + b
+          return a + b
        }
     -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
 The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
 The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
@@ -771,14 +773,14 @@ For example, the following two declarations are equivalent:
 .. testcode:: curried-function-syntactic-sugar
 
     -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-           return a + b
+          return a + b
        }
     -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
 In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
 as the noncurried ``addTwoInts(a:b:)`` function,
@@ -788,11 +790,11 @@ and then call its returned function with the second integer argument:
 .. testcode:: curried-function-usage
 
     >> func addTwoInts(a a: Int, b: Int) -> Int {
-          return a + b
-       }
-       func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-          return a + b
-       }
+    >>    return a + b
+    >> }
+    >> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
+    >>    return a + b
+    >> }
     -> addTwoInts(a: 4, b: 5)
     <$ : Int = 9
     -> // returns a value of 9
@@ -852,8 +854,8 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
