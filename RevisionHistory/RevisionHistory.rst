@@ -32,8 +32,8 @@ Date        Notes
               and the :ref:`Statements_GuardStatement` section
               to the :doc:`../ReferenceManual/Statements` chapter.
 
-            * Added the :ref:`Extensions_ProtocolExtensions` section
-              to the :doc:`../LanguageGuide/Extensions` chapter.
+            * Added the :ref:`Protocols_Extensions` section
+              to the :doc:`../LanguageGuide/Protocols` chapter.
 
             * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
               to the :doc:`../LanguageGuide/AccessControl` chapter.
