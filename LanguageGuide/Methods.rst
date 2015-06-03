@@ -94,11 +94,8 @@ the method's first parameter using a preposition such as
 ``with``, ``for``, or ``by``,
 as seen in the ``incrementBy(_:)`` method from the preceding ``Counter`` class example.
 The use of a preposition enables the method to be read as a sentence when it is called.
-Swift makes this established method naming convention easy to write
-by using a different default approach for method parameters
-than it uses for function parameters.
 
-Specifically, Swift gives the *first* parameter name in a method
+Swift gives the *first* parameter name in a method
 a local parameter name by default,
 and gives the second and subsequent parameter names
 both local *and* external parameter names by default.
@@ -133,7 +130,7 @@ You call the method as follows:
    </ counter value is now 15
 
 You don't need to define an external parameter name for the first argument value,
-because its purpose is clear from the function name ``incrementBy``.
+because its purpose is clear from the function name ``incrementBy(_:numberOfTimes:)``.
 The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
@@ -148,7 +145,7 @@ Modifying External Parameter Name Behavior for Methods
 
 Sometimes it's useful to provide an external parameter name
 for a method's first parameter, even though this is not the default behavior.
-You can either add an explicit external name yourself,
+To do so, you can add an explicit external name yourself.
 or you can prefix the first parameter's name with a hash symbol
 to use the local name as an external name too.
 
