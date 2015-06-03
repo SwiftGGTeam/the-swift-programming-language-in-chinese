@@ -179,7 +179,7 @@ Constant Declaration
 --------------------
 
 A :newTerm:`constant declaration` introduces a constant named value into your program.
-Constant declarations are declared using the ``let`` keyword and have the following form:
+Constant declarations are declared using the keyword ``let`` and have the following form:
 
 .. syntax-outline::
 
@@ -258,7 +258,7 @@ Variable Declaration
 --------------------
 
 A :newTerm:`variable declaration` introduces a variable named value into your program
-and is declared using the ``var`` keyword.
+and is declared using the keyword ``var``.
 
 Variable declarations have several forms that declare different kinds
 of named, mutable values,
@@ -430,7 +430,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. note::
 
-   In a class declaration, the ``static`` keyword has the same effect as
+   In a class declaration, the keyword ``static`` has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
 
 .. TODO: Discuss type properties after they're implemented
@@ -513,7 +513,7 @@ Type Alias Declaration
 ----------------------
 
 A :newTerm:`type alias declaration` introduces a named alias of an existing type into your program.
-Type alias declarations are declared using the ``typealias`` keyword and have the following form:
+Type alias declarations are declared using the keyword ``typealias`` and have the following form:
 
 .. syntax-outline::
 
@@ -556,7 +556,7 @@ Function Declaration
 A :newTerm:`function declaration` introduces a function or method into your program.
 A function declared in the context of class, structure, enumeration, or protocol
 is referred to as a :newTerm:`method`.
-Function declarations are declared using the ``func`` keyword and have the following form:
+Function declarations are declared using the keyword ``func`` and have the following form:
 
 .. syntax-outline::
 
@@ -888,7 +888,7 @@ Enumeration Declaration
 
 An :newTerm:`enumeration declaration` introduces a named enumeration type into your program.
 
-Enumeration declarations have two basic forms and are declared using the ``enum`` keyword.
+Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
 The body of an enumeration declared using either form contains
 zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
@@ -933,7 +933,7 @@ enumeration cases of any type:
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
-In this form, each case block consists of the ``case`` keyword,
+In this form, each case block consists of the keyword ``case``
 followed by one or more enumeration cases, separated by commas.
 The name of each case must be unique.
 Each case can also specify that it stores values of a given type.
@@ -957,7 +957,7 @@ enumeration cases of the same basic type:
         case <#enumeration case 2#> = <#raw value 2#>
     }
 
-In this form, each case block consists of the ``case`` keyword,
+In this form, each case block consists of the keyword ``case``,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
@@ -1093,7 +1093,7 @@ Structure Declaration
 ---------------------
 
 A :newTerm:`structure declaration` introduces a named structure type into your program.
-Structure declarations are declared using the ``struct`` keyword and have the following form:
+Structure declarations are declared using the keyword ``struct`` and have the following form:
 
 .. syntax-outline::
 
@@ -1159,7 +1159,7 @@ Class Declaration
 -----------------
 
 A :newTerm:`class declaration` introduces a named class type into your program.
-Class declarations are declared using the ``class`` keyword and have the following form:
+Class declarations are declared using the keyword ``class`` and have the following form:
 
 .. syntax-outline::
 
@@ -1254,7 +1254,7 @@ Protocol Declaration
 
 A :newTerm:`protocol declaration` introduces a named protocol type into your program.
 Protocol declarations are declared at global scope
-using the ``protocol`` keyword and have the following form:
+using the keyword ``protocol`` and have the following form:
 
 .. syntax-outline::
 
@@ -1514,7 +1514,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protocols declare associated types using the ``typealias`` keyword.
+Protocols declare associated types using the keyword ``typealias``.
 An associated type provides an alias for a type
 that is used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
@@ -1601,7 +1601,7 @@ Initializer Declaration
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
-Initializer declarations are declared using the ``init`` keyword and have
+Initializer declarations are declared using the keyword ``init`` and have
 two basic forms.
 
 Structure, enumeration, and class types can have any number of initializers,
@@ -1806,7 +1806,7 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend the behavior of existing
 class, structure, and enumeration types.
-Extension declarations are declared using the ``extension`` keyword and have the following form:
+Extension declarations are declared using the keyword ``extension`` and have the following form:
 
 .. syntax-outline::
 
@@ -1867,7 +1867,7 @@ Subscript Declaration
 A :newTerm:`subscript` declaration allows you to add subscripting support for objects
 of a particular type and are typically used to provide a convenient syntax
 for accessing the elements in a collection, list, or sequence.
-Subscript declarations are declared using the ``subscript`` keyword
+Subscript declarations are declared using the keyword ``subscript``
 and have the following form:
 
 .. syntax-outline::
@@ -1944,7 +1944,7 @@ Operator Declaration
 
 An :newTerm:`operator declaration` introduces a new infix, prefix,
 or postfix operator into your program
-and is declared using the ``operator`` keyword.
+and is declared using the keyword ``operator``.
 
 You can declare operators of three different fixities:
 infix, prefix, and postfix.
@@ -1974,7 +1974,7 @@ Infix operators can optionally specify a precedence, associativity, or both.
 
 The :newTerm:`precedence` of an operator specifies how tightly an operator
 binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the context-sensitive ``precedence`` keyword
+You specify the precedence of an operator by writing the context-sensitive keyword ``precedence``
 followed by the *precedence level*.
 The *precedence level* can be any whole number (decimal integer) from 0 to 255;
 unlike decimal integer literals, it can't contain any underscore characters.
@@ -1986,7 +1986,7 @@ binds more tightly to its operands.
 
 The :newTerm:`associativity` of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
+You specify the associativity of an operator by writing the context-sensitive keyword ``associativity``
 followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
 or ``none``. Operators that are left-associative group left-to-right. For example,
 the subtraction operator (``-``) is left-associative,
@@ -2155,7 +2155,7 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     only by code in the same source file as the declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
+which consists of the keyword ``set`` enclosed in parentheses (for instance, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,

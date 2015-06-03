@@ -677,7 +677,7 @@ That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it is not appropriate to provide a ``switch`` case for every possible value,
 you can define a default catch-all case to cover any values that are not addressed explicitly.
-This catch-all case is indicated by the ``default`` keyword,
+This catch-all case is indicated by the keyword ``default``,
 and must always appear last.
 
 This example uses a ``switch`` statement to consider
