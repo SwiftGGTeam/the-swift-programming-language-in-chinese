@@ -43,7 +43,7 @@ that match the types of the function's parameters.
 A function's arguments must always be provided in the same order
 as the function's parameter list.
 
-The function in the example below is called ``sayHello``,
+The function in the example below is called ``sayHello(_:)``,
 because that's what it does ---
 it takes a person's name as input and returns a greeting for that person.
 To accomplish this, you define one input parameter ---
@@ -80,7 +80,7 @@ from elsewhere in your code:
 You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
 such as ``sayHello("Anna")``.
 Because the function returns a ``String`` value,
-``sayHello`` can be wrapped in a call to the ``println(_:)`` function
+``sayHello(_:)`` can be wrapped in a call to the ``println(_:)`` function
 to print that string and see its return value, as shown above.
 
 The body of the ``sayHello(_:)`` function starts by
@@ -137,7 +137,7 @@ even though it does not take any parameters.
 The function name is also followed by
 an empty pair of parentheses when the function is called.
 
-.. _Functions_FunctionsWithMultipleParameters:
+.. _Functions_MultipleInputParameters:
 
 Functions With Multiple Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,7 +177,7 @@ Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions are not required to define a return type.
-Here's a version of the ``sayHello`` function,
+Here's a version of the ``sayHello(_:)`` function,
 called ``sayGoodbye(_:)``,
 which prints its own ``String`` value rather than returning it:
 
@@ -221,7 +221,7 @@ The return value of a function can be ignored when it is called:
    << hello, world
    // prints "hello, world" but does not return a value
 
-The first function, ``printAndCount``,
+The first function, ``printAndCount(_:)``,
 prints a string, and then returns its character count as an ``Int``.
 The second function, ``printWithoutCounting``,
 calls the first function, but ignores its return value.
@@ -240,13 +240,13 @@ but the returned value is not used.
 
 .. _Functions_FunctionsWithMultipleReturnValues:
 
-Functions With Multiple Return Values
+Functions with Multiple Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a tuple type as the return type for a function
 to return multiple values as part of one compound return value.
 
-The example below defines a function called ``minMax``,
+The example below defines a function called ``minMax(_:)``,
 which finds the smallest and largest numbers in an array of ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
@@ -396,7 +396,7 @@ separated by a space:
    If you provide an external parameter name for a parameter,
    that external name must *always* be used when you call the function.
 
-Here's a version of the ``sayHello`` function
+Here's a version of the ``sayHello(_:)`` function
 that takes the names of two people
 and returns a greeting for both of them:
 
@@ -410,25 +410,20 @@ and returns a greeting for both of them:
 
 By specifying external parameter names for both parameters,
 both the first and second arguments to the ``sayHello(to:and:)`` function
-must be labeled.
+must be labeled when you call it.
 
 The use of external parameter names can allow a function
 to be called in an expressive, sentence-like manner,
 while still providing a function body that is readable and clear in intent.
 
-.. note::
-
-   Consider using external parameter names whenever the purpose of a function's arguments
-   would be unclear to someone reading your code for the first time.
-   You do not need to specify external parameter names
-   if the purpose of each parameter is unambiguous when the function is called.
 
 .. _Functions_OmittingParameterNames:
 
 Omitting External Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an external name for a function parameter,
+If you do not want to use an external name for the second or subsequent parameters
+of a function,
 write an underscore (``_``) instead of an explicit external name for that parameter.
 
 .. testcode:: omittedExternalParameterNames
@@ -451,7 +446,7 @@ Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can define a :newTerm:`default value` for any parameter in a function
-by adding an assignment expression after that parameter's type.
+by assigning a value to the parameter after that parameter's type.
 If a default value is defined, you can omit that parameter when calling the function.
 
 .. testcode:: omittedExternalParameterNames
@@ -468,7 +463,7 @@ If a default value is defined, you can omit that parameter when calling the func
 
    Place parameters with default values at the end of a function's parameter list.
    This ensures that all calls to the function
-   use the same order for their non-default arguments,
+   use the same order for their nondefault arguments,
    and makes it clear that the same function is being called in each case.
 
 .. _Functions_VariadicParameters:
@@ -554,19 +549,19 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
       }
    -> let originalString = "hello"
    << // originalString : String = "hello"
-   -> let paddedString = alignRight(originalString, 10, "-")
+   -> let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
    << // paddedString : String = "-----hello"
    /> paddedString is equal to \"\(paddedString)\"
    </ paddedString is equal to "-----hello"
    /> originalString is still equal to \"\(originalString)\"
    </ originalString is still equal to "hello"
 
-This example defines a new function called ``alignRight``,
+This example defines a new function called ``alignRight(_:totalLength:pad:)``,
 which aligns an input string to the right edge of a longer output string.
 Any space on the left is filled with a specified padding character.
 In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
 
-The ``alignRight(_:_:_:)`` function defines the input parameter ``string`` to be a variable parameter.
+The ``alignRight(_:totalLength:pad:)`` function defines the input parameter ``string`` to be a variable parameter.
 This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
@@ -623,12 +618,12 @@ to indicate that it can be modified by the function.
    If you mark a parameter as ``inout``,
    it cannot also be marked as ``var`` or ``let``.
 
-Here's an example of a function called ``swapTwoInts``,
+Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
 
-   -> func swapTwoInts(inout a: Int, inout b: Int) {
+   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -683,12 +678,12 @@ For example:
 
 .. testcode:: functionTypes
 
-   -> func addTwoInts(a: Int, b: Int) -> Int {
+   -> func addTwoInts(a: Int, _ b: Int) -> Int {
          return a + b
       }
    >> addTwoInts
    << // r0 : (Int, Int) -> Int = (Function)
-   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+   -> func multiplyTwoInts(a: Int, _ b: Int) -> Int {
          return a * b
       }
    >> multiplyTwoInts
@@ -718,10 +713,8 @@ Here's another example, for a function with no parameters or return value:
    >> printHelloWorld
    << // r2 : () -> () = (Function)
 
-The type of this function is ``() -> ()``,
+The type of this function is ``() -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
-Functions that don't specify a return value always return ``Void``,
-which is equivalent to an empty tuple in Swift, shown as ``()``.
 
 .. _Functions_UsingFunctionTypes:
 
@@ -789,27 +782,27 @@ Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
 
-   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
          println("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)
    <- Result: 8
 
-This example defines a function called ``printMathResult``, which has three parameters.
+This example defines a function called ``printMathResult(_:_:_:)``, which has three parameters.
 The first parameter is called ``mathFunction``, and is of type ``(Int, Int) -> Int``.
 You can pass any function of that type as the argument for this first parameter.
 The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
 These are used as the two input values for the provided math function.
 
-When ``printMathResult`` is called,
+When ``printMathResult(_:_:_:)`` is called,
 it is passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
-The role of ``printMathResult`` is to print the result of
+The role of ``printMathResult(_:_:_:)`` is to print the result of
 a call to a math function of an appropriate type.
 It doesn't matter what that function's implementation actually does ---
 it matters only that the function is of the correct type.
-This enables ``printMathResult`` to hand off some of its functionality
+This enables ``printMathResult(_:_:_:)`` to hand off some of its functionality
 to the caller of the function in a type-safe way.
 
 .. _Functions_FunctionTypesAsReturnTypes:
@@ -821,7 +814,7 @@ You can use a function type as the return type of another function.
 You do this by writing a complete function type
 immediately after the return arrow (``->``) of the returning function.
 
-The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
+The next example defines two simple functions called ``stepForward(_:)`` and ``stepBackward(_:)``.
 The ``stepForward(_:)`` function returns a value one more than its input value,
 and the ``stepBackward(_:)`` function returns a value one less than its input value.
 Both functions have a type of ``(Int) -> Int``:
@@ -835,10 +828,10 @@ Both functions have a type of ``(Int) -> Int``:
          return input - 1
       }
 
-Here's a function called ``chooseStepFunction``,
+Here's a function called ``chooseStepFunction(_:)``,
 whose return type is “a function of type ``(Int) -> Int``”.
-``chooseStepFunction`` returns the ``stepForward(_:)`` function or the ``stepBackward(_:)`` function
-based on a Boolean parameter called ``backwards``:
+The ``chooseStepFunction(_:)``function returns the ``stepForward(_:)`` function
+or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backwards``:
 
 .. testcode:: functionTypes
 
@@ -846,7 +839,7 @@ based on a Boolean parameter called ``backwards``:
          return backwards ? stepBackward : stepForward
       }
 
-You can now use ``chooseStepFunction`` to obtain a function
+You can now use ``chooseStepFunction(_:)`` to obtain a function
 that will step in one direction or the other:
 
 .. testcode:: functionTypes
@@ -861,7 +854,7 @@ The preceding example determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,
-causing ``chooseStepFunction`` to return the ``stepBackward(_:)`` function.
+causing ``chooseStepFunction(_:)`` to return the ``stepBackward(_:)`` function.
 A reference to the returned function is stored in a constant called ``moveNearerToZero``.
 
 Now that ``moveNearerToZero`` refers to the correct function,
@@ -896,7 +889,7 @@ but can still be called and used by their enclosing function.
 An enclosing function can also return one of its nested functions
 to allow the nested function to be used in another scope.
 
-You can rewrite the ``chooseStepFunction`` example above
+You can rewrite the ``chooseStepFunction(_:)`` example above
 to use and return nested functions:
 
 .. testcode:: nestedFunctions
