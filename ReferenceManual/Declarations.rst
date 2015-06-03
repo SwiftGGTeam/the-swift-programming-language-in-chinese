@@ -858,7 +858,8 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses function-result-OPT
+    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
