@@ -31,7 +31,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -70,6 +70,37 @@ see :ref:`Functions_InOutParameters`.
     prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
     in-out-expression --> ``&`` identifier
+
+
+.. _Expressions_TryExpression:
+
+Try Operator
+~~~~~~~~~~~~
+
+A :newTerm:`try expression` consists of the ``try`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try <#expression#>
+
+A :newTerm:`forced-try expression` consists of the ``try!`` operator
+followed by an expression that can throw an error.
+If the expression marked by a forced-try operator throws an error,
+a runtime error is produced.
+It has the following form:
+
+.. syntax-outline::
+
+   try! <#expression#>
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    try-operator --> ``try`` | ``try`` ``!``
+
 
 .. _Expressions_BinaryExpressions:
 
@@ -132,8 +163,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     Grammar of a binary expression
 
     binary-expression --> binary-operator prefix-expression
-    binary-expression --> assignment-operator prefix-expression
-    binary-expression --> conditional-operator prefix-expression
+    binary-expression --> assignment-operator try-operator-OPT prefix-expression
+    binary-expression --> conditional-operator try-operator-OPT prefix-expression
     binary-expression --> type-casting-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
@@ -851,76 +882,6 @@ For example, in the following assignment
     Grammar of a wildcard expression
 
     wildcard-expression --> ``_``
-
-.. _Expressions_TryExpression:
-
-Try Expression
-~~~~~~~~~~~~~~
-
-A :newTerm:`try expression`
-is used to evaluate an expression that can throw an error.
-
-It has the following form:
-
-.. syntax-outline::
-
-   try <#expression#>
-
-If an expression throws an error,
-a try expression acknowledges the error
-and allows it to continue propagation.
-.. FIXME
-
-For example:
-
-.. testcode:: tryExpression
-
-    -> func functionCanThrow() throws {}
-    -> do {
-          try functionCanThrow()
-          print("No Error Thrown")
-       } catch {
-          print("Error Thrown")
-       }
-    << No Error Thrown
-
-.. syntax-grammar::
-
-    Grammar of a try expression
-
-    try-expression --> ``try`` expression
-
-.. _Expressions_ForcedTryExpression:
-
-Forced-Try Expression
-~~~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`forced-try expression`
-is used to evaluate an expression that you are certain will not throw an error.
-
-It has the following form:
-
-.. syntax-outline::
-
-   try! <#expression#>
-
-If an expression throws an error,
-a forced-try expression interrupts propagation and triggers a runtime error.
-As such, it is only appropriate as an assertion of an error not being thrown.
-.. FIXME
-
-For example:
-
-.. testcode:: tryExpression
-
-    -> func functionCanButWillNotThrow() throws {}
-    -> try! functionCanButWillNotThrow()
-
-.. syntax-grammar::
-
-    Grammar of a try expression
-
-    forced-try-expression --> ``try!`` expression
 
 
 .. _Expressions_PostfixExpressions:
