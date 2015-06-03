@@ -537,8 +537,8 @@ Control Transfer Statements
 
 Control transfer statements can change the order in which code in your program is executed
 by unconditionally transferring program control from one piece of code to another.
-Swift has four control transfer statements: a ``break`` statement, a ``continue`` statement,
-a ``fallthrough`` statement, and a ``return`` statement.
+Swift has five control transfer statements: a ``break`` statement, a ``continue`` statement,
+a ``fallthrough`` statement, a ``return`` statement, and a ``throw`` statement.
 
 .. langref-grammar
 
@@ -733,11 +733,13 @@ it can be used only to return from a function or method that does not return a v
 Throw Statement
 ~~~~~~~~~~~~~~~~
 
-A ``throw`` statement occurs in the body of a function, method, or closure definition
-that is declared to be throwable.
+A ``throw`` statement occurs in the body of a throwing function or method,
+or in the body of a closure expression whose type is marked with the ``throws`` keyword.
+
 A ``throw`` statement causes a program to end execution of the current scope
 and begin error propagation to its enclosing scope.
-Error propagation continues until the error is handled by a ``catch`` clause.
+The error that's thrown continues to propagate until it's handled by a ``catch`` clause
+of a ``do`` statement.
 
 A ``throw`` statement consists of the keyword ``throw``
 followed by an expression, as shown below.
@@ -746,7 +748,7 @@ followed by an expression, as shown below.
 
     throw <#expression#>
 
-The value of a ``throw`` statement expression must have a type that conforms to
+The value of the *expression* must have a type that conforms to
 the ``ErrorType`` protocol.
 
 For an example of how to use a ``throw`` statement,
