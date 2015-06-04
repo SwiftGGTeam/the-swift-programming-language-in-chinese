@@ -693,6 +693,7 @@ the default value is used instead.
    !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
    !! f(x: 7) // Invalid, name and value provided
    !! ^~~~
+   !!-
 
 .. assertion:: default-args-evaluated-at-call-site
 
