@@ -205,7 +205,7 @@ a method parameter called ``x`` and an instance property that is also called ``x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
    -> if somePoint.isToTheRightOfX(1.0) {
          print("This point is to the right of the line where x == 1.0")
       }
@@ -247,7 +247,7 @@ before the ``func`` keyword for that method:
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    -> somePoint.moveByX(2.0, y: 3.0)
    -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
@@ -266,7 +266,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point
+   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
    !! fixedPoint.moveByX(2.0, y: 3.0)
@@ -295,7 +295,7 @@ The ``Point`` example shown above could have been written in the following way i
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    >> somePoint.moveByX(2.0, y: 3.0)
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
@@ -324,7 +324,7 @@ a different member from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = (Enum Value)
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.Low
    -> ovenLight.next()
    // ovenLight is now equal to .High
    -> ovenLight.next()
