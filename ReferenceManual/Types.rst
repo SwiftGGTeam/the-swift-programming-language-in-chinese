@@ -272,24 +272,18 @@ The Swift language provides the following syntactic sugar for the Swift standard
 
 In other words, the following two declarations are equivalent:
 
-.. testcode:: array-type
+.. code-block:: swift
 
-    -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
-    << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
-    -> let someArray: [String] = ["Alex", "Brian", "Dave"]
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
-    !! let someArray: [String] = ["Alex", "Brian", "Dave"]
-    !!     ^
-    !! <REPL Input>:1:5: note: 'someArray' previously declared here
-    !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
-    !!     ^
+    let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    let someArray: [String] = ["Alex", "Brian", "Dave"]
 
-.. FIXME The above test is unstable.  Most of the time, the REPL handles the
-   declarations in the order that they appear, but sometimes it gets them
-   backwards.  This means that it complains about the first form [String]
-   being a redefinition of the second form Array, which makes
-   the error messages not match.
-
+.. assertion:: array-literal
+    >> let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
+    << // someArray1 : Array<String> = ["Alex", "Brian", "Dave"]
+    >> let someArray2: [String] = ["Alex", "Brian", "Dave"]
+    << // someArray2 : Array<String> = ["Alex", "Brian", "Dave"]
+    >> someArray1 == someArray2
+    <$ : Bool = true
 
 In both cases, the constant ``someArray``
 is declared as an array of strings. The elements of an array can be accessed
@@ -345,23 +339,19 @@ The Swift language provides the following syntactic sugar for the Swift standard
 
 In other words, the following two declarations are equivalent:
 
-.. testcode:: dictionary-type
+.. code-block:: swift
 
-    -> let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary : [String : Int] = ["Paul": 39, "Alex": 31]
-    -> let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'someDictionary'
-    !! let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    !!     ^
-    !! <REPL Input>:1:5: note: 'someDictionary' previously declared here
-    !! let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
-    !!     ^
+    let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+    let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
-.. FIXME The above test is unstable.  Most of the time, the REPL handles the
-   declarations in the order that they appear, but sometimes it gets them
-   backwards.  This means that it complains about the first form [String: Int]
-   being a redefinition of the second form Dictionary<String, Int>, which makes
-   the error messages not match.
+.. assertion:: dictionary-literal
+
+    >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
+    << // someDictionary1 : [String : Int] = ["Paul": 39, "Alex": 31]
+    >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+    << // someDictionary2 : Dictionary<String, Int> = ["Paul": 39, "Alex": 31]
+    >> someDictionary1 == someDictionary2
+    <$ : Bool = true
 
 In both cases, the constant ``someDictionary``
 is declared as a dictionary with strings as keys and integers as values.
@@ -398,24 +388,19 @@ The Swift language defines the postfix ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
-.. testcode:: optional-type
+.. code-block:: swift
 
-    -> var optionalInteger: Int?
-    << // optionalInteger : Int? = nil
-    -> var optionalInteger: Optional<Int>
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'optionalInteger'
-    !! var optionalInteger: Optional<Int>
-    !! ^
-    !! <REPL Input>:1:5: note: 'optionalInteger' previously declared here
-    !! var optionalInteger: Int?
-    !! ^
+    var optionalInteger: Int?
+    var optionalInteger: Optional<Int>
 
-.. FIXME The above test is unstable.  Most of the time, the REPL handles the
-   declarations in the order that they appear, but sometimes it gets them
-   backwards.  This means that it complains about the first form Int?  being a
-   redefinition of the second form Optional<Int>, which makes the error
-   messages not match -- and then the REPL crashes, which makes the rest of the
-   tests in this group this fail.
+.. assertion:: optional-literal
+
+    >> var optionalInteger1: Int?
+    << // optionalInteger1 : Int? = nil
+    >> var optionalInteger2: Optional<Int>
+    << // optionalInteger2 : Optional<Int> = nil
+    >> optionalInteger1 == optionalInteger2
+    <$ : Bool = true
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -432,6 +417,8 @@ you can access that value using the postfix operator ``!``, as shown below:
 
 .. testcode:: optional-type
 
+    >> var optionalInteger: Int?
+    << // optionalInteger : Int? = nil
     -> optionalInteger = 42
     -> optionalInteger! // 42
     <$ : Int = 42
@@ -470,24 +457,17 @@ the named type ``ImplicitlyUnwrappedOptional<T>``,
 which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
+.. code-block:: swift
+
+    var implicitlyUnwrappedString: String!
+    var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+
 .. testcode:: implictly-unwrapped-optional
 
-    -> var implicitlyUnwrappedString: String!
-    << // implicitlyUnwrappedString : String! = nil
-    -> var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'implicitlyUnwrappedString'
-    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
-    !!     ^
-    !! <REPL Input>:1:5: note: 'implicitlyUnwrappedString' previously declared here
-    !! var implicitlyUnwrappedString: String!
-    !!     ^
-
-.. FIXME The above test is unstable.  Most of the time, the REPL handles the
-   declarations in the order that they appear, but sometimes it gets them
-   backwards.  This means that it complains about the first form String!  being a
-   redefinition of the second form ImplicitlyUnwrappedOptional<String>, which makes the error
-   messages not match -- and then the REPL crashes, which makes the rest of the
-   tests in this group this fail.
+    >> var implicitlyUnwrappedString1: String!
+    << // implicitlyUnwrappedString1 : String! = nil
+    >> var implicitlyUnwrappedString2: ImplicitlyUnwrappedOptional<String>
+    << // implicitlyUnwrappedString2 : ImplicitlyUnwrappedOptional<String> = nil
 
 In both cases, the variable ``implicitlyUnwrappedString``
 is declared to have the type of an implicitly unwrapped optional string.
