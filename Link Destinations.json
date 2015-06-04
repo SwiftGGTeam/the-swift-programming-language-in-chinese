@@ -219,11 +219,13 @@
     "declarations-protocolmethoddeclaration": "ID371", 
     "declarations-protocolpropertydeclaration": "ID370", 
     "declarations-protocolsubscriptdeclaration": "ID373", 
+    "declarations-rethrowingfunctionsandmethods": "ID531", 
     "declarations-staticvariableproperties": "ID360", 
     "declarations-storedvariableobserversandpropertyobservers": "ID359", 
     "declarations-storedvariablesandvariablestoredproperties": "ID357", 
     "declarations-structuredeclaration": "ID367", 
     "declarations-subscriptdeclaration": "ID379", 
+    "declarations-throwingfunctionsandmethods": "ID530", 
     "declarations-typealiasdeclaration": "ID361", 
     "declarations-typevariableproperties": "ID483", 
     "declarations-variabledeclaration": "ID356", 
@@ -438,7 +440,9 @@
     "statements-breakstatement": "ID441", 
     "statements-continuestatement": "ID442", 
     "statements-controltransferstatements": "ID440", 
+    "statements-deferstatement": "ID532", 
     "statements-do-whilestatement": "ID433", 
+    "statements-dostatement": "ID533", 
     "statements-executiondoesnotfallthroughcasesimplicitly": "ID438", 
     "statements-fallthroughstatement": "ID443", 
     "statements-for-instatement": "ID431", 
@@ -548,5 +552,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 530
+  "next_id": 534
 }
