@@ -11,8 +11,6 @@ This table describes the changes to *The Swift Programming Language*.
             * Added the :ref:`TheBasics_ImportDeclarations` section
               to the :doc:`../LanguageGuide/TheBasics` chapter.
 
-            * Added the :ref:`../LanguageGuide/ErrorHandling` chapter.
-
             * Added a note to the :ref:`Types_MetatypeType` section
               about constructing instances from metatype values.
 
@@ -22,7 +20,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Added the :ref:`ControlFlow_Available` section
+2015-06-08  * Added the :doc:`../LanguageGuide/ErrorHandling` chapter.
+
+            * Added the :ref:`ControlFlow_Available` section
               to the :doc:`../LanguageGuide/ControlFlow` chapter
               and the :ref:`Statements_AvailabilityCondition` section
               to the :doc:`../ReferenceManual/Statements` chapter.
