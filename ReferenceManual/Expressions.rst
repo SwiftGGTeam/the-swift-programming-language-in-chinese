@@ -198,7 +198,7 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = (test, 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
@@ -453,7 +453,7 @@ when the default value expression is evaluated at the call site.
     ---
     -> myFunction()
     << myFunction()
-    >> func noNamedArgs(i: Int, j: Int) { logFunctionName() }
+    >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
@@ -592,7 +592,7 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = REPL.Point
+    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
     >> somePoint.moveByX(2.0, y: 3.0)
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
@@ -740,7 +740,9 @@ to capture a weak or unowned reference to the value.
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
-    << TitleTitleTitle
+    << Title
+    << Title
+    << Title
 
 You can also bind an arbitrary expression
 to a named value in the capture list.
@@ -808,7 +810,7 @@ For example:
 
     >> enum MyEnumeration { case SomeValue, AnotherValue }
     -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = (Enum Value)
+    << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
     -> x = .AnotherValue
 
 .. langref-grammar
@@ -973,7 +975,7 @@ The following function calls are equivalent:
     >> let x = 10
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x, {$0 == 13})
+    -> someFunction(x, f: {$0 == 13})
     << // r0 : Bool = false
     -> someFunction(x) {$0 == 13}
     << // r1 : Bool = false

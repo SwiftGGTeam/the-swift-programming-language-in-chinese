@@ -701,7 +701,7 @@ the default value is used instead.
           return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(x: 100)
+    -> foo(100)
     << x is 100
     -> foo()
     << evaluated
@@ -2205,4 +2205,3 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
     access-level-modifiers --> access-level-modifier access-level-modifiers-OPT
-
