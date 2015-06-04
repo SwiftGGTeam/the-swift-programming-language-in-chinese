@@ -462,7 +462,7 @@ In other words, the following two declarations are equivalent:
     var implicitlyUnwrappedString: String!
     var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 
-.. testcode:: implictly-unwrapped-optional
+.. assertion:: implictly-unwrapped-optional
 
     >> var implicitlyUnwrappedString1: String!
     << // implicitlyUnwrappedString1 : String! = nil
