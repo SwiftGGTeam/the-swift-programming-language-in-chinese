@@ -76,7 +76,7 @@ whose range length cannot be changed once it is created:
          let length: Int
       }
    -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange
+   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 3)
    // the range represents integer values 0, 1, and 2
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
@@ -100,12 +100,16 @@ even if they were declared as variable properties:
 .. testcode:: storedProperties
 
    -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange
+   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !! <REPL Input>:1:29: error: cannot assign to 'firstValue' in 'rangeOfFourItems'
+   !!  <REPL Input>:1:29: error: cannot assign to 'firstValue': 'rangeOfFourItems' is immutable
    !! rangeOfFourItems.firstValue = 6
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+   !! ~~~~~~~~~~~~~~~~ ~~~~~~~~~~ ^
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+   !! ^~~
+   !! var
    // this will report an error, even though firstValue is a variable property
 
 Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
@@ -300,9 +304,9 @@ to retrieve and set other properties and values indirectly.
       }
    -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
          size: Size(width: 10.0, height: 10.0))
-   << // square : Rect = REPL.Rect
+   << // square : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 10.0, height: 10.0))
    -> let initialSquareCenter = square.center
-   << // initialSquareCenter : Point = REPL.Point
+   << // initialSquareCenter : Point = REPL.Point(x: 5.0, y: 5.0)
    -> square.center = Point(x: 15.0, y: 15.0)
    -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
@@ -412,7 +416,7 @@ by removing the ``get`` keyword and its braces:
          }
       }
    -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-   << // fourByFiveByTwo : Cuboid = REPL.Cuboid
+   << // fourByFiveByTwo : Cuboid = REPL.Cuboid(width: 4.0, height: 5.0, depth: 2.0)
    -> print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0
 
@@ -794,9 +798,9 @@ For example:
    -> SomeStructure.storedTypeProperty = "Another value."
    -> print(SomeStructure.storedTypeProperty)
    <- Another value.
-   -> println(SomeEnumeration.computedTypeProperty)
+   -> print(SomeEnumeration.computedTypeProperty)
    <- 6
-   -> println(SomeClass.computedTypeProperty)
+   -> print(SomeClass.computedTypeProperty)
    <- 27
 
 The examples that follow use two stored type properties as part of a structure
