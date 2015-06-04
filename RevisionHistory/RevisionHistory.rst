@@ -20,33 +20,39 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Added the :doc:`../LanguageGuide/ErrorHandling` chapter.
+2015-06-08  * Added information about error handling
+              to the :doc:`../LanguageGuide/ErrorHandling` chapter,
+              the :ref:`Statements_DoStatement` section,
+              the :ref:`Statements_ThrowStatement` section,
+              the :ref:`Statements_DeferStatement` section,
+              and the :ref:`Expressions_TryExpression` section.
 
-            * Added the :ref:`ControlFlow_Available` section
-              to the :doc:`../LanguageGuide/ControlFlow` chapter
+            * Added information about API availability checking
+              to the :ref:`ControlFlow_Available` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
               and the :ref:`Statements_AvailabilityCondition` section
               to the :doc:`../ReferenceManual/Statements` chapter.
 
-            * Added the :ref:`ControlFlow_Guard` section
-              to the :doc:`../LanguageGuide/ControlFlow` chapter
+            * Added information about the new ``guard`` statement
+              to the :ref:`ControlFlow_Guard` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
               and the :ref:`Statements_GuardStatement` section
-              to the :doc:`../ReferenceManual/Statements` chapter.
+              of the :doc:`../ReferenceManual/Statements` chapter.
 
-            * Added the :ref:`Protocols_Extensions` section
-              to the :doc:`../LanguageGuide/Protocols` chapter.
+            * Added information about how protocol extensions
+              to the :ref:`Protocols_Extensions` section
+              of the :doc:`../LanguageGuide/Protocols` chapter.
 
-            * Added the :ref:`AccessControl_AccessLevelsForTestTargets` section
-              to the :doc:`../LanguageGuide/AccessControl` chapter.
+            * Added information about access control for unit testing
+              to the :ref:`AccessControl_AccessLevelsForTestTargets` section
+              of the :doc:`../LanguageGuide/AccessControl` chapter.
 
-            * Added the :ref:`Patterns_OptionalPattern` section
-              to the :doc:`../ReferenceManual/Patterns` chapter.
+            * Added information about the new optional pattern
+              to the :ref:`Patterns_OptionalPattern` section
+              of the :doc:`../ReferenceManual/Patterns` chapter.
 
             * Updated the :ref:`ControlFlow_DoWhile` section
               with information about the the ``repeat``-``while`` loop.
-
-            * Updated the
-              :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
-              with a more precise definition of Unicode scalars.
 
             * Updated the :ref:`Properties_TypeProperties` section
               with information about stored and computed type properties
@@ -55,13 +61,12 @@ Date        Notes
             * Updated the :ref:`Statements_BreakStatement` section
               with information about labeled break statements.
 
-            * Added a note to the
-              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
-              section about differences in weak references
-              between garbage collected systems and ARC.
-
             * Updated the :ref:`Attributes_DeclarationAttributes` section
-              with information about the ``@available`` attribute.
+              with information about the ``@available``
+              and ``@warn_unused_result`` attributes.
+
+            * Updated the :ref:`Attributes_TypeAttributes` section
+              with information about the ``@convention`` attribute.
 
             * Updated a note in the :ref:`Properties_PropertyObservers` section
               to clarify the behavior of ``willSet`` and ``didSet`` observers.
@@ -69,8 +74,18 @@ Date        Notes
             * Added a note to the :ref:`AccessControl_AccessLevels` section
               with information about the scope of ``private`` access.
 
-            * Updated the :ref:`Attributes_TypeAttributes` section
-              with information about the ``@convention`` attribute.
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about the differences in weak references
+              between garbage collected systems and ARC.
+
+            * Updated the
+              :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
+              with a more precise definition of Unicode scalars.
+
+            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter
+              now that ``String`` no longer conforms
+              to the ``CollectionType`` protocol from the Swift standard library.
 ----------  --------------------------------------------------------------------------
 2015-04-08  * Swift now has a native ``Set`` collection type.
               For more information, see :ref:`CollectionTypes_Sets`.
