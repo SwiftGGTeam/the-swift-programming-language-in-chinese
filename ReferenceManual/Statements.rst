@@ -598,10 +598,11 @@ a ``fallthrough`` statement, and a ``return`` statement.
 
 .. langref-grammar
 
-    stmt-control-transfer ::= stmt-return
     stmt-control-transfer ::= stmt-break
     stmt-control-transfer ::= stmt-continue
     stmt-control-transfer ::= stmt-fallthrough
+    stmt-control-transfer ::= stmt-return
+    stmt-control-transfer ::= stmt-throw
 
 .. syntax-grammar::
 
@@ -611,6 +612,7 @@ a ``fallthrough`` statement, and a ``return`` statement.
     control-transfer-statement --> continue-statement
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
+    control-transfer-statement --> throw-statement
 
 
 .. _Statements_BreakStatement:
@@ -837,3 +839,38 @@ logical operators such as ``&&`` and ``||``.
 
 .. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
 
+
+.. _Statements_ThrowStatement:
+
+Throw Statement
+~~~~~~~~~~~~~~~~
+
+A ``throw`` statement occurs in the body of a function, method, or closure definition
+that is declared to be throwable.
+A ``throw`` statement causes a program to end execution of the current scope
+and begin error propagation to its enclosing scope.
+Error propagation continues until the error is handled by a ``catch`` clause.
+
+A ``throw`` statement consists of the keyword ``throw``
+followed by an expression, as shown below.
+
+.. syntax-outline::
+
+    throw <#expression#>
+
+The value of a ``throw`` statement expression must have a type that conforms to
+the ``ErrorType`` protocol.
+
+For an example of how to use a ``throw`` statement,
+see :ref:`ErrorHandling_Throw`
+in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+
+.. langref-grammar
+
+    stmt-throw ::= 'throw' expr
+
+.. syntax-grammar::
+
+    Grammar of a throw statement
+
+    throw-statement --> ``throw`` expression

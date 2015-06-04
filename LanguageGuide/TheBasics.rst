@@ -1222,15 +1222,120 @@ to check and unwrap its value in a single statement:
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
 
+.. _TheBasics_ErrorHandling:
+
+Error Handling
+--------------
+
+You use :newTerm:`error handling` to respond to error conditions
+your program may encounter during execution.
+
+In contrast to optionals,
+which can use the presence or absence or a value
+to communicate success or failure of a function,
+error handling allows you to determine the underlying cause of failure,
+and, if necessary, propagate the error to another part of your program.
+
+When a function encounters an error condition, it :newTerm:`throws` an error.
+That function's caller can then :newTerm:`catch` the error and respond appropriately.
+
+.. testcode:: errorHandling
+
+   >> typealias ErrorType = _ErrorType
+   >> ///////////////////////////////////////////
+   >> struct _Error: _ErrorType {
+   >>    var domain: String { return ""}
+   >>    var code: Int { return -1 }
+   >> }
+   >> let Error = _Error()
+   >> condition = true
+   -> func canThrowAnError() throws {
+         // this function may or may not throw an error
+   >>    if condition {
+   >>       throw Error
+   >>    }
+      }
+
+A function indicates that it can throw an error
+by including the ``throws`` keyword in its declaration.
+When you call a function that can throw an error,
+you prepend the ``try`` keyword to the expression.
+
+Swift automatically propagates errors out of their current scope
+until they are handled by a ``catch`` clause.
+
+.. testcode:: errorHandling
+
+   -> do {
+         try canThrowAnError()
+   >>    print("No Error")
+         // no error was thrown
+      }
+      catch Error {
+   >>    print("Error")
+         // an error was thrown
+      }
+   << Error
+
+A ``do`` statement creates a new containing scope,
+which allows errors to be propagated to one or more ``catch`` clauses.
+
+Here's an example of how error handling can be used
+to respond to different error conditions:
+
+.. testcode::
+
+   >> typealias ErrorType = _ErrorType
+   >> ///////////////////////////////////////////////////
+   >> enum Error: ErrorType {
+   >>     case OutOfCleanDishes
+   >>     case MissingIngredients([String])
+   >> }
+   >> func washDishes() {}
+   >> func buyGroceries(_ shoppingList: [String]) {}
+   -> func makeASandwich() throws {
+          // ...
+      }
+   >> func eatASandwich() {}
+   ---
+   -> do {
+          try makeASandwich()
+
+          eatASandwich()
+      }
+      catch Error.OutOfCleanDishes {
+          washDishes()
+      }
+      catch Error.MissingIngredients(let ingredients) {
+          buyGroceries(ingredients)
+      }
+
+In this example, the ``makeASandwich()`` function will throw an error
+if no clean dishes are available
+or if any ingredients are missing.
+Because ``makeASandwich()`` throws,
+the function call is wrapped in a ``try`` expression.
+By wrapping the function call in a ``do`` statement,
+any errors that are thrown will be propagated
+to the provided ``catch`` clauses.
+
+If no error is thrown, the ``eatASandwich()`` function is called.
+If an error is thrown and it matches the ``Error.OutOfCleanDishes`` case,
+then the ``washDishes()`` function will be called.
+If an error is thrown and it matches the ``Error.MissingIngredients`` case,
+then the ``buyGroceries(_:)`` function is called
+with the associated ``[String]`` value captured by the ``catch`` pattern.
+
+Throwing, catching, and propagating errors is covered in greater detail in
+:doc:`ErrorHandling`.
+
 .. _TheBasics_Assertions:
 
 Assertions
 ----------
 
-Optionals enable you to check for values that may or may not exist,
-and to write code that copes gracefully with the absence of a value.
-In some cases, however, it is simply not possible for your code to continue execution
-if a value does not exist, or if a provided value does not satisfy certain conditions.
+In some cases, it is simply not possible for your code to continue execution
+if a particular condition is not satisfied.
 In these situations,
 you can trigger an :newTerm:`assertion` in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.

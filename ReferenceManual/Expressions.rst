@@ -31,7 +31,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -70,6 +70,37 @@ see :ref:`Functions_InOutParameters`.
     prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
     in-out-expression --> ``&`` identifier
+
+
+.. _Expressions_TryExpression:
+
+Try Operator
+~~~~~~~~~~~~
+
+A :newTerm:`try expression` consists of the ``try`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try <#expression#>
+
+A :newTerm:`forced-try expression` consists of the ``try!`` operator
+followed by an expression that can throw an error.
+If the expression marked by a forced-try operator throws an error,
+a runtime error is produced.
+It has the following form:
+
+.. syntax-outline::
+
+   try! <#expression#>
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    try-operator --> ``try`` | ``try`` ``!``
+
 
 .. _Expressions_BinaryExpressions:
 
@@ -132,8 +163,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     Grammar of a binary expression
 
     binary-expression --> binary-operator prefix-expression
-    binary-expression --> assignment-operator prefix-expression
-    binary-expression --> conditional-operator prefix-expression
+    binary-expression --> assignment-operator try-operator-OPT prefix-expression
+    binary-expression --> conditional-operator try-operator-OPT prefix-expression
     binary-expression --> type-casting-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
@@ -362,6 +393,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
+    primary-expression --> try-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
