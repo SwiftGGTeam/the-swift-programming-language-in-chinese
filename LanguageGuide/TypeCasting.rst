@@ -318,7 +318,7 @@ The example creates an array called ``things``, which can store values of type `
 .. testcode:: typeCasting
 
    -> var things = [Any]()
-   << // things : [(Any)] = []
+   << // things : [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)
