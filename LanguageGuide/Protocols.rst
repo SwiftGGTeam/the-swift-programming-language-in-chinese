@@ -126,7 +126,7 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = REPL.Person
+   << // john : Person = REPL.Person(fullName: "John Appleseed")
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -307,7 +307,7 @@ to match the ``Togglable`` protocol's requirements:
          }
       }
    -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = (Enum Value)
+   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.Off
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .On
 
@@ -1080,7 +1080,7 @@ into a single protocol composition requirement on a function parameter:
          print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = REPL.Person
+   << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
    -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
@@ -1456,7 +1456,8 @@ to provide a ``randomBool()`` method,
 which uses the result of the required ``random()`` method
 to return a random ``Bool`` value:
 
-.. testcode:: protocolConformance
+.. testcode:: protocols
+   :compile: true
 
    -> extension RandomNumberGenerator {
          func randomBool() -> Bool {
@@ -1468,13 +1469,19 @@ By creating an extension on the protocol,
 all conforming types automatically gain this method implementation
 without any additional modification.
 
-.. testcode:: protocolConformance
+.. testcode:: protocols
+   :compile: true
 
+   >> do {
    -> let generator = LinearCongruentialGenerator()
    -> print("Here's a random number: \(generator.random())")
    <- Here's a random number: 0.37464991998171
    -> print("And here's a random Boolean: \(generator.randomBool())")
    <- And here's a random Boolean: true
+   >> }
+
+.. The extra scope in the above test code allows this 'generator' variable to shadow
+   the variable that already exists from a previous testcode block.
 
 .. _Protocols_ProvidingDefaultImplementations:
 
