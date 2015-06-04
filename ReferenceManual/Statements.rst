@@ -36,6 +36,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> branch-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
+    statement --> defer-statement ``;``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -593,8 +594,8 @@ Control Transfer Statements
 
 Control transfer statements can change the order in which code in your program is executed
 by unconditionally transferring program control from one piece of code to another.
-Swift has four control transfer statements: a ``break`` statement, a ``continue`` statement,
-a ``fallthrough`` statement, and a ``return`` statement.
+Swift has five control transfer statements: a ``break`` statement, a ``continue`` statement,
+a ``fallthrough`` statement, a ``return`` statement, and a ``throw`` statement.
 
 .. langref-grammar
 
@@ -845,11 +846,13 @@ logical operators such as ``&&`` and ``||``.
 Throw Statement
 ~~~~~~~~~~~~~~~~
 
-A ``throw`` statement occurs in the body of a function, method, or closure definition
-that is declared to be throwable.
+A ``throw`` statement occurs in the body of a throwing function or method,
+or in the body of a closure expression whose type is marked with the ``throws`` keyword.
+
 A ``throw`` statement causes a program to end execution of the current scope
 and begin error propagation to its enclosing scope.
-Error propagation continues until the error is handled by a ``catch`` clause.
+The error that's thrown continues to propagate until it's handled by a ``catch`` clause
+of a ``do`` statement.
 
 A ``throw`` statement consists of the keyword ``throw``
 followed by an expression, as shown below.
@@ -858,7 +861,7 @@ followed by an expression, as shown below.
 
     throw <#expression#>
 
-The value of a ``throw`` statement expression must have a type that conforms to
+The value of the *expression* must have a type that conforms to
 the ``ErrorType`` protocol.
 
 For an example of how to use a ``throw`` statement,
@@ -874,3 +877,54 @@ in the :doc:`../LanguageGuide/ErrorHandling` chapter.
     Grammar of a throw statement
 
     throw-statement --> ``throw`` expression
+
+
+.. _Statements_DeferStatement:
+
+Defer Statement
+---------------
+
+A ``defer`` statement is used for executing code
+just before transferring program control outside of the scope
+that the ``defer`` statement appears in.
+
+A ``defer`` statement has the following form:
+
+.. syntax-outline::
+
+   defer {
+       <#statements#>
+   }
+
+The statements within the ``defer`` statement are executed
+no matter how program control is transferred.
+This means that a ``defer`` statement can be used, for example,
+to perform manual resource management such as closing file descriptors,
+and to perform actions that need to happen even if an error is thrown.
+
+If multiple ``defer`` statements appear in the same scope,
+the order they appear is the reverse of the order they are executed.
+Executing the last ``defer`` statement in a given scope first
+means that statements inside that last ``defer`` statement
+can refer to resources that will be cleaned up by other ``defer`` statements.
+
+.. testcode::
+
+   -> func f() {
+          defer { print("First") }
+          defer { print("Second") }
+          defer { print("Third") }
+      }
+   -> f()
+   <- Third
+   <- Second
+   <- First
+
+The statements in the ``defer`` statement can not
+transfer program control outside of the ``defer`` statement.
+
+.. syntax-grammar:
+
+   Grammar of a defer statement
+
+   defer-statement --> ``defer`` code-block

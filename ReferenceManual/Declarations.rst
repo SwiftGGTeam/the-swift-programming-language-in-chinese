@@ -824,19 +824,61 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     <$ : Int = 11
     -> // returns a value of 11
 
+.. _Declarations_ThrowingFunctionsAndMethods:
 
-.. langref-grammar
+Throwing Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    decl-func ::= attribute-list? ('static' | 'class')? 'mutating'? 'func' any-identifier generic-params? func-signature stmt-brace?
-    func-signature ::= func-arguments func-signature-result?
-    func-signature-result ::= '->' type
+Functions and methods that can throw an error must be marked with the ``throws`` keyword.
+These functions and methods are known as :newTerm:`throwing functions`
+and :newTerm:`throwing methods`.
+They have the following form:
 
-    func-arguments ::= curried-arguments
-    curried-arguments ::= parameter-clause+
+.. syntax-outline::
 
-    parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? '#'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
-    identifier-or-none ::= identifier | '_'
+    func <#function name#>(<#parameters#>) throws -> <#return type#> {
+       <#statements#>
+    }
+
+Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` expression
+(that is, in the scope a ``try`` or ``try!`` operator).
+
+The ``throws`` keyword is part of a function's type,
+and nonthrowing functions are subtypes of throwing functions.
+As a result, you can use a nonthrowing function in the same places as a throwing one.
+For curried functions, the ``throws`` keyword applies only to the innermost function.
+
+You can't overload a function based only on whether the function can throw an error.
+That said,
+you can overload a function based on whether a function *parameter* can throw an error.
+
+A throwing method can't override a nonthrowing method,
+and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
+That said, a nonthrowing method can override a throwing method,
+and a nonthrowing method can satisfy a protocol requirement for a throwing.
+
+.. _Declarations_RethrowingFunctionsAndMethods:
+
+Rethrowing Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A function or method can be declared with the ``rethrows`` keyword
+to indicate that it throws an error only if one of it's function parameters throws an error.
+These functions and methods are known as :newTerm:`rethrowing functions`
+and :newTerm:`rethrowing methods`.
+Rethrowing functions and methods
+must have at least one throwing function parameter.
+
+.. testcode:: rethrows
+
+   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+          try callback()
+      }
+
+A throwing method can't override a rethrowing method,
+and a throwing method can't satisfy a protocol requirement for a rethrowing method.
+That said, a rethrowing method can override a throwing method,
+and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
 .. syntax-grammar::
 
@@ -847,7 +889,8 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses function-result-OPT
+    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 

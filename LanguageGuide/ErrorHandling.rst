@@ -31,7 +31,7 @@ if necessary --- communicate it to the user.
    Error handling in Swift interoperates with error handling patterns
    that use NSError in Cocoa and Objective-C.
    For more information,
-   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_.
+   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. NOTE:
@@ -95,19 +95,6 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    -> func cannotThrowErrors() -> String
    >> { return "foo" }
 
-.. FIXME (Move to reference)
-
-   Whether a function throws is considered part of its type.
-   Function types that cannot throw are subtypes of function types that can throw.
-   A function cannot be overloaded based solely on whether the function throws.
-   However, a function can be overloaded based on whether a function parameter throws.
-   For curried functions, the ``throws`` keyword only applies to the innermost function.
-
-   A method that throws cannot override a method that doesn't throw,
-   nor can it satisfy a protocol requirement for a method that doesn't throw.
-   However, a method that doesn't throw can override a method that does throw,
-   and can satisfy a protocol requirement for a method that does throw.
-
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
    -> func f() -> Int {}
@@ -118,7 +105,7 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    !! <REPL Input>:1:25: error: missing return in a function expected to return 'Int'
    !! func f() throws -> Int {} // Compiler Error
    !! ^
-   
+
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
@@ -193,14 +180,6 @@ When you call a throwing function, you write ``try`` in front of the call.
 This keyword calls out the fact that the function can throw an error
 and that the lines of code after the ``try`` might not be run.
 
-..
-    Calls to methods and functions that can throw
-    must be executed in a ``try`` expression,
-    which consists of the ``try`` keyword,
-    followed by a statement or expression that can implicitly throw.
-    A ``try`` statement acknowledges the error
-    and allows it to continue propagation.
-
 .. testcode:: errorHandling
 
     -> let favoriteSnacks = [
@@ -214,51 +193,14 @@ and that the lines of code after the ``try`` might not be run.
            try vend(itemNamed: snackName)
        }
 
-The ``buyFavoriteSnack`` function looks up the given person's favorite snack
+The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
 and tries to buy it for them.
 If they don't have a favorite snack listed, it tries to buy a candy bar.
 It calls the ``vend`` function, which is a throwing function,
 so the function call is marked with ``try`` in front of it.
-The ``buyFavoriteSnack`` function is also a throwing function,
+The ``buyFavoriteSnack(_:)`` function is also a throwing function,
 so any errors that the ``vend`` function throws
-propagate up to the point where the ``buyFavoriteSnack`` function was called.
-
-.. FIXME
-
-    Move this to the Reference
-
-    .. _ErrorHandling_Rethrow:
-
-    rethrows
-    ~~~~~~~~
-
-    A function that takes a function parameter that throws
-    can be declared with the ``rethrows`` keyword
-    to indicate that,
-    although the function itself does not throw errors,
-    errors thrown by a function parameter will be propagated to the caller.
-
-    .. TODO Example
-
-    .. testcode:: rethrows
-
-       -> func functionWithCallback(callback: () throws -> Int) rethrows {
-              try callback()
-          }
-
-    .. note::
-
-       A ``rethrows`` function is considered to throw,
-       except in the case where a direct call is made and
-       none of the function arguments throw.
-
-       A method that throws cannot override a method that rethrows,
-       and a rethrows method cannot override a method that doesn't throw.
-       However, a method that throws can be overridden by method that rethrows,
-       a method that rethrows can be overridden by a method that doesn't throw.
-       The same rules apply for methods satisfying protocol requirements
-       for methods that rethrow, throw, or don't throw.
-
+propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
 
 .. _ErrorHandling_Catch:
 
@@ -294,7 +236,7 @@ use a ``catch`` clause with a pattern that matches all errors.
 If a ``catch`` clause does not specify a pattern,
 the clause will match and bind any error to a local constant named ``error``.
 For more information about pattern matching,
-see :doc:`../ReferenceManual/Patterns` for more information about pattern matching.
+see :doc:`../ReferenceManual/Patterns`.
 
 .. testcode:: errorHandling
 
@@ -311,31 +253,30 @@ see :doc:`../ReferenceManual/Patterns` for more information about pattern matchi
    << Insufficient funds. Please insert an additional $0.25.
 
 In the above example,
-the ``vend(itemNamed:)`` function is called.
-Because the function can throw an error,
-it is executed in a ``try`` expression.
+the ``vend(itemNamed:)`` function is called in a ``try`` expression,
+because it can throw an error.
 If an error is thrown,
-execution immediately transfers out of the ``do`` statement
-to the ``catch`` clauses,
-which decide whether or not to allow propagation to continue.
+execution immediately transfers to the ``catch`` clauses,
+which decide whether to allow propagation to continue.
 If no error is thrown,
 the return value of ``vend(itemNamed:)`` is assigned to ``snack``,
 and the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Force:
 
-Disabling Compiler Checks for Error Handling
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Disabling Error Propagation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a call to a function declared with the ``throws`` keyword
-will not throw an error at runtime,
-execute it in a :newTerm:`forced-try` expression.
-Doing so will wrap the function call in an assertion,
-such that if an error is thrown,
-a runtime error is triggered.
+There are some cases in which you know a throwing function or method won't,
+in fact, throw an error at run time.
+In these cases,
+you can call the throwing function or method in a :newTerm:`forced-try` expression,
+written, ``try!``,
+instead of a regular ``try`` expression.
 
-A forced-try expression takes the same form of a try expression,
-except with an exclamation mark (``!``) appended to the ``try`` keyword.
+Calling a throwing function or method with ``try!`` disables error propagation
+and wraps the call in a run-time assertion that no error will be thrown.
+If an error actually is thrown, you'll get a runtime error.
 
 .. testcode:: forceTryStatement
 
@@ -354,10 +295,18 @@ except with an exclamation mark (``!``) appended to the ``try`` keyword.
    ---
    -> try! willOnlyThrowIfTrue(false)
 
+
 .. _ErrorHandling_Defer:
 
 Specifying Clean-Up Actions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You use a ``defer`` statement to execute a set of statements
+just before code execution leaves the current block of code.
+This lets you do any necessary cleanup
+that should be performed regardless of whether an error occurred.
+Examples include closing any open file descriptors
+and freeing any manually allocated memory.
 
 A ``defer`` statement defers execution until the current scope is exited.
 It consists of the ``defer`` keyword and the statements to be executed later.
@@ -369,35 +318,28 @@ Deferred actions are executed in reverse order of how they are specified ---
 that is, the code in the first ``defer`` statement executes
 after code in the second, and so on.
 
-You use a ``defer`` statement to do any necessary cleanup
-that should be performed regardless of whether an error occurred or not.
-Examples include closing any open file descriptors
-and freeing any manually allocated memory.
-
-.. TODO Example
-
 .. testcode:: defer
 
    >> func exists(file: String) -> Bool { return true }
    >> struct File {
-          func readline() -> String? { return nil }
-      }
+   >>    func readline() -> String? { return nil }
+   >> }
    >> func open(file: String) -> File { return File() }
    >> func close(fileHandle: File) { }
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)
             defer {
-                close(file)
+               close(file)
             }
             while let line = try file.readline() {
                /* Work with the file. */
             }
-            // close(_:) occurs here, at the end of the formal scope.
+            // close(file) is called here, at the end of the scope.
          }
       }
 
 The above example uses a ``defer`` statement
 to ensure that the ``open(_:)`` function
 has a corresponding call to ``close(_:)``.
-This statement is executed regardless of whether an error is thrown.
+This call is executed regardless of whether an error is thrown.

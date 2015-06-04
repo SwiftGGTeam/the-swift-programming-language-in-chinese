@@ -222,6 +222,16 @@ that is, a function that takes an ``Int`` and returns
 another function that takes and return an ``Int``.
 Curried function are described in :ref:`Declarations_CurriedFunctions`.
 
+Function types that can throw an error must be marked with the ``throws`` keyword,
+and function types that can rethrow an error must be marked with the ``rethrows`` keyword.
+The ``throws`` keyword is part of a function's type,
+and nonthrowing functions are subtypes of throwing functions.
+As a result, you can use a nonthrowing function in the same places as a throwing one.
+For curried functions, the ``throws`` keyword applies only to the innermost function.
+Throwing and rethrowing functions are described in
+:ref:`Declarations_ThrowingFunctionsAndMethods`
+and :ref:`Declarations_RethrowingFunctionsAndMethods`.
+
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
@@ -230,7 +240,8 @@ Curried function are described in :ref:`Declarations_CurriedFunctions`.
 
     Grammar of a function type
 
-    function-type --> type ``->`` type
+    function-type --> type ``throws``-OPT ``->`` type
+    function-type --> type ``rethrows`` ``->`` type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.

@@ -95,6 +95,9 @@ It has the following form:
 
    try! <#expression#>
 
+For more information and to see examples of how to use ``try``,
+see :ref:`ErrorHandling_Throw` and :ref:`ErrorHandling_Catch`.
+
 .. syntax-grammar::
 
     Grammar of a try expression
