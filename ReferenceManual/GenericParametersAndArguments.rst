@@ -52,7 +52,7 @@ for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
 .. testcode:: generic-params
 
-    -> func simpleMax<T: Comparable>(x: T, y: T) -> T {
+    -> func simpleMax<T: Comparable>(x: T, _ y: T) -> T {
           if x < y {
              return y
           }
