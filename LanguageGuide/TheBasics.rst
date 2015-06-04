@@ -977,7 +977,7 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value.
 It's either an ``Int``, or it's nothing at all.)
 
-.. _TheBasics_Nil
+.. _TheBasics_Nil:
 
 nil
 ~~~
