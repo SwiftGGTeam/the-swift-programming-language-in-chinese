@@ -228,10 +228,10 @@ These initializers can be used to create new ``Rect`` instances:
 .. testcode:: extensionsInitializers
 
    -> let defaultRect = Rect()
-   << // defaultRect : Rect = REPL.Rect
+   << // defaultRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // memberwiseRect : Rect = REPL.Rect
+   << // memberwiseRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
 
 You can extend the ``Rect`` structure to provide an additional initializer
 that takes a specific center point and size:
@@ -256,7 +256,7 @@ in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect
+   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -439,14 +439,14 @@ The nested enumeration can now be used with any ``Int`` value:
          for number in numbers {
             switch number.kind {
                case .Negative:
-                  print("- ")
+                  print("- ", appendNewline: false)
                case .Zero:
-                  print("0 ")
+                  print("0 ", appendNewline: false)
                case .Positive:
-                  print("+ ")
+                  print("+ ", appendNewline: false)
             }
          }
-         print("\n")
+         print("")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
    <- + + - 0 - 0 +
