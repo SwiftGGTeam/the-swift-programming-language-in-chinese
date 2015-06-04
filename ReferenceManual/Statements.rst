@@ -36,6 +36,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> branch-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
+    statement --> defer-statement ``;``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -764,3 +765,54 @@ in the :doc:`../LanguageGuide/ErrorHandling` chapter.
     Grammar of a throw statement
 
     throw-statement --> ``throw`` expression
+
+
+.. _Statements_DeferStatement:
+
+Defer Statement
+---------------
+
+A ``defer`` statement is used for executing code
+just before transferring program control outside of the scope
+that the ``defer`` statement appears in.
+
+A ``defer`` statement has the following form:
+
+.. syntax-outline::
+
+   defer {
+       <#statements#>
+   }
+
+The statements within the ``defer`` statement are executed
+no matter how program control is transferred.
+This means that a ``defer`` statement can be used, for example,
+to perform manual resource management such as closing file descriptors,
+and to perform actions that need to happen even if an error is thrown.
+
+If multiple ``defer`` statements appear in the same scope,
+the order they appear is the reverse of the order they are executed.
+Executing the last ``defer`` statement in a given scope first
+means that statements inside that last ``defer`` statement
+can refer to resources that will be cleaned up by other ``defer`` statements.
+
+.. testcode::
+
+   -> func f() {
+          defer { print("First") }
+          defer { print("Second") }
+          defer { print("Third") }
+      }
+   -> f()
+   <- Third
+   <- Second
+   <- First
+
+The statements in the ``defer`` statement can not
+transfer program control outside of the ``defer`` statement.
+
+.. syntax-grammar:
+
+   Grammar of a defer statement
+
+   defer-statement --> ``defer`` code-block
