@@ -772,7 +772,7 @@ Defer Statement
 
 A ``defer`` statement is used for executing code
 just before transferring program control outside of the scope
-that the defer statement appears in.
+that the ``defer`` statement appears in.
 
 A ``defer`` statement has the following form:
 

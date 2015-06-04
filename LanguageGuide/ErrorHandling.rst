@@ -118,7 +118,7 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    !! <REPL Input>:1:25: error: missing return in a function expected to return 'Int'
    !! func f() throws -> Int {} // Compiler Error
    !! ^
-   
+
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
@@ -362,7 +362,7 @@ Specifying Clean-Up Actions
 You use a ``defer`` statement to execute a set of statements
 just before code execution leaves the current block of code.
 This lets you do any necessary cleanup
-that should be performed regardless of whether an error occurred or not.
+that should be performed regardless of whether an error occurred.
 Examples include closing any open file descriptors
 and freeing any manually allocated memory.
 
@@ -376,31 +376,28 @@ Deferred actions are executed in reverse order of how they are specified ---
 that is, the code in the first ``defer`` statement executes
 after code in the second, and so on.
 
-
-.. TODO Example
-
 .. testcode:: defer
 
    >> func exists(file: String) -> Bool { return true }
    >> struct File {
-          func readline() -> String? { return nil }
-      }
+   >>    func readline() -> String? { return nil }
+   >> }
    >> func open(file: String) -> File { return File() }
    >> func close(fileHandle: File) { }
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)
             defer {
-                close(file)
+               close(file)
             }
             while let line = try file.readline() {
                /* Work with the file. */
             }
-            // close(_:) occurs here, at the end of the formal scope.
+            // close(file) is called here, at the end of the scope.
          }
       }
 
 The above example uses a ``defer`` statement
 to ensure that the ``open(_:)`` function
 has a corresponding call to ``close(_:)``.
-This statement is executed regardless of whether an error is thrown.
+This call is executed regardless of whether an error is thrown.
