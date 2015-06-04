@@ -128,10 +128,10 @@ and works out how many elements the range contains:
 
 .. testcode:: multipleInputParameters
 
-   -> func halfOpenRangeLength(start: Int, end: Int) -> Int {
+   -> func halfOpenRangeLength(start start: Int, end: Int) -> Int {
          return end - start
       }
-   -> print(halfOpenRangeLength(1, 10))
+   -> print(halfOpenRangeLength(start: 1, end: 10))
    <- 9
 
 .. _Functions_FunctionsWithoutParameters:
@@ -177,7 +177,7 @@ and returns an appropriate greeting for that person:
               return sayHello(personName)
           }
       }
-   -> println(sayHello("Tim", alreadyGreeted: true))
+   -> print(sayHello("Tim", alreadyGreeted: true))
    <- Hello again, Tim!
 
 You call the ``sayHello(_:alreadyGreeted:)`` function
@@ -227,7 +227,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(stringToPrint: String) -> Int {
          print(stringToPrint)
-         return count(stringToPrint)
+         return stringToPrint.characters.count
       }
    -> func printWithoutCounting(stringToPrint: String) {
          printAndCount(stringToPrint)
@@ -556,7 +556,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 .. testcode:: constantAndVariableParameters
 
    -> func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
-         let amountToPad = totalLength - count(string)
+         let amountToPad = totalLength - string.characters.count
          if amountToPad < 1 {
             return string
          }

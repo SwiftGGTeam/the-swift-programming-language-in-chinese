@@ -682,7 +682,7 @@ you can see the ``numberOfEdits`` property value update to match the number of m
 .. testcode:: reducedSetterScope
 
    -> var stringToEdit = TrackedString()
-   << // stringToEdit : TrackedString = REPL.TrackedString
+   << // stringToEdit : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."
@@ -744,7 +744,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !! /tmp/sourcefile_1.swift:2:40: error: unary operator '++' cannot be applied to an operand of type 'Int'
+   !! /tmp/sourcefile_1.swift:2:40: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
    !! let afterEdits = stringToEdit_Module1C.numberOfEdits++
    !!                                                     ^
 
@@ -755,7 +755,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> var stringToEdit_Module2 = TrackedString()
    // check that we can't change its value from another module
    -> let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !! /tmp/sourcefile_0.swift:3:39: error: unary operator '++' cannot be applied to an operand of type 'Int'
+   !! /tmp/sourcefile_0.swift:3:39: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
    !! let afterEdits = stringToEdit_Module2.numberOfEdits++
    !!                                                    ^
 

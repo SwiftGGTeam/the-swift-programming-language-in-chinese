@@ -88,7 +88,7 @@ using initializer syntax:
 .. testcode:: arraysEmpty
 
    -> var someInts = [Int]()
-   << // someInts : [(Int)] = []
+   << // someInts : [Int] = []
    -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
@@ -123,7 +123,7 @@ and a default value of the appropriate type (called ``repeatedValue``):
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
+   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
    // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
 .. _CollectionTypes_CreatingAnArrayByAddingTwoArraysTogether:
@@ -138,12 +138,12 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
    /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
    </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
@@ -388,15 +388,15 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Bananas
 
 If you need the integer index of each item as well as its value,
-use the global ``enumerate(_:)`` function to iterate over the array instead.
-The ``enumerate(_:)`` function returns a tuple for each item in the array
+use the ``enumerate()`` method to iterate over the array instead.
+The ``enumerate()`` method returns a tuple for each item in the array
 composed of the index and the value for that item.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: arraysInferred
 
-   -> for (index, value) in enumerate(shoppingList) {
+   -> for (index, value) in shoppingList.enumerate() {
          print("Item \(index + 1): \(value)")
       }
    </ Item 1: Six eggs
@@ -639,12 +639,12 @@ For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
-use the global ``sorted(_:_:)`` function,
+use the ``sort()`` method,
 which returns an ordered collection of the provided sequence.
 
 .. testcode:: setUsage
 
-   -> for genre in sorted(favoriteGenres) {
+   -> for genre in favoriteGenres.sort() {
          print("\(genre)")
       }
    </ Classical
@@ -688,16 +688,16 @@ with the results of various set operations represented by the shaded regions.
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
    << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    ---
-   -> sorted(oddDigits.union(evenDigits))
+   -> oddDigits.union(evenDigits).sort()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   -> sorted(oddDigits.intersect(evenDigits))
+   -> oddDigits.intersect(evenDigits).sort()
    << // r1 : [Int] = []
    // []
-   -> sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+   -> oddDigits.subtract(singleDigitPrimeNumbers).sort()
    << // r2 : [Int] = [1, 9]
    // [1, 9]
-   -> sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
    << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
@@ -1048,15 +1048,15 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["YYZ", "LHR"]
+   << // airportCodes : [String] = ["YYZ", "LHR"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
    </ airportCodes is ["YYZ", "LHR"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["Toronto Pearson", "London Heathrow"]
+   << // airportNames : [String] = ["Toronto Pearson", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Toronto Pearson", "London Heathrow"]
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
-use the global ``sorted(_:_:)`` function on its ``keys`` or ``values`` property.
+use the ``sort()`` method on its ``keys`` or ``values`` property.
