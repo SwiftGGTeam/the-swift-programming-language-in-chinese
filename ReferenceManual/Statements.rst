@@ -4,8 +4,11 @@ Statements
 In Swift, there are two kinds of statements: simple statements and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
 Control flow statements are used to control the flow of execution in a program.
-There are three types of control flow statements in Swift:
+There are several types of control flow statements in Swift, including
 loop statements, branch statements, and control transfer statements.
+In addition, Swift provides a ``do`` statement to introduce scope,
+and catch and handle errors,
+and a ``defer`` statement for running clean-up actions just before the current scope exits.
 
 Loop statements allow a block of code to be executed repeatedly,
 branch statements allow a certain block of code to be executed
@@ -37,6 +40,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statement --> defer-statement ``;``-OPT
+    statement --> do-statement ``:``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -920,7 +924,7 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
    <- Second
    <- First
 
-The statements in the ``defer`` statement can not
+The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
 
 .. syntax-grammar:
@@ -928,3 +932,54 @@ transfer program control outside of the ``defer`` statement.
    Grammar of a defer statement
 
    defer-statement --> ``defer`` code-block
+
+
+.. _Statements_DoStatement:
+
+Do Statement
+------------
+
+The ``do`` statement is used to introduce a new scope
+and can optionally contain one or more ``catch`` clauses,
+which contain patterns that match against defined error conditions.
+Variables and constants declared in the scope of a ``do`` statement
+can be accessed only within that scope.
+
+A ``do`` statement has the following form:
+
+.. syntax-outline::
+
+   do {
+       try <#expression#>
+       <#statements#>
+   } catch <#pattern 1#> {
+       <#statements#>
+   } catch <#pattern 2#> where <#condition#> {
+       <#statements#>
+   }
+
+Like a ``switch`` statement,
+the compiler attempts to infer whether ``catch`` clauses are exhaustive.
+If such a determination can be made, the error is considered handled.
+Otherwise, the error automatically propagates out of the containing scope,
+either to an enclosing ``catch`` clause or out of the throwing function must handle the error,
+or the containing function must be declared with ``throws``.
+
+To ensure that an error is handled,
+use a ``catch`` clause with a pattern that matches all errors,
+such as a wildcard pattern (``_``).
+If a ``catch`` clause does not specify a pattern,
+the ``catch`` clause matches and binds any error to a local constant named ``error``.
+For more information about the pattens you can use in a ``catch`` clause,
+see :doc:`../ReferenceManual/Patterns`.
+
+To see an example of how to use a ``do`` statment with several ``catch`` clauses,
+see :ref:`ErrorHandling_Catch`.
+
+.. syntax-grammar::
+
+    Grammar of a do statement
+
+    do-statment --> ``do`` code-block catch-clauses-OPT
+    catch-clauses --> catch-clause catch-clauses-OPT
+    catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block

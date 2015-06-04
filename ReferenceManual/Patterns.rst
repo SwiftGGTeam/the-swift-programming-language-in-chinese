@@ -26,7 +26,7 @@ The second kind of pattern is used for full pattern matching,
 where the values you're trying to match against may not be there at run time.
 These include enumeration case patterns, optional patterns, expression patterns,
 and type-casting patterns. You use these patterns in a case label of a ``switch``
-statement, a catch clause of a ``do`` statement,
+statement, a ``catch`` clause of a ``do`` statement,
 or in the case condition of an ``if``, ``while``,
 ``guard``, or ``for``-``in`` statement.
 
