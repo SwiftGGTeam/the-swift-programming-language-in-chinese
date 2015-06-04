@@ -28,7 +28,7 @@ which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoInts(inout a: Int, inout b: Int) {
+   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -59,13 +59,13 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown belo
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoStrings(inout a: String, inout b: String) {
+   -> func swapTwoStrings(inout a: String, inout _ b: String) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
    ---
-   -> func swapTwoDoubles(inout a: Double, inout b: Double) {
+   -> func swapTwoDoubles(inout a: Double, inout _ b: Double) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -104,7 +104,7 @@ called ``swapTwoValues``:
 
 .. testcode:: genericFunctions
 
-   -> func swapTwoValues<T>(inout a: T, inout b: T) {
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -118,13 +118,13 @@ Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
 
-   -> func swapTwoInts(inout a: Int, inout b: Int)
+   -> func swapTwoInts(inout a: Int, inout _ b: Int)
    >> {
    >>    let temporaryA = a
    >>    a = b
    >>    b = temporaryA
    >> }
-   -> func swapTwoValues<T>(inout a: T, inout b: T)
+   -> func swapTwoValues<T>(inout a: T, inout _ b: T)
    >> {
    >>    let temporaryA = a
    >>    a = b
@@ -290,7 +290,7 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = REPL.IntStack
+   << // intStack : IntStack = REPL.IntStack(items: [])
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -354,7 +354,7 @@ you write ``Stack<String>()``:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -505,8 +505,8 @@ or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
-   -> func findStringIndex(array: [String], valueToFind: String) -> Int? {
-         for (index, value) in enumerate(array) {
+   -> func findStringIndex(array: [String], _ valueToFind: String) -> Int? {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -539,8 +539,8 @@ for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
-   -> func findIndex<T>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+   -> func findIndex<T>(array: [T], _ valueToFind: T) -> Int? {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -581,8 +581,8 @@ as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findIndex<T: Equatable>(array: [T], valueToFind: T) -> Int? {
-         for (index, value) in enumerate(array) {
+   -> func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
+         for (index, value) in array.enumerate() {
             if value == valueToFind {
                return index
             }
@@ -822,7 +822,7 @@ This requirement is expressed through a combination of type constraints and wher
    -> func allItemsMatch<
             C1: Container, C2: Container
             where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-            (someContainer: C1, anotherContainer: C2) -> Bool {
+            (someContainer: C1, _ anotherContainer: C2) -> Bool {
    ---
          // check that both containers contain the same number of items
          if someContainer.count != anotherContainer.count {
@@ -896,7 +896,7 @@ Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>
+   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
