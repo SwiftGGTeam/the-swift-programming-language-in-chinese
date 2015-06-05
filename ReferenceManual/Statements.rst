@@ -927,7 +927,7 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
 
-.. syntax-grammar:
+.. syntax-grammar::
 
    Grammar of a defer statement
 
@@ -980,6 +980,6 @@ see :ref:`ErrorHandling_Catch`.
 
     Grammar of a do statement
 
-    do-statment --> ``do`` code-block catch-clauses-OPT
+    do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
     catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
