@@ -838,26 +838,6 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
-Methods on classes have one important difference from functions.
-Parameter names in functions are used only within the function,
-but parameters names in methods are also used when you call the method
-(except for the first parameter).
-By default, a method has the same name for its parameters
-when you call it and within the method itself.
-You can specify a second name, which is used inside the method.
-
-.. testcode:: guided-tour
-
-    -> class Counter {
-           var count: Int = 0
-           func incrementBy(amount: Int, numberOfTimes times: Int) {
-               count += amount * times
-           }
-       }
-    -> var counter = Counter()
-    << // counter : Counter = REPL.Counter
-    -> counter.incrementBy(2, numberOfTimes: 7)
-
 When working with optional values,
 you can write ``?`` before operations like methods, properties, and subscripting.
 If the value before the ``?`` is ``nil``,
