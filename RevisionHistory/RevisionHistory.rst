@@ -31,7 +31,7 @@ Date        Notes
               to the :ref:`ControlFlow_Available` section
               of the :doc:`../LanguageGuide/ControlFlow` chapter
               and the :ref:`Statements_AvailabilityCondition` section
-              to the :doc:`../ReferenceManual/Statements` chapter.
+              of the :doc:`../ReferenceManual/Statements` chapter.
 
             * Added information about the new ``guard`` statement
               to the :ref:`ControlFlow_Guard` section
@@ -39,7 +39,7 @@ Date        Notes
               and the :ref:`Statements_GuardStatement` section
               of the :doc:`../ReferenceManual/Statements` chapter.
 
-            * Added information about how protocol extensions
+            * Added information about protocol extensions
               to the :ref:`Protocols_Extensions` section
               of the :doc:`../LanguageGuide/Protocols` chapter.
 

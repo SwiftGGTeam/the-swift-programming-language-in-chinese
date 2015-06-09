@@ -396,7 +396,6 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
-    primary-expression --> try-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
