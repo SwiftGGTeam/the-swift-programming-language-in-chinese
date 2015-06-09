@@ -52,7 +52,7 @@ Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
 with associated values allowing for additional information
 about the nature of an error to be communicated.
-Because of this, Swift enumerations adopt ``ErrorType``
+Because of this, Swift enumerations that adopt ``ErrorType``
 automatically have the implementation of their conformance synthesized by the compiler.
 
 For example, here's how you might represent the error conditions
