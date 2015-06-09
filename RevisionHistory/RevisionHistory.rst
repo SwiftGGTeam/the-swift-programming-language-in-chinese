@@ -20,7 +20,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Added information about error handling
+2015-06-08  * Update for Swift v2.0.
+
+            * Added information about error handling
+
               to the :doc:`../LanguageGuide/ErrorHandling` chapter,
               the :ref:`Statements_DoStatement` section,
               the :ref:`Statements_ThrowStatement` section,
