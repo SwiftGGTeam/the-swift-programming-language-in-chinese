@@ -408,7 +408,7 @@ sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
 
-* 使用“是否等”运算符(```=```)来判断两个集合是否包含相同的值。
+* 使用“是否等”运算符(```==```)来判断两个集合是否包含相同的值。
 * 使用```isSubsetOf(_:)```方法来判断一个集合中的值是否也被包含在另外一个集合中。
 * 使用```isSupersetOf(_:)```方法来判断一个集合中包含的值是另一个集合中所有的值。
 * 使用```isStrictSubsetOf(_:)```或者```isStrictSupersetOf(_:)```方法来判断一个集合是否是另外一个集合的子集合或者父集合并且和特定集合不相等。
