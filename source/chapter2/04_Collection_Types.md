@@ -177,7 +177,7 @@ for item in shoppingList {
 
 ```swift
 for (index, value) in enumerate(shoppingList) {
-    println("Item \(index + 1): \(value)")
+    println("Item \(String(index + 1)): \(value)")
 }
 // Item 1: Six eggs
 // Item 2: Milk
