@@ -1,4 +1,4 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)    
+> 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)
 > 校对：[lslxdx](https://github.com/lslxdx)
 
 # 基础部分
@@ -22,7 +22,7 @@
 
 Swift 是一门进行 iOS 和 OS X 应用开发的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
-Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整型值；`Double`和`Float`表示浮点型值；`Bool`是布尔型值；`String`是文本型数据。Swift 还提供了两个基本的集合类型，`Array`和`Dictionary`，详见[集合类型](04_Collection_Types.html)。
+Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整型值；`Double`和`Float`表示浮点型值；`Bool`是布尔型值；`String`是文本型数据。Swift 还提供了三个基本的集合类型，`Array`，`Set`和`Dictionary`，详见[集合类型](04_Collection_Types.html)。
 
 就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，广泛的使用着值不可变的变量，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更清晰地表达你的意图。
 
@@ -693,4 +693,3 @@ assert(age >= 0)
 
 > 注意：  
 断言可能导致你的应用终止运行，所以你应当仔细设计你的代码来让非法条件不会出现。然而，在你的应用发布之前，有时候非法条件可能出现，这时使用断言可以快速发现问题。
-
