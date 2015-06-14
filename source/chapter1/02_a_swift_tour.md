@@ -18,7 +18,7 @@
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
-println("Hello, world")
+print("Hello, world")
 ```
 
 如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main`函数。你同样不需要在每个语句结尾写上分号。
@@ -119,7 +119,7 @@ for score in individualScores {
         teamScore += 1
     }
 }
-teamScore
+print(teamScore)
 ```
 
 在`if`语句中，条件必须是一个布尔表达式——这意味着像`if score { ... }`这样的代码将报错，而不会隐形地与 0 做对比。
@@ -128,7 +128,7 @@ teamScore
 
 ```swift
 var optionalString: String? = "Hello"
-optionalString == nil
+print(optionalString == nil)
 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
@@ -161,6 +161,8 @@ default:
 > 练习：
 > 删除`default`语句，看看会有什么错误？
 
+声明'let'可用于匹配某部分固定值的模式
+
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
 你可以使用`for-in`来遍历字典，需要两个变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
@@ -179,7 +181,7 @@ for (kind, numbers) in interestingNumbers {
         }
     }
 }
-largest
+print(largest)
 ```
 
 > 练习：
@@ -192,13 +194,13 @@ var n = 2
 while n < 100 {
     n = n * 2
 }
-n
+print(n)
 
 var m = 2
 do {
     m = m * 2
 } while m < 100
-m
+print(m)
 ```
 
 你可以在循环中使用`..<`来表示范围，也可以使用传统的写法，两者是等价的：
@@ -208,13 +210,13 @@ var firstForLoop = 0
 for i in 0..<4 {
     firstForLoop += i
 }
-firstForLoop
+print(firstForLoop)
 
 var secondForLoop = 0
 for var i = 0; i < 4; ++i {
     secondForLoop += i
 }
-secondForLoop
+print(secondForLoop)
 ```
 
 使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
@@ -228,7 +230,7 @@ secondForLoop
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
-greet("Bob", "Tuesday")
+greet("Bob",day: "Tuesday")
 ```
 
 > 练习：
@@ -254,8 +256,8 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
     return (min, max, sum)
 }
 let statistics = calculateStatistics([5, 3, 100, 3, 9])
-statistics.sum
-statistics.2
+print(statistics.sum)
+print(statistics.2)
 ```
 
 函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
@@ -317,7 +319,7 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, lessThanTen)
+hasAnyMatches(numbers,condition: lessThanTen)
 ```
 
 函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
@@ -344,7 +346,7 @@ mappedNumbers
 
 ```swift
 let sortedNumbers = sorted(numbers) { $0 > $1 }
-sortedNumbers
+print(sortedNumbers)
 ```
 
 <a name="objects_and_classes"></a>
@@ -449,9 +451,9 @@ class EquilateralTriangle: NamedShape {
     }
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-triangle.perimeter
+print(riangle.perimeter)
 triangle.perimeter = 9.9
-triangle.sideLength
+print(triangle.sideLength)
 ```
 
 在`perimeter`的 setter 中，新值的名字是`newValue`。你可以在`set`之后显式的设置一个名字。
