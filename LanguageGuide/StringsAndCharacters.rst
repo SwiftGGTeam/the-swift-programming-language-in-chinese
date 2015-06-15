@@ -577,16 +577,16 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the global function ``indices(_:)`` to create a ``Range`` of all of the
+Use the ``indices`` property of the ``characters`` property to create a ``Range`` of all of the
 indexes used to access individual characters in a string.
 
 .. testcode:: stringIndex
 
-   -> for index in indices(greeting) {
-         print("\(greeting[index]) ")
+   -> for index in greeting.characters.indices {
+         print("\(greeting[index]) ", appendNewline: false)
       }
-      print("\n")
-   <- G u t e n   T a g
+   >> print("")
+   <- G u t e n   T a g !
 
 .. _StringsAndCharacters_InsertingAndRemoving:
 
