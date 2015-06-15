@@ -693,11 +693,7 @@ such as a constant property that all instances can use
 or a variable property that stores a value that is global to all instances of that type
 (like a static variable in C).
 
-For value types (that is, structures and enumerations),
-you can define stored and computed type properties.
-For classes, you can define computed type properties only.
-
-Stored type properties for value types can be variables or constants.
+Stored type properties can be variables or constants.
 Computed type properties are always declared as variable properties,
 in the same way as computed instance properties.
 
