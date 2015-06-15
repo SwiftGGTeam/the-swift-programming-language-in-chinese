@@ -372,7 +372,7 @@ and to check whether that subscript call is successful.
 .. note::
 
    When you access a subscript on an optional value through optional chaining,
-   you place the question mark *before* the subscript's braces, not after.
+   you place the question mark *before* the subscript's brackets, not after.
    The optional chaining question mark always follows immediately after
    the part of the expression that is optional.
 
