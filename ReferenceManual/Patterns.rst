@@ -278,7 +278,7 @@ Optional Pattern
 
 An :newTerm:`optional pattern` matches values wrapped in a ``Some(T)`` case
 of an ``Optional<T>`` or ``ImplicitlyUnwrappedOptional<T>`` enumeration.
-Optional patterns consist of an identifier pattern followed immediately by a questions mark
+Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
