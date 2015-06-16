@@ -1567,7 +1567,7 @@ to get a textual representation of its contents:
 
     If a conforming type satisfies the requirements for multiple constrained extensions
     that provide implementations for the same method or property,
-    Swift will use the implementation corresponding the most specialized constraints.
+    Swift will use the implementation corresponding to the most specialized constraints.
 
     .. TODO: It would be great to pull this out of a note,
        but we should wait until we have a better narrative that shows how this
