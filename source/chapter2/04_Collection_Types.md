@@ -350,7 +350,7 @@ if favoriteGenres.contains("Funk") {
 
 ```swift
 for genre in favoriteGenres {
-    println("\(value)")
+    println("\(genre)")
 }
 // Classical
 // Jazz
