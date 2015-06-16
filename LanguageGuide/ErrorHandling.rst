@@ -259,8 +259,7 @@ If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
 which decide whether to allow propagation to continue.
 If no error is thrown,
-the return value of ``vend(itemNamed:)`` is assigned to ``snack``,
-and the remaining statements in the ``do`` statement are executed.
+the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Force:
 
