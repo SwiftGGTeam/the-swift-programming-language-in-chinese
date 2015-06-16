@@ -845,7 +845,7 @@ class AutomaticallyNamedDocument: Document {
 ```
 
 
-```AutomaticallyNamedDocument```用一个非可失败构造器```init(name:)```,覆盖了基类的可失败构造器```init?(name:)```。因为子类用不同的方法处理了```name```属性的值为一个空字符串的这种情况。所以子类将不再需要一个可失败的构造器。
+子类```AutomaticallyNamedDocument```用一个非可失败构造器```init(name:)```,覆盖了基类的可失败构造器```init?(name:)```。因为子类用不同的方法处理了```name```属性的值为一个空字符串的这种情况。所以子类将不再需要一个可失败的构造器。
 
 
 ###可失败构造器 init!
