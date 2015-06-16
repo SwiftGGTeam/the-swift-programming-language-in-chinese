@@ -230,7 +230,7 @@ print(secondForLoop)
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
-greet("Bob",day: "Tuesday")
+greet("Bob", "Tuesday")
 ```
 
 > 练习：
@@ -319,7 +319,7 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers,condition: lessThanTen)
+hasAnyMatches(numbers, lessThanTen)
 ```
 
 函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
@@ -451,7 +451,7 @@ class EquilateralTriangle: NamedShape {
     }
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-print(riangle.perimeter)
+print(triangle.perimeter)
 triangle.perimeter = 9.9
 print(triangle.sideLength)
 ```
