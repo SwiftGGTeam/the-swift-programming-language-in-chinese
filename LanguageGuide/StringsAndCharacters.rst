@@ -513,9 +513,9 @@ Accessing and Modifying a String
 You access and modify a string through its methods and properties,
 or by using subscript syntax.
 
-.. _StringsAndCharacters_StringIndexes:
+.. _StringsAndCharacters_StringIndices:
 
-String Indexes
+String Indices
 ~~~~~~~~~~~~~~
 
 Each ``String`` value has an associated :newterm:`index type`,

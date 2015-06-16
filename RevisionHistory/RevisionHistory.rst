@@ -107,7 +107,7 @@ Date        Notes
               see :ref:`Protocols_CheckingForProtocolConformance`.
 
             * Added a new guide section about
-              :ref:`StringsAndCharacters_StringIndexes`.
+              :ref:`StringsAndCharacters_StringIndices`.
 
             * Removed the overflow division (``&/``) and
               overflow remainder (``&%``) operators
