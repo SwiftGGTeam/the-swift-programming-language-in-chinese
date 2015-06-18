@@ -468,6 +468,7 @@
     "stringsandcharacters-specialcharactersinstringliterals": "ID295", 
     "stringsandcharacters-stringequality": "ID299", 
     "stringsandcharacters-stringindexes": "ID495", 
+    "stringsandcharacters-stringindices": "ID534", 
     "stringsandcharacters-stringinterpolation": "ID292", 
     "stringsandcharacters-stringmutability": "ID288", 
     "stringsandcharacters-stringsareunicodescalars": "ID294", 
@@ -552,5 +553,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 534
+  "next_id": 535
 }
