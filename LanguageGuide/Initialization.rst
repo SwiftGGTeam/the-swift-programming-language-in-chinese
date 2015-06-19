@@ -404,11 +404,23 @@ Default Initializers
 --------------------
 
 Swift provides a :newTerm:`default initializer`
-for any structure or base class
+for any structure or class
 that provides default values for all of its properties
 and does not provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
+
+.. assertion:: defaultInitializersForStructAndClass
+
+   -> struct S { var s: String = "s" }
+   -> S().s
+   <$ : String = "s"
+   -> class A { var a: String = "a" }
+   -> A().a
+   <$ : String = "a"
+   -> class B: A {}
+   -> B().a
+   <$ : String = "a"
 
 This example defines a class called ``ShoppingListItem``,
 which encapsulates the name, quantity, and purchase state
