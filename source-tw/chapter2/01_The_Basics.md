@@ -197,9 +197,10 @@ Swift 提供了8，16，32和64位的有符號和無符號整數類型。這些�
 你可以訪問不同整數類型的`min`和`max`屬性來獲取對應類型的最大值和最小值：
 
 ```swift
-let minValue = UInt8.min  // minValue 為 0，是 UInt8 類型的最小值
-let maxValue = UInt8.max  // maxValue 為 255，是 UInt8 類型的最大值
+let minValue = UInt8.min // minValue 為 0，且是Uint8型別
+let maxValue = UInt8.max // maxValue 為 255，且是UInt8型別
 ```
+`min`和`max`所傳回值的型別，正是其所對應的整數型別(如上UInt8，所傳回的型別為UInt8)，且可用在陳述式相同型别的值旁。
 
 ### Int
 
