@@ -772,8 +772,24 @@ before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
 
-.. Reasonably sure that accessing a variable that you didn't capture should be an error.
-   <rdar://problem/17024367> REPL - Accessing a variable not included in the capture list causes a segfault
+..  It's not an error to capture things that aren't included in the capture list,
+    although maybe it should be.  See also rdar://17024367.
+
+.. assertion:: capture-list-is-not-exhaustive
+
+    -> var x = 100
+       var y = 7
+       var f: ()->Int = { [x] in x }
+       var g: ()->Int = { [x] in x+y }
+    << // x : Int = 100
+    << // y : Int = 7
+    << // f : () -> Int = (Function)
+    << // g : () -> Int = (Function)
+    ---
+    -> f()
+    << // r0 : Int = 100
+    -> g()
+    << // r1 : Int = 107
 
 Each entry in the capture list can be marked as ``weak`` or ``unowned``
 to capture a weak or unowned reference to the value.
