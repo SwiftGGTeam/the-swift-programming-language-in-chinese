@@ -850,7 +850,7 @@ see :ref:`Closures_ClosureExpressions`.
     closure-signature --> capture-list identifier-list function-result-OPT ``in``
     closure-signature --> capture-list ``in``
 
-    capture-list --> ``[`` capture-specifier expression ``]``
+    capture-list --> ``[`` capture-specifier-OPT expression ``]``
     capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
 .. _Expressions_ImplicitMemberExpression:
