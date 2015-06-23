@@ -871,9 +871,9 @@ see :ref:`Closures_ClosureExpressions`.
     closure-signature --> capture-list identifier-list function-result-OPT ``in``
     closure-signature --> capture-list ``in``
 
-    capture-list --> ``[`` capture-list-entries ``]``
-    capture-list-entries --> capture-list-entry | capture-list-entry ``,`` capture-list-entries
-    capture-list-entry --> capture-specifier-OPT expression
+    capture-list --> ``[`` capture-list-items ``]``
+    capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
+    capture-list-item --> capture-specifier-OPT expression
     capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
 .. _Expressions_ImplicitMemberExpression:
