@@ -783,6 +783,18 @@ before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
 
+.. assertion:: capture-list-with-commas
+
+    -> var x = 100
+    << // x : Int = 100
+    -> var y = 7
+    << // y : Int = 7
+    -> var f: ()->Int = { [x, y] in x+y }
+    << // f : () -> Int = (Function)
+    >> f()
+    << // r0 : Int = 107
+
+
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
 
@@ -859,7 +871,9 @@ see :ref:`Closures_ClosureExpressions`.
     closure-signature --> capture-list identifier-list function-result-OPT ``in``
     closure-signature --> capture-list ``in``
 
-    capture-list --> ``[`` capture-specifier-OPT expression ``]``
+    capture-list --> ``[`` capture-list-entries ``]``
+    capture-list-entries --> capture-list-entry | capture-list-entry ``,`` capture-list-entries
+    capture-list-entry --> capture-specifier-OPT expression
     capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
 .. _Expressions_ImplicitMemberExpression:
