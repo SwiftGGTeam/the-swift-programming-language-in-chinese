@@ -261,6 +261,18 @@ which decide whether to allow propagation to continue.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
 
+.. note::
+
+   Error handling in Swift resembles exception handling in other languages,
+   with the use of the ``try``, ``catch`` and ``throw`` keywords.
+   Unlike exception handling in many languages ---
+   including Objective-C ---
+   error handling in Swift does not involve unwinding the call stack,
+   which can be computationally expensive.
+   As such, the performance characteristics
+   of a ``throw`` statement
+   are comparable to those of a ``return`` statement.
+
 .. _ErrorHandling_Force:
 
 Disabling Error Propagation
