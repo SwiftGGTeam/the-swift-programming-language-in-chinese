@@ -598,8 +598,9 @@ as the following example shows:
 
 .. note::
 
-   You can't construct a class instance from a class metatype value,
-   because there is no guarantee that a subclass will provide that initializer.
+   You can only construct a class instance from a class metatype value
+   if the initializer is declared to be ``required``
+   or the class is declared to be ``final``.
 
 .. langref-grammar
 
