@@ -522,7 +522,7 @@ you can access the value of the ``street`` property through multilevel optional 
    -> let johnsAddress = Address()
    -> johnsAddress.buildingName = "The Larches"
    -> johnsAddress.street = "Laurel Street"
-   -> john.residence!.address = johnsAddress
+   -> john.residence?.address = johnsAddress
    ---
    -> if let johnsStreet = john.residence?.address?.street {
          print("John's street name is \(johnsStreet).")
@@ -531,11 +531,10 @@ you can access the value of the ``street`` property through multilevel optional 
       }
    <- John's street name is Laurel Street.
 
-Note the use of an exclamation mark during the assignment of
-an address instance to ``john.residence.address``.
-The ``john.residence`` property has an optional type,
-and so you need to unwrap its actual value with an exclamation mark
-before accessing the residence's ``address`` property.
+In this example,
+the attempt to set the ``address`` property of ``john.residence`` will succeed,
+because the value of ``john.residence``
+currently contains a valid ``Residence`` instance.
 
 .. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
 
