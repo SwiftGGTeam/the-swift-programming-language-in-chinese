@@ -201,6 +201,15 @@ in :ref:`Functions_FunctionParameterNames`.
    the ``sayHello(_:alreadyGreeted:)`` function could also be called
    by passing a single tuple value of type ``(String, alreadyGreeted: Bool)``.
 
+.. assertion:: tupleAsSingleArgumentToFunctionWithMultipleParameters
+
+   -> func f(a a: String, b b: String) {}
+   -> let fa: (a: String, b: String) = ("a", "b")
+   -> f(fa)
+   -> func g(_ a: String, _ b: String) {}
+   -> let ga: (String, String) = ("a", "b")
+   -> g(ga)
+
 .. _Functions_FunctionsWithoutReturnValues:
 
 Functions Without Return Values
