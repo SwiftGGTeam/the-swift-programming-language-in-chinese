@@ -190,6 +190,17 @@ any argument after the first is labeled according to its corresponding parameter
 Function parameter naming is described in more detail
 in :ref:`Functions_FunctionParameterNames`.
 
+.. note::
+
+   You can also use a tuple value of compatible type as a single argument
+   when calling a function with more than one parameter,
+   instead of specifying arguments individually.
+   If a parameter has an external name,
+   the corresponding element of the tuple argument must also have that name.
+   In the example above,
+   the ``sayHello(_:alreadyGreeted:)`` function could also be called
+   by passing a single tuple value of type ``(String, alreadyGreeted: Bool)``.
+
 .. _Functions_FunctionsWithoutReturnValues:
 
 Functions Without Return Values
