@@ -945,6 +945,14 @@ which contain patterns that match against defined error conditions.
 Variables and constants declared in the scope of a ``do`` statement
 can be accessed only within that scope.
 
+.. note::
+
+   A ``do`` statement in Swift is similar to
+   curly braces (``{}``) in C used to delimit a code block.
+   Executing code inside a ``do`` statement
+   has the same performance characteristics as
+   executing the same code outside a ``do`` statement.
+
 A ``do`` statement has the following form:
 
 .. syntax-outline::
