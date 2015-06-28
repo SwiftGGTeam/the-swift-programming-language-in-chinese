@@ -155,7 +155,7 @@ Swift 自动为内联函数提供了参数名称缩写功能，您可以直接�
 `in`关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
 
 ```swift
-reversed = sorted(names, { $0 > $1 } )
+reversed = names.sort( { $0 > $1 } )
 ```
 
 在这个例子中，`$0`和`$1`表示闭包中第一个和第二个`String`类型的参数。
@@ -165,11 +165,11 @@ reversed = sorted(names, { $0 > $1 } )
 
 实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。
 Swift 的`String`类型定义了关于大于号 (`>`) 的字符串实现，其作为一个函数接受两个`String`类型的参数并返回`Bool`类型的值。
-而这正好与`sorted`函数的第二个参数需要的函数类型相符合。
+而这正好与`sort(_:)`方法的第二个参数需要的函数类型相符合。
 因此，您可以简单地传递一个大于号，Swift可以自动推断出您想使用大于号的字符串函数实现：
 
 ```swift
-reversed = sorted(names, >)
+reversed = names.sort(>)
 ```
 
 更多关于运算符表达式的内容请查看 [运算符函数](../chapter2/24_Advanced_Operators.html#operator_functions)。
@@ -182,7 +182,7 @@ reversed = sorted(names, >)
 尾随闭包是一个书写在函数括号之后的闭包表达式，函数支持将其作为最后一个参数调用。
 
 ```swift
-func someFunctionThatTakesAClosure(closure: () -> ()) {
+func someFunctionThatTakesAClosure(closure: () -> Void) {
     // 函数体部分
 }
 
@@ -203,7 +203,7 @@ someFunctionThatTakesAClosure() {
 在上例中作为`sorted`函数参数的字符串排序闭包可以改写为：
 
 ```swift
-reversed = sorted(names) { $0 > $1 }
+reversed = names.sort() { $0 > $1 }
 ```
 
 当闭包非常长以至于不能在一行中进行书写时，尾随闭包变得非常有用。
@@ -283,7 +283,7 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 每次调用`incrementor`时，其会以`amount`作为增量增加`runningTotal`的值。
 
 ```swift
-func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+func makeIncrementor(forIncrement amount: Int) -> Void -> Int {
     var runningTotal = 0
     func incrementor() -> Int {
         runningTotal += amount
@@ -293,7 +293,7 @@ func makeIncrementor(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-`makeIncrementor`返回类型为`() -> Int`。
+`makeIncrementor`返回类型为`Void -> Int`。
 这意味着其返回的是一个函数，而不是一个简单类型值。
 该函数在每次调用时不接受参数只返回一个`Int`类型的值。
 关于函数返回其他函数的内容，请查看[函数类型作为返回类型](../chapter2/06_Functions.html#function_types_as_return_types)。
