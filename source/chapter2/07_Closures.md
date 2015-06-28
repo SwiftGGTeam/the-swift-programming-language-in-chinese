@@ -140,10 +140,10 @@ reversed = names.sort( { s1, s2 in return s1 > s2 } )
 单行表达式闭包可以通过隐藏`return`关键字来隐式返回单行表达式的结果，如上版本的例子可以改写为：
 
 ```swift
-reversed = sorted(names, { s1, s2 in s1 > s2 } )
+reversed = names.sort( { s1, s2 in s1 > s2 } )
 ```
 
-在这个例子中，`sorted`函数的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
+在这个例子中，`sort(_:)`方法的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
 因为闭包函数体只包含了一个单一表达式 (`s1 > s2`)，该表达式返回`Bool`类型值，因此这里没有歧义，`return`关键字可以省略。
 
 <a name="shorthand_argument_names"></a>
