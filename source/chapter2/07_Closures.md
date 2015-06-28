@@ -122,15 +122,17 @@ reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } 
 <a name="inferring_type_from_context"></a>
 ### 根据上下文推断类型（Inferring Type From Context）
 
-因为排序闭包函数是作为`sorted`函数的参数进行传入的，Swift可以推断其参数和返回值的类型。
+因为排序闭包函数是作为`sort(_:)`方法的参数进行传入的，Swift可以推断其参数和返回值的类型。
 `sorted`期望第二个参数是类型为`(String, String) -> Bool`的函数，因此实际上`String`,`String`和`Bool`类型并不需要作为闭包表达式定义中的一部分。
 因为所有的类型都可以被正确推断，返回箭头 (`->`) 和围绕在参数周围的括号也可以被省略：
 
 ```swift
-reversed = sorted(names, { s1, s2 in return s1 > s2 } )
+reversed = names.sort( { s1, s2 in return s1 > s2 } )
 ```
 
 实际上任何情况下，通过内联闭包表达式构造的闭包作为参数传递给函数时，都可以推断出闭包的参数和返回值类型，这意味着您几乎不需要利用完整格式构造任何内联闭包。
+
+然而您仍然可以明确写出有着完整格式的闭包。如果完整格式的闭包能够提高代码的可读性我,我们建议采取这种形式。而在`sort(_:)`方法这个例子里,闭包的目的就是排序,读者能够推测除这个闭包是用于字符串处理的,因为这个闭包是为了处理字符串数组的排序。
 
 <a name="implicit_returns_from_single_expression_closures"></a>
 ### 单表达式闭包隐式返回（Implicit Return From Single-Expression Clossures）
