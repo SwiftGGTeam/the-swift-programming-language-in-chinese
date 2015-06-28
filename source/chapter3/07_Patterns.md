@@ -11,6 +11,7 @@
 - [值绑定模式（Value-Binding Pattern）](#value-binding_pattern)
 - [元组模式（Tuple Pattern）](#tuple_pattern)
 - [枚举用例模式（Enumeration Case Pattern）](#enumeration_case_pattern)
+- [可选模式（Optional Patterns）](#optional_patterns)
 - [类型转换模式（Type-Casting Patterns）](#type-casting_patterns)
 - [表达式模式（Expression Pattern）](#expression_pattern)
 
@@ -18,13 +19,9 @@
 
 swift中有2个基本的模式种类：一类能成功和任何值的类型相匹配，另一类在运行时（runtime）和某特定值匹配时可能会失败。
 
-第一类模式用于析构简单变量，常量和可选绑定中的值。此类模式包括通配符模式，标识符模式，以及任何包含了它们的值绑定模式或者元祖模式。你可以为这些模式指定一个类型注释（type annotation）来限制它们只能匹配某种特定类型的值。
+第一类模式用于解构简单变量，常量和可选绑定中的值。此类模式包括通配符模式（wildcard pattern），标识符模式（identifier pattern），以及任何包含了它们的值绑定模式（value binding pattern）或者元祖模式（tuple pattern）。你可以为这类模式指定一个类型注释（type annotation）来限制它们只能匹配某种特定类型的值。
 
 第二类模式用于全模式匹配，这种情况下你用来相比较的值在运行时可能还不存在。此类模式包括枚举用例模式，可选模式，表达式模式和类型转换模式。你在`switch`语句的case标签中，`do`语句的`catch`从句中，或者在`if, while, guard`和`for-in`语句的case条件句中使用这类模式。
-
-在Swift中，模式出现在变量和常量的声明（在它们的左侧），`for-in`语句和`switch`语句（在它们的case标签）中。尽管任何模式都可以出现在`switch`语句的case标签中，但在其他情况下，只有通配符模式（wildcard pattern），标识符模式（identifier pattern）和包含这两种模式的模式才能出现。
-
-你可以为通配符模式（wildcard pattern），标识符模式（identifier pattern）和元组模式（tuple pattern）指定类型注释，用来限制这种模式只匹配某种类型的值。
 
 > 模式(Patterns) 语法  
 > *模式* → [*通配符模式*](..\chapter3\07_Patterns.html#wildcard_pattern) [*类型注解*](..\chapter3\03_Types.html#type_annotation) _可选_  
@@ -32,6 +29,7 @@ swift中有2个基本的模式种类：一类能成功和任何值的类型相�
 > *模式* → [*值绑定模式*](..\chapter3\07_Patterns.html#value_binding_pattern)  
 > *模式* → [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) [*类型注解*](..\chapter3\03_Types.html#type_annotation) _可选_  
 > *模式* → [*enum-case-pattern*](..\chapter3\07_Patterns.html#enum_case_pattern)  
+> *模式* → [*可选模式*](..\chapter3\07_Patterns.html#optional_pattern) [*类型注解*](..\chapter3\03_Types.html#optional_type) _可选_  
 > *模式* → [*type-casting-pattern*](..\chapter3\07_Patterns.html#type_casting_pattern)  
 > *模式* → [*表达式模式*](..\chapter3\07_Patterns.html#expression_pattern)  
 
@@ -42,7 +40,7 @@ swift中有2个基本的模式种类：一类能成功和任何值的类型相�
 
 ```swift
 for _ in 1...3 {
-    // Do something three times.
+// Do something three times.
 }
 ```
 
@@ -75,9 +73,9 @@ let someValue = 42
 ```swift
 let point = (3, 2)
 switch point {
-    // Bind x and y to the elements of point.
+// Bind x and y to the elements of point.
 case let (x, y):
-    println("The point is at (\(x), \(y)).")
+println("The point is at (\(x), \(y)).")
 }
 // prints "The point is at (3, 2).”
 ```
@@ -100,7 +98,7 @@ case let (x, y):
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
 // This code isn't valid.
 for (x, 0) in points {
-    /* ... */
+/* ... */
 }
 ```
 
@@ -126,6 +124,46 @@ let (a): Int = 2 // a: Int = 2
 
 > 枚举用例模式语法  
 > *enum-case-pattern* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) _可选_ **.** [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) _可选_  
+
+
+
+<a name="optional_pattern"></a>
+## 可选模式（Optional Pattern）
+
+可选模式 封装在一个`Some(T)`
+
+可选模式由一个标识符模式和紧随其后的一个问号组成，在某种情况下表现为枚举用例模式。
+
+由于可选模式是`optionan`和`ImplicitlyUnwrappedOptional`枚举用例模式的语法糖，下面的两种写法一样的：
+
+```swift
+let someOptional: Int? = 42
+// Match using an enumeration case pattern
+if case .Some(let x) = someOptional {
+    print(x)
+}
+
+// Match using an optional pattern
+if case let x? = someOptional {
+    print(x)
+}
+```
+
+可选模式在`for-in`语句提供了在一个元素是可选类型的数组中迭代的简便的方式，只为数组中的非空元素执行循环。
+
+```swift
+let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+// Match only non-nil values
+for case let number? in arrayOfOptinalInts {
+    print("Found a \(number)")
+}
+//Found a 2
+//Found a 3
+//Found a 5
+
+```
+> 可选模式语法  
+> *optional-pattern* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) ?
 
 <a name="type-casting_patterns"></a>
 ## 类型转换模式（Type-Casting Patterns）
@@ -157,11 +195,11 @@ let (a): Int = 2 // a: Int = 2
 let point = (1, 2)
 switch point {
 case (0, 0):
-    println("(0, 0) is at the origin.")
+println("(0, 0) is at the origin.")
 case (-2...2, -2...2):
-    println("(\(point.0), \(point.1)) is near the origin.")
+println("(\(point.0), \(point.1)) is near the origin.")
 default:
-    println("The point is at (\(point.0), \(point.1)).")
+println("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
@@ -171,15 +209,15 @@ default:
 ```swift
 // Overload the ~= operator to match a string with an integer
 func ~=(pattern: String, value: Int) -> Bool {
-    return pattern == "\(value)"
+return pattern == "\(value)"
 }
 switch point {
 case ("0", "0"):
-    println("(0, 0) is at the origin.")
+println("(0, 0) is at the origin.")
 case ("-2...2", "-2...2"):
-    println("(\(point.0), \(point.1)) is near the origin.")
+println("(\(point.0), \(point.1)) is near the origin.")
 default:
-    println("The point is at (\(point.0), \(point.1)).")
+println("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
