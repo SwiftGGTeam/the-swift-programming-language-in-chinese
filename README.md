@@ -1,6 +1,6 @@
 《The Swift Programming Language》in Chinese
 =============================================
-
+哈哈哈哈
 中文版Apple官方Swift教程《The Swift Programming Language》
 
 中文Swift社区[Swiftist](http://swiftist.org/)，新社区，正在建设中，感兴趣的朋友可以一起参与进来。
