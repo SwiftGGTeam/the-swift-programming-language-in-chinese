@@ -99,7 +99,7 @@ var reversed = sorted(names, backwards)
 下面的例子展示了之前`backwards`函数对应的闭包表达式版本的代码：
 
 ```swift
-reversed = sorted(names, { (s1: String, s2: String) -> Bool in
+reversed = names.sort({ (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 ```
@@ -114,10 +114,10 @@ reversed = sorted(names, { (s1: String, s2: String) -> Bool in
 因为这个闭包的函数体部分如此短以至于可以将其改写成一行代码：
 
 ```swift
-reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+reversed = names.sort( { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 ```
 
-这说明`sorted`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）。
+这说明`sort(_:)`方法的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）
 
 <a name="inferring_type_from_context"></a>
 ### 根据上下文推断类型（Inferring Type From Context）
