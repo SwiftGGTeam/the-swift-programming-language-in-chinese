@@ -29,7 +29,7 @@ swift语言中模式有2个基本的分类：一类能成功和任何值的类�
 > *模式* → [*值绑定模式*](..\chapter3\07_Patterns.html#value_binding_pattern)  
 > *模式* → [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) [*类型标注*](..\chapter3\03_Types.html#type_annotation) _可选_  
 > *模式* → [*枚举用例模式*](..\chapter3\07_Patterns.html#enum_case_pattern)  
-> *模式* → [*可选模式*](..\chapter3\07_Patterns.html#optional_pattern)
+> *模式* → [*可选模式*](..\chapter3\07_Patterns.html#optional_pattern)  
 > *模式* → [*类型转换模式*](..\chapter3\07_Patterns.html#type_casting_pattern)  
 > *模式* → [*表达式模式*](..\chapter3\07_Patterns.html#expression_pattern)  
 
