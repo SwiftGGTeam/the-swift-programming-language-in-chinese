@@ -73,7 +73,7 @@ directionToHead = .East
 <a name="matching_enumeration_values_with_a_switch_statement"></a>
 ## 匹配枚举值和`Switch`语句
 
-你可以匹配单个枚举值和`switch`语句：
+你可以使用`switch`语句匹配单个枚举值：
 
 ```swift
 directionToHead = .South
@@ -90,15 +90,15 @@ case .West:
 // 输出 "Watch out for penguins”
 ```
 
-你可以如此理解这段代码：
+你可以这样理解这段代码：
 
-“考虑`directionToHead`的值。当它等于`.North`，打印`“Lots of planets have a north”`。当它等于`.South`，打印`“Watch out for penguins”`。”
+“判断`directionToHead`的值。当它等于`.North`，打印`“Lots of planets have a north”`。当它等于`.South`，打印`“Watch out for penguins”`。”
 
-等等依次类推。
+等等以此类推。
 
-正如在[控制流（Control Flow）](05_Control_Flow.html)中介绍，当考虑一个枚举的成员们时，一个`switch`语句必须全面。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。全面性的要求确保了枚举成员不会被意外遗漏。
+正如在[控制流（Control Flow）](05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制性全部穷举的要求确保了枚举成员不会被意外遗漏。
 
-当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确被提出的任何成员：
+当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确被提出的枚举成员：
 
 ```swift
 let somePlanet = Planet.Earth
