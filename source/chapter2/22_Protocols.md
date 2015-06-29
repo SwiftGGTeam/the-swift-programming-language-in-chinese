@@ -21,6 +21,8 @@
 - [协议合成（Protocol Composition）](#protocol_composition)
 - [检验协议的一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
 - [对可选协议的规定（Optional Protocol Requirements）](#optional_protocol_requirements)
+- [协议扩展（Protocol Extensions）](#protocol_extensions)
+
 
 `协议(Protocol)`用于定义完成某项任务或功能所必须的方法和属性，协议实际上并不提供这些功能或任务的具体`实现(Implementation)`--而只用来描述这些实现应该是什么样的。类，结构体，枚举通过提供协议所要求的方法，属性的具体实现来`采用(adopt)`协议。任意能够满足协议要求的类型被称为协议的`遵循者`。
 
@@ -816,7 +818,8 @@ for _ in 1...5 {
 // 0
 ```
 
-## Protocol Extensions
+<a name="protocol_extensions"></a>
+## 协议扩展
 
 Protocols can be extended to provide method and property implementations to conforming types. This allows you to define behavior on protocols themselves, rather than in each type’s individual conformance or in a global function.
 
