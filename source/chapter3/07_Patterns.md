@@ -158,7 +158,7 @@ for case let number? in arrayOfOptinalInts {
 
 ```
 > 可选模式语法  
-> *optional-pattern* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) ?
+> *可选模式* → [*标识符模式*](..\chapter3\03_Types.html#type_identifier) ?
 
 <a name="type-casting_patterns"></a>
 ## 类型转换模式（Type-Casting Patterns）
