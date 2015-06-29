@@ -79,13 +79,13 @@ directionToHead = .East
 directionToHead = .South
 switch directionToHead {
 case .North:
-    println("Lots of planets have a north")
+    print("Lots of planets have a north")
 case .South:
-    println("Watch out for penguins")
+    print("Watch out for penguins")
 case .East:
-    println("Where the sun rises")
+    print("Where the sun rises")
 case .West:
-    println("Where the skies are blue")
+    print("Where the skies are blue")
 }
 // 输出 "Watch out for penguins”
 ```
@@ -104,9 +104,9 @@ case .West:
 let somePlanet = Planet.Earth
 switch somePlanet {
 case .Earth:
-    println("Mostly harmless")
+    print("Mostly harmless")
 default:
-    println("Not a safe place for humans")
+    print("Not a safe place for humans")
 }
 // 输出 "Mostly harmless”
 ```
@@ -164,9 +164,9 @@ productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 ```swift
 switch productBarcode {
 case .UPCA(let numberSystem, let identifier, let check):
-    println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    print("UPC-A with value of \(numberSystem), \(identifier), \(check).")
 case .QRCode(let productCode):
-    println("QR code with value of \(productCode).")
+    print("QR code with value of \(productCode).")
 }
 // 输出 "QR code with value of ABCDEFGHIJKLMNOP.”
 ```
@@ -176,9 +176,9 @@ case .QRCode(let productCode):
 ```swift
 switch productBarcode {
 case let .UPCA(numberSystem, identifier, check):
-    println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+    print("UPC-A with value of \(numberSystem), \(identifier), \(check).")
 case let .QRCode(productCode):
-    println("QR code with value of \(productCode).")
+    print("QR code with value of \(productCode).")
 }
 // 输出 "QR code with value of ABCDEFGHIJKLMNOP."
 ```
@@ -237,15 +237,14 @@ let positionToFind = 9
 if let somePlanet = Planet(rawValue: positionToFind) {
     switch somePlanet {
     case .Earth:
-        println("Mostly harmless")
+        print("Mostly harmless")
     default:
-        println("Not a safe place for humans")
+        print("Not a safe place for humans")
     }
 } else {
-    println("There isn't a planet at position \(positionToFind)")
+    print("There isn't a planet at position \(positionToFind)")
 }
 // 输出 "There isn't a planet at position 9
 ```
 
 这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
-
