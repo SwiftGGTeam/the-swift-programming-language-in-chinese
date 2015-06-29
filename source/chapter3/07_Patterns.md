@@ -73,7 +73,7 @@ let someValue = 42
 ```swift
 let point = (3, 2)
 switch point {
-// Bind x and y to the elements of point.
+    // Bind x and y to the elements of point.
 case let (x, y):
     print("The point is at (\(x), \(y)).")
 }
@@ -92,7 +92,7 @@ case let (x, y):
 
 你可以使用类型注释来限制一个元组模式来匹配某种元组类型。例如，在常量申明`let (x, y): (Int, Int) = (1, 2)`中的元组模式`(x, y): (Int, Int)`，只匹配两个元素都是`Int`这种类型的元组。如果仅需要限制一个元组模式中的某几个元素，只需要直接对这几个元素提供类型注释即可。例如，在`let (x: String, y)`中的元组模式，只要某个元组类型是包含两个元素，且第一个元素类型是`String`，则被匹配。
 
-当元组模式被用在`for-in`语句或者变量或常量申明时，它可以包含通配符模式，标识符模式或者其他包含这两种模式的模式。例如，下面这段代码是不正确的，因为`(x, 0)`中的元素`0`是一个表达式模式：
+当元组模式被用在`for-in`语句或者变量或常量申明时，它可以包含通配符模式，标识符模式，可选模式或者其他包含这些模式的元祖模式。例如，下面这段代码是不正确的，因为`(x, 0)`中的元素`0`是一个表达式模式：
 
 ```swift
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
@@ -204,7 +204,7 @@ default:
 ```swift
 // Overload the ~= operator to match a string with an integer
 func ~=(pattern: String, value: Int) -> Bool {
-return pattern == "\(value)"
+    return pattern == "\(value)"
 }
 switch point {
 case ("0", "0"):
