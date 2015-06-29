@@ -75,7 +75,7 @@ let point = (3, 2)
 switch point {
 // Bind x and y to the elements of point.
 case let (x, y):
-print("The point is at (\(x), \(y)).")
+    print("The point is at (\(x), \(y)).")
 }
 // prints "The point is at (3, 2).”
 ```
@@ -190,11 +190,11 @@ for case let number? in arrayOfOptinalInts {
 let point = (1, 2)
 switch point {
 case (0, 0):
-print("(0, 0) is at the origin.")
+    print("(0, 0) is at the origin.")
 case (-2...2, -2...2):
-print("(\(point.0), \(point.1)) is near the origin.")
+    print("(\(point.0), \(point.1)) is near the origin.")
 default:
-print("The point is at (\(point.0), \(point.1)).")
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
@@ -208,11 +208,11 @@ return pattern == "\(value)"
 }
 switch point {
 case ("0", "0"):
-print("(0, 0) is at the origin.")
+    print("(0, 0) is at the origin.")
 case ("-2...2", "-2...2"):
-print("(\(point.0), \(point.1)) is near the origin.")
+    print("(\(point.0), \(point.1)) is near the origin.")
 default:
-print("The point is at (\(point.0), \(point.1)).")
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
