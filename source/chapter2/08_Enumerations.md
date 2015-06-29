@@ -13,7 +13,7 @@
 
 *枚举*定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
 
-如果你熟悉 C 语言，你就会知道，在 C 语言中枚举将枚举名和一个整形值相对应。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
+如果你熟悉 C 语言，你就会知道，在 C 语言中枚举将枚举名和一个整型值相对应。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
 
 此外，枚举成员可以指定任何类型的相关值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。
 
@@ -24,7 +24,7 @@
 <a name="enumeration_syntax"></a>
 ## 枚举语法
 
-使用`enum`关键词并且把它们的整个定义放在一对大括号内：
+使用`enum`关键词来创建枚举并且把它们的整个定义放在一对大括号内：
 
 ```swift
 enum SomeEnumeration {
@@ -46,7 +46,7 @@ enum CompassPoint {
 一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的***成员值***（或者***成员***）。`case`关键词表明新的一行成员值将被定义。
 
 > 注意：  
-> 不像 C 和 Objective-C 一样，Swift 的枚举成员在被创建时不会被赋予一个默认的整数值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不是隐式的等于`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
+> 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为了`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
 
 多个成员值可以出现在同一行上，用逗号隔开：
 
@@ -62,13 +62,13 @@ enum Planet {
 var directionToHead = CompassPoint.West
 ```
 
-`directionToHead`的类型被推断当它被`CompassPoint`的一个可能值初始化。一旦`directionToHead`被声明为一个`CompassPoint`，你可以使用更短的点（.）语法将其设置为另一个`CompassPoint`的值：
+`directionToHead`的类型可以在它被`CompassPoint`的一个可能值初始化时推断出来。一旦`directionToHead`被声明为一个`CompassPoint`，你可以使用一个缩写语法（.）将其设置为另一个`CompassPoint`的值：
 
 ```swift
 directionToHead = .East
 ```
 
-`directionToHead`的类型已知时，当设定它的值时，你可以不再写类型名。使用显式类型的枚举值可以让代码具有更好的可读性。
+当`directionToHead`的类型已知时，再次为其赋值可以省略枚举名。使用显式类型的枚举值可以让代码具有更好的可读性。
 
 <a name="matching_enumeration_values_with_a_switch_statement"></a>
 ## 匹配枚举值和`Switch`语句
