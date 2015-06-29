@@ -19,7 +19,7 @@
 
 在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
-欲了解更多相关功能，请参见[属性（Properties）](10_Properties.html)，[方法（Methods）](11_Methods.html)，[构造过程（Initialization）](14_Initialization.html)，[扩展（Extensions）](20_Extensions.html)和[协议（Protocols）](21_Protocols.html)。
+欲了解更多相关信息，请参见[属性（Properties）](10_Properties.html)，[方法（Methods）](11_Methods.html)，[构造过程（Initialization）](14_Initialization.html)，[扩展（Extensions）](20_Extensions.html)和[协议（Protocols）](21_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -186,9 +186,9 @@ case let .QRCode(productCode):
 <a name="raw_values"></a>
 ## 原始值（Raw Values）
 
-在[Associated Values](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的替代，枚举成员可以被默认值（称为原始值）预先填充，其中这些原始值具有相同的类型。
+在[Associated Values](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的另一种选择，枚举成员可以被默认值（称为原始值）赋值，其中这些原始值具有相同的类型。
 
-这里是一个枚举成员存储原始 ASCII 值的例子：
+这里是一个枚举成员存储 ASCII 码的例子：
 
 ```swift
 enum ASCIIControlCharacter: Character {
@@ -198,11 +198,11 @@ enum ASCIIControlCharacter: Character {
 }
 ```
 
-在这里，称为`ASCIIControlCharacter`的枚举的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
+在这里，`ASCIIControlCharacter`的枚举类型的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
 
-注意，原始值和相关值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
+注意，原始值和相关值是不相同的。原始值是当你开始定义枚举的时候被预先赋予的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值在你在创建一个基于枚举成员的常量或变量时才会被设置，并且每次当你创建的时候，它的值可以是不同的。
 
-原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当整型值被用于原始值，如果其他枚举成员没有值时，它们会自动递增。
+原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当使用整型值作为原始值时，如果其他枚举成员没有值，它们会自动递增。
 
 下面的枚举是对之前`Planet`这个枚举的一个细化，利用原始整型值来表示每个 planet 在太阳系中的顺序：
 
@@ -212,7 +212,7 @@ enum Planet: Int {
 }
 ```
 
-自动递增意味着`Planet.Venus`的原始值是`2`，依次类推。
+自动递增意味着`Planet.Venus`的原始值是`2`，以此类推。
 
 使用枚举成员的`rawValue`属性可以访问该枚举成员的原始值：
 
@@ -220,15 +220,22 @@ enum Planet: Int {
 let earthsOrder = Planet.Earth.rawValue
 // earthsOrder is 3
 ```
+### 使用原始值来初始化(Initializing from a Raw Value)
 
-通过参数为`rawValue`构造函数创建特定原始值的枚举。这个例子通过原始值`7`识别`Uranus`：
+如果你使用原始值的方式创建一个枚举类型，这个枚举将自动获得一个包含原始值参数(参数名为rawValue)的构造器并返回相应的枚举类型或者nil。你可以使用这个构造器来创建新的枚举成员。
+
+下面这个例子通过原始值`7`创建了`Uranus`枚举类型：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet is of type Planet? and equals Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或称为“可选的`Planet`”。
+
+> 注意：  
+> 使用原始值构造器是可失败构造器，因为并不是所有的原始值都会返回一个对应的枚举成员。欲了解更多相关信息，请参见[可失败构造器（Failable Initializers）](留空)
+<!--TODO 链接未定义-->
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
@@ -247,4 +254,4 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 // 输出 "There isn't a planet at position 9
 ```
 
-这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
+这个范例使用可选绑定（optional binding），通过原始值`9`试图取得一个行星的引用。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
