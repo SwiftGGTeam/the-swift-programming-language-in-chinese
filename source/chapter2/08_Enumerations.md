@@ -43,7 +43,7 @@ enum CompassPoint {
 }
 ```
 
-一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的***成员值***（或者***成员***）。`case`关键词表明新的一行成员值将被定义。
+一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的*成员值*（或者*成员*）。`case`关键词表明新的一行成员值将被定义。
 
 > 注意：  
 > 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为了`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
@@ -114,11 +114,11 @@ default:
 <a name="associated_values"></a>
 ## 相关值（Associated Values）
 
-上一小节的例子演示了一个枚举的成员是如何被定义（分类）的。你可以为`Planet.Earth`设置一个常量或则变量，并且在之后查看这个值。不管怎样，如果有时候能够把其他类型的相关值和成员值一起存储起来会很有用。这能让你存储成员值之外的自定义信息，并且当你每次在代码中使用该成员时允许这个信息产生变化。
+上一小节的例子演示了如何定义（分类）枚举的成员。你可以为`Planet.Earth`设置一个常量或者变量，并且在赋值之后查看这个值。不管怎样，如果有时候能够把其他类型的*相关值*和成员值一起存储起来会很有用。这能让你存储成员值之外的自定义信息，并且当你每次在代码中使用该成员时允许这个信息产生变化。
 
 你可以定义 Swift 的枚举存储任何类型的相关值，如果需要的话，每个成员的数据类型可以是各不相同的。枚举的这种特性跟其他语言中的可辨识联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。
 
-例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有 UPC-A 格式的一维码，它使用数字 0 到 9。每一个条形码都有一个代表“数字系统”的数字，该数字后接 10 个代表“标识符”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
+例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有 UPC-A 格式的一维t条形码，它使用数字 0 到 9。每一个条形码都有一个代表“数字系统”的数字，该数字后接 5 个代表“生产代码”的数字，接下来是5位“产品代码”。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
 
 <img width="252" height="120" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png">
 
@@ -128,28 +128,28 @@ default:
 
 对于库存跟踪系统来说，能够把 UPC-A 码作为三个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
 
-在 Swift 中，用来定义两种商品条码的枚举是这样子的：
+在 Swift 中，使用如下方式定义两种商品条码的枚举：
 
 ```swift
 enum Barcode {
-  case UPCA(Int, Int, Int)
+  case UPCA(Int, Int, Int, Int)
   case QRCode(String)
 }
 ```
 
 以上代码可以这么理解：
 
-“定义一个名为`Barcode`的枚举类型，它可以是`UPCA`的一个相关值（`Int`，`Int`，`Int`），或者`QRCode`的一个字符串类型（`String`）相关值。”
+“定义一个名为`Barcode`的枚举类型，它可以是`UPCA`的一个相关值（`Int`，`Int`，`Int`，`Int`），或者是`QRCode`的一个字符串类型（`String`）相关值。”
 
 这个定义不提供任何`Int`或`String`的实际值，它只是定义了，当`Barcode`常量和变量等于`Barcode.UPCA`或`Barcode.QRCode`时，相关值的类型。
 
 然后可以使用任何一种条码类型创建新的条码，如：
 
 ```swift
-var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
 ```
 
-以上例子创建了一个名为`productBarcode`的新变量，并且赋给它一个`Barcode.UPCA`的相关元组值`(8, 8590951226, 3)`。提供的“标识符”值在整数字中有一个下划线，使其便于阅读条形码。
+以上例子创建了一个名为`productBarcode`的变量，并且赋给它一个`Barcode.UPCA`的相关元组值`(8, 85909, 51226, 3)`。
 
 同一个商品可以被分配给一个不同类型的条形码，如：
 
@@ -163,24 +163,24 @@ productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 ```swift
 switch productBarcode {
-case .UPCA(let numberSystem, let identifier, let check):
-    print("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+case .UPCA(let numberSystem, let manufacturer, let product, let check):
+    print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
 case .QRCode(let productCode):
-    print("QR code with value of \(productCode).")
+    print("QR code: \(productCode).")
 }
-// 输出 "QR code with value of ABCDEFGHIJKLMNOP.”
+// 输出 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 如果一个枚举成员的所有相关值被提取为常量，或者它们全部被提取为变量，为了简洁，你可以只放置一个`var`或者`let`标注在成员名称前：
 
 ```swift
 switch productBarcode {
-case let .UPCA(numberSystem, identifier, check):
-    print("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+case let .UPCA(numberSystem, manufacturer, product, check):
+    print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
 case let .QRCode(productCode):
-    print("QR code with value of \(productCode).")
+    print("QR code: \(productCode).")
 }
-// 输出 "QR code with value of ABCDEFGHIJKLMNOP."
+// 输出 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 <a name="raw_values"></a>
@@ -228,7 +228,7 @@ let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet is of type Planet? and equals Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
