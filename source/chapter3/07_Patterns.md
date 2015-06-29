@@ -1,4 +1,4 @@
-> 翻译：[honghaoz](https://github.com/honghaoz)  
+> 翻译：[honghaoz](https://github.com/honghaoz), [ray16897188](https://github.com/ray16897188)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 # 模式（Patterns）
@@ -144,8 +144,7 @@ if case let x? = someOptional {
     print(x)
 }
 ```
-
-可选模式在`for-in`语句提供了在一个元素是可选类型的数组中迭代的简便方式，只为数组中的非空`non-nil`元素执行循环。
+如果一个数组的元素是可选类型，可选模式为`for-in`语句提供了在该数组中迭代的简便方式，只为数组中的非空`non-nil`元素执行循环。
 
 ```swift
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
