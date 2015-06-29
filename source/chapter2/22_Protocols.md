@@ -1,4 +1,4 @@
-> 翻译：[geek5nan](https://github.com/geek5nan)  
+> 翻译：[geek5nan](https://github.com/geek5nan)
 > 校对：[dabing1022](https://github.com/dabing1022)
 
 # 协议
@@ -164,9 +164,9 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 	}
 }
 let generator = LinearCongruentialGenerator()
-println("Here's a random number: \(generator.random())")
+print("Here's a random number: \(generator.random())")
 // 输出 : "Here's a random number: 0.37464991998171"
-println("And another one: \(generator.random())")
+print("And another one: \(generator.random())")
 // 输出 : "And another one: 0.729023776863283"
 ```
 
@@ -178,7 +178,7 @@ println("And another one: \(generator.random())")
 如果协议中的实例方法打算改变其`遵循者`实例的类型，那么在协议定义时需要在方法前加`mutating`关键字，才能使`结构体，枚举`来采用并满足协议中对方法的规定。
 
 
->注意: 
+>注意:
 >用`类`实现协议中的`mutating`方法时，不用写`mutating`关键字;用`结构体`，`枚举`实现协议中的`mutating`方法时，必须写`mutating`关键字。
 
 如下所示，`Togglable`协议含有名为`toggle`的突变实例方法。根据名称推测，`toggle`方法应该是用于切换或恢复其`遵循者`实例或其属性的类型。
@@ -255,7 +255,7 @@ class SomeSuperClass {
     }
 }
 
- 
+
 class SomeSubClass: SomeSuperClass, SomeProtocol {
     // "required" from SomeProtocol conformance; "override" from SomeSuperClass
     required override init() {
@@ -277,7 +277,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 尽管`协议`本身并不实现任何功能，但是`协议`可以被当做类型来使用。
 
-使用场景:  
+使用场景:
 
 * `协议类型`作为函数、方法或构造器中的参数类型或返回值类型
 * `协议类型`作为常量、变量或属性的类型
@@ -314,7 +314,7 @@ class Dice {
 ```swift
 var d6 = Dice(sides: 6,generator: LinearCongruentialGenerator())
 for _ in 1...5 {
-	println("Random dice roll is \(d6.roll())")
+	print("Random dice roll is \(d6.roll())")
 }
 //输出结果
 //Random dice roll is 3
@@ -333,7 +333,7 @@ for _ in 1...5 {
 
 委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的所属类型(*译者注:只要求外部数据源`遵循`某协议*)。
 
-下文是两个基于骰子游戏的协议: 
+下文是两个基于骰子游戏的协议:
 
 ```swift
 protocol DiceGame {
@@ -349,7 +349,7 @@ protocol DiceGameDelegate {
 ```
 
 `DiceGame`协议可以在任意含有骰子的游戏中实现，`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
-	
+
 如下所示，`SnakesAndLadders`是`Snakes and Ladders`(译者注:[Control Flow](2)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
 
 ```swift
@@ -403,16 +403,16 @@ class DiceGameTracker: DiceGameDelegate {
     func gameDidStart(game: DiceGame) {
         numberOfTurns = 0
         if game is SnakesAndLadders {
-            println("Started a new game of Snakes and Ladders")
+            print("Started a new game of Snakes and Ladders")
         }
-        println("The game is using a \(game.dice.sides)-sided dice")
+        print("The game is using a \(game.dice.sides)-sided dice")
     }
     func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
         ++numberOfTurns
-        println("Rolled a \(diceRoll)")
+        print("Rolled a \(diceRoll)")
     }
     func gameDidEnd(game: DiceGame) {
-        println("The game lasted for \(numberOfTurns) turns")
+        print("The game lasted for \(numberOfTurns) turns")
     }
 }
 ```
@@ -468,7 +468,7 @@ extension Dice: TextRepresentable {
 
 ```swift
 let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
-println(d12.asText())
+print(d12.asText())
 // 输出 "A 12-sided dice"
 ```
 
@@ -480,7 +480,7 @@ extension SnakesAndLadders: TextRepresentable {
 		return "A game of Snakes and Ladders with \(finalSquare) squares"
 	}
 }
-println(game.asText())
+print(game.asText())
 // 输出 "A game of Snakes and Ladders with 25 squares"
 ```
 
@@ -504,7 +504,7 @@ extension Hamster: TextRepresentable {}
 ```swift
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
-println(somethingTextRepresentable.asText())
+print(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
 
@@ -523,7 +523,7 @@ let things: [TextRepresentable] = [game,d12,simonTheHamster]
 
 ```swift
 for thing in things {
-	println(thing.asText())
+	print(thing.asText())
 }
 // A game of Snakes and Ladders with 25 squares
 // A 12-sided dice
@@ -583,7 +583,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 任意`SankesAndLadders`的实例都可以使用`asPrettyText()`方法。
 
 ```swift
-println(game.asPrettyText())
+print(game.asPrettyText())
 // A game of Snakes and Ladders with 25 squares:
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
@@ -624,7 +624,7 @@ struct Person: Named, Aged {
     var age: Int
 }
 func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-    println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+    print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(birthdayPerson)
@@ -642,9 +642,9 @@ wishHappyBirthday(birthdayPerson)
 
 使用`is`和`as`操作符来检查协议的一致性或转化协议类型。检查和转化的语法和之前相同(*详情查看[Typy Casting章节](5)*):
 
-* `is`操作符用来检查实例是否`遵循`了某个`协议`。 
+* `is`操作符用来检查实例是否`遵循`了某个`协议`。
 * `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
-* `as`用以强制向下转型。  
+* `as`用以强制向下转型。
 
 ```swift
 @objc protocol HasArea {
@@ -697,9 +697,9 @@ let objects: [AnyObject] = [
 ```swift
 for object in objects {
     if let objectWithArea = object as? HasArea {
-        println("Area is \(objectWithArea.area)")
+        print("Area is \(objectWithArea.area)")
     } else {
-        println("Something that doesn't have an area")
+        print("Something that doesn't have an area")
     }
 }
 // Area is 12.5663708
@@ -754,7 +754,7 @@ for object in objects {
 `count`属性用于存储当前的值，`increment`方法用来为`count`赋值。
 
 `increment`方法通过`可选链`，尝试从两种`可选成员`中获取`count`。
-	
+
 1. 由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。
 
 2. 即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记
@@ -776,7 +776,7 @@ var counter = Counter()
 counter.dataSource = ThreeSource()
 for _ in 1...4 {
     counter.increment()
-    println(counter.count)
+    print(counter.count)
 }
 // 3
 // 6
@@ -807,7 +807,7 @@ counter.count = -4
 counter.dataSource = TowardsZeroSource()
 for _ in 1...5 {
     counter.increment()
-    println(counter.count)
+    print(counter.count)
 }
 // -3
 // -2
