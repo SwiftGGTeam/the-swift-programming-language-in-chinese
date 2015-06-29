@@ -27,7 +27,7 @@
 这里是一个标准的，非泛型函数`swapTwoInts`,用来交换两个Int值：
 
 ```swift
-func swapTwoInts(inout a: Int, inout b: Int) {
+func swapTwoInts(inout a: Int, inout _ b: Int) {
   let temporaryA = a
   a = b
   b = temporaryA
@@ -36,7 +36,7 @@ func swapTwoInts(inout a: Int, inout b: Int) {
 
 这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[写入读出参数](../chapter2/06_Functions.html)。
 
-`swapTwoInts`函数可以交换`b`的原始值到`a`，也可以交换a的原始值到`b`，你可以调用这个函数交换两个`Int`变量值：
+`swapTwoInts(_:_:)`函数可以交换`b`的原始值到`a`，也可以交换a的原始值到`b`，你可以调用这个函数交换两个`Int`变量值：
 
 ```swift
 var someInt = 3
@@ -47,23 +47,23 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 ```
 
 
-`swapTwoInts`函数是非常有用的，但是它只能交换`Int`值，如果你想要交换两个`String`或者`Double`，就不得不写更多的函数，如 `swapTwoStrings`和`swapTwoDoublesfunctions `，如同如下所示：
+`swapTwoInts(_:_:)`函数是非常有用的，但是它只能交换`Int`值，如果你想要交换两个`String`或者`Double`，就不得不写更多的函数，如 `swapTwoStrings`和`swapTwoDoubles(_:_:)`，如同如下所示：
 
 ```swift
-func swapTwoStrings(inout a: String, inout b: String) {
+func swapTwoStrings(inout a: String, inout _ b: String) {
     let temporaryA = a
     a = b
     b = temporaryA
 }
 
-func swapTwoDoubles(inout a: Double, inout b: Double) {
+func swapTwoDoubles(inout a: Double, inout _ b: Double) {
     let temporaryA = a
     a = b
     b = temporaryA
 }
 ```
 
-你可能注意到 `swapTwoInts`、 `swapTwoStrings`和`swapTwoDoubles`函数功能都是相同的，唯一不同之处就在于传入的变量类型不同，分别是`Int`、`String`和`Double`。
+你可能注意到 `swapTwoInts`、 `swapTwoStrings`和`swapTwoDoubles(_:_:)`函数功能都是相同的，唯一不同之处就在于传入的变量类型不同，分别是`Int`、`String`和`Double`。
 
 但实际应用中通常需要一个用处更强大并且尽可能的考虑到更多的灵活性单个函数，可以用来交换两个任何类型值，很幸运的是，泛型代码帮你解决了这种问题。（一个这种泛型函数后面已经定义好了。）
 
@@ -73,29 +73,29 @@ func swapTwoDoubles(inout a: Double, inout b: Double) {
 <a name="generic_functions"></a>
 ## 泛型函数
 
-`泛型函数`可以工作于任何类型，这里是一个上面`swapTwoInts`函数的泛型版本，用于交换两个值：
+`泛型函数`可以工作于任何类型，这里是一个上面`swapTwoInts(_:_:)`函数的泛型版本，用于交换两个值：
 
 ```swift
-func swapTwoValues<T>(inout a: T, inout b: T) {
+func swapTwoValues<T>(inout a: T, inout _ b: T) {
     let temporaryA = a
     a = b
     b = temporaryA
 }
 ```
 
-`swapTwoValues`函数主体和`swapTwoInts`函数是一样的，它只在第一行稍微有那么一点点不同于`swapTwoInts`，如下所示：
+`swapTwoValues(_:_:)`函数主体和`swapTwoInts(_:_:)`函数是一样的，它只在第一行稍微有那么一点点不同于`swapTwoInts`，如下所示：
 
 ```swift
-func swapTwoInts(inout a: Int, inout b: Int)
-func swapTwoValues<T>(inout a: T, inout b: T)
+func swapTwoInts(inout a: Int, inout _ b: Int)
+func swapTwoValues<T>(inout a: T, inout _ b: T)
 ```
 
 
-这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`Int`、`String`或`Double`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
+这个函数的泛型版本使用了占位类型名字（通常此情况下用字母`T`来表示）来代替实际类型名（如`Int`、`String`或`Double`）。占位类型名没有提示`T`必须是什么类型，但是它提示了`a`和`b`必须是同一类型`T`，而不管`T`表示什么类型。只有`swapTwoValues(_:_:)`函数在每次调用时所传入的实际类型才能决定`T`所代表的类型。
 
-另外一个不同之处在于这个泛型函数名后面跟着的占位类型名字（T）是用尖括号括起来的（`<T>`）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
+另外一个不同之处在于这个泛型函数名后面跟着的占位类型名字（T）是用尖括号括起来的（`<T>`）。这个尖括号告诉 Swift 那个`T`是`swapTwoValues(_:_:)`函数所定义的一个类型。因为`T`是一个占位命名类型，Swift 不会去查找命名为T的实际类型。
 
-`swapTwoValues`函数除了要求传入的两个任何类型值是同一类型外，也可以作为`swapTwoInts`函数被调用。每次`swapTwoValues`被调用，T所代表的类型值都会传给函数。
+`swapTwoValues(_:_:)`函数除了要求传入的两个任何类型值是同一类型外，也可以作为`swapTwoInts`函数被调用。每次`swapTwoValues`被调用，T所代表的类型值都会传给函数。
 
 在下面的两个例子中,`T`分别代表`Int`和`String`：
 
@@ -103,26 +103,26 @@ func swapTwoValues<T>(inout a: T, inout b: T)
 var someInt = 3
 var anotherInt = 107
 swapTwoValues(&someInt, &anotherInt)
-// someInt is now 107, and anotherInt is now 3
+// someInt 现在等于 107, anotherInt 现在等于 3
 ```
 
 ```swift
 var someString = "hello"
 var anotherString = "world"
 swapTwoValues(&someString, &anotherString)
-// someString is now "world", and anotherString is now "hello"
+// someString 现在等于 "world", anotherString 现在等于 "hello"
 ```
 
 
 >注意
-上面定义的函数`swapTwoValues`是受`swap`函数启发而实现的。`swap`函数存在于 Swift 标准库，并可以在其它类中任意使用。如果你在自己代码中需要类似`swapTwoValues`函数的功能，你可以使用已存在的交换函数`swap`函数。
+上面定义的函数`swapTwoValues(_:_:)`是受`swap`函数启发而实现的。`swap`函数存在于 Swift 标准库，并可以在其它类中任意使用。如果你在自己代码中需要类似`swapTwoValues(_:_:)`函数的功能，你可以使用已存在的交换函数`swap(_:_:)`函数。
 
 <a name="type_parameters"></a>
 ## 类型参数
 
 在上面的`swapTwoValues`例子中，占位类型`T`是一种类型参数的示例。类型参数指定并命名为一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（如`<T>`）。
 
-一旦一个类型参数被指定，那么其可以被使用来定义一个函数的参数类型（如`swapTwoValues`函数中的参数`a`和`b`），或作为一个函数返回类型，或用作函数主体中的注释类型。在这种情况下，被类型参数所代表的占位类型不管函数任何时候被调用，都会被实际类型所替换（在上面`swapTwoValues`例子中，当函数第一次被调用时，`T`被`Int`替换，第二次调用时，被`String`替换。）。
+一旦一个类型参数被指定，那么其可以被使用来定义一个函数的参数类型（如`swapTwoValues(_:_:)`函数中的参数`a`和`b`），或作为一个函数返回类型，或用作函数主体中的注释类型。在这种情况下，被类型参数所代表的占位类型不管函数任何时候被调用，都会被实际类型所替换（在上面`swapTwoValues`例子中，当函数第一次被调用时，`T`被`Int`替换，第二次调用时，被`String`替换。）。
 
 你可支持多个类型参数，命名在尖括号中，用逗号分开。
 
@@ -131,10 +131,10 @@ swapTwoValues(&someString, &anotherString)
 
 在简单的情况下，泛型函数或泛型类型需要指定一个占位类型（如上面的`swapTwoValues`泛型函数，或一个存储单一类型的泛型集，如数组），通常用一单个字母`T`来命名类型参数。不过，你可以使用任何有效的标识符来作为类型参数名。
 
-如果你使用多个参数定义更复杂的泛型函数或泛型类型，那么使用更多的描述类型参数是非常有用的。例如，Swift 字典（Dictionary）类型有两个类型参数，一个是键，另外一个是值。如果你自己写字典，你或许会定义这两个类型参数为`KeyType`和`ValueType`，用来记住它们在你的泛型代码中的作用。
+如果你使用多个参数定义更复杂的泛型函数或泛型类型，那么使用更多的描述类型参数是非常有用的。例如，Swift 字典（Dictionary）类型有两个类型参数，一个是键，另外一个是值。如果你自己写字典，你或许会定义这两个类型参数为`Key`和`Value`，用来记住它们在你的泛型代码中的作用。
 
 >注意
-请始终使用大写字母开头的驼峰式命名法（例如`T`和`KeyType`）来给类型参数命名，以表明它们是类型的占位符，而非类型值。
+请始终使用大写字母开头的驼峰式命名法（例如`T`和`Key`）来给类型参数命名，以表明它们是类型的占位符，而非类型值。
 
 <a name="generic_types"></a>
 ## 泛型类型
@@ -145,7 +145,7 @@ swapTwoValues(&someString, &anotherString)
 这部分向你展示如何写一个泛型集类型--`Stack`（栈）。一个栈是一系列值域的集合，和`Array`（数组）类似，但其是一个比 Swift 的`Array`类型更多限制的集合。一个数组可以允许其里面任何位置的插入/删除操作，而栈，只允许在集合的末端添加新的项（如同*push*一个新值进栈）。同样的一个栈也只能从末端移除项（如同*pop*一个值出栈）。
 
 >注意
-栈的概念已被`UINavigationController`类使用来模拟试图控制器的导航结构。你通过调用`UINavigationController`的`pushViewController:animated:`方法来为导航栈添加（add）新的试图控制器；而通过`popViewControllerAnimated:`的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的`后进先出`方式来管理集合，堆栈都是最实用的模型。
+栈的概念已被`UINavigationController`类使用来模拟试图控制器的导航结构。你通过调用`UINavigationController`的`pushViewController(_:animated:)`方法来为导航栈添加（add）新的试图控制器；而通过`popViewControllerAnimated(_:)`的方法来从导航栈中移除（pop）某个试图控制器。每当你需要一个严格的`后进先出`方式来管理集合，堆栈都是最实用的模型。
 
 下图展示了一个栈的压栈(push)/出栈(pop)的行为：
 
@@ -161,7 +161,7 @@ swapTwoValues(&someString, &anotherString)
 
 ```swift
 struct IntStack {
-    var items = Int[]()
+    var items = [Int]()
     mutating func push(item: Int) {
         items.append(item)
     }
@@ -196,10 +196,12 @@ struct Stack<T> {
 `T`定义了一个名为“某种类型T”的节点提供给后来用。这种将来类型可以在结构体的定义里任何地方表示为“T”。在这种情况下，`T`在如下三个地方被用作节点：
 
 - 创建一个名为`items`的属性，使用空的T类型值数组对其进行初始化；
-- 指定一个包含一个参数名为`item`的`push`方法，该参数必须是T类型；
+- 指定一个包含一个参数名为`item`的`push(_:)`方法，该参数必须是T类型；
 - 指定一个`pop`方法的返回值，该返回值将是一个T类型值。
 
-当创建一个新单例并初始化时， 通过用一对紧随在类型名后的尖括号里写出实际指定栈用到类型，创建一个`Stack`实例，同创建`Array`和`Dictionary`一样：
+由于`Stack`是泛型类型，所以在 Swift 中其可以用来创建任何有效类型的栈，这种方式如同`Array`和`Dictionary`。
+
+你可以通过在尖括号里写出栈中需要存储的数据类型来创建并初始化一个`Stack`实例。比如，要创建一个`strings`的栈，你可以写成`Stack<String>()`：
 
 ```swift
 var stackOfStrings = Stack<String>()
@@ -218,13 +220,12 @@ stackOfStrings.push("cuatro")
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
-// fromTheTop is equal to "cuatro", and the stack now contains 3 strings
+// fromTheTop 等于 "cuatro", 现在栈中还有3个string
 ```
 
 下图展示了如何从栈中pop一个值的过程：
 ![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
 
-由于`Stack`是泛型类型，所以在 Swift 中其可以用来创建任何有效类型的栈，这种方式如同`Array`和`Dictionary`。
 
 <a name="type_constraints"></a>
 ##类型约束
