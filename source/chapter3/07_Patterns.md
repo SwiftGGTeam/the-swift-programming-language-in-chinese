@@ -11,15 +11,15 @@
 - [值绑定模式（Value-Binding Pattern）](#value-binding_pattern)
 - [元组模式（Tuple Pattern）](#tuple_pattern)
 - [枚举用例模式（Enumeration Case Pattern）](#enumeration_case_pattern)
-- [可选模式（Optional Patterns）](#optional_patterns)
-- [类型转换模式（Type-Casting Patterns）](#type-casting_patterns)
+- [可选模式（Optional Patterns）](#optional_pattern)
+- [类型转换模式（Type-Casting Patterns）](#type-casting_pattern)
 - [表达式模式（Expression Pattern）](#expression_pattern)
 
-模式（pattern）代表了单个值或者复合值的结构。例如，元组`(1, 2)`的结构是逗号分隔的，包含两个元素的列表。因为模式代表一种值的结构，而不是特定的某个值，你可以把模式和各种同类型的值匹配起来。比如，`(x, y)`可以匹配元组`(1, 2)`，以及任何含两个元素的元组。除了将模式与一个值匹配外，你可以从合成值中提取出部分或全部，然后分别把各个部分和一个常量或变量绑定起来。
+模式（pattern）代表了单个值或者复合值的结构。例如，元组`(1, 2)`的结构是逗号分隔的，包含两个元素的列表。因为模式代表一种值的结构，而不是特定的某个值，你可以把模式和各种同类型的值匹配起来。比如，`(x, y)`可以匹配元组`(1, 2)`，以及任何含两个元素的元组。除了将模式与一个值匹配外，你可以从复合值中提取出部分或全部，然后分别把各个部分和一个常量或变量绑定起来。
 
-swift中有2个基本的模式种类：一类能成功和任何值的类型相匹配，另一类在运行时（runtime）和某特定值匹配时可能会失败。
+swift语言中模式有2个基本的分类：一类能成功和任何值的类型相匹配，另一类在运行时（runtime）和某特定值匹配时可能会失败。
 
-第一类模式用于解构简单变量，常量和可选绑定中的值。此类模式包括通配符模式（wildcard pattern），标识符模式（identifier pattern），以及任何包含了它们的值绑定模式（value binding pattern）或者元祖模式（tuple pattern）。你可以为这类模式指定一个类型注释（type annotation）来限制它们只能匹配某种特定类型的值。
+第一类模式用于解构简单变量，常量和可选绑定中的值。此类模式包括通配符模式（wildcard pattern），标识符模式（identifier pattern），以及任何包含了它们的值绑定模式（value binding pattern）或者元祖模式（tuple pattern）。你可以为这类模式指定一个类型注释（type annotation）从而限制它们只能匹配某种特定类型的值。
 
 第二类模式用于全模式匹配，这种情况下你用来相比较的值在运行时可能还不存在。此类模式包括枚举用例模式，可选模式，表达式模式和类型转换模式。你在`switch`语句的case标签中，`do`语句的`catch`从句中，或者在`if, while, guard`和`for-in`语句的case条件句中使用这类模式。
 
@@ -28,9 +28,9 @@ swift中有2个基本的模式种类：一类能成功和任何值的类型相�
 > *模式* → [*标识符模式*](..\chapter3\07_Patterns.html#identifier_pattern) [*类型注解*](..\chapter3\03_Types.html#type_annotati(Value Binding)on) _可选_  
 > *模式* → [*值绑定模式*](..\chapter3\07_Patterns.html#value_binding_pattern)  
 > *模式* → [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) [*类型注解*](..\chapter3\03_Types.html#type_annotation) _可选_  
-> *模式* → [*enum-case-pattern*](..\chapter3\07_Patterns.html#enum_case_pattern)  
+> *模式* → [*枚举用例模式*](..\chapter3\07_Patterns.html#enum_case_pattern)  
 > *模式* → [*可选模式*](..\chapter3\07_Patterns.html#optional_pattern) [*类型注解*](..\chapter3\03_Types.html#optional_type) _可选_  
-> *模式* → [*type-casting-pattern*](..\chapter3\07_Patterns.html#type_casting_pattern)  
+> *模式* → [*类型转换模式*](..\chapter3\07_Patterns.html#type_casting_pattern)  
 > *模式* → [*表达式模式*](..\chapter3\07_Patterns.html#expression_pattern)  
 
 <a name="wildcard_pattern"></a>
@@ -75,7 +75,7 @@ let point = (3, 2)
 switch point {
 // Bind x and y to the elements of point.
 case let (x, y):
-println("The point is at (\(x), \(y)).")
+print("The point is at (\(x), \(y)).")
 }
 // prints "The point is at (3, 2).”
 ```
@@ -125,16 +125,12 @@ let (a): Int = 2 // a: Int = 2
 > 枚举用例模式语法  
 > *enum-case-pattern* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) _可选_ **.** [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) _可选_  
 
-
-
 <a name="optional_pattern"></a>
 ## 可选模式（Optional Pattern）
 
-可选模式 封装在一个`Some(T)`
+可选模式与封装在一个`Optional(T)`或者一个`ExplicitlyUnwrappedOptional(T)`枚举中的`Some(T)`成员值相匹配。可选模式由一个标识符模式和紧随其后的一个问号组成，在某些情况下表现为枚举用例模式。
 
-可选模式由一个标识符模式和紧随其后的一个问号组成，在某种情况下表现为枚举用例模式。
-
-由于可选模式是`optionan`和`ImplicitlyUnwrappedOptional`枚举用例模式的语法糖，下面的两种写法一样的：
+由于可选模式是`optional`和`ImplicitlyUnwrappedOptional`枚举用例模式的语法糖（syntactic sugar），下面的两种写法一样的：
 
 ```swift
 let someOptional: Int? = 42
@@ -149,7 +145,7 @@ if case let x? = someOptional {
 }
 ```
 
-可选模式在`for-in`语句提供了在一个元素是可选类型的数组中迭代的简便的方式，只为数组中的非空元素执行循环。
+可选模式在`for-in`语句提供了在一个元素是可选类型的数组中迭代的简便方式，只为数组中的非空`non-nil`元素执行循环。
 
 ```swift
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
@@ -195,11 +191,11 @@ for case let number? in arrayOfOptinalInts {
 let point = (1, 2)
 switch point {
 case (0, 0):
-println("(0, 0) is at the origin.")
+print("(0, 0) is at the origin.")
 case (-2...2, -2...2):
-println("(\(point.0), \(point.1)) is near the origin.")
+print("(\(point.0), \(point.1)) is near the origin.")
 default:
-println("The point is at (\(point.0), \(point.1)).")
+print("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
@@ -213,11 +209,11 @@ return pattern == "\(value)"
 }
 switch point {
 case ("0", "0"):
-println("(0, 0) is at the origin.")
+print("(0, 0) is at the origin.")
 case ("-2...2", "-2...2"):
-println("(\(point.0), \(point.1)) is near the origin.")
+print("(\(point.0), \(point.1)) is near the origin.")
 default:
-println("The point is at (\(point.0), \(point.1)).")
+print("The point is at (\(point.0), \(point.1)).")
 }
 // prints "(1, 2) is near the origin.”
 ```
