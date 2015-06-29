@@ -19,7 +19,7 @@
 
 swift语言中模式有2个基本的分类：一类能成功和任何值的类型相匹配，另一类在运行时（runtime）和某特定值匹配时可能会失败。
 
-第一类模式用于解构简单变量，常量和可选绑定中的值。此类模式包括通配符模式（wildcard pattern），标识符模式（identifier pattern），以及任何包含了它们的值绑定模式（value binding pattern）或者元祖模式（tuple pattern）。你可以为这类模式指定一个类型注释（type annotation）从而限制它们只能匹配某种特定类型的值。
+第一类模式用于解构简单变量，常量和可选绑定中的值。此类模式包括通配符模式（wildcard patterns），标识符模式（identifier patterns），以及任何包含了它们的值绑定模式（value binding patterns）或者元祖模式（tuple patterns）。你可以为这类模式指定一个类型注释（type annotation）从而限制它们只能匹配某种特定类型的值。
 
 第二类模式用于全模式匹配，这种情况下你用来相比较的值在运行时可能还不存在。此类模式包括枚举用例模式，可选模式，表达式模式和类型转换模式。你在`switch`语句的case标签中，`do`语句的`catch`从句中，或者在`if, while, guard`和`for-in`语句的case条件句中使用这类模式。
 
