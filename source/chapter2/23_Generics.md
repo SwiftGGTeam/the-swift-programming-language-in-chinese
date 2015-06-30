@@ -1,5 +1,5 @@
 
-> 翻译：[takalard](https://github.com/takalard)
+> 翻译：[takalard](https://github.com/takalard) [SergioChan](https://github.com/SergioChan)
 > 校对：[lifedim](https://github.com/lifedim)
 
 # 泛型
@@ -13,6 +13,7 @@
 - [类型参数](#type_parameters)
 - [命名类型参数](#naming_type_parameters)
 - [泛型类型](#generic_types)
+- [扩展一个泛型类型](#extending_a_generic_type)
 - [类型约束](#type_constraints)
 - [关联类型](#associated_types)
 - [`Where`语句](#where_clauses)
@@ -226,6 +227,33 @@ let fromTheTop = stackOfStrings.pop()
 下图展示了如何从栈中pop一个值的过程：
 ![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
 
+<a name="extending_a_generic_type"></a>
+## 扩展一个泛型类型
+
+当你扩展一个泛型类型的时候，你并不需要在扩展的定义中提供类型参数列表。更加方便的是，原始类型定义中声明的类型参数列表在扩展里是可以使用的，并且这些来自原始类型中的参数名称会被用作原始定义中类型参数的引用。
+
+下面的例子扩展了泛型`Stack`类型，为其添加了一个名为`topItem`的只读计算属性，它将会返回当前栈顶端的元素而不会将其从栈中移除。
+
+```swift
+extension Stack {
+	var topItem: T? {
+    	return items.isEmpty ? nil : items[items.count - 1]
+    }
+}
+```
+
+`topItem`属性会返回一个`T`类型的可选值。当栈为空的时候，`topItem`将会返回`nil`；当栈不为空的时候，`topItem`会返回`items`数组中的最后一个元素。
+
+注意这里的扩展并没有定义一个类型参数列表。相反的，`Stack`类型已有的类型参数名称，`T`，被用在扩展中当做`topItem`计算属性的可选类型。
+
+`topItem`计算属性现在可以被用来返回任意`Stack`实例的顶端元素而无需移除它：
+
+```swift
+if let topItem = stackOfStrings.topItem {
+	print("The top item on the stack is \(topItem).")
+}
+// 打印 "The top item on the stack is tres."
+```
 
 <a name="type_constraints"></a>
 ##类型约束
