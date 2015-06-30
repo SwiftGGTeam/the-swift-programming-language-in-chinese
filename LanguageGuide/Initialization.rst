@@ -1102,7 +1102,7 @@ to see how its ``numberOfWheels`` property has been updated:
             constantProperty = 0
          }
       }
-   !! <REPL Input>:5:26: error: cannot assign to 'let' property 'constantProperty'
+   !!  <REPL Input>:5:26: error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
    !! ~~~~~~~~~~~~~~~~ ^
    !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
