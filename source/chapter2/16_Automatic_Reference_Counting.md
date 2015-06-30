@@ -41,10 +41,10 @@ class Person {
     let name: String
     init(name: String) {
         self.name = name
-        println("\(name) is being initialized")
+        print("\(name) is being initialized")
     }
     deinit {
-        println("\(name) is being deinitialized")
+        print("\(name) is being deinitialized")
     }
 }
 ```
@@ -109,7 +109,7 @@ class Person {
     let name: String
     init(name: String) { self.name = name }
     var apartment: Apartment?
-    deinit { println("\(name) is being deinitialized") }
+    deinit { print("\(name) is being deinitialized") }
 }
 ```
 
@@ -118,7 +118,7 @@ class Apartment {
     let number: Int
     init(number: Int) { self.number = number }
     var tenant: Person?
-    deinit { println("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment #\(number) is being deinitialized") }
 }
 ```
 
@@ -201,7 +201,7 @@ class Person {
     let name: String
     init(name: String) { self.name = name }
     var apartment: Apartment?
-    deinit { println("\(name) is being deinitialized") }
+    deinit { print("\(name) is being deinitialized") }
 }
 ```
 
@@ -210,7 +210,7 @@ class Apartment {
     let number: Int
     init(number: Int) { self.number = number }
     weak var tenant: Person?
-    deinit { println("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment #\(number) is being deinitialized") }
 }
 ```
 
@@ -281,7 +281,7 @@ class Customer {
     init(name: String) {
         self.name = name
     }
-    deinit { println("\(name) is being deinitialized") }
+    deinit { print("\(name) is being deinitialized") }
 }
 ```
 
@@ -293,7 +293,7 @@ class CreditCard {
         self.number = number
         self.customer = customer
     }
-    deinit { println("Card #\(number) is being deinitialized") }
+    deinit { print("Card #\(number) is being deinitialized") }
 }
 ```
 
@@ -347,7 +347,7 @@ john = nil
 ```swift
 class Country {
     let name: String
-    let capitalCity: City!
+    var capitalCity: City!
     init(name: String, capitalName: String) {
         self.name = name
         self.capitalCity = City(name: capitalName, country: self)
@@ -378,7 +378,7 @@ class City {
 
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
-println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // prints "Canada's capital city is called Ottawa"
 ```
 
@@ -403,7 +403,7 @@ class HTMLElement {
     let name: String
     let text: String?
 
-    lazy var asHTML: () -> String = {
+    lazy var asHTML: Void -> String = {
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
         } else {
@@ -417,7 +417,7 @@ class HTMLElement {
     }
 
     deinit {
-        println("\(name) is being deinitialized")
+        print("\(name) is being deinitialized")
     }
 
 }
@@ -440,7 +440,7 @@ class HTMLElement {
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-println(paragraph!.asHTML())
+print(paragraph!.asHTML())
 // prints"hello, world"
 ```
 
@@ -488,7 +488,7 @@ lazy var someClosure: (Int, String) -> String = {
 如果闭包没有指定参数列表或者返回类型，则可以通过上下文推断，那么可以捕获列表放在闭包开始的地方，跟着是关键字`in`：
 
 ```swift
-lazy var someClosure: () -> String = {
+lazy var someClosure: Void -> String = {
     [unowned self] in
     // closure body goes here
 }
@@ -511,7 +511,7 @@ class HTMLElement {
     let name: String
     let text: String?
 
-    lazy var asHTML: () -> String = {
+    lazy var asHTML: Void -> String = {
         [unowned self] in
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
@@ -526,7 +526,7 @@ class HTMLElement {
     }
 
     deinit {
-        println("\(name) is being deinitialized")
+        print("\(name) is being deinitialized")
     }
 
 }
@@ -538,7 +538,7 @@ class HTMLElement {
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-println(paragraph!.asHTML())
+print(paragraph!.asHTML())
 // prints "<p>hello, world</p>"
 ```
 
