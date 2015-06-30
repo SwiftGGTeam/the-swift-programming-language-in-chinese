@@ -167,7 +167,7 @@ when working with strings as value types.
 Working with Characters
 -----------------------
 
-You can access the individual ``Character`` values in for ``String``
+You can access the individual ``Character`` values for a ``String``
 by iterating over its ``characters`` property with a ``for``-``in`` loop:
 
 .. testcode:: characters
@@ -202,7 +202,6 @@ as an argument to its initializer:
    << // catString : String = "Cat!🐱"
    -> print(catString)
    <- Cat!🐱
-
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
