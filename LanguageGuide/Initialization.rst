@@ -418,9 +418,11 @@ with all of its properties set to their default values.
    -> class A { var a: String = "a" }
    -> A().a
    <$ : String = "a"
-   -> class B: A {}
+   -> class B: A { var b: String = "b" }
    -> B().a
    <$ : String = "a"
+   -> B().b
+   <$ : String = "b"
 
 This example defines a class called ``ShoppingListItem``,
 which encapsulates the name, quantity, and purchase state
