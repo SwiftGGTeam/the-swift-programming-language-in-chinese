@@ -43,7 +43,7 @@ func swapTwoInts(inout a: Int, inout _ b: Int) {
 var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
-println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // 输出 "someInt is now 107, and anotherInt is now 3"
 ```
 
@@ -252,13 +252,13 @@ extension Stack {
 if let topItem = stackOfStrings.topItem {
 	print("The top item on the stack is \(topItem).")
 }
-// 打印 "The top item on the stack is tres."
+// 输出 "The top item on the stack is tres."
 ```
 
 <a name="type_constraints"></a>
 ##类型约束
 
-`swapTwoValues`函数和`Stack`类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
+`swapTwoValues(_:_:)`函数和`Stack`类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
 
 例如，Swift 的`Dictionary`类型对作用于其键的类型做了些限制。在[字典](../chapter2/04_Collection_Types.html)的描述中，字典的键类型必须是*可哈希*，也就是说，必须有一种方法可以使其被唯一的表示。`Dictionary`之所以需要其键是可哈希是为了以便于其检查其是否已经包含某个特定键的值。如无此需求，`Dictionary`既不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。
 
@@ -272,7 +272,7 @@ if let topItem = stackOfStrings.topItem {
 
 ```swift
 func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
-    // function body goes here
+    // 这里是函数主体
 }
 ```
 
@@ -280,11 +280,11 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 
 ### 类型约束行为
 
-这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
+这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex(_:_:)`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
 
 ```swift
-func findStringIndex(array: [String], valueToFind: String) -> Int? {
-    for (index, value) in enumerate(array) {
+func findStringIndex(array: [String], _ valueToFind: String) -> Int? {
+    for (index, value) in array.enumerate() {
         if value == valueToFind {
             return index
         }
@@ -294,12 +294,12 @@ func findStringIndex(array: [String], valueToFind: String) -> Int? {
 ```
 
 
-`findStringIndex`函数可以作用于查找一字符串数组中的某个字符串:
+`findStringIndex(_:_:)`函数可以作用于查找一字符串数组中的某个字符串:
 
 ```swift
 let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
 if let foundIndex = findStringIndex(strings, "llama") {
-    println("The index of llama is \(foundIndex)")
+    print("The index of llama is \(foundIndex)")
 }
 // 输出 "The index of llama is 2"
 ```
@@ -309,8 +309,8 @@ if let foundIndex = findStringIndex(strings, "llama") {
 这里展示如何写一个你或许期望的`findStringIndex`的泛型版本`findIndex`。请注意这个函数仍然返回`Int`，是不是有点迷惑呢，而不是泛型类型?那是因为函数返回的是一个可选的索引数，而不是从数组中得到的一个可选值。需要提醒的是，这个函数不会编译，原因在例子后面会说明：
 
 ```swift
-func findIndex<T>(array: [T], valueToFind: T) -> Int? {
-    for (index, value) in enumerate(array) {
+func findIndex<T>(array: [T], _ valueToFind: T) -> Int? {
+    for (index, value) in array.enumerate() {
         if value == valueToFind {
             return index
         }
@@ -323,11 +323,11 @@ func findIndex<T>(array: [T], valueToFind: T) -> Int? {
 
 不过，所有的这些并不会让我们无从下手。Swift 标准库中定义了一个`Equatable`协议，该协议要求任何遵循的类型实现等式符（==）和不等符（!=）对任何两个该类型进行比较。所有的 Swift 标准类型自动支持`Equatable`协议。
 
-任何`Equatable`类型都可以安全的使用在`findIndex`函数中，因为其保证支持等式操作。为了说明这个事实，当你定义一个函数时，你可以写一个`Equatable`类型约束作为类型参数定义的一部分：
+任何`Equatable`类型都可以安全的使用在`findIndex(_:_:)`函数中，因为其保证支持等式操作。为了说明这个事实，当你定义一个函数时，你可以写一个`Equatable`类型约束作为类型参数定义的一部分：
 
 ```swift
-func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
-    for (index, value) in enumerate(array) {
+func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
+    for (index, value) in array.enumerate() {
         if value == valueToFind {
             return index
         }
@@ -339,7 +339,7 @@ func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
 
 `findIndex`中这个单个类型参数写做：`T: Equatable`，也就意味着“任何T类型都遵循`Equatable`协议”。
 
-`findIndex`函数现在则可以成功的编译过，并且作用于任何遵循`Equatable`的类型，如`Double`或`String`:
+`findIndex(_:_:)`函数现在则可以成功的编译过，并且作用于任何遵循`Equatable`的类型，如`Double`或`String`:
 
 ```swift
 let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
