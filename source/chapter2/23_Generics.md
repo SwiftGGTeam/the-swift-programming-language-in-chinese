@@ -355,7 +355,7 @@ let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
 
 ### 关联类型行为
 
-这里是一个`Container`协议的例子，定义了一个ItemType关联类型：
+这里是一个`Container`协议的例子，定义了一个`ItemType`关联类型：
 
 ```swift
 protocol Container {
@@ -368,19 +368,19 @@ protocol Container {
 
 `Container`协议定义了三个任何容器必须支持的兼容要求：
 
-- 必须可以通过`append`方法添加一个新item到容器里；
-- 必须可以通过使用`count`属性获取容器里items的数量，并返回一个`Int`值；
-- 必须可以通过容器的`Int`索引值下标可以检索到每一个item。
+- 必须可以通过`append(_:)`方法添加一个新元素到容器里；
+- 必须可以通过使用`count`属性获取容器里元素的数量，并返回一个`Int`值；
+- 必须可以通过容器的`Int`索引值下标可以检索到每一个元素。
 
-这个协议没有指定容器里item是如何存储的或何种类型是允许的。这个协议只指定三个任何遵循`Container`类型所必须支持的功能点。一个遵循的类型在满足这三个条件的情况下也可以提供其他额外的功能。
+这个协议没有指定容器里的元素是如何存储的或何种类型是允许的。这个协议只指定三个任何遵循`Container`类型所必须支持的功能点。一个遵循的类型在满足这三个条件的情况下也可以提供其他额外的功能。
 
-任何遵循`Container`协议的类型必须指定存储在其里面的值类型，必须保证只有正确类型的items可以加进容器里，必须明确可以通过其下标返回item类型。
+任何遵循`Container`协议的类型必须指定存储在其里面的值类型，必须保证只有正确类型的元素可以加进容器里，必须明确可以通过其下标返回元素类型。
 
-为了定义这三个条件，`Container`协议需要一个方法指定容器里的元素将会保留，而不需要知道特定容器的类型。`Container`协议需要指定任何通过`append`方法添加到容器里的值和容器里元素是相同类型，并且通过容器下标返回的容器元素类型的值的类型是相同类型。
+为了定义这三个条件，`Container`协议需要一个方法指定容器里的元素将会保留，而不需要知道特定容器的类型。`Container`协议需要指定任何通过`append(_:)`方法添加到容器里的值和容器里元素是相同类型，并且通过容器下标返回的容器元素类型的值的类型是相同类型。
 
-为了达到此目的，`Container`协议声明了一个ItemType的关联类型，写作`typealias ItemType`。这个协议不会定义`ItemType`是什么的别名，这个信息将由任何遵循协议的类型来提供。尽管如此，`ItemType`别名提供了一种识别Container中Items类型的方法，并且用于`append`方法和`subscript`方法的类型定义，以便保证任何`Container`期望的行为能够被执行。
+为了达到此目的，`Container`协议声明了一个`ItemType`的关联类型，写作`typealias ItemType`。这个协议不会定义`ItemType`是什么的别名，这个信息将由任何遵循协议的类型来提供。尽管如此，`ItemType`别名提供了一种识别`Container`中元素类型的方法，并且用于`append(_:)`方法和`subscript`方法的类型定义，以便保证任何`Container`期望的行为能够被执行。
 
-这里是一个早前IntStack类型的非泛型版本，遵循Container协议：
+这里是一个早前`IntStack`类型的非泛型版本，遵循`Container`协议：
 
 ```swift
 struct IntStack: Container {
@@ -398,7 +398,7 @@ struct IntStack: Container {
         self.push(item)
     }
     var count: Int {
-    return items.count
+    	return items.count
     }
     subscript(i: Int) -> Int {
         return items[i]
@@ -409,9 +409,9 @@ struct IntStack: Container {
 
 `IntStack`类型实现了`Container`协议的所有三个要求，在`IntStack`类型的每个包含部分的功能都满足这些要求。
 
-此外，`IntStack`指定了`Container`的实现，适用的ItemType被用作`Int`类型。对于这个`Container`协议实现而言，定义 `typealias ItemType = Int`，将抽象的`ItemType`类型转换为具体的`Int`类型。
+此外，`IntStack`指定了`Container`的实现，适用的`ItemType`被用作`Int`类型。对于这个`Container`协议实现而言，定义 `typealias ItemType = Int`，将抽象的`ItemType`类型转换为具体的`Int`类型。
 
-感谢Swift类型参考，你不用在`IntStack`定义部分声明一个具体的`Int`的`ItemType`。由于`IntStack`遵循`Container`协议的所有要求，只要通过简单的查找`append`方法的item参数类型和下标返回的类型，Swift就可以推断出合适的`ItemType`来使用。确实，如果上面的代码中你删除了 `typealias ItemType = Int`这一行，一切仍旧可以工作，因为它清楚的知道ItemType使用的是何种类型。
+感谢Swift类型参考，你不用在`IntStack`定义部分声明一个具体的`Int`的`ItemType`。由于`IntStack`遵循`Container`协议的所有要求，只要通过简单的查找`append(_:)`方法的`item`参数类型和下标返回的类型，Swift就可以推断出合适的`ItemType`来使用。确实，如果上面的代码中你删除了 `typealias ItemType = Int`这一行，一切仍旧可以工作，因为它清楚的知道`ItemType`使用的是何种类型。
 
 你也可以生成遵循`Container`协议的泛型`Stack`类型：
 
@@ -430,7 +430,7 @@ struct Stack<T>: Container {
         self.push(item)
     }
     var count: Int {
-    return items.count
+    	return items.count
     }
     subscript(i: Int) -> T {
         return items[i]
@@ -438,20 +438,20 @@ struct Stack<T>: Container {
 }
 ```
 
-这个时候，占位类型参数`T`被用作`append`方法的item参数和下标的返回类型。Swift 因此可以推断出被用作这个特定容器的`ItemType`的`T`的合适类型。
+这个时候，占位类型参数`T`被用作`append(_:)`方法的`item`参数和下标的返回类型。Swift 因此可以推断出被用作这个特定容器的`ItemType`的`T`的合适类型。
 
 
 ### 扩展一个存在的类型为一指定关联类型
 
 在[使用扩展来添加协议兼容性](../chapter2/21_Protocols.html)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
 
-Swift的`Array`已经提供`append`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳](../chapter2/21_Protocols.html)中有描述这样一个实现一个空扩展的行为：
+Swift的`Array`已经提供`append(_:)`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳](../chapter2/21_Protocols.html)中有描述这样一个实现一个空扩展的行为：
 
 ```swift
 extension Array: Container {}
 ```
 
-如同上面的泛型`Stack`类型一样，`Array的append`方法和下标保证`Swift`可以推断出`ItemType`所使用的适用的类型。定义了这个扩展后，你可以将任何`Array`当作`Container`来使用。
+如同上面的泛型`Stack`类型一样，`Array`的`append(_:)`方法和下标保证`Swift`可以推断出`ItemType`所使用的适用的类型。定义了这个扩展后，你可以将任何`Array`当作`Container`来使用。
 
 <a name="where_clauses"></a>
 ## Where 语句
@@ -509,15 +509,15 @@ func allItemsMatch<
 
 第三个和第四个要求结合起来的意思是`anotherContainer`中的元素也可以通过 `!=` 操作来检查，因为它们在`someContainer`中元素确实是相同的类型。
 
-这些要求能够使`allItemsMatch`函数比较两个容器，即便它们是不同的容器类型。
+这些要求能够使`allItemsMatch(_:_:)`函数比较两个容器，即便它们是不同的容器类型。
 
-`allItemsMatch`首先检查两个容器是否拥有同样数目的items，如果它们的元素数目不同，没有办法进行匹配，函数就会`false`。
+`allItemsMatch(_:_:)`首先检查两个容器是否拥有同样数目的items，如果它们的元素数目不同，没有办法进行匹配，函数就会`false`。
 
-检查完之后，函数通过`for-in`循环和半闭区间操作（..）来迭代`someContainer`中的所有元素。对于每个元素，函数检查是否`someContainer`中的元素不等于对应的`anotherContainer`中的元素，如果这两个元素不等，则这两个容器不匹配，返回`false`。
+检查完之后，函数通过`for-in`循环和半闭区间操作（`..<`）来迭代`someContainer`中的所有元素。对于每个元素，函数检查是否`someContainer`中的元素不等于对应的`anotherContainer`中的元素，如果这两个元素不等，则这两个容器不匹配，返回`false`。
 
 如果循环体结束后未发现没有任何的不匹配，那表明两个容器匹配，函数返回`true`。
 
-这里演示了allItemsMatch函数运算的过程：
+这里演示了`allItemsMatch(_:_:)`函数运算的过程：
 
 ```swift
 var stackOfStrings = Stack<String>()
@@ -528,14 +528,14 @@ stackOfStrings.push("tres")
 var arrayOfStrings = ["uno", "dos", "tres"]
 
 if allItemsMatch(stackOfStrings, arrayOfStrings) {
-    println("All items match.")
+    print("All items match.")
 } else {
-    println("Not all items match.")
+    print("Not all items match.")
 }
 // 输出 "All items match."
 ```
 
- 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。因此你可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的`items`匹配。
+ 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组是不同的类型，但它们都遵循`Container`协议，而且它们都包含同样的类型值。因此你可以调用`allItemsMatch(_:_:)`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch(_:_:)`函数正确的显示了这两个容器的所有元素都是相互匹配的。
 
   [1]: ../chapter2/06_Functions.html
   [2]: https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png
