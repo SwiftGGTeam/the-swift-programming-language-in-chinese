@@ -1,5 +1,5 @@
 > 翻译：[shinyzhu](https://github.com/shinyzhu)  
-> 校对：[pp-prog](https://github.com/pp-prog)
+> 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
 
 # 属性 (Properties)
 ---
@@ -12,16 +12,16 @@
 - [全局变量和局部变量（Global and Local Variables）](#global_and_local_variables)
 - [类型属性（Type Properties）](#type_properties)
 
-**属性**将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，计算属性计算（而不是存储）一个值。计算属性可以用于类、结构体和枚举里，存储属性只能用于类和结构体。
+*属性*将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，而计算属性计算（不是存储）一个值。计算属性可以用于类、结构体和枚举，存储属性只能用于类和结构体。
 
-存储属性和计算属性通常用于特定类型的实例，但是，属性也可以直接用于类型本身，这种属性称为类型属性。
+存储属性和计算属性通常与特定类型的实例关联。但是，属性也可以直接作用于类型本身，这种属性称为类型属性。
 
-另外，还可以定义属性观察器来监控属性值的变化，以此来触发一个自定义的操作。属性观察器可以添加到自己写的存储属性上，也可以添加到从父类继承的属性上。
+另外，还可以定义属性观察器来监控属性值的变化，以此来触发一个自定义的操作。属性观察器可以添加到自己定义的存储属性上，也可以添加到从父类继承的属性上。
 
 <a name="stored_properties"></a>
 ## 存储属性
 
-简单来说，一个存储属性就是存储在特定类或结构体的实例里的一个常量或变量，存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
+简单来说，一个存储属性就是存储在特定类或结构体的实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
 
 可以在定义存储属性的时候指定默认值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[默认属性值](../chapter2/14_Initialization.html#default_property_values)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[在初始化阶段修改常量存储属性](../chapter2/14_Initialization.html#modifying_constant_properties_during_initialization)一节。
 
@@ -38,12 +38,12 @@ rangeOfThreeItems.firstValue = 6
 // 该区间现在表示整数6，7，8
 ```
 
-`FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被赋值，因为它是一个常量存储属性，所以之后无法修改它的值。
+`FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被初始化，因为它是一个常量存储属性，所以之后无法修改它的值。
 
 <a name="stored_properties_of_constant_structure_instances"></a>
-### 常量和存储属性
+### 常量结构体的存储属性
 
-如果创建了一个结构体的实例并赋值给一个常量，则无法修改实例的任何属性，即使定义了变量存储属性：
+如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使定义了变量存储属性：
 
 ```swift
 let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
@@ -52,11 +52,11 @@ rangeOfFourItems.firstValue = 6
 // 尽管 firstValue 是个变量属性，这里还是会报错
 ```
 
-因为`rangeOfFourItems`声明成了常量（用`let`关键字），即使`firstValue`是一个变量属性，也无法再修改它了。
+因为`rangeOfFourItems`被声明成了常量（用`let`关键字），即使`firstValue`是一个变量属性，也无法再修改它了。
 
 这种行为是由于结构体（struct）属于*值类型*。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量。
 
-属于*引用类型*的类（class）则不一样，把一个引用类型的实例赋给一个常量后，仍然可以修改实例的变量属性。
+属于*引用类型*的类（class）则不一样。把一个引用类型的实例赋给一个常量后，仍然可以修改该实例的变量属性。
 
 <a name="lazy_stored_properties"></a>
 ### 延迟存储属性
@@ -64,11 +64,11 @@ rangeOfFourItems.firstValue = 6
 延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`lazy`来标示一个延迟存储属性。
 
 > 注意：  
-> 必须将延迟存储属性声明成变量（使用`var`关键字），因为属性的值在实例构造完成之前可能无法得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
+> 必须将延迟存储属性声明成变量（使用`var`关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
 
-延迟属性很有用，当属性的值依赖于在实例的构造过程结束前无法知道具体值的外部因素时，或者当属性的值需要复杂或大量计算时，可以只在需要的时候来计算它。
+延迟属性很有用，当属性的值依赖于在实例的构造过程结束后才会知道具体值的外部因素时，或者当获得属性的初始值需要复杂或大量计算时，可以只在需要的时候计算它。
 
-下面的例子使用了延迟存储属性来避免复杂类的不必要的初始化。例子中定义了`DataImporter`和`DataManager`两个类，下面是部分代码：
+下面的例子使用了延迟存储属性来避免复杂类中不必要的初始化。例子中定义了`DataImporter`和`DataManager`两个类，下面是部分代码：
 
 ```swift
 class DataImporter {
@@ -94,25 +94,27 @@ manager.data.append("Some more data")
 
 `DataManager`类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。虽然没有写出全部代码，`DataManager`类的目的是管理和提供对这个字符串数组的访问。
 
-`DataManager`的一个功能是从文件导入数据，该功能由`DataImporter`类提供，`DataImporter`需要消耗不少时间完成初始化：因为它的实例在初始化时可能要打开文件，还要读取文件内容到内存。
+`DataManager`的一个功能是从文件导入数据。该功能由`DataImporter`类提供，`DataImporter`完成初始化需要消耗不少时间：因为它的实例在初始化时可能要打开文件，还要读取文件内容到内存。
 
-`DataManager`也可能不从文件中导入数据。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的是当用到`DataImporter`的时候才去创建它。
+`DataManager`也可能不从文件中导入数据就完成了管理数据的功能。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的是当第一次用到`DataImporter`的时候才去创建它。
 
 由于使用了`lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
 
 ```swift
-println(manager.importer.fileName)
+print(manager.importer.fileName)
 // DataImporter 实例的 importer 属性现在被创建了
 // 输出 "data.txt”
 ```
 
+> 注意：  
+> 如果一个被标记为`lazy`的属性在没有初始化时就同时被多个线程访问，则无法保证该属性只会被初始化一次。
+
 <a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
-如果您有过 Objective-C 经验，应该知道Objective-C为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
 
-Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
-一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
+Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
 
 <a name="computed_properties"></a>
 ## 计算属性
