@@ -119,7 +119,7 @@ Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属�
 <a name="computed_properties"></a>
 ## 计算属性
 
-除存储属性外，类、结构体和枚举可以定义*计算属性*，计算属性不直接存储值，而是提供一个 getter 来获取值，一个可选的 setter 来间接设置其他属性或变量的值。
+除存储属性外，类、结构体和枚举可以定义*计算属性*。计算属性不直接存储值，而是提供一个 getter 和一个可选的 setter，来间接获取和设置其他属性或变量的值。
 
 ```swift
 struct Point {
@@ -132,38 +132,38 @@ struct Rect {
     var origin = Point()
     var size = Size()
     var center: Point {
-    get {
-        let centerX = origin.x + (size.width / 2)
-        let centerY = origin.y + (size.height / 2)
-        return Point(x: centerX, y: centerY)
-    }
-    set(newCenter) {
-        origin.x = newCenter.x - (size.width / 2)
-        origin.y = newCenter.y - (size.height / 2)
-    }
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
     }
 }
 var square = Rect(origin: Point(x: 0.0, y: 0.0),
     size: Size(width: 10.0, height: 10.0))
 let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
-println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // 输出 "square.origin is now at (10.0, 10.0)”
 ```
 
-这个例子定义了 3 个几何形状的结构体：
+这个例子定义了 3 个结构体来描述几何形状：
 
 - `Point`封装了一个`(x, y)`的坐标
-- `Size`封装了一个`width`和`height`
+- `Size`封装了一个`width`和一个`height`
 - `Rect`表示一个有原点和尺寸的矩形
 
-`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点和尺寸来算出，所以不需要将它以显式声明的`Point`来保存。`Rect`的计算属性`center`提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
+`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点（`origin`）和尺寸（`size`）算出，所以不需要将它以显式声明的`Point`来保存。`Rect`的计算属性`center`提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
 
-例子中接下来创建了一个名为`square`的`Rect`实例，初始值原点是`(0, 0)`，宽度高度都是`10`。如图所示蓝色正方形。
+上述例子中创建了一个名为`square`的`Rect`实例，初始值原点是`(0, 0)`，宽度高度都是`10`。如下图中蓝色正方形所示。
 
-`square`的`center`属性可以通过点运算符（`square.center`）来访问，这会调用 getter 来获取属性的值。跟直接返回已经存在的值不同，getter 实际上通过计算然后返回一个新的`Point`来表示`square`的中心点。如代码所示，它正确返回了中心点`(5, 5)`。
+`square`的`center`属性可以通过点运算符（`square.center`）来访问，这会调用该属性的 getter 来获取它的值。跟直接返回已经存在的值不同，getter 实际上通过计算然后返回一个新的`Point`来表示`square`的中心点。如代码所示，它正确返回了中心点`(5, 5)`。
 
-`center`属性之后被设置了一个新的值`(15, 15)`，表示向右上方移动正方形到如图所示橙色正方形的位置。设置属性`center`的值会调用 setter 来修改属性`origin`的`x`和`y`的值，从而实现移动正方形到新的位置。
+`center`属性之后被设置了一个新的值`(15, 15)`，表示向右上方移动正方形到如下图橙色正方形所示的位置。设置属性`center`的值会调用它的 setter 来修改属性`origin`的`x`和`y`的值，从而实现移动正方形到新的位置。
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
@@ -177,15 +177,15 @@ struct AlternativeRect {
     var origin = Point()
     var size = Size()
     var center: Point {
-    get {
-        let centerX = origin.x + (size.width / 2)
-        let centerY = origin.y + (size.height / 2)
-        return Point(x: centerX, y: centerY)
-    }
-    set {
-        origin.x = newValue.x - (size.width / 2)
-        origin.y = newValue.y - (size.height / 2)
-    }
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
     }
 }
 ```
@@ -195,10 +195,8 @@ struct AlternativeRect {
 
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
-> 注意：
->
+> 注意：  
 > 必须使用`var`关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
-
 
 只读计算属性的声明可以去掉`get`关键字和花括号：
 
@@ -206,15 +204,15 @@ struct AlternativeRect {
 struct Cuboid {
     var width = 0.0, height = 0.0, depth = 0.0
     var volume: Double {
-    return width * height * depth
+    	return width * height * depth
     }
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // 输出 "the volume of fourByFiveByTwo is 40.0"
 ```
 
-这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性，还有一个名为`volume`的只读计算属性用来返回立方体的体积。设置`volume`的值毫无意义，因为通过`width`、`height`和`depth`就能算出`volume`。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
+这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性。结构体还有一个名为`volume`的只读计算属性用来返回立方体的体积。设置`volume`的值毫无意义，因为无法确定修改`width`、`height`和`depth`三者中的哪些值来匹配新的`volume`，从而造成歧义。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
 <a name="property_observers"></a>
 ## 属性观察器
