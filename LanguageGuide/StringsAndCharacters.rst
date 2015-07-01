@@ -567,7 +567,7 @@ the ``Character`` at a particular ``String`` index.
 Attempting to access a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
-.. syntax-outline::
+.. code-block:: swift
 
    greeting[greeting.endIndex] // error
    greeting.endIndex.successor() // error
