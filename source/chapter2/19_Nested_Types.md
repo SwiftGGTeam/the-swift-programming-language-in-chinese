@@ -76,7 +76,7 @@ struct BlackjackCard {
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
-println("theAceOfSpades: \(theAceOfSpades.description)")
+print("theAceOfSpades: \(theAceOfSpades.description)")
 // 打印出 "theAceOfSpades: suit is ♠, value is 1 or 11"
 ```
 
