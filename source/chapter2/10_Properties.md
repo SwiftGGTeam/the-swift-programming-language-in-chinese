@@ -277,11 +277,11 @@ stepCounter.totalSteps = 896
 <a name="global_and_local_variables"></a>
 ##全局变量和局部变量
 
-计算属性和属性观察器所描述的模式也可以用于*全局变量*和*局部变量*，全局变量是在函数、方法、闭包或任何类型之外定义的变量，局部变量是在函数、方法或闭包内部定义的变量。
+计算属性和属性观察器所描述的模式也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
 前面章节提到的全局或局部变量都属于存储型变量，跟存储属性类似，它提供特定类型的存储空间，并允许读取和写入。
 
-另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器，计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
+另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器。计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
 
 > 注意：  
 > 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`特性。  
@@ -296,9 +296,7 @@ stepCounter.totalSteps = 896
 
 类型属性用于定义特定类型所有实例共享的数据，比如所有实例都能用的一个常量（就像 C 语言中的静态常量），或者所有实例都能访问的一个变量（就像 C 语言中的静态变量）。
 
-对于值类型（指结构体和枚举）可以定义存储型和计算型类型属性，对于类（class）则只能定义计算型类型属性。
-
-值类型的存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算属性一样定义成变量属性。
+值类型的存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算属性一样只能定义成变量属性。
 
 > 注意：  
 > 跟实例的存储属性不同，必须给存储型类型属性指定默认值，因为类型本身无法在初始化过程中使用构造器给类型属性赋值。  
@@ -306,26 +304,30 @@ stepCounter.totalSteps = 896
 <a name="type_property_syntax"></a>
 ###类型属性语法
 
-在 C 或 Objective-C 中，静态常量和静态变量的定义是通过特定类型加上`global`关键字。在 Swift 编程语言中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
+在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为全局（*global*）静态变量定义的。但是在 Swift 编程语言中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
 
-使用关键字`static`来定义值类型的类型属性，关键字`class`来为类（class）定义类型属性。下面的例子演示了存储型和计算型类型属性的语法：
+使用关键字`static`来定义类型属性。在为类（class）定义计算型类型属性时，可以使用关键字`class`来支持子类对父类的实现进行重写。下面的例子演示了存储型和计算型类型属性的语法：
 
 ```swift
 struct SomeStructure {
     static var storedTypeProperty = "Some value."
     static var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+        return 1
     }
 }
 enum SomeEnumeration {
     static var storedTypeProperty = "Some value."
     static var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+        return 6
     }
 }
 class SomeClass {
-    class var computedTypeProperty: Int {
-    // 这里返回一个 Int 值
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 27
+    }
+    class var overrideableComputedTypeProperty: Int {
+        return 107
     }
 }
 ```
@@ -336,17 +338,18 @@ class SomeClass {
 <a name="querying_and_setting_type_properties"></a>
 ###获取和设置类型属性的值
 
-跟实例的属性一样，类型属性的访问也是通过点运算符来进行，但是，类型属性是通过类型本身来获取和设置，而不是通过实例。比如：
+跟实例的属性一样，类型属性的访问也是通过点运算符来进行。但是，类型属性是通过类型本身来获取和设置，而不是通过实例。比如：
 
 ```swift
-println(SomeClass.computedTypeProperty)
-// 输出 "42"
-
-println(SomeStructure.storedTypeProperty)
+print(SomeStructure.storedTypeProperty)
 // 输出 "Some value."
 SomeStructure.storedTypeProperty = "Another value."
-println(SomeStructure.storedTypeProperty)
+print(SomeStructure.storedTypeProperty)
 // 输出 "Another value.”
+print(SomeEnumeration.computedTypeProperty)
+// 输出 "6"
+print(SomeClass.computedTypeProperty)
+// 输出 "27"
 ```
 
 下面的例子定义了一个结构体，使用两个存储型类型属性来表示多个声道的声音电平值，每个声道有一个 0 到 10 之间的整数表示声音电平值。
@@ -355,23 +358,23 @@ println(SomeStructure.storedTypeProperty)
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png" alt="Static Properties VUMeter" width="243" height="357" />
 
-上面所描述的声道模型使用`AudioChannel`结构体来表示：
+上面所描述的声道模型使用`AudioChannel`结构体的实例来表示：
 
 ```swift
 struct AudioChannel {
     static let thresholdLevel = 10
     static var maxInputLevelForAllChannels = 0
     var currentLevel: Int = 0 {
-    didSet {
-        if currentLevel > AudioChannel.thresholdLevel {
-            // 将新电平值设置为阀值
-            currentLevel = AudioChannel.thresholdLevel
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // 将新电平值设置为阀值
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // 存储当前电平值作为新的最大输入电平
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
         }
-        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-            // 存储当前电平值作为新的最大输入电平
-            AudioChannel.maxInputLevelForAllChannels = currentLevel
-        }
-    }
     }
 }
 ```
@@ -382,10 +385,10 @@ struct AudioChannel {
 
 `AudioChannel`也定义了一个名为`currentLevel`的实例存储属性，表示当前声道现在的电平值，取值为 0 到 10。
 
-属性`currentLevel`包含`didSet`属性观察器来检查每次新设置后的属性值，有如下两个检查：
+属性`currentLevel`包含`didSet`属性观察器来检查每次新设置后的属性值，它有如下两个检查：
 
 - 如果`currentLevel`的新值大于允许的阈值`thresholdLevel`，属性观察器将`currentLevel`的值限定为阈值`thresholdLevel`。
-- 如果修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性观察器将新值保存在静态属性`maxInputLevelForAllChannels`中。
+- 如果前一个修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性观察器将新值保存在静态类型属性`maxInputLevelForAllChannels`中。
 
 > 注意：  
 > 在第一个检查过程中，`didSet`属性观察器将`currentLevel`设置成了不同的值，但这时不会再次调用属性观察器。  
@@ -401,9 +404,9 @@ var rightChannel = AudioChannel()
 
 ```swift
 leftChannel.currentLevel = 7
-println(leftChannel.currentLevel)
+print(leftChannel.currentLevel)
 // 输出 "7"
-println(AudioChannel.maxInputLevelForAllChannels)
+print(AudioChannel.maxInputLevelForAllChannels)
 // 输出 "7"
 ```
 
@@ -411,8 +414,8 @@ println(AudioChannel.maxInputLevelForAllChannels)
 
 ```swift
 rightChannel.currentLevel = 11
-println(rightChannel.currentLevel)
+print(rightChannel.currentLevel)
 // 输出 "10"
-println(AudioChannel.maxInputLevelForAllChannels)
+print(AudioChannel.maxInputLevelForAllChannels)
 // 输出 "10"
 ```
