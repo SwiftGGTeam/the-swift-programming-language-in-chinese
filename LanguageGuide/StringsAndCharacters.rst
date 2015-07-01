@@ -114,7 +114,7 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: cannot pass 'let' value 'constantString' to mutating binary operator '+='
+   !! <REPL Input>:1:16: error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
    !! constantString += " and another Highlander"
    !! ~~~~~~~~~~~~~~ ^
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
@@ -547,18 +547,19 @@ the ``Character`` at a particular ``String`` index.
 
 .. testcode:: stringIndex
 
-   -> let greeting = "Guten Tag"
-   << // greeting : String = "Guten Tag"
+   -> let greeting = "Guten Tag!"
+   << // greeting : String = "Guten Tag!"
    -> greeting[greeting.startIndex]
-   << <REPL>: Character = "G"
-   </ G
+   <$ : Character = "G"
+   // G
    -> greeting[greeting.endIndex.predecessor()]
-   << <REPL>: Character = "g"
-   </ g
+   <$ : Character = "!"
+   // !
    -> greeting[greeting.startIndex.successor()]
-   << <REPL>: Character = "u"
-   </ u
+   <$ : Character = "u"
+   // u
    -> let index = advance(greeting.startIndex, 7)
+   << // index : Index = 7
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -566,18 +567,10 @@ the ``Character`` at a particular ``String`` index.
 Attempting to access a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
-.. testcode:: stringIndexOutOfIndex
+.. syntax-outline::
 
-   >> struct MockString {
-   >>     subscript(index: Int) -> Int { return 0 }
-   >>     let endIndex = 0
-   >> }
-   >> let greeting = MockString()
-   << // greeting : MockString = REPL.MockString(endIndex: 0)
-   -> greeting[greeting.endIndex] // error
-   <$ : Int = 0
-   -> greeting.endIndex.successor() // error
-   <$ : Int = 1
+   greeting[greeting.endIndex] // error
+   greeting.endIndex.successor() // error
 
 .. assertion:: emptyStringIndexes
 
