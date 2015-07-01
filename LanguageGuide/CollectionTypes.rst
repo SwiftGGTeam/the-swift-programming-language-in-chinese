@@ -70,9 +70,9 @@ The same value can appear in an array multiple times at different positions.
 Array Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The type of a Swift array is written in full as ``Array<T>``,
-where ``T`` is the type of values the array is allowed to store.
-You can also write the type of an array in shorthand form as ``[T]``.
+The type of a Swift array is written in full as ``Array<SomeType>``,
+where ``SomeType`` is the type of values the array is allowed to store.
+You can also write the type of an array in shorthand form as ``[SomeType]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred
 and is used throughout this guide when referring to the type of an array.
