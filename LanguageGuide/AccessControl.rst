@@ -744,9 +744,9 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !! /tmp/sourcefile_1.swift:2:40: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
+   !! /tmp/sourcefile_1.swift:2:53: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
    !! let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !!                                                     ^
+   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
@@ -755,9 +755,9 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> var stringToEdit_Module2 = TrackedString()
    // check that we can't change its value from another module
    -> let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !! /tmp/sourcefile_0.swift:3:39: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
+   !! /tmp/sourcefile_0.swift:3:52: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
    !! let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !!                                                    ^
+   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
 
 .. _AccessControl_Initializers:
 

@@ -211,7 +211,7 @@ Attempting to do so is reported as an error when your code is compiled:
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // this is a compile-time error - languageName cannot be changed
-   !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
+   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable

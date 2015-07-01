@@ -103,9 +103,9 @@ even if they were declared as variable properties:
    << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !!  <REPL Input>:1:29: error: cannot assign to 'firstValue': 'rangeOfFourItems' is immutable
+   !!  <REPL Input>:1:29: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
    !! rangeOfFourItems.firstValue = 6
-   !! ~~~~~~~~~~~~~~~~ ~~~~~~~~~~ ^
+   !! ~~~~~~~~~~~~~~~~            ^
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
    !! ^~~
