@@ -222,34 +222,33 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重载请参考[继承](chapter/13_Inheritance.html)一章的[重载](chapter/13_Inheritance.html#overriding)。
 
 > 注意：  
-> 不需要为无法重载的计算属性添加属性观察器，因为可以通过 setter 直接监控和响应值的变化。  
+> 不需要为非重载的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。  
 
 可以为属性添加如下的一个或全部观察器：
 
-- `willSet`在设置新的值之前调用
+- `willSet`在新的值被设置之前调用
 - `didSet`在新的值被设置之后立即调用
 
-`willSet`观察器会将新的属性值作为固定参数传入，在`willSet`的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称`newValue`表示。
+`willSet`观察器会将新的属性值作为常量参数传入，在`willSet`的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称`newValue`表示。
 
 类似地，`didSet`观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
-> 注意：
->
+> 注意：  
 > `willSet`和`didSet`观察器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
 
-这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数，可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
+这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
 ```swift
 class StepCounter {
     var totalSteps: Int = 0 {
-    willSet(newTotalSteps) {
-        println("About to set totalSteps to \(newTotalSteps)")
-    }
-    didSet {
-        if totalSteps > oldValue  {
-            println("Added \(totalSteps - oldValue) steps")
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
         }
-    }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
     }
 }
 let stepCounter = StepCounter()
@@ -270,10 +269,10 @@ stepCounter.totalSteps = 896
 
 例子中的`willSet`观察器将表示新值的参数自定义为`newTotalSteps`，这个观察器只是简单的将新的值输出。
 
-`didSet`观察器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
+`didSet`观察器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有为旧的值提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
 
 > 注意：  
-> 如果在`didSet`观察器里为属性赋值，这个值会替换观察器之前设置的值。  
+> 如果在一个属性的`didSet`观察器里为它赋值，这个值会替换该观察器之前设置的值。  
 
 <a name="global_and_local_variables"></a>
 ##全局变量和局部变量
