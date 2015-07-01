@@ -234,7 +234,8 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 类似地，`didSet`观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
 > 注意：  
-> `willSet`和`didSet`观察器在属性初始化过程中不会被调用，它们只会当属性的值在初始化之外的地方被设置时被调用。
+> 父类的属性在子类的构造器中被赋值时，它在父类中的`willSet`和`didSet`观察器会被调用。  
+> 有关构造器代理的更多信息，请参考[值类型的构造器代理](chapter/14_Initialization.html#initializer_delegation_for_value_types)和[构造器链](chapter/14_Initialization.html#initialization_chain)。
 
 这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
