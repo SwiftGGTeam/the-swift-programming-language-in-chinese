@@ -1033,18 +1033,17 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Unlike functions, an initializer can't be used as a value.
+Like a function, an initializer can be used as a value.
 For example:
 
 .. testcode:: initExpression
 
     >> class SomeClass { class func someClassFunction() {} }
-    -> var x = SomeClass.someClassFunction // ok
-    << // x : () -> () = (Function)
-    -> var y = SomeClass.init              // error
-    !! <REPL Input>:1:19: error: initializer cannot be referenced without arguments
-    !! var y = SomeClass.init              // error
-    !!                   ^
+    -> var initializer = SomeClass.init
+    <~ // initializer : () -> SomeClass = (Function)
+    -> initializer()
+    <$ : SomeClass = REPL.SomeClass
+    // Creates an instance of SomeClass
 
 You also use an initializer expression
 to delegate to the initializer of a superclass.
