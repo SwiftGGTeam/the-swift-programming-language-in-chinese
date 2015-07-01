@@ -1284,6 +1284,7 @@ which has two optional requirements:
 
 .. testcode:: protocolConformance
 
+   >> import Foundation
    -> @objc protocol CounterDataSource {
          optional func incrementForCount(count: Int) -> Int
          optional var fixedIncrement: Int { get }
