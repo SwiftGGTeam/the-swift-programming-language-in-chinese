@@ -138,6 +138,7 @@ in documentation comments:
 ``Returns``,
 ``SeeAlso``,
 ``Since``,
+``Throws``,
 ``TODO``,
 ``Version``, and
 ``Warning``
