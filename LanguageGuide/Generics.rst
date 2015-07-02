@@ -196,7 +196,7 @@ you can use it to define the type of a function's parameters
 (such as the ``a`` and ``b`` parameters of the ``swapTwoValues(_:_:)`` function),
 or as the function's return type,
 or as a type annotation within the body of the function.
-In each case, the placeholder type represented by the type parameter
+In each case, the type parameter
 is replaced with an *actual* type whenever the function is called.
 (In the ``swapTwoValues(_:_:)`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
@@ -211,26 +211,19 @@ separated by commas.
 Naming Type Parameters
 ----------------------
 
-In simple cases where a generic function or generic type
-refers to a single placeholder type
-(such as the ``swapTwoValues`` generic function above,
-or a generic collection that stores a single type, such as ``Array``),
-it is traditional to use the single-character name ``T`` for the type parameter.
-However, you can use any valid identifier as the type parameter name.
-
-If you are defining more complex generic functions,
-or generic types with multiple parameters,
-it is useful to provide more descriptive type parameter names.
-For example, Swift's ``Dictionary`` type has two type parameters ---
-one for its keys and one for its values.
-If you were writing ``Dictionary`` yourself,
-you might name these two type parameters ``Key`` and ``Value``
-to remind you of their purpose as you use them within your generic code.
+In most cases, type parameters have descriptive names,
+such as ``Key`` and ``Value`` in ``Dictionary<Key, Value>``
+and ``Element`` in ``Array<Element>``,
+which tells the reader about the relationship between the type parameter
+and the generic type or function it's used in.
+However, when there isn't a meaningful relationship between them,
+it's traditional to name them using single letters such as ``T``, ``U``, and ``V``,
+such as ``T`` in the ``swapTwoValues(_:_:)`` function above.
 
 .. note::
 
-   Always give type parameters ``UpperCamelCase`` names
-   (such as ``T`` and ``Key``)
+   Always give type parameters upper camel case names
+   (such as ``T`` and ``MyTypeParameter``)
    to indicate that they are a placeholder for a *type*, not a value.
 
 .. _Generics_GenericTypes:
@@ -326,7 +319,7 @@ Here's a generic version of the same code:
 
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
-but with a placeholder type parameter called ``T``
+but with a type parameter called ``T``
 instead of an actual type of ``Int``.
 This type parameter is written within a pair of angle brackets (``<T>``)
 immediately after the structure's name.
@@ -755,7 +748,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
          }
       }
 
-This time, the placeholder type parameter ``T`` is used as
+This time, the type parameter ``T`` is used as
 the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
 Swift can therefore infer that ``T`` is the appropriate type to use
@@ -845,7 +838,7 @@ This function takes two arguments called
 ``someContainer`` and ``anotherContainer``.
 The ``someContainer`` argument is of type ``C1``,
 and the ``anotherContainer`` argument is of type ``C2``.
-Both ``C1`` and ``C2`` are placeholder type parameters
+Both ``C1`` and ``C2`` are type parameters
 for two container types to be determined when the function is called.
 
 The function's type parameter list places
