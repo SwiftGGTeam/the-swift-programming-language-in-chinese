@@ -25,6 +25,7 @@ or bound to a constant or variable name.
 .. testcode:: patternMatchingIntroduction
 
    -> let numbers = (1, 2, 3)
+   << // numbers : (Int, Int, Int) = (1, 2, 3)
    -> switch numbers {
       case (_, let second, _):
          print(second)
@@ -32,7 +33,8 @@ or bound to a constant or variable name.
    <- 2
    ---
    -> let words = ("alpha", "bravo", "charlie")
-   -> switch numbers {
+   << // words : (String, String, String) = ("alpha", "bravo", "charlie")
+   -> switch words {
       case (_, let second, _):
          print(second)
       }
@@ -100,7 +102,7 @@ the letter grade corresponding to a score out of 100:
 .. testcode:: patternMatchingRange
 
    -> let grade = 87
-   << grade: Int = 87
+   << // grade : Int = 87
    -> switch grade {
          case 90...100:
             print("A - Excellent")
@@ -127,7 +129,7 @@ which corresponds to a "B" letter grade.
    .. testcode:: patternMatchingRange_Alternative
 
       >> let grade = 87
-      << grade: Int = 87
+      << // grade : Int = 87
       -> if grade > 90 {
             print("A - Excellent")
          } else if grade > 80 {
@@ -156,6 +158,7 @@ to only iterate over a subset of keys:
          "Christy": 76,
          "Duncan": 68
       ]
+   << // grades : [String : Int] = ["Alexandra": 92, "Buddy": 87, "Christy": 76, "Duncan": 68]
    ---
    -> for case let (passingStudent, 75...100) in grades {
           print(passingStudent)
@@ -212,9 +215,9 @@ representing the extent of the delay in minutes.
 .. testcode:: patternMatchingEnumeration
 
    -> let goodNews = Status.OnTime
-   << // goodNews: Status = Status.OnTime
+   << // goodNews : Status = REPL.Status.OnTime
    -> let badNews = Status.Delayed(minutes: 90)
-   << // badNews: Status = Status.Delayed(minutes: 90)
+   << // badNews : Status = REPL.Status.Delayed(90)
 
 The ``Train`` class can be extended to implement a ``description`` property,
 which returns a human-readable ``String`` value reporting the status of the train:
@@ -257,10 +260,11 @@ could capture the associated ``minutes`` value using a value-binding pattern,
 and specify the range in an additional ``where`` clause.
 This allows the associated value to be used in the branch:
 
-.. testcode::
+.. testcode:: patternMatchingEnumeration
 
    >> let status = Status.OnTime
-   >> func status() -> String? {
+   << // status : Status = REPL.Status.OnTime
+   >> func f() -> String? {
    >> switch status {
    -> case .Delayed(let minutes) where 1...5 ~= minutes:
        return "Slight delay of \(minutes) min"
@@ -272,36 +276,40 @@ Enumeration patterns and associated value-binding patterns
 can be matched in a ``for``-``in`` loop as well.
 Consider the following three ``Train`` values:
 
-.. testcode::
+.. testcode:: patternMatchingEnumeration
 
    -> let wabashCannonball = Train()
+   << // wabashCannonball : Train = REPL.Train
    >> print(wabashCannonball.description)
    << On time
    ---
    -> let polarExpress = Train()
       polarExpress.status = .Delayed(minutes: 4)
+   << // polarExpress : Train = REPL.Train
    >> print(polarExpress.description)
-   << "Slight delay of 4 min"
+   << Slight delay
    ---
    -> let darjeelingLimited = Train()
       darjeelingLimited.status = .Delayed(minutes: 20)
-   >> print(darjeelingLimited)
+   << // darjeelingLimited : Train = REPL.Train
+   >> print(darjeelingLimited.description)
    << Delayed
    ---
    -> let trains: [Train] = [wabashCannonball, polarExpress, darjeelingLimited]
-   <~ // trains: [Train] =
+   <~ // trains : [Train] = [REPL.Train, REPL.Train, REPL.Train]
 
 You can specify a pattern for each iteration of a ``for``-``in`` loop
 to only evaluate values that match the pattern will be evaluated:
 
-.. testcode::
+.. testcode:: patternMatchingEnumeration
 
-   -> var runningTotal = 0
-      for case let .Delayed(minutes) in trains.map({$0.status}) {
-          runningTotal += minutes
+   -> var totalDelay = 0
+   << // totalDelay : Int = 0
+   -> for case let .Delayed(minutes) in trains.map({$0.status}) {
+          totalDelay += minutes
       }
-   -> print("Total delay: \(runningTotal) min")
-   << Total delay: \(24) min
+   -> print("Total delay: \(totalDelay) min")
+   <- Total delay: 24 min
 
 In the example above,
 the ``status`` property value for each train
@@ -325,8 +333,8 @@ whereas ``nil`` values represent an abstention.
 
 .. testcode:: patternMatchingOptional
 
-   -> let surveyResponses: [Int?] = [nil, 4, 5, nil, 3, 5, 1, nil, 4]
-   << surveyResponses: [Int?] = [nil, 4, 5, nil, 3, 5, 1, nil, 4]
+   -> let surveyResponses: [Int?] = [nil, 4, 5, nil, 3, 5, 2, nil, 2]
+   << // surveyResponses : [Int?] = [nil, Optional(4), Optional(5), nil, Optional(3), Optional(5), Optional(2), nil, Optional(2)]
 
 To determine the average score from respondents,
 you might use a ``for``-``in`` loop to iterate over all of the responses,
@@ -336,9 +344,9 @@ to only record responses with a score:
 .. testcode:: patternMatchingOptional
 
    -> var count = 0
-   << count: Int = 0
+   << // count : Int = 0
    -> var total = 0
-   << total: Int = 0
+   << // total : Int = 0
    ---
    -> for possibleScore in surveyResponses {
           guard let score = possibleScore else { continue }
@@ -346,6 +354,8 @@ to only record responses with a score:
           ++count
       }
    -> let averageScore = Double(total) / Double(count)
+   << // averageScore : Double = 3.5
+   // 3.5
 
 However, as discussed in the previous section,
 enumeration cases can be pattern matched
@@ -358,7 +368,7 @@ to only iterate over non-`nil` values in the ``surveyResponses`` array:
 .. testcode:: patternMatchingOptional
 
    >> (total, count) = (0, 0)
-   -> for case let Optional<Int>.Some(score) in surveyResponses {
+   -> for case let .Some(score) in surveyResponses {
           total += score
           ++count
       }
@@ -468,16 +478,22 @@ in order to be evaluated.
 .. testcode:: patternMatchingTuple
 
    -> let unluckySpin: (Symbol, Symbol, Symbol) = (.🍇, .🔔, .🍋)
+   << // unluckySpin : (Symbol, Symbol, Symbol) = (REPL.Symbol.🍇, REPL.Symbol.🔔, REPL.Symbol.🍋)
    -> payoff(unluckySpin)
-   </ 0
+   <$ : Int = 0
+   // 0
    ---
    -> let okSpin: (Symbol, Symbol, Symbol) = (.🍒, .🍒, .🍉)
+   << // okSpin : (Symbol, Symbol, Symbol) = (REPL.Symbol.🍒, REPL.Symbol.🍒, REPL.Symbol.🍉)
    -> payoff(okSpin)
-   </ 5
+   <$ : Int = 5
+   // 5
    ---
    -> let luckySpin: (Symbol, Symbol, Symbol) = (.💰, .💰, .💰)
+   << // luckySpin : (Symbol, Symbol, Symbol) = (REPL.Symbol.💰, REPL.Symbol.💰, REPL.Symbol.💰)
    -> payoff(luckySpin)
-   </ 100
+   <$ : Int = 100
+   // 100
 
 Matching Values by Type
 -----------------------
@@ -506,7 +522,7 @@ and a ``mixedFlock`` array that stores a collection of ducks and geese:
       }
    ---
    -> let mixedFlock: [Waterfowl] = [Duck(), Duck(), Goose()]
-   <~ // mixedFlock: [Waterfowl] = 3 values {
+   << // mixedFlock : [Waterfowl] = [REPL.Duck, REPL.Duck, REPL.Goose]
 
 For each element in the heterogeneous array,
 you can use a ``switch`` statement
