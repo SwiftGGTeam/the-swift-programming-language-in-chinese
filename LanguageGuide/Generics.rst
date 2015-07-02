@@ -23,7 +23,7 @@ and there are no limitations on what that type can be.
 The Problem That Generics Solve
 -------------------------------
 
-Here's a standard, non-generic function called ``swapTwoInts``,
+Here's a standard, non-generic function called ``swapTwoInts(_:_:)``,
 which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
@@ -55,7 +55,7 @@ The ``swapTwoInts(_:_:)`` function is useful, but it can only be used with ``Int
 If you want to swap two ``String`` values,
 or two ``Double`` values,
 you have to write more functions,
-such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown below:
+such as the ``swapTwoStrings(_:_:)`` and ``swapTwoDoubles(_:_:)`` functions shown below:
 
 .. testcode:: whyGenerics
 
@@ -72,7 +72,7 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown belo
       }
 
 You may have noticed that the bodies of
-the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles(_:_:)`` functions are identical.
+the ``swapTwoInts(_:_:)``, ``swapTwoStrings(_:_:)``, and ``swapTwoDoubles(_:_:)`` functions are identical.
 The only difference is the type of the values that they accept
 (``Int``, ``String``, and ``Double``).
 
@@ -100,7 +100,7 @@ Generic Functions
 
 :newTerm:`Generic functions` can work with any type.
 Here's a generic version of the ``swapTwoInts(_:_:)`` function from above,
-called ``swapTwoValues``:
+called ``swapTwoValues(_:_:)``:
 
 .. testcode:: genericFunctions
 
@@ -112,8 +112,8 @@ called ``swapTwoValues``:
 
 The body of the ``swapTwoValues(_:_:)`` function
 is identical to the body of the ``swapTwoInts(_:_:)`` function.
-However, the first line of ``swapTwoValues``
-is slightly different from ``swapTwoInts``.
+However, the first line of ``swapTwoValues(_:_:)``
+is slightly different from ``swapTwoInts(_:_:)``.
 Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
@@ -140,7 +140,7 @@ whatever ``T`` represents.
 The actual type to use in place of ``T``
 will be determined each time the ``swapTwoValues(_:_:)`` function is called.
 
-The other difference is that the generic function's name (``swapTwoValues``)
+The other difference is that the generic function's name (``swapTwoValues(_:_:)``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
 within the ``swapTwoValues(_:_:)`` function definition.
@@ -149,7 +149,7 @@ Because ``T`` is a placeholder, Swift does not look for an actual type called ``
 The ``swapTwoValues(_:_:)`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
 as long as both of those values are of the same type as each other.
-Each time ``swapTwoValues`` is called,
+Each time ``swapTwoValues(_:_:)`` is called,
 the type to use for ``T`` is inferred from the types of values passed to the function.
 
 In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respectively:
@@ -185,7 +185,7 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 Type Parameters
 ---------------
 
-In the ``swapTwoValues`` example above,
+In the ``swapTwoValues(_:_:)`` example above,
 the placeholder type ``T`` is an example of a :newTerm:`type parameter`.
 Type parameters specify and name a placeholder type,
 and are written immediately after the function's name,
@@ -198,7 +198,7 @@ or as the function's return type,
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
 is replaced with an *actual* type whenever the function is called.
-(In the ``swapTwoValues`` example above,
+(In the ``swapTwoValues(_:_:)`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
