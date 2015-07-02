@@ -41,35 +41,35 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 
 闭包表达式是一种利用简洁语法构建内联闭包的方式。
 闭包表达式提供了一些语法优化，使得撰写闭包变得简单明了。
-下面闭包表达式的例子通过使用几次迭代展示了`sorted`函数定义和语法优化的方式。
+下面闭包表达式的例子通过使用几次迭代展示了`sort(_:)`方法定义和语法优化的方式。
 每一次迭代都用更简洁的方式描述了相同的功能。
 
 <a name="the_sorted_function"></a>
-### sorted 函数（The Sorted Function）
+### sort 函数（The Sort Function）
 
-Swift 标准库提供了`sorted`函数，会根据您提供的基于输出类型排序的闭包函数将已知类型数组中的值进行排序。
-一旦排序完成，函数会返回一个与原数组大小相同的新数组，该数组中包含已经正确排序的同类型元素。
+Swift 标准库提供了名为`sort`的函数，会根据您提供的用于排序的闭包函数将已知类型数组中的值进行排序。
+一旦排序完成，`sort(_:)`方法会返回一个与原数组大小相同,包含同类型元素且元素已正确排序的新数组。原数组不会被`sort(_:)`方法修改。
 
-下面的闭包表达式示例使用`sorted`函数对一个`String`类型的数组进行字母逆序排序，以下是初始数组值：
+下面的闭包表达式示例使用`sort(_:)`方法对一个String类型的数组进行字母逆序排序，以下是初始数组值：
 
 ```swift
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 ```
 
-`sorted`函数需要传入两个参数：
+`sort(_:)`方法需要传入两个参数：
 
 * 已知类型的数组
-* 闭包函数，该闭包函数需要传入与数组类型相同的两个值，并返回一个布尔类型值来告诉`sorted`函数当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
+* 闭包函数，该闭包函数需要传入与数组元素类型相同的两个值，并返回一个布尔类型值来表明当排序结束后传入的第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值前面，排序闭包函数需要返回`true`，反之返回`false`。
 
 该例子对一个`String`类型的数组进行排序，因此排序闭包函数类型需为`(String, String) -> Bool`。
 
-提供排序闭包函数的一种方式是撰写一个符合其类型要求的普通函数，并将其作为`sort`函数的第二个参数传入：
+提供排序闭包函数的一种方式是撰写一个符合其类型要求的普通函数，并将其作为`ssort(_:)`方法的参数传入：
 
 ```swift
 func backwards(s1: String, s2: String) -> Bool {
     return s1 > s2
 }
-var reversed = sorted(names, backwards)
+var reversed = names.sort(backwards)
 // reversed 为 ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 ```
 
@@ -99,7 +99,7 @@ var reversed = sorted(names, backwards)
 下面的例子展示了之前`backwards`函数对应的闭包表达式版本的代码：
 
 ```swift
-reversed = sorted(names, { (s1: String, s2: String) -> Bool in
+reversed = names.sort({ (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 ```
@@ -114,23 +114,25 @@ reversed = sorted(names, { (s1: String, s2: String) -> Bool in
 因为这个闭包的函数体部分如此短以至于可以将其改写成一行代码：
 
 ```swift
-reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+reversed = names.sort( { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 ```
 
-这说明`sorted`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）。
+这说明`sort(_:)`方法的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）
 
 <a name="inferring_type_from_context"></a>
 ### 根据上下文推断类型（Inferring Type From Context）
 
-因为排序闭包函数是作为`sorted`函数的参数进行传入的，Swift可以推断其参数和返回值的类型。
+因为排序闭包函数是作为`sort(_:)`方法的参数进行传入的，Swift可以推断其参数和返回值的类型。
 `sorted`期望第二个参数是类型为`(String, String) -> Bool`的函数，因此实际上`String`,`String`和`Bool`类型并不需要作为闭包表达式定义中的一部分。
 因为所有的类型都可以被正确推断，返回箭头 (`->`) 和围绕在参数周围的括号也可以被省略：
 
 ```swift
-reversed = sorted(names, { s1, s2 in return s1 > s2 } )
+reversed = names.sort( { s1, s2 in return s1 > s2 } )
 ```
 
 实际上任何情况下，通过内联闭包表达式构造的闭包作为参数传递给函数时，都可以推断出闭包的参数和返回值类型，这意味着您几乎不需要利用完整格式构造任何内联闭包。
+
+然而您仍然可以明确写出有着完整格式的闭包。如果完整格式的闭包能够提高代码的可读性,则可以采用完整格式的闭包。而在`sort(_:)`方法这个例子里,闭包的目的就是排序,读者能够推测除这个闭包是用于字符串处理的,因为这个闭包是为了处理字符串数组的排序。
 
 <a name="implicit_returns_from_single_expression_closures"></a>
 ### 单表达式闭包隐式返回（Implicit Return From Single-Expression Clossures）
@@ -138,10 +140,10 @@ reversed = sorted(names, { s1, s2 in return s1 > s2 } )
 单行表达式闭包可以通过隐藏`return`关键字来隐式返回单行表达式的结果，如上版本的例子可以改写为：
 
 ```swift
-reversed = sorted(names, { s1, s2 in s1 > s2 } )
+reversed = names.sort( { s1, s2 in s1 > s2 } )
 ```
 
-在这个例子中，`sorted`函数的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
+在这个例子中，`sort(_:)`方法的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。
 因为闭包函数体只包含了一个单一表达式 (`s1 > s2`)，该表达式返回`Bool`类型值，因此这里没有歧义，`return`关键字可以省略。
 
 <a name="shorthand_argument_names"></a>
@@ -153,7 +155,7 @@ Swift 自动为内联函数提供了参数名称缩写功能，您可以直接�
 `in`关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
 
 ```swift
-reversed = sorted(names, { $0 > $1 } )
+reversed = names.sort( { $0 > $1 } )
 ```
 
 在这个例子中，`$0`和`$1`表示闭包中第一个和第二个`String`类型的参数。
@@ -163,11 +165,11 @@ reversed = sorted(names, { $0 > $1 } )
 
 实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。
 Swift 的`String`类型定义了关于大于号 (`>`) 的字符串实现，其作为一个函数接受两个`String`类型的参数并返回`Bool`类型的值。
-而这正好与`sorted`函数的第二个参数需要的函数类型相符合。
+而这正好与`sort(_:)`方法的第二个参数需要的函数类型相符合。
 因此，您可以简单地传递一个大于号，Swift可以自动推断出您想使用大于号的字符串函数实现：
 
 ```swift
-reversed = sorted(names, >)
+reversed = names.sort(>)
 ```
 
 更多关于运算符表达式的内容请查看 [运算符函数](../chapter2/24_Advanced_Operators.html#operator_functions)。
@@ -180,7 +182,7 @@ reversed = sorted(names, >)
 尾随闭包是一个书写在函数括号之后的闭包表达式，函数支持将其作为最后一个参数调用。
 
 ```swift
-func someFunctionThatTakesAClosure(closure: () -> ()) {
+func someFunctionThatTakesAClosure(closure: () -> Void) {
     // 函数体部分
 }
 
@@ -201,7 +203,7 @@ someFunctionThatTakesAClosure() {
 在上例中作为`sorted`函数参数的字符串排序闭包可以改写为：
 
 ```swift
-reversed = sorted(names) { $0 > $1 }
+reversed = names.sort() { $0 > $1 }
 ```
 
 当闭包非常长以至于不能在一行中进行书写时，尾随闭包变得非常有用。
@@ -281,7 +283,7 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 每次调用`incrementor`时，其会以`amount`作为增量增加`runningTotal`的值。
 
 ```swift
-func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+func makeIncrementor(forIncrement amount: Int) -> Void -> Int {
     var runningTotal = 0
     func incrementor() -> Int {
         runningTotal += amount
@@ -291,7 +293,7 @@ func makeIncrementor(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-`makeIncrementor`返回类型为`() -> Int`。
+`makeIncrementor`返回类型为`Void -> Int`。
 这意味着其返回的是一个函数，而不是一个简单类型值。
 该函数在每次调用时不接受参数只返回一个`Int`类型的值。
 关于函数返回其他函数的内容，请查看[函数类型作为返回类型](../chapter2/06_Functions.html#function_types_as_return_types)。
