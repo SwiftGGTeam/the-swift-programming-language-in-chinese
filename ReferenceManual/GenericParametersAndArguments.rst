@@ -191,7 +191,7 @@ and therefore ``String`` must also conform to the ``Hashable`` protocol.
 You can also replace a type parameter with a type argument that is itself
 a specialized version of a generic type (provided it satisfies the appropriate
 constraints and requirements). For example, you can replace the type parameter
-``T`` in ``Array<T>`` with a specialized version of an array, ``Array<Int>``,
+``Element`` in ``Array<Element>`` with a specialized version of an array, ``Array<Int>``,
 to form an array whose elements are themselves arrays of integers.
 
 .. testcode:: array-of-arrays
