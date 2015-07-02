@@ -1,436 +1,610 @@
-Destructuring & Pattern Matching
-================================
+Pattern Matching
+================
 
-.. TODO Expanded discussion and copy editing
+:newTerm:`Patterns` express the structure of values,
+rather than the values themselves.
+A pattern can describe values that follow a particular rule, like
+"all numbers within the range ``1`` to ``10``",
+"all tuples whose first value is ``true``, or
+"all values of type `String`".
+In Swift, patterns can be used to represent
+single values, tuples, and enumeration cases, as well as
+type-cast values, optionals, and arbitrary expressions.
+By testing a value against a pattern rather than an individual value,
+an expression can be used to evaluate a variety of different values.
+This is known as :newTerm:`pattern matching`.
 
-:newTerm:`Patterns` express a structure of constant and variable declarations.
-Swift uses patterns for :newTerm:`destructuring expressions`,
-which bind values to a variable or constant name,
-and for :newTerm:`pattern matching`,
-which test whether a particular value or sequence of values
-match a given pattern.
+For example,
+the tuples ``(1, 2, 3)`` and ``("alpha", "bravo", "charlie")``
+have different values and different types,
+but can both be represented by a pattern consisting of a three-element tuple.
+When matching these values against a pattern,
+each element of the tuple can be either ignored using the wildcard pattern (`_`),
+or bound to a constant or variable name.
 
-Patterns allows code to perform complex tasks
+.. testcode:: patternMatchingIntroduction
+
+   -> let numbers = (1, 2, 3)
+   -> switch numbers {
+      case (_, let second, _):
+         print(second)
+      }
+   <- 2
+   ---
+   -> let words = ("alpha", "bravo", "charlie")
+   -> switch numbers {
+      case (_, let second, _):
+         print(second)
+      }
+   <- bravo
+
+In Swift, patterns are matched in ``case`` expressions,
+which can be used as a condition in
+``switch`` statements,
+``if`` and ``guard`` statements,
+and ``for``-``in`` loops.
+
+As described in :ref:`ControlFlow_ControlFlow_Switch`,
+a ``switch`` statement consists of one or more ``case`` statements,
+which are used to determine which control flow branch should be selected:
+
+.. syntax-outline::
+
+   switch <#value#> {
+      case <#pattern#>:
+         <#statements#>
+   }
+
+An ``if`` or ``guard`` statement can use the result of
+a pattern matching expression as its condition.
+In this case, the pattern is evaluated against a value of an assignment expression:
+
+.. syntax-outline::
+
+   if case <#pattern#> = <#value#> {
+      <#statements#>
+   }
+
+   guard case <#pattern#> = <#value#> else {
+      <#statements#>
+   }
+
+A ``for``-``in`` loop can use a pattern matching expression
+to only iterate over the values that match the specified pattern.
+
+.. syntax-outline::
+
+   for case <#pattern#> in <#values#> {
+      <#statements#>
+   }
+
+Pattern matching allows you to express complex ideas
 using concise, idiomatic syntax
 that reduces complexity and eliminates boilerplate code.
-For example...
+As a result, code is not only easier to write,
+but easier to read and maintain as well.
 
-.. TODO Real Examples
+For a complete list of Swift patterns,
+see  :doc:`../ReferenceManual/Patterns`.
 
-.. testcode::
+Matching Values in a Range
+--------------------------
 
-   -> let point: (Int?, Int?) = (x: 1, y: 2)
-   -> let x = point.x
-   -> let y = point.y
-   -> if x != nil && y != nil && x != y {
-         print("(\(x), \(y))")
+As described in :ref:`ControlFlow_RangeMatching`,
+``switch`` statements can check for the inclusion of values in a range.
+
+For example,
+consider a ``switch`` statement that prints
+the letter grade corresponding to a score out of 100:
+
+.. testcode:: patternMatchingRange
+
+   -> let grade = 87
+   << grade: Int = 87
+   -> switch grade {
+         case 90...100:
+            print("A - Excellent")
+         case 80..<90:
+            print("B - Satisfactory")
+         case 70..<80:
+            print("C - Mediocre")
+         case 60..<70:
+            print("D - Insufficient")
+         default:
+            print("F - Failure")
       }
-   <- (1, 2)
+   <- B - Satisfactory
 
-(taking advantage of patterns)
+For each ``case`` expression,
+the specified range is tested for inclusion of the ``grade`` value
+using the contains (``~=``) operator.
+In the example above, the ``grade`` value of ``87``
+is contained by the range ``80..<90``,
+which corresponds to a "B" letter grade.
 
-.. testcode::
+.. TODO
 
-   -> if case let (x?, y?) = point where x != y {
-          print("(\(x), \(y))")
-      }
+   .. testcode:: patternMatchingRange_Alternative
 
-
-Destructuring Expressions
--------------------------
-
-Destructuring expressions are used to bind values to constants or variables.
-There are four types of destructuring expression patterns:
-the identifier pattern,
-the wildcard pattern,
-the tuple pattern, and
-the value-binding pattern.
-
-.. TODO: Expand discussion
-
-Identifier Pattern
-~~~~~~~~~~~~~~~~~~
-
-An :newTerm:`identifier pattern` matches any value to a variable or constant name.
-If the constant or variable name has a type annotation,
-the match only succeeds if the corresponding value has a compatible type.
-Otherwise, the constant or variable implicitly becomes the type of the value.
-For example, in the following constant declaration,
-``someConstant`` is an identifier pattern
-that matches the ``String`` value ``"Hello"``:
-
-.. TODO: Real Examples
-
-
-.. testcode::
-
-   -> let someConstant = "Hello"
-   << // someValue : String = "Hello"
-
-.. testcode::
-
-   -> for vowel in ["a", "e", "i", "o", "u"] {
-         print(vowel)
-      }
-
-Wildcard Pattern
-~~~~~~~~~~~~~~~~
-
-A :newTerm:`wildcard pattern` matches and ignores any value,
-and consists of an underscore (``_``).
-For example, the following code iterates through the closed range ``1...3``,
-ignoring the current value of the range on each iteration of the loop:
-
-.. TODO: Real Examples
-
-.. testcode::
-
-   -> let _ = "something"
-
-.. testcode::
-
-   -> var a = 1
-      for _ in 1...10 {
-         a *= 2
-      }
-      print(a)
-   <- 1024
-
-Tuple Pattern
-~~~~~~~~~~~~~
-
-A :newTerm:`tuple pattern` matches a tuple value to
-a comma-delimited list of of identifier or wildcard patterns enclosed in parentheses.
-If the list of variable or constant names has a type annotation,
-the match only succeeds if the tuple value has a compatible type.
-Otherwise, the match will succeed if the tuple pattern has the same number of elements
-as the corresponding tuple value.
-For example, in the following constant declaration,
-``(x, y) : (Int, String)`` is a tuple pattern
-that matches the tuple value ``(1, "Hello")``:
-
-.. TODO: Real Example
-
-.. testcode::
-
-   -> let (x, y) = (1, "Hello")
-   << // ....
-
-(wildcard used to ignore value for altitude)
-
-.. testcode::
-
-   -> for (latitude, longitude, _) in coordinates {
-
-      }
-
-Value-Binding Pattern
-~~~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`value-binding` pattern binds matched values to variable or constant names.
-Value-binding patterns that
-bind a matched value to the name of a constant begin with the ``let`` keyword;
-those that bind to the name of variable begin with the ``var`` keyword.
-
-.. testcode::
-
-   let (x, y) = (1, 2)
-
-Identifier patterns within a value-binding pattern bind new named variables or constants to their matching values. For example, you can decompose the elements of a tuple and bind the value of each element to a corresponding identifier pattern.
-
-.. image:: ../images/valueBindingPattern_2x.png
-   :align: center
-
-Optional Binding
-________________
-
-.. QUESTION: Is this correct?
-
-When a value-binding pattern binds a value of optional type,
-the initializer expression can be evaluated as part of a conditional statement.
-
-.. TODO: Rework Examples
-
-.. testcode::
-
-   >> enum Error: ErrorType {
-   >>    case Invalid
-   >> }
-   -> func validate(fields: [String: AnyObject]) throws {
-         let name: String? = fields["name"] as? String
-         if name == nil {
-           throw Error.Invalid
+      >> let grade = 87
+      << grade: Int = 87
+      -> if grade > 90 {
+            print("A - Excellent")
+         } else if grade > 80 {
+            print("B - Excellent")
+         } else if grade > 70 {
+            print("C - Mediocre")
+         } else if grade > 60 {
+            print("D - Insufficient")
+         } else {
+            print("F - Failure")
          }
+      <- B - Satisfactory
 
-         let year: Int? = fields["year"] as? Int
-         if year == nil || year! < 1980 {
-           throw Error.Invalid
+You can also pattern match on a range in a ``for``-``in`` loop.
+For example,
+given a dictionary with student names as keys
+and their corresponding grades as values,
+a ``for``-``in`` loop could pattern match on a range
+to only iterate over a subset of keys:
+
+.. testcode:: patternMatchingRange
+
+   -> var grades: [String: Int] = [
+         "Alexandra": 92,
+         "Buddy": 87,
+         "Christy": 76,
+         "Duncan": 68
+      ]
+   ---
+   -> for case let (passingStudent, 75...100) in grades {
+          print(passingStudent)
+      }
+   <- Alexandra
+   <- Buddy
+   <- Christy
+
+For each key / value pair in the dictionary,
+the tuple pattern is evaluated.
+If the iterated value is contained by the range ``75...100``,
+then the key is bound to the ``passingStudent`` constant
+within the body of the loop.
+
+.. TODO
+   .. note::
+
+      Intervals are matched using the expression pattern.
+      Any type can be matched using the expression pattern
+      if they provide an implementation of the contains (``~=``) operator.
+      By default, the ``~=`` operator compares
+      two values of the same type using the ``==`` operator
+
+      For more information, see :ref:`Patterns_ExpressionPattern`.
+
+Matching Enumeration Cases with Associated Values
+-------------------------------------------------
+
+Patterns can be used to match on enumeration cases and their associated values.
+
+For example,
+consider a ``Status`` enumeration,
+which represents whether a train is running on time or is delayed.
+
+.. testcode:: patternMatchingEnumeration
+
+   -> enum Status {
+          case OnTime
+          case Delayed(minutes: Int)
+      }
+   ---
+   -> class Train {
+         var status = Status.OnTime
+      }
+
+When a train is running on time,
+its status is ``.OnTime``,
+which does not store an associated value.
+However, when a train is delayed,
+its status is ``.Delayed(Int)``,
+which stores an associated ``Int`` value
+representing the extent of the delay in minutes.
+
+.. testcode:: patternMatchingEnumeration
+
+   -> let goodNews = Status.OnTime
+   << // goodNews: Status = Status.OnTime
+   -> let badNews = Status.Delayed(minutes: 90)
+   << // badNews: Status = Status.Delayed(minutes: 90)
+
+The ``Train`` class can be extended to implement a ``description`` property,
+which returns a human-readable ``String`` value reporting the status of the train:
+
+.. testcode:: patternMatchingEnumeration
+
+   -> extension Train {
+         var description: String {
+             switch status {
+             case .OnTime:
+                 return "On time"
+             case .Delayed(minutes: 1...5):
+                 return "Slight delay"
+             case .Delayed(_):
+                 return "Delayed"
+             }
          }
       }
 
-(using if-let with where)
+In the example above,
+the ``switch`` statement evaluates the ``status`` property of the train.
+For each ``case`` expression,
+the ``status`` is matched against the specified enumeration pattern.
+If the train is on time,
+``status`` will match on the ``.OnTime`` enumeration pattern,
+which matches by simple equality.
+If the train is delayed, but only by a few minutes,
+``status`` will match on the ``.Delayed`` enumeration pattern
+and the ``0...5`` expression pattern in the enumeration's associated value.
+If the train is delayed by any other amount of time,
+``status`` will match on the ``.Delayed`` enumeration pattern
+and the wildcard (``_``) pattern in the enumeration's associated value,
+which matches any number of minutes.
+
+In addition to matching an enumeration case,
+you can bind any associated values to a constant or variable.
+For example,
+the corresponding ``case`` for a slightly delayed train
+could capture the associated ``minutes`` value using a value-binding pattern,
+and specify the range in an additional ``where`` clause.
+This allows the associated value to be used in the branch:
 
 .. testcode::
 
-   >> enum Error: ErrorType {
-   >>    case Invalid
+   >> let status = Status.OnTime
+   >> func status() -> String? {
+   >> switch status {
+   -> case .Delayed(let minutes) where 1...5 ~= minutes:
+       return "Slight delay of \(minutes) min"
+   >> default: return nil
    >> }
-   -> func validate(fields: [String: AnyObject]) throws {
-         if let name: String? = fields["name"] as? String {
-            if let year: Int? = fields["year"] as? Int
-               where year >= 1980 {
-               return
-            }
-         }
-
-         throw Error.Invalid
-      }
-
-(using guard statement)
-
-.. testcode::
-
-   -> func validate(fields: [String: AnyObject]) throws {
-         guard let name = fields["name"] as? String,
-               let year = fields["year"] as? Int
-               where year >= 1980
-         else {
-            throw Error.Invalid
-         }
-      }
-
-Pattern Matching
-----------------
-
-:newTerm:`Pattern matching` is the process of testing whether
-a particular value or sequence of values match a given pattern.
-
-You can match a pattern with the ``case`` statement,
-which consists of the ``case`` keyword,
-followed by a pattern to match.
-
-You use a ``case`` statement in an
-``if``, ``guard``, or ``switch`` statement
-to determine which conditional branch is executed,
-or in a
-``for``-``in`` or ``while`` loop,
-to determine how many times the loop is executed.
-
-.. TODO: Additional examples
-
-.. testcode::
-
-   -> for case (key, value?) in myDictionary {
-        doThing(value)
-      }
-
-   -> for case .MyEnumCase(let value) in enumValues where value != 42 {
-          doThing(value)
-      }
-
-
-``case`` statements can match all of the patterns described above,
-as well as the patterns described below,
-which can only appear as part of a ``case`` statement.
-These are
-the enumeration pattern,
-the optional pattern,
-the type-casting ``is`` and ``as`` patterns, and
-the expression pattern.
-
-Enumeration Patterns
-~~~~~~~~~~~~~~~~~~~~
-
-.. TODO: Reword
-
-An :newTerm:`enumeration pattern` matches a case of an existing enumeration type.
-
-.. TODO: Real Examples
-
-For example: ...
-
-.. testcode::
-
-   >> enum CoinFace {
-   >>    case Heads, Tails
    >> }
-   >> func flip() -> CoinFace { return .Heads }
-   -> switch flip() {
-      case .Heads: print("Heads, I win!")
-      case .Tails: print("Tails, You Lose!")
-      }
 
-If the enumeration case you're trying to match has any associated values,
-the corresponding enumeration case pattern must specify a tuple pattern that contains
-one element for each associated value. For an example that uses a ``switch`` statement
-to match enumeration cases containing associated values,
-see :ref:`Enumerations_AssociatedValues`.
+Enumeration patterns and associated value-binding patterns
+can be matched in a ``for``-``in`` loop as well.
+Consider the following three ``Train`` values:
 
 .. testcode::
 
-   >> enum Foo {
-   >> case Bar(Int)
+   -> let wabashCannonball = Train()
+   >> print(wabashCannonball.description)
+   << On time
+   ---
+   -> let polarExpress = Train()
+      polarExpress.status = .Delayed(minutes: 4)
+   >> print(polarExpress.description)
+   << "Slight delay of 4 min"
+   ---
+   -> let darjeelingLimited = Train()
+      darjeelingLimited.status = .Delayed(minutes: 20)
+   >> print(darjeelingLimited)
+   << Delayed
+   ---
+   -> let trains: [Train] = [wabashCannonball, polarExpress, darjeelingLimited]
+   <~ // trains: [Train] =
+
+You can specify a pattern for each iteration of a ``for``-``in`` loop
+to only evaluate values that match the pattern will be evaluated:
+
+.. testcode::
+
+   -> var runningTotal = 0
+      for case let .Delayed(minutes) in trains.map({$0.status}) {
+          runningTotal += minutes
+      }
+   -> print("Total delay: \(runningTotal) min")
+   << Total delay: \(24) min
+
+In the example above,
+the ``status`` property value for each train
+is collected using the ``map`` method
+and iterated over in a ``for``-``in`` loop.
+For each ``Status`` value matching the specified enumeration pattern ``.Delayed``,
+the associated value is bound to the ``minutes`` constant,
+which is then added to the ``runningTotal`` variable.
+
+Matching Optionals
+------------------
+
+Patterns can be used to match on values of optional types.
+
+For example,
+consider an array of type ``[Int?]``,
+which contains optional integer values
+corresponding to responses to a survey.
+Responses from participants are represented by a score between ``1`` and ``5``,
+whereas ``nil`` values represent an abstention.
+
+.. testcode:: patternMatchingOptional
+
+   -> let surveyResponses: [Int?] = [nil, 4, 5, nil, 3, 5, 1, nil, 4]
+   << surveyResponses: [Int?] = [nil, 4, 5, nil, 3, 5, 1, nil, 4]
+
+To determine the average score from respondents,
+you might use a ``for``-``in`` loop to iterate over all of the responses,
+use a value-binding expression in a ``guard`` statement
+to only record responses with a score:
+
+.. testcode:: patternMatchingOptional
+
+   -> var count = 0
+   << count: Int = 0
+   -> var total = 0
+   << total: Int = 0
+   ---
+   -> for possibleScore in surveyResponses {
+          guard let score = possibleScore else { continue }
+          total += score
+          ++count
+      }
+   -> let averageScore = Double(total) / Double(count)
+
+However, as discussed in the previous section,
+enumeration cases can be pattern matched
+in such a way that their associated values are bound to a constant or variable.
+Since optionals use the ``Optional<T>`` enumeration
+in their underlying implementation,
+the same enumeration pattern matching approach can be used
+to only iterate over non-`nil` values in the ``surveyResponses`` array:
+
+.. testcode:: patternMatchingOptional
+
+   >> (total, count) = (0, 0)
+   -> for case let Optional<Int>.Some(score) in surveyResponses {
+          total += score
+          ++count
+      }
+   >> print(averageScore == Double(total) / Double(count))
+   << true
+
+Because of how important optionals are to the language,
+Swift provides a shorthand syntax for matching on optional values:
+the optional pattern.
+You can append a question mark (``?``) to a constant or variable name
+to match optionals that containing a value,
+and bind that value to the constant or variable.
+
+The following code is equivalent to the example above,
+matching on an optional pattern ``score?``
+instead of an enumeration pattern.
+
+.. testcode:: patternMatchingOptional
+
+   >> (total, count) = (0, 0)
+   -> for case let score? in surveyResponses {
+          total += score
+          ++count
+      }
+   >> print(averageScore == Double(total) / Double(count))
+   << true
+
+Matching Values in a Tuple
+--------------------------
+
+Patterns can be used to match on tuples with any number of elements.
+
+For example,
+consider a ``Symbol`` enumeration that represents
+the possible values on a slot machine reel in a casino:
+
+.. testcode:: patternMatchingTuple
+
+   -> enum Symbol {
+          case 🍒, 🍊, 🍋, 🍇, 🍉, 🔔, 💰
+      }
+
+To calculate the payoff of a particular result of a spin,
+you could test for each combination of winning possibilities
+using a series of ``if`` statements and equality operators (``==``):
+
+.. testcode:: patternMatchingTuple_Alternative
+
+   >> enum Symbol { case 🍒, 🍊, 🍋, 🍇, 🍉, 🔔, 💰 }
+   -> func payoff(firstReel: Symbol, _ secondReel: Symbol, _ thirdReel: Symbol) -> Int {
+          if firstReel == .💰 && secondReel == .💰 && thirdReel == .💰 {
+              return 100
+          } else if firstReel == .🔔 && secondReel == .🔔 && thirdReel == .🔔 {
+              return 50
+          }
+          // etc.
+          else {
+              return 0
+          }
+      }
+
+Although this is a straightforward approach,
+the resulting code is not particularly concise or readable.
+
+However, by pattern matching on tuples in a ``switch`` statement,
+each of the winning combinations can be visually inspected with ease:
+
+.. testcode:: patternMatchingTuple
+
+   -> func payoff(firstReel: Symbol, _ secondReel: Symbol, _ thirdReel: Symbol) -> Int {
+          switch (firstReel, secondReel, thirdReel) {
+          case (.💰, .💰, .💰): return 100
+          case (.🔔, .🔔, .🔔): return 50
+          case (.🍉, .🍉, .🍉): return 30
+          case (.🍇, .🍇, .🍇): return 25
+          case (.🍋, .🍋, .🍋): return 20
+          case (.🍊, .🍊, .🍊): return 15
+          case (.🍒, .🍒, .🍒): return 10
+          case (.🍒, .🍒,  _ ): return 5
+          case (.🍒,  _ ,  _ ): return 2
+          default:
+              return 0
+          }
+      }
+
+For each of the ``case`` expressions in the ``switch`` statement,
+a tuple pattern is matched against the evaluated tuple of ``Symbol`` values.
+When matching on a tuple value,
+a tuple pattern first determines whether the tuple has the same number of elements,
+and then proceeds to evaluate each tuple element
+according to its corresponding sub-pattern.
+Most of the combinations involve getting three-in-a-row of the same symbol,
+however combinations starting with 🍒 or 🍒🍒 return a consolation prize.
+Because the wildcard pattern ``_`` matches all ``Symbol`` values ---
+including ``.🍒`` ---
+the pattern ``(.🍒, .🍒,  _ )`` must precede the pattern ``(.🍒, _ ,  _ )``
+in order to be evaluated.
+
+.. TODO
+
+   Even though most of the winning combinations are mutually exclusive ---
+   that is, you cannot get three-in-a-row of 🍋
+   while also getting three-in-a-row of 🍊 ---
+   checking in order of highest-paying possibility ensures that
+   the player always receives the best possible outcome.
+
+.. testcode:: patternMatchingTuple
+
+   -> let unluckySpin: (Symbol, Symbol, Symbol) = (.🍇, .🔔, .🍋)
+   -> payoff(unluckySpin)
+   </ 0
+   ---
+   -> let okSpin: (Symbol, Symbol, Symbol) = (.🍒, .🍒, .🍉)
+   -> payoff(okSpin)
+   </ 5
+   ---
+   -> let luckySpin: (Symbol, Symbol, Symbol) = (.💰, .💰, .💰)
+   -> payoff(luckySpin)
+   </ 100
+
+Matching Values by Type
+-----------------------
+
+Patterns can be used to match on particular types.
+
+For example,
+consider a ``Waterfowl`` protocol,
+with conforming classes ``Duck`` and ``Goose``,
+and a ``mixedFlock`` array that stores a collection of ducks and geese:
+
+.. testcode:: patternMatchingType
+
+   -> protocol Waterfowl {}
+   ---
+   -> class Duck: Waterfowl {
+          func quack() {
+              print("Quack!")
+          }
+      }
+   ---
+   -> class Goose: Waterfowl {
+          func honk() {
+              print("Honk!")
+          }
+      }
+   ---
+   -> let mixedFlock: [Waterfowl] = [Duck(), Duck(), Goose()]
+   <~ // mixedFlock: [Waterfowl] = 3 values {
+
+For each element in the heterogeneous array,
+you can use a ``switch`` statement
+with cases matching ``is`` type-casting patterns
+to determine the element's specific class type ---
+either ``Duck`` or ``Goose``.
+
+.. testcode:: patternMatchingType
+
+   -> for bird in mixedFlock {
+          switch bird {
+          case is Duck:
+              print("Duck!")
+          case is Goose:
+              print("Goose!")
+          default:
+              continue
+          }
+      }
+   <- Duck!
+   <- Duck!
+   <- Goose!
+
+The ``is`` pattern matches a value if it is the type specified by the pattern.
+The ``is`` pattern behaves like the ``is`` operator by performing a type cast,
+but discarding the returned type.
+
+Pattern Matching with Type-Cast
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the ``as`` type-casting pattern to match a type
+and bind a value of that explicit type to a constant or variable.
+
+.. testcode:: patternMatchingType
+
+   -> for bird in mixedFlock {
+          switch bird {
+          case let duck as Duck:
+              duck.quack()
+          case let goose as Goose:
+              goose.honk()
+          default:
+              continue
+          }
+      }
+   <- Quack!
+   <- Quack!
+   <- Honk!
+
+In the example above,
+each case in the ``switch`` statement matches on an ``as`` pattern,
+which binds the evaluated ``bird`` value to a local constant
+that is used in the corresponding branch statements.
+
+The ``as`` pattern, like the ``is`` pattern,
+matches a value if it is the type specified by the pattern.
+Unlike the ``is`` pattern, however,
+the matched value can be bound to a constant or variable of the returned type.
+
+You use the ``as`` pattern instead of the ``is`` pattern
+when you're interested in working with the matched value
+as that particular type.
+This avoids a forced downcast or a conditional downcast with optional chaining.
+
+.. testcode:: patternMatchingType
+
+   >> for bird in mixedFlock {
+   >> switch bird {
+   -> case is Duck:
+         // forced downcast
+         (bird as! Duck).quack()
+      case is Goose:
+         // conditional downcast with optional chaining
+         (bird as? Goose)?.honk()
+   >> default: continue
    >> }
-   >> let someValue = Bar(42)
-   -> switch someValue {
-      case .Bar(let value):
-         // ...
-      default:
-         // ...
-      }
-
-This pattern is also used for error handling,
-as described in :ref:`ErrorHandling_CatchingAndHandlingErrors`.
-
-.. testcode::
-
-   >> enum Error: ErrorType {
-   >> case SomeError(String)
    >> }
-   >> func canThrow() throws {}
-   -> do {
-         try canThrow()
-      } catch Error.SomeError(let message):
-         print(message)
-      } catch {
-         print("An error occurred")
+   << Quack!
+   << Quack!
+   << Honk!
+
+Pattern Matching Over a Collection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can iterate over only elements in a sequence of a particular type
+by matching an ``as`` pattern in a ``for``-``in`` loop.
+
+.. testcode:: patternMatchingType
+
+   -> for case let duck as Duck in mixedFlock {
+          duck.quack()
       }
+   <- Quack!
+   <- Quack!
 
-Exhaustiveness
-______________
-
-Both ``switch`` statements and ``catch`` expressions must be exhaustive.
-That is, the compiler must be able to determine that
-the provided patterns can match any values that can possibly be evaluated.
-
-The Swift compiler is able to automatically determine exhaustiveness for
-enumerations and certain data types.
-For example, the compiler understands that a ``switch`` statement
-that evaluates a value of type ``Bool``
-with cases for both ``true`` and ``false``
-is exhaustive,
-since ``Bool`` can only be ``true`` or ``false.
-
-.. testcode::
-
-   >> let truthValue: Bool = true
-   -> switch truthValue {
-      case true: // ...
-   >> print(true)
-      case false: // ...
-   >> print(false)
-      }
-   << false
-
-Similarly, for an enumeration type, such as ``Optional``,
-the compiler can determine a ``switch`` statement is exhaustive
-if there are cases that match ``.Some`` and ``.None``.
-
-.. testcode::
-
-   >> let someOptional: Int? = nil
-   -> switch someOptional {
-      case
-      }
-
-
-When necessary, a ``default`` clause
-or a ``case`` statement with a wildcard pattern in a ``switch`` statement,
-or an unqualified ``catch`` expression
-can be provided as an exhaustive ”catch-all”.
-
-.. TODO: Mention that compiler can tell whether a case statement will not be executed
-
-Optional Pattern
-~~~~~~~~~~~~~~~~
-
-An :newTerm:`optional pattern` matches
-an ``Optional`` or ``ImplicitlyUnwrappedOptional`` type
-that contains a value,
-and binds that value to a constant or variable name.
-It takes the form of a value-binding pattern
-whose constant or variable is followed a question mark (``?``).
-
-.. testcode::
-
-   >> let someOptional: Int? = 57
-   << // someOptional : Int? = 57
-   -> switch someOptional {
-      case let value?: // ...
-      case nil: // ...
-      }
-
-Because Swift optionals are implemented as enumeration cases,
-the example above is equivalent to the following example
-using the enumeration pattern:
-
-.. testcode::
-
-   -> switch someOptional {
-      case nil: // ...
-   >> print("nil")
-      case .Some(let value): // ...
-   >> print(value)
-      }
-   << 57
-
-The optional pattern provides a convenient way to
-iterate over an array of optional types with a ``for``-``in`` loop
-and only execute the loop for elements that have a value:
-
-.. testcode::
-
-   >> let arrayOfOptionals: [Int?] = [nil, 2, 3, nil, 5, nil, 7]
-   -> for case let element? in arrayOfOptionals {
-         print(element)
-      }
-   << 2
-   << 3
-   << 5
-   << 7
-
-Type-Casting Patterns
-~~~~~~~~~~~~~~~~~~~~~
-
-Swift has two :newTerm:`type-casting patterns`:
-the ``is`` pattern and
-the ``as`` pattern.
-
-.. note::
-
-   These are not to be confused with the ``as?`` and ``as!`` operators.
-
-The ``is`` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the ``is`` pattern---or a subclass of that type.
-The ``is`` pattern behaves like the ``is`` operator in that they both perform a type cast
-but discard the returned type.
-
-.. TODO: Real Examples
-
-.. testcode::
-
-   -> let mixedArray: [Any] = [1, "a", true, nil]
-      switch mixedArray.last {
-      case is Int:
-          print("Int")
-      case is String:
-          print("String")
-      case is Bool:
-          print("Bool")
-      default:
-          print("Who knows?")
-      }
-
-The ``as`` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the ``as`` pattern---or a subclass of that type.
-If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the left-hand side
-of the ``as`` pattern.
-
-.. TODO: Real Examples
-
-.. testcode::
-
-   -> for case let string as String in mixedArray {
-         // ...
-      }
+In the example above,
+each value in ``mixedFlock`` is matched against
+the pattern ``case let duck as Duck``.
+If the value is of type ``Duck``,
+then that value is bound to the ``duck`` constant,
+which is then used in the body of the loop.
