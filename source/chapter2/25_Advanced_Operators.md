@@ -23,13 +23,13 @@
 <a name="bitwise_operators"></a>
 ## 位运算符
 
-位运算符(`Bitwise operators`)可以操作一个数据结构中每个独立的比特位。它们通常被用在底层开发中，比如图形编程和创建设备驱动。位运算符在处理外部资源的原始数据时也十分有用，比如对自定义通信协议传输的数据进行编码和解码。
+位运算符(`Bitwise operators`)可以操作一个数据结构中每个独立的位。它们通常被用在底层开发中，比如图形编程和创建设备驱动。位运算符在处理外部资源的原始数据时也十分有用，比如对自定义通信协议传输的数据进行编码和解码。
 
 Swift 支持C语言中的全部位运算符，具体如下：
 
 ### 按位取反运算符(`bitwise NOT operator`)
 
-按位取反运算符(`~`) 可以对一个数值的全部比特位进行取反：
+按位取反运算符(`~`) 可以对一个数值的全部位进行取反：
 
 ![Art/bitwiseNOT_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseNOT_2x.png)
 
@@ -40,47 +40,47 @@ let initialBits: UInt8 = 0b00001111
 let invertedBits = ~initialBits  // 等于 0b11110000
 ```
 
-`UInt8` 类型的整数有 8 个比特位，可以存储 0 ~ 255之间的任意整数。这个例子初始化了一个 `UInt8` 类型的整数，其二进制值为 `00001111`，它的前 4 位都为`0`，后 4 位都为`1`。这个值等价于十进制的 `15` 。
+`UInt8` 类型的整数有 8 个比特位，可以存储 0 ~ 255之间的任意整数。这个例子初始化了一个 `UInt8` 类型的整数，并赋值为二进制的 `00001111`，它的前 4 位都为`0`，后 4 位都为`1`。这个值等价于十进制的 `15` 。
 
-接着使用按位取反运算符创建了一个名为 `invertedBits` 的常量，这个常量的值与全部比特位取反后的 `initialBits` 相等。即所有的 `0` 都变成了 `1`，同时所有的 `1` 都变成 `0`。`invertedBits` 的二进制值为 `11110000`，等价于无符号十进制数的 `240`。
+接着使用按位取反运算符创建了一个名为 `invertedBits` 的常量，这个常量的值与全部位取反后的 `initialBits` 相等。即所有的 `0` 都变成了 `1`，同时所有的 `1` 都变成 `0`。`invertedBits` 的二进制值为 `11110000`，等价于无符号十进制数的 `240`。
 
-### 按位与运算符
+### 按位与运算符(Bitwise AND Operator)
 
-按位与运算符对两个数进行操作，然后返回一个新的数，这个数的每个位都需要两个输入数的同一位都为1时才为1。
+按位与运算符(`&`)可以对两个数的比特位进行合并。它返回一个新的数，只有当两个操作数的对应位*都*为 `1` 的时候，该数的对应位才为 `1`。
 
 ![Art/bitwiseAND_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseAND_2x.png "Art/bitwiseAND_2x.png")
 
-以下代码，`firstSixBits`和`lastSixBits`中间4个位都为1。对它俩进行按位与运算后，就得到了`00111100`，即十进制的`60`。
+在下面的示例当中，`firstSixBits` 和 `lastSixBits` 中间 4 个位的值都为 1 。按位与运算符对它们进行了运算，得到二进制数值 `00111100`，等价于无符号十进制数的 `60`：
 
-```swift
+```
 let firstSixBits: UInt8 = 0b11111100
 let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // 等于 00111100
 ```
 
-### 按位或运算
+### 按位或运算符(Bitwise OR Operator)
 
-按位或运算符`|`比较两个数，然后返回一个新的数，这个数的每一位设置1的条件是两个输入数的同一位都不为0(即任意一个为1，或都为1)。
+按位或运算符(`|`)可以对两个数的比特位进行比较。它返回一个新的数，只要两个操作数的对应位中有*任意*一个为 `1` 时，该数的对应位就为 `1`。
 
 ![Art/bitwiseOR_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseOR_2x.png "Art/bitwiseOR_2x.png")
 
-如下代码，`someBits`和`moreBits`在不同位上有`1`。按位或运行的结果是`11111110`，即十进制的`254`。
+在下面的示例当中，`someBits` 和 `moreBits` 将不同的位设置为 `1`。接位或运算符对它们进行了运算，得到二进制数值 `11111110`，等价于无符号十进制数的 `254`：
 
-```swift
+```
 let someBits: UInt8 = 0b10110010
 let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // 等于 11111110
 ```
 
-### 按位异或运算符
+### 按位异或运算符(Bitwise XOR Opoerator)
 
-按位异或运算符`^`比较两个数，然后返回一个数，这个数的每个位设为`1`的条件是两个输入数的同一位不同，如果相同就设为`0`。
+按位异或运算符(`^`)可以对两个数的比特位进行比较。它返回一个新的数，当两个操作数的对应位不相同时，该数的对应位就为 `1`：
 
 ![Art/bitwiseXOR_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseXOR_2x.png "Art/bitwiseXOR_2x.png")
 
-以下代码，`firstBits`和`otherBits`都有一个`1`跟另一个数不同的。所以按位异或的结果是把它这些位置为`1`，其他都置为`0`。
+在下面的示例当中，`firstBits` 和 `otherBits` 都有一个自己设置为 `1` 而对方设置为 `0` 的位。 按位异或运算符将这两个位都设置为 `1`，同时将其它位都设置为 `0`：
 
-```swift
+```
 let firstBits: UInt8 = 0b00010100
 let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // 等于 00010001
@@ -88,21 +88,27 @@ let outputBits = firstBits ^ otherBits  // 等于 00010001
 
 ### 按位左移/右移运算符
 
-左移运算符`<<`和右移运算符`>>`会把一个数的所有比特位按以下定义的规则向左或向右移动指定位数。
+按位左移运算符(`<<`)和按位右移运算符(`>>`)可以对一个数进行指定位数的左移和右移，但是需要遵守下面定义的规则。
 
-按位左移和按位右移的效果相当把一个整数乘于或除于一个因子为`2`的整数。向左移动一个整型的比特位相当于把这个数乘于`2`，向右移一位就是除于`2`。
+对一个数进行按位左移或按位右移，相当于对这个数进行乘以 2 或除以 2 的运算。将一个整数左移一位，等价于将这个数乘以 2，同样地，将一个整数右移一位，等价于将这个数除以 2。
 
-#### 无符整型的移位操作
+#### 无符号整型的移位操作
 
-对无符整型的移位的效果如下：
+对无符号整型进行移位的规则如下：
 
-已经存在的比特位向左或向右移动指定的位数。被移出整型存储边界的的位数直接抛弃，移动留下的空白位用零`0`来填充。这种方法称为逻辑移位。
+1. 已经存在的比特位按指定的位数进行左移和右移。
+2. 任何移动超出整型存储边界的位都会被丢弃。
+3. 用 0 来填充移动后产生的空白位。
 
-以下这张把展示了 `11111111 << 1`(`11111111`向左移1位)，和 `11111111 >> 1`(`11111111`向右移1位)。蓝色的是被移位的，灰色是被抛弃的，橙色的`0`是被填充进来的。
+这种方法称为逻辑移位(`logical shift`)。
+
+以下这张图展示了 `11111111 << 1`(即把 `11111111` 向左移动 1 位)，和 `11111111 >> 1`(即把 `11111111` 向右移动 1 位) 的结果。蓝色的部分是被移位的，灰色的部分是被抛弃的，橙色的部分则是被填充进来的。
 
 ![Art/bitshiftUnsigned_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftUnsigned_2x.png "Art/bitshiftUnsigned_2x.png")
 
-```swift
+下面的代码演示了 Swift 中的移位操作：
+
+```
 let shiftBits: UInt8 = 4   // 即二进制的00000100
 shiftBits << 1             // 00001000
 shiftBits << 2             // 00010000
@@ -111,62 +117,62 @@ shiftBits << 6             // 00000000
 shiftBits >> 2             // 00000001
 ```
 
-你可以使用移位操作进行其他数据类型的编码和解码。
+可以使用移位操作对其他的数据类型进行编码和解码：
 
-```swift
+```
 let pink: UInt32 = 0xCC6699
 let redComponent = (pink & 0xFF0000) >> 16    // redComponent 是 0xCC, 即 204
 let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent 是 0x66, 即 102
 let blueComponent = pink & 0x0000FF           // blueComponent 是 0x99, 即 153
 ```
 
-这个例子使用了一个`UInt32`的命名为`pink`的常量来存储层叠样式表`CSS`中粉色的颜色值，`CSS`颜色`#CC6699`在Swift用十六进制`0xCC6699`来表示。然后使用按位与(&)和按位右移就可以从这个颜色值中解析出红(CC)，绿(66)，蓝(99)三个部分。
+这个示例使用了一个命名为 `pink` 的 `UInt32` 型常量来存储层叠样式表(`CSS`)中粉色的颜色值。该 `CSS` 的十六进制颜色值 `#CC6699`， 在 Swift 中表示为 `0xCC6699`。然后利用按位与运算符(`&`)和按位右移运算符(`>>`)从这个颜色值中分解出红(`CC`)、绿(`66`)以及蓝(`99`)三个部分。
 
-对`0xCC6699`和`0xFF0000`进行按位与`&`操作就可以得到红色部分。`0xFF0000`中的`0`了遮盖了`OxCC6699`的第二和第三个字节，这样`6699`被忽略了，只留下`0xCC0000`。
+红色部分是通过对 `0xCC6699` 和 `0xFF0000` 进行按位与运算后得到的。`0xFF0000` 中的 `0` 部分作为*掩码*，掩盖了 `OxCC6699` 中的第二和第三个字节，使得数值中的 `6699` 被忽略，只留下 `0xCC0000`。
 
-然后，按向右移动16位，即 `>> 16`。十六进制中每两个字符是8比特位，所以移动16位的结果是把`0xCC0000`变成`0x0000CC`。这和`0xCC`是相等的，就是十进制的`204`。
+然后，再将这个数按向右移动 16 位(`>> 16`)。十六进制中每两个字符表示 8 个比特位，所以移动 16 位后 `0xCC0000` 就变为 `0x0000CC`。这个数和`0xCC`是等同的，也就是十进制数值的 `204`。
 
-同样的，绿色部分来自于`0xCC6699`和`0x00FF00`的按位操作得到`0x006600`。然后向右移动8位，得到`0x66`，即十进制的`102`。
+同样的，绿色部分通过对 `0xCC6699` 和 `0x00FF00` 进行按位与运算得到 `0x006600`。然后将这个数向右移动 8 位，得到 `0x66`，也就是十进制数值的 `102`。
 
-最后，蓝色部分对`0xCC6699`和`0x0000FF`进行按位与运算，得到`0x000099`，无需向右移位了，所以结果就是`0x99`，即十进制的`153`。
+最后，蓝色部分通过对 `0xCC6699` 和 `0x0000FF` 进行按位与运算得到 `0x000099`。并且不需要进行向右移位，所以结果为 `0x99` ，也就是十进制数值的 `153`。
 
-#### 有符整型的移位操作
+#### 有符号整型的移位操作
 
-有符整型的移位操作相对复杂得多，因为正负号也是用二进制位表示的。(这里举的例子虽然都是8位的，但它的原理是通用的。)
+对比无符号整型来说，有符整型的移位操作相对复杂得多，这种复杂性源于有符号整数的二进制表现形式。(为了简单起见，以下的示例都是基于 8 位有符号整数的，但是其中的原理对任何位数的有符号整数都是通用的。)
 
-有符整型通过第1个比特位(称为符号位)来表达这个整数是正数还是负数。`0`代表正数，`1`代表负数。
+有符号整数使用第 1 个比特位(通常被称为符号位)来表示这个数的正负。符号位为 `0` 代表正数，为 `1` 代表负数。
 
-其余的比特位(称为数值位)存储其实值。有符正整数和无符正整数在计算机里的存储结果是一样的，下来我们来看`+4`内部的二进制结构。
+其余的比特位(通常被称为数值位)存储了这个数的真实值。有符号正整数和无符号数的存储方式是一样的，都是从 `0`  开始算起。这是值为 `4` 的 `Int8` 型整数的二进制位表现形式：
 
 ![Art/bitshiftSignedFour_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSignedFour_2x.png "Art/bitshiftSignedFour_2x.png")
 
-符号位为`0`，代表正数，另外7比特位二进制表示的实际值就刚好是`4`。
+符号位为 `0`，说明这是一个正数，另外 7 位则代表了十进制数值 `4` 的二进制表示。
 
-负数呢，跟正数不同。负数存储的是2的n次方减去它的绝对值，n为数值位的位数。一个8比特的数有7个数值位，所以是2的7次方，即128。
+负数的存储方式略有不同。它存储的是 `2` 的 n 次方减去它的真实值绝对值，这里的 n 为数值位的位数。一个 8 位的数有 7 个数值位，所以是 2 的 7 次方，即 128。
 
-我们来看`-4`存储的二进制结构。
+这是值为 `-4` 的 `Int8` 型整数的二进制位表现形式：
 
 ![Art/bitshiftSignedMinusFour_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSignedMinusFour_2x.png "Art/bitshiftSignedMinusFour_2x.png")
 
-现在符号位为`1`，代表负数，7个数值位要表达的二进制值是124，即128 - 4。
+这次的符号位为 `1`，说明这是一个负数，另外 7 个位则代表了数值 `124`(即 `128 - 4`) 的二进制表示。
 
 ![Art/bitshiftSignedMinusFourValue_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSignedMinusFourValue_2x.png "Art/bitshiftSignedMinusFourValue_2x.png")
 
-负数的编码方式称为二进制补码表示。这种表示方式看起来很奇怪，但它有几个优点。
+负数的表示通常被称为二进制补码(`two's complement`)表示法。用这种方法来表示负数乍看起来有点奇怪，但它有几个优点。
 
-首先，只需要对全部8个比特位(包括符号)做标准的二进制加法就可以完成 `-1 + -4` 的操作，忽略加法过程产生的超过8个比特位表达的任何信息。
+首先，如果想对 `-1` 和 `-4` 进行加法操作，我们只需要将这两个数的全部 8 个比特位进行相加，并且将计算结果中超出 8 位的数值丢弃：
 
 ![Art/bitshiftSignedAddition_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSignedAddition_2x.png "Art/bitshiftSignedAddition_2x.png")
 
-第二，由于使用二进制补码表示，我们可以和正数一样对负数进行按位左移右移的，同样也是左移1位时乘于`2`，右移1位时除于`2`。要达到此目的，对有符整型的右移有一个特别的要求：
+其次，使用二进制补码可以使负数的按位左移和右移操作得到跟正数同样的效果，即每向左移一位就将自身的数值乘以 2，每向右一位就将自身的数值除以 2。要达到此目的，对有符号整数的右移有一个额外的规则：
 
-对有符整型按位右移时，不使用0填充空白位，而是根据符号位(正数为`0`，负数为`1`)填充空白位。
+* 当对正整数进行按位右移操作时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用*符号位*进行填充，而不是用 0。
 
 ![Art/bitshiftSigned_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSigned_2x.png "Art/bitshiftSigned_2x.png")
 
-这就确保了在右移的过程中，有符整型的符号不会发生变化。这称为算术移位。
+这个行为可以确保有符号整数的符号位不会因为右移操作而改变，这通常被称为算术移位(`arithmetic shift`)。
 
-正因为正数和负数特殊的存储方式，向右移位使它接近于`0`。移位过程中保持符号会不变，负数在接近`0`的过程中一直是负数。
+由于正数和负数的特殊存储方式，在对它们进行右移的时候，会使它们越来越接近 0。在移位的过程中保持符号位不变，意味着负整数在接近 `0` 的过程中会一直保持为负。
 
 <a name="overflow_operators"></a>
 ## 溢出运算符
