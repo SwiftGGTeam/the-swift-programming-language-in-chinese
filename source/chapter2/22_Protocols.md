@@ -263,7 +263,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 }
 ```
 
-**可失败构造器的规定**
+### 可失败构造器的规定
 
 可以通过给协议```Protocols```中添加可失败构造器来使遵循该协议的类型必须实现该可失败构造器。
 
