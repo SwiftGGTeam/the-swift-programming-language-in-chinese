@@ -177,95 +177,79 @@ let blueComponent = pink & 0x0000FF           // blueComponent 是 0x99, 即 153
 <a name="overflow_operators"></a>
 ## 溢出运算符
 
-默认情况下，当你往一个整型常量或变量赋于一个它不能承载的大数时，Swift不会让你这么干的，它会报错。这样，在操作过大或过小的数的时候就很安全了。
+在默认情况下，当向一个整数赋超过它容量的值时，Swift 默认会报错，而不是生成一个无效的数。这个行为给我们操作过大或着过小的数的时候提供了额外的安全性。
 
-例如，`Int16`整型能承载的整数范围是`-32768`到`32767`，如果给它赋上超过这个范围的数，就会报错：
+例如，`Int16` 型整数能容纳的有符号整数范围是 `-32768` 到 `32767`，当为一个 `Int16` 型变量赋的值超过这个范围时，系统就会报错：
 
-```swift
+```
 var potentialOverflow = Int16.max
-// potentialOverflow 等于 32767, 这是 Int16 能承载的最大整数
+// potentialOverflow 的值是 32767, 这是 Int16 能容纳的最大整数
+
 potentialOverflow += 1
-// 噢, 出错了
+// 这里会报错
 ```
 
-对过大或过小的数值进行错误处理让你的数值边界条件更灵活。
+为过大或者过小的数值提供错误处理，能让我们在处理边界值时更加灵活。
 
-当然，你有意在溢出时对有效位进行截断，你可采用溢出运算，而非错误处理。Swfit为整型计算提供了5个`&`符号开头的溢出运算符。
+然而，也可以选择让系统在数值溢出的时候采取截断操作，而非报错。可以使用 Swift 提供的三个溢出操作符(`overflow operators`)来让系统支持整数溢出运算。这些操作符都是以 `&` 开头的：
 
-- 溢出加法 `&+`
-- 溢出减法 `&-`
-- 溢出乘法 `&*`
-- 溢出除法 `&/`
-- 溢出求余 `&%`
+* 溢出加法 `&+`
+* 溢出减法 `&-`
+* 溢出乘法 `&*`
 
-### 值的上溢出
+### 数值溢出
 
-下面例子使用了溢出加法`&+`来解剖的无符整数的上溢出
+数值有可能出现上溢或者下溢。
 
-```swift
-var willOverflow = UInt8.max
-// willOverflow 等于UInt8的最大整数 255
-willOverflow = willOverflow &+ 1
-// 此时 willOverflow 等于 0
+这个示例演示了当我们对一个无符号整数使用溢出加法(`&+`)进行上溢运算时会发生什么：
+```
+var unsignedOverflow = UInt8.max
+// unsignedOverflow 等于 UInt8 所能容纳的最大整数 255
+
+unsignedOverflow = unsignedOverflow &+ 1
+// 此时 unsignedOverflow 等于 0
 ```
 
-`willOverflow`用`Int8`所能承载的最大值`255`(二进制`11111111`)，然后用`&+`加1。然后`UInt8`就无法表达这个新值的二进制了，也就导致了这个新值上溢出了，大家可以看下图。溢出后，新值在`UInt8`的承载范围内的那部分是`00000000`，也就是`0`。
+`unsignedOverflow` 被初始化为 `UInt8` 所能容纳的最大整数(`255`，以二进制表示即 `11111111`)。然后使用了溢出加法运算符(`&+`)对其进行加 1 操作。这使得它的二进制表示正好超出 `UInt8` 所能容纳的位数，也就导致了数值的溢出，如下图所示。数值溢出后，留在 `UInt8` 边界内的值是 `00000000`，也就是十进制数值的 0。
 
 ![Art/overflowAddition_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowAddition_2x.png "Art/overflowAddition_2x.png")
 
-### 值的下溢出
+同样地，当我们对一个无符号整数使用溢出减法(`&-`)进行下溢运算时也会产生类似的现象：
 
-数值也有可能因为太小而越界。举个例子：
+```
+var unsignedOverflow = UInt8.min
+// unsignedOverflow 等于 UInt8 所能容纳的最小整数 0
 
-`UInt8`的最小值是`0`(二进制为`00000000`)。使用`&-`进行溢出减1，就会得到二进制的`11111111`即十进制的`255`。
-
-![Art/overflowUnsignedSubtraction_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowUnsignedSubtraction_2x.png "Art/overflowUnsignedSubtraction_2x.png")
-
-Swift代码是这样的:
-
-```swift
-var willUnderflow = UInt8.min
-// willUnderflow 等于UInt8的最小值0
-willUnderflow = willUnderflow &- 1
-// 此时 willUnderflow 等于 255
+unsignedOverflow = unsignedOverflow &- 1
+// 此时 unsignedOverflow 等于 255
 ```
 
-有符整型也有类似的下溢出，有符整型所有的减法也都是对包括在符号位在内的二进制数进行二进制减法的，这在 "按位左移/右移运算符" 一节提到过。最小的有符整数是`-128`，即二进制的`10000000`。用溢出减法减去去1后，变成了`01111111`，即UInt8所能承载的最大整数`127`。
+`UInt8` 型整数能容纳的最小值是 0，以二进制表示即 `00000000`。当使用溢出减法运算符对其进行减 1 操作时，数值会产生下溢并被截断为 `11111111`， 也就是十进制数值的 255。
+
+![Art/overflowUnsignedSubtraction_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowUnsignedSubtraction_2x.png "Art/overflowAddition_2x.png")
+
+溢出也会发生在有符号整型数值上。在对有符号整型数值进行溢出加法或溢出减法运算时，符号位也需要参与计算，正如[按位左移/右移运算符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID34)所描述的。
+
+```
+var signedOverflow = Int8.min
+// signedOverflow 等于 Int8 所能容纳的最小整数 -128
+
+signedOverflow = signedOverflow &- 1
+// 此时 signedOverflow 等于 127
+```
+
+`Int8` 型整数能容纳的最小值是 -128，以二进制表示即 `10000000`。当使用溢出减法操作符对其进行减 1 操作时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整数所能容纳的最大值。
 
 ![Art/overflowSignedSubtraction_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowSignedSubtraction_2x.png "Art/overflowSignedSubtraction_2x.png")
 
-来看看Swift代码：
-
-```swift
-var signedUnderflow = Int8.min
-// signedUnderflow 等于最小的有符整数 -128
-signedUnderflow = signedUnderflow &- 1
-// 此时 signedUnderflow 等于 127
-```
-
-### 除零溢出
-
-一个数除以0 `i / 0`，或者对0求余数 `i % 0`，就会产生一个错误。
-
-```swift
-let x = 1
-let y = x / 0
-```
-
-使用它们对应的可溢出的版本的运算符`&/`和`&%`进行除0操作时就会得到`0`值。
-
-```swift
-let x = 1
-let y = x &/ 0
-// y 等于 0
-```
+对于无符号与有符号整型数值来说，当出现上溢时，它们会从数值所能容纳的最大数变成最小的数。同样地，当发生下溢时，它们会从所能容纳的最小数变成最大的数。
 
 <a name="precedence_and_associativity"></a>
 ## 优先级和结合性
 
-运算符的优先级使得一些运算符优先于其他运算符，高优先级的运算符会先被计算。
+运算符的优先级(`precedence`)使得一些运算符优先于其他运算符，高优先级的运算符会先被计算。
 
-结合性定义相同优先级的运算符在一起时是怎么组合或关联的，是和左边的一组呢，还是和右边的一组。意思就是，到底是和左边的表达式结合呢，还是和右边的表达式结合？
+结合性(`associativity`)定义相同优先级的运算符在一起时是怎么组合或关联的，是和左边的一组呢，还是和右边的一组。意思就是，到底是和左边的表达式结合呢，还是和右边的表达式结合？
 
 在混合表达式中，运算符的优先级和结合性是非常重要的。举个例子，为什么下列表达式的结果为`4`？
 
