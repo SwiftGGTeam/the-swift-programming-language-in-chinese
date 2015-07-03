@@ -7,7 +7,7 @@
 本页包含内容：
 
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
-- [对属性的规定（Property Requirements）](#property_requirements)
+- [属性要求（Property Requirements）](#property_requirements)
 - [对方法的规定（Method Requirements）](#method_requirements)
 - [对突变方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
 - [对构造器的规定（Initializer Requirements）](#initializer_requirements)
@@ -54,7 +54,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 ```
 
 <a name="property_requirements"></a>
-## 对属性的规定
+## 属性要求
 
 协议可以规定其`遵循者`提供特定名称与类型的`实例属性(instance property)`或`类属性(type property)`，而不管其是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外也可以指定属性是只读的还是可读写的。
 
