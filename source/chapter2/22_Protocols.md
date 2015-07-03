@@ -29,7 +29,7 @@
 <a name="protocol_syntax"></a>
 ## 协议的语法
 
-`协议`的定义方式与`类，结构体，枚举`的定义都非常相似，如下所示:
+协议的定义方式与类，结构体，枚举的定义非常相似:
 
 ```swift
 protocol SomeProtocol {
@@ -37,7 +37,7 @@ protocol SomeProtocol {
 }
 ```
 
-在类型名称后加上`协议名称`，中间以冒号`:`分隔即可实现协议；实现多个协议时，各协议之间用逗号`,`分隔，如下所示:
+要使类遵循某个协议，需要在类型名称后加上协议名称，中间以冒号`:`分隔，作为类型定义的一部分。遵循多个协议时，各协议之间用逗号`,`分隔:
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
@@ -45,7 +45,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 }
 ```
 
-如果一个类在含有`父类`的同时也采用了协议，应当把`父类`放在所有的`协议`之前，如下所示:
+如果类在遵循协议的同时拥有父类，应该将父类名放在协议名之前，以逗号分隔:
 
 ```swift
 class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
