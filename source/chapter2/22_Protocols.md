@@ -170,15 +170,17 @@ print("And another one: \(generator.random())")
 <a name="mutating_method_requirements"></a>
 ## 对Mutating方法的规定
 
-有时不得不在方法中更改实例的所属类型。在基于`值类型(value types)`(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改实例及其属性的所属类型。这一过程在[Modifyting Value Types from Within Instance Methods](1)章节中有详细描述。
+有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改它所属的实例及其实例属性的值。这一过程在[Modifyting Value Types from Within Instance Methods](TODO)章节中有详细描述。
 
-如果协议中的实例方法打算改变其`遵循者`实例的类型，那么在协议定义时需要在方法前加`mutating`关键字，才能使`结构体，枚举`来采用并满足协议中对方法的规定。
+如果你在协议中定义了一个方法旨在改变遵循该协议的实例，那么在协议定义时需要在方法前加`mutating`关键字。这使得结构和枚举遵循协议并满足此方法要求。
 
 
 >注意:
->用`类`实现协议中的`mutating`方法时，不用写`mutating`关键字;用`结构体`，`枚举`实现协议中的`mutating`方法时，必须写`mutating`关键字。
+>用类实现协议中的`mutating`方法时，不用写`mutating`关键字;用结构体，枚举实现协议中的`mutating`方法时，必须写`mutating`关键字。
 
-如下所示，`Togglable`协议含有名为`toggle`的突变实例方法。根据名称推测，`toggle`方法应该是用于切换或恢复其`遵循者`实例或其属性的类型。
+如下所示，`Togglable`协议含有名为`toggle`的实例方法。根据名称推测，`toggle()`方法将通过改变实例属性，来切换遵循该协议的实例的状态。
+
+`toggle()`方法在定义的时候，使用`mutating`关键字标记，这表明当它被调用时该方法将会改变协议遵循者实例的状态。
 
 ```swift
 protocol Togglable {
@@ -186,9 +188,9 @@ protocol Togglable {
 }
 ```
 
-当使用`枚举`或`结构体`来实现`Togglabl`协议时，需要提供一个带有`mutating`前缀的`toggle`方法。
+当使用`枚举`或`结构体`来实现`Togglable`协议时，需要提供一个带有`mutating`前缀的`toggle`方法。
 
-如下所示，`OnOffSwitch`枚举`遵循`了`Togglable`协议，`On`，`Off`两个成员用于表示当前状态。枚举的`toggle`方法被标记为`mutating`，用以匹配`Togglabel`协议的规定。
+下面定义了一个名为`OnOffSwitch`的枚举类型。这个枚举类型在两种状态之间进行切换，用枚举成员`On`和`Off`表示。枚举类型的`toggle`方法被标记为`mutating`以满足`Togglable`协议的要求。
 
 ```swift
 enum OnOffSwitch: Togglable {
@@ -218,7 +220,7 @@ protocol SomeProtocol {
 }
 ```
 
-**协议构造器规定在类中的实现**
+### 协议构造器规定在类中的实现
 
 你可以在遵循该协议的类中实现构造器，并指定其为类的特定构造器或者便捷构造器。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
 
