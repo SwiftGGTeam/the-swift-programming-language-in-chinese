@@ -9,7 +9,7 @@
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
 - [对属性的规定（Property Requirements）](#property_requirements)
 - [对方法的规定（Method Requirements）](#method_requirements)
-- [对突变方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
+- [对Mutating方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
 - [对构造器的规定（Initializer Requirements）](#initializer_requirements)
 - [协议类型（Protocols as Types）](#protocols_as_types)
 - [委托(代理)模式（Delegation）](#delegation)
@@ -68,9 +68,8 @@ protocol SomeProtocol {
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
-<!--TODO-->
-在协议中定义类属性(type property)时，使用`static`关键字作为前缀。
-通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
+
+在协议中定义类属性(type property)时，总是使用`static`关键字作为前缀。当协议的遵循者是类时，可以使用`class`或`static`关键字来声明类属性，但是在协议的定义中，仍然要使用`static`关键字。
 
 ```swift
 protocol AnotherProtocol {
@@ -125,20 +124,17 @@ Starship类把`fullName`属性实现为只读的计算型属性。每一个`Star
 <a name="method_requirements"></a>
 ## 对方法的规定
 
-`协议`可以要求其`遵循者`实现某些指定的`实例方法`或`类方法`。这些方法作为协议的一部分，像普通的方法一样清晰的放在协议的定义中，而不需要大括号和方法体。
+协议可以要求其遵循者实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通的方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是在协议的方法定义中，不支持参数默认值。
 
->注意：
->协议中的方法支持`变长参数(variadic parameter)`，不支持`参数默认值(default value)`。
-
-如下所示，协议中类方法的定义与类属性的定义相似，在协议定义的方法前置`class`关键字来表示。当在`枚举`或`结构体`实现类方法时，需要使用`static`关键字来代替。
+正如对属性的规定中所说的，在协议中定义类方法的时候，总是使用`static`关键字作为前缀。当协议的遵循者是类的时候，虽然你可以在类的实现中使用`class`或者`static`来实现类方法，但是在协议中声明类方法，仍然要使用`static`关键字。
 
 ```swift
 protocol SomeProtocol {
-	class func someTypeMethod()
+	static func someTypeMethod()
 }
 ```
 
-如下所示，定义了含有一个实例方法的的协议。
+下面的例子定义了含有一个实例方法的协议。
 
 ```swift
 protocol RandomNumberGenerator {
@@ -146,7 +142,7 @@ protocol RandomNumberGenerator {
 }
 ```
 
-`RandomNumberGenerator`协议要求其`遵循者`必须拥有一个名为`random`， 返回值类型为`Double`的实例方法。 (尽管这里并未指明，但是我们假设返回值在[0，1]区间内)。
+`RandomNumberGenerator`协议要求其遵循者必须拥有一个名为`random`， 返回值类型为`Double`的实例方法。尽管这里并未指明，但是我们假设返回值在[0，1)区间内。
 
 `RandomNumberGenerator`协议并不在意每一个随机数是怎样生成的，它只强调这里有一个随机数生成器。
 
@@ -172,7 +168,7 @@ print("And another one: \(generator.random())")
 ```
 
 <a name="mutating_method_requirements"></a>
-## 对突变方法的规定
+## 对Mutating方法的规定
 
 有时不得不在方法中更改实例的所属类型。在基于`值类型(value types)`(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改实例及其属性的所属类型。这一过程在[Modifyting Value Types from Within Instance Methods](1)章节中有详细描述。
 
