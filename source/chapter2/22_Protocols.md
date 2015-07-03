@@ -7,7 +7,7 @@
 本页包含内容：
 
 - [协议的语法（Protocol Syntax）](#protocol_syntax)
-- [属性要求（Property Requirements）](#property_requirements)
+- [对属性的规定（Property Requirements）](#property_requirements)
 - [对方法的规定（Method Requirements）](#method_requirements)
 - [对突变方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
 - [对构造器的规定（Initializer Requirements）](#initializer_requirements)
@@ -29,7 +29,7 @@
 <a name="protocol_syntax"></a>
 ## 协议的语法
 
-协议的定义方式与类，结构体，枚举的定义非常相似:
+协议的定义方式与类，结构体，枚举的定义非常相似。
 
 ```swift
 protocol SomeProtocol {
@@ -37,7 +37,7 @@ protocol SomeProtocol {
 }
 ```
 
-要使类遵循某个协议，需要在类型名称后加上协议名称，中间以冒号`:`分隔，作为类型定义的一部分。遵循多个协议时，各协议之间用逗号`,`分隔:
+要使类遵循某个协议，需要在类型名称后加上协议名称，中间以冒号`:`分隔，作为类型定义的一部分。遵循多个协议时，各协议之间用逗号`,`分隔。
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
@@ -45,7 +45,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 }
 ```
 
-如果类在遵循协议的同时拥有父类，应该将父类名放在协议名之前，以逗号分隔:
+如果类在遵循协议的同时拥有父类，应该将父类名放在协议名之前，以逗号分隔。
 
 ```swift
 class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
@@ -54,13 +54,13 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 ```
 
 <a name="property_requirements"></a>
-## 属性要求
+## 对属性的规定
 
-协议可以规定其`遵循者`提供特定名称与类型的`实例属性(instance property)`或`类属性(type property)`，而不管其是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外也可以指定属性是只读的还是可读写的。
+协议可以规定其`遵循者`提供特定名称和类型的`实例属性(instance property)`或`类属性(type property)`，而不指定是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外还必须指明是只读的还是可读可写的。
 
-如果协议要求属性是可读写的，那么这个属性不能是常量`存储型属性`或只读`计算型属性`；如果协议要求属性是只读的(gettable)，那么`计算型属性`或`存储型属性`都能满足协议对属性的规定，在你的代码中，即使为只读属性实现了写方法(settable)也依然有效。
+如果协议要求属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。
 
-协议中的属性经常被加以`var`前缀声明其为变量属性，在声明后加上`{ set get }`来表示属性是可读写的，只读的属性则写作`{ get }`，如下所示:
+协议中的通常用var来声明属性，在类型声明后加上`{ set get }`来表示属性是可读可写的，只读属性则用`{ get }`来表示。
 
 ```swift
 protocol SomeProtocol {
@@ -68,16 +68,17 @@ protocol SomeProtocol {
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
-
-如下所示，通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
+<!--TODO-->
+在协议中定义类属性(type property)时，使用`static`关键字作为前缀。
+通常在协议的定义中使用`class`前缀表示该属性为类成员；在枚举和结构体实现协议时中，需要使用`static`关键字作为前缀。
 
 ```swift
 protocol AnotherProtocol {
-	class var someTypeProperty: Int { get set }
+	static var someTypeProperty: Int { get set }
 }
 ```
 
-如下所示，这是一个含有一个实例属性要求的协议:
+如下所示，这是一个含有一个实例属性要求的协议。
 
 ```swift
 protocol FullyNamed {
@@ -85,9 +86,9 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed`协议定义了任何拥有`fullName`的类型。它并不指定具体类型，而只是要求类型必须提供一个`fullName`。任何`FullyNamed`类型都得有一个只读的`fullName`属性，类型为`String`。
+`FullyNamed`协议除了要求协议的遵循者提供fullName属性外，对协议对遵循者的类型并没有特别的要求。这个协议表示，任何遵循`FullyNamed`协议的类型，都具有一个可读的`String`类型实例属性`fullName`。
 
-如下所示，这是一个实现了`FullyNamed`协议的简单结构体:
+下面是一个遵循`FullyNamed`协议的简单结构体。
 
 ```swift
 struct Person: FullyNamed{
@@ -97,29 +98,29 @@ let john = Person(fullName: "John Appleseed")
 //john.fullName 为 "John Appleseed"
 ```
 
-这个例子中定义了一个叫做`Person`的结构体，用来表示具有指定名字的人。从第一行代码中可以看出，它采用了`FullyNamed`协议。
+这个例子中定义了一个叫做`Person`的结构体，用来表示具有名字的人。从第一行代码中可以看出，它遵循了`FullyNamed`协议。
 
-`Person`结构体的每一个实例都有一个叫做`fullName`，`String`类型的存储型属性，这正好匹配了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
+`Person`结构体的每一个实例都有一个叫做`fullName`，`String`类型的存储型属性。这正好满足了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
 
-这有一个更为复杂的类，它采用并实现了`FullyNamed`协议，如下所示:
+下面是一个更为复杂的类，它采用并遵循了`FullyNamed`协议:
 
 ```swift
 class Starship: FullyNamed {
-	var prefix: String?
-	var name: String
-	init(name: String, prefix: String? = nil ) {
-		self.name = name
-		self.prefix = prefix
-	}
-	var fullName: String {
-	return (prefix != nil ? prefix! + " " : " ") + name
-	}
+    var prefix: String?
+    var name: String
+    init(name: String, prefix: String? = nil) {
+        self.name = name
+        self.prefix = prefix
+    }
+    var fullName: String {
+        return (prefix != nil ? prefix! + " " : "") + name
+    }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-// ncc1701.fullName == "USS Enterprise"
+// ncc1701.fullName is "USS Enterprise"
 ```
 
-`Starship`类把`fullName`属性实现为只读的`计算型属性`。每一个`Starship`类的实例都有一个名为`name`的必备属性和一个名为`prefix`的可选属性。 当`prefix`存在时，将`prefix`插入到`name`之前来为`Starship`构建`fullName`，`prefix`不存在时，则将直接用`name`构建`fullName`
+Starship类把`fullName`属性实现为只读的计算型属性。每一个`Starship`类的实例都有一个名为`name`的属性和一个名为`prefix`的可选属性。 当`prefix`存在时，将`prefix`插入到`name`之前来为Starship构建`fullName`，`prefix`不存在时，则将直接用`name`构建`fullName`。
 
 <a name="method_requirements"></a>
 ## 对方法的规定
