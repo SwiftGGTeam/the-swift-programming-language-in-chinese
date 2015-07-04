@@ -534,7 +534,7 @@ for thing in things {
 <a name="protocol_inheritance"></a>
 ## 协议的继承
 
-协议能够继承一到多个其他协议。语法与类的继承相似，多个协议间用逗号`，`分隔
+协议能够继承一个或多个其他协议，可以在继承的协议基础上增加新的内容要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔:
 
 ```swift
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
@@ -550,9 +550,9 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-遵循`PrettyTextRepresentable`协议的同时，也需要遵循`TextRepresentable`协议。
+例子中定义了一个新的协议`PrettyTextRepresentable`，它继承自`TextRepresentable`协议。任何遵循`PrettyTextRepresentable`协议的类型在满足该协议的要求时，也必须满足`TextRepresentable`协议的要求。在这个例子中，`PrettyTextRepresentable`协议要求其遵循者提供一个返回值为`String`类型的`asPrettyText`方法。
 
-如下所示，用`扩展`为`SnakesAndLadders`遵循`PrettyTextRepresentable`协议:
+如下所示，扩展`SnakesAndLadders`，让其遵循`PrettyTextRepresentable`协议:
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
@@ -573,11 +573,11 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 }
 ```
 
-在`for in`中迭代出了`board`数组中的每一个元素:
+上述扩展使得`SnakesAndLadders`遵循了`PrettyTextRepresentable`协议，并为每个`SnakesAndLadders`类型提供了了协议要求的`asPrettyText()`方法。每个`PrettyTextRepresentable`类型同时也是`TextRepresentable`类型，所以在`asPrettyText`的实现中，可以调用`asText()`方法。之后在每一行加上换行符，作为输出的开始。然后遍历数组中的元素，输出一个几何图形来表示遍历的结果:
 
-* 当从数组中迭代出的元素的值大于0时，用`▲`表示
-* 当从数组中迭代出的元素的值小于0时，用`▼`表示
-* 当从数组中迭代出的元素的值等于0时，用`○`表示
+* 当从数组中取出的元素的值大于0时，用`▲`表示
+* 当从数组中取出的元素的值小于0时，用`▼`表示
+* 当从数组中取出的元素的值等于0时，用`○`表示
 
 任意`SankesAndLadders`的实例都可以使用`asPrettyText()`方法。
 
