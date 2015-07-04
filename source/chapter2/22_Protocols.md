@@ -222,7 +222,7 @@ protocol SomeProtocol {
 
 ### 协议构造器规定在类中的实现
 
-你可以在遵循该协议的类中实现构造器，并指定其为类的特定构造器或者便捷构造器。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
+你可以在遵循该协议的类中实现构造器，并指定其为类的指定构造器(designated initializer)或者便利构造器(convenience initializer)。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
 
 ```swift
 class SomeClass: SomeProtocol {
@@ -234,11 +234,12 @@ class SomeClass: SomeProtocol {
 
 使用`required`修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。
 
-关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`required`构造器 </a>
+<!--TODO 参考链接-->
+关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`Required`构造器 </a>
 
+<!--TODO 参考链接-->
 >注意
->
->如果类已经被“final”修饰符所标示，你就不需要在协议构造器规定的实现中使用"required"修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
+>如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
 
 如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
 
@@ -250,13 +251,13 @@ protocol SomeProtocol {
 
 class SomeSuperClass {
     init() {
-        //协议定义
+        // 构造器的实现
     }
 }
 
 
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-    // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+    // 因为遵循协议，需要加上"required"; 因为继承自父类，需要加上"override"
     required override init() {
         // 构造器实现
     }
@@ -265,7 +266,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器的规定
 
-可以通过给协议```Protocols```中添加可失败构造器来使遵循该协议的类型必须实现该可失败构造器。
+可以通过给协议`Protocols`中添加可失败构造器来使遵循该协议的类型必须实现该可失败构造器。
 
 如果在协议中定义一个可失败构造器，则在遵顼该协议的类型中必须添加同名同参数的可失败构造器或非可失败构造器。
 如果在协议中定义一个非可失败构造器，则在遵循该协议的类型中必须添加同名同参数的非可失败构造器或隐式解析类型的可失败构造器（`init!`）。
