@@ -485,7 +485,7 @@ print(game.asText())
 <a name="declaring_protocol_adoption_with_an_extension"></a>
 ## 通过扩展补充协议声明
 
-当一个类型已经实现了协议中的所有要求，却没有声明时，可以通过`扩展`来补充协议声明:
+当一个类型已经实现了协议中的所有要求，却没有声明为遵循该协议时，可以通过扩展(空的扩展体)来补充协议声明:
 
 ```swift
 struct Hamster {
@@ -506,7 +506,8 @@ print(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
 
-> 注意: 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出明显的协议声明
+> 注意
+> 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明
 
 <a name="collections_of_protocol_types"></a>
 ## 集合中的协议类型
