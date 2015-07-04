@@ -417,7 +417,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 `gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。当然了，这些方法也可以在类型转换之后调用。在上例代码中，通过`is`操作符检查`game`是否为 `SnakesAndLadders`类型的实例，如果是，则打印出相应的内容。
 
-无论当前进行的是何种游戏，`game`都遵循`DiceGame`协议以确保`game`含有`dice`属性，因此在`gameDidStart`方法中可以通过传入的`game`参数来访问`dice`属性，进而打印出`dice`的`sides`属性的值。
+无论当前进行的是何种游戏，`game`都遵循`DiceGame`协议以确保`game`含有`dice`属性，因此在`gameDidStart(_:)`方法中可以通过传入的`game`参数来访问`dice`属性，进而打印出`dice`的`sides`属性的值。
 
 `DiceGameTracker`的运行情况，如下所示:
 
@@ -438,11 +438,12 @@ game.play()
 <a name="adding_protocol_conformance_with_an_extension"></a>
 ## 在扩展中添加协议成员
 
-即便无法修改源代码，依然可以通过`扩展(Extension)`来扩充已存在类型(*译者注: 类，结构体，枚举等*)。`扩展`可以为已存在的类型添加`属性`，`方法`，`下标脚本`，`协议`等成员。详情请在[扩展](4)章节中查看。
+即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(*译者注: 类，结构体，枚举等*)。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。详情请在[扩展](4)章节中查看。
 
-> 注意: 通过`扩展`为已存在的类型`遵循`协议时，该类型的所有实例也会随之添加协议中的方法
+> 注意
+> 通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法
 
-`TextRepresentable`协议含有一个`asText`，如下所示：
+例如`TextRepresentable`协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本:
 
 ```swift
 protocol TextRepresentable {
@@ -450,7 +451,7 @@ protocol TextRepresentable {
 }
 ```
 
-通过`扩展`为上一节中提到的`Dice`类遵循`TextRepresentable`协议
+可以通过扩展，为上一节中提到的`Dice`增加类遵循`TextRepresentable`协议的功能
 
 ```swift
 extension Dice: TextRepresentable {
@@ -459,8 +460,9 @@ extension Dice: TextRepresentable {
 	}
 }
 ```
+现在，通过扩展使得`Dice`类型遵循了一个新的协议，这和`Dice`类型在定义的时候声明为遵循`TextRepresentable`协议的效果相同。在扩展的时候，协议名称写在类型名之后，以冒号隔开，在大括号内写明新添加的协议内容。
 
-从现在起，`Dice`类型的实例可被当作`TextRepresentable`类型：
+现在所有`Dice`的实例都遵循了`TextRepresentable`协议:
 
 ```swift
 let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
@@ -468,7 +470,7 @@ print(d12.asText())
 // 输出 "A 12-sided dice"
 ```
 
-`SnakesAndLadders`类也可以通过`扩展`的方式来遵循协议：
+同样`SnakesAndLadders`类也可以通过`扩展`的方式来遵循`TextRepresentable`协议：
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
