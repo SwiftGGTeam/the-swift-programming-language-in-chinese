@@ -383,7 +383,7 @@ class SnakesAndLadders: DiceGame {
 
 这个版本的游戏封装到了`SnakesAndLadders`类中，该类遵循了`DiceGame`协议，并且提供了相应的可读的`dice`属性和`play`实例方法。(`dice`属性在构造之后就不再改变，且协议只要求`dice`为只读的，因此将`dice`声明为常量属性。)
 
-在`SnakesAndLadders`类的`构造器(initializer)`初始化游戏。所有的游戏逻辑被转移到了`play`方法中，`play`方法使用协议规定的`dice`属性提供骰子摇出的值。
+游戏使用`SnakesAndLadders`类的`构造器(initializer)`初始化游戏。所有的游戏逻辑被转移到了协议中的`play`方法，`play`方法使用协议规定的`dice`属性提供骰子摇出的值。
 
 注意:`delegate`并不是游戏的必备条件，因此`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性。因为`delegate`是可选值，因此在初始化的时候被自动赋值为`nil`。随后，可以在游戏中为`delegate`设置适当的值。
 
@@ -413,7 +413,7 @@ class DiceGameTracker: DiceGameDelegate {
 }
 ```
 
-`DiceGameTracker`实现了`DiceGameDelegate`协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时，`numberOfTurns`属性被赋值为0; 在每新一轮中递加; 游戏结束后，输出打印游戏的总轮数。
+`DiceGameTracker`实现了`DiceGameDelegate`协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时，`numberOfTurns`属性被赋值为0; 在每新一轮中递增; 游戏结束后，输出打印游戏的总轮数。
 
 `gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。当然了，这些方法也可以在类型转换之后调用。在上例代码中，通过`is`操作符检查`game`是否为 `SnakesAndLadders`类型的实例，如果是，则打印出相应的内容。
 
