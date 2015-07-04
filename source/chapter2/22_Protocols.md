@@ -327,13 +327,9 @@ for _ in 1...5 {
 <a name="delegation"></a>
 ## 委托(代理)模式
 
-委托是一种设计模式(*译者注: 想起了那年 UITableViewDelegate 中的奔跑，那是我逝去的Objective-C。。。*)，它允许`类`或`结构体`将一些需要它们负责的功能`交由(委托)`给其他的类型的实例。
+委托是一种设计模式，它允许`类`或`结构体`将一些需要它们负责的功能`交由(委托)`给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法， 使其`遵循者`拥有这些被委托的`函数和方法`。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。
 
-委托模式的实现很简单: 定义`协议`来`封装`那些需要被委托的`函数和方法`， 使其`遵循者`拥有这些被委托的`函数和方法`。
-
-委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的所属类型(*译者注:只要求外部数据源`遵循`某协议*)。
-
-下文是两个基于骰子游戏的协议:
+下面的例子是两个基于骰子游戏的协议:
 
 ```swift
 protocol DiceGame {
@@ -348,7 +344,7 @@ protocol DiceGameDelegate {
 }
 ```
 
-`DiceGame`协议可以在任意含有骰子的游戏中实现，`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
+`DiceGame`协议可以在任意含有骰子的游戏中实现。`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
 
 如下所示，`SnakesAndLadders`是`Snakes and Ladders`(译者注:[Control Flow](2)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
 
@@ -385,15 +381,15 @@ class SnakesAndLadders: DiceGame {
 }
 ```
 
-这个版本的游戏封装到了`SnakesAndLadders`类中，该类采用了`DiceGame`协议，并且提供了`dice`属性和`play`实例方法用来`遵循`协议。(`dice`属性在构造之后就不在改变，且协议只要求`dice`为只读的，因此将`dice`声明为常量属性。)
+这个版本的游戏封装到了`SnakesAndLadders`类中，该类遵循了`DiceGame`协议，并且提供了相应的可读的`dice`属性和`play`实例方法。(`dice`属性在构造之后就不再改变，且协议只要求`dice`为只读的，因此将`dice`声明为常量属性。)
 
 在`SnakesAndLadders`类的`构造器(initializer)`初始化游戏。所有的游戏逻辑被转移到了`play`方法中，`play`方法使用协议规定的`dice`属性提供骰子摇出的值。
 
-> 注意:`delegate`并不是游戏的必备条件，因此`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性，`delegate`使用`nil`作为初始值。
+注意:`delegate`并不是游戏的必备条件，因此`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性。因为`delegate`是可选值，因此在初始化的时候被自动赋值为`nil`。随后，可以在游戏中为`delegate`设置适当的值。
 
 `DicegameDelegate`协议提供了三个方法用来追踪游戏过程。被放置于游戏的逻辑中，即`play()`方法内。分别在游戏开始时，新一轮开始时，游戏结束时被调用。
 
-因为`delegate`是一个遵循`DiceGameDelegate`的可选属性，因此在`play()`方法中使用了`可选链`来调用委托方法。 若`delegate`属性为`nil`， 则delegate所调用的方法失效。若`delegate`不为`nil`，则方法能够被调用
+因为`delegate`是一个遵循`DiceGameDelegate`的可选属性，因此在`play()`方法中使用了`可选链`来调用委托方法。 若`delegate`属性为`nil`， 则delegate所调用的方法失效，并不会产生错误。若`delegate`不为`nil`，则方法能够被调用
 
 如下所示，`DiceGameTracker`遵循了`DiceGameDelegate`协议
 
