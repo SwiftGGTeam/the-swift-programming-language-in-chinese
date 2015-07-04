@@ -274,15 +274,16 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 <a name="protocols_as_types"></a>
 ## 协议类型
 
-尽管`协议`本身并不实现任何功能，但是`协议`可以被当做类型来使用。
+尽管协议本身并不实现任何功能，但是协议可以被当做类型来使用。
 
-使用场景:
+协议可以像其他普通类型一样使用，使用场景:
 
-* `协议类型`作为函数、方法或构造器中的参数类型或返回值类型
-* `协议类型`作为常量、变量或属性的类型
-* `协议类型`作为数组、字典或其他容器中的元素类型
+* 作为函数、方法或构造器中的参数类型或返回值类型
+* 作为常量、变量或属性的类型
+* 作为数组、字典或其他容器中的元素类型
 
-> 注意: 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用驼峰式写法
+> 注意
+> 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用大写字母开头的驼峰式写法，例如(`FullyNamed`和`RandomNumberGenerator`)
 
 如下所示，这个示例中将协议当做类型来使用
 
@@ -300,18 +301,18 @@ class Dice {
 }
 ```
 
-例子中又一个`Dice`类，用来代表桌游中的拥有N个面的骰子。`Dice`的实例含有`sides`和`generator`两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器。
+例子中定义了一个`Dice`类，用来代表桌游中的拥有N个面的骰子。`Dice`的实例含有`sides`和`generator`两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器。
 
  `generator`属性的类型为`RandomNumberGenerator`，因此任何遵循了`RandomNumberGenerator`协议的类型的实例都可以赋值给`generator`，除此之外，无其他要求。
 
-`Dice`类中也有一个`构造器(initializer)`，用来进行初始化操作。构造器中含有一个名为`generator`，类型为`RandomNumberGenerator`的形参。在调用构造方法时创建`Dice`的实例时，可以传入任何遵循`RandomNumberGenerator`协议的实例给generator。
+`Dice`类中也有一个构造器(initializer)，用来进行初始化操作。构造器中含有一个名为`generator`，类型为`RandomNumberGenerator`的形参。在调用构造方法时创建`Dice`的实例时，可以传入任何遵循`RandomNumberGenerator`协议的实例给generator。
 
-`Dice`类也提供了一个名为`roll`的实例方法用来模拟骰子的面值。它先使用`generator`的`random`方法来创建一个[0-1]区间内的随机数种子，然后加工这个随机数种子生成骰子的面值。generator被认为是遵循了`RandomNumberGenerator`的类型，因而保证了`random`方法可以被调用。
+`Dice`类也提供了一个名为`roll`的实例方法用来模拟骰子的面值。它先使用`generator`的`random()`方法来创建一个[0,1)区间内的随机数，然后使用这个随机数生成正确的骰子面值。因为generator遵循了`RandomNumberGenerator`协议，因而保证了`random`方法可以被调用。
 
-如下所示，这里展示了如何使用`LinearCongruentialGenerator`的实例作为随机数生成器创建一个六面骰子:
+下面的例子展示了如何使用`LinearCongruentialGenerator`的实例作为随机数生成器创建一个六面骰子:
 
 ```swift
-var d6 = Dice(sides: 6,generator: LinearCongruentialGenerator())
+var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
 for _ in 1...5 {
 	print("Random dice roll is \(d6.roll())")
 }
