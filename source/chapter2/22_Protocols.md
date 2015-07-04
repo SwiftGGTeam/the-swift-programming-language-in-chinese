@@ -512,13 +512,13 @@ print(somethingTextRepresentable.asText())
 <a name="collections_of_protocol_types"></a>
 ## 集合中的协议类型
 
-协议类型可以被集合使用，表示集合中的元素均为协议类型:
+协议类型可以在集合使用，表示集合中的元素均为协议类型，下面的例子创建了一个类型为`TextRepresentable`的数组:
 
 ```swift
 let things: [TextRepresentable] = [game,d12,simonTheHamster]
 ```
 
-如下所示，`things`数组可以被直接遍历，并调用其中元素的`asText()`函数:
+如下所示，`things`数组可以被直接遍历，并打印每个元素的文本表示:
 
 ```swift
 for thing in things {
