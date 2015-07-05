@@ -11,11 +11,11 @@
 - [重写（Overriding）](#overriding)
 - [防止重写](#preventing_overrides)
 
-一个类可以*继承（inherit）*另一个类的方法（methods），属性（property）和其它特性。当一个类继承其它类时，继承类叫*子类（subclass）*，被继承类叫*超类（或父类，superclass）*。在 Swift 中，继承是区分「类」与其它类型的一个基本特征。
+一个类可以*继承（inherit）*另一个类的方法（methods），属性（properties）和其它特性。当一个类继承其它类时，继承类叫*子类（subclass）*，被继承类叫*超类（或父类，superclass）*。在 Swift 中，继承是区分「类」与其它类型的一个基本特征。
 
 在 Swift 中，类可以调用和访问超类的方法，属性和下标脚本（subscripts），并且可以重写（override）这些方法，属性和下标脚本来优化或修改它们的行为。Swift 会检查你的重写定义在超类中是否有匹配的定义，以此确保你的重写行为是正确的。
 
-可以为类中继承来的属性添加属性观察器（property observer），这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性（stored property）还是计算型属性（computed property）。
+可以为类中继承来的属性添加属性观察器（property observers），这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性（stored property）还是计算型属性（computed property）。
 
 <a name="defining_a_base_class"></a>
 ## 定义一个基类（Base class）
@@ -27,7 +27,7 @@ Swift 中的类并不是从一个通用的基类继承而来。如果你不为�
 
 下面的例子定义了一个叫`Vehicle`的基类。这个基类声明了一个名为`currentSpeed `，默认值是0.0的存储属性(属性类型推断为`Double `)。`currentSpeed `属性的值被一个`String` 类型的只读计算型属性`description`使用，用来创建车辆的描述。
 
-`Vehicle`基类也定义了一个名为`makeNoise`的方法。这个方法实际上不为`Vehicle`实例做任何事，但之后将会被`Vehicle`的子类定制
+`Vehicle`基类也定义了一个名为`makeNoise`的方法。这个方法实际上不为`Vehicle`实例做任何事，但之后将会被`Vehicle`的子类定制：
 
 ```swift
 class Vehicle {
@@ -41,7 +41,7 @@ class Vehicle {
 }
 ```
 
-您可以用初始化语法创建一个`Vehicle `的新实例，即 `TypeName`后面跟一个空括号：
+您可以用初始化语法创建一个`Vehicle `的新实例，即类名后面跟一个空括号：
 ```swift
 let someVehicle = Vehicle()
 ```
@@ -52,6 +52,8 @@ let someVehicle = Vehicle()
 println("Vehicle: \(someVehicle.description)")
 // Vehicle: traveling at 0.0 miles per hour
 ```
+
+`Vehicle`类定义了一个通用特性的车辆类，实际上没什么用处。为了让它变得更加有用，需要改进它能够描述一个更加具体的车辆类。
 
 <a name="subclassing"></a>
 ## 子类生成（Subclassing）
@@ -66,11 +68,7 @@ class SomeClass: SomeSuperclass {
 }
 ```
 
-下一个例子，定义一个更具体的车辆类叫`Bicycle`。这个新类是在 `Vehicle`类的基础上创建起来。因此你需要将`Vehicle`类放在 `Bicycle`类后面，用冒号分隔。
-
-我们可以将这读作：
-
-“定义一个新的类叫`Bicycle `，它继承了`Vehicle`的特性”；
+下一个例子，定义一个叫`Bicycle`的子类，继承成父类`Vehicle`
 
 ```swift
 class Bicycle: Vehicle {
@@ -161,7 +159,7 @@ train.makeNoise()
 
 ### 重写属性
 
-你可以重写继承来的实例属性或类属性，提供自己定制的getter和setter，或添加属性观察器使重写的属性观察属性值什么时候发生改变。
+你可以重写继承来的实例属性或类属性，提供自己定制的getter和setter，或添加属性观察器使重写的属性可以观察属性值什么时候发生改变。
 
 #### 重写属性的Getters和Setters
 
@@ -228,7 +226,7 @@ println("AutomaticCar: \(automatic.description)")
 
 你可以通过把方法，属性或下标脚本标记为*`final`*来防止它们被重写，只需要在声明关键字前加上`final`特性即可。（例如：`final var`, `final func`, `final class func`, 以及 `final subscript`）
 
-如果你重写了`final`方法，属性或下标脚本，在编译时会报错。在扩展中，你添加到类里的方法，属性或下标脚本也可以在扩展的定义里标记为 final。
+如果你重写了`final`方法，属性或下标脚本，在编译时会报错。在类扩展中的方法，属性或下标脚本也可以在扩展的定义里标记为 final。
 
-你可以通过在关键字`class`前添加`final`特性（`final class`）来将整个类标记为 final 的，这样的类是不可被继承的，否则会报编译错误。
+你可以通过在关键字`class`前添加`final`特性（`final class`）来将整个类标记为 final 的，这样的类是不可被继承的，任何子类试图继承此类时，在编译时会报错。
 
