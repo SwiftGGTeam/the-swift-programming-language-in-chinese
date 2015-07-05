@@ -51,14 +51,14 @@ Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode �
 
 要创建一个空字符串作为初始值，可以将空的字符串字面量赋值给变量，也可以初始化一个新的`String`实例：   
  
-```
+```swift
 var emptyString = ""               // 空字符串字面量
 var anotherEmptyString = String()  // 初始化方法
 // 两个字符串均为空并等价。
 ```
 
 您可以通过检查其`Boolean`类型的`isEmpty`属性来判断该字符串是否为空：   
-```
+```swift
 if emptyString.isEmpty {
     print("Nothing to see here")
 }
@@ -70,7 +70,7 @@ if emptyString.isEmpty {
 
 您可以通过将一个特定字符串分配给一个变量来对其进行修改，或者分配给一个常量来保证其不会被修改：
 
-```
+```swift
 var variableString = "Horse"
 variableString += " and carriage"
 // variableString 现在为 "Horse and carriage"
@@ -104,7 +104,7 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 
 您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
 
-```
+```swift
 for character in "Dog!🐶".characters {
     print(character)
 }
@@ -119,12 +119,12 @@ for-in 循环在 [For Loops](05_Control_Flow.html#for_loops) 中进行了详细�
 
 另外，通过标明一个`Character`类型并用字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
-```
+```swift
 let exclamationMark: Charater = "!"
 ```   
 字符串可以通过传递一个值类型为`Charater`的数组作为自变量来初始化：
 
-```
+```swift
 let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
 let catString = String(catCharacters)
 print(catString)
@@ -136,7 +136,7 @@ print(catString)
 
 字符串可以通过加法运算符（`+`）相加在一起（或称“连接”）创建一个新的字符串：
 
-```
+```swift
 let string1 = "hello"
 let string2 = " there"
 var welcome = string1 +　string2
@@ -145,7 +145,7 @@ var welcome = string1 +　string2
 
 您也可以通过加法赋值运算符 (`+=`) 将一个字符串添加到一个已经存在字符串变量上：
 
-```
+```swift
 var instruction = "look over"
 instruction += string2
 // instruction 现在等于　"look over there" 
@@ -153,7 +153,7 @@ instruction += string2
 
 您可以用`append`方法将一个字符附加到一个字符串变量的尾部：
 
-```
+```swift
 let exclamationMark: Character = "!"
 welcome.append(exclamationMark)
 // welcome 现在等于 "hello there!"
@@ -169,7 +169,7 @@ welcome.append(exclamationMark)
 字符串插值是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。
 您插入的字符串字面量的每一项都在以反斜线为前缀的圆括号中：
 
-```
+```swift
 let multiplier = 3
 let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 // message 是 "3 times 2.5 is 7.5"
@@ -215,7 +215,7 @@ Unicode 标量是对应字符的唯一21位数字或者修饰符，例如`U+0061
 `wiseWords`常量包含了两个双引号；
 `dollarSign`、`blackHeart`和`sparklingHeart`常量演示了三种不同格式的 Unicode 标量：
 
-```
+```swift
 let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
 // "Imageination is more important than knowledge" - Enistein
 let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
@@ -232,7 +232,7 @@ let sparklingHeart = "\u{1F496}"  // 💖, Unicode 标量 U+1F496
 在这两种情况中，字母 é 代表了一个单一的 Swift 的字符串，同时代表了一个可扩展的字形群。
 在第一种情况，这个字形群包含一个单一标量；而在第二种情况，它是包含两个标量的字形群：   
 
-```
+```swift
 let eAcute: Character = "\u{E9}"                         // é
 let combinedEAcute: Character = "\u{65}\u{301}"          // e 后面加上  ́
 // eAcute 是 é, combinedEAcute 是 é
@@ -243,7 +243,7 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e 后面加上  ́
 在 Swift 都会表示为同一个单一的字符：   
 
 
-```
+```swift
 let precomposed: Character = "\u{D55C}"                  // 한
 let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
 // precomposed 是 한, decomposed 是 한
@@ -251,7 +251,7 @@ let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
 
 可拓展的字符群集可以使包围记号(例如`COMBINING ENCLOSING CIRCLE`或者`U+20DD`)的标量包围其他 Unicode 标量，作为一个单一的字符： 
 
-```
+```swift
 let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 // enclosedEAcute 是 é⃝
 ```  
@@ -259,7 +259,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 局部的指示符号的 Unicode 标量可以组合成一个单一的字符，例如 `REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：   
 
 
-```
+```swift
 let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 // regionalIndicatorForUS 是 🇺🇸
 ```
@@ -270,7 +270,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 调用字符串的`count`属性，就可以获取一个字符串的字符数量：
 
 
-```
+```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 // 打印输出："unusualMenagerie has 40 characters"
@@ -279,7 +279,7 @@ print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 注意在 Swift 中，使用可拓展的字符群集作为字符来连接或改变字符串时，并不一定会更改字符串的字符数量。   
 例如，如果你用四个字符的单词 cafe 初始化一个新的字符串，然后添加一个 `COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是4，因为第四个字符是 é ，而不是 e ：
 
-```
+```swift
 var word = "cafe"
 print("the number of characters in \(word) is \(word.characters.count)")
 // 打印输出 "the number of characters in cafe is 4"
@@ -305,7 +305,7 @@ print("the number of characters in \(word) is \(word.characters.count)")
 通过调用`String.Index`的`predecessor()`方法，可以立即得到前面一个索引，调用`successor()`方法可以立即得到后面一个索引。任何一个字符串的索引都可以通过锁链作用的这些方法来获取另一个索引，也可以调用`advance(start:n:)`函数来获取。但如果尝试获取出界的字符串索引，就会抛出一个运行时错误。   
 你可以使用下标语法来访问字符在字符串的确切索引。尝试获取出界的字符串索引，仍然抛出一个运行时错误。   
 
-```
+```swift
 let greeting = "Guten Tag"
 greeting[greeting.startIndex]
 // G
@@ -322,7 +322,7 @@ greeting.endIndex.successor() // 错误
 
 使用`characters`属性的`indices`会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问分立的字符。  
  
-```
+```swift
 for index in greeting.characters.indices {
     print("\(greeting[index]) ", appendNewline: false)
 }
@@ -333,7 +333,7 @@ for index in greeting.characters.indices {
 ### 插入和删除 (Inserting and Removing)   
 调用`insert(_:atIndex:)`方法可以在一个字符串的指定索引插入一个字符。   
 
-```
+```swift
 var welcome = "hello"
 welcome.insert("!", atIndex: welcome.endIndex)
 // welcome now 现在等于 "hello!"   
@@ -341,14 +341,14 @@ welcome.insert("!", atIndex: welcome.endIndex)
 
 调用`splice(_:atIndex:)`方法可以在一个字符串的指定索引插入一个字符串。   
 
-```
+```swift
 welcome.splice(" there".characters, atIndex: welcome.endIndex.predecessor())
 // welcome 现在等于 "hello there!"
 ```    
 
 调用`removeAtIndex(_:)`方法可以在一个字符串的指定索引删除一个字符。   
 
-```
+```swift
 welcome.removeAtIndex(welcome.endIndex.predecessor())
 // welcome 现在等于 "hello there"
 // 翻译的人解释：最后还有一个换行符，所以这里删除的是 !
@@ -356,7 +356,7 @@ welcome.removeAtIndex(welcome.endIndex.predecessor())
 
 调用`removeRange(_:)`方法可以在一个字符串的指定索引删除一个子字符串。   
 
-```
+```swift
 let range = advance(welcome.endIndex, -6)..<welcome.endIndex
 welcome.removeRange(range)
 // welcome 现在等于 "hello"
@@ -372,7 +372,7 @@ Swift 提供了三种方式来比较文本值：字符串字符相等、前缀�
 ### 字符串/字符相等 (String and Character Equality)   
 字符串/字符可以用等于操作符(`==`)和不等于操作符(`!=`)，详细描述在 [Comparison Operators](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-ID70)：
 
-```
+```swift
 let quotation = "We're a lot alike, you and I."
 let sameQuotation = "We're a lot alike, you and I."
 if quotation == sameQuotation {
@@ -384,7 +384,7 @@ if quotation == sameQuotation {
 如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等的，那就认为它们是相等的。在这个情况下，即使可扩展的字形群集是有不同的 Unicode 标量构成的，只要它们有同样的语言意义和外观，就认为它们标准相等。   
 例如，`LATIN SMALL LETTER E WITH ACUTE`(`U+00E9`)就是标准相等于`LATIN SMALL LETTER E`(`U+0065`)后面加上`COMBINING ACUTE ACCENT`(`U+0301`)。这两个字符群集都有效的表示字符 é ，所以它们被认为是标准相等的：   
 
-```
+```swift
 // "Voulez-vous un café?" 使用 LATIN SMALL LETTER E WITH ACUTE
 let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
 // "Voulez-vous un café?" 使用 LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
@@ -397,7 +397,7 @@ if eAcuteQuestion == combinedEAcuteQuestion {
 
 相反，英语中的`LATIN CAPITAL LETTER A`(`U+0401`，或者`A`)不等于俄语中的`CYRILLIC CAPITAL LETTER A`(`U+0410`，或者`A`)。两个字符看着是一样的，但却有不同的语言意义：   
 
-```
+```swift
 let latinCapitalLetterA: Character = "\u{41}"
 let cyrillicCapitalLetterA: Character = "\u{0410}"
 if latinCapitalLetterA != cyrillicCapitalLetterA {
@@ -416,7 +416,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 通过调用字符串的`hasPrefix(_:)`/`hasSuffix(_:)`方法来检查字符串是否拥有特定前缀/后缀，两个方法均需要以字符串作为参数传入并传出`Boolean`值。   
 下面的例子以一个字符串数组表示莎士比亚话剧《罗密欧与朱丽叶》中前两场的场景位置：
 
-```
+```swift
 let romeoAndJuliet = [
     "Act 1 Scene 1: Verona, A public place",
     "Act 1 Scene 2: Capulet's mansion",
@@ -434,7 +434,7 @@ let romeoAndJuliet = [
 
 您可以调用`hasPrefix(_:)`方法来计算话剧中第一幕的场景数：
 
-```
+```swift
 var act1SceneCount = 0
 for scene in romeoAndJuliet {
     if scene.hasPrefix("Act 1 ") {
@@ -447,7 +447,7 @@ print("There are \(act1SceneCount) scenes in Act 1")
 
 相似地，您可以用`hasSuffix(_:)`方法来计算发生在不同地方的场景数：
 
-```
+```swift
 var mansionCount = 0
 var cellCount = 0
 for scene in romeoAndJuliet {
@@ -481,7 +481,7 @@ Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式�
 
 下面由`D``o``g``‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`🐶`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
 
-```
+```swift
 let dogString = "Dog‼🐶"
 ```   
 
@@ -532,7 +532,7 @@ let dogString = "Dog‼🐶"
 </center>
 </body>
 
-```
+```swift
 for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", appendNewline: false)
 }
@@ -584,7 +584,7 @@ print("")
 </body>   
 
 
-```
+```swift
 for codeUnit in dogString.utf16 {
     print("\(codeUnit) ", appendNewline: false)
 }
@@ -638,7 +638,7 @@ print("")
 </body>   
 
 
-```
+```swift
 for scalar in dogString.unicodeScalars {
     print("\(scalar.value) ", appendNewline: false)
 }
@@ -652,7 +652,7 @@ print("")
 
 作为查询字符值属性的一种替代方法，每个`UnicodeScalar`值也可以用来构建一个新的字符串值，比如在字符串插值中使用：
 
-```
+```swift
 for scalar in dogString.unicodeScalars {
     print("\(scalar) ")
 }
