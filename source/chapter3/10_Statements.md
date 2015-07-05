@@ -1,6 +1,7 @@
 > 翻译：[coverxit](https://github.com/coverxit),[littledogboy](https://github.com/littledogboy)  
 > 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),[littledogboy](https://github.com/littledogboy)
 
+<a name="statement_statements"></a>
 # 语句
 -----------------
 
@@ -40,6 +41,7 @@
 > *循环语句* → [*while语句*](..\chapter3\10_Statements.html#wheetatype类型ile_statement)  
 > *循环语句* → [*do-while语句*](..\chapter3\10_Statements.html#do_while_statement)  
 
+<a name="for_statements"></a>
 ### For 语句
 
 `for`语句只有在循环条件为真时重复执行代码块，此时计数器递增。
@@ -66,6 +68,8 @@
 > *for语句* → **for** **(** [*for初始条件*](..\chapter3\10_Statements.html#for_init) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ **)** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
 > *for初始条件* → [*变量声明*](..\chapter3\05_Declarations.html#variable_declaration) | [*表达式列表*](..\chapter3\04_Expressions.html#expression_list)  
 
+
+<a name="for-in_statements"></a>
 ### For-In 语句
 
 `for-in`语句允许在重复执行代码块的同时，迭代集合（或遵循`Sequence`协议的任意类型）中的每一项。
@@ -81,6 +85,8 @@
 > For-In 循环语法  
 > *for-in语句* → **for** [*模式*](..\chapter3\07_Patterns.html#pattern) **in** [*表达式*](..\chapter3\04_Expressions.html#expression) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
 
+
+<a name="while_statements"></a>
 ### While 语句
 
 `while`语句当循环条件为真时，允许重复执行代码块。
@@ -103,11 +109,21 @@
 
 > While 循环语法  
 > *while语句* → **while** [*while条件*](..\chapter3\10_Statements.html#while_condition) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *while条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*声明*](..\chapter3\05_Declarations.html#declaration)   
-> *表达式* → [*表达式*](..\chapter3\04_Expressions.html#expression)   
-> *表达式* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [条件列表](TODO)    
-> *表达式* →
+> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*声明*](..\chapter3\05_Declarations.html#declaration)   
+> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression)   
+> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*条件列表*](TODO)    
+> *条件* → [*可用条件*](..\chapter3\10_Statement.html#availability) [*表达式*](..\chapter3\04_Expressions.html#expression)    
+> *条件列表* → [*条件条件*](TODO)  [*条件列表*](TODO)      
+> *条件* → [*可用条件*](..\chapter3\10_Statement.html#availability) [可选绑定条件](../chapter2/01_The_Basics.html#optional_binding)    
+> *case条件* → **case** [*模式*](..\chapter3\07_Patterns.html#pattern) [构造器](TODO) [where](DOTO)    
+> *可选绑定条件* → [可选绑定头](TODO) [持续可选绑定](TODO) [持续可选绑定列表](TODO)    
+> *可选绑定头* → **let** [*模式*](..\chapter3\07_Patterns.html#pattern)  [构造器](TODO)  **var**  [*模式*](..\chapter3\07_Patterns.html#pattern)  [构造器](TODO)    
+>  *可持续绑定列表* →  [*模式*](..\chapter3\07_Patterns.html#pattern) |  [构造器](TODO) [可选绑定头](TODO)
+> 
 
+
+
+<a name="while-while_statements"></a>
 ### Repeat-While 语句
 
 `repeat-while`语句允许代码块被执行一次或多次。
@@ -142,6 +158,8 @@
 > *分支语句* → [*if语句*](..\chapter3\10_Statements.html#if_statement)  
 > *分支语句* → [*switch语句*](..\chapter3\10_Statements.html#switch_statement)  
 
+
+<a name="if_statements"></a>
 ### If 语句
 
 取决于一个或多个条件的值，`if`语句将决定执行哪一块代码。
@@ -176,21 +194,23 @@
 `if`语句中条件的值的类型必须遵循`LogicValue`协议。同时，条件也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
 > If语句语法  
-> *if语句* → **if** [*if条件*](..\chapter3\10_Statements.html#if_condition) [*代码块*](..\chapter3\05_Declarations.html#code_block) [*else子句(Clause)*](..\chapter3\10_Statements.html#else_clause) _可选_  
+> *if语句* → **if** [*if条件*](..\chapter3\10_Statements.html#if_condition) [*代码块*](..\chapter3\05_Declarations.html#code_block) [*else(Clause)*](..\chapter3\10_Statements.html#else_clause) _可选_  
 > *if条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*声明*](..\chapter3\05_Declarations.html#declaration)  
-> *else子句(Clause)* → **else** [*代码块*](..\chapter3\05_Declarations.html#code_block) | **else** [*if语句*](..\chapter3\10_Statements.html#if_statement)     
+> *else(Clause)* → **else** [*代码块*](..\chapter3\05_Declarations.html#code_block) | **else** [*if语句*](..\chapter3\10_Statements.html#if_statement)     
 
+
+<a name="guard_statements"></a>
 ### Guard 语句    
     
-`guard` 语句用来转移程序控制出该作用域，假如一个或者多个多个条件不成立。
+`guard` 语句用来转移程序控制出其作用域，如果一个或者多个条件不成立。
  `guard` 语句的格式如下：    
  > guard `condition` else {    
    `statements`    
  >}    
  
- `guard`语句中条件的值的类型必须遵循`LogicValue`协议。同时，条件也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+ `guard`语句中条件值的类型必须遵循`LogicValue`协议。且条件可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
  
- 在`guard`语句中声明的常量或者变量，可使用范围为从声明开始到作用域结束,常量和变量的值从可选绑定声明中分配。
+ 在`guard`语句中声明的常量或者变量，可用范围从声明开始到作用域结束,常量和变量的值从可选绑定声明中分配。
  
  `guard`语句需要有`else`子句，并且必须调用被`noreturn`属性标记的函数,或者使用下面的语句把程序执行转移到guard语句的作用域外。    
  
@@ -199,8 +219,10 @@
  *  `continue`
  *  `throw`    
  
-执行转移语句详情参见[执行转移语句](TODO)
+执行转移语句详情参见[控制传递语句](TODO)
 
+
+<a name="switch_statements"></a>
 ### Switch 语句
 
 取决于`switch`语句的*控制表达式（control expression）*，`switch`语句将决定执行哪一块代码。
@@ -251,12 +273,11 @@ case let (x, y) where x == y:
 > *case标签* → **case** [*case项列表*](..\chapter3\10_Statements.html#case_item_list) **:**  
 > *case项列表* → [*模式*](..\chapter3\07_Patterns.html#pattern) [*guard-clause*](..\chapter3\10_Statements.html#guard_clause) _可选_ | [*模式*](..\chapter3\07_Patterns.html#pattern) [*guard-clause*](..\chapter3\10_Statements.html#guard_clause) _可选_ **,** [*case项列表*](..\chapter3\10_Statements.html#case_item_list)  
 > *default标签* → **default** **:**  
-> *where-clause* → **where** [*guard-expression*](..\chapter3\10_Statements.html#guard_expression)  
+> *where-clause* → **where** [*guard-expression*](..\chapter3\10_Statements.html#guard)  
 > *where-expression* → [*表达式*](..\chapter3\04_Expressions.html#expression)  
 
-<a name="labeled_statement"></a>
+<a name="labeled_statements"></a>
 <a name="control_transfer_statements"></a>
-
 ## 带标签的语句
 
 你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
@@ -270,7 +291,7 @@ case let (x, y) where x == y:
 > *语句标签* → [*标签名称*](..\chapter3\10_Statements.html#label_name) **:**  
 > *标签名称* → [*标识符*](..\chapter3\02_Lexical_Structure.html#identifier)  
 
-<a name="control_transfer_statement"></a>
+<a name="control_transfer_statements"></a>
 ## 控制传递语句
 
 通过无条件地把控制权从一片代码传递到另一片代码，控制传递语句能够改变代码执行的顺序。Swift 提供四种类型的控制传递语句：`break`语句、`continue`语句、`fallthrough`语句和`return`语句。
@@ -282,7 +303,7 @@ case let (x, y) where x == y:
 > *控制传递语句* → [*return语句*](..\chapter3\10_Statements.html#return_statement)     
 > *控制传递语句* → [*throw语句*](..\chapter3\10_Statements.html#throw_statement)  
 
-<a name="break_statement"></a>
+<a name="break_statements"></a>
 ### Break 语句
 
 `break`语句用于终止循环或`switch`语句的执行。使用`break`语句时，可以只写`break`这个关键词，也可以在`break`后面跟上标签名（label name），像下面这样：
@@ -301,7 +322,7 @@ case let (x, y) where x == y:
 > Break 语句语法  
 > *break语句* → **break** [*标签名称*](..\chapter3\10_Statements.html#label_name) _可选_  
 
-<a name="continue_statement"></a>
+<a name="continue_statements"></a>
 ### Continue 语句
 
 `continue`语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用`continue`语句时，可以只写`continue`这个关键词，也可以在`continue`后面跟上标签名（label name），像下面这样：
@@ -322,7 +343,7 @@ case let (x, y) where x == y:
 > Continue 语句语法  
 > *continue语句* → **continue** [*标签名称*](..\chapter3\10_Statements.html#label_name) _可选_  
 
-<a name="fallthrough_statement"></a>
+<a name="fallthrough_statements"></a>
 ### Fallthrough 语句
 
 `fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个 case 传递给下一个 case 。这种传递是无条件的，即使下一个 case 的模式与`switch`语句的控制表达式的值不匹配。
@@ -334,7 +355,7 @@ case let (x, y) where x == y:
 > Fallthrough 语句语法  
 > *fallthrough语句* → **fallthrough**  
 
-<a name="return_statement"></a>
+<a name="return_statements"></a>
 ### Return 语句
 
 `return`语句用于在函数或方法的实现中将控制权传递给调用者，接着程序将会从调用者的位置继续向下执行。
@@ -351,7 +372,7 @@ case let (x, y) where x == y:
 > Return 语句语法  
 > *return语句* → **return** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_     
 
-<a name="availability_statement"></a>
+<a name="availability_statements"></a>
 ### Availability 语句    
 
 可用性条件，被当做`if` ，`while` 语句的条件，并且 `guard` 语句在运行时会基于特定的语法格式查询接口的可用性。    
@@ -363,10 +384,10 @@ avaliability 语句的形式如下：
 >  `fallback statements to execute if the APIs are unavailable`   
 > }    
 
-可用性条件执行一个代码块时，取决于在运行时你想要使用的接口是否可用。
+可用性条件执行一个代码块时，取决于在运行时想要使用的接口是否可用。
 当编译器检查到代码块中的接口是可用的，则从可用性条件中获取相应信息。    
 
-可用性条件使用逗号分隔平台名称和版本列表。使用`iOS`，`OSX`，以及`watchOS`为平台名称，包括相应的版本号。*参数是必需的。在任何平台上代码块主体都被可用性条件保护起来，由目标规定的最小部署目标执行。        
+可用性条件使用逗号分隔平台名称和版本列表。使用`iOS`，`OSX`，以及`watchOS`为平台名称，包括相应的版本号。*参数是必需的。在任何平台上代码块主体都被可用性条件保护起来，由满足最低部署条件的目标设备运行。        
    
 与布尔类型条件不同，不能用逻辑运算符 **&&** 和 **||** 合并可用性条件。 
 
@@ -383,7 +404,7 @@ avaliability 语句的形式如下：
 > *版本号* → [十进制数字](TODO)  **.** [十进制数字](TODO) **.** [十进制数字](TODO)
     
 
-<a name="throw_statement"></a>
+<a name="throw_statements"></a>
 ### Throw 语句    
 `throw`语句出现在抛出函数或者抛出方法体内，或者类型被`throws`关键字标记的表达式体内。   
  
@@ -400,14 +421,14 @@ avaliability 语句的形式如下：
 > throw 语句语法    
 > *抛出语句* → **throw**  *[表达式­](TODO)*    
 
-<a name="defer_statement"></a>
+<a name="defer_statements"></a>
 ### Defer 语句
 
  `defer` 语句用于转移程序控制出延迟语句作用域之前执行代码。    
  
 在 `defer` 语句中的语句无论程序控制如何转移都会执行。这意味着 `defer` 语句可以被使用在以下这些情况，像手动得执行资源管理，关闭文件描述，或者即使抛出了错误也需要去实现执行一些动作。    
 
-如果多个 `defer` 语句出现在同一范围内，那么它们执行的顺序与它们出现的顺序相反。最后执行的 `defer` 语句为给定范围内的第一个，这意味着最后的延迟语句中的语句涉及的资源可以被其他 `defer`语句清理掉。    
+如果多个 `defer` 语句出现在同一范围内，那么它们执行的顺序与出现的顺序相反。给定作用域中的第一个`defer` 语句，会在最后执行，这意味着最后执行的延迟语句中的语句涉及的资源可以被其他 `defer`语句清理掉。    
 
 > 1  func f( ) {    
 > 2  defer { print("First") }    
@@ -420,13 +441,13 @@ avaliability 语句的形式如下：
 > 9  // prints "First"    
 
 
-`defer` 语句中的语句无法转移程序控制权出延迟语句。    
+`defer` 语句中的语句无法转移程序控制出延迟语句。    
 
 > defer 语句语法        
 > *延迟语句*  → **defer** *[代码块](TODO)*    
 
 
-<a name="do_statement"></a>
+<a name="do_statements"></a>
 ### Do 语句    
 
 `do` 语句用于引入一个新的作用域,该作用域中可以含有一个或多个`catch`子句,catch子句中定义了一些匹配错误情况的模式。`do` 语句作用域内定义的常量和变量，只能在do语句作用域内访问。    
@@ -441,17 +462,17 @@ avaliability 语句的形式如下：
 > }    
 
 
-如同`switch`语句,编译器会判断`catch`子句是否被遗漏。如果这样的决定被执行，则视为错误被处理。否则，错误会自动传播出包含作用域,被一个封闭的`catch`语句或抛出函数处理，包含函数必须以`throws`关键字声明。    
+如同`switch`语句,编译器会判断`catch`子句是否被遗漏。如果catch没有被遗漏，则认为错误被处理。否则，错误会自动传播出包含作用域,被一个封闭的`catch`语句或抛出函数处理掉，包含函数必须以`throws`关键字声明。    
 
-为了确保错误已经被处理，使用一个匹配所有错误的`catch`子句，如通配符模式（_）。如果一个`catch`子句不指定一种模式，catch子句会匹配和结合任何错误本地命名常量错误。有关可在catch子句中使用了图纹的更多信息，请参阅模式。    
+    
 
 为了确保错误已经被处理，使用一个匹配所有错误的`catch`子句，如通配符模式（_）。如果一个`catch`子句不指定一种模式，`catch`子句会匹配和约束任何局部变量命名的`error`。有关在`catch`子句中使用模式的更多信息，详见[模式](TODO)。    
 
 关于在一些`catch`子句中如何使用` do`语句的例子，详情参见[错误处理](TODO)一章的[抛出错误](TODO)。       
 
-> do 语句语法  → **do** *[代码块](TODO) [catch子句](TODO)*    
-> catch子句  → *[catch子句](TODO) [catch子句](TODO)*    
-> catch子句  → **catch** **[模式](TODO)** *可选的* [where子句]() *可选的* [代码块](TODO)
+> do 语句语法  → **do** *[*代码块*](..\chapter3\05_Declarations.html#code_block) [catch](TODO)*    
+> catch  → *[catch子句](TODO) [catch子句](TODO)*    
+> catch  → **catch** *[*模式*](..\chapter3\07_Patterns.html#pattern)** *可选的* [*where*]() *可选的*  [*代码块*](..\chapter3\05_Declarations.html#code_block)
 
 
 
