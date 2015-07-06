@@ -305,12 +305,12 @@ Here's a generic version of the same code:
 
 .. testcode:: genericStack
 
-   -> struct Stack<T> {
-         var items = [T]()
-         mutating func push(item: T) {
+   -> struct Stack<Element> {
+         var items = [Element]()
+         mutating func push(item: Element) {
             items.append(item)
          }
-         mutating func pop() -> T {
+         mutating func pop() -> Element {
             return items.removeLast()
          }
       }
@@ -319,21 +319,23 @@ Here's a generic version of the same code:
 
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
-but with a type parameter called ``T``
+but with a type parameter called ``Element``
 instead of an actual type of ``Int``.
-This type parameter is written within a pair of angle brackets (``<T>``)
+This type parameter is written within a pair of angle brackets (``<Element>``)
 immediately after the structure's name.
 
-``T`` defines a placeholder name for “some type ``T``” to be provided later on.
-This future type can be referred to as “``T``” anywhere within the structure's definition.
-In this case, ``T`` is used as a placeholder in three places:
+``Element`` defines a placeholder name for
+“some type ``Element``” to be provided later on.
+This future type can be referred to as “``Element``”
+anywhere within the structure's definition.
+In this case, ``Element`` is used as a placeholder in three places:
 
 * To create a property called ``items``,
-  which is initialized with an empty array of values of type ``T``
+  which is initialized with an empty array of values of type ``Element``
 * To specify that the ``push(_:)`` method has a single parameter called ``item``,
-  which must be of type ``T``
+  which must be of type ``Element``
 * To specify that the value returned by the ``pop()`` method
-  will be a value of type ``T``
+  will be a value of type ``Element``
 
 Because it is a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
@@ -393,17 +395,17 @@ which returns the top item on the stack without popping it from the stack:
 .. testcode:: genericStack
 
    -> extension Stack {
-         var topItem: T? {
+         var topItem: Element? {
             return items.isEmpty ? nil : items[items.count - 1]
          }
       }
 
-The ``topItem`` property returns an optional value of type ``T``.
+The ``topItem`` property returns an optional value of type ``Element``.
 If the stack is empty, ``topItem`` returns ``nil``;
 if the stack is not empty, ``topItem`` returns the final item in the ``items`` array.
 
 Note that this extension does not define a type parameter list.
-Instead, the ``Stack`` type's existing type parameter name, ``T``,
+Instead, the ``Stack`` type's existing type parameter name, ``Element``,
 is used within the extension to indicate the optional type of
 the ``topItem`` computed property.
 
@@ -727,31 +729,31 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
 .. testcode:: associatedTypes
 
-   -> struct Stack<T>: Container {
-         // original Stack<T> implementation
-         var items = [T]()
-         mutating func push(item: T) {
+   -> struct Stack<Element>: Container {
+         // original Stack<Element> implementation
+         var items = [Element]()
+         mutating func push(item: Element) {
             items.append(item)
          }
-         mutating func pop() -> T {
+         mutating func pop() -> Element {
             return items.removeLast()
          }
          // conformance to the Container protocol
-         mutating func append(item: T) {
+         mutating func append(item: Element) {
             self.push(item)
          }
          var count: Int {
             return items.count
          }
-         subscript(i: Int) -> T {
+         subscript(i: Int) -> Element {
             return items[i]
          }
       }
 
-This time, the type parameter ``T`` is used as
+This time, the type parameter ``Element`` is used as
 the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
-Swift can therefore infer that ``T`` is the appropriate type to use
+Swift can therefore infer that ``Element`` is the appropriate type to use
 as the ``ItemType`` for this particular container.
 
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
