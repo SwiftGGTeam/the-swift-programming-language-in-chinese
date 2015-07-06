@@ -310,18 +310,21 @@ are defined to be of type ``Character``,
 and are set to some of the more common ASCII control characters.
 ``Character`` values are described in :doc:`StringsAndCharacters`.
 
-Note that raw values are *not* the same as associated values.
-Raw values are set to prepopulated values
-when you first define the enumeration in your code,
-like the three ASCII codes above.
-The raw value for a particular enumeration member is always the same.
-Associated values are set when you create a new constant or variable
-based on one of the enumeration's members,
-and can be different each time you do so.
+.. note::
+
+   Raw values are *not* the same as associated values.
+   Raw values are set to prepopulated values
+   when you first define the enumeration in your code,
+   like the three ASCII codes above.
+   The raw value for a particular enumeration member is always the same.
+   Associated values are set when you create a new constant or variable
+   based on one of the enumeration's members,
+   and can be different each time you do so.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
+
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
 
