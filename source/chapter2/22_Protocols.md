@@ -589,19 +589,20 @@ print(game.asPrettyText())
 
 <a name="class_only_protocol"></a>
 ## 类专属协议
-你可以在协议的继承列表中,通过添加“class”关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该“class”关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。
+你可以在协议的继承列表中,通过添加`class`关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该`class`关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。
 
 ```swift
 protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
     // class-only protocol definition goes here
 }
 ```
-在以上例子中，协议SomeClassOnlyProtocol只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
+
+在以上例子中，协议`SomeClassOnlyProtocol`只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
+
+<!--TODO 链接-->
 
 >注意
->
->当协议需求定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
-
+>当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
 
 
 <a name="protocol_composition"></a>
