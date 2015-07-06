@@ -264,7 +264,7 @@ Array Type
 ----------
 
 The Swift language provides the following syntactic sugar for the Swift standard library
-``Array<T>`` type:
+``Array<Element>`` type:
 
 .. syntax-outline::
 
