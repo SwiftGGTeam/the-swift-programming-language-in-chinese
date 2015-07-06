@@ -2048,7 +2048,7 @@ You do not write the ``override`` modifier when overriding a required designated
       }
    !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
-   !! ~~~~~~~~          ^
+   !! ~~~~~~~~~         ^
    !!-
    !! <REPL Input>:2:15: note: overridden required initializer is here
    !!    required init() {}
