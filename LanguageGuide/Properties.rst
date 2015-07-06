@@ -704,12 +704,10 @@ in the same way as computed instance properties.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
-.. TODO: I've found a note saying that
-   "Global variables and static properties are now lazily initialized on first use.
-   Where you would use dispatch_once to lazily initialize a singleton object
-   in Objective-C, you can simply declare a global variable with an initializer in Swift.
-   Like dispatch_once, this lazy initialization is thread safe."
-   If this is true, I haven't yet mentioned it for static properties.
+   Stored type properties are guaranteed
+   to be lazily initialized only once,
+   even when accessed by multiple threads simultaneously.
+   and do not need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 
