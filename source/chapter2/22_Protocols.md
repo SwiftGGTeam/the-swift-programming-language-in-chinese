@@ -608,9 +608,9 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 <a name="protocol_composition"></a>
 ## 协议合成
 
-一个协议可由多个协议采用`protocol<SomeProtocol， AnotherProtocol>`这样的格式进行组合，称为`协议合成(protocol composition)`。
+有时候需要同时遵循多个协议。你可以将多个协议采用`protocol<SomeProtocol， AnotherProtocol>`这样的格式进行组合，称为`协议合成(protocol composition)`。你可以在`<>`中罗列任意多个你想要遵循的协议，以逗号分隔。
 
-举个例子：
+下面的例子中，将`Named`和`Aged`两个协议按照上述的语法组合成一个协议:
 
 ```swift
 protocol Named {
@@ -633,9 +633,12 @@ wishHappyBirthday(birthdayPerson)
 
 `Named`协议包含`String`类型的`name`属性;`Aged`协议包含`Int`类型的`age`属性。`Person`结构体`遵循`了这两个协议。
 
-`wishHappyBirthday`函数的形参`celebrator`的类型为`protocol<Named，Aged>`。可以传入任意`遵循`这两个协议的类型的实例
+`wishHappyBirthday`函数的形参`celebrator`的类型为`protocol<Named，Aged>`。可以传入任意`遵循`这两个协议的类型的实例。
 
-> 注意: `协议合成`并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。
+上面的例子创建了一个名为`birthdayPerson`的`Person`实例，作为参数传递给了`wishHappyBirthday(_:)`函数。因为`Person`同时遵循这两个协议，所以这个参数合法，函数将输出生日问候语。
+
+> 注意
+> `协议合成`并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。
 
 <a name="checking_for_protocol_conformance"></a>
 ## 检验协议的一致性
