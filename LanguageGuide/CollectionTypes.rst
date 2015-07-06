@@ -70,9 +70,9 @@ The same value can appear in an array multiple times at different positions.
 Array Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The type of a Swift array is written in full as ``Array<SomeType>``,
-where ``SomeType`` is the type of values the array is allowed to store.
-You can also write the type of an array in shorthand form as ``[SomeType]``.
+The type of a Swift array is written in full as ``Array<Element>``,
+where ``Element`` is the type of values the array is allowed to store.
+You can also write the type of an array in shorthand form as ``[Element]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred
 and is used throughout this guide when referring to the type of an array.
@@ -472,8 +472,8 @@ are also hashable by default.
 Set Type Syntax
 ~~~~~~~~~~~~~~~
 
-The type of a Swift set is written as ``Set<T>``,
-where ``T`` is the type that the set is allowed to store.
+The type of a Swift set is written as ``Set<Element>``,
+where ``Element`` is the type that the set is allowed to store.
 Unlike arrays, sets do not have an equivalent shorthand form.
 
 
