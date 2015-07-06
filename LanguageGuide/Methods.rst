@@ -146,8 +146,6 @@ Modifying External Parameter Name Behavior for Methods
 Sometimes it's useful to provide an external parameter name
 for a method's first parameter, even though this is not the default behavior.
 To do so, you can add an explicit external name yourself.
-or you can prefix the first parameter's name with a hash symbol
-to use the local name as an external name too.
 
 Conversely, if you do not want to provide an external name
 for the second or subsequent parameter of a method,

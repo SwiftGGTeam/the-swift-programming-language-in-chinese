@@ -189,8 +189,6 @@ Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
 Because of this, Swift provides an automatic external name
 for *every* parameter in an initializer if you don't provide an external name yourself.
-This automatic external name is the same as the local name,
-as if you had written a hash symbol before every initialization parameter.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
