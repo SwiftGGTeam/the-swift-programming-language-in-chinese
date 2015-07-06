@@ -310,6 +310,10 @@ are defined to be of type ``Character``,
 and are set to some of the more common ASCII control characters.
 ``Character`` values are described in :doc:`StringsAndCharacters`.
 
+Raw values can be
+strings, characters, or any of the integer or floating-point number types.
+Each raw value must be unique within its enumeration declaration.
+
 .. note::
 
    Raw values are *not* the same as associated values.
@@ -321,9 +325,10 @@ and are set to some of the more common ASCII control characters.
    based on one of the enumeration's members,
    and can be different each time you do so.
 
-Raw values can be
-strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its enumeration declaration.
+.. _Enumerations_IntegerRawValues:
+
+Integer Raw Values and Auto-Incrementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
@@ -337,7 +342,8 @@ with raw integer values to represent each planet's order from the sun:
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 
-Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
+Auto-incrementation means that ``Planet.Venus``
+has a raw value of ``2``, and so on.
 
 Access the raw value of an enumeration member with its ``rawValue`` property:
 
