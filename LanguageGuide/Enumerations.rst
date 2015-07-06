@@ -354,6 +354,37 @@ Access the raw value of an enumeration member with its ``rawValue`` property:
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
 
+
+.. _Enumerations_StringRawValues:
+
+String Raw Values and Auto-Synthesis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When strings are used for raw values,
+they auto-synthesize values according to their name if no value is specified.
+
+The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
+with raw string values to represent each direction's name:
+
+.. testcode:: rawValues
+
+   -> enum CompassPoint: String {
+         case North, South, East, West
+      }
+
+Auto-synthesis means that ``CompassPoint.South``
+has a raw value of ``"South"``, and so on.
+
+Access the raw value of an enumeration member with its ``rawValue`` property:
+
+.. testcode:: rawValues
+
+   -> let sunsetDirection = CompassPoint.West.rawValue
+   << // sunsetDirection : String = "West"
+   /> sunsetDirection is \(sunsetDirection)
+   </ sunsetDirection is West
+
+
 .. _Enumerations_InitializingFromARawValue:
 
 Initializing from a Raw Value
