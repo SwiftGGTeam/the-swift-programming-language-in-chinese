@@ -643,19 +643,20 @@ wishHappyBirthday(birthdayPerson)
 <a name="checking_for_protocol_conformance"></a>
 ## 检验协议的一致性
 
-使用`is`和`as`操作符来检查协议的一致性或转化协议类型。检查和转化的语法和之前相同(*详情查看[Typy Casting章节](5)*):
+<!--TODO 链接-->
+你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[Typy Casting章节](5)*):
 
-* `is`操作符用来检查实例是否`遵循`了某个`协议`。
+* `is`操作符用来检查实例是否`遵循`了某个`协议`
 * `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
-* `as`用以强制向下转型。
+* `as`用以强制向下转型，如果强转失败，会引起运行时错误。
+
+下面的例子定义了一个`HasArea`的协议，要求有一个`Double`类型可读的`area`:
 
 ```swift
-@objc protocol HasArea {
+protocol HasArea {
     var area: Double { get }
 }
 ```
-
-> 注意: `@objc`用来表示协议是可选的，也可以用来表示暴露给`Objective-C`的代码，此外，`@objc`型协议只对`类`有效，因此只能在`类`中检查协议的一致性。详情查看*[Using Siwft with Cocoa and Objectivei-c](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。
 
 如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议
 
@@ -683,7 +684,7 @@ class Animal {
 }
 ```
 
-`Circle，Country，Animal`并没有一个相同的基类，因而采用`AnyObject`类型的数组来装载在他们的实例，如下所示:
+`Circle`，`Country`，`Animal`并没有一个相同的基类，然而，它们都是类，它们的实例都可以作为`AnyObject`类型的变量，存储在同一个数组中:
 
 ```swift
 let objects: [AnyObject] = [
@@ -693,7 +694,7 @@ let objects: [AnyObject] = [
 ]
 ```
 
-`objects`数组使用字面量初始化，数组包含一个`radius`为2。0的`Circle`的实例，一个保存了英国面积的`Country`实例和一个`legs`为4的`Animal`实例。
+`objects`数组使用字面量初始化，数组包含一个`radius`为2的`Circle`的实例，一个保存了英国面积的`Country`实例和一个`legs`为4的`Animal`实例。
 
 如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了`HasArea`协议:
 
@@ -712,7 +713,7 @@ for object in objects {
 
 当迭代出的元素遵循`HasArea`协议时，通过`as?`操作符将其`可选绑定(optional binding)`到`objectWithArea`常量上。`objectWithArea`是`HasArea`协议类型的实例，因此`area`属性是可以被访问和打印的。
 
-`objects`数组中元素的类型并不会因为`向下转型`而改变，它们仍然是`Circle`，`Country`，`Animal`类型。然而，当它们被赋值给`objectWithArea`常量时，则只被视为`HasArea`类型，因此只有`area`属性能够被访问。
+`objects`数组中元素的类型并不会因为强转而丢失类型信息，它们仍然是`Circle`，`Country`，`Animal`类型。然而，当它们被赋值给`objectWithArea`常量时，则只被视为`HasArea`类型，因此只有`area`属性能够被访问。
 
 <a name="optional_protocol_requirements"></a>
 ## 对可选协议的规定
