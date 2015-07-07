@@ -552,7 +552,6 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-label statements | default-label statements
-    switch-case --> case-label ``;`` | default-label ``;``
 
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
