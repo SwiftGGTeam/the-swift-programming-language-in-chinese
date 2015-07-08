@@ -975,6 +975,49 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
+Enumerations can have cases with associated values
+that are instances of the enumeration type.
+To enable this functionality for an enumeration case,
+mark the case with the ``indirect`` declaration modifier;
+to enable this for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier.
+For example:
+
+.. testcode:: indirect-enum
+
+   -> enum BinaryTree<T> {
+         case Leaf(T)
+         indirect case Node(left: BinaryTree, right: BinaryTree)
+      }
+   >> let l1 = BinaryTree.Leaf(10)
+   >> let l2 = BinaryTree.Leaf(100)
+   >> let n = BinaryTree.Node(left: l1, right: l2)
+   >> let l3 = BinaryTree.Leaf(99)
+   >> let t = BinaryTree.Node(left: n, right: l3)
+   << // l1 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(10)
+   << // l2 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(100)
+   << // n : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100))
+   << // l3 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(99)
+   << // t : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100)), REPL.BinaryTree<Swift.Int>.Leaf(99))
+   -> indirect enum Tree<T> {
+         case Leaf(T)
+         case Node(Tree, Tree)
+         case BigNode(Tree, Tree, Tree, Tree)
+      }
+
+.. Enums are value types, so they have a fixed memory layout.
+   The compiler has to insert a layer of indirection
+   in order to get recursion inside an enum case.
+   So you use 'indirect' to get recursion.
+
+.. Marking the entire enumeration is convenient when
+   there are multiple indirect enum cases
+
+.. If you mark 'indirect enum' you can't mark 'indirect case' inside it
+
+.. If you mark a case as indirect, it has to actually have recursion.
+   (But for now the compiler is satisfied with just having an associated value.)
+
 .. _Declarations_EnumerationsWithRawCaseValues:
 
 Enumerations with Cases of a Raw-Value Type
@@ -1061,6 +1104,13 @@ as shown in :ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
 The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
+
+.. FIXME: Or use if-case:
+   enum E { case C(Int) }
+   let e = E.C(100)
+   if case E.C(let i) = e { print(i) }
+   // prints 100
+
 
 
 .. NOTE: Note that you can require protocol adoption,
