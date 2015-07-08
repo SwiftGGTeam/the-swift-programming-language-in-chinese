@@ -529,9 +529,10 @@ For this reason, Swift strings cannot be indexed by integer values.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``.
-The ``endIndex`` property returns
-the "past-the-end" position of the last character,
-If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
+The ``endIndex`` property is the position after the last character in a ``String``.
+As a result,
+the ``endIndex`` property isn't a valid argument to a string's subscript.
+If a ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
 A ``String.Index`` value can access
 its immediately preceding index by calling the ``predecessor()`` method,
