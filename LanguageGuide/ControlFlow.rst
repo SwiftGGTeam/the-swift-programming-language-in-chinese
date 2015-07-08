@@ -973,15 +973,17 @@ Control Transfer Statements
 
 :newTerm:`Control transfer statements` change the order in which your code is executed,
 by transferring control from one piece of code to another.
-Swift has four control transfer statements:
+Swift has five control transfer statements:
 
 * ``continue``
 * ``break``
 * ``fallthrough``
 * ``return``
+* ``throw``
 
 The ``continue``, ``break``, and ``fallthrough`` statements are described below.
-The ``return`` statement is described in :doc:`Functions`.
+The ``return`` statement is described in :doc:`Functions`,
+and the ``throw`` statement is described in :ref:`ErrorHandling_Throw`.
 
 .. _ControlFlow_Continue:
 
@@ -1377,7 +1379,7 @@ You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
 Unlike an ``if`` statement,
 a ``guard`` statement always has an ``else`` clause ---
-the code inside the ``else``` clause is executed if the condition is not true.
+the code inside the ``else`` clause is executed if the condition is not true.
 
 .. testcode:: guard
 
@@ -1415,7 +1417,7 @@ the code inside the ``else`` branch is executed.
 That branch must transfer control to exit the code block
 that that ``guard`` statement appears in.
 It can do this with a control transfer statement
-such as ``return``, ``break``, or ``continue``,
+such as ``return``, ``break``, ``continue``, or ``throw``,
 or it can call a function or method
 that doesn't return, such as ``fatalError()``.
 
