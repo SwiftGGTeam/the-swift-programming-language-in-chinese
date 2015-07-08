@@ -843,7 +843,10 @@ class AutomaticallyNamedDocument: Document {
     }
 }
 ```
-```AutomaticallyNamedDocument```用一个非可失败构造器```init(name:)```,覆盖了基类的可失败构造器```init?(name:)```。因为子类用不同的方法处理了```name```属性的值为一个空字符串的这种情况。所以子类将不再需要一个可失败的构造器。
+
+
+子类```AutomaticallyNamedDocument```用一个非可失败构造器```init(name:)```,覆盖了基类的可失败构造器```init?(name:)```。因为子类用不同的方法处理了```name```属性的值为一个空字符串的这种情况。所以子类将不再需要一个可失败的构造器。
+
 
 ###可失败构造器 init!
 
@@ -865,6 +868,7 @@ class SomeClass {
     }
 }
 ```
+
 当子类覆盖基类的必要构造器时，必须在子类的构造器前同样添加```required```修饰符以确保当其它类继承该子类时，该构造器同为必要构造器。在覆盖基类的必要构造器时，不需要添加```override```修饰符：
 
 ```swift
