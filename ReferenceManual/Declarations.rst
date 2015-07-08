@@ -978,9 +978,11 @@ see :ref:`Enumerations_AssociatedValues`.
 Enumerations can have cases with associated values
 that are instances of the enumeration type.
 To enable this functionality for an enumeration case,
-mark the case with the ``indirect`` declaration modifier;
-to enable this for all the cases of an enumeration,
-mark the entire enumeration with the ``indirect`` modifier.
+mark the case with the ``indirect`` declaration modifier.
+To enable this for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier ---
+this is convenient when the enumeration contains many cases
+that would each need to be marked with the ``indirect`` modifier.
 For example:
 
 .. testcode:: indirect-enum
@@ -1001,22 +1003,24 @@ For example:
    << // t : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100)), REPL.BinaryTree<Swift.Int>.Leaf(99))
    -> indirect enum Tree<T> {
          case Leaf(T)
-         case Node(Tree, Tree)
-         case BigNode(Tree, Tree, Tree, Tree)
+         case SmallNode(Tree, Tree)
+         case MediumNode(Tree, Tree, Tree)
+         case LargeNode(Tree, Tree, Tree, Tree)
       }
 
-.. Enums are value types, so they have a fixed memory layout.
-   The compiler has to insert a layer of indirection
-   in order to get recursion inside an enum case.
-   So you use 'indirect' to get recursion.
+Instances of enumeration types have value semantics,
+which means they have a fixed layout in memory.
+To support recursion, with an instance of the enumeration
+contained inside another instance of the enumeration,
+the compiler must insert a layer of indirection.
+The ``indirect`` declaration modifier enables this indirection.
 
-.. Marking the entire enumeration is convenient when
-   there are multiple indirect enum cases
+An enumeration that is marked with the ``indirect`` modifier
+can't contain any cases that are also marked with the ``indirect`` modifier.
+An enumeration case that's marked with the ``indirect`` modifier
+must have an associated value.
 
-.. If you mark 'indirect enum' you can't mark 'indirect case' inside it
-
-.. If you mark a case as indirect, it has to actually have recursion.
-   (But for now the compiler is satisfied with just having an associated value.)
+.. (But for now the compiler is satisfied with just having an associated value.)
 
 .. _Declarations_EnumerationsWithRawCaseValues:
 
