@@ -1003,8 +1003,8 @@ and one of the following literal-convertible protocols:
 ``StringLiteralConvertible`` for string literals that contain any number of characters, and
 ``ExtendedGraphemeClusterLiteralConvertible`` for string literals
 that contain only a single character.
-
 Each case must have a unique name and be assigned a unique raw value.
+
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
@@ -1021,6 +1021,19 @@ In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value 
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
+
+If the raw-value type is specified as ``String``
+and you don't assign values to the cases explicitly,
+each unassigned case is implicitly assigned a string with the same text as the name of that case.
+
+.. testcode:: raw-value-enum-implicit-string-values
+
+    -> enum WeekendDay: String {
+          case Saturday, Sunday
+       }
+
+In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
+and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
