@@ -286,6 +286,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``final``,
   ``get``,
   ``infix``,
+  ``indirect``,
   ``lazy``,
   ``left``,
   ``mutating``,

@@ -1088,10 +1088,10 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
-    union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
@@ -1130,7 +1130,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` literal
-
 
 
 .. _Declarations_StructureDeclaration:
