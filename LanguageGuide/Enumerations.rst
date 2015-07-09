@@ -310,23 +310,36 @@ are defined to be of type ``Character``,
 and are set to some of the more common ASCII control characters.
 ``Character`` values are described in :doc:`StringsAndCharacters`.
 
-Note that raw values are *not* the same as associated values.
-Raw values are set to prepopulated values
-when you first define the enumeration in your code,
-like the three ASCII codes above.
-The raw value for a particular enumeration member is always the same.
-Associated values are set when you create a new constant or variable
-based on one of the enumeration's members,
-and can be different each time you do so.
-
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
-When integers are used for raw values,
-they auto-increment if no value is specified for some of the enumeration members.
+
+.. note::
+
+   Raw values are *not* the same as associated values.
+   Raw values are set to prepopulated values
+   when you first define the enumeration in your code,
+   like the three ASCII codes above.
+   The raw value for a particular enumeration member is always the same.
+   Associated values are set when you create a new constant or variable
+   based on one of the enumeration's members,
+   and can be different each time you do so.
+
+.. _Enumerations_ImplicitlyAssignedRawValues:
+
+Implicitly Assigned Raw Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you're working with enumerations that store integer or string raw values,
+you don't have to explicitly assign a raw value for each member.
+When you don't, Swift will automatically assign the values for you.
+
+For instance, when integers are used for raw values,
+the implicit value for each member is one more than the previous member.
+If the first member doesn't have a value set, it's value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
-with raw integer values to represent each planet's order from the sun:
+with integer raw values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
@@ -334,9 +347,26 @@ with raw integer values to represent each planet's order from the sun:
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 
-Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
+In the example above,
+``Planet.Mercury`` has an explicit raw value of ``1``,
+``Planet.Venus`` has an implicit raw value of ``2``, and so on.
 
-Access the raw value of an enumeration member with its ``rawValue`` property:
+When strings are used for raw values,
+the implicit value for each member is the text of that member's name.
+
+The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
+with string raw values to represent each direction's name:
+
+.. testcode:: rawValues
+
+   -> enum CompassPoint: String {
+         case North, South, East, West
+      }
+
+In the example above,
+``CompassPoint.South`` has an implicit raw value of ``"South"``, and so on.
+
+You access the raw value of an enumeration member with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
@@ -344,6 +374,12 @@ Access the raw value of an enumeration member with its ``rawValue`` property:
    << // earthsOrder : Int = 3
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
+   ---
+   -> let sunsetDirection = CompassPoint.West.rawValue
+   << // sunsetDirection : String = "West"
+   /> sunsetDirection is \"\(sunsetDirection)\"
+   </ sunsetDirection is "West"
+
 
 .. _Enumerations_InitializingFromARawValue:
 
