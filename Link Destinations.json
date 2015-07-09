@@ -234,6 +234,7 @@
     "enumerations-and-structures": "ID465", 
     "enumerations-associatedvalues": "ID148", 
     "enumerations-enumerationsyntax": "ID146", 
+    "enumerations-implicitlyassignedrawvalues": "ID535", 
     "enumerations-initializingfromarawvalue": "ID150", 
     "enumerations-matchingenumerationvalueswithaswitchstatement": "ID147", 
     "enumerations-rawvalues": "ID149", 
@@ -553,5 +554,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 535
+  "next_id": 536
 }
