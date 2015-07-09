@@ -987,27 +987,16 @@ For example:
 
 .. testcode:: indirect-enum
 
-   -> enum BinaryTree<T> {
-         case Leaf(T)
-         indirect case Node(left: BinaryTree, right: BinaryTree)
+   -> enum Tree<T> {
+         case Empty
+         indirect case Node(value: T, left: Tree, right: Tree)
       }
-   >> let l1 = BinaryTree.Leaf(10)
-   >> let l2 = BinaryTree.Leaf(100)
-   >> let n = BinaryTree.Node(left: l1, right: l2)
-   >> let l3 = BinaryTree.Leaf(99)
-   >> let t = BinaryTree.Node(left: n, right: l3)
-   << // l1 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(10)
-   << // l2 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(100)
-   << // n : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100))
-   << // l3 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(99)
-   << // t : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100)), REPL.BinaryTree<Swift.Int>.Leaf(99))
-   ---
-   -> indirect enum Tree<T> {
-         case Leaf(T)
-         case SmallNode(Tree, Tree)
-         case MediumNode(Tree, Tree, Tree)
-         case LargeNode(Tree, Tree, Tree, Tree)
-      }
+   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
+   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
+   >> let t = Tree.Node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
 
 Instances of enumeration types have value semantics,
 which means they have a fixed layout in memory.
