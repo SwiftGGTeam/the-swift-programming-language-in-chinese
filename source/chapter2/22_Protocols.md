@@ -58,11 +58,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 
 协议可以规定其`遵循者`提供特定名称和类型的`实例属性(instance property)`或`类属性(type property)`，而不指定是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外还必须指明是只读的还是可读可写的。
 
-<<<<<<< HEAD
 如果协议规定属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。
-=======
-如果协议要求属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 协议中的通常用var来声明属性，在类型声明后加上`{ set get }`来表示属性是可读可写的，只读属性则用`{ get }`来表示。
 
@@ -650,17 +646,11 @@ wishHappyBirthday(birthdayPerson)
 <!--TODO 链接-->
 你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[Typy Casting章节](5)*):
 
-<<<<<<< HEAD
 * `is`操作符用来检查实例是否`遵循`了某个`协议`
 * `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
 * `as`用以强制向下转型，如果强转失败，会引起运行时错误。
 
 下面的例子定义了一个`HasArea`的协议，要求有一个`Double`类型可读的`area`:
-=======
-* `is`操作符用来检查实例是否`遵循`了某个`协议`。
-* `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
-* `as`用以强制向下转型。
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 protocol HasArea {
@@ -771,13 +761,7 @@ for object in objects {
 
 类`Counter`使用`count`来存储当前的值。该类同时定义了一个`increment`方法，每次调用该方法的时候，将会增加`count`的值。
 
-<<<<<<< HEAD
 `increment()`方法首先试图使用`incrementForCount(_:)`方法来得到每次的增量。`increment()`方法使用可选链来尝试调用`incrementForCount(_:)`，并将当前的`count`值作为参数传入。
-=======
-`increment`方法通过`可选链`，尝试从两种`可选成员`中获取`count`。
-
-1. 由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 这里使用了两种可选链方法。由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记。
 
@@ -851,15 +835,9 @@ for _ in 1...5 {
 <a name="protocol_extensions"></a>
 ## 协议扩展
 
-<<<<<<< HEAD
 使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
 
 例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用协议中要求的`random()`方法来实现:
-=======
-Protocols can be extended to provide method and property implementations to conforming types. This allows you to define behavior on protocols themselves, rather than in each type’s individual conformance or in a global function.
-
-For example, the `RandomNumberGenerator` protocol can be extended to provide a `randomBool()` method, which uses the result of the required `random()` method to return a random `Bool` value:
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 extension RandomNumberGenerator {
@@ -869,16 +847,11 @@ extension RandomNumberGenerator {
 }
 ```
 
-<<<<<<< HEAD
 通过扩展协议，所有协议的遵循者，在不用任何修改的情况下，都自动得到了这个扩展所增加的方法。
-=======
-By creating an extension on the protocol, all conforming types automatically gain this method implementation without any additional modification.
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-<<<<<<< HEAD
 // 输出 "Here's a random number: 0.37464991998171"
 print("And here's a random Boolean: \(generator.randomBool())")
 // 输出 "And here's a random Boolean: true"
@@ -892,21 +865,6 @@ print("And here's a random Boolean: \(generator.randomBool())")
 > 通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。
 
 例如，`PrettyTextRepresentable`协议，继承了`TextRepresentable`协议，可以为其提供一个默认的`asPrettyText()`方法来简化返回值
-=======
-// prints "Here's a random number: 0.37464991998171"
-print("And here's a random Boolean: \(generator.randomBool())")
-// prints "And here's a random Boolean: true"
-```
-
-### Providing Default Implementations
-
-You can use protocol extensions to provide a default implementation to any method or property requirement of that protocol. If a conforming type provides its own implementation of a required method or property, that implementation will be used instead of the one provided by the extension.
-
-> NOTE
-> Protocol requirements with default implementations provided by extensions are distinct from optional protocol requirements. Although conforming types don’t have to provide their own implementation of either, requirements with default implementations can be called without optional chaining.
-
-For example, the `PrettyTextRepresentable` protocol, which inherits the `TextRepresentable` protocol can provide a default implementation of its required `asPrettyText()` method to simply return the result of the `asText()` method:
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 extension PrettyTextRepresentable  {
@@ -916,19 +874,11 @@ extension PrettyTextRepresentable  {
 }
 ```
 
-<<<<<<< HEAD
 ### 为协议扩展添加限制条件
 
 在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where 子句](TODO))。:
 
 例如，你可以扩展`CollectionType`协议，但是只适用于元素遵循`TextRepresentable`的情况:
-=======
-### Adding Constraints to Protocol Extensions
-
-When you define a protocol extension, you can specify constraints that conforming types must satisfy before the methods and properties of the extension are available. You write these constraints after the name of the protocol you’re extending using a `where` clause, as described in ([Where 子句](TODO)).:
-
-For instance, you can define an extension to the `CollectionType` protocol that applies to any collection whose elements conform to the `TextRepresentable protocol` from the example above.
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 extension CollectionType where Generator.Element : TextRepresentable {
@@ -938,15 +888,9 @@ extension CollectionType where Generator.Element : TextRepresentable {
 }
 ```
 
-<<<<<<< HEAD
 `asList()`方法将每个元素以`asText()`的方式表示，最后以逗号分隔链接起来。
 
 现在我们来看`Hamster`，它遵循`TextRepresentable`:
-=======
-The `asList()` method takes the textual representation of each element in the collection and concatenates them into a comma-separated list.
-
-Consider the `Hamster` structure from before, which conforms to the `TextRepresentable` protocol, and an array of `Hamster` values:
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
 
 ```swift
 let murrayTheHamster = Hamster(name: "Murray")
@@ -955,7 +899,6 @@ let mauriceTheHamster = Hamster(name: "Maurice")
 let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 ```
 
-<<<<<<< HEAD
 因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`asList()`方法得到数组内容的文本表示:
 
 ```swift
@@ -965,14 +908,3 @@ print(hamsters.asList())
 
 > 注意  
 > 如果有多个协议扩展，而一个协议的遵循者又同时满足它们的限制，那么将会使用所满足限制最多的那个扩展。
-=======
-Because `Array` conforms to `CollectionType`, and the array’s elements conform to the `TextRepresentable` protocol, the array can use the `asList()` method to get a textual representation of its contents:
-
-```swift
-print(hamsters.asList())
-// prints "(A hamster named Murray, A hamster named Morgan, A hamster named Maurice)"
-```
-
-> NOTE
-> If a conforming type satisfies the requirements for multiple constrained extensions that provide implementations for the same method or property, Swift will use the implementation corresponding to the most specialized constraints.
->>>>>>> 6062b84363714e2573bfbb79500b7a5839478a28
