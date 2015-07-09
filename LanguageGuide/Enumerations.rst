@@ -461,7 +461,7 @@ For example, here is an enumeration that stores simple calculations:
        }
 
 You can also write ``indirect`` before the beginning of the enumeration,
-to enable indirection for all of its members that need it:
+to enable indirection for all of the enumeration's members that need it:
 
 .. testcode:: recursive-enum
 
@@ -508,5 +508,5 @@ to work with data that has a recursive structure:
 This function can calculate the value of a plain number
 by returning the associated value,
 but to calculate the value of an addition or multiplication,
-it first calculates the values on the lift and right hand sides,
+it first calculates the values of the left and right hand side,
 and then adds or multiplies them.
