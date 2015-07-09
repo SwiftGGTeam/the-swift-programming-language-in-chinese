@@ -444,20 +444,31 @@ and so the ``else`` branch is executed instead.
 Recursive Enumerations
 ----------------------
 
-Some enumerations store data that has a recursive structure,
-where a member of the enumeration has another instance of the enumeration
-as its associated value.
-You mark these members by writing ``indirect`` before them,
-which tells compiler to insert the necessary layer of indirection.
+Enumerations work well for modeling data
+when there is a fixed number of possibilities that need to be considered,
+such as arithmetic operations on numbers.
+One important characteristic of arithmetic expressions
+is that they can be nested.
+For example, a calculator can evaluate the expression ``(5 + 4) * 2``
+which has a number on the right hand side of the multiplication
+and another expression on the left hand side of the multiplication.
+
+A :newTerm:`recursive enumeration` is an enumeration
+that has another instance of the enumeration
+as the associated value for one or more of the enumeration members.
+The compiler has to to insert a layer of indirection
+when it works with recursive enumerations.
+You indicate that an enumeration member is recursive
+by writing ``indirect`` before it.
 
 For example, here is an enumeration that stores simple calculations:
 
 .. testcode:: recursive-enum-intro
 
-    -> enum Calculation {
+    -> enum ArithmeticExpression {
            case Number(Int)
-           indirect case Add(Calculation, Calculation)
-           indirect case Multiply(Calculation, Calculation)
+           indirect case Add(ArithmeticExpression, ArithmeticExpression)
+           indirect case Multiply(ArithmeticExpression, ArithmeticExpression)
        }
 
 You can also write ``indirect`` before the beginning of the enumeration,
@@ -465,16 +476,16 @@ to enable indirection for all of the enumeration's members that need it:
 
 .. testcode:: recursive-enum
 
-    -> indirect enum Calculation {
+    -> indirect enum ArithmeticExpression {
            case Number(Int)
-           case Add(Calculation, Calculation)
-           case Multiply(Calculation, Calculation)
+           case Add(ArithmeticExpression, ArithmeticExpression)
+           case Multiply(ArithmeticExpression, ArithmeticExpression)
        }
 
 This enumeration can store three kinds of information:
 a plain number, adding two numbers, and multiplying two numbers.
 The associated value of ``Add`` and ``Multiply``
-is another instance of the ``Calculation`` enumeration ---
+is another instance of the ``ArithmeticExpression`` enumeration ---
 this lets addition and multiplication be nested.
 
 A recursive function is a straightforward way
@@ -482,27 +493,27 @@ to work with data that has a recursive structure:
 
 .. testcode:: recursive-enum
 
-    -> func calculate(problem: Calculation) -> Int {
+    -> func evaluate(expression: ArithmeticExpression) -> Int {
            switch problem {
                case .Number(let value):
                    return value
                case .Add(let left, let right):
-                   return calculate(left) + calculate(right)
+                   return evaluate(left) + evaluate(right)
                case .Multiply(let left, let right):
-                   return calculate(left) * calculate(right)
+                   return evaluate(left) * evaluate(right)
            }
        }
     ---
-    // Calculate (5 + 4) * 2
-    -> let five = Calculation.Number(5)
-    -> let four = Calculation.Number(4)
-    -> let sum = Calculation.Add(five, four)
-    -> let product = Calculation.Multiply(sum, Calculation.Number(2))
-    << // five : Calculation = REPL.Calculation
-    << // four : Calculation = REPL.Calculation
-    << // sum : Calculation = REPL.Calculation
-    << // product : Calculation = REPL.Calculation
-    -> print(calculate(product))
+    // evaluate (5 + 4) * 2
+    -> let five = ArithmeticExpression.Number(5)
+    -> let four = ArithmeticExpression.Number(4)
+    -> let sum = ArithmeticExpression.Add(five, four)
+    -> let product = ArithmeticExpression.Multiply(sum, ArithmeticExpression.Number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression
+    -> print(evaluate(product))
     <- 18
 
 This function can calculate the value of a plain number
