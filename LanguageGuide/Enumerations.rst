@@ -494,7 +494,7 @@ to work with data that has a recursive structure:
 .. testcode:: recursive-enum
 
     -> func evaluate(expression: ArithmeticExpression) -> Int {
-           switch problem {
+           switch expression {
                case .Number(let value):
                    return value
                case .Add(let left, let right):
