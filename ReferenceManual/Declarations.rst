@@ -1020,7 +1020,27 @@ can't contain any cases that are also marked with the ``indirect`` modifier.
 An enumeration case that's marked with the ``indirect`` modifier
 must have an associated value.
 
-.. (But for now the compiler is satisfied with just having an associated value.)
+.. It really should be an associated value **that includes the enum type**
+   but right now the compiler is satisfied with any associated value.
+   Alex emailed Joe Groff 2015-07-08 about this.
+
+.. assertion indirect-in-indirect
+
+   -> indirect enum E { indirect case C(E) }
+   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
+   !! indirect enum E { indirect case C(E) }
+   !!                   ^
+
+.. assertion indirect-without-recursion
+
+   -> enum E { indirect case C }
+   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
+   !! enum E { indirect case C }
+   !!          ^
+   ---
+   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+
 
 .. _Declarations_EnumerationsWithRawCaseValues:
 
