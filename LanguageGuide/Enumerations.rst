@@ -444,31 +444,69 @@ and so the ``else`` branch is executed instead.
 Recursive Enumerations
 ----------------------
 
+Some enumerations store data that has a recursive structure,
+where a member of the enumeration has another instance of the enumeration
+as its associated value.
+You mark these members by writing ``indirect`` before them,
+which tells compiler to insert the necessary layer of indirection.
 
-::
+For example, here is an enumeration that stores simple calculations:
 
-    enum Calculation {
-        case Number(Int)
-        indirect case Add(Calculation, Calculation)
-        indirect case Subtract(Calculation, Calculation)
-    }
+.. testcode:: recursive-enum-intro
 
-    func calculate(problem: Calculation) -> Int {
-        switch problem {
-            case .Number(let value):
-                return value
-            case .Add(let left, let right):
-                return calculate(left) + calculate(right)
-            case .Subtract(let left, let right):
-                return calculate(left) - calculate(right)
-        }
-    }
+    -> enum Calculation {
+           case Number(Int)
+           indirect case Add(Calculation, Calculation)
+           indirect case Multiply(Calculation, Calculation)
+       }
 
-    // 5 + 4 - 2
-    let five = Calculation.Number(5)
-    let four = Calculation.Number(4)
-    let sum = Calculation.Add(five, four)
-    let difference = Calculation.Subtract(sum, Calculation.Number(2))
-    calculate(difference)
-    // <-- 7
+You can also write ``indirect`` before the beginning of the enumeration,
+to enable indirection for all of its members that need it:
 
+.. testcode:: recursive-enum
+
+    -> indirect enum Calculation {
+           case Number(Int)
+           case Add(Calculation, Calculation)
+           case Multiply(Calculation, Calculation)
+       }
+
+This enumeration can store three kinds of information:
+a plain number, adding two numbers, and multiplying two numbers.
+The associated value of ``Add`` and ``Multiply``
+is another instance of the ``Calculation`` enumeration ---
+this lets addition and multiplication be nested.
+
+A recursive function is a straightforward way
+to work with data that has a recursive structure:
+
+.. testcode:: recursive-enum
+
+    -> func calculate(problem: Calculation) -> Int {
+           switch problem {
+               case .Number(let value):
+                   return value
+               case .Add(let left, let right):
+                   return calculate(left) + calculate(right)
+               case .Multiply(let left, let right):
+                   return calculate(left) * calculate(right)
+           }
+       }
+    ---
+    // Calculate (5 + 4) * 2
+    -> let five = Calculation.Number(5)
+    -> let four = Calculation.Number(4)
+    -> let sum = Calculation.Add(five, four)
+    -> let product = Calculation.Multiply(sum, Calculation.Number(2))
+    << // five : Calculation = REPL.Calculation
+    << // four : Calculation = REPL.Calculation
+    << // sum : Calculation = REPL.Calculation
+    << // product : Calculation = REPL.Calculation
+    -> print(calculate(product))
+    <- 18
+
+This function can calculate the value of a plain number
+by returning the associated value,
+but to calculate the value of an addition or multiplication,
+it first calculates the values on the lift and right hand sides,
+and then adds or multiplies them.
