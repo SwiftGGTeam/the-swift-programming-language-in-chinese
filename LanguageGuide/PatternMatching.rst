@@ -3,13 +3,13 @@ Pattern Matching
 
 :newTerm:`Patterns` express the structure of values,
 rather than the values themselves.
-A pattern can describe values that follow a particular rule, like
+A pattern can describe any values that follow a particular rule, like
 "all numbers within the range ``1`` to ``10``",
 "all tuples whose first value is ``true``, or
-"all values of type `String`".
+"all values of type ``String``".
 In Swift, patterns can be used to represent
 single values, tuples, and enumeration cases, as well as
-type-cast values, optionals, and arbitrary expressions.
+type-cast values, optionals, and certain expressions.
 By testing a value against a pattern rather than an individual value,
 an expression can be used to evaluate a variety of different values.
 This is known as :newTerm:`pattern matching`.
@@ -26,22 +26,20 @@ or bound to a constant or variable name.
 
    -> let numbers = (1, 2, 3)
    << // numbers : (Int, Int, Int) = (1, 2, 3)
-   -> switch numbers {
-      case (_, let second, _):
+   -> if case (_, let second, _) = numbers {
          print(second)
       }
    <- 2
    ---
    -> let words = ("alpha", "bravo", "charlie")
    << // words : (String, String, String) = ("alpha", "bravo", "charlie")
-   -> switch words {
-      case (_, let second, _):
+   -> if case (_, let second, _):
          print(second)
       }
    <- bravo
 
-In Swift, patterns are matched in ``case`` expressions,
-which can be used as a condition in
+In Swift, patterns are matched by the ``case`` keyword,
+which can be used in
 ``switch`` statements,
 ``if`` and ``guard`` statements,
 and ``for``-``in`` loops.
@@ -57,8 +55,8 @@ which are used to determine which control flow branch should be selected:
          <#statements#>
    }
 
-An ``if`` or ``guard`` statement can use the result of
-a pattern matching expression as its condition.
+An ``if`` or ``guard`` statement can use a pattern as its condition,
+instead of using an expression.
 In this case, the pattern is evaluated against a value of an assignment expression:
 
 .. syntax-outline::
@@ -71,8 +69,8 @@ In this case, the pattern is evaluated against a value of an assignment expressi
       <#statements#>
    }
 
-A ``for``-``in`` loop can use a pattern matching expression
-to only iterate over the values that match the specified pattern.
+A ``for``-``in`` loop can specify a pattern
+to iterate over only the values that match the specified pattern.
 
 .. syntax-outline::
 
@@ -85,104 +83,6 @@ using concise, idiomatic syntax
 that reduces complexity and eliminates boilerplate code.
 As a result, code is not only easier to write,
 but easier to read and maintain as well.
-
-For a complete list of Swift patterns,
-see  :doc:`../ReferenceManual/Patterns`.
-
-Matching Values in a Range
---------------------------
-
-As described in :ref:`ControlFlow_RangeMatching`,
-``switch`` statements can check for the inclusion of values in a range.
-
-For example,
-consider a ``switch`` statement that prints
-the letter grade corresponding to a score out of 100:
-
-.. testcode:: patternMatchingRange
-
-   -> let grade = 87
-   << // grade : Int = 87
-   -> switch grade {
-         case 90...100:
-            print("A - Excellent")
-         case 80..<90:
-            print("B - Satisfactory")
-         case 70..<80:
-            print("C - Mediocre")
-         case 60..<70:
-            print("D - Insufficient")
-         default:
-            print("F - Failure")
-      }
-   <- B - Satisfactory
-
-For each ``case`` expression,
-the specified range is tested for inclusion of the ``grade`` value
-using the contains (``~=``) operator.
-In the example above, the ``grade`` value of ``87``
-is contained by the range ``80..<90``,
-which corresponds to a "B" letter grade.
-
-.. TODO
-
-   .. testcode:: patternMatchingRange_Alternative
-
-      >> let grade = 87
-      << // grade : Int = 87
-      -> if grade > 90 {
-            print("A - Excellent")
-         } else if grade > 80 {
-            print("B - Excellent")
-         } else if grade > 70 {
-            print("C - Mediocre")
-         } else if grade > 60 {
-            print("D - Insufficient")
-         } else {
-            print("F - Failure")
-         }
-      <- B - Satisfactory
-
-You can also pattern match on a range in a ``for``-``in`` loop.
-For example,
-given a dictionary with student names as keys
-and their corresponding grades as values,
-a ``for``-``in`` loop could pattern match on a range
-to only iterate over a subset of keys:
-
-.. testcode:: patternMatchingRange
-
-   -> var grades: [String: Int] = [
-         "Alexandra": 92,
-         "Buddy": 87,
-         "Christy": 76,
-         "Duncan": 68
-      ]
-   << // grades : [String : Int] = ["Alexandra": 92, "Buddy": 87, "Christy": 76, "Duncan": 68]
-   ---
-   -> for case let (passingStudent, 75...100) in grades {
-          print(passingStudent)
-      }
-   <- Alexandra
-   <- Buddy
-   <- Christy
-
-For each key / value pair in the dictionary,
-the tuple pattern is evaluated.
-If the iterated value is contained by the range ``75...100``,
-then the key is bound to the ``passingStudent`` constant
-within the body of the loop.
-
-.. TODO
-   .. note::
-
-      Intervals are matched using the expression pattern.
-      Any type can be matched using the expression pattern
-      if they provide an implementation of the contains (``~=``) operator.
-      By default, the ``~=`` operator compares
-      two values of the same type using the ``==`` operator
-
-      For more information, see :ref:`Patterns_ExpressionPattern`.
 
 Matching Enumeration Cases with Associated Values
 -------------------------------------------------
@@ -256,7 +156,7 @@ In addition to matching an enumeration case,
 you can bind any associated values to a constant or variable.
 For example,
 the corresponding ``case`` for a slightly delayed train
-could capture the associated ``minutes`` value using a value-binding pattern,
+can capture the associated ``minutes`` value using a value-binding pattern,
 and specify the range in an additional ``where`` clause.
 This allows the associated value to be used in the branch:
 
@@ -264,7 +164,7 @@ This allows the associated value to be used in the branch:
 
    >> let status = Status.OnTime
    << // status : Status = REPL.Status.OnTime
-   >> func f() -> String? {
+   >> do {
    >> switch status {
    -> case .Delayed(let minutes) where 1...5 ~= minutes:
        return "Slight delay of \(minutes) min"
@@ -296,10 +196,10 @@ Consider the following three ``Train`` values:
    << Delayed
    ---
    -> let trains: [Train] = [wabashCannonball, polarExpress, darjeelingLimited]
-   <~ // trains : [Train] = [REPL.Train, REPL.Train, REPL.Train]
+   << // trains : [Train] = [REPL.Train, REPL.Train, REPL.Train]
 
 You can specify a pattern for each iteration of a ``for``-``in`` loop
-to only evaluate values that match the pattern will be evaluated:
+to evaluate only values that match the pattern:
 
 .. testcode:: patternMatchingEnumeration
 
@@ -328,8 +228,8 @@ For example,
 consider an array of type ``[Int?]``,
 which contains optional integer values
 corresponding to responses to a survey.
-Responses from participants are represented by a score between ``1`` and ``5``,
-whereas ``nil`` values represent an abstention.
+Responses from participants are represented by a score between ``1`` and ``5``.
+``nil`` responses indicate that a participant abstained from responding.
 
 .. testcode:: patternMatchingOptional
 
@@ -337,9 +237,9 @@ whereas ``nil`` values represent an abstention.
    << // surveyResponses : [Int?] = [nil, Optional(4), Optional(5), nil, Optional(3), Optional(5), Optional(2), nil, Optional(2)]
 
 To determine the average score from respondents,
-you might use a ``for``-``in`` loop to iterate over all of the responses,
+you can use a ``for``-``in`` loop to iterate over all of the responses,
 use a value-binding expression in a ``guard`` statement
-to only record responses with a score:
+to record only responses with a score:
 
 .. testcode:: patternMatchingOptional
 
@@ -363,7 +263,7 @@ in such a way that their associated values are bound to a constant or variable.
 Since optionals use the ``Optional<T>`` enumeration
 in their underlying implementation,
 the same enumeration pattern matching approach can be used
-to only iterate over non-`nil` values in the ``surveyResponses`` array:
+to iterate over only non-``nil`` values in the ``surveyResponses`` array:
 
 .. testcode:: patternMatchingOptional
 
@@ -382,7 +282,7 @@ You can append a question mark (``?``) to a constant or variable name
 to match optionals that containing a value,
 and bind that value to the constant or variable.
 
-The following code is equivalent to the example above,
+The following code is an easier way to express the code above,
 matching on an optional pattern ``score?``
 instead of an enumeration pattern.
 
@@ -412,7 +312,7 @@ the possible values on a slot machine reel in a casino:
       }
 
 To calculate the payoff of a particular result of a spin,
-you could test for each combination of winning possibilities
+you can test for each combination of winning possibilities
 using a series of ``if`` statements and equality operators (``==``):
 
 .. testcode:: patternMatchingTuple_Alternative
@@ -553,8 +453,39 @@ but discarding the returned type.
 Pattern Matching with Type-Cast
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the ``as`` type-casting pattern to match a type
-and bind a value of that explicit type to a constant or variable.
+When matching with the ``is`` type-casting pattern,
+you must either use a forced downcast
+or a conditional downcast with optional chaining
+in order to use a value as its matched type:
+
+.. testcode:: patternMatchingType
+
+   >> for bird in mixedFlock {
+   >> switch bird {
+   -> case is Duck:
+         // forced downcast
+         (bird as! Duck).quack()
+      case is Goose:
+         // conditional downcast with optional chaining
+         (bird as? Goose)?.honk()
+   >> default: continue
+   >> }
+   >> }
+   << Quack!
+   << Quack!
+   << Honk!
+
+However, neither of these options are particularly well-suited,
+since a forced downcast can fail and trigger a runtime error,
+and a conditional downcast with optional chaining is inconvenient.
+Instead, you can use the ``as`` type-casting pattern
+when you're interested in working with the matched value
+as that particular type.
+
+The ``as`` pattern, like the ``is`` pattern,
+matches a value if it is the type specified by the pattern.
+Unlike the ``is`` pattern, however,
+the matched value can be bound to a constant or variable of the returned type.
 
 .. testcode:: patternMatchingType
 
@@ -577,33 +508,6 @@ each case in the ``switch`` statement matches on an ``as`` pattern,
 which binds the evaluated ``bird`` value to a local constant
 that is used in the corresponding branch statements.
 
-The ``as`` pattern, like the ``is`` pattern,
-matches a value if it is the type specified by the pattern.
-Unlike the ``is`` pattern, however,
-the matched value can be bound to a constant or variable of the returned type.
-
-You use the ``as`` pattern instead of the ``is`` pattern
-when you're interested in working with the matched value
-as that particular type.
-This avoids a forced downcast or a conditional downcast with optional chaining.
-
-.. testcode:: patternMatchingType
-
-   >> for bird in mixedFlock {
-   >> switch bird {
-   -> case is Duck:
-         // forced downcast
-         (bird as! Duck).quack()
-      case is Goose:
-         // conditional downcast with optional chaining
-         (bird as? Goose)?.honk()
-   >> default: continue
-   >> }
-   >> }
-   << Quack!
-   << Quack!
-   << Honk!
-
 Pattern Matching Over a Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -624,3 +528,97 @@ the pattern ``case let duck as Duck``.
 If the value is of type ``Duck``,
 then that value is bound to the ``duck`` constant,
 which is then used in the body of the loop.
+
+Matching Values in a Range
+--------------------------
+
+As described in :ref:`ControlFlow_RangeMatching`,
+``switch`` statements can check for the inclusion of values in a range.
+
+For example,
+consider a ``switch`` statement that prints
+the letter grade corresponding to a score out of 100:
+
+.. testcode:: patternMatchingRange
+
+   -> let grade = 87
+   << // grade : Int = 87
+   -> switch grade {
+         case 90...100:
+            print("A - Excellent")
+         case 80..<90:
+            print("B - Satisfactory")
+         case 70..<80:
+            print("C - Mediocre")
+         case 60..<70:
+            print("D - Insufficient")
+         default:
+            print("F - Failure")
+      }
+   <- B - Satisfactory
+
+For each ``case`` expression,
+the specified range is tested for inclusion of the ``grade`` value
+using the contains (``~=``) operator.
+In the example above, the ``grade`` value of ``87``
+is contained by the range ``80..<90``,
+which corresponds to a "B" letter grade.
+
+.. TODO
+
+   .. testcode:: patternMatchingRange_Alternative
+
+      >> let grade = 87
+      << // grade : Int = 87
+      -> if grade > 90 {
+            print("A - Excellent")
+         } else if grade > 80 {
+            print("B - Excellent")
+         } else if grade > 70 {
+            print("C - Mediocre")
+         } else if grade > 60 {
+            print("D - Insufficient")
+         } else {
+            print("F - Failure")
+         }
+      <- B - Satisfactory
+
+You can also pattern match on a range in a ``for``-``in`` loop.
+For example,
+given a dictionary with student names as keys
+and their corresponding grades as values,
+a ``for``-``in`` loop can pattern match on a range
+to iterate over only a subset of keys:
+
+.. testcode:: patternMatchingRange
+
+   -> var grades: [String: Int] = [
+         "Alexandra": 92,
+         "Buddy": 87,
+         "Christy": 76,
+         "Duncan": 68
+      ]
+   << // grades : [String : Int] = ["Alexandra": 92, "Buddy": 87, "Christy": 76, "Duncan": 68]
+   ---
+   -> for case let (passingStudent, 75...100) in grades {
+          print(passingStudent)
+      }
+   <- Alexandra
+   <- Buddy
+   <- Christy
+
+For each key / value pair in the dictionary,
+the tuple pattern is evaluated.
+If the iterated value is contained by the range ``75...100``,
+then the key is bound to the ``passingStudent`` constant
+within the body of the loop.
+
+.. note::
+
+   Intervals are matched using the expression pattern.
+   Any type can be matched using the expression pattern
+   if they provide an implementation of the contains (``~=``) operator.
+   By default, the ``~=`` operator compares
+   two values of the same type using the ``==`` operator
+
+   For more information, see :ref:`Patterns_ExpressionPattern`.
