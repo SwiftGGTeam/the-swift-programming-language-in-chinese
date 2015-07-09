@@ -325,16 +325,21 @@ Each raw value must be unique within its enumeration declaration.
    based on one of the enumeration's members,
    and can be different each time you do so.
 
-.. _Enumerations_IntegerRawValues:
+.. _Enumerations_ImplicitlyAssignedRawValues:
 
-Integer Raw Values and Auto-Incrementation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Implicitly Assigned Raw Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When integers are used for raw values,
-they auto-increment if no value is specified for some of the enumeration members.
+When you're working with enumerations that store integer or string raw values,
+you don't have to explicitly assign a raw value for each member.
+When you don't, Swift will automatically assign the values for you.
+
+For instance, when integers are used for raw values,
+the implicit value for each member is one more than the previous member.
+If the first member doesn't have a value set, it's value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
-with raw integer values to represent each planet's order from the sun:
+with integer raw values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
@@ -342,29 +347,15 @@ with raw integer values to represent each planet's order from the sun:
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 
-Auto-incrementation means that ``Planet.Venus``
-has a raw value of ``2``, and so on.
-
-Access the raw value of an enumeration member with its ``rawValue`` property:
-
-.. testcode:: rawValues
-
-   -> let earthsOrder = Planet.Earth.rawValue
-   << // earthsOrder : Int = 3
-   /> earthsOrder is \(earthsOrder)
-   </ earthsOrder is 3
-
-
-.. _Enumerations_StringRawValues:
-
-String Raw Values and Auto-Synthesis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the example above,
+``Planet.Mercury`` has an explicit raw value of ``1``,
+``Planet.Venus`` has an implicit raw value of ``2``, and so on.
 
 When strings are used for raw values,
-they auto-synthesize values according to their name if no value is specified.
+the implicit value for each member is the text of that member's name.
 
 The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
-with raw string values to represent each direction's name:
+with string raw values to represent each direction's name:
 
 .. testcode:: rawValues
 
@@ -372,17 +363,22 @@ with raw string values to represent each direction's name:
          case North, South, East, West
       }
 
-Auto-synthesis means that ``CompassPoint.South``
-has a raw value of ``"South"``, and so on.
+In the example above,
+``CompassPoint.South`` has an implicit raw value of ``"South"``, and so on.
 
-Access the raw value of an enumeration member with its ``rawValue`` property:
+You access the raw value of an enumeration member with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
+   -> let earthsOrder = Planet.Earth.rawValue
+   << // earthsOrder : Int = 3
+   /> earthsOrder is \(earthsOrder)
+   </ earthsOrder is 3
+   ---
    -> let sunsetDirection = CompassPoint.West.rawValue
    << // sunsetDirection : String = "West"
-   /> sunsetDirection is \(sunsetDirection)
-   </ sunsetDirection is West
+   /> sunsetDirection is \"\(sunsetDirection)\"
+   </ sunsetDirection is "West"
 
 
 .. _Enumerations_InitializingFromARawValue:
