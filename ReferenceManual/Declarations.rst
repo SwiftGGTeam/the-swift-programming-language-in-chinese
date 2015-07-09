@@ -1001,6 +1001,7 @@ For example:
    << // n : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100))
    << // l3 : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Leaf(99)
    << // t : BinaryTree<Int> = REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Node(REPL.BinaryTree<Swift.Int>.Leaf(10), REPL.BinaryTree<Swift.Int>.Leaf(100)), REPL.BinaryTree<Swift.Int>.Leaf(99))
+   ---
    -> indirect enum Tree<T> {
          case Leaf(T)
          case SmallNode(Tree, Tree)
