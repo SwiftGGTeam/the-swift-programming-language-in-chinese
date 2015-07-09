@@ -438,3 +438,37 @@ and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
    is together, and the union bits (aka Associated Values) come last.
+
+.. _Enumerations_RecursiveEnumerations:
+
+Recursive Enumerations
+----------------------
+
+
+::
+
+    enum Calculation {
+        case Number(Int)
+        indirect case Add(Calculation, Calculation)
+        indirect case Subtract(Calculation, Calculation)
+    }
+
+    func calculate(problem: Calculation) -> Int {
+        switch problem {
+            case .Number(let value):
+                return value
+            case .Add(let left, let right):
+                return calculate(left) + calculate(right)
+            case .Subtract(let left, let right):
+                return calculate(left) - calculate(right)
+        }
+    }
+
+    // 5 + 4 - 2
+    let five = Calculation.Number(5)
+    let four = Calculation.Number(4)
+    let sum = Calculation.Add(five, four)
+    let difference = Calculation.Subtract(sum, Calculation.Number(2))
+    calculate(difference)
+    // <-- 7
+
