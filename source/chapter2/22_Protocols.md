@@ -175,7 +175,7 @@ print("And another one: \(generator.random())")
 如果你在协议中定义了一个方法旨在改变遵循该协议的实例，那么在协议定义时需要在方法前加`mutating`关键字。这使得结构和枚举遵循协议并满足此方法要求。
 
 
->注意:
+>注意:  
 >用类实现协议中的`mutating`方法时，不用写`mutating`关键字;用结构体，枚举实现协议中的`mutating`方法时，必须写`mutating`关键字。
 
 如下所示，`Togglable`协议含有名为`toggle`的实例方法。根据名称推测，`toggle()`方法将通过改变实例属性，来切换遵循该协议的实例的状态。
@@ -238,7 +238,7 @@ class SomeClass: SomeProtocol {
 关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`Required`构造器 </a>
 
 <!--TODO 参考链接-->
->注意
+>注意  
 >如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
 
 如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
@@ -282,7 +282,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 * 作为常量、变量或属性的类型
 * 作为数组、字典或其他容器中的元素类型
 
-> 注意
+> 注意  
 > 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用大写字母开头的驼峰式写法，例如(`FullyNamed`和`RandomNumberGenerator`)
 
 如下所示，这个示例中将协议当做类型来使用
@@ -440,7 +440,7 @@ game.play()
 
 即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(*译者注: 类，结构体，枚举等*)。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。详情请在[扩展](4)章节中查看。
 
-> 注意
+> 注意  
 > 通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法
 
 例如`TextRepresentable`协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本:
@@ -506,7 +506,7 @@ print(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
 
-> 注意
+> 注意  
 > 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明
 
 <a name="collections_of_protocol_types"></a>
@@ -601,7 +601,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 
 <!--TODO 链接-->
 
->注意
+>注意  
 >当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
 
 
@@ -637,7 +637,7 @@ wishHappyBirthday(birthdayPerson)
 
 上面的例子创建了一个名为`birthdayPerson`的`Person`实例，作为参数传递给了`wishHappyBirthday(_:)`函数。因为`Person`同时遵循这两个协议，所以这个参数合法，函数将输出生日问候语。
 
-> 注意
+> 注意  
 > `协议合成`并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。
 
 <a name="checking_for_protocol_conformance"></a>
@@ -861,7 +861,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 
 可以通过协议扩展的方式来为协议规定的属性和方法提供默认的实现。如果协议的遵循者对规定的属性和方法提供了自己的实现，那么遵循者提供的实现将被使用。
 
-> 注意
+> 注意  
 > 通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。
 
 例如，`PrettyTextRepresentable`协议，继承了`TextRepresentable`协议，可以为其提供一个默认的`asPrettyText()`方法来简化返回值
