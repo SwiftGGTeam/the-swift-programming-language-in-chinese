@@ -718,15 +718,18 @@ for object in objects {
 <a name="optional_protocol_requirements"></a>
 ## 对可选协议的规定
 
-可选协议含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`@optional`关键字作为前缀来定义可选成员。
+协议可以含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`optional`关键字作为前缀来定义可选成员。
 
-可选协议在调用时使用`可选链`，详细内容在[Optional Chaning](7)章节中查看。
+<!--TODO 链接-->
+可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容，详细内容在[Optional Chaning](7)章节中查看。
 
-像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。`可选方法`和`可选属性`都会返回一个`可选值(optional value)`，当其不可访问时，`?`之后语句不会执行，并整体返回`nil`
+像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。可选方法和可选属性都会返回一个`可选值(optional value)`，当其不可访问时，`?`之后语句不会执行，并整体返回`nil`
 
-> 注意: 可选协议只能在含有`@objc`前缀的协议中生效。且`@objc`的协议只能被`类`遵循
+> 注意  
+> 可选协议只能在含有`@objc`前缀的协议中生效。且`@objc`的协议只能被`类`遵循  
+> 这个前缀表示协议将暴露给Objective-C代码，详情参见`Using Swift with Cocoa and Objective-C`。即使你不打算和Objective-C有什么交互，如果你想要指明协议包含可选属性，那么还是要加上`@obj`前缀
 
-如下所示，`Counter`类使用含有两个可选成员的`CounterDataSource`协议类型的外部数据源来提供`增量值(increment amount)`
+下面的例子定义了一个叫`Counter`的整数加法类，它使用外部的数据源来实现每次的增量。数据源是两个可选属性，在`CounterDataSource`协议中定义:
 
 ```swift
 @objc protocol CounterDataSource {
@@ -735,9 +738,10 @@ for object in objects {
 }
 ```
 
-`CounterDataSource`含有`incrementForCount`的`可选方法`和`fiexdIncrement`的`可选属性`，它们使用了不同的方法来从数据源中获取合适的增量值。
+`CounterDataSource`含有`incrementForCount`可选方法和`fiexdIncrement`可选属性，它们使用了不同的方法来从数据源中获取合适的增量值。
 
-> 注意: `CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明但不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
+> 注意  
+> `CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明都不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
 
 `Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示:
 
@@ -755,25 +759,27 @@ for object in objects {
 }
 ```
 
-`count`属性用于存储当前的值，`increment`方法用来为`count`赋值。
+类`Counter`使用`count`来存储当前的值。该类同时定义了一个`increment`方法，每次调用该方法的时候，将会增加`count`的值。
 
-`increment`方法通过`可选链`，尝试从两种`可选成员`中获取`count`。
+`increment()`方法首先试图使用`incrementForCount(_:)`方法来得到每次的增量。`increment()`方法使用可选链来尝试调用`incrementForCount(_:)`，并将当前的`count`值作为参数传入。
 
-1. 由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。
+这里使用了两种可选链方法。由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记。
 
-2. 即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记
+调用`incrementForCount`方法在上述两种情形都有可能失败，所以返回值为*可选*`Int`类型。虽然在`CounterDataSource`中，`incrementForCount`被定义为一个非可选`Int`(non-optional)，但是这里我们仍然需要返回*可选*`Int`类型。
 
-在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。
+在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。如果可选值确实包含一个数值，这表示`delegate`和方法都存在，之后便将`amount`加到`count`上，增加操作完成。
 
-当`incrementForCount`不能被调用时，尝试使用可选属性`fixedIncrement`来代替。
+如果没有从`incrementForCount(_:)`获取到值，可能是`dataSource`为nil，或者它并没有实现`incrementForCount`方法——那么`increment()`方法将试图从数据源的`fixedIncrement`属性中获取增量。`fixedIncrement`也是一个可选型，所以在属性名的后面添加`?`来试图取回可选属性的值。和之前一样，返回值为可选型。
 
-`ThreeSource`实现了`CounterDataSource`协议，如下所示:
+`ThreeSource`实现了`CounterDataSource`协议，它实现来可选属性`fixedIncrement`，每次返回值`3`:
 
-	class ThreeSource: CounterDataSource {
-		let fixedIncrement = 3
-	}
+```swift
+@objc class ThreeSource: CounterDataSource {
+	let fixedIncrement = 3
+}
+```
 
-使用`ThreeSource`作为数据源开实例化一个`Counter`:
+可以使用`ThreeSource`的实例作为`Counter`实例的数据源:
 
 ```swift
 var counter = Counter()
@@ -788,7 +794,9 @@ for _ in 1...4 {
 // 12
 ```
 
-`TowardsZeroSource`实现了`CounterDataSource`协议中的`incrementForCount`方法，如下所示:
+上述代码新建了一个`Counter`实例；将它的数据源设置为`TreeSource`实例；调用`increment()`4次。和你预想的一样，每次在调用的时候，`count`的值增加3.
+
+下面是一个更为复杂的数据源`TowardsZeroSource`，它将使得最后的值变为0:
 
 ```swift
 class TowardsZeroSource: CounterDataSource {
@@ -804,7 +812,11 @@ func incrementForCount(count: Int) -> Int {
 }
 ```
 
-下边是执行的代码：
+`TowardsZeroSource`实现了`CounterDataSource`协议中的`incrementForCount(_:)`方法，以`count`参数为依据，计算出每次的增量。如果`count`已经为0，方法返回0，这表示之后不会再有增量。
+
+你可以配合使用`TowardsZeroSource`实例和`Counter`实例来从`-4`增加到`0`.一旦增加到`0`，数值便不会再有变动。
+
+在下面的例子中，将从`-4`增加到`0`。一旦结果为`0`，便不在增加:
 
 ```swift
 counter.count = -4
