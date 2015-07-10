@@ -975,15 +975,25 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
-Enumerations can have cases with associated values
-that are instances of the enumeration type.
-To enable this functionality for an enumeration case,
-mark the case with the ``indirect`` declaration modifier.
-To enable this for all the cases of an enumeration,
+Enumerations can a recursive structure,
+that is, they can have cases with associated values
+that are instances of the enumeration type itself.
+However, instances of enumeration types have value semantics,
+which means they have a fixed layout in memory.
+To support recursion,
+the compiler must insert a layer of indirection.
+
+To enable indirection for a particular enumeration case,
+mark it with the ``indirect`` declaration modifier.
+To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
-For example:
+
+.. TODO The word "enable" is kind of a weasle word.
+   Better to have a more concrete discussion of exactly when
+   it is and isn't used.
+   For example, does "indirect enum { X(Int) } mark X as indirect?
 
 .. testcode:: indirect-enum
 
@@ -998,17 +1008,10 @@ For example:
    << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
    << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
 
-Instances of enumeration types have value semantics,
-which means they have a fixed layout in memory.
-To support recursion, with an instance of the enumeration
-contained inside another instance of the enumeration,
-the compiler must insert a layer of indirection.
-The ``indirect`` declaration modifier enables this indirection.
-
-An enumeration that is marked with the ``indirect`` modifier
-can't contain any cases that are also marked with the ``indirect`` modifier.
 An enumeration case that's marked with the ``indirect`` modifier
 must have an associated value.
+An enumeration that is marked with the ``indirect`` modifier
+can't contain any cases that are also marked with the ``indirect`` modifier.
 
 .. It really should be an associated value **that includes the enum type**
    but right now the compiler is satisfied with any associated value.
@@ -1030,6 +1033,8 @@ must have an associated value.
    ---
    -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
    -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   ---
+   -> indirect enum E3 { case X }
 
 
 .. _Declarations_EnumerationsWithRawCaseValues:
