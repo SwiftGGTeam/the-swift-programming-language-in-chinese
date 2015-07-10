@@ -44,7 +44,7 @@ which can be used in
 ``if`` and ``guard`` statements,
 and ``for``-``in`` loops.
 
-As described in :ref:`ControlFlow_ControlFlow_Switch`,
+As described in :ref:`ControlFlow_Switch`,
 a ``switch`` statement consists of one or more ``case`` statements,
 which are used to determine which control flow branch should be selected:
 
