@@ -463,7 +463,7 @@ this means the enumeration needs to be recursive.
 A :newTerm:`recursive enumeration` is an enumeration
 that has another instance of the enumeration
 as the associated value for one or more of the enumeration members.
-The compiler has to to insert a layer of indirection
+The compiler has to insert a layer of indirection
 when it works with recursive enumerations.
 You indicate that an enumeration member is recursive
 by writing ``indirect`` before it.
