@@ -504,31 +504,21 @@ the nested ``incrementer()`` function might seem unusual:
 
 The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
-It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
-from its surrounding function
-and using them within its own function body.
-
-Because it modifies the ``runningTotal`` variable each time it is called,
-``incrementer`` captures a *reference* to the current ``runningTotal`` variable,
-and not just a copy of its initial value.
-Capturing a reference ensures that ``runningTotal`` does not disappear
+It does this by capturing a *reference* to ``runningTotal`` and ``amount``
+from the surrounding function and using them within its own function body.
+Capturing by reference ensures that ``runningTotal`` and ``amount`` do not disappear
 when the call to ``makeIncrementer`` ends,
-and ensures that ``runningTotal`` is available
-the next time the ``incrementer()`` function is called..
-
-However, because it does not modify ``amount``,
-and ``amount`` is not mutated outside it,
-``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
-This value is stored along with the new ``incrementer()`` function.
+and also ensures that ``runningTotal`` is available
+the next time the ``incrementer`` function is called.
 
 .. note::
 
-   Swift determines what should be captured by reference
-   and what should be copied by value.
-   You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementer()`` function.
-   Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the ``incrementer()`` function.
+   As an optimization,
+   Swift may instead capture and store a *copy* of a value
+   if that value is not mutated by or outside a closure.
+
+   Swift also handles all memory management involved in disposing of
+   variables when they are no longer needed.
 
 Here's an example of ``makeIncrementer`` in action:
 
