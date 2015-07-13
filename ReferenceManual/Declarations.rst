@@ -975,6 +975,68 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
+Enumerations can a recursive structure,
+that is, they can have cases with associated values
+that are instances of the enumeration type itself.
+However, instances of enumeration types have value semantics,
+which means they have a fixed layout in memory.
+To support recursion,
+the compiler must insert a layer of indirection.
+
+To enable indirection for a particular enumeration case,
+mark it with the ``indirect`` declaration modifier.
+To enable indirection for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier ---
+this is convenient when the enumeration contains many cases
+that would each need to be marked with the ``indirect`` modifier.
+
+.. TODO The word "enable" is kind of a weasle word.
+   Better to have a more concrete discussion of exactly when
+   it is and isn't used.
+   For example, does "indirect enum { X(Int) } mark X as indirect?
+
+.. testcode:: indirect-enum
+
+   -> enum Tree<T> {
+         case Empty
+         indirect case Node(value: T, left: Tree, right: Tree)
+      }
+   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
+   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
+   >> let t = Tree.Node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+
+An enumeration case that's marked with the ``indirect`` modifier
+must have an associated value.
+An enumeration that is marked with the ``indirect`` modifier
+can't contain any cases that are also marked with the ``indirect`` modifier.
+
+.. It really should be an associated value **that includes the enum type**
+   but right now the compiler is satisfied with any associated value.
+   Alex emailed Joe Groff 2015-07-08 about this.
+
+.. assertion indirect-in-indirect
+
+   -> indirect enum E { indirect case C(E) }
+   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
+   !! indirect enum E { indirect case C(E) }
+   !!                   ^
+
+.. assertion indirect-without-recursion
+
+   -> enum E { indirect case C }
+   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
+   !! enum E { indirect case C }
+   !!          ^
+   ---
+   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   ---
+   -> indirect enum E3 { case X }
+
+
 .. _Declarations_EnumerationsWithRawCaseValues:
 
 Enumerations with Cases of a Raw-Value Type
@@ -1062,6 +1124,13 @@ The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
+.. FIXME: Or use if-case:
+   enum E { case C(Int) }
+   let e = E.C(100)
+   if case E.C(let i) = e { print(i) }
+   // prints 100
+
+
 
 .. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw-value type,
@@ -1088,10 +1157,10 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
-    union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
@@ -1130,7 +1199,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` literal
-
 
 
 .. _Declarations_StructureDeclaration:

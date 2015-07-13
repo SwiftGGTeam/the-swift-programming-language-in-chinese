@@ -436,3 +436,99 @@ and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
    is together, and the union bits (aka Associated Values) come last.
+
+.. _Enumerations_RecursiveEnumerations:
+
+Recursive Enumerations
+----------------------
+
+Enumerations work well for modeling data
+when there is a fixed number of possibilities that need to be considered,
+such as the operations used for doing simple integer arithmetic.
+The operations let you combine simple arithmetic expressions
+that are made up of integers such as ``5``
+into more complex arithmetic expressions such as ``5 + 4``.
+
+One important characteristic of arithmetic expressions
+is that they can be nested.
+For example, a calculator can evaluate the expression ``(5 + 4) * 2``
+which has a number on the right hand side of the multiplication
+and another expression on the left hand side of the multiplication.
+Because the data is nested,
+the enumeration used to store the data also needs to support nesting ---
+this means the enumeration needs to be recursive.
+
+A :newTerm:`recursive enumeration` is an enumeration
+that has another instance of the enumeration
+as the associated value for one or more of the enumeration members.
+The compiler has to insert a layer of indirection
+when it works with recursive enumerations.
+You indicate that an enumeration member is recursive
+by writing ``indirect`` before it.
+
+For example, here is an enumeration that stores simple arithmetic expressions:
+
+.. testcode:: recursive-enum-intro
+
+    -> enum ArithmeticExpression {
+           case Number(Int)
+           indirect case Addition(ArithmeticExpression, ArithmeticExpression)
+           indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+       }
+
+.. TODO Conceptual art would really help here.
+
+You can also write ``indirect`` before the beginning of the enumeration,
+to enable indirection for all of the enumeration's members that need it:
+
+.. testcode:: recursive-enum
+
+    -> indirect enum ArithmeticExpression {
+           case Number(Int)
+           case Addition(ArithmeticExpression, ArithmeticExpression)
+           case Multiplication(ArithmeticExpression, ArithmeticExpression)
+       }
+
+This enumeration can store three kinds of arithmetic expressions:
+a plain number,
+the addition of two expressions,
+and the multiplication of two expressions.
+The ``Addition`` and ``Multiplication`` members have associated values
+that are also arithmetic expressions ---
+these associated values make it possible to nest expressions.
+
+A recursive function is a straightforward way
+to work with data that has a recursive structure.
+For example, here's a function that evaluates an arithmetic expression:
+
+.. testcode:: recursive-enum
+
+    -> func evaluate(expression: ArithmeticExpression) -> Int {
+           switch expression {
+               case .Number(let value):
+                   return value
+               case .Addition(let left, let right):
+                   return evaluate(left) + evaluate(right)
+               case .Multiplication(let left, let right):
+                   return evaluate(left) * evaluate(right)
+           }
+       }
+    ---
+    // evaluate (5 + 4) * 2
+    -> let five = ArithmeticExpression.Number(5)
+    -> let four = ArithmeticExpression.Number(4)
+    -> let sum = ArithmeticExpression.Addition(five, four)
+    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression
+    -> print(evaluate(product))
+    <- 18
+
+This function evaluates a plain number
+by simply returning the associated value.
+It evaluates an addition or multiplication
+by evaluating the expression on left hand side,
+evaluating the expression on the right hand side,
+and then adding them or multiplying them.
