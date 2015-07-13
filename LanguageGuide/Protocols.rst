@@ -1298,7 +1298,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> @objc class Counter {
+   -> @objc class Counter: NSObject {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
@@ -1363,7 +1363,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> @objc class ThreeSource: CounterDataSource {
+   -> @objc class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1395,7 +1395,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: CounterDataSource {
+   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0

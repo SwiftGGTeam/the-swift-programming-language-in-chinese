@@ -261,7 +261,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
        >> import Foundation
        -> @objc
-          class ExampleClass {
+          class ExampleClass: NSObject {
              var enabled: Bool {
                 @objc(isEnabled) get {
                    // Return the appropriate value
