@@ -238,6 +238,7 @@
     "enumerations-initializingfromarawvalue": "ID150", 
     "enumerations-matchingenumerationvalueswithaswitchstatement": "ID147", 
     "enumerations-rawvalues": "ID149", 
+    "enumerations-recursiveenumerations": "ID536", 
     "errorhandling-catch": "ID512", 
     "errorhandling-defer": "ID514", 
     "errorhandling-force": "ID513", 
@@ -554,5 +555,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 536
+  "next_id": 537
 }
