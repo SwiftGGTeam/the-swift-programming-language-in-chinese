@@ -447,12 +447,12 @@ when there is a fixed number of possibilities that need to be considered,
 such as the operations used for doing simple integer arithmetic.
 The operations let you combine simple arithmetic expressions
 that are made up of integers such as ``5``
-into more complex arithmetic expressions such as ``5 + 4``.
+into more complex ones such as ``5 + 4``.
 
 One important characteristic of arithmetic expressions
 is that they can be nested.
-For example, a calculator can evaluate the expression ``(5 + 4) * 2``
-which has a number on the right hand side of the multiplication
+For example, the expression ``(5 + 4) * 2``
+has a number on the right hand side of the multiplication
 and another expression on the left hand side of the multiplication.
 Because the data is nested,
 the enumeration used to store the data also needs to support nesting ---
