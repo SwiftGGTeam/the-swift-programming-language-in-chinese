@@ -25,7 +25,7 @@ Swift 统一的函数语法足够灵活，可以用来表示任何函数，包�
 
 每个函数有个函数名，用来描述函数执行的任务。要使用一个函数时，你用函数名“调用”，并传给它匹配的输入值（称作实参，arguments）。一个函数的实参必须与函数参数表里参数的顺序一致。
 
-在下面例子中的函数叫做`"greetingForPerson"`，之所以叫这个名字是因为这个函数用一个人的名字当做输入，并返回给这个人的问候语。为了完成这个任务，你定义一个输入参数-一个叫做 `personName` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
+在下面例子中的函数叫做`"sayHello(_:)"`，之所以叫这个名字,是因为这个函数用一个人的名字当做输入，并返回给这个人的问候语。为了完成这个任务，你定义一个输入参数-一个叫做 `personName` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
 
 ```swift
 func sayHello(personName: String) -> String {
@@ -45,11 +45,11 @@ println(sayHello("Brian"))
 // prints "Hello, Brian!"
 ```
 
-调用 `sayHello` 函数时，在圆括号中传给它一个 `String` 类型的实参。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `println` 的调用中，用来输出这个函数的返回值，正如上面所示。
+调用 `sayHello(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `println` 的调用中，用来输出这个函数的返回值，正如上面所示。
 
-在 `sayHello` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时赋值了给 `personName` 的一个简单问候消息。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
+在 `sayHello(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时赋值了给 `personName` 的一个简单问候消息。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
-你可以用不同的输入值多次调用 `sayHello`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
+你可以用不同的输入值多次调用 `sayHello(_:)`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
 
 为了简化这个函数的定义，可以将问候消息的创建和返回写成一句：
 
@@ -94,9 +94,31 @@ println(sayHelloWorld())
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
 
+### 多参量函数 (Functions With Multiple Parameters)
+
+函数可以有多种输入参数,这写参数被包含在函数的括号之中,以逗号分隔.
+
+这个函数取得一个人的名字和是否被招呼作为输入,并对那个人返回适当地问候语:
+
+```swift
+func sayHello(personName: String, alreadyGreeted: Bool) -> String {
+    if alreadyGreeted {
+        return sayHelloAgain(personName)
+    } else {
+        return sayHello(personName)
+    }
+}
+print(sayHello("Tim", alreadyGreeted: true))
+// prints "Hello again, Tim!"
+```
+
+你通过在括号内传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值,使用逗号分隔来调用`sayHello(_:alreadyGreeted:)`函数.
+
+当调用超过一个参数的函数时,第一个参数后的参数根据其对应的参数名称标记,函数参数命名在[Function Parameter Names](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-ID166)有更详细的描述.
+
 ### 无返回值函数（Functions Without Return Values）
 
-函数可以没有返回值。下面是 `sayHello` 函数的另一个版本，叫 `waveGoodbye`，这个函数直接输出 `String` 值，而不是返回它：
+函数可以没有返回值。下面是 `sayHello(_:)` 函数的另一个版本，叫 `sayGoodbye(_:)`，这个函数直接输出 `String` 值，而不是返回它：
 
 ```swift
 func sayGoodbye(personName: String) {
@@ -109,14 +131,14 @@ sayGoodbye("Dave")
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
 > 注意：
-> 严格上来说，虽然没有返回值被定义，`sayGoodbye` 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 `Void`。它其实是一个空的元组（tuple），没有任何元素，可以写成`()`。
+> 严格上来说，虽然没有返回值被定义，`sayGoodbye(_:)` 函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫 `Void`。它其实是一个空的元组（tuple），没有任何元素，可以写成`()`。
 
 被调用时，一个函数的返回值可以被忽略：
 
 ```swift
 func printAndCount(stringToPrint: String) -> Int {
-    println(stringToPrint)
-    return countElements(stringToPrint)
+    print(stringToPrint)
+    return stringToPrint.characters.count
 }
 func printWithoutCounting(stringToPrint: String) {
     printAndCount(stringToPrint)
@@ -128,10 +150,10 @@ printWithoutCounting("hello, world")
 
 ```
 
-第一个函数 `printAndCount`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
+第一个函数 `printAndCount(_:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
 > 注意：
-> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这将导致编译错误（compile-time error）。
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，并且试图这样做,这将导致编译错误（compile-time error）。
 
 ### 多重返回值函数（Functions with Multiple Return Values）
 
