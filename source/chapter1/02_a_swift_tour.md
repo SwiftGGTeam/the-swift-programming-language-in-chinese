@@ -27,7 +27,7 @@ print("Hello, world")
 
 > 注意：
 > 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
-> <a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese/raw/gh-pages/source/chapter1/GuidedTour.playground.zip">打开Playground</a>
+> <a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese/raw/gh-pages/source/chapter1/GuidedTour.playground.zip">下载Playground</a>
 
 <a name="simple_values"></a>
 ## 简单值
@@ -40,7 +40,7 @@ myVariable = 50
 let myConstant = 42
 ```
 
-常量或者变量的类型必须和你赋给它们的值一样。然而，声明时类型是可选的，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
+常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
@@ -107,7 +107,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`do-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
+使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`repeat-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -124,7 +124,7 @@ print(teamScore)
 
 在`if`语句中，条件必须是一个布尔表达式——这意味着像`if score { ... }`这样的代码将报错，而不会隐形地与 0 做对比。
 
-你可以一起使用`if`和`let`来处理值缺失的情况。有些变量的值是可选的。一个可选的值可能是一个具体的值或者是`nil`，表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
+你可以一起使用`if`和`let`来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是`nil`以表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
 
 ```swift
 var optionalString: String? = "Hello"
@@ -161,7 +161,7 @@ default:
 > 练习：
 > 删除`default`语句，看看会有什么错误？
 
-声明'let'可用于匹配某部分固定值的模式
+声明`let`可用于匹配某部分固定值的模式
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
@@ -185,9 +185,9 @@ print(largest)
 ```
 
 > 练习：
-> 添加另一个变量来记录哪种类型的数字是最大的。
+> 添加另一个变量来记录现在和之前最大数字的类型。
 
-使用`while`来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。
+使用`while`来重复运行一段代码直到不满足条件。循环条件也可以在结尾，保证能至少循环一次。
 
 ```swift
 var n = 2
@@ -197,7 +197,7 @@ while n < 100 {
 print(n)
 
 var m = 2
-do {
+repeat {
     m = m * 2
 } while m < 100
 print(m)
@@ -224,7 +224,7 @@ print(secondForLoop)
 <a name="functions_and_closures"></a>
 ## 函数和闭包
 
-使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值。
+使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值的类型。
 
 ```swift
 func greet(name: String, day: String) -> String {
@@ -319,10 +319,10 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, lessThanTen)
+hasAnyMatches(numbers, condition: lessThanTen)
 ```
 
-函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
+函数实际上是一种特殊的闭包:它是一段能之后被调取的代码。闭包中的代码能访问闭包所建作用域中能得到的变量和函数，即使闭包是在一个不同的作用域被执行的 - 你已经在嵌套函数例子中所看到。你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
 
 ```swift
 numbers.map({
@@ -335,14 +335,14 @@ numbers.map({
 > 练习：
 > 重写闭包，对所有奇数返回0。
 
-有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
+有很多种创建更简洁的闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
-mappedNumbers
+print(mappedNumbers)
 ```
 
-你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
+你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。当一个闭包是传给函数的唯一参数，你可以完全忽略括号。
 
 ```swift
 let sortedNumbers = sorted(numbers) { $0 > $1 }
@@ -423,9 +423,9 @@ test.simpleDescription()
 ```
 
 > 练习：
-> 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，实现`area`和`describe`方法。
+> 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，在子类`Circle`中实现`area()`和`simpleDescription()`方法。
 
-属性可以有 getter 和 setter 。
+除了储存简单的属性之外，属性可以有 getter 和 setter 。
 
 ```swift
 class EquilateralTriangle: NamedShape {
@@ -473,12 +473,12 @@ class TriangleAndSquare {
     var triangle: EquilateralTriangle {
     willSet {
         square.sideLength = newValue.sideLength
-    }
+      }
     }
     var square: Square {
     willSet {
         triangle.sideLength = newValue.sideLength
-    }
+      }
     }
     init(size: Double, name: String) {
         square = Square(sideLength: size, name: name)
@@ -486,23 +486,10 @@ class TriangleAndSquare {
     }
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-triangleAndSquare.square.sideLength
-triangleAndSquare.triangle.sideLength
+print(triangleAndSquare.square.sideLength)
+print(triangleAndSquare.triangle.sideLength)
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-triangleAndSquare.triangle.sideLength
-```
-
-类中的方法和一般的函数有一个重要的区别，函数的参数名只在函数内部使用，但是方法的参数名需要在调用的时候显式说明（除了第一个参数）。默认情况下，方法的参数名和它在方法内部的名字一样，不过你也可以定义第二个名字，这个名字被用在方法内部。
-
-```swift
-class Counter {
-    var count: Int = 0
-    func incrementBy(amount: Int, numberOfTimes times: Int) {
-        count += amount * times
-    }
-}
-var counter = Counter()
-counter.incrementBy(2, numberOfTimes: 7)
+print(triangleAndSquare.triangle.sideLength)
 ```
 
 处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加`?`。如果`?`之前的值是`nil`，`?`后面的东西都会被忽略，并且整个表达式返回`nil`。否则，`?`之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
@@ -544,9 +531,9 @@ let aceRawValue = ace.rawValue
 > 练习：
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
-在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
+在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`来访问一个枚举成员的原始值。
 
-使用'rawValue'在原始值和枚举值之间进行转换。
+使用`init?(rawValue:)`构造器来从原始值中枚举一个例子。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -554,7 +541,7 @@ if let convertedRank = Rank(rawValue: 3) {
 }
 ```
 
-枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，如果原始值没有意义，你不需要设置。
+枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，以防原始值没有意义，你不需要设置。
 
 ```swift
 enum Suit {
@@ -578,12 +565,11 @@ let heartsDescription = hearts.simpleDescription()
 ```
 
 > 练习：
-> 给`Suit`添加一个`color`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
+> 给`Suit`添加一个`color()`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
 
 注意，有两种方式可以引用`Hearts`成员：给`hearts`常量赋值时，枚举成员`Suit.Hearts`需要用全名来引用，因为常量没有显式指定类型。在`switch`里，枚举成员使用缩写`.Hearts`来引用，因为`self`的值已经知道是一个`suit`。已知变量类型的情况下你可以使用缩写。
 
-使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是
-结构体是传值，类是传引用。
+使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
 
 ```swift
 struct Card {
@@ -624,7 +610,7 @@ case let .Error(error):
 > 练习：
 > 给`ServerResponse`和`switch`添加第三种情况。
 
-注意如何从`ServerResponse`中提取日升和日落时间。
+注意如何从`ServerResponse`中提取日升和日落时间并用得到的值用来和`switch`的情况作比较。
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
@@ -679,7 +665,7 @@ extension Int: ExampleProtocol {
         self += 42
     }
 }
-7.simpleDescription
+print(7.simpleDescription)
 ```
 
 > 练习：
@@ -701,17 +687,17 @@ protocolValue.simpleDescription
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
-    var result = [ItemType]()
-    for i in 0..<times {
+func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
         result.append(item)
     }
     return result
 }
-repeat("knock", 4)
+repeatItem("knock", numberOfTimes:4)
 ```
 
-你也可以创建泛型类、枚举和结构体。
+你也可以创建泛型函数、方法、类、枚举和结构体。
 
 ```swift
 // Reimplement the Swift standard library's optional type
@@ -726,7 +712,7 @@ possibleInteger = .Some(100)
 在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
 
 ```swift
-func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
             if lhsItem == rhsItem {
@@ -740,6 +726,6 @@ anyCommonElements([1, 2, 3], [3])
 ```
 
 > 练习：
-> 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
+> 修改`anyCommonElements(_:_:)`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
 简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
