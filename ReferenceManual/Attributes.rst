@@ -235,10 +235,8 @@ the ``noreturn`` attribute to a function or method *type*.
     implicitly applied to the members of that class or protocol.
     The compiler also implicitly adds the ``objc`` attribute to a class
     that inherits from another class marked with the ``objc`` attribute.
-    Classes marked with the ``objc`` attribute
-    must inherit from ``NSObject``.
-    Protocols marked with the ``objc`` attribute
-    can't inherit from protocols that aren't.
+    Protocols marked with the ``objc`` attribute can't inherit
+    from protocols that aren't.
 
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
@@ -261,7 +259,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
        >> import Foundation
        -> @objc
-          class ExampleClass: NSObject {
+          class ExampleClass {
              var enabled: Bool {
                 @objc(isEnabled) get {
                    // Return the appropriate value
