@@ -20,10 +20,25 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Updated for Swift v2.0.
+2015-07-20  * Added information about recursive enumerations
+              to the :ref:`Enumerations_RecursiveEnumerations` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added information about the behavior
+              of enumeration cases with ``String`` raw values
+              to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithRawCaseValues` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Updated the :ref:`Closures_CapturingValues` section
+              to clarify how variables and constants are captured in closures.
+----------  --------------------------------------------------------------------------
+2015-06-08  * Updated for Swift 2.0.
 
             * Added information about error handling
-
               to the :doc:`../LanguageGuide/ErrorHandling` chapter,
               the :ref:`Statements_DoStatement` section,
               the :ref:`Statements_ThrowStatement` section,
