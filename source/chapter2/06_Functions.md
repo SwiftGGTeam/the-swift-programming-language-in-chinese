@@ -114,7 +114,7 @@ print(sayHello("Tim", alreadyGreeted: true))
 
 你通过在括号内传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值,使用逗号分隔来调用`sayHello(_:alreadyGreeted:)`函数.
 
-当调用超过一个参数的函数时,第一个参数后的参数根据其对应的参数名称标记,函数参数命名在[Function Parameter Names](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-ID166)有更详细的描述.
+当调用超过一个参数的函数时,第一个参数后的参数根据其对应的参数名称标记,函数参数命名在[函数参数名称（Function Parameter Names）](#Function_Parameter_Names)有更详细的描述.
 
 ### 无返回值函数（Functions Without Return Values）
 
@@ -159,35 +159,65 @@ printWithoutCounting("hello, world")
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
-下面的这个例子中，`count` 函数用来计算一个字符串中元音，辅音和其他字母的个数（基于美式英语的标准）。
+下面的这个例子中，定义了一个名为`minMax(_:)`的函数,作用是在一个`Int`数组中找出最小值与最大值.
 
 ```swift
-func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
-    var vowels = 0, consonants = 0, others = 0
-    for character in string {
-        switch String(character).lowercaseString {
-        case "a", "e", "i", "o", "u":
-            ++vowels
-        case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-          "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            ++consonants
-        default:
-            ++others
+func minMax(array: [Int]) -> (min: Int, max: Int) {
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
         }
     }
-    return (vowels, consonants, others)
+    return (currentMin, currentMax)
 }
 ```
 
-你可以用 `count` 函数来处理任何一个字符串，返回的值将是一个包含三个 `Int` 型值的元组（tuple）：
+`minMax(_:)`函数返回一个包含两个`Int`值的元组,这些值被标记为`min`和`max`,一遍查询函数的返回值时他们可以被访问.
+
+`minMax(_:)`的函数体中,在开始的时候设置两个工作变量`currentMin`和`currentMax`作为数组中的第一个`Int`值.然后函数会遍历数组中剩余的值并检查该值是否比`currentMin`和`currentMax`更小或更大.最后数组中的最小值与最大值返回两个`Int`值最为一个元组.
+
+因为元组的成员值被命名为函数的返回类型的一部分​​，可以通过点语法来访问与取回发现的最小值与最小值:
 
 ```swift
-let total = count("some arbitrary string!")
-println("\(total.vowels) vowels and \(total.consonants) consonants")
-// prints "6 vowels and 13 consonants"
+let bounds = minMax([8, -6, 2, 109, 3, 71])
+print("min is \(bounds.min) and max is \(bounds.max)")
+// prints "min is -6 and max is 109"
 ```
 
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型中有了定义。
+
+可选元组返回类型(Optional Tuple Return Types)
+
+如果函数返回的元组类型中有可能在整个元组中含有“没有值”，你可以使用*可选的(Optional)* 元组返回类型反映整个元组可以是`nil`的事实.你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组,例如`(Int,Int)?`或`(String,Int,Bool)?`
+
+> 注意:
+> 可选元组类型如`(Int,Int)?`与元组包含可选属性如`(Int?,Int?)`是不同的.可选的元组类型，整个数组是可选的，而不只是元组中的每个元素值.
+
+前面的`minMax(_:)`函数返回了一个包含两个`Int`值的元组.但是函数不会在数组中执行任何安全检查,如果`array`参数有一个空数组,如上定义的`minMax(_:)`在试图访问`array[0]`时会触发一个运行时错误.
+
+为了安全的处理这个"空数组"问题,写一个`minMax(_:)`函数使用可选元组返回类型,并且当数组为空时返回`nil`:
+
+```swift
+func minMax(array: [Int]) -> (min: Int, max: Int)? {
+    if array.isEmpty { return nil }
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
+}
+```
+
+你可以选择性的绑定当`minMax(_:)`函数返回的是一个实际的元组值还是`nil`
 
 <a name="Function_Parameter_Names"></a>
 ## 函数参数名称（Function Parameter Names）
