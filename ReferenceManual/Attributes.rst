@@ -231,10 +231,13 @@ the ``noreturn`` attribute to a function or method *type*.
     The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
-    If you apply the ``objc`` attribute to a class or protocol, it's
-    implicitly applied to the members of that class or protocol.
-    The compiler also implicitly adds the ``objc`` attribute to a class
-    that inherits from another class marked with the ``objc`` attribute.
+    If you apply the ``objc`` attribute to a class,
+    you must also mark its members ``objc``
+    to make them available to use in Objective-C code.
+    The compiler implicitly adds the ``objc`` attribute
+    to a class and all its members
+    if that class inherits from an Objective-C class.
+
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't.
 
