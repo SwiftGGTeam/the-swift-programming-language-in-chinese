@@ -271,9 +271,9 @@ the ``noreturn`` attribute to a function or method *type*.
              }
           }
 
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-    Possibly link to Anna and Jack's guide too.
+     For more information,
+     see `Swift Type Compatibility <//apple_ref/doc/uid/TP40014216-CH4-ID53>`_
+     in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 ``noescape``
     Apply this attribute to a function or method declaration
