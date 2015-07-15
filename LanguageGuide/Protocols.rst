@@ -1261,10 +1261,9 @@ to reflect the fact that the optional requirement may not have been implemented.
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
 
-   Note also that ``@objc`` protocols can be adopted only by classes,
-   and not by structures or enumerations.
-   If you mark your protocol as ``@objc`` in order to specify optional requirements,
-   you will only be able to apply that protocol to class types.
+   Note also that ``@objc`` protocols can be adopted only by classes
+   that inherit from Objective-C classes or other ``@objc`` classes.
+   They can't be adopted by structures or enumerations.
 
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
@@ -1298,7 +1297,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> @objc class Counter {
+   -> class Counter {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
@@ -1363,7 +1362,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> @objc class ThreeSource: CounterDataSource {
+   -> class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1395,7 +1394,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: CounterDataSource {
+   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0
