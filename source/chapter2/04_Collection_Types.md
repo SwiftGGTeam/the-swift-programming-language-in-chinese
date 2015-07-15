@@ -7,7 +7,7 @@
 本页包含内容：
 
 - [数组（Arrays）](#arrays)
-- [集合(Sets)](#sets)
+- [集合（Sets）](#sets)
 - [字典（Dictionaries）](#dictionaries)
 - [集合的可变性（Mutability of Collections）](#mutability_of_collections)
 
