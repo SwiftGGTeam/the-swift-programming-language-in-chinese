@@ -35,6 +35,14 @@ Date        Notes
 
             * Updated the :ref:`Closures_CapturingValues` section
               to clarify how variables and constants are captured in closures.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              to describe when you can apply the ``@objc`` attribute to classes.
+
+            * Added a note to the :ref:`ErrorHandling_Catch` section
+              about the performance of exectuing a ``throw`` statement.
+              Added similar information about the ``do`` statement
+              in the :ref:`Statements_DoStatement`.
 ----------  --------------------------------------------------------------------------
 2015-06-08  * Updated for Swift 2.0.
 
