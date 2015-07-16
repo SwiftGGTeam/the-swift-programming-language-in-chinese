@@ -344,7 +344,7 @@ after code in the second, and so on.
                close(file)
             }
             while let line = try file.readline() {
-               /* Work with the file. */
+               // Work with the file.
    >>          print(line)
             }
             // close(file) is called here, at the end of the scope.

@@ -445,7 +445,7 @@ Recursive Enumerations
 Enumerations work well for modeling data
 when there is a fixed number of possibilities that need to be considered,
 such as the operations used for doing simple integer arithmetic.
-The operations let you combine simple arithmetic expressions
+These operations let you combine simple arithmetic expressions
 that are made up of integers such as ``5``
 into more complex ones such as ``5 + 4``.
 
@@ -529,6 +529,6 @@ For example, here's a function that evaluates an arithmetic expression:
 This function evaluates a plain number
 by simply returning the associated value.
 It evaluates an addition or multiplication
-by evaluating the expression on left hand side,
+by evaluating the expression on the left hand side,
 evaluating the expression on the right hand side,
 and then adding them or multiplying them.

@@ -975,7 +975,7 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
-Enumerations can a recursive structure,
+Enumerations can have a recursive structure,
 that is, they can have cases with associated values
 that are instances of the enumeration type itself.
 However, instances of enumeration types have value semantics,
@@ -985,10 +985,6 @@ the compiler must insert a layer of indirection.
 
 To enable indirection for a particular enumeration case,
 mark it with the ``indirect`` declaration modifier.
-To enable indirection for all the cases of an enumeration,
-mark the entire enumeration with the ``indirect`` modifier ---
-this is convenient when the enumeration contains many cases
-that would each need to be marked with the ``indirect`` modifier.
 
 .. TODO The word "enable" is kind of a weasle word.
    Better to have a more concrete discussion of exactly when
@@ -1008,10 +1004,17 @@ that would each need to be marked with the ``indirect`` modifier.
    << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
    << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
 
+To enable indirection for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier ---
+this is convenient when the enumeration contains many cases
+that would each need to be marked with the ``indirect`` modifier.
+
 An enumeration case that's marked with the ``indirect`` modifier
 must have an associated value.
 An enumeration that is marked with the ``indirect`` modifier
-can't contain any cases that are also marked with the ``indirect`` modifier.
+can contain a mixture of cases that have associated values and cases those that don't.
+That said,
+it can't contain any cases that are also marked with the ``indirect`` modifier.
 
 .. It really should be an associated value **that includes the enum type**
    but right now the compiler is satisfied with any associated value.

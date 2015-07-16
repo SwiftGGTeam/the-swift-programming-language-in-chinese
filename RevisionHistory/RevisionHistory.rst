@@ -40,9 +40,9 @@ Date        Notes
               to describe when you can apply the ``@objc`` attribute to classes.
 
             * Added a note to the :ref:`ErrorHandling_Catch` section
-              about the performance of exectuing a ``throw`` statement.
+              about the performance of executing a ``throw`` statement.
               Added similar information about the ``do`` statement
-              in the :ref:`Statements_DoStatement`.
+              in the :ref:`Statements_DoStatement` section.
 ----------  --------------------------------------------------------------------------
 2015-06-08  * Updated for Swift 2.0.
 
