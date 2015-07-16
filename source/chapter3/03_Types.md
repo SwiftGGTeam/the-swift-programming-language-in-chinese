@@ -125,7 +125,7 @@ Swift语言中使用[`type`]来简化标准库中定义`Array<T>`类型的操作
 换句话说，下面两个声明是等价的：
 
 ```swift
-let someArray: String[] = ["Alex", "Brian", "Dave"]
+let someArray: [String] = ["Alex", "Brian", "Dave"]
 let someArray: Array<String> = ["Alex", "Brian", "Dave"]
 ```
 上面两种情况下，常量`someArray`都被声明为字符串数组。数组的元素也可以通过`[]`获取访问：`someArray[0]`是指第0个元素`“Alex”`。
