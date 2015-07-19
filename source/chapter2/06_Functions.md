@@ -219,25 +219,32 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 
 你可以选择性的绑定当`minMax(_:)`函数返回的是一个实际的元组值还是`nil`
 
+```swift
+if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
+    print("min is \(bounds.min) and max is \(bounds.max)")
+}
+// prints "min is -6 and max is 109"
+```
+
 <a name="Function_Parameter_Names"></a>
 ## 函数参数名称（Function Parameter Names）
 
-以上所有的函数都给它们的参数定义了`参数名（parameter name）`：
+函数参数都有一个*外部参数名(external parameter name)*和一个*本地参数名(local parameter name)*.外部参数名用来标记传递给函数调用的参数,本地参数名在实现函数的时候使用.
 
 ```swift
-func someFunction(parameterName: Int) {
-    // function body goes here, and can use parameterName
-    // to refer to the argument value for that parameter
+func someFunction(firstParameterName: Int, secondParameterName: Int) {
+    // function body goes here
+    // firstParameterName and secondParameterName refer to
+    // the argument values for the first and second parameters
 }
+someFunction(1, secondParameterName: 2)
 ```
 
-但是，这些参数名仅在函数体中使用，不能在函数调用时使用。这种类型的参数名被称作`局部参数名（local parameter name）`，因为它们只能在函数体中使用。
+一般情况下,第一个参数省略其外部参数名,第二个以后的参数使用其本地参数名作为自己的外部参数名.所有参数需要有不同的本地参数名,但可以共享相同的外部参数名.
 
-### 外部参数名（External Parameter Names）
+### 指定外部参数名(Specifying External Parameter Names)
 
-有时候，调用函数时，给每个参数命名是非常有用的，因为这些参数名可以指出各个实参的用途是什么。
-
-如果你希望函数的使用者在调用函数时提供参数名字，那就需要给每个参数除了局部参数名外再定义一个`外部参数名`。外部参数名写在局部参数名之前，用空格分隔。
+你可以在本地参数名前指定外部参数名,中间以逗号分隔.
 
 ```swift
 func someFunction(externalParameterName localParameterName: Int) {
@@ -246,122 +253,56 @@ func someFunction(externalParameterName localParameterName: Int) {
 }
 ```
 
-> 注意：
+> 注意:
 > 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。
 
-以下是个例子，这个函数使用一个`结合者（joiner）`把两个字符串联在一起：
+这个版本的`sayHello(_:)`函数,得到了两个人的名字,会同时返回对他俩的问候:
 
 ```swift
-func join(s1: String, s2: String, joiner: String) -> String {
-    return s1 + joiner + s2
+func sayHello(to person: String, and anotherPerson: String) -> String {
+    return "Hello \(person) and \(anotherPerson)!"
 }
+print(sayHello(to: "Bill", and: "Ted"))
+// prints "Hello Bill and Ted!"
 ```
 
-当你调用这个函数时，这三个字符串的用途是不清楚的：
+为每个参数指定外部参数名,在你调用函数`sayHello(to:and:)`函数时时两个参数都必须被标记出来.
+
+使用外部函数名可以使得函数可以用一句话表达清楚,并且使得函数体内部可读,能表达出函数的明确意图.
+
+### 忽略外部参数名(Omitting External Parameter Names)
+
+如果你不想为第二个及后续的参数设置参数名,用一个下划线(_)代替一个明确地参数名.
 
 ```swift
-join("hello", "world", ", ")
-// returns "hello, world"
-```
-
-为了让这些字符串的用途更为明显，我们为 `join` 函数添加外部参数名：
-
-```swift
-func join(string s1: String, toString s2: String, withJoiner joiner: String) -> String {
-    return s1 + joiner + s2
+func someFunction(firstParameterName: Int, _ secondParameterName: Int) {
+    // function body goes here
+    // firstParameterName and secondParameterName refer to
+    // the argument values for the first and second parameters
 }
+someFunction(1, 2)
 ```
 
-在这个版本的 `join` 函数中，第一个参数有一个叫 `string` 的外部参数名和 `s1` 的局部参数名，第二个参数有一个叫 `toString` 的外部参数名和 `s2` 的局部参数名，第三个参数有一个叫 `withJoiner` 的外部参数名和 `joiner` 的局部参数名。
+> 注意:
+> 因为第一个参数默认忽略其外部参数名称，明确写下划线是多余的。
 
-现在，你可以使用这些外部参数名以一种清晰地方式来调用函数了：
-
-```swift
-join(string: "hello", toString: "world", withJoiner: ", ")
-// returns "hello, world"
-```
-
-使用外部参数名让第二个版本的 `join` 函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。
-
-> 注意：
-> 当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。
-
-### 简写外部参数名（Shorthand External Parameter Names）
-
-如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉 Swift 使用这个参数名作为局部和外部参数名。
-
-下面这个例子定义了一个叫 `containsCharacter` 的函数，使用`井号（#）`的方式定义了外部参数名：
-
-```swift
-func containsCharacter(#string: String, #characterToFind: Character) -> Bool {
-    for character in string {
-        if character == characterToFind {
-            return true
-        }
-    }
-    return false
-}
-```
-
-这样定义参数名，使得函数体更为可读，清晰，同时也可以以一个不含糊的方式被调用：
-
-```swift
-let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
-// containsAVee equals true, because "aardvark" contains a "v”
-```
 
 ### 默认参数值（Default Parameter Values）
 
-你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以忽略这个参数。
+你可以在函数体中为每个参数定义`默认值(Deafult Values)`。当默认值被定义后，调用这个函数时可以忽略这个参数。
+
+```swift
+func someFunction(parameterWithDefault: Int = 12) {
+    // function body goes here
+    // if no arguments are passed to the function call,
+    // value of parameterWithDefault is 42
+}
+someFunction(6) // parameterWithDefault is 6
+someFunction() // parameterWithDefault is 12
+```
 
 > 注意：
 > 将带有默认值的参数放在函数参数列表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。
-
-以下是另一个版本的`join`函数，其中`joiner`有了默认参数值：
-
-```swift
-func join(string s1: String, toString s2: String, withJoiner joiner: String = " ") -> String {
-    return s1 + joiner + s2
-}
-```
-
-像第一个版本的 `join` 函数一样，如果 `joiner` 被赋值时，函数将使用这个字符串值来连接两个字符串：
-
-```swift
-join(string: "hello", toString: "world", withJoiner: "-")
-// returns "hello-world"
-```
-
-当这个函数被调用时，如果 `joiner` 的值没有被指定，函数会使用默认值（" "）：
-
-```swift
-join(string: "hello", toString:"world")
-// returns "hello world"
-```
-
-### 默认值参数的外部参数名（External Names for Parameters with Default Values）
-
-在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。
-
-为了使定义外部参数名更加简单，当你未给带默认值的参数提供外部参数名时，Swift 会自动提供外部名字。此时外部参数名与局部名字是一样的，就像你已经在局部参数名前写了`井号（#）`一样。
-
-下面是 `join` 函数的另一个版本，这个版本中并没有为它的参数提供外部参数名，但是 `joiner` 参数依然有外部参数名：
-
-```swift
-func join(s1: String, s2: String, joiner: String = " ") -> String {
-    return s1 + joiner + s2
-}
-```
-
-在这个例子中，Swift 自动为 `joiner` 提供了外部参数名。因此，当函数调用时，外部参数名必须使用，这样使得参数的用途变得清晰。
-
-```swift
-join("hello", "world", joiner: "-")
-// returns "hello-world"
-```
-
-> 注意：
-> 你可以使用`下划线（_）`作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。
 
 ### 可变参数（Variadic Parameters）
 
@@ -369,7 +310,7 @@ join("hello", "world", joiner: "-")
 
 传入可变参数的值在函数体内当做这个类型的一个数组。例如，一个叫做 `numbers` 的 `Double...` 型可变参数，在函数体内可以当做一个叫 `numbers` 的 `Double[]` 型的数组常量。
 
-下面的这个函数用来计算一组任意长度数字的算术平均数：
+下面的这个函数用来计算一组任意长度数字的`算术平均数(arithmetic mean)`：
 
 ```swift
 func arithmeticMean(numbers: Double...) -> Double {
@@ -381,12 +322,13 @@ func arithmeticMean(numbers: Double...) -> Double {
 }
 arithmeticMean(1, 2, 3, 4, 5)
 // returns 3.0, which is the arithmetic mean of these five numbers
-arithmeticMean(3, 8, 19)
+arithmeticMean(3, 8.25, 18.75)
 // returns 10.0, which is the arithmetic mean of these three numbers
 ```
 
 > 注意：
-> 一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。
+> 最多可以有一个可变参数函数,和它必须出现在参数列表中,为了避免歧义在调用函数有多个参数。
+> 如果你的函数有一个或多个参数有默认值,还有一个可变的参数,将可变参写在参数列表的最后。
 
 如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
 
@@ -399,8 +341,8 @@ arithmeticMean(3, 8, 19)
 通过在参数名前加关键字 `var` 来定义变量参数：
 
 ```swift
-func alignRight(var string: String, count: Int, pad: Character) -> String {
-    let amountToPad = count - countElements(string)
+func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
+    let amountToPad = totalLength - string.characters.count
     if amountToPad < 1 {
         return string
     }
@@ -411,16 +353,22 @@ func alignRight(var string: String, count: Int, pad: Character) -> String {
     return string
 }
 let originalString = "hello"
-let paddedString = alignRight(originalString, 10, "-")
+let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
 // paddedString is equal to "-----hello"
 // originalString is still equal to "hello"
 ```
 
-这个例子中定义了一个新的叫做 `alignRight` 的函数，用来右对齐输入的字符串到一个长的输出字符串中。左侧空余的地方用指定的填充字符填充。这个例子中，字符串`"hello"`被转换成了`"-----hello"`。
+这个例子中定义了一个新的叫做 `alignRight(_:totalLength:pad:)` 的函数，用来右对齐输入的字符串到一个长的输出字符串中。左侧空余的地方用指定的填充字符填充。这个例子中，字符串`"hello"`被转换成了`"-----hello"`。
 
-`alignRight` 函数将参数 `string` 定义为变量参数。这意味着 `string` 现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。
+`alignRight(_:totalLength:pad:)` 函数将参数 `string` 定义为变量参数。这意味着 `string` 现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。
 
-该函数首先计算出多少个字符需要被添加到 `string` 的左边，以右对齐到总的字符串中。这个值存在局部常量 `amountToPad` 中。这个函数然后将 `amountToPad` 多的填充（pad）字符填充到 `string` 左边，并返回结果。它使用了 `string` 这个变量参数来进行所有字符串操作。
+　函数首先找出有多少字符需要被添加到左边的字符串以右对齐在整个字符串。这个值是存储在一个本地常数称为amountToPad。如果不需要填充(也就是说,如果amountToPad小于1),该函数返回字符串没有填充的输入值。
+　　
+　　否则,该函数创建一个新的临时字符串常量称为padString,初始化填充字符,并将amountToPad padString副本添加到现有的左边的字符串。(一个字符串值不能被添加到一个字符值,所以padString常数用于确保双方+操作符的字符串值)。
+
+该函数首先计算出多少个字符需要被添加到 `string` 的左边，以右对齐到总的字符串中。这个值存在局部常量 `amountToPad` 中。如果不需要填充(即,如果`amountToPad`小于`1`),该函数返回没有填充输入的`string`.
+
+否则,该函数会建立一个临时的String常量称为`padString`,初始化`pad`字符,并将`amountToPad`作为`padString`的副本添加到现有的字符串左边.(一个`Character`后不能直接添加一个`String`值,所以`padString`经常用于确保`+`号两边都是`String`值.)
 
 > 注意：
 > 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
@@ -436,29 +384,29 @@ let paddedString = alignRight(originalString, 10, "-")
 > 注意：
 > 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。如果你用 `inout` 标记一个参数，这个参数不能被 `var` 或者 `let` 标记。
 
-下面是例子，`swapTwoInts` 函数，有两个分别叫做 `a` 和 `b` 的输入输出参数：
+下面是例子，`swapTwoInts(_:_:)` 函数，有两个分别叫做 `a` 和 `b` 的输入输出参数：
 
 ```swift
-func swapTwoInts(inout a: Int, inout b: Int) {
+func swapTwoInts(inout a: Int, inout _ b: Int) {
     let temporaryA = a
     a = b
     b = temporaryA
 }
 ```
 
-这个 `swapTwoInts` 函数仅仅交换 `a` 与 `b` 的值。该函数先将 `a` 的值存到一个暂时常量 `temporaryA` 中，然后将 `b` 的值赋给 `a`，最后将 `temporaryA` 幅值给 `b`。
+这个 `swapTwoInts(_:_:)` 函数仅仅交换 `a` 与 `b` 的值。该函数先将 `a` 的值存到一个暂时常量 `temporaryA` 中，然后将 `b` 的值赋给 `a`，最后将 `temporaryA` 幅值给 `b`。
 
-你可以用两个 `Int` 型的变量来调用 `swapTwoInts`。需要注意的是，`someInt` 和 `anotherInt` 在传入 `swapTwoInts` 函数前，都加了 `&` 的前缀：
+你可以用两个 `Int` 型的变量来调用 `swapTwoInts(_:_:)`。需要注意的是，`someInt` 和 `anotherInt` 在传入 `swapTwoInts(_:_:)` 函数前，都加了 `&` 的前缀：
 
 ```swift
 var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
-println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// prints "someInt is now 107, and anotherInt is now 3”
+print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+// prints "someInt is now 107, and anotherInt is now 3"
 ```
 
-从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts` 函数中被修改，尽管它们的定义在函数体外。
+从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts(_:_:)` 函数中被修改，尽管它们的定义在函数体外。
 
 > 注意：
 > 输入输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
@@ -471,10 +419,10 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 例如：
 
 ```swift
-func addTwoInts(a: Int, b: Int) -> Int {
+func addTwoInts(a: Int, _ b: Int) -> Int {
     return a + b
 }
-func multiplyTwoInts(a: Int, b: Int) -> Int {
+func multiplyTwoInts(a: Int, _ b: Int) -> Int {
     return a * b
 }
 ```
@@ -487,11 +435,11 @@ func multiplyTwoInts(a: Int, b: Int) -> Int {
 
 ```swift
 func printHelloWorld() {
-    println("hello, world")
+    print("hello, world")
 }
 ```
 
-这个函数的类型是：`() -> ()`，或者叫“没有参数，并返回 `Void` 类型的函数”。没有指定返回类型的函数总返回 `Void`。在Swift中，`Void` 与空的元组是一样的。
+这个函数的类型是：`() -> void`，或者叫“没有参数，并返回 `Void` 类型的函数”。
 
 ### 使用函数类型（Using Function Types）
 
@@ -510,7 +458,7 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
 现在，你可以用 `mathFunction` 来调用被赋值的函数了：
 
 ```swift
-println("Result: \(mathFunction(2, 3))")
+print("Result: \(mathFunction(2, 3))")
 // prints "Result: 5"
 ```
 
@@ -518,7 +466,7 @@ println("Result: \(mathFunction(2, 3))")
 
 ```swift
 mathFunction = multiplyTwoInts
-println("Result: \(mathFunction(2, 3))")
+print("Result: \(mathFunction(2, 3))")
 // prints "Result: 6"
 ```
 
@@ -536,18 +484,18 @@ let anotherMathFunction = addTwoInts
 下面是另一个例子，正如上面的函数一样，同样是输出某种数学运算结果：
 
 ```swift
-func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
-    println("Result: \(mathFunction(a, b))")
+func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+    print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// prints "Result: 8”
+// prints "Result: 8"
 ```
 
-这个例子定义了 `printMathResult` 函数，它有三个参数：第一个参数叫 `mathFunction`，类型是`(Int, Int) -> Int`，你可以传入任何这种类型的函数；第二个和第三个参数叫 `a` 和 `b`，它们的类型都是 `Int`，这两个值作为已给的函数的输入值。
+这个例子定义了 `printMathResult(_:_:_:)` 函数，它有三个参数：第一个参数叫 `mathFunction`，类型是`(Int, Int) -> Int`，你可以传入任何这种类型的函数；第二个和第三个参数叫 `a` 和 `b`，它们的类型都是 `Int`，这两个值作为已给的函数的输入值。
 
-当 `printMathResult` 被调用时，它被传入 `addTwoInts` 函数和整数`3`和`5`。它用传入`3`和`5`调用 `addTwoInts`，并输出结果：`8`。
+当 `printMathResult(_:_:_:)` 被调用时，它被传入 `addTwoInts` 函数和整数`3`和`5`。它用传入`3`和`5`调用 `addTwoInts`，并输出结果：`8`。
 
-`printMathResult` 函数的作用就是输出另一个合适类型的数学函数的调用结果。它不关心传入函数是如何实现的，它只关心这个传入的函数类型是正确的。这使得 `printMathResult` 可以以一种类型安全（type-safe）的方式来保证传入函数的调用是正确的。
+`printMathResult(_:_:_:)` 函数的作用就是输出另一个合适类型的数学函数的调用结果。它不关心传入函数是如何实现的，它只关心这个传入的函数类型是正确的。这使得 `printMathResult(_:_:_:)` 可以以一种类型安全（type-safe）的方式来保证传入函数的调用是正确的。
 
 ### 函数类型作为返回类型（Function Type as Return Types）
 
@@ -564,7 +512,7 @@ func stepBackward(input: Int) -> Int {
 }
 ```
 
-下面这个叫做 `chooseStepFunction` 的函数，它的返回类型是 `(Int) -> Int` 的函数。`chooseStepFunction` 根据布尔值 `backwards` 来返回 `stepForward` 函数或 `stepBackward` 函数：
+下面这个叫做 `chooseStepFunction(_:)` 的函数，它的返回类型是 `(Int) -> Int` 的函数。`chooseStepFunction(_:)` 根据布尔值 `backwards` 来返回 `stepForward(_:)` 函数或 `stepBackward(_:)` 函数：
 
 ```swift
 func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
@@ -572,7 +520,7 @@ func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
 }
 ```
 
-你现在可以用 `chooseStepFunction` 来获得一个函数，不管是那个方向：
+你现在可以用 `chooseStepFunction(_:)` 来获得一个函数，不管是那个方向：
 
 ```swift
 var currentValue = 3
@@ -580,22 +528,23 @@ let moveNearerToZero = chooseStepFunction(currentValue > 0)
 // moveNearerToZero now refers to the stepBackward() function
 ```
 
-上面这个例子中计算出从 `currentValue` 逐渐接近到`0`是需要向正数走还是向负数走。`currentValue` 的初始值是`3`，这意味着 `currentValue > 0` 是真的（`true`），这将使得 `chooseStepFunction` 返回 `stepBackward` 函数。一个指向返回的函数的引用保存在了 `moveNearerToZero` 常量中。
+上面这个例子中计算出从 `currentValue` 逐渐接近到`0`是需要向正数走还是向负数走。`currentValue` 的初始值是`3`，这意味着 `currentValue > 0` 是真的（`true`），这将使得 `chooseStepFunction(_:)` 返回 `stepBackward(_:)` 函数。一个指向返回的函数的引用保存在了 `moveNearerToZero` 常量中。
 
 现在，`moveNearerToZero` 指向了正确的函数，它可以被用来数到`0`：
 
 ```swift
-println("Counting to zero:")
+print("Counting to zero:")
 // Counting to zero:
 while currentValue != 0 {
-    println("\(currentValue)... ")
+    print("\(currentValue)... ")
     currentValue = moveNearerToZero(currentValue)
 }
-println("zero!")
+print("zero!")
 // 3...
 // 2...
 // 1...
 // zero!
+
 ```
 
 <a name="Nested_Functions"></a>
@@ -605,7 +554,7 @@ println("zero!")
 
 默认情况下，嵌套函数是对外界不可见的，但是可以被他们封闭函数（enclosing function）来调用。一个封闭函数也可以返回它的某一个嵌套函数，使得这个函数可以在其他域中被使用。
 
-你可以用返回嵌套函数的方式重写 `chooseStepFunction` 函数：
+你可以用返回嵌套函数的方式重写 `chooseStepFunction(_:)` 函数：
 
 ```swift
 func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
@@ -617,10 +566,10 @@ var currentValue = -4
 let moveNearerToZero = chooseStepFunction(currentValue > 0)
 // moveNearerToZero now refers to the nested stepForward() function
 while currentValue != 0 {
-    println("\(currentValue)... ")
+    print("\(currentValue)... ")
     currentValue = moveNearerToZero(currentValue)
 }
-println("zero!")
+print("zero!")
 // -4...
 // -3...
 // -2...
