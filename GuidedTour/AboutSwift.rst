@@ -34,7 +34,7 @@ and unifies the procedural and object-oriented portions of the language.
 Swift is friendly to new programmers.
 It is the first industrial-quality systems programming language
 that is as expressive and enjoyable as a scripting language.
-It supports playgrounds, an innovative feature
+It supports Playgrounds, an innovative feature
 that allows programmers to experiment with Swift code and see the results immediately,
 without the overhead of building and running an app.
 
