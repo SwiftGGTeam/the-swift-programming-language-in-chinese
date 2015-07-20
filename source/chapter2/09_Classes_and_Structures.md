@@ -1,5 +1,5 @@
-> 翻译：[JaySurplus](https://github.com/JaySurplus)
-> 校对：[sg552](https://github.com/sg552)
+> 翻译：[JaySurplus](https://github.com/JaySurplus),[SkyJean](https://github.com/SkyJean)
+> 校对：[sg552](https://github.com/sg552),[SkyJean](https://github.com/SkyJean)
 
 # 类和结构体
 
@@ -9,9 +9,10 @@
 - [结构体和枚举是值类型](#structures_and_enumerations_are_value_types)
 - [类是引用类型](#classes_are_reference_types)
 - [类和结构体的选择](#choosing_between_classes_and_structures)
-- [集合（collection）类型的赋值与复制行为](#assignment_and_copy_behavior_for_collection_types)
+- [字符串(String)、数组(Array)、和字典(Dictionary)类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
 
-类和结构体是人们构建代码所用的一种通用且灵活的构造体。为了在类和结构体中实现各种功能，我们必须要严格按照常量、变量以及函数所规定的语法规则来定义属性和添加方法。
+
+类和结构体是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
 
@@ -28,7 +29,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 定义附属脚本用于访问值
 * 定义构造器用于生成初始化值
 * 通过扩展以增加默认实现的功能
-* 符合协议以对某类提供标准功能
+* 实现协议以提供某种标准功能
 
 更多信息请参见 [属性](10_Properties.html)，[方法](11_Methods.html)，[下标脚本](12_Subscripts.html)，[初始过程](14_Initialization.html)，[扩展](20_Extensions.html)，和[协议](21_Protocols.html)。
 
@@ -39,7 +40,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 解构器允许一个类实例释放任何其所被分配的资源
 * 引用计数允许对一个类的多次引用
 
-更多信息请参见[继承](http://)，[类型转换](http://)，[初始化](http://)，和[自动引用计数](http://)。
+更多信息请参见[继承](13_Inheritance.html)，[类型转换](20_Type_Casting.html)，[析构过程](15_Deinitialization)，和[自动引用计数](16_Automatic_Reference_Counting)。
 
 > 注意：
 结构体总是通过被复制的方式在代码中传递，因此请不要使用引用计数。
@@ -77,7 +78,7 @@ class VideoMode {
 
 在上面的示例中我们定义了一个名为`Resolution`的结构体，用来描述一个显示器的像素分辨率。这个结构体包含了两个名为`width`和`height`的存储属性。存储属性是捆绑和存储在类或结构体中的常量或变量。当这两个属性被初始化为整数`0`的时候，它们会被推断为`Int`类型。
 
-在上面的示例中我们还定义了一个名为`VideoMode`的类，用来描述一个视频显示器的特定模式。这个类包含了四个储存属性变量。第一个是`分辨率`，它被初始化为一个新的`Resolution`结构体的实例，具有`Resolution`的属性类型。新`VideoMode`实例同时还会初始化其它三个属性，它们分别是，初始值为`false`(意为“non-interlaced video”)的`interlaced`，回放帧率初始值为`0.0`的`frameRate`和值为可选`String`的`name`。`name`属性会被自动赋予一个默认值`nil`，意为“没有`name`值”，因为它是一个可选类型。
+在上面的示例中我们还定义了一个名为`VideoMode`的类，用来描述一个视频显示器的特定模式。这个类包含了四个储存属性变量。第一个是`分辨率`，它被初始化为一个新的`Resolution`结构体的实例，具有`Resolution`的属性类型。新`VideoMode`实例同时还会初始化其它三个属性，它们分别是，初始值为`false`(意为“非隔行扫描视频”)的`interlaced`，回放帧率初始值为`0.0`的`frameRate`和值为可选`String`的`name`。`name`属性会被自动赋予一个默认值`nil`，意为“没有`name`值”，因为它是一个可选类型。
 
 ### 类和结构体实例
 
@@ -90,7 +91,7 @@ let someResolution = Resolution()
 let someVideoMode = VideoMode()
 ```
 
-结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
+结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
 
 ### 属性访问
 
@@ -121,9 +122,9 @@ println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 >  注意：
 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新设置`resolution`属性。
 
-### 结构体类型的成员逐一构造器(Memberwise Initializers for structure Types)
+### 结构体类型的成员逐一构造器(Memberwise Initializers for Structure Types)
 
-所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
+所有结构体都有一个自动生成的*成员逐一构造器*，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
 ```swift
 let vga = Resolution(width:640, height: 480)
@@ -134,11 +135,11 @@ let vga = Resolution(width:640, height: 480)
 <a name="structures_and_enumerations_are_value_types"></a>
 ## 结构体和枚举是值类型
 
-值类型被赋予给一个变量，常数或者本身被传递给一个函数的时候，实际上操作的是其的拷贝。
+*值类型*被赋予给一个变量、常量或者本身被传递给一个函数的时候，实际上操作的是其的*拷贝*。
 
-在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数（Integer）、浮点数（floating-point）、布尔值（Booleans）、字符串（string)、数组（array）和字典（dictionaries），都是值类型，并且都是以结构体的形式在后台所实现。
+在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数（Integer）、浮点数（floating-point）、布尔值（Boolean）、字符串（string)、数组（array）和字典（dictionary），都是值类型，并且都是以结构体的形式在后台所实现。
 
-在 Swift 中，所有的结构体和枚举都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。
+在 Swift 中，所有的结构体和枚举类型都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。
 
 请看下面这个示例，其使用了前一个示例中`Resolution`结构体：
 
@@ -171,7 +172,7 @@ println("hd is still \(hd.width	) pixels wide")
 // 输出 "hd is still 1920 pixels wide"
 ```
 
-在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所存储的`值（values）`进行拷贝，然后将拷贝的数据存储到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的宽（width）。
+在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所存储的`值（values）`进行拷贝，然后将拷贝的数据存储到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的`width`的值。
 
 枚举也遵循相同的行为准则：
 
@@ -252,7 +253,7 @@ if tenEighty === alsoTenEighty {
 
 ### 指针
 
-如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用指针来引用内存中的地址。一个 Swift 常量或者变量引用一个引用类型的实例与 C 语言中的指针类似，不同的是并不直接指向内存中的某个地址，而且也不要求你使用星号（*）来表明你在创建一个引用。Swift 中这些引用与其它的常量或变量的定义方式相同。
+如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用*指针*来引用内存中的地址。一个 Swift 常量或者变量引用一个引用类型的实例与 C 语言中的指针类似，不同的是并不直接指向内存中的某个地址，而且也不要求你使用星号（*）来表明你在创建一个引用。Swift 中这些引用与其它的常量或变量的定义方式相同。
 
 <a name="choosing_between_classes_and_structures"></a>
 ## 类和结构体的选择
@@ -268,7 +269,7 @@ if tenEighty === alsoTenEighty {
 * 任何在结构体中储存的值类型属性，也将会被拷贝，而不是被引用。
 * 结构体不需要去继承另一个已存在类型的属性或者行为。
 
-合适的结构体候选者包括：
+举例来说，以下情境中适合使用结构体：
 
 * 几何形状的大小，封装一个`width`属性和`height`属性，两者均为`Double`类型。
 * 一定范围内的路径，封装一个`start`属性和`length`属性，两者均为`Int`类型。
@@ -276,15 +277,15 @@ if tenEighty === alsoTenEighty {
 
 在所有其它案例中，定义一个类，生成一个它的实例，并通过引用来管理和传递。实际中，这意味着绝大部分的自定义数据构造都应该是类，而非结构体。
 
-<a name="assignment_and_copy_behavior_for_collection_types"></a>
-## 集合（Collection）类型的赋值和拷贝行为
+<a name="assignment_and_copy_behavior_for_strings_arrays_and_dictionaries"></a>
+## 字符串(String)、数组(Array)、和字典(Dictionary)类型的赋值与复制行为
 
-Swift 中`字符串（String）`,`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。这意味着String，Array，Dictionary类型数据被赋值给新的常量(或变量），或者被传入函数（或方法）中时，它们的值会发生拷贝行为（值传递方式）。
+Swift 中`字符串（String）`,`数组（Array）`和`字典（Dictionary）`类型均以结构体的形式实现。这意味着String，Array，Dictionary类型数据被赋值给新的常量或变量，或者被传入函数或方法中时，它们的值会发生拷贝行为（值传递方式）。
 
 Objective-C中`字符串（NSString）`,`数组（NSArray）`和`字典（NSDictionary）`类型均以类的形式实现，这与Swfit中以值传递方式是不同的。NSString，NSArray，NSDictionary在发生赋值或者传入函数（或方法）时，不会发生值拷贝，而是传递已存在实例的引用。
 
 
 > 注意：
-以上是对于数组，字典，字符串和其它值的`拷贝`的描述。
+以上是对于字符串、数组、字典和其它值的`拷贝`的描述。
 在你的代码中，拷贝好像是确实是在有拷贝行为的地方产生过。然而，在 Swift 的后台中，只有确有必要，`实际（actual）`拷贝才会被执行。Swift 管理所有的值拷贝以确保性能最优化的性能，所以你也没有必要去避免赋值以保证最优性能。（实际赋值由系统管理优化）
 
