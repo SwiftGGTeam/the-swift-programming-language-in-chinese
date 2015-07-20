@@ -1,52 +1,54 @@
 About Swift
 ===========
 
-Swift is a new programming language for iOS, OS X, and watchOS apps
-that builds on the best of C and Objective-C,
-without the constraints of C compatibility.
-Swift adopts safe programming patterns and adds modern features
-to make programming easier, more flexible, and more fun.
-Swift’s clean slate,
-backed by the mature and much-loved Cocoa and Cocoa Touch frameworks,
-is an opportunity to reimagine how software development works.
+Swift is a safe, fast, and interactive programming language
+that combines the best in modern language thinking
+with wisdom from the wider Apple engineering culture.
+The compiler is optimized for performance,
+and the language is optimized for development,
+without compromising on either.
 
-Swift has been years in the making.
+Swift is a fantastic way to write iOS, OS X, and watchOS apps.
 Apple laid the foundation for Swift
 by advancing our existing compiler, debugger, and framework infrastructure.
 We simplified memory management with Automatic Reference Counting (ARC).
 Our framework stack, built on the solid base of Foundation and Cocoa,
 has been modernized and standardized throughout.
 Objective-C itself has evolved
-to support blocks, collection literals, nullability annotations, generics, and modules,
-enabling framework adoption of modern language technologies without disruption.
-Thanks to this groundwork,
-we can now introduce a new language for the future of Apple software development.
-
-Swift feels familiar to Objective-C developers.
-It adopts the readability of Objective-C’s named parameters
-and the power of Objective-C’s dynamic object model.
-It provides seamless access to existing Cocoa frameworks
-and mix-and-match interoperability with Objective-C code.
+to support blocks, collection literals, nullability annotations, generics, and modules.
 Building from this common ground,
-Swift introduces many new features
-and unifies the procedural and object-oriented portions of the language.
+Swift provides seamless access to existing Cocoa frameworks
+and mix-and-match interoperability with Objective-C code.
+
+Swift is an industrial-quality systems programming language.
+By adopting safe programming patterns,
+Swift eliminates entire classes of unsafe code.
+Variables are always initialized before use,
+arrays and integers are checked for overflow,
+and memory is managed automatically.
+Optionals ensure that `nil` values are not created or accessed at runtime.
+Not just safe, Swift is built to be fast as well.
+Using the incredibly high-performance LLVM compiler,
+Swift code is transformed into optimized native code that gets the most out of modern hardware.
+The syntax and standard library have also been tuned
+to make the most obvious way to write your code also perform the best.
+Combining safety and speed, Swift is an excellent choice for
+everything from "hello, world" to an entire operating system.
 
 Swift is friendly to new programmers.
-It is the first industrial-quality systems programming language
+It's the first compiled language
 that is as expressive and enjoyable as a scripting language.
-It supports Playgrounds, an innovative feature
+It supports playgrounds, an innovative feature
 that allows programmers to experiment with Swift code and see the results immediately,
 without the overhead of building and running an app.
+Combining powerful type inference and pattern matching with
+a modern, lightweight syntax
+Swift allows complex ideas to be expressed in a clear and concise manner.
+As a result, code is not just easier to write,
+but easier to read and maintain as well.
 
-Swift combines the best in modern language thinking
-with wisdom from the wider Apple engineering culture.
-The compiler is optimized for performance,
-and the language is optimized for development,
-without compromising on either.
-It’s designed to scale from "hello, world" to an entire operating system.
-All this makes Swift a sound future investment for developers and for Apple.
-
-Swift is a fantastic way to write iOS, OS X, and watchOS apps,
-and will continue to evolve with new features and capabilities.
+Swift has been years in the making,
+and it will continue to evolve with new features and capabilities
+for many years to come.
 Our goals for Swift are ambitious.
 We can’t wait to see what you create with it.
