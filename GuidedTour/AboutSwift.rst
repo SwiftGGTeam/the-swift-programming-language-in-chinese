@@ -17,7 +17,7 @@ We simplified memory management with Automatic Reference Counting (ARC).
 Our framework stack, built on the solid base of Foundation and Cocoa,
 has been modernized and standardized throughout.
 Objective-C itself has evolved
-to support blocks, collection literals, and modules,
+to support blocks, collection literals, nullability annotations, generics, and modules,
 enabling framework adoption of modern language technologies without disruption.
 Thanks to this groundwork,
 we can now introduce a new language for the future of Apple software development.
