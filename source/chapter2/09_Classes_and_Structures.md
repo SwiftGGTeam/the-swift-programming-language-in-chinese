@@ -98,7 +98,7 @@ let someVideoMode = VideoMode()
 通过使用*点语法*（*dot syntax*），你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：
 
 ```swift
-println("The width of someResolution is \(someResolution.width)")
+print("The width of someResolution is \(someResolution.width)")
 // 输出 "The width of someResolution is 0"
 ```
 
@@ -107,7 +107,7 @@ println("The width of someResolution is \(someResolution.width)")
 你也可以访问子属性，如`VideoMode`中`Resolution`属性的`width`属性：
 
 ```swift
-println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 // 输出 "The width of someVideoMode is 0"
 ```
 
@@ -115,7 +115,7 @@ println("The width of someVideoMode is \(someVideoMode.resolution.width)")
 
 ```swift
 someVideoMode.resolution.width = 1280
-println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 // 输出 "The width of someVideoMode is now 1280"
 ```
 
@@ -161,14 +161,14 @@ cinema.width = 2048
 这里，将会显示`cinema`的`width`属性确已改为了`2048`：
 
 ```swift
-println("cinema is now  \(cinema.width) pixels wide")
+print("cinema is now  \(cinema.width) pixels wide")
 // 输出 "cinema is now 2048 pixels wide"
 ```
 
 然而，初始的`hd`实例中`width`属性还是`1920`：
 
 ```swift
-println("hd is still \(hd.width	) pixels wide")
+print("hd is still \(hd.width	) pixels wide")
 // 输出 "hd is still 1920 pixels wide"
 ```
 
@@ -184,7 +184,7 @@ var currentDirection = CompassPoint.West
 let rememberedDirection = currentDirection
 currentDirection = .East
 if rememberedDirection == .West {
-	println("The remembered direction is still .West")
+	print("The remembered direction is still .West")
 }
 // 输出 "The remembered direction is still .West"
 ```
@@ -220,7 +220,7 @@ alsoTenEighty.frameRate = 30.0
 下面，通过查看`tenEighty`的`frameRate`属性，我们会发现它正确的显示了基本`VideoMode`实例的新帧率，其值为`30.0`：
 
 ```swift
-println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 // 输出 "The frameRate property of theEighty is now 30.0"
 ```
 
@@ -239,7 +239,7 @@ println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 
 ```swift
 if tenEighty === alsoTenEighty {
-	println("tenEighty and alsoTenEighty refer to the same Resolution instance.")
+	print("tenEighty and alsoTenEighty refer to the same Resolution instance.")
 }
 //输出 "tenEighty and alsoTenEighty refer to the same Resolution instance."
 ```
@@ -288,4 +288,3 @@ Objective-C中`字符串（NSString）`,`数组（NSArray）`和`字典（NSDict
 > 注意：
 以上是对于字符串、数组、字典和其它值的`拷贝`的描述。
 在你的代码中，拷贝好像是确实是在有拷贝行为的地方产生过。然而，在 Swift 的后台中，只有确有必要，`实际（actual）`拷贝才会被执行。Swift 管理所有的值拷贝以确保性能最优化的性能，所以你也没有必要去避免赋值以保证最优性能。（实际赋值由系统管理优化）
-

@@ -1,6 +1,6 @@
 
-> 翻译：[XieLingWang](https://github.com/xielingwang), [JackAlan](https://github.com/AlanMelody)    
-> 校对：[EvilCome](https://github.com/Evilcome), [JackAlan](https://github.com/AlanMelody)    
+> 翻译：[XieLingWang](https://github.com/xielingwang), [JackAlan](https://github.com/AlanMelody)
+> 校对：[EvilCome](https://github.com/Evilcome), [JackAlan](https://github.com/AlanMelody)
 
 # 基本运算符
 -----------------
@@ -69,10 +69,10 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 - 减法（`-`）
 - 乘法（`*`）
 - 除法（`/`）
-	
+
 		1 + 2       // 等于 3
 		5 - 3       // 等于 2
-		2 * 3       // 等于 6	
+		2 * 3       // 等于 6
 		10.0 / 2.5  // 等于 4.0
 
 
@@ -230,12 +230,12 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 
 比较运算多用于条件语句，如`if`条件：
 
-	
+
 	let name = "world"
 	if name == "world" {
-		println("hello, world")
+		print("hello, world")
 	} else {
-	    println("I'm sorry \(name), but I don't recognize you")
+	    print("I'm sorry \(name), but I don't recognize you")
 	}
 	// 输出 "hello, world", 因为 `name` 就是等于 "world"
 
@@ -256,7 +256,7 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 	}
 
 这里有个计算表格行高的例子。如果有表头，那行高应比内容高度要高出50像素; 如果没有表头，只需高出20像素。
-	
+
 	let contentHeight = 40
 	let hasHeader = true
 	let rowHeight = contentHeight + (hasHeader ? 50 : 20)
@@ -326,7 +326,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在`for-in`循环中：
 
 	for index in 1...5 {
-	    println("\(index) * 5 = \(index * 5)")
+	    print("\(index) * 5 = \(index * 5)")
 	}
 	// 1 * 5 = 5
 	// 2 * 5 = 10
@@ -348,7 +348,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let names = ["Anna", "Alex", "Brian", "Jack"]
 	let count = names.count
 	for i in 0..<count {
-	    println("第 \(i + 1) 个人叫 \(names[i])")
+	    print("第 \(i + 1) 个人叫 \(names[i])")
 	}
 	// 第 1 个人叫 Anna
 	// 第 2 个人叫 Alex
@@ -375,7 +375,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 
 	let allowedEntry = false
 	if !allowedEntry {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "ACCESS DENIED"
 
@@ -395,9 +395,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let enteredDoorCode = true
 	let passedRetinaScan = false
 	if enteredDoorCode && passedRetinaScan {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "ACCESS DENIED"
 
@@ -413,9 +413,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let hasDoorKey = false
 	let knowsOverridePassword = true
 	if hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 
@@ -424,9 +424,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 我们可以组合多个逻辑运算来表达一个复合逻辑：
 
 	if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 
@@ -445,9 +445,9 @@ Swift 逻辑操作符`&&`和`||`是左结合的，这意味着拥有多元逻辑
 
 
 	if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 

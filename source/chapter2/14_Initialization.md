@@ -13,7 +13,7 @@
 - [值类型的构造器代理](#initializer_delegation_for_value_types)
 - [类的继承和构造过程](#class_inheritance_and_initialization)
 - [可失败构造器](#failable_initializers)
-- [必要构造器](#required_initializers) 
+- [必要构造器](#required_initializers)
 - [通过闭包和函数来设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
 
 
@@ -39,7 +39,7 @@
 
 ```swift
 init() {
-    // 在此处执行构造过程    
+    // 在此处执行构造过程
 }
 ```
 
@@ -53,7 +53,7 @@ struct Fahrenheit {
     }
 }
 var f = Fahrenheit()
-println("The default temperature is \(f.temperature)° Fahrenheit")
+print("The default temperature is \(f.temperature)° Fahrenheit")
 // 输出 "The default temperature is 32.0° Fahrenheit”
 ```
 
@@ -182,7 +182,7 @@ class SurveyQuestion {
         self.text = text
     }
     func ask() {
-        println(text)
+        print(text)
     }
 }
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
@@ -210,7 +210,7 @@ class SurveyQuestion {
         self.text = text
     }
     func ask() {
-        println(text)
+        print(text)
     }
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
@@ -656,7 +656,7 @@ var breakfastList = [
 breakfastList[0].name = "Orange juice"
 breakfastList[0].purchased = true
 for item in breakfastList {
-    println(item.description)
+    print(item.description)
 }
 // 1 x orange juice ✔
 // 1 x bacon ✘
@@ -666,13 +666,13 @@ for item in breakfastList {
 如上所述，例子中通过字面量方式创建了一个新数组`breakfastList`，它包含了三个新的`ShoppingListItem`实例，因此数组的类型也能自动推导为`ShoppingListItem[]`。在数组创建完之后，数组中第一个`ShoppingListItem`实例的名字从`[Unnamed]`修改为`Orange juice`，并标记为已购买。接下来通过遍历数组每个元素并打印它们的描述值，展示了所有项当前的默认状态都已按照预期完成了赋值。
 
 <a name="failable_initializers"></a>
-## 可失败构造器 
+## 可失败构造器
 
 如果一个类，结构体或枚举类型的对象，在构造自身的过程中有可能失败，则为其定义一个可失败构造器，是非常有必要的。这里所指的“失败”是指，如给构造器传入无效的参数值，或缺少某种所需的外部资源，又或是不满足某种必要的条件等。
 
 为了妥善处理这种构造过程中可能会失败的情况。你可以在一个类，结构体或是枚举类型的定义中，添加一个或多个可失败构造器。其语法为在`init`关键字后面加添问号`(init?)`。
 
-> 注意： 
+> 注意：
 可失败构造器的参数名和参数类型，不能与其它非可失败构造器的参数名，及其类型相同。
 
 可失败构造器，在构建对象的过程中，创建一个其自身类型为可选类型的对象。你通过`return nil` 语句，来表明可失败构造器在何种情况下“失败”。
@@ -697,9 +697,9 @@ struct Animal {
 ```swift
 let someCreature = Animal(species: "Giraffe")
 // someCreature 的类型是 Animal? 而不是 Animal
- 
+
 if let giraffe = someCreature {
-    println("An animal was initialized with a species of \(giraffe.species)")
+    print("An animal was initialized with a species of \(giraffe.species)")
 }
 // 打印 "An animal was initialized with a species of Giraffe"
 ```
@@ -709,9 +709,9 @@ if let giraffe = someCreature {
 ```swift
 let anonymousCreature = Animal(species: "")
 // anonymousCreature 的类型是 Animal?, 而不是 Animal
- 
+
 if anonymousCreature == nil {
-    println("The anonymous creature could not be initialized")
+    print("The anonymous creature could not be initialized")
 }
 // 打印 "The anonymous creature could not be initialized"
 ```
@@ -748,13 +748,13 @@ enum TemperatureUnit {
 ```swift
 let fahrenheitUnit = TemperatureUnit(symbol: "F")
 if fahrenheitUnit != nil {
-    println("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // 打印 "This is a defined temperature unit, so initialization succeeded."
- 
+
 let unknownUnit = TemperatureUnit(symbol: "X")
 if unknownUnit == nil {
-    println("This is not a defined temperature unit, so initialization failed.")
+    print("This is not a defined temperature unit, so initialization failed.")
 }
 // 打印 "This is not a defined temperature unit, so initialization failed."
 ```
@@ -769,16 +769,16 @@ if unknownUnit == nil {
 enum TemperatureUnit: Character {
     case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
 }
- 
+
 let fahrenheitUnit = TemperatureUnit(rawValue: "F")
 if fahrenheitUnit != nil {
-    println("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // prints "This is a defined temperature unit, so initialization succeeded."
- 
+
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil {
-    println("This is not a defined temperature unit, so initialization failed.")
+    print("This is not a defined temperature unit, so initialization failed.")
 }
 // prints "This is not a defined temperature unit, so initialization failed."
 ```
@@ -804,7 +804,7 @@ class Product {
 ```swift
 if let bowTie = Product(name: "bow tie") {
     // 不需要检查 bowTie.name == nil
-    println("The product's name is \(bowTie.name)")
+    print("The product's name is \(bowTie.name)")
 }
 // 打印 "The product's name is bow tie"
 ```
@@ -841,7 +841,7 @@ class CartItem: Product {
 
 ```swift
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
-    println("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+    print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
 // 打印 "Item: sock, quantity: 2"
 ```
@@ -849,9 +849,9 @@ if let twoSocks = CartItem(name: "sock", quantity: 2) {
 
 ```swift
 if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
-    println("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+    print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
 } else {
-    println("Unable to initialize zero shirts")
+    print("Unable to initialize zero shirts")
 }
 // 打印 "Unable to initialize zero shirts"
 ```
@@ -860,9 +860,9 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 
 ```swift
 if let oneUnnamed = CartItem(name: "", quantity: 1) {
-    println("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+    print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
 } else {
-    println("Unable to initialize one unnamed product")
+    print("Unable to initialize one unnamed product")
 }
 // 打印 "Unable to initialize one unnamed product"
 ```
@@ -920,7 +920,7 @@ class AutomaticallyNamedDocument: Document {
 你也可以用 ```init？```重写 ```init！```，反之亦然。
 你还可以用 ```init```代理调用```init！```，但这会触发一个断言：是否 ```init！```构造器会触发构造失败？
 
-<a name="required_initializers"></a> 
+<a name="required_initializers"></a>
 ##必要构造器
 
 在类的构造器前添加```required```修饰符表明所有该类的子类都必须实现该构造器：
@@ -1001,9 +1001,8 @@ struct Checkerboard {
 
 ```swift
 let board = Checkerboard()
-println(board.squareIsBlackAtRow(0, column: 1))
+print(board.squareIsBlackAtRow(0, column: 1))
 // 输出 "true"
-println(board.squareIsBlackAtRow(9, column: 9))
+print(board.squareIsBlackAtRow(9, column: 9))
 // 输出 "false"
 ```
-

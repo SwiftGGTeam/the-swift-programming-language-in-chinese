@@ -54,7 +54,7 @@ struct TimesTable {
     }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
-println("3的6倍是\(threeTimesTable[6])")
+print("3的6倍是\(threeTimesTable[6])")
 // 输出 "3的6倍是18"
 ```
 

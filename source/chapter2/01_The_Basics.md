@@ -121,28 +121,28 @@ languageName = "Swift++"
 
 ### 输出常量和变量
 
-你可以用`println`函数来输出当前常量或变量的值:
+你可以用`print`函数来输出当前常量或变量的值:
 
 ```swift
-println(friendlyWelcome)
+print(friendlyWelcome)
 // 输出 "Bonjour!"
 ```
 
-`println`是一个用来输出的全局函数，输出的内容会在最后换行。如果你用 Xcode，`println`将会输出内容到“console”面板上。(另一种函数叫`print`，唯一区别是在输出内容最后不会换行。)
+`print`是一个用来输出的全局函数，输出的内容会在最后换行。如果你用 Xcode，`print`将会输出内容到“console”面板上。(另一种函数叫`print`，唯一区别是在输出内容最后不会换行。)
 
-`println`函数输出传入的`String`值：
+`print`函数输出传入的`String`值：
 
 ```swift
-println("This is a string")
+print("This is a string")
 // 输出 "This is a string"
 ```
 
-与 Cocoa 里的`NSLog`函数类似的是，`println`函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。
+与 Cocoa 里的`NSLog`函数类似的是，`print`函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。
 
 Swift 用_字符串插值（string interpolation）_的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
 ```swift
-println("The current value of friendlyWelcome is \(friendlyWelcome)")
+print("The current value of friendlyWelcome is \(friendlyWelcome)")
 // 输出 "The current value of friendlyWelcome is Bonjour!
 ```
 
@@ -181,7 +181,7 @@ Swift 中的注释与C 语言的注释非常相似。单行注释以双正斜杠
 与其他大部分编程语言不同，Swift 并不强制要求你在每条语句的结尾处使用分号（`;`），当然，你也可以按照你自己的习惯添加分号。有一种情况下必须要用分号，即你打算在同一行内写多条独立的语句：
 
 ```swift
-let cat = "🐱"; println(cat)
+let cat = "🐱"; print(cat)
 // 输出 "🐱"
 ```
 
@@ -409,9 +409,9 @@ let turnipsAreDelicious = false
 
 ```swift
 if turnipsAreDelicious {
-    println("Mmm, tasty turnips!")
+    print("Mmm, tasty turnips!")
 } else {
-    println("Eww, turnips are horrible.")
+    print("Eww, turnips are horrible.")
 }
 // 输出 "Eww, turnips are horrible."
 ```
@@ -460,9 +460,9 @@ let http404Error = (404, "Not Found")
 
 ```swift
 let (statusCode, statusMessage) = http404Error
-println("The status code is \(statusCode)")
+print("The status code is \(statusCode)")
 // 输出 "The status code is 404"
-println("The status message is \(statusMessage)")
+print("The status message is \(statusMessage)")
 // 输出 "The status message is Not Found"
 ```
 
@@ -470,16 +470,16 @@ println("The status message is \(statusMessage)")
 
 ```swift
 let (justTheStatusCode, _) = http404Error
-println("The status code is \(justTheStatusCode)")
+print("The status code is \(justTheStatusCode)")
 // 输出 "The status code is 404"
 ```
 
 此外，你还可以通过下标来访问元组中的单个元素，下标从零开始：
 
 ```swift
-println("The status code is \(http404Error.0)")
+print("The status code is \(http404Error.0)")
 // 输出 "The status code is 404"
-println("The status message is \(http404Error.1)")
+print("The status message is \(http404Error.1)")
 // 输出 "The status message is Not Found"
 ```
 
@@ -492,9 +492,9 @@ let http200Status = (statusCode: 200, description: "OK")
 给元组中的元素命名后，你可以通过名字来获取这些元素的值：
 
 ```swift
-println("The status code is \(http200Status.statusCode)")
+print("The status code is \(http200Status.statusCode)")
 // 输出 "The status code is 200"
-println("The status message is \(http200Status.description)")
+print("The status message is \(http200Status.description)")
 // 输出 "The status message is OK"
 ```
 
@@ -537,9 +537,9 @@ let convertedNumber = possibleNumber.toInt()
 
 ```swift
 if convertedNumber != nil {
-    println("\(possibleNumber) has an integer value of \(convertedNumber!)")
+    print("\(possibleNumber) has an integer value of \(convertedNumber!)")
 } else {
-    println("\(possibleNumber) could not be converted to an integer")
+    print("\(possibleNumber) could not be converted to an integer")
 }
 // 输出 "123 has an integer value of 123"
 ```
@@ -566,9 +566,9 @@ if let constantName = someOptional {
 
 ```swift
 if let actualNumber = possibleNumber.toInt() {
-    println("\(possibleNumber) has an integer value of \(actualNumber)")
+    print("\(possibleNumber) has an integer value of \(actualNumber)")
 } else {
-    println("\(possibleNumber) could not be converted to an integer")
+    print("\(possibleNumber) could not be converted to an integer")
 }
 // 输出 "123 has an integer value of 123"
 ```
@@ -619,13 +619,13 @@ Swift 的`nil`和 Objective-C 中的`nil`并不一样。在 Objective-C 中，`n
 
 ```swift
 let possibleString: String? = "An optional string."
-println(possibleString!) // 需要惊叹号来获取值
+print(possibleString!) // 需要惊叹号来获取值
 // 输出 "An optional string."
 ```
 
 ```swift
 let assumedString: String! = "An implicitly unwrapped optional string."
-println(assumedString)  // 不需要感叹号
+print(assumedString)  // 不需要感叹号
 // 输出 "An implicitly unwrapped optional string."
 ```
 
@@ -638,7 +638,7 @@ println(assumedString)  // 不需要感叹号
 
 ```swift
 if assumedString {
-    println(assumedString)
+    print(assumedString)
 }
 // 输出 "An implicitly unwrapped optional string."
 ```
@@ -647,7 +647,7 @@ if assumedString {
 
 ```swift
 if let definiteString = assumedString {
-    println(definiteString)
+    print(definiteString)
 }
 // 输出 "An implicitly unwrapped optional string."
 ```

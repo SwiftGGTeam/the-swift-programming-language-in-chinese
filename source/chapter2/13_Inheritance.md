@@ -49,7 +49,7 @@ let someVehicle = Vehicle()
 现在已经创建了一个`Vehicle`的新实例，你可以访问它的`description`属性来打印车辆的当前速度。
 
 ```swift
-println("Vehicle: \(someVehicle.description)")
+print("Vehicle: \(someVehicle.description)")
 // Vehicle: traveling at 0.0 miles per hour
 ```
 
@@ -81,17 +81,17 @@ class Bicycle: Vehicle {
 除了它所继承的特性，`Bicycle`类还定义了一个默认值为`false`的存储型属性`hasBasket`（属性推断为`Bool`）。
 
 默认情况下，你创建任何新的`Bicycle`实例将不会有一个篮子，创建该实例之后，你可以为特定的`Bicycle`实例设置`hasBasket `属性为`ture`：
- 
+
 ```swift
 let bicycle = Bicycle()
 bicycle.hasBasket = true
 ```
- 
+
 你还可以修改`Bicycle `实例所继承的`currentSpeed `属性，和查询实例所继承的`description `属性：
- 
+
 ```swift
 bicycle.currentSpeed = 15.0
-println("Bicycle: \(bicycle.description)")
+print("Bicycle: \(bicycle.description)")
 // Bicycle: traveling at 15.0 miles per hour
 ```
 
@@ -112,7 +112,7 @@ let tandem = Tandem()
 tandem.hasBasket = true
 tandem.currentNumberOfPassengers = 2
 tandem.currentSpeed = 22.0
-println("Tandem: \(tandem.description)")
+print("Tandem: \(tandem.description)")
 // Tandem: traveling at 22.0 miles per hour
 ```
 
@@ -144,7 +144,7 @@ println("Tandem: \(tandem.description)")
 ```swift
 class Train: Vehicle {
     override func makeNoise() {
-        println("Choo Choo")
+        print("Choo Choo")
     }
 }
 ```
@@ -189,7 +189,7 @@ class Car: Vehicle {
 let car = Car()
 car.currentSpeed = 25.0
 car.gear = 3
-println("Car: \(car.description)")
+print("Car: \(car.description)")
 // Car: traveling at 25.0 miles per hour in gear 3
 ```
 
@@ -217,7 +217,7 @@ class AutomaticCar: Car {
 ```swift
 let automatic = AutomaticCar()
 automatic.currentSpeed = 35.0
-println("AutomaticCar: \(automatic.description)")
+print("AutomaticCar: \(automatic.description)")
 // AutomaticCar: traveling at 35.0 miles per hour in gear 4
 ```
 
@@ -229,4 +229,3 @@ println("AutomaticCar: \(automatic.description)")
 如果你重写了`final`方法，属性或下标脚本，在编译时会报错。在类扩展中的方法，属性或下标脚本也可以在扩展的定义里标记为 final。
 
 你可以通过在关键字`class`前添加`final`特性（`final class`）来将整个类标记为 final 的，这样的类是不可被继承的，任何子类试图继承此类时，在编译时会报错。
-

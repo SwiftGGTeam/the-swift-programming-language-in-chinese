@@ -39,13 +39,13 @@ func sayHello(personName: String) -> String {
 该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么。这样的定义使得函数可以在别的地方以一种清晰的方式被调用：
 
 ```swift
-println(sayHello("Anna"))
+print(sayHello("Anna"))
 // prints "Hello, Anna!"
-println(sayHello("Brian"))
+print(sayHello("Brian"))
 // prints "Hello, Brian!"
 ```
 
-调用 `sayHello(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `println` 的调用中，用来输出这个函数的返回值，正如上面所示。
+调用 `sayHello(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `print` 的调用中，用来输出这个函数的返回值，正如上面所示。
 
 在 `sayHello(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时赋值了给 `personName` 的一个简单问候消息。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
@@ -57,7 +57,7 @@ println(sayHello("Brian"))
 func sayHelloAgain(personName: String) -> String {
     return "Hello again, " + personName + "!"
 }
-println(sayHelloAgain("Anna"))
+print(sayHelloAgain("Anna"))
 // prints "Hello again, Anna!"
 ```
 
@@ -76,7 +76,7 @@ println(sayHelloAgain("Anna"))
 func halfOpenRangeLength(start: Int, end: Int) -> Int {
     return end - start
 }
-println(halfOpenRangeLength(1, 10))
+print(halfOpenRangeLength(1, 10))
 // prints "9"
 ```
 
@@ -88,7 +88,7 @@ println(halfOpenRangeLength(1, 10))
 func sayHelloWorld() -> String {
     return "hello, world"
 }
-println(sayHelloWorld())
+print(sayHelloWorld())
 // prints "hello, world"
 ```
 
@@ -122,7 +122,7 @@ print(sayHello("Tim", alreadyGreeted: true))
 
 ```swift
 func sayGoodbye(personName: String) {
-    println("Goodbye, \(personName)!")
+    print("Goodbye, \(personName)!")
 }
 sayGoodbye("Dave")
 // prints "Goodbye, Dave!"
