@@ -751,7 +751,7 @@ Swift 有内置支持去检查接口的可用性的，这可以确保我们不�
 
 ```swift
 if #available(iOS 9, OSX 10.10, *) {
-    // 在 iOS 使用 iOS 9 APIs , 并且在 OS X 使用 OS X v10.10 APIs 
+    // 在 iOS 使用 iOS 9 APIs , 并且在 OS X 使用 OS X v10.10 APIs
 } else {
     // 回滚至早前 iOS and OS X 的API
 }

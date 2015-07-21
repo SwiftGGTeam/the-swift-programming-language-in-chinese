@@ -77,9 +77,9 @@ class Player {
 
 ```swift
 var playerOne: Player? = Player(coins: 100)
-println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
 // 输出 "A new player has joined the game with 100  coins"
-println("There are now \(Bank.coinsInBank) coins left   in the bank")
+print("There are now \(Bank.coinsInBank) coins left   in the bank")
 // 输出 "There are now 9900 coins left in the bank"
 ```
 
@@ -89,9 +89,9 @@ println("There are now \(Bank.coinsInBank) coins left   in the bank")
 
 ```swift
 playerOne!.winCoins(2_000)
-println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
 // 输出 "PlayerOne won 2000 coins & now has 2100 coins"
-println("The bank now only has \(Bank.coinsInBank) coins left")
+print("The bank now only has \(Bank.coinsInBank) coins left")
 // 输出 "The bank now only has 7900 coins left"
 ```
 
@@ -99,9 +99,9 @@ println("The bank now only has \(Bank.coinsInBank) coins left")
 
 ```swift
 playerOne = nil
-println("PlayerOne has left the game")
+print("PlayerOne has left the game")
 // 输出 "PlayerOne has left the game"
-println("The bank now has \(Bank.coinsInBank) coins")
+print("The bank now has \(Bank.coinsInBank) coins")
 // 输出 "The bank now has 10000 coins"
 ```
 

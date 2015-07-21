@@ -62,9 +62,9 @@ let roomCount = john.residence!.numberOfRooms
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
-    println("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-	println("Unable to retrieve the number of rooms.")
+	print("Unable to retrieve the number of rooms.")
 }
 // 打印 "Unable to retrieve the number of rooms.
 ```
@@ -85,9 +85,9 @@ john.residence = Residence()
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
-    println("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-    println("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // 打印 "John's residence has 1 room(s)"。
 ```
@@ -119,7 +119,7 @@ class Residence {
         return rooms[i]
     }
     func printNumberOfRooms() {
-        println("The number of rooms is \(numberOfRooms)")
+        print("The number of rooms is \(numberOfRooms)")
     }
     var address: Address?
 }
@@ -173,9 +173,9 @@ class Address {
 ```swift
 let john = Person()
 if let roomCount = john.residence?.numberOfRooms {
-    println("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-    println("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // 打印 "Unable to retrieve the number of rooms。
 ```
@@ -191,7 +191,7 @@ if let roomCount = john.residence?.numberOfRooms {
 
 ```swift
 func printNumberOfRooms(){
-	println(“The number of rooms is \(numberOfRooms)”)
+	print(“The number of rooms is \(numberOfRooms)”)
 }
 ```
 
@@ -201,9 +201,9 @@ func printNumberOfRooms(){
 
 ```swift
 if john.residence?.printNumberOfRooms?() {
-    println("It was possible to print the number of rooms.")
+    print("It was possible to print the number of rooms.")
 } else {
-    println("It was not possible to print the number of rooms.")
+    print("It was not possible to print the number of rooms.")
 }
 // 打印 "It was not possible to print the number of rooms."。
 ```
@@ -220,9 +220,9 @@ if john.residence?.printNumberOfRooms?() {
 
 ```swift
 if let firstRoomName = john.residence?[0].name {
-    println("The first room name is \(firstRoomName).")
+    print("The first room name is \(firstRoomName).")
 } else {
-    println("Unable to retrieve the first room name.")
+    print("Unable to retrieve the first room name.")
 }
 // 打印 "Unable to retrieve the first room name."。
 ```
@@ -238,9 +238,9 @@ johnsHouse.rooms += Room(name: "Kitchen")
 john.residence = johnsHouse
 
 if let firstRoomName = john.residence?[0].name {
-    println("The first room name is \(firstRoomName).")
+    print("The first room name is \(firstRoomName).")
 } else {
-    println("Unable to retrieve the first room name.")
+    print("Unable to retrieve the first room name.")
 }
 // 打印 "The first room name is Living Room."。
 ```
@@ -263,9 +263,9 @@ if let firstRoomName = john.residence?[0].name {
 
 ```swift
 if let johnsStreet = john.residence?.address?.street {
-    println("John's street name is \(johnsStreet).")
+    print("John's street name is \(johnsStreet).")
 } else {
-    println("Unable to retrieve the address.")
+    print("Unable to retrieve the address.")
 }
 // 打印 "Unable to retrieve the address.”。
 ```
@@ -285,9 +285,9 @@ john.residence!.address = johnsAddress
 
 ```swift
 if let johnsStreet = john.residence?.address?.street {
-    println("John's street name is \(johnsStreet).")
+    print("John's street name is \(johnsStreet).")
 } else {
-    println("Unable to retrieve the address.")
+    print("Unable to retrieve the address.")
 }
 // 打印 "John's street name is Laurel Street."。
 ```
@@ -303,7 +303,7 @@ if let johnsStreet = john.residence?.address?.street {
 
 ```swift
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-    println("John's building identifier is \(buildingIdentifier).")
+    print("John's building identifier is \(buildingIdentifier).")
 }
 // 打印 "John's building identifier is The Larches."。
 ```
@@ -312,7 +312,7 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 
 ```swift
 if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
-    println("John's uppercase building identifier is \(upper).")
+    print("John's uppercase building identifier is \(upper).")
 }
 // 打印 "John's uppercase building identifier is THE LARCHES."。
 ```

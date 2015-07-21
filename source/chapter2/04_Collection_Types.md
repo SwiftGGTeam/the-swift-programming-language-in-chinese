@@ -35,7 +35,7 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为泛型集合。更�
 
 > 注意:
  Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 *Using Swift with Cocoa and Obejective-C* 一书。 
+ 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 *Using Swift with Cocoa and Obejective-C* 一书。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -395,10 +395,10 @@ for genre in favoriteGenres {
 
 更多关于`for-in`循环信息，参见[For循环](05_Control_Flow.html#for_loops)。
 
-Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中值可以使用`sorted()`方法，它将根据提供的序列返回一个排序的集合.
+Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中值可以使用`sort()`方法，它将根据提供的序列返回一个排序的集合.
 
 ```swift
-for genre in sorted(favoriteGenres) {
+for genre in favoriteGenres.sort() {
     print("\(genre)")
 }
 // prints "Classical"
@@ -427,13 +427,13 @@ for genre in sorted(favoriteGenres) {
 let oddDigits: Set = [1, 3, 5, 7, 9]
 let evenDigits: Set = [0, 2, 4, 6, 8]
 let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-sorted(oddDigits.union(evenDigits))
+oddDigits.union(evenDigits).sort()
 // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-sorted(oddDigits.intersect(evenDigits))
+oddDigits.intersect(evenDigits).sort()
 // []
-sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+oddDigits.subtract(singleDigitPrimeNumbers).sort()
 // [1, 9]
-sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
 // [1, 2, 9]
 ```
 
