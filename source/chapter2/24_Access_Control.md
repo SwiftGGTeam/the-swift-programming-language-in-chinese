@@ -255,7 +255,7 @@ struct TrackedString {
 ```
 
 
-`TrackedString`结构体定义了一个用于存储`String`类型的属性`value`，并将初始化值设为`""`（即一个空字符串）。该结构体同时也定义了另一个用于存储`Int`类型的属性名`numberOfEdits`，它用于记录属性`value`被修改的次数。这个功能的实现通过属性`value`的`didSet`方法实现，每当给`value`赋新值时就会调用`didSet`方法，然后将`numberOfEdits`的值加一。   
+`TrackedString`结构体定义了一个用于存储`String`类型的属性`value`，并将初始化值设为`""`（即一个空字符串）。该结构体同时也定义了另一个用于存储`Int`类型的属性名`numberOfEdits`，它用于记录属性`value`被修改的次数。这个功能的实现通过属性`value`的`didSet`方法实现，每当给`value`赋新值时就会调用`didSet`方法，然后将`numberOfEdits`的值加一。
 
 结构体`TrackedString`和它的属性`value`均没有申明显式访问级别，所以它们都拥有默认的访问级别`internal`。但是该结构体的`numberOfEdits`属性使用`private(set)`修饰符进行申明，这意味着`numberOfEdits`属性只能在定义该结构体的源文件中赋值。`numberOfEdits`属性的`Getter`依然是默认的访问级别`internal`，但是`Setter`的访问级别是`private`，这表示该属性只有在当前的源文件中是可读写的，而在当前源文件所属的模块中它只是一个可读的属性。  
 
@@ -266,7 +266,7 @@ var stringToEdit = TrackedString()
 stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
-println("The number of edits is \(stringToEdit.numberOfEdits)")
+print("The number of edits is \(stringToEdit.numberOfEdits)")
 // prints "The number of edits is 3"
 ```
 
@@ -345,6 +345,3 @@ Swift为结构体、类都提供了一个默认的无参初始化方法，用于
 任何你定义的类型别名都会被当作不同的类型，以便于进行访问控制。一个类型别名的访问级别不可高于原类型的访问级别。比如说，一个`private`级别的类型别名可以设定给一个`public`、`internal`、`private`的类型，但是一个`public`级别的类型别名只能设定给一个`public`级别的类型，不能设定给`internal`或`private` 级别的类型。
 
 > 注意：这条规则也适用于为满足协议一致性而给相关类型命名别名的情况。
-
-
-

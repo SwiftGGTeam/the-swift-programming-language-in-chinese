@@ -67,10 +67,10 @@ extension Double {
     var ft: Double { return self / 3.28084 }
 }
 let oneInch = 25.4.mm
-println("One inch is \(oneInch) meters")
+print("One inch is \(oneInch) meters")
 // 打印输出："One inch is 0.0254 meters"
 let threeFeet = 3.ft
-println("Three feet is \(threeFeet) meters")
+print("Three feet is \(threeFeet) meters")
 // 打印输出："Three feet is 0.914399970739201 meters"
 ```
 
@@ -84,7 +84,7 @@ println("Three feet is \(threeFeet) meters")
 
 ```swift
 let aMarathon = 42.km + 195.m
-println("A marathon is \(aMarathon) meters long")
+print("A marathon is \(aMarathon) meters long")
 // 打印输出："A marathon is 42195.0 meters long"
 ```
 
@@ -169,7 +169,7 @@ extension Int {
 
 ```swift
 3.repetitions({
-    println("Hello!")
+    print("Hello!")
     })
 // Hello!
 // Hello!
@@ -180,7 +180,7 @@ extension Int {
 
 ```swift
 3.repetitions{
-    println("Goodbye!")
+    print("Goodbye!")
 }
 // Goodbye!
 // Goodbye!
@@ -296,5 +296,3 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 
 >注意：
 由于已知`number.kind `是`Int.Kind`型，所以`Int.Kind`中的所有成员值都可以使用`switch`语句里的形式简写，比如使用 `. Negative`代替`Int.Kind.Negative`。
-
-

@@ -299,7 +299,7 @@ class CreditCard {
 }
 ```
 
-> 注意: 
+> 注意:
 > `CreditCard`类的`number`属性被定义为`UInt64`类型而不是`Int`类型，以确保`number`属性的存储量在32位和64位系统上都能足够容纳16位的卡号。
 
 下面的代码片段定义了一个叫`john`的可选类型`Customer`变量，用来保存某个特定客户的引用。由于是可选类型，所以变量被初始化为`nil`。
@@ -557,4 +557,3 @@ print(paragraph!.asHTML())
 paragraph = nil
 // prints "p is being deinitialized"
 ```
-
