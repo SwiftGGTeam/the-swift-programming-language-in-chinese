@@ -972,8 +972,33 @@ The name of each case must be unique.
 Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
 immediately following the name of the case.
+
+Enumeration cases that store associated values can be used as functions
+that create instances of the enumeration with the specified associated values.
+And just like functions,
+you can get a reference to an enumeration case and apply it later in your code.
+
+.. testcode:: enum-case-as-function
+
+    -> enum Number {
+          case Integer(Int)
+          case Real(Double)
+       }
+    -> let f = Number.Integer
+    << // f : (Int) -> Number = (Function)
+    -> // f is a function of type (Int) -> Number
+    ---
+    -> // Apply f to create an array of Number instances with integer values
+    -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
+    << // evenInts : [Number] = [REPL.Number, REPL.Number, REPL.Number, REPL.Number]
+
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
+
+.. _Declarations_EnumerationsWithIndirection:
+
+Enumerations with Indirection
++++++++++++++++++++++++++++++
 
 Enumerations can have a recursive structure,
 that is, they can have cases with associated values
