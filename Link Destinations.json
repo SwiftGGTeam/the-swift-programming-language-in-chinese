@@ -206,6 +206,7 @@
     "declarations-deinitializerdeclaration": "ID377", 
     "declarations-enumerationdeclaration": "ID364", 
     "declarations-enumerationswithcasesofanytype": "ID365", 
+    "declarations-enumerationswithindirection": "ID537", 
     "declarations-enumerationswithrawcasevalues": "ID366", 
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
@@ -555,5 +556,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 537
+  "next_id": 538
 }
