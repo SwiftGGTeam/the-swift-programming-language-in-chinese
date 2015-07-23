@@ -1045,6 +1045,29 @@ For example:
     <$ : SomeClass = REPL.SomeClass
     // Creates an instance of SomeClass
 
+When an initializer is invoked directly on a type,
+writing ``init`` is optional;
+in all other cases, it's required.
+
+.. testcode:: explicit-vs-implicit-init
+
+    >> struct SomeType { let options: Int }
+    -> let s1 = SomeType(options: 1)
+    << // s1 : SomeType = REPL.SomeType(options: 1)
+    -> let s2 = SomeType.init(options: 3)
+    << // s2 : SomeType = REPL.SomeType(options: 3)
+    ---
+    >> let someValue = s1
+    << // someValue : SomeType = REPL.SomeType(options: 1)
+    -> let s3 = someValue.dynamicType(options: 5)  // Error
+    !! <REPL Input>:1:31: error: initializing from a metatype must reference 'init' explicitly
+    !! let s3 = someValue.dynamicType(options: 5)  // Error
+    !!                               ^
+    !!                               .init
+    -> let s4 = someValue.dynamicType.init(options: 7)
+    << // s4 : SomeType = REPL.SomeType(options: 7)
+    
+
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
