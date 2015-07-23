@@ -1038,16 +1038,29 @@ For example:
 
 .. testcode:: initExpression
 
-    >> class SomeClass { class func someClassFunction() {} }
-    -> var initializer = SomeClass.init
-    <~ // initializer : () -> SomeClass = (Function)
-    -> initializer()
-    <$ : SomeClass = REPL.SomeClass
-    // Creates an instance of SomeClass
+    >> class SomeClass { }
+    -> let initializer = SomeClass.init
+    << // initializer : () -> SomeClass = (Function)
+    -> let instance = initializer()
+    << // instance : SomeClass = REPL.SomeClass
 
-When an initializer is invoked directly on a type,
-writing ``init`` is optional;
-in all other cases, it's required.
+You also use an initializer expression
+to delegate to the initializer of a superclass.
+
+.. testcode:: initExpression
+
+    >> class SomeSuperClass { }
+    -> class SomeSubClass: SomeSuperClass {
+    ->     override init() {
+    ->         // subclass initialization goes here
+    ->         super.init()
+    ->     }
+    -> }
+
+You can access an initializer without using an initializer expression
+only in the case where you specify a type by name.
+In all other cases, you must use an initializer expression
+to access the initializer of a type.
 
 .. testcode:: explicit-vs-implicit-init
 
@@ -1067,20 +1080,6 @@ in all other cases, it's required.
     -> let s4 = someValue.dynamicType.init(options: 7)
     << // s4 : SomeType = REPL.SomeType(options: 7)
     
-
-You also use an initializer expression
-to delegate to the initializer of a superclass.
-
-.. testcode:: initExpression
-
-    >> class SomeSuperClass { }
-    -> class SomeSubClass: SomeSuperClass {
-    ->     override init() {
-    ->         // subclass initialization goes here
-    ->         super.init()
-    ->     }
-    -> }
-
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
