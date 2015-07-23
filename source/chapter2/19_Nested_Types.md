@@ -45,7 +45,7 @@ struct BlackjackCard {
             }
        }
     }
-    
+
     // BlackjackCard 的属性和方法
     let rank: Rank, suit: Suit
     var description: String {
@@ -76,7 +76,7 @@ struct BlackjackCard {
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
-println("theAceOfSpades: \(theAceOfSpades.description)")
+print("theAceOfSpades: \(theAceOfSpades.description)")
 // 打印出 "theAceOfSpades: suit is ♠, value is 1 or 11"
 ```
 
@@ -93,4 +93,3 @@ let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
 ```
 
 对于上面这个例子，这样可以使`Suit`, `Rank`, 和 `Values`的名字尽可能的短，因为它们的名字会自然的由定义它们的上下文来限定。
-

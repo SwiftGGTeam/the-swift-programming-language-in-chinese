@@ -16,25 +16,16 @@
 
 Swift 中存在四种表达式： 前缀（prefix）表达式，二元（binary）表达式，主要（primary）表达式和后缀（postfix）表达式。表达式可以返回一个值，以及运行某些逻辑（causes a side effect）。
 
-前缀表达式和二元表达式就是对某些表达式使用各种运算符（operators）。 主要表达式是最短小的表达式，它提供了获取（变量的）值的一种途径。 后缀表达式则允许你建立复杂的表达式，例如配合函数调用和成员访问。 每种表达式都在下面有详细论述～
+前缀表达式和二元表达式就是对某些表达式使用各种运算符（operators）。 主要表达式是最短小的表达式，它提供了获取（变量的）值的一种途径。 后缀表达式则允许你建立复杂的表达式，例如配合函数调用和成员访问。 每种表达式都在下面有详细论述。
 
 > 表达式语法  
-> *表达式* → [*前置表达式*](..\chapter3\04_Expressions.html#prefix_expression) [*二元表达式列表*](..\chapter3\04_Expressions.html#binary_expressions) _可选_  
+> *表达式* → [*试算子(try operator)*](..\chapter3\04_Expressions.html#*) _可选_ | [*前置表达式*](..\chapter3\04_Expressions.html#prefix_expression) | [*二元表达式列表*](..\chapter3\04_Expressions.html#binary_expressions) _可选_  
 > *表达式列表* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*表达式*](..\chapter3\04_Expressions.html#expression) **,** [*表达式列表*](..\chapter3\04_Expressions.html#expression_list)  
 
 <a name="prefix_expressions"></a>
 ## 前缀表达式（Prefix Expressions）
-
-前缀表达式由 前缀符号和表达式组成。（这个前缀符号只能接收一个参数）
-
-Swift 标准库支持如下的前缀操作符：
-
-- ++ 自增1 （increment）
-- -- 自减1 （decrement）
-- ! 逻辑否 （Logical NOT ）
-- ~ 按位否 （Bitwise NOT ）
-- \+ 加（Unary plus）
-- \- 减（Unary minus）
+ 
+前缀表达式由可选的前缀符号和表达式组成。（这个前缀符号只能接收一个参数）
 
 对于这些操作符的使用，请参见： Basic Operators and Advanced Operators
 
@@ -45,6 +36,16 @@ Swift 标准库支持如下的前缀操作符：
 > *前置表达式* → [*写入写出(in-out)表达式*](..\chapter3\04_Expressions.html#in_out_expression)  
 > *写入写出(in-out)表达式* → **&** [*标识符*](LexicalStructure.html#identifier)  
 
+<a name="try_operator"></a>
+## try 操作符（try operator）
+try表达式由紧跟在可能会出错的表达式后面的`try`操作符组成，形式如下：
+    `try expression`
+强制的try表示由紧跟在可能会出错的表达式后面的`try!`操作符组成，出错时会产生一个运行时错误，形式如下：
+    `try! expression`
+关于`try`更多的例子和信息请参见：Catching and Handling Errors.
+> try表达式语法  
+> *try 操作符* → [*try*](LexicalStructure.html#try_operator) | *try!*
+
 <a name="binary_expressions"></a>
 ## 二元表达式（Binary Expressions）
 
@@ -52,69 +53,10 @@ Swift 标准库支持如下的前缀操作符：
 
 > `left-hand argument` `operator` `right-hand argument`
 
-Swift 标准库提供了如下的二元运算符：
-
-- 求幂相关（无结合，优先级160）
-  - << 按位左移（Bitwise left shift）
-  - >> 按位右移（Bitwise right shift）
-- 乘除法相关（左结合，优先级150）
-  - \* 乘
-  - / 除
-  - % 求余
-  - &* 乘法，忽略溢出（ Multiply, ignoring overflow）
-  - &/ 除法，忽略溢出（Divide, ignoring overflow）
-  - &% 求余, 忽略溢出（ Remainder, ignoring overflow）
-  - & 位与（ Bitwise AND）
-- 加减法相关（左结合, 优先级140）
-  - \+ 加
-  - \- 减
-  - &+ Add with overflow
-  - &- Subtract with overflow
-  - | 按位或（Bitwise OR ）
-  - ^ 按位异或（Bitwise XOR）
-- Range （无结合,优先级 135）
-  - ..< 半闭值域 Half-closed range
-  - ... 全闭值域 Closed range
-- 类型转换 （无结合,优先级 132）
-  - is 类型检查（ type check）
-  - as 类型转换（ type cast）
-- Comparative （无结合,优先级 130）
-  - < 小于
-  - <= 小于等于
-  - &gt; 大于
-  - &gt;= 大于等于
-  - == 等于
-  - != 不等
-  - === 恒等于
-  - !== 不恒等
-  - ~= 模式匹配（ Pattern match）
-- 合取（ Conjunctive） （左结合,优先级 120）
-  - && 逻辑与（Logical AND）
-- 析取（Disjunctive） （左结合,优先级 110）
-  - || 逻辑或（ Logical OR）
-- 三元条件（Ternary Conditional ）（右结合,优先级 100）
-  - ?: 三元条件 Ternary conditional
-- 赋值 （Assignment） （右结合, 优先级 90）
-  - = 赋值（Assign）
-  - *=  Multiply and assign
-  - /= Divide and assign
-  - %= Remainder and assign
-  - += Add and assign
-  - -= Subtract and assign
-  - <<= Left bit shift and assign
-  - &gt;&gt;= Right bit shift and assign
-  - &= Bitwise AND and assign
-  - ^= Bitwise XOR and assign
-  - |= Bitwise OR and assign
-  - &&= Logical AND and assign
-  - ||= Logical OR and assign
-
 关于这些运算符（operators）的更多信息，请参见：Basic Operators and Advanced Operators.
 
 > 注意  
 > 在解析时,  一个二元表达式表示为一个一级数组（a flat list）, 这个数组（List）根据运算符的先后顺序，被转换成了一个tree. 例如： 2 + 3 * 5 首先被认为是：  2, + , `` 3``, *, 5. 随后它被转换成 tree （2 + （3 * 5））
-
-<p></p>
 
 > 二元表达式语法  
 > *二元表达式* → [*二元运算符*](LexicalStructure.html#binary_operator) [*前置表达式*](..\chapter3\04_Expressions.html#prefix_expression)  
@@ -122,6 +64,7 @@ Swift 标准库提供了如下的二元运算符：
 > *二元表达式* → [*条件运算符*](..\chapter3\04_Expressions.html#conditional_operator) [*前置表达式*](..\chapter3\04_Expressions.html#prefix_expression)  
 > *二元表达式* → [*类型转换运算符*](..\chapter3\04_Expressions.html#type_casting_operator)  
 > *二元表达式列表* → [*二元表达式*](..\chapter3\04_Expressions.html#binary_expression) [*二元表达式列表*](..\chapter3\04_Expressions.html#binary_expressions) _可选_  
+> *赋值操作符*
 
 
 <a name="assignment_operator"></a>
@@ -160,49 +103,43 @@ Swift 标准库提供了如下的二元运算符：
 <a name="type-casting_operators"></a>
 ## 类型转换运算符（Type-Casting Operators）
 
-有两种类型转换操作符： as 和 is.  它们有如下的形式：
+有4种类型转换运算符： `is`,`as`,`? `和`!`.  它们有如下的形式：
 
-> `expression` as `type`  
-> `expression` as? `type`  
 > `expression` is `type`  
+> `expression` as `type`  
+> `expression` is? `type`
+> `expression` as! `type`  
 
-as 运算符会把`目标表达式`转换成指定的`类型`（specified type），过程如下：
+`is`运算符在程序运行时检查表达式能否向下转化为指定的类型，如果可以在返回`ture`，如果不行，则返回`false`。
 
-- 如果类型转换成功， 那么目标表达式就会返回指定类型的实例（instance）. 例如：把子类（subclass）变成父类（superclass）时.
-- 如果转换失败，则会抛出编译错误（ compile-time error）。
-- 如果上述两个情况都不是（也就是说，编译器在编译时期无法确定转换能否成功，） 那么目标表达式就会变成指定的类型的optional. （is an optional of the specified type ） 然后在运行时，如果转换成功， 目标表达式就会作为 optional的一部分来返回， 否则，目标表达式返回nil. 对应的例子是： 把一个 superclass 转换成一个 subclass.
-
+`as`运算符在程序编译时执行类型转化，且总是成功，比如进行向上转换（upcast）和桥接（bridging）。向上转换指把表达式转换成类型的超类的一个是实例而不使用中间的变量。以下表达式是等价的：
 ```swift
-class SomeSuperType {}
-class SomeType: SomeSuperType {}
-class SomeChildType: SomeType {}
-let s = SomeType()
-
-let x = s as SomeSuperType  // known to succeed; type is SomeSuperType
-let y = s as Int            // known to fail; compile-time error
-let z = s as SomeChildType  // might fail at runtime; type is SomeChildType?
+func f(any: Any) { print("Function for Any") }
+func f(int: Int) { print("Function for Int") }
+let x = 10
+f(x)
+// prints "Function for Int"
+ 
+let y: Any = x
+f(y)
+// prints "Function for Any"
+ 
+f(x as Any)
+// prints "Function for Any"
 ```
+桥接运算可以让你把一个Swift标准库中的类型的表达式作为一个与之相关的基础类（比如NSString）来使用，而不需要新建一个实例。关于桥接的更多实例参见Using Swift with Cocoa and Objective-C中的Cocoa Data Types。
 
-使用'as'做类型转换跟正常的类型声明，对于编译器来说是一样的。例如：
+`as?`操作符为带条件的类型转换。`as?`操作符返回可选的转换类型。在运行时，如果转换成功，表达式的值会被覆盖掉再返回，如果转换不成功的话，则返回`nil`。如果条件转换中的条件的真值一开始就已经确定真伪了，则在编译时会报错。
 
-```swift
-let y1 = x as SomeType  // Type information from 'as'
-let y2: SomeType = x    // Type information from an annotation
-```
-
-'is' 运算符在“运行时（runtime）”会做检查。 成功会返回true, 否则 false
-
-上述检查在“编译时（compile time）”不能使用。 例如下面的使用是错误的：
-
-```swift
-"hello" is String
-"hello" is Int
-```
+`a!`操作符表示强制转换，其返回指定的类型，而不是可选的类型。如果转换失败，则会出现运行时错误。表达式`x as T` 效果等同于`(x as? T)!`。
 
 关于类型转换的更多内容和例子，请参见： Type Casting.
 
 > 类型转换运算符(type-casting-operator)语法  
-> *类型转换运算符* → **is** [*类型*](..\chapter3\03_Types.html#type) | **as** **?** _可选_ [*类型*](..\chapter3\03_Types.html#type)  
+> *类型转换运算符* → **is** [*类型*](..\chapter3\03_Types.html#type) 
+> *类型转换运算符* → **as** [*类型*](..\chapter3\03_Types.html#type) 
+> *类型转换运算符* → **is** **?** [*类型*](..\chapter3\03_Types.html#type) 
+> *类型转换运算符* → **as** **!** [*类型*](..\chapter3\03_Types.html#type)  
 
 <a name="primary_expressions"></a>
 ## 主表达式（Primary Expressions）
@@ -211,7 +148,7 @@ let y2: SomeType = x    // Type information from an annotation
 
 > 主表达式语法  
 > *主表达式* → [*标识符*](LexicalStructure.html#identifier) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_  
-> *主表达式* → [*字面量表达式*](..\chapter3\04_Expressions.html#literal_expression)  
+> *主表达式* → [*字符型表达式*](..\chapter3\04_Expressions.html#literal_expression)  
 > *主表达式* → [*self表达式*](..\chapter3\04_Expressions.html#self_expression)  
 > *主表达式* → [*超类表达式*](..\chapter3\04_Expressions.html#superclass_expression)  
 > *主表达式* → [*闭包表达式*](..\chapter3\04_Expressions.html#closure_expression)  
@@ -232,18 +169,36 @@ let y2: SomeType = x    // Type information from an annotation
 
 在某个函数（function）中，`__FUNCTION__` 会返回当前函数的名字。 在某个方法（method）中，它会返回当前方法的名字。 在某个property 的getter/setter中会返回这个属性的名字。 在特殊的成员如init/subscript中 会返回这个关键字的名字，在某个文件的顶端（the top level of a file），它返回的是当前module的名字。
 
-一个array literal，是一个有序的值的集合。 它的形式是：
+当作为函数或者方法时，字符型表达式的值在被调用时初始化。
+```swift
+func logFunctionName(string: String = __FUNCTION__) {
+    print(string)
+}
+func myFunction() {
+    logFunctionName() // Prints "myFunction()".
+}
+ 
+myFunction()
+namedArgs(1, withJay: 2)
+```
+
+一个`array literal`，是一个有序的值的集合。 它的形式是：
 
 > [`value 1`, `value 2`, `...`]
 
-数组中的最后一个表达式可以紧跟一个逗号（','）. []表示空数组 。 array literal的type是 T[], 这个T就是数组中元素的type. 如果该数组中有多种type, T则是跟这些type的公共supertype最接近的type.（closest common supertype）
+数组中的最后一个表达式可以紧跟一个逗号（','）. []表示空数组 。 array literal的type是 T[], 这个T就是数组中元素的type. 如果该数组中有多种type, T则是跟这些type的公共`supertype`最接近的type.空的`array literal`由一组方括号定义，可用来创建特定类型的空数组。
+```swift
+var emptyArray: [Double] = []
+```
 
 一个`dictionary literal` 是一个包含无序的键值对（key-value pairs）的集合，它的形式是:
 
 > [`key 1`: `value 1`, `key 2`: `value 2`, `...`]
 
-dictionary 的最后一个表达式可以是一个逗号（','）. [:] 表示一个空的dictionary. 它的type是 Dictionary<KeyType, ValueType> （这里KeyType表示 key的type, ValueType表示 value的type） 如果这个dictionary 中包含多种 types, 那么KeyType, Value 则对应着它们的公共supertype最接近的type（ closest common supertype）.
-
+dictionary 的最后一个表达式可以是一个逗号（','）. [:] 表示一个空的dictionary. 它的type是 Dictionary<KeyType, ValueType> （这里KeyType表示 key的type, ValueType表示 value的type） 如果这个dictionary 中包含多种 types, 那么KeyType, Value 则对应着它们的公共supertype最接近的type（ closest common supertype）.一个空的dictionary literal由方括号中加一个冒号组成，以此来与空array literal区分开，可以使用空的dictionary literal来创建特定类型的键值对。
+```swift
+var emptyDictionary: [String: Double]=[:]
+```
 > 字面量表达式语法  
 > *字面量表达式* → [*字面量*](LexicalStructure.html#literal)  
 > *字面量表达式* → [*数组字面量*](..\chapter3\04_Expressions.html#array_literal) | [*字典字面量*](..\chapter3\04_Expressions.html#dictionary_literal)  
@@ -531,8 +486,7 @@ t.0 = t.1
 // Now t is （20, 20, 30）
 ```
 
-The members of a module access the top-level declarations of that module.
-（不确定：对于某个module的member的调用，只能调用在top-level声明中的member.）
+对于某个module的member的调用，只能调用在top-level声明中的member.
 
 > 显式成员表达式语法  
 > *显示成员表达式* → [*后置表达式*](..\chapter3\04_Expressions.html#postfix_expression) **.** [*十进制数字*](..\chapter3\02_Lexical_Structure.html#decimal_digit)  
@@ -604,6 +558,16 @@ someInstance.dynamicType.printClassName（）
 > `expression`!
 
 如果该表达式的值不是nil, 则返回对应的值。 否则，抛出运行时错误（runtime error）。
+返回的值可能会被需改，可以是被赋值了，也可以是出现异常造成的。比如：
+```swift
+var x: Int? = 0
+x!++
+// x is now 1
+ 
+var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+someDictionary["a"]![0] = 100
+// someDictionary is now [b: [10, 20], a: [100, 2, 3]] 
+```
 
 > 强制取值(Forced Value)语法  
 > *强制取值(Forced Value)表达式* → [*后置表达式*](..\chapter3\04_Expressions.html#postfix_expression) **!**  
@@ -632,6 +596,22 @@ if let unwrappedC = c {
     result = unwrappedC.property.performAction（）
 }
 ```
+后缀'?' 返回目标表达式的值可能会被修改，可能是由于出现了赋值，也有可能是出现异常而产生的修改。如果可选链表达式为`nil`，则表达式右边的复制操作不会被执行。比如：
+```swift
+func someFunctionWithSideEffects() -> Int {
+    return 42  // No actual side effects.
+}
+var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+ 
+someDictionary["not here"]?[0] = someFunctionWithSideEffects()
+// someFunctionWithSideEffects is not evaluated
+// someDictionary is still [b: [10, 20], a: [1, 2, 3]]
+ 
+someDictionary["a"]?[0] = someFunctionWithSideEffects()
+// someFunctionWithSideEffects is evaluated and returns 42
+// someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+```
+
 
 > 可选链表达式语法  
 > *可选链表达式* → [*后置表达式*](..\chapter3\04_Expressions.html#postfix_expression) **?**  
