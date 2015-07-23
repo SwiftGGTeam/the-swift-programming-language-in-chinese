@@ -20,6 +20,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-08-03  * Added information about using enumeration cases as functions
+              to the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section.
+----------  --------------------------------------------------------------------------
 2015-07-21  * Added information about recursive enumerations
               to the :ref:`Enumerations_RecursiveEnumerations` section
               of the :doc:`../LanguageGuide/Enumerations` chapter
