@@ -1038,11 +1038,13 @@ For example:
 
 .. testcode:: initExpression
 
-    >> class SomeClass { }
-    -> let initializer = SomeClass.init
-    << // initializer : () -> SomeClass = (Function)
-    -> let instance = initializer()
-    << // instance : SomeClass = REPL.SomeClass
+    -> struct SomeType {
+           let options: Int
+       }
+    -> let initializer = SomeType.init
+    << // initializer : (options: Int) -> SomeType = (Function)
+    -> let instance = initializer(options: 17)
+    << // instance : SomeType = REPL.SomeType(options: 17)
 
 You also use an initializer expression
 to delegate to the initializer of a superclass.
@@ -1062,9 +1064,8 @@ only in the case where you specify a type by name.
 In all other cases, you must use an initializer expression
 to access the initializer of a type.
 
-.. testcode:: explicit-vs-implicit-init
+.. testcode:: initExpression
 
-    >> struct SomeType { let options: Int }
     -> let s1 = SomeType(options: 1)
     << // s1 : SomeType = REPL.SomeType(options: 1)
     -> let s2 = SomeType.init(options: 3)
