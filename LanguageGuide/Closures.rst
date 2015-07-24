@@ -59,10 +59,10 @@ each of which expresses the same functionality in a more succinct way.
 
 .. _Closures_TheSortedFunction:
 
-The Sort Function
-~~~~~~~~~~~~~~~~~~~
+The Sort Method
+~~~~~~~~~~~~~~~
 
-Swift's standard library provides a function called ``sort``,
+Swift's standard library provides a method called ``sort(_:)``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
