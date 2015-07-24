@@ -1832,6 +1832,20 @@ in a different way than its superclass,
 its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
 
+
+.. AJM ◊HERE◊
+   a different way to implement AutomaticallyNamedDocument
+   using a forced-unwrap call to super,
+   knowing that it won't ever actually fail.
+
+   -> class AutomaticallyNamedDocument: Document {
+         override init(name: String) {
+            super.init(name: name.isEmpty ? name : "[Untitled]")!
+         }
+      }
+
+
+
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
 The init! Failable Initializer
