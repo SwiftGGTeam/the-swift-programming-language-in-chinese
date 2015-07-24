@@ -1033,23 +1033,10 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Like a function, an initializer can be used as a value.
-For example:
-
-.. testcode:: initExpression
-
-    -> struct SomeType {
-           let options: Int
-       }
-    -> let initializer = SomeType.init
-    << // initializer : (options: Int) -> SomeType = (Function)
-    -> let instance = initializer(options: 17)
-    << // instance : SomeType = REPL.SomeType(options: 17)
-
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
-.. testcode:: initExpression
+.. testcode:: init-call-superclass
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
@@ -1059,27 +1046,43 @@ to delegate to the initializer of a superclass.
     ->     }
     -> }
 
+Like a function, an initializer can be used as a value.
+For example:
+
+.. testcode:: init-as-value
+
+    // Type annotation is required because String has multiple initializers.
+    -> let initializer: Int -> String = String.init
+    << // initializer : Int -> String = (Function)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    << // oneTwoThree : String = "123"
+    -> print(oneTwoThree)
+    <- 123
+
 If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
-.. testcode:: initExpression
+.. testcode:: explitic-implicit-init
 
-    -> let s1 = SomeType.init(options: 3)  // Valid
-    << // s1 : SomeType = REPL.SomeType(options: 3)
-    -> let s2 = SomeType(options: 1)       // Also valid
-    << // s2 : SomeType = REPL.SomeType(options: 1)
+    >> struct SomeType {
+    >>     let data: Int
+    >> }
+    -> let s1 = SomeType.init(data: 3)  // Valid
+    << // s1 : SomeType = REPL.SomeType(data: 3)
+    -> let s2 = SomeType(data: 1)       // Also valid
+    << // s2 : SomeType = REPL.SomeType(data: 1)
     ---
     >> let someValue = s1
-    -> let s4 = someValue.dynamicType.init(options: 7)  // Valid
-    << // s4 : SomeType = REPL.SomeType(options: 7)
-    << // someValue : SomeType = REPL.SomeType(options: 1)
-    -> let s4 = someValue.dynamicType(options: 5)       // Error
+    << // someValue : SomeType = REPL.SomeType(data: 3)
+    -> let s4 = someValue.dynamicType(data: 5)       // Error
+    << // s3 : SomeType = REPL.SomeType(data: 7)
+    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
     !! <REPL Input>:1:31: error: initializing from a metatype must reference 'init' explicitly
-    !! let s4 = someValue.dynamicType(options: 5)       // Error
+    !! let s4 = someValue.dynamicType(data: 5)       // Error
     !!                               ^
     !!                               .init
-    
+
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
