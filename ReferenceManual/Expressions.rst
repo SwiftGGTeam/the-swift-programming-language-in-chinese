@@ -1059,10 +1059,9 @@ to delegate to the initializer of a superclass.
     ->     }
     -> }
 
-You can access an initializer without using an initializer expression
-only in the case where you specify a type by name.
-In all other cases, you must use an initializer expression
-to access the initializer of a type.
+If you specify a type by name,
+you can access the type's initializer without using an initializer expression.
+In all other cases, you must use an initializer expression.
 
 .. testcode:: initExpression
 
