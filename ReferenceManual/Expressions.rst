@@ -1065,20 +1065,20 @@ In all other cases, you must use an initializer expression.
 
 .. testcode:: initExpression
 
-    -> let s1 = SomeType(options: 1)
-    << // s1 : SomeType = REPL.SomeType(options: 1)
-    -> let s2 = SomeType.init(options: 3)
-    << // s2 : SomeType = REPL.SomeType(options: 3)
+    -> let s1 = SomeType.init(options: 3)  // Valid
+    << // s1 : SomeType = REPL.SomeType(options: 3)
+    -> let s2 = SomeType(options: 1)       // Also valid
+    << // s2 : SomeType = REPL.SomeType(options: 1)
     ---
     >> let someValue = s1
+    -> let s4 = someValue.dynamicType.init(options: 7)  // Valid
+    << // s4 : SomeType = REPL.SomeType(options: 7)
     << // someValue : SomeType = REPL.SomeType(options: 1)
-    -> let s3 = someValue.dynamicType(options: 5)  // Error
+    -> let s4 = someValue.dynamicType(options: 5)       // Error
     !! <REPL Input>:1:31: error: initializing from a metatype must reference 'init' explicitly
-    !! let s3 = someValue.dynamicType(options: 5)  // Error
+    !! let s4 = someValue.dynamicType(options: 5)       // Error
     !!                               ^
     !!                               .init
-    -> let s4 = someValue.dynamicType.init(options: 7)
-    << // s4 : SomeType = REPL.SomeType(options: 7)
     
 .. langref-grammar
 
