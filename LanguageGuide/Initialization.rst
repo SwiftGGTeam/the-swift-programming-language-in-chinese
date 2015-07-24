@@ -1758,7 +1758,7 @@ even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
 the only way to delegate up to the superclass initializer
-is by forced unwrapping it.
+is by forced unwrapping the result of the failable superclass initializer.
 
 .. note::
 
@@ -1832,7 +1832,7 @@ and so it provides a nonfailable version of the initializer instead.
 
 You can use forced unwrapping in an initializer
 to call a failable initializer from the superclass
-as part of the implementation of a nonfailable initializer.
+as part of the implementation of a subclass's nonfailable initializer.
 For example, the ``UntitledDocument`` subclass is always named "[Untitled]",
 and it uses the failable ``init(name:)`` initializer
 from its superclass during initialization.
