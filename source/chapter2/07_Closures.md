@@ -283,7 +283,7 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 每次调用`incrementor`时，其会以`amount`作为增量增加`runningTotal`的值。
 
 ```swift
-func makeIncrementor(forIncrement amount: Int) -> Void -> Int {
+func makeIncrementor(forIncrement amount: Int) -> () -> Int {
     var runningTotal = 0
     func incrementor() -> Int {
         runningTotal += amount
@@ -293,7 +293,7 @@ func makeIncrementor(forIncrement amount: Int) -> Void -> Int {
 }
 ```
 
-`makeIncrementor`返回类型为`Void -> Int`。
+`makeIncrementor`返回类型为`() -> Int`。
 这意味着其返回的是一个函数，而不是一个简单类型值。
 该函数在每次调用时不接受参数只返回一个`Int`类型的值。
 关于函数返回其他函数的内容，请查看[函数类型作为返回类型](../chapter2/06_Functions.html#function_types_as_return_types)。
@@ -315,16 +315,11 @@ func incrementor() -> Int {
 }
 ```
 
-`incrementor`函数并没有获取任何参数，但是在函数体内访问了`runningTotal`和`amount`变量。这是因为其通过捕获在包含它的函数体内已经存在的`runningTotal`和`amount`变量而实现。
-
-由于没有修改`amount`变量，`incrementor`实际上捕获并存储了该变量的一个副本，而该副本随着`incrementor`一同被存储。
-
-然而，因为每次调用该函数的时候都会修改`runningTotal`的值，`incrementor`捕获了当前`runningTotal`变量的引用，而不是仅仅复制该变量的初始值。捕获一个引用保证了当`makeIncrementor`结束时候并不会消失，也保证了当下一次执行`incrementor`函数时，`runningTotal`可以继续增加。
+`incrementer`函数并没有任何参数，但是在函数体内访问了`runningTotal`和`amount`变量。这是因为其通过捕获在包含它的函数体内已经存在的`runningTotal`和`amount`变量的引用(reference)而实现。捕捉了变量引用,保证了`runningTotal`和`amount`变量在调用完`makeIncrementer`后不会消失,并且保证了在下一次执行`incrementer`函数时,`runningTotal`可以继续增加。
 
 > 注意：
-> Swift 会决定捕获引用还是拷贝值。
-> 您不需要标注`amount`或者`runningTotal`来声明在嵌入的`incrementor`函数中的使用方式。
-> Swift 同时也处理`runingTotal`变量的内存管理操作，如果不再被`incrementor`函数使用，则会被清除。
+> 为了优化,Swift可能会捕捉和保存一份对值的拷贝,如果这个值是不可变或是在闭包外的。
+> Swift同样负责被捕捉的所有变量的内存管理,包括释放不被需要的变量。
 
 下面代码为一个使用`makeIncrementor`的例子：
 
