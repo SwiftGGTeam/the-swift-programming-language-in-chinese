@@ -1201,7 +1201,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
     raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> numeric-literal | string-literal | boolean-literal
+    raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
