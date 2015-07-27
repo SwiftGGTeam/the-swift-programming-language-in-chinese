@@ -1027,6 +1027,7 @@ depending on the value of one or more build configurations.
     build-configuration-else-clause --> ``#else`` statements
 
     build-configuration --> platform-testing-function
+    build-configuration --> identifier
     build-configuration --> boolean-literal
     build-configuration --> ``(`` build-configuration ``)``
     build-configuration --> ``!`` build-configuration
