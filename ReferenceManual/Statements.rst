@@ -1,22 +1,22 @@
 Statements
 ==========
 
-.. FIXME: Revise the intro para for #if and #line.
-
-In Swift, there are two kinds of statements: simple statements and control flow statements.
+In Swift, there are three kinds of statements: simple statements, compiler control statements,
+and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
+Compiler control statements allow the program to change aspects of the compiler's behavior
+and include a build configuration and line control statement.
+
 Control flow statements are used to control the flow of execution in a program.
 There are several types of control flow statements in Swift, including
 loop statements, branch statements, and control transfer statements.
-In addition, Swift provides a ``do`` statement to introduce scope,
-and catch and handle errors,
-and a ``defer`` statement for running clean-up actions just before the current scope exits.
-
 Loop statements allow a block of code to be executed repeatedly,
 branch statements allow a certain block of code to be executed
 only when certain conditions are met,
 and control transfer statements provide a way to alter the order in which code is executed.
-Each type of control flow statement is described in detail below.
+In addition, Swift provides a ``do`` statement to introduce scope,
+and catch and handle errors,
+and a ``defer`` statement for running clean-up actions just before the current scope exits.
 
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
@@ -996,6 +996,9 @@ see :ref:`ErrorHandling_Catch`.
 Compiler Control Statements
 ---------------------------
 
+Compiler control statements allow the program to change aspects of the compiler's behavior.
+Swift has two complier control statements: a build configuration statement
+and a line control statement.
 
 .. syntax-grammar::
 
@@ -1009,6 +1012,10 @@ Compiler Control Statements
 
 Build Configuration Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A build configuration statement allows code to be conditionally compiled
+depending on the value of one or more build configurations.
+
 
 .. syntax-grammar::
 
@@ -1044,6 +1051,29 @@ Build Configuration Statement
 Line Control Statement
 ~~~~~~~~~~~~~~~~~~~~~~
 
+A line control statement is used to specify line a number and filename
+that are different than the line number and filename of the source code being compiled.
+Use a line control statement to change the source code location
+used by Swift for diagnostic and debugging purposes.
+
+A line control statement has the following form:
+
+.. syntax-outline::
+
+    #line <#line number#> <#filename#>
+
+A line control statement changes the values of the ``__LINE__`` and ``__FILE__``
+literal expressions, beginning with the line of code following the line control statement.
+The *line number* changes the value of ``__LINE__``
+and is any integer literal greater than zero.
+The *filename* changes the value of ``__FILE__`` and is a string literal.
+
+You can reset the source code location back to the default line numbering and filename
+by writing a line control statement without specifying a *line number* and *filename*.
+
+A line control statement must appear on its own line
+and can't be the last line of a source code file.
+
 .. syntax-grammar::
 
     Grammar of a line control statement
@@ -1052,4 +1082,3 @@ Line Control Statement
     line-control-statement --> ``#line`` line-number file-name
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
-
