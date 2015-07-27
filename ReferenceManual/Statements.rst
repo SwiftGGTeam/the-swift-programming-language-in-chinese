@@ -41,9 +41,9 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> branch-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
-    statement --> compiler-control-statement
     statement --> defer-statement ``;``-OPT
     statement --> do-statement ``:``-OPT
+    statement --> compiler-control-statement
     statements --> statement statements-OPT
 
     compiler-control-statement -> line-control-statement | build-configuration-statement
@@ -52,6 +52,30 @@ and is used to separate multiple statements if they appear on the same line.
     line-control-statement --> ``#line`` line-number file-name
     line-number --> A decimal integer greater than zero.
     file-name --> static-string-literal
+
+    build-configuration-statement --> ``#if`` build-configuration statements build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
+    build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
+    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements
+    build-configuration-else-clause --> ``#else`` statements
+
+    build-configuration --> platform-testing-function
+    build-configuration --> boolean-literal
+    build-configuration --> ``(`` build-configuration ``)``
+    build-configuration --> ``!`` build-configuration
+    build-configuration --> build-configuration ``&&`` build-configuration
+    build-configuration --> build-configuration ``||`` build-configuration
+
+    platform-testing-function --> ``os`` ``(`` operating-system ``)``
+    platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    operating-system --> ``OSX`` | ``iOS`` | ``watchOS``
+    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+
+.. Testing notes:
+
+   !!true doesn't work but !(!true) does -- this matches normal expressions
+   #if can be nested, as expected
+   let's not explicitly document the broken precedence between && and ||
+       <rdar://problem/21692106> #if evaluates boolean operators without precedence
 
 
 .. NOTE: Removed semicolon-statement as syntactic category,
