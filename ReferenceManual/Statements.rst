@@ -1,6 +1,8 @@
 Statements
 ==========
 
+.. FIXME: Revise the intro para for #if and #line.
+
 In Swift, there are two kinds of statements: simple statements and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
 Control flow statements are used to control the flow of execution in a program.
@@ -39,9 +41,18 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> branch-statement ``;``-OPT
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
+    statement --> compiler-control-statement
     statement --> defer-statement ``;``-OPT
     statement --> do-statement ``:``-OPT
     statements --> statement statements-OPT
+
+    compiler-control-statement -> line-control-statement | build-configuration-statement
+
+    line-control-statement --> ``#line``
+    line-control-statement --> ``#line`` line-number file-name
+    line-number --> A decimal integer greater than zero.
+    file-name --> static-string-literal
+
 
 .. NOTE: Removed semicolon-statement as syntactic category,
     because, according to Doug, they're not really statements.
