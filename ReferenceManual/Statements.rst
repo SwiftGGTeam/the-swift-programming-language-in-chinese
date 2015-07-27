@@ -1051,7 +1051,7 @@ depending on the value of one or more build configurations.
 Line Control Statement
 ~~~~~~~~~~~~~~~~~~~~~~
 
-A line control statement is used to specify line a number and filename
+A line control statement is used to specify a line number and filename
 that are different than the line number and filename of the source code being compiled.
 Use a line control statement to change the source code location
 used by Swift for diagnostic and debugging purposes.
