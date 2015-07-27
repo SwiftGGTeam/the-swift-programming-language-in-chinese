@@ -46,38 +46,6 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> compiler-control-statement
     statements --> statement statements-OPT
 
-    compiler-control-statement -> line-control-statement | build-configuration-statement
-
-    line-control-statement --> ``#line``
-    line-control-statement --> ``#line`` line-number file-name
-    line-number --> A decimal integer greater than zero.
-    file-name --> static-string-literal
-
-    build-configuration-statement --> ``#if`` build-configuration statements build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
-    build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
-    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements
-    build-configuration-else-clause --> ``#else`` statements
-
-    build-configuration --> platform-testing-function
-    build-configuration --> boolean-literal
-    build-configuration --> ``(`` build-configuration ``)``
-    build-configuration --> ``!`` build-configuration
-    build-configuration --> build-configuration ``&&`` build-configuration
-    build-configuration --> build-configuration ``||`` build-configuration
-
-    platform-testing-function --> ``os`` ``(`` operating-system ``)``
-    platform-testing-function --> ``arch`` ``(`` architecture ``)``
-    operating-system --> ``OSX`` | ``iOS`` | ``watchOS``
-    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
-
-.. Testing notes:
-
-   !!true doesn't work but !(!true) does -- this matches normal expressions
-   #if can be nested, as expected
-   let's not explicitly document the broken precedence between && and ||
-       <rdar://problem/21692106> #if evaluates boolean operators without precedence
-
-
 .. NOTE: Removed semicolon-statement as syntactic category,
     because, according to Doug, they're not really statements.
     For example, you can't have
@@ -1021,3 +989,67 @@ see :ref:`ErrorHandling_Catch`.
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
     catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
+
+
+.. _Statements_CompilerControlStatements:
+
+Compiler Control Statements
+---------------------------
+
+
+.. syntax-grammar::
+
+    Grammar of a compiler control statement
+
+    compiler-control-statement --> build-configuration-statement
+    compiler-control-statement --> line-control-statement
+
+
+.. _Statements_BuildConfigurationStatement:
+
+Build Configuration Statement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a build configuration statement
+
+    build-configuration-statement --> ``#if`` build-configuration statements build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
+    build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
+    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements
+    build-configuration-else-clause --> ``#else`` statements
+
+    build-configuration --> platform-testing-function
+    build-configuration --> boolean-literal
+    build-configuration --> ``(`` build-configuration ``)``
+    build-configuration --> ``!`` build-configuration
+    build-configuration --> build-configuration ``&&`` build-configuration
+    build-configuration --> build-configuration ``||`` build-configuration
+
+    platform-testing-function --> ``os`` ``(`` operating-system ``)``
+    platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    operating-system --> ``OSX`` | ``iOS`` | ``watchOS``
+    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+
+.. Testing notes:
+
+   !!true doesn't work but !(!true) does -- this matches normal expressions
+   #if can be nested, as expected
+   let's not explicitly document the broken precedence between && and ||
+       <rdar://problem/21692106> #if evaluates boolean operators without precedence
+
+
+.. _Statements_LineControlStatement:
+
+Line Control Statement
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a line control statement
+
+    line-control-statement --> ``#line``
+    line-control-statement --> ``#line`` line-number file-name
+    line-number --> A decimal integer greater than zero
+    file-name --> static-string-literal
+
