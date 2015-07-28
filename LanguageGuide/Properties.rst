@@ -704,10 +704,10 @@ in the same way as computed instance properties.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
-   Stored type properties are guaranteed
-   to be lazily initialized only once,
-   even when accessed by multiple threads simultaneously.
-   and do not need to be marked with the ``lazy`` modifier.
+   Stored type properties are lazily initialized on their first access.
+   They are guaranteed to be initialized only once,
+   even when accessed by multiple threads simultaneously,
+   and they do not need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 
