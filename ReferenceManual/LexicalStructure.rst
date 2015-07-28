@@ -596,9 +596,9 @@ For example, all the following string literals have the same value:
    <$ : String = "1 2 3"
 
 The default inferred type of a string literal is ``String``.
-The default inferred type of the characters that make up a string
-is ``Character``. For more information about the ``String`` and ``Character``
-types, see :doc:`../LanguageGuide/StringsAndCharacters`.
+For more information about the ``String`` type,
+see :doc:`../LanguageGuide/StringsAndCharacters`
+and `String Structure Reference <//apple_ref/doc/uid/TP40015181>`_.
 
 .. langref-grammar
 
