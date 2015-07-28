@@ -65,16 +65,16 @@ which defines a stored constant property called ``name``:
 
 .. testcode:: howARCWorks
 
--> class Person {
-    let name: String
-        init(name: String) {
+   -> class Person {
+         let name: String
+         init(name: String) {
             self.name = name
-                print("\(name) is being initialized")
-        }
-    deinit {
-        print("\(name) is being deinitialized")
-    }
-}
+            print("\(name) is being initialized")
+         }
+         deinit {
+            print("\(name) is being deinitialized")
+         }
+      }
 
 The ``Person`` class has an initializer that sets the instance's ``name`` property
 and prints a message to indicate that initialization is underway.
@@ -82,103 +82,103 @@ The ``Person`` class also has a deinitializer
 that prints a message when an instance of the class is deallocated.
 
 The next code snippet defines three variables of type ``Person?``,
-    which are used to set up multiple references to a new ``Person`` instance
-    in subsequent code snippets.
-    Because these variables are of an optional type (``Person?``, not ``Person``),
-    they are automatically initialized with a value of ``nil``,
-    and do not currently reference a ``Person`` instance.
+which are used to set up multiple references to a new ``Person`` instance
+in subsequent code snippets.
+Because these variables are of an optional type (``Person?``, not ``Person``),
+they are automatically initialized with a value of ``nil``,
+and do not currently reference a ``Person`` instance.
 
-    .. testcode:: howARCWorks
+.. testcode:: howARCWorks
 
-    -> var reference1: Person?
-    << // reference1 : Person? = nil
-    -> var reference2: Person?
-    << // reference2 : Person? = nil
-    -> var reference3: Person?
-    << // reference3 : Person? = nil
+   -> var reference1: Person?
+   << // reference1 : Person? = nil
+   -> var reference2: Person?
+   << // reference2 : Person? = nil
+   -> var reference3: Person?
+   << // reference3 : Person? = nil
 
-    You can now create a new ``Person`` instance
-    and assign it to one of these three variables:
+You can now create a new ``Person`` instance
+and assign it to one of these three variables:
 
-    .. testcode:: howARCWorks
+.. testcode:: howARCWorks
 
-    -> reference1 = Person(name: "John Appleseed")
-    <- John Appleseed is being initialized
+   -> reference1 = Person(name: "John Appleseed")
+   <- John Appleseed is being initialized
 
-    Note that the message ``"John Appleseed is being initialized"`` is printed
-    at the point that you call the ``Person`` class's initializer.
-    This confirms that initialization has taken place.
+Note that the message ``"John Appleseed is being initialized"`` is printed
+at the point that you call the ``Person`` class's initializer.
+This confirms that initialization has taken place.
 
-    Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
-    there is now a strong reference from ``reference1`` to the new ``Person`` instance.
-    Because there is at least one strong reference,
-    ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
+Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
+there is now a strong reference from ``reference1`` to the new ``Person`` instance.
+Because there is at least one strong reference,
+ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
 
-    If you assign the same ``Person`` instance to two more variables,
-    two more strong references to that instance are established:
+If you assign the same ``Person`` instance to two more variables,
+two more strong references to that instance are established:
 
-    .. testcode:: howARCWorks
+.. testcode:: howARCWorks
 
-    -> reference2 = reference1
-    -> reference3 = reference1
+   -> reference2 = reference1
+   -> reference3 = reference1
 
-    There are now *three* strong references to this single ``Person`` instance.
+There are now *three* strong references to this single ``Person`` instance.
 
 If you break two of these strong references (including the original reference)
-    by assigning ``nil`` to two of the variables,
-    a single strong reference remains,
-    and the ``Person`` instance is not deallocated:
+by assigning ``nil`` to two of the variables,
+a single strong reference remains,
+and the ``Person`` instance is not deallocated:
 
-    .. testcode:: howARCWorks
+.. testcode:: howARCWorks
 
-    -> reference1 = nil
-    -> reference2 = nil
+   -> reference1 = nil
+   -> reference2 = nil
 
-    ARC does not deallocate the ``Person`` instance until
-    the third and final strong reference is broken,
-    at which point it is clear that you are no longer using the ``Person`` instance:
+ARC does not deallocate the ``Person`` instance until
+the third and final strong reference is broken,
+at which point it is clear that you are no longer using the ``Person`` instance:
 
-    .. testcode:: howARCWorks
+.. testcode:: howARCWorks
 
-    -> reference3 = nil
-    <- John Appleseed is being deinitialized
+   -> reference3 = nil
+   <- John Appleseed is being deinitialized
 
-    .. _AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances:
+.. _AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances:
 
-    Strong Reference Cycles Between Class Instances
-    -----------------------------------------------
+Strong Reference Cycles Between Class Instances
+-----------------------------------------------
 
-    In the examples above,
-    ARC is able to track the number of references to the new ``Person`` instance you create
-    and to deallocate that ``Person`` instance when it is no longer needed.
+In the examples above,
+ARC is able to track the number of references to the new ``Person`` instance you create
+and to deallocate that ``Person`` instance when it is no longer needed.
 
-    However, it is possible to write code in which an instance of a class
-    *never* gets to a point where it has zero strong references.
-    This can happen if two class instances hold a strong reference to each other,
-    such that each instance keeps the other alive.
-    This is known as a :newTerm:`strong reference cycle`.
+However, it is possible to write code in which an instance of a class
+*never* gets to a point where it has zero strong references.
+This can happen if two class instances hold a strong reference to each other,
+such that each instance keeps the other alive.
+This is known as a :newTerm:`strong reference cycle`.
 
-    You resolve strong reference cycles
-    by defining some of the relationships between classes
-    as weak or unowned references instead of as strong references.
-    This process is described in
-    :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
-    However, before you learn how to resolve a strong reference cycle,
-    it is useful to understand how such a cycle is caused.
+You resolve strong reference cycles
+by defining some of the relationships between classes
+as weak or unowned references instead of as strong references.
+This process is described in
+:ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
+However, before you learn how to resolve a strong reference cycle,
+it is useful to understand how such a cycle is caused.
 
-    Here's an example of how a strong reference cycle can be created by accident.
-    This example defines two classes called ``Person`` and ``Apartment``,
-    which model a block of apartments and its residents:
+Here's an example of how a strong reference cycle can be created by accident.
+This example defines two classes called ``Person`` and ``Apartment``,
+which model a block of apartments and its residents:
 
-    .. testcode:: referenceCycles
-    :compile: true
+.. testcode:: referenceCycles
+   :compile: true
 
-    -> class Person {
-        let name: String
-            init(name: String) { self.name = name }
-        var apartment: Apartment?
-            deinit { print("\(name) is being deinitialized") }
-    }
+   -> class Person {
+         let name: String
+         init(name: String) { self.name = name }
+         var apartment: Apartment?
+         deinit { print("\(name) is being deinitialized") }
+      }
    ---
    -> class Apartment {
          let unit: String
@@ -426,18 +426,11 @@ print their “deinitialized” messages
 after the ``john`` and ``unit4A`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
-.. TODO: weak references can also be implicitly unchecked optionals.
-   I should mention this here, but when would it be appropriate to use them?
-
-.. note::
-
-   In systems that use garbage collection,
-   weak pointers are sometimes used to implement a simple caching mechanism
-   because objects with no strong references are deallocated
-   only when memory pressure triggers garbage collection.
-   However, with ARC, values are deallocated
-   as soon as their last strong reference is removed,
-   making weak references unsuitable for such a purpose.
+.. TODO: Feedback from [Contributor 7746] to be incorporated here:
+   “In the ARC section, at the end of the weak pointer section,
+   it is worth mentioning that trying to use weak pointers as a cache
+   (like you might do in a GC'd system) is doomed to failure:
+   values will be deallocated as soon as the last strong reference is removed.”
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
