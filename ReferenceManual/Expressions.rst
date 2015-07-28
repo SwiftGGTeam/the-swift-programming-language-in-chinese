@@ -1138,6 +1138,23 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
+If a period appears at the beginning of a line,
+it is understood as part of an explicit member expression,
+not as an implicit member expression.
+For example, the following listing shows chained method calls
+split over several lines:
+
+.. testcode:: period-at-start-of-line
+   :compile: true
+
+   >> let x =
+   -> [10, 3, 20, 15, 4]
+   -> .sort()
+   -> .filter { $0 > 5 }
+   -> .map { $0 * 100 }
+   >> print(x)
+   << [1000, 1500, 2000]
+
 .. langref-grammar
 
     expr-dot ::= expr-postfix '.' dollarident
