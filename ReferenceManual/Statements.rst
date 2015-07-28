@@ -1016,15 +1016,72 @@ Build Configuration Statement
 A build configuration statement allows code to be conditionally compiled
 depending on the value of one or more build configurations.
 
+Every build configuration statement begins with ``#if`` and ends with ``#endif``.
+A simple build configuration statement has the following form:
+
+.. syntax-outline::
+
+    #if <#build configuration#>
+        <#statements#>
+    #endif
+
+Unlike the condition of an ``if`` statement,
+the *build configuration* is evaluated at compile time.
+As a result,
+the *statements* are compiled and executed only if the *build configuration*
+evaluates to ``true`` at compile time.
+
+The *build configuration* can include the ``true`` and ``false`` Boolean literals,
+an identifier used with the ``-D`` command line flag, or any of the platform
+testing functions listed in the table below.
+
+====================  =========================================
+Function              Valid arguments
+====================  =========================================
+``os()``              ``OSX``, ``iOS``, ``watchOS``
+``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
+====================  =========================================
+
+.. note::
+
+   The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` build configuration returns ``true``
+   when code is compiled for the 32–bit iOS simulator.
+
+You can combine build configurations using the logical operators
+``&&``, ``||``, and ``!``
+and use parentheses for grouping.
+
+Similar to an ``if`` statement,
+you can add multiple conditional branches to test for different build configurations.
+You can add any number of additional branches using ``#elseif`` clauses.
+You can also add a final additional branch using an ``#else`` clause.
+Build configuration statements that contain multiple branches
+have the following form:
+
+.. syntax-outline::
+
+    #if <#build configuration 1#>
+        <#statements to compile and execute if build configuration 1 is true#>
+    #elseif <#build configuration 2#>
+        <#statements to compile and execute if build configuration 2 is true#>
+    #else
+        <#statements to compile and execute if both build configurations are false#>
+    #endif
+
+.. note::
+
+    Each statment in the body of a build configuration statement is parsed
+    even if it's not complied.
 
 .. syntax-grammar::
 
     Grammar of a build configuration statement
 
-    build-configuration-statement --> ``#if`` build-configuration statements build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
+    build-configuration-statement --> ``#if`` build-configuration statements-OPT build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
     build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
-    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements
-    build-configuration-else-clause --> ``#else`` statements
+    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements-OPT
+    build-configuration-else-clause --> ``#else`` statements-OPT
 
     build-configuration --> platform-testing-function
     build-configuration --> identifier
@@ -1045,6 +1102,13 @@ depending on the value of one or more build configurations.
    #if can be nested, as expected
    let's not explicitly document the broken precedence between && and ||
        <rdar://problem/21692106> #if evaluates boolean operators without precedence
+
+   Also, the body of a build configuration statement contains *zero* or more statements.
+   Thus, this is allowed:
+       #if
+       #elseif
+       #else
+       #endif
 
 
 .. _Statements_LineControlStatement:
