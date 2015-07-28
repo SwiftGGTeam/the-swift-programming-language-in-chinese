@@ -1758,7 +1758,7 @@ even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
 the only way to delegate up to the superclass initializer
-is by forced unwrapping the result of the failable superclass initializer.
+is to force-unwrap the result of the failable superclass initializer.
 
 .. note::
 
