@@ -426,12 +426,15 @@ print their “deinitialized” messages
 after the ``john`` and ``unit4A`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
-.. TODO: Feedback from [Contributor 7746] to be incorporated here:
-   “In the ARC section, at the end of the weak pointer section,
-   it is worth mentioning that trying to use weak pointers as a cache
-   (like you might do in a GC'd system) is doomed to failure:
-   values will be deallocated as soon as the last strong reference is removed.”
+.. note::
 
+   In systems that use garbage collection,
+   weak pointers are sometimes used to implement a simple caching mechanism
+   because objects with no strong references are deallocated
+   only when memory pressure triggers garbage collection.
+   However, with ARC, values are deallocated
+   as soon as their last strong reference is removed,
+   making weak references unsuitable for such a purpose.
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
 Unowned References
