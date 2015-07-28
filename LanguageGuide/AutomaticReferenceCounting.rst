@@ -720,7 +720,7 @@ which provides a simple model for an individual element within an HTML document:
    -> class HTMLElement {
    ---
          let name: String
-         var text: String?
+         let text: String?
    ---
          lazy var asHTML: () -> String = {
             if let text = self.text {
@@ -945,7 +945,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
    -> class HTMLElement {
    ---
          let name: String
-         var text: String?
+         let text: String?
    ---
          lazy var asHTML: () -> String = {
                [unowned self] in
