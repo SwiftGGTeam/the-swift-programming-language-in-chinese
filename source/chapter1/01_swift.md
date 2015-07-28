@@ -1,5 +1,5 @@
 > 翻译：[numbbbbb](https://github.com/numbbbbb)  
-> 校对：[yeahdongcn](https://github.com/yeahdongcn)
+> 校对：[yeahdongcn](https://github.com/yeahdongcn), [xtymichael](https://github.com/xtymichael)
 
 # 关于 Swift
 -----------------
