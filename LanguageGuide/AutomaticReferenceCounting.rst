@@ -778,11 +778,11 @@ in order to prevent the representation from returning an empty HTML tag:
    -> let heading = HTMLElement(name: "h1")
    << // heading : HTMLElement = REPL.HTMLElement
    -> let defaultText = "some default text"
-   << defaultText: String = "some default text"
+   << // defaultText : String = "some default text"
    -> heading.asHTML = {
          return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
       }
-   -> println(heading.asHTML())
+   -> print(heading.asHTML())
    <- <h1>some default text</h1>
 
 .. note::
