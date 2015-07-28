@@ -1864,6 +1864,9 @@ is called (that is, any initializer delegation is performed).
 A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
 or to an ``init!`` failable initializer.
+A nonfailable initializer can delegate to an ``init?`` failable initializer
+by force-unwrapping the result of the superclass's initializer ---
+for example, by writing ``super.init()!``.
 
 Initialization failure propagates through initializer delegation.
 Specifically,

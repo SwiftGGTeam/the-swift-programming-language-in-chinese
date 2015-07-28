@@ -1757,10 +1757,8 @@ This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
-the subclass initializer cannot delegate up to the superclass initializer.
-A nonfailable initializer can never delegate to a failable initializer.
-
-.. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
+the only way to delegate up to the superclass initializer
+is to force-unwrap the result of the failable superclass initializer.
 
 .. note::
 
@@ -1831,6 +1829,29 @@ Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way than its superclass,
 its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
+
+You can use forced unwrapping in an initializer
+to call a failable initializer from the superclass
+as part of the implementation of a subclass's nonfailable initializer.
+For example, the ``UntitledDocument`` subclass is always named "[Untitled]",
+and it uses the failable ``init(name:)`` initializer
+from its superclass during initialization.
+
+.. testcode:: failableInitializers
+
+   -> class UntitledDocument: Document {
+         override init() {
+            super.init(name: "[Untitled]")!
+         }
+      }
+
+In this case, if the ``init(name:)`` initializer
+were ever called with an empty string as the name,
+the forced unwrap operation would result in a runtime error.
+However, because it's called with a string constant,
+you can see that the initializer won't fail,
+so no runtime error can occur in this case.
+
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
