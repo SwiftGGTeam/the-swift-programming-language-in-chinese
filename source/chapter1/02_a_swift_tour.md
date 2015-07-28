@@ -1,4 +1,4 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb)
+> 翻译：[numbbbbb](https://github.com/numbbbbb), [xtymichael](https://github.com/xtymichael)
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
 
 # Swift 初见
