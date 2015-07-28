@@ -1147,11 +1147,10 @@ split over several lines:
 .. testcode:: period-at-start-of-line
    :compile: true
 
-   >> let x =
-   -> [10, 3, 20, 15, 4]
-   -> .sort()
-   -> .filter { $0 > 5 }
-   -> .map { $0 * 100 }
+   -> let x = [10, 3, 20, 15, 4]
+   ->     .sort()
+   ->     .filter { $0 > 5 }
+   ->     .map { $0 * 100 }
    >> print(x)
    << [1000, 1500, 2000]
 
