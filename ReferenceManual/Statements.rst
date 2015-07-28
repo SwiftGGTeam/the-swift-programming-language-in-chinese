@@ -1,20 +1,22 @@
 Statements
 ==========
 
-In Swift, there are two kinds of statements: simple statements and control flow statements.
+In Swift, there are three kinds of statements: simple statements, compiler control statements,
+and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
+Compiler control statements allow the program to change aspects of the compiler's behavior
+and include a build configuration and line control statement.
+
 Control flow statements are used to control the flow of execution in a program.
 There are several types of control flow statements in Swift, including
 loop statements, branch statements, and control transfer statements.
-In addition, Swift provides a ``do`` statement to introduce scope,
-and catch and handle errors,
-and a ``defer`` statement for running clean-up actions just before the current scope exits.
-
 Loop statements allow a block of code to be executed repeatedly,
 branch statements allow a certain block of code to be executed
 only when certain conditions are met,
 and control transfer statements provide a way to alter the order in which code is executed.
-Each type of control flow statement is described in detail below.
+In addition, Swift provides a ``do`` statement to introduce scope,
+and catch and handle errors,
+and a ``defer`` statement for running clean-up actions just before the current scope exits.
 
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
@@ -41,6 +43,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> control-transfer-statement ``;``-OPT
     statement --> defer-statement ``;``-OPT
     statement --> do-statement ``:``-OPT
+    statement --> compiler-control-statement
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -986,3 +989,161 @@ see :ref:`ErrorHandling_Catch`.
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
     catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
+
+
+.. _Statements_CompilerControlStatements:
+
+Compiler Control Statements
+---------------------------
+
+Compiler control statements allow the program to change aspects of the compiler's behavior.
+Swift has two complier control statements: a build configuration statement
+and a line control statement.
+
+.. syntax-grammar::
+
+    Grammar of a compiler control statement
+
+    compiler-control-statement --> build-configuration-statement
+    compiler-control-statement --> line-control-statement
+
+
+.. _Statements_BuildConfigurationStatement:
+
+Build Configuration Statement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A build configuration statement allows code to be conditionally compiled
+depending on the value of one or more build configurations.
+
+Every build configuration statement begins with ``#if`` and ends with ``#endif``.
+A simple build configuration statement has the following form:
+
+.. syntax-outline::
+
+    #if <#build configuration#>
+        <#statements#>
+    #endif
+
+Unlike the condition of an ``if`` statement,
+the *build configuration* is evaluated at compile time.
+As a result,
+the *statements* are compiled and executed only if the *build configuration*
+evaluates to ``true`` at compile time.
+
+The *build configuration* can include the ``true`` and ``false`` Boolean literals,
+an identifier used with the ``-D`` command line flag, or any of the platform
+testing functions listed in the table below.
+
+====================  =========================================
+Function              Valid arguments
+====================  =========================================
+``os()``              ``OSX``, ``iOS``, ``watchOS``
+``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
+====================  =========================================
+
+.. note::
+
+   The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` build configuration returns ``true``
+   when code is compiled for the 32–bit iOS simulator.
+
+You can combine build configurations using the logical operators
+``&&``, ``||``, and ``!``
+and use parentheses for grouping.
+
+Similar to an ``if`` statement,
+you can add multiple conditional branches to test for different build configurations.
+You can add any number of additional branches using ``#elseif`` clauses.
+You can also add a final additional branch using an ``#else`` clause.
+Build configuration statements that contain multiple branches
+have the following form:
+
+.. syntax-outline::
+
+    #if <#build configuration 1#>
+        <#statements to compile and execute if build configuration 1 is true#>
+    #elseif <#build configuration 2#>
+        <#statements to compile and execute if build configuration 2 is true#>
+    #else
+        <#statements to compile and execute if both build configurations are false#>
+    #endif
+
+.. note::
+
+    Each statment in the body of a build configuration statement is parsed
+    even if it's not complied.
+
+.. syntax-grammar::
+
+    Grammar of a build configuration statement
+
+    build-configuration-statement --> ``#if`` build-configuration statements-OPT build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
+    build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
+    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements-OPT
+    build-configuration-else-clause --> ``#else`` statements-OPT
+
+    build-configuration --> platform-testing-function
+    build-configuration --> identifier
+    build-configuration --> boolean-literal
+    build-configuration --> ``(`` build-configuration ``)``
+    build-configuration --> ``!`` build-configuration
+    build-configuration --> build-configuration ``&&`` build-configuration
+    build-configuration --> build-configuration ``||`` build-configuration
+
+    platform-testing-function --> ``os`` ``(`` operating-system ``)``
+    platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    operating-system --> ``OSX`` | ``iOS`` | ``watchOS``
+    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+
+.. Testing notes:
+
+   !!true doesn't work but !(!true) does -- this matches normal expressions
+   #if can be nested, as expected
+   let's not explicitly document the broken precedence between && and ||
+       <rdar://problem/21692106> #if evaluates boolean operators without precedence
+
+   Also, the body of a build configuration statement contains *zero* or more statements.
+   Thus, this is allowed:
+       #if
+       #elseif
+       #else
+       #endif
+
+
+.. _Statements_LineControlStatement:
+
+Line Control Statement
+~~~~~~~~~~~~~~~~~~~~~~
+
+A line control statement is used to specify a line number and filename
+that are different than the line number and filename of the source code being compiled.
+Use a line control statement to change the source code location
+used by Swift for diagnostic and debugging purposes.
+
+A line control statement has the following form:
+
+.. syntax-outline::
+
+    #line <#line number#> <#filename#>
+
+A line control statement changes the values of the ``__LINE__`` and ``__FILE__``
+literal expressions, beginning with the line of code following the line control statement.
+The *line number* changes the value of ``__LINE__``
+and is any integer literal greater than zero.
+The *filename* changes the value of ``__FILE__`` and is a string literal.
+
+You can reset the source code location back to the default line numbering and filename
+by writing a line control statement without specifying a *line number* and *filename*.
+
+A line control statement must appear on its own line
+and can't be the last line of a source code file.
+
+.. syntax-grammar::
+
+    Grammar of a line control statement
+
+    line-control-statement --> ``#line``
+    line-control-statement --> ``#line`` line-number file-name
+    line-number --> A decimal integer greater than zero
+    file-name --> static-string-literal

@@ -613,15 +613,21 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
     escape_expr_body ::= [(]escape_expr_body[)]
     escape_expr_body ::= [^\n\r"()]
 
+
 .. syntax-grammar::
 
     Grammar of a string literal
 
-    string-literal --> ``"`` quoted-text-OPT ``"``
+    string-literal --> static-string-literal | interpolated-string-literal
+
+    static-string-literal --> ``"`` quoted-text-OPT ``"``
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
-    quoted-text-item --> ``\(`` expression ``)``
     quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
+
+    interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
+    interpolated-text --> interpolated-text-item interpolated-text-OPT
+    interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
