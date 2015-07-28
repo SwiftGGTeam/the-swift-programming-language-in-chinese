@@ -361,7 +361,7 @@ favoriteGenres.insert("Jazz")
 
 ```swift
 if let removedGenre = favoriteGenres.remove("Rock") {
-    print("\(removedValue)? I'm over it.")
+    print("\(removedGenre)? I'm over it.")
 } else {
     print("I never much cared for that.")
 }
@@ -456,7 +456,7 @@ let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
 let cityAnimals: Set = ["🐦", "🐭"]
 houseAnimals.isSubsetOf(farmAnimals)
 // true
-farmAnimals.isSuperSetOf(houseAnimals)
+farmAnimals.isSupersetOf(houseAnimals)
 // true
 farmAnimals.isDisjointWith(cityAnimals)
 // true
@@ -495,7 +495,7 @@ Swift 的字典使用`Dictionary<Key, Value>`定义，其中`Key`是字典中键
 我们可以像数组一样使用构造语法创建一个拥有确定类型的空字典：
 
 ```swift
-var namesOfIntegers = [Int: String]
+var namesOfIntegers = [Int: String]()
 // namesOfIntegers 是一个空的 [Int: String] 字典
 ```
 

@@ -495,6 +495,20 @@ plusOne(10)
 这种形式中，每一个事件块由关键字`case`开始，后面紧接着一个或多个以逗号分隔的枚举事件。每一个事件名必须是独一无二的。每一个事件也可以指定它所存储的指定类型的值，这些类型在*关联值类型(associated values types)*的元组里被指定，立即书写在事件
 名后。获得更多关于关联值类型的信息和例子，请查看[关联值(Associated Values)](TODO)一节。
 
+枚举有一个递归结构，就是说，枚举有着枚举类型自身实例的关联值的事件。然而，枚举类型的实例有值语义，意味着它们在内存中有着固定的位置。为了支持递归，编译器必需插入一个间接层。
+
+为间接使用特殊的枚举事件，使用`indirect`声明修饰符标记。
+
+> enum Tree<T> {
+> 		case Empty
+> 		indirect case Node(value: T, left: Tree, right:Tree)
+> }
+
+为了间接的使用一个枚举的所有事件，使用`indirect`修饰符标记整个枚举-当枚举有许多事件且每个事件都需要使用`indirect`修饰符标记的时候这将非常便利。
+
+一个被`indirect`修饰符标记的枚举事件必需有一个关联值。一个使用`indirect`修饰符标记的枚举包含有着关联值的事件和没有关联值的事件的混合。就是说，它不能包含任何也使用`indirect`修饰符标记的事件。
+
+
 <a name="enumerations_with_cases_of_a_raw-value_type"></a>
 ###使用原始值类型事件的枚举(Enumerations with Cases of a Raw-Value Type)
 
@@ -505,9 +519,9 @@ plusOne(10)
 >		case `enumeration case 2` = `raw value 2`  
 > }  
 
-在这种形式中，每一个事件块由`case`关键字开始，后面紧接着一个或多个以逗号分隔的枚举事件。和第一种形式的枚举事件不同，这种形式的枚举事件包含一个同类型的基础值，叫做*原始值(raw value)*。这些值的类型在*原始值类型(raw-value type)*中被指定，必须表示一个整数，浮点数，字符串，或者一个字符。特别是*原始值类型(raw-value type)*必需遵守`Equatable`类型的协议和下列形式中的一种字面量构造协议(literal-convertible protocols):整型字面量有`IntergerLiteralConvertible`，浮点行字面量有`FloatingPointLiteralConvertible`，包含任意数量字符的字符串型字面量有`StringLiteralConvertible`，仅包含一个单一字符的字符串型字面量有`ExtendedGraphemeClusterLiteralConvertible`。
+在这种形式中，每一个事件块由`case`关键字开始，后面紧接着一个或多个以逗号分隔的枚举事件。和第一种形式的枚举事件不同，这种形式的枚举事件包含一个同类型的基础值，叫做*原始值(raw value)*。这些值的类型在*原始值类型(raw-value type)*中被指定，必须表示一个整数，浮点数，字符串，或者一个字符。特别是*原始值类型(raw-value type)*必需遵守`Equatable`类型的协议和下列形式中的一种字面量构造协议(literal-convertible protocols):整型字面量有`IntergerLiteralConvertible`，浮点行字面量有`FloatingPointLiteralConvertible`，包含任意数量字符的字符串型字面量有`StringLiteralConvertible`，仅包含一个单一字符的字符串型字面量有`ExtendedGraphemeClusterLiteralConvertible`。每一个事件必须有唯一的名字，必须有一个唯一的初始值。
 
-每一个事件必须有唯一的名字，必须有一个唯一的初始值。如果初始值类型被指定为`Int`，则不必为事件显式的指定值，它们会隐式的被标为值`0,1,2`等。每一个没有被赋值的`Int`类型时间会隐式的赋予一个初始值，它们是自动递增的。
+如果初始值类型被指定为`Int`，则不必为事件显式的指定值，它们会隐式的被标为值`0,1,2`等。每一个没有被赋值的`Int`类型时间会隐式的赋予一个初始值，它们是自动递增的。
 
 ```Swift
 num ExampleEnum: Int {
@@ -516,6 +530,14 @@ num ExampleEnum: Int {
 ```
 
 在上面的例子中，`ExampleEnum.A`的值是`0`，`ExampleEnum.B`的值是`1`。因为`ExampleEnum.C`的值被显式的设定为`5`，因此`ExampleEnum.D`的值会自动增长为`6`。
+
+如果原始值类型被指定为`String`类型，你不用明确的为事件指定值，每一个没有指定的事件会隐式地用与事件名字相同的字符串指定。
+
+> enum WeekendDay: String {
+> 		case Saturday, Sunday
+> }
+
+在上面这个例子中，`WeekendDay.Saturday`的原始值是`"Saturday"`,`WeekendDay.Sunday`的原始值是`"Sunday"`。
 
 拥有多种事件的原始值类型的枚举含蓄地遵循定义在Swift标准库中的`RawRepresentable`协议。所以，它们拥有一个原始值(`rawValue`)属性和一个有着`init?(rawValue: RawValue)`签名的可失败构造器(a failable initializer)。可以使用原始值属性去取的枚举事件的原始值，就像在`ExampleEnum.B.rawValue`中一样。如果有一个事件符合，也可以使用原始值去找到一个符合的事件，通过调用枚举的可失败构造器，如`ExampleEnum(rawValue: 5)`,这个可失败构造器返回一个可选的事件。想得到更多的信息和关于原始值类型查看更多信息和获取初始值类型事件的信息，参阅初始值[原始值(Raw Values)](TODO)。
 
@@ -530,10 +552,10 @@ num ExampleEnum: Int {
 > 枚举声明语法 
 > *枚举声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO) _可选_ [*联合式枚举*](TODO) 
 > *枚举声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO)  _可选_ [*原始值式枚举*](..\chapter3\05_Declarations.html#raw_value_style_enum) 
-> *联合式枚举* → **enum** [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [类型继承子句](TODO)_可选_ **{** [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_ **}**  
+> *联合式枚举* → **indirect** _可选_ **enum** [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [类型继承子句](TODO)_可选_ **{** [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_ **}**  
 > *union-style-enum-members* → [*union-style-enum-member*](..\chapter3\05_Declarations.html#union_style_enum_member) [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_  
 > *union-style-enum-member* → [*声明*](..\chapter3\05_Declarations.html#declaration) | [*联合式(Union Style)的枚举case子句*](..\chapter3\05_Declarations.html#union_style_enum_case_clause)  
-> *联合式(Union Style)的枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **case** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
+> *联合式(Union Style)的枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **indirect** _可选_ **case** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
 > *联合式(Union Style)的枚举case列表* → [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) | [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) **,** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
 > *联合式(Union Style)的case* → [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组类型*](..\chapter3\03_Types.html#tuple_type) _可选_  
 > *枚举名* → [*标识符*](LexicalStructure.html#identifier)  
