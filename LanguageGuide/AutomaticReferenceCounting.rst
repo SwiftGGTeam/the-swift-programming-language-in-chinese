@@ -739,7 +739,9 @@ which provides a simple model for an individual element within an HTML document:
       }
 
 The ``HTMLElement`` class defines a ``name`` property,
-which indicates the name of the element, such as ``"p"`` for a paragraph element,
+which indicates the name of the element,
+such as ``"h1"`` for a heading element,
+``"p"`` for a paragraph element,
 or ``"br"`` for a line break element.
 ``HTMLElement`` also defines an optional ``text`` property,
 which you can set to a string that represents
@@ -764,7 +766,21 @@ However, because ``asHTML`` is a closure property rather than an instance method
 you can replace the default value of the ``asHTML`` property with a custom closure,
 if you want to change the HTML rendering for a particular HTML element.
 
-.. QUESTION: I don't actually do so, however. Is this a valid justification here?
+For example, the ``asHTML`` property could be set to a closure
+that defaults to some text if the ``text`` property is ``nil``,
+in order to prevent the representation from returning an empty HTML tag:
+
+.. testcode:: strongReferenceCyclesForClosures
+
+   -> let heading = HTMLElement(name: "h1")
+   << // heading : HTMLElement = REPL.HTMLElement
+   -> let defaultText = "some default text"
+   << // defaultText : String = "some default text"
+   -> heading.asHTML = {
+         return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+      }
+   -> print(heading.asHTML())
+   <- <h1>some default text</h1>
 
 .. note::
 
