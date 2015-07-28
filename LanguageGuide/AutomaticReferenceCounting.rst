@@ -431,13 +431,13 @@ This proves that the reference cycle has been broken.
 
 .. note::
 
-   In garbage-collected (GC) systems,
-   weak pointers are sometimes used as an ad hoc caching mechanism,
-   because objects with no strong references are only deallocated
-   when memory pressure necessitates it.
+   In systems that use garbage collection,
+   weak pointers are sometimes used to implement a simple caching mechanism
+   because objects with no strong references are deallocated
+   only when memory pressure triggers garbage collection.
    However, with ARC, values are deallocated
    as soon as their last strong reference is removed,
-   making them unsuitable for such a purpose.
+   making weak references unsuitable for such a purpose.
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
