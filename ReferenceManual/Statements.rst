@@ -1062,11 +1062,11 @@ have the following form:
 .. syntax-outline::
 
     #if <#build configuration 1#>
-        <#statements to compile and execute if build configuration 1 is true#>
+        <#statements to compile if build configuration 1 is true#>
     #elseif <#build configuration 2#>
-        <#statements to compile and execute if build configuration 2 is true#>
+        <#statements to compile if build configuration 2 is true#>
     #else
-        <#statements to compile and execute if both build configurations are false#>
+        <#statements to compile if both build configurations are false#>
     #endif
 
 .. note::

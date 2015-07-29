@@ -14,7 +14,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-08-03  * Updated the :ref:`ErrorHandling_Represent` section
+2015-08-05  * Updated the :ref:`ErrorHandling_Represent` section
               now that all types can conform to the ``ErrorType`` protocol.
 
             * Added information
