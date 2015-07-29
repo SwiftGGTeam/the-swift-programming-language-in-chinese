@@ -1052,9 +1052,9 @@ or it responds with some error information.
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse
+    << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
     -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse
+    << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
     ---
     >> var test_response: String = ""
     << // test_response : String = ""

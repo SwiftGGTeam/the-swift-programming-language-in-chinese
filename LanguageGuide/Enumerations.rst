@@ -231,7 +231,7 @@ New barcodes can then be created using either type:
 .. testcode:: enums
 
    -> var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
-   << // productBarcode : Barcode = REPL.Barcode
+   << // productBarcode : Barcode = REPL.Barcode.UPCA(8, 85909, 51226, 3)
 
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
@@ -519,10 +519,10 @@ For example, here's a function that evaluates an arithmetic expression:
     -> let four = ArithmeticExpression.Number(4)
     -> let sum = ArithmeticExpression.Addition(five, four)
     -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
-    << // five : ArithmeticExpression = REPL.ArithmeticExpression
-    << // four : ArithmeticExpression = REPL.ArithmeticExpression
-    << // sum : ArithmeticExpression = REPL.ArithmeticExpression
-    << // product : ArithmeticExpression = REPL.ArithmeticExpression
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
     -> print(evaluate(product))
     <- 18
 

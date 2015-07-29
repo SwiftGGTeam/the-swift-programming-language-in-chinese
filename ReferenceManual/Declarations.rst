@@ -990,7 +990,7 @@ you can get a reference to an enumeration case and apply it later in your code.
     ---
     -> // Apply f to create an array of Number instances with integer values
     -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number, REPL.Number, REPL.Number, REPL.Number]
+    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
