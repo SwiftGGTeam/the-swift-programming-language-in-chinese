@@ -61,7 +61,7 @@ of operating a vending machine:
 
    -> enum VendingMachineError: ErrorType {
           case InvalidSelection
-          case InsufficientFunds(required: Double)
+          case InsufficientFunds(centsNeeded: Int)
           case OutOfStock
       }
 
@@ -70,8 +70,8 @@ In this example, a vending machine can fail for the following reasons:
 * The requested item is not a valid selection, indicated by ``InvalidSelection``.
 * The requested item's cost is greater than the provided funds,
   indicated by ``InsufficientFunds``.
-  The associated ``Double`` value represents the balance
-  required to complete the transaction.
+  The associated ``Int`` value represents the additional amount
+  needed (in cents) to complete the transaction.
 * The request item is out of stock, indicated by ``OutOfStock``.
 
 .. _ErrorHandling_Throw:
@@ -105,7 +105,6 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    !! func f() throws -> Int {} // Compiler Error
    !! ^
 
-
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
    -> func f(callback: Void -> Int) { }
@@ -124,18 +123,18 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    -> struct Item {
-         var price: Double
+         var price: Int  // In cents
          var count: Int
       }
    ---
    -> var inventory = [
-          "Candy Bar": Item(price: 1.25, count: 7),
-          "Chips": Item(price: 1.00, count: 4),
-          "Pretzels": Item(price: 0.75, count: 11)
+          "Candy Bar": Item(price: 125, count: 7),
+          "Chips": Item(price: 100, count: 4),
+          "Pretzels": Item(price: 75, count: 11)
       ]
-   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 1.0, count: 4), "Candy Bar": REPL.Item(price: 1.25, count: 7), "Pretzels": REPL.Item(price: 0.75, count: 11)]
-   -> var amountDeposited = 1.00
-   << // amountDeposited : Double = 1.0
+   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 100, count: 4), "Candy Bar": REPL.Item(price: 125, count: 7), "Pretzels": REPL.Item(price: 75, count: 11)]
+   -> var amountDeposited = 100
+   << // amountDeposited : Int = 100
    ---
    -> func vend(itemNamed name: String) throws {
           guard var item = inventory[name] else {
@@ -152,8 +151,8 @@ or has a cost that exceeds the current deposited amount:
               --item.count
               inventory[name] = item
           } else {
-              let amountRequired = item.price - amountDeposited
-              throw VendingMachineError.InsufficientFunds(required: amountRequired)
+              let amountNeeded = item.price - amountDeposited
+              throw VendingMachineError.InsufficientFunds(centsNeeded: amountNeeded)
           }
       }
 
@@ -246,10 +245,10 @@ see :doc:`../ReferenceManual/Patterns`.
           print("Invalid Selection.")
       } catch VendingMachineError.OutOfStock {
           print("Out of Stock.")
-      } catch VendingMachineError.InsufficientFunds(let amountRequired) {
-          print("Insufficient funds. Please insert an additional $\(amountRequired).")
+      } catch VendingMachineError.InsufficientFunds(let amountNeeded) {
+          print("Insufficient funds. Please insert an additional \(amountNeeded) cents.")
       }
-   << Insufficient funds. Please insert an additional $0.25.
+   << Insufficient funds. Please insert an additional 25 cents.
 
 In the above example,
 the ``vend(itemNamed:)`` function is called in a ``try`` expression,
