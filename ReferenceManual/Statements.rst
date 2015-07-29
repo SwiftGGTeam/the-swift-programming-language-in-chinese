@@ -979,7 +979,7 @@ the ``catch`` clause matches and binds any error to a local constant named ``err
 For more information about the pattens you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
 
-To see an example of how to use a ``do`` statment with several ``catch`` clauses,
+To see an example of how to use a ``do`` statement with several ``catch`` clauses,
 see :ref:`ErrorHandling_Catch`.
 
 .. syntax-grammar::
@@ -1071,7 +1071,7 @@ have the following form:
 
 .. note::
 
-    Each statment in the body of a build configuration statement is parsed
+    Each statement in the body of a build configuration statement is parsed
     even if it's not complied.
 
 .. syntax-grammar::
