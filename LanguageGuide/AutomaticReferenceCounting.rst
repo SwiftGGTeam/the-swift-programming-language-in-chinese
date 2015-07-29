@@ -435,6 +435,7 @@ This proves that the reference cycle has been broken.
    However, with ARC, values are deallocated
    as soon as their last strong reference is removed,
    making weak references unsuitable for such a purpose.
+
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
 Unowned References
