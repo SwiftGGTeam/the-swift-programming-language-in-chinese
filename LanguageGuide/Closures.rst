@@ -425,13 +425,13 @@ so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
 The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
-and is added to the output array by the ``map(_:_:)`` function.
+and is added to the output array by the ``map(_:)`` method.
 
 The use of trailing closure syntax in the example above
 neatly encapsulates the closure's functionality
 immediately after the function that closure supports,
 without needing to wrap the entire closure within
-the ``map(_:_:)`` function's outer parentheses.
+the ``map(_:)`` method's outer parentheses.
 
 .. _Closures_CapturingValues:
 
