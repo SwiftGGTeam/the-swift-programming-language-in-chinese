@@ -253,15 +253,14 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 <a name="recursive_enumerations"></a>
 ## 递归枚举（Recursive Enumerations）
 
-Enumerations work well for modeling data when there is a fixed number of possibilities that need to be considered, such as the operations used for doing simple integer arithmetic. These operations let you combine simple arithmetic expressions that are made up of integers such as `5` into more complex ones such as `5 + 4`.
+在对操作符进行描述的时候，使用枚举类型来对数据建模很方便，因为需要考虑的情况固定可枚举。操作符可以将两个由数字组成的算数表达式连接起来，例如，将`5`连接成复杂一些的表达式`5+4`.
 
-One important characteristic of arithmetic expressions is that they can be nested. For example, the expression `(5 + 4) * 2` has a number on the right hand side of the multiplication and another expression on the left hand side of the multiplication. Because the data is nested, the enumeration used to store the data also needs to support nesting—this means the enumeration needs to be recursive.
+算数表达式的一个重要特性是，表达式可以嵌套使用。例如，表达式`(5 + 4) * 2`乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也许要支持这种嵌套————这表示枚举类型需要支持递归。
 
-A recursive enumeration is an enumeration that has another instance of the enumeration as the associated value for one or more of the enumeration members. The compiler has to insert a layer of indirection when it works with recursive enumerations. You indicate that an enumeration member is recursive by writing indirect before it.
+`递归枚举（recursive enumeration）`是一种枚举类型，表示它的枚举中，有一个或多个枚举成员拥有该枚举的其他成员作为相关值。使用递归枚举时，编译器会插入一个中间层。你可以在枚举成员前加上`indirect`来表示这成员可递归。
 
-A `recursive enumeration` is an enumeration that has another instance of the enumeration as the associated value for one or more of the enumeration members. The compiler has to insert a layer of indirection when it works with recursive enumerations. You indicate that an enumeration member is recursive by writing `indirect` before it.
+例如，下面的例子中，枚举类型存储了简单的算数表达式：
 
-For example, here is an enumeration that stores simple arithmetic expressions:
 
 ```swift
 enum ArithmeticExpression {
@@ -271,7 +270,7 @@ enum ArithmeticExpression {
 }
 ```
 
-You can also write `indirect` before the beginning of the enumeration, to enable indirection for all of the enumeration’s members that need it:
+你也可以在枚举类型开头加上`indirect`关键字来表示它的所有成员都是可递归的：
 
 ```swift
 indirect enum ArithmeticExpression {
@@ -281,9 +280,9 @@ indirect enum ArithmeticExpression {
 }
 ```
 
-This enumeration can store three kinds of arithmetic expressions: a plain number, the addition of two expressions, and the multiplication of two expressions. The `Addition` and `Multiplication` members have associated values that are also arithmetic expressions—these associated values make it possible to nest expressions.
+上面定义的枚举类型可以存储三种算数表达式：纯数字、两个表达式的相加、两个表达式相乘。`Addition` 和 `Multiplication`成员的相关值也是算数表达式————这些相关值使得嵌套表达式成为可能。
 
-A recursive function is a straightforward way to work with data that has a recursive structure. For example, here’s a function that evaluates an arithmetic expression:
+递归函数可以很直观地使用具有递归性质的数据结构。例如，下面是一个计算算数表达式的函数：
 
 ```swift
 func evaluate(expression: ArithmeticExpression) -> Int {
@@ -297,13 +296,13 @@ func evaluate(expression: ArithmeticExpression) -> Int {
     }
 }
  
-// evaluate (5 + 4) * 2
+// 计算 (5 + 4) * 2
 let five = ArithmeticExpression.Number(5)
 let four = ArithmeticExpression.Number(4)
 let sum = ArithmeticExpression.Addition(five, four)
 let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
 print(evaluate(product))
-// prints "18"
+// 输出 "18"
 ```
 
-This function evaluates a plain number by simply returning the associated value. It evaluates an addition or multiplication by evaluating the expression on the left hand side, evaluating the expression on the right hand side, and then adding them or multiplying them.
+该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法元算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
