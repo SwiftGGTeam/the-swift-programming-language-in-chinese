@@ -201,9 +201,16 @@ enum ASCIIControlCharacter: Character {
 
 在这里，称为`ASCIIControlCharacter`的枚举的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
 
-注意，原始值和相关值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
+原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。
 
-原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当整型值被用于原始值，如果其他枚举成员没有值时，它们会自动递增。
+>注意：  
+>原始值和相关值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
+
+### 原始值的隐式赋值（Implicitly Assigned Raw Values）
+
+在使用原始值为整数或者字符串类型的枚举时，不需要显式的为每一个成员赋值，这时，Swift将会自动为你赋值。
+
+例如，当使用整数作为原始值时，隐式赋值的值依次递增1。如果第一个值没有被赋初值，将会被自动置为0。
 
 下面的枚举是对之前`Planet`这个枚举的一个细化，利用原始整型值来表示每个 planet 在太阳系中的顺序：
 
@@ -213,23 +220,46 @@ enum Planet: Int {
 }
 ```
 
-自动递增意味着`Planet.Venus`的原始值是`2`，依次类推。
+在上面的例子中，`Plant.Mercury`赋了初值`1`，`Planet.Venus`会拥有隐式赋值`2`，依次类推。
+
+当使用字符串作为枚举类型的初值时，每个枚举成员的隐式初值则为该成员的名称。
+
+下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为咩个方向的名称：
+
+```swift
+enum CompassPoint: String {
+    case North, South, East, West
+}
+```
+
+上面例子中，`CompassPoint.South`拥有隐式初值`South`，依次类推。
 
 使用枚举成员的`rawValue`属性可以访问该枚举成员的原始值：
 
 ```swift
 let earthsOrder = Planet.Earth.rawValue
-// earthsOrder is 3
+// earthsOrder 值为 3
+
+let sunsetDirection = CompassPoint.West.rawValue
+// sunsetDirection 值为 "West"
 ```
 
-通过参数为`rawValue`构造函数创建特定原始值的枚举。这个例子通过原始值`7`识别`Uranus`：
+### 使用原始值初始化枚举变量（Initializing from a Raw Value）
+
+如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法将原始值类型作为参数，返回枚举成员或者`nil`。你可以使用这种初始化方法来创建一个新的枚举变量。
+
+这个例子通过原始值`7`从而创建枚举成员：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
-// possiblePlanet is of type Planet? and equals Planet.Uranus
+// possiblePlanet 类型为 Planet? 值为 Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+
+<!-- TODO 连接 -->  
+>注意：  
+>原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[Failableinitializers](http://)
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
