@@ -139,7 +139,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
