@@ -448,7 +448,7 @@ are also hashable by default.
    or in different programs.
 
    Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must must also provide an implementation of the “is equal” operator (``==``).
+   conforming types must also provide an implementation of the “is equal” operator (``==``).
    The ``Equatable`` protocol requires
    any conforming implementation of ``==`` to be an equivalence relation.
    That is, an implementation of ``==`` must satisfy the following three conditions,
