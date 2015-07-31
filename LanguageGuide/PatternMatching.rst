@@ -10,8 +10,9 @@ A pattern can describe any values that follow a particular rule, like
 In Swift, patterns can be used to represent
 single values, tuples, and enumeration cases, as well as
 type-cast values, optionals, and certain expressions.
-By testing a value against a pattern rather than an individual value,
-an expression can be used to evaluate a variety of different values.
+By testing a value against a pattern
+rather than against another individual value,
+you can use an expression to evaluate a variety of different values.
 This is known as :newTerm:`pattern matching`.
 
 For example,
@@ -20,7 +21,7 @@ have different values and different types,
 but can both be represented by a pattern consisting of a three-element tuple.
 When matching these values against a pattern,
 each element of the tuple can be either ignored using the wildcard pattern (`_`),
-or bound to a constant or variable name.
+or bound to a constant or variable name:
 
 .. testcode:: patternMatchingIntroduction
 
@@ -70,7 +71,7 @@ In this case, the pattern is evaluated against a value of an assignment expressi
    }
 
 A ``for``-``in`` loop can specify a pattern
-to iterate over only the values that match the specified pattern.
+to iterate over only the values that match the specified pattern:
 
 .. syntax-outline::
 
@@ -87,11 +88,11 @@ but easier to read and maintain as well.
 Matching Enumeration Cases with Associated Values
 -------------------------------------------------
 
-Patterns can be used to match on enumeration cases and their associated values.
+You can use patterns to match on enumeration cases and their associated values.
 
 For example,
 consider a ``Status`` enumeration,
-which represents whether a train is running on time or is delayed.
+which represents whether a train is running on time or is delayed:
 
 .. testcode:: patternMatchingEnumeration
 
@@ -110,7 +111,7 @@ which does not store an associated value.
 However, when a train is delayed,
 its status is ``.Delayed(Int)``,
 which stores an associated ``Int`` value
-representing the extent of the delay in minutes.
+representing the extent of the delay in minutes:
 
 .. testcode:: patternMatchingEnumeration
 
@@ -119,7 +120,7 @@ representing the extent of the delay in minutes.
    -> let badNews = Status.Delayed(minutes: 90)
    << // badNews : Status = REPL.Status.Delayed(90)
 
-The ``Train`` class can be extended to implement a ``description`` property,
+You can extend the ``Train`` class to implement a ``description`` property,
 which returns a human-readable ``String`` value reporting the status of the train:
 
 .. testcode:: patternMatchingEnumeration
@@ -158,7 +159,7 @@ For example,
 the corresponding ``case`` for a slightly delayed train
 can capture the associated ``minutes`` value using a value-binding pattern,
 and specify the range in an additional ``where`` clause.
-This allows the associated value to be used in the branch:
+This capability allows the associated value to be used in the branch:
 
 .. testcode:: patternMatchingEnumeration
 
@@ -172,8 +173,8 @@ This allows the associated value to be used in the branch:
    >> }
    >> }
 
-Enumeration patterns and associated value-binding patterns
-can be matched in a ``for``-``in`` loop as well.
+You can match enumeration patterns and associated value-binding patterns
+in a ``for``-``in`` loop as well.
 Consider the following three ``Train`` values:
 
 .. testcode:: patternMatchingEnumeration
@@ -222,14 +223,14 @@ which is then added to the ``runningTotal`` variable.
 Matching Optionals
 ------------------
 
-Patterns can be used to match on values of optional types.
+You can use patterns to match on values of optional types.
 
 For example,
 consider an array of type ``[Int?]``,
 which contains optional integer values
 corresponding to responses to a survey.
 Responses from participants are represented by a score between ``1`` and ``5``.
-``nil`` responses indicate that a participant abstained from responding.
+A ``nil`` response indicates that a participant abstained from responding.
 
 .. testcode:: patternMatchingOptional
 
@@ -260,7 +261,7 @@ to record only responses with a score:
 However, as discussed in the previous section,
 enumeration cases can be pattern matched
 in such a way that their associated values are bound to a constant or variable.
-Since optionals use the ``Optional<T>`` enumeration
+Because optionals use the ``Optional<T>`` enumeration
 in their underlying implementation,
 the same enumeration pattern matching approach can be used
 to iterate over only non-``nil`` values in the ``surveyResponses`` array:
@@ -279,12 +280,12 @@ Because of how important optionals are to the language,
 Swift provides a shorthand syntax for matching on optional values:
 the optional pattern.
 You can append a question mark (``?``) to a constant or variable name
-to match optionals that containing a value,
+to match optionals that contain a value,
 and bind that value to the constant or variable.
 
 The following code is an easier way to express the code above,
 matching on an optional pattern ``score?``
-instead of an enumeration pattern.
+instead of an enumeration pattern:
 
 .. testcode:: patternMatchingOptional
 
@@ -299,7 +300,7 @@ instead of an enumeration pattern.
 Matching Values in a Tuple
 --------------------------
 
-Patterns can be used to match on tuples with any number of elements.
+You can use patterns to match on tuples with any number of elements.
 
 For example,
 consider a ``Symbol`` enumeration that represents
@@ -311,8 +312,8 @@ the possible values on a slot machine reel in a casino:
           case 🍒, 🍊, 🍋, 🍇, 🍉, 🔔, 💰
       }
 
-To calculate the payoff of a particular result of a spin,
-you can test for each combination of winning possibilities
+To calculate the payoff for a particular result of a spin,
+test for each combination of winning possibilities
 using a series of ``if`` statements and equality operators (``==``):
 
 .. testcode:: patternMatchingTuple_Alternative
@@ -334,7 +335,7 @@ Although this is a straightforward approach,
 the resulting code is not particularly concise or readable.
 
 However, by pattern matching on tuples in a ``switch`` statement,
-each of the winning combinations can be visually inspected with ease:
+you can visually inspect each of the winning combinations:
 
 .. testcode:: patternMatchingTuple
 
@@ -359,13 +360,13 @@ a tuple pattern is matched against the evaluated tuple of ``Symbol`` values.
 When matching on a tuple value,
 a tuple pattern first determines whether the tuple has the same number of elements,
 and then proceeds to evaluate each tuple element
-according to its corresponding sub-pattern.
+according to its corresponding subpattern.
 Most of the combinations involve getting three-in-a-row of the same symbol,
 however combinations starting with 🍒 or 🍒🍒 return a consolation prize.
 Because the wildcard pattern ``_`` matches all ``Symbol`` values ---
 including ``.🍒`` ---
 the pattern ``(.🍒, .🍒,  _ )`` must precede the pattern ``(.🍒, _ ,  _ )``
-in order to be evaluated.
+in order to be evaluated:
 
 .. TODO
 
@@ -398,7 +399,7 @@ in order to be evaluated.
 Matching Values by Type
 -----------------------
 
-Patterns can be used to match on particular types.
+You can use patterns to match on particular types.
 
 For example,
 consider a ``Waterfowl`` protocol,
@@ -428,7 +429,7 @@ For each element in the heterogeneous array,
 you can use a ``switch`` statement
 with cases matching ``is`` type-casting patterns
 to determine the element's specific class type ---
-either ``Duck`` or ``Goose``.
+either ``Duck`` or ``Goose``:
 
 .. testcode:: patternMatchingType
 
@@ -476,16 +477,16 @@ in order to use a value as its matched type:
    << Honk!
 
 However, neither of these options are particularly well-suited,
-since a forced downcast can fail and trigger a runtime error,
+because a forced downcast can fail and trigger a runtime error,
 and a conditional downcast with optional chaining is inconvenient.
 Instead, you can use the ``as`` type-casting pattern
 when you're interested in working with the matched value
-as that particular type.
+as a particular type.
 
 The ``as`` pattern, like the ``is`` pattern,
 matches a value if it is the type specified by the pattern.
 Unlike the ``is`` pattern, however,
-the matched value can be bound to a constant or variable of the returned type.
+the matched value can be bound to a constant or variable of the returned type:
 
 .. testcode:: patternMatchingType
 
@@ -511,8 +512,8 @@ that is used in the corresponding branch statements.
 Pattern Matching Over a Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can iterate over only elements in a sequence of a particular type
-by matching an ``as`` pattern in a ``for``-``in`` loop.
+You can iterate over only elements of a particular type in a sequence
+by matching an ``as`` pattern in a ``for``-``in`` loop:
 
 .. testcode:: patternMatchingType
 
@@ -607,7 +608,7 @@ to iterate over only a subset of keys:
    <- Buddy
    <- Christy
 
-For each key / value pair in the dictionary,
+For each key/value pair in the dictionary,
 the tuple pattern is evaluated.
 If the iterated value is contained by the range ``75...100``,
 then the key is bound to the ``passingStudent`` constant
@@ -617,8 +618,8 @@ within the body of the loop.
 
    Intervals are matched using the expression pattern.
    Any type can be matched using the expression pattern
-   if they provide an implementation of the contains (``~=``) operator.
+   if the type provides an implementation of the contains (``~=``) operator.
    By default, the ``~=`` operator compares
-   two values of the same type using the ``==`` operator
+   two values of the same type using the ``==`` operator.
 
    For more information, see :ref:`Patterns_ExpressionPattern`.
