@@ -115,25 +115,6 @@ Function parameters and return values are extremely flexible in Swift.
 You can define anything from a simple utility function with a single unnamed parameter
 to a complex function with expressive parameter names and different parameter options.
 
-.. _Functions_MultipleInputParameters:
-
-Multiple Input Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Functions can have multiple input parameters,
-which are written within the function's parentheses, separated by commas.
-
-This function takes a start and an end index for a half-open range,
-and works out how many elements the range contains:
-
-.. testcode:: multipleInputParameters
-
-   -> func halfOpenRangeLength(start start: Int, end: Int) -> Int {
-         return end - start
-      }
-   -> print(halfOpenRangeLength(start: 1, end: 10))
-   <- 9
-
 .. _Functions_FunctionsWithoutParameters:
 
 Functions Without Parameters
