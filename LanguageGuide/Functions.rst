@@ -373,8 +373,15 @@ A local parameter name is used in the implementation of the function.
 By default, the first parameter omits its external name,
 and the second and subsequent parameters
 use their local name as their external name.
-All parameters must have unique local names,
-but may share external parameter in common.
+All parameters must have unique local names.
+Although it's possible for multiple parameters
+to have the same external name,
+unique external names help make your code more readable.
+
+.. assertion:: non-unique-external-name
+
+   -> func foo(external a: Int, external b: Int) { }
+   -> foo(external: 7, external: 12)
 
 .. _Functions_ExternalParameterNames:
 
