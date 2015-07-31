@@ -263,7 +263,7 @@ This is because Objective-C does not have explicitly typed arrays.
 However, you can often be confident about the type of objects contained in such an array
 just from the information you know about the API that provided the array.
 
-In these situations, you can use the forced version of the type cast operator (``as``)
+In these situations, you can use the forced version of the type cast operator (``as!``)
 to downcast each item in the array to a more specific class type than ``AnyObject``,
 without the need for optional unwrapping.
 
@@ -380,9 +380,3 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
    </ Hello, Michael
 
-.. note::
-
-   The cases of a ``switch`` statement use
-   the forced version of the type cast operator (``as``, not ``as?``)
-   to check and cast to a specific type.
-   This check is always safe within the context of a ``switch`` case statement.

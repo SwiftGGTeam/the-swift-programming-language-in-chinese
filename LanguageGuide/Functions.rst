@@ -115,25 +115,6 @@ Function parameters and return values are extremely flexible in Swift.
 You can define anything from a simple utility function with a single unnamed parameter
 to a complex function with expressive parameter names and different parameter options.
 
-.. _Functions_MultipleInputParameters:
-
-Multiple Input Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Functions can have multiple input parameters,
-which are written within the function's parentheses, separated by commas.
-
-This function takes a start and an end index for a half-open range,
-and works out how many elements the range contains:
-
-.. testcode:: multipleInputParameters
-
-   -> func halfOpenRangeLength(start start: Int, end: Int) -> Int {
-         return end - start
-      }
-   -> print(halfOpenRangeLength(start: 1, end: 10))
-   <- 9
-
 .. _Functions_FunctionsWithoutParameters:
 
 Functions Without Parameters
@@ -392,8 +373,15 @@ A local parameter name is used in the implementation of the function.
 By default, the first parameter omits its external name,
 and the second and subsequent parameters
 use their local name as their external name.
-All parameters must have unique local names,
-but may share external parameter in common.
+All parameters must have unique local names.
+Although it's possible for multiple parameters
+to have the same external name,
+unique external names help make your code more readable.
+
+.. assertion:: non-unique-external-name
+
+   -> func foo(external a: Int, external b: Int) { }
+   -> foo(external: 7, external: 12)
 
 .. _Functions_ExternalParameterNames:
 

@@ -293,7 +293,6 @@
     "functions-functiontypesasparametertypes": "ID176", 
     "functions-functiontypesasreturntypes": "ID177", 
     "functions-inoutparameters": "ID173", 
-    "functions-multipleinputparameters": "ID161", 
     "functions-nestedfunctions": "ID178", 
     "functions-omittingparameternames": "ID526", 
     "functions-optionaltuplereturntypes": "ID165", 
