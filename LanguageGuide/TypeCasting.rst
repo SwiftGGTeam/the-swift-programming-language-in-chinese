@@ -380,9 +380,3 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
    </ Hello, Michael
 
-.. note::
-
-   The cases of a ``switch`` statement use
-   the forced version of the type cast operator (``as``, not ``as?``)
-   to check and cast to a specific type.
-   This check is always safe within the context of a ``switch`` case statement.
