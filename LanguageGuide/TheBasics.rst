@@ -947,7 +947,7 @@ An optional says:
    without the need for special constants.
 
 Here's an example of how optionals can be used to cope with the absence of a value.
-Swift's ``String`` type has an initializer
+Swift's ``Int`` type has an initializer
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
