@@ -793,8 +793,8 @@ if unknownUnit == nil {
 class Product {
     let name: String!
     init?(name: String) {
-        if name.isEmpty { return nil }
         self.name = name
+        if name.isEmpty { return nil }
     }
 }
 ```
