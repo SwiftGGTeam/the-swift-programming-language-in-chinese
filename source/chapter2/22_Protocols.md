@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[geek5nan](https://github.com/geek5nan)
 > 校对：[dabing1022](https://github.com/dabing1022)
+
+> 2.0
+> 翻译+校对：[futantan](https://github.com/futantan)
 
 # 协议
 -----------------
@@ -170,7 +174,7 @@ print("And another one: \(generator.random())")
 <a name="mutating_method_requirements"></a>
 ## 对Mutating方法的规定
 
-有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改它所属的实例及其实例属性的值。这一过程在[Modifyting Value Types from Within Instance Methods](TODO)章节中有详细描述。
+有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改它所属的实例及其实例属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
 
 如果你在协议中定义了一个方法旨在改变遵循该协议的实例，那么在协议定义时需要在方法前加`mutating`关键字。这使得结构和枚举遵循协议并满足此方法要求。
 
@@ -234,12 +238,10 @@ class SomeClass: SomeProtocol {
 
 使用`required`修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。
 
-<!--TODO 参考链接-->
-关于`required`构造器的更多内容，请参考<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_454">`Required`构造器 </a>
+关于`required`构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
 
-<!--TODO 参考链接-->
 >注意  
->如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_339">防止重写</a>
+>如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
 
 如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
 
@@ -266,7 +268,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器的规定
 
-可以通过给协议`Protocols`中添加可失败构造器来使遵循该协议的类型必须实现该可失败构造器。
+可以通过给协议`Protocols`中添加[可失败构造器](./14_Initialization.html#failable_initializers)来使遵循该协议的类型必须实现该可失败构造器。
 
 如果在协议中定义一个可失败构造器，则在遵顼该协议的类型中必须添加同名同参数的可失败构造器或非可失败构造器。如果在协议中定义一个非可失败构造器，则在遵循该协议的类型中必须添加同名同参数的非可失败构造器或隐式解析类型的可失败构造器（`init!`）。
 
@@ -346,7 +348,7 @@ protocol DiceGameDelegate {
 
 `DiceGame`协议可以在任意含有骰子的游戏中实现。`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
 
-如下所示，`SnakesAndLadders`是`Snakes and Ladders`(译者注:[Control Flow](2)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
+如下所示，`SnakesAndLadders`是`Snakes and Ladders`([Control Flow](./05_Control_Flow.html)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
 
 ```swift
 class SnakesAndLadders: DiceGame {
@@ -438,7 +440,7 @@ game.play()
 <a name="adding_protocol_conformance_with_an_extension"></a>
 ## 在扩展中添加协议成员
 
-即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(*译者注: 类，结构体，枚举等*)。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。详情请在[扩展](4)章节中查看。
+即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(*译者注: 类，结构体，枚举等*)。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。详情请在[扩展](./21_Extensions.html)章节中查看。
 
 > 注意  
 > 通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法
@@ -602,7 +604,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 <!--TODO 链接-->
 
 >注意  
->当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_145">结构体和枚举是值类型</a>和<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_146">类是引用类型</a>
+>当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
 
 
 <a name="protocol_composition"></a>
@@ -644,7 +646,7 @@ wishHappyBirthday(birthdayPerson)
 ## 检验协议的一致性
 
 <!--TODO 链接-->
-你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[Typy Casting章节](5)*):
+你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[类型转换](./20_Type_Casting.html)*):
 
 * `is`操作符用来检查实例是否`遵循`了某个`协议`
 * `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
@@ -721,7 +723,7 @@ for object in objects {
 协议可以含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`optional`关键字作为前缀来定义可选成员。
 
 <!--TODO 链接-->
-可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容，详细内容在[Optional Chaning](7)章节中查看。
+可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容，详细内容在[可空链式调用](./17_Optional_Chaining.html)章节中查看。
 
 像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。可选方法和可选属性都会返回一个`可选值(optional value)`，当其不可访问时，`?`之后语句不会执行，并整体返回`nil`
 
@@ -876,7 +878,7 @@ extension PrettyTextRepresentable  {
 
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where 子句](TODO))。:
+在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where语句](./23_Generics.html#where_clauses))。:
 
 例如，你可以扩展`CollectionType`协议，但是只适用于元素遵循`TextRepresentable`的情况:
 

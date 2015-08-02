@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[yankuangshi](https://github.com/yankuangshi)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
+
+> 2.0
+> 翻译+校对：[futantan](https://github.com/futantan)
 
 # 枚举（Enumerations）
 ---
@@ -20,7 +24,7 @@
 
 在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
-欲了解更多相关信息，请参见[属性（Properties）](10_Properties.html)，[方法（Methods）](11_Methods.html)，[构造过程（Initialization）](14_Initialization.html)，[扩展（Extensions）](20_Extensions.html)和[协议（Protocols）](21_Protocols.html)。
+欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./20_Extensions.html)和[协议（Protocols）](./21_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -97,7 +101,7 @@ case .West:
 
 等等以此类推。
 
-正如在[控制流（Control Flow）](05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制性全部穷举的要求确保了枚举成员不会被意外遗漏。
+正如在[控制流（Control Flow）](./05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制性全部穷举的要求确保了枚举成员不会被意外遗漏。
 
 当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确被提出的枚举成员：
 
@@ -187,7 +191,7 @@ case let .QRCode(productCode):
 <a name="raw_values"></a>
 ## 原始值（Raw Values）
 
-在[Associated Values](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的另一种选择，枚举成员可以被默认值（称为原始值）赋值，其中这些原始值具有相同的类型。
+在[相关值](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的另一种选择，枚举成员可以被默认值（称为原始值）赋值，其中这些原始值具有相同的类型。
 
 这里是一个枚举成员存储 ASCII 码的例子：
 
@@ -199,7 +203,7 @@ enum ASCIIControlCharacter: Character {
 }
 ```
 
-在这里，`ASCIIControlCharacter`的枚举类型的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
+在这里，`ASCIIControlCharacter`的枚举类型的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见[字符串和字符](./03_Strings_and_Characters.html)部分。
 
 
 原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。
@@ -261,7 +265,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 <!-- TODO 连接 -->  
 >注意：  
->原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[Failableinitializers](http://)
+>原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations#failable_initializers)
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 

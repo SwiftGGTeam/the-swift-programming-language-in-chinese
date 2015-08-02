@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[xiehurricane](https://github.com/xiehurricane)
-> 校对：[happyming](https://github.com/happyming) [yangsiy](https://github.com/yangsiy)
+> 校对：[happyming](https://github.com/happyming)
+
+> 2.0
+> 翻译+校对：[yangsiy](https://github.com/yangsiy)
 
 # 类型转换（Type Casting）
 -----------------
@@ -16,7 +20,7 @@ _类型转换_可以判断实例的类型，也可以将实例看做是其父类
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类是否实现了某个协议，就像在 [Checking for Protocol Conformance](Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-XID_363)部分讲述的一样。
+你也可以用它来检查一个类是否实现了某个协议，就像在 [检验协议的一致性](./22_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
 ## 定义一个类层次作为例子
@@ -155,6 +159,7 @@ Swift为不确定类型提供了两种特殊类型别名：
 > 注意：  
 > 只有当你明确的需要它的行为和功能时才使用`Any`和`AnyObject`。在你的代码里使用你期望的明确的类型总是更好的。
 
+<a name="anyobject"></a>
 ### `AnyObject`类型
 
 当在工作中使用 Cocoa APIs，我们一般会接收一个`[AnyObject]`类型的数组，或者说“一个任何对象类型的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以从 API 提供的信息中清晰地确定数组中对象的类型。

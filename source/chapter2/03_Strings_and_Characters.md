@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[wh1100717](https://github.com/wh1100717)  
 > 校对：[Hawstein](https://github.com/Hawstein)
+
+> 2.0
+> 翻译+校对：[DianQK](https://github.com/DianQK)
 
 # 字符串和字符（Strings and Characters）
 ---
@@ -30,7 +34,7 @@ Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode �
 你也可以在常量、变量、字面量和表达式中进行字符串插值操作，这可以帮助你轻松创建用于展示、存储和打印的自定义字符串。
 
 > 注意：  
-> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [AnyObject](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID343) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
+> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [`AnyObject`类型](./20_Type_Casting.html#anyobject) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
 > 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。  
 
 
@@ -88,7 +92,7 @@ constantString += " and another Highlander"
 Swift 的`String`类型是值类型。
 如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。
 任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。
-值类型在 [结构体和枚举是值类型](09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
+值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
 
 > 注意：  
 > 与 Cocoa 中的`NSString`不同，当您在 Cocoa 中创建了一个`NSString`实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该`NSString`实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
@@ -115,7 +119,7 @@ for character in "Dog!🐶".characters {
 // 🐶
 ```
 
-for-in 循环在 [For Loops](05_Control_Flow.html#for_loops) 中进行了详细描述。
+for-in 循环在 [For Loops](./05_Control_Flow.html#for_loops) 中进行了详细描述。
 
 另外，通过标明一个`Character`类型并用字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
@@ -370,7 +374,7 @@ Swift 提供了三种方式来比较文本值：字符串字符相等、前缀�
 
 <a name="string_and_character_equality"></a>
 ### 字符串/字符相等 (String and Character Equality)
-字符串/字符可以用等于操作符(`==`)和不等于操作符(`!=`)，详细描述在 [Comparison Operators](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-ID70)：
+字符串/字符可以用等于操作符(`==`)和不等于操作符(`!=`)，详细描述在[比较运算符](./02_Basic_Operators.html#comparison_operators)：
 
 ```swift
 let quotation = "We're a lot alike, you and I."

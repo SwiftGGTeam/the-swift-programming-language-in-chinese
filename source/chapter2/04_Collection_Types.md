@@ -1,5 +1,9 @@
-> 翻译：[zqp](https://github.com/zqp), [JackAlan](https://github.com/AlanMelody)
-> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai), [feiin](https://github.com/feiin), [JackAlan](https://github.com/AlanMelody)
+> 1.0
+> 翻译：[zqp](https://github.com/zqp), 
+> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai), [feiin](https://github.com/feiin)
+
+> 2.0
+> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 # 集合类型 (Collection Types)
 -----------------
@@ -18,7 +22,7 @@ Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的集合类型�
 Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把不正确的数据类型插入其中。同时这也说明我们完全可以对取回值的类型非常自信。
 
 > 注意：
-Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为泛型集合。更多关于泛型类型和集合，参见 [泛型](23_Generics.html)章节。
+Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为泛型集合。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
 
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
@@ -35,7 +39,7 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为泛型集合。更�
 
 > 注意:
  Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 *Using Swift with Cocoa and Obejective-C* 一书。
+ 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -255,14 +259,14 @@ for (index, value) in shoppingList.enumerate() {
 
 > 注意：
 > Swift的`Set`类型被桥接到`Fundation`中的`NSSet`类。
-> 关于使用`Fundation`和`Cocoa`中`Set`的知识，请看 *Using Swift with Cocoa and Objective-C*。
+> 关于使用`Fundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
 
 <a name="hash_values_for_set_types"></a>
 #### Set类型的哈希值
 
 为了存储在集合中，该类型必须是可哈希化的-也就是说，该类型必须提供一个方法来计算它的哈希值。一个哈希值是```Int```类型的，它和其他的对象相同，其被用来比较相等与否，比如```a==b```,它遵循的是```a.hashValue == b.hashValue```。
 
-Swift 的所有基本类型(比如```String```,```Int```,```Double```和```Bool```)默认都是可哈希化的，它可以作为集合的值或者字典的键值类型。没有关联值的枚举成员值(在[枚举部分](08_Enumerations.html)有讲述)默认也是可哈希化的。
+Swift 的所有基本类型(比如```String```,```Int```,```Double```和```Bool```)默认都是可哈希化的，它可以作为集合的值或者字典的键值类型。没有关联值的枚举成员值(在[枚举](./08_Enumerations.html)有讲述)默认也是可哈希化的。
 
 > 注意：
 > 你可以使用你自定义的类型作为集合的值或者是字典的键值类型，但你需要使你的自定义类型服从Swift标准库中的`Hashable`协议。服从`Hashable`协议的类型需要提供一个类型为`Int`的取值访问器属性`hashValue`。这个由类型的`hashValue`返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
@@ -272,7 +276,7 @@ Swift 的所有基本类型(比如```String```,```Int```,```Double```和```Bool`
 * ```a==b```意味着```b==a```(对称性)
 * ```a==b&&b==c```意味着```a==c```(传递性)
 
-关于协议遵循的更多信息，请看[协议](22_Protocols.html)
+关于协议遵循的更多信息，请看[协议](./22_Protocols.html)
 
 <a name="set_type_syntax"></a>
 ### Set类型语法
@@ -393,7 +397,7 @@ for genre in favoriteGenres {
 // Hip hop
 ```
 
-更多关于`for-in`循环信息，参见[For循环](05_Control_Flow.html#for_loops)。
+更多关于`for-in`循环信息，参见[For循环](./05_Control_Flow.html#for_loops)。
 
 Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中值可以使用`sort()`方法，它将根据提供的序列返回一个排序的集合.
 
@@ -471,7 +475,7 @@ farmAnimals.isDisjointWith(cityAnimals)
 
 > 注意：
 > Swiftly 的`Dictionary` 类型被桥接到Foundation的`NSDictionary`类。
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 *Using Swift with Cocoa and Obejective-C* 一书。
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
 
 <a name="dictionary_type_shorthand_syntax"></a>
 ## 字典类型快捷语法
@@ -640,7 +644,7 @@ for (airportCode, airportName) in airports {
 // LHR: London Heathrow
 ```
 
-更多关于`for-in`循环的信息，参见[For 循环](05_Control_Flow.html#for_loops)。
+更多关于`for-in`循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
 
 通过访问`keys`或者`values`属性，我们也可以遍历字典的键或者值。
 

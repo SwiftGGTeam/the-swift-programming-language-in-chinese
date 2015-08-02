@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[Hawstein](https://github.com/Hawstein)  
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai), [KYawn](https://github.com/KYawn)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[KYawn](https://github.com/KYawn)
 
 # 特性
 -----------------
@@ -25,7 +29,7 @@
 
 `autoclosure`
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以声明返回表达式自身类型的没有参数的方法类型，也可以用于函数参数的声明。含有`autoclosure`特性的声明同时也具有`noescape`的特性，除非传递可选参数`escaping`.关于怎样使用`autoclosure`特性的例子，参见[函数类型](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449).
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以声明返回表达式自身类型的没有参数的方法类型，也可以用于函数参数的声明。含有`autoclosure`特性的声明同时也具有`noescape`的特性，除非传递可选参数`escaping`.关于怎样使用`autoclosure`特性的例子，参见[函数类型](./03_Types.html#function_type).
 
 `available`
 

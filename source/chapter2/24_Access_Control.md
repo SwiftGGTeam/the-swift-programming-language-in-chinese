@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[JaceFu](http://www.devtalking.com/)  
 > 校对：[ChildhoodAndy](http://childhood.logdown.com)
+
+> 2.0
+> 翻译+校对：[mmoaay](https://github.com/mmoaay)
 
 # 访问控制
 ------------------
@@ -288,13 +292,13 @@ public struct TrackedString {
 
 <a name="initializers"></a>
 ## 初始化
-我们可以给自定义的初始化方法申明访问级别，但是要不高于它所属类的访问级别。但[必要构造器](TODO)例外，它的访问级别必须和所属类的访问级别相同。
+我们可以给自定义的初始化方法申明访问级别，但是要不高于它所属类的访问级别。但[必要构造器](./14_Initialization.html#required_initializers)例外，它的访问级别必须和所属类的访问级别相同。
 
 如同函数或方法参数，初始化方法参数的访问级别也不能低于初始化方法的访问级别。
 
 <a name="default_initializers"></a>
 ### 默认初始化方法
-Swift为结构体、类都提供了一个默认的无参初始化方法，用于给它们的所有属性提供赋值操作，但不会给出具体值。默认初始化方法可以参阅[Default Initializers](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_336)。默认初始化方法的访问级别与所属类型的访问级别相同。
+Swift为结构体、类都提供了一个默认的无参初始化方法，用于给它们的所有属性提供赋值操作，但不会给出具体值。默认初始化方法可以参阅[默认构造器](./14_Initialization.html#default_initializers)。默认初始化方法的访问级别与所属类型的访问级别相同。
 
 > 注意：如果一个类型被申明为`public`级别，那么默认的初始化方法的访问级别为`internal`。如果你想让无参的初始化方法在其他模块中可以被使用，那么你必须提供一个具有`public`访问级别的无参初始化方法。
 

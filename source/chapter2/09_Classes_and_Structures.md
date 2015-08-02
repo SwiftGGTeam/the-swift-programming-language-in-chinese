@@ -1,5 +1,9 @@
-> 翻译：[JaySurplus](https://github.com/JaySurplus),[SkyJean](https://github.com/SkyJean)
-> 校对：[sg552](https://github.com/sg552),[SkyJean](https://github.com/SkyJean)
+> 1.0
+> 翻译：[JaySurplus](https://github.com/JaySurplus)
+> 校对：[sg552](https://github.com/sg552)
+
+> 2.0
+> 翻译+校对：[SkyJean](https://github.com/SkyJean)
 
 # 类和结构体
 
@@ -31,7 +35,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 通过扩展以增加默认实现的功能
 * 实现协议以提供某种标准功能
 
-更多信息请参见 [属性](10_Properties.html)，[方法](11_Methods.html)，[下标脚本](12_Subscripts.html)，[初始过程](14_Initialization.html)，[扩展](20_Extensions.html)，和[协议](21_Protocols.html)。
+更多信息请参见 [属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标脚本](./12_Subscripts.html)，[初始过程](./14_Initialization.html)，[扩展](./20_Extensions.html)，和[协议](./21_Protocols.html)。
 
 与结构体相比，类还有如下的附加功能：
 
@@ -40,7 +44,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 解构器允许一个类实例释放任何其所被分配的资源
 * 引用计数允许对一个类的多次引用
 
-更多信息请参见[继承](13_Inheritance.html)，[类型转换](20_Type_Casting.html)，[析构过程](15_Deinitialization)，和[自动引用计数](16_Automatic_Reference_Counting)。
+更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./20_Type_Casting.html)，[析构过程](./15_Deinitialization)，和[自动引用计数](./16_Automatic_Reference_Counting)。
 
 > 注意：
 结构体总是通过被复制的方式在代码中传递，因此请不要使用引用计数。
@@ -91,7 +95,7 @@ let someResolution = Resolution()
 let someVideoMode = VideoMode()
 ```
 
-结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
+结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](./14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
 
 ### 属性访问
 
@@ -130,7 +134,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 let vga = Resolution(width:640, height: 480)
 ```
 
-与结构体不同，类实例没有默认的成员逐一构造器。[构造过程](14_Initialization.html)章节会对构造器进行更详细的讨论。
+与结构体不同，类实例没有默认的成员逐一构造器。[构造过程](./14_Initialization.html)章节会对构造器进行更详细的讨论。
 
 <a name="structures_and_enumerations_are_value_types"></a>
 ## 结构体和枚举是值类型
@@ -249,7 +253,7 @@ if tenEighty === alsoTenEighty {
 * “等价于”表示两个类类型（class type）的常量或者变量引用同一个类实例。
 * “等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。
 
-当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[运算符函数(Operator Functions)](24_Advanced_Operators.html#operator_functions)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
+当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[等价操作符](./24_Advanced_Operators.html#equivalence_operators)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
 
 ### 指针
 

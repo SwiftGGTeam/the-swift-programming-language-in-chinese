@@ -1,5 +1,9 @@
-> 翻译：[honghaoz](https://github.com/honghaoz), [ray16897188](https://github.com/ray16897188)  
+> 1.0
+> 翻译：[honghaoz](https://github.com/honghaoz)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[ray16897188](https://github.com/ray16897188)  
 
 # 模式（Patterns）
 -----------------
@@ -24,14 +28,14 @@ swift语言中模式有2个基本的分类：一类能成功和任何值的类�
 第二类模式用于全模式匹配，这种情况下你用来相比较的值在运行时可能还不存在。此类模式包括枚举用例模式（enumeration case patterns），可选模式（optional patterns），表达式模式（expression patterns）和类型转换模式（type-casting patterns）。你在`switch`语句的case标签中，`do`语句的`catch`从句中，或者在`if, while, guard`和`for-in`语句的case条件句中使用这类模式。
 
 > 模式(Patterns) 语法  
-> *模式* → [*通配符模式*](..\chapter3\07_Patterns.html#wildcard_pattern) [*类型标注*](..\chapter3\03_Types.html#type_annotation) _可选_  
-> *模式* → [*标识符模式*](..\chapter3\07_Patterns.html#identifier_pattern) [*类型标注*](..\chapter3\03_Types.html#type_annotati(Value Binding)on) _可选_  
-> *模式* → [*值绑定模式*](..\chapter3\07_Patterns.html#value_binding_pattern)  
-> *模式* → [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) [*类型标注*](..\chapter3\03_Types.html#type_annotation) _可选_  
-> *模式* → [*枚举用例模式*](..\chapter3\07_Patterns.html#enum_case_pattern)  
-> *模式* → [*可选模式*](..\chapter3\07_Patterns.html#optional_pattern)  
-> *模式* → [*类型转换模式*](..\chapter3\07_Patterns.html#type_casting_pattern)  
-> *模式* → [*表达式模式*](..\chapter3\07_Patterns.html#expression_pattern)  
+> *模式* → [*通配符模式*](../chapter3/07_Patterns.html#wildcard_pattern) [*类型标注*](../chapter3/03_Types.html#type_annotation) _可选_  
+> *模式* → [*标识符模式*](../chapter3/07_Patterns.html#identifier_pattern) [*类型标注*](../chapter3/03_Types.html#type_annotati(Value Binding)on) _可选_  
+> *模式* → [*值绑定模式*](../chapter3/07_Patterns.html#value_binding_pattern)  
+> *模式* → [*元组模式*](../chapter3/07_Patterns.html#tuple_pattern) [*类型标注*](../chapter3/03_Types.html#type_annotation) _可选_  
+> *模式* → [*枚举用例模式*](../chapter3/07_Patterns.html#enum_case_pattern)  
+> *模式* → [*可选模式*](../chapter3/07_Patterns.html#optional_pattern)  
+> *模式* → [*类型转换模式*](../chapter3/07_Patterns.html#type_casting_pattern)  
+> *模式* → [*表达式模式*](../chapter3/07_Patterns.html#expression_pattern)  
 
 <a name="wildcard_pattern"></a>
 ## 通配符模式（Wildcard Pattern）
@@ -83,7 +87,7 @@ case let (x, y):
 在上面这个例子中，`let`将元组模式`(x, y)`分配到各个标识符模式。正是由于这么做，`switch`语句中`case let (x, y):`和`case (let x, let y):`匹配到的值是一样的。
 
 > 值绑定(Value Binding)模式语法  
-> *值绑定模式* → **var** [*模式*](..\chapter3\07_Patterns.html#pattern) | **let** [*模式*](..\chapter3\07_Patterns.html#pattern)  
+> *值绑定模式* → **var** [*模式*](../chapter3/07_Patterns.html#pattern) | **let** [*模式*](../chapter3/07_Patterns.html#pattern)  
 
 <a name="tuple_pattern"></a>
 ## 元组模式（Tuple Pattern）
@@ -111,9 +115,9 @@ let (a): Int = 2 // a: Int = 2
 ```
 
 > 元组模式语法  
-> *元组模式* → **(** [*元组模式元素列表*](..\chapter3\07_Patterns.html#tuple_pattern_element_list) _可选_ **)**  
-> *元组模式元素列表* → [*元组模式元素*](..\chapter3\07_Patterns.html#tuple_pattern_element) | [*元组模式元素*](..\chapter3\07_Patterns.html#tuple_pattern_element) **,** [*元组模式元素列表*](..\chapter3\07_Patterns.html#tuple_pattern_element_list)  
-> *元组模式元素* → [*模式*](..\chapter3\07_Patterns.html#pattern)  
+> *元组模式* → **(** [*元组模式元素列表*](../chapter3/07_Patterns.html#tuple_pattern_element_list) _可选_ **)**  
+> *元组模式元素列表* → [*元组模式元素*](../chapter3/07_Patterns.html#tuple_pattern_element) | [*元组模式元素*](../chapter3/07_Patterns.html#tuple_pattern_element) **,** [*元组模式元素列表*](../chapter3/07_Patterns.html#tuple_pattern_element_list)  
+> *元组模式元素* → [*模式*](../chapter3/07_Patterns.html#pattern)  
 
 <a name="enumeration_case_pattern"></a>
 ## 枚举用例模式（Enumeration Case Pattern）
@@ -123,7 +127,7 @@ let (a): Int = 2 // a: Int = 2
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用`switch`语句来匹配包含关联值枚举用例的例子，请参阅`Associated Values`.
 
 > 枚举用例模式语法  
-> *enum-case-pattern* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) _可选_ **.** [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组模式*](..\chapter3\07_Patterns.html#tuple_pattern) _可选_  
+> *enum-case-pattern* → [*类型标识*](../chapter3/03_Types.html#type_identifier) _可选_ **.** [*枚举的case名*](../chapter3/05_Declarations.html#enum_case_name) [*元组模式*](../chapter3/07_Patterns.html#tuple_pattern) _可选_  
 
 <a name="optional_pattern"></a>
 ## 可选模式（Optional Pattern）
@@ -158,7 +162,7 @@ for case let number? in arrayOfOptinalInts {
 
 ```
 > 可选模式语法  
-> *可选模式* → [*标识符模式*](..\chapter3\03_Types.html#type_identifier) ?
+> *可选模式* → [*标识符模式*](../chapter3/03_Types.html#type_identifier) ?
 
 <a name="type-casting_patterns"></a>
 ## 类型转换模式（Type-Casting Patterns）
@@ -175,9 +179,9 @@ for case let number? in arrayOfOptinalInts {
 关于使用`switch`语句来匹配`is`模式和`as`模式值的例子，请参阅`Type Casting for Any and AnyObject`。
 
 > 类型转换模式语法  
-> *type-casting-pattern* → [*is模式*](..\chapter3\07_Patterns.html#is_pattern) | [*as模式*](..\chapter3\07_Patterns.html#as_pattern)  
-> *is模式* → **is** [*类型*](..\chapter3\03_Types.html#type)  
-> *as模式* → [*模式*](..\chapter3\07_Patterns.html#pattern) **as** [*类型*](..\chapter3\03_Types.html#type)  
+> *type-casting-pattern* → [*is模式*](../chapter3/07_Patterns.html#is_pattern) | [*as模式*](../chapter3/07_Patterns.html#as_pattern)  
+> *is模式* → **is** [*类型*](../chapter3/03_Types.html#type)  
+> *as模式* → [*模式*](../chapter3/07_Patterns.html#pattern) **as** [*类型*](../chapter3/03_Types.html#type)  
 
 <a name="expression_pattern"></a>
 ## 表达式模式（Expression Pattern）
@@ -216,4 +220,4 @@ default:
 ```
 
 > 表达式模式语法  
-> *表达式模式* → [*表达式*](..\chapter3\04_Expressions.html#expression)  
+> *表达式模式* → [*表达式*](../chapter3/04_Expressions.html#expression)  

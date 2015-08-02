@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[pp-prog](https://github.com/pp-prog)  
 > 校对：[zqp](https://github.com/zqp)
+
+> 2.0
+> 翻译+校对：[DianQK](https://github.com/DianQK)
 
 # 方法（Methods）
 -----------------
@@ -16,7 +20,7 @@
 <a name="instance_methods"></a>
 ## 实例方法 (Instance Methods)
 
-**实例方法**是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见[函数](../charpter2/06_Functions.md)。
+**实例方法**是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见[函数](./06_Functions.md)。
 
 实例方法要写在它所属的类型的前后大括号之间。实例方法能够隐式访问它所属类型的所有的其他实例方法和属性。实例方法只能被它所属的类的某个特定实例调用。实例方法不能脱离于现存的实例而被调用。
 
@@ -60,7 +64,7 @@ class Counter {
 <a name="local_and_external_parameter"></a>
 ### 方法的局部参数名称和外部参数名称(Local and External Parameter Names for Methods)
 
-函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[函数的外部参数名](06_Functions.html)。方法参数也一样（因为方法就是函数，只是这个函数与某个类型相关联了）。
+函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.html#specifying_external_parameter_names)。方法参数也一样（因为方法就是函数，只是这个函数与某个类型相关联了）。
 
 Swift 中的方法和 Objective-C 中的方法极其相似。像在 Objective-C 中一样，Swift 中方法的名称通常用一个介词指向方法的第一个参数，比如：`with`，`for`，`by`等等。前面的`Counter`类的例子中`incrementBy(_:)`方法就是这样的。介词的使用让方法在被调用时能像一个句子一样被解读。
 
@@ -157,7 +161,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX(_:y:)`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字，这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](10_Properties.html#global_and_local_variables)：
+注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](./10_Properties.html#global_and_local_variables)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)

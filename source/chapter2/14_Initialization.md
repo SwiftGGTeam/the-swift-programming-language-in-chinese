@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[lifedim](https://github.com/lifedim)
-> 校对：[lifedim](https://github.com/lifedim)，[chenmingbiao](https://github.com/chenmingbiao)
+> 校对：[lifedim](https://github.com/lifedim)
+
+> 2.0
+> 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
 
 # 构造过程（Initialization）
 
@@ -21,7 +25,7 @@
 
 构造过程是通过定义构造器（`Initializers`）来实现的，这些构造器可以看做是用来创建特定类型实例的特殊方法。与 Objective-C 中的构造器不同，Swift 的构造器无需返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化。
 
-类的实例也可以通过定义析构器（`deinitializer`）在实例释放之前执行特定的清除工作。想了解更多关于析构器的内容，请参考[析构过程](15_Deinitialization.html)。
+类的实例也可以通过定义析构器（`deinitializer`）在实例释放之前执行特定的清除工作。想了解更多关于析构器的内容，请参考[析构过程](./15_Deinitialization.html)。
 
 <a name="setting_initial_values_for_stored_properties"></a>
 ## 存储型属性的初始赋值
@@ -193,6 +197,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
 
 调查问题在问题提出之后，我们才能得到回答。所以我们将属性回答`response`声明为`String?`类型，或者说是可选字符串类型`optional String`。当`SurveyQuestion`实例化时，它将自动赋值为空`nil`，表明暂时还不存在此字符串。
 
+<a name="assigning_constant_properties_during_initialization"></a>
 ### 构造过程中常量属性的修改
 
 只要在构造过程结束前常量的值能确定，你可以在构造过程中的任意时间点修改常量属性的值。
@@ -237,6 +242,7 @@ var item = ShoppingListItem()
 
 由于`ShoppingListItem`类中的所有属性都有默认值，且它是没有父类的基类，它将自动获得一个可以为所有属性设置默认值的默认构造器（尽管代码中没有显式为`name`属性设置默认值，但由于`name`是可选字符串类型，它将默认设置为`nil`）。上面例子中使用默认构造器创造了一个`ShoppingListItem`类的实例（使用`ShoppingListItem()`形式的构造器语法），并将其赋值给变量`item`。
 
+<a name="memberwise_initializers_for_structure_types"></a>
 ### 结构体的逐一成员构造器
 
 除上面提到的默认构造器，如果结构体对所有存储型属性提供了默认值且自身没有提供定制的构造器，它们能自动获得一个逐一成员构造器。
@@ -259,14 +265,14 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 
 构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为构造器代理，它能减少多个构造器间的代码重复。
 
-构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给本身提供的其它构造器。类则不同，它可以继承自其它类（请参考[继承](13_Inheritance.html)），这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节[类的继承和构造过程](#class_inheritance_and_initialization)中介绍。
+构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给本身提供的其它构造器。类则不同，它可以继承自其它类（请参考[继承](./13_Inheritance.html)），这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节[类的继承和构造过程](#class_inheritance_and_initialization)中介绍。
 
 对于值类型，你可以使用`self.init`在自定义的构造器中引用其它的属于相同值类型的构造器。并且你只能在构造器内部调用`self.init`。
 
 如果你为某个值类型定义了一个定制的构造器，你将无法访问到默认构造器（如果是结构体，则无法访问逐一对象构造器）。这个限制可以防止你在为值类型定义了一个更复杂的，完成了重要准备构造器之后，别人还是错误的使用了那个自动生成的构造器。
 
 >注意：  
-假如你想通过默认构造器、逐一对象构造器以及你自己定制的构造器为值类型创建实例，我们建议你将自己定制的构造器写到扩展（`extension`）中，而不是跟值类型定义混在一起。想查看更多内容，请查看[扩展](20_Extensions.html)章节。
+假如你想通过默认构造器、逐一对象构造器以及你自己定制的构造器为值类型创建实例，我们建议你将自己定制的构造器写到扩展（`extension`）中，而不是跟值类型定义混在一起。想查看更多内容，请查看[扩展](./20_Extensions.html)章节。
 
 下面例子将定义一个结构体`Rect`，用来代表几何矩形。这个例子需要两个辅助的结构体`Size`和`Point`，它们各自为其所有的属性提供了初始值`0.0`。
 
@@ -324,7 +330,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 构造器`init(center:size:)`可以自己将`origin`和`size`的新值赋值到对应的属性中。然而尽量利用现有的构造器和它所提供的功能来实现`init(center:size:)`的功能，是更方便、更清晰和更直观的方法。
 
 >注意：  
-如果你想用另外一种不需要自己定义`init()`和`init(origin:size:)`的方式来实现这个例子，请参考[扩展](20_Extensions.html)。
+如果你想用另外一种不需要自己定义`init()`和`init(origin:size:)`的方式来实现这个例子，请参考[扩展](./20_Extensions.html)。
 
 <a name="class_inheritance_and_initialization"></a>
 ## 类的继承和构造过程
@@ -361,8 +367,8 @@ convenience init(parameters) {
 }
 ```
 
-<a name="initialization_chain"></a>
-### 构造器链
+<a name="initializer_delegation_for_class_types"></a>
+### 类的构造器代理规则
 
 为了简化指定构造器和便利构造器之间的调用关系，Swift 采用以下三条规则来限制构造器之间的代理调用：
 
@@ -465,6 +471,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 最终，一旦子类的指定构造器完成调用，最开始被调用的便利构造器可以执行更多的定制操作。
 
+<a name="initializer_inheritance_and_overriding"></a>
 ### 构造器的继承和重载
 
 跟 Objective-C 中的子类不同，Swift 中的子类不会默认继承父类的构造器。Swift 的这种机制可以防止一个父类的简单构造器被一个更专业的子类继承，并被错误的用来创建子类的实例。
@@ -609,7 +616,7 @@ class RecipeIngredient: Food {
 
 `RecipeIngredient`也定义了一个便利构造器`init(name: String)`，它只通过`name`来创建`RecipeIngredient`的实例。这个便利构造器假设任意`RecipeIngredient`实例的`quantity`为1，所以不需要显示指明数量即可创建出实例。这个便利构造器的定义可以让创建实例更加方便和快捷，并且避免了使用重复的代码来创建多个`quantity`为 1 的`RecipeIngredient`实例。这个便利构造器只是简单的将任务代理给了同一类里提供的指定构造器。
 
-注意，`RecipeIngredient`的便利构造器`init(name: String)`使用了跟`Food`中指定构造器`init(name: String)`相同的参数。因为这个便利构造器重写要父类的指定构造器`init(name: String)`，必须在前面使用使用`override`标识。
+注意，`RecipeIngredient`的便利构造器`init(name: String)`使用了跟`Food`中指定构造器`init(name: String)`相同的参数。因为这个便利构造器重写要父类的指定构造器`init(name: String)`，必须在前面使用使用`override`标识（参见[构造器的继承和重载](#initializer_inheritance_and_overriding)）。
 
 在这个例子中，`RecipeIngredient`的父类是`Food`，它有一个便利构造器`init()`。这个构造器因此也被`RecipeIngredient`继承。这个继承的`init()`函数版本跟`Food`提供的版本是一样的，除了它是将任务代理给`RecipeIngredient`版本的`init(name: String)`而不是`Food`提供的版本。
 

@@ -1,5 +1,9 @@
-> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao), [JackAlan](https://github.com/AlanMelody)
-> 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai), [JackAlan](https://github.com/AlanMelody)
+> 1.0
+> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
+> 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 # 控制流
 -----------------
@@ -87,7 +91,7 @@ for (animalName, legCount) in numberOfLegs {
 // spiders have 8 legs
 ```
 
-字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。关于数组和字典，详情参见[集合类型](04_Collection_Types.html)。
+字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。
 
 <a name="for"></a>
 
@@ -529,8 +533,9 @@ case let (x, y):
 - `break`
 - `fallthrough`
 - `return`
+- `throw`
 
-我们将会在下面讨论`continue`、`break`和`fallthrough`语句。`return`语句将会在[函数](06_Functions.html)章节讨论。
+我们将会在下面讨论`continue`、`break`和`fallthrough`语句。`return`语句将会在[函数](./06_Functions.html)章节讨论，`throw`语句会在[错误抛出](./18_Error_Handling.html#throwing_errors)
 
 <a name="continue"></a>
 ### Continue

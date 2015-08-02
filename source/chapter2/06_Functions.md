@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[honghaoz](https://github.com/honghaoz)
 > 校对：[LunaticM](https://github.com/LunaticM)
+
+> 2.0
+> 翻译+校对：[dreamkidd](https://github.com/dreamkidd)
 
 # 函数（Functions）
 -----------------
@@ -116,6 +120,7 @@ print(sayHello("Tim", alreadyGreeted: true))
 
 当调用超过一个参数的函数时,第一个参数后的参数根据其对应的参数名称标记,函数参数命名在[函数参数名称（Function Parameter Names）](#Function_Parameter_Names)有更详细的描述.
 
+<a name="functions_without_return_values"></a>
 ### 无返回值函数（Functions Without Return Values）
 
 函数可以没有返回值。下面是 `sayHello(_:)` 函数的另一个版本，叫 `sayGoodbye(_:)`，这个函数直接输出 `String` 值，而不是返回它：
@@ -242,6 +247,7 @@ someFunction(1, secondParameterName: 2)
 
 一般情况下,第一个参数省略其外部参数名,第二个以后的参数使用其本地参数名作为自己的外部参数名.所有参数需要有不同的本地参数名,但可以共享相同的外部参数名.
 
+<a name="specifying_external_parameter_names"></a>
 ### 指定外部参数名(Specifying External Parameter Names)
 
 你可以在本地参数名前指定外部参数名,中间以逗号分隔.
@@ -373,6 +379,7 @@ let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
 > 注意：
 > 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
 
+<a name="in_out_parameters"></a>
 ### 输入输出参数（In-Out Parameters）
 
 变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。

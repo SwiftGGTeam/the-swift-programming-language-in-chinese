@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[Lin-H](https://github.com/Lin-H)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
+
+> 2.0
+> 翻译+校对：[SergioChan](https://github.com/SergioChan)
 
 # 嵌套类型
 -----------------
@@ -72,7 +76,7 @@ struct BlackjackCard {
 
 `BlackjackCard`结构体自身有两个属性—`rank`与`suit`，也同样定义了一个计算属性`description`，`description`属性用`rank`和`suit`的中内容来构建对这张扑克牌名字和数值的描述，并用可选类型`second`来检查是否存在第二个值，若存在，则在原有的描述中增加对第二数值的描述。
 
-因为`BlackjackCard`是一个没有自定义构造函数的结构体，在[Memberwise Initializers for Structure Types](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/14Initialization.md)中知道结构体有默认的成员构造函数，所以你可以用默认的`initializer`去初始化新的常量`theAceOfSpades`:
+因为`BlackjackCard`是一个没有自定义构造函数的结构体，在[结构体的逐一成员构造器](./14_Initialization.html#memberwise_initializers_for_structure_types)中知道结构体有默认的成员构造函数，所以你可以用默认的`initializer`去初始化新的常量`theAceOfSpades`:
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)

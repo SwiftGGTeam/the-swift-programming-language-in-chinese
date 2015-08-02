@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[lyuka](https://github.com/lyuka)  
 > 校对：[Hawstein](https://github.com/Hawstein)
+
+> 2.0
+> 翻译+校对：[shanksyang](https://github.com/shanksyang)
 
 #扩展（Extensions）
 ----
@@ -25,7 +29,7 @@ Swift 中的扩展可以：
 - 使一个已有类型符合某个协议
 
 TODO：
-在 Swift 中，你甚至可以对一个协议(Procotol)进行扩展，提供协议需要的实现，或者添加额外的功能能够对合适的类型带来额外的好处。你可以从[协议扩展](#)获取更多的细节。
+在 Swift 中，你甚至可以对一个协议(Procotol)进行扩展，提供协议需要的实现，或者添加额外的功能能够对合适的类型带来额外的好处。你可以从[协议扩展](./Protocols.html#protocol_extensions)获取更多的细节。
 
 >注意：  
 扩展可以对一个类型添加新的功能，但是不能重写已有的功能。
@@ -48,7 +52,7 @@ extension SomeType: SomeProtocol, AnotherProctocol {
 }
 ```
 
-按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议遵循者](21_Protocols.html#adding_protocol_conformance_with_an_extension)
+按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议遵循者](./21_Protocols.html#adding_protocol_conformance_with_an_extension)
 
 >注意：  
 如果你定义了一个扩展向一个已有类型添加新功能，那么这个新功能对该类型的所有已有实例中都是可用的，即使它们是在你的这个扩展的前面定义的。
@@ -101,7 +105,7 @@ print("A marathon is \(aMarathon) meters long")
 > 注意：  
 如果你使用扩展向一个值类型添加一个构造器，在该值类型已经向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers）时，你可以在值类型的扩展构造器中调用默认构造器(default initializers)和逐一成员构造器(memberwise initializers)。
 >
-正如在[值类型的构造器代理](14_Initialization.html#initializer_delegation_for_value_types)中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
+正如在[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
 
 下面的例子定义了一个用于描述几何矩形的定制结构体`Rect`。这个例子同时定义了两个辅助结构体`Size`和`Point`，它们都把`0.0`作为所有属性的默认值：
 
@@ -117,7 +121,7 @@ struct Rect {
     var size = Size()
 }
 ```
-因为结构体`Rect`提供了其所有属性的默认值，所以正如[默认构造器](14_Initialization.html#default_initializers)中描述的，它可以自动接受一个默认构造器和一个逐一成员构造器。这些构造器可以用于构造新的`Rect`实例：
+因为结构体`Rect`提供了其所有属性的默认值，所以正如[默认构造器](./14_Initialization.html#default_initializers)中描述的，它可以自动接受一个默认构造器和一个逐一成员构造器。这些构造器可以用于构造新的`Rect`实例：
 
 ```swift
 let defaultRect = Rect()

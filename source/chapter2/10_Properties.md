@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[shinyzhu](https://github.com/shinyzhu)  
 > 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
+
+> 2.0
+> 翻译+校对：[yangsiy](https://github.com/yangsiy)
 
 # 属性 (Properties)
 ---
@@ -23,7 +27,7 @@
 
 简单来说，一个存储属性就是存储在特定类或结构体的实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
 
-可以在定义存储属性的时候指定默认值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[默认属性值](../chapter2/14_Initialization.html#default_property_values)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程](../chapter2/14_Initialization.html)一章的[在初始化阶段修改常量存储属性](../chapter2/14_Initialization.html#modifying_constant_properties_during_initialization)一节。
+可以在定义存储属性的时候指定默认值，请参考[默认属性值](./14_Initialization.html#default_property_values)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[在初始化阶段修改常量存储属性](./14_Initialization.html#assigning_constant_properties_during_initialization)一节。
 
 下面的例子定义了一个名为`FixedLengthRange`的结构体，它描述了一个在创建后无法修改值域宽度的区间：
 
@@ -219,7 +223,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 *属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，甚至新的值和现在的值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重载请参考[继承](chapter/13_Inheritance.html)一章的[重载](chapter/13_Inheritance.html#overriding)。
+可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重载请参考[重载](./13_Inheritance.html#overriding)。
 
 > 注意：  
 > 不需要为非重载的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。  
@@ -235,7 +239,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 > 注意：  
 > 父类的属性在子类的构造器中被赋值时，它在父类中的`willSet`和`didSet`观察器会被调用。  
-> 有关构造器代理的更多信息，请参考[值类型的构造器代理](chapter/14_Initialization.html#initializer_delegation_for_value_types)和[构造器链](chapter/14_Initialization.html#initialization_chain)。
+> 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)和[类的构造器代理规则](./14_Initialization.html#initializer_delegation_for_class_types)。
 
 这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 

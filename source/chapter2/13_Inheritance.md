@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[Hawstein](https://github.com/Hawstein)  
 > 校对：[menlongsheng](https://github.com/menlongsheng)
+
+> 2.0
+> 翻译+校对：[shanksyang](https://github.com/shanksyang)
 
 # 继承（Inheritance）
 -------------------

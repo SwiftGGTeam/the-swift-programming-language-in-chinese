@@ -1,5 +1,9 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb), [xtymichael](https://github.com/xtymichael)
+> 1.0
+> 翻译：[numbbbbb](https://github.com/numbbbbb)
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 # Swift 初见
 
@@ -27,7 +31,7 @@ print("Hello, world")
 
 > 注意：
 > 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
-> <a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese/raw/gh-pages/source/chapter1/GuidedTour.playground.zip">下载Playground</a>
+> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip">下载Playground</a>
 
 <a name="simple_values"></a>
 ## 简单值

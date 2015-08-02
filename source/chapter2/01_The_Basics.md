@@ -1,5 +1,9 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus), [xtymichael](https://github.com/xtymichael)
+> 1.0
+> 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)
 > 校对：[lslxdx](https://github.com/lslxdx)
+
+> 2.0
+> [xtymichael](https://github.com/xtymichael)
 
 # 基础部分
 -----------------
@@ -99,6 +103,12 @@ var welcomeMessage: String
 welcomeMessage = "Hello"
 ```
 
+你可以在一行中定义多个同样类型的变量，用逗号分割，并在最后一个变量名之后添加类型标注：
+
+```swift
+var red, green, blue: Double
+```
+
 > 注意：  
 一般来说你很少需要写类型标注。如果你在声明常量或者变量的时候赋了一个初始值，Swift可以推断出这个常量或者变量的类型，请参考[类型安全和类型推断](#type_safety_and_type_inference)。在上面的例子中，没有给`welcomeMessage`赋初始值，所以变量`welcomeMessage`的类型是通过一个类型标注指定的，而不是通过初始值推断的。
 
@@ -165,7 +175,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 ```
 
 > 注意：  
-字符串插值所有可用的选项，请参考[字符串插值](03_Strings_and_Characters.html#string_interpolation)。
+字符串插值所有可用的选项，请参考[字符串插值](./03_Strings_and_Characters.html#string_interpolation)。
 
 <a name="comments"></a>
 ## 注释
@@ -369,7 +379,7 @@ let twoThousandAndOne = twoThousand + UInt16(one)
 
 现在两个数字的类型都是`UInt16`，可以进行相加。目标常量`twoThousandAndOne`的类型被推断为`UInt16`，因为它是两个`UInt16`值的和。
 
-`SomeType(ofInitialValue)`是调用 Swift 构造器并传入一个初始值的默认方法。在语言内部，`UInt16`有一个构造器，可以接受一个`UInt8`类型的值，所以这个构造器可以用现有的`UInt8`来创建一个新的`UInt16`。注意，你并不能传入任意类型的值，只能传入`UInt16`内部有对应构造器的值。不过你可以扩展现有的类型来让它可以接收其他类型的值（包括自定义类型），请参考[扩展](20_Extensions.html)。
+`SomeType(ofInitialValue)`是调用 Swift 构造器并传入一个初始值的默认方法。在语言内部，`UInt16`有一个构造器，可以接受一个`UInt8`类型的值，所以这个构造器可以用现有的`UInt8`来创建一个新的`UInt16`。注意，你并不能传入任意类型的值，只能传入`UInt16`内部有对应构造器的值。不过你可以扩展现有的类型来让它可以接收其他类型的值（包括自定义类型），请参考[扩展](./20_Extensions.html)。
 
 <a name="integer_and_floating_point_conversion"></a>
 ### 整数和浮点数转换
@@ -440,7 +450,7 @@ if turnipsAreDelicious {
 // 输出 "Eww, turnips are horrible."
 ```
 
-条件语句，例如`if`，请参考[控制流](05_Control_Flow.html)。
+条件语句，例如`if`，请参考[控制流](./05_Control_Flow.html)。
 
 如果你在需要使用`Bool`类型的地方使用了非布尔值，Swift 的类型安全机制会报错。下面的例子会报告一个编译时错误：
 
@@ -460,7 +470,7 @@ if i == 1 {
 }
 ```
 
-`i == 1`的比较结果是`Bool`类型，所以第二个例子可以通过类型检查。类似`i == 1`这样的比较，请参考[基本操作符](05_Control_Flow.html)。
+`i == 1`的比较结果是`Bool`类型，所以第二个例子可以通过类型检查。类似`i == 1`这样的比较，请参考[基本操作符](./05_Control_Flow.html)。
 
 和 Swift 中的其他类型安全的例子一样，这个方法可以避免错误并保证这块代码的意图总是清晰的。
 
@@ -522,10 +532,10 @@ print("The status message is \(http200Status.description)")
 // 输出 "The status message is OK"
 ```
 
-作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个`(Int, String)`元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](06_Functions.html#Function_Parameters_and_Return_Values)。
+作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个`(Int, String)`元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](./06_Functions.html#Function_Parameters_and_Return_Values)。
 
 > 注意：  
-元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](09_Classes_and_Structures.html)。
+元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](./09_Classes_and_Structures.html)。
 
 <a name="optionals"></a>
 ## 可选类型
@@ -608,7 +618,7 @@ if convertedNumber != nil {
 <a name="optional_binding"></a>
 ### 可选绑定
 
-使用可选绑定（optional binding）来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在`if`和`while`语句中来对可选类型的值进行判断并把值赋给一个常量或者变量。`if`和`while`语句，请参考[控制流](05_Control_Flow.html)。
+使用可选绑定（optional binding）来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在`if`和`while`语句中来对可选类型的值进行判断并把值赋给一个常量或者变量。`if`和`while`语句，请参考[控制流](./05_Control_Flow.html)。
 
 像下面这样在`if`语句中写一个可选绑定：
 
@@ -654,7 +664,7 @@ if let constantName = someOptional, anotherConstantName = someOtherOptional {
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[类实例之间的循环强引用](16_Automatic_Reference_Counting.html#strong_reference_cycles_between_class_instances)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./16_Automatic_Reference_Counting.html#unowned_references_and_implicitly_unwrapped_optional_properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型`String`和隐式解析可选类型`String`之间的区别：
 
@@ -740,7 +750,7 @@ do {
 
 如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个符合`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个符合`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会被调用并传递相关被`catch`所捕捉到的`[String]`值。
 
-抛出，捕捉，传递错误会在[错误处理](../chapter2/18_Error_Handling.html)章节详细说明。
+抛出，捕捉，传递错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
 
 <a name="assertions"></a>
 ## 断言
@@ -777,7 +787,7 @@ assert(age >= 0)
 * 需要给函数传入一个值，但是非法的值可能导致函数不能正常执行。
 * 一个可选值现在是`nil`，但是后面的代码运行需要一个非`nil`值。
 
-请参考[下标脚本](12_Subscripts.html)和[函数](06_Functions.html)。
+请参考[下标脚本](./12_Subscripts.html)和[函数](./06_Functions.html)。
 
 > 注意：  
 断言可能导致你的应用终止运行，所以你应当仔细设计你的代码来让非法条件不会出现。然而，在你的应用发布之前，有时候非法条件可能出现，这时使用断言可以快速发现问题。

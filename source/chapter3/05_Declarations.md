@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[marsprince](https://github.com/marsprince) [Lenhoon](https://github.com/marsprince)[(微博)](http://www.weibo.com/lenhoon)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[Lenhoon](https://github.com/Lenhoon)
 
 <a name="declarations"></a>
 # 声明
@@ -84,9 +88,9 @@ Swift的源文件中的顶级代码由零个或多个语句，声明和表达式
 
 <a name="grammer_of_an_import_declaration"></a>
 > 导入(Import)声明语法  
-> *导入声明* → [*特性(attributes)列表*](TODO) _可选_ **import** [*导入类型*](..\chapter3\05_Declarations.html#import_kind) _可选_ [*导入路径*](..\chapter3\05_Declarations.html#import_path)  
+> *导入声明* → [*特性(attributes)列表*](TODO) _可选_ **import** [*导入类型*](../chapter3/05_Declarations.html#import_kind) _可选_ [*导入路径*](../chapter3/05_Declarations.html#import_path)  
 > *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **var** | **func**  
-> *导入路径* → [*导入路径标识符*](..\chapter3\05_Declarations.html#import_path_identifier) | [*导入路径标识符*](..\chapter3\05_Declarations.html#import_path_identifier) **.** [*导入路径*](..\chapter3\05_Declarations.html#import_path)  
+> *导入路径* → [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) | [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) **.** [*导入路径*](../chapter3/05_Declarations.html#import_path)  
 > *导入路径标识符* → [*标识符*](TODO) | [*运算符*](TODO)  
 
 <a name="constant_declaration"></a>
@@ -111,9 +115,9 @@ let (firstNumber, secondNumber) = (10, 42)
 在上例中，`firstNumber`是一个值为`10`的常量，`secnodeName`是一个值为`42`的常量。所有常量都可以独立的使用：
 
 ```swift
-println("The first number is \(firstNumber).")
+println("The first number is /(firstNumber).")
 // prints "The first number is 10."
-println("The second number is \(secondNumber).")
+println("The second number is /(secondNumber).")
 // prints "The second number is 42."
 ```
 
@@ -125,10 +129,10 @@ println("The second number is \(secondNumber).")
 
 <a name="grammer_of_a_constant_declaration"></a>
 > 常数声明语法  
-> *常量声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **let** [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
-> *模式构造器列表* → [*模式构造器*](..\chapter3\05_Declarations.html#pattern_initializer) | [*模式构造器*](..\chapter3\05_Declarations.html#pattern_initializer) **,** [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
-> *模式构造器* → [*模式*](..\chapter3\07_Patterns.html#pattern) [*构造器*](..\chapter3\05_Declarations.html#initializer) _可选_  
-> *构造器* → **=** [*表达式*](..\chapter3\04_Expressions.html#expression)  
+> *常量声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **let** [*模式构造器列表*](../chapter3/05_Declarations.html#pattern_initializer_list)  
+> *模式构造器列表* → [*模式构造器*](../chapter3/05_Declarations.html#pattern_initializer) | [*模式构造器*](../chapter3/05_Declarations.html#pattern_initializer) **,** [*模式构造器列表*](../chapter3/05_Declarations.html#pattern_initializer_list)  
+> *模式构造器* → [*模式*](../chapter3/07_Patterns.html#pattern) [*构造器*](../chapter3/05_Declarations.html#initializer) _可选_  
+> *构造器* → **=** [*表达式*](../chapter3/04_Expressions.html#expression)  
 
 <a name="variable_declaration"></a>
 ##变量声明
@@ -228,27 +232,27 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 
 <a name="grammer_of_a_variable_declaration"></a>
 > 变量声明语法  
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*模式构造器列表*](..\chapter3\05_Declarations.html#pattern_initializer_list)  
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*getter-setter块*](..\chapter3\05_Declarations.html#getter_setter_block)  
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)   
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*构造器*](..\chapter3\05_Declarations.html#initializer) [*willSet-didSet代码块*](..\chapter3\05_Declarations.html#willSet_didSet_block)   
-> *变量声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*构造器*](..\chapter3\05_Declarations.html#initializer) _可选_ [*willSet-didSet代码块*](..\chapter3\05_Declarations.html#willSet_didSet_block)  
-> *变量声明头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **var**  
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*模式构造器列表*](../chapter3/05_Declarations.html#pattern_initializer_list)  
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*getter-setter块*](../chapter3/05_Declarations.html#getter_setter_block)  
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)   
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*构造器*](../chapter3/05_Declarations.html#initializer) [*willSet-didSet代码块*](../chapter3/05_Declarations.html#willSet_didSet_block)   
+> *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*构造器*](../chapter3/05_Declarations.html#initializer) _可选_ [*willSet-didSet代码块*](../chapter3/05_Declarations.html#willSet_didSet_block)  
+> *变量声明头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **var**  
 > *变量名称* → [*标识符*](LexicalStructure.html#identifier)  
-> *getter-setter块* → **{** [*getter子句*](..\chapter3\05_Declarations.html#getter_clause) [*setter子句*](..\chapter3\05_Declarations.html#setter_clause) _可选_ **}**  
-> *getter-setter块* → **{** [*setter子句*](..\chapter3\05_Declarations.html#setter_clause) [*getter子句*](..\chapter3\05_Declarations.html#getter_clause) **}**  
-> *getter子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **get** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *setter子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **set** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *getter-setter块* → **{** [*getter子句*](../chapter3/05_Declarations.html#getter_clause) [*setter子句*](../chapter3/05_Declarations.html#setter_clause) _可选_ **}**  
+> *getter-setter块* → **{** [*setter子句*](../chapter3/05_Declarations.html#setter_clause) [*getter子句*](../chapter3/05_Declarations.html#getter_clause) **}**  
+> *getter子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **get** [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *setter子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **set** [*setter名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
 > *setter名称* → **(** [*标识符*](LexicalStructure.html#identifier) **)**  
-> *getter-setter关键字(Keyword)块* → **{** [*getter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#getter_keyword_clause) [*setter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#setter_keyword_clause) _可选_ **}**  
-> *getter-setter关键字(Keyword)块* → **{** [*setter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#setter_keyword_clause) [*getter关键字(Keyword)子句*](..\chapter3\05_Declarations.html#getter_keyword_clause) **}**  
-> *getter关键字(Keyword)子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **get**  
-> *setter关键字(Keyword)子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **set**  
-> *willSet-didSet代码块* → **{** [*willSet子句*](..\chapter3\05_Declarations.html#willSet_clause) [*didSet子句*](..\chapter3\05_Declarations.html#didSet_clause) _可选_ **}**  
-> *willSet-didSet代码块* → **{** [*didSet子句*](..\chapter3\05_Declarations.html#didSet_clause) [*willSet子句*](..\chapter3\05_Declarations.html#willSet_clause) **}**  
-> *willSet子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **willSet** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *didSet子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **didSet** [*setter名称*](..\chapter3\05_Declarations.html#setter_name) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *getter-setter关键字(Keyword)块* → **{** [*getter关键字(Keyword)子句*](../chapter3/05_Declarations.html#getter_keyword_clause) [*setter关键字(Keyword)子句*](../chapter3/05_Declarations.html#setter_keyword_clause) _可选_ **}**  
+> *getter-setter关键字(Keyword)块* → **{** [*setter关键字(Keyword)子句*](../chapter3/05_Declarations.html#setter_keyword_clause) [*getter关键字(Keyword)子句*](../chapter3/05_Declarations.html#getter_keyword_clause) **}**  
+> *getter关键字(Keyword)子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **get**  
+> *setter关键字(Keyword)子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **set**  
+> *willSet-didSet代码块* → **{** [*willSet子句*](../chapter3/05_Declarations.html#willSet_clause) [*didSet子句*](../chapter3/05_Declarations.html#didSet_clause) _可选_ **}**  
+> *willSet-didSet代码块* → **{** [*didSet子句*](../chapter3/05_Declarations.html#didSet_clause) [*willSet子句*](../chapter3/05_Declarations.html#willSet_clause) **}**  
+> *willSet子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **willSet** [*setter名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *didSet子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **didSet** [*setter名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
 
 <a name="type_alias_declaration"></a>
 ##类型的别名声明
@@ -263,10 +267,10 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 
 <a name="grammer_of_a_type_alias_declaration"></a>
 > 类型别名声明语法  
-> *类型别名声明* → [*类型别名头(Head)*](..\chapter3\05_Declarations.html#typealias_head) [*类型别名赋值*](..\chapter3\05_Declarations.html#typealias_assignment)  
-> *类型别名头(Head)* → [*属性列表*](todo) _可选_ [*访问级别修饰符*]((TODO) _可选_ **typealias** [*类型别名名称*](..\chapter3\05_Declarations.html#typealias_name)  
+> *类型别名声明* → [*类型别名头(Head)*](../chapter3/05_Declarations.html#typealias_head) [*类型别名赋值*](../chapter3/05_Declarations.html#typealias_assignment)  
+> *类型别名头(Head)* → [*属性列表*](todo) _可选_ [*访问级别修饰符*]((TODO) _可选_ **typealias** [*类型别名名称*](../chapter3/05_Declarations.html#typealias_name)  
 > *类型别名名称* → [*标识符*](LexicalStructure.html#identifier)  
-> *类型别名赋值* → **=** [*类型*](..\chapter3\03_Types.html#type)  
+> *类型别名赋值* → **=** [*类型*](../chapter3/03_Types.html#type)  
 
 <a name="function_declaration"></a>
 ##函数声明
@@ -447,22 +451,22 @@ plusOne(10)
 
 <a name="grammer_of_a_function_declaration"></a>
 > 函数声明语法  
-> *函数声明* → [*函数头*](..\chapter3\05_Declarations.html#function_head) [*函数名*](..\chapter3\05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](..\chapter3\05_Declarations.html#function_signature) [*函数体*](..\chapter3\05_Declarations.html#function_body)  
-> *函数头* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](..\chapter3\05_Declarations.html#declaration_specifiers) _可选_ **func**  
+> *函数声明* → [*函数头*](../chapter3/05_Declarations.html#function_head) [*函数名*](../chapter3/05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](../chapter3/05_Declarations.html#function_signature) [*函数体*](../chapter3/05_Declarations.html#function_body)  
+> *函数头* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **func**  
 > *函数名* → [*标识符*](LexicalStructure.html#identifier) | [*运算符*](LexicalStructure.html#operator)  
-> *函数签名(signature)* → [*parameter-clauses*](..\chapter3\05_Declarations.html#parameter_clauses) **throws** [*函数结果*](..\chapter3\05_Declarations.html#function_result) _可选_  
-> *函数签名(signature)* → [*parameter-clauses*](..\chapter3\05_Declarations.html#parameter_clauses) **rethrows** [*函数结果*](..\chapter3\05_Declarations.html#function_result) _可选_  
-> *函数结果* → **->** [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)  
-> *函数体* → [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *parameter-clauses* → [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause) [*parameter-clauses*](..\chapter3\05_Declarations.html#parameter_clauses) _可选_  
-> *参数子句* → **(** **)** | **(** [*参数列表*](..\chapter3\05_Declarations.html#parameter_list) **...** _可选_ **)**  
-> *参数列表* → [*参数*](..\chapter3\05_Declarations.html#parameter) | [*参数*](..\chapter3\05_Declarations.html#parameter) **,** [*参数列表*](..\chapter3\05_Declarations.html#parameter_list)  
-> *参数* → **inout** _可选_ **let** _可选_ [*外部参数名*](..\chapter3\05_Declarations.html#parameter_name)_可选_ [*内部参数名*](..\chapter3\05_Declarations.html#local_parameter_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*默认参数子句*](..\chapter3\05_Declarations.html#default_argument_clause) _可选_  
-> *参数* → **inout** _可选_ **var** [*外部参数名*](..\chapter3\05_Declarations.html#parameter_name) [*内部参数名*](..\chapter3\05_Declarations.html#local_parameter_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*默认参数子句*](..\chapter3\05_Declarations.html#default_argument_clause) _可选_  
-> *参数* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)  
+> *函数签名(signature)* → [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) **throws** [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_  
+> *函数签名(signature)* → [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) **rethrows** [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_  
+> *函数结果* → **->** [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)  
+> *函数体* → [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *parameter-clauses* → [*参数子句*](../chapter3/05_Declarations.html#parameter_clause) [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) _可选_  
+> *参数子句* → **(** **)** | **(** [*参数列表*](../chapter3/05_Declarations.html#parameter_list) **...** _可选_ **)**  
+> *参数列表* → [*参数*](../chapter3/05_Declarations.html#parameter) | [*参数*](../chapter3/05_Declarations.html#parameter) **,** [*参数列表*](../chapter3/05_Declarations.html#parameter_list)  
+> *参数* → **inout** _可选_ **let** _可选_ [*外部参数名*](../chapter3/05_Declarations.html#parameter_name)_可选_ [*内部参数名*](../chapter3/05_Declarations.html#local_parameter_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*默认参数子句*](../chapter3/05_Declarations.html#default_argument_clause) _可选_  
+> *参数* → **inout** _可选_ **var** [*外部参数名*](../chapter3/05_Declarations.html#parameter_name) [*内部参数名*](../chapter3/05_Declarations.html#local_parameter_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*默认参数子句*](../chapter3/05_Declarations.html#default_argument_clause) _可选_  
+> *参数* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)  
 > *参数名* → [*标识符*](LexicalStructure.html#identifier) | **_**  
 > *内部参数名* → [*标识符*](LexicalStructure.html#identifier) | **_**  
-> *默认参数子句* → **=** [*表达式*](..\chapter3\04_Expressions.html#expression)  
+> *默认参数子句* → **=** [*表达式*](../chapter3/04_Expressions.html#expression)  
 
 <a name="enumeration_declaration"></a>
 ##枚举声明
@@ -550,22 +554,22 @@ num ExampleEnum: Int {
 
 <a name="grammer_of_an_enumeration_declaration"></a>
 > 枚举声明语法 
-> *枚举声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO) _可选_ [*联合式枚举*](TODO) 
-> *枚举声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO)  _可选_ [*原始值式枚举*](..\chapter3\05_Declarations.html#raw_value_style_enum) 
-> *联合式枚举* → **indirect** _可选_ **enum** [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [类型继承子句](TODO)_可选_ **{** [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_ **}**  
-> *union-style-enum-members* → [*union-style-enum-member*](..\chapter3\05_Declarations.html#union_style_enum_member) [*union-style-enum-members*](..\chapter3\05_Declarations.html#union_style_enum_members) _可选_  
-> *union-style-enum-member* → [*声明*](..\chapter3\05_Declarations.html#declaration) | [*联合式(Union Style)的枚举case子句*](..\chapter3\05_Declarations.html#union_style_enum_case_clause)  
-> *联合式(Union Style)的枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **indirect** _可选_ **case** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
-> *联合式(Union Style)的枚举case列表* → [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) | [*联合式(Union Style)的case*](..\chapter3\05_Declarations.html#union_style_enum_case) **,** [*联合式(Union Style)的枚举case列表*](..\chapter3\05_Declarations.html#union_style_enum_case_list)  
-> *联合式(Union Style)的case* → [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*元组类型*](..\chapter3\03_Types.html#tuple_type) _可选_  
+> *枚举声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO) _可选_ [*联合式枚举*](TODO) 
+> *枚举声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO)  _可选_ [*原始值式枚举*](../chapter3/05_Declarations.html#raw_value_style_enum) 
+> *联合式枚举* → **indirect** _可选_ **enum** [*枚举名*](../chapter3/05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [类型继承子句](TODO)_可选_ **{** [*union-style-enum-members*](../chapter3/05_Declarations.html#union_style_enum_members) _可选_ **}**  
+> *union-style-enum-members* → [*union-style-enum-member*](../chapter3/05_Declarations.html#union_style_enum_member) [*union-style-enum-members*](../chapter3/05_Declarations.html#union_style_enum_members) _可选_  
+> *union-style-enum-member* → [*声明*](../chapter3/05_Declarations.html#declaration) | [*联合式(Union Style)的枚举case子句*](../chapter3/05_Declarations.html#union_style_enum_case_clause)  
+> *联合式(Union Style)的枚举case子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **indirect** _可选_ **case** [*联合式(Union Style)的枚举case列表*](../chapter3/05_Declarations.html#union_style_enum_case_list)  
+> *联合式(Union Style)的枚举case列表* → [*联合式(Union Style)的case*](../chapter3/05_Declarations.html#union_style_enum_case) | [*联合式(Union Style)的case*](../chapter3/05_Declarations.html#union_style_enum_case) **,** [*联合式(Union Style)的枚举case列表*](../chapter3/05_Declarations.html#union_style_enum_case_list)  
+> *联合式(Union Style)的case* → [*枚举的case名*](../chapter3/05_Declarations.html#enum_case_name) [*元组类型*](../chapter3/03_Types.html#tuple_type) _可选_  
 > *枚举名* → [*标识符*](LexicalStructure.html#identifier)  
 > *枚举的case名* → [*标识符*](LexicalStructure.html#identifier)  
-> *原始值式枚举* → **enum** [*枚举名*](..\chapter3\05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](TODO) **{** [*原始值式枚举成员列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_members) **}**  
-> *原始值式枚举成员列表* → [*原始值式枚举成员*](..\chapter3\05_Declarations.html#raw_value_style_enum_member) [*原始值式枚举成员列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_members) _可选_  
-> *原始值式枚举成员* → [*声明*](..\chapter3\05_Declarations.html#declaration) | [*原始值式枚举case子句*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_clause)  
-> *原始值式枚举case子句* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **case** [*原始值式枚举case列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_list)  
-> *原始值式枚举case列表* → [*原始值式枚举case*](..\chapter3\05_Declarations.html#raw_value_style_enum_case) | [*原始值式枚举case*](..\chapter3\05_Declarations.html#raw_value_style_enum_case) **,** [*原始值式枚举case列表*](..\chapter3\05_Declarations.html#raw_value_style_enum_case_list)  
-> *原始值式枚举case* → [*枚举的case名*](..\chapter3\05_Declarations.html#enum_case_name) [*原始值赋值*](..\chapter3\05_Declarations.html#raw_value_assignment) _可选_  
+> *原始值式枚举* → **enum** [*枚举名*](../chapter3/05_Declarations.html#enum_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](TODO) **{** [*原始值式枚举成员列表*](../chapter3/05_Declarations.html#raw_value_style_enum_members) **}**  
+> *原始值式枚举成员列表* → [*原始值式枚举成员*](../chapter3/05_Declarations.html#raw_value_style_enum_member) [*原始值式枚举成员列表*](../chapter3/05_Declarations.html#raw_value_style_enum_members) _可选_  
+> *原始值式枚举成员* → [*声明*](../chapter3/05_Declarations.html#declaration) | [*原始值式枚举case子句*](../chapter3/05_Declarations.html#raw_value_style_enum_case_clause)  
+> *原始值式枚举case子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **case** [*原始值式枚举case列表*](../chapter3/05_Declarations.html#raw_value_style_enum_case_list)  
+> *原始值式枚举case列表* → [*原始值式枚举case*](../chapter3/05_Declarations.html#raw_value_style_enum_case) | [*原始值式枚举case*](../chapter3/05_Declarations.html#raw_value_style_enum_case) **,** [*原始值式枚举case列表*](../chapter3/05_Declarations.html#raw_value_style_enum_case_list)  
+> *原始值式枚举case* → [*枚举的case名*](../chapter3/05_Declarations.html#enum_case_name) [*原始值赋值*](../chapter3/05_Declarations.html#raw_value_assignment) _可选_  
 > *原始值赋值* → **=** [*原始值字面量*](TODO)  
 > *原始值字面量* → [数字型字面量](TODO)|[字符串型字面量](TODO)|[布尔型字面量](TODO)
 
@@ -601,9 +605,9 @@ num ExampleEnum: Int {
 
 <a name="grammer_of_a_structure_declaration"></a>
 > 结构体声明语法  
-> *结构体声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [访问级别修饰符](TODO )_可选_ **struct** [*结构体名称*](..\chapter3\05_Declarations.html#struct_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*结构体主体*](..\chapter3\05_Declarations.html#struct_body)  
+> *结构体声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [访问级别修饰符](TODO )_可选_ **struct** [*结构体名称*](../chapter3/05_Declarations.html#struct_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*结构体主体*](../chapter3/05_Declarations.html#struct_body)  
 > *结构体名称* → [*标识符*](LexicalStructure.html#identifier)  
-> *结构体主体* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
+> *结构体主体* → **{** [*声明(Declarations)列表*](../chapter3/05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="class_declaration"></a>
 ##类声明
@@ -640,9 +644,9 @@ num ExampleEnum: Int {
 
 <a name="grammer_of_a_class_declaration"></a>
 > 类声明语法  
-> *类声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [访问级别修饰符](TODO)**class** [*类名*](..\chapter3\05_Declarations.html#class_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*类主体*](..\chapter3\05_Declarations.html#class_body)  
+> *类声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [访问级别修饰符](TODO)**class** [*类名*](../chapter3/05_Declarations.html#class_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承子句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*类主体*](../chapter3/05_Declarations.html#class_body)  
 > *类名* → [*标识符*](LexicalStructure.html#identifier)  
-> *类主体* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
+> *类主体* → **{** [*声明(Declarations)列表*](../chapter3/05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="protocol_declaration"></a>
 ##协议声明(translated by 小一)
@@ -683,15 +687,15 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_a_protocol_declaration"></a>
 > 协议(Protocol)声明语法  
-> *协议声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO) _可选_ **protocol** [*协议名*](..\chapter3\05_Declarations.html#protocol_name) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*协议主体*](..\chapter3\05_Declarations.html#protocol_body)  
+> *协议声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修饰符*](TODO) _可选_ **protocol** [*协议名*](../chapter3/05_Declarations.html#protocol_name) [*类型继承子句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*协议主体*](../chapter3/05_Declarations.html#protocol_body)  
 > *协议名* → [*标识符*](LexicalStructure.html#identifier)  
-> *协议主体* → **{** [*协议成员声明(Declarations)列表*](..\chapter3\05_Declarations.html#protocol_member_declarations) _可选_ **}**  
-> *协议成员声明* → [*协议属性声明*](..\chapter3\05_Declarations.html#protocol_property_declaration)  
-> *协议成员声明* → [*协议方法声明*](..\chapter3\05_Declarations.html#protocol_method_declaration)  
-> *协议成员声明* → [*协议构造器声明*](..\chapter3\05_Declarations.html#protocol_initializer_declaration)  
-> *协议成员声明* → [*协议附属脚本声明*](..\chapter3\05_Declarations.html#protocol_subscript_declaration)  
-> *协议成员声明* → [*协议关联类型声明*](..\chapter3\05_Declarations.html#protocol_associated_type_declaration)  
-> *协议成员声明(Declarations)列表* → [*协议成员声明*](..\chapter3\05_Declarations.html#protocol_member_declaration) [*协议成员声明(Declarations)列表*](..\chapter3\05_Declarations.html#protocol_member_declarations) _可选_  
+> *协议主体* → **{** [*协议成员声明(Declarations)列表*](../chapter3/05_Declarations.html#protocol_member_declarations) _可选_ **}**  
+> *协议成员声明* → [*协议属性声明*](../chapter3/05_Declarations.html#protocol_property_declaration)  
+> *协议成员声明* → [*协议方法声明*](../chapter3/05_Declarations.html#protocol_method_declaration)  
+> *协议成员声明* → [*协议构造器声明*](../chapter3/05_Declarations.html#protocol_initializer_declaration)  
+> *协议成员声明* → [*协议附属脚本声明*](../chapter3/05_Declarations.html#protocol_subscript_declaration)  
+> *协议成员声明* → [*协议关联类型声明*](../chapter3/05_Declarations.html#protocol_associated_type_declaration)  
+> *协议成员声明(Declarations)列表* → [*协议成员声明*](../chapter3/05_Declarations.html#protocol_member_declaration) [*协议成员声明(Declarations)列表*](../chapter3/05_Declarations.html#protocol_member_declarations) _可选_  
 
 <a name="protocol_property_declaration"></a>
 ###协议属性声明
@@ -708,7 +712,7 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_an_import_declaration"></a>
 > 协议属性声明语法  
-> *协议属性声明* → [*变量声明头(Head)*](..\chapter3\05_Declarations.html#variable_declaration_head) [*变量名*](..\chapter3\05_Declarations.html#variable_name) [*类型标注*](..\chapter3\03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
+> *协议属性声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
 
 <a name="protocol_method_declaration"></a>
 ###协议方法声明
@@ -721,7 +725,7 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_a_protocol_declaration"></a>
 > 协议方法声明语法  
-> *协议方法声明* → [*函数头*](..\chapter3\05_Declarations.html#function_head) [*函数名*](..\chapter3\05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](..\chapter3\05_Declarations.html#function_signature)  
+> *协议方法声明* → [*函数头*](../chapter3/05_Declarations.html#function_head) [*函数名*](../chapter3/05_Declarations.html#function_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名(Signature)*](../chapter3/05_Declarations.html#function_signature)  
 
 <a name="protocol_initializer_declaration"></a>
 ###协议构造器声明
@@ -737,7 +741,7 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_a_protocol_initializer_declaration"></a>
 > 协议构造器声明语法  
-> *协议构造器声明* → [*构造器头(Head)*](..\chapter3\05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause)  
+> *协议构造器声明* → [*构造器头(Head)*](../chapter3/05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](../chapter3/05_Declarations.html#parameter_clause)  
 
 <a name="protocol_subscript_declaration"></a>
 ###协议下标脚本声明
@@ -752,7 +756,7 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_a_protocol_subscript_declaration"></a>
 > 协议附属脚本声明语法  
-> *协议附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
+> *协议附属脚本声明* → [*附属脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
 
 <a name="protocol_associated_type_declaration"></a>
 ###协议相关类型声明
@@ -761,7 +765,7 @@ protocol SomeProtocol:class{
 
 <a name="grammer_of_a_protocol_associated_type_declaration"></a>
 > 协议关联类型声明语法  
-> *协议关联类型声明* → [*类型别名头(Head)*](..\chapter3\05_Declarations.html#typealias_head) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*类型别名赋值*](..\chapter3\05_Declarations.html#typealias_assignment) _可选_  
+> *协议关联类型声明* → [*类型别名头(Head)*](../chapter3/05_Declarations.html#typealias_head) [*类型继承子句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*类型别名赋值*](../chapter3/05_Declarations.html#typealias_assignment) _可选_  
 
 <a name="initializer_declaration"></a>
 ##构造器声明
@@ -844,11 +848,11 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <a name="grammer_of_an_initializer_declaration"></a>
 > 构造器声明语法  
-> *构造器声明* → [*构造器头(Head)*](..\chapter3\05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause) [*构造器主体*](..\chapter3\05_Declarations.html#initializer_body)  
-> *构造器头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init**       
-> *构造器头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init ?**           
-> *构造器头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init !** 
-> *构造器主体* → [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *构造器声明* → [*构造器头(Head)*](../chapter3/05_Declarations.html#initializer_head) [*泛型参数子句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数子句*](../chapter3/05_Declarations.html#parameter_clause) [*构造器主体*](../chapter3/05_Declarations.html#initializer_body)  
+> *构造器头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init**       
+> *构造器头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init ?**           
+> *构造器头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符列表(modifiers)*](TODO) _可选_ **init !** 
+> *构造器主体* → [*代码块*](../chapter3/05_Declarations.html#code_block)  
 
 <a name="deinitializer_declaration"></a>
 ##析构声明
@@ -870,7 +874,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <a name="grammer_of_a_deinitializer_declaration"></a>
 > 析构器声明语法  
-> *析构器声明* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ **deinit** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *析构器声明* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **deinit** [*代码块*](../chapter3/05_Declarations.html#code_block)  
 
 <a name="extension_declaration"></a>
 ##扩展声明
@@ -892,8 +896,8 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <a name="grammer_of_an_extension_declaration"></a>
 > 扩展(Extension)声明语法  
-> *扩展声明* → [访问级别修饰符](TODO) _可选_ **extension** [*类型标识*](..\chapter3\03_Types.html#type_identifier) [*类型继承子句*](..\chapter3\03_Types.html#type_inheritance_clause) _可选_ [*extension-body*](..\chapter3\05_Declarations.html#extension_body)  
-> *extension-body* → **{** [*声明(Declarations)列表*](..\chapter3\05_Declarations.html#declarations) _可选_ **}**  
+> *扩展声明* → [访问级别修饰符](TODO) _可选_ **extension** [*类型标识*](../chapter3/03_Types.html#type_identifier) [*类型继承子句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*extension-body*](../chapter3/05_Declarations.html#extension_body)  
+> *extension-body* → **{** [*声明(Declarations)列表*](../chapter3/05_Declarations.html#declarations) _可选_ **}**  
 
 <a name="subscript_declaration"></a>
 ##下标脚本声明
@@ -925,11 +929,11 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <a name="grammer_of_a_subscript_declaration"></a>
 > 附属脚本声明语法  
-> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter块*](..\chapter3\05_Declarations.html#getter_setter_block)  
-> *附属脚本声明* → [*附属脚本头(Head)*](..\chapter3\05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](..\chapter3\05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](..\chapter3\05_Declarations.html#getter_setter_keyword_block)  
-> *附属脚本头(Head)* → [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*声明修饰符列表(declaration-modifiers)*](TODO) _可选_ **subscript** [*参数子句*](..\chapter3\05_Declarations.html#parameter_clause)  
-> *附属脚本结果(Result)* → **->** [*特性(Attributes)列表*](..\chapter3\06_Attributes.html#attributes) _可选_ [*类型*](..\chapter3\03_Types.html#type)   
+> *附属脚本声明* → [*附属脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *附属脚本声明* → [*附属脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter块*](../chapter3/05_Declarations.html#getter_setter_block)  
+> *附属脚本声明* → [*附属脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*附属脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
+> *附属脚本头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符列表(declaration-modifiers)*](TODO) _可选_ **subscript** [*参数子句*](../chapter3/05_Declarations.html#parameter_clause)  
+> *附属脚本结果(Result)* → **->** [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)   
 
 <a name="operator_declaration"></a>
 ##运算符声明(translated by 林)
@@ -976,14 +980,14 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <a name="grammer_of_an_operator_declaration"></a>
 > 运算符声明语法  
-> *运算符声明* → [*前置运算符声明*](..\chapter3\05_Declarations.html#prefix_operator_declaration) | [*后置运算符声明*](..\chapter3\05_Declarations.html#postfix_operator_declaration) | [*中置运算符声明*](..\chapter3\05_Declarations.html#infix_operator_declaration)  
+> *运算符声明* → [*前置运算符声明*](../chapter3/05_Declarations.html#prefix_operator_declaration) | [*后置运算符声明*](../chapter3/05_Declarations.html#postfix_operator_declaration) | [*中置运算符声明*](../chapter3/05_Declarations.html#infix_operator_declaration)  
 > *前置运算符声明* → **prefix** **运算符** [*运算符*](LexicalStructure.html#operator) **{** **}**  
 > *后置运算符声明* → **postfix** **运算符** [*运算符*](LexicalStructure.html#operator) **{** **}**  
-> *中置运算符声明* → **infix** **运算符** [*运算符*](LexicalStructure.html#operator) **{** [*中置运算符属性*](..\chapter3\05_Declarations.html#infix_operator_attributes) _可选_ **}**  
-> *中置运算符属性* → [*优先级子句*](..\chapter3\05_Declarations.html#precedence_clause) _可选_ [*结和性子句*](..\chapter3\05_Declarations.html#associativity_clause) _可选_  
-> *优先级子句* → **precedence** [*优先级水平*](..\chapter3\05_Declarations.html#precedence_level)  
+> *中置运算符声明* → **infix** **运算符** [*运算符*](LexicalStructure.html#operator) **{** [*中置运算符属性*](../chapter3/05_Declarations.html#infix_operator_attributes) _可选_ **}**  
+> *中置运算符属性* → [*优先级子句*](../chapter3/05_Declarations.html#precedence_clause) _可选_ [*结和性子句*](../chapter3/05_Declarations.html#associativity_clause) _可选_  
+> *优先级子句* → **precedence** [*优先级水平*](../chapter3/05_Declarations.html#precedence_level)  
 > *优先级水平* → 十进制整数 0 到 255  
-> *结和性子句* → **associativity** [*结和性*](..\chapter3\05_Declarations.html#associativity)  
+> *结和性子句* → **associativity** [*结和性*](../chapter3/05_Declarations.html#associativity)  
 > *结和性* → **left** | **right** | **none**  
 
 

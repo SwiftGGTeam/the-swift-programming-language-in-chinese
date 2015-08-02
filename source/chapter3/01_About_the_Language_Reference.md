@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[dabing1022](https://github.com/dabing1022)  
-> 校对：[numbbbbb](https://github.com/numbbbbb), [KYawn](https://github.com/KYawn)
+> 校对：[numbbbbb](https://github.com/numbbbbb)
+
+> 2.0
+> 翻译+校对：[KYawn](https://github.com/KYawn)
 
 
 # 关于语言附注

@@ -1,5 +1,9 @@
+> 1.0
 > 翻译：[xielingwang](https://github.com/xielingwang)  
 > 校对：[numbbbbb](https://github.com/numbbbbb)
+
+> 2.0
+> 翻译+校对：[buginux](https://github.com/buginux)
 
 # 高级运算符
 -----------------
@@ -12,7 +16,7 @@
 - [运算符函数(Operator Functions)](#operator_functions)
 - [自定义运算符](#custom_operators)
 
-除了在之前介绍过的[基本运算符](02_Basic_Operators.html)，Swift 中还有许多可以对数值进行复杂操作的高级运算符。这些高级运算符包含了在 C 和 Objective-C 中已经被大家所熟知的位运算符和移位运算符。
+除了在之前介绍过的[基本运算符](./02_Basic_Operators.html)，Swift 中还有许多可以对数值进行复杂操作的高级运算符。这些高级运算符包含了在 C 和 Objective-C 中已经被大家所熟知的位运算符和移位运算符。
 
 与C语言中的算术运算符不同，Swift 中的算术运算符默认是不会溢出的。所有溢出行为都会被捕获并报告为错误。如果想让系统允许溢出行为，可以选择使用 Swift 中另一套默认支持溢出的运算符，比如溢出加法运算符(`&+`)。所有的这些溢出运算符都是以 `&` 开头的。
 
@@ -393,7 +397,8 @@ let afterIncrement = ++toIncrement
 > 注意：
 > 不能对默认的赋值运算符(`=`)进行重载。只有组合赋值符可以被重载。同样地，也无法对三目条件运算符 `a ? b : c` 进行重载。
 
-### 等价运算符
+<a name="equivalence_operators"></a>
+### 等价操作符
 
 自定义的类和结构体没有对等价操作符(`equivalence operators`)进行默认实现，等价操作符通常被称为“相等”操作符(`==`)与“不等”操作符(`!=`)。对于自定义类型，Swift 无法判断其是否“相等”，因为“相等”的含义取决于这些自定义类型在你的代码中所扮演的角色。
 
@@ -421,6 +426,7 @@ if twoThree == anotherTwoThree {
 // prints "These two vectors are equivalent."
 ```
 
+<a name="custom_operators"></a>
 ### 自定义运算符
 
 除了实现标准运算符，在 Swift 当中还可以声明和实现自定义运算符(`custom operators`)。可以用来自定义运算符的字符列表请参考[操作符](../chapter3/02_Lexical_Structure.html#operators)
