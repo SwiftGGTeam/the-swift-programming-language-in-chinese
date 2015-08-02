@@ -189,6 +189,12 @@ Residence中得printNumberOfRooms()方法输出当前的numberOfRooms值：
 
 类似的，可以通过下标，用可空链式调用来赋值：
 
+john.residence?[0] = Room(name: "Bathroom")
+
+这次赋值同样会失败，因为`residence`目前是`nil`。
+
+如果你创建一个Residence实例，添加一些Room实例并赋值给john.residence，那就可以通过可选链和下标来访问数组中的元素：
+
 	let johnsHouse = Residence()
 	johnsHouse.rooms.append(Room(name: "Living Room"))
 	johnsHouse.rooms.append(Room(name: "Kitchen"))
