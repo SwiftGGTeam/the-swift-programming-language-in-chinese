@@ -495,8 +495,6 @@ let dogString = "Dog‼🐶"
 您可以通过遍历字符串的`utf8`属性来访问它的`UTF-8`表示。
 其为`String.UTF8View`类型的属性，`UTF8View`是无符号8位 (`UInt8`) 值的集合，每一个`UInt8`值都是一个字符的 UTF-8 表示：
 
-<body>
-<center>
 <table style='text-align:center'>
  <tr height=77>
   <td>Character</td>
@@ -533,8 +531,7 @@ let dogString = "Dog‼🐶"
   <td>9</td>
  </tr>
 </table>
-</center>
-</body>
+
 
 ```swift
 for codeUnit in dogString.utf8 {
@@ -554,8 +551,7 @@ print("")
 
 您可以通过遍历字符串的`utf16`属性来访问它的`UTF-16`表示。
 其为`String.UTF16View`类型的属性，`UTF16View`是无符号16位 (`UInt16`) 值的集合，每一个`UInt16`都是一个字符的 UTF-16 表示：
-<body>
-<center>
+
 <table style='text-align:center'>
  <tr height=77>
   <td>Character</td>
@@ -584,8 +580,6 @@ print("")
   <td>5</td>
  </tr>
 </table>
-</center>
-</body>
 
 
 ```swift
@@ -610,8 +604,7 @@ print("")
 
 每一个`UnicodeScalar`拥有一个值属性，可以返回对应的21位数值，用`UInt32`来表示：
 
-<body>
-<center>
+
 <table style='text-align:center'>
  <tr height=77>
   <td>Character</td>
@@ -638,8 +631,6 @@ print("")
   <td>4</td>
  </tr>
 </table>
-</center>
-</body>
 
 
 ```swift
