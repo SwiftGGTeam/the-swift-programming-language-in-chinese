@@ -3,13 +3,11 @@
 
 中文版Apple官方Swift教程《The Swift Programming Language》
 
-中文Swift社区[Swiftist](http://swiftist.org/)，新社区，正在建设中，感兴趣的朋友可以一起参与进来。
-
-**如果想帮忙翻译或者校对，请加QQ群：364279588，谢谢！**
+**如果想帮忙翻译或者校对，请加QQ群：480616051，谢谢！**
 
 # 在线阅读
 
-使用Gitbook制作，可以直接[在线阅读](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/)。
+使用Gitbook制作，可以直接[在线阅读](http://swiftguide.cn/)。
 
 # 当前阶段
 
