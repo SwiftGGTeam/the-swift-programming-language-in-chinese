@@ -11,18 +11,51 @@
 
 使用Gitbook制作，可以直接[在线阅读](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/)。
 
-# 电子书下载
-
-CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/1402621206)
-
-其他格式可以通过PDF转换
-
 # 当前阶段
 
-文章已经全部翻译完成，当前阶段为自由校对阶段，可以随意提issue和pr。
+已经更新到Swift 2.0，对应苹果官方文档7.23的更新。
 
+# 2.0译者记录
 
-# 译者记录
+- About Swift （**完成** By：@xtymichael）
+- A Swift Tour（**完成** By：@xtymichael）
+- The Basics（**完成** By：@xtymichael）
+- Basic Operators（**完成** By：@AlanMelody）
+- Strings and Characters（**完成** By：@DianQK）
+- Collection Types（**完成** By：@AlanMelody）
+- Control Flow（**完成** By：@AlanMelody）
+- Functions（**完成** By：@dreamkidd）
+- Closures（**完成** By：@100mango）
+- Enumerations（**完成** By：@futantan）
+- Classes and Structures（**完成** By：@SkyJean）
+- Properties（**完成** By：@yangsiy）
+- Methods（**完成** By：@DianQK）
+- Subscripts（**完成** By：@shanksyang）
+- Inheritance（**完成** By：@shanksyang）
+- Initialization（**完成** By：@chenmingbiao）
+- Deinitialization（**完成** By：@chenmingbiao）
+- Automatic Reference Counting（**完成** By：@Channe）
+- Optional Chaining（**完成** By：@lyojo）
+- Error Handling（**完成** By：@lyojo）
+- Type Casting（**完成** By：@yangsiy）
+- Nested Types（**完成** By：@SergioChan）
+- Extensions（**完成** By；@shanksyang）
+- Protocols（**完成** By：@futantan）
+- Generics（**完成** By：@SergioChan）
+- Access Control（**完成** By：@mmoaay）
+- Advanced Operators（**完成** By：@buginux）
+- About the Language Reference（**完成** By：@KYawn）
+- Lexical Structure（**完成** By：@buginux）
+- Types（**完成** By：@EudeMorgen）
+- Expressions（**完成** By：@EudeMorgen）
+- Statements（**完成** By：@littledogboy）
+- Declarations（**完成** By：@Lenhoon）
+- Attributes（**完成** By：@KYawn）
+- Patterns（**完成** By：@ray16897188）
+- Generic Parameters and Arguments（**完成** By：@wardenNScaiyi）
+- Summary of the Grammar（**完成** By：@miaosiqi）
+
+# 1.0译者记录
 
 * 欢迎使用 Swift
    * 关于 Swift ([numbbbbb])
