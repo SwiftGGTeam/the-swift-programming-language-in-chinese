@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[Lin-H](https://github.com/Lin-H)  
+> 翻译：[Lin-H](https://github.com/Lin-H)
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 > 2.0

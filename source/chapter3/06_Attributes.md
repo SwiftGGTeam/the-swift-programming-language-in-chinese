@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[Hawstein](https://github.com/Hawstein)  
+> 翻译：[Hawstein](https://github.com/Hawstein)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0

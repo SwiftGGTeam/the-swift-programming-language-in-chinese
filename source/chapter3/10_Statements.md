@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[coverxit](https://github.com/coverxit) 
+> 翻译：[coverxit](https://github.com/coverxit)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),
 
 > 2.0

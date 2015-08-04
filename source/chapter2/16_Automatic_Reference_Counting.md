@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[TimothyYe](https://github.com/TimothyYe)  
+> 翻译：[TimothyYe](https://github.com/TimothyYe)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
 > 2.0

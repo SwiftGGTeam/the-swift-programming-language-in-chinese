@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[xielingwang](https://github.com/xielingwang)  
+> 翻译：[xielingwang](https://github.com/xielingwang)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 > 2.0

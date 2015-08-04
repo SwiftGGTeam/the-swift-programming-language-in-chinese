@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[dabing1022](https://github.com/dabing1022)  
+> 翻译：[dabing1022](https://github.com/dabing1022)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 > 2.0

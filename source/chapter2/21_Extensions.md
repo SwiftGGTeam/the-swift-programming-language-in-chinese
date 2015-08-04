@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[lyuka](https://github.com/lyuka)  
+> 翻译：[lyuka](https://github.com/lyuka)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
 > 2.0

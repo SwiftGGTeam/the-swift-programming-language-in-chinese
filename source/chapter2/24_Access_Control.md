@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[JaceFu](http://www.devtalking.com/)  
+> 翻译：[JaceFu](http://www.devtalking.com/)
 > 校对：[ChildhoodAndy](http://childhood.logdown.com)
 
 > 2.0

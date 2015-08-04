@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[superkam](https://github.com/superkam)  
+> 翻译：[superkam](https://github.com/superkam)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 > 2.0

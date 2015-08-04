@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[siemenliu](https://github.com/siemenliu)  
+> 翻译：[siemenliu](https://github.com/siemenliu)
 > 校对：[zq54zquan](https://github.com/zq54zquan)
 
 > 2.0

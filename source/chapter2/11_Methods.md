@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[pp-prog](https://github.com/pp-prog)  
+> 翻译：[pp-prog](https://github.com/pp-prog)
 > 校对：[zqp](https://github.com/zqp)
 
 > 2.0

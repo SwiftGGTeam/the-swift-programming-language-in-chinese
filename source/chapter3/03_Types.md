@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[lyuka](https://github.com/lyuka)  
+> 翻译：[lyuka](https://github.com/lyuka)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0

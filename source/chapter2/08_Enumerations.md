@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[yankuangshi](https://github.com/yankuangshi)  
+> 翻译：[yankuangshi](https://github.com/yankuangshi)
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 > 2.0
