@@ -15,43 +15,43 @@
 
 # 2.0译者记录
 
-- About Swift （**完成** By：@xtymichael）
-- A Swift Tour（**完成** By：@xtymichael）
-- The Basics（**完成** By：@xtymichael）
-- Basic Operators（**完成** By：@AlanMelody）
-- Strings and Characters（**完成** By：@DianQK）
-- Collection Types（**完成** By：@AlanMelody）
-- Control Flow（**完成** By：@AlanMelody）
-- Functions（**完成** By：@dreamkidd）
-- Closures（**完成** By：@100mango）
-- Enumerations（**完成** By：@futantan）
-- Classes and Structures（**完成** By：@SkyJean）
-- Properties（**完成** By：@yangsiy）
-- Methods（**完成** By：@DianQK）
-- Subscripts（**完成** By：@shanksyang）
-- Inheritance（**完成** By：@shanksyang）
-- Initialization（**完成** By：@chenmingbiao）
-- Deinitialization（**完成** By：@chenmingbiao）
-- Automatic Reference Counting（**完成** By：@Channe）
-- Optional Chaining（**完成** By：@lyojo）
-- Error Handling（**完成** By：@lyojo）
-- Type Casting（**完成** By：@yangsiy）
-- Nested Types（**完成** By：@SergioChan）
-- Extensions（**完成** By；@shanksyang）
-- Protocols（**完成** By：@futantan）
-- Generics（**完成** By：@SergioChan）
-- Access Control（**完成** By：@mmoaay）
-- Advanced Operators（**完成** By：@buginux）
-- About the Language Reference（**完成** By：@KYawn）
-- Lexical Structure（**完成** By：@buginux）
-- Types（**完成** By：@EudeMorgen）
-- Expressions（**完成** By：@EudeMorgen）
-- Statements（**完成** By：@littledogboy）
-- Declarations（**完成** By：@Lenhoon）
-- Attributes（**完成** By：@KYawn）
-- Patterns（**完成** By：@ray16897188）
-- Generic Parameters and Arguments（**完成** By：@wardenNScaiyi）
-- Summary of the Grammar（**完成** By：@miaosiqi）
+- About Swift （[xtymichael](https://github.com/xtymichael)）
+- A Swift Tour（[xtymichael](https://github.com/xtymichael)）
+- The Basics（[xtymichael](https://github.com/xtymichael)）
+- Basic Operators（[AlanMelody](https://github.com/AlanMelody)）
+- Strings and Characters（[DianQK](https://github.com/DianQK)）
+- Collection Types（[AlanMelody](https://github.com/AlanMelody)）
+- Control Flow（[AlanMelody](https://github.com/AlanMelody)）
+- Functions（[dreamkidd](https://github.com/dreamkidd)）
+- Closures（[100mango](https://github.com/100mango)）
+- Enumerations（[futantan](https://github.com/futantan)）
+- Classes and Structures（[SkyJean](https://github.com/SkyJean)）
+- Properties（[yangsiy](https://github.com/yangsiy)）
+- Methods（[DianQK](https://github.com/DianQK)）
+- Subscripts（[shanksyang](https://github.com/shanksyang)）
+- Inheritance（[shanksyang](https://github.com/shanksyang)）
+- Initialization（[chenmingbiao](https://github.com/chenmingbiao)）
+- Deinitialization（[chenmingbiao](https://github.com/chenmingbiao)）
+- Automatic Reference Counting（[Channe](https://github.com/Channe)）
+- Optional Chaining（[lyojo](https://github.com/lyojo)）
+- Error Handling（[lyojo](https://github.com/lyojo)）
+- Type Casting（[yangsiy](https://github.com/yangsiy)）
+- Nested Types（[SergioChan](https://github.com/SergioChan)）
+- Extensions（[shanksyang](https://github.com/shanksyang)）
+- Protocols（[futantan](https://github.com/futantan)）
+- Generics（[SergioChan](https://github.com/SergioChan)）
+- Access Control（[mmoaay](https://github.com/mmoaay)）
+- Advanced Operators（[buginux](https://github.com/buginux)）
+- About the Language Reference（[KYawn](https://github.com/KYawn)）
+- Lexical Structure（[buginux](https://github.com/buginux)）
+- Types（[EudeMorgen](https://github.com/EudeMorgen)）
+- Expressions（[EudeMorgen](https://github.com/EudeMorgen)）
+- Statements（[littledogboy](https://github.com/littledogboy)）
+- Declarations（[Lenhoon](https://github.com/Lenhoon)）
+- Attributes（[KYawn](https://github.com/KYawn)）
+- Patterns（[ray16897188](https://github.com/ray16897188)）
+- Generic Parameters and Arguments（[wardenNScaiyi](https://github.com/wardenNScaiyi)）
+- Summary of the Grammar（[miaosiqi](https://github.com/miaosiqi)）
 
 # 1.0译者记录
 
