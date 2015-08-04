@@ -1,10 +1,10 @@
 > Swift 兴趣交流群：`131595168`, `146932759`, `151336833`, `153549217`. **加入一个群即可，请勿重复添加**
 
-> [Swift 开发者社区](http://swiftist.org)
+> <a target='_blank' href="http://swiftist.org">Swift 开发者社区</a>
 
-> [Swift 资源汇总](https://github.com/ipader/SwiftGuide)
+> <a target='_blank' href="https://github.com/ipader/SwiftGuide">Swift 资源汇总</a>
 
-> [Swift 优秀newsletter](http://swiftsandbox.io)
+> <a target='_blank' href="http://swiftsandbox.io">Swift 优秀newsletter</a>
 
 <!-- -->
 > 如果你觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持是我们最大的动力。
