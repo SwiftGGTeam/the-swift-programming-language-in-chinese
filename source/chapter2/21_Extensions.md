@@ -29,7 +29,7 @@ Swift 中的扩展可以：
 - 使一个已有类型符合某个协议
 
 TODO：
-在 Swift 中，你甚至可以对一个协议(Procotol)进行扩展，提供协议需要的实现，或者添加额外的功能能够对合适的类型带来额外的好处。你可以从[协议扩展](./Protocols.html#protocol_extensions)获取更多的细节。
+在 Swift 中，你甚至可以对一个协议(Procotol)进行扩展，提供协议需要的实现，或者添加额外的功能能够对合适的类型带来额外的好处。你可以从[协议扩展](./22_Protocols.html#protocol_extensions)获取更多的细节。
 
 >注意：  
 扩展可以对一个类型添加新的功能，但是不能重写已有的功能。
@@ -52,7 +52,7 @@ extension SomeType: SomeProtocol, AnotherProctocol {
 }
 ```
 
-按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议遵循者](./21_Protocols.html#adding_protocol_conformance_with_an_extension)
+按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议遵循者](./22_Protocols.html#adding_protocol_conformance_with_an_extension)
 
 >注意：  
 如果你定义了一个扩展向一个已有类型添加新功能，那么这个新功能对该类型的所有已有实例中都是可用的，即使它们是在你的这个扩展的前面定义的。
