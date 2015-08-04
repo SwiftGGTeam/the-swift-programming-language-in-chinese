@@ -55,13 +55,13 @@ a group of related error conditions,
 with associated values allowing for additional information
 about the nature of an error to be communicated.
 For example, here's how you might represent the error conditions
-of operating a vending machine:
+of operating a vending machine inside a game:
 
 .. testcode:: errorHandling
 
    -> enum VendingMachineError: ErrorType {
           case InvalidSelection
-          case InsufficientFunds(centsNeeded: Int)
+          case InsufficientFunds(coinsNeeded: Int)
           case OutOfStock
       }
 
@@ -70,8 +70,8 @@ In this example, a vending machine can fail for the following reasons:
 * The requested item is not a valid selection, indicated by ``InvalidSelection``.
 * The requested item's cost is greater than the provided funds,
   indicated by ``InsufficientFunds``.
-  The associated ``Int`` value represents the additional amount
-  needed (in cents) to complete the transaction.
+  The associated ``Int`` value represents the additional number
+  of coins needed to complete the transaction.
 * The request item is out of stock, indicated by ``OutOfStock``.
 
 .. _ErrorHandling_Throw:
@@ -123,7 +123,7 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    -> struct Item {
-         var price: Int  // In cents
+         var price: Int
          var count: Int
       }
    ---
@@ -133,8 +133,8 @@ or has a cost that exceeds the current deposited amount:
           "Pretzels": Item(price: 75, count: 11)
       ]
    << // inventory : [String : Item] = ["Chips": REPL.Item(price: 100, count: 4), "Candy Bar": REPL.Item(price: 125, count: 7), "Pretzels": REPL.Item(price: 75, count: 11)]
-   -> var amountDeposited = 100
-   << // amountDeposited : Int = 100
+   -> var coinsDeposited = 100
+   << // coinsDeposited : Int = 100
    ---
    -> func vend(itemNamed name: String) throws {
           guard var item = inventory[name] else {
@@ -145,14 +145,13 @@ or has a cost that exceeds the current deposited amount:
               throw VendingMachineError.OutOfStock
           }
 
-          if amountDeposited >= item.price {
+          if coinsDeposited >= item.price {
               // Dispense the snack
-              amountDeposited -= item.price
+              coinsDeposited -= item.price
               --item.count
               inventory[name] = item
           } else {
-              let amountNeeded = item.price - amountDeposited
-              throw VendingMachineError.InsufficientFunds(centsNeeded: amountNeeded)
+              throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
           }
       }
 
@@ -245,10 +244,10 @@ see :doc:`../ReferenceManual/Patterns`.
           print("Invalid Selection.")
       } catch VendingMachineError.OutOfStock {
           print("Out of Stock.")
-      } catch VendingMachineError.InsufficientFunds(let amountNeeded) {
-          print("Insufficient funds. Please insert an additional \(amountNeeded) cents.")
+      } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+          print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
-   << Insufficient funds. Please insert an additional 25 cents.
+   << Insufficient funds. Please insert an additional 25 coins.
 
 In the above example,
 the ``vend(itemNamed:)`` function is called in a ``try`` expression,
