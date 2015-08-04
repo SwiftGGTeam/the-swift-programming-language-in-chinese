@@ -1,5 +1,5 @@
 > 1.0
-> 翻译：[zqp](https://github.com/zqp), 
+> 翻译：[zqp](https://github.com/zqp)
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai), [feiin](https://github.com/feiin)
 
 > 2.0

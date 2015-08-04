@@ -3,7 +3,7 @@
 > 校对：[lslxdx](https://github.com/lslxdx)
 
 > 2.0
-> [xtymichael](https://github.com/xtymichael)
+> 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 # 基础部分
 -----------------
