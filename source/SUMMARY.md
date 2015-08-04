@@ -4,6 +4,7 @@
    * [关于 Swift](chapter1/01_swift.md)
    * [Swift 初见](chapter1/02_a_swift_tour.md)
    * [Swift 版本历史记录](chapter1/03_revision_history.md)
+   * [Swift 1.0 发布内容](v1.0.md)
 * [Swift 教程](chapter2/chapter2.md)
    * [基础部分](chapter2/01_The_Basics.md)
    * [基本运算符](chapter2/02_Basic_Operators.md)
