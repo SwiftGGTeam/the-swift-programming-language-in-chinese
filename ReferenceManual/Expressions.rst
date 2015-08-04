@@ -1098,7 +1098,7 @@ In all other cases, you must use an initializer expression.
 Explicit Member Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`explicit member expression` allows access
+An :newTerm:`explicit member expression` allows access
 to the members of a named type, a tuple, or a module.
 It consists of a period (``.``) between the item
 and the identifier of its member.

@@ -1458,7 +1458,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
+   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,
@@ -1586,7 +1586,7 @@ The ``Product`` class has a constant ``name`` property
 that must not be allowed to take an empty string value.
 To enforce this requirement,
 the ``Product`` class uses a failable initializer to ensure that
-the property's value is non-empty before allowing initialization to succeed.
+the property's value is nonempty before allowing initialization to succeed.
 
 However, ``Product`` is a class, not a structure.
 This means that unlike ``Animal``,
@@ -1710,7 +1710,7 @@ If the superclass initialization succeeds,
 the ``CartItem`` initializer validates that it has received
 a ``quantity`` value of ``1`` or more.
 
-If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
+If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
 
 .. testcode:: failableInitializers
@@ -1752,7 +1752,7 @@ Overriding a Failable Initializer
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
-with a subclass *non*-failable initializer.
+with a subclass *non*failable initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
@@ -1782,7 +1782,7 @@ is to force-unwrap the result of the failable superclass initializer.
 
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
-a ``name`` property that is either a non-empty string value or ``nil``,
+a ``name`` property that is either a nonempty string value or ``nil``,
 but cannot be an empty string:
 
 .. testcode:: failableInitializers
@@ -1833,7 +1833,7 @@ and so it provides a nonfailable version of the initializer instead.
 You can use forced unwrapping in an initializer
 to call a failable initializer from the superclass
 as part of the implementation of a subclass's nonfailable initializer.
-For example, the ``UntitledDocument`` subclass is always named "[Untitled]",
+For example, the ``UntitledDocument`` subclass below is always named ``"[Untitled]"``,
 and it uses the failable ``init(name:)`` initializer
 from its superclass during initialization.
 
@@ -1845,7 +1845,7 @@ from its superclass during initialization.
          }
       }
 
-In this case, if the ``init(name:)`` initializer
+In this case, if the ``init(name:)`` initializer of the superclass
 were ever called with an empty string as the name,
 the forced unwrap operation would result in a runtime error.
 However, because it's called with a string constant,

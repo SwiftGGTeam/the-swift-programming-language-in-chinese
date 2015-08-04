@@ -29,7 +29,7 @@ if necessary --- communicate it to the user.
 .. note::
 
    Error handling in Swift interoperates with error handling patterns
-   that use NSError in Cocoa and Objective-C.
+   that use the ``NSError`` class in Cocoa and Objective-C.
    For more information,
    see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
