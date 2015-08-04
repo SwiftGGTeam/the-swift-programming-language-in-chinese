@@ -27,11 +27,11 @@
 
 我错了。
 
-![图1](https://img.bi/#/TmFvPpk!BZO2eAzmXBRQaHN80Qukey5wTVrvFgxt2IAA5cQe)
-![图2](https://img.bi/#/DtL1E8F!yE5pOw7a4qyQSz_rPwGbfUGQumi3wQjY_XtQYi2W)
-![图3](https://img.bi/#/2FqhxS4!Bvkahw_U9kewHHHmeQw533Ewfm3nLAbrFMGAEpLs)
-![图4](https://img.bi/#/x8OFU6s!879WQwHIovTw7FqA-gTrwgqw-6qU6A4m22sgbK8F)
-![图5](https://img.bi/#/7nKCb0l!fLsVQAIuAzRQ2Xx4qwcSrIvQiou4sgl5tKfQajOK)
+![](https://raw.githubusercontent.com/numbbbbb/the-swift-programming-language-in-chinese/gh-pages/swift%202.0%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87/1.png)
+![](https://raw.githubusercontent.com/numbbbbb/the-swift-programming-language-in-chinese/gh-pages/swift%202.0%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87/2.png)
+![](https://raw.githubusercontent.com/numbbbbb/the-swift-programming-language-in-chinese/gh-pages/swift%202.0%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87/3.png)
+![](https://raw.githubusercontent.com/numbbbbb/the-swift-programming-language-in-chinese/gh-pages/swift%202.0%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87/4.png)
+![](https://raw.githubusercontent.com/numbbbbb/the-swift-programming-language-in-chinese/gh-pages/swift%202.0%E5%BC%95%E7%94%A8%E5%9B%BE%E7%89%87/5.png)
 
 在我没有任何回复的情况下，不到一天时间，有五位朋友报名。看到这些回复的时候我真的很惊讶，也很感动，无论这个项目存在多少问题，只要有人关注，有人愿意为它付出，那我还有什么理由放弃呢？
 
