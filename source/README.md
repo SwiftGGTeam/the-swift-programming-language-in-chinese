@@ -75,4 +75,4 @@ Swift 2.0 参与者名单（按照章节顺序）：
 - [wardenNScaiyi](https://github.com/wardenNScaiyi)
 - [miaosiqi](https://github.com/miaosiqi)
 
-最后，感谢[极客学院](www.jikexueyuan.com)提供的wiki系统，在国内访问起来速度很快，优化后的样式看起来也更舒服。
+最后，感谢<a target='_blank' href="http://wiki.jikexueyuan.com/">极客学院</a>提供的wiki系统，在国内访问起来速度很快，优化后的样式看起来也更舒服。
