@@ -7,7 +7,7 @@
 > <a target='_blank' href="http://swiftsandbox.io">Swift 优秀newsletter</a>
 
 <!-- -->
-> 如果您觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持是我们最大的动力。
+> 如果您觉得这个项目不错，请<a target='_blank' href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese">点击Star一下</a>，您的支持是我们最大的动力。
 
 # 2.0 新的开始	
 
