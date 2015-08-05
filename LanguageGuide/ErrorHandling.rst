@@ -96,13 +96,13 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
-   -> func f() -> Int {}
-   !! <REPL Input>:1:18: error: missing return in a function expected to return 'Int'
-   !! func f() -> Int {}
+   -> func f() -> Int { return 42 }
+   -> func f() throws -> Int { return 42} // Compiler Error
+   !! <REPL Input>:1:6: error: invalid redeclaration of 'f()'
+   !! func f() throws -> Int { return 42} // Compiler Error
    !! ^
-   -> func f() throws -> Int {} // Compiler Error
-   !! <REPL Input>:1:25: error: missing return in a function expected to return 'Int'
-   !! func f() throws -> Int {} // Compiler Error
+   !! <REPL Input>:1:6: note: 'f()' previously declared here
+   !! func f() -> Int { return 42 }
    !! ^
 
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
