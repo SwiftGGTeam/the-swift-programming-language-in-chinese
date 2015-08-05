@@ -173,6 +173,11 @@ an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
 
+.. _Error_Try:
+
+Calling Functions That Throw Errors
+-----------------------------------
+
 When you call a throwing function, you write ``try`` in front of the call.
 This keyword calls out the fact that the function can throw an error
 and that the lines of code after the ``try`` might not be run.
@@ -198,6 +203,35 @@ so the function call is marked with ``try`` in front of it.
 The ``buyFavoriteSnack(_:)`` function is also a throwing function,
 so any errors that the ``vend`` function throws
 propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
+
+..
+    When you call a throwing function that returns a value
+
+    .. testcode:: try-with-values
+
+   -> func f() throws -> Int {
+         return 10
+      }
+      func g() throws -> Int {
+         return 20
+      }
+   -> let total = try f() + g()
+
+    The `try` applies to both the call to `f` and the call to `g` --
+    it's the same as try ( f() + g() )
+    not the same as (try f()) + g()
+
+    You can't put `try` on the right hand side of an operator.
+    ... explain why that wouldn't make sense ...
+
+.. assertion:: no-try-on-rhs
+
+   -> func f() throws -> Int { return 10 }
+   -> let x = 100 + try f()
+   !! <REPL Input>:1:15: error: 'try' cannot appear to the right of a non-assignment operator
+   !! let x = 100 + try f() 
+   !!               ^
+
 
 .. _ErrorHandling_Catch:
 
