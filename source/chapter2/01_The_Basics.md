@@ -670,7 +670,7 @@ if let constantName = someOptional, anotherConstantName = someOtherOptional {
 
 ```swift
 let possibleString: String? = "An optional string."
-let forcedString: possibleString! // 需要惊叹号来获取值
+let forcedString:String = possibleString! // 需要惊叹号来获取值
 
 let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString  // 不需要感叹号
