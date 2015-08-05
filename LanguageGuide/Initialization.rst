@@ -18,10 +18,6 @@ Instances of class types can also implement a :newTerm:`deinitializer`,
 which performs any custom cleanup just before an instance of that class is deallocated.
 For more information about deinitializers, see :doc:`Deinitialization`.
 
-.. TODO: mention that you can't construct a class instance from a class metatype value,
-   because you can't be sure that a subclass will definitely provide the constructor ---
-   see doug's notes from r14175 for more info
-
 .. _Initialization_SettingInitialValuesForStoredProperties:
 
 Setting Initial Values for Stored Properties
@@ -189,8 +185,6 @@ Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
 Because of this, Swift provides an automatic external name
 for *every* parameter in an initializer if you don't provide an external name yourself.
-This automatic external name is the same as the local name,
-as if you had written a hash symbol before every initialization parameter.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
@@ -449,11 +443,6 @@ The example above uses the default initializer for the ``ShoppingListItem`` clas
 to create a new instance of the class with initializer syntax,
 written as ``ShoppingListItem()``,
 and assigns this new instance to a variable called ``item``.
-
-.. QUESTION: How is this affected by inheritance?
-   If I am a subclass of a superclass that defines a designated initializer,
-   I (the subclass) presumably don't get a default initializer,
-   because I am obliged to delegate up to my parent's default initializer.
 
 .. _Initialization_MemberwiseInitializersForStructureTypes:
 
@@ -1469,7 +1458,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
+   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,
@@ -1597,7 +1586,7 @@ The ``Product`` class has a constant ``name`` property
 that must not be allowed to take an empty string value.
 To enforce this requirement,
 the ``Product`` class uses a failable initializer to ensure that
-the property's value is non-empty before allowing initialization to succeed.
+the property's value is nonempty before allowing initialization to succeed.
 
 However, ``Product`` is a class, not a structure.
 This means that unlike ``Animal``,
@@ -1721,7 +1710,7 @@ If the superclass initialization succeeds,
 the ``CartItem`` initializer validates that it has received
 a ``quantity`` value of ``1`` or more.
 
-If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
+If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
 
 .. testcode:: failableInitializers
@@ -1763,15 +1752,13 @@ Overriding a Failable Initializer
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
-with a subclass *non*-failable initializer.
+with a subclass *nonfailable* initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
-the subclass initializer cannot delegate up to the superclass initializer.
-A nonfailable initializer can never delegate to a failable initializer.
-
-.. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
+the only way to delegate up to the superclass initializer
+is to force-unwrap the result of the failable superclass initializer.
 
 .. note::
 
@@ -1795,7 +1782,7 @@ A nonfailable initializer can never delegate to a failable initializer.
 
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
-a ``name`` property that is either a non-empty string value or ``nil``,
+a ``name`` property that is either a nonempty string value or ``nil``,
 but cannot be an empty string:
 
 .. testcode:: failableInitializers
@@ -1842,6 +1829,29 @@ Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way than its superclass,
 its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
+
+You can use forced unwrapping in an initializer
+to call a failable initializer from the superclass
+as part of the implementation of a subclass's nonfailable initializer.
+For example, the ``UntitledDocument`` subclass below is always named ``"[Untitled]"``,
+and it uses the failable ``init(name:)`` initializer
+from its superclass during initialization.
+
+.. testcode:: failableInitializers
+
+   -> class UntitledDocument: Document {
+         override init() {
+            super.init(name: "[Untitled]")!
+         }
+      }
+
+In this case, if the ``init(name:)`` initializer of the superclass
+were ever called with an empty string as the name,
+the forced unwrap operation would result in a runtime error.
+However, because it's called with a string constant,
+you can see that the initializer won't fail,
+so no runtime error can occur in this case.
+
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
@@ -2050,7 +2060,7 @@ You do not write the ``override`` modifier when overriding a required designated
       }
    !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
-   !! ~~~~~~~~          ^
+   !! ~~~~~~~~~         ^
    !!-
    !! <REPL Input>:2:15: note: overridden required initializer is here
    !!    required init() {}

@@ -286,6 +286,7 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``final``,
   ``get``,
   ``infix``,
+  ``indirect``,
   ``lazy``,
   ``left``,
   ``mutating``,
@@ -466,14 +467,6 @@ Floating-Point Literals
 By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
 
-.. TODO: Confirm that using a Unicode special x operator below
-   rather thas just the letter x is correct.
-   This is used in the Guide too.
-   APSG entry on 'x' says to use it in screen resolutions
-   such as 600 x 800, but doesn't comment on this specific usage.
-   Developer Publications SG entry on 'x' says:
-   Used in place of a multiplication sign or the word by to describe dimensions: a 50 x 50 pixel resolution.
-
 Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
 The decimal fraction consists of a decimal point (``.``)
@@ -603,9 +596,9 @@ For example, all the following string literals have the same value:
    <$ : String = "1 2 3"
 
 The default inferred type of a string literal is ``String``.
-The default inferred type of the characters that make up a string
-is ``Character``. For more information about the ``String`` and ``Character``
-types, see :doc:`../LanguageGuide/StringsAndCharacters`.
+For more information about the ``String`` type,
+see :doc:`../LanguageGuide/StringsAndCharacters`
+and `String Structure Reference <//apple_ref/doc/uid/TP40015181>`_.
 
 .. langref-grammar
 
@@ -620,15 +613,21 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
     escape_expr_body ::= [(]escape_expr_body[)]
     escape_expr_body ::= [^\n\r"()]
 
+
 .. syntax-grammar::
 
     Grammar of a string literal
 
-    string-literal --> ``"`` quoted-text-OPT ``"``
+    string-literal --> static-string-literal | interpolated-string-literal
+
+    static-string-literal --> ``"`` quoted-text-OPT ``"``
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
-    quoted-text-item --> ``\(`` expression ``)``
     quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
+
+    interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
+    interpolated-text --> interpolated-text-item interpolated-text-OPT
+    interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``

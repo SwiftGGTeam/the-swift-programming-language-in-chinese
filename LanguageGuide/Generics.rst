@@ -23,7 +23,7 @@ and there are no limitations on what that type can be.
 The Problem That Generics Solve
 -------------------------------
 
-Here's a standard, non-generic function called ``swapTwoInts``,
+Here's a standard, non-generic function called ``swapTwoInts(_:_:)``,
 which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
@@ -55,7 +55,7 @@ The ``swapTwoInts(_:_:)`` function is useful, but it can only be used with ``Int
 If you want to swap two ``String`` values,
 or two ``Double`` values,
 you have to write more functions,
-such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown below:
+such as the ``swapTwoStrings(_:_:)`` and ``swapTwoDoubles(_:_:)`` functions shown below:
 
 .. testcode:: whyGenerics
 
@@ -72,7 +72,7 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles(_:_:)`` functions shown belo
       }
 
 You may have noticed that the bodies of
-the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles(_:_:)`` functions are identical.
+the ``swapTwoInts(_:_:)``, ``swapTwoStrings(_:_:)``, and ``swapTwoDoubles(_:_:)`` functions are identical.
 The only difference is the type of the values that they accept
 (``Int``, ``String``, and ``Double``).
 
@@ -100,7 +100,7 @@ Generic Functions
 
 :newTerm:`Generic functions` can work with any type.
 Here's a generic version of the ``swapTwoInts(_:_:)`` function from above,
-called ``swapTwoValues``:
+called ``swapTwoValues(_:_:)``:
 
 .. testcode:: genericFunctions
 
@@ -112,8 +112,8 @@ called ``swapTwoValues``:
 
 The body of the ``swapTwoValues(_:_:)`` function
 is identical to the body of the ``swapTwoInts(_:_:)`` function.
-However, the first line of ``swapTwoValues``
-is slightly different from ``swapTwoInts``.
+However, the first line of ``swapTwoValues(_:_:)``
+is slightly different from ``swapTwoInts(_:_:)``.
 Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
@@ -140,7 +140,7 @@ whatever ``T`` represents.
 The actual type to use in place of ``T``
 will be determined each time the ``swapTwoValues(_:_:)`` function is called.
 
-The other difference is that the generic function's name (``swapTwoValues``)
+The other difference is that the generic function's name (``swapTwoValues(_:_:)``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
 within the ``swapTwoValues(_:_:)`` function definition.
@@ -149,7 +149,7 @@ Because ``T`` is a placeholder, Swift does not look for an actual type called ``
 The ``swapTwoValues(_:_:)`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
 as long as both of those values are of the same type as each other.
-Each time ``swapTwoValues`` is called,
+Each time ``swapTwoValues(_:_:)`` is called,
 the type to use for ``T`` is inferred from the types of values passed to the function.
 
 In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respectively:
@@ -185,7 +185,7 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 Type Parameters
 ---------------
 
-In the ``swapTwoValues`` example above,
+In the ``swapTwoValues(_:_:)`` example above,
 the placeholder type ``T`` is an example of a :newTerm:`type parameter`.
 Type parameters specify and name a placeholder type,
 and are written immediately after the function's name,
@@ -196,9 +196,9 @@ you can use it to define the type of a function's parameters
 (such as the ``a`` and ``b`` parameters of the ``swapTwoValues(_:_:)`` function),
 or as the function's return type,
 or as a type annotation within the body of the function.
-In each case, the placeholder type represented by the type parameter
+In each case, the type parameter
 is replaced with an *actual* type whenever the function is called.
-(In the ``swapTwoValues`` example above,
+(In the ``swapTwoValues(_:_:)`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
@@ -211,26 +211,19 @@ separated by commas.
 Naming Type Parameters
 ----------------------
 
-In simple cases where a generic function or generic type
-refers to a single placeholder type
-(such as the ``swapTwoValues`` generic function above,
-or a generic collection that stores a single type, such as ``Array``),
-it is traditional to use the single-character name ``T`` for the type parameter.
-However, you can use any valid identifier as the type parameter name.
-
-If you are defining more complex generic functions,
-or generic types with multiple parameters,
-it is useful to provide more descriptive type parameter names.
-For example, Swift's ``Dictionary`` type has two type parameters ---
-one for its keys and one for its values.
-If you were writing ``Dictionary`` yourself,
-you might name these two type parameters ``Key`` and ``Value``
-to remind you of their purpose as you use them within your generic code.
+In most cases, type parameters have descriptive names,
+such as ``Key`` and ``Value`` in ``Dictionary<Key, Value>``
+and ``Element`` in ``Array<Element>``,
+which tells the reader about the relationship between the type parameter
+and the generic type or function it's used in.
+However, when there isn't a meaningful relationship between them,
+it's traditional to name them using single letters such as ``T``, ``U``, and ``V``,
+such as ``T`` in the ``swapTwoValues(_:_:)`` function above.
 
 .. note::
 
-   Always give type parameters ``UpperCamelCase`` names
-   (such as ``T`` and ``Key``)
+   Always give type parameters upper camel case names
+   (such as ``T`` and ``MyTypeParameter``)
    to indicate that they are a placeholder for a *type*, not a value.
 
 .. _Generics_GenericTypes:
@@ -312,35 +305,35 @@ Here's a generic version of the same code:
 
 .. testcode:: genericStack
 
-   -> struct Stack<T> {
-         var items = [T]()
-         mutating func push(item: T) {
+   -> struct Stack<Element> {
+         var items = [Element]()
+         mutating func push(item: Element) {
             items.append(item)
          }
-         mutating func pop() -> T {
+         mutating func pop() -> Element {
             return items.removeLast()
          }
       }
 
-.. QUESTION: should Stack's pop() method include bounds checking?
-
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
-but with a placeholder type parameter called ``T``
+but with a type parameter called ``Element``
 instead of an actual type of ``Int``.
-This type parameter is written within a pair of angle brackets (``<T>``)
+This type parameter is written within a pair of angle brackets (``<Element>``)
 immediately after the structure's name.
 
-``T`` defines a placeholder name for “some type ``T``” to be provided later on.
-This future type can be referred to as “``T``” anywhere within the structure's definition.
-In this case, ``T`` is used as a placeholder in three places:
+``Element`` defines a placeholder name for
+“some type ``Element``” to be provided later on.
+This future type can be referred to as “``Element``”
+anywhere within the structure's definition.
+In this case, ``Element`` is used as a placeholder in three places:
 
 * To create a property called ``items``,
-  which is initialized with an empty array of values of type ``T``
+  which is initialized with an empty array of values of type ``Element``
 * To specify that the ``push(_:)`` method has a single parameter called ``item``,
-  which must be of type ``T``
+  which must be of type ``Element``
 * To specify that the value returned by the ``pop()`` method
-  will be a value of type ``T``
+  will be a value of type ``Element``
 
 Because it is a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
@@ -400,17 +393,17 @@ which returns the top item on the stack without popping it from the stack:
 .. testcode:: genericStack
 
    -> extension Stack {
-         var topItem: T? {
+         var topItem: Element? {
             return items.isEmpty ? nil : items[items.count - 1]
          }
       }
 
-The ``topItem`` property returns an optional value of type ``T``.
+The ``topItem`` property returns an optional value of type ``Element``.
 If the stack is empty, ``topItem`` returns ``nil``;
 if the stack is not empty, ``topItem`` returns the final item in the ``items`` array.
 
 Note that this extension does not define a type parameter list.
-Instead, the ``Stack`` type's existing type parameter name, ``T``,
+Instead, the ``Stack`` type's existing type parameter name, ``Element``,
 is used within the extension to indicate the optional type of
 the ``topItem`` computed property.
 
@@ -547,9 +540,9 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:12: error: binary operator '==' cannot be applied to two T operands
+   !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two T operands
    !!       if value == valueToFind {
-   !!                ^
+   !!          ~~~~~ ^  ~~~~~~~~~~~
 
 This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
@@ -734,31 +727,31 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
 .. testcode:: associatedTypes
 
-   -> struct Stack<T>: Container {
-         // original Stack<T> implementation
-         var items = [T]()
-         mutating func push(item: T) {
+   -> struct Stack<Element>: Container {
+         // original Stack<Element> implementation
+         var items = [Element]()
+         mutating func push(item: Element) {
             items.append(item)
          }
-         mutating func pop() -> T {
+         mutating func pop() -> Element {
             return items.removeLast()
          }
          // conformance to the Container protocol
-         mutating func append(item: T) {
+         mutating func append(item: Element) {
             self.push(item)
          }
          var count: Int {
             return items.count
          }
-         subscript(i: Int) -> T {
+         subscript(i: Int) -> Element {
             return items[i]
          }
       }
 
-This time, the placeholder type parameter ``T`` is used as
+This time, the type parameter ``Element`` is used as
 the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
-Swift can therefore infer that ``T`` is the appropriate type to use
+Swift can therefore infer that ``Element`` is the appropriate type to use
 as the ``ItemType`` for this particular container.
 
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
@@ -845,7 +838,7 @@ This function takes two arguments called
 ``someContainer`` and ``anotherContainer``.
 The ``someContainer`` argument is of type ``C1``,
 and the ``anotherContainer`` argument is of type ``C2``.
-Both ``C1`` and ``C2`` are placeholder type parameters
+Both ``C1`` and ``C2`` are type parameters
 for two container types to be determined when the function is called.
 
 The function's type parameter list places
@@ -922,10 +915,6 @@ You can therefore call the ``allItemsMatch(_:_:)`` function
 with these two containers as its arguments.
 In the example above, the ``allItemsMatch(_:_:)`` function correctly reports that
 all of the items in the two containers match.
-
-.. QUESTION: swift/stdlib/core/Algorithm.swift contains a function called equal,
-   which provides essentially this functionality for two Sequences.
-   Should I mention this fact, and if so, how?
 
 .. TODO: Subscripts
    ----------------

@@ -181,17 +181,17 @@ which model a block of apartments and its residents:
       }
    ---
    -> class Apartment {
-         let number: Int
-         init(number: Int) { self.number = number }
+         let unit: String
+         init(unit: String) { self.unit = unit }
          var tenant: Person?
-         deinit { print("Apartment #\(number) is being deinitialized") }
+         deinit { print("Apartment \(unit) is being deinitialized") }
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``
 and an optional ``apartment`` property that is initially ``nil``.
 The ``apartment`` property is optional, because a person may not always have an apartment.
 
-Similarly, every ``Apartment`` instance has a ``number`` property of type ``Int``
+Similarly, every ``Apartment`` instance has a ``unit`` property of type ``String``
 and has an optional ``tenant`` property that is initially ``nil``.
 The tenant property is optional because an apartment may not always have a tenant.
 
@@ -201,7 +201,7 @@ This enables you to see whether
 instances of ``Person`` and ``Apartment`` are being deallocated as expected.
 
 This next code snippet defines two variables of optional type
-called ``john`` and ``number73``,
+called ``john`` and ``unit4A``,
 which will be set to a specific ``Apartment`` and ``Person`` instance below.
 Both of these variables have an initial value of ``nil``, by virtue of being optional:
 
@@ -209,20 +209,20 @@ Both of these variables have an initial value of ``nil``, by virtue of being opt
    :compile: true
 
    -> var john: Person?
-   -> var number73: Apartment?
+   -> var unit4A: Apartment?
 
 You can now create a specific ``Person`` instance and ``Apartment`` instance
-and assign these new instances to the ``john`` and ``number73`` variables:
+and assign these new instances to the ``john`` and ``unit4A`` variables:
 
 .. testcode:: referenceCycles
    :compile: true
 
    -> john = Person(name: "John Appleseed")
-   -> number73 = Apartment(number: 73)
+   -> unit4A = Apartment(unit: "4A")
 
 Here's how the strong references look after creating and assigning these two instances.
 The ``john`` variable now has a strong reference to the new ``Person`` instance,
-and the ``number73`` variable has a strong reference to the new ``Apartment`` instance:
+and the ``unit4A`` variable has a strong reference to the new ``Apartment`` instance:
 
 .. image:: ../images/referenceCycle01_2x.png
    :align: center
@@ -230,13 +230,13 @@ and the ``number73`` variable has a strong reference to the new ``Apartment`` in
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
 Note that an exclamation mark (``!``) is used to unwrap and access
-the instances stored inside the ``john`` and ``number73`` optional variables,
+the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
 .. testcode:: referenceCycles
 
-   -> john!.apartment = number73
-   -> number73!.tenant = john
+   -> john!.apartment = unit4A
+   -> unit4A!.tenant = john
 
 Here's how the strong references look after you link the two instances together:
 
@@ -248,7 +248,7 @@ a strong reference cycle between them.
 The ``Person`` instance now has a strong reference to the ``Apartment`` instance,
 and the ``Apartment`` instance has a strong reference to the ``Person`` instance.
 Therefore, when you break the strong references held by
-the ``john`` and ``number73`` variables,
+the ``john`` and ``unit4A`` variables,
 the reference counts do not drop to zero,
 and the instances are not deallocated by ARC:
 
@@ -256,7 +256,7 @@ and the instances are not deallocated by ARC:
    :compile: true
 
    -> john = nil
-   -> number73 = nil
+   -> unit4A = nil
 
 Note that neither deinitializer was called
 when you set these two variables to ``nil``.
@@ -264,7 +264,7 @@ The strong reference cycle prevents the ``Person`` and ``Apartment`` instances
 from ever being deallocated, causing a memory leak in your app.
 
 Here's how the strong references look after you set
-the ``john`` and ``number73`` variables to ``nil``:
+the ``john`` and ``unit4A`` variables to ``nil``:
 
 .. image:: ../images/referenceCycle03_2x.png
    :align: center
@@ -359,26 +359,26 @@ is declared as a weak reference:
       }
    ---
    -> class Apartment {
-         let number: Int
-         init(number: Int) { self.number = number }
+         let unit: String
+         init(unit: String) { self.unit = unit }
          weak var tenant: Person?
-         deinit { print("Apartment #\(number) is being deinitialized") }
+         deinit { print("Apartment \(unit) is being deinitialized") }
       }
 
-The strong references from the two variables (``john`` and ``number73``)
+The strong references from the two variables (``john`` and ``unit4A``)
 and the links between the two instances are created as before:
 
 .. testcode:: weakReferences
    :compile: true
 
    -> var john: Person?
-   -> var number73: Apartment?
+   -> var unit4A: Apartment?
    ---
    -> john = Person(name: "John Appleseed")
-   -> number73 = Apartment(number: 73)
+   -> unit4A = Apartment(unit: "4A")
    ---
-   -> john!.apartment = number73
-   -> number73!.tenant = john
+   -> john!.apartment = unit4A
+   -> unit4A!.tenant = john
 
 Here's how the references look now that you've linked the two instances together:
 
@@ -404,7 +404,7 @@ it is deallocated:
    <- John Appleseed is being deinitialized
 
 The only remaining strong reference to the ``Apartment`` instance
-is from the ``number73`` variable.
+is from the ``unit4A`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
@@ -417,23 +417,24 @@ it too is deallocated:
 .. testcode:: weakReferences
    :compile: true
 
-   -> number73 = nil
-   <- Apartment #73 is being deinitialized
+   -> unit4A = nil
+   <- Apartment 4A is being deinitialized
 
 The final two code snippets above show that
 the deinitializers for the ``Person`` instance and ``Apartment`` instance
 print their “deinitialized” messages
-after the ``john`` and ``number73`` variables are set to ``nil``.
+after the ``john`` and ``unit4A`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
-.. TODO: weak references can also be implicitly unchecked optionals.
-   I should mention this here, but when would it be appropriate to use them?
+.. note::
 
-.. TODO: Feedback from [Contributor 7746] to be incorporated here:
-   “In the ARC section, at the end of the weak pointer section,
-   it is worth mentioning that trying to use weak pointers as a cache
-   (like you might do in a GC'd system) is doomed to failure:
-   values will be deallocated as soon as the last strong reference is removed.”
+   In systems that use garbage collection,
+   weak pointers are sometimes used to implement a simple caching mechanism
+   because objects with no strong references are deallocated
+   only when memory pressure triggers garbage collection.
+   However, with ARC, values are deallocated
+   as soon as their last strong reference is removed,
+   making weak references unsuitable for such a purpose.
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
@@ -742,7 +743,9 @@ which provides a simple model for an individual element within an HTML document:
       }
 
 The ``HTMLElement`` class defines a ``name`` property,
-which indicates the name of the element, such as ``"p"`` for a paragraph element,
+which indicates the name of the element,
+such as ``"h1"`` for a heading element,
+``"p"`` for a paragraph element,
 or ``"br"`` for a line break element.
 ``HTMLElement`` also defines an optional ``text`` property,
 which you can set to a string that represents
@@ -767,7 +770,21 @@ However, because ``asHTML`` is a closure property rather than an instance method
 you can replace the default value of the ``asHTML`` property with a custom closure,
 if you want to change the HTML rendering for a particular HTML element.
 
-.. QUESTION: I don't actually do so, however. Is this a valid justification here?
+For example, the ``asHTML`` property could be set to a closure
+that defaults to some text if the ``text`` property is ``nil``,
+in order to prevent the representation from returning an empty HTML tag:
+
+.. testcode:: strongReferenceCyclesForClosures
+
+   -> let heading = HTMLElement(name: "h1")
+   << // heading : HTMLElement = REPL.HTMLElement
+   -> let defaultText = "some default text"
+   << // defaultText : String = "some default text"
+   -> heading.asHTML = {
+         return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+      }
+   -> print(heading.asHTML())
+   <- <h1>some default text</h1>
 
 .. note::
 
@@ -895,9 +912,6 @@ followed by the ``in`` keyword:
    >>    return "foo"
       }
    >> }
-
-.. QUESTION: I have declared both of these closure properties as lazy.
-   Is this the right message to be sending?
 
 .. _AutomaticReferenceCounting_WeakAndUnownedReferencesForClosures:
 

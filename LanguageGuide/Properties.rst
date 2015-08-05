@@ -126,15 +126,6 @@ you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
 
-.. QUESTION: the same is actually true for computed properties of structures too
-   (which surprised me, as they don't have storage).
-   Does this mean I should mention it again later on?
-   For now, I've deliberately said "properties" rather than "stored properties"
-   in the first paragraph of this section, to set expectations.
-   (I've also asked whether this is intentional, in rdar://16338553.)
-
-.. TODO: see the explanation in rdar://16338553, and write about it here.
-
 .. _Properties_LazyStoredProperties:
 
 Lazy Stored Properties
@@ -161,7 +152,7 @@ the ``lazy`` modifier before its declaration.
    -> class C { lazy let x = 0 }
    !! <REPL Input>:1:11: error: 'lazy' cannot be used on a let
    !! class C { lazy let x = 0 }
-   !! ^~~~
+   !! ^~~~~
    !!-
 
 Lazy properties are useful when the initial value for a property
@@ -476,7 +467,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
       }
    !! <REPL Input>:2:6: error: lazy properties may not have observers
    !! lazy var x: Int = 0 {
-   !! ^~~~
+   !! ^~~~~
    !!-
 
 .. assertion:: storedAndComputedInheritedPropertiesCanBeObserved
@@ -704,12 +695,10 @@ in the same way as computed instance properties.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
-.. TODO: I've found a note saying that
-   "Global variables and static properties are now lazily initialized on first use.
-   Where you would use dispatch_once to lazily initialize a singleton object
-   in Objective-C, you can simply declare a global variable with an initializer in Swift.
-   Like dispatch_once, this lazy initialization is thread safe."
-   If this is true, I haven't yet mentioned it for static properties.
+   Stored type properties are lazily initialized on their first access.
+   They are guaranteed to be initialized only once,
+   even when accessed by multiple threads simultaneously,
+   and they do not need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 

@@ -185,11 +185,6 @@ or a variable into a constant.
    surround the keyword with back ticks (`````) when using it as a name.
    However, avoid using keywords as names unless you have absolutely no choice.
 
-.. QUESTION: I've deliberately not given an example here,
-   because I don't want to suggest that such an example is
-   a good example of when you *should* use a keyword as a name.
-   Is this the right approach to take?
-
 You can change the value of an existing variable to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
@@ -534,9 +529,23 @@ All of these integer literals have a decimal value of ``17``:
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
 They must always have a number (or hexadecimal number) on both sides of the decimal point.
-They can also have an optional :newTerm:`exponent`,
-indicated by an uppercase or lowercase ``e`` for decimal floats,
-or an uppercase or lowercase ``p`` for hexadecimal floats.
+Decimal floats can also have an optional :newTerm:`exponent`,
+indicated by an uppercase or lowercase ``e``;
+hexadecimal floats must have an exponent,
+indicated by an uppercase or lowercase ``p``.
+
+.. assertion:: float-required-vs-optional-exponent
+
+   -> let hexWithout = 0x1.5
+   !! <REPL Input>:1:23: error: hexadecimal floating point literal must end with an exponent
+   !! let hexWithout = 0x1.5
+   !!                       ^
+   -> let hexWith = 0x1.5p7
+   << // hexWith : Double = 168.0
+   -> let decimalWithout = 0.5
+   << // decimalWithout : Double = 0.5
+   -> let decimalWith = 0.5e7
+   << // decimalWith : Double = 5000000.0
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
@@ -952,7 +961,7 @@ An optional says:
    without the need for special constants.
 
 Here's an example of how optionals can be used to cope with the absence of a value.
-Swift's ``String`` type has an initializer
+Swift's ``Int`` type has an initializer
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,

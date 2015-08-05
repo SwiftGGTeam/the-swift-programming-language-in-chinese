@@ -159,8 +159,6 @@ and are set to ``0`` in the output value:
    -> let outputBits = firstBits ^ otherBits  // equals 00010001
    << // outputBits : UInt8 = 17
 
-.. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
-
 .. _AdvancedOperators_BitwiseLeftAndRightShiftOperators:
 
 Bitwise Left and Right Shift Operators
@@ -263,11 +261,6 @@ which gives an output value of ``0x000099``.
 There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
-
-.. QUESTION: I've used UInt32 values here,
-   but this would also work with an inferred Int.
-   Which is a better example? (I've chosen not to use Int so far,
-   as this section is about unsigned shifts.)
 
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
@@ -661,9 +654,6 @@ performs this operation on both the ``x`` and ``y`` properties:
    /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
    </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
-.. QUESTION: is this the first time I will have introduced attributes?
-   If so, do they need more qualification?
-
 .. _AdvancedOperators_CompoundAssignmentOperators:
 
 Compound Assignment Operators
@@ -735,14 +725,6 @@ and returns the result:
    Only the compound assignment operators can be overloaded.
    Similarly, the ternary conditional operator
    (``a ? b : c``) cannot be overloaded.
-
-.. QUESTION: some of the standard operators (such as equation and comparison)
-   are implemented as part of a protocol (such as Equatable and Comparable).
-   You don't seem to need to declare conformance to these protocols
-   in order to implement the operator functions, however.
-   Is that correct? Can you get != for free after implementing == , for example?
-   UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
-   like Equatable to provide a default implementation of != if you implement ==
 
 .. _AdvancedOperators_EquivalenceOperators:
 

@@ -206,6 +206,7 @@
     "declarations-deinitializerdeclaration": "ID377", 
     "declarations-enumerationdeclaration": "ID364", 
     "declarations-enumerationswithcasesofanytype": "ID365", 
+    "declarations-enumerationswithindirection": "ID537", 
     "declarations-enumerationswithrawcasevalues": "ID366", 
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
@@ -234,9 +235,11 @@
     "enumerations-and-structures": "ID465", 
     "enumerations-associatedvalues": "ID148", 
     "enumerations-enumerationsyntax": "ID146", 
+    "enumerations-implicitlyassignedrawvalues": "ID535", 
     "enumerations-initializingfromarawvalue": "ID150", 
     "enumerations-matchingenumerationvalueswithaswitchstatement": "ID147", 
     "enumerations-rawvalues": "ID149", 
+    "enumerations-recursiveenumerations": "ID536", 
     "errorhandling-catch": "ID512", 
     "errorhandling-defer": "ID514", 
     "errorhandling-force": "ID513", 
@@ -290,7 +293,6 @@
     "functions-functiontypesasparametertypes": "ID176", 
     "functions-functiontypesasreturntypes": "ID177", 
     "functions-inoutparameters": "ID173", 
-    "functions-multipleinputparameters": "ID161", 
     "functions-nestedfunctions": "ID178", 
     "functions-omittingparameternames": "ID526", 
     "functions-optionaltuplereturntypes": "ID165", 
@@ -438,6 +440,8 @@
     "statements-availabilitycondition": "ID522", 
     "statements-branchstatements": "ID434", 
     "statements-breakstatement": "ID441", 
+    "statements-buildconfigurationstatement": "ID539", 
+    "statements-compilercontrolstatements": "ID538", 
     "statements-continuestatement": "ID442", 
     "statements-controltransferstatements": "ID440", 
     "statements-deferstatement": "ID532", 
@@ -450,6 +454,7 @@
     "statements-guardstatement": "ID524", 
     "statements-ifstatement": "ID435", 
     "statements-labeledstatement": "ID439", 
+    "statements-linecontrolstatement": "ID540", 
     "statements-loopstatements": "ID429", 
     "statements-returnstatement": "ID444", 
     "statements-switchstatement": "ID436", 
@@ -553,5 +558,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 535
+  "next_id": 541
 }

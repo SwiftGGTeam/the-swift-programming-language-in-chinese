@@ -231,7 +231,7 @@ New barcodes can then be created using either type:
 .. testcode:: enums
 
    -> var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
-   << // productBarcode : Barcode = REPL.Barcode
+   << // productBarcode : Barcode = REPL.Barcode.UPCA(8, 85909, 51226, 3)
 
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
@@ -293,8 +293,6 @@ enumeration members can come prepopulated with default values
 (called :newTerm:`raw values`),
 which are all of the same type.
 
-.. QUESTION: it's not really "in addition to", it's "alternatively" - does this matter?
-
 Here's an example that stores raw ASCII values alongside named enumeration members:
 
 .. testcode:: rawValues
@@ -310,23 +308,36 @@ are defined to be of type ``Character``,
 and are set to some of the more common ASCII control characters.
 ``Character`` values are described in :doc:`StringsAndCharacters`.
 
-Note that raw values are *not* the same as associated values.
-Raw values are set to prepopulated values
-when you first define the enumeration in your code,
-like the three ASCII codes above.
-The raw value for a particular enumeration member is always the same.
-Associated values are set when you create a new constant or variable
-based on one of the enumeration's members,
-and can be different each time you do so.
-
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
-When integers are used for raw values,
-they auto-increment if no value is specified for some of the enumeration members.
+
+.. note::
+
+   Raw values are *not* the same as associated values.
+   Raw values are set to prepopulated values
+   when you first define the enumeration in your code,
+   like the three ASCII codes above.
+   The raw value for a particular enumeration member is always the same.
+   Associated values are set when you create a new constant or variable
+   based on one of the enumeration's members,
+   and can be different each time you do so.
+
+.. _Enumerations_ImplicitlyAssignedRawValues:
+
+Implicitly Assigned Raw Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you're working with enumerations that store integer or string raw values,
+you don't have to explicitly assign a raw value for each member.
+When you don't, Swift will automatically assign the values for you.
+
+For instance, when integers are used for raw values,
+the implicit value for each member is one more than the previous member.
+If the first member doesn't have a value set, it's value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
-with raw integer values to represent each planet's order from the sun:
+with integer raw values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
@@ -334,9 +345,26 @@ with raw integer values to represent each planet's order from the sun:
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 
-Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
+In the example above,
+``Planet.Mercury`` has an explicit raw value of ``1``,
+``Planet.Venus`` has an implicit raw value of ``2``, and so on.
 
-Access the raw value of an enumeration member with its ``rawValue`` property:
+When strings are used for raw values,
+the implicit value for each member is the text of that member's name.
+
+The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
+with string raw values to represent each direction's name:
+
+.. testcode:: rawValues
+
+   -> enum CompassPoint: String {
+         case North, South, East, West
+      }
+
+In the example above,
+``CompassPoint.South`` has an implicit raw value of ``"South"``, and so on.
+
+You access the raw value of an enumeration member with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
@@ -344,6 +372,12 @@ Access the raw value of an enumeration member with its ``rawValue`` property:
    << // earthsOrder : Int = 3
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
+   ---
+   -> let sunsetDirection = CompassPoint.West.rawValue
+   << // sunsetDirection : String = "West"
+   /> sunsetDirection is \"\(sunsetDirection)\"
+   </ sunsetDirection is "West"
+
 
 .. _Enumerations_InitializingFromARawValue:
 
@@ -402,3 +436,99 @@ and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
    is together, and the union bits (aka Associated Values) come last.
+
+.. _Enumerations_RecursiveEnumerations:
+
+Recursive Enumerations
+----------------------
+
+Enumerations work well for modeling data
+when there is a fixed number of possibilities that need to be considered,
+such as the operations used for doing simple integer arithmetic.
+These operations let you combine simple arithmetic expressions
+that are made up of integers such as ``5``
+into more complex ones such as ``5 + 4``.
+
+One important characteristic of arithmetic expressions
+is that they can be nested.
+For example, the expression ``(5 + 4) * 2``
+has a number on the right hand side of the multiplication
+and another expression on the left hand side of the multiplication.
+Because the data is nested,
+the enumeration used to store the data also needs to support nesting ---
+this means the enumeration needs to be recursive.
+
+A :newTerm:`recursive enumeration` is an enumeration
+that has another instance of the enumeration
+as the associated value for one or more of the enumeration members.
+The compiler has to insert a layer of indirection
+when it works with recursive enumerations.
+You indicate that an enumeration member is recursive
+by writing ``indirect`` before it.
+
+For example, here is an enumeration that stores simple arithmetic expressions:
+
+.. testcode:: recursive-enum-intro
+
+    -> enum ArithmeticExpression {
+           case Number(Int)
+           indirect case Addition(ArithmeticExpression, ArithmeticExpression)
+           indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+       }
+
+.. TODO Conceptual art would really help here.
+
+You can also write ``indirect`` before the beginning of the enumeration,
+to enable indirection for all of the enumeration's members that need it:
+
+.. testcode:: recursive-enum
+
+    -> indirect enum ArithmeticExpression {
+           case Number(Int)
+           case Addition(ArithmeticExpression, ArithmeticExpression)
+           case Multiplication(ArithmeticExpression, ArithmeticExpression)
+       }
+
+This enumeration can store three kinds of arithmetic expressions:
+a plain number,
+the addition of two expressions,
+and the multiplication of two expressions.
+The ``Addition`` and ``Multiplication`` members have associated values
+that are also arithmetic expressions ---
+these associated values make it possible to nest expressions.
+
+A recursive function is a straightforward way
+to work with data that has a recursive structure.
+For example, here's a function that evaluates an arithmetic expression:
+
+.. testcode:: recursive-enum
+
+    -> func evaluate(expression: ArithmeticExpression) -> Int {
+           switch expression {
+               case .Number(let value):
+                   return value
+               case .Addition(let left, let right):
+                   return evaluate(left) + evaluate(right)
+               case .Multiplication(let left, let right):
+                   return evaluate(left) * evaluate(right)
+           }
+       }
+    ---
+    // evaluate (5 + 4) * 2
+    -> let five = ArithmeticExpression.Number(5)
+    -> let four = ArithmeticExpression.Number(4)
+    -> let sum = ArithmeticExpression.Addition(five, four)
+    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
+    -> print(evaluate(product))
+    <- 18
+
+This function evaluates a plain number
+by simply returning the associated value.
+It evaluates an addition or multiplication
+by evaluating the expression on the left hand side,
+evaluating the expression on the right hand side,
+and then adding them or multiplying them.

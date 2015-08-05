@@ -11,19 +11,65 @@ This table describes the changes to *The Swift Programming Language*.
             * Added the :ref:`TheBasics_ImportDeclarations` section
               to the :doc:`../LanguageGuide/TheBasics` chapter.
 
-            * Added a note to the :ref:`Types_MetatypeType` section
-              about constructing instances from metatype values.
-
-            * Updated the :ref:`BasicOperators_AssignmentOperator` section
-              with information about why chained assignment isn't supported.
-
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-06-08  * Updated for Swift v2.0.
+2015-08-06  * Updated the :ref:`ErrorHandling_Represent` section
+              now that all types can conform to the ``ErrorType`` protocol.
+
+            * Added information
+              to the :ref:`Initialization_OverridingAFailableInitializer` section
+              about how a nonfailable initializer can delegate
+              up to a failable initializer
+              by force-unwrapping the result of the superclass's initializer.
+
+            * Added information about using enumeration cases as functions
+              to the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section.
+
+            * Added information about explicitly referencing an initializer
+              to the :ref:`Expressions_InitializerExpression` section.
+
+            * Added information about build configuration
+              and line control statements
+              to the :ref:`Statements_CompilerControlStatements` section.
+
+            * Added a note to the :ref:`Types_MetatypeType` section
+              about constructing class instances from metatype values.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about weak references being unsuitable for caching.
+
+            * Updated a note in the :ref:`Properties_TypeProperties` section
+              to mention that stored type properties are lazily initialized.
+----------  --------------------------------------------------------------------------
+2015-07-21  * Added information about recursive enumerations
+              to the :ref:`Enumerations_RecursiveEnumerations` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added information about the behavior
+              of enumeration cases with ``String`` raw values
+              to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithRawCaseValues` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Updated the :ref:`Closures_CapturingValues` section
+              to clarify how variables and constants are captured in closures.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              to describe when you can apply the ``@objc`` attribute to classes.
+
+            * Added a note to the :ref:`ErrorHandling_Catch` section
+              about the performance of executing a ``throw`` statement.
+              Added similar information about the ``do`` statement
+              in the :ref:`Statements_DoStatement` section.
+----------  --------------------------------------------------------------------------
+2015-06-08  * Updated for Swift 2.0.
 
             * Added information about error handling
-
               to the :doc:`../LanguageGuide/ErrorHandling` chapter,
               the :ref:`Statements_DoStatement` section,
               the :ref:`Statements_ThrowStatement` section,

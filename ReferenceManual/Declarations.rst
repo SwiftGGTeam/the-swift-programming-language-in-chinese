@@ -972,8 +972,98 @@ The name of each case must be unique.
 Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
 immediately following the name of the case.
+
+Enumeration cases that store associated values can be used as functions
+that create instances of the enumeration with the specified associated values.
+And just like functions,
+you can get a reference to an enumeration case and apply it later in your code.
+
+.. testcode:: enum-case-as-function
+
+    -> enum Number {
+          case Integer(Int)
+          case Real(Double)
+       }
+    -> let f = Number.Integer
+    << // f : (Int) -> Number = (Function)
+    -> // f is a function of type (Int) -> Number
+    ---
+    -> // Apply f to create an array of Number instances with integer values
+    -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
+    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
+
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
+
+.. _Declarations_EnumerationsWithIndirection:
+
+Enumerations with Indirection
++++++++++++++++++++++++++++++
+
+Enumerations can have a recursive structure,
+that is, they can have cases with associated values
+that are instances of the enumeration type itself.
+However, instances of enumeration types have value semantics,
+which means they have a fixed layout in memory.
+To support recursion,
+the compiler must insert a layer of indirection.
+
+To enable indirection for a particular enumeration case,
+mark it with the ``indirect`` declaration modifier.
+
+.. TODO The word "enable" is kind of a weasle word.
+   Better to have a more concrete discussion of exactly when
+   it is and isn't used.
+   For example, does "indirect enum { X(Int) } mark X as indirect?
+
+.. testcode:: indirect-enum
+
+   -> enum Tree<T> {
+         case Empty
+         indirect case Node(value: T, left: Tree, right: Tree)
+      }
+   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
+   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
+   >> let t = Tree.Node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+
+To enable indirection for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier ---
+this is convenient when the enumeration contains many cases
+that would each need to be marked with the ``indirect`` modifier.
+
+An enumeration case that's marked with the ``indirect`` modifier
+must have an associated value.
+An enumeration that is marked with the ``indirect`` modifier
+can contain a mixture of cases that have associated values and cases those that don't.
+That said,
+it can't contain any cases that are also marked with the ``indirect`` modifier.
+
+.. It really should be an associated value **that includes the enum type**
+   but right now the compiler is satisfied with any associated value.
+   Alex emailed Joe Groff 2015-07-08 about this.
+
+.. assertion indirect-in-indirect
+
+   -> indirect enum E { indirect case C(E) }
+   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
+   !! indirect enum E { indirect case C(E) }
+   !!                   ^
+
+.. assertion indirect-without-recursion
+
+   -> enum E { indirect case C }
+   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
+   !! enum E { indirect case C }
+   !!          ^
+   ---
+   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   ---
+   -> indirect enum E3 { case X }
+
 
 .. _Declarations_EnumerationsWithRawCaseValues:
 
@@ -1003,8 +1093,8 @@ and one of the following literal-convertible protocols:
 ``StringLiteralConvertible`` for string literals that contain any number of characters, and
 ``ExtendedGraphemeClusterLiteralConvertible`` for string literals
 that contain only a single character.
-
 Each case must have a unique name and be assigned a unique raw value.
+
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
@@ -1021,6 +1111,19 @@ In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value 
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
+
+If the raw-value type is specified as ``String``
+and you don't assign values to the cases explicitly,
+each unassigned case is implicitly assigned a string with the same text as the name of that case.
+
+.. testcode:: raw-value-enum-implicit-string-values
+
+    -> enum WeekendDay: String {
+          case Saturday, Sunday
+       }
+
+In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
+and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
@@ -1049,6 +1152,13 @@ The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
+.. FIXME: Or use if-case:
+   enum E { case C(Int) }
+   let e = E.C(100)
+   if case E.C(let i) = e { print(i) }
+   // prints 100
+
+
 
 .. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw-value type,
@@ -1075,10 +1185,10 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
-    union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
@@ -1091,7 +1201,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
     raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> numeric-literal | string-literal | boolean-literal
+    raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
@@ -1117,7 +1227,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` literal
-
 
 
 .. _Declarations_StructureDeclaration:
@@ -1755,6 +1864,9 @@ is called (that is, any initializer delegation is performed).
 A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
 or to an ``init!`` failable initializer.
+A nonfailable initializer can delegate to an ``init?`` failable initializer
+by force-unwrapping the result of the superclass's initializer ---
+for example, by writing ``super.init()!``.
 
 Initialization failure propagates through initializer delegation.
 Specifically,

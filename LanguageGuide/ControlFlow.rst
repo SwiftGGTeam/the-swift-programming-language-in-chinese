@@ -12,11 +12,6 @@ In addition to the traditional ``for`` loop found in C,
 Swift adds a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-.. TODO: add the text below once we have some documentation about Sequence:
-   The ``for``-``in`` loop can even be used with your own custom types
-   if they conform to the ``Sequence`` protocol.
-   <link>
-
 Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
@@ -144,7 +139,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -156,11 +151,6 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
    including your own classes and collection types,
    as long as they conform to the ``Sequence`` protocol.
    <link to Sequence definition>
-
-.. QUESTION: are there any plans for enums to conform to Sequence?
-   If so, they might make for a good example.
-   What would the syntax be if they did?
-   'for planet in Planet'?
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
@@ -284,8 +274,6 @@ The rules of the game are as follows:
   following the horizontal path indicated by the dotted arrow above.
 * If your turn ends at the bottom of a ladder, you move up that ladder.
 * If your turn ends at the head of a snake, you move down that snake.
-
-.. TODO: update this description to match the look of the final artwork.
 
 The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
@@ -734,8 +722,9 @@ It is not valid to write the following code, because the first case is empty:
             print("Not the letter A")
       }
    !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
-   !!          case "a":
-   !!          ^~~~~~~~~
+   !!      case "a":
+   !!      ^~~~~~~~~
+   !!                break
    // this will report a compile-time error
 
 Unlike a ``switch`` statement in C,
@@ -973,15 +962,17 @@ Control Transfer Statements
 
 :newTerm:`Control transfer statements` change the order in which your code is executed,
 by transferring control from one piece of code to another.
-Swift has four control transfer statements:
+Swift has five control transfer statements:
 
 * ``continue``
 * ``break``
 * ``fallthrough``
 * ``return``
+* ``throw``
 
 The ``continue``, ``break``, and ``fallthrough`` statements are described below.
-The ``return`` statement is described in :doc:`Functions`.
+The ``return`` statement is described in :doc:`Functions`,
+and the ``throw`` statement is described in :ref:`ErrorHandling_Throw`.
 
 .. _ControlFlow_Continue:
 
@@ -1377,7 +1368,7 @@ You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
 Unlike an ``if`` statement,
 a ``guard`` statement always has an ``else`` clause ---
-the code inside the ``else``` clause is executed if the condition is not true.
+the code inside the ``else`` clause is executed if the condition is not true.
 
 .. testcode:: guard
 
@@ -1415,7 +1406,7 @@ the code inside the ``else`` branch is executed.
 That branch must transfer control to exit the code block
 that that ``guard`` statement appears in.
 It can do this with a control transfer statement
-such as ``return``, ``break``, or ``continue``,
+such as ``return``, ``break``, ``continue``, or ``throw``,
 or it can call a function or method
 that doesn't return, such as ``fatalError()``.
 

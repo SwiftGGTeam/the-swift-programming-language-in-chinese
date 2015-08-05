@@ -264,7 +264,7 @@ Array Type
 ----------
 
 The Swift language provides the following syntactic sugar for the Swift standard library
-``Array<T>`` type:
+``Array<Element>`` type:
 
 .. syntax-outline::
 
@@ -412,6 +412,9 @@ Any type can be explicitly declared to be (or implicitly converted to) an option
 If you don't provide an initial value when you declare an
 optional variable or property, its value automatically defaults to ``nil``.
 
+.. TODO Add a link to the Optional Enum Reference page.
+   For more information about the Optional type, see ...
+
 If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
@@ -493,6 +496,8 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types,
 see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
+
+.. TODO Add a link to the ImplicitlyUnwrappedOptional Enum Reference page.
 
 .. syntax-grammar::
 

@@ -1033,22 +1033,10 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Like a function, an initializer can be used as a value.
-For example:
-
-.. testcode:: initExpression
-
-    >> class SomeClass { class func someClassFunction() {} }
-    -> var initializer = SomeClass.init
-    <~ // initializer : () -> SomeClass = (Function)
-    -> initializer()
-    <$ : SomeClass = REPL.SomeClass
-    // Creates an instance of SomeClass
-
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
-.. testcode:: initExpression
+.. testcode:: init-call-superclass
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
@@ -1057,6 +1045,43 @@ to delegate to the initializer of a superclass.
     ->         super.init()
     ->     }
     -> }
+
+Like a function, an initializer can be used as a value.
+For example:
+
+.. testcode:: init-as-value
+
+    // Type annotation is required because String has multiple initializers.
+    -> let initializer: Int -> String = String.init
+    << // initializer : Int -> String = (Function)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    << // oneTwoThree : String = "123"
+    -> print(oneTwoThree)
+    <- 123
+
+If you specify a type by name,
+you can access the type's initializer without using an initializer expression.
+In all other cases, you must use an initializer expression.
+
+.. testcode:: explitic-implicit-init
+
+    >> struct SomeType {
+    >>     let data: Int
+    >> }
+    -> let s1 = SomeType.init(data: 3)  // Valid
+    << // s1 : SomeType = REPL.SomeType(data: 3)
+    -> let s2 = SomeType(data: 1)       // Also valid
+    << // s2 : SomeType = REPL.SomeType(data: 1)
+    ---
+    >> let someValue = s1
+    << // someValue : SomeType = REPL.SomeType(data: 3)
+    -> let s4 = someValue.dynamicType(data: 5)       // Error
+    << // s3 : SomeType = REPL.SomeType(data: 7)
+    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
+    !! let s4 = someValue.dynamicType(data: 5)       // Error
+    !!                               ^
+    !!                               .init
 
 .. langref-grammar
 
@@ -1073,7 +1098,7 @@ to delegate to the initializer of a superclass.
 Explicit Member Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`explicit member expression` allows access
+An :newTerm:`explicit member expression` allows access
 to the members of a named type, a tuple, or a module.
 It consists of a period (``.``) between the item
 and the identifier of its member.
@@ -1112,6 +1137,22 @@ The members of a module access
 the top-level declarations of that module.
 
 .. TR: Confirm?
+
+If a period appears at the beginning of a line,
+it is understood as part of an explicit member expression,
+not as an implicit member expression.
+For example, the following listing shows chained method calls
+split over several lines:
+
+.. testcode:: period-at-start-of-line
+   :compile: true
+
+   -> let x = [10, 3, 20, 15, 4]
+   ->     .sort()
+   ->     .filter { $0 > 5 }
+   ->     .map { $0 * 100 }
+   >> print(x)
+   << [1000, 1500, 2000]
 
 .. langref-grammar
 

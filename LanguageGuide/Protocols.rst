@@ -580,9 +580,6 @@ and uses this random number to create a dice roll value within the correct range
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
 it is guaranteed to have a ``random()`` method to call.
 
-.. QUESTION: would it be better to show Dice using a RandomNumberGenerator
-   as a data source, a la UITableViewDataSource etc.?
-
 .. TODO: mention that you can only do RandomNumberGenerator-like things
    with this property, because the property is only known to be a
    RandomNumberGenerator.
@@ -638,10 +635,6 @@ The ``DiceGame`` protocol is a protocol that can be adopted
 by any game that involves dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type to track the progress of a ``DiceGame``.
-
-.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
-   the right thing to advise for delegates written in Swift?
-   It looks a little odd in the syntax above.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
@@ -1268,14 +1261,9 @@ to reflect the fact that the optional requirement may not have been implemented.
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
 
-   Note also that ``@objc`` protocols can be adopted only by classes,
-   and not by structures or enumerations.
-   If you mark your protocol as ``@objc`` in order to specify optional requirements,
-   you will only be able to apply that protocol to class types.
-
-.. QUESTION: is this acceptable wording for this limitation?
-
-.. TODO: remove this note when this limitation is lifted in the future.
+   Note also that ``@objc`` protocols can be adopted only by classes
+   that inherit from Objective-C classes or other ``@objc`` classes.
+   They can't be adopted by structures or enumerations.
 
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
@@ -1309,7 +1297,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> @objc class Counter {
+   -> class Counter {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
@@ -1374,7 +1362,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> @objc class ThreeSource: CounterDataSource {
+   -> class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1406,7 +1394,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: CounterDataSource {
+   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0
@@ -1535,7 +1523,8 @@ to the ``TextRepresentable`` protocol from the example above.
 
    -> extension CollectionType where Generator.Element : TextRepresentable {
           func asList() -> String {
-              return "(" + ", ".join(map({$0.asText()})) + ")"
+              let itemsAsText = self.map {$0.asText()}
+              return "(" + ", ".join(itemsAsText) + ")"
           }
       }
 

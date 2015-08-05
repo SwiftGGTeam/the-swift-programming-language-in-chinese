@@ -293,14 +293,15 @@ and tests for equality.
    << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
-              let vegetableComment = "Add some raisins and make ants on a log."
+              print("Add some raisins and make ants on a log.")
           case "cucumber", "watercress":
-              let vegetableComment = "That would make a good tea sandwich."
+              print("That would make a good tea sandwich.")
           case let x where x.hasSuffix("pepper"):
-              let vegetableComment = "Is it a spicy \(x)?"
+              print("Is it a spicy \(x)?")
           default:
-              let vegetableComment = "Everything tastes good in soup."
+              print("Everything tastes good in soup.")
       }
+   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -1052,9 +1053,9 @@ or it responds with some error information.
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse
+    << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
     -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse
+    << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
     ---
     >> var test_response: String = ""
     << // test_response : String = ""
@@ -1256,13 +1257,6 @@ or to require a class to have a particular superclass.
    Modify the ``anyCommonElements(_:_:)`` function
    to make a function that returns an array
    of the elements that any two sequences have in common.
-
-..
-  TODO: dig into this error
-  let l1 = [1: 100, 2: 200]
-  let l2 = [(1, 100), (4, 5)]
-  anyCommonElements(l1, l2)
-  ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
 
 In the simple cases,
 you can omit ``where`` and simply

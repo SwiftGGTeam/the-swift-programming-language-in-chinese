@@ -64,10 +64,6 @@ For more details, see :ref:`Protocols_Extensions`.
    !! func foo() {}
    !! ^
 
-.. QUESTION: What are the rules for overloading via extensions?
-
-.. TODO: Talk about extending enumerations to have additional member values
-
 Extension Syntax
 ----------------
 

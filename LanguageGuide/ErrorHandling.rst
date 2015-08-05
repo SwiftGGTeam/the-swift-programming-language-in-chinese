@@ -29,7 +29,7 @@ if necessary --- communicate it to the user.
 .. note::
 
    Error handling in Swift interoperates with error handling patterns
-   that use NSError in Cocoa and Objective-C.
+   that use the ``NSError`` class in Cocoa and Objective-C.
    For more information,
    see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
@@ -47,22 +47,21 @@ Representing Errors
 
 In Swift, errors are represented by
 values of types conforming to the ``ErrorType`` protocol.
+Types that adopt ``ErrorType``
+automatically have the implementation of their conformance synthesized by the compiler.
 
 Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
 with associated values allowing for additional information
 about the nature of an error to be communicated.
-Because of this, Swift enumerations that adopt ``ErrorType``
-automatically have the implementation of their conformance synthesized by the compiler.
-
 For example, here's how you might represent the error conditions
-of operating a vending machine:
+of operating a vending machine inside a game:
 
 .. testcode:: errorHandling
 
    -> enum VendingMachineError: ErrorType {
           case InvalidSelection
-          case InsufficientFunds(required: Double)
+          case InsufficientFunds(coinsNeeded: Int)
           case OutOfStock
       }
 
@@ -71,8 +70,8 @@ In this example, a vending machine can fail for the following reasons:
 * The requested item is not a valid selection, indicated by ``InvalidSelection``.
 * The requested item's cost is greater than the provided funds,
   indicated by ``InsufficientFunds``.
-  The associated ``Double`` value represents the balance
-  required to complete the transaction.
+  The associated ``Int`` value represents the additional number
+  of coins needed to complete the transaction.
 * The request item is out of stock, indicated by ``OutOfStock``.
 
 .. _ErrorHandling_Throw:
@@ -106,7 +105,6 @@ A function, method, or closure cannot throw an error unless explicitly indicated
    !! func f() throws -> Int {} // Compiler Error
    !! ^
 
-
 .. assertion:: throwingFunctionParameterTypeOverloadDeclaration
 
    -> func f(callback: Void -> Int) { }
@@ -125,18 +123,18 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    -> struct Item {
-         var price: Double
+         var price: Int
          var count: Int
       }
    ---
    -> var inventory = [
-          "Candy Bar": Item(price: 1.25, count: 7),
-          "Chips": Item(price: 1.00, count: 4),
-          "Pretzels": Item(price: 0.75, count: 11)
+          "Candy Bar": Item(price: 125, count: 7),
+          "Chips": Item(price: 100, count: 4),
+          "Pretzels": Item(price: 75, count: 11)
       ]
-   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 1.0, count: 4), "Candy Bar": REPL.Item(price: 1.25, count: 7), "Pretzels": REPL.Item(price: 0.75, count: 11)]
-   -> var amountDeposited = 1.00
-   << // amountDeposited : Double = 1.0
+   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 100, count: 4), "Candy Bar": REPL.Item(price: 125, count: 7), "Pretzels": REPL.Item(price: 75, count: 11)]
+   -> var coinsDeposited = 100
+   << // coinsDeposited : Int = 100
    ---
    -> func vend(itemNamed name: String) throws {
           guard var item = inventory[name] else {
@@ -147,14 +145,13 @@ or has a cost that exceeds the current deposited amount:
               throw VendingMachineError.OutOfStock
           }
 
-          if amountDeposited >= item.price {
+          if coinsDeposited >= item.price {
               // Dispense the snack
-              amountDeposited -= item.price
+              coinsDeposited -= item.price
               --item.count
               inventory[name] = item
           } else {
-              let amountRequired = item.price - amountDeposited
-              throw VendingMachineError.InsufficientFunds(required: amountRequired)
+              throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
           }
       }
 
@@ -247,10 +244,10 @@ see :doc:`../ReferenceManual/Patterns`.
           print("Invalid Selection.")
       } catch VendingMachineError.OutOfStock {
           print("Out of Stock.")
-      } catch VendingMachineError.InsufficientFunds(let amountRequired) {
-          print("Insufficient funds. Please insert an additional $\(amountRequired).")
+      } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+          print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
-   << Insufficient funds. Please insert an additional $0.25.
+   << Insufficient funds. Please insert an additional 25 coins.
 
 In the above example,
 the ``vend(itemNamed:)`` function is called in a ``try`` expression,
@@ -260,6 +257,18 @@ execution immediately transfers to the ``catch`` clauses,
 which decide whether to allow propagation to continue.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
+
+.. note::
+
+   Error handling in Swift resembles exception handling in other languages,
+   with the use of the ``try``, ``catch`` and ``throw`` keywords.
+   Unlike exception handling in many languages ---
+   including Objective-C ---
+   error handling in Swift does not involve unwinding the call stack,
+   which can be computationally expensive.
+   As such, the performance characteristics
+   of a ``throw`` statement
+   are comparable to those of a ``return`` statement.
 
 .. _ErrorHandling_Force:
 
@@ -332,7 +341,7 @@ after code in the second, and so on.
                close(file)
             }
             while let line = try file.readline() {
-               /* Work with the file. */
+               // Work with the file.
    >>          print(line)
             }
             // close(file) is called here, at the end of the scope.

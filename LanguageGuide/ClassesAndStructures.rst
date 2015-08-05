@@ -22,9 +22,6 @@ automatically made available for other code to use.
    instances of *either* a class or a structure type.
    Because of this, the more general term :newTerm:`instance` is used.
 
-.. TODO: add a note here about public and private interfaces,
-   once we know how these will be declared in Swift.
-
 .. _ClassesAndStructures_ComparingClassesAndStructures:
 
 Comparing Classes and Structures
@@ -136,10 +133,6 @@ The ``Resolution`` structure definition and the ``VideoMode`` class definition
 only describe what a ``Resolution`` or ``VideoMode`` will look like.
 They themselves do not describe a specific resolution or video mode.
 To do that, you need to create an instance of the structure or class.
-
-.. QUESTION: this isn't strictly true.
-   You could argue that the Resolution structure definition describes a resolution of (0, 0),
-   not that this would be a valid resolution.
 
 The syntax for creating instances is very similar for both structures and classes:
 
@@ -419,9 +412,9 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two S operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !!    ^
+   !!    ~~ ^   ~~
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -431,9 +424,9 @@ or passed to a function.)
    -> let e2 = E.B
    << // e2 : E = REPL.E.B
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two E operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two E operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !!    ^
+   !!    ~~ ^   ~~
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
@@ -473,9 +466,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two C operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two C operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !!    ^
+   !!    ~~ ^  ~~
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -485,9 +478,9 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two S operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !!    ^
+   !!    ~~ ^  ~~
 
 .. TODO: This needs clarifying with regards to function references.
 

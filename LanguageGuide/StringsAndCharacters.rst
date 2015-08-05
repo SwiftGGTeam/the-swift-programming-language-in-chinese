@@ -1,10 +1,11 @@
 Strings and Characters
 ======================
 
-A :newTerm:`string` is an ordered collection of characters,
+A :newTerm:`string` is a series of characters,
 such as ``"hello, world"`` or ``"albatross"``.
-Swift strings are represented by the ``String`` type,
-which in turn represents a collection of values of ``Character`` type.
+Swift strings are represented by the ``String`` type.
+The contents of a ``String`` can be accessed in various ways,
+including as a collection of ``Character`` values.
 
 Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
@@ -14,16 +15,15 @@ String concatenation is as simple as
 adding together two strings with the ``+`` operator,
 and string mutability is managed by choosing between a constant or a variable,
 just like any other value in Swift.
+You can also use strings to insert
+constants, variables, literals, and expressions into longer strings,
+in a process known as string interpolation.
+This makes it easy to create custom string values for display, storage, and printing.
 
 Despite this simplicity of syntax,
 Swift's ``String`` type is a fast, modern string implementation.
 Every string is composed of encoding-independent Unicode characters,
 and provides support for accessing those characters in various Unicode representations.
-
-You can also use strings to insert
-constants, variables, literals, and expressions into longer strings,
-in a process known as string interpolation.
-This makes it easy to create custom string values for display, storage, and printing.
 
 .. note::
 
@@ -77,10 +77,6 @@ or initialize a new ``String`` instance with initializer syntax:
    -> var anotherEmptyString = String()  // initializer syntax
    << // anotherEmptyString : String = ""
    // these two strings are both empty, and are equivalent to each other
-
-.. QUESTION: I've made both of these variables,
-   because you'd be likely to use them as such if they start out empty.
-   Is this the correct approach to take here?
 
 Find out whether a ``String`` value is empty
 by checking its Boolean ``isEmpty`` property:
@@ -141,14 +137,6 @@ or when it is assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
 Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
-
-.. note::
-
-   This behavior differs from that of ``NSString`` in Cocoa.
-   When you create an ``NSString`` instance in Cocoa,
-   and pass it to a function or method or assign it to a variable,
-   you are always passing or assigning a *reference* to the same single ``NSString``.
-   No copying of the string takes place, unless you specifically request it.
 
 Swift's copy-by-default ``String`` behavior ensures that
 when a function or method passes you a ``String`` value,
@@ -519,7 +507,7 @@ String Indices
 
 Each ``String`` value has an associated :newterm:`index type`,
 ``String.Index``,
-which corresponds to the positions of each ``Character`` it contains.
+which corresponds to the position of each ``Character`` in the string.
 
 As mentioned above,
 different characters can require different amounts of memory to store,
@@ -529,9 +517,10 @@ For this reason, Swift strings cannot be indexed by integer values.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``.
-The ``endIndex`` property returns
-the "past-the-end" position of the last character,
-If the ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
+The ``endIndex`` property is the position after the last character in a ``String``.
+As a result,
+the ``endIndex`` property isn't a valid argument to a string's subscript.
+If a ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
 A ``String.Index`` value can access
 its immediately preceding index by calling the ``predecessor()`` method,
@@ -567,7 +556,7 @@ the ``Character`` at a particular ``String`` index.
 Attempting to access a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
-.. syntax-outline::
+.. code-block:: swift
 
    greeting[greeting.endIndex] // error
    greeting.endIndex.successor() // error
@@ -588,7 +577,9 @@ indexes used to access individual characters in a string.
          print("\(greeting[index]) ", appendNewline: false)
       }
    >> print("")
-   <- G u t e n   T a g !
+   <- G u t e n   T a g ! 
+
+.. Guten Tag! above has a space after it.
 
 .. _StringsAndCharacters_InsertingAndRemoving:
 
