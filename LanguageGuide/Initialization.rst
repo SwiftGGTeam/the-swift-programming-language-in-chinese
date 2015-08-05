@@ -1752,7 +1752,7 @@ Overriding a Failable Initializer
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
-with a subclass *non*failable initializer.
+with a subclass *nonfailable* initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
