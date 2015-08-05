@@ -246,7 +246,7 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` expression ``:``
+    conditional-operator --> ``?`` try-operator-OPT expression ``:``
 
 
 .. _Expressions_Type-CastingOperators:
