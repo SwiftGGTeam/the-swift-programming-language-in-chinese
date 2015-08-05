@@ -527,7 +527,7 @@ its immediately preceding index by calling the ``predecessor()`` method,
 and its immediately succeeding index by calling the ``successor()`` method.
 Any index in a ``String`` can be accessed from any other index
 by chaining these methods together,
-or by using the global ``advance(start:n:)`` function.
+or by using the ``advancedBy(_:)`` method.
 Attempting to access an index outside of a string's range
 will trigger a runtime error.
 
@@ -547,7 +547,7 @@ the ``Character`` at a particular ``String`` index.
    -> greeting[greeting.startIndex.successor()]
    <$ : Character = "u"
    // u
-   -> let index = advance(greeting.startIndex, 7)
+   -> let index = greeting.startIndex.advancedBy(7)
    << // index : Index = 7
    -> greeting[index]
    <$ : Character = "a"
@@ -577,7 +577,7 @@ indexes used to access individual characters in a string.
          print("\(greeting[index]) ", appendNewline: false)
       }
    >> print("")
-   <- G u t e n   T a g ! 
+   <- G u t e n   T a g !
 
 .. Guten Tag! above has a space after it.
 
@@ -597,12 +597,12 @@ use the ``insert(_:atIndex:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
 
-To insert another string at a specified index,
-use the ``splice(_:atIndex:)`` method.
+To insert the contents of another string at a specified index,
+use the ``insertContentsOf(_:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.splice(" there".characters, atIndex: welcome.endIndex.predecessor())
+   -> welcome.insertContentsOf(" there".characters, at: welcome.endIndex.predecessor())
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -621,7 +621,7 @@ use the ``removeRange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> let range = advance(welcome.endIndex, -6)..<welcome.endIndex
+   -> let range = welcome.endIndex.advancedBy(-6)..<welcome.endIndex
    << // range : Range<Index> = Range(5..<11)
    -> welcome.removeRange(range)
    /> welcome now equals \"\(welcome)\"
