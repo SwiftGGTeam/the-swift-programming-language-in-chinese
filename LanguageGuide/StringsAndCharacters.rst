@@ -577,7 +577,7 @@ indexes used to access individual characters in a string.
          print("\(greeting[index]) ", appendNewline: false)
       }
    >> print("")
-   <- G u t e n   T a g !
+   <- G u t e n   T a g ! 
 
 .. Guten Tag! above has a space after it.
 
