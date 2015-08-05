@@ -270,6 +270,48 @@ the remaining statements in the ``do`` statement are executed.
    of a ``throw`` statement
    are comparable to those of a ``return`` statement.
 
+.. _ErrorHandling_Optional:
+
+Ignoring Errors
+~~~~~~~~~~~~~~~
+
+There are some circumstances in which error handling with a ``do``-``catch`` statement
+is unnecessary or inconvenient.
+For instance, if the specific error thrown by a function is not important to the caller,
+or if a function can only throw a single kind of error.
+In these cases,
+you can call the throwing function or method in a :newTerm:`optional-try` expression,
+written ``try?``,
+instead of a regular ``try`` expression.
+
+Calling a throwing function or method with ``try?`` disables error propagation,
+changing the call to a throwing function or method
+into a call to an optional-producing expression.
+If an error is thrown, the expression will return ``nil``.
+
+.. testcode:: optionalTryStatement
+
+   >> enum Error : ErrorType { case E }
+   >> let someError = Error.E
+   -> func parse(string: String) throws -> Int {
+         guard let number = Int(string) else { throw someError }
+         return number
+      }
+   ---
+   -> do {
+         let seven = parse("7")
+         print("Lucky Number: \(seven + 10)")
+      } catch {
+         // Handle Error
+      }
+   << // someError : Error = REPL.Error.E
+   ---
+   -> if let seven = try? parse("7") {
+         print("Lucky Number: \(seven + 10)")
+      }
+   <- Lucky Number: 17
+
+
 .. _ErrorHandling_Force:
 
 Disabling Error Propagation
@@ -279,7 +321,7 @@ There are some cases in which you know a throwing function or method won't,
 in fact, throw an error at run time.
 In these cases,
 you can call the throwing function or method in a :newTerm:`forced-try` expression,
-written, ``try!``,
+written ``try!``,
 instead of a regular ``try`` expression.
 
 Calling a throwing function or method with ``try!`` disables error propagation
@@ -302,7 +344,6 @@ If an error actually is thrown, you'll get a runtime error.
    << // someError : Error = REPL.Error.E
    ---
    -> try! willOnlyThrowIfTrue(false)
-
 
 .. _ErrorHandling_Defer:
 
