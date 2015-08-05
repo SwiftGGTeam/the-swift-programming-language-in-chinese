@@ -299,7 +299,7 @@ If an error is thrown, the expression will return ``nil``.
       }
    ---
    -> do {
-         let seven = parse("7")
+         let seven = try parse("7")
          print("Lucky Number: \(seven + 10)")
       } catch {
          // Handle Error
