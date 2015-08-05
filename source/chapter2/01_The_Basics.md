@@ -557,7 +557,7 @@ C 和 Objective-C 中并没有可选类型这个概念。最接近的是 Objecti
 
 ```swift
 let possibleNumber = "123"
-let convertedNumber = Int(possibleNumber)
+let convertedNumber = possibleNumber.toInt()
 // convertedNumber 被推测为类型 "Int?"， 或者类型 "optional Int"
 ```
 
@@ -599,15 +599,15 @@ Swift 的`nil`和 Objective-C 中的`nil`并不一样。在 Objective-C 中，`n
 if convertedNumber != nil {
     print("convertedNumber contains some integer value.")
 }
-// 输出 "转换的数字包含整数值。"
+// 输出 "convertedNumber contains some integer value."
 ```
 当你确定可选类型确实包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的_强制解析（forced unwrapping）：
 
 ```swift
 if convertedNumber != nil {
-    print("convertedNumber has an integer value of \(convertedNumber).")
+    print("convertedNumber has an integer value of \(convertedNumber!).")
 }
-// 输出 "转换的数字有整数值123。"
+// 输出 "convertedNumber has an integer value of 123."
 ```
 
 更多关于`if`语句的内容，请参考[控制流](05_Control_Flow.html)。
