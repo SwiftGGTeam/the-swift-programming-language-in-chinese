@@ -574,7 +574,7 @@ indexes used to access individual characters in a string.
 .. testcode:: stringIndex
 
    -> for index in greeting.characters.indices {
-         print("\(greeting[index]) ", appendNewline: false)
+         print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
    <- G u t e n   T a g ! 
@@ -892,7 +892,7 @@ one for each byte in the string's UTF-8 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf8 {
-         print("\(codeUnit) ", appendNewline: false)
+         print("\(codeUnit) ", terminator: "")
       }
    -> print("")
    </ 68 111 103 226 128 188 240 159 144 182
@@ -929,7 +929,7 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 .. testcode:: unicodeRepresentations
 
    -> for codeUnit in dogString.utf16 {
-         print("\(codeUnit) ", appendNewline: false)
+         print("\(codeUnit) ", terminator: "")
       }
    -> print("")
    </ 68 111 103 8252 55357 56374
@@ -970,7 +970,7 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
 .. testcode:: unicodeRepresentations
 
    -> for scalar in dogString.unicodeScalars {
-         print("\(scalar.value) ", appendNewline: false)
+         print("\(scalar.value) ", terminator: "")
       }
    -> print("")
    </ 68 111 103 8252 128054

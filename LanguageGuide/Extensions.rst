@@ -435,11 +435,11 @@ The nested enumeration can now be used with any ``Int`` value:
          for number in numbers {
             switch number.kind {
                case .Negative:
-                  print("- ", appendNewline: false)
+                  print("- ", terminator: "")
                case .Zero:
-                  print("0 ", appendNewline: false)
+                  print("0 ", terminator: "")
                case .Positive:
-                  print("+ ", appendNewline: false)
+                  print("+ ", terminator: "")
             }
          }
          print("")
