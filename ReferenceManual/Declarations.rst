@@ -896,10 +896,12 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     function-body --> code-block
 
     parameter-clauses --> parameter-clause parameter-clauses-OPT
-    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
+    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
+    parameter --> ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
     default-argument-clause --> ``=`` expression
