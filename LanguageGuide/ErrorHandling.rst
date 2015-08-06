@@ -173,7 +173,13 @@ an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
 
-When you call a throwing function, you write ``try`` in front of the call.
+.. _ErrorHandling_Catch:
+
+Handling Errors
+---------------
+
+When you call a throwing function,
+you mark the expression by writing ``try`` in front it.
 This keyword calls out the fact that the function can throw an error
 and that the lines of code after the ``try`` might not be run.
 
@@ -199,14 +205,72 @@ The ``buyFavoriteSnack(_:)`` function is also a throwing function,
 so any errors that the ``vend`` function throws
 propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
 
-.. _ErrorHandling_Catch:
+.. note::
 
-Catching and Handling Errors
-----------------------------
+   Error handling in Swift resembles exception handling in other languages,
+   with the use of the ``try``, ``catch`` and ``throw`` keywords.
+   Unlike exception handling in many languages ---
+   including Objective-C ---
+   error handling in Swift does not involve unwinding the call stack,
+   which can be computationally expensive.
+   As such, the performance characteristics
+   of a ``throw`` statement
+   are comparable to those of a ``return`` statement.
 
-You use a ``do``-``catch`` statement to catch errors and handle them.
+There are three forms of ``try``:
 
-.. FIXME A little more intro.
+* You use ``try`` inside a throwing function to propagate the error.
+  You also use ``try``  inside ``do``-``catch`` block
+  to handle the error using a block of code,
+
+* You use ``try?`` to handle the error as an optional value.
+
+* You use ``try!`` to disable error propagation
+  by asserting that no error will be thrown.
+
+.. TODO From here to the next heading might fit better in the reference.
+
+When you write ``try``, ``try?``, or ``try!``,
+it applies to the whole expression that comes after it.
+For example, in the assignment ``let sum = try a() + b()``,
+either of the functions can be throwing functions.
+All three of the following are equivalent:
+
+.. testcode:: placement-of-try
+
+    >> func a() throws -> Int { return 10 }
+    >> func b() throws -> Int { return 10 }
+    >> var sum = 0
+    -> sum = try a() + b()
+    -> sum = try (a() + b())
+    -> sum = (try a()) + b()
+    // sum : Int = 20
+    // sum : Int = 20
+    // sum : Int = 20
+
+Because ``try`` changes type information,
+it can't be applied to only one side of an operator.
+When ``try`` appears on the left hand side,
+it applies to the entire operation.
+It's an error to write ``try`` on the right hand side.
+
+.. testcode:: placement-of-try
+
+    -> sum = a() + (try b())   // Error
+
+
+.. _ErrorHandling_DoCatch:
+
+Handling Errors Using a Block of Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You use a ``do``-``catch`` statement to handle errors
+by running a block of code.
+If an error is thrown by the code in the ``do`` clause,
+it is matched against the ``catch`` clauses
+to determine which one of them can handle the error.
+
+Here is the general form of a ``do``-``catch`` statement:
 
 .. syntax-outline::
 
@@ -217,23 +281,24 @@ You use a ``do``-``catch`` statement to catch errors and handle them.
       <#statements#>
    }
 
-If an error is thrown,
-that error is propagated to its outer scope
-until it is handled by a ``catch`` clause.
-A ``catch`` clause consists of the ``catch`` keyword,
-followed by a pattern to match the error against and a set of statements to execute.
-
-Like a ``switch`` statement,
-the compiler attempts to infer whether ``catch`` clauses are exhaustive.
-If such a determination can be made, the error is considered handled.
-Otherwise, the containing scope must handle the error,
-or the containing function must be declared with ``throws``.
-To ensure that an error is handled,
-use a ``catch`` clause with a pattern that matches all errors.
-If a ``catch`` clause does not specify a pattern,
-the clause will match and bind any error to a local constant named ``error``.
+You write a pattern after ``catch`` to indicate what errors
+that clause can handle.
+If a ``catch`` clause does have a pattern,
+the clause matches any error to a local constant named ``error``.
 For more information about pattern matching,
 see :doc:`../ReferenceManual/Patterns`.
+
+A ``do``-``catch`` clause doesn't have to handle every possible error
+that the code in its ``do`` clause could throw.
+If none of the ``catch`` clauses can handle the error,
+the error continues to propagate to the surrounding scope.
+However, the error must handled by some surrounding scope ---
+either by another larger ``do``-``catch`` statement
+with a ``catch`` clause that can handle the error,
+or by being inside a function marked with ``throws``.
+For example, the following code handles all three cases
+of the ``VendingMachineError`` enumeration,
+but any other error would have to be handled by its surrounding scope.
 
 .. testcode:: errorHandling
 
@@ -258,35 +323,16 @@ which decide whether to allow propagation to continue.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
 
-.. note::
-
-   Error handling in Swift resembles exception handling in other languages,
-   with the use of the ``try``, ``catch`` and ``throw`` keywords.
-   Unlike exception handling in many languages ---
-   including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
-   which can be computationally expensive.
-   As such, the performance characteristics
-   of a ``throw`` statement
-   are comparable to those of a ``return`` statement.
-
 .. _ErrorHandling_Optional:
 
-Handling Errors Using Optionals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Handling Errors as Optional Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You use ``try?`` to handle an error by converting it to an optional value.
 If an error is thrown while evaluating the ``try?`` expression,
 the value of the expression is ``nil``.
 You don't need to put a ``try?`` expression inside a ``do``-``catch`` statement.
 For example, ``x`` and ``y`` have the same value and behavior in the following code.
-
-..
-  The func returns more information than I need
-  Simple error handling: f() returns an optional type
-  In this case, the API author gave you error information
-  But.. you don't actually care about the error 
-  Discard the error info and convert to an optional
 
 .. testcode:: optional-try
 
@@ -317,49 +363,31 @@ Using ``try?`` lets you write concise error handling code
 for situations where you want to handle all errors in the same way,
 and when there aren't any lines of code that would come after ``try``
 inside the ``do`` clause of a ``do``-``catch`` statement.
+For example,
+the following code listing shows an app
+that displays cached data while waiting for new data to load.
+If any error occurs while loading the cached data,
+the cache is just ignored.
 
-.. Another example
+.. code-block:: swift
 
-    ::
-
-    /*
-    Start a background process that loads new data and updates the UI when
-    the new data is ready.
-    */
-    loadNewData()
-
+    loadNewDataInBackground()
     if let data = try? loadCachedData() {
-         /*
-         Show the cached data while the new data is loading.  If any error
-         occurs while loading the cached data, handle the error by ignoring the
-         cached data.
-         */
+         // Show the cached data.
     }
 
-.. note::
-
-   Just like ``try``, when you write ``try?`` on the left hand side of an operator,
-   the entire operation is part of the ``try?`` expression.
-   For example,
-   ``try? f() ?? defaultValue`` is the same as ``try? ( f() ?? defaultValue )``
-   If you want the ``try?`` to apply only to the left hand side,
-   use parenthesis,
-   like ``(try? f()) ?? defaultValue``.
+.. TODO make the above tested code
 
 .. _ErrorHandling_Force:
 
 Disabling Error Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are some cases in which you know a throwing function or method won't,
-in fact, throw an error at run time.
+There are some cases in which you know a throwing function or method
+won't, in fact, throw an error at run time.
 In these cases,
-you can call the throwing function or method in a :newTerm:`forced-try` expression,
-written ``try!``,
-instead of a regular ``try`` expression.
-
-Calling a throwing function or method with ``try!`` disables error propagation
-and wraps the call in a run-time assertion that no error will be thrown.
+you can write ``try!`` before the expression to disable error propagation
+and wrap the call in a run-time assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
 .. testcode:: forceTryStatement
