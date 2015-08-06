@@ -44,7 +44,11 @@ Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode �
 
 您可以在您的代码中包含一段预定义的字符串值作为字符串字面量。字符串字面量是由双引号 ("") 包裹着的具有固定顺序的文本字符集。
 字符串字面量可以用于为常量和变量提供初始值：
-```let someString = "Some string literal value"```
+
+```swift
+let someString = "Some string literal value"
+```
+
 注意`someString`常量通过字符串字面量进行初始化，Swift 会推断该常量为`String`类型。
 > 注意：
 > 更多关于在字面量的特殊字符，请查看 [Special Characters in String Literals](#special_characters_in_string_literals) 。
@@ -62,6 +66,7 @@ var anotherEmptyString = String()  // 初始化方法
 ```
 
 您可以通过检查其`Boolean`类型的`isEmpty`属性来判断该字符串是否为空：
+
 ```swift
 if emptyString.isEmpty {
     print("Nothing to see here")
@@ -109,7 +114,7 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
 
 ```swift
-for character in "Dog!🐶".characters {
+for character in "Dog!🐶" {
     print(character)
 }
 // D
@@ -271,30 +276,34 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 <a name="counting_characters"></a>
 ## 计算字符数量 (Counting Characters)
 
-调用字符串的`count`属性，就可以获取一个字符串的字符数量：
+如果想要获得一个字符串中字符的数量，可以调用全局函数`count(_:)`，把字符串作为参数传进去：
 
 
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+println("unusualMenagerie has \(count(unusualMenagerie)) characters")
 // 打印输出："unusualMenagerie has 40 characters"
 ```
 
 注意在 Swift 中，使用可拓展的字符群集作为字符来连接或改变字符串时，并不一定会更改字符串的字符数量。
+
 例如，如果你用四个字符的单词 cafe 初始化一个新的字符串，然后添加一个 `COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是4，因为第四个字符是 é ，而不是 e ：
 
 ```swift
 var word = "cafe"
-print("the number of characters in \(word) is \(word.characters.count)")
+println("the number of characters in \(word) is \(count(word))")
 // 打印输出 "the number of characters in cafe is 4"
+
 word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
-print("the number of characters in \(word) is \(word.characters.count)")
+ 
+println("the number of characters in \(word) is \(count(word))")
 // 打印输出 "the number of characters in café is 4"
 ```
 
 > 注意：  
-> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`characters`属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
-> 另外需要注意的是通过`characters`返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
+> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`count(_:)`函数必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
+> 
+> 另外需要注意的是通过`count(_:)`返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。作为佐证，当一个`NSString`的`length`属性被一个Swift的`String`值访问时，实际上是调用了`utf16Count`。
 
 
 <a name="accessing_and_modifying_a_string"></a>
@@ -304,8 +313,26 @@ print("the number of characters in \(word) is \(word.characters.count)")
 <a name="string_indices"></a>
 ### 字符串索引 (String Indices)
 每一个字符串都有一个关联的索引(*index*)类型，`String.index`，它对应着字符串中的每一个字符的位置。
+
 前面提到，不同的字符可能会占用不同的内存空间数量，所以要知道字符的确定位置，就必须从字符串开头遍历每一个 Unicode 标量到字符串结尾。因此，Swift 的字符串不能用整数(integer)做索引。
-使用`startIndex`属性可以获取字符串的第一个字符。使用`endIndex`属性可以获取最后一个字符的末尾位置。如果字符串是空值，`startIndex`和`endIndex`是相等的。
+
+使用`startIndex`属性可以获取字符串的第一个字符。使用`endIndex`属性可以获取最后一个字符的位置。如果字符串是空值，`startIndex`和`endIndex`是相等的。
+
+```swift
+let greeting = "Guten Tag"
+println(greeting.startIndex)
+// 0
+println(greeting.endIndex)
+// 9
+```
+
+你可以通过下表来获得`String`对应位置的`Character`：
+
+```swift
+greeting[greeting.startIndex]
+// G
+```
+
 通过调用`String.Index`的`predecessor()`方法，可以立即得到前面一个索引，调用`successor()`方法可以立即得到后面一个索引。任何一个字符串的索引都可以通过锁链作用的这些方法来获取另一个索引，也可以调用`advance(start:n:)`函数来获取。但如果尝试获取出界的字符串索引，就会抛出一个运行时错误。
 你可以使用下标语法来访问字符在字符串的确切索引。尝试获取出界的字符串索引，仍然抛出一个运行时错误。
 
@@ -388,6 +415,7 @@ if quotation == sameQuotation {
 ```
 
 如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等的，那就认为它们是相等的。在这个情况下，即使可扩展的字形群集是有不同的 Unicode 标量构成的，只要它们有同样的语言意义和外观，就认为它们标准相等。
+
 例如，`LATIN SMALL LETTER E WITH ACUTE`(`U+00E9`)就是标准相等于`LATIN SMALL LETTER E`(`U+0065`)后面加上`COMBINING ACUTE ACCENT`(`U+0301`)。这两个字符群集都有效的表示字符 é ，所以它们被认为是标准相等的：
 
 ```swift
@@ -537,9 +565,9 @@ let dogString = "Dog‼🐶"
 
 ```swift
 for codeUnit in dogString.utf8 {
-    print("\(codeUnit) ", appendNewline: false)
+    print("\(codeUnit) ")
 }
-print("")
+print("\n")
 // 68 111 103 226 128 188 240 159 144 182
 ```
 
@@ -586,14 +614,16 @@ print("")
 
 ```swift
 for codeUnit in dogString.utf16 {
-    print("\(codeUnit) ", appendNewline: false)
+    print("\(codeUnit) ")
 }
-print("")
+print("\n")
 // 68 111 103 8252 55357 56374
 ```
 
 同样，前三个代码单元值 (68, 111, 103) 代表了字符`D`、`o`和`g`，它们的 UTF-16 代码单元和 UTF-8 完全相同（因为这些 Unicode 标量表示 ASCII 字符）。
+
 第四个代码单元值 (8252) 是一个等于十六进制203C的的十进制值。这个代表了`DOUBLE EXCLAMATION MARK`字符的 Unicode 标量值`U+203C`。这个字符在 UTF-16 中可以用一个代码单元表示。
+
 第五和第六个代码单元值 (55357 和 56374) 是`DOG FACE`字符的UTF-16 表示。
 第一个值为`U+D83D`(十进制值为 55357)，第二个值为`U+DC36`(十进制值为 56374)。
 
@@ -637,14 +667,15 @@ print("")
 
 ```swift
 for scalar in dogString.unicodeScalars {
-    print("\(scalar.value) ", appendNewline: false)
+    print("\(scalar.value) ")
 }
-print("")
+print("\n")
 // 68 111 103 8252 128054
 ```
 
 前三个代码单元值 (68, 111, 103) 仍然代表字符`D`、`o`和`g`。
 第四个代码单元值 (8252) 仍然是一个等于十六进制203C的的十进制值。这个代表了`DOUBLE EXCLAMATION MARK`字符的 Unicode 标量`U+203C`。
+
 第五位数值，128054，是一个十六进制1F436的十进制表示。其等同于`DOG FACE`的Unicode 标量`U+1F436`。
 
 作为查询字符值属性的一种替代方法，每个`UnicodeScalar`值也可以用来构建一个新的字符串值，比如在字符串插值中使用：
