@@ -900,7 +900,6 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``inout``-OPT ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> ``inout``-OPT ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> attributes-OPT type
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
     default-argument-clause --> ``=`` expression
