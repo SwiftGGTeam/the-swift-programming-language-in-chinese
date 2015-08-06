@@ -272,45 +272,79 @@ the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Optional:
 
-Ignoring Errors
-~~~~~~~~~~~~~~~
+Handling Errors Using Optionals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are some circumstances in which error handling with a ``do``-``catch`` statement
-is unnecessary or inconvenient.
-For instance, if the specific error thrown by a function is not important to the caller,
-or if a function can only throw a single kind of error.
-In these cases,
-you can call the throwing function or method in a :newTerm:`optional-try` expression,
-written ``try?``,
-instead of a regular ``try`` expression.
+You use ``try?`` to handle an error by converting it to an optional value.
+If an error is thrown while evaluating the ``try?`` expression,
+the value of the expression is ``nil``.
+You don't need to put a ``try?`` expression inside a ``do``-``catch`` statement.
+For example, ``x`` and ``y`` have the same value and behavior in the following code.
 
-Calling a throwing function or method with ``try?`` disables error propagation,
-changing the call to a throwing function or method
-into a call to an optional-producing expression.
-If an error is thrown, the expression will return ``nil``.
+..
+  The func returns more information than I need
+  Simple error handling: f() returns an optional type
+  In this case, the API author gave you error information
+  But.. you don't actually care about the error 
+  Discard the error info and convert to an optional
 
-.. testcode:: optionalTryStatement
+.. testcode:: optional-try
 
-   >> enum Error : ErrorType { case E }
-   >> let someError = Error.E
-   -> func parse(string: String) throws -> Int {
-         guard let number = Int(string) else { throw someError }
-         return number
-      }
-   ---
-   -> do {
-         let seven = try parse("7")
-         print("Lucky Number: \(seven + 10)")
-      } catch {
-         // Handle Error
-      }
-   << // someError : Error = REPL.Error.E
-   ---
-   -> if let seven = try? parse("7") {
-         print("Lucky Number: \(seven + 10)")
-      }
-   <- Lucky Number: 17
+    -> func someThrowingFunction() throws -> Int {
+          // ...
+    >>    return 40
+    -> }
+    ---
+    -> let x = try? someThrowingFunction()
+    << // x : Int? = Optional(40)
+    ---
+    -> let y: Int?
+       do {
+           y = try someThrowingFunction()
+       } catch {
+           y = nil
+       }
+    << // y : Int? = Optional(40)
 
+
+If ``someThrowingFunction()`` throws an error,
+the value of ``x`` and ``y`` is ``nil``.
+Otherwise, the value of ``x`` and ``y`` is the value that the function returned.
+Note that ``x`` and ``y`` are an optional of whatever type ``someThrowingFunction()`` returns.
+Here the function returns an integer, so ``x`` and ``y`` are optional integers.
+
+Using ``try?`` lets you write concise error handling code
+for situations where you want to handle all errors in the same way,
+and when there aren't any lines of code that would come after ``try``
+inside the ``do`` clause of a ``do``-``catch`` statement.
+
+.. Another example
+
+    ::
+
+    /*
+    Start a background process that loads new data and updates the UI when
+    the new data is ready.
+    */
+    loadNewData()
+
+    if let data = try? loadCachedData() {
+         /*
+         Show the cached data while the new data is loading.  If any error
+         occurs while loading the cached data, handle the error by ignoring the
+         cached data.
+         */
+    }
+
+.. note::
+
+   Just like ``try``, when you write ``try?`` on the left hand side of an operator,
+   the entire operation is part of the ``try?`` expression.
+   For example,
+   ``try? f() ?? defaultValue`` is the same as ``try? ( f() ?? defaultValue )``
+   If you want the ``try?`` to apply only to the left hand side,
+   use parenthesis,
+   like ``(try? f()) ?? defaultValue``.
 
 .. _ErrorHandling_Force:
 
