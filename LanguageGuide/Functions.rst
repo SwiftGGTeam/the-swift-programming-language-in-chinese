@@ -513,14 +513,7 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 .. note::
 
-   A function may have at most one variadic parameter,
-   and it must always appear last in the parameter list,
-   to avoid ambiguity when calling the function with multiple parameters.
-
-   If your function has one or more parameters with a default value,
-   and also has a variadic parameter,
-   place the variadic parameter after all the defaulted parameters
-   at the very end of the list.
+   A function may have at most one variadic parameter.
 
 .. _Functions_ConstantAndVariableParameters:
 

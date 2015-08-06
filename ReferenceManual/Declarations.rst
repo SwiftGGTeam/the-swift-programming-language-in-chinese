@@ -670,7 +670,7 @@ is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
-A function can have at most one variadic parameter, which must be its last parameter.
+A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
 For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,

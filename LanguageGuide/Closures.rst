@@ -135,8 +135,7 @@ Closure expression syntax has the following general form:
 Closure expression syntax can use
 constant parameters, variable parameters, and ``inout`` parameters.
 Default values cannot be provided.
-Variadic parameters can be used if you name the variadic parameter
-and place it last in the parameter list.
+Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
 .. FIXME: the note about default values is tracked by rdar://16535452.

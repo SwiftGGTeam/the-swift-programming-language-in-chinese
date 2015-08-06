@@ -204,7 +204,7 @@ a very simple assert function:
     "For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Closures_Autoclosures`."
 
-A function type can have a variadic parameter as the last parameter in its *parameter type*.
+A function type can have a variadic parameter in its *parameter type*.
 Syntactically,
 a variadic parameter consists of a base type name followed immediately by three dots (``...``),
 as in ``Int...``. A variadic parameter is treated as an array that contains elements
