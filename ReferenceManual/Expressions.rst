@@ -95,7 +95,7 @@ It has the following form:
 
 If the *expression* does not throw an error,
 the value of the optional-try expression
-is the same as the value of the *expression*.
+is an optional containing the value of the *expression*.
 Otherwise, the value of the optional-try expression is ``nil``.
 
 A :newTerm:`forced-try expression` consists of the ``try!`` operator
