@@ -324,13 +324,15 @@ greeting[greeting.endIndex] // 错误
 greeting.endIndex.successor() // 错误
 ```
 
-使用`characters`属性的`indices`会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问分立的字符。  
+使用全局函数`indices`会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问分立的字符。  
 
 ```swift
-for index in greeting.characters.indices {
-    print("\(greeting[index]) ", appendNewline: false)
+for index in indices(greeting) {
+    print("\(greeting[index]) ")
 }
-// 打印输出 "G u t e n   T a g !"
+println("\n")
+// prints "G u t e n   T a g"
+
 ```
 
 <a name="inserting_and_removing"></a>
