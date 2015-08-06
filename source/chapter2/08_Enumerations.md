@@ -263,7 +263,6 @@ let possiblePlanet = Planet(rawValue: 7)
 
 然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
-<!-- TODO 连接 -->  
 >注意：  
 >原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations#failable_initializers)
 
