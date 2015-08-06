@@ -85,6 +85,19 @@ It has the following form:
 
    try <#expression#>
 
+An :newTerm:`optional-try expression` consists of the ``try?`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try? <#expression#>
+
+If the *expression* does not throw an error,
+the value of the optional-try expression
+is the same as the value of the *expression*.
+Otherwise, the value of the optional-try expression is ``nil``.
+
 A :newTerm:`forced-try expression` consists of the ``try!`` operator
 followed by an expression that can throw an error.
 If the expression marked by a forced-try operator throws an error,
@@ -96,13 +109,13 @@ It has the following form:
    try! <#expression#>
 
 For more information and to see examples of how to use ``try``,
-see :ref:`ErrorHandling_Throw` and :ref:`ErrorHandling_Catch`.
+see :doc:`../LanguageGuide/ErrorHandling``.
 
 .. syntax-grammar::
 
     Grammar of a try expression
 
-    try-operator --> ``try`` | ``try`` ``!``
+    try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
 
 
 .. _Expressions_BinaryExpressions:
