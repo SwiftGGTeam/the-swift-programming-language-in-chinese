@@ -229,7 +229,7 @@ let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
 // "Imageination is more important than knowledge" - Enistein
 let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
 let blackHeart = "\u{2665}"           // ♥, Unicode 标量 U+2665
-let sparklingHeart = "\u{1F496}"  // 💖, Unicode 标量 U+1F496
+let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
 ```
 
 <a name="extended_grapheme_clusters"></a>  
@@ -316,7 +316,7 @@ println("the number of characters in \(word) is \(count(word))")
 
 前面提到，不同的字符可能会占用不同的内存空间数量，所以要知道字符的确定位置，就必须从字符串开头遍历每一个 Unicode 标量到字符串结尾。因此，Swift 的字符串不能用整数(integer)做索引。
 
-使用`startIndex`属性可以获取字符串的第一个字符。使用`endIndex`属性可以获取最后一个字符的位置。如果字符串是空值，`startIndex`和`endIndex`是相等的。
+使用`startIndex`属性可以获取字符串的第一个字符。使用`endIndex`属性可以获取最后的位置（译者注：其实endIndex在值上与字符串的长度相等）。如果字符串是空值，`startIndex`和`endIndex`是相等的。
 
 ```swift
 let greeting = "Guten Tag"
