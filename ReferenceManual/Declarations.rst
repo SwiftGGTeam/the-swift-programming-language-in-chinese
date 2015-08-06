@@ -885,7 +885,7 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     Grammar of a function declaration
 
-    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body-OPT
 
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
