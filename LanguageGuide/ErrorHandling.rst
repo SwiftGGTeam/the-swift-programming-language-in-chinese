@@ -221,7 +221,7 @@ There are three forms of ``try``:
 
 * You use ``try`` inside a throwing function to propagate the error.
   You also use ``try``  inside ``do``-``catch`` block
-  to handle the error using a block of code,
+  to handle the error using a block of code.
 
 * You use ``try?`` to handle the error as an optional value.
 
@@ -247,6 +247,10 @@ All three of the following are equivalent:
     // sum : Int = 20
     // sum : Int = 20
     // sum : Int = 20
+
+.. TODO Verify that this is correct.
+   ``try?`` changes type information,
+   but Brian doesn't think that's true for regular ``try`` or ``try!``.
 
 Because ``try`` changes type information,
 it can't be applied to only one side of an operator.
@@ -360,9 +364,7 @@ Note that ``x`` and ``y`` are an optional of whatever type ``someThrowingFunctio
 Here the function returns an integer, so ``x`` and ``y`` are optional integers.
 
 Using ``try?`` lets you write concise error handling code
-for situations where you want to handle all errors in the same way,
-and when there aren't any lines of code that would come after ``try``
-inside the ``do`` clause of a ``do``-``catch`` statement.
+for situations where you want to handle all errors in the same way.
 For example,
 the following code listing shows an app
 that displays cached data while waiting for new data to load.
@@ -377,6 +379,7 @@ the cache is just ignored.
     }
 
 .. TODO make the above tested code
+.. TODO clean up the "For example" sentence. It doesn't *show* an app.
 
 .. _ErrorHandling_Force:
 
