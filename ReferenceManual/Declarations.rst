@@ -1815,6 +1815,11 @@ you need to mark overridden designated initializers with the ``override`` declar
     you don't also mark the initializer with the ``override`` modifier
     when you override the required initializer in a subclass.
 
+Just like functions and methods, initializers can throw or rethrow errors.
+And just like functions and methods,
+you use the ``throws`` or ``rethrows`` keyword after an initializer's parameters
+to indicate the appropriate behavior.
+
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
