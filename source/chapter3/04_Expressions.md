@@ -442,14 +442,8 @@ Initializer表达式用来给某个Type初始化。 它的形式如下：
 
 > `expression`.init(`initializer arguments`)
 
-（Initializer表达式用来给某个Type初始化。） 跟函数（function）不同， initializer 不能返回值。
+初始化函数表达式在调用函数时用来初始某个Type。 也可以使用初始化函数表达式来委托调用（delegate to ）到superclass的initializers.
 
-```swift
-var x = SomeClass.someClassFunction // ok
-var y = SomeClass.init              // error
-```
-
-可以通过 initializer 表达式来委托调用（delegate to ）到superclass的initializers.
 
 ```swift
 class SomeSubClass: SomeSuperClass {
@@ -459,6 +453,29 @@ class SomeSubClass: SomeSuperClass {
     }
 }
 ```
+
+和函数类似， 初始化表达式可以用作数值。 举例来说：
+
+```swift
+// Type annotation is required because String has multiple initializers.
+let initializer: Int -> String = String.init
+let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+print(oneTwoThree)
+// prints "123"
+```
+
+如果要用名字来指定某个type， 可以不用初始化函数表达式直接使用type的initializer。在其他情况下， 你必须使用初始化函数表达式。
+
+
+```swift
+let s1 = SomeType.init(data: 3)  // Valid
+let s2 = SomeType(data: 1)       // Also valid
+
+let s4 = someValue.dynamicType(data: 5)       // Error
+let s3 = someValue.dynamicType.init(data: 7)  // Valid
+```
+
+
 
 > 构造器表达式语法  
 > *构造器表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **init**  
