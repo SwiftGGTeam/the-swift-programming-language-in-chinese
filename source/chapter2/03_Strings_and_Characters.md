@@ -34,7 +34,7 @@ Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode �
 你也可以在常量、变量、字面量和表达式中进行字符串插值操作，这可以帮助你轻松创建用于展示、存储和打印的自定义字符串。
 
 > 注意：  
-> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [`AnyObject`类型](./20_Type_Casting.html#anyobject) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
+> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [`AnyObject`类型](./19_Type_Casting.html#anyobject) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
 > 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。  
 
 
@@ -129,9 +129,9 @@ for-in 循环在 [For Loops](./05_Control_Flow.html#for_loops) 中进行了详�
 另外，通过标明一个`Character`类型并用字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
 ```swift
-let exclamationMark: Charater = "!"
+let exclamationMark: Character = "!"
 ```
-字符串可以通过传递一个值类型为`Charater`的数组作为自变量来初始化：
+字符串可以通过传递一个值类型为`Character`的数组作为自变量来初始化：
 
 ```swift
 let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
@@ -429,7 +429,7 @@ if eAcuteQuestion == combinedEAcuteQuestion {
 // 打印输出 "These two strings are considered equal"
 ```
 
-相反，英语中的`LATIN CAPITAL LETTER A`(`U+0401`，或者`A`)不等于俄语中的`CYRILLIC CAPITAL LETTER A`(`U+0410`，或者`A`)。两个字符看着是一样的，但却有不同的语言意义：
+相反，英语中的`LATIN CAPITAL LETTER A`(`U+0041`，或者`A`)不等于俄语中的`CYRILLIC CAPITAL LETTER A`(`U+0410`，或者`A`)。两个字符看着是一样的，但却有不同的语言意义：
 
 ```swift
 let latinCapitalLetterA: Character = "\u{41}"
@@ -531,7 +531,7 @@ let dogString = "Dog‼🐶"
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
-  <td colspan=3>‼<br>U+1F436</td>
+  <td colspan=3>‼<br>U+203C</td>
   <td colspan=4>🐶<br>U+1F436</td>
  </tr>
  <tr height=77>
@@ -588,7 +588,7 @@ print("\n")
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
-  <td>‼<br>U+1F436</td>
+  <td>‼<br>U+203C</td>
   <td colspan=2>🐶<br>U+1F436</td>
  </tr>
  <tr height=77>
@@ -643,7 +643,7 @@ print("\n")
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
-  <td>‼<br>U+1F436</td>
+  <td>‼<br>U+203C</td>
   <td>🐶<br>U+1F436</td>
  </tr>
  <tr height=77>
