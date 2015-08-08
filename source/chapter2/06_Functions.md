@@ -250,7 +250,7 @@ someFunction(1, secondParameterName: 2)
 <a name="specifying_external_parameter_names"></a>
 ### 指定外部参数名(Specifying External Parameter Names)
 
-你可以在本地参数名前指定外部参数名,中间以逗号分隔.
+你可以在本地参数名前指定外部参数名,中间以空格分隔.
 
 ```swift
 func someFunction(externalParameterName localParameterName: Int) {
