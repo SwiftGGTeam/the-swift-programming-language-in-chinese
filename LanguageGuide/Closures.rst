@@ -606,28 +606,3 @@ both of those constants or variables will refer to the same closure:
    << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
-
-.. TODO: Autoclosures
-   ------------------
-
-.. TODO: var closure1: @autoclosure () -> Int = 4  // Function producing 4 whenever it is called.
-
-.. TODO: from Assert.swift in stdlib/core:
-   @transparent
-   func assert(
-     condition: @autoclosure () -> Bool, message: StaticString = StaticString()
-   ) {
-   }
-.. TODO: note that an @autoclosure's argument type must always be ()
-   see also test/expr/closure/closures.swift
-
-.. TODO: The autoclosure attribute modifies a function type,
-   changing the behavior of any assignment into (or initialization of) a value with the function type.
-   Instead of requiring that the rvalue and lvalue have the same function type,
-   an "auto closing" function type requires its initializer expression to have
-   the same type as the function's result type,
-   and it implicitly binds a closure over this expression.
-   This is typically useful for function arguments that want to
-   capture computation that can be run lazily.
-   autoclosure is only valid in a type of a syntactic function type
-   that is defined to take a syntactic empty tuple.
