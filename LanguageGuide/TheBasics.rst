@@ -230,8 +230,9 @@ You can print the current value of a constant or variable with the ``print(_:)``
 followed by a line break, to an appropriate output.
 In Xcode, for example,
 the ``print(_:)`` function prints its output in Xcode's “console” pane.
-(A related function, ``print(_:appendNewline:)``, performs the same task
-while optionally appending a line break to the end of the value to be printed.)
+(A related function, ``print(_:terminator:)``, performs the same task
+while letting you choose a string other than ```"\n"`` to terminate the output.
+To print a value without a line break after in, pass an empty string as the terminator.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
@@ -1139,9 +1140,11 @@ as a comma-separated list of assignment expressions.
    -> let b: String? = "2"
    << // b : String? = Optional("2")
    -> if let x = a, y = b {
-         print(x, y)
+         print(x)
+         print(y)
       }
-   <- ("1", "2")
+   <- 1
+   <- 2
 
 .. syntax-outline::
 
