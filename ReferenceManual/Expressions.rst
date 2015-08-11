@@ -1319,7 +1319,7 @@ For example:
    << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
 
 .. langref-grammar
 
@@ -1411,14 +1411,14 @@ For example:
    <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
-   </ someDictionary is still [b: [10, 20], a: [1, 2, 3]]
+   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
 
 .. langref-grammar
 

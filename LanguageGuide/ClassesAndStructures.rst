@@ -412,7 +412,7 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ~~ ^   ~~
 
@@ -424,7 +424,7 @@ or passed to a function.)
    -> let e2 = E.B
    << // e2 : E = REPL.E.B
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two E operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ~~ ^   ~~
 
@@ -466,7 +466,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two C operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
 
@@ -478,7 +478,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
 

@@ -266,9 +266,13 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
    << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
-   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
+   !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
    !! fixedPoint.moveByX(2.0, y: 3.0)
-   !! ^          ~~~~~~~
+   !!  ^~~~~~~~~~
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let fixedPoint = Point(x: 3.0, y: 3.0)
+   !! ^~~
+   !! var
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
