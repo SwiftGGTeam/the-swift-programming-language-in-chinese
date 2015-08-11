@@ -31,7 +31,7 @@
    * [泛型](chapter2/23_Generics.md)
    * [权限控制](chapter2/24_Access_Control.md)
    * [高级操作符](chapter2/25_Advanced_Operators.md)
-* [语言参考](chapter3/chapter3.md)
+* 语言参考
    * [关于语言参考](chapter3/01_About_the_Language_Reference.md)
    * [词法结构](chapter3/02_Lexical_Structure.md)
    * [类型](chapter3/03_Types.md)
@@ -42,7 +42,7 @@
    * [模式](chapter3/07_Patterns.md)
    * [泛型参数](chapter3/08_Generic_Parameters_and_Arguments.md)
    * [语法总结](chapter3/09_Summary_of_the_Grammar.md)
-* [苹果官方Blog官方翻译](chapter4/chapter4.md)
+* 苹果官方Blog官方翻译
    * [Access Control 权限控制的黑与白](chapter4/01_Access_Control.md)
    * [造个类型不是梦-白话Swift类型创建](chapter4/02_Type_Custom.md)
    * [WWDC里面的那个“大炮打气球”](chapter4/03_Ballons.md)
