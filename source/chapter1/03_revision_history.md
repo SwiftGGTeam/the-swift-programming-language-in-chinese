@@ -1,9 +1,9 @@
-> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)  
-> 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-
 # Swift 版本历史记录
 
 ---
+
+> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)  
+> 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
 本页内容包括：
 

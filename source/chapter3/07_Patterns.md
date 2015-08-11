@@ -1,12 +1,12 @@
+# 模式（Patterns）
+-----------------
+
 > 1.0
 > 翻译：[honghaoz](https://github.com/honghaoz)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[ray16897188](https://github.com/ray16897188)  
-
-# 模式（Patterns）
------------------
 
 本页内容包括：
 

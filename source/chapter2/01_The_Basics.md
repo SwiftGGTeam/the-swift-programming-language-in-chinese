@@ -1,12 +1,12 @@
+# 基础部分
+-----------------
+
 > 1.0
 > 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)
 > 校对：[lslxdx](https://github.com/lslxdx)
 
 > 2.0
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
-
-# 基础部分
------------------
 
 本页包含内容：
 

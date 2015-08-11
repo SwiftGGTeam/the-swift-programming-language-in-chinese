@@ -1,11 +1,11 @@
+# 类和结构体
+
 > 1.0
 > 翻译：[JaySurplus](https://github.com/JaySurplus)
 > 校对：[sg552](https://github.com/sg552)
 
 > 2.0
 > 翻译+校对：[SkyJean](https://github.com/SkyJean)
-
-# 类和结构体
 
 本页包含内容：
 

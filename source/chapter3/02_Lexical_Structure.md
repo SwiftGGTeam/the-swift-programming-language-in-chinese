@@ -1,3 +1,6 @@
+# 词法结构
+-----------------
+
 > 1.0
 > 翻译：[superkam](https://github.com/superkam)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
@@ -5,8 +8,6 @@
 > 2.0
 > 翻译+校对：[buginux]([KYawn](https://github.com/buginux)
 
-# 词法结构
------------------
 
 本页包含内容：
 

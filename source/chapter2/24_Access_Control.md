@@ -1,12 +1,12 @@
+# 访问控制
+------------------
+
 > 1.0
 > 翻译：[JaceFu](http://www.devtalking.com/)
 > 校对：[ChildhoodAndy](http://childhood.logdown.com)
 
 > 2.0
 > 翻译+校对：[mmoaay](https://github.com/mmoaay)
-
-# 访问控制
-------------------
 
 本页内容包括：
 

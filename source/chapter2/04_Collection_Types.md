@@ -1,12 +1,12 @@
+# 集合类型 (Collection Types)
+-----------------
+
 > 1.0
 > 翻译：[zqp](https://github.com/zqp)
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai), [feiin](https://github.com/feiin)
 
 > 2.0
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-
-# 集合类型 (Collection Types)
------------------
 
 本页包含内容：
 

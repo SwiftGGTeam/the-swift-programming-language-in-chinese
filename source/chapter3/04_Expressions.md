@@ -1,12 +1,12 @@
+# 表达式（Expressions）
+-----------------
+
 > 1.0
 > 翻译：[sg552](https://github.com/sg552)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[EudeMorgen](https://github.com/EudeMorgen)
-
-# 表达式（Expressions）
------------------
 
 本页包含内容：
 

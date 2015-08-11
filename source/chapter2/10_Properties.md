@@ -1,12 +1,12 @@
+# 属性 (Properties)
+---
+
 > 1.0
 > 翻译：[shinyzhu](https://github.com/shinyzhu)
 > 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
 
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
-
-# 属性 (Properties)
----
 
 本页包含内容：
 

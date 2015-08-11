@@ -1,12 +1,12 @@
+# 析构过程（Deinitialization）
+---------------------------
+
 > 1.0
 > 翻译：[bruce0505](https://github.com/bruce0505)
 > 校对：[fd5788](https://github.com/fd5788)
 
 > 2.0
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
-
-# 析构过程（Deinitialization）
----------------------------
 
 本页包含内容：
 

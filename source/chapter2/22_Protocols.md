@@ -1,12 +1,12 @@
+# 协议
+-----------------
+
 > 1.0
 > 翻译：[geek5nan](https://github.com/geek5nan)
 > 校对：[dabing1022](https://github.com/dabing1022)
 
 > 2.0
 > 翻译+校对：[futantan](https://github.com/futantan)
-
-# 协议
------------------
 
 本页包含内容：
 

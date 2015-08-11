@@ -1,12 +1,12 @@
+# 类型转换（Type Casting）
+-----------------
+
 > 1.0
 > 翻译：[xiehurricane](https://github.com/xiehurricane)
 > 校对：[happyming](https://github.com/happyming)
 
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
-
-# 类型转换（Type Casting）
------------------
 
 本页包含内容：
 

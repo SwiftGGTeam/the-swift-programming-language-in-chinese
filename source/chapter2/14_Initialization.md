@@ -1,13 +1,12 @@
+# 构造过程（Initialization）
+-----------------
+
 > 1.0
 > 翻译：[lifedim](https://github.com/lifedim)
 > 校对：[lifedim](https://github.com/lifedim)
 
 > 2.0
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
-
-# 构造过程（Initialization）
-
------------------
 
 本页包含内容：
 

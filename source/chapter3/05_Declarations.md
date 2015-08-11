@@ -1,13 +1,13 @@
+<a name="declarations"></a>
+# 声明
+-----------------
+
 > 1.0
 > 翻译：[marsprince](https://github.com/marsprince) [Lenhoon](https://github.com/marsprince)[(微博)](http://www.weibo.com/lenhoon)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[Lenhoon](https://github.com/Lenhoon)
-
-<a name="declarations"></a>
-# 声明
------------------
 
 本页包含内容：
 

@@ -1,12 +1,12 @@
+# 语法总结
+-----
+
 > 1.0
 > 翻译：[stanzhai](https://github.com/stanzhai)
 > 校对：[xielingwang](https://github.com/xielingwang)
 
 > 2.0
 > 翻译+校对：[miaosiqi](https://github.com/miaosiqi)
-
-# 语法总结
-_________________
 
 本页包含内容：
 

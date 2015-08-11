@@ -1,12 +1,12 @@
+# 函数（Functions）
+-----------------
+
 > 1.0
 > 翻译：[honghaoz](https://github.com/honghaoz)
 > 校对：[LunaticM](https://github.com/LunaticM)
 
 > 2.0
 > 翻译+校对：[dreamkidd](https://github.com/dreamkidd)
-
-# 函数（Functions）
------------------
 
 本页包含内容：
 

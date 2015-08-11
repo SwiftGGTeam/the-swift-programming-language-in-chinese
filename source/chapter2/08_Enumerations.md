@@ -1,12 +1,12 @@
+# 枚举（Enumerations）
+---
+
 > 1.0
 > 翻译：[yankuangshi](https://github.com/yankuangshi)
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 > 2.0
 > 翻译+校对：[futantan](https://github.com/futantan)
-
-# 枚举（Enumerations）
----
 
 本页内容包含：
 
