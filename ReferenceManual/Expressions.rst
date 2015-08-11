@@ -602,8 +602,11 @@ For example:
 
     self-expression --> ``self``
     self-expression --> ``self`` ``.`` identifier
-    self-expression --> ``self`` ``[`` expression ``]``
+    self-expression --> ``self`` ``[`` expression-list ``]``
     self-expression --> ``self`` ``.`` ``init``
+
+.. TODO Would be nice to make the self-expression grammar more parallel to the
+   superclass-expression grammar.
 
 
 .. _Expressions_SuperclassExpression:
@@ -645,7 +648,7 @@ to make use of the implementation in their superclass.
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
-    superclass-subscript-expression --> ``super`` ``[`` expression ``]``
+    superclass-subscript-expression --> ``super`` ``[`` expression-list ``]``
     superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
