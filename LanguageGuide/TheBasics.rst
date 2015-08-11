@@ -1140,9 +1140,11 @@ as a comma-separated list of assignment expressions.
    -> let b: String? = "2"
    << // b : String? = Optional("2")
    -> if let x = a, y = b {
-         print(x, y)
+         print(x)
+         print(y)
       }
-   <- ("1", "2")
+   <- 1
+   <- 2
 
 .. syntax-outline::
 
