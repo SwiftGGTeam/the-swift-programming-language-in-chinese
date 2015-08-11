@@ -460,6 +460,10 @@ even if it has stored properties that do not have default values.
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
    << // s : S = REPL.S(int: 42, string: "hello")
+   ---
+   -> struct SS { var int = 10; var string: String }
+   -> let ss = SS(int: 42, string: "hello")
+   << // ss : SS = REPL.SS(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
