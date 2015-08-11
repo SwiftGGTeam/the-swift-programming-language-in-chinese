@@ -1,13 +1,13 @@
+# Swift 初见
+
+---
+
 > 1.0
 > 翻译：[numbbbbb](https://github.com/numbbbbb)
 > 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
-
-# Swift 初见
-
----
 
 本页内容包括：
 

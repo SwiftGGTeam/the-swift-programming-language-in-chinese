@@ -1,12 +1,12 @@
+# 嵌套类型
+-----------------
+
 > 1.0
 > 翻译：[Lin-H](https://github.com/Lin-H)
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 > 2.0
 > 翻译+校对：[SergioChan](https://github.com/SergioChan)
-
-# 嵌套类型
------------------
 
 本页包含内容：
 

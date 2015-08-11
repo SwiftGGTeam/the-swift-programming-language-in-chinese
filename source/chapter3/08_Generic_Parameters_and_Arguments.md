@@ -1,12 +1,12 @@
+# 泛型参数
+---------
+
 > 1.0
 > 翻译：[fd5788](https://github.com/fd5788)
 > 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[wardenNScaiyi](https:github.com/wardenNScaiyi)
-
-# 泛型参数
----------
 
 本页包含内容：
 

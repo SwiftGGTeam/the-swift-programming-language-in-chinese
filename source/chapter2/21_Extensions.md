@@ -1,12 +1,12 @@
+# 扩展（Extensions）
+----
+
 > 1.0
 > 翻译：[lyuka](https://github.com/lyuka)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
 > 2.0
 > 翻译+校对：[shanksyang](https://github.com/shanksyang)
-
-#扩展（Extensions）
-----
 
 本页包含内容：
 

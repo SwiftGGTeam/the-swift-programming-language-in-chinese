@@ -1,12 +1,12 @@
+# 高级运算符
+-----------------
+
 > 1.0
 > 翻译：[xielingwang](https://github.com/xielingwang)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 > 2.0
 > 翻译+校对：[buginux](https://github.com/buginux)
-
-# 高级运算符
------------------
 
 本页内容包括：
 

@@ -1,12 +1,12 @@
+# 自动引用计数
+-----------------
+
 > 1.0
 > 翻译：[TimothyYe](https://github.com/TimothyYe)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
 > 2.0
 > 翻译+校对：[Channe](https://github.com/Channe)
-
-# 自动引用计数
------------------
 
 本页包含内容：
 

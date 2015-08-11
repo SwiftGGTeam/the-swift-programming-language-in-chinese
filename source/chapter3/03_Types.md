@@ -1,12 +1,12 @@
+# 类型（Types）
+-----------------
+
 > 1.0
 > 翻译：[lyuka](https://github.com/lyuka)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
 > 翻译+校对：[EudeMorgen](https://github.com/EudeMorgen)
-
-# 类型（Types）
------------------
 
 本页包含内容：
 

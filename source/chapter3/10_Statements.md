@@ -1,13 +1,13 @@
+<a name="statement_statements"></a>
+# 语句
+-----------------
+
 > 1.0
 > 翻译：[coverxit](https://github.com/coverxit)
 > 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),
 
 > 2.0
 > 翻译+校对：[littledogboy](https://github.com/littledogboy)
-
-<a name="statement_statements"></a>
-# 语句
------------------
 
 本页包含内容：
 

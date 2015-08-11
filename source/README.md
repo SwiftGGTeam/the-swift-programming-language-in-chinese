@@ -1,3 +1,5 @@
+# 2.0 新的开始	
+
 > Swift 兴趣交流群：`131595168`, `146932759`, `151336833`, `153549217`. **加入一个群即可，请勿重复添加**
 
 > <a target='_blank' href="http://swiftist.org">Swift 开发者社区</a>
@@ -8,8 +10,6 @@
 
 <!-- -->
 > 如果您觉得这个项目不错，请<a target='_blank' href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese">点击Star一下</a>，您的支持是我们最大的动力。
-
-# 2.0 新的开始	
 
 ## 1
 
@@ -51,28 +51,28 @@
 
 下次你再打开这篇文档，可以多看看那些列在最上方的ID，哪怕不去follow和star，只是看一眼就好。他们的所有努力和付出，就存在于这短暂的一瞥中。
 
-Swift 2.0 参与者名单（按照章节顺序）：
-- [xtymichael](https://github.com/xtymichael)
-- [AlanMelody](https://github.com/AlanMelody)
-- [DianQK](https://github.com/DianQK)
-- [dreamkidd](https://github.com/dreamkidd)
-- [100mango](https://github.com/100mango)
-- [futantan](https://github.com/futantan)
-- [SkyJean](https://github.com/SkyJean)
-- [yangsiy](https://github.com/yangsiy)
-- [shanksyang](https://github.com/shanksyang)
-- [chenmingbiao](https://github.com/chenmingbiao)
-- [Channe](https://github.com/Channe)
-- [lyojo](https://github.com/lyojo)
-- [SergioChan](https://github.com/SergioChan)
-- [mmoaay](https://github.com/mmoaay)
-- [buginux](https://github.com/buginux)
-- [KYawn](https://github.com/KYawn)
-- [EudeMorgen](https://github.com/EudeMorgen)
-- [littledogboy](https://github.com/littledogboy)
-- [Lenhoon](https://github.com/Lenhoon)
-- [ray16897188](https://github.com/ray16897188)
-- [wardenNScaiyi](https://github.com/wardenNScaiyi)
-- [miaosiqi](https://github.com/miaosiqi)
+Swift 2.0 参与者名单（按照章节顺序）：  
+- [xtymichael](https://github.com/xtymichael)     
+- [AlanMelody](https://github.com/AlanMelody)    
+- [DianQK](https://github.com/DianQK)  
+- [dreamkidd](https://github.com/dreamkidd)  
+- [100mango](https://github.com/100mango)  
+- [futantan](https://github.com/futantan)  
+- [SkyJean](https://github.com/SkyJean)  
+- [yangsiy](https://github.com/yangsiy)  
+- [shanksyang](https://github.com/shanksyang)  
+- [chenmingbiao](https://github.com/chenmingbiao)  
+- [Channe](https://github.com/Channe)  
+- [lyojo](https://github.com/lyojo)  
+- [SergioChan](https://github.com/SergioChan)  
+- [mmoaay](https://github.com/mmoaay)  
+- [buginux](https://github.com/buginux)  
+- [KYawn](https://github.com/KYawn)  
+- [EudeMorgen](https://github.com/EudeMorgen)  
+- [littledogboy](https://github.com/littledogboy)   
+- [Lenhoon](https://github.com/Lenhoon)   
+- [ray16897188](https://github.com/ray16897188)   
+- [wardenNScaiyi](https://github.com/wardenNScaiyi)  
+- [miaosiqi](https://github.com/miaosiqi)  
 
 最后，感谢<a target='_blank' href="http://wiki.jikexueyuan.com/">极客学院</a>提供的wiki系统，在国内访问起来速度很快，优化后的样式看起来也更舒服。

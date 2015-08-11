@@ -1,13 +1,13 @@
+# 泛型
+
+------
+
 > 1.0
 > 翻译：[takalard](https://github.com/takalard)
 > 校对：[lifedim](https://github.com/lifedim)
 
 > 2.0
 > 翻译+校对： [SergioChan](https://github.com/SergioChan)
-
-# 泛型
-
-------
 
 本页包含内容：
 

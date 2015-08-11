@@ -1,13 +1,12 @@
+# 下标脚本（Subscripts）
+-----------------
+
 > 1.0
 > 翻译：[siemenliu](https://github.com/siemenliu)
 > 校对：[zq54zquan](https://github.com/zq54zquan)
 
 > 2.0
 > 翻译+校对：[shanksyang](https://github.com/shanksyang)
-
-
-# 下标脚本（Subscripts）
------------------
 
 本页包含内容：
 

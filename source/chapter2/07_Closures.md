@@ -1,12 +1,12 @@
+# 闭包（Closures）
+-----------------
+
 > 1.0
 > 翻译：[wh1100717](https://github.com/wh1100717)
 > 校对：[lyuka](https://github.com/lyuka)
 
 > 2.0
 > 翻译+校对：[100mango](https://github.com/100mango)
-
-# 闭包（Closures）
------------------
 
 本页包含内容：
 

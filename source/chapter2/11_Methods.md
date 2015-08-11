@@ -1,12 +1,12 @@
+# 方法（Methods）
+-----------------
+
 > 1.0
 > 翻译：[pp-prog](https://github.com/pp-prog)
 > 校对：[zqp](https://github.com/zqp)
 
 > 2.0
 > 翻译+校对：[DianQK](https://github.com/DianQK)
-
-# 方法（Methods）
------------------
 
 本页包含内容：
 
