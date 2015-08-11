@@ -631,12 +631,12 @@ if let constantName = someOptional {
 你可以像上面这样使用可选绑定来重写`possibleNumber`这个例子：
 
 ```swift
-if let actualNumber = possibleNumber.toInt() {
-    print("\(possibleNumber) has an integer value of \(actualNumber)")
+if let actualNumber = Int(possibleNumber) {
+    print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
 } else {
-    print("\(possibleNumber) could not be converted to an integer")
+    print("\'\(possibleNumber)\' could not be converted to an integer")
 }
-// 输出 "123 has an integer value of 123"
+// 输出 "'123' has an integer value of 123"
 ```
 
 这段代码可以被理解为：
