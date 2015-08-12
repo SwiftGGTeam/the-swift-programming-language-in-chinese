@@ -38,6 +38,13 @@ or bound to a constant or variable name:
          print(second)
       }
    <- bravo
+   !! <REPL Input>:1:4: warning: 'if' condition is always true
+   !! if case (_, let second, _) = numbers {
+   !! ^
+   !! <REPL Input>:1:4: warning: 'if' condition is always true
+   !! if case (_, let second, _) = words {
+   !! ^
+
 
 In Swift, patterns are matched by the ``case`` keyword,
 which can be used in
