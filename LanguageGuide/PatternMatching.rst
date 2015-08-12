@@ -206,7 +206,7 @@ to evaluate only values that match the pattern:
 
    -> var totalDelay = 0
    << // totalDelay : Int = 0
-   -> for case let .Delayed(minutes) in trains.map({$0.status}) {
+   -> for case .Delayed(let minutes) in trains.map({$0.status}) {
           totalDelay += minutes
       }
    -> print("Total delay: \(totalDelay) min")
@@ -269,7 +269,7 @@ to iterate over only non-``nil`` values in the ``surveyResponses`` array:
 .. testcode:: patternMatchingOptional
 
    >> (total, count) = (0, 0)
-   -> for case let .Some(score) in surveyResponses {
+   -> for case .Some(let score) in surveyResponses {
           total += score
           ++count
       }
@@ -601,7 +601,7 @@ to iterate over only a subset of keys:
       ]
    << // grades : [String : Int] = ["Alexandra": 92, "Buddy": 87, "Christy": 76, "Duncan": 68]
    ---
-   -> for case let (passingStudent, 75...100) in grades {
+   -> for case (let passingStudent, 75...100) in grades {
           print(passingStudent)
       }
    <- Alexandra
