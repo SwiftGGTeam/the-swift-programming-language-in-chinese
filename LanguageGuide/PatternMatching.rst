@@ -34,7 +34,7 @@ or bound to a constant or variable name:
    ---
    -> let words = ("alpha", "bravo", "charlie")
    << // words : (String, String, String) = ("alpha", "bravo", "charlie")
-   -> if case (_, let second, _) = numbers {
+   -> if case (_, let second, _) = words {
          print(second)
       }
    <- bravo
