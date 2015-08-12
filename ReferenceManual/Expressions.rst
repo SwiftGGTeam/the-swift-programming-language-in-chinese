@@ -108,6 +108,36 @@ It has the following form:
 
    try! <#expression#>
 
+When the expression on the left hand side of a binary operator
+is marked with ``try``, ``try?``, or ``try!``,
+that keyword applies to the whole binary expression.
+All three of the following are equivalent:
+
+.. testcode:: placement-of-try
+
+    >> func a() throws -> Int { return 10 }
+    >> func b() throws -> Int { return 10 }
+    >> var sum = 0
+    -> sum = try a() + b()
+    -> sum = try (a() + b())
+    -> sum = (try a()) + b()
+    // sum : Int = 20
+    // sum : Int = 20
+    // sum : Int = 20
+
+You can't write ``try`` on the right hand side of a binary operator,
+except for assignment operators.
+
+.. assertion:: try-on-right
+
+    >> func a() throws -> Int { return 10 }
+    >> func b() throws -> Int { return 10 }
+    >> var sum = 0
+    -> sum = 7 + try b()   // Error
+    !! <REPL Input>:1:5: error: 'try' cannot appear to the right of a non-assignment operator
+    !! 7 + try b()
+    !!     ^
+
 For more information and to see examples of how to use ``try``,
 see :doc:`../LanguageGuide/ErrorHandling`.
 
