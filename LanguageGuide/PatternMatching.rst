@@ -167,7 +167,7 @@ This capability allows the associated value to be used in the branch:
    << // status : Status = REPL.Status.OnTime
    >> do {
    >> switch status {
-   -> case .Delayed(let minutes) where 1...5 ~= minutes:
+   -> case .Delayed(let minutes) where minutes >= 1 && minutes <= 5:
        return "Slight delay of \(minutes) min"
    >> default: return nil
    >> }
