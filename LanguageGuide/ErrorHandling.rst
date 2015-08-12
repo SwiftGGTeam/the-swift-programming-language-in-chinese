@@ -42,13 +42,20 @@ if necessary --- communicate it to the user.
 
 .. _ErrorHandling_Represent:
 
-Representing Errors
--------------------
+Representing and Throwing Errors
+--------------------------------
 
 In Swift, errors are represented by
 values of types conforming to the ``ErrorType`` protocol.
 Types that adopt ``ErrorType``
 automatically have the implementation of their conformance synthesized by the compiler.
+You throw an error with a ``throw`` statement.
+
+.. testcode:: throw-simple-error
+
+   >> enum SomeError: ErrorType { case Error }
+   >> let someError = SomeError.Error
+   -> throw someError
 
 Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
@@ -64,6 +71,8 @@ of operating a vending machine inside a game:
           case InsufficientFunds(coinsNeeded: Int)
           case OutOfStock
       }
+   ---
+   -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
 
 In this example, a vending machine can fail for the following reasons:
 
@@ -74,17 +83,115 @@ In this example, a vending machine can fail for the following reasons:
   of coins needed to complete the transaction.
 * The request item is out of stock, indicated by ``OutOfStock``.
 
-.. _ErrorHandling_Throw:
+Here, five additional coins are needed,
+so an error is thrown using the ``throw`` statement.
 
-Throwing Errors
+
+.. _ErrorHandling_Catch:
+
+Handling Errors
 ---------------
 
-To indicate that a function or method can throw an error,
+When you call a throwing function,
+you mark the expression by writing ``try`` in front it.
+This keyword calls out the fact that the function can throw an error
+and that the lines of code after the ``try`` might not be run.
+
+.. testcode:: errorHandling
+
+    -> let favoriteSnacks = [
+           "Alice": "Chips",
+           "Bob": "Licorice",
+           "Eve": "Pretzels",
+       ]
+    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
+    -> func buyFavoriteSnack(person: String) throws {
+           let snackName = favoriteSnacks[person] ?? "Candy Bar"
+           try vend(itemNamed: snackName)
+       }
+
+The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
+and tries to buy it for them.
+If they don't have a favorite snack listed, it tries to buy a candy bar.
+It calls the ``vend`` function, which is a throwing function,
+so the function call is marked with ``try`` in front of it.
+The ``buyFavoriteSnack(_:)`` function is also a throwing function,
+so any errors that the ``vend`` function throws
+propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
+
+.. note::
+
+   Error handling in Swift resembles exception handling in other languages,
+   with the use of the ``try``, ``catch`` and ``throw`` keywords.
+   Unlike exception handling in many languages ---
+   including Objective-C ---
+   error handling in Swift does not involve unwinding the call stack,
+   which can be computationally expensive.
+   As such, the performance characteristics
+   of a ``throw`` statement
+   are comparable to those of a ``return`` statement.
+
+There are four ways to handle errors:
+
+* Use ``throws`` in a function's type
+  to handle the error by propagating it
+  and handling it where the function is called.
+
+* Use ``try`` inside ``do``-``catch`` block
+  to handle the error using a block of code.
+
+* Use ``try?`` to handle the error as an optional value.
+
+* Use ``try!`` to disable error propagation
+  by asserting that no error will be thrown.
+
+.. TODO From here to the next heading might fit better in the reference.
+
+When you write ``try``, ``try?``, or ``try!``,
+it applies to the whole expression that comes after it.
+For example, in the assignment ``let sum = try a() + b()``,
+either of the functions can be throwing functions.
+All three of the following are equivalent:
+
+.. testcode:: placement-of-try
+
+    >> func a() throws -> Int { return 10 }
+    >> func b() throws -> Int { return 10 }
+    >> var sum = 0
+    -> sum = try a() + b()
+    -> sum = try (a() + b())
+    -> sum = (try a()) + b()
+    // sum : Int = 20
+    // sum : Int = 20
+    // sum : Int = 20
+
+.. TODO Verify that this is correct.
+   ``try?`` changes type information,
+   but Brian doesn't think that's true for regular ``try`` or ``try!``.
+
+    Because ``try`` changes type information,
+    it can't be applied to only one side of an operator.
+    When ``try`` appears on the left hand side,
+    it applies to the entire operation.
+    It's an error to write ``try`` on the right hand side.
+
+    .. testcode:: placement-of-try
+
+        -> sum = a() + (try b())   // Error
+
+.. _ErrorHandling_Throw:
+
+Handling Errors By Propogating
+------------------------------
+
+To indicate that a function handles errors thrown inside it
+by propagating them to where the function is called
 you write the ``throws`` keyword in its declaration,
 after its parameters.
-If it specifies a return type,
+If the function specifies a return type,
 you write the ``throws`` keyword before the return arrow (``->``).
-A function, method, or closure cannot throw an error unless explicitly indicated.
+Functions that are not marked with ``throws``
+must handle any errors inside the function.
 
 .. testcode:: throwingFunctionDeclaration
 
@@ -112,8 +219,6 @@ A function, method, or closure cannot throw an error unless explicitly indicated
 
 .. TODO Add more assertions to test these behaviors
 
-At any point in the body of a throwing function,
-you can throw an error with a ``throw`` statement.
 In the example below,
 the ``vend(itemNamed:)`` function throws an error if
 the requested item is not available,
@@ -172,96 +277,6 @@ Because a ``throw`` statement immediately transfers program control,
 an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
-
-.. _ErrorHandling_Catch:
-
-Handling Errors
----------------
-
-When you call a throwing function,
-you mark the expression by writing ``try`` in front it.
-This keyword calls out the fact that the function can throw an error
-and that the lines of code after the ``try`` might not be run.
-
-.. testcode:: errorHandling
-
-    -> let favoriteSnacks = [
-           "Alice": "Chips",
-           "Bob": "Licorice",
-           "Eve": "Pretzels",
-       ]
-    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
-    -> func buyFavoriteSnack(person: String) throws {
-           let snackName = favoriteSnacks[person] ?? "Candy Bar"
-           try vend(itemNamed: snackName)
-       }
-
-The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
-and tries to buy it for them.
-If they don't have a favorite snack listed, it tries to buy a candy bar.
-It calls the ``vend`` function, which is a throwing function,
-so the function call is marked with ``try`` in front of it.
-The ``buyFavoriteSnack(_:)`` function is also a throwing function,
-so any errors that the ``vend`` function throws
-propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
-
-.. note::
-
-   Error handling in Swift resembles exception handling in other languages,
-   with the use of the ``try``, ``catch`` and ``throw`` keywords.
-   Unlike exception handling in many languages ---
-   including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
-   which can be computationally expensive.
-   As such, the performance characteristics
-   of a ``throw`` statement
-   are comparable to those of a ``return`` statement.
-
-There are three forms of ``try``:
-
-* You use ``try`` inside a throwing function to propagate the error.
-  You also use ``try``  inside ``do``-``catch`` block
-  to handle the error using a block of code.
-
-* You use ``try?`` to handle the error as an optional value.
-
-* You use ``try!`` to disable error propagation
-  by asserting that no error will be thrown.
-
-.. TODO From here to the next heading might fit better in the reference.
-
-When you write ``try``, ``try?``, or ``try!``,
-it applies to the whole expression that comes after it.
-For example, in the assignment ``let sum = try a() + b()``,
-either of the functions can be throwing functions.
-All three of the following are equivalent:
-
-.. testcode:: placement-of-try
-
-    >> func a() throws -> Int { return 10 }
-    >> func b() throws -> Int { return 10 }
-    >> var sum = 0
-    -> sum = try a() + b()
-    -> sum = try (a() + b())
-    -> sum = (try a()) + b()
-    // sum : Int = 20
-    // sum : Int = 20
-    // sum : Int = 20
-
-.. TODO Verify that this is correct.
-   ``try?`` changes type information,
-   but Brian doesn't think that's true for regular ``try`` or ``try!``.
-
-Because ``try`` changes type information,
-it can't be applied to only one side of an operator.
-When ``try`` appears on the left hand side,
-it applies to the entire operation.
-It's an error to write ``try`` on the right hand side.
-
-.. testcode:: placement-of-try
-
-    -> sum = a() + (try b())   // Error
-
 
 .. _ErrorHandling_DoCatch:
 
