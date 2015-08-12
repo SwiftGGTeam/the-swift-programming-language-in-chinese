@@ -109,7 +109,7 @@ It has the following form:
    try! <#expression#>
 
 For more information and to see examples of how to use ``try``,
-see :doc:`../LanguageGuide/ErrorHandling``.
+see :doc:`../LanguageGuide/ErrorHandling`.
 
 .. syntax-grammar::
 
