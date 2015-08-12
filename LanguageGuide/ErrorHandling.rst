@@ -40,6 +40,7 @@ if necessary --- communicate it to the user.
     we'll need to take about performance and other subtle differences.
     Leaving this discussion out for Xcode 7 beta 1.
 
+
 .. _ErrorHandling_Represent:
 
 Representing and Throwing Errors
@@ -92,32 +93,20 @@ so an error is thrown using the ``throw`` statement.
 Handling Errors
 ---------------
 
-When you call a throwing function,
-you mark the expression by writing ``try`` in front it.
-This keyword calls out the fact that the function can throw an error
-and that the lines of code after the ``try`` might not be run.
+There are four ways to handle errors:
 
-.. testcode:: errorHandling
+* Use ``try`` in a function marked with ``throws``
+  to handle the error by allowing the error to propagating,
+  and then handling the error in the scope
+  where the function is called.
 
-    -> let favoriteSnacks = [
-           "Alice": "Chips",
-           "Bob": "Licorice",
-           "Eve": "Pretzels",
-       ]
-    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
-    -> func buyFavoriteSnack(person: String) throws {
-           let snackName = favoriteSnacks[person] ?? "Candy Bar"
-           try vend(itemNamed: snackName)
-       }
+* Use ``try`` in a ``do``-``catch`` block
+  to handle the error using a block of code.
 
-The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
-and tries to buy it for them.
-If they don't have a favorite snack listed, it tries to buy a candy bar.
-It calls the ``vend`` function, which is a throwing function,
-so the function call is marked with ``try`` in front of it.
-The ``buyFavoriteSnack(_:)`` function is also a throwing function,
-so any errors that the ``vend`` function throws
-propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
+* Use ``try?`` to handle the error as an optional value.
+
+* Use ``try!`` to disable error propagation
+  by asserting that no error will be thrown.
 
 .. note::
 
@@ -131,67 +120,26 @@ propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called
    of a ``throw`` statement
    are comparable to those of a ``return`` statement.
 
-There are four ways to handle errors:
-
-* Use ``throws`` in a function's type
-  to handle the error by propagating it
-  and handling it where the function is called.
-
-* Use ``try`` inside ``do``-``catch`` block
-  to handle the error using a block of code.
-
-* Use ``try?`` to handle the error as an optional value.
-
-* Use ``try!`` to disable error propagation
-  by asserting that no error will be thrown.
-
-.. TODO From here to the next heading might fit better in the reference.
-
-When you write ``try``, ``try?``, or ``try!``,
-it applies to the whole expression that comes after it.
-For example, in the assignment ``let sum = try a() + b()``,
-either of the functions can be throwing functions.
-All three of the following are equivalent:
-
-.. testcode:: placement-of-try
-
-    >> func a() throws -> Int { return 10 }
-    >> func b() throws -> Int { return 10 }
-    >> var sum = 0
-    -> sum = try a() + b()
-    -> sum = try (a() + b())
-    -> sum = (try a()) + b()
-    // sum : Int = 20
-    // sum : Int = 20
-    // sum : Int = 20
-
-.. TODO Verify that this is correct.
-   ``try?`` changes type information,
-   but Brian doesn't think that's true for regular ``try`` or ``try!``.
-
-    Because ``try`` changes type information,
-    it can't be applied to only one side of an operator.
-    When ``try`` appears on the left hand side,
-    it applies to the entire operation.
-    It's an error to write ``try`` on the right hand side.
-
-    .. testcode:: placement-of-try
-
-        -> sum = a() + (try b())   // Error
 
 .. _ErrorHandling_Throw:
 
-Handling Errors By Propogating
-------------------------------
+Handling Errors By Propagating
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a function handles errors thrown inside it
-by propagating them to where the function is called
-you write the ``throws`` keyword in its declaration,
+To indicate that a function can propagate errors
+that are thrown inside of it
+to the scope where the function is called,
+you write the ``throws`` keyword in its declaration
 after its parameters.
 If the function specifies a return type,
 you write the ``throws`` keyword before the return arrow (``->``).
-Functions that are not marked with ``throws``
-must handle any errors inside the function.
+
+.. note::
+
+    Functions that are not marked with ``throws``
+    cannot propagate errors;
+    any errors thrown inside the function
+    must be handled inside the function.
 
 .. testcode:: throwingFunctionDeclaration
 
@@ -278,6 +226,32 @@ an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
 
+Inside the body of the function,
+you mark an expression that can thrown an error
+by writing ``try`` in front it.
+
+.. testcode:: errorHandling
+
+    -> let favoriteSnacks = [
+           "Alice": "Chips",
+           "Bob": "Licorice",
+           "Eve": "Pretzels",
+       ]
+    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
+    -> func buyFavoriteSnack(person: String) throws {
+           let snackName = favoriteSnacks[person] ?? "Candy Bar"
+           try vend(itemNamed: snackName)
+       }
+
+The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
+and tries to buy it for them.
+If they don't have a favorite snack listed, it tries to buy a candy bar.
+It calls the ``vend`` function, which is a throwing function,
+so the function call is marked with ``try`` in front of it.
+The ``buyFavoriteSnack(_:)`` function is also a throwing function,
+so any errors that the ``vend`` function throws
+propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
+
 .. _ErrorHandling_DoCatch:
 
 Handling Errors Using a Block of Code
@@ -350,8 +324,7 @@ Handling Errors as Optional Values
 You use ``try?`` to handle an error by converting it to an optional value.
 If an error is thrown while evaluating the ``try?`` expression,
 the value of the expression is ``nil``.
-You don't need to put a ``try?`` expression inside a ``do``-``catch`` statement.
-For example, ``x`` and ``y`` have the same value and behavior in the following code.
+For example, ``x`` and ``y`` have the same value and behavior in the following code:
 
 .. testcode:: optional-try
 
@@ -381,10 +354,10 @@ Here the function returns an integer, so ``x`` and ``y`` are optional integers.
 Using ``try?`` lets you write concise error handling code
 for situations where you want to handle all errors in the same way.
 For example,
-the following code listing shows an app
-that displays cached data while waiting for new data to load.
+the following code listing
+displays cached data while waiting for new data to load.
 If any error occurs while loading the cached data,
-the cache is just ignored.
+the cache is ignored.
 
 .. code-block:: swift
 
@@ -394,7 +367,7 @@ the cache is just ignored.
     }
 
 .. TODO make the above tested code
-.. TODO clean up the "For example" sentence. It doesn't *show* an app.
+
 
 .. _ErrorHandling_Force:
 
@@ -425,10 +398,11 @@ If an error actually is thrown, you'll get a runtime error.
    ---
    -> try! willOnlyThrowIfTrue(false)
 
+
 .. _ErrorHandling_Defer:
 
 Specifying Clean-Up Actions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 You use a ``defer`` statement to execute a set of statements
 just before code execution leaves the current block of code.
