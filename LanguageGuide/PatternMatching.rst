@@ -165,10 +165,10 @@ This capability allows the associated value to be used in the branch:
 
    >> let status = Status.OnTime
    << // status : Status = REPL.Status.OnTime
-   >> do {
+   >> func delayDescription() -> String? {
    >> switch status {
    -> case .Delayed(let minutes) where minutes >= 1 && minutes <= 5:
-       return "Slight delay of \(minutes) min"
+   ->    return "Slight delay of \(minutes) min"
    >> default: return nil
    >> }
    >> }
