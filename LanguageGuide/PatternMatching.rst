@@ -533,12 +533,15 @@ which is then used in the body of the loop.
 Matching Values in a Range
 --------------------------
 
-As described in :ref:`ControlFlow_RangeMatching`,
-``switch`` statements can check for the inclusion of values in a range.
+In addition to matching a pattern against specific value by equality,
+Swift also supports a more general form of expression pattern matching.
+For example, :ref:`ControlFlow_RangeMatching` describes how
+the  ``...`` and ``..<`` range operators produce ranges
+that can be used as expressions in ``switch`` statement
+to check for the inclusion of values in that range.
 
-For example,
-consider a ``switch`` statement that prints
-the letter grade corresponding to a score out of 100:
+Consider the following ``switch`` statement,
+which prints the letter grade corresponding to a score out of 100:
 
 .. testcode:: patternMatchingRange
 
