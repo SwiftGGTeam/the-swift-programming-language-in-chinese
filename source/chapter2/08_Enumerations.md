@@ -232,9 +232,9 @@ enum Planet: Int {
 ```swift
 enum CompassPoint: String {
     case North = "North"
-    case North = "South"
-    case North = "East"
-    case North = "West"
+    case South = "South"
+    case East = "East"
+    case West = "West"
 }
 ```
 
