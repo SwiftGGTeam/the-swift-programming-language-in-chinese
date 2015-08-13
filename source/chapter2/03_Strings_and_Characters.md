@@ -114,7 +114,7 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
 
 ```swift
-for character in "Dog!🐶" {
+for character in "Dog!🐶".characters {
     print(character)
 }
 // D
