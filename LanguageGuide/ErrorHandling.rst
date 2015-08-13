@@ -11,7 +11,7 @@ recoverable errors at runtime.
     ^-- why is this to-do even here???
 
 Some operations
-aren't be guaranteed to always complete execution or produce a useful output.
+aren't guaranteed to always complete execution or produce a useful output.
 Optionals are used to represent the absence of a value,
 but when an operation fails,
 it's often useful to understand what caused the failure,
