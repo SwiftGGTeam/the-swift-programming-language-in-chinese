@@ -225,19 +225,18 @@ enum Planet: Int {
 }
 ```
 
-在上面的例子中，`Plant.Mercury`赋了初值`1`，`Planet.Venus`会拥有隐式赋值`2`，依次类推。
+在上面的例子中，`Planet.Mercury`赋了初值`1`，`Planet.Venus`会拥有隐式赋值`2`，依次类推。
 
-当使用字符串作为枚举类型的初值时，每个枚举成员的隐式初值则为该成员的名称。
-
-下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为咩个方向的名称：
+而当使用除整数以外的其它类型作为枚举类型时，则必须明确指定初值，例如:
 
 ```swift
 enum CompassPoint: String {
-    case North, South, East, West
+    case North = "North"
+    case South = "South"
+    case East = "East"
+    case West = "West"
 }
 ```
-
-上面例子中，`CompassPoint.South`拥有隐式初值`South`，依次类推。
 
 使用枚举成员的`rawValue`属性可以访问该枚举成员的原始值：
 
@@ -245,8 +244,6 @@ enum CompassPoint: String {
 let earthsOrder = Planet.Earth.rawValue
 // earthsOrder 值为 3
 
-let sunsetDirection = CompassPoint.West.rawValue
-// sunsetDirection 值为 "West"
 ```
 ### 使用原始值来初始化(Initializing from a Raw Value)
 
