@@ -1524,7 +1524,7 @@ to the ``TextRepresentable`` protocol from the example above.
    -> extension CollectionType where Generator.Element : TextRepresentable {
           func asList() -> String {
               let itemsAsText = self.map {$0.asText()}
-              return "(" + ", ".join(itemsAsText) + ")"
+              return "(" + itemsAsText.joinWithSeparator(", ") + ")"
           }
       }
 
