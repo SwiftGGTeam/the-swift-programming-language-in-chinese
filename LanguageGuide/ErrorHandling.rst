@@ -63,7 +63,6 @@ You throw an error with a ``throw`` statement.
    -> throw someError
 
 Swift enumerations are particularly well-suited to modeling
-git-blame: Command not found.
 a group of related error conditions,
 with associated values allowing for additional information
 about the nature of an error to be communicated.
@@ -101,7 +100,7 @@ Handling Errors
 There are four ways to handle errors:
 
 * Use ``try`` in a function marked with ``throws``
-  to handle the error by allowing the error to propagate,
+  allow the error to propagate,
   and then handling the error in the scope
   where the function was called.
 
@@ -203,14 +202,14 @@ or has a cost that exceeds the current deposited amount:
               throw VendingMachineError.OutOfStock
           }
 
-          if coinsDeposited >= item.price {
-              coinsDeposited -= item.price
-              --item.count
-              inventory[name] = item
-              dispenseSnack(name)
-          } else {
+          guard item.price < coinsDeposited else {
               throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
           }
+
+          coinsDeposited -= item.price
+          --item.count
+          inventory[name] = item
+          dispenseSnack(name)
       }
 
 First, a ``guard`` statement is used
@@ -233,7 +232,7 @@ that is, a valid, in-stock selection with sufficient funds ---
 are met.
 
 Inside the body of of a throwing function,
-you mark an expression that can thrown an error
+you mark an expression that can throw an error
 by writing ``try`` in front it.
 
 .. testcode:: errorHandling
