@@ -100,8 +100,8 @@ Handling Errors
 There are four ways to handle errors:
 
 * Use ``try`` in a function marked with ``throws``
-  allow the error to propagate,
-  and then handling the error in the scope
+  to allow the error to propagate,
+  and then handle the error in the scope
   where the function was called.
 
 * Use ``try`` in a ``do``-``catch`` block
