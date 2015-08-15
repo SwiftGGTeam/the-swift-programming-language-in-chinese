@@ -114,7 +114,7 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
 
 ```swift
-for character in "Dog!🐶" {
+for character in "Dog!🐶".characters {
     print(character)
 }
 // D
@@ -276,13 +276,12 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 <a name="counting_characters"></a>
 ## 计算字符数量 (Counting Characters)
 
-如果想要获得一个字符串中字符的数量，可以调用全局函数`count(_:)`，把字符串作为参数传进去：
-
+如果想要获得一个字符串中字符的数量，可以使用字符串的characters属性的count属性：
 
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-println("unusualMenagerie has \(count(unusualMenagerie)) characters")
-// 打印输出："unusualMenagerie has 40 characters"
+print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+// 打印输出 "unusualMenagerie has 40 characters"
 ```
 
 注意在 Swift 中，使用可拓展的字符群集作为字符来连接或改变字符串时，并不一定会更改字符串的字符数量。
@@ -291,13 +290,13 @@ println("unusualMenagerie has \(count(unusualMenagerie)) characters")
 
 ```swift
 var word = "cafe"
-println("the number of characters in \(word) is \(count(word))")
+print("the number of characters in \(word) is \(word.characters.count)")
 // 打印输出 "the number of characters in cafe is 4"
-
+     
 word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
- 
-println("the number of characters in \(word) is \(count(word))")
-// 打印输出 "the number of characters in café is 4"
+     
+print("the number of characters in \(word) is \(word.characters.count)")
+// 打印输出 "the number of characters in café is 4"
 ```
 
 > 注意：  
@@ -354,12 +353,10 @@ greeting.endIndex.successor() // 错误
 使用全局函数`indices`会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问分立的字符。  
 
 ```swift
-for index in indices(greeting) {
-    print("\(greeting[index]) ")
+for index in greeting.characters.indices {
+   print("\(greeting[index]) ", appendNewline: false)
 }
-println("\n")
-// prints "G u t e n   T a g"
-
+// prints "G u t e n   T a g !"
 ```
 
 <a name="inserting_and_removing"></a>
@@ -565,9 +562,9 @@ let dogString = "Dog‼🐶"
 
 ```swift
 for codeUnit in dogString.utf8 {
-    print("\(codeUnit) ")
+   print("\(codeUnit) ", appendNewline: false)
 }
-print("\n")
+print("")
 // 68 111 103 226 128 188 240 159 144 182
 ```
 
