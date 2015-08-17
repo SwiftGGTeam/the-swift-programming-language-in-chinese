@@ -80,7 +80,7 @@ from elsewhere in your code:
 You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
 such as ``sayHello("Anna")``.
 Because the function returns a ``String`` value,
-``sayHello(_:)`` can be wrapped in a call to the ``print(_:)`` function
+``sayHello(_:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
 
 The body of the ``sayHello(_:)`` function starts by

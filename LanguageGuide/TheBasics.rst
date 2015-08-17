@@ -219,20 +219,25 @@ Attempting to do so is reported as an error when your code is compiled:
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can print the current value of a constant or variable with the ``print(_:)`` function:
+You can print the current value of a constant or variable with the ``print(_:separator:terminator:)`` function:
 
 .. testcode:: constantsAndVariables
 
    -> print(friendlyWelcome)
    <- Bonjour!
 
-``print(_:)`` is a global function that prints a value,
-followed by a line break, to an appropriate output.
+The ``print(_:separator:terminator:)`` function
+is a global function that prints a value followed by a line break,
+to an appropriate output.
 In Xcode, for example,
-the ``print(_:)`` function prints its output in Xcode's “console” pane.
-(A related function, ``print(_:terminator:)``, performs the same task
-while letting you choose a string other than ```"\n"`` to terminate the output.
-To print a value without a line break after in, pass an empty string as the terminator.)
+the ``print(_:separator:terminator:)`` function prints its output in Xcode's “console” pane.
+The ``separator` and ``terminator`` arguments have default values,
+so including them when you call this function is optional.
+To print a value without a line break after in,
+write ``print(someValue, terminator:"")``
+to pass an empty string as the terminator.
+For information about parameters with default values,
+see :doc:`_Functions_DefaultParameterValues`.
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
@@ -244,14 +249,14 @@ To print a value without a line break after in, pass an empty string as the term
    Strictly speaking, you can't print the value of *any* constant or variable ---
    you can only print values of types for which String has a constructor.
 
-The ``print(_:)`` function prints any ``String`` value you pass to it:
+The ``print(_:separator:terminator:)`` function prints any ``String`` value you pass to it:
 
 .. testcode:: constantsAndVariables
 
    -> print("This is a string")
    <- This is a string
 
-The ``print(_:)`` function can print more complex logging messages.
+The ``print(_:separator:terminator:)`` function can print more complex logging messages.
 These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include the name of a constant or variable
