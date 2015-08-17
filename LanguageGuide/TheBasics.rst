@@ -227,37 +227,32 @@ You can print the current value of a constant or variable with the ``print(_:sep
    <- Bonjour!
 
 The ``print(_:separator:terminator:)`` function
-is a global function that prints a value followed by a line break,
+is a global function that prints one or more values
 to an appropriate output.
 In Xcode, for example,
 the ``print(_:separator:terminator:)`` function prints its output in Xcode's “console” pane.
-The ``separator` and ``terminator`` arguments have default values,
-so including them when you call this function is optional.
-To print a value without a line break after in,
-write ``print(someValue, terminator:"")``
-to pass an empty string as the terminator.
+The ``separator`` and ``terminator`` arguments have default values,
+so you can omit them when you call this function.
+By default, it terminates the line it prints by adding a line break.
+To print a value without a line break after it,
+pass an empty string as the terminator --- for example,
+``print(someValue, terminator:"")``.
 For information about parameters with default values,
 see :doc:`_Functions_DefaultParameterValues`.
+
+.. assertion:: printingWithoutNewline
+
+    >> let someValue = 10
+    << // someValue : Int = 10
+    -> print(someValue, terminator:"")
+    -> print(someValue)
+    << 1010
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
 
 .. NOTE: this is a deliberately simplistic description of what you can do with print().
    It will be expanded later on.
-
-.. QUESTION: is this *too* simplistic?
-   Strictly speaking, you can't print the value of *any* constant or variable ---
-   you can only print values of types for which String has a constructor.
-
-The ``print(_:separator:terminator:)`` function prints any ``String`` value you pass to it:
-
-.. testcode:: constantsAndVariables
-
-   -> print("This is a string")
-   <- This is a string
-
-The ``print(_:separator:terminator:)`` function can print more complex logging messages.
-These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include the name of a constant or variable
 as a placeholder in a longer string,
