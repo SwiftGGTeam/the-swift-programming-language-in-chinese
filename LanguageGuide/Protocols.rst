@@ -1521,7 +1521,7 @@ to the ``TextRepresentable`` protocol from the example above.
 
 .. testcode:: protocols
 
-   -> extension CollectionType where Generator.Element : TextRepresentable {
+   -> extension CollectionType where Generator.Element: TextRepresentable {
           func asList() -> String {
               let itemsAsText = self.map {$0.asText()}
               return "(" + itemsAsText.joinWithSeparator(", ") + ")"

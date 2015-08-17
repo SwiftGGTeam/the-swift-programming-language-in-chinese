@@ -195,7 +195,7 @@ and will still have an access level of internal:
 .. testcode:: accessControlDefaulted
 
    -> class SomeInternalClass {}              // implicitly internal
-   -> var someInternalConstant = 0            // implicitly internal
+   -> let someInternalConstant = 0            // implicitly internal
    << // someInternalConstant : Int = 0
 
 .. _AccessControl_CustomTypes:

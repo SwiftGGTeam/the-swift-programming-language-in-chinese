@@ -139,9 +139,9 @@ Other units require some conversion to be expressed as a value measured in meter
 One kilometer is the same as 1,000 meters,
 so the ``km`` computed property multiplies the value by ``1_000.00``
 to convert into a number expressed in meters.
-Similarly, there are 3.28024 feet in a meter,
+Similarly, there are 3.28084 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
-by ``3.28024``, to convert it from feet to meters.
+by ``3.28084``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
 and so they are expressed without the ``get`` keyword, for brevity.

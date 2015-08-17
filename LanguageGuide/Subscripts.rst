@@ -111,7 +111,7 @@ your particular class or structure's functionality.
 For example, Swift's ``Dictionary`` type implements a subscript
 to set and retrieve the values stored in a ``Dictionary`` instance.
 You can set a value in a dictionary
-by providing a key of the dictionary's key type within subscript braces,
+by providing a key of the dictionary's key type within subscript brackets,
 and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
@@ -154,7 +154,7 @@ but cannot use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
-the types of the value or values that are contained within the subscript braces
+the types of the value or values that are contained within the subscript brackets
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 

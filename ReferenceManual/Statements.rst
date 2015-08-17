@@ -584,6 +584,20 @@ For more information and to see examples
 of how to use statement labels,
 see :ref:`ControlFlow_LabeledStatements` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
+.. assertion:: backtick-identifier-is-legal-label
+
+   -> var i = 0
+   << // i : Int = 0
+   -> `return`: while i < 100 {
+          i++
+          if i == 10 {
+              break `return`
+          }
+      }
+   -> print(i)
+   << 10
+
+
 .. syntax-grammar::
 
     Grammar of a labeled statement
