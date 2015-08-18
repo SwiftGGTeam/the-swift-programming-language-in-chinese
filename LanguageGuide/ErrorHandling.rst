@@ -70,14 +70,13 @@ about the nature of an error to be communicated.
 For example, here's how you might represent the error conditions
 of operating a vending machine inside a game:
 
-.. testcode:: errorHandling
+.. testcode:: throw-enum-error
 
    -> enum VendingMachineError: ErrorType {
           case InvalidSelection
           case InsufficientFunds(coinsNeeded: Int)
           case OutOfStock
       }
-   ---
    -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
    xx fatal error
 
@@ -192,6 +191,11 @@ or has a cost that exceeds the current deposited amount:
 
 .. testcode:: errorHandling
 
+   >> enum VendingMachineError: ErrorType {
+   >>     case InvalidSelection
+   >>     case InsufficientFunds(coinsNeeded: Int)
+   >>     case OutOfStock
+   >> }
    -> struct Item {
          var price: Int
          var count: Int
@@ -205,7 +209,8 @@ or has a cost that exceeds the current deposited amount:
           ]
    ->     var coinsDeposited = 0
    ->     func dispenseSnack(snack: String) {
-             // ...
+   >>        print("Dispensing \(snack)")
+   ->        // ...
           }
    ---
    ->     func vend(itemNamed name: String) throws {
@@ -228,8 +233,6 @@ or has a cost that exceeds the current deposited amount:
           }
       }
 
-.. TODO: Better test for VendingMachine
-
 First, a ``guard`` statement is used
 to bind the ``item`` constant and ``count`` variable
 to the corresponding values in the current inventory.
@@ -251,18 +254,21 @@ are met.
 
 .. testcode:: errorHandling
 
-    -> let favoriteSnacks = [
-           "Alice": "Chips",
-           "Bob": "Licorice",
-           "Eve": "Pretzels",
-       ]
-    << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
-    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
-           let snackName = favoriteSnacks[person] ?? "Candy Bar"
-           try vendingMachine.vend(itemNamed: snackName)
-       }
-
-.. TODO: Real test
+   -> let favoriteSnacks = [
+          "Alice": "Chips",
+          "Bob": "Licorice",
+          "Eve": "Pretzels",
+      ]
+   << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
+   -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
+          let snackName = favoriteSnacks[person] ?? "Candy Bar"
+          try vendingMachine.vend(itemNamed: snackName)
+      }
+   >> var v = VendingMachine()
+   << // v : VendingMachine = REPL.VendingMachine
+   >> v.coinsDeposited = 100
+   >> try buyFavoriteSnack("Alice", vendingMachine: v)
+   << Dispensing Chips
 
 The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
 and tries to buy it for them.
@@ -317,6 +323,7 @@ but any other error would have to be handled by its surrounding scope.
 .. testcode:: errorHandling
 
    -> var vendingMachine = VendingMachine()
+   << // vendingMachine : VendingMachine = REPL.VendingMachine
    -> vendingMachine.coinsDeposited = 10
    -> do {
           try vendingMachine.vend(itemNamed: "Candy Bar")
@@ -328,7 +335,7 @@ but any other error would have to be handled by its surrounding scope.
       } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
-   << Insufficient funds. Please insert an additional 25 coins.
+   << Insufficient funds. Please insert an additional 2 coins.
 
 In the above example,
 the ``vend(itemNamed:)`` function is called in a ``try`` expression,
