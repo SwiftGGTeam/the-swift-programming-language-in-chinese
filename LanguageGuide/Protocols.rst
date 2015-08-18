@@ -800,7 +800,7 @@ This might be a description of itself, or a text version of its current state:
    :compile: true
 
    -> protocol TextRepresentable {
-         func asText() -> String
+         var textualDescription: String { get }
       }
 
 The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
@@ -809,7 +809,7 @@ The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRe
    :compile: true
 
    -> extension Dice: TextRepresentable {
-         func asText() -> String {
+         var textualDescription: String {
             return "A \(sides)-sided dice"
          }
       }
@@ -826,7 +826,7 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
    :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
-   -> print(d12.asText())
+   -> print(d12.textualDescription)
    <- A 12-sided dice
 
 Similarly, the ``SnakesAndLadders`` game class can be extended to
@@ -836,11 +836,11 @@ adopt and conform to the ``TextRepresentable`` protocol:
    :compile: true
 
    -> extension SnakesAndLadders: TextRepresentable {
-         func asText() -> String {
+         var textualDescription: String {
             return "A game of Snakes and Ladders with \(finalSquare) squares"
          }
       }
-   -> print(game.asText())
+   -> print(game.textualDescription)
    <- A game of Snakes and Ladders with 25 squares
 
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
@@ -857,7 +857,7 @@ you can make it adopt the protocol with an empty extension:
 
    -> struct Hamster {
          var name: String
-         func asText() -> String {
+         var textualDescription: String {
             return "A hamster named \(name)"
          }
       }
@@ -870,7 +870,7 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
 
    -> let simonTheHamster = Hamster(name: "Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
-   -> print(somethingTextRepresentable.asText())
+   -> print(somethingTextRepresentable.textualDescription)
    <- A hamster named Simon
 
 .. note::
@@ -894,13 +894,13 @@ This example creates an array of ``TextRepresentable`` things:
    -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
 It is now possible to iterate over the items in the array,
-and print each item's textual representation:
+and print each item's textual description:
 
 .. testcode:: protocols
    :compile: true
 
    -> for thing in things {
-         print(thing.asText())
+         print(thing.textualDescription)
       }
    </ A game of Snakes and Ladders with 25 squares
    </ A 12-sided dice
@@ -910,8 +910,8 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
-it is safe to call ``thing.asText`` each time through the loop.
+and anything that is ``TextRepresentable`` is known to have a ``textualDescription`` property,
+it is safe to access ``thing.textualDescription`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
 
@@ -939,7 +939,7 @@ the ``TextRepresentable`` protocol from above:
    :compile: true
 
    -> protocol PrettyTextRepresentable: TextRepresentable {
-         func asPrettyText() -> String
+         var prettyTextualDescription: String { get }
       }
 
 This example defines a new protocol, ``PrettyTextRepresentable``,
@@ -948,7 +948,7 @@ Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the require
 enforced by ``TextRepresentable``,
 *plus* the additional requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
-to provide an instance method called ``asPrettyText`` that returns a ``String``.
+to provide a gettable property called ``prettyTextualDescription`` that returns a ``String``.
 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
@@ -956,8 +956,8 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
    :compile: true
 
    -> extension SnakesAndLadders: PrettyTextRepresentable {
-         func asPrettyText() -> String {
-            var output = asText() + ":\n"
+         var prettyTextualDescription: String {
+            var output = textualDescription + ":\n"
             for index in 1...finalSquare {
                switch board[index] {
                   case let ladder where ladder > 0:
@@ -973,10 +973,11 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
       }
 
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol
-and provides an implementation of the ``asPrettyText()`` method
+and provides an implementation of the ``prettyTextualDescription`` property
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
-and so the ``asPrettyText`` implementation starts by calling the ``asText()`` method
+and so the implementation of ``prettyTextualDescription`` starts
+by accessing the ``textualDescription`` property
 from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.
@@ -990,13 +991,13 @@ and appends a geometric shape to represent the contents of each square:
 * Otherwise, the square's value is ``0``, and it is a “free” square,
   represented by ``○``.
 
-The method implementation can now be used to print a pretty text description
+The ``prettyTextualDescription`` property can now be used to print a pretty text description
 of any ``SnakesAndLadders`` instance:
 
 .. testcode:: protocols
    :compile: true
 
-   -> print(game.asPrettyText())
+   -> print(game.prettyTextualDescription)
    </ A game of Snakes and Ladders with 25 squares:
    </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 
@@ -1491,14 +1492,14 @@ that implementation will be used instead of the one provided by the extension.
 
 For example, the ``PrettyTextRepresentable`` protocol,
 which inherits the ``TextRepresentable`` protocol
-can provide a default implementation of its required ``asPrettyText()`` method
-to simply return the result of the ``asText()`` method:
+can provide a default implementation of its required ``prettyTextualDescription`` property
+to simply return the result of accessing the ``textualDescription`` property:
 
 .. testcode:: protocols
 
    -> extension PrettyTextRepresentable  {
-         func asPrettyText() -> String {
-            return asText()
+         var prettyTextualDescription: String {
+            return textualDescription
          }
       }
 
@@ -1522,15 +1523,15 @@ to the ``TextRepresentable`` protocol from the example above.
 .. testcode:: protocols
 
    -> extension CollectionType where Generator.Element: TextRepresentable {
-          func asList() -> String {
-              let itemsAsText = self.map {$0.asText()}
-              return "(" + itemsAsText.joinWithSeparator(", ") + ")"
+          var textualDescription: String {
+              let itemsAsText = self.map { $0.textualDescription }
+              return "[" + itemsAsText.joinWithSeparator(", ") + "]"
           }
       }
 
-The ``asList()`` method takes
-the textual representation of each element in the collection
-and concatenates them into a comma-separated list.
+The ``textualDescription`` property returns the textual description
+of the entire collection by concatenating the textual representation
+of each element in the collection into a comma-separated list, enclosed in brackets.
 
 Consider the ``Hamster`` structure from before,
 which conforms to the ``TextRepresentable`` protocol,
@@ -1543,15 +1544,15 @@ and an array of ``Hamster`` values:
    -> let mauriceTheHamster = Hamster(name: "Maurice")
    -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 
-Because ``Array`` conforms to ``CollectionType``,
+Because ``Array`` conforms to ``CollectionType``
 and the array's elements conform to the ``TextRepresentable`` protocol,
-the array can use the ``asList()`` method
+the array can use the ``textualDescription`` property
 to get a textual representation of its contents:
 
 .. testcode:: protocols
 
-   -> print(hamsters.asList())
-   <- (A hamster named Murray, A hamster named Morgan, A hamster named Maurice)
+   -> print(hamsters.textualDescription)
+   <- [A hamster named Murray, A hamster named Morgan, A hamster named Maurice]
 
 .. note::
 
