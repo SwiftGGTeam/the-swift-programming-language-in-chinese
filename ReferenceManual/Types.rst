@@ -385,7 +385,7 @@ Optional Type
 -------------
 
 The Swift language defines the postfix ``?`` as syntactic sugar for
-the named type ``Optional<T>``, which is defined in the Swift standard library.
+the named type ``Optional<Wrapped>``, which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
 .. code-block:: swift
@@ -406,7 +406,7 @@ In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?``.
 
-The type ``Optional<T>`` is an enumeration with two cases, ``None`` and ``Some(T)``,
+The type ``Optional<Wrapped>`` is an enumeration with two cases, ``None`` and ``Some(Wrapped)``,
 which are used to represent values that may or may not be present.
 Any type can be explicitly declared to be (or implicitly converted to) an optional type.
 If you don't provide an initial value when you declare an

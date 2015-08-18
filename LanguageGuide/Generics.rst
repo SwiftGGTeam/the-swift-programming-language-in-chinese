@@ -926,4 +926,4 @@ all of the items in the two containers match.
 .. TODO: Generic Enumerations
    --------------------------
 
-.. TODO: Describe how Optional<T> works
+.. TODO: Describe how Optional<Wrapped> works

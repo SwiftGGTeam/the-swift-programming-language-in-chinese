@@ -95,17 +95,17 @@ a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`
 
 As mentioned above,
 you can constrain the associated types of type parameters to conform to protocols.
-For example, the generic parameter clause ``<T: Generator where T.Element: Equatable>``
-specifies that ``T`` conforms to the ``Generator`` protocol
-and the associated type of ``T``, ``T.Element``, conforms to the ``Equatable`` protocol
-(``T`` has the associated type ``Element`` because ``Generator`` declares ``Element``
-and ``T`` conforms to ``Generator``).
+For example, the generic parameter clause ``<S: SequenceType where S.Generator.Element: Equatable>``
+specifies that ``S`` conforms to the ``SequenceType`` protocol
+and the associated type of the sequence's generator, ``S.Generator.Element``,
+conforms to the ``Equatable`` protocol.
+This constraint ensures that each element of the sequence is equatable.
 
 You can also specify the requirement that two types be identical,
 using the ``==`` operator. For example, the generic parameter clause
-``<T: Generator, U: Generator where T.Element == U.Element>``
-expresses the constraints that ``T`` and ``U`` conform to the ``Generator`` protocol
-and that their associated types must be identical.
+``<S1: SequenceType, S2: SequenceType where S1.Generator.Element == S2.Generator.Element>``
+expresses the constraints that ``S1`` and ``S2`` conform to the ``SequenceType`` protocol
+and that the associated types of their generators must be identical.
 
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
