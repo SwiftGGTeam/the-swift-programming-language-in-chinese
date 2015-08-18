@@ -61,6 +61,7 @@ You throw an error with a ``throw`` statement.
    >> enum SomeError: ErrorType { case Error }
    >> let someError = SomeError.Error
    -> throw someError
+   xx fatal error
 
 Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
@@ -78,6 +79,7 @@ of operating a vending machine inside a game:
       }
    ---
    -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+   xx fatal error
 
 In this example, a vending machine can fail for the following reasons:
 
@@ -111,6 +113,11 @@ There are four ways to handle errors:
 
 * Use ``try!`` to disable error propagation
   by asserting that no error will be thrown.
+
+You mark an expression that can throw an error
+by writing ``try`` in front it.
+This keyword calls out the fact that the expression can throw an error
+and that the lines of code after the ``try`` might not be run.
 
 .. note::
 
@@ -153,14 +160,21 @@ you write the ``throws`` keyword before the return arrow (``->``).
    -> func cannotThrowErrors() -> String
    >> { return "foo" }
 
-.. assertion:: throwingFunctionParameterTypeOverloadDeclaration
+.. assertion:: throwing-function-cant-overload-nonthrowing
+   :compile: true
 
    -> func f() -> Int { return 10 }
    -> func f() throws -> Int { return 10 } // Error
+   !!  /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'f()'
+   !! func f() throws -> Int { return 10 } // Error
+   !! ^
+   !! /tmp/swifttest.swift:1:6: note: 'f()' previously declared here
+   !! func f() -> Int { return 10 }
+   !! ^
 
-.. TODO: Add expectations for the lines above.
+.. Above test needs to be compiled or it's not predictable which version of f() gets read first.
 
-.. assertion:: throwingFunctionParameterTypeOverloadDeclaration
+.. assertion:: throwing-parameter-can-overload-nonthrowing
 
    -> func f(callback: Void -> Int) { }
    -> func f(callback: Void throws -> Int) { } // Allowed
@@ -183,34 +197,38 @@ or has a cost that exceeds the current deposited amount:
          var count: Int
       }
    ---
-   -> var inventory = [
-          "Candy Bar": Item(price: 12, count: 7),
-          "Chips": Item(price: 10, count: 4),
-          "Pretzels": Item(price: 7, count: 11)
-      ]
-   << // inventory : [String : Item] = ["Chips": REPL.Item(price: 10, count: 4), "Candy Bar": REPL.Item(price: 12, count: 7), "Pretzels": REPL.Item(price: 7, count: 11)]
-   -> var coinsDeposited = 10
-   << // coinsDeposited : Int = 10
+   -> class VendingMachine {
+   ->     var inventory = [
+              "Candy Bar": Item(price: 12, count: 7),
+              "Chips": Item(price: 10, count: 4),
+              "Pretzels": Item(price: 7, count: 11)
+          ]
+   ->     var coinsDeposited = 0
+   ->     func dispenseSnack(snack: String) {
+             // ...
+          }
    ---
-   >> func dispenseSnack(snack: String) { }
-   -> func vend(itemNamed name: String) throws {
-          guard var item = inventory[name] else {
-              throw VendingMachineError.InvalidSelection
-          }
+   ->     func vend(itemNamed name: String) throws {
+              guard var item = inventory[name] else {
+                  throw VendingMachineError.InvalidSelection
+              }
 
-          guard item.count > 0 else {
-              throw VendingMachineError.OutOfStock
-          }
+              guard item.count > 0 else {
+                  throw VendingMachineError.OutOfStock
+              }
 
-          guard item.price < coinsDeposited else {
-              throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
-          }
+              guard item.price < coinsDeposited else {
+                  throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
+              }
 
-          coinsDeposited -= item.price
-          --item.count
-          inventory[name] = item
-          dispenseSnack(name)
+              coinsDeposited -= item.price
+              --item.count
+              inventory[name] = item
+              self.dispenseSnack(name)
+          }
       }
+
+.. TODO: Better test for VendingMachine
 
 First, a ``guard`` statement is used
 to bind the ``item`` constant and ``count`` variable
@@ -231,10 +249,6 @@ an item will be vended only if all of the requirements for purchase ---
 that is, a valid, in-stock selection with sufficient funds ---
 are met.
 
-Inside the body of of a throwing function,
-you mark an expression that can throw an error
-by writing ``try`` in front it.
-
 .. testcode:: errorHandling
 
     -> let favoriteSnacks = [
@@ -243,10 +257,12 @@ by writing ``try`` in front it.
            "Eve": "Pretzels",
        ]
     << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
-    -> func buyFavoriteSnack(person: String) throws {
+    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
            let snackName = favoriteSnacks[person] ?? "Candy Bar"
-           try vend(itemNamed: snackName)
+           try vendingMachine.vend(itemNamed: snackName)
        }
+
+.. TODO: Real test
 
 The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
 and tries to buy it for them.
@@ -300,8 +316,10 @@ but any other error would have to be handled by its surrounding scope.
 
 .. testcode:: errorHandling
 
+   -> var vendingMachine = VendingMachine()
+   -> vendingMachine.coinsDeposited = 10
    -> do {
-          try vend(itemNamed: "Candy Bar")
+          try vendingMachine.vend(itemNamed: "Candy Bar")
           // Enjoy delicious snack
       } catch VendingMachineError.InvalidSelection {
           print("Invalid Selection.")
@@ -332,6 +350,7 @@ the value of the expression is ``nil``.
 For example, ``x`` and ``y`` have the same value and behavior in the following code:
 
 .. testcode:: optional-try
+    :compile: true
 
     -> func someThrowingFunction() throws -> Int {
           // ...
@@ -339,7 +358,8 @@ For example, ``x`` and ``y`` have the same value and behavior in the following c
     -> }
     ---
     -> let x = try? someThrowingFunction()
-    << // x : Int? = Optional(40)
+    >> print(x)
+    << Optional(40)
     ---
     -> let y: Int?
        do {
@@ -347,8 +367,8 @@ For example, ``x`` and ``y`` have the same value and behavior in the following c
        } catch {
            y = nil
        }
-    << // y : Int? = Optional(40)
-
+    >> print(y)
+    << Optional(40)
 
 If ``someThrowingFunction()`` throws an error,
 the value of ``x`` and ``y`` is ``nil``.
@@ -365,17 +385,29 @@ for situations where you want to handle all errors in the same way.
 For example,
 the following code listing
 displays cached data while waiting for new data to load.
-If any error occurs while loading the cached data,
-the cache is ignored.
 
-.. code-block:: swift
+.. testcode:: optional-try-cached-data
 
-    loadNewDataInBackground()
-    if let data = try? loadCachedData() {
-         // Show the cached data.
-    }
+    >> func loadNewDataInBackground() -> Void { }
+    >> func loadCachedData() throws -> Int { return 10 }
+    >> func loadDataFromDisk() throws -> Int { return 10 }
+    -> loadNewDataInBackground()
+    -> if let data = try? loadCachedData() {
+            // Show the cached data.
+       } else if let data = try? loadDataFromDisk() {
+            // Show the data from disk.
+       } else {
+           // Show UI that data is loading over the network
+       }
 
-.. TODO: Make the above tested code
+Using optional binding with ``try?`` and ``else``-``if`` blocks
+lets you express fallback code paths.
+In the example above,
+if attempting to load data from the cache throws an error,
+it falls back to loading data from disk ---
+if that also throws an error,
+it handles the error by letting the user know
+that data is being loaded over the network.
 
 
 .. _ErrorHandling_Force:
@@ -387,18 +419,20 @@ There are some cases in which you know a throwing function or method
 won't, in fact, throw an error at run time.
 In these cases,
 you can write ``try!`` before the expression to disable error propagation
-and wrap the call in a run-time assertion that no error will be thrown.
+and wrap the call in a runtime assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
 .. testcode:: forceTryStatement
 
    >> enum Error : ErrorType { case E }
    >> let someError = Error.E
-   -> func willOnlyThrowIfTrue(value: Bool) throws {
-         if value { throw someError }
+   << // someError : Error = REPL.Error.E
+   -> func throwsIfArrayIsEmpty(array: [Any]) throws -> Void {
+         if array.isEmpty {
+            throw someError
+         }
       }
-   -> try! willOnlyThrowIfTrue(false)
-
+   -> try! throwsIfArrayIsEmpty([1, 2, 3])
 
 .. _ErrorHandling_Defer:
 
