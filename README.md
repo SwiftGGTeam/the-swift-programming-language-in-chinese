@@ -3,6 +3,8 @@
 
 中文版Apple官方Swift教程《The Swift Programming Language》
 
+[英文原版](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
+
 **如果想帮忙翻译或者校对，请加QQ群：480616051，谢谢！**
 
 # 在线阅读
