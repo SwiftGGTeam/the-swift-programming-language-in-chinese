@@ -48,20 +48,8 @@ Representing and Throwing Errors
 
 In Swift, errors are represented by
 values of types that conform to the ``ErrorType`` protocol.
-Types that adopt ``ErrorType``
-automatically have the implementation of their conformance synthesized by the compiler.
-You throw an error with a ``throw`` statement.
-
-.. TR: Is the above comment about conformance still true?
-   Now that ErrorType is public, I think we decided
-   that it no longer has any required properties.
-
-.. testcode:: throw-simple-error
-
-   >> enum SomeError: ErrorType { case Error }
-   >> let someError = SomeError.Error
-   -> throw someError
-   xx fatal error
+This empty protocol indicates that a type
+can be used for error handling.
 
 Swift enumerations are particularly well-suited to modeling
 a group of related error conditions,
@@ -77,46 +65,45 @@ of operating a vending machine inside a game:
           case InsufficientFunds(coinsNeeded: Int)
           case OutOfStock
       }
+
+Throwing an error lets you indicate that something unexpected happened
+and the normal flow of execution can't continue.
+You use a ``throw`` statement to throw an error.
+For example,
+the following code throws an error to indicate
+that five additional coins are needed by the vending machine.
+
+.. testcode:: throw-enum-error
+
    -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
    xx fatal error
-
-In this example, a vending machine can fail for the following reasons:
-
-* The requested item is not a valid selection, indicated by ``InvalidSelection``.
-* The requested item's cost is greater than the provided funds,
-  indicated by ``InsufficientFunds``.
-  The associated ``Int`` value represents the additional number
-  of coins needed to complete the transaction.
-* The request item is out of stock, indicated by ``OutOfStock``.
-
-Here, five additional coins are needed,
-so an error is thrown using the ``throw`` statement.
-
 
 .. _ErrorHandling_Catch:
 
 Handling Errors
 ---------------
 
-There are four ways to handle errors:
+When an error is thrown,
+some surrounding piece of code must be responsible
+for handling the error ---
+for example, by correcting the problem,
+trying an alternate approach,
+or informing the user of the failure.
+There are four ways to handle errors in Swift.
+You can propagate the error from a function to the code that calls the function,
+handle the error using a block of code,
+handle the error as an optional value,
+or assert that the error will not occur.
+Each approach is described in a section below.
 
-* Use ``try`` in a function marked with ``throws``
-  to allow the error to propagate,
-  and then handle the error in the scope
-  where the function was called.
-
-* Use ``try`` in a ``do``-``catch`` block
-  to handle the error using a block of code.
-
-* Use ``try?`` to handle the error as an optional value.
-
-* Use ``try!`` to disable error propagation
-  by asserting that no error will be thrown.
-
-You mark an expression that can throw an error
-by writing ``try`` in front it.
-This keyword calls out the fact that the expression can throw an error
-and that the lines of code after the ``try`` might not be run.
+When an error is thrown,
+it changes the flow of your program,
+so it's important that you are able identify
+places in your code that can throw errors.
+You use the ``try`` keyword ---
+or the ``try?`` or ``try!`` variation ---
+to call out the fact that a piece of code can throw an error.
+These keywords are described in the sections below.
 
 .. note::
 
@@ -145,11 +132,7 @@ A function marked with ``throws`` is called a :newTerm:`throwing function`.
 If the function specifies a return type,
 you write the ``throws`` keyword before the return arrow (``->``).
 
-.. note::
-
-    Only throwing functions can propagate errors.
-    Any errors thrown inside a nonthrowing function
-    must be handled inside the function.
+.. TODO Add discussion of throwing initializers
 
 .. testcode:: throwingFunctionDeclaration
 
@@ -183,8 +166,14 @@ you write the ``throws`` keyword before the return arrow (``->``).
 .. TODO: Write about the fact the above rules that govern overloading
    for throwing and nonthrowing functions.
 
+.. note::
+
+    Only throwing functions can propagate errors.
+    Any errors thrown inside a nonthrowing function
+    must be handled inside the function.
+
 In the example below,
-the ``vend(itemNamed:)`` function throws an error if
+the ``vend(itemNamed:)`` method throws an error if
 the requested item is not available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
@@ -302,23 +291,27 @@ Here is the general form of a ``do``-``catch`` statement:
 
 You write a pattern after ``catch`` to indicate what errors
 that clause can handle.
-If a ``catch`` clause does have a pattern,
+If a ``catch`` clause doesn't have a pattern,
 the clause matches any error
 and binds the error to a local constant named ``error``.
 For more information about pattern matching,
 see :doc:`../ReferenceManual/Patterns`.
 
-A ``do``-``catch`` clause doesn't have to handle every possible error
-that the code in its ``do`` clause could throw.
-If none of the ``catch`` clauses can handle the error,
-the error continues to propagate to the surrounding scope.
+The ``catch`` clauses don't have to handle every possible error
+that the code in its ``do`` clause can throw.
+If none of the ``catch`` clauses handle the error,
+the error propagates to the surrounding scope.
 However, the error must handled by some surrounding scope ---
 either by another larger ``do``-``catch`` statement
-with a ``catch`` clause that can handle the error,
+with a ``catch`` clause that handles the error,
 or by being inside a function marked with ``throws``.
 For example, the following code handles all three cases
 of the ``VendingMachineError`` enumeration,
-but any other error would have to be handled by its surrounding scope.
+but all other error have to be handled by its surrounding scope.
+
+.. TODO: Call out the reasoning why we don't let you
+   consider a catch clause exhaustive by just matching
+   the errors in an given enum without a general catch/default.
 
 .. testcode:: errorHandling
 
@@ -395,14 +388,14 @@ displays cached data while waiting for new data to load.
 
 .. testcode:: optional-try-cached-data
 
-    >> func loadNewDataInBackground() -> Void { }
+    >> func loadNewDataInBackground() { }
     >> func loadCachedData() throws -> Int { return 10 }
     >> func loadDataFromDisk() throws -> Int { return 10 }
     -> loadNewDataInBackground()
     -> if let data = try? loadCachedData() {
-            // Show the cached data.
+            // Show the cached data
        } else if let data = try? loadDataFromDisk() {
-            // Show the data from disk.
+            // Show the data from disk
        } else {
            // Show UI that data is loading over the network
        }
