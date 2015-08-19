@@ -100,45 +100,47 @@ Otherwise, the value of the optional-try expression is ``nil``.
 
 A :newTerm:`forced-try expression` consists of the ``try!`` operator
 followed by an expression that can throw an error.
-If the expression marked by a forced-try operator throws an error,
-a runtime error is produced.
 It has the following form:
 
 .. syntax-outline::
 
    try! <#expression#>
 
+If the *expression* throws an error,
+a runtime error is produced.
+
 When the expression on the left hand side of a binary operator
 is marked with ``try``, ``try?``, or ``try!``,
-that keyword applies to the whole binary expression.
-All three of the following are equivalent:
+that operator applies to the whole binary expression.
+That said, you can use parentheses to be explicit about the scope of the operator's application.
 
 .. testcode:: placement-of-try
 
-    >> func a() throws -> Int { return 10 }
-    >> func b() throws -> Int { return 10 }
+    >> func someThrowingFunction() throws -> Int { return 10 }
+    >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    -> sum = try a() + b()
-    -> sum = try (a() + b())
-    -> sum = (try a()) + b()
-    // sum : Int = 20
-    // sum : Int = 20
-    // sum : Int = 20
+    << // sum : Int = 0
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both funciton calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can't write ``try`` on the right hand side of a binary operator,
 except for assignment operators.
 
 .. assertion:: try-on-right
 
-    >> func a() throws -> Int { return 10 }
-    >> func b() throws -> Int { return 10 }
+    >> func someThrowingFunction() throws -> Int { return 10 }
     >> var sum = 0
-    -> sum = 7 + try b()   // Error
-    !! <REPL Input>:1:5: error: 'try' cannot appear to the right of a non-assignment operator
-    !! 7 + try b()
-    !!     ^
+    << // sum : Int = 0
+    -> sum = 7 + try someThrowingFunction() // Error
+    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + try someThrowingFunction() // Error
+    !!           ^
 
-For more information and to see examples of how to use ``try``,
+For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
 
 .. syntax-grammar::
@@ -1362,7 +1364,7 @@ For example:
    << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
 
 .. langref-grammar
 
@@ -1454,14 +1456,14 @@ For example:
    <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
-   </ someDictionary is still [b: [10, 20], a: [1, 2, 3]]
+   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
 
 .. langref-grammar
 
