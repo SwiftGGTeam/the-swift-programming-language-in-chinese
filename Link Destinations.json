@@ -242,7 +242,9 @@
     "enumerations-recursiveenumerations": "ID536", 
     "errorhandling-catch": "ID512", 
     "errorhandling-defer": "ID514", 
+    "errorhandling-docatch": "ID541", 
     "errorhandling-force": "ID513", 
+    "errorhandling-optional": "ID542", 
     "errorhandling-represent": "ID509", 
     "errorhandling-rethrow": "ID511", 
     "errorhandling-throw": "ID510", 
@@ -558,5 +560,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 541
+  "next_id": 543
 }
