@@ -279,9 +279,12 @@ Here is the general form of a ``do``-``catch`` statement:
 .. syntax-outline::
 
    do {
-      <#statements#>
-   } catch <#pattern#> {
-      <#statements#>
+       try <#expression#>
+       <#statements#>
+   } catch <#pattern 1#> {
+       <#statements#>
+   } catch <#pattern 2#> where <#condition#> {
+       <#statements#>
    }
 
 You write a pattern after ``catch`` to indicate what errors
