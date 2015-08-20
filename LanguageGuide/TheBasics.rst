@@ -572,7 +572,7 @@ All of these floating-point literals have a decimal value of ``12.1875``:
    << // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeroes
+Both integers and floats can be padded with extra zeros
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
