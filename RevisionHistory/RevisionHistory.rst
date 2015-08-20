@@ -14,6 +14,21 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-08-24  * Added information about the new ``try?`` keyword
+              to the :ref:`ErrorHandling_Optional` section.
+            
+            * Added information about the new Swift standard library
+              ``print(_:separator:terminator)`` function
+              to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
+              
+            * Updated the discussion of the ``@NSManaged`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section
+              now that the attribute can be applied to certain instances methods.
+              
+            * Updated the :ref:`Functions_VariadicParameters` section
+              now that variadic parameters can be declared in any position
+              in a function's parameter list.
+----------  --------------------------------------------------------------------------
 2015-08-06  * Updated the :ref:`ErrorHandling_Represent` section
               now that all types can conform to the ``ErrorType`` protocol.
 
