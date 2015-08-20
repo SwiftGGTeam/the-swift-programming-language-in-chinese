@@ -85,24 +85,71 @@ It has the following form:
 
    try <#expression#>
 
+An :newTerm:`optional-try expression` consists of the ``try?`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try? <#expression#>
+
+If the *expression* does not throw an error,
+the value of the optional-try expression
+is an optional containing the value of the *expression*.
+Otherwise, the value of the optional-try expression is ``nil``.
+
 A :newTerm:`forced-try expression` consists of the ``try!`` operator
 followed by an expression that can throw an error.
-If the expression marked by a forced-try operator throws an error,
-a runtime error is produced.
 It has the following form:
 
 .. syntax-outline::
 
    try! <#expression#>
 
-For more information and to see examples of how to use ``try``,
-see :ref:`ErrorHandling_Throw` and :ref:`ErrorHandling_Catch`.
+If the *expression* throws an error,
+a runtime error is produced.
+
+When the expression on the left hand side of a binary operator
+is marked with ``try``, ``try?``, or ``try!``,
+that operator applies to the whole binary expression.
+That said, you can use parentheses to be explicit about the scope of the operator's application.
+
+.. testcode:: placement-of-try
+
+    >> func someThrowingFunction() throws -> Int { return 10 }
+    >> func anotherThrowingFunction() throws -> Int { return 5 }
+    >> var sum = 0
+    << // sum : Int = 0
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both funciton calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+A ``try`` expression can't appear on the right hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``try`` expression is enclosed in parentheses.
+
+.. assertion:: try-on-right
+
+    >> func someThrowingFunction() throws -> Int { return 10 }
+    >> var sum = 0
+    << // sum : Int = 0
+    -> sum = 7 + try someThrowingFunction() // Error
+    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + try someThrowingFunction() // Error
+    !!           ^
+    -> sum = 7 + (try someThrowingFunction()) // OK
+
+For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
+see :doc:`../LanguageGuide/ErrorHandling`.
 
 .. syntax-grammar::
 
     Grammar of a try expression
 
-    try-operator --> ``try`` | ``try`` ``!``
+    try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
 
 
 .. _Expressions_BinaryExpressions:

@@ -814,7 +814,7 @@ Availability Condition
 ~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
-and ``guard`` statement to query the availability of APIs at run time,
+and ``guard`` statement to query the availability of APIs at runtime,
 based on specified platforms arguments.
 
 An availability condition has the following form:
@@ -828,7 +828,7 @@ An availability condition has the following form:
    }
 
 You use an availability condition to execute a block of code,
-depending on whether the APIs you want to use are available at run time.
+depending on whether the APIs you want to use are available at runtime.
 The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 

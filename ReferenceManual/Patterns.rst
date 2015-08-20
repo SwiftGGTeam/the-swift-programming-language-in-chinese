@@ -13,7 +13,7 @@ to a constant or variable name.
 
 In Swift, there are two basic kinds of patterns:
 those that successfully match any kind of value,
-and those that may fail to match a specified value at run time.
+and those that may fail to match a specified value at runtime.
 
 The first kind of pattern is used for destructuring values
 in simple variable, constant, and optional bindings.
@@ -23,7 +23,7 @@ them. You can specify a type annotation for these patterns
 to constrain them to match only values of a certain type.
 
 The second kind of pattern is used for full pattern matching,
-where the values you're trying to match against may not be there at run time.
+where the values you're trying to match against may not be there at runtime.
 These include enumeration case patterns, optional patterns, expression patterns,
 and type-casting patterns. You use these patterns in a case label of a ``switch``
 statement, a ``catch`` clause of a ``do`` statement,
