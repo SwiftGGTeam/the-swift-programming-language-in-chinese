@@ -1435,7 +1435,7 @@ if you try to use an API that isn't available.
 
 You use an :newTerm:`availability condition` in an ``if`` or ``guard`` statement
 to conditionally execute a block of code,
-depending on whether the APIs you want to use are available at run time.
+depending on whether the APIs you want to use are available at runtime.
 The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
