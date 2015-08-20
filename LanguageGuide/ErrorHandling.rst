@@ -385,7 +385,7 @@ for situations where you want to handle all errors in the same way.
 For example,
 the following code listing
 uses several approaches to fetch data,
-or returns ``nil`` if all of them fail.
+or returns ``nil`` if all of the approaches fail.
 
 .. testcode:: optional-try-cached-data
 
@@ -410,17 +410,21 @@ you can write ``try!`` before the expression to disable error propagation
 and wrap the call in a runtime assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
+For example, the following code uses a ``loadImage(_:)`` function
+which loads the image resource at a given path
+or throws an error if the image can't be loaded.
+In this case, because the image is shipped with the application,
+no error will be thrown at run time,
+so it is appropriate to disable error propagation.
+
 .. testcode:: forceTryStatement
 
-   >> enum Error : ErrorType { case E }
-   >> let someError = Error.E
-   << // someError : Error = REPL.Error.E
-   -> func throwsIfArrayIsEmpty(array: [Any]) throws -> Void {
-         if array.isEmpty {
-            throw someError
-         }
-      }
-   -> try! throwsIfArrayIsEmpty([1, 2, 3])
+   >> struct Image {}
+   >> func loadImage(path: String) throws -> Image {
+   >>     return Image()
+   >> }
+   -> let photo = try! loadImage("./Resources/John Appleseed.jpg")
+   << // photo : Image = REPL.Image()
 
 .. _ErrorHandling_Defer:
 
