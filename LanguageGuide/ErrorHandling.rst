@@ -7,9 +7,6 @@ Swift provides first-class support for
 throwing, catching, propagating, and manipulating
 recoverable errors at runtime.
 
-.. TODO: Refactor and expand optionals discussion into separate chapter.
-    ^-- why is this to-do even here???
-
 Some operations
 aren't guaranteed to always complete execution or produce a useful output.
 Optionals are used to represent the absence of a value,
@@ -30,7 +27,7 @@ and to communicate to the user any errors it can't resolve.
 
    Error handling in Swift interoperates with error handling patterns
    that use the ``NSError`` class in Cocoa and Objective-C.
-   For more information,
+   For more information about this class,
    see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
@@ -300,7 +297,7 @@ that the code in its ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
 However, the error must handled by *some* surrounding scope ---
-either by an enclosing ``catch`` clause
+either by an enclosing ``do``-``catch`` clause
 that handles the error
 or by being inside a throwing function.
 For example, the following code handles all three cases
@@ -318,7 +315,6 @@ but all other errors have to be handled by its surrounding scope:
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
-          // Enjoy delicious snack
       } catch VendingMachineError.InvalidSelection {
           print("Invalid Selection.")
       } catch VendingMachineError.OutOfStock {
@@ -374,10 +370,6 @@ the value of ``x`` and ``y`` is ``nil``.
 Otherwise, the value of ``x`` and ``y`` is the value that the function returned.
 Note that ``x`` and ``y`` are an optional of whatever type ``someThrowingFunction()`` returns.
 Here the function returns an integer, so ``x`` and ``y`` are optional integers.
-
-.. TODO: Moving back from low-level up to high level.
-   Suggest folding the para below into the para before the code listing,
-   and combining the listings.
 
 Using ``try?`` lets you write concise error handling code
 when you want to handle all errors in the same way.
