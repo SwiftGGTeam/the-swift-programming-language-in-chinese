@@ -456,7 +456,7 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-the named type ``ImplicitlyUnwrappedOptional<T>``,
+the named type ``ImplicitlyUnwrappedOptional<Wrapped>``,
 which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
