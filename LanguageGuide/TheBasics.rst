@@ -238,7 +238,7 @@ To print a value without a line break after it,
 pass an empty string as the terminator --- for example,
 ``print(someValue, terminator:"")``.
 For information about parameters with default values,
-see :doc:`_Functions_DefaultParameterValues`.
+see :ref:`Functions_DefaultParameterValues`.
 
 .. assertion:: printingWithoutNewline
 
