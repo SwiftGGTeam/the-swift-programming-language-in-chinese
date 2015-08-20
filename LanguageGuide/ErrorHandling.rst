@@ -389,16 +389,13 @@ or returns ``nil`` if all of them fail.
 
 .. testcode:: optional-try-cached-data
 
-    >> func loadNewDataInBackground() { }
-    >> func loadCachedData() throws -> Int { return 10 }
-    >> func loadDataFromDisk() throws -> Int { return 10 }
-    -> loadNewDataInBackground()
-    -> func getData() -> Data? {
-           if let data = try? loadCachedData() { return data }
-           if let data = try? loadDataFromDisk() { return data }
+    >> func fetchDataFromDisk() throws -> Int { return 10 }
+    >> func fetchDataFromServer() throws -> Int { return 10 }
+    -> func fetchData() -> Data? {
+           if let data = try? fetchDataFromDisk() { return data }
+           if let data = try? fetchDataFromServer() { return data }
            return nil
        }
-}
 
 Using optional binding with ``try?`` and ``else``-``if`` blocks
 lets you express fallback code paths.
