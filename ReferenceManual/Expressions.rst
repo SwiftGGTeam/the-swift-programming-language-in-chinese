@@ -127,8 +127,9 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can't write ``try`` on the right hand side of a binary operator,
-except for assignment operators.
+A ``try`` expression can't appear on the right hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``try`` expression is enclosed in parentheses.
 
 .. assertion:: try-on-right
 
@@ -139,6 +140,7 @@ except for assignment operators.
     !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
     !! sum = 7 + try someThrowingFunction() // Error
     !!           ^
+    -> sum = 7 + (try someThrowingFunction()) // OK
 
 For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
