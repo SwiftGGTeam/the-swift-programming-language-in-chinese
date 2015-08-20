@@ -23,8 +23,8 @@ the file not existing at the specified path,
 the file not having read permissions, or
 the file not being encoded in a compatible format.
 Distinguishing among these different situations
-allows a program to resolve some errors,
-and communicate errors it can't resolve to the user.
+allows a program to resolve some errors
+and to communicate to the user any errors it can't resolve.
 
 .. note::
 
@@ -51,7 +51,7 @@ values of types that conform to the ``ErrorType`` protocol.
 This empty protocol indicates that a type
 can be used for error handling.
 
-Swift enumerations are particularly well-suited to modeling
+Swift enumerations are particularly well suited to modeling
 a group of related error conditions,
 with associated values allowing for additional information
 about the nature of an error to be communicated.
@@ -71,7 +71,7 @@ and the normal flow of execution can't continue.
 You use a ``throw`` statement to throw an error.
 For example,
 the following code throws an error to indicate
-that five additional coins are needed by the vending machine.
+that five additional coins are needed by the vending machine:
 
 .. testcode:: throw-enum-error
 
@@ -87,22 +87,22 @@ When an error is thrown,
 some surrounding piece of code must be responsible
 for handling the error ---
 for example, by correcting the problem,
-trying an alternate approach,
+trying an alternative approach,
 or informing the user of the failure.
+
 There are four ways to handle errors in Swift.
-You can propagate the error from a function to the code that calls the function,
-handle the error using a block of code,
+You can propagate the error from a function to the code that calls that function,
+handle the error using a ``do``-``catch`` statement,
 handle the error as an optional value,
 or assert that the error will not occur.
 Each approach is described in a section below.
 
-When an error is thrown,
+When a function throws an error,
 it changes the flow of your program,
-so it's important that you are able identify
-places in your code that can throw errors.
-You use the ``try`` keyword ---
+so it's important that you can quickly identify places in your code that can throw errors.
+To identify these places in your code, write the ``try`` keyword ---
 or the ``try?`` or ``try!`` variation ---
-to call out the fact that a piece of code can throw an error.
+before a piece of code that calls a function, method, or initializer that can throw an error.
 These keywords are described in the sections below.
 
 .. note::
@@ -112,7 +112,7 @@ These keywords are described in the sections below.
    Unlike exception handling in many languages ---
    including Objective-C ---
    error handling in Swift does not involve unwinding the call stack,
-   which can be computationally expensive.
+   a process that can be computationally expensive.
    As such, the performance characteristics
    of a ``throw`` statement
    are comparable to those of a ``return`` statement.
@@ -120,12 +120,10 @@ These keywords are described in the sections below.
 
 .. _ErrorHandling_Throw:
 
-Handling Errors By Propagating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Propagating Errors Using Throwing Functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To indicate that a function can propagate errors
-that are thrown inside of it
-to the scope where the function is called,
+To indicate that a function, method, or initializer can throw an error,
 you write the ``throws`` keyword in the function's declaration
 after its parameters.
 A function marked with ``throws`` is called a :newTerm:`throwing function`.
@@ -166,6 +164,9 @@ you write the ``throws`` keyword before the return arrow (``->``).
 .. TODO: Write about the fact the above rules that govern overloading
    for throwing and nonthrowing functions.
 
+A throwing function propagates errors that are thrown inside of it
+to the scope from which it's called.
+
 .. note::
 
     Only throwing functions can propagate errors.
@@ -173,8 +174,9 @@ you write the ``throws`` keyword before the return arrow (``->``).
     must be handled inside the function.
 
 In the example below,
-the ``vend(itemNamed:)`` method throws an error if
-the requested item is not available,
+the ``VendingMachine`` class has a ``vend(itemNamed:)`` method
+that throws an appropriate ``VendingMachineError``
+if the requested item is not available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
 
@@ -198,8 +200,7 @@ or has a cost that exceeds the current deposited amount:
           ]
    ->     var coinsDeposited = 0
    ->     func dispenseSnack(snack: String) {
-   >>        print("Dispensing \(snack)")
-   ->        // ...
+              print("Dispensing \(snack)")
           }
    ---
    ->     func vend(itemNamed name: String) throws {
@@ -211,35 +212,32 @@ or has a cost that exceeds the current deposited amount:
                   throw VendingMachineError.OutOfStock
               }
 
-              guard item.price < coinsDeposited else {
+              guard item.price <= coinsDeposited else {
                   throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
               }
 
               coinsDeposited -= item.price
               --item.count
               inventory[name] = item
-              self.dispenseSnack(name)
+              dispenseSnack(name)
           }
       }
 
-First, a ``guard`` statement is used
-to bind the ``item`` constant and ``count`` variable
-to the corresponding values in the current inventory.
-If the item is not in the inventory, the ``InvalidSelection`` error is thrown.
-Next, the availability of the requested item is determined by checking its count.
-If ``count`` is less than or equal to zero,
-an ``OutOfStock`` error is thrown.
-Finally, the price of the requested item is compared to the current deposited amount.
-If the deposited amount can cover the cost of the item,
-the price is deducted from the deposited amount,
-the count of the stock of the item is decremented in the inventory,
-and the requested item is dispensed.
-Otherwise, the outstanding balance is calculated
-and used as an associated value for the thrown ``InsufficientFunds`` error.
+The implementation of the ``vend(itemNamed:)`` method
+uses ``guard`` statements to exit the method early and throw appropriate errors
+if any of the requirements for purchasing a snack aren't met.
 Because a ``throw`` statement immediately transfers program control,
-an item will be vended only if all of the requirements for purchase ---
-that is, a valid, in-stock selection with sufficient funds ---
-are met.
+an item will be vended only if all of these requirements are met.
+
+Because the ``vend(itemNamed:)`` method propagates any errors it throws,
+places in your code that call it must either handle the errors directly---
+using a ``do``-``catch`` statement, ``try?``, or ``try!``---
+or continue to propagate them.
+For example,
+the ``buyFavoriteSnack(_:vendingMachine:)`` in the example below
+is also a throwing function,
+and any errors that the ``vend(itemNamed:)`` method throws will
+propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` function is called.
 
 .. testcode:: errorHandling
 
@@ -257,21 +255,18 @@ are met.
    << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
    >> try buyFavoriteSnack("Alice", vendingMachine: v)
-   << Dispensing Chips
+   </ Dispensing Chips
 
-The ``buyFavoriteSnack(_:)`` function looks up the given person's favorite snack
-and tries to buy it for them.
-If they don't have a favorite snack listed, it tries to buy a candy bar.
-It calls the ``vend`` function, which is a throwing function,
-so the function call is marked with ``try`` in front of it.
-The ``buyFavoriteSnack(_:)`` function is also a throwing function,
-so any errors that the ``vend`` function throws
-propagate up to the point where the ``buyFavoriteSnack(_:)`` function was called.
+In this example,
+the ``buyFavoriteSnack(_:vendingMachine:)`` function looks up a given person's favorite snack
+and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
+Because the ``vend(itemNamed:)`` method can throw an error,
+it's called with the ``try`` keyword in front of it.
 
 .. _ErrorHandling_DoCatch:
 
-Handling Errors Using a Block of Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Handling Errors Using Do-Catch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You use a ``do``-``catch`` statement to handle errors
 by running a block of code.
@@ -301,13 +296,13 @@ The ``catch`` clauses don't have to handle every possible error
 that the code in its ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
-However, the error must handled by some surrounding scope ---
-either by another larger ``do``-``catch`` statement
-with a ``catch`` clause that handles the error,
-or by being inside a function marked with ``throws``.
+However, the error must handled by *some* surrounding scope ---
+either by an enclosing ``catch`` clause
+that handles the error
+or by being inside a throwing function.
 For example, the following code handles all three cases
 of the ``VendingMachineError`` enumeration,
-but all other error have to be handled by its surrounding scope.
+but all other errors have to be handled by its surrounding scope:
 
 .. TODO: Call out the reasoning why we don't let you
    consider a catch clause exhaustive by just matching
@@ -317,9 +312,9 @@ but all other error have to be handled by its surrounding scope.
 
    -> var vendingMachine = VendingMachine()
    << // vendingMachine : VendingMachine = REPL.VendingMachine
-   -> vendingMachine.coinsDeposited = 10
+   -> vendingMachine.coinsDeposited = 8
    -> do {
-          try vendingMachine.vend(itemNamed: "Candy Bar")
+          try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
           // Enjoy delicious snack
       } catch VendingMachineError.InvalidSelection {
           print("Invalid Selection.")
@@ -328,10 +323,10 @@ but all other error have to be handled by its surrounding scope.
       } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
-   << Insufficient funds. Please insert an additional 2 coins.
+   <- Insufficient funds. Please insert an additional 2 coins.
 
 In the above example,
-the ``vend(itemNamed:)`` function is called in a ``try`` expression,
+the ``buyFavoriteSnack(_:vendingMachine:)`` function is called in a ``try`` expression,
 because it can throw an error.
 If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
@@ -341,13 +336,14 @@ the remaining statements in the ``do`` statement are executed.
 
 .. _ErrorHandling_Optional:
 
-Handling Errors as Optional Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Converting Errors to Optional Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You use ``try?`` to handle an error by converting it to an optional value.
 If an error is thrown while evaluating the ``try?`` expression,
 the value of the expression is ``nil``.
-For example, ``x`` and ``y`` have the same value and behavior in the following code:
+For example,
+in the following code ``x`` and ``y`` have the same value and behavior:
 
 .. testcode:: optional-try
     :compile: true
@@ -381,17 +377,17 @@ Here the function returns an integer, so ``x`` and ``y`` are optional integers.
    and combining the listings.
 
 Using ``try?`` lets you write concise error handling code
-for situations where you want to handle all errors in the same way.
+when you want to handle all errors in the same way.
 For example,
-the following code listing
+the following code
 uses several approaches to fetch data,
 or returns ``nil`` if all of the approaches fail.
 
 .. testcode:: optional-try-cached-data
 
     >> struct Data {}
-    >> func fetchDataFromDisk() throws -> Data { return 10 }
-    >> func fetchDataFromServer() throws -> Data { return 10 }
+    >> func fetchDataFromDisk() throws -> Data { return Data() }
+    >> func fetchDataFromServer() throws -> Data { return Data() }
     -> func fetchData() -> Data? {
            if let data = try? fetchDataFromDisk() { return data }
            if let data = try? fetchDataFromServer() { return data }
@@ -403,14 +399,14 @@ or returns ``nil`` if all of the approaches fail.
 Disabling Error Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are some cases in which you know a throwing function or method
+Sometimes you know a throwing function or method
 won't, in fact, throw an error at runtime.
-In these cases,
+On those occasions,
 you can write ``try!`` before the expression to disable error propagation
 and wrap the call in a runtime assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
-For example, the following code uses a ``loadImage(_:)`` function
+For example, the following code uses a ``loadImage(_:)`` function,
 which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
@@ -428,22 +424,22 @@ so it is appropriate to disable error propagation.
 
 .. _ErrorHandling_Defer:
 
-Specifying Clean-Up Actions
----------------------------
+Specifying Cleanup Actions
+--------------------------
 
 You use a ``defer`` statement to execute a set of statements
 just before code execution leaves the current block of code.
-This lets you do any necessary cleanup
+This statement lets you do any necessary cleanup
 that should be performed regardless
 of *how* execution leaves the current block of code ---
 whether it leaves because an error was thrown
-or because of a statement like ``return`` or ``break``.
+or because of a statement such as ``return`` or ``break``.
 For example, you can use a ``defer`` statement
-to ensure file descriptors are closed
+to ensure that file descriptors are closed
 and manually allocated memory is freed.
 
 A ``defer`` statement defers execution until the current scope is exited.
-It consists of the ``defer`` keyword and the statements to be executed later.
+This statement consists of the ``defer`` keyword and the statements to be executed later.
 The deferred statements may not contain any code
 that would transfer control out of the statements,
 such as a ``break`` or a ``return`` statement,
@@ -481,4 +477,4 @@ has a corresponding call to ``close(_:)``.
 .. note::
 
     You can use a ``defer`` statement
-    even when there is no error handling code involved.
+    even when no error handling code is involved.
