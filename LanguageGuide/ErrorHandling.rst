@@ -384,7 +384,8 @@ Using ``try?`` lets you write concise error handling code
 for situations where you want to handle all errors in the same way.
 For example,
 the following code listing
-displays cached data while waiting for new data to load.
+uses several approaches to fetch data,
+or returns ``nil`` if all of them fail.
 
 .. testcode:: optional-try-cached-data
 
@@ -392,13 +393,12 @@ displays cached data while waiting for new data to load.
     >> func loadCachedData() throws -> Int { return 10 }
     >> func loadDataFromDisk() throws -> Int { return 10 }
     -> loadNewDataInBackground()
-    -> if let data = try? loadCachedData() {
-            // Show the cached data
-       } else if let data = try? loadDataFromDisk() {
-            // Show the data from disk
-       } else {
-           // Show UI that data is loading over the network
+    -> func getData() -> Data? {
+           if let data = try? loadCachedData() { return data }
+           if let data = try? loadDataFromDisk() { return data }
+           return nil
        }
+}
 
 Using optional binding with ``try?`` and ``else``-``if`` blocks
 lets you express fallback code paths.
