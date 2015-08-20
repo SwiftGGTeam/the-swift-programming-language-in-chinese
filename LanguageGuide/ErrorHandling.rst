@@ -389,23 +389,14 @@ or returns ``nil`` if all of them fail.
 
 .. testcode:: optional-try-cached-data
 
-    >> func fetchDataFromDisk() throws -> Int { return 10 }
-    >> func fetchDataFromServer() throws -> Int { return 10 }
+    >> struct Data {}
+    >> func fetchDataFromDisk() throws -> Data { return 10 }
+    >> func fetchDataFromServer() throws -> Data { return 10 }
     -> func fetchData() -> Data? {
            if let data = try? fetchDataFromDisk() { return data }
            if let data = try? fetchDataFromServer() { return data }
            return nil
        }
-
-Using optional binding with ``try?`` and ``else``-``if`` blocks
-lets you express fallback code paths.
-In the example above,
-if attempting to load data from the cache throws an error,
-it falls back to loading data from disk ---
-if that also throws an error,
-it handles the error by letting the user know
-that data is being loaded over the network.
-
 
 .. _ErrorHandling_Force:
 
