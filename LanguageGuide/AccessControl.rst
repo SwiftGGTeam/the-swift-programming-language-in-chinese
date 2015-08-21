@@ -461,18 +461,18 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
    ---
-   !! /tmp/sourcefile_1.swift:1:33: error: 'PublicStruct.Type' does not have a member named 'PrivateEnumInsidePublicStruct'
+   !! /tmp/sourcefile_1.swift:1:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !! ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_1.swift:2:35: error: 'InternalStruct.Type' does not have a member named 'PrivateEnumInsideInternalStruct'
+   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_1.swift:2:35: error: type 'InternalStruct' has no member 'PrivateEnumInsideInternalStruct'
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
-   !! ^              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !!                                   ^~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   !! ^
+   !!                                  ^
    !! /tmp/sourcefile_1.swift:4:36: error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
-   !! ^
+   !!                                    ^
 
 .. sourcefile:: nestedTypes_Module2_Public
 
@@ -495,30 +495,30 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
    ---
-   !! /tmp/sourcefile_0.swift:2:34: error: 'PublicStruct.Type' does not have a member named 'InternalEnumInsidePublicStruct'
+   !! /tmp/sourcefile_0.swift:2:34: error: type 'PublicStruct' has no member 'InternalEnumInsidePublicStruct'
    !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.A
-   !! ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:35: error: 'PublicStruct.Type' does not have a member named 'AutomaticEnumInsidePublicStruct'
+   !!                                  ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:35: error: type 'PublicStruct' has no member 'AutomaticEnumInsidePublicStruct'
    !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.A
-   !! ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:33: error: 'PublicStruct.Type' does not have a member named 'PrivateEnumInsidePublicStruct'
+   !!                                   ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:4:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !! ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:5:36: error: use of unresolved identifier 'InternalStruct'
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
-   !! ^
+   !!                                    ^
    !! /tmp/sourcefile_0.swift:6:37: error: use of unresolved identifier 'InternalStruct'
    !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.A
-   !! ^
+   !!                                     ^
    !! /tmp/sourcefile_0.swift:7:35: error: use of unresolved identifier 'InternalStruct'
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
-   !! ^
+   !!                                   ^
    !! /tmp/sourcefile_0.swift:8:34: error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   !! ^
+   !!                                  ^
    !! /tmp/sourcefile_0.swift:9:36: error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
-   !! ^
+   !!                                    ^
 
 .. _AccessControl_Subclassing:
 
@@ -744,9 +744,9 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !! /tmp/sourcefile_1.swift:2:40: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
+   !! /tmp/sourcefile_1.swift:2:53: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
    !! let afterEdits = stringToEdit_Module1C.numberOfEdits++
-   !!                                        ^
+   !!                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
@@ -755,9 +755,9 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> var stringToEdit_Module2 = TrackedString()
    // check that we can't change its value from another module
    -> let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !!  /tmp/sourcefile_0.swift:3:39: error: cannot pass immutable value of type 'Int' to mutating unary operator '++'
+   !! /tmp/sourcefile_0.swift:3:52: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
    !! let afterEdits = stringToEdit_Module2.numberOfEdits++
-   !!                                       ^
+   !!                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
 
 .. _AccessControl_Initializers:
 
@@ -1030,9 +1030,9 @@ for individual type members.
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileC = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:2:22: error: 'PublicStruct' does not have a member named 'privateMethod'
+   !! /tmp/sourcefile_1.swift:2:22: error: value of type 'PublicStruct' has no member 'privateMethod'
    !! let differentFileC = publicStructInDifferentFile.privateMethod()
-   !! ^                           ~~~~~~~~~~~~~
+   !!                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
 
 .. sourcefile:: extensions_Module2
 
@@ -1041,15 +1041,15 @@ for individual type members.
    -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    -> let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !! /tmp/sourcefile_0.swift:3:24: error: 'PublicStruct' does not have a member named 'implicitlyInternalMethodFromStruct'
+   !! /tmp/sourcefile_0.swift:3:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromStruct'
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
-   !! ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:24: error: 'PublicStruct' does not have a member named 'implicitlyInternalMethodFromExtension'
+   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:4:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromExtension'
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
-   !! ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:5:24: error: 'PublicStruct' does not have a member named 'privateMethod'
+   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:5:24: error: value of type 'PublicStruct' has no member 'privateMethod'
    !! let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !! ^                             ~~~~~~~~~~~~~
+   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
 
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
