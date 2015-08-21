@@ -124,7 +124,8 @@ and a default value of the appropriate type (called ``repeatedValue``):
 
    -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
    << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
-   // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
+   /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
+   </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
 .. _CollectionTypes_CreatingAnArrayByAddingTwoArraysTogether:
 
@@ -139,8 +140,8 @@ The new array's type is inferred from the type of the two arrays you add togethe
 
    -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
    << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
-   /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
+   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
    << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
