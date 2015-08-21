@@ -6,7 +6,7 @@
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
 > 2.0
-> 翻译+校对：[buginux]([KYawn](https://github.com/buginux)
+> 翻译+校对：[buginux](https://github.com/buginux)
 
 
 本页包含内容：
