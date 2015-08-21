@@ -22,14 +22,14 @@ Date        Notes
               to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
               
             * Updated the discussion of the ``@NSManaged`` attribute
-              in the :ref:`Attributes_DeclarationAttributes` section
+              in the :ref:`Attributes_DeclarationAttributes` section,
               now that the attribute can be applied to certain instances methods.
               
-            * Updated the :ref:`Functions_VariadicParameters` section
+            * Updated the :ref:`Functions_VariadicParameters` section,
               now that variadic parameters can be declared in any position
               in a function's parameter list.
 ----------  --------------------------------------------------------------------------
-2015-08-06  * Updated the :ref:`ErrorHandling_Represent` section
+2015-08-06  * Updated the :ref:`ErrorHandling_Represent` section,
               now that all types can conform to the ``ErrorType`` protocol.
 
             * Added information
@@ -147,7 +147,7 @@ Date        Notes
               :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
               with a more precise definition of Unicode scalars.
 
-            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter
+            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
               now that ``String`` no longer conforms
               to the ``CollectionType`` protocol from the Swift standard library.
 ----------  --------------------------------------------------------------------------

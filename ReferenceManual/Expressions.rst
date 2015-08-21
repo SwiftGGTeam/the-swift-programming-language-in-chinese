@@ -120,11 +120,11 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
     << // sum : Int = 0
-    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both funciton calls
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
     -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
-    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the fist function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``try`` expression can't appear on the right hand side of a binary operator,
