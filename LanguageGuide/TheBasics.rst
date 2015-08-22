@@ -319,7 +319,7 @@ Semicolons
 Unlike many other languages,
 Swift does not require you to write a semicolon (``;``) after each statement in your code,
 although you can do so if you wish.
-Semicolons *are* required, however,
+However, semicolons *are* required
 if you want to write multiple separate statements on a single line:
 
 .. testcode:: semiColons
