@@ -600,6 +600,19 @@ For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
 and `String Structure Reference <//apple_ref/doc/uid/TP40015181>`_.
 
+String literals that are concatenated by the ``+`` operator
+are concatenated at compile time.
+For example, the values of ``textA`` and ``textB``
+in the example below are identical ---
+no runtime concatenation is performed.
+
+.. testcode:: concatenated-strings
+
+  -> let textA = "Hello " + "world"
+  -> let textB = "Hello world"
+  << // textA : String = "Hello world"
+  << // textB : String = "Hello world"
+
 .. langref-grammar
 
     character_literal ::= '[^'\\\n\r]|character_escape'
