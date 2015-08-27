@@ -173,10 +173,7 @@ You can constrain a tuple pattern to match certain kinds of tuple types
 by using type annotations.
 For example, the tuple pattern ``(x, y): (Int, Int)`` in the constant declaration
 ``let (x, y): (Int, Int) = (1, 2)`` matches only tuple types in which
-both elements are of type ``Int``. To constrain only some elements of a tuple pattern,
-provide type annotations directly to those individual elements. For example, the tuple
-pattern in ``let (x: String, y)`` matches any two-element tuple type, as long as the first
-element is of type ``String``.
+both elements are of type ``Int``.
 
 When a tuple pattern is used as the pattern in a ``for``-``in`` statement
 or in a variable or constant declaration, it can contain only wildcard patterns,
