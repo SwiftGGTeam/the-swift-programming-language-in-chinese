@@ -1,4 +1,4 @@
-# 语法总结
+# 语法总结（Summary of the Grammar）
 -----
 
 > 1.0

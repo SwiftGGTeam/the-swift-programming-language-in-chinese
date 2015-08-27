@@ -1,5 +1,5 @@
 <a name="declarations"></a>
-# 声明
+# 声明（Declarations）
 -----------------
 
 > 1.0
