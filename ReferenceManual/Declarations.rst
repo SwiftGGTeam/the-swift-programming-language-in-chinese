@@ -2326,4 +2326,3 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
-    access-level-modifiers --> access-level-modifier access-level-modifiers-OPT
