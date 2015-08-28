@@ -1352,7 +1352,7 @@ and to provide an opportunity to debug the cause of the absent or invalid value.
 Debugging with Assertions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An assertion is a runtime check that a logical condition definitely evaluates to ``true``.
+An assertion is a runtime check that a Boolean condition definitely evaluates to ``true``.
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.
@@ -1365,8 +1365,9 @@ you can see exactly where the invalid state occurred
 and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-You write an assertion by calling the global ``assert(_:_:)`` function.
-You pass the ``assert(_:_:)`` function an expression that evaluates to ``true`` or ``false``
+You write an assertion by calling
+the Swift standard library global ``assert(_:_file:line:)`` function.
+You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions
@@ -1396,6 +1397,11 @@ The assertion message can be omitted if desired, as in the following example:
    << // age : Int = -3
    -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
    xx assert
+
+.. note::
+
+   Assertions are disabled when your code is compiled with optimizations,
+   such as when building with an app target's default Release configuration in Xcode.
 
 .. _TheBasics_WhenToUseAssertions:
 
