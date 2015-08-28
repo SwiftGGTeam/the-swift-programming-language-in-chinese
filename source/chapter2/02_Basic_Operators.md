@@ -1,10 +1,12 @@
-
-> 翻译：[XieLingWang](https://github.com/xielingwang)    
-> 校对：[EvilCome](https://github.com/Evilcome)  
-> 最终校对：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
-
-# 基本运算符
+# 基本运算符（Basic Operators）
 -----------------
+
+> 1.0
+> 翻译：[XieLingWang](https://github.com/xielingwang)
+> 校对：[EvilCome](https://github.com/Evilcome)
+
+> 2.0
+> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 本页包含内容：
 
@@ -18,20 +20,20 @@
 - [区间运算符](#range_operators)
 - [逻辑运算符](#logical_operators)
 
-运算符是检查、改变、合并值的特殊符号或短语。例如，加号`+`将两个数相加（如`let i = 1 + 2`）。复杂些的运算例如逻辑与运算符`&&`（如`if enteredDoorCode && passedRetinaScan`），或让 i 值加1的便捷自增运算符`++i`等。
+运算符是检查、改变、合并值的特殊符号或短语。例如，加号`+`将两个数相加（如`let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符`&&`（如`if enteredDoorCode && passedRetinaScan`），或让 i 值加1的便捷自增运算符`++i`等。
 
-Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如：赋值符（`=`）不返回值，以防止把想要判断相等运算符（`==`）的地方写成赋值符导致的错误。算术运算符（`+`，`-`，`*`，`/`，`%`等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](24_Advanced_Operators.html#overflow_operators)。
+Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如：赋值符（`=`）不返回值，以防止把想要判断相等运算符（`==`）的地方写成赋值符导致的错误。算术运算符（`+`，`-`，`*`，`/`，`%`等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](./24_Advanced_Operators.html#overflow_operators)。
 
 区别于 C 语言，在 Swift 中你可以对浮点数进行取余运算（`%`），Swift 还提供了 C 语言没有的表达两数之间的值的区间运算符（`a..<b`和`a...b`），这方便我们表达一个区间内的数值。
 
-本章节只描述了 Swift 中的基本运算符，[高级运算符](24_Advanced_Operators.html)包含了高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
+本章节只描述了 Swift 中的基本运算符，[高级运算符](./24_Advanced_Operators.html)包含了高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
 
 <a name="terminology"></a>
 ## 术语
 
 运算符有一元、二元和三元运算符。
 
-- 一元运算符对单一操作对象操作（如`-a`）。一元运算符分前置运算符和后置运算符，前置运算符需紧排操作对象之前（如`!b`），后置运算符需紧跟操作对象之后（如`i++`）。
+- 一元运算符对单一操作对象操作（如`-a`）。一元运算符分前置运算符和后置运算符，前置运算符需紧跟在操作对象之前（如`!b`），后置运算符需紧跟在操作对象之后（如`i++`）。
 - 二元运算符操作两个操作对象（如`2 + 3`），是中置的，因为它们出现在两个操作对象之间。
 - 三元运算符操作三个操作对象，和 C 语言一样，Swift 只有一个三元运算符，就是三目运算符（`a ? b : c`）。
 
@@ -47,7 +49,7 @@ Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减�
 	a = b
 	// a 现在等于 10
 
-如果赋值的右边是一个多元组，它的元素可以马上被分解多个常量或变量：
+如果赋值的右边是一个多元组，它的元素可以马上被分解成多个常量或变量：
 
 	let (x, y) = (1, 2)
 	// 现在 x 等于 1, y 等于 2
@@ -70,15 +72,15 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 - 减法（`-`）
 - 乘法（`*`）
 - 除法（`/`）
-	
+
 		1 + 2       // 等于 3
 		5 - 3       // 等于 2
-		2 * 3       // 等于 6	
+		2 * 3       // 等于 6
 		10.0 / 2.5  // 等于 4.0
 
 
 
-与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如`a &+ b`）。详情参见[溢出运算符](24_Advanced_Operators.html#overflow_operators)。
+与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如`a &+ b`）。详情参见[溢出运算符](./24_Advanced_Operators.html#overflow_operators)。
 
 加法运算符也可用于`String`的拼接：
 
@@ -190,7 +192,7 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 <a name="compound_assignment_operators"></a>
 ## 复合赋值（Compound Assignment Operators）
 
-如同强大的 C 语言，Swift 也提供把其他运算符和赋值运算（`=`）组合的复合赋值运算符，组合加运算（`+=`）是其中一个例子：
+如同 C 语言，Swift 也提供把其他运算符和赋值运算（`=`）组合的复合赋值运算符，组合加运算（`+=`）是其中一个例子：
 
 	var a = 1
 	a += 2 // a 现在是 3
@@ -216,7 +218,7 @@ Swift 中所有数值类型都支持了基本的四则算术运算：
 - 小于等于（`a <= b`）
 
 > 注意：
-Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](09_Classes_and_Structures.html)。
+Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.html)。
 
 每个比较运算都返回了一个标识表达式是否成立的布尔值：
 
@@ -231,17 +233,17 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 
 比较运算多用于条件语句，如`if`条件：
 
-	
+
 	let name = "world"
 	if name == "world" {
-		println("hello, world")
+		print("hello, world")
 	} else {
-	    println("I'm sorry \(name), but I don't recognize you")
+	    print("I'm sorry \(name), but I don't recognize you")
 	}
 	// 输出 "hello, world", 因为 `name` 就是等于 "world"
 
 
-关于`if`语句，请看[控制流](05_Control_Flow.html)。
+关于`if`语句，请看[控制流](./05_Control_Flow.html)。
 
 <a name="ternary_conditional_operator"></a>
 ## 三目运算符(Ternary Conditional Operator)
@@ -257,7 +259,7 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 	}
 
 这里有个计算表格行高的例子。如果有表头，那行高应比内容高度要高出50像素; 如果没有表头，只需高出20像素。
-	
+
 	let contentHeight = 40
 	let hasHeader = true
 	let rowHeight = contentHeight + (hasHeader ? 50 : 20)
@@ -307,8 +309,8 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 	//userDefinedColorName的值为空 ，所以colorNameToUse的值为`red`
 
 
-`userDefinedColorName`变量被定义为一个可选字符串类型，默认值为nil。由于`userDefinedColorName`是一个可选类型，我们可以使用空合运算符去判断其值。在上一个例子中，通过空合运算符为一个名为`colorNameToUse`的变量赋予一个字符串类型初始值。
-由于`userDefinedColorName`值为空，因此表达式` userDefinedColorName ?? defaultColorName `返回默认值，即`red`。
+`userDefinedColorName`变量被定义为一个可选`String`类型，默认值为`nil`。由于`userDefinedColorName`是一个可选类型，我们可以使用空合运算符去判断其值。在上一个例子中，通过空合运算符为一个名为`colorNameToUse`的变量赋予一个字符串类型初始值。
+由于`userDefinedColorName`值为空，因此表达式` userDefinedColorName ?? defaultColorName `返回`defaultColorName`的值，即`red`。
 
 另一种情况，分配一个非空值(`non-nil`)给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在`userDefaultColorName`中的值，而非默认值。
 
@@ -322,12 +324,12 @@ Swift 也提供恒等`===`和不恒等`!==`这两个比较符来判断两个对�
 Swift 提供了两个方便表达一个区间的值的运算符。
 
 ### 闭区间运算符
-闭区间运算符（`a...b`）定义一个包含从`a`到`b`(包括`a`和`b`)的所有值的区间，`b`必须大于`a`。
+闭区间运算符（`a...b`）定义一个包含从`a`到`b`(包括`a`和`b`)的所有值的区间，`b`必须大于等于`a`。
 ‌
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在`for-in`循环中：
 
 	for index in 1...5 {
-	    println("\(index) * 5 = \(index * 5)")
+	    print("\(index) * 5 = \(index * 5)")
 	}
 	// 1 * 5 = 5
 	// 2 * 5 = 10
@@ -336,7 +338,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	// 5 * 5 = 25
 
 
-关于`for-in`，请看[控制流](05_Control_Flow.html)。
+关于`for-in`，请看[控制流](./05_Control_Flow.html)。
 
 ### 半开区间运算符
 
@@ -349,7 +351,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let names = ["Anna", "Alex", "Brian", "Jack"]
 	let count = names.count
 	for i in 0..<count {
-	    println("第 \(i + 1) 个人叫 \(names[i])")
+	    print("第 \(i + 1) 个人叫 \(names[i])")
 	}
 	// 第 1 个人叫 Anna
 	// 第 2 个人叫 Alex
@@ -357,7 +359,7 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	// 第 4 个人叫 Jack
 
 
-数组有4个元素，但`0..<count`只数到3(最后一个元素的下标)，因为它是半开区间。关于数组，请查阅[数组](04_Collection_Types.html#arrays)。
+数组有4个元素，但`0..<count`只数到3(最后一个元素的下标)，因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.html#arrays)。
 
 <a name="logical_operators"></a>
 ## 逻辑运算
@@ -372,11 +374,11 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 
 逻辑非运算（`!a`）对一个布尔值取反，使得`true`变`false`，`false`变`true`。
 
-它是一个前置运算符，需出现在操作数之前，且不加空格。读作`非 a`，例子如下：
+它是一个前置运算符，需紧跟在操作数之前，且不加空格。读作`非 a`，例子如下：
 
 	let allowedEntry = false
 	if !allowedEntry {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "ACCESS DENIED"
 
@@ -396,9 +398,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let enteredDoorCode = true
 	let passedRetinaScan = false
 	if enteredDoorCode && passedRetinaScan {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "ACCESS DENIED"
 
@@ -414,9 +416,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 	let hasDoorKey = false
 	let knowsOverridePassword = true
 	if hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 
@@ -425,9 +427,9 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 我们可以组合多个逻辑运算来表达一个复合逻辑：
 
 	if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 
@@ -437,15 +439,18 @@ Swift 提供了两个方便表达一个区间的值的运算符。
 
 前两种情况，我们都不满足，所以前两个简单逻辑的结果是`false`，但是我们是知道紧急情况下重置的密码的，所以整个复杂表达式的值还是`true`。
 
+>注意：
+Swift 逻辑操作符`&&`和`||`是左结合的，这意味着拥有多元逻辑操作符的复合表达式优先计算最左边的子表达式。
+
 ### 使用括号来明确优先级
 
 为了一个复杂表达式更容易读懂，在合适的地方使用括号来明确优先级是很有效的，虽然它并非必要的。在上个关于门的权限的例子中，我们给第一个部分加个括号，使用它看起来逻辑更明确：
 
 
 	if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-	    println("Welcome!")
+	    print("Welcome!")
 	} else {
-	    println("ACCESS DENIED")
+	    print("ACCESS DENIED")
 	}
 	// 输出 "Welcome!"
 

@@ -1,8 +1,8 @@
-> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
-> 校对：[老码团队翻译组-Jame](http://weibo.com/u/5241713117)
-
 # Swift里的值类型与引用类型
 -----------------
+
+> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
+> 校对：[老码团队翻译组-Jame](http://weibo.com/u/5241713117)
 
 本页包含内容：
 

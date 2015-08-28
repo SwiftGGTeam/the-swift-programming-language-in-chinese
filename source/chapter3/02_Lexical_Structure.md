@@ -1,8 +1,13 @@
-> 翻译：[superkam](https://github.com/superkam)  
+# 词法结构（Lexical Structure）
+-----------------
+
+> 1.0
+> 翻译：[superkam](https://github.com/superkam)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
-# 词法结构
------------------
+> 2.0
+> 翻译+校对：[buginux](https://github.com/buginux)
+
 
 本页包含内容：
 
@@ -202,14 +207,14 @@ true			   // 布尔型字面量
 let x = 3; "1 2 \(x)"
 ```
 
-字符串字面量的默认推导类型为 `String`。组成字符串的字符默认推导类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_368)。
+字符串字面量的默认推导类型为 `String`。组成字符串的字符默认推导类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](../chapter2/03_Strings_and_Characters.html)。
 
 > 字符型字面量语法  
 > *字符串字面量* → **"** [*引用文本*](#quoted_text)<sub>可选</sub> **"**  
 <a id="quoted_text"></a>
 > *引用文本* → [*引用文本条目*](#quoted_text_item) [*引用文本*](#quoted_text) <sub>可选</sub>  
 > *引用文本条目* → [*转义字符*](#escaped_character)  
-> *引用文本条目* → **\(** [*表达式*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383) **)**  
+> *引用文本条目* → **\(** [*表达式*](./04_Expressions.html) **)**  
 > *引用文本条目* → **除了"­, \­, U+000A, 或者 U+000D的所有Unicode的字符**  
 > *转义字符* → **\0** | **\\** | **\t** | **\n** | **\r** | **\"** | **\'**     
 > *转义字符* → **\u {** [*unicode标量数字*](#unicode_scalar_digits) **}** 
@@ -218,7 +223,7 @@ let x = 3; "1 2 \(x)"
 <a id="operators"></a>
 ## 运算符
 
-Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_70) 和 [高级运算符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_28) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
+Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/25_Advanced_Operators.html) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
 
 自定义运算符可以由以下其中之一的 ASCII 字符 `/`、`=`、 `-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 以及 `~`, 或者后面语法中规定的任一个 Unicode 字符开始。在第一个字符之后，允许使用组合型 Unicode 字符。也可以使用两个或者多个的点号来自定义运算符（比如, `....`）。虽然可以自定义包含问号`?`的运算符，但是这个运算符不能只包含单独的一个问号。
 
@@ -238,7 +243,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在某些特定的构造中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个标记，剩余部分以同样的方式会被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 不会被视为单独的标记，因而不会被误解析为 `>>` 运算符的一部分。
 
-要学习如何自定义运算符，请参考 [自定义操作符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48) 和 [运算符声明](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_644)。要学习如何重载运算符，请参考 [运算符方法](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43)。
+要学习如何自定义运算符，请参考 [自定义操作符](../chapter2/25_Advanced_Operators.html#custom_operators) 和 [运算符声明](./05_Declarations.html#operator_declaration)。要学习如何重载运算符，请参考 [运算符方法](../chapter2/25_Advanced_Operators.html#operator_functions)。
 
 > 运算符语法语法  
 > *运算符* → [*头部运算符*](#operator_head) [*运算符字符组*](#operator_characters)<sub>可选</sub>  

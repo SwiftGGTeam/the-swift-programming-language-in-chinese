@@ -1,7 +1,7 @@
+# Access Control 权限控制的黑与白
+
 > 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)
 > 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-
-# Access Control 权限控制的黑与白
 
 如果您之前没有接触过权限控制，先来听一个小故事：
 

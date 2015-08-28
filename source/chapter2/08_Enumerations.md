@@ -1,8 +1,12 @@
-> 翻译：[yankuangshi](https://github.com/yankuangshi)  
-> 校对：[shinyzhu](https://github.com/shinyzhu)
-
 # 枚举（Enumerations）
 ---
+
+> 1.0
+> 翻译：[yankuangshi](https://github.com/yankuangshi)
+> 校对：[shinyzhu](https://github.com/shinyzhu)
+
+> 2.0
+> 翻译+校对：[futantan](https://github.com/futantan)
 
 本页内容包含：
 
@@ -10,6 +14,7 @@
 - [匹配枚举值与`Swith`语句（Matching Enumeration Values with a Switch Statement）](#matching_enumeration_values_with_a_switch_statement)
 - [相关值（Associated Values）](#associated_values)
 - [原始值（Raw Values）](#raw_values)
+- [递归枚举（Recursive Enumerations）](#recursive_enumerations)
 
 *枚举*定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
 
@@ -19,7 +24,7 @@
 
 在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
-欲了解更多相关信息，请参见[属性（Properties）](10_Properties.html)，[方法（Methods）](11_Methods.html)，[构造过程（Initialization）](14_Initialization.html)，[扩展（Extensions）](20_Extensions.html)和[协议（Protocols）](21_Protocols.html)。
+欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./20_Extensions.html)和[协议（Protocols）](./21_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -96,7 +101,7 @@ case .West:
 
 等等以此类推。
 
-正如在[控制流（Control Flow）](05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制性全部穷举的要求确保了枚举成员不会被意外遗漏。
+正如在[控制流（Control Flow）](./05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.West`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制性全部穷举的要求确保了枚举成员不会被意外遗漏。
 
 当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确被提出的枚举成员：
 
@@ -186,7 +191,7 @@ case let .QRCode(productCode):
 <a name="raw_values"></a>
 ## 原始值（Raw Values）
 
-在[Associated Values](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的另一种选择，枚举成员可以被默认值（称为原始值）赋值，其中这些原始值具有相同的类型。
+在[相关值](#raw_values)小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的相关值。作为相关值的另一种选择，枚举成员可以被默认值（称为原始值）赋值，其中这些原始值具有相同的类型。
 
 这里是一个枚举成员存储 ASCII 码的例子：
 
@@ -198,11 +203,19 @@ enum ASCIIControlCharacter: Character {
 }
 ```
 
-在这里，`ASCIIControlCharacter`的枚举类型的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见字符串和字符[`Strings and Characters`](03_Strings_and_Characters.html)部分。
+在这里，`ASCIIControlCharacter`的枚举类型的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的 ASCII 控制字符。字符值的描述请详见[字符串和字符](./03_Strings_and_Characters.html)部分。
 
-注意，原始值和相关值是不相同的。原始值是当你开始定义枚举的时候被预先赋予的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值在你在创建一个基于枚举成员的常量或变量时才会被设置，并且每次当你创建的时候，它的值可以是不同的。
 
-原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当使用整型值作为原始值时，如果其他枚举成员没有值，它们会自动递增。
+原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。
+
+>注意：  
+>原始值和相关值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
+
+### 原始值的隐式赋值（Implicitly Assigned Raw Values）
+
+在使用原始值为整数或者字符串类型的枚举时，不需要显式的为每一个成员赋值，这时，Swift将会自动为你赋值。
+
+例如，当使用整数作为原始值时，隐式赋值的值依次递增1。如果第一个值没有被赋初值，将会被自动置为0。
 
 下面的枚举是对之前`Planet`这个枚举的一个细化，利用原始整型值来表示每个 planet 在太阳系中的顺序：
 
@@ -212,30 +225,46 @@ enum Planet: Int {
 }
 ```
 
-自动递增意味着`Planet.Venus`的原始值是`2`，以此类推。
+在上面的例子中，`Plant.Mercury`赋了初值`1`，`Planet.Venus`会拥有隐式赋值`2`，依次类推。
+
+当使用字符串作为枚举类型的初值时，每个枚举成员的隐式初值则为该成员的名称。
+
+下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为咩个方向的名称：
+
+```swift
+enum CompassPoint: String {
+    case North, South, East, West
+}
+```
+
+上面例子中，`CompassPoint.South`拥有隐式初值`South`，依次类推。
 
 使用枚举成员的`rawValue`属性可以访问该枚举成员的原始值：
 
 ```swift
 let earthsOrder = Planet.Earth.rawValue
-// earthsOrder is 3
+// earthsOrder 值为 3
+
+let sunsetDirection = CompassPoint.West.rawValue
+// sunsetDirection 值为 "West"
 ```
 ### 使用原始值来初始化(Initializing from a Raw Value)
 
-如果你使用原始值的方式创建一个枚举类型，这个枚举将自动获得一个包含原始值参数(参数名为rawValue)的构造器并返回相应的枚举类型或者nil。你可以使用这个构造器来创建新的枚举成员。
+### 使用原始值初始化枚举变量（Initializing from a Raw Value）
 
-下面这个例子通过原始值`7`创建了`Uranus`枚举类型：
+如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法将原始值类型作为参数，返回枚举成员或者`nil`。你可以使用这种初始化方法来创建一个新的枚举变量。
+
+这个例子通过原始值`7`从而创建枚举成员：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
-// possiblePlanet is of type Planet? and equals Planet.Uranus
+// possiblePlanet 类型为 Planet? 值为 Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或称为“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
-> 注意：  
-> 使用原始值构造器是可失败构造器，因为并不是所有的原始值都会返回一个对应的枚举成员。欲了解更多相关信息，请参见[可失败构造器（Failable Initializers）](TODO)
-
+>注意：  
+>原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations#failable_initializers)
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
@@ -254,4 +283,61 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 // 输出 "There isn't a planet at position 9
 ```
 
-这个范例使用可选绑定（optional binding），通过原始值`9`试图取得一个行星的引用。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
+这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。`if let somePlanet = Planet(rawValue: 9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
+
+<a name="recursive_enumerations"></a>
+## 递归枚举（Recursive Enumerations）
+
+在对操作符进行描述的时候，使用枚举类型来对数据建模很方便，因为需要考虑的情况固定可枚举。操作符可以将两个由数字组成的算数表达式连接起来，例如，将`5`连接成复杂一些的表达式`5+4`.
+
+算数表达式的一个重要特性是，表达式可以嵌套使用。例如，表达式`(5 + 4) * 2`乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也许要支持这种嵌套————这表示枚举类型需要支持递归。
+
+`递归枚举（recursive enumeration）`是一种枚举类型，表示它的枚举中，有一个或多个枚举成员拥有该枚举的其他成员作为相关值。使用递归枚举时，编译器会插入一个中间层。你可以在枚举成员前加上`indirect`来表示这成员可递归。
+
+例如，下面的例子中，枚举类型存储了简单的算数表达式：
+
+
+```swift
+enum ArithmeticExpression {
+    case Number(Int)
+    indirect case Addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
+
+你也可以在枚举类型开头加上`indirect`关键字来表示它的所有成员都是可递归的：
+
+```swift
+indirect enum ArithmeticExpression {
+    case Number(Int)
+    case Addition(ArithmeticExpression, ArithmeticExpression)
+    case Multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
+
+上面定义的枚举类型可以存储三种算数表达式：纯数字、两个表达式的相加、两个表达式相乘。`Addition` 和 `Multiplication`成员的相关值也是算数表达式————这些相关值使得嵌套表达式成为可能。
+
+递归函数可以很直观地使用具有递归性质的数据结构。例如，下面是一个计算算数表达式的函数：
+
+```swift
+func evaluate(expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case .Number(let value):
+        return value
+    case .Addition(let left, let right):
+        return evaluate(left) + evaluate(right)
+    case .Multiplication(let left, let right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+ 
+// 计算 (5 + 4) * 2
+let five = ArithmeticExpression.Number(5)
+let four = ArithmeticExpression.Number(4)
+let sum = ArithmeticExpression.Addition(five, four)
+let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+print(evaluate(product))
+// 输出 "18"
+```
+
+该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法元算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。

@@ -1,8 +1,8 @@
-> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
-> 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-
 # 造个类型不是梦-白话Swift类型创建
 -----------------
+
+> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
+> 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
 本页包含内容：
 

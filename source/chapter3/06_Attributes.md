@@ -1,8 +1,12 @@
-> 翻译：[Hawstein](https://github.com/Hawstein)  
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai), [KYawn](https://github.com/KYawn)
-
-# 特性
+# 特性（Attributes）
 -----------------
+
+> 1.0
+> 翻译：[Hawstein](https://github.com/Hawstein)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[KYawn](https://github.com/KYawn)
 
 本页内容包括：
 
@@ -25,7 +29,7 @@
 
 `autoclosure`
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以声明返回表达式自身类型的没有参数的方法类型，也可以用于函数参数的声明。含有`autoclosure`特性的声明同时也具有`noescape`的特性，除非传递可选参数`escaping`.关于怎样使用`autoclosure`特性的例子，参见[函数类型](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449).
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以声明返回表达式自身类型的没有参数的方法类型，也可以用于函数参数的声明。含有`autoclosure`特性的声明同时也具有`noescape`的特性，除非传递可选参数`escaping`.关于怎样使用`autoclosure`特性的例子，参见[函数类型](./03_Types.html#function_type).
 
 `available`
 
@@ -95,7 +99,7 @@ class MyClass {
 
 该特性用于修饰任何可以在Objective-C中表示的声明。比如，非嵌套类、协议、非泛型枚举（仅限整型值类型）、类和协议的属性和方法（包括`getter`和`setter`）、构造器、析构器以及下标。`objc`特性告诉编译器这个声明可以在Objective-C代码中使用。
 
-如果你将`objc`特性应用于一个类或协议，它也会隐式地应用于那个类的成员或协议。对于标记了`objc`特性的类，编译器会隐式地为它的子类添加`objc`特性。标记了`objc`特性的协议不能继承没有标记`objc`的协议。
+标有`objc`特性的类必须继承自Objective-C中定义的类。如果你将`objc`特性应用于一个类或协议，它也会隐式地应用于那个类的成员或协议。对于标记了`objc`特性的类，编译器会隐式地为它的子类添加`objc`特性。标记了`objc`特性的协议不能继承没有标记`objc`的协议。
 
 如果你将`objc`特性应用于枚举，每一个枚举的`case`都会以枚举名称和`case`名称组合的方式暴露在Objective-C代码中。例如：一个名为`Venus`的`case`在`Planet`枚举中，这个`case`暴露在Objective-C代码中时叫做`PlanetVenus`。
 

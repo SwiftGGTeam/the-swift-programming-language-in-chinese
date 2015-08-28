@@ -1,10 +1,13 @@
-
-> 翻译：[takalard](https://github.com/takalard) [SergioChan](https://github.com/SergioChan)
-> 校对：[lifedim](https://github.com/lifedim)
-
-# 泛型
+# 泛型（Generics）
 
 ------
+
+> 1.0
+> 翻译：[takalard](https://github.com/takalard)
+> 校对：[lifedim](https://github.com/lifedim)
+
+> 2.0
+> 翻译+校对： [SergioChan](https://github.com/SergioChan)
 
 本页包含内容：
 
@@ -35,7 +38,7 @@ func swapTwoInts(inout a: Int, inout _ b: Int) {
 }
 ```
 
-这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[写入读出参数](../chapter2/06_Functions.html)。
+这个函数使用写入读出（in-out）参数来交换`a`和`b`的值，请参考[输入输出参数](./06_Functions.html#in_out_parameters)。
 
 `swapTwoInts(_:_:)`函数可以交换`b`的原始值到`a`，也可以交换a的原始值到`b`，你可以调用这个函数交换两个`Int`变量值：
 
@@ -260,7 +263,7 @@ if let topItem = stackOfStrings.topItem {
 
 `swapTwoValues(_:_:)`函数和`Stack`类型可以作用于任何类型，不过，有的时候对使用在泛型函数和泛型类型上的类型强制约束为某种特定类型是非常有用的。类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
 
-例如，Swift 的`Dictionary`类型对作用于其键的类型做了些限制。在[字典](../chapter2/04_Collection_Types.html)的描述中，字典的键类型必须是*可哈希*，也就是说，必须有一种方法可以使其被唯一的表示。`Dictionary`之所以需要其键是可哈希是为了以便于其检查其是否已经包含某个特定键的值。如无此需求，`Dictionary`既不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。
+例如，Swift 的`Dictionary`类型对作用于其键的类型做了些限制。在[字典](./04_Collection_Types.html#dictionaries)的描述中，字典的键类型必须是*可哈希*，也就是说，必须有一种方法可以使其被唯一的表示。`Dictionary`之所以需要其键是可哈希是为了以便于其检查其是否已经包含某个特定键的值。如无此需求，`Dictionary`既不会告诉是否插入或者替换了某个特定键的值，也不能查找到已经存储在字典里面的给定键值。
 
 这个需求强制加上一个类型约束作用于`Dictionary`的键上，当然其键类型必须遵循`Hashable`协议（Swift 标准库中定义的一个特定协议）。所有的 Swift 基本类型（如`String`，`Int`， `Double`和 `Bool`）默认都是可哈希。
 
@@ -443,9 +446,9 @@ struct Stack<T>: Container {
 
 ### 扩展一个存在的类型为一指定关联类型
 
-在[使用扩展来添加协议兼容性](../chapter2/21_Protocols.html)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
+在[在扩展中添加协议成员](./21_Protocols.html#adding_protocol_conformance_with_an_extension)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
 
-Swift的`Array`已经提供`append(_:)`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[使用扩展来声明协议的采纳](../chapter2/21_Protocols.html)中有描述这样一个实现一个空扩展的行为：
+Swift的`Array`已经提供`append(_:)`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[通过扩展补充协议声明](./21_Protocols.html#declaring_protocol_adoption_with_an_extension)中有描述这样一个实现一个空扩展的行为：
 
 ```swift
 extension Array: Container {}

@@ -1,8 +1,12 @@
-> 翻译：[TimothyYe](https://github.com/TimothyYe)  
+# 自动引用计数（Automatic Reference Counting）
+-----------------
+
+> 1.0
+> 翻译：[TimothyYe](https://github.com/TimothyYe)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
-# 自动引用计数
------------------
+> 2.0
+> 翻译+校对：[Channe](https://github.com/Channe)
 
 本页包含内容：
 
@@ -299,7 +303,7 @@ class CreditCard {
 }
 ```
 
-> 注意: 
+> 注意:
 > `CreditCard`类的`number`属性被定义为`UInt64`类型而不是`Int`类型，以确保`number`属性的存储量在32位和64位系统上都能足够容纳16位的卡号。
 
 下面的代码片段定义了一个叫`john`的可选类型`Customer`变量，用来保存某个特定客户的引用。由于是可选类型，所以变量被初始化为`nil`。
@@ -335,6 +339,8 @@ john = nil
 
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
 
+
+<a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
 ###无主引用以及隐式解析可选属性
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
@@ -373,9 +379,9 @@ class City {
 
 为了建立两个类的依赖关系，`City`的构造函数有一个`Country`实例的参数，并且将实例保存为`country`属性。
 
-`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（[在两段式构造过程中有具体描述](14_Initialization.html)）
+`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（在[两段式构造过程](./14_Initialization.html#two_phase_initialization)中有具体描述）
 
-为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。（[在隐式解析可选类型中有描述](01_The_Basics.html)）
+为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。（在[隐式解析可选类型](./01_The_Basics.html#implicityly_unwrapped_optionals)中有描述）
 
 由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这代表一旦`name`属性被赋值后，`Country`的构造函数就能引用并传递隐式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
 
@@ -456,7 +462,7 @@ print(paragraph!.asHTML())
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/closureReferenceCycle01_2x.png)
 
-实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](07_Closures.html)）。
+实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](./07_Closures.html#capturing_values)）。
 
 >注意:  
 虽然闭包多次使用了`self`，它只捕获`HTMLElement`实例的一个强引用。
@@ -557,4 +563,3 @@ print(paragraph!.asHTML())
 paragraph = nil
 // prints "p is being deinitialized"
 ```
-
