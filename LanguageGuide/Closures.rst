@@ -47,7 +47,7 @@ are a convenient means of naming and defining self-contained blocks of code
 as part of a larger function.
 However, it is sometimes useful to write shorter versions of function-like constructs
 without a full declaration and name.
-This is particularly true when you work with functions that take other functions
+This is particularly true when you work with functions or methods that take functions
 as one or more of their arguments.
 
 :newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
@@ -79,25 +79,23 @@ Here's the initial array to be sorted:
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
    << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-The ``sort(_:)`` method takes two arguments:
-
-* An array of values of a known type.
-* A closure that takes two arguments of the same type as the array's contents,
-  and returns a ``Bool`` value to say whether the first value should appear
-  before or after the second value once the values are sorted.
-  The sorting closure needs to return ``true``
-  if the first value should appear *before* the second value,
-  and ``false`` otherwise.
+The ``sort(_:)`` method accepts a closure that takes two arguments
+of the same type as the array's contents,
+and returns a ``Bool`` value to say whether the first value should appear
+before or after the second value once the values are sorted.
+The sorting closure needs to return ``true``
+if the first value should appear *before* the second value,
+and ``false`` otherwise.
 
 This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
 One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as the ``sort(_:)`` method's parameter:
+and to pass it in as an argument to the ``sort(_:)`` method:
 
 .. testcode:: closureSyntax
 
-   -> func backwards(s1: String, s2: String) -> Bool {
+   -> func backwards(s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
    -> var reversed = names.sort(backwards)
@@ -180,8 +178,8 @@ it can even be written on a single line:
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sort(_:)`` method has remained the same.
-A pair of parentheses still wrap the entire set of arguments for the function.
-However, one of those arguments is now an inline closure.
+A pair of parentheses still wrap the entire argument for the method.
+However, that argument is now an inline closure.
 
 .. _Closures_InferringTypeFromContext:
 
@@ -206,9 +204,9 @@ can also be omitted:
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer the parameter types and return type
-when passing a closure to a function as an inline closure expression.
+when passing a closure to a function or method as an inline closure expression.
 As a result, you never need to write an inline closure in its fullest form
-when the closure is used as a function argument.
+when the closure is used as a function or method argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
@@ -233,7 +231,7 @@ as in this version of the previous example:
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Here, the function type of the ``sort(_:)`` method's second argument
+Here, the function type of the ``sort(_:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
@@ -314,19 +312,23 @@ that is written outside of (and *after*) the parentheses of the function call it
          // trailing closure's body goes here
       }
 
-.. note::
-
-   If a closure expression is provided as the function's only argument
-   and you provide that expression as a trailing closure,
-   you do not need to write a pair of parentheses ``()``
-   after the function's name when you call the function.
-
 The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
 can be written outside of the ``sort(_:)`` method's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
    -> reversed = names.sort() { $0 > $1 }
+   >> reversed
+   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+If a closure expression is provided as the function or method's only argument
+and you provide that expression as a trailing closure,
+you do not need to write a pair of parentheses ``()``
+after the function or method's name when you call the function:
+
+.. testcode:: closureSyntax
+
+   -> reversed = names.sort { $0 > $1 }
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -363,10 +365,7 @@ the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
 You can now use the ``numbers`` array to create an array of ``String`` values,
-by passing a closure expression to the array's ``map(_:)`` method as a trailing closure.
-Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
-because the ``map(_:)`` method has only one parameter,
-and that parameter is provided as a trailing closure:
+by passing a closure expression to the array's ``map(_:)`` method as a trailing closure:
 
 .. testcode:: arrayMap
 
