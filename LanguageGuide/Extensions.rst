@@ -379,7 +379,7 @@ from the right of the number:
 
 If the ``Int`` value does not have enough digits for the requested index,
 the subscript implementation returns ``0``,
-as if the number had been padded with zeroes to the left:
+as if the number had been padded with zeros to the left:
 
 .. testcode:: extensionsSubscripts
 

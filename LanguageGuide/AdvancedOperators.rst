@@ -72,7 +72,7 @@ This is equivalent to a decimal value of ``15``.
 The bitwise NOT operator is then used to create a new constant called ``invertedBits``,
 which is equal to ``initialBits``,
 but with all of the bits inverted.
-Zeroes become ones, and ones become zeroes.
+Zeros become ones, and ones become zeros.
 The value of ``invertedBits`` is ``11110000``,
 which is equal to an unsigned decimal value of ``240``.
 
@@ -185,7 +185,7 @@ The bit-shifting behavior for unsigned integers is as follows:
 
 1. Existing bits are moved to the left or right by the requested number of places.
 2. Any bits that are moved beyond the bounds of the integer's storage are discarded.
-3. Zeroes are inserted in the spaces left behind
+3. Zeros are inserted in the spaces left behind
    after the original bits are moved to the left or right.
 
 This approach is known as a :newTerm:`logical shift`.
@@ -196,7 +196,7 @@ and ``11111111 >> 1``
 (which is ``11111111`` shifted to the right by ``1`` place).
 Blue numbers are shifted,
 gray numbers are discarded,
-and orange zeroes are inserted:
+and orange zeros are inserted:
 
 .. image:: ../images/bitshiftUnsigned_2x.png
    :align: center
@@ -241,7 +241,7 @@ by the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``
 
 The red component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0xFF0000``.
-The zeroes in ``0xFF0000`` effectively “mask” the second and third bytes of ``0xCC6699``,
+The zeros in ``0xFF0000`` effectively “mask” the second and third bytes of ``0xCC6699``,
 causing the ``6699`` to be ignored and leaving ``0xCC0000`` as the result.
 
 This number is then shifted 16 places to the right (``>> 16``).

@@ -188,11 +188,11 @@ However, one of those arguments is now an inline closure.
 Inferring Type From Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because the sorting closure is passed as an argument to a function,
+Because the sorting closure is passed as an argument to a method,
 Swift can infer the types of its parameters
-and the type of the value it returns
-from the type of the ``sort(_:)`` method's second parameter.
-This parameter is expecting a function of type ``(String, String) -> Bool``.
+and the type of the value it returns.
+The ``sort(_:)`` method is being called on an array of strings,
+so its argument must be a function of type ``(String, String) -> Bool``.
 This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
@@ -273,8 +273,7 @@ Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
 as a function that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed for the ``sort(_:)`` method's
-second parameter.
+This exactly matches the function type needed by the ``sort(_:)`` method.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
