@@ -1340,26 +1340,5 @@ Write an import declaration as follows:
 Which modules your code imports depends on
 what functionality is required and which platforms are being targeted.
 
-The following table describes some of the most commonly used modules:
-
-=====================  =========================================================
-Import Declaration     Summary
-=====================  =========================================================
-``import Darwin``      **C Standard Library** and **C POSIX Library**, which include
-                       common mathematical functions,
-                       core input and output functions,
-                       networking functions and data types, and
-                       pseudo-random numbers generation functions.
-``import Foundation``  Base layer of Objective-C classes, such as
-                       ``NSString``, ``NSData``,
-                       ``NSArray``, ``NSDictionary``, ``NSSet``,
-                       ``NSDate``, ``NSURL``, and ``NSLocale``.
-                       *Includes Darwin*.
-``import AppKit``      Objective-C classes for building OS X apps.
-                       *Includes Foundation*.
-``import UIKit``       Objective-C classes for building iOS apps.
-                       *Includes Foundation*.
-=====================  =========================================================
-
 For more information about using Swift with system frameworks and libraries,
 see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
