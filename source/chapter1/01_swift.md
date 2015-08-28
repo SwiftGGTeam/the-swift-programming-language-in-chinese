@@ -1,4 +1,4 @@
-# 关于 Swift
+# 关于 Swift（About Swift）
 -----------------
 
 > 1.0
