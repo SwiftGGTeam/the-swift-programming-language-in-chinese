@@ -1314,31 +1314,3 @@ See also :doc:`Subscripts` and :doc:`Functions`.
    an assertion is an effective way to ensure that
    such conditions are highlighted and noticed during development,
    before your app is published.
-
-.. _TheBasics_ImportDeclarations:
-
-Import Declarations
--------------------
-
-By default, a Swift file can only access the types and functions that are
-declared within the current module
-or are available in Swift's standard library.
-You can use an :newTerm:`import declaration` to gain access to
-symbols declared outside the current module.
-
-.. note::
-
-   Import declarations are generally found at the beginning of a file,
-   since external symbols are only accessible following an import declaration.
-
-Write an import declaration as follows:
-
-.. syntax-outline::
-
-   import <#module#>
-
-Which modules your code imports depends on
-what functionality is required and which platforms are being targeted.
-
-For more information about using Swift with system frameworks and libraries,
-see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
