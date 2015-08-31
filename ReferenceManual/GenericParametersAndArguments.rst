@@ -80,7 +80,7 @@ Where Clauses
 
 You can specify additional requirements on type parameters and their associated types
 by including a ``where`` clause after the *generic parameter list*.
-A ``where`` clause consists of the keyword ``where``,
+A ``where`` clause consists of the ``where`` keyword,
 followed by a comma-separated list of one or more *requirements*.
 
 The *requirements* in a ``where`` clause specify that a type parameter inherits from

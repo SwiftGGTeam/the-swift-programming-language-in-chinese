@@ -471,7 +471,7 @@ For examples of how to use these various types of values in ``switch`` statement
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
 A ``switch`` case can optionally contain a where clause after each pattern.
-A :newTerm:`where clause` is introduced by the keyword ``where`` followed by an expression,
+A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
 If a where clause is present, the *statements* within the relevant case
@@ -489,13 +489,13 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
     >> }
 
 As the above example shows, patterns in a case can also bind constants
-using the keyword ``let`` (they can also bind variables using the keyword ``var``).
+using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
 These constants (or variables) can then be referenced in a corresponding where clause
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
 none of those patterns can contain constant or variable bindings.
 
-A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
+A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
 which must appear at the end of the ``switch`` statement.
@@ -533,7 +533,7 @@ the program exits from the ``switch`` statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
-which simply consists of the keyword ``fallthrough``,
+which simply consists of the ``fallthrough`` keyword,
 in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
@@ -643,8 +643,8 @@ Break Statement
 
 A ``break`` statement ends program execution of a loop,
 an ``if`` statement, or a ``switch`` statement.
-A ``break`` statement can consist of only the keyword ``break``,
-or it can consist of the keyword ``break`` followed by the name of a statement label,
+A ``break`` statement can consist of only the ``break`` keyword,
+or it can consist of the ``break`` keyword followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -686,8 +686,8 @@ Continue Statement
 
 A ``continue`` statement ends program execution of the current iteration of a loop
 statement but does not stop execution of the loop statement.
-A ``continue`` statement can consist of only the keyword ``continue``,
-or it can consist of the keyword ``continue`` followed by the name of a statement label,
+A ``continue`` statement can consist of only the ``continue`` keyword,
+or it can consist of the ``continue`` keyword followed by the name of a statement label,
 as shown below.
 
 .. syntax-outline::
@@ -769,8 +769,8 @@ A ``return`` statement occurs in the body of a function or method definition
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
-A ``return`` statement can consist of only the keyword ``return``,
-or it can consist of the keyword ``return`` followed by an expression, as shown below.
+A ``return`` statement can consist of only the ``return`` keyword,
+or it can consist of the ``return`` keyword followed by an expression, as shown below.
 
 .. syntax-outline::
 
@@ -874,7 +874,7 @@ and begin error propagation to its enclosing scope.
 The error that's thrown continues to propagate until it's handled by a ``catch`` clause
 of a ``do`` statement.
 
-A ``throw`` statement consists of the keyword ``throw``
+A ``throw`` statement consists of the ``throw`` keyword
 followed by an expression, as shown below.
 
 .. syntax-outline::

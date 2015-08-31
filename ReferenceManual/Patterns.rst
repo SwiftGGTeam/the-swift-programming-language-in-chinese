@@ -120,8 +120,8 @@ Value-Binding Pattern
 
 A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
 Value-binding patterns that bind a matched value to the name of a constant
-begin with the keyword ``let``; those that bind to the name of variable
-begin with the keyword ``var``.
+begin with the ``let`` keyword; those that bind to the name of variable
+begin with the ``var`` keyword.
 
 Identifiers patterns within a value-binding pattern
 bind new named variables or constants to their matching values. For example,
