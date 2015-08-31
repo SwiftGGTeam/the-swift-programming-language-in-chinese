@@ -184,7 +184,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 // message 是 "3 times 2.5 is 7.5"
 ```
 
-在上面的例子中，`multiplier`作为`\(multiplier)`被插入到一个字符串字面量中。
+在上面的例子中，`multiplier`作为`\(multiplier)`被插入到一个字符串常量量中。
 当创建字符串执行插值计算时此占位符会被替换为`multiplier`实际的值。
 
 `multiplier`的值也作为字符串中后面表达式的一部分。
