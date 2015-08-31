@@ -609,20 +609,6 @@ delaying the actual evaluation of the expression
 until you call the closure.
 For example:
 
-.. Not as good of an example
-
-    ::
-
-        var remainingDoughnuts = 99
-        let doughnutFlavor: () -> String = { remainingDoughnuts -= 1; return "Delicious!" }
-        print(remainingDoughnuts) // still 99
-        print(doughnutFlavor())
-        print(remainingDoughnuts) // now 98
-
-    Even though the number of doughnuts is reduced by one
-    as part of determining the doughnut flavor,
-    that operation is delayed until the ``doughnutFlavor`` closure is called.
-
 ::
 
     var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -631,27 +617,13 @@ For example:
     print("Now serving \(nextCustomer())!")
     print(customersInLine.count)  // Now there are 4 people in line
 
-    var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    let announcement: () -> String = {
-        if let customer = customersInLine.popLast() {
-            return "Now serving \(customer)!"
-        } else {
-            return "Anybody else ready?"
-        }
-    }
-    print(customersInLine.count)  // Still 5 people in line
-    print(announcement)
-    print(customersInLine.count)  // Now there are 4 people in line
-
-.. TODO: Pick one of the two alternatives above.
-
 Even though the last element of the ``customersInLine`` array is removed
 as part of the closure,
 the operation isn't carried out until the closure is called later on.
 If the closure isn't called,
 the expression that the closure returns is never evaluated.
 
-.. transition into logging example
+.. TODO: transition into logging example - now we're passing it into a function.
 
 ::
 
