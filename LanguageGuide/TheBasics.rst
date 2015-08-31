@@ -1205,8 +1205,7 @@ you place an exclamation mark after the optional's type when you declare it.
 
 .. note::
 
-   If you try to use the value wrapped in an implicitly unwrapped optional
-   when that value is ``nil``,
+   If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
    you'll trigger a runtime error.
    The result is exactly the same as if you place an exclamation mark
    after a normal optional that does not contain a value.
