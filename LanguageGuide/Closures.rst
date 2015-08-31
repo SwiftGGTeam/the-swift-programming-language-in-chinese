@@ -577,6 +577,31 @@ and does not affect the variable captured by ``incrementBySeven``:
    Swift uses *capture lists* to break these strong reference cycles.
    For more information, see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures`.
 
+
+.. _Closures_Autoclosures:
+
+Using Closures to Delay Argument Execution
+------------------------------------------
+
+.. OUTLINE
+
+   - you don't always want arguments to a function to be evaluated right away
+   - for example, short circuit evaluation of OR
+   - for example, delayed evaluation of assert() log message
+
+   - to delay evaluation of an expression, wrap it in a closure
+   - let delayed = { print("evaluated") ; return 100 }
+   - most common use is as part of a function call
+   - doSomething("blue", { return doSomethingElse() })
+
+   - the calling syntax is kind of heavy weight
+   - using @autoclosure lets you imply/omit the closure at the call site
+   - the argument is automatically wrapped in a closure
+
+   - @autoclosure implies @noescape
+   - use @autoclosure(escaping) as needed
+
+
 .. _Closures_ClosuresAreReferenceTypes:
 
 Closures Are Reference Types
