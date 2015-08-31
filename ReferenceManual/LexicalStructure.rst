@@ -60,6 +60,9 @@ but the comment markers must be balanced.
    No other syntactic category refers to this one,
    and the prose is sufficient to define it completely.
 
+Comments can contain additional formatting and markup,
+as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
+
 .. _LexicalStructure_Identifiers:
 
 Identifiers
