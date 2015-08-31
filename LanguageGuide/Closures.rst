@@ -580,12 +580,14 @@ and does not affect the variable captured by ``incrementBySeven``:
 
 .. _Closures_Autoclosures:
 
-Using Closures to Delay Argument Execution
-------------------------------------------
+Using Closures to Delay Evaluation
+----------------------------------
 
 .. OUTLINE
 
-   - you don't always want arguments to a function to be evaluated right away
+   - you don't always want an expression to be evaluated right away
+   - the most common case is passing arguments to a function
+   - delayed evaluation for correctness and/or performance
    - for example, short circuit evaluation of OR
    - for example, delayed evaluation of assert() log message
 
@@ -601,6 +603,51 @@ Using Closures to Delay Argument Execution
    - @autoclosure implies @noescape
    - use @autoclosure(escaping) as needed
 
+
+::
+
+    func log(condition: Bool, message: () -> String) {
+        guard condition else { return }
+        let messageContent = message()
+        print(messageContent)
+    }
+    log(2+2 == 5, message: {"This is never printed."})
+    log(true, message: {"This is printed."})
+
+The closure that returns the message is only run
+if the logging condition is ``true`` ---
+the closure might be computationally expensive
+or even change some state in the program.
+
+Marking it with autoclosure lets you write it as a normal expression:
+
+::
+
+    func log(condition: Bool, @autoclosure message: () -> String) {
+        guard condition else { return }
+        let messageContent = message()
+        print(messageContent)
+    }
+    log(2+2 == 5, message: "This is never printed.")
+    log(true, message: "This is printed.")
+
+The ``autoclosure`` attribute implies ``noescape``.
+If you want an autoclosure that is allowed to escape,
+use the ``autoclosure(escaping)`` form of the attribute:
+
+::
+
+    var errors: [() -> String] = []
+    func log(condition: Bool, @autoclosure(escaping) message: () -> String) {
+        guard condition else { return }
+        let messageContent = message()
+        errors.append(message)
+    }
+    log(2+2 == 5, message: "This is never printed.")
+    log(true, message: "This is printed.")
+    print("Encountered \(errors.count) error(s).")
+    for error in errors { print(error()) }
+  
 
 .. _Closures_ClosuresAreReferenceTypes:
 
