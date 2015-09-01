@@ -570,7 +570,7 @@ not an instance of ``SomeClass``.
 And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
 not an instance of a type that conforms to ``SomeProtocol`` at runtime.
 You can use a ``dynamicType`` expression with an instance of a type
-to access that instance's runtime type as a value,
+to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
 .. testcode:: metatype-type
@@ -587,16 +587,45 @@ as the following example shows:
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // someInstance is of type SomeBaseClass at compile time, but
-    -> // someInstance is of type SomeSubClass at runtime
+    -> // The compile-time type of someInstance is SomeBaseClass,
+    -> // and the runtime type of someInstance is SomeBaseClass
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 
-.. note::
+Use the identity operators (``===``  and ``!==``) to test
+whether an instance's runtime type is the same as its compile-time type.
 
-   You can construct a class instance from a class metatype value
-   only if the initializer is declared to be ``required``
-   or the class is declared to be ``final``.
+.. testcode:: metatype-type
+
+    -> if someInstance.dynamicType === someInstance.self {
+          print("The dynamic type of someInstance is SomeBaseCass")
+       } else {
+          print("The dynamic type of someInstance isn't SomeBaseClass")
+       }
+    <- The dynamic type of someInstance isn't SomeSubClass
+
+Use an initializer expression to construct an instance of a type
+from that type's metatype value.
+For class instances,
+the initializer that's called must be marked with the ``required`` keyword
+or the entire class marked with the ``final`` keyword.
+
+.. testcode:: metatype-type-init
+
+    -> class AnotherSubClass: SomeBaseClass {
+          let string: String
+          required init(string: String) {
+             self.string = string
+          }
+          override class func printClassName() {
+             print("AnotherSubClass")
+          }
+       }
+    -> let metatype: AnotherSubClass.Type = AnotherSubClass.self
+    << // metatype : AnotherSubClass.Type = REPL.AnotherSubClass
+    -> let anotherInstance = metatype.init(string: "some string")
+    << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
+
 
 .. langref-grammar
 
