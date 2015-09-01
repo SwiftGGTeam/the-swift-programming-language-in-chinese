@@ -459,7 +459,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
 
 .. testcode:: closures
 
-   -> func makeIncrementer(forIncrement amount: Int) -> Void -> Int {
+   -> func makeIncrementer(forIncrement amount: Int) -> () -> Int {
          var runningTotal = 0
          func incrementer() -> Int {
             runningTotal += amount
@@ -468,7 +468,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
          return incrementer
       }
 
-The return type of ``makeIncrementer`` is ``Void -> Int``.
+The return type of ``makeIncrementer`` is ``() -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
 and returns an ``Int`` value each time it is called.
@@ -577,11 +577,40 @@ and does not affect the variable captured by ``incrementBySeven``:
    Swift uses *capture lists* to break these strong reference cycles.
    For more information, see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures`.
 
+.. _Closures_ClosuresAreReferenceTypes:
+
+Closures Are Reference Types
+----------------------------
+
+In the example above,
+``incrementBySeven`` and ``incrementByTen`` are constants,
+but the closures these constants refer to are still able to increment
+the ``runningTotal`` variables that they have captured.
+This is because functions and closures are :newTerm:`reference types`.
+
+Whenever you assign a function or a closure to a constant or a variable,
+you are actually setting that constant or variable to be
+a *reference* to the function or closure.
+In the example above,
+it is the choice of closure that ``incrementByTen`` *refers to* that is constant,
+and not the contents of the closure itself.
+
+This also means that if you assign a closure to two different constants or variables,
+both of those constants or variables will refer to the same closure:
+
+.. testcode:: closures
+
+   -> let alsoIncrementByTen = incrementByTen
+   << // alsoIncrementByTen : Void -> Int = (Function)
+   -> alsoIncrementByTen()
+   << // r5 : Int = 50
+   /> returns a value of \(r5)
+   </ returns a value of 50
 
 .. _Closures_Autoclosures:
 
-Using Closures to Delay Evaluation
-----------------------------------
+Autoclosures
+------------
 
 .. OUTLINE
 
@@ -604,9 +633,12 @@ Using Closures to Delay Evaluation
    - use @autoclosure(escaping) as needed
 
 You can use a closure that doesn't take any arguments
-to wrap an expression,
-delaying the actual evaluation of the expression
+to wrap a piece of code,
+delaying the actual evaluation of that code
 until you call the closure.
+This is useful for code
+that has side effects or is computationally expensive,
+because it lets you control when that code is evaluated.
 For example:
 
 .. testcode:: delay-expression-evaluation
@@ -631,20 +663,23 @@ For example:
        customersInLine.popFirst()           // FAIL
    It also returns an optional, which complicates the listing.
 
+.. TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
+
 Even though the last element of the ``customersInLine`` array is removed
 as part of the closure,
 the operation isn't carried out until the closure is called later on.
 If the closure is never called,
 the expression inside the closure is never evaluated.
-Note that the type of ``nextCustomer`` is ``() -> String`` and not ``String`` ---
-a closure that takes no arguments and returns a string.
+Note that the type of ``nextCustomer`` is not ``String``
+but ``() -> String`` ---
+a function that takes no arguments and returns a string.
 
-A common use of closures to delay evaluation of an expression
-is when calling a function.
-Delaying the evaluation an expression
+Using closures to delay the evaluation of an expression is especially useful
+when passing arguments to a function.
+Delaying the evaluation of an expression
 that has side effects or is computationally expensive
 lets you evaluate the expression
-at an appropriate point in the program ---
+at an appropriate point in the function's body ---
 or even choose not to evaluate the expression at all.
 
 For example, the ``assert(_:_:file:line:)`` function in the standard library
@@ -671,7 +706,7 @@ Here's a simplified version of that function:
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
 should be automatically wrapped in a closure.
-You call the ``assert(_:message_)`` function
+You call the ``assert(_:message:)`` function
 as if it took a ``String`` argument instead of a closure.
 
 .. testcode:: simple-assert-with-autoclosure
@@ -719,35 +754,7 @@ use the ``autoclosure(escaping)`` form of the attribute:
        }
     <- This closure is run.
 
+.. TODO: Walk through this example and explain what's going on.
+
 For more information about the ``autoclosure`` and ``noescape`` attributes,
 see :ref:`Attributes_DeclarationAttributes`.
-
-.. _Closures_ClosuresAreReferenceTypes:
-
-Closures Are Reference Types
-----------------------------
-
-In the example above,
-``incrementBySeven`` and ``incrementByTen`` are constants,
-but the closures these constants refer to are still able to increment
-the ``runningTotal`` variables that they have captured.
-This is because functions and closures are :newTerm:`reference types`.
-
-Whenever you assign a function or a closure to a constant or a variable,
-you are actually setting that constant or variable to be
-a *reference* to the function or closure.
-In the example above,
-it is the choice of closure that ``incrementByTen`` *refers to* that is constant,
-and not the contents of the closure itself.
-
-This also means that if you assign a closure to two different constants or variables,
-both of those constants or variables will refer to the same closure:
-
-.. testcode:: closures
-
-   -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : Void -> Int = (Function)
-   -> alsoIncrementByTen()
-   << // r5 : Int = 50
-   /> returns a value of \(r5)
-   </ returns a value of 50
