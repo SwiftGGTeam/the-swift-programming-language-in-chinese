@@ -613,25 +613,26 @@ For example:
 
     var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     let nextCustomer = { customersInLine.popFirst() ?? "anybody" }
-    print(customersInLine.count)  // Still 5 people in line
+    print(customersInLine.count)
+
     print("Now serving \(nextCustomer())!")
-    print(customersInLine.count)  // Now there are 4 people in line
+    print(customersInLine.count)
 
 Even though the last element of the ``customersInLine`` array is removed
 as part of the closure,
 the operation isn't carried out until the closure is called later on.
-Note that the type of ``nextCustomer`` is ``() -> String`` and not ``String`` ---
-a closure that takes no arguments and returns a string.
 If the closure is never called,
 the expression inside the closure is never evaluated.
+Note that the type of ``nextCustomer`` is ``() -> String`` and not ``String`` ---
+a closure that takes no arguments and returns a string.
 
 A common use of closures to delay evaluation of an expression
 is when calling a function.
 Delaying the evaluation an expression
-that has side effects or is computationally expensive.
-This lets you evaluate the expression
+that has side effects or is computationally expensive
+lets you evaluate the expression
 at an appropriate point in the program ---
-or even determine not to evaluate the expression at all.
+or even choose not to evaluate the expression at all.
 
 For example, the ``assert(_:_:file:line:)`` function in the standard library
 uses a closure for its condition and logging message.
@@ -656,6 +657,8 @@ Here's a simplified version of that function:
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
 should be automatically wrapped in a closure.
+You call the ``assert(_:message_)`` function
+as if it took a ``String`` argument instead of a closure.
 
 ::
 
@@ -670,13 +673,15 @@ should be automatically wrapped in a closure.
 
 .. note::
 
-   Autoclosures change the meaning of a function call,
-   without any indication of that change at the call site.
-   Overusing autoclosures makes your code hard to read.
+   Overusing autoclosures can make your code hard to read.
    The context and function name should make it clear
    that evaluation of an expression is being deferred.
 
-The ``autoclosure`` attribute implies ``noescape``.
+The ``autoclosure`` attribute implies the ``noescape`` attribute,
+which indicates that the closure is used only within the function ---
+the closure isn't allowed to be stored in a way
+that would let it "escape" the scope of the function
+and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
@@ -696,6 +701,8 @@ use the ``autoclosure(escaping)`` form of the attribute:
         print(error())
     }
   
+For more information about the ``autoclosure`` and ``noescape`` attributes,
+see :ref:`Attributes_DeclarationAttributes`.
 
 .. _Closures_ClosuresAreReferenceTypes:
 
