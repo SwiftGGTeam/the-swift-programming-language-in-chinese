@@ -187,7 +187,7 @@ to capture an implicit closure over a specified expression instead of the expres
 This provides a syntactically convenient way to defer the evaluation of an expression
 until its value is used in the function body.
 For an example of an autoclosure function type parameter,
-see :ref:`Functions_Autoclosure`.
+see :ref:`Closures_Autoclosures:`.
 
 A function type can have a variadic parameter in its *parameter type*.
 Syntactically,
