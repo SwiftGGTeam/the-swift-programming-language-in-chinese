@@ -612,7 +612,7 @@ For example:
 ::
 
     var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    let nextCustomer = { customersInLine.popLast() ?? "Anybody" }
+    let nextCustomer = { customersInLine.popFirst() ?? "anybody" }
     print(customersInLine.count)  // Still 5 people in line
     print("Now serving \(nextCustomer())!")
     print(customersInLine.count)  // Now there are 4 people in line
@@ -620,37 +620,53 @@ For example:
 Even though the last element of the ``customersInLine`` array is removed
 as part of the closure,
 the operation isn't carried out until the closure is called later on.
-If the closure isn't called,
-the expression that the closure returns is never evaluated.
+Note that the type of ``nextCustomer`` is ``() -> String`` and not ``String`` ---
+a closure that takes no arguments and returns a string.
+If the closure is never called,
+the expression inside the closure is never evaluated.
 
-.. TODO: transition into logging example - now we're passing it into a function.
+A common use of closures to delay evaluation of an expression
+is when calling a function.
+Delaying the evaluation an expression
+that has side effects or is computationally expensive.
+This lets you evaluate the expression
+at an appropriate point in the program ---
+or even determine not to evaluate the expression at all.
+
+For example, the ``assert(_:_:file:line:)`` function in the standard library
+uses a closure for its condition and logging message.
+During debug builds, it evaluates the condition and,
+if the condition fails,
+evaluates the logging message so it can log the problem.
+During production builds, it doesn't do anything:
+neither argument is evaluated.
+Here's a simplified version of that function:
 
 ::
 
-    func log(condition: Bool, message: () -> String) {
-        guard condition else { return }
-        let messageContent = message()
-        print(messageContent)
+    func assert(condition: Bool, message: () -> String) {
+        if condition {
+            let messageContent = message()
+            print(messageContent)
+        }
     }
-    log(2+2 == 5, message: {"This is never printed."})
-    log(true, message: {"This is printed."})
+    assert(2+2 == 4, message: {"This closure is never run."})
+    assert(true, message: {"This closure is run."})
 
-The closure that returns the message is only run
-if the logging condition is ``true`` ---
-the closure might be computationally expensive
-or even change some state in the program.
-
-Marking it with autoclosure lets you write it as a normal expression:
+You can use the ``autoclosure`` attribute on the function parameter,
+which indicates that the expression being passed
+should be automatically wrapped in a closure.
 
 ::
 
-    func log(condition: Bool, @autoclosure message: () -> String) {
-        guard condition else { return }
-        let messageContent = message()
-        print(messageContent)
+    func assert(condition: Bool, @autoclosure message: () -> String) {
+        if condition {
+            let messageContent = message()
+            print(messageContent)
+        }
     }
-    log(2+2 == 5, message: "This is never printed.")
-    log(true, message: "This is printed.")
+    assert(2+2 == 4, message: "This closure is never run.")
+    assert(true, message: "This closure is run.")
 
 .. note::
 
@@ -667,15 +683,18 @@ use the ``autoclosure(escaping)`` form of the attribute:
 ::
 
     var errors: [() -> String] = []
-    func log(condition: Bool, @autoclosure(escaping) message: () -> String) {
-        guard condition else { return }
-        let messageContent = message()
-        errors.append(message)
+    func assert(condition: Bool, @autoclosure(escaping) message: () -> String) {
+        if condition {
+            errors.append(message)
+        }
     }
-    log(2+2 == 5, message: "This is never printed.")
-    log(true, message: "This is printed.")
+    assert(2+2 == 4, message: "This closure is never run.")
+    assert(true, message: "This closure is run.")
+
     print("Encountered \(errors.count) error(s).")
-    for error in errors { print(error()) }
+    for error in errors {
+        print(error())
+    }
   
 
 .. _Closures_ClosuresAreReferenceTypes:
