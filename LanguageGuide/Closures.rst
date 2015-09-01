@@ -609,14 +609,27 @@ delaying the actual evaluation of the expression
 until you call the closure.
 For example:
 
-::
+.. testcode:: delay-expression-evaluation
 
-    var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    let nextCustomer = { customersInLine.popFirst() ?? "anybody" }
-    print(customersInLine.count)
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> let nextCustomer = { customersInLine.removeAtIndex(0) }
+    << // nextCustomer : () -> String = (Function)
+    -> print(customersInLine.count)
+    <- 5
+    ---
+    -> print("Now serving \(nextCustomer())!")
+    <- Now serving Chris!
+    -> print(customersInLine.count)
+    <- 4
 
-    print("Now serving \(nextCustomer())!")
-    print(customersInLine.count)
+.. Using removeAtIndex(_:) instead of popFirst() because the latter only works
+   with ArraySlice, not with Array:
+       customersInLine[0..<3].popLast()     // fine
+       customersInLine[0..<3].popFirst()    // fine
+       customersInLine.popLast()            // fine
+       customersInLine.popFirst()           // FAIL
+   It also returns an optional, which complicates the listing.
 
 Even though the last element of the ``customersInLine`` array is removed
 as part of the closure,
@@ -643,16 +656,17 @@ During production builds, it doesn't do anything:
 neither argument is evaluated.
 Here's a simplified version of that function:
 
-::
+.. testcode:: simple-assert
 
-    func assert(condition: Bool, message: () -> String) {
-        if condition {
-            let messageContent = message()
-            print(messageContent)
-        }
-    }
-    assert(2+2 == 4, message: {"This closure is never run."})
-    assert(true, message: {"This closure is run."})
+    -> func assert(condition: Bool, message: () -> String) {
+           if condition {
+               let messageContent = message()
+               print(messageContent)
+           }
+       }
+    -> assert(2+2 == 5, message: {"This closure is never run."})
+    -> assert(true, message: {"This closure is run."})
+    <- This closure is run.
 
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
@@ -660,16 +674,17 @@ should be automatically wrapped in a closure.
 You call the ``assert(_:message_)`` function
 as if it took a ``String`` argument instead of a closure.
 
-::
+.. testcode:: simple-assert-with-autoclosure
 
-    func assert(condition: Bool, @autoclosure message: () -> String) {
-        if condition {
-            let messageContent = message()
-            print(messageContent)
-        }
-    }
-    assert(2+2 == 4, message: "This closure is never run.")
-    assert(true, message: "This closure is run.")
+    -> func assert(condition: Bool, @autoclosure message: () -> String) {
+           if condition {
+               let messageContent = message()
+               print(messageContent)
+           }
+       }
+    -> assert(2+2 == 5, message: "This closure is never run.")
+    -> assert(true, message: "This closure is run.")
+    <- This closure is run.
 
 .. note::
 
@@ -685,22 +700,25 @@ and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
-::
+.. testcode:: simple-assert-with-escaping-autoclosure
 
-    var errors: [() -> String] = []
-    func assert(condition: Bool, @autoclosure(escaping) message: () -> String) {
-        if condition {
-            errors.append(message)
-        }
-    }
-    assert(2+2 == 4, message: "This closure is never run.")
-    assert(true, message: "This closure is run.")
+    -> var errors: [() -> String] = []
+    << // errors : [() -> String] = []
+    -> func assert(condition: Bool, @autoclosure(escaping) message: () -> String) {
+           if condition {
+               errors.append(message)
+           }
+       }
+    -> assert(2+2 == 5, message: "This closure is never run.")
+    -> assert(true, message: "This closure is run.")
+    ---
+    -> print("Encountered \(errors.count) error(s).")
+    <- Encountered 1 error(s).
+    -> for error in errors {
+           print(error())
+       }
+    <- This closure is run.
 
-    print("Encountered \(errors.count) error(s).")
-    for error in errors {
-        print(error())
-    }
-  
 For more information about the ``autoclosure`` and ``noescape`` attributes,
 see :ref:`Attributes_DeclarationAttributes`.
 
