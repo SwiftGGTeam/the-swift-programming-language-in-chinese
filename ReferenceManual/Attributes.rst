@@ -45,7 +45,7 @@ the ``noreturn`` attribute to a function or method *type*.
     Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
     except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute,
-    see :ref:`Types_FunctionType`.
+    see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
 
 ``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
