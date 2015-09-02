@@ -612,26 +612,6 @@ both of those constants or variables will refer to the same closure:
 Autoclosures
 ------------
 
-.. OUTLINE
-
-   - you don't always want an expression to be evaluated right away
-   - the most common case is passing arguments to a function
-   - delayed evaluation for correctness and/or performance
-   - for example, short circuit evaluation of OR
-   - for example, delayed evaluation of assert() log message
-
-   - to delay evaluation of an expression, wrap it in a closure
-   - let delayed = { print("evaluated") ; return 100 }
-   - most common use is as part of a function call
-   - doSomething("blue", { return doSomethingElse() })
-
-   - the calling syntax is kind of heavy weight
-   - using @autoclosure lets you imply/omit the closure at the call site
-   - the argument is automatically wrapped in a closure
-
-   - @autoclosure implies @noescape
-   - use @autoclosure(escaping) as needed
-
 You can use a closure that doesn't take any arguments
 to wrap a piece of code,
 delaying the actual evaluation of that code
