@@ -179,7 +179,7 @@ and it is finished executing the ``for``-``in`` statement.
 
     Grammar of a for-in statement
 
-    for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression code-block where-clause-OPT
+    for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression where-clause-OPT code-block
 
 
 .. _Statements_WhileStatement:
