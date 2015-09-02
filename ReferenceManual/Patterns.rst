@@ -327,7 +327,7 @@ Type-Casting Patterns
 ---------------------
 
 There are two type-casting patterns, the ``is`` pattern and the ``as`` pattern.
-Both type-casting patterns appear only in ``switch`` statement
+The ``is`` pattern appears only in ``switch`` statement
 case labels. The ``is`` and ``as`` patterns have the following form:
 
 .. syntax-outline::
