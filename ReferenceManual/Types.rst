@@ -602,7 +602,7 @@ whether an instance's runtime type is the same as its compile-time type.
        } else {
           print("The dynamic type of someInstance isn't SomeBaseClass")
        }
-    <- The dynamic type of someInstance isn't SomeSubClass
+    <- The dynamic type of someInstance isn't SomeBaseClass
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
@@ -610,7 +610,7 @@ For class instances,
 the initializer that's called must be marked with the ``required`` keyword
 or the entire class marked with the ``final`` keyword.
 
-.. testcode:: metatype-type-init
+.. testcode:: metatype-type
 
     -> class AnotherSubClass: SomeBaseClass {
           let string: String
