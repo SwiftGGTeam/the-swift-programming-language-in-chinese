@@ -1130,27 +1130,15 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
-Multiple optional bindings can appear in a single ``if`` statement
-as a comma-separated list of assignment expressions.
+You can include multiple optional bindings in a single ``if`` statement
+and use a ``where`` clause to check for a Boolean condition:
 
-.. assertion:: useOfMultipleValueOptionalBinding
+.. testcode:: multipleOptionalBindings
 
-   -> let a: String? = "1"
-   << // a : String? = Optional("1")
-   -> let b: String? = "2"
-   << // b : String? = Optional("2")
-   -> if let x = a, y = b {
-         print(x)
-         print(y)
-      }
-   <- 1
-   <- 2
-
-.. syntax-outline::
-
-   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
-      <#statements#>
-   }
+   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+         print("\(firstNumber) < \(secondNumber)")
+      } 
+   <- 4 < 42
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
