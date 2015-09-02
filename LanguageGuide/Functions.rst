@@ -348,9 +348,6 @@ returns an actual tuple value or ``nil``:
       }
    <- min is -6 and max is 109
 
-.. TODO: mention that you can pass a tuple as the entire set of arguments,
-   as in var argTuple = (0, "one", '2'); x.foo(argTuple)
-
 .. _Functions_FunctionParameterNames:
 
 Function Parameter Names
