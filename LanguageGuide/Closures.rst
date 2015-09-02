@@ -692,6 +692,37 @@ Here's a simplified version of that function:
     -> assert(true, message: {"This closure is run."})
     <- This closure is run.
 
+
+
+
+For example, the ``serveNextCustomer(_:counters:)`` function in the listing below
+takes a customer's name and a list of service counters.
+Service counters that are available have a ``nil`` value
+and counters that are in use have the name of the customer
+who is being helped at that counter.
+The customer's name is passed to this function wrapped in a closure
+and is evaluated only if there is an available counter.
+
+::
+
+    var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    var counters: [String?] = [nil, nil]
+
+    func serveNextCustomer(customer: () -> String, inout counters: [String?]) {
+        for i in counters.indices {
+            if counters[i] == nil {
+                counters[i] = customer()
+                return
+            }
+        }
+    }
+
+    serveNextCustomer({customersInLine.removeAtIndex(0)}, counters: &counters)
+
+
+
+
+
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
 should be automatically wrapped in a closure.
