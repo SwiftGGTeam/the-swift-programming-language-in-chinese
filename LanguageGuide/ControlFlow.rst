@@ -98,8 +98,8 @@ by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 This calculation doesn't need to know the individual counter values each time through the loop ---
 it simply needs to execute the loop the correct number of times.
-The underscore character ``_``
-(used in place of a loop variable)
+The underscore character (``_``)
+used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
@@ -810,7 +810,9 @@ ______
 
 You can use tuples to test multiple values in the same ``switch`` statement.
 Each element of the tuple can be tested against a different value or interval of values.
-Alternatively, use the underscore (``_``) identifier to match any possible value.
+Alternatively, use the underscore character (``_``),
+also known as the wildcard pattern,
+to match any possible value.
 
 The example below takes an (x, y) point,
 expressed as a simple tuple of type ``(Int, Int)``,
