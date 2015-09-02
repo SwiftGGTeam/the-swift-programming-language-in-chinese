@@ -1246,7 +1246,7 @@ You use :newTerm:`error handling` to respond to error conditions
 your program may encounter during execution.
 
 In contrast to optionals,
-which can use the presence or absence or a value
+which can use the presence or absence of a value
 to communicate success or failure of a function,
 error handling allows you to determine the underlying cause of failure,
 and, if necessary, propagate the error to another part of your program.
