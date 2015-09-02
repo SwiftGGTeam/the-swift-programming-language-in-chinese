@@ -612,6 +612,9 @@ both of those constants or variables will refer to the same closure:
 Autoclosures
 ------------
 
+.. TODO: Begin with a definition of an autoclosure
+   and a summary of why we're going to talk about deferred execution.
+
 You can use a closure that doesn't take any arguments
 to wrap a piece of code,
 delaying the actual evaluation of that code
@@ -654,6 +657,8 @@ Note that the type of ``nextCustomer`` is not ``String``
 but ``() -> String`` ---
 a function that takes no arguments and returns a string.
 
+.. TODO: Stronger transition between topics here.
+
 Using closures to delay the evaluation of an expression is especially useful
 when passing arguments to a function.
 Delaying the evaluation of an expression
@@ -661,6 +666,10 @@ that has side effects or is computationally expensive
 lets you evaluate the expression
 at an appropriate point in the function's body ---
 or even choose not to evaluate the expression at all.
+
+.. TODO: Better to use an example that has more than just a string literal
+   as the delayed expression ---
+   ideally, something that extends the example above.
 
 For example, the ``assert(_:_:file:line:)`` function in the standard library
 uses a closure for its condition and logging message.
