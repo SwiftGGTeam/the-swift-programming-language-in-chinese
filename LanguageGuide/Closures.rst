@@ -457,7 +457,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
 
 .. testcode:: closures
 
-   -> func makeIncrementer(forIncrement amount: Int) -> Void -> Int {
+   -> func makeIncrementer(forIncrement amount: Int) -> () -> Int {
          var runningTotal = 0
          func incrementer() -> Int {
             runningTotal += amount
@@ -466,7 +466,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
          return incrementer
       }
 
-The return type of ``makeIncrementer`` is ``Void -> Int``.
+The return type of ``makeIncrementer`` is ``() -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
 and returns an ``Int`` value each time it is called.
@@ -522,7 +522,7 @@ Here's an example of ``makeIncrementer`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementer(forIncrement: 10)
-   << // incrementByTen : Void -> Int = (Function)
+   << // incrementByTen : () -> Int = (Function)
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementer function that adds ``10`` to
@@ -550,7 +550,7 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementer(forIncrement: 7)
-   << // incrementBySeven : Void -> Int = (Function)
+   << // incrementBySeven : () -> Int = (Function)
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
@@ -599,33 +599,140 @@ both of those constants or variables will refer to the same closure:
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : Void -> Int = (Function)
+   << // alsoIncrementByTen : () -> Int = (Function)
    -> alsoIncrementByTen()
    << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
 
-.. TODO: Autoclosures
-   ------------------
+.. _Closures_Autoclosures:
 
-.. TODO: var closure1: @autoclosure () -> Int = 4  // Function producing 4 whenever it is called.
+Autoclosures
+------------
 
-.. TODO: from Assert.swift in stdlib/core:
-   @transparent
-   func assert(
-     condition: @autoclosure () -> Bool, message: StaticString = StaticString()
-   ) {
-   }
-.. TODO: note that an @autoclosure's argument type must always be ()
-   see also test/expr/closure/closures.swift
+An :newTerm:`autoclosure` is a closure that is automatically created 
+to wrap an expression that's being passed as an argument to a function.
+It doesn't take any arguments,
+and when it's called, it returns the value
+of the expression that's wrapped inside of it.
+An autoclosure lets you delay evaluation,
+because the code inside isn't run until you call the closure.
+This is useful for code
+that has side effects or is computationally expensive,
+because it lets you control when that code is evaluated.
+The code below shows how a closure delays evaluation.
 
-.. TODO: The autoclosure attribute modifies a function type,
-   changing the behavior of any assignment into (or initialization of) a value with the function type.
-   Instead of requiring that the rvalue and lvalue have the same function type,
-   an "auto closing" function type requires its initializer expression to have
-   the same type as the function's result type,
-   and it implicitly binds a closure over this expression.
-   This is typically useful for function arguments that want to
-   capture computation that can be run lazily.
-   autoclosure is only valid in a type of a syntactic function type
-   that is defined to take a syntactic empty tuple.
+.. testcode:: autoclosures
+
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> let nextCustomer = { customersInLine.removeAtIndex(0) }
+    << // nextCustomer : () -> String = (Function)
+    -> print(customersInLine.count)
+    <- 5
+    ---
+    -> print("Now serving \(nextCustomer())!")
+    <- Now serving Chris!
+    -> print(customersInLine.count)
+    <- 4
+
+.. Using removeAtIndex(_:) instead of popFirst() because the latter only works
+   with ArraySlice, not with Array:
+       customersInLine[0..<3].popLast()     // fine
+       customersInLine[0..<3].popFirst()    // fine
+       customersInLine.popLast()            // fine
+       customersInLine.popFirst()           // FAIL
+   It also returns an optional, which complicates the listing.
+
+.. TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
+
+Even though the first element of the ``customersInLine`` array is removed
+as part of the closure,
+that operation isn't carried out until the closure is actually called.
+If the closure is never called,
+the expression inside the closure is never evaluated.
+Note that the type of ``nextCustomer`` is not ``String``
+but ``() -> String`` ---
+a function that takes no arguments and returns a string.
+You get the same behavior when you do this in a function:
+
+.. testcode:: autoclosures-function
+
+    >> var customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(customer: () -> String) {
+           print("Now serving \(customer())!")
+       }
+    -> serveNextCustomer( { customersInLine.removeAtIndex(0) } )
+    <- Now serving Alex!
+
+The ``serveNextCustomer(_:)`` function in the listing above
+takes an explicit closure that returns the next customer's name.
+The version of ``serveNextCustomer(_:)`` below
+performs the same operation but, instead of using an explicit closure,
+it uses an autoclosure
+by marking its parameter with the ``@autoclosure`` attribute.
+Now you can call the function
+as if it took a ``String`` argument instead of a closure.
+
+.. testcode:: autoclosures-function-with-autoclosure
+
+    >> var customersInLine = ["Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(@autoclosure customer: () -> String) {
+           print("Now serving \(customer())!")
+       }
+    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    <- Now serving Ewa!
+
+.. note::
+
+   Overusing autoclosures can make your code hard to understand.
+   The context and function name should make it clear
+   that evaluation is being deferred.
+
+The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
+which indicates that the closure is used only within the function.
+That is, the closure isn't allowed to be stored in a way
+that would let it "escape" the scope of the function
+and be executed after the function returns.
+If you want an autoclosure that is allowed to escape,
+use the ``@autoclosure(escaping)`` form of the attribute:
+
+.. testcode:: autoclosures-function-with-escape
+
+    >> var customersInLine = ["Barry", "Daniella"]
+    << // customersInLine : [String] = ["Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Barry", "Daniella"]
+    -> var customerClosures: [() -> String] = []
+    << // customerClosures : [() -> String] = []
+    -> func collectCustomerClosures(@autoclosure(escaping) customer: () -> String) {
+           customerClosures.append(customer)
+       }
+    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    ---
+    -> print("Colected \(customerClosures.count) closures.")
+    <- Collected 2 closures.
+    -> for customerClosure in customerClosures {
+           print("Now serving \(customerClosures())!")
+       }
+    <- Now serving Barry!
+    <- Now serving Daniella!
+
+In the code above,
+instead of calling the closure passed to it
+as its ``customer`` argument,
+the ``collectCustomerClosures(_:)``function appends the closure to the ``customerClosures`` array.
+The array is declared outside the scope of the function,
+which means the closures in the array can be executed after the function returns.
+As a result,
+the value of the ``customer`` argument must be allowed to escape the function's scope.
+
+For more information about the ``@autoclosure`` and ``@noescape`` attributes,
+see :ref:`Attributes_DeclarationAttributes`.
