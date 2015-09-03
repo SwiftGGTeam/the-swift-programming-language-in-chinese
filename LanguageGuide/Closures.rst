@@ -666,80 +666,32 @@ that has side effects or is computationally expensive
 lets you evaluate the expression
 at an appropriate point in the function's body ---
 or even choose not to evaluate the expression at all.
+For example, the ``serveNextCustomer(_:)`` function in the listing below
+takes as its argument a closure that returns the next customer's name:
 
-.. TODO: Better to use an example that has more than just a string literal
-   as the delayed expression ---
-   ideally, something that extends the example above.
+.. testcode:: delay-evaluation-argument-no-autoclosure
 
-For example, the ``assert(_:_:file:line:)`` function in the standard library
-uses a closure for its condition and logging message.
-During debug builds, it evaluates the condition and,
-if the condition fails,
-evaluates the logging message so it can log the problem.
-During production builds, it doesn't do anything:
-neither argument is evaluated.
-Here's a simplified version of that function:
-
-.. testcode:: simple-assert
-
-    -> func assert(condition: Bool, message: () -> String) {
-           if condition {
-               let messageContent = message()
-               print(messageContent)
-           }
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(customer: () -> String) {
+           let customerName = customer()
+           print("New serving \(customerName)!")
        }
-    -> assert(2+2 == 5, message: {"This closure is never run."})
-    -> assert(true, message: {"This closure is run."})
-    <- This closure is run.
-
-
-
-
-For example, the ``serveNextCustomer(_:counters:)`` function in the listing below
-takes a customer's name and a list of service counters.
-Service counters that are available have a ``nil`` value
-and counters that are in use have the name of the customer
-who is being helped at that counter.
-The customer's name is passed to this function wrapped in a closure
-and is evaluated only if there is an available counter.
-
-::
-
-    var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    var counters: [String?] = [nil, nil]
-
-    func serveNextCustomer(customer: () -> String, inout counters: [String?]) {
-        for i in counters.indices {
-            if counters[i] == nil {
-                counters[i] = customer()
-                return
-            }
-        }
-    }
-
-    serveNextCustomer({customersInLine.removeAtIndex(0)}, counters: &counters)
-
-
-
-
+    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
 
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
 should be automatically wrapped in a closure.
-You call the ``assert(_:message:)`` function
+Using an autoclosure lets you call the function
 as if it took a ``String`` argument instead of a closure.
 
-.. testcode:: simple-assert-with-autoclosure
+.. testcode:: delay-evaluation-argument-no-autoclosure
 
-    -> func assert(condition: Bool, @autoclosure message: () -> String) {
-           if condition {
-               let messageContent = message()
-               print(messageContent)
-           }
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(@autoclosure customer: () -> String) {
+           let customerName = customer()
+           print("New serving \(customerName)!")
        }
-    -> assert(2+2 == 5, message: "This closure is never run.")
-    -> assert(true, message: "This closure is run.")
-    <- This closure is run.
+    -> serveNextCustomer(customersInLine.removeAtIndex(0))
 
 .. note::
 
@@ -755,24 +707,20 @@ and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
-.. testcode:: simple-assert-with-escaping-autoclosure
-
-    -> var errors: [() -> String] = []
-    << // errors : [() -> String] = []
-    -> func assert(condition: Bool, @autoclosure(escaping) message: () -> String) {
-           if condition {
-               errors.append(message)
-           }
+.. testcode:: delay-evaluation-argument-no-autoclosure
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> var servedCustomers: [() -> String] = []
+    -> func serveNextCustomer(@autoclosure(escaping) customer: () -> String) {
+           servedCustomers.append(customer)
        }
-    -> assert(2+2 == 5, message: "This closure is never run.")
-    -> assert(true, message: "This closure is run.")
+    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
+    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
     ---
-    -> print("Encountered \(errors.count) error(s).")
-    <- Encountered 1 error(s).
-    -> for error in errors {
-           print(error())
+    -> print("Served \(servedCustomers.count) customers.")
+    -> for customer in servedCustomers {
+           let customerName = customer()
+           print("New serving \(customerName)!")
        }
-    <- This closure is run.
 
 .. TODO: Walk through this example and explain what's going on.
 
