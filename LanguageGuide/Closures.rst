@@ -672,11 +672,13 @@ takes as its argument a closure that returns the next customer's name:
 .. testcode:: delay-evaluation-argument-no-autoclosure
 
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
     -> serveNextCustomer({customersInLine.removeAtIndex(0)})
+    <- Now serving Chris!
 
 You can use the ``autoclosure`` attribute on the function parameter,
 which indicates that the expression being passed
@@ -686,12 +688,14 @@ as if it took a ``String`` argument instead of a closure.
 
 .. testcode:: delay-evaluation-argument-no-autoclosure
 
-    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> var customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(@autoclosure customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
     -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    <- Now serving Alex!
 
 .. note::
 
@@ -708,8 +712,10 @@ If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
 .. testcode:: delay-evaluation-argument-no-autoclosure
-    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> var customersInLine = ["Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     -> var servedCustomers: [() -> String] = []
+    << // servedCustomers : [() -> String] = []
     -> func serveNextCustomer(@autoclosure(escaping) customer: () -> String) {
            servedCustomers.append(customer)
        }
@@ -717,10 +723,13 @@ use the ``autoclosure(escaping)`` form of the attribute:
     -> serveNextCustomer({customersInLine.removeAtIndex(0)})
     ---
     -> print("Served \(servedCustomers.count) customers.")
+    <- Served 2 customers.
     -> for customer in servedCustomers {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
+    <- Now serving Ewa!
+    <- Now serving Barry!
 
 .. TODO: Walk through this example and explain what's going on.
 
