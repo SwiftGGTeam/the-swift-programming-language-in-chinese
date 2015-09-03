@@ -650,7 +650,7 @@ The code below shows how a closure delays evaluation.
 
 Even though the first element of the ``customersInLine`` array is removed
 as part of the closure,
-the operation isn't carried out until the closure is called later on.
+that operation isn't carried out until the closure is actually called.
 If the closure is never called,
 the expression inside the closure is never evaluated.
 Note that the type of ``nextCustomer`` is not ``String``
@@ -703,7 +703,7 @@ That is, the closure isn't allowed to be stored in a way
 that would let it "escape" the scope of the function
 and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
-use the ``autoclosure(escaping)`` form of the attribute:
+use the ``@autoclosure(escaping)`` form of the attribute:
 
 .. testcode:: autoclosures-function-with-escape
 
@@ -730,7 +730,7 @@ use the ``autoclosure(escaping)`` form of the attribute:
 In the code above,
 instead of calling the closure passed to it
 as its ``customer`` argument,
-the function appends the closure to the ``customerClosures`` array.
+the ``collectCustomerClosures(_:)``function appends the closure to the ``customerClosures`` array.
 The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
