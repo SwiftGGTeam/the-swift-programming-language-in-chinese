@@ -662,7 +662,7 @@ You use the ``@autoclosure`` attribute on the function parameter,
 to indicates that the expression being passed
 gets automatically wrapped in a closure.
 For example, the ``serveNextCustomer(_:)`` function in the listing below
-taks as its argument an explicit closure
+takes as its argument an explicit closure
 that returns the next customer's name,
 and the ``serveNextCustomer2(_:)`` function 
 does the same thing with an autoclosure.
@@ -671,19 +671,19 @@ as if it took a ``String`` argument instead of a closure.
 
 .. testcode:: autoclosures
 
-    -> customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
-    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
+    -> customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> serveNextCustomer({ customersInLine.removeAtIndex(0) })
     <- Now serving Chris!
     ---
-    -> customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer2(@autoclosure customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
+    -> customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
     -> serveNextCustomer2(customersInLine.removeAtIndex(0))
     <- Now serving Alex!
 
@@ -702,12 +702,13 @@ If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
 .. testcode:: autoclosures
-    -> customersInLine = ["Ewa", "Barry", "Daniella"]
-    -> var servedCustomers: [() -> String] = []
-    << // servedCustomers : [() -> String] = []
+
     -> func serveNextCustomer3(@autoclosure(escaping) customer: () -> String) {
            servedCustomers.append(customer)
        }
+    -> customersInLine = ["Ewa", "Barry", "Daniella"]
+    -> var servedCustomers: [() -> String] = []
+    << // servedCustomers : [() -> String] = []
     -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
     -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
     ---
@@ -727,5 +728,5 @@ The array is accessible outside the scope of the function,
 which means the closures must be allowed to escape the function's scope
 so they can be executed after the function returns.
 
-For more information about the ``autoclosure`` and ``noescape`` attributes,
+For more information about the ``@autoclosure`` and ``@noescape`` attributes,
 see :ref:`Attributes_DeclarationAttributes`.
