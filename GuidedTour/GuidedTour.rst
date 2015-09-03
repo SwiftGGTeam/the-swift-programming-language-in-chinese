@@ -1223,9 +1223,9 @@ as well as classes, enumerations, and structures.
 .. testcode:: guided-tour
 
     // Reimplement the Swift standard library's optional type
-    -> enum OptionalValue<T> {
+    -> enum OptionalValue<Wrapped> {
            case None
-           case Some(T)
+           case Some(Wrapped)
        }
     -> var possibleInteger: OptionalValue<Int> = .None
     << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
@@ -1240,7 +1240,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1259,8 +1259,5 @@ or to require a class to have a particular superclass.
    to make a function that returns an array
    of the elements that any two sequences have in common.
 
-In the simple cases,
-you can omit ``where`` and simply
-write the protocol or class name after a colon.
 Writing ``<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
