@@ -714,13 +714,13 @@ use the ``@autoclosure(escaping)`` form of the attribute:
     -> func collectCustomerClosures(@autoclosure(escaping) customer: () -> String) {
            customerClosures.append(customer)
        }
-    -> serveNextCustomer(customersInLine.removeAtIndex(0))
-    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
+    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
     ---
-    -> print("Colected \(customerClosures.count) closures.")
+    -> print("Collected \(customerClosures.count) closures.")
     <- Collected 2 closures.
     -> for customerClosure in customerClosures {
-           print("Now serving \(customerClosures())!")
+           print("Now serving \(customerClosure())!")
        }
     <- Now serving Barry!
     <- Now serving Daniella!
