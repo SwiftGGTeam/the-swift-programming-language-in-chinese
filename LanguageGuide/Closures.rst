@@ -624,7 +624,7 @@ that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
 For example:
 
-.. testcode:: delay-expression-evaluation
+.. testcode:: autoclosures
 
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -669,10 +669,9 @@ or even choose not to evaluate the expression at all.
 For example, the ``serveNextCustomer(_:)`` function in the listing below
 takes as its argument a closure that returns the next customer's name:
 
-.. testcode:: delay-evaluation-argument-no-autoclosure
+.. testcode:: autoclosures
 
-    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
@@ -686,15 +685,14 @@ should be automatically wrapped in a closure.
 Using an autoclosure lets you call the function
 as if it took a ``String`` argument instead of a closure.
 
-.. testcode:: delay-evaluation-argument-no-autoclosure
+.. testcode:: autoclosures
 
-    -> var customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
-    -> func serveNextCustomer(@autoclosure customer: () -> String) {
+    -> customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer2(@autoclosure customer: () -> String) {
            let customerName = customer()
            print("Now serving \(customerName)!")
        }
-    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    -> serveNextCustomer2(customersInLine.removeAtIndex(0))
     <- Now serving Alex!
 
 .. note::
@@ -711,16 +709,15 @@ and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
 use the ``autoclosure(escaping)`` form of the attribute:
 
-.. testcode:: delay-evaluation-argument-no-autoclosure
-    -> var customersInLine = ["Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
+.. testcode:: autoclosures
+    -> customersInLine = ["Ewa", "Barry", "Daniella"]
     -> var servedCustomers: [() -> String] = []
     << // servedCustomers : [() -> String] = []
-    -> func serveNextCustomer(@autoclosure(escaping) customer: () -> String) {
+    -> func serveNextCustomer3(@autoclosure(escaping) customer: () -> String) {
            servedCustomers.append(customer)
        }
-    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
-    -> serveNextCustomer({customersInLine.removeAtIndex(0)})
+    -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
+    -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
     ---
     -> print("Served \(servedCustomers.count) customers.")
     <- Served 2 customers.
