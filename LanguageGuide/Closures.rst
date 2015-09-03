@@ -703,14 +703,14 @@ use the ``autoclosure(escaping)`` form of the attribute:
 
 .. testcode:: autoclosures
 
+    -> customersInLine = ["Ewa", "Barry", "Daniella"]
+    -> var servedCustomers: [() -> String] = []
     -> func serveNextCustomer3(@autoclosure(escaping) customer: () -> String) {
            servedCustomers.append(customer)
        }
-    -> customersInLine = ["Ewa", "Barry", "Daniella"]
-    -> var servedCustomers: [() -> String] = []
     << // servedCustomers : [() -> String] = []
-    -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
-    -> serveNextCustomer3({customersInLine.removeAtIndex(0)})
+    -> serveNextCustomer3(customersInLine.removeAtIndex(0))
+    -> serveNextCustomer3(customersInLine.removeAtIndex(0))
     ---
     -> print("Served \(servedCustomers.count) customers.")
     <- Served 2 customers.
