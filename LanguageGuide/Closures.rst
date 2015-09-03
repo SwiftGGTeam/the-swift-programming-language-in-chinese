@@ -524,7 +524,7 @@ Here's an example of ``makeIncrementer`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementer(forIncrement: 10)
-   << // incrementByTen : Void -> Int = (Function)
+   << // incrementByTen : () -> Int = (Function)
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementer function that adds ``10`` to
@@ -552,7 +552,7 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementer(forIncrement: 7)
-   << // incrementBySeven : Void -> Int = (Function)
+   << // incrementBySeven : () -> Int = (Function)
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
@@ -601,7 +601,7 @@ both of those constants or variables will refer to the same closure:
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : Void -> Int = (Function)
+   << // alsoIncrementByTen : () -> Int = (Function)
    -> alsoIncrementByTen()
    << // r5 : Int = 50
    /> returns a value of \(r5)
