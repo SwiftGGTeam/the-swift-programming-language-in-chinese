@@ -131,6 +131,7 @@
     "classesandstructures-memberwiseinitializersforstructuretypes": "ID87", 
     "classesandstructures-pointers": "ID91", 
     "classesandstructures-structuresandenumerationsarevaluetypes": "ID88", 
+    "closures-autoclosures": "ID543", 
     "closures-capturingvalues": "ID103", 
     "closures-closureexpressions": "ID95", 
     "closures-closureexpressionsyntax": "ID97", 
@@ -560,5 +561,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 543
+  "next_id": 544
 }
