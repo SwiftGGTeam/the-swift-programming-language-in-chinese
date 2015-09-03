@@ -728,7 +728,7 @@ use the ``@autoclosure(escaping)`` form of the attribute:
 In the code above,
 instead of calling the closure passed to it
 as its ``customer`` argument,
-the ``collectCustomerClosures(_:)``function appends the closure to the ``customerClosures`` array.
+the ``collectCustomerClosures(_:)`` function appends the closure to the ``customerClosures`` array.
 The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
