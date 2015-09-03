@@ -612,17 +612,18 @@ both of those constants or variables will refer to the same closure:
 Autoclosures
 ------------
 
-.. TODO: Begin with a definition of an autoclosure
-   and a summary of why we're going to talk about deferred execution.
-
-You can use a closure that doesn't take any arguments
-to wrap a piece of code,
-delaying the actual evaluation of that code
-until you call the closure.
+An :newTerm:`autoclosure` is a closure that is created automatically
+to wrap an expression that's being passed as an argument to a function.
+It doesn't take any arguments,
+and when it's called, it returns the value
+of the expression that's wrapped inside of it.
+Autoclosures let you delay evaluation because
+the code inside isn't run until you call the closure.
 This is useful for code
 that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
-For example:
+The code below shows how an ordinary closure delays evaluation ---
+an autoclosure works the same way.
 
 .. testcode:: autoclosures
 
@@ -657,17 +658,16 @@ Note that the type of ``nextCustomer`` is not ``String``
 but ``() -> String`` ---
 a function that takes no arguments and returns a string.
 
-.. TODO: Stronger transition between topics here.
-
-Using closures to delay the evaluation of an expression is especially useful
-when passing arguments to a function.
-Delaying the evaluation of an expression
-that has side effects or is computationally expensive
-lets you evaluate the expression
-at an appropriate point in the function's body ---
-or even choose not to evaluate the expression at all.
+You use the ``@autoclosure`` attribute on the function parameter,
+to indicates that the expression being passed
+gets automatically wrapped in a closure.
 For example, the ``serveNextCustomer(_:)`` function in the listing below
-takes as its argument a closure that returns the next customer's name:
+taks as its argument an explicit closure
+that returns the next customer's name,
+and the ``serveNextCustomer2(_:)`` function 
+does the same thing with an autoclosure.
+Using an autoclosure lets you call the second function
+as if it took a ``String`` argument instead of a closure.
 
 .. testcode:: autoclosures
 
@@ -678,15 +678,7 @@ takes as its argument a closure that returns the next customer's name:
        }
     -> serveNextCustomer({customersInLine.removeAtIndex(0)})
     <- Now serving Chris!
-
-You can use the ``autoclosure`` attribute on the function parameter,
-which indicates that the expression being passed
-should be automatically wrapped in a closure.
-Using an autoclosure lets you call the function
-as if it took a ``String`` argument instead of a closure.
-
-.. testcode:: autoclosures
-
+    ---
     -> customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer2(@autoclosure customer: () -> String) {
            let customerName = customer()
@@ -701,7 +693,7 @@ as if it took a ``String`` argument instead of a closure.
    The context and function name should make it clear
    that evaluation of an expression is being deferred.
 
-The ``autoclosure`` attribute implies the ``noescape`` attribute,
+The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
 which indicates that the closure is used only within the function ---
 the closure isn't allowed to be stored in a way
 that would let it "escape" the scope of the function
@@ -728,7 +720,12 @@ use the ``autoclosure(escaping)`` form of the attribute:
     <- Now serving Ewa!
     <- Now serving Barry!
 
-.. TODO: Walk through this example and explain what's going on.
+In the code above,
+instead of calling the closure that is its ``customer`` argument,
+the function collects all of the closures in an array.
+The array is accessible outside the scope of the function,
+which means the closures must be allowed to escape the function's scope
+so they can be executed after the function returns.
 
 For more information about the ``autoclosure`` and ``noescape`` attributes,
 see :ref:`Attributes_DeclarationAttributes`.
