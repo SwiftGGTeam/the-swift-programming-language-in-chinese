@@ -3,17 +3,28 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-.. Not in this beta
-
-            * Added the :ref:`LexicalStructure_CommentDocumentation` section
-              to the :doc:`../ReferenceManual/LexicalStructure` chapter.
-
-            * Added the :ref:`TheBasics_ImportDeclarations` section
-              to the :doc:`../LanguageGuide/TheBasics` chapter.
-
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-09-09  * Added information about the ``@autoclosure`` attribute ---
+              including its ``@autoclosure(escaping)`` form ---
+              to the :ref:`Closures_Autoclosures` section.
+              
+            * Added an example of using multiple optional bindings
+              with a ``where`` clause
+              to the :ref:`TheBasics_OptionalBinding` section.
+            
+            * Added information to the :ref:`LexicalStructure_StringLiterals` section
+              about how concatenating string literals using the ``+`` operator
+              happens at compile time.
+              
+            * Added information to the :ref:`Types_MetatypeType` section
+              about comparing metatype values and using them
+              to construct instances with initializer expressions.
+            
+            * Added a note to the :ref:`TheBasics_DebuggingWithAssertions` section
+              about when user-defined assertions are disabled.
+----------  --------------------------------------------------------------------------
 2015-08-24  * Added information about the new ``try?`` keyword
               to the :ref:`ErrorHandling_Optional` section.
             
