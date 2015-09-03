@@ -674,7 +674,7 @@ takes as its argument a closure that returns the next customer's name:
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(customer: () -> String) {
            let customerName = customer()
-           print("New serving \(customerName)!")
+           print("Now serving \(customerName)!")
        }
     -> serveNextCustomer({customersInLine.removeAtIndex(0)})
 
@@ -689,7 +689,7 @@ as if it took a ``String`` argument instead of a closure.
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> func serveNextCustomer(@autoclosure customer: () -> String) {
            let customerName = customer()
-           print("New serving \(customerName)!")
+           print("Now serving \(customerName)!")
        }
     -> serveNextCustomer(customersInLine.removeAtIndex(0))
 
@@ -719,7 +719,7 @@ use the ``autoclosure(escaping)`` form of the attribute:
     -> print("Served \(servedCustomers.count) customers.")
     -> for customer in servedCustomers {
            let customerName = customer()
-           print("New serving \(customerName)!")
+           print("Now serving \(customerName)!")
        }
 
 .. TODO: Walk through this example and explain what's going on.
