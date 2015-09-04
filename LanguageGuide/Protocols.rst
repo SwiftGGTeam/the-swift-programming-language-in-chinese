@@ -1326,16 +1326,21 @@ and so ``dataSource`` has a question mark after its name to indicate that
 Secondly, even if ``dataSource`` *does* exist,
 there is no guarantee that it implements ``incrementForCount``,
 because it is an optional requirement.
-This is why ``incrementForCount`` is also written with a question mark after its name.
+Here, the possibility that ``incrementForCount`` might not be implemented
+is also handled by optional chaining.
+The function call to ``incrementForCount`` only happens
+if ``incrementForCount`` exists ---
+that is, if it is non-nil.
 
 Because the call to ``incrementForCount`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
 This is true even though ``incrementForCount`` is defined as returning
 a non-optional ``Int`` value in the definition of ``CounterDataSource``.
-
-.. TODO: explain why there is only one layer of optional here,
-   even though there are two points of failure.
-   (This was technical review feedback from [Contributor 6004].)
+Even though there are two optional chaining operations,
+one after another,
+the result is still wrapped in a single optional.
+For more information about using multiple optional chaining operations,
+see :ref:`OptionalChaining_LinkingMultipleLevelsOfChaining`.
 
 After calling ``incrementForCount``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.
