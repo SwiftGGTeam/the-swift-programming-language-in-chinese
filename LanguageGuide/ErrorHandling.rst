@@ -252,7 +252,7 @@ propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` func
    << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
    >> try buyFavoriteSnack("Alice", vendingMachine: v)
-   </ Dispensing Chips
+   << Dispensing Chips
 
 In this example,
 the ``buyFavoriteSnack(_:vendingMachine:)`` function looks up a given person's favorite snack
