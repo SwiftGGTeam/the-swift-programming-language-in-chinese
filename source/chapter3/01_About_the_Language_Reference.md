@@ -1,4 +1,4 @@
-# 关于语言附注
+# 关于语言参考（About the Language Reference）
 -----------------
 
 > 1.0

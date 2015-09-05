@@ -1,4 +1,4 @@
-# 类和结构体
+# 类和结构体（Classes and Structures）
 
 > 1.0
 > 翻译：[JaySurplus](https://github.com/JaySurplus)

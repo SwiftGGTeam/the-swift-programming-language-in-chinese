@@ -1,4 +1,4 @@
-# 自动引用计数
+# 自动引用计数（Automatic Reference Counting）
 -----------------
 
 > 1.0

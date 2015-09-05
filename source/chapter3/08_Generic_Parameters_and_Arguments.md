@@ -1,4 +1,4 @@
-# 泛型参数
+# 泛型参数（Generic Parameters and Arguments）
 ---------
 
 > 1.0
