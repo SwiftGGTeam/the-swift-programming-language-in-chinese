@@ -292,7 +292,7 @@ someFunction(1, 2)
 > 注意:
 > 因为第一个参数默认忽略其外部参数名称，明确写下划线是多余的。
 
-
+<a name="default_Parameter_values"></a>
 ### 默认参数值（Default Parameter Values）
 
 你可以在函数体中为每个参数定义`默认值(Deafult Values)`。当默认值被定义后，调用这个函数时可以忽略这个参数。
