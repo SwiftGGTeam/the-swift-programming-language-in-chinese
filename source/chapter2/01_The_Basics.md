@@ -149,23 +149,14 @@ languageName = "Swift++"
 <a name="printing"></a>
 ### 输出常量和变量
 
-你可以用`print(_:)`函数来输出当前常量或变量的值:
+你可以用`print(_:separator:terminator:)`函数来输出当前常量或变量的值:
 
 ```swift
 print(friendlyWelcome)
 // 输出 "Bonjour!"
 ```
 
-`print(_:)`是一个用来输出的全局函数，输出的内容会在最后换行。如果你用 Xcode，`print(_:)`将会输出内容到“console”面板上。(另一种函数叫`print(_:appendNewline:)`，唯一区别是在输出内容最后不会换行。)
-
-`print(_:)`函数输出传入的`String`值：
-
-```swift
-print("This is a string")
-// 输出 "This is a string"
-```
-
-`print(_:)`函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。
+`print(_:separator:terminator:)`是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)`将会输出内容到“console”面板上。`separator`和`terminator`参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给`terminator`参数--例如，`print(someValue, terminator:"")`。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.html#default_parameter_values)。
 
 Swift 用字符串插值（string interpolation）的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
