@@ -149,23 +149,14 @@ languageName = "Swift++"
 <a name="printing"></a>
 ### 输出常量和变量
 
-你可以用`print(_:)`函数来输出当前常量或变量的值:
+你可以用`print(_:separator:terminator:)`函数来输出当前常量或变量的值:
 
 ```swift
 print(friendlyWelcome)
 // 输出 "Bonjour!"
 ```
 
-`print(_:)`是一个用来输出的全局函数，输出的内容会在最后换行。如果你用 Xcode，`print(_:)`将会输出内容到“console”面板上。(另一种函数叫`print(_:appendNewline:)`，唯一区别是在输出内容最后不会换行。)
-
-`print(_:)`函数输出传入的`String`值：
-
-```swift
-print("This is a string")
-// 输出 "This is a string"
-```
-
-`print(_:)`函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。
+`print(_:separator:terminator:)`是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)`将会输出内容到“console”面板上。`separator`和`terminator`参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给`terminator`参数--例如，`print(someValue, terminator:"")`。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.html#default_parameter_values)。
 
 Swift 用字符串插值（string interpolation）的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
@@ -223,7 +214,7 @@ Swift 提供了8，16，32和64位的有符号和无符号整数类型。这些�
 <a name="integer_bounds"></a>
 ### 整数范围
 
-你可以访问不同整数类型的`min`和`max`属性来获取对应类型的最大值和最小值：
+你可以访问不同整数类型的`min`和`max`属性来获取对应类型的最小值和最大值：
 
 ```swift
 let minValue = UInt8.min  // minValue 为 0，是 UInt8 类型
@@ -239,7 +230,7 @@ let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型
 * 在32位平台上，`Int`和`Int32`长度相同。
 * 在64位平台上，`Int`和`Int64`长度相同。
 
-除非你需要特定长度的整数，一般来说使用`Int`就够了。这可以提高代码一致性和可复用性。即使是在32位平台上，`Int`可以存储的整数范围也可以达到`-2147483648`~`2147483647`，大多数时候这已经足够大了。
+除非你需要特定长度的整数，一般来说使用`Int`就够了。这可以提高代码一致性和可复用性。即使是在32位平台上，`Int`可以存储的整数范围也可以达到`-2,147,483,648`~`2,147,483,647`，大多数时候这已经足够大了。
 
 <a name="UInt"></a>
 ### UInt
@@ -272,7 +263,7 @@ Swift 是一个类型安全（type safe）的语言。类型安全的语言可�
 
 由于 Swift 是类型安全的，所以它会在编译你的代码时进行类型检查（type checks），并把不匹配的类型标记为错误。这可以让你在开发的时候尽早发现并修复错误。
 
-当你要处理不同类型的值时，类型检查可以帮你避免错误。然而，这并不是说你每次声明常量和变量的时候都需要显式指定类型。如果你没有显式指定类型，Swift 会使用_类型推断（type inference）来选择合适的类型。有了类型推断，编译器可以在编译代码的时候自动推断出表达式的类型。原理很简单，只要检查你赋的值即可。
+当你要处理不同类型的值时，类型检查可以帮你避免错误。然而，这并不是说你每次声明常量和变量的时候都需要显式指定类型。如果你没有显式指定类型，Swift 会使用_类型推断_（type inference）来选择合适的类型。有了类型推断，编译器可以在编译代码的时候自动推断出表达式的类型。原理很简单，只要检查你赋的值即可。
 
 因为有类型推断，和 C 或者 Objective-C 比起来 Swift 很少需要声明类型。常量和变量虽然需要明确类型，但是大部分工作并不需要你自己来完成。
 
@@ -430,7 +421,7 @@ var maxAmplitudeFound = AudioSample.min
 <a name="booleans"></a>
 ## 布尔值
 
-Swift 有一个基本的布尔（Boolean）类型，叫做`Bool`。布尔值指逻辑上的（logical，因为它们只能是真或者假。Swift 有两个布尔常量，`true`和`false`：
+Swift 有一个基本的布尔（Boolean）类型，叫做`Bool`。布尔值指逻辑上的值，因为它们只能是真或者假。Swift 有两个布尔常量，`true`和`false`：
 
 ```swift
 let orangesAreOrange = true
@@ -551,17 +542,17 @@ print("The status message is \(http200Status.description)")
 > 注意：  
 C 和 Objective-C 中并没有可选类型这个概念。最接近的是 Objective-C 中的一个特性，一个方法要不返回一个对象要不返回`nil`，`nil`表示“缺少一个合法的对象”。然而，这只对对象起作用——对于结构体，基本的 C 类型或者枚举类型不起作用。对于这些类型，Objective-C 方法一般会返回一个特殊值（比如`NSNotFound`）来暗示值缺失。这种方法假设方法的调用者知道并记得对特殊值进行判断。然而，Swift 的可选类型可以让你暗示_任意类型_的值缺失，并不需要一个特殊值。
 
-来看一个例子。Swift 的`String`类型有一个叫做`toInt`的方法，作用是将一个`String`值转换成一个`Int`值。然而，并不是所有的字符串都可以转换成一个整数。字符串`"123"`可以被转换成数字`123`，但是字符串`"hello, world"`不行。
+来看一个例子。Swift 的`String`类型有一种构造器，作用是将一个`String`值转换成一个`Int`值。然而，并不是所有的字符串都可以转换成一个整数。字符串`"123"`可以被转换成数字`123`，但是字符串`"hello, world"`不行。
 
-下面的例子使用`toInt`方法来尝试将一个`String`转换成`Int`：
+下面的例子使用这种构造器来尝试将一个`String`转换成`Int`：
 
 ```swift
 let possibleNumber = "123"
-let convertedNumber = possibleNumber.toInt()
+let convertedNumber = Int(possibleNumber)
 // convertedNumber 被推测为类型 "Int?"， 或者类型 "optional Int"
 ```
 
-因为`toInt`方法可能会失败，所以它返回一个_可选类型（optional）`Int`，而不是一个`Int`。一个可选的`Int`被写作`Int?`而不是`Int`。问号暗示包含的值是可选类型，也就是说可能包含`Int`值也可能不包含值。（不能包含其他任何值比如`Bool`值或者`String`值。只能是`Int`或者什么都没有。）
+因为该构造器可能会失败，所以它返回一个_可选类型_（optional）`Int`，而不是一个`Int`。一个可选的`Int`被写作`Int?`而不是`Int`。问号暗示包含的值是可选类型，也就是说可能包含`Int`值也可能不包含值。（不能包含其他任何值比如`Bool`值或者`String`值。只能是`Int`或者什么都没有。）
 
 <a name="nil"></a>
 ### nil
@@ -591,9 +582,9 @@ Swift 的`nil`和 Objective-C 中的`nil`并不一样。在 Objective-C 中，`n
 <a name="if"></a>
 ### if 语句以及强制解析
 
-你可以使用`if`语句和nil比较来判断一个可选值是否包含值。你可以使用“相等”(==)或“不等”(!=)来执行比较。
+你可以使用`if`语句和`nil`比较来判断一个可选值是否包含值。你可以使用“相等”(`==`)或“不等”(`!=`)来执行比较。
 
-如果可选类型有值，它将不等于nil:
+如果可选类型有值，它将不等于`nil`:
 
 ```swift
 if convertedNumber != nil {
@@ -601,7 +592,7 @@ if convertedNumber != nil {
 }
 // 输出 "convertedNumber contains some integer value."
 ```
-当你确定可选类型确实包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的_强制解析（forced unwrapping）：
+当你确定可选类型确实包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的_强制解析_（forced unwrapping）：
 
 ```swift
 if convertedNumber != nil {
@@ -641,13 +632,13 @@ if let actualNumber = Int(possibleNumber) {
 
 这段代码可以被理解为：
 
-“如果`possibleNumber.toInt`返回的可选`Int`包含一个值，创建一个叫做`actualNumber`的新常量并将可选包含的值赋给它。”
+“如果`Int(possibleNumber)`返回的可选`Int`包含一个值，创建一个叫做`actualNumber`的新常量并将可选包含的值赋给它。”
 
 如果转换成功，`actualNumber`常量可以在`if`语句的第一个分支中使用。它已经被可选类型_包含的_值初始化过，所以不需要再使用`!`后缀来获取它的值。在这个例子中，`actualNumber`只被用来输出转换结果。
 
 你可以在可选绑定中使用常量和变量。如果你想在`if`语句的第一个分支中操作`actualNumber`的值，你可以改成`if var actualNumber`，这样可选类型包含的值就会被赋给一个变量而非常量。
 
-多个可选绑定可以用逗号区分成一列表达式出现在一个`if`语句中。
+多个可选绑定可以用逗号分隔，作为一列表达式出现在一个`if`语句中。
 
 ```swift
 if let constantName = someOptional, anotherConstantName = someOtherOptional {
@@ -704,15 +695,15 @@ if let definiteString = assumedString {
 
 <a name="error_handling"></a>
 ## 错误处理
-你可以使用错误处理(error handling)来应对程序执行中出错的条件。
+你可以使用错误处理(error handling)来应对程序执行中可能会遇到的错误条件。
 
-相对于可选中运用值得存在与缺失来表达函数的成功与失败，错误处理可以推断失败的原因，并传送至程序的其他部分。
+相对于可选中运用值的存在与缺失来表达函数的成功与失败，错误处理可以推断失败的原因，并传播至程序的其他部分。
 
 当一个函数遇到错误条件，它能报错。调用函数的地方能抛出错误消息并合理处理。
 
 ```swift
-func canThrowAnErrow() throws{
-  //this function may or may not throw an error
+func canThrowAnErrow() throws {
+    // 这个函数有可能抛出错误
 }
 ```
 
@@ -727,30 +718,30 @@ do {
 }
 ```
 
-一个`do`的声明创建了一个新的包含作用域,使得错误能被传播到一个或更多`catch`从句。
+一个`do`语句创建了一个新的包含作用域,使得错误能被传播到一个或多个`catch`从句。
 
-这里有一个错误处理用来应对不同错误条件的例子。
+这里有一个错误处理如何用来应对不同错误条件的例子。
 
 ```swift
 func makeASandwich() throws {
-  // ...
+    // ...
 }
 
 do {
-  try makeASandwich()
-  eatASandwich()
-} catch Error.OutOfCleanDishes{
-  washDishes()
+    try makeASandwich()
+    eatASandwich()
+} catch Error.OutOfCleanDishes {
+    washDishes()
 } catch Error.MissingIngredients(let ingredients) {
-  buyGroceries(ingredients)
+    buyGroceries(ingredients)
 }
 ```
 
-在此例中，`makeASandwich()`（做一个三明治）函数会抛出一个错误消息如果没有干净的盘子或者某个原料缺失。因为`makeASandwich()`抛出错误，调用函数会被包裹在`try`表达式中。将函数包裹在一个`do`声明中,任何被抛出的错误会被传送到提供的`catch`从句中。
+在此例中，`makeASandwich()`（做一个三明治）函数会抛出一个错误消息如果没有干净的盘子或者某个原料缺失。因为`makeASandwich()`抛出错误，函数调用被包裹在`try`表达式中。将函数包裹在一个`do`语句中,任何被抛出的错误会被传播到提供的`catch`从句中。
 
-如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个符合`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个符合`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会被调用并传递相关被`catch`所捕捉到的`[String]`值。
+如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个匹配`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个匹配`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会随着被`catch`所捕捉到的关联值`[String]`被调用。
 
-抛出，捕捉，传递错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
+抛出，捕捉，以及传播错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
 
 <a name="assertions"></a>
 ## 断言
@@ -759,11 +750,11 @@ do {
 
 ### 使用断言进行调试
 
-断言会在运行时判断一个逻辑条件是否为`true`。从字面意思来说，断言“断言”一个条件是否为真。你可以使用断言来保证在运行其他代码之前，某些重要的条件已经被满足。如果条件判断为`true`，代码运行会继续进行；如果条件判断为`false`，代码运行停止，你的应用被终止。
+断言会在运行时判断一个逻辑条件是否为`true`。从字面意思来说，断言“断言”一个条件是否为真。你可以使用断言来保证在运行其他代码之前，某些重要的条件已经被满足。如果条件判断为`true`，代码运行会继续进行；如果条件判断为`false`，代码执行结束，你的应用被终止。
 
 如果你的代码在调试环境下触发了一个断言，比如你在 Xcode 中构建并运行一个应用，你可以清楚地看到不合法的状态发生在哪里并检查断言被触发时你的应用的状态。此外，断言允许你附加一条调试信息。
 
-你可以使用全局`assert`函数来写一个断言。向`assert`函数传入一个结果为`true`或者`false`的表达式以及一条信息，当表达式为`false`的时候这条信息会被显示：
+你可以使用全局`assert(_:_:)`函数来写一个断言。向`assert(_:_:)`函数传入一个结果为`true`或者`false`的表达式以及一条信息，当表达式的结果为`false`的时候这条信息会被显示：
 
 ```swift
 let age = -3
@@ -771,9 +762,9 @@ assert(age >= 0, "A person's age cannot be less than zero")
 // 因为 age < 0，所以断言会触发
 ```
 
-在这个例子中，只有`age >= 0`为`true`的时候，即`age`的值非负的时候，代码运行才会继续。如果`age`的值是负数，就像代码中那样，`age >= 0`为`false`，断言被触发，结束应用。
+在这个例子中，只有`age >= 0`为`true`的时候，即`age`的值非负的时候，代码才会继续执行。如果`age`的值是负数，就像代码中那样，`age >= 0`为`false`，断言被触发，终止应用。
 
-断言信息如果不需要，可以被省略，就像这样：
+如果不需要断言信息，可以省略，就像这样：
 
 ```swift
 assert(age >= 0)
