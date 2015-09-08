@@ -97,7 +97,7 @@ Date        Notes
 
             * Updated the discussion of the ``@NSManaged`` attribute
               in the :ref:`Attributes_DeclarationAttributes` section,
-              now that the attribute can be applied to certain instances methods.
+              now that the attribute can be applied to certain instance methods.
               
             * Updated the :ref:`Functions_VariadicParameters` section,
               now that variadic parameters can be declared in any position
