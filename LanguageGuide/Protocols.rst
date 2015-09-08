@@ -1237,18 +1237,21 @@ You can define :newTerm:`optional requirements` for protocols,
 These requirements do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
+When you use a method or property in an optional requirement,
+its type automatically becomes an optional.
+For example,
+a method of type ``(Int) -> String`` becomes ``((Int) -> String)?``.
+Note that the entire function type
+is wrapped in the optional,
+not method's the return value.
 
 An optional protocol requirement can be called with optional chaining,
 to account for the possibility that the requirement was not implemented
 by a type that conforms to the protocol.
-For information on optional chaining, see :doc:`OptionalChaining`.
-
-You check for an implementation of an optional requirement
-by writing a question mark after the name of the requirement when it is called,
+You check for an implementation of an optional method
+by writing a question mark after the name of the method when it is called,
 such as ``someOptionalMethod?(someArgument)``.
-Optional property requirements, and optional method requirements that return a value,
-will always return an optional value of the appropriate type when they are accessed or called,
-to reflect the fact that the optional requirement may not have been implemented.
+For information on optional chaining, see :doc:`OptionalChaining`.
 
 .. note::
 
@@ -1280,7 +1283,7 @@ which has two optional requirements:
       }
 
 The ``CounterDataSource`` protocol defines
-an optional method requirement called ``incrementForCount``
+an optional method requirement called ``incrementForCount(_:)``
 and an optional property requirement called ``fixedIncrement``.
 These requirements define two different ways for data sources to provide
 an appropriate increment amount for a ``Counter`` instance.
@@ -1319,30 +1322,31 @@ by looking for an implementation of the ``incrementForCount(_:)`` method on its 
 The ``increment()`` method uses optional chaining to try to call ``incrementForCount(_:)``,
 and passes the current ``count`` value as the method's single argument.
 
-Note *two* levels of optional chaining at play here.
-Firstly, it is possible that ``dataSource`` may be ``nil``,
+Note that *two* levels of optional chaining are at play here.
+First, it is possible that ``dataSource`` may be ``nil``,
 and so ``dataSource`` has a question mark after its name to indicate that
-``incrementForCount`` should only be called if ``dataSource`` is non-nil.
-Secondly, even if ``dataSource`` *does* exist,
-there is no guarantee that it implements ``incrementForCount``,
+``incrementForCount(_:)`` should be called only if ``dataSource`` isn't ``nil``.
+Second, even if ``dataSource`` *does* exist,
+there is no guarantee that it implements ``incrementForCount(_:)``,
 because it is an optional requirement.
-Here, the possibility that ``incrementForCount`` might not be implemented
+Here, the possibility that ``incrementForCount(_:)`` might not be implemented
 is also handled by optional chaining.
-The function call to ``incrementForCount`` only happens
-if ``incrementForCount`` exists ---
-that is, if it is non-nil.
+The call to ``incrementForCount(_:)`` happens
+only if ``incrementForCount(_:)`` exists ---
+that is, if it isn't ``nil``.
+This is why ``incrementForCount(_:)`` is also written with a question mark after its name.
 
-Because the call to ``incrementForCount`` can fail for either of these two reasons,
+Because the call to ``incrementForCount(_:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
-This is true even though ``incrementForCount`` is defined as returning
-a non-optional ``Int`` value in the definition of ``CounterDataSource``.
+This is true even though ``incrementForCount(_:)`` is defined as returning
+a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,
 the result is still wrapped in a single optional.
 For more information about using multiple optional chaining operations,
 see :ref:`OptionalChaining_LinkingMultipleLevelsOfChaining`.
 
-After calling ``incrementForCount``, the optional ``Int`` that it returns
+After calling ``incrementForCount(_:)``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.
 If the optional ``Int`` does contain a value ---
 that is, if the delegate and method both exist,
@@ -1352,7 +1356,7 @@ and incrementation is complete.
 
 If it is *not* possible to retrieve a value from the ``incrementForCount(_:)`` method ---
 either because ``dataSource`` is nil,
-or because the data source does not implement ``incrementForCount`` ---
+or because the data source does not implement ``incrementForCount(_:)`` ---
 then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
