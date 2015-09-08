@@ -525,14 +525,14 @@ This means that a function can return another function as its value.
 
 .. testcode:: guided-tour
 
-    -> func makeIncrementer() -> (Int -> Int) {
+    -> func makeIncrementer() -> ((Int) -> Int) {
            func addOne(number: Int) -> Int {
                return 1 + number
            }
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : Int -> Int = (Function)
+    << // increment : (Int) -> Int = (Function)
     -> increment(7)
     <$ : Int = 8
 
@@ -540,7 +540,7 @@ A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
 
-    -> func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+    -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
            for item in list {
                if condition(item) {
                    return true
