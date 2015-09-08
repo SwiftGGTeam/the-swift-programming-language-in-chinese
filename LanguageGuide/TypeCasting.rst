@@ -280,7 +280,7 @@ and populates this array with three instances of the ``Movie`` class:
    << // someObjects : [AnyObject] = [REPL.Movie, REPL.Movie, REPL.Movie]
 
 Because this array is known to contain only ``Movie`` instances,
-you can downcast and unwrap directly to a non-optional ``Movie``
+you can downcast and unwrap directly to a nonoptional ``Movie``
 with the forced version of the type cast operator (``as!``):
 
 .. testcode:: typeCasting

@@ -446,15 +446,15 @@ an :newTerm:`unowned reference` does not keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is assumed to *always* have a value.
-Because of this, an unowned reference is always defined as a non-optional type.
+Because of this, an unowned reference is always defined as a nonoptional type.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
-Because an unowned reference is non-optional,
+Because an unowned reference is nonoptional,
 you don't need to unwrap the unowned reference each time it is used.
 An unowned reference can always be accessed directly.
 However, ARC cannot set the reference to ``nil`` when the instance it refers to is deallocated,
-because variables of a non-optional type cannot be set to ``nil``.
+because variables of a nonoptional type cannot be set to ``nil``.
 
 .. note::
 
@@ -482,7 +482,7 @@ seen in the weak reference example above.
 In this data model, a customer may or may not have a credit card,
 but a credit card will *always* be associated with a customer.
 To represent this, the ``Customer`` class has an optional ``card`` property,
-but the ``CreditCard`` class has a non-optional ``customer`` property.
+but the ``CreditCard`` class has a nonoptional ``customer`` property.
 
 Furthermore, a new ``CreditCard`` instance can *only* be created
 by passing a ``number`` value and a ``customer`` instance
@@ -675,7 +675,7 @@ without needing to use an exclamation mark to unwrap its optional value:
 
 In the example above, the use of an implicitly unwrapped optional
 means that all of the two-phase class initializer requirements are satisfied.
-The ``capitalCity`` property can be used and accessed like a non-optional value
+The ``capitalCity`` property can be used and accessed like a nonoptional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 

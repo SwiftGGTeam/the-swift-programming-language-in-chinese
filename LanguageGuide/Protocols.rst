@@ -1363,7 +1363,7 @@ The ``fixedIncrement`` property is also an optional requirement,
 and so its name is also written using optional chaining,
 to indicate that the attempt to access the property's value can fail.
 As before, the returned value is an optional ``Int`` value,
-even though ``fixedIncrement`` is defined as a non-optional ``Int`` property
+even though ``fixedIncrement`` is defined as a nonoptional ``Int`` property
 as part of the ``CounterDataSource`` protocol definition.
 
 Here's a simple ``CounterDataSource`` implementation where the data source
