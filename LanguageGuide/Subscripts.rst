@@ -133,7 +133,7 @@ see :ref:`CollectionTypes_AccessingAndModifyingADictionary`.
 .. note::
 
    Swift's ``Dictionary`` type implements its key-value subscripting
-   as a subscript that takes and receives an *optional* type.
+   as a subscript that takes and returns an *optional* type.
    For the ``numberOfLegs`` dictionary above,
    the key-value subscript takes and returns a value of type ``Int?``,
    or “optional int”.
