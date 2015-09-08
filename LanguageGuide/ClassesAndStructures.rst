@@ -22,9 +22,6 @@ automatically made available for other code to use.
    instances of *either* a class or a structure type.
    Because of this, the more general term :newTerm:`instance` is used.
 
-.. TODO: add a note here about public and private interfaces,
-   once we know how these will be declared in Swift.
-
 .. _ClassesAndStructures_ComparingClassesAndStructures:
 
 Comparing Classes and Structures
@@ -137,16 +134,12 @@ only describe what a ``Resolution`` or ``VideoMode`` will look like.
 They themselves do not describe a specific resolution or video mode.
 To do that, you need to create an instance of the structure or class.
 
-.. QUESTION: this isn't strictly true.
-   You could argue that the Resolution structure definition describes a resolution of (0, 0),
-   not that this would be a valid resolution.
-
 The syntax for creating instances is very similar for both structures and classes:
 
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = REPL.Resolution
+   << // someResolution : Resolution = REPL.Resolution(width: 0, height: 0)
    -> let someVideoMode = VideoMode()
    << // someVideoMode : VideoMode = REPL.VideoMode
 
@@ -173,7 +166,7 @@ separated by a period (``.``), without any spaces:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The width of someResolution is \(someResolution.width)")
+   -> print("The width of someResolution is \(someResolution.width)")
    <- The width of someResolution is 0
 
 In this example,
@@ -185,7 +178,7 @@ such as the ``width`` property in the ``resolution`` property of a ``VideoMode``
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+   -> print("The width of someVideoMode is \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is 0
 
 You can also use dot syntax to assign a new value to a variable property:
@@ -193,7 +186,7 @@ You can also use dot syntax to assign a new value to a variable property:
 .. testcode:: ClassesAndStructures
 
    -> someVideoMode.resolution.width = 1280
-   -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+   -> print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
 .. note::
@@ -217,7 +210,7 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = REPL.Resolution
+   << // vga : Resolution = REPL.Resolution(width: 640, height: 480)
 
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -261,9 +254,9 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = REPL.Resolution
+   << // hd : Resolution = REPL.Resolution(width: 1920, height: 1080)
    -> var cinema = hd
-   << // cinema : Resolution = REPL.Resolution
+   << // cinema : Resolution = REPL.Resolution(width: 1920, height: 1080)
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -291,7 +284,7 @@ shows that it has indeed changed to be ``2048``:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("cinema is now \(cinema.width) pixels wide")
+   -> print("cinema is now \(cinema.width) pixels wide")
    <- cinema is now 2048 pixels wide
 
 However, the ``width`` property of the original ``hd`` instance
@@ -299,7 +292,7 @@ still has the old value of ``1920``:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("hd is still \(hd.width) pixels wide")
+   -> print("hd is still \(hd.width) pixels wide")
    <- hd is still 1920 pixels wide
 
 When ``cinema`` was given the current value of ``hd``,
@@ -318,12 +311,12 @@ The same behavior applies to enumerations:
          case North, South, East, West
       }
    -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = (Enum Value)
+   << // currentDirection : CompassPoint = REPL.CompassPoint.West
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = (Enum Value)
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
    -> currentDirection = .East
    -> if rememberedDirection == .West {
-         println("The remembered direction is still .West")
+         print("The remembered direction is still .West")
       }
    <- The remembered direction is still .West
 
@@ -380,7 +373,7 @@ from the underlying ``VideoMode`` instance:
 
 .. testcode:: ClassesAndStructures
 
-   -> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+   -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
 
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
@@ -415,25 +408,25 @@ or passed to a function.)
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S
+   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S
-   -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two S operands
-   !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
-   !!    ^
+   << // s2 : S = REPL.S(x: 0, y: 0)
+   -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !!    ~~ ^   ~~
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
    -> enum E { case A, B }
    -> let e1 = E.A
-   << // e1 : E = (Enum Value)
+   << // e1 : E = REPL.E.A
    -> let e2 = E.B
-   << // e2 : E = (Enum Value)
-   -> if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !! <REPL Input>:1:4: error: binary operator '===' cannot be applied to two E operands
-   !! if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
-   !!    ^
+   << // e2 : E = REPL.E.B
+   -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !!    ~~ ^   ~~
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
@@ -447,7 +440,7 @@ Use these operators to check whether two constants or variables refer to the sam
 .. testcode:: ClassesAndStructures
 
    -> if tenEighty === alsoTenEighty {
-         println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
+         print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
       }
    <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
@@ -472,22 +465,22 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    << // c1 : C = REPL.C
    -> let c2 = C()
    << // c2 : C = REPL.C
-   -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two C operands
-   !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
-   !!    ^
+   -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
+   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
+   !!    ~~ ^  ~~
 
 .. assertion:: structuresDontGetEqualityByDefault
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S
+   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S
-   -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !! <REPL Input>:1:4: error: binary operator '==' cannot be applied to two S operands
-   !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
-   !!    ^
+   << // s2 : S = REPL.S(x: 0, y: 0)
+   -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
+   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
+   !!    ~~ ^  ~~
 
 .. TODO: This needs clarifying with regards to function references.
 

@@ -122,7 +122,7 @@ which count the number of ``Movie`` and ``Song`` instances in the ``library`` ar
          }
       }
    ---
-   -> println("Media library contains \(movieCount) movies and \(songCount) songs")
+   -> print("Media library contains \(movieCount) movies and \(songCount) songs")
    <- Media library contains 2 movies and 3 songs
 
 This example iterates through all items in the ``library`` array.
@@ -181,9 +181,9 @@ to check the downcast each time through the loop:
 
    -> for item in library {
          if let movie = item as? Movie {
-            println("Movie: '\(movie.name)', dir. \(movie.director)")
+            print("Movie: '\(movie.name)', dir. \(movie.director)")
          } else if let song = item as? Song {
-            println("Song: '\(song.name)', by \(song.artist)")
+            print("Song: '\(song.name)', by \(song.artist)")
          }
       }
    ---
@@ -230,7 +230,7 @@ whenever a ``Song`` is found in the library.
    to introduce type casting in a pattern matching context
    and to set up the crazy Any example at the end of the chapter.
 
-.. No section on upcasting because nobody can come up with
+.. TODO: No section on upcasting because nobody can come up with
    an example that isn't excessively contrived.
    The reference shows the behavior in a contrived example.
 
@@ -263,7 +263,7 @@ This is because Objective-C does not have explicitly typed arrays.
 However, you can often be confident about the type of objects contained in such an array
 just from the information you know about the API that provided the array.
 
-In these situations, you can use the forced version of the type cast operator (``as``)
+In these situations, you can use the forced version of the type cast operator (``as!``)
 to downcast each item in the array to a more specific class type than ``AnyObject``,
 without the need for optional unwrapping.
 
@@ -287,7 +287,7 @@ with the forced version of the type cast operator (``as!``):
 
    -> for object in someObjects {
          let movie = object as! Movie
-         println("Movie: '\(movie.name)', dir. \(movie.director)")
+         print("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
    </ Movie: 'Moon', dir. Duncan Jones
@@ -300,7 +300,7 @@ instead of downcasting each item:
 .. testcode:: typeCasting
 
    -> for movie in someObjects as! [Movie] {
-         println("Movie: '\(movie.name)', dir. \(movie.director)")
+         print("Movie: '\(movie.name)', dir. \(movie.director)")
       }
    </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
    </ Movie: 'Moon', dir. Duncan Jones
@@ -318,7 +318,7 @@ The example creates an array called ``things``, which can store values of type `
 .. testcode:: typeCasting
 
    -> var things = [Any]()
-   << // things : [(Any)] = []
+   << // things : [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)
@@ -349,25 +349,25 @@ a constant of the specified type to enable its value to be printed:
    -> for thing in things {
          switch thing {
             case 0 as Int:
-               println("zero as an Int")
+               print("zero as an Int")
             case 0 as Double:
-               println("zero as a Double")
+               print("zero as a Double")
             case let someInt as Int:
-               println("an integer value of \(someInt)")
+               print("an integer value of \(someInt)")
             case let someDouble as Double where someDouble > 0:
-               println("a positive double value of \(someDouble)")
+               print("a positive double value of \(someDouble)")
             case is Double:
-               println("some other double value that I don't want to print")
+               print("some other double value that I don't want to print")
             case let someString as String:
-               println("a string value of \"\(someString)\"")
+               print("a string value of \"\(someString)\"")
             case let (x, y) as (Double, Double):
-               println("an (x, y) point at \(x), \(y)")
+               print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
-               println("a movie called '\(movie.name)', dir. \(movie.director)")
+               print("a movie called '\(movie.name)', dir. \(movie.director)")
             case let stringConverter as String -> String:
-               println(stringConverter("Michael"))
+               print(stringConverter("Michael"))
             default:
-               println("something else")
+               print("something else")
          }
       }
    ---
@@ -380,20 +380,3 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
    </ Hello, Michael
 
-.. note::
-
-   The cases of a ``switch`` statement use
-   the forced version of the type cast operator (``as``, not ``as?``)
-   to check and cast to a specific type.
-   This check is always safe within the context of a ``switch`` case statement.
-
-.. TODO: Where should I mention “AnyClass”?
-
-.. TODO: this section needs to address the question of "a constant or variable having a type"
-   as distinct from "a class instance having a type".
-   This is also relevant in a protocol context.
-
-.. QUESTION: should I mention upcasting here?
-   I can't think of an example where it's useful.
-   However, it does display different behavior from downcasting,
-   in that upcasting always works, and so it doesn't return an optional.

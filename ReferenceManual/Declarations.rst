@@ -179,7 +179,7 @@ Constant Declaration
 --------------------
 
 A :newTerm:`constant declaration` introduces a constant named value into your program.
-Constant declarations are declared using the keyword ``let`` and have the following form:
+Constant declarations are declared using the ``let`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -215,9 +215,9 @@ Both constants can now be used independently:
 
 .. testcode:: constant-decl
 
-    -> println("The first number is \(firstNumber).")
+    -> print("The first number is \(firstNumber).")
     <- The first number is 10.
-    -> println("The second number is \(secondNumber).")
+    -> print("The second number is \(secondNumber).")
     <- The second number is 42.
 
 The type annotation (``:`` *type*) is optional in a constant declaration
@@ -258,7 +258,7 @@ Variable Declaration
 --------------------
 
 A :newTerm:`variable declaration` introduces a variable named value into your program
-and is declared using the keyword ``var``.
+and is declared using the ``var`` keyword.
 
 Variable declarations have several forms that declare different kinds
 of named, mutable values,
@@ -430,7 +430,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. note::
 
-   In a class declaration, the keyword ``static`` has the same effect as
+   In a class declaration, the ``static`` keyword has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
 
 .. TODO: Discuss type properties after they're implemented
@@ -513,7 +513,7 @@ Type Alias Declaration
 ----------------------
 
 A :newTerm:`type alias declaration` introduces a named alias of an existing type into your program.
-Type alias declarations are declared using the keyword ``typealias`` and have the following form:
+Type alias declarations are declared using the ``typealias`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -556,7 +556,7 @@ Function Declaration
 A :newTerm:`function declaration` introduces a function or method into your program.
 A function declared in the context of class, structure, enumeration, or protocol
 is referred to as a :newTerm:`method`.
-Function declarations are declared using the keyword ``func`` and have the following form:
+Function declarations are declared using the ``func`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -594,6 +594,8 @@ This kind of function is known as a :newTerm:`nested function`.
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
+.. _Declarations_ParameterNames:
+
 Parameter Names
 ~~~~~~~~~~~~~~~
 
@@ -607,34 +609,20 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-For function parameters,
-the parameter name is used within the function body,
-but is not used when calling the function.
-For method parameters,
-the parameter name is used as within the function body,
-and is also used as a label for the argument when calling the method.
-The name of a method's first parameter
-is used only within the function body,
-like the parameter of a function.
+A parameter has a local name,
+which is used within the function body,
+as well as an external name,
+which is used as a label for the argument when calling the method.
+By default, the external name of the first parameter is omitted,
+and the second and subsequent parameters
+use their local names as external names.
 For example:
 
-.. testcode:: func-simple-param
+.. testcode:: default-parameter-names
 
-   -> func f(x: Int, y: String) -> String {
-          return y + String(x)
-      }
-   -> f(7, "hello")  // x and y have no name
-   << // r0 : String = "hello7"
-   ---
-   -> class C {
-          func f(x: Int, y: String) -> String {
-              return y + String(x)
-          }
-      }
-   -> let c = C()
-   << // c : C = REPL.C
-   -> c.f(7, y: "hello")  // x has no name, y has a name
-   << // r1 : String = "hello7"
+   -> func f(x: Int, y: Int) -> Int { return x + y }
+   -> f(1, y: 2) // y is labeled, x is not
+   << // r0 : Int = 3
 
 You can override the default behavior
 for how parameter names are used
@@ -643,23 +631,25 @@ with one of the following forms:
 .. syntax-outline::
 
     <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
     _ <#local parameter name#>: <#parameter type#>
 
-A second name before the local parameter name
+A name before the local parameter name
 gives the parameter an external name,
 which can be different from the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
-A hash symbol (``#``) before a parameter name
-indicates that the name should be used as both an external and a local parameter name.
-It has the same meaning as writing the local parameter name twice.
-The corresponding argument must have this name in function or method calls.
-
 An underscore (``_``) before a local parameter name
 gives that parameter no name to be used in function calls.
 The corresponding argument must have no name in function or method calls.
+
+.. testcode:: overridden-parameter-names
+
+   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
+   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
+   << // r0 : Int = 6
+
+.. _Declarations_SpecialKindsOfParameters:
 
 Special Kinds of Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -675,12 +665,12 @@ using the following forms:
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
-A parameter named with an underscore (``_``) is explicitly ignored
-and can't be accessed within the body of the function.
+An underscore (``_``) parameter
+is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
-A function can have at most one variadic parameter, which must be its last parameter.
+A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
 For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
@@ -691,30 +681,28 @@ is understood to have a default value of the given expression.
 The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
 the default value is used instead.
-If the parameter is not omitted,
-it must have its name in the function call.
 
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()       // Valid, uses default value
-   -> f(x: 7)   // Valid, name and value provided
-   -> f(7)      // Invalid, value provided without its name
+   -> f()  // Valid, uses default value
+   -> f(7) // Valid, value provided without its name
+   -> f(x: 7) // Invalid, name and value provided
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
-   !! f(7)      // Invalid, value provided without its name
-   !!   ^
-   !!   x:
+   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
+   !! f(x: 7) // Invalid, name and value provided
+   !! ^~~~
+   !!-
 
 .. assertion:: default-args-evaluated-at-call-site
 
     -> func shout() -> Int {
-           println("evaluated")
-           return 10
+          print("evaluated")
+          return 10
        }
-    -> func foo(x: Int = shout()) { println("x is \(x)") }
-    -> foo(x: 100)
+    -> func foo(x: Int = shout()) { print("x is \(x)") }
+    -> foo(100)
     << x is 100
     -> foo()
     << evaluated
@@ -722,6 +710,8 @@ it must have its name in the function call.
     -> foo()
     << evaluated
     << x is 10
+
+.. _Declarations_SpecialKindsOfMethods:
 
 Special Kinds of Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -751,22 +741,22 @@ The returned function takes the next parameter and returns another function.
 This continues until there are no remaining parameters,
 at which point the last function returns the return value of the original multiparameter function.
 The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(_:_:)`` function as the equivalent ``addTwoIntsCurried(_:)(b:)`` function:
+For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
 
 .. testcode:: curried-function
 
-    -> func addTwoInts(a: Int, b: Int) -> Int {
-           return a + b
+    -> func addTwoInts(a a: Int, b: Int) -> Int {
+          return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
-The ``addTwoInts(_:_:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(_:)(b:)`` function takes a single integer, and returns another function
+The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
+The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
 that takes the second integer and adds it to the first.
 (The nested function captures the value of the first integer argument from the enclosing
 function.)
@@ -783,33 +773,33 @@ For example, the following two declarations are equivalent:
 
 .. testcode:: curried-function-syntactic-sugar
 
-    -> func addTwoIntsCurried(a: Int)(b: Int) -> Int {
-           return a + b
+    -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
+          return a + b
        }
-    -> func addTwoIntsCurried(a: Int) -> (Int -> Int) {
-           func addTheOtherInt(b: Int) -> Int {
-               return a + b
-            }
-            return addTheOtherInt
-        }
+    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
+          func addTheOtherInt(b: Int) -> Int {
+             return a + b
+          }
+          return addTheOtherInt
+       }
 
-In order to use the ``addTwoIntsCurried(_:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(_:_:)`` function,
-you must call the ``addTwoIntsCurried(_:)(b:)`` function with the first integer argument
+In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
+as the noncurried ``addTwoInts(a:b:)`` function,
+you must call the ``addTwoIntsCurried(a:)(b:)`` function with the first integer argument
 and then call its returned function with the second integer argument:
 
 .. testcode:: curried-function-usage
 
-    >> func addTwoInts(a: Int, b: Int) -> Int {
-          return a + b
-       }
-       func addTwoIntsCurried(a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> addTwoInts(4, 5)
+    >> func addTwoInts(a a: Int, b: Int) -> Int {
+    >>    return a + b
+    >> }
+    >> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
+    >>    return a + b
+    >> }
+    -> addTwoInts(a: 4, b: 5)
     <$ : Int = 9
     -> // returns a value of 9
-    -> addTwoIntsCurried(4)(b: 5)
+    -> addTwoIntsCurried(a: 4)(b: 5)
     <$ : Int = 9
     -> // returns a value of 9
 
@@ -817,16 +807,16 @@ Although you must provide the arguments to a noncurried function all at once in 
 you can use the curried form of a function to provide arguments in several function calls,
 one at a time (even in different places in your code).
 This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(_:)(b:)`` function to an integer argument ``1``
+For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
 and assign the result to the constant ``plusOne``:
 
 .. testcode:: curried-function
 
-    -> let plusOne = addTwoIntsCurried(1)
+    -> let plusOne = addTwoIntsCurried(a: 1)
     << // plusOne : Int -> Int = (Function)
     -> // plusOne is a function of type Int -> Int
 
-Because ``plusOne`` refers to the ``addTwoIntsCurried(_:)(b:)`` function with its argument bound
+Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
 as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
 
 .. testcode:: curried-function
@@ -835,39 +825,83 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     <$ : Int = 11
     -> // returns a value of 11
 
+.. _Declarations_ThrowingFunctionsAndMethods:
 
-.. langref-grammar
+Throwing Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    decl-func ::= attribute-list? ('static' | 'class')? 'mutating'? 'func' any-identifier generic-params? func-signature stmt-brace?
-    func-signature ::= func-arguments func-signature-result?
-    func-signature-result ::= '->' type
+Functions and methods that can throw an error must be marked with the ``throws`` keyword.
+These functions and methods are known as :newTerm:`throwing functions`
+and :newTerm:`throwing methods`.
+They have the following form:
 
-    func-arguments ::= curried-arguments
-    curried-arguments ::= parameter-clause+
+.. syntax-outline::
 
-    parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? '#'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
-    identifier-or-none ::= identifier | '_'
+    func <#function name#>(<#parameters#>) throws -> <#return type#> {
+       <#statements#>
+    }
+
+Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` expression
+(that is, in the scope a ``try`` or ``try!`` operator).
+
+The ``throws`` keyword is part of a function's type,
+and nonthrowing functions are subtypes of throwing functions.
+As a result, you can use a nonthrowing function in the same places as a throwing one.
+For curried functions, the ``throws`` keyword applies only to the innermost function.
+
+You can't overload a function based only on whether the function can throw an error.
+That said,
+you can overload a function based on whether a function *parameter* can throw an error.
+
+A throwing method can't override a nonthrowing method,
+and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
+That said, a nonthrowing method can override a throwing method,
+and a nonthrowing method can satisfy a protocol requirement for a throwing.
+
+.. _Declarations_RethrowingFunctionsAndMethods:
+
+Rethrowing Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A function or method can be declared with the ``rethrows`` keyword
+to indicate that it throws an error only if one of it's function parameters throws an error.
+These functions and methods are known as :newTerm:`rethrowing functions`
+and :newTerm:`rethrowing methods`.
+Rethrowing functions and methods
+must have at least one throwing function parameter.
+
+.. testcode:: rethrows
+
+   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+          try callback()
+      }
+
+A throwing method can't override a rethrowing method,
+and a throwing method can't satisfy a protocol requirement for a rethrowing method.
+That said, a rethrowing method can override a throwing method,
+and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
 .. syntax-grammar::
 
     Grammar of a function declaration
 
-    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body-OPT
 
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses function-result-OPT
+    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
     parameter-clauses --> parameter-clause parameter-clauses-OPT
-    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
+    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` ``#``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> attributes-OPT type
+    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
+    parameter --> ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
     default-argument-clause --> ``=`` expression
@@ -888,7 +922,7 @@ Enumeration Declaration
 
 An :newTerm:`enumeration declaration` introduces a named enumeration type into your program.
 
-Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
+Enumeration declarations have two basic forms and are declared using the ``enum`` keyword.
 The body of an enumeration declared using either form contains
 zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
@@ -933,14 +967,104 @@ enumeration cases of any type:
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
-In this form, each case block consists of the keyword ``case``
+In this form, each case block consists of the ``case`` keyword
 followed by one or more enumeration cases, separated by commas.
 The name of each case must be unique.
 Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
 immediately following the name of the case.
+
+Enumeration cases that store associated values can be used as functions
+that create instances of the enumeration with the specified associated values.
+And just like functions,
+you can get a reference to an enumeration case and apply it later in your code.
+
+.. testcode:: enum-case-as-function
+
+    -> enum Number {
+          case Integer(Int)
+          case Real(Double)
+       }
+    -> let f = Number.Integer
+    << // f : (Int) -> Number = (Function)
+    -> // f is a function of type (Int) -> Number
+    ---
+    -> // Apply f to create an array of Number instances with integer values
+    -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
+    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
+
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
+
+.. _Declarations_EnumerationsWithIndirection:
+
+Enumerations with Indirection
++++++++++++++++++++++++++++++
+
+Enumerations can have a recursive structure,
+that is, they can have cases with associated values
+that are instances of the enumeration type itself.
+However, instances of enumeration types have value semantics,
+which means they have a fixed layout in memory.
+To support recursion,
+the compiler must insert a layer of indirection.
+
+To enable indirection for a particular enumeration case,
+mark it with the ``indirect`` declaration modifier.
+
+.. TODO The word "enable" is kind of a weasle word.
+   Better to have a more concrete discussion of exactly when
+   it is and isn't used.
+   For example, does "indirect enum { X(Int) } mark X as indirect?
+
+.. testcode:: indirect-enum
+
+   -> enum Tree<T> {
+         case Empty
+         indirect case Node(value: T, left: Tree, right: Tree)
+      }
+   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
+   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
+   >> let t = Tree.Node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+
+To enable indirection for all the cases of an enumeration,
+mark the entire enumeration with the ``indirect`` modifier ---
+this is convenient when the enumeration contains many cases
+that would each need to be marked with the ``indirect`` modifier.
+
+An enumeration case that's marked with the ``indirect`` modifier
+must have an associated value.
+An enumeration that is marked with the ``indirect`` modifier
+can contain a mixture of cases that have associated values and cases those that don't.
+That said,
+it can't contain any cases that are also marked with the ``indirect`` modifier.
+
+.. It really should be an associated value **that includes the enum type**
+   but right now the compiler is satisfied with any associated value.
+   Alex emailed Joe Groff 2015-07-08 about this.
+
+.. assertion indirect-in-indirect
+
+   -> indirect enum E { indirect case C(E) }
+   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
+   !! indirect enum E { indirect case C(E) }
+   !!                   ^
+
+.. assertion indirect-without-recursion
+
+   -> enum E { indirect case C }
+   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
+   !! enum E { indirect case C }
+   !!          ^
+   ---
+   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   ---
+   -> indirect enum E3 { case X }
+
 
 .. _Declarations_EnumerationsWithRawCaseValues:
 
@@ -957,7 +1081,7 @@ enumeration cases of the same basic type:
         case <#enumeration case 2#> = <#raw value 2#>
     }
 
-In this form, each case block consists of the keyword ``case``,
+In this form, each case block consists of the ``case`` keyword,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
 value, called a :newTerm:`raw value`, of the same basic type.
@@ -970,8 +1094,8 @@ and one of the following literal-convertible protocols:
 ``StringLiteralConvertible`` for string literals that contain any number of characters, and
 ``ExtendedGraphemeClusterLiteralConvertible`` for string literals
 that contain only a single character.
-
 Each case must have a unique name and be assigned a unique raw value.
+
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
@@ -988,6 +1112,19 @@ In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value 
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
+
+If the raw-value type is specified as ``String``
+and you don't assign values to the cases explicitly,
+each unassigned case is implicitly assigned a string with the same text as the name of that case.
+
+.. testcode:: raw-value-enum-implicit-string-values
+
+    -> enum WeekendDay: String {
+          case Saturday, Sunday
+       }
+
+In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
+and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
@@ -1016,6 +1153,13 @@ The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
+.. FIXME: Or use if-case:
+   enum E { case C(Int) }
+   let e = E.C(100)
+   if case E.C(let i) = e { print(i) }
+   // prints 100
+
+
 
 .. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw-value type,
@@ -1042,10 +1186,10 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
-    union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
@@ -1058,7 +1202,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
     raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> numeric-literal | string-literal | boolean-literal
+    raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
@@ -1086,14 +1230,13 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     raw-value-assignment --> ``=`` literal
 
 
-
 .. _Declarations_StructureDeclaration:
 
 Structure Declaration
 ---------------------
 
 A :newTerm:`structure declaration` introduces a named structure type into your program.
-Structure declarations are declared using the keyword ``struct`` and have the following form:
+Structure declarations are declared using the ``struct`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -1159,7 +1302,7 @@ Class Declaration
 -----------------
 
 A :newTerm:`class declaration` introduces a named class type into your program.
-Class declarations are declared using the keyword ``class`` and have the following form:
+Class declarations are declared using the ``class`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -1254,7 +1397,7 @@ Protocol Declaration
 
 A :newTerm:`protocol declaration` introduces a named protocol type into your program.
 Protocol declarations are declared at global scope
-using the keyword ``protocol`` and have the following form:
+using the ``protocol`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -1476,7 +1619,9 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows``
+
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
@@ -1514,7 +1659,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protocols declare associated types using the keyword ``typealias``.
+Protocols declare associated types using the ``typealias`` keyword.
 An associated type provides an alias for a type
 that is used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
@@ -1601,7 +1746,7 @@ Initializer Declaration
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
-Initializer declarations are declared using the keyword ``init`` and have
+Initializer declarations are declared using the ``init`` keyword and have
 two basic forms.
 
 Structure, enumeration, and class types can have any number of initializers,
@@ -1670,6 +1815,11 @@ you need to mark overridden designated initializers with the ``override`` declar
     you don't also mark the initializer with the ``override`` modifier
     when you override the required initializer in a subclass.
 
+Just like functions and methods, initializers can throw or rethrow errors.
+And just like functions and methods,
+you use the ``throws`` or ``rethrows`` keyword after an initializer's parameters
+to indicate the appropriate behavior.
+
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
@@ -1722,6 +1872,9 @@ is called (that is, any initializer delegation is performed).
 A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
 or to an ``init!`` failable initializer.
+A nonfailable initializer can delegate to an ``init?`` failable initializer
+by force-unwrapping the result of the superclass's initializer ---
+for example, by writing ``super.init()!``.
 
 Initialization failure propagates through initializer delegation.
 Specifically,
@@ -1749,7 +1902,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
@@ -1806,7 +1960,7 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend the behavior of existing
 class, structure, and enumeration types.
-Extension declarations are declared using the keyword ``extension`` and have the following form:
+Extension declarations are declared using the ``extension`` keyword and have the following form:
 
 .. syntax-outline::
 
@@ -1867,7 +2021,7 @@ Subscript Declaration
 A :newTerm:`subscript` declaration allows you to add subscripting support for objects
 of a particular type and are typically used to provide a convenient syntax
 for accessing the elements in a collection, list, or sequence.
-Subscript declarations are declared using the keyword ``subscript``
+Subscript declarations are declared using the ``subscript`` keyword
 and have the following form:
 
 .. syntax-outline::
@@ -1944,7 +2098,7 @@ Operator Declaration
 
 An :newTerm:`operator declaration` introduces a new infix, prefix,
 or postfix operator into your program
-and is declared using the keyword ``operator``.
+and is declared using the ``operator`` keyword.
 
 You can declare operators of three different fixities:
 infix, prefix, and postfix.
@@ -1974,7 +2128,7 @@ Infix operators can optionally specify a precedence, associativity, or both.
 
 The :newTerm:`precedence` of an operator specifies how tightly an operator
 binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the context-sensitive keyword ``precedence``
+You specify the precedence of an operator by writing the context-sensitive ``precedence`` keyword
 followed by the *precedence level*.
 The *precedence level* can be any whole number (decimal integer) from 0 to 255;
 unlike decimal integer literals, it can't contain any underscore characters.
@@ -1986,7 +2140,7 @@ binds more tightly to its operands.
 
 The :newTerm:`associativity` of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the context-sensitive keyword ``associativity``
+You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
 followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
 or ``none``. Operators that are left-associative group left-to-right. For example,
 the subtraction operator (``-``) is left-associative,
@@ -2155,7 +2309,7 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     only by code in the same source file as the declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the keyword ``set`` enclosed in parentheses (for instance, ``private(set)``).
+which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
@@ -2172,5 +2326,3 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
-    access-level-modifiers --> access-level-modifier access-level-modifiers-OPT
-

@@ -3,7 +3,7 @@ Control Flow
 
 Swift provides all the familiar control flow statements from C-like languages.
 These include ``for`` and ``while`` loops to perform a task multiple times;
-``if`` and ``switch`` statements
+``if``, ``guard``, and ``switch`` statements
 to execute different branches of code based on certain conditions;
 and statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
@@ -11,11 +11,6 @@ to transfer the flow of execution to another point in your code.
 In addition to the traditional ``for`` loop found in C,
 Swift adds a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
-
-.. TODO: add the text below once we have some documentation about Sequence:
-   The ``for``-``in`` loop can even be used with your own custom types
-   if they conform to the ``Sequence`` protocol.
-   <link>
 
 Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
@@ -52,7 +47,7 @@ This example prints the first few entries in the five-times-table:
 .. testcode:: forLoops
 
    -> for index in 1...5 {
-         println("\(index) times 5 is \(index * 5)")
+         print("\(index) times 5 is \(index * 5)")
       }
    </ 1 times 5 is 5
    </ 2 times 5 is 10
@@ -69,7 +64,7 @@ In this case, the loop contains only one statement,
 which prints an entry from the five-times-table for the current value of ``index``.
 After the statement is executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
-and the ``println(_:)`` function is called again.
+and the ``print(_:separator:terminator:)`` function is called again.
 This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
@@ -92,7 +87,7 @@ you can ignore the values by using an underscore in place of a variable name:
    -> for _ in 1...power {
          answer *= base
       }
-   -> println("\(base) to the power of \(power) is \(answer)")
+   -> print("\(base) to the power of \(power) is \(answer)")
    <- 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
@@ -103,8 +98,8 @@ by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 This calculation doesn't need to know the individual counter values each time through the loop ---
 it simply needs to execute the loop the correct number of times.
-The underscore character ``_``
-(used in place of a loop variable)
+The underscore character (``_``)
+used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
@@ -115,7 +110,7 @@ Use a ``for``-``in`` loop with an array to iterate over its items:
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
    << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
-         println("Hello, \(name)!")
+         print("Hello, \(name)!")
       }
    </ Hello, Anna!
    </ Hello, Alex!
@@ -135,7 +130,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> for (animalName, legCount) in numberOfLegs {
-         println("\(animalName)s have \(legCount) legs")
+         print("\(animalName)s have \(legCount) legs")
       }
    </ ants have 6 legs
    </ cats have 4 legs
@@ -144,21 +139,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
-
-In addition to arrays and dictionaries,
-you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
-
-.. testcode:: forLoops
-
-   -> for character in "Hello" {
-         println(character)
-      }
-   </ H
-   </ e
-   </ l
-   </ l
-   </ o
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -170,11 +151,6 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
    including your own classes and collection types,
    as long as they conform to the ``Sequence`` protocol.
    <link to Sequence definition>
-
-.. QUESTION: are there any plans for enums to conform to Sequence?
-   If so, they might make for a good example.
-   What would the syntax be if they did?
-   'for planet in Planet'?
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
@@ -190,7 +166,7 @@ Swift supports traditional C-style ``for`` loops with a condition and an increme
 .. testcode:: forLoops
 
    -> for var index = 0; index < 3; ++index {
-         println("index is \(index)")
+         print("index is \(index)")
       }
    </ index is 0
    </ index is 1
@@ -239,12 +215,12 @@ you must declare ``index`` before the loop's scope begins:
 
    -> var index: Int
    -> for index = 0; index < 3; ++index {
-         println("index is \(index)")
+         print("index is \(index)")
       }
    </ index is 0
    </ index is 1
    </ index is 2
-   -> println("The loop statements were executed \(index) times")
+   -> print("The loop statements were executed \(index) times")
    <- The loop statements were executed 3 times
 
 Note that the final value of ``index`` after this loop is completed is ``3``, not ``2``.
@@ -266,7 +242,7 @@ the number of iterations is not known before the first iteration begins.
 Swift provides two kinds of ``while`` loop:
 
 * ``while`` evaluates its condition at the start of each pass through the loop.
-* ``do``-``while`` evaluates its condition at the end of each pass through the loop.
+* ``repeat``-``while`` evaluates its condition at the end of each pass through the loop.
 
 .. _ControlFlow_While:
 
@@ -299,8 +275,6 @@ The rules of the game are as follows:
 * If your turn ends at the bottom of a ladder, you move up that ladder.
 * If your turn ends at the head of a snake, you move down that snake.
 
-.. TODO: update this description to match the look of the final artwork.
-
 The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
@@ -313,7 +287,7 @@ The board is initialized with 26 zero ``Int`` values, not 25
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -348,17 +322,17 @@ The first dice roll always moves the player on to the board:
    -> while square < finalSquare {
          // roll the dice
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
-   >>    println("after diceRoll, square is \(square)")
+   >>    print("after diceRoll, square is \(square)")
          if square < board.count {
             // if we're still on the board, move up or down for a snake or a ladder
             square += board[square]
-   >>       println("after snakes or ladders, square is \(square)")
+   >>       print("after snakes or ladders, square is \(square)")
          }
       }
-   -> println("Game over!")
+   -> print("Game over!")
    << diceRoll is 1
    << after diceRoll, square is 1
    << after snakes or ladders, square is 1
@@ -429,25 +403,30 @@ Instead, the loop is executed until a particular condition is satisfied.
 
 .. _ControlFlow_DoWhile:
 
-Do-While
-~~~~~~~~
+Repeat-While
+~~~~~~~~~~~~
 
 The other variation of the ``while`` loop,
-known as the ``do``-``while`` loop,
+known as the ``repeat``-``while`` loop,
 performs a single pass through the loop block first,
 *before* considering the loop's condition.
 It then continues to repeat the loop until the condition is ``false``.
 
-Here's the general form of a ``do``-``while`` loop:
+.. note::
+
+   The ``repeat``-``while`` loop in Swift is analogous to
+   a ``do``-``while`` loop in other languages.
+
+Here's the general form of a ``repeat``-``while`` loop:
 
 .. syntax-outline::
 
-   do {
+   repeat {
       <#statements#>
    } while <#condition#>
 
 Here's the *Snakes and Ladders* example again,
-written as a ``do``-``while`` loop rather than a ``while`` loop.
+written as a ``repeat``-``while`` loop rather than a ``while`` loop.
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in exactly the same way as with a ``while`` loop:
 
@@ -456,7 +435,7 @@ are initialized in exactly the same way as with a ``while`` loop:
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
@@ -476,18 +455,18 @@ and has no effect:
 
 .. testcode:: snakesAndLadders2
 
-   -> do {
+   -> repeat {
          // move up or down for a snake or ladder
          square += board[square]
-   >>      println("after snakes or ladders, square is \(square)")
+   >>      print("after snakes or ladders, square is \(square)")
          // roll the dice
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
-   >>    println("after diceRoll, square is \(square)")
+   >>    print("after diceRoll, square is \(square)")
    -> } while square < finalSquare
-   -> println("Game over!")
+   -> print("Game over!")
    << after snakes or ladders, square is 0
    << diceRoll is 1
    << after diceRoll, square is 1
@@ -526,9 +505,9 @@ The current loop execution then ends.
 
 The loop's condition (``while square < finalSquare``) is the same as before,
 but this time it is not evaluated until the *end* of the first run through the loop.
-The structure of the ``do``-``while`` loop is better suited to this game
+The structure of the ``repeat``-``while`` loop is better suited to this game
 than the ``while`` loop in the previous example.
-In the ``do``-``while`` loop above,
+In the ``repeat``-``while`` loop above,
 ``square += board[square]`` is always executed *immediately after*
 the loop's ``while`` condition confirms that ``square`` is still on the board.
 This behavior removes the need for the array bounds check
@@ -567,7 +546,7 @@ It executes a set of statements only if that condition is ``true``:
    -> var temperatureInFahrenheit = 30
    << // temperatureInFahrenheit : Int = 30
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       }
    <- It's very cold. Consider wearing a scarf.
 
@@ -587,9 +566,9 @@ These statements are indicated by the ``else`` keyword:
 
    -> temperatureInFahrenheit = 40
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else {
-         println("It's not that cold. Wear a t-shirt.")
+         print("It's not that cold. Wear a t-shirt.")
       }
    <- It's not that cold. Wear a t-shirt.
 
@@ -605,11 +584,11 @@ to consider additional clauses:
 
    -> temperatureInFahrenheit = 90
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else if temperatureInFahrenheit >= 86 {
-         println("It's really warm. Don't forget to wear sunscreen.")
+         print("It's really warm. Don't forget to wear sunscreen.")
       } else {
-         println("It's not that cold. Wear a t-shirt.")
+         print("It's not that cold. Wear a t-shirt.")
       }
    <- It's really warm. Don't forget to wear sunscreen.
 
@@ -624,9 +603,9 @@ and can be excluded if the set of conditions does not need to be complete:
 
    -> temperatureInFahrenheit = 72
    -> if temperatureInFahrenheit <= 32 {
-         println("It's very cold. Consider wearing a scarf.")
+         print("It's very cold. Consider wearing a scarf.")
       } else if temperatureInFahrenheit >= 86 {
-         println("It's really warm. Don't forget to wear sunscreen.")
+         print("It's really warm. Don't forget to wear sunscreen.")
       }
 
 In this example,
@@ -677,7 +656,7 @@ That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it is not appropriate to provide a ``switch`` case for every possible value,
 you can define a default catch-all case to cover any values that are not addressed explicitly.
-This catch-all case is indicated by the keyword ``default``,
+This catch-all case is indicated by the ``default`` keyword,
 and must always appear last.
 
 This example uses a ``switch`` statement to consider
@@ -689,12 +668,12 @@ a single lowercase character called ``someCharacter``:
    << // someCharacter : Character = "e"
    -> switch someCharacter {
          case "a", "e", "i", "o", "u":
-            println("\(someCharacter) is a vowel")
+            print("\(someCharacter) is a vowel")
          case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
             "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            println("\(someCharacter) is a consonant")
+            print("\(someCharacter) is a consonant")
          default:
-            println("\(someCharacter) is not a vowel or a consonant")
+            print("\(someCharacter) is not a vowel or a consonant")
       }
    <- e is a vowel
 
@@ -738,13 +717,14 @@ It is not valid to write the following code, because the first case is empty:
    -> switch anotherCharacter {
          case "a":
          case "A":
-            println("The letter A")
+            print("The letter A")
          default:
-            println("Not the letter A")
+            print("Not the letter A")
       }
    !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
-   !!          case "a":
-   !!          ^~~~~~~~~
+   !!      case "a":
+   !!      ^~~~~~~~~
+   !!                break
    // this will report a compile-time error
 
 Unlike a ``switch`` statement in C,
@@ -803,7 +783,7 @@ to provide a natural-language count for numbers of any size:
       default:
           naturalCount = "many"
       }
-   -> println("There are \(naturalCount) \(countedThings).")
+   -> print("There are \(naturalCount) \(countedThings).")
    <- There are dozens of moons orbiting Saturn.
 
 In the above example, ``approximateCount`` is evaluated in a ``switch`` statement.
@@ -830,7 +810,9 @@ ______
 
 You can use tuples to test multiple values in the same ``switch`` statement.
 Each element of the tuple can be tested against a different value or interval of values.
-Alternatively, use the underscore (``_``) identifier to match any possible value.
+Alternatively, use the underscore character (``_``),
+also known as the wildcard pattern,
+to match any possible value.
 
 The example below takes an (x, y) point,
 expressed as a simple tuple of type ``(Int, Int)``,
@@ -842,15 +824,15 @@ and categorizes it on the graph that follows the example:
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
-            println("(0, 0) is at the origin")
+            print("(0, 0) is at the origin")
          case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
+            print("(\(somePoint.0), 0) is on the x-axis")
          case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
+            print("(0, \(somePoint.1)) is on the y-axis")
          case (-2...2, -2...2):
-            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            print("(\(somePoint.0), \(somePoint.1)) is inside the box")
          default:
-            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+            print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
       }
    <- (1, 1) is inside the box
 
@@ -891,11 +873,11 @@ and categorizes it on the graph that follows:
    << // anotherPoint : (Int, Int) = (2, 0)
    -> switch anotherPoint {
          case (let x, 0):
-            println("on the x-axis with an x value of \(x)")
+            print("on the x-axis with an x value of \(x)")
          case (0, let y):
-            println("on the y-axis with a y value of \(y)")
+            print("on the y-axis with a y value of \(y)")
          case let (x, y):
-            println("somewhere else at (\(x), \(y))")
+            print("somewhere else at (\(x), \(y))")
       }
    <- on the x-axis with an x value of 2
 
@@ -918,7 +900,7 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 Once the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``println(_:)`` function.
+Here, they are used as shorthand for printing the values with the ``print(_:separator:terminator:)`` function.
 
 Note that this ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
@@ -949,11 +931,11 @@ The example below categorizes an (x, y) point on the following graph:
    << // yetAnotherPoint : (Int, Int) = (1, -1)
    -> switch yetAnotherPoint {
          case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the line x == y")
+            print("(\(x), \(y)) is on the line x == y")
          case let (x, y) where x == -y:
-            println("(\(x), \(y)) is on the line x == -y")
+            print("(\(x), \(y)) is on the line x == -y")
          case let (x, y):
-            println("(\(x), \(y)) is just some arbitrary point")
+            print("(\(x), \(y)) is just some arbitrary point")
       }
    <- (1, -1) is on the line x == -y
 
@@ -982,15 +964,17 @@ Control Transfer Statements
 
 :newTerm:`Control transfer statements` change the order in which your code is executed,
 by transferring control from one piece of code to another.
-Swift has four control transfer statements:
+Swift has five control transfer statements:
 
 * ``continue``
 * ``break``
 * ``fallthrough``
 * ``return``
+* ``throw``
 
 The ``continue``, ``break``, and ``fallthrough`` statements are described below.
-The ``return`` statement is described in :doc:`Functions`.
+The ``return`` statement is described in :doc:`Functions`,
+and the ``throw`` statement is described in :ref:`ErrorHandling_Throw`.
 
 .. _ControlFlow_Continue:
 
@@ -1018,7 +1002,7 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
-   -> for character in puzzleInput {
+   -> for character in puzzleInput.characters {
          switch character {
             case "a", "e", "i", "o", "u", " ":
                continue
@@ -1026,7 +1010,7 @@ to create a cryptic puzzle phrase:
                puzzleOutput.append(character)
          }
       }
-   -> println(puzzleOutput)
+   -> print(puzzleOutput)
    <- grtmndsthnklk
 
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
@@ -1107,9 +1091,9 @@ Multiple values are covered in a single ``switch`` case for brevity:
             break
       }
    -> if let integerValue = possibleIntegerValue {
-         println("The integer value of \(numberSymbol) is \(integerValue).")
+         print("The integer value of \(numberSymbol) is \(integerValue).")
       } else {
-         println("An integer value could not be found for \(numberSymbol).")
+         print("An integer value could not be found for \(numberSymbol).")
       }
    <- The integer value of 三 is 3.
 
@@ -1167,7 +1151,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
          default:
             description += " an integer."
       }
-   -> println(description)
+   -> print(description)
    <- The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``
@@ -1186,7 +1170,7 @@ There are no other specific cases,
 and so ``integerToDescribe`` is matched by the catchall ``default`` case.
 
 After the ``switch`` statement has finished executing,
-the number's description is printed using the ``println(_:)`` function.
+the number's description is printed using the ``print(_:separator:terminator:)`` function.
 In this example,
 the number ``5`` is correctly identified as a prime number.
 
@@ -1203,20 +1187,24 @@ the number ``5`` is correctly identified as a prime number.
 Labeled Statements
 ~~~~~~~~~~~~~~~~~~
 
-You can nest loops and ``switch`` statements
-inside other loops and ``switch`` statements in Swift
+You can nest loops and conditional statements
+inside other loops and conditional statements in Swift
 to create complex control flow structures.
-However, loops and ``switch`` statements can both use the ``break`` statement
+However, loops and conditional statements can both use the ``break`` statement
 to end their execution prematurely.
 Therefore, it is sometimes useful to be explicit about
-which loop or ``switch`` statement you want a ``break`` statement to terminate.
+which loop or conditional statement you want a ``break`` statement to terminate.
 Similarly, if you have multiple nested loops,
 it can be useful to be explicit about which loop the ``continue`` statement
 should affect.
 
 To achieve these aims,
-you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`,
-and use this label with the ``break`` statement or ``continue`` statement
+you can mark a loop statement or conditional statement with a :newTerm:`statement label`.
+With a conditional statement,
+you can use a statement label with the ``break`` statement
+to end the execution of the labeled statement.
+With a loop statement,
+you can use a statement label with the ``break`` or ``continue`` statement
 to end or continue the execution of the labeled statement.
 
 A labeled statement is indicated by placing
@@ -1253,7 +1241,7 @@ are initialized in the same way as before:
    -> let finalSquare = 25
    << // finalSquare : Int = 25
    -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
-   << // board : [(Int)] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
@@ -1273,25 +1261,25 @@ to reflect that you must land exactly on square 25:
 
    -> gameLoop: while square != finalSquare {
          if ++diceRoll == 7 { diceRoll = 1 }
-   >>    println("diceRoll is \(diceRoll)")
+   >>    print("diceRoll is \(diceRoll)")
          switch square + diceRoll {
             case finalSquare:
                // diceRoll will move us to the final square, so the game is over
-   >>          println("finalSquare, game is over")
+   >>          print("finalSquare, game is over")
                break gameLoop
             case let newSquare where newSquare > finalSquare:
                // diceRoll will move us beyond the final square, so roll again
-   >>          println("move too far, roll again")
+   >>          print("move too far, roll again")
                continue gameLoop
             default:
                // this is a valid move, so find out its effect
                square += diceRoll
-   >>          println("after diceRoll, square is \(square)")
+   >>          print("after diceRoll, square is \(square)")
                square += board[square]
-   >>          println("after snakes or ladders, square is \(square)")
+   >>          print("after snakes or ladders, square is \(square)")
          }
       }
-   -> println("Game over!")
+   -> print("Game over!")
    << diceRoll is 1
    << after diceRoll, square is 1
    << after snakes or ladders, square is 1
@@ -1370,3 +1358,138 @@ and to work out if the move is allowed:
    However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
    Doing so is consistent with the label's use alongside the ``break`` statement,
    and helps make the game's logic clearer to read and understand.
+
+.. _ControlFlow_Guard:
+
+Early Exit
+----------
+
+A ``guard`` statement, like an ``if`` statement,
+executes statements depending on the Boolean value of an expression.
+You use a ``guard`` statement to require that a condition must be true
+in order for the code after the ``guard`` statement to be executed.
+Unlike an ``if`` statement,
+a ``guard`` statement always has an ``else`` clause ---
+the code inside the ``else`` clause is executed if the condition is not true.
+
+.. testcode:: guard
+
+    -> func greet(person: [String: String]) {
+           guard let name = person["name"] else {
+               return
+           }
+
+           print("Hello \(name)!")
+
+           guard let location = person["location"] else {
+               print("I hope the weather is nice near you.")
+               return
+           }
+
+           print("I hope the weather is nice in \(location).")
+       }
+    ---
+    -> greet(["name": "John"])
+    <- Hello John!
+    <- I hope the weather is nice near you.
+    -> greet(["name": "Jane", "location": "Cupertino"])
+    <- Hello Jane!
+    <- I hope the weather is nice in Cupertino.
+
+If the ``guard`` statement's condition is met,
+code execution continues after the ``guard`` statement's closing brace.
+Any variables or constants that were assigned values
+using an optional binding as part of the condition
+are available for the rest of the code block
+that the ``guard`` statement appears in.
+
+If that condition is not met,
+the code inside the ``else`` branch is executed.
+That branch must transfer control to exit the code block
+that that ``guard`` statement appears in.
+It can do this with a control transfer statement
+such as ``return``, ``break``, ``continue``, or ``throw``,
+or it can call a function or method
+that doesn't return, such as ``fatalError()``.
+
+Using a ``guard`` statement for requirements
+improves the readability of your code,
+compared to doing the same check with an ``if`` statement.
+It lets you write the code that's typically executed
+without wrapping it in an ``else`` block,
+and it lets you keep the code that handles a violated requirement
+next to the requirement.
+
+.. _ControlFlow_Available:
+
+Checking API Availability
+-------------------------
+
+Swift has built-in support for checking API availability,
+which ensures that you don't accidentally use APIs that are unavailable
+on a given deployment target.
+
+The compiler uses availability information in the SDK
+to verify that all of the APIs used in your code
+are available on the deployment target specified by your project.
+Swift reports an error at compile time
+if you try to use an API that isn't available.
+
+You use an :newTerm:`availability condition` in an ``if`` or ``guard`` statement
+to conditionally execute a block of code,
+depending on whether the APIs you want to use are available at runtime.
+The compiler uses the information from the availability condition
+when it verifies that the APIs in that block of code are available.
+
+.. testcode:: availability
+
+   -> if #available(iOS 9, OSX 10.10, *) {
+          // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
+      } else {
+          // Fall back to earlier iOS and OS X APIs
+      }
+   !! <REPL Input>:1:4: warning: unnecessary check for 'OSX'; minimum deployment target ensures guard will always be true
+   !! if #available(iOS 9, OSX 10.10, *) {
+   !! ^
+
+
+The availability condition above specifies that on iOS,
+the body of the ``if`` executes only on iOS 9 and later;
+on OS X, only on OS X v10.10 and later.
+The last argument, ``*``, is required and specifies that on any other platform,
+the body of the ``if`` executes on the minimum deployment target specified by your target.
+
+In its general form,
+the availability condition takes a list of platform names and versions.
+You use ``iOS``, ``OSX``, and ``watchOS`` for the platform names.
+In addition to specifying major version numbers like iOS 8,
+you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
+
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statements to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+.. FIXME
+    Not a general purpose condition; can't combine with &&, etc.
+    Use can use it with if-let, and other Boolean conditions, using a comma
+
+
+.. FIXME
+    When used with 'guard' it refines the availablity for the remainder of the
+    block of code.
+
+    You can do this on your own classes that depend on SDK versiosn
+
+    @available class Foo
+
+    guard #available {
+        fall back and return
+    }
+    let  f = Foo
+    do cool new stuff with Foo
+
+

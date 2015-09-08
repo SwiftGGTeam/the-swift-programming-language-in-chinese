@@ -87,8 +87,6 @@ and an external name (for use when calling the function),
 as described in :ref:`Functions_ExternalParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-However, the default behavior of local names and external names
-is different for functions and methods.
 
 Methods in Swift are very similar to their counterparts in Objective-C.
 As in Objective-C, the name of a method in Swift typically refers to
@@ -96,11 +94,8 @@ the method's first parameter using a preposition such as
 ``with``, ``for``, or ``by``,
 as seen in the ``incrementBy(_:)`` method from the preceding ``Counter`` class example.
 The use of a preposition enables the method to be read as a sentence when it is called.
-Swift makes this established method naming convention easy to write
-by using a different default approach for method parameters
-than it uses for function parameters.
 
-Specifically, Swift gives the *first* parameter name in a method
+Swift gives the *first* parameter name in a method
 a local parameter name by default,
 and gives the second and subsequent parameter names
 both local *and* external parameter names by default.
@@ -135,30 +130,11 @@ You call the method as follows:
    </ counter value is now 15
 
 You don't need to define an external parameter name for the first argument value,
-because its purpose is clear from the function name ``incrementBy``.
+because its purpose is clear from the function name ``incrementBy(_:numberOfTimes:)``.
 The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
-This default behavior effectively treats the method as if you had written
-a hash symbol (``#``) before the ``numberOfTimes`` parameter:
-
-.. testcode:: externalParameterNamesComparison
-
-   >> class Counter {
-   >>    var count: Int = 0
-   >>    func incrementBy(amount: Int) {
-   >>       count += amount
-   >>    }
-   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
-         count += amount * numberOfTimes
-      }
-   >> }
-   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
-   !! ^
-   !!-
-
-The default behavior described above means that method definitions in Swift
+The behavior described above means that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
 
@@ -169,9 +145,7 @@ Modifying External Parameter Name Behavior for Methods
 
 Sometimes it's useful to provide an external parameter name
 for a method's first parameter, even though this is not the default behavior.
-You can either add an explicit external name yourself,
-or you can prefix the first parameter's name with a hash symbol
-to use the local name as an external name too.
+To do so, you can add an explicit external name yourself.
 
 Conversely, if you do not want to provide an external name
 for the second or subsequent parameter of a method,
@@ -229,9 +203,9 @@ a method parameter called ``x`` and an instance property that is also called ``x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
    -> if somePoint.isToTheRightOfX(1.0) {
-         println("This point is to the right of the line where x == 1.0")
+         print("This point is to the right of the line where x == 1.0")
       }
    <- This point is to the right of the line where x == 1.0
 
@@ -271,9 +245,9 @@ before the ``func`` keyword for that method:
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    -> somePoint.moveByX(2.0, y: 3.0)
-   -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
 The ``Point`` structure above defines a mutating ``moveByX(_:y:)`` method,
@@ -290,11 +264,15 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point
+   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
-   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
+   !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
    !! fixedPoint.moveByX(2.0, y: 3.0)
-   !! ^          ~~~~~~~
+   !!  ^~~~~~~~~~
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let fixedPoint = Point(x: 3.0, y: 3.0)
+   !! ^~~
+   !! var
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
@@ -319,9 +297,9 @@ The ``Point`` example shown above could have been written in the following way i
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    >> somePoint.moveByX(2.0, y: 3.0)
-   >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
 This version of the mutating ``moveByX(_:y:)`` method creates a brand new structure
@@ -348,7 +326,7 @@ a different member from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = (Enum Value)
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.Low
    -> ovenLight.next()
    // ovenLight is now equal to .High
    -> ovenLight.next()
@@ -369,7 +347,7 @@ are methods that are called on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
 You indicate type methods by writing
-the keyword ``static`` before the method's ``func`` keyword.
+the ``static`` keyword before the method's ``func`` keyword.
 Classes may also use the ``class`` keyword
 to allow subclasses to override the superclass’s implementation of that method.
 
@@ -499,7 +477,7 @@ and see what happens when the player completes level one:
    -> var player = Player(name: "Argyrios")
    << // player : Player = REPL.Player
    -> player.completedLevel(1)
-   -> println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+   -> print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2
 
 If you create a second player, whom you try to move to a level
@@ -510,9 +488,9 @@ the attempt to set the player's current level fails:
 
    -> player = Player(name: "Beto")
    -> if player.tracker.advanceToLevel(6) {
-         println("player is now on level 6")
+         print("player is now on level 6")
       } else {
-         println("level 6 has not yet been unlocked")
+         print("level 6 has not yet been unlocked")
       }
    <- level 6 has not yet been unlocked
 

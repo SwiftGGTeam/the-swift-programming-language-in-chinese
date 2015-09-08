@@ -4,15 +4,14 @@ Protocols
 A :newTerm:`protocol` defines a blueprint of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.
-The protocol doesn't actually provide an implementation for any of these requirements ---
-it only describes what an implementation will look like.
 The protocol can then be :newTerm:`adopted` by a class, structure, or enumeration
 to provide an actual implementation of those requirements.
 Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
-Protocols can require that conforming types have specific
-instance properties, instance methods, type methods, operators, and subscripts.
+In addition to specifying requirements that conforming types must implement,
+you can extend a protocol to implement some of these requirements
+or to implement additional functionality that conforming types can take advantage of.
 
 .. FIXME: Protocols should also be able to support initializers,
    and indeed you can currently write them,
@@ -22,10 +21,6 @@ instance properties, instance methods, type methods, operators, and subscripts.
    UPDATE: actually, they *can* be used right now,
    but only in a generic function, and not more generally with the protocol type.
    I'm not sure I should mention them in this chapter until they work more generally.
-
-.. TODO: When I add in the fact that protocols support initializers,
-   I should also mention that implementations of those initialiers
-   must be marked as "required" if the conforming class is non-final.
 
 .. _Protocols_ProtocolSyntax:
 
@@ -131,7 +126,7 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = REPL.Person
+   << // john : Person = REPL.Person(fullName: "John Appleseed")
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -239,9 +234,9 @@ a :newTerm:`linear congruential generator`:
          }
       }
    -> let generator = LinearCongruentialGenerator()
-   -> println("Here's a random number: \(generator.random())")
+   -> print("Here's a random number: \(generator.random())")
    <- Here's a random number: 0.37464991998171
-   -> println("And another one: \(generator.random())")
+   -> print("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
 .. _Protocols_MutatingMethodRequirements:
@@ -312,7 +307,7 @@ to match the ``Togglable`` protocol's requirements:
          }
       }
    -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = (Enum Value)
+   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.Off
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .On
 
@@ -585,9 +580,6 @@ and uses this random number to create a dice roll value within the correct range
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
 it is guaranteed to have a ``random()`` method to call.
 
-.. QUESTION: would it be better to show Dice using a RandomNumberGenerator
-   as a data source, a la UITableViewDataSource etc.?
-
 .. TODO: mention that you can only do RandomNumberGenerator-like things
    with this property, because the property is only known to be a
    RandomNumberGenerator.
@@ -600,7 +592,7 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    -> for _ in 1...5 {
-         println("Random dice roll is \(d6.roll())")
+         print("Random dice roll is \(d6.roll())")
       }
    </ Random dice roll is 3
    </ Random dice roll is 5
@@ -643,10 +635,6 @@ The ``DiceGame`` protocol is a protocol that can be adopted
 by any game that involves dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type to track the progress of a ``DiceGame``.
-
-.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
-   the right thing to advise for delegates written in Swift?
-   It looks a little odd in the syntax above.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
@@ -735,16 +723,16 @@ which adopts the ``DiceGameDelegate`` protocol:
          func gameDidStart(game: DiceGame) {
             numberOfTurns = 0
             if game is SnakesAndLadders {
-               println("Started a new game of Snakes and Ladders")
+               print("Started a new game of Snakes and Ladders")
             }
-            println("The game is using a \(game.dice.sides)-sided dice")
+            print("The game is using a \(game.dice.sides)-sided dice")
          }
          func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
-            println("Rolled a \(diceRoll)")
+            print("Rolled a \(diceRoll)")
          }
          func gameDidEnd(game: DiceGame) {
-            println("The game lasted for \(numberOfTurns) turns")
+            print("The game lasted for \(numberOfTurns) turns")
          }
       }
 
@@ -812,7 +800,7 @@ This might be a description of itself, or a text version of its current state:
    :compile: true
 
    -> protocol TextRepresentable {
-         func asText() -> String
+         var textualDescription: String { get }
       }
 
 The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
@@ -821,7 +809,7 @@ The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRe
    :compile: true
 
    -> extension Dice: TextRepresentable {
-         func asText() -> String {
+         var textualDescription: String {
             return "A \(sides)-sided dice"
          }
       }
@@ -838,7 +826,7 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
    :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
-   -> println(d12.asText())
+   -> print(d12.textualDescription)
    <- A 12-sided dice
 
 Similarly, the ``SnakesAndLadders`` game class can be extended to
@@ -848,11 +836,11 @@ adopt and conform to the ``TextRepresentable`` protocol:
    :compile: true
 
    -> extension SnakesAndLadders: TextRepresentable {
-         func asText() -> String {
+         var textualDescription: String {
             return "A game of Snakes and Ladders with \(finalSquare) squares"
          }
       }
-   -> println(game.asText())
+   -> print(game.textualDescription)
    <- A game of Snakes and Ladders with 25 squares
 
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
@@ -869,7 +857,7 @@ you can make it adopt the protocol with an empty extension:
 
    -> struct Hamster {
          var name: String
-         func asText() -> String {
+         var textualDescription: String {
             return "A hamster named \(name)"
          }
       }
@@ -882,7 +870,7 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
 
    -> let simonTheHamster = Hamster(name: "Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
-   -> println(somethingTextRepresentable.asText())
+   -> print(somethingTextRepresentable.textualDescription)
    <- A hamster named Simon
 
 .. note::
@@ -906,13 +894,13 @@ This example creates an array of ``TextRepresentable`` things:
    -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
 It is now possible to iterate over the items in the array,
-and print each item's textual representation:
+and print each item's textual description:
 
 .. testcode:: protocols
    :compile: true
 
    -> for thing in things {
-         println(thing.asText())
+         print(thing.textualDescription)
       }
    </ A game of Snakes and Ladders with 25 squares
    </ A 12-sided dice
@@ -922,8 +910,8 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
-it is safe to call ``thing.asText`` each time through the loop.
+and anything that is ``TextRepresentable`` is known to have a ``textualDescription`` property,
+it is safe to access ``thing.textualDescription`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
 
@@ -951,7 +939,7 @@ the ``TextRepresentable`` protocol from above:
    :compile: true
 
    -> protocol PrettyTextRepresentable: TextRepresentable {
-         func asPrettyText() -> String
+         var prettyTextualDescription: String { get }
       }
 
 This example defines a new protocol, ``PrettyTextRepresentable``,
@@ -960,7 +948,7 @@ Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the require
 enforced by ``TextRepresentable``,
 *plus* the additional requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
-to provide an instance method called ``asPrettyText`` that returns a ``String``.
+to provide a gettable property called ``prettyTextualDescription`` that returns a ``String``.
 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
@@ -968,8 +956,8 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
    :compile: true
 
    -> extension SnakesAndLadders: PrettyTextRepresentable {
-         func asPrettyText() -> String {
-            var output = asText() + ":\n"
+         var prettyTextualDescription: String {
+            var output = textualDescription + ":\n"
             for index in 1...finalSquare {
                switch board[index] {
                   case let ladder where ladder > 0:
@@ -985,10 +973,11 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
       }
 
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol
-and provides an implementation of the ``asPrettyText()`` method
+and provides an implementation of the ``prettyTextualDescription`` property
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
-and so the ``asPrettyText`` implementation starts by calling the ``asText()`` method
+and so the implementation of ``prettyTextualDescription`` starts
+by accessing the ``textualDescription`` property
 from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.
@@ -1002,13 +991,13 @@ and appends a geometric shape to represent the contents of each square:
 * Otherwise, the square's value is ``0``, and it is a “free” square,
   represented by ``○``.
 
-The method implementation can now be used to print a pretty text description
+The ``prettyTextualDescription`` property can now be used to print a pretty text description
 of any ``SnakesAndLadders`` instance:
 
 .. testcode:: protocols
    :compile: true
 
-   -> println(game.asPrettyText())
+   -> print(game.prettyTextualDescription)
    </ A game of Snakes and Ladders with 25 squares:
    </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 
@@ -1082,10 +1071,10 @@ into a single protocol composition requirement on a function parameter:
          var age: Int
       }
    -> func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-         println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+         print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = REPL.Person
+   << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
    -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
@@ -1197,9 +1186,9 @@ it conforms to the ``HasArea`` protocol:
 
    -> for object in objects {
          if let objectWithArea = object as? HasArea {
-            println("Area is \(objectWithArea.area)")
+            print("Area is \(objectWithArea.area)")
          } else {
-            println("Something that doesn't have an area")
+            print("Something that doesn't have an area")
          }
       }
    </ Area is 12.5663708
@@ -1273,14 +1262,9 @@ to reflect the fact that the optional requirement may not have been implemented.
    you need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
 
-   Note also that ``@objc`` protocols can be adopted only by classes,
-   and not by structures or enumerations.
-   If you mark your protocol as ``@objc`` in order to specify optional requirements,
-   you will only be able to apply that protocol to class types.
-
-.. QUESTION: is this acceptable wording for this limitation?
-
-.. TODO: remove this note when this limitation is lifted in the future.
+   Note also that ``@objc`` protocols can be adopted only by classes
+   that inherit from Objective-C classes or other ``@objc`` classes.
+   They can't be adopted by structures or enumerations.
 
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
@@ -1289,6 +1273,7 @@ which has two optional requirements:
 
 .. testcode:: protocolConformance
 
+   >> import Foundation
    -> @objc protocol CounterDataSource {
          optional func incrementForCount(count: Int) -> Int
          optional var fixedIncrement: Int { get }
@@ -1313,7 +1298,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
 
-   -> @objc class Counter {
+   -> class Counter {
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
@@ -1378,7 +1363,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> @objc class ThreeSource: CounterDataSource {
+   -> class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1391,7 +1376,7 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
    -> counter.dataSource = ThreeSource()
    -> for _ in 1...4 {
          counter.increment()
-         println(counter.count)
+         print(counter.count)
       }
    </ 3
    </ 6
@@ -1410,7 +1395,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: CounterDataSource {
+   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0
@@ -1438,13 +1423,146 @@ Once the counter reaches zero, no more counting takes place:
    -> counter.dataSource = TowardsZeroSource()
    -> for _ in 1...5 {
          counter.increment()
-         println(counter.count)
+         print(counter.count)
       }
    </ -3
    </ -2
    </ -1
    </ 0
    </ 0
+
+.. _Protocols_Extensions:
+
+Protocol Extensions
+-------------------
+
+Protocols can be extended to provide method and property implementations
+to conforming types.
+This allows you to define behavior on protocols themselves,
+rather than in each type's individual conformance or in a global function.
+
+For example, the ``RandomNumberGenerator`` protocol can be extended
+to provide a ``randomBool()`` method,
+which uses the result of the required ``random()`` method
+to return a random ``Bool`` value:
+
+.. testcode:: protocols
+   :compile: true
+
+   -> extension RandomNumberGenerator {
+         func randomBool() -> Bool {
+            return random() > 0.5
+         }
+      }
+
+By creating an extension on the protocol,
+all conforming types automatically gain this method implementation
+without any additional modification.
+
+.. testcode:: protocols
+   :compile: true
+
+   >> do {
+   -> let generator = LinearCongruentialGenerator()
+   -> print("Here's a random number: \(generator.random())")
+   <- Here's a random number: 0.37464991998171
+   -> print("And here's a random Boolean: \(generator.randomBool())")
+   <- And here's a random Boolean: true
+   >> }
+
+.. The extra scope in the above test code allows this 'generator' variable to shadow
+   the variable that already exists from a previous testcode block.
+
+.. _Protocols_ProvidingDefaultImplementations:
+
+Providing Default Implementations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use protocol extensions to provide a default implementation
+to any method or property requirement of that protocol.
+If a conforming type provides its own implementation of a required method or property,
+that implementation will be used instead of the one provided by the extension.
+
+.. note::
+
+   Protocol requirements with default implementations provided by extensions
+   are distinct from optional protocol requirements.
+   Although conforming types don't have to provide their own implementation of either,
+   requirements with default implementations can be called without optional chaining.
+
+For example, the ``PrettyTextRepresentable`` protocol,
+which inherits the ``TextRepresentable`` protocol
+can provide a default implementation of its required ``prettyTextualDescription`` property
+to simply return the result of accessing the ``textualDescription`` property:
+
+.. testcode:: protocols
+
+   -> extension PrettyTextRepresentable  {
+         var prettyTextualDescription: String {
+            return textualDescription
+         }
+      }
+
+.. _Protocols_AddingConstraintsToProtocolExtensions:
+
+Adding Constraints to Protocol Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you define a protocol extension,
+you can specify constraints that conforming types
+must satisfy before the methods and properties of the extension are available.
+You write these constraints after the name of the protocol you're extending
+using a ``where`` clause,
+as described in :ref:`Generics_WhereClauses`.
+
+For instance,
+you can define an extension to the ``CollectionType`` protocol
+that applies to any collection whose elements conform
+to the ``TextRepresentable`` protocol from the example above.
+
+.. testcode:: protocols
+
+   -> extension CollectionType where Generator.Element: TextRepresentable {
+          var textualDescription: String {
+              let itemsAsText = self.map { $0.textualDescription }
+              return "[" + itemsAsText.joinWithSeparator(", ") + "]"
+          }
+      }
+
+The ``textualDescription`` property returns the textual description
+of the entire collection by concatenating the textual representation
+of each element in the collection into a comma-separated list, enclosed in brackets.
+
+Consider the ``Hamster`` structure from before,
+which conforms to the ``TextRepresentable`` protocol,
+and an array of ``Hamster`` values:
+
+.. testcode:: protocols
+
+   -> let murrayTheHamster = Hamster(name: "Murray")
+   -> let morganTheHamster = Hamster(name: "Morgan")
+   -> let mauriceTheHamster = Hamster(name: "Maurice")
+   -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+
+Because ``Array`` conforms to ``CollectionType``
+and the array's elements conform to the ``TextRepresentable`` protocol,
+the array can use the ``textualDescription`` property
+to get a textual representation of its contents:
+
+.. testcode:: protocols
+
+   -> print(hamsters.textualDescription)
+   <- [A hamster named Murray, A hamster named Morgan, A hamster named Maurice]
+
+.. note::
+
+    If a conforming type satisfies the requirements for multiple constrained extensions
+    that provide implementations for the same method or property,
+    Swift will use the implementation corresponding to the most specialized constraints.
+
+    .. TODO: It would be great to pull this out of a note,
+       but we should wait until we have a better narrative that shows how this
+       works with some examples.
 
 .. TODO: Other things to be included
 .. ---------------------------------

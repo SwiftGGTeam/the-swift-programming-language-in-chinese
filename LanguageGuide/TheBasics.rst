@@ -1,15 +1,16 @@
 The Basics
 ==========
 
-Swift is a new programming language for iOS and OS X app development.
+Swift is a new programming language for iOS, OS X, and watchOS app development.
 Nonetheless, many parts of Swift will be familiar
 from your experience of developing in C and Objective-C.
 
 Swift provides its own versions of all fundamental C and Objective-C types,
 including ``Int`` for integers, ``Double`` and ``Float`` for floating-point values,
 ``Bool`` for Boolean values, and ``String`` for textual data.
-Swift also provides powerful versions of the two primary collection types,
-``Array`` and ``Dictionary``, as described in :doc:`CollectionTypes`.
+Swift also provides powerful versions of the three primary collection types,
+``Array``, ``Set``, and ``Dictionary``,
+as described in :doc:`CollectionTypes`.
 
 Like C, Swift uses variables to store and refer to values by an identifying name.
 Swift also makes extensive use of variables whose values cannot be changed.
@@ -128,7 +129,7 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    :compile: true
 
    -> welcomeMessage = "Hello"
-   >> println(welcomeMessage)
+   >> print(welcomeMessage)
    << Hello
 
 You can define multiple related variables of the same type on a single line,
@@ -184,11 +185,6 @@ or a variable into a constant.
    surround the keyword with back ticks (`````) when using it as a name.
    However, avoid using keywords as names unless you have absolutely no choice.
 
-.. QUESTION: I've deliberately not given an example here,
-   because I don't want to suggest that such an example is
-   a good example of when you *should* use a keyword as a name.
-   Is this the right approach to take?
-
 You can change the value of an existing variable to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
@@ -210,49 +206,53 @@ Attempting to do so is reported as an error when your code is compiled:
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // this is a compile-time error - languageName cannot be changed
-   !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
+   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let languageName = "Swift"
+   !! ^~~
+   !! var
 
 .. _TheBasics_PrintingConstantsAndVariables:
 
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can print the current value of a constant or variable with the ``println(_:)`` function:
+You can print the current value of a constant or variable with the ``print(_:separator:terminator:)`` function:
 
 .. testcode:: constantsAndVariables
 
-   -> println(friendlyWelcome)
+   -> print(friendlyWelcome)
    <- Bonjour!
 
-``println`` is a global function that prints a value,
-followed by a line break, to an appropriate output.
+The ``print(_:separator:terminator:)`` function
+is a global function that prints one or more values
+to an appropriate output.
 In Xcode, for example,
-``println`` prints its output in Xcode's “console” pane.
-(A second function, ``print``, performs the same task
-without appending a line break to the end of the value to be printed.)
+the ``print(_:separator:terminator:)`` function prints its output in Xcode's “console” pane.
+The ``separator`` and ``terminator`` arguments have default values,
+so you can omit them when you call this function.
+By default, it terminates the line it prints by adding a line break.
+To print a value without a line break after it,
+pass an empty string as the terminator --- for example,
+``print(someValue, terminator:"")``.
+For information about parameters with default values,
+see :ref:`Functions_DefaultParameterValues`.
+
+.. assertion:: printingWithoutNewline
+
+    >> let someValue = 10
+    << // someValue : Int = 10
+    -> print(someValue, terminator:"")
+    -> print(someValue)
+    << 1010
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
 
-.. NOTE: this is a deliberately simplistic description of what you can do with println().
+.. NOTE: this is a deliberately simplistic description of what you can do with print().
    It will be expanded later on.
-
-.. QUESTION: is this *too* simplistic?
-   Strictly speaking, you can't print the value of *any* constant or variable ---
-   you can only print values of types for which String has a constructor.
-
-The ``println(_:)`` function prints any ``String`` value you pass to it:
-
-.. testcode:: constantsAndVariables
-
-   -> println("This is a string")
-   <- This is a string
-
-The ``println(_:)`` function can print more complex logging messages,
-in a similar manner to Cocoa's ``NSLog`` function.
-These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include the name of a constant or variable
 as a placeholder in a longer string,
@@ -261,7 +261,7 @@ Wrap the name in parentheses and escape it with a backslash before the opening p
 
 .. testcode:: constantsAndVariables
 
-   -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
+   -> print("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is Bonjour!
 
 .. note::
@@ -319,12 +319,12 @@ Semicolons
 Unlike many other languages,
 Swift does not require you to write a semicolon (``;``) after each statement in your code,
 although you can do so if you wish.
-Semicolons *are* required, however,
+However, semicolons *are* required
 if you want to write multiple separate statements on a single line:
 
 .. testcode:: semiColons
 
-   -> let cat = "🐱"; println(cat)
+   -> let cat = "🐱"; print(cat)
    << // cat : String = "🐱"
    <- 🐱
 
@@ -530,9 +530,23 @@ All of these integer literals have a decimal value of ``17``:
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
 They must always have a number (or hexadecimal number) on both sides of the decimal point.
-They can also have an optional :newTerm:`exponent`,
-indicated by an uppercase or lowercase ``e`` for decimal floats,
-or an uppercase or lowercase ``p`` for hexadecimal floats.
+Decimal floats can also have an optional :newTerm:`exponent`,
+indicated by an uppercase or lowercase ``e``;
+hexadecimal floats must have an exponent,
+indicated by an uppercase or lowercase ``p``.
+
+.. assertion:: float-required-vs-optional-exponent
+
+   -> let hexWithout = 0x1.5
+   !! <REPL Input>:1:23: error: hexadecimal floating point literal must end with an exponent
+   !! let hexWithout = 0x1.5
+   !!                       ^
+   -> let hexWith = 0x1.5p7
+   << // hexWith : Double = 168.0
+   -> let decimalWithout = 0.5
+   << // decimalWithout : Double = 0.5
+   -> let decimalWith = 0.5e7
+   << // decimalWith : Double = 5000000.0
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
@@ -558,7 +572,7 @@ All of these floating-point literals have a decimal value of ``12.1875``:
    << // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeroes
+Both integers and floats can be padded with extra zeros
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
@@ -604,7 +618,7 @@ is reported as an error when your code is compiled:
 .. testcode:: constantsAndVariablesOverflowError
 
    -> let cannotBeNegative: UInt8 = -1
-   !! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
+   !!  <REPL Input>:1:31: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
    !! let cannotBeNegative: UInt8 = -1
    !!                        ^
    // UInt8 cannot store negative numbers, and so this will report an error
@@ -771,9 +785,9 @@ such as the ``if`` statement:
 .. testcode:: booleans
 
    -> if turnipsAreDelicious {
-         println("Mmm, tasty turnips!")
+         print("Mmm, tasty turnips!")
       } else {
-         println("Eww, turnips are horrible.")
+         print("Eww, turnips are horrible.")
       }
    <- Eww, turnips are horrible.
 
@@ -835,7 +849,7 @@ A status code of ``404 Not Found`` is returned if you request a webpage that doe
 .. testcode:: tuples
 
    -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, Not Found)
+   << // http404Error : (Int, String) = (404, "Not Found")
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
@@ -856,10 +870,10 @@ which you then access as usual:
 .. testcode:: tuples
 
    -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, Not Found)
-   -> println("The status code is \(statusCode)")
+   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+   -> print("The status code is \(statusCode)")
    <- The status code is 404
-   -> println("The status message is \(statusMessage)")
+   -> print("The status message is \(statusMessage)")
    <- The status message is Not Found
 
 If you only need some of the tuple's values,
@@ -869,8 +883,8 @@ when you decompose the tuple:
 .. testcode:: tuples
 
    -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, Not Found)
-   -> println("The status code is \(justTheStatusCode)")
+   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
+   -> print("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
 Alternatively,
@@ -878,9 +892,9 @@ access the individual element values in a tuple using index numbers starting at 
 
 .. testcode:: tuples
 
-   -> println("The status code is \(http404Error.0)")
+   -> print("The status code is \(http404Error.0)")
    <- The status code is 404
-   -> println("The status message is \(http404Error.1)")
+   -> print("The status message is \(http404Error.1)")
    <- The status message is Not Found
 
 You can name the individual elements in a tuple when the tuple is defined:
@@ -888,16 +902,16 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (200, OK)
+   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
 
 .. testcode:: tuples
 
-   -> println("The status code is \(http200Status.statusCode)")
+   -> print("The status code is \(http200Status.statusCode)")
    <- The status code is 200
-   -> println("The status message is \(http200Status.description)")
+   -> print("The status message is \(http200Status.description)")
    <- The status message is OK
 
 Tuples are particularly useful as the return values of functions.
@@ -948,23 +962,23 @@ An optional says:
    without the need for special constants.
 
 Here's an example of how optionals can be used to cope with the absence of a value.
-Swift's ``String`` type has a method called ``toInt``,
+Swift's ``Int`` type has an initializer
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below uses the ``toInt()`` method to try to convert a ``String`` into an ``Int``:
+The example below uses the initializer to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
-   -> let convertedNumber = possibleNumber.toInt()
+   -> let convertedNumber = Int(possibleNumber)
    << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt()`` method might fail,
+Because the initializer might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -1028,7 +1042,7 @@ If an optional has a value, it is considered to be “not equal to” ``nil``:
 .. testcode:: optionals
 
    -> if convertedNumber != nil {
-         println("convertedNumber contains some integer value.")
+         print("convertedNumber contains some integer value.")
       }
    <- convertedNumber contains some integer value.
 
@@ -1042,7 +1056,7 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
 .. testcode:: optionals
 
    -> if convertedNumber != nil {
-         println("convertedNumber has an integer value of \(convertedNumber!).")
+         print("convertedNumber has an integer value of \(convertedNumber!).")
       }
    <- convertedNumber has an integer value of 123.
 
@@ -1082,16 +1096,16 @@ to use optional binding rather than forced unwrapping:
 
 .. testcode:: optionals
 
-   -> if let actualNumber = possibleNumber.toInt() {
-         println("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+   -> if let actualNumber = Int(possibleNumber) {
+         print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
       } else {
-         println("\'\(possibleNumber)\' could not be converted to an integer")
+         print("\'\(possibleNumber)\' could not be converted to an integer")
       }
    <- '123' has an integer value of 123
 
 This code can be read as:
 
-“If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
+“If the optional ``Int`` returned by ``Int(possibleNumber)`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
 If the conversion is successful,
@@ -1116,25 +1130,15 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
-Multiple optional bindings can appear in a single ``if`` statement
-as a comma-separated list of assignment expressions.
+You can include multiple optional bindings in a single ``if`` statement
+and use a ``where`` clause to check for a Boolean condition:
 
-.. assertion:: useOfMultipleValueOptionalBinding
+.. testcode:: multipleOptionalBindings
 
-   -> let a: String? = "1"
-   << // a : String? = Optional("1")
-   -> let b: String? = "2"
-   << // b : String? = Optional("2")
-   -> if let x = a, y = b {
-         println(x, y)
-      }
-   <- (1, 2)
-
-.. syntax-outline::
-
-   if let <#constantName#> = <#someOptional#>, <#anotherConstantName#> = <#someOtherOptional#> {
-      <#statements#>
-   }
+   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+         print("\(firstNumber) < \(secondNumber)")
+      } 
+   <- 4 < 42
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
@@ -1189,9 +1193,8 @@ you place an exclamation mark after the optional's type when you declare it.
 
 .. note::
 
-   If you try to access an implicitly unwrapped optional
-   when it does not contain a value,
-   you will trigger a runtime error.
+   If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
+   you'll trigger a runtime error.
    The result is exactly the same as if you place an exclamation mark
    after a normal optional that does not contain a value.
 
@@ -1201,7 +1204,7 @@ to check if it contains a value:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if assumedString != nil {
-         println(assumedString)
+         print(assumedString)
       }
    <- An implicitly unwrapped optional string.
 
@@ -1211,7 +1214,7 @@ to check and unwrap its value in a single statement:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if let definiteString = assumedString {
-         println(definiteString)
+         print(definiteString)
       }
    <- An implicitly unwrapped optional string.
 
@@ -1222,15 +1225,111 @@ to check and unwrap its value in a single statement:
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
 
+.. _TheBasics_ErrorHandling:
+
+Error Handling
+--------------
+
+You use :newTerm:`error handling` to respond to error conditions
+your program may encounter during execution.
+
+In contrast to optionals,
+which can use the presence or absence of a value
+to communicate success or failure of a function,
+error handling allows you to determine the underlying cause of failure,
+and, if necessary, propagate the error to another part of your program.
+
+When a function encounters an error condition, it :newTerm:`throws` an error.
+That function's caller can then :newTerm:`catch` the error and respond appropriately.
+
+.. testcode:: errorHandling
+
+   >> enum Error: ErrorType {
+   >>    case SomeError
+   >> }
+   >> let condition = true
+   << // condition : Bool = true
+   -> func canThrowAnError() throws {
+         // this function may or may not throw an error
+   >>    if condition {
+   >>       throw Error.SomeError
+   >>    }
+      }
+
+A function indicates that it can throw an error
+by including the ``throws`` keyword in its declaration.
+When you call a function that can throw an error,
+you prepend the ``try`` keyword to the expression.
+
+Swift automatically propagates errors out of their current scope
+until they are handled by a ``catch`` clause.
+
+.. testcode:: errorHandling
+
+   -> do {
+   ->    try canThrowAnError()
+   >>    print("No Error")
+   ->    // no error was thrown
+   -> } catch {
+   >>    print("Error")
+   ->    // an error was thrown
+   -> }
+   << Error
+
+A ``do`` statement creates a new containing scope,
+which allows errors to be propagated to one or more ``catch`` clauses.
+
+Here's an example of how error handling can be used
+to respond to different error conditions:
+
+.. testcode:: errorHandlingTwo
+
+   >> enum Error: ErrorType {
+   >>     case OutOfCleanDishes
+   >>     case MissingIngredients([String])
+   >> }
+   >> func washDishes() { print("Wash dishes") }
+   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
+   -> func makeASandwich() throws {
+          // ...
+      }
+   >> func eatASandwich() {}
+   ---
+   -> do {
+          try makeASandwich()
+          eatASandwich()
+      } catch Error.OutOfCleanDishes {
+          washDishes()
+      } catch Error.MissingIngredients(let ingredients) {
+          buyGroceries(ingredients)
+      }
+
+In this example, the ``makeASandwich()`` function will throw an error
+if no clean dishes are available
+or if any ingredients are missing.
+Because ``makeASandwich()`` throws,
+the function call is wrapped in a ``try`` expression.
+By wrapping the function call in a ``do`` statement,
+any errors that are thrown will be propagated
+to the provided ``catch`` clauses.
+
+If no error is thrown, the ``eatASandwich()`` function is called.
+If an error is thrown and it matches the ``Error.OutOfCleanDishes`` case,
+then the ``washDishes()`` function will be called.
+If an error is thrown and it matches the ``Error.MissingIngredients`` case,
+then the ``buyGroceries(_:)`` function is called
+with the associated ``[String]`` value captured by the ``catch`` pattern.
+
+Throwing, catching, and propagating errors is covered in greater detail in
+:doc:`ErrorHandling`.
+
 .. _TheBasics_Assertions:
 
 Assertions
 ----------
 
-Optionals enable you to check for values that may or may not exist,
-and to write code that copes gracefully with the absence of a value.
-In some cases, however, it is simply not possible for your code to continue execution
-if a value does not exist, or if a provided value does not satisfy certain conditions.
+In some cases, it is simply not possible for your code to continue execution
+if a particular condition is not satisfied.
 In these situations,
 you can trigger an :newTerm:`assertion` in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.
@@ -1240,7 +1339,7 @@ and to provide an opportunity to debug the cause of the absent or invalid value.
 Debugging with Assertions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An assertion is a runtime check that a logical condition definitely evaluates to ``true``.
+An assertion is a runtime check that a Boolean condition definitely evaluates to ``true``.
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.
@@ -1253,8 +1352,9 @@ you can see exactly where the invalid state occurred
 and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-You write an assertion by calling the global ``assert(_:_:)`` function.
-You pass the ``assert(_:_:)`` function an expression that evaluates to ``true`` or ``false``
+You write an assertion by calling
+the Swift standard library global ``assert(_:_file:line:)`` function.
+You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions
@@ -1284,6 +1384,11 @@ The assertion message can be omitted if desired, as in the following example:
    << // age : Int = -3
    -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
    xx assert
+
+.. note::
+
+   Assertions are disabled when your code is compiled with optimizations,
+   such as when building with an app target's default Release configuration in Xcode.
 
 .. _TheBasics_WhenToUseAssertions:
 

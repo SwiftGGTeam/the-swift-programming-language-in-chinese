@@ -54,15 +54,15 @@ Deinitializers in Action
 
 Here's an example of a deinitializer in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
-The ``Bank`` structure manages a made-up currency,
+The ``Bank`` class manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
 There can only ever be one ``Bank`` in the game,
-and so the ``Bank`` is implemented as a structure with type properties and methods
+and so the ``Bank`` is implemented as a class with type properties and methods
 to store and manage its current state:
 
 .. testcode:: deinitializer
 
-   -> struct Bank {
+   -> class Bank {
          static var coinsInBank = 10_000
          static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
             numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
@@ -124,9 +124,9 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
 
    -> var playerOne: Player? = Player(coins: 100)
    << // playerOne : Player? = Optional(REPL.Player)
-   -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+   -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins
-   -> println("There are now \(Bank.coinsInBank) coins left in the bank")
+   -> print("There are now \(Bank.coinsInBank) coins left in the bank")
    <- There are now 9900 coins left in the bank
 
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
@@ -141,9 +141,9 @@ and whenever its ``winCoins(_:)`` method is called:
 .. testcode:: deinitializer
 
    -> playerOne!.winCoins(2_000)
-   -> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+   -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
    <- PlayerOne won 2000 coins & now has 2100 coins
-   -> println("The bank now only has \(Bank.coinsInBank) coins left")
+   -> print("The bank now only has \(Bank.coinsInBank) coins left")
    <- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
@@ -153,13 +153,10 @@ and the bank has only 7,900 coins left.
 .. testcode:: deinitializer
 
    -> playerOne = nil
-   -> println("PlayerOne has left the game")
+   -> print("PlayerOne has left the game")
    <- PlayerOne has left the game
-   -> println("The bank now has \(Bank.coinsInBank) coins")
+   -> print("The bank now has \(Bank.coinsInBank) coins")
    <- The bank now has 10000 coins
-
-.. This code doesn't work in a playground.  See <rdar://problem/17190159>
-   playground loggers retain objects, preventing deinit from running
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``nil``,
@@ -170,6 +167,3 @@ No other properties or variables are still referring to the ``Player`` instance,
 and so it is deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.
-
-.. TODO: switch Bank to be a class rather than a structure
-   once we have support for class-level properties.

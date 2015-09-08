@@ -77,8 +77,8 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable
-   -> println("six times three is \(threeTimesTable[6])")
+   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
+   -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
 In this example, a new instance of ``TimesTable`` is created
@@ -111,7 +111,7 @@ your particular class or structure's functionality.
 For example, Swift's ``Dictionary`` type implements a subscript
 to set and retrieve the values stored in a ``Dictionary`` instance.
 You can set a value in a dictionary
-by providing a key of the dictionary's key type within subscript braces,
+by providing a key of the dictionary's key type within subscript brackets,
 and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
@@ -154,7 +154,7 @@ but cannot use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
-the types of the value or values that are contained within the subscript braces
+the types of the value or values that are contained within the subscript brackets
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 
@@ -204,7 +204,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix
+   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
 
 The preceding example creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -220,10 +220,10 @@ separated by a comma:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> matrix[0, 1] = 1.5
-   >> println(matrix[0, 1])
+   >> print(matrix[0, 1])
    << 1.5
    -> matrix[1, 0] = 3.2
-   >> println(matrix[1, 0])
+   >> print(matrix[1, 0])
    << 3.2
 
 These two statements call the subscript's setter to set

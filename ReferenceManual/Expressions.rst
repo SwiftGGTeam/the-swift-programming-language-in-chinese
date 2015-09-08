@@ -31,7 +31,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -45,21 +45,13 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following prefix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-* ``!`` Logical NOT
-* ``~`` Bitwise NOT
-* ``+`` Unary plus
-* ``-`` Unary minus
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
-In addition to the standard library operators listed above,
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
 as an in-out argument to a function call expression.
 For more information and to see an example,
@@ -79,6 +71,87 @@ see :ref:`Functions_InOutParameters`.
     prefix-expression --> in-out-expression
     in-out-expression --> ``&`` identifier
 
+
+.. _Expressions_TryExpression:
+
+Try Operator
+~~~~~~~~~~~~
+
+A :newTerm:`try expression` consists of the ``try`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try <#expression#>
+
+An :newTerm:`optional-try expression` consists of the ``try?`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try? <#expression#>
+
+If the *expression* does not throw an error,
+the value of the optional-try expression
+is an optional containing the value of the *expression*.
+Otherwise, the value of the optional-try expression is ``nil``.
+
+A :newTerm:`forced-try expression` consists of the ``try!`` operator
+followed by an expression that can throw an error.
+It has the following form:
+
+.. syntax-outline::
+
+   try! <#expression#>
+
+If the *expression* throws an error,
+a runtime error is produced.
+
+When the expression on the left hand side of a binary operator
+is marked with ``try``, ``try?``, or ``try!``,
+that operator applies to the whole binary expression.
+That said, you can use parentheses to be explicit about the scope of the operator's application.
+
+.. testcode:: placement-of-try
+
+    >> func someThrowingFunction() throws -> Int { return 10 }
+    >> func anotherThrowingFunction() throws -> Int { return 5 }
+    >> var sum = 0
+    << // sum : Int = 0
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+A ``try`` expression can't appear on the right hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``try`` expression is enclosed in parentheses.
+
+.. assertion:: try-on-right
+
+    >> func someThrowingFunction() throws -> Int { return 10 }
+    >> var sum = 0
+    << // sum : Int = 0
+    -> sum = 7 + try someThrowingFunction() // Error
+    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + try someThrowingFunction() // Error
+    !!           ^
+    -> sum = 7 + (try someThrowingFunction()) // OK
+
+For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
+see :doc:`../LanguageGuide/ErrorHandling`.
+
+.. syntax-grammar::
+
+    Grammar of a try expression
+
+    try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
+
+
 .. _Expressions_BinaryExpressions:
 
 Binary Expressions
@@ -93,98 +166,11 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-The Swift standard library provides the following binary operators:
-
-.. The following comes from stdlib/core/Policy.swift
-
-* Exponentiative (No associativity, precedence level 160)
-
-  - ``<<`` Bitwise left shift
-  - ``>>`` Bitwise right shift
-
-* Multiplicative (Left associative, precedence level 150)
-
-  - ``*`` Multiply
-  - ``/`` Divide
-  - ``%`` Remainder
-  - ``&*`` Multiply, ignoring overflow
-  - ``&`` Bitwise AND
-
-* Additive (Left associative, precedence level 140)
-
-  - ``+`` Add
-  - ``-`` Subtract
-  - ``&+`` Add with overflow
-  - ``&-`` Subtract with overflow
-  - ``|`` Bitwise OR
-  - ``^`` Bitwise XOR
-
-* Range (No associativity, precedence level 135)
-
-  - ``..<`` Half-open range
-  - ``...`` Closed range
-
-* Cast (No associativity, precedence level 132)
-
-  - ``is`` Type check
-  - ``as``, ``as?``, and ``as!`` Type cast
-
-* Nil Coalescing (Right associative, precedence level 131)
-
-  - ``??`` Nil coalescing
-
-* Comparative (No associativity, precedence level 130)
-
-  - ``<`` Less than
-  - ``<=`` Less than or equal
-  - ``>`` Greater than
-  - ``>=`` Greater than or equal
-  - ``==`` Equal
-  - ``!=`` Not equal
-  - ``===`` Identical
-  - ``!==`` Not identical
-  - ``~=`` Pattern match
-
-* Conjunctive (Left associative, precedence level 120)
-
-  - ``&&`` Logical AND
-
-* Disjunctive (Left associative, precedence level 110)
-
-  - ``||`` Logical OR
-
-* Ternary Conditional (Right associative, precedence level 100)
-
-  - ``?`` ``:`` Ternary conditional
-
-* Assignment (Right associative, precedence level 90)
-
-  - ``=`` Assign
-  - ``*=`` Multiply and assign
-  - ``/=`` Divide and assign
-  - ``%=`` Remainder and assign
-  - ``+=`` Add and assign
-  - ``-=`` Subtract and assign
-  - ``<<=`` Left bit shift and assign
-  - ``>>=`` Right bit shift and assign
-  - ``&=`` Bitwise AND and assign
-  - ``^=`` Bitwise XOR and assign
-  - ``|=`` Bitwise OR and assign
-  - ``&&=`` Logical AND and assign
-  - ``||=`` Logical OR and assign
-
-.. assertion:: nilCoalescingOperator
-
-    -> var sequence: [Int] = []
-    << // sequence : [Int] = []
-    -> sequence.first ?? 0 // produces 0, because sequence.first is nil
-    <$ : Int = 0
-    -> sequence.append(22)
-    -> sequence.first ?? 0 // produces 22, the value of sequence.first
-    <$ : Int = 22
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -227,8 +213,8 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     Grammar of a binary expression
 
     binary-expression --> binary-operator prefix-expression
-    binary-expression --> assignment-operator prefix-expression
-    binary-expression --> conditional-operator prefix-expression
+    binary-expression --> assignment-operator try-operator-OPT prefix-expression
+    binary-expression --> conditional-operator try-operator-OPT prefix-expression
     binary-expression --> type-casting-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
@@ -259,7 +245,7 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = (test, 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
@@ -307,7 +293,7 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` expression ``:``
+    conditional-operator --> ``?`` try-operator-OPT expression ``:``
 
 
 .. _Expressions_Type-CastingOperators:
@@ -366,8 +352,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { println("Function for Any") }
-   -> func f(int: Int) { println("Function for Int") }
+   -> func f(any: Any) { print("Function for Any") }
+   -> func f(int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
@@ -505,7 +491,7 @@ when the default value expression is evaluated at the call site.
 .. testcode:: special-literal-evaluated-at-call-site
 
     -> func logFunctionName(string: String = __FUNCTION__) {
-           println(string)
+           print(string)
        }
     -> func myFunction() {
           logFunctionName() // Prints "myFunction()".
@@ -513,7 +499,7 @@ when the default value expression is evaluated at the call site.
     ---
     -> myFunction()
     << myFunction()
-    >> func noNamedArgs(i: Int, j: Int) { logFunctionName() }
+    >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
@@ -652,9 +638,9 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = REPL.Point
+    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
     >> somePoint.moveByX(2.0, y: 3.0)
-    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
@@ -663,8 +649,11 @@ For example:
 
     self-expression --> ``self``
     self-expression --> ``self`` ``.`` identifier
-    self-expression --> ``self`` ``[`` expression ``]``
+    self-expression --> ``self`` ``[`` expression-list ``]``
     self-expression --> ``self`` ``.`` ``init``
+
+.. TODO Would be nice to make the self-expression grammar more parallel to the
+   superclass-expression grammar.
 
 
 .. _Expressions_SuperclassExpression:
@@ -706,7 +695,7 @@ to make use of the implementation in their superclass.
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
-    superclass-subscript-expression --> ``super`` ``[`` expression ``]``
+    superclass-subscript-expression --> ``super`` ``[`` expression-list ``]``
     superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
@@ -819,7 +808,7 @@ to capture a weak or unowned reference to the value.
 
 .. testcode:: closure-expression-weak
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: () -> Void) { f() }
     >> class C {
     >> let title = "Title"
     >> func method() {
@@ -828,7 +817,9 @@ to capture a weak or unowned reference to the value.
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
-    << TitleTitleTitle
+    << Title
+    << Title
+    << Title
 
 You can also bind an arbitrary expression
 to a named value in the capture list.
@@ -838,7 +829,7 @@ For example:
 
 .. testcode:: closure-expression-capture
 
-    >> func myFunction(f: () -> ()) { f() }
+    >> func myFunction(f: () -> Void) { f() }
     >> class P { let title = "Title" }
     >> class C {
     >> let parent = P()
@@ -898,7 +889,7 @@ For example:
 
     >> enum MyEnumeration { case SomeValue, AnotherValue }
     -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = (Enum Value)
+    << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
     -> x = .AnotherValue
 
 .. langref-grammar
@@ -987,15 +978,11 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. TR: Does it make sense to call out the left-to-right grouping?
-
-The Swift standard library provides the following postfix operators:
-
-* ``++`` Increment
-* ``--`` Decrement
-
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
+
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. langref-grammar
 
@@ -1067,7 +1054,7 @@ The following function calls are equivalent:
     >> let x = 10
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x, {$0 == 13})
+    -> someFunction(x, f: {$0 == 13})
     << // r0 : Bool = false
     -> someFunction(x) {$0 == 13}
     << // r1 : Bool = false
@@ -1126,23 +1113,10 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Unlike functions, an initializer can't be used as a value.
-For example:
-
-.. testcode:: initExpression
-
-    >> class SomeClass { class func someClassFunction() {} }
-    -> var x = SomeClass.someClassFunction // ok
-    << // x : () -> () = (Function)
-    -> var y = SomeClass.init              // error
-    !! <REPL Input>:1:19: error: initializer cannot be referenced without arguments
-    !! var y = SomeClass.init              // error
-    !!                   ^
-
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
-.. testcode:: initExpression
+.. testcode:: init-call-superclass
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
@@ -1151,6 +1125,43 @@ to delegate to the initializer of a superclass.
     ->         super.init()
     ->     }
     -> }
+
+Like a function, an initializer can be used as a value.
+For example:
+
+.. testcode:: init-as-value
+
+    // Type annotation is required because String has multiple initializers.
+    -> let initializer: Int -> String = String.init
+    << // initializer : Int -> String = (Function)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    << // oneTwoThree : String = "123"
+    -> print(oneTwoThree)
+    <- 123
+
+If you specify a type by name,
+you can access the type's initializer without using an initializer expression.
+In all other cases, you must use an initializer expression.
+
+.. testcode:: explitic-implicit-init
+
+    >> struct SomeType {
+    >>     let data: Int
+    >> }
+    -> let s1 = SomeType.init(data: 3)  // Valid
+    << // s1 : SomeType = REPL.SomeType(data: 3)
+    -> let s2 = SomeType(data: 1)       // Also valid
+    << // s2 : SomeType = REPL.SomeType(data: 1)
+    ---
+    >> let someValue = s1
+    << // someValue : SomeType = REPL.SomeType(data: 3)
+    -> let s4 = someValue.dynamicType(data: 5)       // Error
+    << // s3 : SomeType = REPL.SomeType(data: 7)
+    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
+    !! let s4 = someValue.dynamicType(data: 5)       // Error
+    !!                               ^
+    !!                               .init
 
 .. langref-grammar
 
@@ -1167,7 +1178,7 @@ to delegate to the initializer of a superclass.
 Explicit Member Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`explicit member expression` allows access
+An :newTerm:`explicit member expression` allows access
 to the members of a named type, a tuple, or a module.
 It consists of a period (``.``) between the item
 and the identifier of its member.
@@ -1206,6 +1217,22 @@ The members of a module access
 the top-level declarations of that module.
 
 .. TR: Confirm?
+
+If a period appears at the beginning of a line,
+it is understood as part of an explicit member expression,
+not as an implicit member expression.
+For example, the following listing shows chained method calls
+split over several lines:
+
+.. testcode:: period-at-start-of-line
+   :compile: true
+
+   -> let x = [10, 3, 20, 15, 4]
+   ->     .sort()
+   ->     .filter { $0 > 5 }
+   ->     .map { $0 * 100 }
+   >> print(x)
+   << [1000, 1500, 2000]
 
 .. langref-grammar
 
@@ -1268,12 +1295,12 @@ runtime type of the *expression*, as the following example shows:
 
     -> class SomeBaseClass {
            class func printClassName() {
-               println("SomeBaseClass")
+               print("SomeBaseClass")
            }
        }
     -> class SomeSubClass: SomeBaseClass {
            override class func printClassName() {
-               println("SomeSubClass")
+               print("SomeSubClass")
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
@@ -1372,7 +1399,7 @@ For example:
    << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [100, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
 
 .. langref-grammar
 
@@ -1464,14 +1491,14 @@ For example:
    <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
-   </ someDictionary is still [b: [10, 20], a: [1, 2, 3]]
+   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
 
 .. langref-grammar
 

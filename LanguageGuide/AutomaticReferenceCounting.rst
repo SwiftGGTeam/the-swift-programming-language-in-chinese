@@ -69,10 +69,10 @@ which defines a stored constant property called ``name``:
          let name: String
          init(name: String) {
             self.name = name
-            println("\(name) is being initialized")
+            print("\(name) is being initialized")
          }
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
       }
 
@@ -177,14 +177,14 @@ which model a block of apartments and its residents:
          let name: String
          init(name: String) { self.name = name }
          var apartment: Apartment?
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class Apartment {
          let unit: String
          init(unit: String) { self.unit = unit }
          var tenant: Person?
-         deinit { println("Apartment \(unit) is being deinitialized") }
+         deinit { print("Apartment \(unit) is being deinitialized") }
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``
@@ -355,14 +355,14 @@ is declared as a weak reference:
          let name: String
          init(name: String) { self.name = name }
          var apartment: Apartment?
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class Apartment {
          let unit: String
          init(unit: String) { self.unit = unit }
          weak var tenant: Person?
-         deinit { println("Apartment \(unit) is being deinitialized") }
+         deinit { print("Apartment \(unit) is being deinitialized") }
       }
 
 The strong references from the two variables (``john`` and ``unit4A``)
@@ -426,14 +426,15 @@ print their “deinitialized” messages
 after the ``john`` and ``unit4A`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
-.. TODO: weak references can also be implicitly unchecked optionals.
-   I should mention this here, but when would it be appropriate to use them?
+.. note::
 
-.. TODO: Feedback from [Contributor 7746] to be incorporated here:
-   “In the ARC section, at the end of the weak pointer section,
-   it is worth mentioning that trying to use weak pointers as a cache
-   (like you might do in a GC'd system) is doomed to failure:
-   values will be deallocated as soon as the last strong reference is removed.”
+   In systems that use garbage collection,
+   weak pointers are sometimes used to implement a simple caching mechanism
+   because objects with no strong references are deallocated
+   only when memory pressure triggers garbage collection.
+   However, with ARC, values are deallocated
+   as soon as their last strong reference is removed,
+   making weak references unsuitable for such a purpose.
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
@@ -502,7 +503,7 @@ to avoid a strong reference cycle:
          init(name: String) {
             self.name = name
          }
-         deinit { println("\(name) is being deinitialized") }
+         deinit { print("\(name) is being deinitialized") }
       }
    ---
    -> class CreditCard {
@@ -512,7 +513,7 @@ to avoid a strong reference cycle:
             self.number = number
             self.customer = customer
          }
-         deinit { println("Card #\(number) is being deinitialized") }
+         deinit { print("Card #\(number) is being deinitialized") }
       }
 
 .. note::
@@ -669,7 +670,7 @@ without needing to use an exclamation mark to unwrap its optional value:
    :compile: true
 
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
-   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
    <- Canada's capital city is called Ottawa
 
 In the example above, the use of an implicitly unwrapped optional
@@ -722,7 +723,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -736,13 +737,15 @@ which provides a simple model for an individual element within an HTML document:
          }
    ---
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
    ---
       }
 
 The ``HTMLElement`` class defines a ``name`` property,
-which indicates the name of the element, such as ``"p"`` for a paragraph element,
+which indicates the name of the element,
+such as ``"h1"`` for a heading element,
+``"p"`` for a paragraph element,
 or ``"br"`` for a line break element.
 ``HTMLElement`` also defines an optional ``text`` property,
 which you can set to a string that represents
@@ -767,7 +770,21 @@ However, because ``asHTML`` is a closure property rather than an instance method
 you can replace the default value of the ``asHTML`` property with a custom closure,
 if you want to change the HTML rendering for a particular HTML element.
 
-.. QUESTION: I don't actually do so, however. Is this a valid justification here?
+For example, the ``asHTML`` property could be set to a closure
+that defaults to some text if the ``text`` property is ``nil``,
+in order to prevent the representation from returning an empty HTML tag:
+
+.. testcode:: strongReferenceCyclesForClosures
+
+   -> let heading = HTMLElement(name: "h1")
+   << // heading : HTMLElement = REPL.HTMLElement
+   -> let defaultText = "some default text"
+   << // defaultText : String = "some default text"
+   -> heading.asHTML = {
+         return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+      }
+   -> print(heading.asHTML())
+   <- <h1>some default text</h1>
 
 .. note::
 
@@ -791,7 +808,7 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
-   -> println(paragraph!.asHTML())
+   -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
 .. note::
@@ -889,15 +906,12 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
+      lazy var someClosure: Void -> String = {
             [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
       }
    >> }
-
-.. QUESTION: I have declared both of these closure properties as lazy.
-   Is this the right message to be sending?
 
 .. _AutomaticReferenceCounting_WeakAndUnownedReferencesForClosures:
 
@@ -931,7 +945,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: () -> String = {
+         lazy var asHTML: Void -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
@@ -946,7 +960,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          }
    ---
          deinit {
-            println("\(name) is being deinitialized")
+            print("\(name) is being deinitialized")
          }
    ---
       }
@@ -962,7 +976,7 @@ You can create and print an ``HTMLElement`` instance as before:
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
-   -> println(paragraph!.asHTML())
+   -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
 Here's how the references look with the capture list in place:

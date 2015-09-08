@@ -6,6 +6,162 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-09-09  * Added information about the ``@autoclosure`` attribute ---
+              including its ``@autoclosure(escaping)`` form ---
+              to the :ref:`Closures_Autoclosures` section.
+              
+            * Added an example of using multiple optional bindings
+              with a ``where`` clause
+              to the :ref:`TheBasics_OptionalBinding` section.
+            
+            * Added information to the :ref:`LexicalStructure_StringLiterals` section
+              about how concatenating string literals using the ``+`` operator
+              happens at compile time.
+              
+            * Added information to the :ref:`Types_MetatypeType` section
+              about comparing metatype values and using them
+              to construct instances with initializer expressions.
+            
+            * Added a note to the :ref:`TheBasics_DebuggingWithAssertions` section
+              about when user-defined assertions are disabled.
+----------  --------------------------------------------------------------------------
+2015-08-24  * Added information about the new ``try?`` keyword
+              to the :ref:`ErrorHandling_Optional` section.
+            
+            * Added information about the new Swift standard library
+              ``print(_:separator:terminator)`` function
+              to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
+              
+            * Updated the discussion of the ``@NSManaged`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section,
+              now that the attribute can be applied to certain instances methods.
+              
+            * Updated the :ref:`Functions_VariadicParameters` section,
+              now that variadic parameters can be declared in any position
+              in a function's parameter list.
+----------  --------------------------------------------------------------------------
+2015-08-06  * Updated the :ref:`ErrorHandling_Represent` section,
+              now that all types can conform to the ``ErrorType`` protocol.
+
+            * Added information
+              to the :ref:`Initialization_OverridingAFailableInitializer` section
+              about how a nonfailable initializer can delegate
+              up to a failable initializer
+              by force-unwrapping the result of the superclass's initializer.
+
+            * Added information about using enumeration cases as functions
+              to the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section.
+
+            * Added information about explicitly referencing an initializer
+              to the :ref:`Expressions_InitializerExpression` section.
+
+            * Added information about build configuration
+              and line control statements
+              to the :ref:`Statements_CompilerControlStatements` section.
+
+            * Added a note to the :ref:`Types_MetatypeType` section
+              about constructing class instances from metatype values.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about weak references being unsuitable for caching.
+
+            * Updated a note in the :ref:`Properties_TypeProperties` section
+              to mention that stored type properties are lazily initialized.
+----------  --------------------------------------------------------------------------
+2015-07-21  * Added information about recursive enumerations
+              to the :ref:`Enumerations_RecursiveEnumerations` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added information about the behavior
+              of enumeration cases with ``String`` raw values
+              to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithRawCaseValues` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Updated the :ref:`Closures_CapturingValues` section
+              to clarify how variables and constants are captured in closures.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              to describe when you can apply the ``@objc`` attribute to classes.
+
+            * Added a note to the :ref:`ErrorHandling_Catch` section
+              about the performance of executing a ``throw`` statement.
+              Added similar information about the ``do`` statement
+              in the :ref:`Statements_DoStatement` section.
+----------  --------------------------------------------------------------------------
+2015-06-08  * Updated for Swift 2.0.
+
+            * Added information about error handling
+              to the :doc:`../LanguageGuide/ErrorHandling` chapter,
+              the :ref:`Statements_DoStatement` section,
+              the :ref:`Statements_ThrowStatement` section,
+              the :ref:`Statements_DeferStatement` section,
+              and the :ref:`Expressions_TryExpression` section.
+
+            * Added information about API availability checking
+              to the :ref:`ControlFlow_Available` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_AvailabilityCondition` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added information about the new ``guard`` statement
+              to the :ref:`ControlFlow_Guard` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_GuardStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added information about protocol extensions
+              to the :ref:`Protocols_Extensions` section
+              of the :doc:`../LanguageGuide/Protocols` chapter.
+
+            * Added information about access control for unit testing
+              to the :ref:`AccessControl_AccessLevelsForTestTargets` section
+              of the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Added information about the new optional pattern
+              to the :ref:`Patterns_OptionalPattern` section
+              of the :doc:`../ReferenceManual/Patterns` chapter.
+
+            * Updated the :ref:`ControlFlow_DoWhile` section
+              with information about the the ``repeat``-``while`` loop.
+
+            * Updated the :ref:`Properties_TypeProperties` section
+              with information about stored and computed type properties
+              for classes, structures, and enumerations.
+
+            * Updated the :ref:`Statements_BreakStatement` section
+              with information about labeled break statements.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              with information about the ``@available``
+              and ``@warn_unused_result`` attributes.
+
+            * Updated the :ref:`Attributes_TypeAttributes` section
+              with information about the ``@convention`` attribute.
+
+            * Updated a note in the :ref:`Properties_PropertyObservers` section
+              to clarify the behavior of ``willSet`` and ``didSet`` observers.
+
+            * Added a note to the :ref:`AccessControl_AccessLevels` section
+              with information about the scope of ``private`` access.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about the differences in weak references
+              between garbage collected systems and ARC.
+
+            * Updated the
+              :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
+              with a more precise definition of Unicode scalars.
+
+            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
+              now that ``String`` no longer conforms
+              to the ``CollectionType`` protocol from the Swift standard library.
+----------  --------------------------------------------------------------------------
 2015-04-08  * Swift now has a native ``Set`` collection type.
               For more information, see :ref:`CollectionTypes_Sets`.
 
@@ -23,7 +179,7 @@ Date        Notes
               see :ref:`Protocols_CheckingForProtocolConformance`.
 
             * Added a new guide section about
-              :ref:`StringsAndCharacters_StringIndexes`.
+              :ref:`StringsAndCharacters_StringIndices`.
 
             * Removed the overflow division (``&/``) and
               overflow remainder (``&%``) operators

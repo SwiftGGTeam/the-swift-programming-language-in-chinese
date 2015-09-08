@@ -47,30 +47,30 @@ are a convenient means of naming and defining self-contained blocks of code
 as part of a larger function.
 However, it is sometimes useful to write shorter versions of function-like constructs
 without a full declaration and name.
-This is particularly true when you work with functions that take other functions
+This is particularly true when you work with functions or methods that take functions
 as one or more of their arguments.
 
 :newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
 Closure expressions provide several syntax optimizations
 for writing closures in a shortened form without loss of clarity or intent.
 The closure expression examples below illustrate these optimizations
-by refining a single example of the ``sorted(_:_:)`` function over several iterations,
+by refining a single example of the ``sort(_:)`` method over several iterations,
 each of which expresses the same functionality in a more succinct way.
 
 .. _Closures_TheSortedFunction:
 
-The Sorted Function
-~~~~~~~~~~~~~~~~~~~
+The Sort Method
+~~~~~~~~~~~~~~~
 
-Swift's standard library provides a function called ``sorted``,
+Swift's standard library provides a method called ``sort(_:)``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
-the ``sorted(_:_:)`` function returns a new array of the same type and size as the old one,
+the ``sort(_:)`` method returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted(_:_:)`` function.
+The original array is not modified by the ``sort(_:)`` method.
 
-The closure expression examples below use the ``sorted(_:_:)`` function
+The closure expression examples below use the ``sort(_:)`` method
 to sort an array of ``String`` values in reverse alphabetical order.
 Here's the initial array to be sorted:
 
@@ -79,28 +79,26 @@ Here's the initial array to be sorted:
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
    << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-The ``sorted(_:_:)`` function takes two arguments:
-
-* An array of values of a known type.
-* A closure that takes two arguments of the same type as the array's contents,
-  and returns a ``Bool`` value to say whether the first value should appear
-  before or after the second value once the values are sorted.
-  The sorting closure needs to return ``true``
-  if the first value should appear *before* the second value,
-  and ``false`` otherwise.
+The ``sort(_:)`` method accepts a closure that takes two arguments
+of the same type as the array's contents,
+and returns a ``Bool`` value to say whether the first value should appear
+before or after the second value once the values are sorted.
+The sorting closure needs to return ``true``
+if the first value should appear *before* the second value,
+and ``false`` otherwise.
 
 This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
 One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as the ``sorted(_:_:)`` function's second parameter:
+and to pass it in as an argument to the ``sort(_:)`` method:
 
 .. testcode:: closureSyntax
 
-   -> func backwards(s1: String, s2: String) -> Bool {
+   -> func backwards(s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversed = sorted(names, backwards)
+   -> var reversed = names.sort(backwards)
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -135,8 +133,7 @@ Closure expression syntax has the following general form:
 Closure expression syntax can use
 constant parameters, variable parameters, and ``inout`` parameters.
 Default values cannot be provided.
-Variadic parameters can be used if you name the variadic parameter
-and place it last in the parameter list.
+Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
 .. FIXME: the note about default values is tracked by rdar://16535452.
@@ -144,8 +141,6 @@ Tuples can also be used as parameter types and return types.
 
 .. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
-
-.. QUESTION: should I be using names.sorted or sorted(names)?
 
 .. QUESTION: is "reversed" the right name to use here?
    it's a backwards sort, not a reversed version of the original array
@@ -155,7 +150,7 @@ from earlier:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { (s1: String, s2: String) -> Bool in
+   -> reversed = names.sort({ (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversed
@@ -178,24 +173,24 @@ it can even be written on a single line:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   -> reversed = names.sort( { (s1: String, s2: String) -> Bool in return s1 > s2 } )
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-This illustrates that the overall call to the ``sorted(_:_:)`` function has remained the same.
-A pair of parentheses still wrap the entire set of arguments for the function.
-However, one of those arguments is now an inline closure.
+This illustrates that the overall call to the ``sort(_:)`` method has remained the same.
+A pair of parentheses still wrap the entire argument for the method.
+However, that argument is now an inline closure.
 
 .. _Closures_InferringTypeFromContext:
 
 Inferring Type From Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because the sorting closure is passed as an argument to a function,
+Because the sorting closure is passed as an argument to a method,
 Swift can infer the types of its parameters
-and the type of the value it returns
-from the type of the ``sorted(_:_:)`` function's second parameter.
-This parameter is expecting a function of type ``(String, String) -> Bool``.
+and the type of the value it returns.
+The ``sort(_:)`` method is being called on an array of strings,
+so its argument must be a function of type ``(String, String) -> Bool``.
 This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
@@ -204,18 +199,18 @@ can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { s1, s2 in return s1 > s2 } )
+   -> reversed = names.sort( { s1, s2 in return s1 > s2 } )
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer the parameter types and return type
-when passing a closure to a function as an inline closure expression.
+when passing a closure to a function or method as an inline closure expression.
 As a result, you never need to write an inline closure in its fullest form
-when the closure is used as a function argument.
+when the closure is used as a function or method argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
-In the case of the ``sorted(_:_:)`` function,
+In the case of the ``sort(_:)`` method,
 the purpose of the closure is clear from the fact that sorting is taking place,
 and it is safe for a reader to assume that
 the closure is likely to be working with ``String`` values,
@@ -232,11 +227,11 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { s1, s2 in s1 > s2 } )
+   -> reversed = names.sort( { s1, s2 in s1 > s2 } )
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Here, the function type of the ``sorted(_:_:)`` function's second argument
+Here, the function type of the ``sort(_:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
@@ -260,7 +255,7 @@ because the closure expression is made up entirely of its body:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, { $0 > $1 } )
+   -> reversed = names.sort( { $0 > $1 } )
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -276,14 +271,13 @@ Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
 as a function that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed for the ``sorted(_:_:)`` function's
-second parameter.
+This exactly matches the function type needed by the ``sort(_:)`` method.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names, >)
+   -> reversed = names.sort(>)
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -302,7 +296,7 @@ that is written outside of (and *after*) the parentheses of the function call it
 
 .. testcode:: closureSyntax
 
-   -> func someFunctionThatTakesAClosure(closure: () -> ()) {
+   -> func someFunctionThatTakesAClosure(closure: () -> Void) {
          // function body goes here
       }
    ---
@@ -318,19 +312,23 @@ that is written outside of (and *after*) the parentheses of the function call it
          // trailing closure's body goes here
       }
 
-.. note::
-
-   If a closure expression is provided as the function's only argument
-   and you provide that expression as a trailing closure,
-   you do not need to write a pair of parentheses ``()``
-   after the function's name when you call the function.
-
 The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
-can be written outside of the ``sorted(_:_:)`` function's parentheses as a trailing closure:
+can be written outside of the ``sort(_:)`` method's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sorted(names) { $0 > $1 }
+   -> reversed = names.sort() { $0 > $1 }
+   >> reversed
+   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+If a closure expression is provided as the function or method's only argument
+and you provide that expression as a trailing closure,
+you do not need to write a pair of parentheses ``()``
+after the function or method's name when you call the function:
+
+.. testcode:: closureSyntax
+
+   -> reversed = names.sort { $0 > $1 }
    >> reversed
    << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -367,10 +365,7 @@ the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
 You can now use the ``numbers`` array to create an array of ``String`` values,
-by passing a closure expression to the array's ``map(_:)`` method as a trailing closure.
-Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
-because the ``map(_:)`` method has only one parameter,
-and that parameter is provided as a trailing closure:
+by passing a closure expression to the array's ``map(_:)`` method as a trailing closure:
 
 .. testcode:: arrayMap
 
@@ -383,7 +378,7 @@ and that parameter is provided as a trailing closure:
          }
          return output
       }
-   << // strings : Array<String> = ["OneSix", "FiveEight", "FiveOneZero"]
+   << // strings : [String] = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type [String]
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
@@ -427,13 +422,13 @@ so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
 The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
-and is added to the output array by the ``map(_:_:)`` function.
+and is added to the output array by the ``map(_:)`` method.
 
 The use of trailing closure syntax in the example above
 neatly encapsulates the closure's functionality
 immediately after the function that closure supports,
 without needing to wrap the entire closure within
-the ``map(_:_:)`` function's outer parentheses.
+the ``map(_:)`` method's outer parentheses.
 
 .. _Closures_CapturingValues:
 
@@ -499,38 +494,28 @@ the nested ``incrementer()`` function might seem unusual:
 
    -> func incrementer() -> Int {
    >>    var runningTotal = 0
-   >>    var amount = 1
+   >>    let amount = 1
          runningTotal += amount
          return runningTotal
       }
 
 The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
-It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
-from its surrounding function
-and using them within its own function body.
-
-Because it modifies the ``runningTotal`` variable each time it is called,
-``incrementer`` captures a *reference* to the current ``runningTotal`` variable,
-and not just a copy of its initial value.
-Capturing a reference ensures that ``runningTotal`` does not disappear
+It does this by capturing a *reference* to ``runningTotal`` and ``amount``
+from the surrounding function and using them within its own function body.
+Capturing by reference ensures that ``runningTotal`` and ``amount`` do not disappear
 when the call to ``makeIncrementer`` ends,
-and ensures that ``runningTotal`` is available
-the next time the ``incrementer()`` function is called..
-
-However, because it does not modify ``amount``,
-and ``amount`` is not mutated outside it,
-``incrementer`` actually captures and stores a *copy* of the value stored in ``amount``.
-This value is stored along with the new ``incrementer()`` function.
+and also ensures that ``runningTotal`` is available
+the next time the ``incrementer`` function is called.
 
 .. note::
 
-   Swift determines what should be captured by reference
-   and what should be copied by value.
-   You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementer()`` function.
-   Swift also handles all memory management involved in disposing of ``runningTotal``
-   when it is no longer needed by the ``incrementer()`` function.
+   As an optimization,
+   Swift may instead capture and store a *copy* of a value
+   if that value is not mutated by or outside a closure.
+
+   Swift also handles all memory management involved in disposing of
+   variables when they are no longer needed.
 
 Here's an example of ``makeIncrementer`` in action:
 
@@ -620,27 +605,134 @@ both of those constants or variables will refer to the same closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
-.. TODO: Autoclosures
-   ------------------
+.. _Closures_Autoclosures:
 
-.. TODO: var closure1: @autoclosure () -> Int = 4  // Function producing 4 whenever it is called.
+Autoclosures
+------------
 
-.. TODO: from Assert.swift in stdlib/core:
-   @transparent
-   func assert(
-     condition: @autoclosure () -> Bool, message: StaticString = StaticString()
-   ) {
-   }
-.. TODO: note that an @autoclosure's argument type must always be ()
-   see also test/expr/closure/closures.swift
+An :newTerm:`autoclosure` is a closure that is automatically created 
+to wrap an expression that's being passed as an argument to a function.
+It doesn't take any arguments,
+and when it's called, it returns the value
+of the expression that's wrapped inside of it.
+An autoclosure lets you delay evaluation,
+because the code inside isn't run until you call the closure.
+This is useful for code
+that has side effects or is computationally expensive,
+because it lets you control when that code is evaluated.
+The code below shows how a closure delays evaluation.
 
-.. TODO: The autoclosure attribute modifies a function type,
-   changing the behavior of any assignment into (or initialization of) a value with the function type.
-   Instead of requiring that the rvalue and lvalue have the same function type,
-   an "auto closing" function type requires its initializer expression to have
-   the same type as the function's result type,
-   and it implicitly binds a closure over this expression.
-   This is typically useful for function arguments that want to
-   capture computation that can be run lazily.
-   autoclosure is only valid in a type of a syntactic function type
-   that is defined to take a syntactic empty tuple.
+.. testcode:: autoclosures
+
+    -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+    -> let nextCustomer = { customersInLine.removeAtIndex(0) }
+    << // nextCustomer : () -> String = (Function)
+    -> print(customersInLine.count)
+    <- 5
+    ---
+    -> print("Now serving \(nextCustomer())!")
+    <- Now serving Chris!
+    -> print(customersInLine.count)
+    <- 4
+
+.. Using removeAtIndex(_:) instead of popFirst() because the latter only works
+   with ArraySlice, not with Array:
+       customersInLine[0..<3].popLast()     // fine
+       customersInLine[0..<3].popFirst()    // fine
+       customersInLine.popLast()            // fine
+       customersInLine.popFirst()           // FAIL
+   It also returns an optional, which complicates the listing.
+
+.. TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
+
+Even though the first element of the ``customersInLine`` array is removed
+as part of the closure,
+that operation isn't carried out until the closure is actually called.
+If the closure is never called,
+the expression inside the closure is never evaluated.
+Note that the type of ``nextCustomer`` is not ``String``
+but ``() -> String`` ---
+a function that takes no arguments and returns a string.
+You get the same behavior when you do this in a function:
+
+.. testcode:: autoclosures-function
+
+    >> var customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(customer: () -> String) {
+           print("Now serving \(customer())!")
+       }
+    -> serveNextCustomer( { customersInLine.removeAtIndex(0) } )
+    <- Now serving Alex!
+
+The ``serveNextCustomer(_:)`` function in the listing above
+takes an explicit closure that returns the next customer's name.
+The version of ``serveNextCustomer(_:)`` below
+performs the same operation but, instead of using an explicit closure,
+it uses an autoclosure
+by marking its parameter with the ``@autoclosure`` attribute.
+Now you can call the function
+as if it took a ``String`` argument instead of a closure.
+
+.. testcode:: autoclosures-function-with-autoclosure
+
+    >> var customersInLine = ["Ewa", "Barry", "Daniella"]
+    << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Ewa", "Barry", "Daniella"]
+    -> func serveNextCustomer(@autoclosure customer: () -> String) {
+           print("Now serving \(customer())!")
+       }
+    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    <- Now serving Ewa!
+
+.. note::
+
+   Overusing autoclosures can make your code hard to understand.
+   The context and function name should make it clear
+   that evaluation is being deferred.
+
+The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
+which indicates that the closure is used only within the function.
+That is, the closure isn't allowed to be stored in a way
+that would let it "escape" the scope of the function
+and be executed after the function returns.
+If you want an autoclosure that is allowed to escape,
+use the ``@autoclosure(escaping)`` form of the attribute:
+
+.. testcode:: autoclosures-function-with-escape
+
+    >> var customersInLine = ["Barry", "Daniella"]
+    << // customersInLine : [String] = ["Barry", "Daniella"]
+    /> customersInLine is \(customersInLine)
+    </ customersInLine is ["Barry", "Daniella"]
+    -> var customerClosures: [() -> String] = []
+    << // customerClosures : [() -> String] = []
+    -> func collectCustomerClosures(@autoclosure(escaping) customer: () -> String) {
+           customerClosures.append(customer)
+       }
+    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
+    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
+    ---
+    -> print("Collected \(customerClosures.count) closures.")
+    <- Collected 2 closures.
+    -> for customerClosure in customerClosures {
+           print("Now serving \(customerClosure())!")
+       }
+    <- Now serving Barry!
+    <- Now serving Daniella!
+
+In the code above,
+instead of calling the closure passed to it
+as its ``customer`` argument,
+the ``collectCustomerClosures(_:)`` function appends the closure to the ``customerClosures`` array.
+The array is declared outside the scope of the function,
+which means the closures in the array can be executed after the function returns.
+As a result,
+the value of the ``customer`` argument must be allowed to escape the function's scope.
+
+For more information about the ``@autoclosure`` and ``@noescape`` attributes,
+see :ref:`Attributes_DeclarationAttributes`.

@@ -18,10 +18,6 @@ Instances of class types can also implement a :newTerm:`deinitializer`,
 which performs any custom cleanup just before an instance of that class is deallocated.
 For more information about deinitializers, see :doc:`Deinitialization`.
 
-.. TODO: mention that you can't construct a class instance from a class metatype value,
-   because you can't be sure that a subclass will definitely provide the constructor ---
-   see doug's notes from r14175 for more info
-
 .. _Initialization_SettingInitialValuesForStoredProperties:
 
 Setting Initial Values for Stored Properties
@@ -73,8 +69,8 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = REPL.Fahrenheit
-   -> println("The default temperature is \(f.temperature)° Fahrenheit")
+   << // f : Fahrenheit = REPL.Fahrenheit(temperature: 32.0)
+   -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
 The structure defines a single initializer, ``init``, with no parameters,
@@ -154,11 +150,11 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = REPL.Celsius
+   << // boilingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = REPL.Celsius
+   << // freezingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -189,8 +185,6 @@ Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
 Because of this, Swift provides an automatic external name
 for *every* parameter in an initializer if you don't provide an external name yourself.
-This automatic external name is the same as the local name,
-as if you had written a hash symbol before every initialization parameter.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
@@ -225,9 +219,9 @@ by providing named values for each initializer parameter:
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = REPL.Color
+   << // magenta : Color = REPL.Color(red: 1.0, green: 0.0, blue: 1.0)
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = REPL.Color
+   << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
 without using external parameter names.
@@ -271,7 +265,7 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = REPL.Celsius
+   << // bodyTemperature : Celsius = REPL.Celsius(temperatureInCelsius: 37.0)
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -305,7 +299,7 @@ with an optional ``String`` property called ``response``:
             self.text = text
          }
          func ask() {
-            println(text)
+            print(text)
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
@@ -341,8 +335,12 @@ it can't be further modified.
          }
       }
    !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
-   !!             self.c = 2
-   !!                    ^
+   !! self.c = 2
+   !! ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int
+   !! ^~~
+   !! var
 
 .. assertion:: constantPropertyAssignmentWithInitialValue
 
@@ -352,9 +350,16 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! <REPL Input>:4:16: error: cannot assign to 'c' in 'self'
-   !!             self.c = 1
-   !!             ~~~~~~ ^
+   !! <REPL Input>:4:16: error: immutable value 'self.c' may only be initialized once
+   !! self.c = 1
+   !! ^
+   !! <REPL Input>:2:10: note: initial value already provided in 'let' declaration
+   !! let c: Int = 0
+   !! ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let c: Int = 0
+   !! ^~~
+   !! var
 
 .. note::
 
@@ -378,7 +383,7 @@ it can still be set within the class's initializer:
             self.text = text
          }
          func ask() {
-            println(text)
+            print(text)
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
@@ -393,11 +398,25 @@ Default Initializers
 --------------------
 
 Swift provides a :newTerm:`default initializer`
-for any structure or base class
+for any structure or class
 that provides default values for all of its properties
 and does not provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
+
+.. assertion:: defaultInitializersForStructAndClass
+
+   -> struct S { var s: String = "s" }
+   -> S().s
+   <$ : String = "s"
+   -> class A { var a: String = "a" }
+   -> A().a
+   <$ : String = "a"
+   -> class B: A { var b: String = "b" }
+   -> B().a
+   <$ : String = "a"
+   -> B().b
+   <$ : String = "b"
 
 This example defines a class called ``ShoppingListItem``,
 which encapsulates the name, quantity, and purchase state
@@ -425,11 +444,6 @@ to create a new instance of the class with initializer syntax,
 written as ``ShoppingListItem()``,
 and assigns this new instance to a variable called ``item``.
 
-.. QUESTION: How is this affected by inheritance?
-   If I am a subclass of a superclass that defines a designated initializer,
-   I (the subclass) presumably don't get a default initializer,
-   because I am obliged to delegate up to my parent's default initializer.
-
 .. _Initialization_MemberwiseInitializersForStructureTypes:
 
 Memberwise Initializers for Structure Types
@@ -445,7 +459,11 @@ even if it has stored properties that do not have default values.
 
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
-   << // s : S = REPL.S
+   << // s : S = REPL.S(int: 42, string: "hello")
+   ---
+   -> struct SS { var int = 10; var string: String }
+   -> let ss = SS(int: 42, string: "hello")
+   << // ss : SS = REPL.SS(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -467,7 +485,7 @@ which you can use to initialize a new ``Size`` instance:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = REPL.Size
+   << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
@@ -563,7 +581,7 @@ from their property definitions:
 .. testcode:: valueDelegation
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = REPL.Rect
+   << // basicRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -577,7 +595,7 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = REPL.Rect
+   << // originRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -591,7 +609,7 @@ which stores the new origin and size values in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect
+   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -1011,7 +1029,7 @@ and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` o
 
    -> let vehicle = Vehicle()
    << // vehicle : Vehicle = REPL.Vehicle
-   -> println("Vehicle: \(vehicle.description)")
+   -> print("Vehicle: \(vehicle.description)")
    </ Vehicle: 0 wheel(s)
 
 The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
@@ -1044,7 +1062,7 @@ to see how its ``numberOfWheels`` property has been updated:
 
    -> let bicycle = Bicycle()
    << // bicycle : Bicycle = REPL.Bicycle
-   -> println("Bicycle: \(bicycle.description)")
+   -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
 .. note::
@@ -1077,9 +1095,13 @@ to see how its ``numberOfWheels`` property has been updated:
             constantProperty = 0
          }
       }
-   !! <REPL Input>:5:26: error: cannot assign to 'constantProperty' in 'self'
+   !!  <REPL Input>:5:26: error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
    !! ~~~~~~~~~~~~~~~~ ^
+   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !! let constantProperty: Int
+   !! ^~~
+   !! var
 
 .. _Initialization_AutomaticInitializerInheritance:
 
@@ -1315,7 +1337,7 @@ to create a new ``ShoppingListItem`` instance:
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
-         println(item.description)
+         print(item.description)
       }
    </ 1 x Orange juice ✔
    </ 1 x Bacon ✘
@@ -1414,11 +1436,11 @@ and to check if initialization succeeded:
 .. testcode:: failableInitializers
 
    -> let someCreature = Animal(species: "Giraffe")
-   << // someCreature : Animal? = Optional(REPL.Animal)
+   << // someCreature : Animal? = Optional(REPL.Animal(species: "Giraffe"))
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
-         println("An animal was initialized with a species of \(giraffe.species)")
+         print("An animal was initialized with a species of \(giraffe.species)")
       }
    <- An animal was initialized with a species of Giraffe
 
@@ -1432,7 +1454,7 @@ the initializer triggers an initialization failure:
    // anonymousCreature is of type Animal?, not Animal
    ---
    -> if anonymousCreature == nil {
-         println("The anonymous creature could not be initialized")
+         print("The anonymous creature could not be initialized")
       }
    <- The anonymous creature could not be initialized
 
@@ -1440,7 +1462,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
+   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,
@@ -1487,16 +1509,16 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
-         println("This is a defined temperature unit, so initialization succeeded.")
+         print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is not a defined temperature unit, so initialization failed.")
+         print("This is not a defined temperature unit, so initialization failed.")
       }
    <- This is not a defined temperature unit, so initialization failed.
 
@@ -1522,16 +1544,16 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional((Enum Value))
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
    -> if fahrenheitUnit != nil {
-         println("This is a defined temperature unit, so initialization succeeded.")
+         print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
    << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
-         println("This is not a defined temperature unit, so initialization failed.")
+         print("This is not a defined temperature unit, so initialization failed.")
       }
    <- This is not a defined temperature unit, so initialization failed.
 
@@ -1568,7 +1590,7 @@ The ``Product`` class has a constant ``name`` property
 that must not be allowed to take an empty string value.
 To enforce this requirement,
 the ``Product`` class uses a failable initializer to ensure that
-the property's value is non-empty before allowing initialization to succeed.
+the property's value is nonempty before allowing initialization to succeed.
 
 However, ``Product`` is a class, not a structure.
 This means that unlike ``Animal``,
@@ -1598,7 +1620,7 @@ without needing to check for a value of ``nil``:
 
    -> if let bowTie = Product(name: "bow tie") {
          // no need to check if bowTie.name == nil
-         println("The product's name is \(bowTie.name)")
+         print("The product's name is \(bowTie.name)")
       }
    <- The product's name is bow tie
 
@@ -1620,7 +1642,7 @@ and no further initialization code is executed.
    -> struct S {
          init?(string1: String) {
             self.init(string2: string1)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
          init?(string2: String) { return nil }
       }
@@ -1632,7 +1654,7 @@ and no further initialization code is executed.
    -> class C {
          convenience init?(string1: String) {
             self.init(string2: string1)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
          init?(string2: String) { return nil }
       }
@@ -1647,7 +1669,7 @@ and no further initialization code is executed.
    -> class D: C {
          init?(string2: String) {
             super.init(string1: string2)
-            println("Hello!") // this should never be printed, because initialization has already failed
+            print("Hello!") // this should never be printed, because initialization has already failed
          }
       }
    -> let d = D(string2: "bing")
@@ -1692,13 +1714,13 @@ If the superclass initialization succeeds,
 the ``CartItem`` initializer validates that it has received
 a ``quantity`` value of ``1`` or more.
 
-If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
+If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
 
 .. testcode:: failableInitializers
 
    -> if let twoSocks = CartItem(name: "sock", quantity: 2) {
-         println("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+         print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
       }
    <- Item: sock, quantity: 2
 
@@ -1708,9 +1730,9 @@ the ``CartItem`` initializer causes initialization to fail:
 .. testcode:: failableInitializers
 
    -> if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
-         println("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+         print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
       } else {
-         println("Unable to initialize zero shirts")
+         print("Unable to initialize zero shirts")
       }
    <- Unable to initialize zero shirts
 
@@ -1720,9 +1742,9 @@ the superclass ``Product`` initializer causes initialization to fail:
 .. testcode:: failableInitializers
 
    -> if let oneUnnamed = CartItem(name: "", quantity: 1) {
-         println("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+         print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
       } else {
-         println("Unable to initialize one unnamed product")
+         print("Unable to initialize one unnamed product")
       }
    <- Unable to initialize one unnamed product
 
@@ -1734,15 +1756,13 @@ Overriding a Failable Initializer
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
-with a subclass *non*-failable initializer.
+with a subclass *nonfailable* initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
-the subclass initializer cannot delegate up to the superclass initializer.
-A nonfailable initializer can never delegate to a failable initializer.
-
-.. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
+the only way to delegate up to the superclass initializer
+is to force-unwrap the result of the failable superclass initializer.
 
 .. note::
 
@@ -1766,7 +1786,7 @@ A nonfailable initializer can never delegate to a failable initializer.
 
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
-a ``name`` property that is either a non-empty string value or ``nil``,
+a ``name`` property that is either a nonempty string value or ``nil``,
 but cannot be an empty string:
 
 .. testcode:: failableInitializers
@@ -1813,6 +1833,29 @@ Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way than its superclass,
 its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
+
+You can use forced unwrapping in an initializer
+to call a failable initializer from the superclass
+as part of the implementation of a subclass's nonfailable initializer.
+For example, the ``UntitledDocument`` subclass below is always named ``"[Untitled]"``,
+and it uses the failable ``init(name:)`` initializer
+from its superclass during initialization.
+
+.. testcode:: failableInitializers
+
+   -> class UntitledDocument: Document {
+         override init() {
+            super.init(name: "[Untitled]")!
+         }
+      }
+
+In this case, if the ``init(name:)`` initializer of the superclass
+were ever called with an empty string as the name,
+the forced unwrap operation would result in a runtime error.
+However, because it's called with a string constant,
+you can see that the initializer won't fail,
+so no runtime error can occur in this case.
+
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
@@ -2021,7 +2064,7 @@ You do not write the ``override`` modifier when overriding a required designated
       }
    !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
-   !! ~~~~~~~~          ^
+   !! ~~~~~~~~~         ^
    !!-
    !! <REPL Input>:2:15: note: overridden required initializer is here
    !!    required init() {}
@@ -2167,8 +2210,8 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: checkers
 
    -> let board = Checkerboard()
-   << // board : Checkerboard = REPL.Checkerboard
-   -> println(board.squareIsBlackAtRow(0, column: 1))
+   << // board : Checkerboard = REPL.Checkerboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> println(board.squareIsBlackAtRow(9, column: 9))
+   -> print(board.squareIsBlackAtRow(9, column: 9))
    <- false

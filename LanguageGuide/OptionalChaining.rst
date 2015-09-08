@@ -96,9 +96,9 @@ To use optional chaining, use a question mark in place of the exclamation mark:
    :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- Unable to retrieve the number of rooms.
 
@@ -133,9 +133,9 @@ the default ``numberOfRooms`` value of ``1``:
    :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- John's residence has 1 room(s).
 
@@ -188,7 +188,7 @@ which is initialized with an empty array of type ``[Room]``:
             }
          }
          func printNumberOfRooms() {
-            println("The number of rooms is \(numberOfRooms)")
+            print("The number of rooms is \(numberOfRooms)")
          }
          var address: Address?
       }
@@ -237,27 +237,21 @@ The third property, ``street``, is used to name the street for that address:
          var street: String?
          func buildingIdentifier() -> String? {
             if buildingName != nil {
-               return buildingName
-            } else if buildingNumber != nil {
-               return buildingNumber
+                return buildingName
+            } else if buildingNumber != nil && street != nil {
+                return "\(buildingNumber) \(street)"
             } else {
-               return nil
+                return nil
             }
          }
       }
 
-The ``Address`` class also provides a method called ``buildingIdentifier``,
+The ``Address`` class also provides a method called ``buildingIdentifier()``,
 which has a return type of ``String?``.
-This method checks the ``buildingName`` and ``buildingNumber`` properties
+This method checks the properties of the address
 and returns ``buildingName`` if it has a value,
-or ``buildingNumber`` if it has a value,
-or ``nil`` if neither property has a value.
-
-.. QUESTION: you could write this in a shorter form by just returning buildingNumber
-   if buildingName is nil. However, I think the code above is clearer in intent.
-   What do others think?
-   I could always call this out, of course,
-   but this preamble section is already pretty long.
+or ``buildingNumber`` concatenated with ``street`` if both have values,
+or ``nil`` otherwise.
 
 .. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
 
@@ -276,9 +270,9 @@ and try to access its ``numberOfRooms`` property as before:
 
    -> let john = Person()
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- Unable to retrieve the number of rooms.
 
@@ -316,7 +310,7 @@ Here's how the method looks:
 
    -> func printNumberOfRooms() {
    >>    let numberOfRooms = 3
-         println("The number of rooms is \(numberOfRooms)")
+         print("The number of rooms is \(numberOfRooms)")
       }
 
 This method does not specify a return type.
@@ -337,9 +331,9 @@ to see if the method call was successful:
    :compile: true
 
    -> if john.residence?.printNumberOfRooms() != nil {
-         println("It was possible to print the number of rooms.")
+         print("It was possible to print the number of rooms.")
       } else {
-         println("It was not possible to print the number of rooms.")
+         print("It was not possible to print the number of rooms.")
       }
    <- It was not possible to print the number of rooms.
 
@@ -354,9 +348,9 @@ which enables you to compare against ``nil`` to see if the property was set succ
    :compile: true
 
    -> if (john.residence?.address = someAddress) != nil {
-         println("It was possible to set the address.")
+         print("It was possible to set the address.")
       } else {
-         println("It was not possible to set the address.")
+         print("It was not possible to set the address.")
       }
    <- It was not possible to set the address.
 
@@ -372,7 +366,7 @@ and to check whether that subscript call is successful.
 .. note::
 
    When you access a subscript on an optional value through optional chaining,
-   you place the question mark *before* the subscript's braces, not after.
+   you place the question mark *before* the subscript's brackets, not after.
    The optional chaining question mark always follows immediately after
    the part of the expression that is optional.
 
@@ -386,9 +380,9 @@ the subscript call fails:
    :compile: true
 
    -> if let firstRoomName = john.residence?[0].name {
-         println("The first room name is \(firstRoomName).")
+         print("The first room name is \(firstRoomName).")
       } else {
-         println("Unable to retrieve the first room name.")
+         print("Unable to retrieve the first room name.")
       }
    <- Unable to retrieve the first room name.
 
@@ -420,9 +414,9 @@ the actual items in the ``rooms`` array through optional chaining:
    -> john.residence = johnsHouse
    ---
    -> if let firstRoomName = john.residence?[0].name {
-         println("The first room name is \(firstRoomName).")
+         print("The first room name is \(firstRoomName).")
       } else {
-         println("Unable to retrieve the first room name.")
+         print("Unable to retrieve the first room name.")
       }
    <- The first room name is Living Room.
 
@@ -495,9 +489,9 @@ both of which are of optional type:
    :compile: true
 
    -> if let johnsStreet = john.residence?.address?.street {
-         println("John's street name is \(johnsStreet).")
+         print("John's street name is \(johnsStreet).")
       } else {
-         println("Unable to retrieve the address.")
+         print("Unable to retrieve the address.")
       }
    <- Unable to retrieve the address.
 
@@ -522,20 +516,19 @@ you can access the value of the ``street`` property through multilevel optional 
    -> let johnsAddress = Address()
    -> johnsAddress.buildingName = "The Larches"
    -> johnsAddress.street = "Laurel Street"
-   -> john.residence!.address = johnsAddress
+   -> john.residence?.address = johnsAddress
    ---
    -> if let johnsStreet = john.residence?.address?.street {
-         println("John's street name is \(johnsStreet).")
+         print("John's street name is \(johnsStreet).")
       } else {
-         println("Unable to retrieve the address.")
+         print("Unable to retrieve the address.")
       }
    <- John's street name is Laurel Street.
 
-Note the use of an exclamation mark during the assignment of
-an address instance to ``john.residence.address``.
-The ``john.residence`` property has an optional type,
-and so you need to unwrap its actual value with an exclamation mark
-before accessing the residence's ``address`` property.
+In this example,
+the attempt to set the ``address`` property of ``john.residence`` will succeed,
+because the value of ``john.residence``
+currently contains a valid ``Residence`` instance.
 
 .. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
 
@@ -556,7 +549,7 @@ is also ``String?``:
    :compile: true
 
    -> if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-         println("John's building identifier is \(buildingIdentifier).")
+         print("John's building identifier is \(buildingIdentifier).")
       }
    <- John's building identifier is The Larches.
 
@@ -569,9 +562,9 @@ place the optional chaining question mark *after* the method's parentheses:
    -> if let beginsWithThe =
          john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
          if beginsWithThe {
-            println("John's building identifier begins with \"The\".")
+            print("John's building identifier begins with \"The\".")
          } else {
-            println("John's building identifier does not begin with \"The\".")
+            print("John's building identifier does not begin with \"The\".")
          }
       }
    <- John's building identifier begins with "The".

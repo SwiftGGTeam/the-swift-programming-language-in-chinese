@@ -70,9 +70,9 @@ The same value can appear in an array multiple times at different positions.
 Array Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The type of a Swift array is written in full as ``Array<T>``,
-where ``T`` is the type of values the array is allowed to store.
-You can also write the type of an array in shorthand form as ``[T]``.
+The type of a Swift array is written in full as ``Array<Element>``,
+where ``Element`` is the type of values the array is allowed to store.
+You can also write the type of an array in shorthand form as ``[Element]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred
 and is used throughout this guide when referring to the type of an array.
@@ -88,8 +88,8 @@ using initializer syntax:
 .. testcode:: arraysEmpty
 
    -> var someInts = [Int]()
-   << // someInts : [(Int)] = []
-   -> println("someInts is of type [Int] with \(someInts.count) items.")
+   << // someInts : [Int] = []
+   -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
 Note that the type of the ``someInts`` variable is inferred to be ``[Int]``
@@ -123,8 +123,9 @@ and a default value of the appropriate type (called ``repeatedValue``):
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : [(Double)] = [0.0, 0.0, 0.0]
-   // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
+   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
+   /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
+   </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
 .. _CollectionTypes_CreatingAnArrayByAddingTwoArraysTogether:
 
@@ -138,12 +139,12 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : [(Double)] = [2.5, 2.5, 2.5]
-   /> anotherThreeDoubles is inferred as [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as [Double], and equals [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
+   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : [(Double)] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
    /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
    </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
@@ -225,7 +226,7 @@ To find out the number of items in an array, check its read-only ``count`` prope
 
 .. testcode:: arraysInferred
 
-   -> println("The shopping list contains \(shoppingList.count) items.")
+   -> print("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
 Use the Boolean ``isEmpty`` property
@@ -234,9 +235,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: arraysInferred
 
    -> if shoppingList.isEmpty {
-         println("The shopping list is empty.")
+         print("The shopping list is empty.")
       } else {
-         println("The shopping list is not empty.")
+         print("The shopping list is not empty.")
       }
    <- The shopping list is not empty.
 
@@ -298,10 +299,6 @@ with ``"Bananas"`` and ``"Apples"``:
 .. note::
 
    You can't use subscript syntax to append a new item to the end of an array.
-
-.. QUESTION: should I note here that you can't set the firstItem variable
-   and expect the value in the array to change,
-   because String is a value type?
 
 To insert an item into the array at a specified index,
 call the array's ``insert(_:atIndex:)`` method:
@@ -367,8 +364,6 @@ Like the ``removeAtIndex(_:)`` method, ``removeLast()`` returns the removed item
    /> the apples constant is now equal to the removed \"\(apples)\" string
    </ the apples constant is now equal to the removed "Apples" string
 
-.. TODO: write about the algorithmic methods on Array.
-
 .. _CollectionTypes_IteratingOverAnArray:
 
 Iterating Over an Array
@@ -379,7 +374,7 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
 .. testcode:: arraysInferred
 
    -> for item in shoppingList {
-         println(item)
+         print(item)
       }
    </ Six eggs
    </ Milk
@@ -388,16 +383,16 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Bananas
 
 If you need the integer index of each item as well as its value,
-use the global ``enumerate(_:)`` function to iterate over the array instead.
-The ``enumerate(_:)`` function returns a tuple for each item in the array
+use the ``enumerate()`` method to iterate over the array instead.
+The ``enumerate()`` method returns a tuple for each item in the array
 composed of the index and the value for that item.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: arraysInferred
 
-   -> for (index, value) in enumerate(shoppingList) {
-         println("Item \(index + 1): \(value)")
+   -> for (index, value) in shoppingList.enumerate() {
+         print("Item \(index + 1): \(value)")
       }
    </ Item 1: Six eggs
    </ Item 2: Milk
@@ -415,7 +410,7 @@ Sets
 
 A :newTerm:`set` stores distinct values of the same type
 in a collection with no defined ordering.
-You can use sets as an alternative to arrays when the order of items is not important,
+You can use a set instead of an array when the order of items is not important,
 or when you need to ensure that an item only appears once.
 
 .. note::
@@ -454,7 +449,7 @@ are also hashable by default.
    or in different programs.
 
    Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must must also provide an implementation of the “is equal” operator (``==``).
+   conforming types must also provide an implementation of the “is equal” operator (``==``).
    The ``Equatable`` protocol requires
    any conforming implementation of ``==`` to be an equivalence relation.
    That is, an implementation of ``==`` must satisfy the following three conditions,
@@ -472,8 +467,8 @@ are also hashable by default.
 Set Type Syntax
 ~~~~~~~~~~~~~~~
 
-The type of a Swift set is written as ``Set<T>``,
-where ``T`` is the type that the set is allowed to store.
+The type of a Swift set is written as ``Set<Element>``,
+where ``Element`` is the type that the set is allowed to store.
 Unlike arrays, sets do not have an equivalent shorthand form.
 
 
@@ -489,7 +484,7 @@ using initializer syntax:
 
    -> var letters = Set<Character>()
    << // letters : Set<Character> = Set([])
-   -> println("letters is of type Set<Character> with \(letters.count) items.")
+   -> print("letters is of type Set<Character> with \(letters.count) items.")
    <- letters is of type Set<Character> with 0 items.
 
 .. note::
@@ -569,7 +564,7 @@ check its read-only ``count`` property:
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
    << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
-   -> println("I have \(favoriteGenres.count) favorite music genres.")
+   -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
 Use the Boolean ``isEmpty`` property
@@ -578,9 +573,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: setUsage
 
    -> if favoriteGenres.isEmpty {
-         println("As far as music goes, I'm not picky.")
+         print("As far as music goes, I'm not picky.")
       } else {
-         println("I have particular music preferences.")
+         print("I have particular music preferences.")
       }
    <- I have particular music preferences.
 
@@ -601,9 +596,9 @@ Alternatively, all items in a set can be removed with its ``removeAll()`` method
 .. testcode:: setUsage
 
    -> if let removedGenre = favoriteGenres.remove("Rock") {
-         println("\(removedGenre)? I'm over it.")
+         print("\(removedGenre)? I'm over it.")
       } else {
-         println("I never much cared for that.")
+         print("I never much cared for that.")
       }
    <- Rock? I'm over it.
 
@@ -612,9 +607,9 @@ To check whether a set contains a particular item, use the ``contains(_:)`` meth
 .. testcode:: setUsage
 
    -> if favoriteGenres.contains("Funk") {
-          println("I get up on the good foot.")
+          print("I get up on the good foot.")
       } else {
-          println("It's too funky in here.")
+          print("It's too funky in here.")
       }
    <- It's too funky in here.
 
@@ -629,7 +624,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 .. testcode:: setUsage
 
    -> for genre in favoriteGenres {
-         println("\(genre)")
+         print("\(genre)")
       }
    </ Classical
    </ [Tool J]
@@ -639,13 +634,13 @@ For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
-use the global ``sorted(_:_:)`` function,
+use the ``sort()`` method,
 which returns an ordered collection of the provided sequence.
 
 .. testcode:: setUsage
 
-   -> for genre in sorted(favoriteGenres) {
-         println("\(genre)")
+   -> for genre in favoriteGenres.sort() {
+         print("\(genre)")
       }
    </ Classical
    </ Hip hop
@@ -688,16 +683,16 @@ with the results of various set operations represented by the shaded regions.
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
    << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    ---
-   -> sorted(oddDigits.union(evenDigits))
+   -> oddDigits.union(evenDigits).sort()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   -> sorted(oddDigits.intersect(evenDigits))
+   -> oddDigits.intersect(evenDigits).sort()
    << // r1 : [Int] = []
    // []
-   -> sorted(oddDigits.subtract(singleDigitPrimeNumbers))
+   -> oddDigits.subtract(singleDigitPrimeNumbers).sort()
    << // r2 : [Int] = [1, 9]
    // [1, 9]
-   -> sorted(oddDigits.exclusiveOr(singleDigitPrimeNumbers))
+   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
    << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
@@ -897,7 +892,7 @@ by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred
 
-   -> println("The airports dictionary contains \(airports.count) items.")
+   -> print("The airports dictionary contains \(airports.count) items.")
    <- The airports dictionary contains 2 items.
 
 Use the Boolean ``isEmpty`` property
@@ -906,9 +901,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 .. testcode:: dictionariesInferred
 
    -> if airports.isEmpty {
-         println("The airports dictionary is empty.")
+         print("The airports dictionary is empty.")
       } else {
-         println("The airports dictionary is not empty.")
+         print("The airports dictionary is not empty.")
       }
    <- The airports dictionary is not empty.
 
@@ -953,7 +948,7 @@ or ``nil`` if no value existed:
 .. testcode:: dictionariesInferred
 
    -> if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
-         println("The old value for DUB was \(oldValue).")
+         print("The old value for DUB was \(oldValue).")
       }
    <- The old value for DUB was Dublin.
 
@@ -967,9 +962,9 @@ Otherwise, the subscript returns ``nil``:
 .. testcode:: dictionariesInferred
 
    -> if let airportName = airports["DUB"] {
-         println("The name of the airport is \(airportName).")
+         print("The name of the airport is \(airportName).")
       } else {
-         println("That airport is not in the airports dictionary.")
+         print("That airport is not in the airports dictionary.")
       }
    <- The name of the airport is Dublin Airport.
 
@@ -983,9 +978,9 @@ by assigning a value of ``nil`` for that key:
    -> airports["APL"] = nil
    // APL has now been removed from the dictionary
    >> if let deletedName = airports["APL"] {
-   >>    println("The key-value pair for APL has *not* been deleted, but it should have been!")
+   >>    print("The key-value pair for APL has *not* been deleted, but it should have been!")
    >> } else {
-   >>    println("APL has now been removed from the dictionary")
+   >>    print("APL has now been removed from the dictionary")
    >> }
    << APL has now been removed from the dictionary
 
@@ -998,9 +993,9 @@ or returns ``nil`` if no value existed:
 .. testcode:: dictionariesInferred
 
    -> if let removedValue = airports.removeValueForKey("DUB") {
-         println("The removed airport's name is \(removedValue).")
+         print("The removed airport's name is \(removedValue).")
       } else {
-         println("The airports dictionary does not contain a value for DUB.")
+         print("The airports dictionary does not contain a value for DUB.")
       }
    <- The removed airport's name is Dublin Airport.
 
@@ -1017,7 +1012,7 @@ as part of the iteration:
 .. testcode:: dictionariesInferred
 
    -> for (airportCode, airportName) in airports {
-         println("\(airportCode): \(airportName)")
+         print("\(airportCode): \(airportName)")
       }
    </ YYZ: Toronto Pearson
    </ LHR: London Heathrow
@@ -1030,13 +1025,13 @@ by accessing its ``keys`` and ``values`` properties:
 .. testcode:: dictionariesInferred
 
    -> for airportCode in airports.keys {
-         println("Airport code: \(airportCode)")
+         print("Airport code: \(airportCode)")
       }
    </ Airport code: YYZ
    </ Airport code: LHR
    ---
    -> for airportName in airports.values {
-         println("Airport name: \(airportName)")
+         print("Airport name: \(airportName)")
       }
    </ Airport name: Toronto Pearson
    </ Airport name: London Heathrow
@@ -1048,15 +1043,15 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [(String)] = ["YYZ", "LHR"]
+   << // airportCodes : [String] = ["YYZ", "LHR"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
    </ airportCodes is ["YYZ", "LHR"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [(String)] = ["Toronto Pearson", "London Heathrow"]
+   << // airportNames : [String] = ["Toronto Pearson", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Toronto Pearson", "London Heathrow"]
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
-use the global ``sorted(_:_:)`` function on its ``keys`` or ``values`` property.
+use the ``sort()`` method on its ``keys`` or ``values`` property.

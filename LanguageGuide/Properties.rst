@@ -27,14 +27,14 @@ and also to properties that a subclass inherits from its superclass.
 
    -> class C {
          var x: Int = 0 {
-            willSet { println("C willSet x to \(newValue)") }
-            didSet { println("C didSet x from \(oldValue)") }
+            willSet { print("C willSet x to \(newValue)") }
+            didSet { print("C didSet x from \(oldValue)") }
          }
       }
    -> class D: C {
          override var x: Int {
-            willSet { println("D willSet x to \(newValue)") }
-            didSet { println("D didSet x from \(oldValue)") }
+            willSet { print("D willSet x to \(newValue)") }
+            didSet { print("D didSet x from \(oldValue)") }
          }
       }
    -> var c = C(); c.x = 42
@@ -76,7 +76,7 @@ whose range length cannot be changed once it is created:
          let length: Int
       }
    -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange
+   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 3)
    // the range represents integer values 0, 1, and 2
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
@@ -100,12 +100,16 @@ even if they were declared as variable properties:
 .. testcode:: storedProperties
 
    -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange
+   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !! <REPL Input>:1:29: error: cannot assign to 'firstValue' in 'rangeOfFourItems'
+   !!  <REPL Input>:1:29: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
    !! rangeOfFourItems.firstValue = 6
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+   !! ~~~~~~~~~~~~~~~~            ^
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+   !! ^~~
+   !! var
    // this will report an error, even though firstValue is a variable property
 
 Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
@@ -121,15 +125,6 @@ If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
-
-.. QUESTION: the same is actually true for computed properties of structures too
-   (which surprised me, as they don't have storage).
-   Does this mean I should mention it again later on?
-   For now, I've deliberately said "properties" rather than "stored properties"
-   in the first paragraph of this section, to set expectations.
-   (I've also asked whether this is intentional, in rdar://16338553.)
-
-.. TODO: see the explanation in rdar://16338553, and write about it here.
 
 .. _Properties_LazyStoredProperties:
 
@@ -157,7 +152,7 @@ the ``lazy`` modifier before its declaration.
    -> class C { lazy let x = 0 }
    !! <REPL Input>:1:11: error: 'lazy' cannot be used on a let
    !! class C { lazy let x = 0 }
-   !! ^~~~
+   !! ^~~~~
    !!-
 
 Lazy properties are useful when the initial value for a property
@@ -185,7 +180,7 @@ neither of which is shown in full:
          var fileName = "data.txt"
          // the DataImporter class would provide data importing functionality here
    >>    init() {
-   >>       println("the DataImporter instance for the importer property has now been created")
+   >>       print("the DataImporter instance for the importer property has now been created")
    >>    }
       }
    ---
@@ -228,13 +223,19 @@ such as when its ``fileName`` property is queried:
 
 .. testcode:: lazyProperties
 
-   -> println(manager.importer.fileName)
+   -> print(manager.importer.fileName)
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
-.. FIXME: Add a note to describe whether or not lazy is thread-safe.
-   This is as per <rdar://problem/17084977>
-   ER: We should document whether lazy initialization is thread safe
+.. note::
+
+   If a property marked with the ``lazy`` modifier
+   is accessed by multiple threads simultaneously
+   and the property has not yet been initialized,
+   there is no guarantee that the property will be initialized only once.
+
+.. 6/19/14, 10:54 PM [Contributor 7746]:
+   @lazy is not thread safe.  Global variables (and static struct/enum fields) *are*.
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
@@ -294,11 +295,11 @@ to retrieve and set other properties and values indirectly.
       }
    -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
          size: Size(width: 10.0, height: 10.0))
-   << // square : Rect = REPL.Rect
+   << // square : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 10.0, height: 10.0))
    -> let initialSquareCenter = square.center
-   << // initialSquareCenter : Point = REPL.Point
+   << // initialSquareCenter : Point = REPL.Point(x: 5.0, y: 5.0)
    -> square.center = Point(x: 15.0, y: 15.0)
-   -> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+   -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
 
 This example defines three structures for working with geometric shapes:
@@ -406,8 +407,8 @@ by removing the ``get`` keyword and its braces:
          }
       }
    -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-   << // fourByFiveByTwo : Cuboid = REPL.Cuboid
-   -> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+   << // fourByFiveByTwo : Cuboid = REPL.Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+   -> print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
@@ -440,7 +441,7 @@ even if the new value is the same as the property's current value.
 
 .. assertion:: observersAreCalledEvenIfNewValueIsTheSameAsOldValue
 
-   -> class C { var x: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } } }
+   -> class C { var x: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } } }
    -> let c = C()
    << // c : C = REPL.C
    -> c.x = 24
@@ -460,13 +461,13 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
 
    -> class C {
          lazy var x: Int = 0 {
-            willSet { println("C willSet x to \(newValue)") }
-            didSet { println("C didSet x from \(oldValue)") }
+            willSet { print("C willSet x to \(newValue)") }
+            didSet { print("C didSet x from \(oldValue)") }
          }
       }
    !! <REPL Input>:2:6: error: lazy properties may not have observers
    !! lazy var x: Int = 0 {
-   !! ^~~~
+   !! ^~~~~
    !!-
 
 .. assertion:: storedAndComputedInheritedPropertiesCanBeObserved
@@ -478,12 +479,12 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
       }
    -> class D: C {
          override var x: Int {
-            willSet { println("D willSet x to \(newValue)") }
-            didSet { println("D didSet x from \(oldValue)") }
+            willSet { print("D willSet x to \(newValue)") }
+            didSet { print("D didSet x from \(oldValue)") }
          }
          override var y: Int {
-            willSet { println("D willSet y to \(newValue)") }
-            didSet { println("D didSet y from \(oldValue)") }
+            willSet { print("D willSet y to \(newValue)") }
+            didSet { print("D didSet y from \(oldValue)") }
          }
       }
    -> var d = D()
@@ -518,8 +519,8 @@ or use the default parameter name of ``oldValue``.
 
 .. note::
 
-   ``willSet`` and ``didSet`` observers are not called when
-   a property is set in an initializer before delegation takes place.
+   ``willSet`` and ``didSet`` observers of superclass properties
+   are called when a property is set in a subclass initializer.
 
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
@@ -528,7 +529,7 @@ or use the default parameter name of ``oldValue``.
 .. assertion:: observersAreNotCalledDuringInitialization
 
    -> class C {
-         var x: Int { willSet { println("willSet") } didSet { println("didSet") } }
+         var x: Int { willSet { print("willSet") } didSet { print("didSet") } }
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
@@ -548,11 +549,11 @@ to keep track of a person's exercise during their daily routine.
    -> class StepCounter {
          var totalSteps: Int = 0 {
             willSet(newTotalSteps) {
-               println("About to set totalSteps to \(newTotalSteps)")
+               print("About to set totalSteps to \(newTotalSteps)")
             }
             didSet {
                if totalSteps > oldValue  {
-                  println("Added \(totalSteps - oldValue) steps")
+                  print("Added \(totalSteps - oldValue) steps")
                }
             }
          }
@@ -598,7 +599,7 @@ and the default name of ``oldValue`` is used instead.
    -> let c = C()
    << // c : C = REPL.C
    -> c.x = 24
-   -> println(c.x)
+   -> print(c.x)
    <- -273
 
 .. TODO: If you add a property observer to a stored property of structure type,
@@ -632,16 +633,16 @@ and are written in the same way as computed properties.
 .. assertion:: computedVariables
    :compile: true
 
-   -> var a: Int { get { return 42 } set { println("set a to \(newValue)") } }
+   -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
    -> a = 37
    <- set a to 37
-   -> println(a)
+   -> print(a)
    <- 42
 
 .. assertion:: observersForStoredVariables
    :compile: true
 
-   -> var a: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } }
+   -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
    -> a = 42
    <- willSet
    <- didSet
@@ -683,11 +684,7 @@ such as a constant property that all instances can use
 or a variable property that stores a value that is global to all instances of that type
 (like a static variable in C).
 
-For value types (that is, structures and enumerations),
-you can define stored and computed type properties.
-For classes, you can define computed type properties only.
-
-Stored type properties for value types can be variables or constants.
+Stored type properties can be variables or constants.
 Computed type properties are always declared as variable properties,
 in the same way as computed instance properties.
 
@@ -698,12 +695,10 @@ in the same way as computed instance properties.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
-.. TODO: I've found a note saying that
-   "Global variables and static properties are now lazily initialized on first use.
-   Where you would use dispatch_once to lazily initialize a singleton object
-   in Objective-C, you can simply declare a global variable with an initializer in Swift.
-   Like dispatch_once, this lazy initialization is thread safe."
-   If this is true, I haven't yet mentioned it for static properties.
+   Stored type properties are lazily initialized on their first access.
+   They are guaranteed to be initialized only once,
+   even when accessed by multiple threads simultaneously,
+   and they do not need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 
@@ -783,14 +778,14 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-   -> println(SomeStructure.storedTypeProperty)
+   -> print(SomeStructure.storedTypeProperty)
    <- Some value.
    -> SomeStructure.storedTypeProperty = "Another value."
-   -> println(SomeStructure.storedTypeProperty)
+   -> print(SomeStructure.storedTypeProperty)
    <- Another value.
-   -> println(SomeEnumeration.computedTypeProperty)
+   -> print(SomeEnumeration.computedTypeProperty)
    <- 6
-   -> println(SomeClass.computedTypeProperty)
+   -> print(SomeClass.computedTypeProperty)
    <- 27
 
 The examples that follow use two stored type properties as part of a structure
@@ -882,9 +877,9 @@ is updated to equal ``7``:
    :compile: true
 
    -> leftChannel.currentLevel = 7
-   -> println(leftChannel.currentLevel)
+   -> print(leftChannel.currentLevel)
    <- 7
-   -> println(AudioChannel.maxInputLevelForAllChannels)
+   -> print(AudioChannel.maxInputLevelForAllChannels)
    <- 7
 
 If you try to set the ``currentLevel`` of the *right* channel to ``11``,
@@ -896,7 +891,7 @@ and the ``maxInputLevelForAllChannels`` type property is updated to equal ``10``
    :compile: true
 
    -> rightChannel.currentLevel = 11
-   -> println(rightChannel.currentLevel)
+   -> print(rightChannel.currentLevel)
    <- 10
-   -> println(AudioChannel.maxInputLevelForAllChannels)
+   -> print(AudioChannel.maxInputLevelForAllChannels)
    <- 10

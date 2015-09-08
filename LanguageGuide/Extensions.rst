@@ -2,7 +2,7 @@ Extensions
 ==========
 
 :newTerm:`Extensions` add new functionality to an existing
-class, structure, or enumeration type.
+class, structure, enumeration, or protocol type.
 This includes the ability to extend types
 for which you do not have access to the original source code
 (known as :newTerm:`retroactive modeling`).
@@ -17,6 +17,11 @@ Extensions in Swift can:
 * Define subscripts
 * Define and use new nested types
 * Make an existing type conform to a protocol
+
+In Swift,
+you can even extend a protocol to provide implementations of its requirements
+or add additional functionality that conforming types can take advantage of.
+For more details, see :ref:`Protocols_Extensions`.
 
 .. note::
 
@@ -33,11 +38,11 @@ Extensions in Swift can:
    -> extension C {
          override var x: Int {
             didSet {
-               println("new x is \(x)")
+               print("new x is \(x)")
             }
          }
          override func foo() {
-            println("called overridden foo")
+            print("called overridden foo")
          }
       }
    !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
@@ -58,10 +63,6 @@ Extensions in Swift can:
    !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
    !! func foo() {}
    !! ^
-
-.. QUESTION: What are the rules for overloading via extensions?
-
-.. TODO: Talk about extending enumerations to have additional member values
 
 Extension Syntax
 ----------------
@@ -116,11 +117,11 @@ to provide basic support for working with distance units:
       }
    -> let oneInch = 25.4.mm
    << // oneInch : Double = 0.0254
-   -> println("One inch is \(oneInch) meters")
+   -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
    << // threeFeet : Double = 0.914399970739201
-   -> println("Three feet is \(threeFeet) meters")
+   -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
 These computed properties express that a ``Double`` value
@@ -138,9 +139,9 @@ Other units require some conversion to be expressed as a value measured in meter
 One kilometer is the same as 1,000 meters,
 so the ``km`` computed property multiplies the value by ``1_000.00``
 to convert into a number expressed in meters.
-Similarly, there are 3.28024 feet in a meter,
+Similarly, there are 3.28084 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
-by ``3.28024``, to convert it from feet to meters.
+by ``3.28084``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
 and so they are expressed without the ``get`` keyword, for brevity.
@@ -151,7 +152,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    -> let aMarathon = 42.km + 195.m
    << // aMarathon : Double = 42195.0
-   -> println("A marathon is \(aMarathon) meters long")
+   -> print("A marathon is \(aMarathon) meters long")
    <- A marathon is 42195.0 meters long
 
 .. note::
@@ -223,10 +224,10 @@ These initializers can be used to create new ``Rect`` instances:
 .. testcode:: extensionsInitializers
 
    -> let defaultRect = Rect()
-   << // defaultRect : Rect = REPL.Rect
+   << // defaultRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // memberwiseRect : Rect = REPL.Rect
+   << // memberwiseRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
 
 You can extend the ``Rect`` structure to provide an additional initializer
 that takes a specific center point and size:
@@ -251,7 +252,7 @@ in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect
+   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -272,14 +273,14 @@ The following example adds a new instance method called ``repetitions`` to the `
 .. testcode:: extensionsInstanceMethods
 
    -> extension Int {
-         func repetitions(task: () -> ()) {
+         func repetitions(task: () -> Void) {
             for _ in 0..<self {
                task()
             }
          }
       }
 
-The ``repetitions(_:)`` method takes a single argument of type ``() -> ()``,
+The ``repetitions(_:)`` method takes a single argument of type ``() -> Void``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
@@ -289,7 +290,7 @@ to perform a task that many number of times:
 .. testcode:: extensionsInstanceMethods
 
    -> 3.repetitions({
-         println("Hello!")
+         print("Hello!")
       })
    </ Hello!
    </ Hello!
@@ -300,7 +301,7 @@ Use trailing closure syntax to make the call more succinct:
 .. testcode:: extensionsInstanceMethods
 
    -> 3.repetitions {
-         println("Goodbye!")
+         print("Goodbye!")
       }
    </ Goodbye!
    </ Goodbye!
@@ -378,7 +379,7 @@ from the right of the number:
 
 If the ``Int`` value does not have enough digits for the requested index,
 the subscript implementation returns ``0``,
-as if the number had been padded with zeroes to the left:
+as if the number had been padded with zeros to the left:
 
 .. testcode:: extensionsSubscripts
 
@@ -434,14 +435,14 @@ The nested enumeration can now be used with any ``Int`` value:
          for number in numbers {
             switch number.kind {
                case .Negative:
-                  print("- ")
+                  print("- ", terminator: "")
                case .Zero:
-                  print("0 ")
+                  print("0 ", terminator: "")
                case .Positive:
-                  print("+ ")
+                  print("+ ", terminator: "")
             }
          }
-         print("\n")
+         print("")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
    <- + + - 0 - 0 +
