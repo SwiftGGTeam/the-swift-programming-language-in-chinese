@@ -505,8 +505,6 @@ You can use nested functions
 to organize the code in a function
 that is long or complex.
 
-.. TR: Any objections to this guidance?
-
 .. testcode:: guided-tour
 
     -> func returnFifteen() -> Int {
