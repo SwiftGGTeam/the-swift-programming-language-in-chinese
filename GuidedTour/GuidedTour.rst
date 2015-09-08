@@ -218,7 +218,7 @@ Braces around the body are required.
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
-   with past incartations of the Doctor in Dr. Who.
+   with past incarnations of the Doctor in Dr. Who.
 
 ..
    -> let haveJellyBabies = true
@@ -1037,12 +1037,12 @@ or it responds with some error information.
    As the story goes, during the course of a rather wild party,
    one of the computer's vacuum tube cabinets
    was opened to provide heat to a cold room in the winter.
-   As the story goes, through great coincidence,
-   when got a cheese tray bashed into it during the celebration,
+   Through great coincidence,
+   when a cheese tray got bashed into it during the celebration,
    the computer kept on working even though some of the tubes were broken
    and had cheese splattered & melted all over them.
    Tech were dispatched to make sure the computer was ok
-   and told add more cheese if necesary --
+   and told add more cheese if necessary --
    the officer in charge said that he didn't want
    an "out of cheese error" interrupting the calculation.
 
