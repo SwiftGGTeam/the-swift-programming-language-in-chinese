@@ -1058,29 +1058,13 @@ or it responds with some error information.
     -> let failure = ServerResponse.Error("Out of cheese.")
     << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
     ---
-    >> var test_response: String = ""
-    << // test_response : String = ""
-    >> switch success {
-    >>     case let .Result(sunrise, sunset):
-    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>     case let .Error(error):
-    >>         test_response = "Failure...  \(error)"
-    >> }
-    >> test_response
-    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
            case let .Result(sunrise, sunset):
-               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+               print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
            case let .Error(error):
-               let serverResponse = "Failure...  \(error)"
+               print("Failure...  \(error)")
        }
-
-.. Note:
-   The repetition and odd structure for the switch above is because
-   the REPL requires an initial value for variables to make it testable.
-   From a playground side, I can see the value of a variable
-   that's scoped only within the switch,
-   so I don't need a variable in the outer scope.
+    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 
