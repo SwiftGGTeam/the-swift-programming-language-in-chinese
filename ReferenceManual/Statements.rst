@@ -1052,7 +1052,7 @@ testing functions listed in the table below.
 ====================  =========================================
 Function              Valid arguments
 ====================  =========================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``
+``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
 ====================  =========================================
 
@@ -1107,7 +1107,7 @@ have the following form:
 
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
-    operating-system --> ``OSX`` | ``iOS`` | ``watchOS``
+    operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
 
 .. Testing notes:
