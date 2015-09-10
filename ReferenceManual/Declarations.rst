@@ -487,6 +487,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     variable-declaration-head --> attributes-OPT declaration-modifiers-OPT ``var``
     variable-name --> identifier
 
+    getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
     getter-clause --> attributes-OPT ``get`` code-block
