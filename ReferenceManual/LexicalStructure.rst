@@ -577,18 +577,17 @@ using the following escape sequences:
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
-The interpolated expression must not contain
-an unescaped double quote (``"``),
-an unescaped backslash (``\``),
+The interpolated expression can contain a string literal,
+but can't contain an unescaped backslash (``\``),
 a carriage return, or a line feed.
-The expression must evaluate to a value of a type
-that the ``String`` class has an initializer for.
 
 For example, all the following string literals have the same value:
 
 .. testcode:: string-literals
 
    -> "1 2 3"
+   <$ : String = "1 2 3"
+   -> "1 2 \("3")"
    <$ : String = "1 2 3"
    -> "1 2 \(3)"
    <$ : String = "1 2 3"

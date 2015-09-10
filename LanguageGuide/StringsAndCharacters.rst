@@ -271,8 +271,8 @@ when it is included inside the string literal.
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
-   cannot contain an unescaped double quote (``"``) or backslash (``\``),
-   and cannot contain a carriage return or line feed.
+   cannot contain an unescaped backslash (``\``), a carriage return, or a line feed.
+   However, they can contain other string literals.
 
 .. TODO: add a bit here about making things Printable.
 
