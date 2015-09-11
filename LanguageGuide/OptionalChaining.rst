@@ -294,12 +294,10 @@ the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
 
 The assignment is part of of the optional chaining,
-so none of the code on the right hand side of the ``=`` operator
+which means none of the code on the right hand side of the ``=`` operator
 is evaluated if ``john.residence`` is ``nil``.
 To show this, the example below uses a rather contrived function
 to create an address.
-If the function is called, it prints "Function was called"
-to make that fact visible.
 
 .. testcode:: optionalChaining
    :compile: true
@@ -318,12 +316,8 @@ to make that fact visible.
    << Function was called.
 
 In this example,
-just like in the previous example,
-the attempt to set the ``address`` property fails
-because ``john.residence`` is currently ``nil``.
-You can also tell that the ``createAddress()`` function
-is never called
-because nothing is printed.
+it's clear that the ``createAddress()`` function
+is never called because nothing is printed.
 
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
