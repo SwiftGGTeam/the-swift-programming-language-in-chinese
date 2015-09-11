@@ -308,7 +308,7 @@ The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
 
 Mutating methods for enumerations can set the implicit ``self`` parameter to be
-a different member from the same enumeration:
+a different case from the same enumeration:
 
 .. testcode:: selfEnumerations
 

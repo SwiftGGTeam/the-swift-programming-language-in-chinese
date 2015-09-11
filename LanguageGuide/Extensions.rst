@@ -425,7 +425,7 @@ negative, zero, or positive.
 
 This example also adds a new computed instance property to ``Int``,
 called ``kind``,
-which returns the appropriate ``Kind`` enumeration member for that integer.
+which returns the appropriate ``Kind`` enumeration case for that integer.
 
 The nested enumeration can now be used with any ``Int`` value:
 
@@ -456,6 +456,6 @@ and prints an appropriate description.
 .. note::
 
    ``number.kind`` is already known to be of type ``Int.Kind``.
-   Because of this, all of the ``Int.Kind`` member values
+   Because of this, all of the ``Int.Kind`` case values
    can be written in shorthand form inside the ``switch`` statement,
    such as ``.Negative`` rather than ``Int.Kind.Negative``.
