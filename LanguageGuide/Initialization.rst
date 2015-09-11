@@ -1473,14 +1473,14 @@ the initializer triggers an initialization failure:
 Failable Initializers for Enumerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use a failable initializer to select an appropriate enumeration member
+You can use a failable initializer to select an appropriate enumeration case
 based on one or more parameters.
 The initializer can then fail if the provided parameters
-do not match an appropriate enumeration member.
+do not match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
 with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
-A failable initializer is used to find an appropriate enumeration member
+A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
@@ -1502,7 +1502,7 @@ for a ``Character`` value representing a temperature symbol:
       }
 
 You can use this failable initializer to choose
-an appropriate enumeration member for the three possible states
+an appropriate enumeration case for the three possible states
 and to cause initialization to fail if the parameter does not match one of these
 states:
 
@@ -1530,7 +1530,7 @@ Failable Initializers for Enumerations with Raw Values
 Enumerations with raw values automatically receive a failable initializer,
 ``init?(rawValue:)``,
 that takes a parameter called ``rawValue`` of the appropriate raw-value type
-and selects a matching enumeration member if one is found,
+and selects a matching enumeration case if one is found,
 or triggers an initialization failure if no matching value exists.
 
 You can rewrite the ``TemperatureUnit`` example from above

@@ -434,7 +434,7 @@ such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
 
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and can be used as set value types or dictionary key types.
-Enumeration member values without associated values
+Enumeration case values without associated values
 (as described in :doc:`Enumerations`)
 are also hashable by default.
 
