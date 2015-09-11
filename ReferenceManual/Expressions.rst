@@ -764,6 +764,11 @@ The following closure expressions are equivalent:
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
 
+.. _Expressions_CaptureLists:
+
+Capture Lists
++++++++++++++
+
 By default, a closure expression captures values from its surrounding scope
 with strong references to those values.
 You can use a :newTerm:`capture list` to explicitly control
@@ -848,6 +853,8 @@ the resulting value is captured by value rather than by reference.
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
+For more information and examples of capture lists,
+see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 .. langref-grammar
 

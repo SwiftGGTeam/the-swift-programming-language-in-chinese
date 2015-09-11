@@ -997,3 +997,6 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 .. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
    Unowned capture of self in a closure capture list does not avoid a reference cycle
+
+For more information about capture lists,
+see :ref:`Expressions_CaptureLists`.
