@@ -110,6 +110,9 @@ the optional chaining attempt returns a value of type ``Int?``, or “optional `
 When ``residence`` is ``nil``, as in the example above,
 this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
+The optional ``Int`` is access through an ``if``-``let`` construction
+to unwrap the integer and assign the nonoptional value
+to the ``roomCount`` variable.
 
 Note that this is true even though ``numberOfRooms`` is a nonoptional ``Int``.
 The fact that it is queried through an optional chain
