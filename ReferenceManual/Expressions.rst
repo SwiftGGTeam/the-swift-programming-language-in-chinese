@@ -1500,21 +1500,6 @@ For example:
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
 
-.. assertion:: optional-chaining-includes-assignment
-
-   -> var i = 1
-   << // i : Int = 1
-   -> func f() -> Int { i += 1; return i }
-   ---
-   -> struct S { var foo: Int }
-   -> var s: S? = nil
-   << // s : S? = nil
-   ---
-   -> s?.foo = f()
-   << // r0 : ()? = nil
-   -> print(i)
-   << 1
-
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix
