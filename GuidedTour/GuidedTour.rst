@@ -285,8 +285,12 @@ the default value is used instead.
 
 .. testcode:: guided-tour
 
-
-
+    -> let nickName: String? = nil
+    << // nickName : String? = nil
+    -> let fullName: String = "John Appleseed"
+    << // fullName : String = "John Appleseed"
+    -> let informalGreeting = "Hi \(nickName ?? fullName)"
+    << // informalGreeting : String = "Hi John Appleseed"
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
