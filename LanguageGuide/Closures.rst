@@ -621,11 +621,11 @@ This is useful for code
 that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
 
-.. it's rare that you write function that use autoclosures
+.. TODO It's rare that you write function that use autoclosures
 
-.. most common place you see autoclosure is when calling assert()
+.. TODO Most common place you see autoclosure is when calling assert()
 
-.. autoclosure is a syntactic convenience that lets you omit the { }
+.. TODO Autoclosure is a syntactic convenience that lets you omit the { }
 
 The code below shows how a closure delays evaluation.
 
