@@ -276,8 +276,6 @@ to the constant after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-Using ``if``-``let`` lets you handle optional values
-by choosing which piece of code to run.
 Another way to handle optional values
 is to provide a default value using the ``??`` operator.
 If the optional value is missing,
