@@ -295,9 +295,15 @@ because ``john.residence`` is currently ``nil``.
 
 The assignment is part of of the optional chaining,
 which means none of the code on the right hand side of the ``=`` operator
-is evaluated if ``john.residence`` is ``nil``.
-To show this, the example below uses a rather contrived function
-to create an address.
+is evaluated.
+In the previous example,
+it's not easy to see that ``someAddress`` is never evaluated,
+because accessing a variable doesn't have any side effects.
+The listing below does the same assignment,
+but it uses a function to create the address.
+The function prints "Function was called" before returning a value,
+which lets you see
+whether the right hand side of the ``=`` operator was evaluated.
 
 .. testcode:: optionalChaining
    :compile: true
@@ -315,9 +321,8 @@ to create an address.
    >> createAddress()
    << Function was called.
 
-In this example,
-it's clear that the ``createAddress()`` function
-is never called because nothing is printed.
+You can tell that the ``createAddress()`` function isn't called,
+because nothing is printed.
 
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
