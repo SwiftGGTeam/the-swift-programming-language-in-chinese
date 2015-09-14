@@ -298,7 +298,7 @@ which means none of the code on the right hand side of the ``=`` operator
 is evaluated.
 In the previous example,
 it's not easy to see that ``someAddress`` is never evaluated,
-because accessing a variable doesn't have any side effects.
+because accessing a constant doesn't have any side effects.
 The listing below does the same assignment,
 but it uses a function to create the address.
 The function prints "Function was called" before returning a value,
