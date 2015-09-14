@@ -293,6 +293,37 @@ In this example,
 the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
 
+The assignment is part of of the optional chaining,
+which means none of the code on the right hand side of the ``=`` operator
+is evaluated.
+In the previous example,
+it's not easy to see that ``someAddress`` is never evaluated,
+because accessing a constant doesn't have any side effects.
+The listing below does the same assignment,
+but it uses a function to create the address.
+The function prints "Function was called" before returning a value,
+which lets you see
+whether the right hand side of the ``=`` operator was evaluated.
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> func createAddress() -> Address {
+          print("Function was called.")
+   ---
+          let someAddress = Address()
+          someAddress.buildingNumber = "29"
+          someAddress.street = "Acacia Road"
+   ---
+          return someAddress
+      }
+   -> john.residence?.address = createAddress()
+   >> createAddress()
+   << Function was called.
+
+You can tell that the ``createAddress()`` function isn't called,
+because nothing is printed.
+
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
 Calling Methods Through Optional Chaining
