@@ -650,6 +650,18 @@ The corresponding argument must have no name in function or method calls.
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
    << // r0 : Int = 6
 
+.. _Declarations_InOutParameters:
+
+In-Out Parameters
+~~~~~~~~~~~~~~~~~
+
+.. define call by value result
+
+.. define call by reference
+
+.. explain that #2 is used as an optimization
+
+
 .. _Declarations_SpecialKindsOfParameters:
 
 Special Kinds of Parameters
