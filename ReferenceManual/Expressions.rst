@@ -764,10 +764,18 @@ The following closure expressions are equivalent:
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
 
-A closure expression can explicitly specify
-the values that it captures from the surrounding scope
-using a :newTerm:`capture list`.
-A capture list is written as a comma separated list surrounded by square brackets,
+.. _Expressions_CaptureLists:
+
+Capture Lists
++++++++++++++
+
+By default, a closure expression captures values from its surrounding scope
+with strong references to those values.
+You can use a :newTerm:`capture list` to explicitly control
+how values are captured in a closure.
+
+A capture list is written as a comma separated list of expressions
+surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
@@ -782,7 +790,6 @@ even if you omit the parameter names, parameter types, and return type.
     << // f : () -> Int = (Function)
     >> f()
     << // r0 : Int = 107
-
 
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
@@ -803,8 +810,9 @@ even if you omit the parameter names, parameter types, and return type.
     -> g()
     << // r1 : Int = 107
 
-Each entry in the capture list can be marked as ``weak`` or ``unowned``
-to capture a weak or unowned reference to the value.
+You can mark a class-type expression in a capture list
+with ``weak`` or ``unowned`` to capture a weak or unowned reference
+to the expression's value.
 
 .. testcode:: closure-expression-weak
 
@@ -822,9 +830,9 @@ to capture a weak or unowned reference to the value.
     << Title
 
 You can also bind an arbitrary expression
-to a named value in the capture list.
+to a named value in a capture list.
 The expression is evaluated when the closure is formed,
-and captured with the specified strength.
+and the value is captured with the specified strength.
 For example:
 
 .. testcode:: closure-expression-capture
@@ -840,8 +848,13 @@ For example:
     >> C().method()
     << Title
 
+If an expression in a capture list isn't marked with a specific capture strength,
+the resulting value is captured by value rather than by reference.
+
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
+For more information and examples of capture lists,
+see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 .. langref-grammar
 

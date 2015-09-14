@@ -252,6 +252,7 @@
     "expression-optionalchainingoperator": "ID405", 
     "expressions-assignmentoperator": "ID386", 
     "expressions-binaryexpressions": "ID385", 
+    "expressions-capturelists": "ID544", 
     "expressions-closureexpression": "ID393", 
     "expressions-dynamictypeexpression": "ID402", 
     "expressions-explicitmemberexpression": "ID400", 
@@ -561,5 +562,5 @@
     "string-literals", 
     "control-transfer-statements"
   ], 
-  "next_id": 544
+  "next_id": 545
 }
