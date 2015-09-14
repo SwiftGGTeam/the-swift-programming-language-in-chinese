@@ -218,7 +218,7 @@ Braces around the body are required.
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
-   with past incartations of the Doctor in Dr. Who.
+   with past incarnations of the Doctor in Dr. Who.
 
 ..
    -> let haveJellyBabies = true
@@ -275,6 +275,20 @@ Otherwise, the optional value is unwrapped and assigned
 to the constant after ``let``,
 which makes the unwrapped value available
 inside the block of code.
+
+Another way to handle optional values
+is to provide a default value using the ``??`` operator.
+If the optional value is missing,
+the default value is used instead.
+
+.. testcode:: guided-tour
+
+    -> let nickName: String? = nil
+    << // nickName : String? = nil
+    -> let fullName: String = "John Appleseed"
+    << // fullName : String = "John Appleseed"
+    -> let informalGreeting = "Hi \(nickName ?? fullName)"
+    << // informalGreeting : String = "Hi John Appleseed"
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
@@ -505,8 +519,6 @@ You can use nested functions
 to organize the code in a function
 that is long or complex.
 
-.. TR: Any objections to this guidance?
-
 .. testcode:: guided-tour
 
     -> func returnFifteen() -> Int {
@@ -525,14 +537,14 @@ This means that a function can return another function as its value.
 
 .. testcode:: guided-tour
 
-    -> func makeIncrementer() -> (Int -> Int) {
+    -> func makeIncrementer() -> ((Int) -> Int) {
            func addOne(number: Int) -> Int {
                return 1 + number
            }
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : Int -> Int = (Function)
+    << // increment : (Int) -> Int = (Function)
     -> increment(7)
     <$ : Int = 8
 
@@ -540,7 +552,7 @@ A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
 
-    -> func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+    -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
            for item in list {
                if condition(item) {
                    return true
@@ -1037,12 +1049,12 @@ or it responds with some error information.
    As the story goes, during the course of a rather wild party,
    one of the computer's vacuum tube cabinets
    was opened to provide heat to a cold room in the winter.
-   As the story goes, through great coincidence,
-   when got a cheese tray bashed into it during the celebration,
+   Through great coincidence,
+   when a cheese tray got bashed into it during the celebration,
    the computer kept on working even though some of the tubes were broken
    and had cheese splattered & melted all over them.
    Tech were dispatched to make sure the computer was ok
-   and told add more cheese if necesary --
+   and told add more cheese if necessary --
    the officer in charge said that he didn't want
    an "out of cheese error" interrupting the calculation.
 
@@ -1058,29 +1070,13 @@ or it responds with some error information.
     -> let failure = ServerResponse.Error("Out of cheese.")
     << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
     ---
-    >> var test_response: String = ""
-    << // test_response : String = ""
-    >> switch success {
-    >>     case let .Result(sunrise, sunset):
-    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>     case let .Error(error):
-    >>         test_response = "Failure...  \(error)"
-    >> }
-    >> test_response
-    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
            case let .Result(sunrise, sunset):
-               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+               print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
            case let .Error(error):
-               let serverResponse = "Failure...  \(error)"
+               print("Failure...  \(error)")
        }
-
-.. Note:
-   The repetition and odd structure for the switch above is because
-   the REPL requires an initial value for variables to make it testable.
-   From a playground side, I can see the value of a variable
-   that's scoped only within the switch,
-   so I don't need a variable in the outer scope.
+    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 
