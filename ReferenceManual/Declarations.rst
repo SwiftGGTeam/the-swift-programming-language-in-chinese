@@ -655,12 +655,34 @@ The corresponding argument must have no name in function or method calls.
 In-Out Parameters
 ~~~~~~~~~~~~~~~~~
 
-.. define call by value result
+It-out parameters are passed as follows:
 
-.. define call by reference
+1. As part of the function call,
+   the value of the argument is copied.
+2. During the body of the function,
+   the copy is modified.
+3. As part of the function return,
+   the argument is assigned the copy's value.
 
-.. explain that #2 is used as an optimization
+.. TR: In (2) is it legal to access the original non-copied value?
 
+This behavior is known as :newTerm:`call by value result`
+or :newTerm:`copy-in copy-out`.
+For example,
+when a computed property or a property with observers
+is passed as an in-out parameter,
+its getter is called as part of the function call
+and its setter is called as part of the function return.
+
+As an optimization,
+when the argument is a value stored at physical address in memory,
+same memory location is used both inside and outside the function body.
+The optimized behavior is known as :newTerm:`call by value`,
+but still satisfies all of the requirements
+of the call-by-value-result model
+while removing the overhead of copying.
+You should not depend on the behavior differences
+between call by value result and call by value.
 
 .. _Declarations_SpecialKindsOfParameters:
 
