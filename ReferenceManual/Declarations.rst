@@ -719,8 +719,7 @@ For example:
    !! f(&x, &x) // INVALID
    !!   ^~
 
-There is no copy-out at the end of closures or nested functions
-inside a function that has an in-out parameter.
+There is no copy-out at the end of closures or nested functions.
 This means if a closure is called after the function returns,
 any changes that closure makes to the in-out parameters
 do not get copied back to the original.
