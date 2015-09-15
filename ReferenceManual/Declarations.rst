@@ -682,14 +682,35 @@ while removing the overhead of copying.
 You should not depend on the behavior differences
 between copy-in copy-out and call by reference.
 
-.. TODO: Not legal to access the original value
-   instead of going through the in-out copy.
-   Not a compiler error but behavior undefined.
-   We should file a bug to make it a compiler error.
+Do not access the value that was passed as an in-out argument
+even if it is available in the current scope.
+When the function returns,
+your changes to the original are overwritten
+with the value of the copy.
 
-.. TODO: Aliasing - if I pass the same var in as two inouts
-   the copy-out behavior isn't defined.
-   Which is why this isn't allowed.
+You can't pass the same argument to multiple in-out parameters
+because the order in which the copies are written back
+is not well defined,
+which means the final value of the original
+would also not be well defined.
+For example:
+
+.. testcode:: cant-pass-inout-aliasing
+
+   -> var x = 10
+   << // x : Int = 10
+   -> func f(inout a: Int, inout _ b: Int) -> () {
+          a += 1
+          b += 10
+      }
+   -> f(&x, &x) // INVALID
+   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
+   !! f(&x, &x) // INVALID
+   !!       ^~
+   !! <REPL Input>:1:3: note: previous aliasing argument
+   !! f(&x, &x) // INVALID
+   !!   ^~
+
 
 .. testcode:: closure-doesnt-copy-out-inout
 
