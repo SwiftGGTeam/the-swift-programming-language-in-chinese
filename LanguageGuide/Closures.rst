@@ -615,18 +615,25 @@ to wrap an expression that's being passed as an argument to a function.
 It doesn't take any arguments,
 and when it's called, it returns the value
 of the expression that's wrapped inside of it.
+This syntactic convenience lets you omit braces around a function's parameter
+by writing a normal expression instead of an explicit closure.
+
+It's common to call functions that use autoclosures,
+but most programs don't need to implement any functions
+that use autoclosures.
+For example,
+the ``assert(condition:message:file:line:)`` function
+uses an autoclosure for its test and message arguments;
+its test argument is evaluated only in debug builds
+and its message argument is evaluated only if the test fails.
+Calling a function like this is common,
+but most programs don't need to implement a function like this.
+
 An autoclosure lets you delay evaluation,
 because the code inside isn't run until you call the closure.
 This is useful for code
 that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
-
-.. TODO It's rare that you write function that use autoclosures
-
-.. TODO Most common place you see autoclosure is when calling assert()
-
-.. TODO Autoclosure is a syntactic convenience that lets you omit the { }
-
 The code below shows how a closure delays evaluation.
 
 .. testcode:: autoclosures
