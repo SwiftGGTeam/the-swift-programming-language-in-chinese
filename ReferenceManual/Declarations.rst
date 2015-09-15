@@ -664,10 +664,8 @@ It-out parameters are passed as follows:
 3. As part of the function return,
    the argument is assigned the copy's value.
 
-.. TR: In (2) is it legal to access the original non-copied value?
-
-This behavior is known as :newTerm:`call by value result`
-or :newTerm:`copy-in copy-out`.
+This behavior is known as :newTerm:`copy-in copy-out`
+or :newTerm:`call by value result`.
 For example,
 when a computed property or a property with observers
 is passed as an in-out parameter,
@@ -677,12 +675,47 @@ and its setter is called as part of the function return.
 As an optimization,
 when the argument is a value stored at physical address in memory,
 same memory location is used both inside and outside the function body.
-The optimized behavior is known as :newTerm:`call by value`,
+The optimized behavior is known as :newTerm:`call by reference`,
 but still satisfies all of the requirements
-of the call-by-value-result model
+of the copy-in copy-out model
 while removing the overhead of copying.
 You should not depend on the behavior differences
-between call by value result and call by value.
+between copy-in copy-out and call by reference.
+
+.. TODO: Not legal to access the original value
+   instead of going through the in-out copy.
+   Not a compiler error but behavior undefined.
+   We should file a bug to make it a compiler error.
+
+.. TODO: Aliasing - if I pass the same var in as two inouts
+   the copy-out behavior isn't defined.
+   Which is why this isn't allowed.
+
+.. testcode:: closure-doesnt-copy-out-inout
+
+    -> func outer (inout a: Int) -> () -> () {
+           func inner () -> () {
+               a += 1
+           }
+           return inner
+       }
+    ---
+    -> var x = 10
+    << // x : Int = 10
+    -> print(x)
+    <- 10
+    -> let f = outer(&x)
+    << // f : () -> () = (Function)
+    -> print(x)
+    <- 10
+    -> f()
+    -> print(x)
+    <- 10
+
+..  TODO The copy-out happen when outer() returns.
+    No copy-out of x when inner() returns
+    Its increment applies to the *copy* of x,
+    and doesn't propogate to the original.
 
 .. _Declarations_SpecialKindsOfParameters:
 
