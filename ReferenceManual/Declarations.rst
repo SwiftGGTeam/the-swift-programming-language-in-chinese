@@ -679,14 +679,22 @@ The optimized behavior is known as :newTerm:`call by reference`,
 but still satisfies all of the requirements
 of the copy-in copy-out model
 while removing the overhead of copying.
-You should not depend on the behavior differences
+Do not depend on the behavior differences
 between copy-in copy-out and call by reference.
 
-Do not access the value that was passed as an in-out argument
-even if it is available in the current scope.
+Do not access the value that was passed as an in-out argument,
+even if the original argument is available in the current scope.
 When the function returns,
 your changes to the original are overwritten
 with the value of the copy.
+Do not depend on the call-by-reference optimization's implementation
+to try keep the changes from being overwritten.
+
+.. When the call-by-reference optimization is in play,
+   it would happen to do what you want.
+   But you still shouldn't do that --
+   as noted above, you're not allowed to depend on
+   behavior differences that happen because of call by reference.
 
 You can't pass the same argument to multiple in-out parameters
 because the order in which the copies are written back
@@ -711,6 +719,12 @@ For example:
    !! f(&x, &x) // INVALID
    !!   ^~
 
+There is no copy-out at the end of closures or nested functions
+inside a function that has an in-out parameter.
+This means if a closure is called after the function returns,
+any changes that closure makes to the in-out parameters
+do not get copied back to the original.
+For example:
 
 .. testcode:: closure-doesnt-copy-out-inout
 
@@ -723,20 +737,16 @@ For example:
     ---
     -> var x = 10
     << // x : Int = 10
-    -> print(x)
-    <- 10
     -> let f = outer(&x)
     << // f : () -> () = (Function)
-    -> print(x)
-    <- 10
     -> f()
     -> print(x)
     <- 10
 
-..  TODO The copy-out happen when outer() returns.
-    No copy-out of x when inner() returns
-    Its increment applies to the *copy* of x,
-    and doesn't propogate to the original.
+The value of ``x`` is not changed by ``inner()`` incrementing ``a``
+because ``inner()`` is called after ``outer()`` returns.
+To change the value of ``x``,
+``inner()`` would need to be called before ``outer()`` returned.
 
 .. _Declarations_SpecialKindsOfParameters:
 
