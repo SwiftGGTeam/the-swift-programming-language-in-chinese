@@ -615,9 +615,20 @@ to wrap an expression that's being passed as an argument to a function.
 It doesn't take any arguments,
 and when it's called, it returns the value
 of the expression that's wrapped inside of it.
+This syntactic convenience lets you omit braces around a function's parameter
+by writing a normal expression instead of an explicit closure.
+
+It's common to *call* functions that take autoclosures,
+but it's not common to *implement* that kind of function.
+For example,
+the ``assert(condition:message:file:line:)`` function
+takes an autoclosure for its ``condition`` and ``message`` parameters;
+its ``condition`` parameter is evaluated only in debug builds
+and its ``message`` parameter is evaluated only if ``condition`` is ``false``.
+
 An autoclosure lets you delay evaluation,
 because the code inside isn't run until you call the closure.
-This is useful for code
+Delaying evaluation is useful for code
 that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
 The code below shows how a closure delays evaluation.
@@ -626,12 +637,15 @@ The code below shows how a closure delays evaluation.
 
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    -> let nextCustomer = { customersInLine.removeAtIndex(0) }
-    << // nextCustomer : () -> String = (Function)
     -> print(customersInLine.count)
     <- 5
     ---
-    -> print("Now serving \(nextCustomer())!")
+    -> let customerProvider = { customersInLine.removeAtIndex(0) }
+    << // customerProvider : () -> String = (Function)
+    -> print(customersInLine.count)
+    <- 5
+    ---
+    -> print("Now serving \(customerProvider())!")
     <- Now serving Chris!
     -> print(customersInLine.count)
     <- 4
@@ -647,14 +661,17 @@ The code below shows how a closure delays evaluation.
 .. TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
 
 Even though the first element of the ``customersInLine`` array is removed
-as part of the closure,
-that operation isn't carried out until the closure is actually called.
+by the code inside the closure,
+the array element isn't removed until the closure is actually called.
 If the closure is never called,
-the expression inside the closure is never evaluated.
-Note that the type of ``nextCustomer`` is not ``String``
+the expression inside the closure is never evaluated,
+which means the array element is never removed.
+Note that the type of ``customerProvider`` is not ``String``
 but ``() -> String`` ---
-a function that takes no arguments and returns a string.
-You get the same behavior when you do this in a function:
+a function with no parameters that returns a string.
+
+You get the same behavior of delayed evaluation
+when you pass a closure as an argument to a function.
 
 .. testcode:: autoclosures-function
 
@@ -662,20 +679,23 @@ You get the same behavior when you do this in a function:
     << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
-    -> func serveNextCustomer(customer: () -> String) {
-           print("Now serving \(customer())!")
+    -> func serveCustomer(customerProvider: () -> String) {
+           print("Now serving \(customerProvider())!")
        }
-    -> serveNextCustomer( { customersInLine.removeAtIndex(0) } )
+    -> serveCustomer( { customersInLine.removeAtIndex(0) } )
     <- Now serving Alex!
 
-The ``serveNextCustomer(_:)`` function in the listing above
-takes an explicit closure that returns the next customer's name.
-The version of ``serveNextCustomer(_:)`` below
-performs the same operation but, instead of using an explicit closure,
-it uses an autoclosure
+The ``serveCustomer(_:)`` function in the listing above
+takes an explicit closure that returns a customer's name.
+The version of ``serveCustomer(_:)`` below
+performs the same operation but, instead of taking an explicit closure,
+it takes an autoclosure
 by marking its parameter with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
+The argument is automatically converted to a closure,
+because the ``customerProvider`` parameter is marked
+with the ``@autoclosure`` attribute.
 
 .. testcode:: autoclosures-function-with-autoclosure
 
@@ -683,10 +703,10 @@ as if it took a ``String`` argument instead of a closure.
     << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
-    -> func serveNextCustomer(@autoclosure customer: () -> String) {
-           print("Now serving \(customer())!")
+    -> func serveCustomer(@autoclosure customerProvider: () -> String) {
+           print("Now serving \(customerProvider())!")
        }
-    -> serveNextCustomer(customersInLine.removeAtIndex(0))
+    -> serveCustomer(customersInLine.removeAtIndex(0))
     <- Now serving Ewa!
 
 .. note::
@@ -701,7 +721,7 @@ That is, the closure isn't allowed to be stored in a way
 that would let it "escape" the scope of the function
 and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
-use the ``@autoclosure(escaping)`` form of the attribute:
+use the ``@autoclosure(escaping)`` form of the attribute.
 
 .. testcode:: autoclosures-function-with-escape
 
@@ -709,18 +729,18 @@ use the ``@autoclosure(escaping)`` form of the attribute:
     << // customersInLine : [String] = ["Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Barry", "Daniella"]
-    -> var customerClosures: [() -> String] = []
-    << // customerClosures : [() -> String] = []
-    -> func collectCustomerClosures(@autoclosure(escaping) customer: () -> String) {
-           customerClosures.append(customer)
+    -> var customerProviders: [() -> String] = []
+    << // customerProviders : [() -> String] = []
+    -> func collectCustomerProviders(@autoclosure(escaping) customerProvider: () -> String) {
+           customerProviders.append(customerProvider)
        }
-    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
-    -> collectCustomerClosures(customersInLine.removeAtIndex(0))
+    -> collectCustomerProviders(customersInLine.removeAtIndex(0))
+    -> collectCustomerProviders(customersInLine.removeAtIndex(0))
     ---
-    -> print("Collected \(customerClosures.count) closures.")
+    -> print("Collected \(customerProviders.count) closures.")
     <- Collected 2 closures.
-    -> for customerClosure in customerClosures {
-           print("Now serving \(customerClosure())!")
+    -> for customerProvider in customerProviders {
+           print("Now serving \(customerProvider())!")
        }
     <- Now serving Barry!
     <- Now serving Daniella!
@@ -728,7 +748,7 @@ use the ``@autoclosure(escaping)`` form of the attribute:
 In the code above,
 instead of calling the closure passed to it
 as its ``customer`` argument,
-the ``collectCustomerClosures(_:)`` function appends the closure to the ``customerClosures`` array.
+the ``collectCustomerProviders(_:)`` function appends the closure to the ``customerProviders`` array.
 The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
