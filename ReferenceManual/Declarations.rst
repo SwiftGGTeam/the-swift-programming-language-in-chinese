@@ -582,8 +582,8 @@ Write ``var`` in front of a parameter's name to make it a variable,
 scoping any changes made to the variable just to the function body,
 or write ``inout`` to make those changes also apply
 to the argument that was passed in the caller's scope.
-For a discussion of in-out parameters,
-see :ref:`Functions_InOutParameters`.
+In-out parameters are discussed in detail
+in :ref:`Declarations_InOutParameters`, below.
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
@@ -655,14 +655,14 @@ The corresponding argument must have no name in function or method calls.
 In-Out Parameters
 ~~~~~~~~~~~~~~~~~
 
-It-out parameters are passed as follows:
+In-out parameters are passed as follows:
 
-1. As part of the function call,
+1. When the function is called,
    the value of the argument is copied.
-2. During the body of the function,
+2. In the body of the function,
    the copy is modified.
-3. As part of the function return,
-   the argument is assigned the copy's value.
+3. When the function returns,
+   the copy's value is assigned to the original argument.
 
 This behavior is known as :newTerm:`copy-in copy-out`
 or :newTerm:`call by value result`.
@@ -673,13 +673,13 @@ its getter is called as part of the function call
 and its setter is called as part of the function return.
 
 As an optimization,
-when the argument is a value stored at physical address in memory,
-same memory location is used both inside and outside the function body.
-The optimized behavior is known as :newTerm:`call by reference`,
-but still satisfies all of the requirements
+when the argument is a value stored at a physical address in memory,
+the same memory location is used both inside and outside the function body.
+The optimized behavior is known as :newTerm:`call by reference`;
+it satisfies all of the requirements
 of the copy-in copy-out model
 while removing the overhead of copying.
-Do not depend on the behavior differences
+Do not depend on the behavioral differences
 between copy-in copy-out and call by reference.
 
 Do not access the value that was passed as an in-out argument,
@@ -687,14 +687,14 @@ even if the original argument is available in the current scope.
 When the function returns,
 your changes to the original are overwritten
 with the value of the copy.
-Do not depend on the call-by-reference optimization's implementation
-to try keep the changes from being overwritten.
+Do not depend on the implementation of the call-by-reference optimization
+to try to keep the changes from being overwritten.
 
 .. When the call-by-reference optimization is in play,
    it would happen to do what you want.
    But you still shouldn't do that --
    as noted above, you're not allowed to depend on
-   behavior differences that happen because of call by reference.
+   behavioral differences that happen because of call by reference.
 
 You can't pass the same argument to multiple in-out parameters
 because the order in which the copies are written back
@@ -707,16 +707,16 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(inout a: Int, inout _ b: Int) -> () {
+   -> func f(inout a: Int, inout _ b: Int) {
           a += 1
           b += 10
       }
-   -> f(&x, &x) // INVALID
+   -> f(&x, &x) // Invalid, in-out arguments alias each other
    !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
-   !! f(&x, &x) // INVALID
+   !! f(&x, &x) // Invalid, in-out arguments alias each other
    !!       ^~
    !! <REPL Input>:1:3: note: previous aliasing argument
-   !! f(&x, &x) // INVALID
+   !! f(&x, &x) // Invalid, in-out arguments alias each other
    !!   ^~
 
 There is no copy-out at the end of closures or nested functions.
@@ -727,8 +727,8 @@ For example:
 
 .. testcode:: closure-doesnt-copy-out-inout
 
-    -> func outer (inout a: Int) -> () -> () {
-           func inner () -> () {
+    -> func outer(inout a: Int) -> () -> Void {
+           func inner() {
                a += 1
            }
            return inner
@@ -737,15 +737,18 @@ For example:
     -> var x = 10
     << // x : Int = 10
     -> let f = outer(&x)
-    << // f : () -> () = (Function)
+    << // f : () -> Void = (Function)
     -> f()
     -> print(x)
     <- 10
 
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``
+The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
 because ``inner()`` is called after ``outer()`` returns.
 To change the value of ``x``,
 ``inner()`` would need to be called before ``outer()`` returned.
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
