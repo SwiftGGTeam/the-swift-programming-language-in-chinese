@@ -600,12 +600,15 @@ at the start of its parameter definition.
 An in-out parameter has a value that is passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
+For a detailed discussion of the behavior of in-out parameters
+and associated compiler optimizations,
+see :ref:`Declarations_InOutParameters`.
 
 You can only pass a variable as the argument for an in-out parameter.
 You cannot pass a constant or a literal value as the argument,
 because constants and literals cannot be modified.
 You place an ampersand (``&``) directly before a variable's name
-when you pass it as an argument to an inout parameter,
+when you pass it as an argument to an in-out parameter,
 to indicate that it can be modified by the function.
 
 .. note::
