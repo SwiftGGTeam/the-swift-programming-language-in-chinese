@@ -6,6 +6,26 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+
+2015-09-22  * Updated for Swift 2.1.
+
+            * Added information about the behavior of in-out parameters
+              in the :ref:`Declarations_InOutParameters` section.
+
+            * Added information about capture lists and capture by value
+              in the :ref:`Expressions_CaptureLists` section.
+
+            * Added an example of assignment through optional chaining
+              in the :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining` section.
+
+            * Corrected the grammar of getter-setter blocks
+              in the :ref:`Declarations_TypeVariableProperties` section
+              to show that ``get`` is optional when there is no setter block.
+
+.. Added an example of optional chaining in :doc:`../GuidedTour/GuidedTour``.
+
+.. Improved discussion of autoclosures in the :ref:`Closures_Autoclosures` section.
+
 2015-09-16  * Updated for Swift 2.0.
 
             * Added information about error handling
