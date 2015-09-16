@@ -624,7 +624,7 @@ For example,
 the ``assert(condition:message:file:line:)`` function
 takes an autoclosure for its ``condition`` and ``message`` parameters;
 its ``condition`` parameter is evaluated only in debug builds
-and its ``message`` parameter is evaluated only if the test fails.
+and its ``message`` parameter is evaluated only if ``condition`` is ``false``.
 
 An autoclosure lets you delay evaluation,
 because the code inside isn't run until you call the closure.
@@ -693,6 +693,9 @@ it takes an autoclosure
 by marking its parameter with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
+The argument is automatically converted to a closure,
+because the ``customerProvider`` parameter is marked
+with the ``@autoclosure`` attribute.
 
 .. testcode:: autoclosures-function-with-autoclosure
 
@@ -705,16 +708,6 @@ as if it took a ``String`` argument instead of a closure.
        }
     -> serveCustomer(customersInLine.removeAtIndex(0))
     <- Now serving Ewa!
-
-This time,
-the code that calls the ``serveCustomer(_:)`` function
-is written as if it were passing the expression
-``serveCustomer(customersInLine.removeAtIndex(0))``
-instead of passing a closure.
-The expression written in the function call
-is automatically converted to a closure
-because the ``customerProvider`` parameter is marked
-with the ``@autoclosure`` attribute.
 
 .. note::
 
