@@ -8,6 +8,10 @@ Date        Notes
 ==========  ==========================================================================
 2015-09-22  * Updated for Swift 2.1.
 
+            * Updated the :ref:`StringsAndCharacters_StringInterpolation`
+              and :ref:`LexicalStructure_StringLiterals` sections
+              now that string interpolations can contain string literals.
+            
             * Added information about the behavior of in-out parameters
               to the :ref:`Declarations_InOutParameters` section.
 
