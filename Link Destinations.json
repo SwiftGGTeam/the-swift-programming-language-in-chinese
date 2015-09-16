@@ -214,6 +214,7 @@
     "declarations-functiondeclaration": "ID362", 
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
+    "declarations-inoutparameters": "ID545", 
     "declarations-operatordeclaration": "ID380", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
@@ -560,7 +561,8 @@
     "ternary-conditional-operator", 
     "where-clauses", 
     "string-literals", 
-    "control-transfer-statements"
+    "control-transfer-statements", 
+    "in-out-parameters"
   ], 
-  "next_id": 545
+  "next_id": 546
 }
