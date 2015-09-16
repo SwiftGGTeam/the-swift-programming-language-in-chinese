@@ -16,7 +16,7 @@
 - [闭包是引用类型（Closures Are Reference Types）](#closures_are_reference_types)
 
 闭包是自包含的函数代码块，可以在代码中被传递和使用。
-Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的 lambdas 函数比较相似。
+Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的 匿名函数比较相似。
 
 闭包可以捕获和存储其所在上下文中任意常量和变量的引用。
 这就是所谓的闭合并包裹着这些常量和变量，俗称闭包。Swift 会为您管理在捕获过程中涉及到的所有内存操作。
