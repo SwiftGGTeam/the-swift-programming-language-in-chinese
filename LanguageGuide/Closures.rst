@@ -618,20 +618,17 @@ of the expression that's wrapped inside of it.
 This syntactic convenience lets you omit braces around a function's parameter
 by writing a normal expression instead of an explicit closure.
 
-It's common to call functions that use autoclosures,
-but most programs don't need to implement any functions
-that use autoclosures.
+It's common to *call* functions that take autoclosures,
+but it's not common to *implement* that kind of function.
 For example,
 the ``assert(condition:message:file:line:)`` function
-uses an autoclosure for its test and message arguments;
-its test argument is evaluated only in debug builds
-and its message argument is evaluated only if the test fails.
-Calling a function like this is common,
-but most programs don't need to implement a function like this.
+takes an autoclosure for its ``condition`` and ``message`` parameters;
+its ``condition`` parameter is evaluated only in debug builds
+and its ``message`` parameter is evaluated only if the test fails.
 
 An autoclosure lets you delay evaluation,
 because the code inside isn't run until you call the closure.
-This is useful for code
+Delaying evaluation is useful for code
 that has side effects or is computationally expensive,
 because it lets you control when that code is evaluated.
 The code below shows how a closure delays evaluation.
@@ -674,7 +671,7 @@ but ``() -> String`` ---
 a function with no parameters that returns a string.
 
 You get the same behavior of delayed evaluation
-when you pass a closure as an argument to a function:
+when you pass a closure as an argument to a function.
 
 .. testcode:: autoclosures-function
 
@@ -689,10 +686,10 @@ when you pass a closure as an argument to a function:
     <- Now serving Alex!
 
 The ``serveCustomer(_:)`` function in the listing above
-takes an explicit closure that returns the next customer's name.
+takes an explicit closure that returns a customer's name.
 The version of ``serveCustomer(_:)`` below
-performs the same operation but, instead of using an explicit closure,
-it uses an autoclosure
+performs the same operation but, instead of taking an explicit closure,
+it takes an autoclosure
 by marking its parameter with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
@@ -709,6 +706,16 @@ as if it took a ``String`` argument instead of a closure.
     -> serveCustomer(customersInLine.removeAtIndex(0))
     <- Now serving Ewa!
 
+This time,
+the code that calls the ``serveCustomer(_:)`` function
+is written as if it were passing the expression
+``serveCustomer(customersInLine.removeAtIndex(0))``
+instead of passing a closure.
+The expression written in the function call
+is automatically converted to a closure
+because the ``customerProvider`` parameter is marked
+with the ``@autoclosure`` attribute.
+
 .. note::
 
    Overusing autoclosures can make your code hard to understand.
@@ -721,7 +728,7 @@ That is, the closure isn't allowed to be stored in a way
 that would let it "escape" the scope of the function
 and be executed after the function returns.
 If you want an autoclosure that is allowed to escape,
-use the ``@autoclosure(escaping)`` form of the attribute:
+use the ``@autoclosure(escaping)`` form of the attribute.
 
 .. testcode:: autoclosures-function-with-escape
 
