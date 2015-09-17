@@ -22,10 +22,10 @@
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
-print("Hello, world")
+print("Hello, world!")
 ```
 
-如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main`函数。你同样不需要在每个语句结尾写上分号。
+如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main()`函数。你同样不需要在每个语句结尾写上分号。
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
@@ -84,9 +84,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```swift
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
 shoppingList[1] = "bottle of water"
-```
 
-```swift
 var occupations = [
     "Malcolm": "Captain",
     "Kaylee": "Mechanic",
@@ -152,20 +150,21 @@ if let name = optionalName {
 let vegetable = "red pepper"
 switch vegetable {
 case "celery":
-    let vegetableComment = "Add some raisins and make ants on a log."
+    print("Add some raisins and make ants on a log.")
 case "cucumber", "watercress":
-    let vegetableComment = "That would make a good tea sandwich."
+    print("That would make a good tea sandwich.")
 case let x where x.hasSuffix("pepper"):
-    let vegetableComment = "Is it a spicy \(x)?"
+    print("Is it a spicy \(x)?")
 default:
-    let vegetableComment = "Everything tastes good in soup."
+    print("Everything tastes good in soup.")
 }
 ```
 
 > 练习：
 > 删除`default`语句，看看会有什么错误？
 
-声明`let`可用于匹配某部分固定值的模式
+
+注意`let`在上述例子的等式中是如何使用的，它将匹配等式的值赋给常量`x`。
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
@@ -442,12 +441,12 @@ class EquilateralTriangle: NamedShape {
     }
 
     var perimeter: Double {
-    get {
-        return 3.0 * sideLength
-    }
-    set {
-        sideLength = newValue / 3.0
-    }
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
     }
 
     override func simpleDescription() -> String {
@@ -475,14 +474,14 @@ print(triangle.sideLength)
 ```swift
 class TriangleAndSquare {
     var triangle: EquilateralTriangle {
-    willSet {
-        square.sideLength = newValue.sideLength
-      }
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
     }
     var square: Square {
-    willSet {
-        triangle.sideLength = newValue.sideLength
-      }
+        willSet {
+            triangle.sideLength = newValue.sideLength
+        }
     }
     init(size: Double, name: String) {
         square = Square(sideLength: size, name: name)
@@ -535,9 +534,9 @@ let aceRawValue = ace.rawValue
 > 练习：
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
-在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`来访问一个枚举成员的原始值。
+在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`属性来访问一个枚举成员的原始值。
 
-使用`init?(rawValue:)`构造器来从原始值中枚举一个例子。
+使用`init?(rawValue:)`初始化构造器在原始值和枚举值之间进行转换。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -562,7 +561,6 @@ enum Suit {
             return "clubs"
         }
     }
-
 }
 let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
@@ -599,10 +597,10 @@ enum ServerResponse {
     case Result(String, String)
     case Error(String)
 }
-
+ 
 let success = ServerResponse.Result("6:00 am", "8:09 pm")
 let failure = ServerResponse.Error("Out of cheese.")
-
+ 
 switch success {
 case let .Result(sunrise, sunset):
     let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
@@ -663,7 +661,7 @@ let bDescription = b.simpleDescription
 ```swift
 extension Int: ExampleProtocol {
     var simpleDescription: String {
-    return "The number \(self)"
+        return "The number \(self)"
     }
     mutating func adjust() {
         self += 42
@@ -679,8 +677,8 @@ print(7.simpleDescription)
 
 ```swift
 let protocolValue: ExampleProtocol = a
-protocolValue.simpleDescription
-// protocolValue.anotherProperty  // Uncomment to see the error
+print(protocolValue.simpleDescription)
+// print(protocolValue.anotherProperty)  // Uncomment to see the error
 ```
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
@@ -705,18 +703,18 @@ repeatItem("knock", numberOfTimes:4)
 
 ```swift
 // Reimplement the Swift standard library's optional type
-enum OptionalValue<T> {
+enum OptionalValue<Wrapped> {
     case None
-    case Some(T)
+    case Some(Wrapped)
 }
 var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 ```
 
-在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
+在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
 
 ```swift
-func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
+func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
             if lhsItem == rhsItem {
@@ -732,4 +730,4 @@ anyCommonElements([1, 2, 3], [3])
 > 练习：
 > 修改`anyCommonElements(_:_:)`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
+` <T: Equatable>`和`<T where T: Equatable>`是等价的。
