@@ -293,7 +293,7 @@ In this example,
 the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
 
-The assignment is part of of the optional chaining,
+The assignment is part of the optional chaining,
 which means none of the code on the right hand side of the ``=`` operator
 is evaluated.
 In the previous example,
