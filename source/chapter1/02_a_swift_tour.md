@@ -18,10 +18,10 @@
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
-println("Hello, world")
+print("Hello, world!")
 ```
 
-如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main`函数。你同样不需要在每个语句结尾写上分号。
+如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main()`函数。你同样不需要在每个语句结尾写上分号。
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
@@ -80,9 +80,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```swift
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
 shoppingList[1] = "bottle of water"
-```
 
-```swift
 var occupations = [
     "Malcolm": "Captain",
     "Kaylee": "Mechanic",
@@ -107,7 +105,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`do-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
+使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`repeat-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -119,7 +117,7 @@ for score in individualScores {
         teamScore += 1
     }
 }
-teamScore
+print(teamScore)
 ```
 
 在`if`语句中，条件必须是一个布尔表达式——这意味着像`if score { ... }`这样的代码将报错，而不会隐形地与 0 做对比。
@@ -128,8 +126,8 @@ teamScore
 
 ```swift
 var optionalString: String? = "Hello"
-optionalString == nil
-
+print(optionalString == nil)
+ 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
 if let name = optionalName {
@@ -148,18 +146,20 @@ if let name = optionalName {
 let vegetable = "red pepper"
 switch vegetable {
 case "celery":
-    let vegetableComment = "Add some raisins and make ants on a log."
+    print("Add some raisins and make ants on a log.")
 case "cucumber", "watercress":
-    let vegetableComment = "That would make a good tea sandwich."
+    print("That would make a good tea sandwich.")
 case let x where x.hasSuffix("pepper"):
-    let vegetableComment = "Is it a spicy \(x)?"
+    print("Is it a spicy \(x)?")
 default:
-    let vegetableComment = "Everything tastes good in soup."
+    print("Everything tastes good in soup.")
 }
 ```
 
 > 练习：  
 > 删除`default`语句，看看会有什么错误？
+
+注意`let`在上述例子的等式中是如何使用的，它将匹配等式的值赋给常量`x`。
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
@@ -179,7 +179,7 @@ for (kind, numbers) in interestingNumbers {
         }
     }
 }
-largest
+print(largest)
 ```
 
 > 练习：  
@@ -192,13 +192,13 @@ var n = 2
 while n < 100 {
     n = n * 2
 }
-n
+print(n)
 
 var m = 2
-do {
+repeat {
     m = m * 2
 } while m < 100
-m
+print(m)
 ```
 
 你可以在循环中使用`..<`来表示范围，也可以使用传统的写法，两者是等价的：
@@ -208,13 +208,13 @@ var firstForLoop = 0
 for i in 0..<4 {
     firstForLoop += i
 }
-firstForLoop
+print(firstForLoop)
 
 var secondForLoop = 0
 for var i = 0; i < 4; ++i {
     secondForLoop += i
 }
-secondForLoop
+print(secondForLoop)
 ```
 
 使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
@@ -254,8 +254,8 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
     return (min, max, sum)
 }
 let statistics = calculateStatistics([5, 3, 100, 3, 9])
-statistics.sum
-statistics.2
+print(statistics.sum)
+print(statistics.2)
 ```
 
 函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
@@ -337,14 +337,14 @@ numbers.map({
 
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
-mappedNumbers
+print(mappedNumbers)
 ```
 
 你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
 
 ```swift
 let sortedNumbers = sorted(numbers) { $0 > $1 }
-sortedNumbers
+print(sortedNumbers)
 ```
 
 <a name="objects_and_classes"></a>
@@ -436,12 +436,12 @@ class EquilateralTriangle: NamedShape {
     }
 
     var perimeter: Double {
-    get {
-        return 3.0 * sideLength
-    }
-    set {
-        sideLength = newValue / 3.0
-    }
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
     }
 
     override func simpleDescription() -> String {
@@ -449,9 +449,9 @@ class EquilateralTriangle: NamedShape {
     }
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-triangle.perimeter
+print(triangle.perimeter)
 triangle.perimeter = 9.9
-triangle.sideLength
+print(triangle.sideLength)
 ```
 
 在`perimeter`的 setter 中，新值的名字是`newValue`。你可以在`set`之后显式的设置一个名字。
@@ -469,14 +469,14 @@ triangle.sideLength
 ```swift
 class TriangleAndSquare {
     var triangle: EquilateralTriangle {
-    willSet {
-        square.sideLength = newValue.sideLength
-    }
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
     }
     var square: Square {
-    willSet {
-        triangle.sideLength = newValue.sideLength
-    }
+        willSet {
+            triangle.sideLength = newValue.sideLength
+        }
     }
     init(size: Double, name: String) {
         square = Square(sideLength: size, name: name)
@@ -484,23 +484,10 @@ class TriangleAndSquare {
     }
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-triangleAndSquare.square.sideLength
-triangleAndSquare.triangle.sideLength
+print(triangleAndSquare.square.sideLength)
+print(triangleAndSquare.triangle.sideLength)
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-triangleAndSquare.triangle.sideLength
-```
-
-类中的方法和一般的函数有一个重要的区别，函数的参数名只在函数内部使用，但是方法的参数名需要在调用的时候显式说明（除了第一个参数）。默认情况下，方法的参数名和它在方法内部的名字一样，不过你也可以定义第二个名字，这个名字被用在方法内部。
-
-```swift
-class Counter {
-    var count: Int = 0
-    func incrementBy(amount: Int, numberOfTimes times: Int) {
-        count += amount * times
-    }
-}
-var counter = Counter()
-counter.incrementBy(2, numberOfTimes: 7)
+print(triangleAndSquare.triangle.sideLength)
 ```
 
 处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加`?`。如果`?`之前的值是`nil`，`?`后面的东西都会被忽略，并且整个表达式返回`nil`。否则，`?`之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
@@ -531,20 +518,20 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.rawValue())
+            return String(self.rawValue)
         }
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.rawValue()
+let aceRawValue = ace.rawValue
 ```
 
 > 练习：  
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
-在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
+在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`属性来访问一个枚举成员的原始值。
 
-使用'rawValue'在原始值和枚举值之间进行转换。
+使用`init?(rawValue:)`初始化构造器在原始值和枚举值之间进行转换。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -569,7 +556,6 @@ enum Suit {
             return "clubs"
         }
     }
-
 }
 let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
@@ -607,10 +593,10 @@ enum ServerResponse {
     case Result(String, String)
     case Error(String)
 }
-
+ 
 let success = ServerResponse.Result("6:00 am", "8:09 pm")
 let failure = ServerResponse.Error("Out of cheese.")
-
+ 
 switch success {
 case let .Result(sunrise, sunset):
     let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
@@ -671,13 +657,13 @@ let bDescription = b.simpleDescription
 ```swift
 extension Int: ExampleProtocol {
     var simpleDescription: String {
-    return "The number \(self)"
+        return "The number \(self)"
     }
     mutating func adjust() {
         self += 42
     }
 }
-7.simpleDescription
+print(7.simpleDescription)
 ```
 
 > 练习：  
@@ -687,8 +673,8 @@ extension Int: ExampleProtocol {
 
 ```swift
 let protocolValue: ExampleProtocol = a
-protocolValue.simpleDescription
-// protocolValue.anotherProperty  // Uncomment to see the error
+print(protocolValue.simpleDescription)
+// print(protocolValue.anotherProperty)  // Uncomment to see the error
 ```
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
@@ -699,32 +685,32 @@ protocolValue.simpleDescription
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
-    var result = [ItemType]()
-    for i in 0..<times {
+func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
         result.append(item)
     }
     return result
 }
-repeat("knock", 4)
+repeatItem("knock", numberOfTimes:4)
 ```
 
 你也可以创建泛型类、枚举和结构体。
 
 ```swift
 // Reimplement the Swift standard library's optional type
-enum OptionalValue<T> {
+enum OptionalValue<Wrapped> {
     case None
-    case Some(T)
+    case Some(Wrapped)
 }
 var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 ```
 
-在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
+在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
 
 ```swift
-func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
             if lhsItem == rhsItem {
@@ -740,4 +726,4 @@ anyCommonElements([1, 2, 3], [3])
 > 练习：  
 > 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
+` <T: Equatable>`和`<T where T: Equatable>`是等价的。
