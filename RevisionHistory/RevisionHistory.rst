@@ -11,6 +11,10 @@ Date        Notes
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
               and :ref:`LexicalStructure_StringLiterals` sections
               now that string interpolations can contain string literals.
+              
+            * Updated the :ref:`Attributes_DeclarationAttributes`
+              and :ref:`Statements_BuildConfigurationStatement` sections
+              with information about tvOS.
             
             * Added information about the behavior of in-out parameters
               to the :ref:`Declarations_InOutParameters` section.
