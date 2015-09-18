@@ -635,7 +635,8 @@ For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
 use the ``sort()`` method,
-which returns an ordered collection of the provided sequence.
+which returns the set's elements as an array
+sorted using the ``<`` operator.
 
 .. testcode:: setUsage
 
