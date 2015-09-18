@@ -286,7 +286,7 @@ the access level for that compound tuple type will be private.
    -> let privateTuple = returnPrivateTuple()
    !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
-   !! ^
+   !! ^~~~~~~~~~~~~~~~~~
 
 .. sourcefile:: tupleTypes_Module2_Public
 
@@ -302,10 +302,10 @@ the access level for that compound tuple type will be private.
    -> let privateTuple = returnPrivateTuple()
    !! /tmp/sourcefile_0.swift:2:21: error: use of unresolved identifier 'returnInternalTuple'
    !! let internalTuple = returnInternalTuple()
-   !! ^
+   !! ^~~~~~~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
-   !! ^
+   !! ^~~~~~~~~~~~~~~~~~
 
 .. note::
 
@@ -469,10 +469,10 @@ you must explicitly declare the nested type as public.
    !!                                   ^~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   !!                                  ^
+   !!                                  ^~~~~~~~~~~~~
    !! /tmp/sourcefile_1.swift:4:36: error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
-   !!                                    ^
+   !!                                    ^~~~~~~~~~~~~
 
 .. sourcefile:: nestedTypes_Module2_Public
 
@@ -506,19 +506,19 @@ you must explicitly declare the nested type as public.
    !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:5:36: error: use of unresolved identifier 'InternalStruct'
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
-   !!                                    ^
+   !!                                    ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:6:37: error: use of unresolved identifier 'InternalStruct'
    !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.A
-   !!                                     ^
+   !!                                     ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:7:35: error: use of unresolved identifier 'InternalStruct'
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
-   !!                                   ^
+   !!                                   ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:8:34: error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   !!                                  ^
+   !!                                  ^~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:9:36: error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
-   !!                                    ^
+   !!                                    ^~~~~~~~~~~~~
 
 .. _AccessControl_Subclassing:
 
