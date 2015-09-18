@@ -384,8 +384,10 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
 
 If you need the integer index of each item as well as its value,
 use the ``enumerate()`` method to iterate over the array instead.
-The ``enumerate()`` method returns a tuple for each item in the array
+For each item in the array,
+the ``enumerate()`` method returns a tuple
 composed of the index and the value for that item.
+
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
