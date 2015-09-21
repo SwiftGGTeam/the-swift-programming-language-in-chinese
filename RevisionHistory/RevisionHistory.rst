@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-09-22  * Updated for Swift 2.1.
+2015-09-23  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
               and :ref:`LexicalStructure_StringLiterals` sections
