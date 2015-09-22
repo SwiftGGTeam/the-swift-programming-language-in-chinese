@@ -605,6 +605,21 @@ both of those constants or variables will refer to the same closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
+
+.. _Closures_Noescape:
+
+Closure Lifespan
+----------------
+
+.. By default, a closure can be called at any time.
+
+.. @noescape is a tighter API contract: that the closure isn't called
+   after the function returns.
+
+.. Using @noescape lets you omit ``self``
+   and it lets the compiler optimize more
+
+
 .. _Closures_Autoclosures:
 
 Autoclosures
