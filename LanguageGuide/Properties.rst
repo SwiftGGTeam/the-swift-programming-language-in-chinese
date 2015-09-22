@@ -499,7 +499,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
 
    You don't need to define property observers for non-overridden computed properties,
    because you can observe and respond to changes to their value
-   from directly within the computed property's setter.
+   in the computed property's setter.
 
 You have the option to define either or both of these observers on a property:
 
@@ -509,17 +509,16 @@ You have the option to define either or both of these observers on a property:
 If you implement a ``willSet`` observer,
 it is passed the new property value as a constant parameter.
 You can specify a name for this parameter as part of your ``willSet`` implementation.
-If you choose not to write the parameter name and parentheses within your implementation,
-the parameter will still be made available with a default parameter name of ``newValue``.
+If you don't write the parameter name and parentheses within your implementation,
+the parameter is made available with a default parameter name of ``newValue``.
 
 Similarly, if you implement a ``didSet`` observer,
 it will be passed a constant parameter containing the old property value.
-You can name the parameter if you wish,
-or use the default parameter name of ``oldValue``.
+You can name the parameter or use the default parameter name of ``oldValue``.
 
 .. note::
 
-   ``willSet`` and ``didSet`` observers of superclass properties
+   The ``willSet`` and ``didSet`` observers of superclass properties
    are called when a property is set in a subclass initializer.
 
    For more information about initializer delegation,
