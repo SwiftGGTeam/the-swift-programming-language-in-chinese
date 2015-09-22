@@ -387,7 +387,6 @@ use the ``enumerate()`` method to iterate over the array instead.
 For each item in the array,
 the ``enumerate()`` method returns a tuple
 composed of the index and the value for that item.
-
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
