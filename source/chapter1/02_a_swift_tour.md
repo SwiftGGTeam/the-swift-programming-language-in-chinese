@@ -79,7 +79,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 > 练习：
 > 使用`\()`来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
-使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。
+使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。最后一个元素后面允许有个逗号。
 
 ```swift
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
@@ -654,7 +654,7 @@ let bDescription = b.simpleDescription
 > 练习：
 > 写一个实现这个协议的枚举。
 
-注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
+注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
 使用`extension`来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
 
