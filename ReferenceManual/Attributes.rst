@@ -295,7 +295,7 @@ the ``noreturn`` attribute to a function or method *type*.
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
     and to allow overloading of methods and initializers
-    in an a class marked with the ``objc`` attribute.
+    in a class marked with the ``objc`` attribute.
 
     A method marked with the ``nonobjc`` attribute
     cannot override a method marked with the ``objc`` attribute.
