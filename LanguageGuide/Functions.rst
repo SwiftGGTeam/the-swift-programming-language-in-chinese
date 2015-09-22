@@ -30,10 +30,11 @@ Defining and Calling Functions
 ------------------------------
 
 When you define a function,
-you can optionally define one or more named, typed values that the function takes as input
-(known as :newTerm:`parameters`),
-and/or a type of value that the function will pass back as output when it is done
-(known as its :newTerm:`return type`).
+you can optionally define one or more named, typed values that the function takes as input,
+known as :newTerm:`parameters`.
+You can also optionally define
+a type of value that the function will pass back as output when it is done,
+known as its :newTerm:`return type`.
 
 Every function has a :newTerm:`function name`,
 which describes the task that the function performs.
