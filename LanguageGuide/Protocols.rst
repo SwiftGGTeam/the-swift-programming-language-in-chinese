@@ -248,7 +248,7 @@ It is sometimes necessary for a method to modify (or *mutate*) the instance it b
 For instance methods on value types (that is, structures and enumerations)
 you place the ``mutating`` keyword before a method's ``func`` keyword
 to indicate that the method is allowed to modify the instance it belongs to
-and/or any properties of that instance.
+and any properties of that instance.
 This process is described in :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`.
 
 If you define a protocol instance method requirement
