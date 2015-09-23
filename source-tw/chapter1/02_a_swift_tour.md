@@ -301,7 +301,7 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, lessThanTen)
+hasAnyMatches(numbers, condition: lessThanTen)
 ```
 
 函數實際上是一種特殊的閉包，你可以使用`{}`來創建一個匿名閉包。使用`in`將參數和返回值類型聲明與閉包涵數體進行分離。
