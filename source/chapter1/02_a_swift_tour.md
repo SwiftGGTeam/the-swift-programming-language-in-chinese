@@ -656,7 +656,7 @@ let bDescription = b.simpleDescription
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
-使用`extension`来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
+使用`extension`来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
 
 ```swift
 extension Int: ExampleProtocol {

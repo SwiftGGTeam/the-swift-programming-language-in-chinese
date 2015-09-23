@@ -649,7 +649,7 @@ let bDescription = b.simpleDescription
 
 注意聲明`SimpleStructure`時候`mutating`關鍵字用來標記一個會修改結構體的方法。`SimpleClass`的聲明不需要標記任何方法因為類中的方法經常會修改類。
 
-使用`extension`來為現有的類型添加功能，比如新的方法和參數。你可以使用擴展來改造定義在別處，甚至是從外部庫或者框架引入的一個類型，使得這個類型遵循某個協議。
+使用`extension`來為現有的類型添加功能，比如新的方法和計算屬性。你可以使用擴展來改造定義在別處，甚至是從外部庫或者框架引入的一個類型，使得這個類型遵循某個協議。
 
 ```swift
 extension Int: ExampleProtocol {
