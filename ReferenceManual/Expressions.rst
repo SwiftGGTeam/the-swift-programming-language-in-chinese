@@ -1438,12 +1438,15 @@ It has the following form:
 
     <#expression#>?
 
+The postfix ``?`` operator makes an optional-chaining expression
+from an expression without changing the expression's value.
+
 Optional-chaining expressions must appear within a postfix expression,
 and they cause the postfix expression to be evaluated in a special way.
-If the optional-chaining expression is ``nil``,
+If the value of the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-If the optional-chaining expression is not ``nil``,
+If the value of the optional-chaining expression is not ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
