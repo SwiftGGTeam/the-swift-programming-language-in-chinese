@@ -121,10 +121,10 @@ class Person {
 
 ```swift
 class Apartment {
-    let number: Int
-    init(number: Int) { self.number = number }
+    let unit: String
+    init(unit: String) { self.unit = unit }
     var tenant: Person?
-    deinit { print("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
@@ -134,45 +134,45 @@ class Apartment {
 
 这两个类都定义了析构函数，用以在类实例被析构的时候输出信息。这让你能够知晓`Person`和`Apartment`的实例是否像预期的那样被销毁。
 
-接下来的代码片段定义了两个可选类型的变量`john`和`number73`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选的优点：
+接下来的代码片段定义了两个可选类型的变量`john`和`unit4A`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选的优点：
 
 ```swift
 var john: Person?
-var number73: Apartment?
+var unit4A: Apartment?
 ```
 
-现在你可以创建特定的`Person`和`Apartment`实例并将赋值给`john`和`number73`变量：
+现在你可以创建特定的`Person`和`Apartment`实例并将赋值给`john`和`unit4A`变量：
 
 ```swift
 john = Person(name: "John Appleseed")
-number73 = Apartment(number: 73)
+unit4A = Apartment(unit: "4A")
 ```
 
-在两个实例被创建和赋值后，下图表现了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`number73`有一个指向`Apartment`实例的强引用：
+在两个实例被创建和赋值后，下图表现了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`unit4A`有一个指向`Apartment`实例的强引用：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle01_2x.png)
 
-现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来展开和访问可选变量`john`和`number73`中的实例，这样实例的属性才能被赋值：
+现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来展开和访问可选变量`john`和`unit4A`中的实例，这样实例的属性才能被赋值：
 
 ```swift
-john!.apartment = number73
-number73!.tenant = john
+john!.apartment = unit4A
+unit4A!.tenant = john
 ```
 
 在将两个实例联系在一起之后，强引用的关系如图所示：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle02_2x.png)
 
-不幸的是，这两个实例关联后会产生一个循环强引用。`Person`实例现在有了一个指向`Apartment`实例的强引用，而`Apartment`实例也有了一个指向`Person`实例的强引用。因此，当你断开`john`和`number73`变量所持有的强引用时，引用计数并不会降为 0，实例也不会被 ARC 销毁：
+不幸的是，这两个实例关联后会产生一个循环强引用。`Person`实例现在有了一个指向`Apartment`实例的强引用，而`Apartment`实例也有了一个指向`Person`实例的强引用。因此，当你断开`john`和`unit4A`变量所持有的强引用时，引用计数并不会降为 0，实例也不会被 ARC 销毁：
 
 ```swift
 john = nil
-number73 = nil
+unit4A = nil
 ```
 
 注意，当你把这两个变量设为`nil`时，没有任何一个析构函数被调用。循环强引用会一直阻止`Person`和`Apartment`类实例的销毁，这就在你的应用程序中造成了内存泄漏。
 
-在你将`john`和`number73`赋值为`nil`后，强引用关系如下图：
+在你将`john`和`unit4A`赋值为`nil`后，强引用关系如下图：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle03_2x.png)
 
@@ -213,24 +213,24 @@ class Person {
 
 ```swift
 class Apartment {
-    let number: Int
-    init(number: Int) { self.number = number }
+    let unit: String
+    init(unit: String) { self.unit = unit }
     weak var tenant: Person?
-    deinit { print("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
-然后跟之前一样，建立两个变量（`john`和`number73`）之间的强引用，并关联两个实例：
+然后跟之前一样，建立两个变量（`john`和`unit4A`）之间的强引用，并关联两个实例：
 
 ```swift
 var john: Person?
-var number73: Apartment?
+var unit4A: Apartment?
 
 john = Person(name: "John Appleseed")
-number73 = Apartment(number: 73)
+unit4A = Apartment(unit: "4A")
 
-john!.apartment = number73
-number73!.tenant = john
+john!.apartment = unit4A
+unit4A!.tenant = john
 ```
 
 现在，两个关联在一起的实例的引用关系如下图所示：
@@ -248,18 +248,18 @@ john = nil
 // prints "John Appleseed is being deinitialized"
 ```
 
-唯一剩下的指向`Apartment`实例的强引用来自于变量`number73`。如果你断开这个强引用，再也没有指向`Apartment`实例的强引用了：
+唯一剩下的指向`Apartment`实例的强引用来自于变量`unit4A`。如果你断开这个强引用，再也没有指向`Apartment`实例的强引用了：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/weakReference03_2x.png)
 
 由于再也没有指向`Apartment`实例的强引用，该实例也会被销毁：
 
 ```swift
-number73 = nil
-// prints "Apartment #73 is being deinitialized"
+unit4A = nil
+// prints "Apartment 4A is being deinitialized"
 ```
 
-上面的两段代码展示了变量`john`和`number73`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
+上面的两段代码展示了变量`john`和`unit4A`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
 
 <a name="2"></a>
 ### 无主引用
