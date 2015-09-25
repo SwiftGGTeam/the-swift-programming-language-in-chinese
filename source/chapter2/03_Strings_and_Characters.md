@@ -291,7 +291,7 @@ print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 
 注意在 Swift 中，使用可拓展的字符群集作为`Character`值来连接或改变字符串时，并不一定会更改字符串的字符数量。
 
-例如，如果你用四个字符的单词`cafe`初始化一个新的字符串，然后添加一个`COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是`4`，因为第四个字符是`e`，而不是`e`：
+例如，如果你用四个字符的单词`cafe`初始化一个新的字符串，然后添加一个`COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是`4`，因为第四个字符是`é`，而不是`e`：
 
 ```swift
 var word = "cafe"
