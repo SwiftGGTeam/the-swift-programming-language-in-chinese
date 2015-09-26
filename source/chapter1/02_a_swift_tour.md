@@ -341,14 +341,14 @@ numbers.map({
 有很多种创建更简洁的闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
 ```swift
-let sortedNumbers = numbers.sort { $0 > $1 }
-print(sortedNumbers)
+let mappedNumbers = numbers.map({ number in 3 * number })
+print(mappedNumbers)
 ```
 
 你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。当一个闭包是传给函数的唯一参数，你可以完全忽略括号。
 
 ```swift
-let sortedNumbers = sorted(numbers) { $0 > $1 }
+let sortedNumbers = numbers.sort { $0 > $1 }
 print(sortedNumbers)
 ```
 
@@ -656,7 +656,7 @@ let bDescription = b.simpleDescription
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
-使用`extension`来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
+使用`extension`来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
 
 ```swift
 extension Int: ExampleProtocol {

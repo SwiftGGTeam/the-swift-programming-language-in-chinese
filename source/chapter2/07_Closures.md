@@ -67,7 +67,7 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 该例子对一个`String`类型的数组进行排序，因此排序闭包函数类型需为`(String, String) -> Bool`。
 
-提供排序闭包函数的一种方式是撰写一个符合其类型要求的普通函数，并将其作为`ssort(_:)`方法的参数传入：
+提供排序闭包函数的一种方式是撰写一个符合其类型要求的普通函数，并将其作为`sort(_:)`方法的参数传入：
 
 ```swift
 func backwards(s1: String, s2: String) -> Bool {
