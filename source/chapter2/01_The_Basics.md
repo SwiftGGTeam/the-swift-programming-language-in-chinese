@@ -638,12 +638,13 @@ if let actualNumber = Int(possibleNumber) {
 
 你可以在可选绑定中使用常量和变量。如果你想在`if`语句的第一个分支中操作`actualNumber`的值，你可以改成`if var actualNumber`，这样可选类型包含的值就会被赋给一个变量而非常量。
 
-多个可选绑定可以用逗号分隔，作为一列表达式出现在一个`if`语句中。
+你可以包含多个可选绑定在`if`语句中，并使用`where`子句做布尔值判断。
 
 ```swift
-if let constantName = someOptional, anotherConstantName = someOtherOptional {
-    statements
+if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+    print("\(firstNumber) < \(secondNumber)")
 }
+// prints "4 < 42"
 ```
 
 <a name="implicityly_unwrapped_optionals"></a>
