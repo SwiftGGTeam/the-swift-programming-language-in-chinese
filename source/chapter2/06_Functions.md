@@ -181,7 +181,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 }
 ```
 
-`minMax(_:)`函数返回一个包含两个`Int`值的元组，这些值被标记为`min`和`max`，一遍查询函数的返回值时他们可以被访问。
+`minMax(_:)`函数返回一个包含两个`Int`值的元组，这些值被标记为`min`和`max`，以便查询函数的返回值时他们可以被访问。
 
 `minMax(_:)`的函数体中，在开始的时候设置两个工作变量`currentMin`和`currentMax`作为数组中的第一个`Int`值。然后函数会遍历数组中剩余的值并检查该值是否比`currentMin`和`currentMax`更小或更大。最后数组中的最小值与最大值返回两个`Int`值最为一个元组。
 
