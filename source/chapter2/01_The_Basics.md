@@ -703,7 +703,7 @@ if let definiteString = assumedString {
 当一个函数遇到错误条件，它能报错。调用函数的地方能抛出错误消息并合理处理。
 
 ```swift
-func canThrowAnErrow() throws {
+func canThrowAnError() throws {
     // 这个函数有可能抛出错误
 }
 ```
@@ -712,7 +712,7 @@ func canThrowAnErrow() throws {
 
 ```swift
 do {
-    try canThrowAnErrow()
+    try canThrowAnError()
     // 没有错误消息抛出
 } catch {
     // 有一个错误消息抛出
