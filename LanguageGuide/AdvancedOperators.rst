@@ -364,9 +364,6 @@ causes an error:
    xx overflow
    // this causes an error
 
-.. FIXME: change the error text we detect here
-   once overflowing provides an error message rather than just an assert.
-
 Providing error handling when values get too large or too small
 gives you much more flexibility when coding for boundary value conditions.
 
