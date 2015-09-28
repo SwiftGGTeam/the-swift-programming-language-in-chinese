@@ -535,7 +535,10 @@ starting from their left:
 
 This calculation yields the final answer of 17.
 
-For a complete list of Swift operator precedences and associativity rules, see  :doc:`../ReferenceManual/Expressions`.
+For a complete list of Swift operator precedences and associativity rules,
+see :doc:`../ReferenceManual/Expressions`.
+For information about the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. note::
 
@@ -862,8 +865,9 @@ Because it is in essence an “additive” operator,
 it has been given the same associativity and precedence values
 (``left`` and ``140``)
 as default additive infix operators such as ``+`` and ``-``.
-For a complete list of the default Swift operator precedence
-and associativity settings, see :doc:`../ReferenceManual/Expressions`.
+For a complete list of the operator precedence and associativity settings,
+for the operators provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. note::
 
