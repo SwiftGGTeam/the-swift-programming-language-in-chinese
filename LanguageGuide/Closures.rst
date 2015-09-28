@@ -611,6 +611,37 @@ both of those constants or variables will refer to the same closure:
 Closure Lifespan
 ----------------
 
+When you pass a closure as the argument to a function,
+you can provide additional information about when the closure will be executed.
+If you write ``@noescape`` before the parameter,
+this means the closure is not allowed to be executed
+after the function returns.
+
+::
+
+    class K {
+        var x = 10
+        func doSomething() {
+            someFunctionThatTakesAClosure { self.x = 100 }
+        }
+    }
+    // Not @noescape so "self." is required at call site in K
+    func someFunctionThatTakesAClosure(closure: () -> Void) {
+        closure()
+    }
+
+
+.. sort() in the stdlib is noescape
+   because the closure is used in running the function
+
+.. But some closures aren't used at that time,
+   they're saved to be used later.
+   For example, the callback in a network I/O function
+   is called when the I/O completes,
+   after the enqueue-operation function returns.
+
+
+
 .. By default, a closure can be called at any time.
 
 .. @noescape is a tighter API contract: that the closure isn't called
