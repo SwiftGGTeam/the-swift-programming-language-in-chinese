@@ -475,7 +475,7 @@ Operator :newTerm:`precedence` gives some operators higher priority than others;
 these operators are applied first.
 
 Operator :newTerm:`associativity` defines how operators of the same precedence
-are grouped together (or :newTerm:`associated`) ---
+are grouped together ---
 either grouped from the left, or grouped from the right.
 Think of it as meaning “they associate with the expression to their left,”
 or “they associate with the expression to their right.”
@@ -821,8 +821,7 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 Precedence and Associativity for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a :newTerm:`precedence`
-and an :newTerm:`associativity`.
+Custom ``infix`` operators can also specify a precedence and an associativity.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these two characteristics affect an infix operator's interaction
 with other infix operators.
