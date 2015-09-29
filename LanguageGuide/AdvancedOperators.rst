@@ -526,7 +526,7 @@ starting from their left:
    -> 2 + (3 * 5)
    << // r2 : Int = 4
 
-``(3 % 5)`` is 15, so this is equivalent to:
+``(3 * 5)`` is 15, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
