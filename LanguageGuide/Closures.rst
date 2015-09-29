@@ -608,28 +608,47 @@ both of those constants or variables will refer to the same closure:
 
 .. _Closures_Noescape:
 
-Closure Lifespan
-----------------
+Escaping and Nonescaping Closures
+---------------------------------
 
-When you pass a closure as the argument to a function,
-you can provide additional information about when the closure will be executed.
-If you write ``@noescape`` before the parameter,
-this means the closure is not allowed to be executed
-after the function returns.
+A closure is said to :newTerm:`escape` a function
+when the closure is passed as an argument to the function,
+but is called after the function returns.
+When you declare a function that takes a closure as one of its parameters,
+you can write ``@noescape`` before the parameter name
+to indicate that the closure is not allowed to escape.
+Otherwise, the closure is allowed to escape the function.
+
+Marking a closure with ``@noescape``
+lets the compiler make more aggressive optimizations
+because it knows more information about the closure's lifespan.
+It also lets you refer to ``self`` implicitly within the closure.
+For example:
+
+.. FIXME: Replace code with non-placeholder
 
 ::
 
     class K {
         var x = 10
         func doSomething() {
-            someFunctionThatTakesAClosure { self.x = 100 }
+            f { self.x = 100 }
+            g { x = 200 }
         }
     }
-    // Not @noescape so "self." is required at call site in K
-    func someFunctionThatTakesAClosure(closure: () -> Void) {
+
+    func f(closure: () -> Void) {
         closure()
     }
 
+    func g(@noescape closure: () -> Void) {
+        closure()
+    }
+
+
+.. When calling f() you have to write self.x
+   but when calling g() you can just write x.
+   That's because the closure in g() is marked with @noescape.
 
 .. sort() in the stdlib is noescape
    because the closure is used in running the function
@@ -639,16 +658,6 @@ after the function returns.
    For example, the callback in a network I/O function
    is called when the I/O completes,
    after the enqueue-operation function returns.
-
-
-
-.. By default, a closure can be called at any time.
-
-.. @noescape is a tighter API contract: that the closure isn't called
-   after the function returns.
-
-.. Using @noescape lets you omit ``self``
-   and it lets the compiler optimize more
 
 
 .. _Closures_Autoclosures:
