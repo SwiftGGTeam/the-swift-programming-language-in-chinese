@@ -848,8 +848,39 @@ For example:
     >> C().method()
     << Title
 
-If an expression in a capture list isn't marked with a specific capture strength,
-the resulting value is captured by value rather than by reference.
+..
+
+    If an expression in a capture list isn't marked with a specific capture strength,
+
+    If an expression is implicitly captured,
+    that is it is not part of a capture list,
+
+    Bindings in a capture list
+    are initialized at the time the closure is created.
+    If a binding doesn't have a name [x] vs [x = foo]
+    it is initialized like [x = x]
+
+    We're capturing the variable not capturing the value.
+
+    the resulting value is captured by value rather than by reference.
+
+    captured by value at time of closure creation
+
+    var a = 0
+    var b = 0
+    let closure = { [a] in
+        print(a)  // prints 0
+        print(b)  // prints 10
+    }
+    a = 10
+    b = 10
+    closure()
+
+
+    The a in the closure's scope is init-ed when the closure is created.
+    A exists in both the inner and outer scopes.
+    But when it refers to b it's just using something from a surrounding scope.
+
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
