@@ -1062,18 +1062,18 @@ or it responds with some error information.
 
     -> enum ServerResponse {
            case Result(String, String)
-           case Error(String)
+           case Failure(String)
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
     << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
-    -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
+    -> let failure = ServerResponse.Failure("Out of cheese.")
+    << // failure : ServerResponse = REPL.ServerResponse.Failure("Out of cheese.")
     ---
     -> switch success {
            case let .Result(sunrise, sunset):
                print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .Error(error):
+           case let .Failure(error):
                print("Failure...  \(error)")
        }
     << Sunrise is at 6:00 am and sunset is at 8:09 pm.
