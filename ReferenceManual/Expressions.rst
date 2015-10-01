@@ -780,6 +780,65 @@ before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
 
+When the closure is created,
+the entries in the capture list are initialized
+to the value of the variable or constant that has the same name
+in the surrounding scope.
+For example in the code below,
+``a`` is included in the capture list but ``b`` is not,
+which gives them different behavior.
+
+.. testcode:: capture-list-value-semantics
+
+    -> var a = 0
+    << // a : Int = 0
+    -> var b = 0
+    << // b : Int = 0
+    -> let closure = { [a] in
+        print(a, b)
+    }
+    << // closure : () -> () = (Function)
+    -> a = 10
+    -> b = 10
+    -> closure()
+    <- 0 10
+
+There are two different variables both named ``a``,
+the one in the surrounding scope and the one inside the closure's scope,
+but only one variable named ``b``.
+The inner ``a`` is initialized with the value of the outer ``a``
+when the closure is created.
+This means that the change to the value of ``a`` in the outer scope
+does not effect the value of ``a`` in the inner scope,
+nor would changes to ``a`` inside the closure
+effect the value of ``a`` outside the closure.
+In contrast, there is only only one variable named ``b`` ---
+the ``b`` in the outer scope ---
+so changes from inside or outside the closure are visible in both places.
+
+This distinction is not visible
+when the captured variable or constant has reference semantics,
+because capturing by reference and by value
+both allow the changes to be visible in both scopes.
+
+.. testcode:: capture-list-reference-semantics
+
+    -> class SimpleClass {
+           var value: Int = 0
+       }
+    -> var x = SimpleClass()
+    << // x : SimpleClass = REPL.SimpleClass
+    -> var y = SimpleClass()
+    << // y : SimpleClass = REPL.SimpleClass
+    -> let closure = { [x] in
+           print(x.value, y.value)
+       }
+    << // closure : () -> () = (Function)
+    -> x.value = 10
+    -> y.value = 10
+    -> closure()
+    <- 10 10
+
 .. assertion:: capture-list-with-commas
 
     -> var x = 100
@@ -831,7 +890,7 @@ to the expression's value.
 
 You can also bind an arbitrary expression
 to a named value in a capture list.
-The expression is evaluated when the closure is formed,
+The expression is evaluated when the closure is created,
 and the value is captured with the specified strength.
 For example:
 
@@ -847,40 +906,6 @@ For example:
     >> } }
     >> C().method()
     << Title
-
-..
-
-    If an expression in a capture list isn't marked with a specific capture strength,
-
-    If an expression is implicitly captured,
-    that is it is not part of a capture list,
-
-    Bindings in a capture list
-    are initialized at the time the closure is created.
-    If a binding doesn't have a name [x] vs [x = foo]
-    it is initialized like [x = x]
-
-    We're capturing the variable not capturing the value.
-
-    the resulting value is captured by value rather than by reference.
-
-    captured by value at time of closure creation
-
-    var a = 0
-    var b = 0
-    let closure = { [a] in
-        print(a)  // prints 0
-        print(b)  // prints 10
-    }
-    a = 10
-    b = 10
-    closure()
-
-
-    The a in the closure's scope is init-ed when the closure is created.
-    A exists in both the inner and outer scopes.
-    But when it refers to b it's just using something from a surrounding scope.
-
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
