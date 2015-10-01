@@ -484,7 +484,7 @@ It is important to consider
 each operator's precedence and associativity
 when working out the order in which a compound expression will be calculated.
 For example,
-operator precedence explains why the following expression equals 17.
+operator precedence explains why the following expression equals ``17``.
 
 .. testcode:: evaluationOrder
 
@@ -496,11 +496,11 @@ operator precedence explains why the following expression equals 17.
 If you read strictly from left to right,
 you might expect the expression to be calculated as follows:
 
-* 2 plus 3 equals 5
-* 5 remainder 4 equals 1
-* 1 times 5 equals 5
+* ``2`` plus ``3`` equals ``5``
+* ``5`` remainder ``4`` equals ``1``
+* ``1`` times ``5`` equals ``5``
 
-However, the actual answer is 17, not 5.
+However, the actual answer is ``17``, not ``5``.
 Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the remainder operator (``%``) and the multiplication operator (``*``)
@@ -519,21 +519,21 @@ starting from their left:
    -> 2 + ((3 % 4) * 5)
    << // r1 : Int = 4
 
-``(3 % 4)`` is 3, so this is equivalent to:
+``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
    -> 2 + (3 * 5)
    << // r2 : Int = 4
 
-``(3 * 5)`` is 15, so this is equivalent to:
+``(3 * 5)`` is ``15``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
    -> 2 + 15
    << // r3 : Int = 17
 
-This calculation yields the final answer of 17.
+This calculation yields the final answer of ``17``.
 
 For a complete list of Swift operator precedences and associativity rules,
 see :doc:`../ReferenceManual/Expressions`.
