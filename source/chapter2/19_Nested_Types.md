@@ -1,12 +1,12 @@
-# 嵌套类型（Nested Types）
------------------
-
 > 1.0
-> 翻译：[Lin-H](https://github.com/Lin-H)
+> 翻译：[Lin-H](https://github.com/Lin-H)  
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
 > 2.0
 > 翻译+校对：[SergioChan](https://github.com/SergioChan)
+
+# 嵌套类型
+-----------------
 
 本页包含内容：
 
@@ -69,8 +69,8 @@ struct BlackjackCard {
 
 如上文所提到的，枚举型`Rank`在自己内部定义了一个嵌套结构体`Values`。在这个结构体中，只有`Ace`有两个数值，其余牌都只有一个数值。结构体`Values`中定义的两个属性：
 
-- `first`为` Int`
-- `second`为 `Int?` 或 “optional `Int`”
+`first`, 为` Int`
+`second`, 为 `Int?`, 或 “optional `Int`”
 
 `Rank`定义了一个计算属性`values`，它将会返回一个结构体`Values`的实例。这个计算属性会根据牌的面值，用适当的数值去初始化`Values`实例，并赋值给`values`。对于`J`,`Q`,`K`,`Ace`会使用特殊数值，对于数字面值的牌使用`Int`类型的值。
 

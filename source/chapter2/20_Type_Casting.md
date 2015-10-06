@@ -1,12 +1,12 @@
-# 类型转换（Type Casting）
------------------
-
 > 1.0
 > 翻译：[xiehurricane](https://github.com/xiehurricane)
 > 校对：[happyming](https://github.com/happyming)
 
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
+
+# 类型转换（Type Casting）
+-----------------
 
 本页包含内容：
 
@@ -16,7 +16,7 @@
 - [`Any`和`AnyObject`的类型转换](#type_casting_for_any_and_anyobject)
 
 
-_类型转换_ 可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
+_类型转换_可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 

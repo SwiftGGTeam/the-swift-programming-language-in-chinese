@@ -96,7 +96,7 @@ counter.incrementBy(5, numberOfTimes: 3)
 <a name="modifying_external_parameter_name_behavior_for_methods"></a>
 ### 修改方法的外部参数名称(Modifying External Parameter Name Behavior for Methods)
 
-有时为方法的第一个参数提供一个外部参数名称是非常有用的，尽管这不是默认的行为。你可以自己添加一个显式的外部名称或者用一个井号（`#`）作为第一个参数的前缀来把这个局部名称当作外部名称使用。
+有时为方法的第一个参数提供一个外部参数名称是非常有用的，尽管这不是默认的行为。你可以自己添加一个显式的外部名称作为第一个参数的前缀来把这个局部名称当作外部名称使用。
 
 相反，如果你不想为方法的第二个及后续的参数提供一个外部名称，可以通过使用下划线（`_`）作为该参数的显式外部名称，这样做将覆盖默认行为。
 
@@ -222,7 +222,7 @@ ovenLight.next()
 
 ```swift
 class SomeClass {
-  class func someTypeMethod() {
+  static func someTypeMethod() {
     // type method implementation goes here
   }
 }

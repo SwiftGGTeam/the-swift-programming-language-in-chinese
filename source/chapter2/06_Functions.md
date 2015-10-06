@@ -40,7 +40,7 @@ func sayHello(personName: String) -> String {
 
 所有的这些信息汇总起来成为函数的定义，并以 `func` 作为前缀。指定函数返回类型时，用返回箭头 `->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
 
-该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么。这样的定义使得函数可以在别的地方以一种清晰的方式被调用：
+该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么类型。这样的定义使得函数可以在别的地方以一种清晰的方式被调用：
 
 ```swift
 print(sayHello("Anna"))
@@ -100,9 +100,9 @@ print(sayHelloWorld())
 
 ### 多参量函数 (Functions With Multiple Parameters)
 
-函数可以有多种输入参数,这写参数被包含在函数的括号之中,以逗号分隔.
+函数可以有多种输入参数，这些参数被包含在函数的括号之中，以逗号分隔。
 
-这个函数取得一个人的名字和是否被招呼作为输入,并对那个人返回适当地问候语:
+这个函数取得一个人的名字和是否被招呼作为输入，并对那个人返回适当的问候语:
 
 ```swift
 func sayHello(personName: String, alreadyGreeted: Bool) -> String {
@@ -116,9 +116,9 @@ print(sayHello("Tim", alreadyGreeted: true))
 // prints "Hello again, Tim!"
 ```
 
-你通过在括号内传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值,使用逗号分隔来调用`sayHello(_:alreadyGreeted:)`函数.
+你通过在括号内传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值，使用逗号分隔来调用`sayHello(_:alreadyGreeted:)`函数。
 
-当调用超过一个参数的函数时,第一个参数后的参数根据其对应的参数名称标记,函数参数命名在[函数参数名称（Function Parameter Names）](#Function_Parameter_Names)有更详细的描述.
+当调用超过一个参数的函数时，第一个参数后的参数根据其对应的参数名称标记，函数参数命名在[函数参数名称（Function Parameter Names）](#Function_Parameter_Names)有更详细的描述。
 
 <a name="functions_without_return_values"></a>
 ### 无返回值函数（Functions Without Return Values）
@@ -164,7 +164,7 @@ printWithoutCounting("hello, world")
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
-下面的这个例子中，定义了一个名为`minMax(_:)`的函数,作用是在一个`Int`数组中找出最小值与最大值.
+下面的这个例子中，定义了一个名为`minMax(_:)`的函数，作用是在一个`Int`数组中找出最小值与最大值。
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
@@ -181,9 +181,9 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 }
 ```
 
-`minMax(_:)`函数返回一个包含两个`Int`值的元组,这些值被标记为`min`和`max`,一遍查询函数的返回值时他们可以被访问.
+`minMax(_:)`函数返回一个包含两个`Int`值的元组，这些值被标记为`min`和`max`，以便查询函数的返回值时他们可以被访问。
 
-`minMax(_:)`的函数体中,在开始的时候设置两个工作变量`currentMin`和`currentMax`作为数组中的第一个`Int`值.然后函数会遍历数组中剩余的值并检查该值是否比`currentMin`和`currentMax`更小或更大.最后数组中的最小值与最大值返回两个`Int`值最为一个元组.
+`minMax(_:)`的函数体中，在开始的时候设置两个工作变量`currentMin`和`currentMax`作为数组中的第一个`Int`值。然后函数会遍历数组中剩余的值并检查该值是否比`currentMin`和`currentMax`更小或更大。最后数组中的最小值与最大值返回两个`Int`值最为一个元组。
 
 因为元组的成员值被命名为函数的返回类型的一部分​​，可以通过点语法来访问与取回发现的最小值与最小值:
 
@@ -197,14 +197,14 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 可选元组返回类型(Optional Tuple Return Types)
 
-如果函数返回的元组类型中有可能在整个元组中含有“没有值”，你可以使用*可选的(Optional)* 元组返回类型反映整个元组可以是`nil`的事实.你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组,例如`(Int,Int)?`或`(String,Int,Bool)?`
+如果函数返回的元组类型中有可能在整个元组中含有“没有值”，你可以使用*可选的(Optional)* 元组返回类型反映整个元组可以是`nil`的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如`(Int,Int)?`或`(String,Int,Bool)?`
 
 > 注意:
-> 可选元组类型如`(Int,Int)?`与元组包含可选属性如`(Int?,Int?)`是不同的.可选的元组类型，整个数组是可选的，而不只是元组中的每个元素值.
+> 可选元组类型如`(Int,Int)?`与元组包含可选属性如`(Int?,Int?)`是不同的.可选的元组类型，整个数组是可选的，而不只是元组中的每个元素值。
 
-前面的`minMax(_:)`函数返回了一个包含两个`Int`值的元组.但是函数不会在数组中执行任何安全检查,如果`array`参数有一个空数组,如上定义的`minMax(_:)`在试图访问`array[0]`时会触发一个运行时错误.
+前面的`minMax(_:)`函数返回了一个包含两个`Int`值的元组。但是函数不会在数组中执行任何安全检查，如果`array`参数有一个空数组，如上定义的`minMax(_:)`在试图访问`array[0]`时会触发一个运行时错误。
 
-为了安全的处理这个"空数组"问题,写一个`minMax(_:)`函数使用可选元组返回类型,并且当数组为空时返回`nil`:
+为了安全的处理这个"空数组"问题，写一个`minMax(_:)`函数使用可选元组返回类型，并且当数组为空时返回`nil`:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
@@ -234,7 +234,7 @@ if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
 <a name="Function_Parameter_Names"></a>
 ## 函数参数名称（Function Parameter Names）
 
-函数参数都有一个*外部参数名(external parameter name)*和一个*本地参数名(local parameter name)*.外部参数名用来标记传递给函数调用的参数,本地参数名在实现函数的时候使用.
+函数参数都有一个*外部参数名(external parameter name)*和一个*本地参数名(local parameter name)*。外部参数名用来标记传递给函数调用的参数，本地参数名在实现函数的时候使用。
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
@@ -245,12 +245,12 @@ func someFunction(firstParameterName: Int, secondParameterName: Int) {
 someFunction(1, secondParameterName: 2)
 ```
 
-一般情况下,第一个参数省略其外部参数名,第二个以后的参数使用其本地参数名作为自己的外部参数名.所有参数需要有不同的本地参数名,但可以共享相同的外部参数名.
+一般情况下，第一个参数省略其外部参数名，第二个以后的参数使用其本地参数名作为自己的外部参数名。所有参数需要有不同的本地参数名，但可以共享相同的外部参数名。
 
 <a name="specifying_external_parameter_names"></a>
 ### 指定外部参数名(Specifying External Parameter Names)
 
-你可以在本地参数名前指定外部参数名,中间以空格分隔.
+你可以在本地参数名前指定外部参数名，中间以空格分隔。
 
 ```swift
 func someFunction(externalParameterName localParameterName: Int) {
@@ -259,10 +259,10 @@ func someFunction(externalParameterName localParameterName: Int) {
 }
 ```
 
-> 注意:
+> 注意：
 > 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。
 
-这个版本的`sayHello(_:)`函数,得到了两个人的名字,会同时返回对他俩的问候:
+这个版本的`sayHello(_:)`函数，得到了两个人的名字，会同时返回对他俩的问候：
 
 ```swift
 func sayHello(to person: String, and anotherPerson: String) -> String {
@@ -272,13 +272,13 @@ print(sayHello(to: "Bill", and: "Ted"))
 // prints "Hello Bill and Ted!"
 ```
 
-为每个参数指定外部参数名,在你调用函数`sayHello(to:and:)`函数时时两个参数都必须被标记出来.
+为每个参数指定外部参数名，在你调用函数`sayHello(to:and:)`函数时时两个参数都必须被标记出来。
 
-使用外部函数名可以使得函数可以用一句话表达清楚,并且使得函数体内部可读,能表达出函数的明确意图.
+使用外部函数名可以使得函数可以用一句话表达清楚，并且使得函数体内部可读，能表达出函数的明确意图。
 
 ### 忽略外部参数名(Omitting External Parameter Names)
 
-如果你不想为第二个及后续的参数设置参数名,用一个下划线(_)代替一个明确地参数名.
+如果你不想为第二个及后续的参数设置参数名，用一个下划线(`_`)代替一个明确地参数名。
 
 ```swift
 func someFunction(firstParameterName: Int, _ secondParameterName: Int) {
@@ -292,7 +292,7 @@ someFunction(1, 2)
 > 注意:
 > 因为第一个参数默认忽略其外部参数名称，明确写下划线是多余的。
 
-
+<a name="default_parameter_values"></a>
 ### 默认参数值（Default Parameter Values）
 
 你可以在函数体中为每个参数定义`默认值(Deafult Values)`。当默认值被定义后，调用这个函数时可以忽略这个参数。
@@ -301,7 +301,7 @@ someFunction(1, 2)
 func someFunction(parameterWithDefault: Int = 12) {
     // function body goes here
     // if no arguments are passed to the function call,
-    // value of parameterWithDefault is 42
+    // value of parameterWithDefault is 12
 }
 someFunction(6) // parameterWithDefault is 6
 someFunction() // parameterWithDefault is 12
@@ -314,7 +314,7 @@ someFunction() // parameterWithDefault is 12
 
 一个`可变参数（variadic parameter）`可以接受零个或多个值。函数调用时，你可以用可变参数来传入不确定数量的输入参数。通过在变量类型名后面加入`（...）`的方式来定义可变参数。
 
-传入可变参数的值在函数体内当做这个类型的一个数组。例如，一个叫做 `numbers` 的 `Double...` 型可变参数，在函数体内可以当做一个叫 `numbers` 的 `Double[]` 型的数组常量。
+可变参数的传入值在函数体为此类型的一个数组。例如，一个叫做 `numbers` 的 `Double...` 型可变参数，在函数体内可以当做一个叫 `numbers` 的 `[Double]` 型的数组常量。
 
 下面的这个函数用来计算一组任意长度数字的`算术平均数(arithmetic mean)`：
 
@@ -333,8 +333,8 @@ arithmeticMean(3, 8.25, 18.75)
 ```
 
 > 注意：
-> 最多可以有一个可变参数函数,和它必须出现在参数列表中,为了避免歧义在调用函数有多个参数。
-> 如果你的函数有一个或多个参数有默认值,还有一个可变的参数,将可变参写在参数列表的最后。
+> 最多可以有一个可变参数函数，和它必须出现在参数列表中，为了避免歧义在调用函数有多个参数。
+> 如果你的函数有一个或多个参数有默认值，还有一个可变的参数，将可变参写在参数列表的最后。
 
 如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
 
@@ -370,11 +370,11 @@ let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
 
 　函数首先找出有多少字符需要被添加到左边的字符串以右对齐在整个字符串。这个值是存储在一个本地常数称为amountToPad。如果不需要填充(也就是说,如果amountToPad小于1),该函数返回字符串没有填充的输入值。
 　　
-　　否则,该函数创建一个新的临时字符串常量称为padString,初始化填充字符,并将amountToPad padString副本添加到现有的左边的字符串。(一个字符串值不能被添加到一个字符值,所以padString常数用于确保双方+操作符的字符串值)。
+　　否则,该函数创建一个新的临时字符串常量称为padString，初始化填充字符，并将amountToPad padString副本添加到现有的左边的字符串。(一个字符串值不能被添加到一个字符值，所以padString常数用于确保双方+操作符的字符串值)。
 
-该函数首先计算出多少个字符需要被添加到 `string` 的左边，以右对齐到总的字符串中。这个值存在局部常量 `amountToPad` 中。如果不需要填充(即,如果`amountToPad`小于`1`),该函数返回没有填充输入的`string`.
+该函数首先计算出多少个字符需要被添加到 `string` 的左边，以右对齐到总的字符串中。这个值存在局部常量 `amountToPad` 中。如果不需要填充(即，如果`amountToPad`小于`1`)，该函数返回没有填充输入的`string`。
 
-否则,该函数会建立一个临时的String常量称为`padString`,初始化`pad`字符,并将`amountToPad`作为`padString`的副本添加到现有的字符串左边.(一个`Character`后不能直接添加一个`String`值,所以`padString`经常用于确保`+`号两边都是`String`值.)
+否则，该函数会建立一个临时的String常量称为`padString`，初始化`pad`字符,并将`amountToPad`作为`padString`的副本添加到现有的字符串左边。(一个`Character`后不能直接添加一个`String`值，所以`padString`经常用于确保`+`号两边都是`String`值。)
 
 > 注意：
 > 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
@@ -436,7 +436,7 @@ func multiplyTwoInts(a: Int, _ b: Int) -> Int {
 
 这个例子中定义了两个简单的数学函数：`addTwoInts` 和 `multiplyTwoInts`。这两个函数都传入两个 `Int` 类型， 返回一个合适的`Int`值。
 
-这两个函数的类型是 `(Int, Int) -> Int`，可以读作“这个函数类型，它有两个 `Int` 型的参数并返回一个 `Int` 型的值。”。
+这两个函数的类型是 `(Int, Int) -> Int`，可以读作”这个函数类型，它有两个 `Int` 型的参数并返回一个 `Int` 型的值。”。
 
 下面是另一个例子，一个没有参数，也没有返回值的函数：
 
