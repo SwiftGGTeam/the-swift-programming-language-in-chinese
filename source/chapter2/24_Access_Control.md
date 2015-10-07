@@ -1,8 +1,12 @@
-> 翻译：[JaceFu](http://www.devtalking.com/)  
+# 访问控制（Access Control）
+------------------
+
+> 1.0
+> 翻译：[JaceFu](http://www.devtalking.com/)
 > 校对：[ChildhoodAndy](http://childhood.logdown.com)
 
-# 访问控制
-------------------
+> 2.0
+> 翻译+校对：[mmoaay](https://github.com/mmoaay)
 
 本页内容包括：
 
@@ -146,7 +150,7 @@ private class SomePrivateClass {        // 显式的 private 类
 ### 函数类型
 函数的访问级别需要根据该函数的参数类型和返回类型的访问级别得出。如果根据参数类型和返回类型得出的函数访问级别不符合默认上下文，那么就需要明确地申明该函数的访问级别。
 
-下面的例子定义了一个名为`someFunction`全局函数，并且没有明确地申明其访问级别。也许你会认为该函数应该拥有默认的访问级别`internal`，但事实并非如此。事实上，如果按下面这种写法，带埋是无法编译通过的：
+下面的例子定义了一个名为`someFunction`全局函数，并且没有明确地申明其访问级别。也许你会认为该函数应该拥有默认的访问级别`internal`，但事实并非如此。事实上，如果按下面这种写法，代码是无法编译通过的：
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -255,7 +259,7 @@ struct TrackedString {
 ```
 
 
-`TrackedString`结构体定义了一个用于存储`String`类型的属性`value`，并将初始化值设为`""`（即一个空字符串）。该结构体同时也定义了另一个用于存储`Int`类型的属性名`numberOfEdits`，它用于记录属性`value`被修改的次数。这个功能的实现通过属性`value`的`didSet`方法实现，每当给`value`赋新值时就会调用`didSet`方法，然后将`numberOfEdits`的值加一。   
+`TrackedString`结构体定义了一个用于存储`String`类型的属性`value`，并将初始化值设为`""`（即一个空字符串）。该结构体同时也定义了另一个用于存储`Int`类型的属性名`numberOfEdits`，它用于记录属性`value`被修改的次数。这个功能的实现通过属性`value`的`didSet`方法实现，每当给`value`赋新值时就会调用`didSet`方法，然后将`numberOfEdits`的值加一。
 
 结构体`TrackedString`和它的属性`value`均没有申明显式访问级别，所以它们都拥有默认的访问级别`internal`。但是该结构体的`numberOfEdits`属性使用`private(set)`修饰符进行申明，这意味着`numberOfEdits`属性只能在定义该结构体的源文件中赋值。`numberOfEdits`属性的`Getter`依然是默认的访问级别`internal`，但是`Setter`的访问级别是`private`，这表示该属性只有在当前的源文件中是可读写的，而在当前源文件所属的模块中它只是一个可读的属性。  
 
@@ -266,7 +270,7 @@ var stringToEdit = TrackedString()
 stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
-println("The number of edits is \(stringToEdit.numberOfEdits)")
+print("The number of edits is \(stringToEdit.numberOfEdits)")
 // prints "The number of edits is 3"
 ```
 
@@ -288,13 +292,13 @@ public struct TrackedString {
 
 <a name="initializers"></a>
 ## 初始化
-我们可以给自定义的初始化方法申明访问级别，但是要不高于它所属类的访问级别。但[必要构造器](TODO)例外，它的访问级别必须和所属类的访问级别相同。
+我们可以给自定义的初始化方法申明访问级别，但是要不高于它所属类的访问级别。但[必要构造器](./14_Initialization.html#required_initializers)例外，它的访问级别必须和所属类的访问级别相同。
 
 如同函数或方法参数，初始化方法参数的访问级别也不能低于初始化方法的访问级别。
 
 <a name="default_initializers"></a>
 ### 默认初始化方法
-Swift为结构体、类都提供了一个默认的无参初始化方法，用于给它们的所有属性提供赋值操作，但不会给出具体值。默认初始化方法可以参阅[Default Initializers](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_336)。默认初始化方法的访问级别与所属类型的访问级别相同。
+Swift为结构体、类都提供了一个默认的无参初始化方法，用于给它们的所有属性提供赋值操作，但不会给出具体值。默认初始化方法可以参阅[默认构造器](./14_Initialization.html#default_initializers)。默认初始化方法的访问级别与所属类型的访问级别相同。
 
 > 注意：如果一个类型被申明为`public`级别，那么默认的初始化方法的访问级别为`internal`。如果你想让无参的初始化方法在其他模块中可以被使用，那么你必须提供一个具有`public`访问级别的无参初始化方法。
 
@@ -345,6 +349,3 @@ Swift为结构体、类都提供了一个默认的无参初始化方法，用于
 任何你定义的类型别名都会被当作不同的类型，以便于进行访问控制。一个类型别名的访问级别不可高于原类型的访问级别。比如说，一个`private`级别的类型别名可以设定给一个`public`、`internal`、`private`的类型，但是一个`public`级别的类型别名只能设定给一个`public`级别的类型，不能设定给`internal`或`private` 级别的类型。
 
 > 注意：这条规则也适用于为满足协议一致性而给相关类型命名别名的情况。
-
-
-

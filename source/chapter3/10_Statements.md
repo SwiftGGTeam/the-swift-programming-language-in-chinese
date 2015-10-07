@@ -1,9 +1,13 @@
-> 翻译：[coverxit](https://github.com/coverxit),[littledogboy](https://github.com/littledogboy)  
-> 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),[littledogboy](https://github.com/littledogboy)
-
 <a name="statement_statements"></a>
-# 语句
+# 语句（Statements）
 -----------------
+
+> 1.0
+> 翻译：[coverxit](https://github.com/coverxit)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),
+
+> 2.0
+> 翻译+校对：[littledogboy](https://github.com/littledogboy)
 
 本页包含内容：
 
@@ -19,14 +23,14 @@
 是否将分号（`;`）添加到语句的结尾处是可选的。但若要在同一行内写多条独立语句，请务必使用分号。
 
 > 语句语法  
-> *语句* → [*表达式*](..\chapter3\04_Expressions.html#expression) **;** _可选_  
-> *语句* → [*声明*](..\chapter3\05_Declarations.html#declaration) **;** _可选_  
-> *语句* → [*循环语句*](..\chapter3\10_Statements.html#loop_statement) **;** _可选_  
-> *语句* → [*分支语句*](..\chapter3\10_Statements.html#branch_statement) **;** _可选_  
-> *语句* → [*标记语句(Labeled Statement)*](..\chapter3\10_Statements.html#labeled_statement)  
-> *语句* → [*控制转移语句*](..\chapter3\10_Statements.html#control_transfer_statement) **;** _可选_  
-> *语句* → [*XXX语句*](..\chapter3\10_Statements.html#control_transfer_statement) **;** _可选_     
-> *多条语句(Statements)* → [*语句*](..\chapter3\10_Statements.html#statement) [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements) _可选_  
+> *语句* → [*表达式*](../chapter3/04_Expressions.html#expression) **;** _可选_  
+> *语句* → [*声明*](../chapter3/05_Declarations.html#declaration) **;** _可选_  
+> *语句* → [*循环语句*](../chapter3/10_Statements.html#loop_statement) **;** _可选_  
+> *语句* → [*分支语句*](../chapter3/10_Statements.html#branch_statement) **;** _可选_  
+> *语句* → [*标记语句(Labeled Statement)*](../chapter3/10_Statements.html#labeled_statement)  
+> *语句* → [*控制转移语句*](../chapter3/10_Statements.html#control_transfer_statement) **;** _可选_  
+> *语句* → [*XXX语句*](../chapter3/10_Statements.html#control_transfer_statement) **;** _可选_     
+> *多条语句(Statements)* → [*语句*](../chapter3/10_Statements.html#statement) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements) _可选_  
 
 <a name="loop_statements"></a>
 ## 循环语句
@@ -36,10 +40,10 @@
 通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
 
 > 循环语句语法  
-> *循环语句* → [*for语句*](..\chapter3\10_Statements.html#for_statement)  
-> *循环语句* → [*for-in语句*](..\chapter3\10_Statements.html#for_in_statement)  
-> *循环语句* → [*while语句*](..\chapter3\10_Statements.html#wheetatype类型ile_statement)  
-> *循环语句* → [*do-while语句*](..\chapter3\10_Statements.html#do_while_statement)  
+> *循环语句* → [*for语句*](../chapter3/10_Statements.html#for_statement)  
+> *循环语句* → [*for-in语句*](../chapter3/10_Statements.html#for_in_statement)  
+> *循环语句* → [*while语句*](../chapter3/10_Statements.html#wheetatype类型ile_statement)  
+> *循环语句* → [*do-while语句*](../chapter3/10_Statements.html#do_while_statement)  
 
 <a name="for_statements"></a>
 ### For 语句
@@ -64,9 +68,9 @@
 在 *initialzation* 中定义的变量仅在`for`循环的作用域内有效。*condition* 表达式的值的类型必须遵循`BooleanType `协议。
 
 > For 循环语法  
-> *for语句* → **for** [*for初始条件*](..\chapter3\10_Statements.html#for_init) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *for语句* → **for** **(** [*for初始条件*](..\chapter3\10_Statements.html#for_init) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ **;** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_ **)** [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *for初始条件* → [*变量声明*](..\chapter3\05_Declarations.html#variable_declaration) | [*表达式列表*](..\chapter3\04_Expressions.html#expression_list)  
+> *for语句* → **for** [*for初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *for语句* → **for** **(** [*for初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **)** [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *for初始条件* → [*变量声明*](../chapter3/05_Declarations.html#variable_declaration) | [*表达式列表*](../chapter3/04_Expressions.html#expression_list)  
 
 
 <a name="for-in_statements"></a>
@@ -83,7 +87,7 @@
 `for-in`语句在循环开始前会调用 *collection* 表达式的`generate`方法来获取一个生成器类型（这是一个遵循`Generator`协议的类型）的值。接下来循环开始，调用 *collection* 表达式的`next`方法。如果其返回值不是`None`，它将会被赋给 *item*，然后执行 *statements*，执行完毕后回到循环开始处；否则，将不会赋值给 *item* 也不会执行 *statements*，`for-in`至此执行完毕。
 
 > For-In 循环语法  
-> *for-in语句* → **for** [*模式*](..\chapter3\07_Patterns.html#pattern) **in** [*表达式*](..\chapter3\04_Expressions.html#expression) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
+> *for-in语句* → **for** [*模式*](../chapter3/07_Patterns.html#pattern) **in** [*表达式*](../chapter3/04_Expressions.html#expression) [*代码块*](../chapter3/05_Declarations.html#code_block)  
 
 
 <a name="while_statements"></a>
@@ -108,17 +112,17 @@
 *condition* 表达式的值的类型必须遵循`BooleanType `协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
 > While 循环语法  
-> *while语句* → **while** [*while条件*](..\chapter3\10_Statements.html#while_condition) [*代码块*](..\chapter3\05_Declarations.html#code_block)  
-> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*声明*](..\chapter3\05_Declarations.html#declaration)   
-> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression)   
-> *条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*条件列表*](TODO)    
-> *条件* → [*可用条件*](..\chapter3\10_Statement.html#availability) [*表达式*](..\chapter3\04_Expressions.html#expression)    
+> *while语句* → **while** [*while条件*](../chapter3/10_Statements.html#while_condition) [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*声明*](../chapter3/05_Declarations.html#declaration)   
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression)   
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*条件列表*](TODO)    
+> *条件* → [*可用条件*](../chapter3/10_Statement.html#availability) [*表达式*](../chapter3/04_Expressions.html#expression)    
 > *条件列表* → [*条件条件*](TODO)  [*条件列表*](TODO)      
-> *条件* → [*可用条件*](..\chapter3\10_Statement.html#availability) [可选绑定条件](../chapter2/01_The_Basics.html#optional_binding)    
-> *case条件* → **case** [*模式*](..\chapter3\07_Patterns.html#pattern) [构造器](TODO) [where](DOTO)    
+> *条件* → [*可用条件*](../chapter3/10_Statement.html#availability) [可选绑定条件](../chapter2/01_The_Basics.html#optional_binding)    
+> *case条件* → **case** [*模式*](../chapter3/07_Patterns.html#pattern) [构造器](TODO) [where](DOTO)    
 > *可选绑定条件* → [可选绑定头](TODO) [持续可选绑定](TODO) [持续可选绑定列表](TODO)    
-> *可选绑定头* → **let** [*模式*](..\chapter3\07_Patterns.html#pattern)  [构造器](TODO)  **var**  [*模式*](..\chapter3\07_Patterns.html#pattern)  [构造器](TODO)    
->  *可持续绑定列表* →  [*模式*](..\chapter3\07_Patterns.html#pattern) |  [构造器](TODO) [可选绑定头](TODO)
+> *可选绑定头* → **let** [*模式*](../chapter3/07_Patterns.html#pattern)  [构造器](TODO)  **var**  [*模式*](../chapter3/07_Patterns.html#pattern)  [构造器](TODO)    
+>  *可持续绑定列表* →  [*模式*](../chapter3/07_Patterns.html#pattern) |  [构造器](TODO) [可选绑定头](TODO)
 > 
 
 
@@ -145,7 +149,7 @@
 *condition* 表达式的值的类型必须遵循`BooleanType `协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
 > Repeat-While 循环语法  
-> * repeat-while语句* → **repeat** [*代码块*](..\chapter3\05_Declarations.html#code_block) **while** [*while条件*](..\chapter3\10_Statements.html#while_condition)  
+> * repeat-while语句* → **repeat** [*代码块*](../chapter3/05_Declarations.html#code_block) **while** [*while条件*](../chapter3/10_Statements.html#while_condition)  
 
 <a name="branch_statements"></a>
 ## 分支语句
@@ -155,8 +159,8 @@
 `switch`语句中的控制流可以用`break`语句修改，详情请见[Break 语句](#break_statement)。
 
 > 分支语句语法  
-> *分支语句* → [*if语句*](..\chapter3\10_Statements.html#if_statement)  
-> *分支语句* → [*switch语句*](..\chapter3\10_Statements.html#switch_statement)  
+> *分支语句* → [*if语句*](../chapter3/10_Statements.html#if_statement)  
+> *分支语句* → [*switch语句*](../chapter3/10_Statements.html#switch_statement)  
 
 
 <a name="if_statements"></a>
@@ -194,9 +198,9 @@
 `if`语句中条件的值的类型必须遵循`LogicValue`协议。同时，条件也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
 > If语句语法  
-> *if语句* → **if** [*if条件*](..\chapter3\10_Statements.html#if_condition) [*代码块*](..\chapter3\05_Declarations.html#code_block) [*else(Clause)*](..\chapter3\10_Statements.html#else_clause) _可选_  
-> *if条件* → [*表达式*](..\chapter3\04_Expressions.html#expression) | [*声明*](..\chapter3\05_Declarations.html#declaration)  
-> *else(Clause)* → **else** [*代码块*](..\chapter3\05_Declarations.html#code_block) | **else** [*if语句*](..\chapter3\10_Statements.html#if_statement)     
+> *if语句* → **if** [*if条件*](../chapter3/10_Statements.html#if_condition) [*代码块*](../chapter3/05_Declarations.html#code_block) [*else(Clause)*](../chapter3/10_Statements.html#else_clause) _可选_  
+> *if条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*声明*](../chapter3/05_Declarations.html#declaration)  
+> *else(Clause)* → **else** [*代码块*](../chapter3/05_Declarations.html#code_block) | **else** [*if语句*](../chapter3/10_Statements.html#if_statement)     
 
 
 <a name="guard_statements"></a>
@@ -266,15 +270,15 @@ case let (x, y) where x == y:
 当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这就意味着，如果你想执行下一个 case 分支，需要显式地在你需要的 case 分支里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，详情参见 [Fallthrough 语句](#fallthrough_statement)。
 
 > Switch语句语法  
-> *switch语句* → **switch** [*表达式*](..\chapter3\04_Expressions.html#expression) **{** [*SwitchCase列表*](..\chapter3\10_Statements.html#switch_cases) _可选_ **}**  
-> *SwitchCase列表* → [*SwitchCase*](..\chapter3\10_Statements.html#switch_case) [*SwitchCase列表*](..\chapter3\10_Statements.html#switch_cases) _可选_  
-> *SwitchCase* → [*case标签*](..\chapter3\10_Statements.html#case_label) [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements) | [*default标签*](..\chapter3\10_Statements.html#default_label) [*多条语句(Statements)*](..\chapter3\10_Statements.html#statements)  
-> *SwitchCase* → [*case标签*](..\chapter3\10_Statements.html#case_label) **;** | [*default标签*](..\chapter3\10_Statements.html#default_label) **;**  
-> *case标签* → **case** [*case项列表*](..\chapter3\10_Statements.html#case_item_list) **:**  
-> *case项列表* → [*模式*](..\chapter3\07_Patterns.html#pattern) [*guard-clause*](..\chapter3\10_Statements.html#guard_clause) _可选_ | [*模式*](..\chapter3\07_Patterns.html#pattern) [*guard-clause*](..\chapter3\10_Statements.html#guard_clause) _可选_ **,** [*case项列表*](..\chapter3\10_Statements.html#case_item_list)  
+> *switch语句* → **switch** [*表达式*](../chapter3/04_Expressions.html#expression) **{** [*SwitchCase列表*](../chapter3/10_Statements.html#switch_cases) _可选_ **}**  
+> *SwitchCase列表* → [*SwitchCase*](../chapter3/10_Statements.html#switch_case) [*SwitchCase列表*](../chapter3/10_Statements.html#switch_cases) _可选_  
+> *SwitchCase* → [*case标签*](../chapter3/10_Statements.html#case_label) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements) | [*default标签*](../chapter3/10_Statements.html#default_label) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements)  
+> *SwitchCase* → [*case标签*](../chapter3/10_Statements.html#case_label) **;** | [*default标签*](../chapter3/10_Statements.html#default_label) **;**  
+> *case标签* → **case** [*case项列表*](../chapter3/10_Statements.html#case_item_list) **:**  
+> *case项列表* → [*模式*](../chapter3/07_Patterns.html#pattern) [*guard-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ | [*模式*](../chapter3/07_Patterns.html#pattern) [*guard-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ **,** [*case项列表*](../chapter3/10_Statements.html#case_item_list)  
 > *default标签* → **default** **:**  
-> *where-clause* → **where** [*guard-expression*](..\chapter3\10_Statements.html#guard)  
-> *where-expression* → [*表达式*](..\chapter3\04_Expressions.html#expression)  
+> *where-clause* → **where** [*guard-expression*](../chapter3/10_Statements.html#guard)  
+> *where-expression* → [*表达式*](../chapter3/04_Expressions.html#expression)  
 
 <a name="labeled_statements"></a>
 <a name="control_transfer_statements"></a>
@@ -287,9 +291,9 @@ case let (x, y) where x == y:
 关于使用带标签的语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > 标记语句语法  
-> *标记语句(Labeled Statement)* → [*语句标签*](..\chapter3\10_Statements.html#statement_label) [*循环语句*](..\chapter3\10_Statements.html#loop_statement) | [*语句标签*](..\chapter3\10_Statements.html#statement_label) [*switch语句*](..\chapter3\10_Statements.html#switch_statement)  
-> *语句标签* → [*标签名称*](..\chapter3\10_Statements.html#label_name) **:**  
-> *标签名称* → [*标识符*](..\chapter3\02_Lexical_Structure.html#identifier)  
+> *标记语句(Labeled Statement)* → [*语句标签*](../chapter3/10_Statements.html#statement_label) [*循环语句*](../chapter3/10_Statements.html#loop_statement) | [*语句标签*](../chapter3/10_Statements.html#statement_label) [*switch语句*](../chapter3/10_Statements.html#switch_statement)  
+> *语句标签* → [*标签名称*](../chapter3/10_Statements.html#label_name) **:**  
+> *标签名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)  
 
 <a name="control_transfer_statements"></a>
 ## 控制传递语句
@@ -297,11 +301,11 @@ case let (x, y) where x == y:
 通过无条件地把控制权从一片代码传递到另一片代码，控制传递语句能够改变代码执行的顺序。Swift 提供四种类型的控制传递语句：`break`语句、`continue`语句、`fallthrough`语句和`return`语句。
 
 > 控制传递语句(Control Transfer Statement) 语法  
-> *控制传递语句* → [*break语句*](..\chapter3\10_Statements.html#break_statement)  
-> *控制传递语句* → [*continue语句*](..\chapter3\10_Statements.html#continue_statement)  
-> *控制传递语句* → [*fallthrough语句*](..\chapter3\10_Statements.html#fallthrough_statement)  
-> *控制传递语句* → [*return语句*](..\chapter3\10_Statements.html#return_statement)     
-> *控制传递语句* → [*throw语句*](..\chapter3\10_Statements.html#throw_statement)  
+> *控制传递语句* → [*break语句*](../chapter3/10_Statements.html#break_statement)  
+> *控制传递语句* → [*continue语句*](../chapter3/10_Statements.html#continue_statement)  
+> *控制传递语句* → [*fallthrough语句*](../chapter3/10_Statements.html#fallthrough_statement)  
+> *控制传递语句* → [*return语句*](../chapter3/10_Statements.html#return_statement)     
+> *控制传递语句* → [*throw语句*](../chapter3/10_Statements.html#throw_statement)  
 
 <a name="break_statements"></a>
 ### Break 语句
@@ -320,7 +324,7 @@ case let (x, y) where x == y:
 关于使用`break`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Break](../chapter2/05_Control_Flow.html#break) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > Break 语句语法  
-> *break语句* → **break** [*标签名称*](..\chapter3\10_Statements.html#label_name) _可选_  
+> *break语句* → **break** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_  
 
 <a name="continue_statements"></a>
 ### Continue 语句
@@ -341,7 +345,7 @@ case let (x, y) where x == y:
 关于使用`continue`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Continue](../chapter2/05_Control_Flow.html#continue) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > Continue 语句语法  
-> *continue语句* → **continue** [*标签名称*](..\chapter3\10_Statements.html#label_name) _可选_  
+> *continue语句* → **continue** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_  
 
 <a name="fallthrough_statements"></a>
 ### Fallthrough 语句
@@ -370,7 +374,7 @@ case let (x, y) where x == y:
 而当只写`return`时，仅仅是将控制权从该函数或方法传递给调用者，而不返回一个值。（这就是说，该函数或方法的返回类型为`Void`或`()`）
 
 > Return 语句语法  
-> *return语句* → **return** [*表达式*](..\chapter3\04_Expressions.html#expression) _可选_     
+> *return语句* → **return** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_     
 
 <a name="availability_statements"></a>
 ### Availability 语句    
@@ -452,6 +456,8 @@ avaliability 语句的形式如下：
 
 `do` 语句用于引入一个新的作用域,该作用域中可以含有一个或多个`catch`子句,catch子句中定义了一些匹配错误情况的模式。`do` 语句作用域内定义的常量和变量，只能在do语句作用域内访问。    
 
+swift 中的 do 语句与C 中限定代码块界限的大括号 （{}）很相似，并且在程序运行的时候并不会造成系统开销。    
+
 > do {    
 >    try `expression`    
 >    `statements`    
@@ -470,9 +476,9 @@ avaliability 语句的形式如下：
 
 关于在一些`catch`子句中如何使用` do`语句的例子，详情参见[错误处理](TODO)一章的[抛出错误](TODO)。       
 
-> do 语句语法  → **do** *[*代码块*](..\chapter3\05_Declarations.html#code_block) [catch](TODO)*    
+> do 语句语法  → **do** *[*代码块*](../chapter3/05_Declarations.html#code_block) [catch](TODO)*    
 > catch  → *[catch子句](TODO) [catch子句](TODO)*    
-> catch  → **catch** *[*模式*](..\chapter3\07_Patterns.html#pattern)** *可选的* [*where*]() *可选的*  [*代码块*](..\chapter3\05_Declarations.html#code_block)
+> catch  → **catch** *[*模式*](../chapter3/07_Patterns.html#pattern)** *可选的* [*where*]() *可选的*  [*代码块*](../chapter3/05_Declarations.html#code_block)
 
 
 

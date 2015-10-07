@@ -1,8 +1,12 @@
-> 翻译：[pp-prog](https://github.com/pp-prog)  
-> 校对：[zqp](https://github.com/zqp)
-
 # 方法（Methods）
 -----------------
+
+> 1.0
+> 翻译：[pp-prog](https://github.com/pp-prog)
+> 校对：[zqp](https://github.com/zqp)
+
+> 2.0
+> 翻译+校对：[DianQK](https://github.com/DianQK)
 
 本页包含内容：
 
@@ -16,7 +20,7 @@
 <a name="instance_methods"></a>
 ## 实例方法 (Instance Methods)
 
-**实例方法**是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见[函数](../charpter2/06_Functions.md)。
+**实例方法**是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见[函数](./06_Functions.md)。
 
 实例方法要写在它所属的类型的前后大括号之间。实例方法能够隐式访问它所属类型的所有的其他实例方法和属性。实例方法只能被它所属的类的某个特定实例调用。实例方法不能脱离于现存的实例而被调用。
 
@@ -60,9 +64,9 @@ class Counter {
 <a name="local_and_external_parameter"></a>
 ### 方法的局部参数名称和外部参数名称(Local and External Parameter Names for Methods)
 
-函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[函数的外部参数名](06_Functions.html)。方法参数也一样（因为方法就是函数，只是这个函数与某个类型相关联了）。
+函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.html#specifying_external_parameter_names)。方法参数也一样（因为方法就是函数，只是这个函数与某个类型相关联了）。
 
-Swift 中的方法和 Objective-C 中的方法极其相似。像在 Objective-C 中一样，Swift 中方法的名称通常用一个介词指向方法的第一个参数，比如：`with`，`for`，`by`等等。前面的`Counter`类的例子中`incrementBy(_:)`方法就是这样的。介词的使用让方法在被调用时能像一个句子一样被解读。   
+Swift 中的方法和 Objective-C 中的方法极其相似。像在 Objective-C 中一样，Swift 中方法的名称通常用一个介词指向方法的第一个参数，比如：`with`，`for`，`by`等等。前面的`Counter`类的例子中`incrementBy(_:)`方法就是这样的。介词的使用让方法在被调用时能像一个句子一样被解读。
 
 具体来说，Swift 默认仅给方法的第一个参数名称一个局部参数名称；默认同时给第二个和后续的参数名称局部参数名称和外部参数名称。这个约定与典型的命名和调用约定相适应，与你在写 Objective-C 的方法时很相似。这个约定还让表达式方法在调用时不需要再限定参数名称。
 
@@ -85,14 +89,14 @@ counter.incrementBy(5, numberOfTimes: 3)
 // counter 的值现在是 15
 ```
 
-你不必为第一个参数值再定义一个外部变量名：因为从函数名`incrementBy(_numberOfTimes:)`已经能很清楚地看出它的作用。但是第二个参数，就要被一个外部参数名称所限定，以便在方法被调用时明确它的作用。   
+你不必为第一个参数值再定义一个外部变量名：因为从函数名`incrementBy(_numberOfTimes:)`已经能很清楚地看出它的作用。但是第二个参数，就要被一个外部参数名称所限定，以便在方法被调用时明确它的作用。
 这种默认行为使上面代码意味着：在 Swift 中定义方法使用了与 Objective-C 同样的语法风格，并且方法将以自然表达式的方式被调用。
 
 
 <a name="modifying_external_parameter_name_behavior_for_methods"></a>
 ### 修改方法的外部参数名称(Modifying External Parameter Name Behavior for Methods)
 
-有时为方法的第一个参数提供一个外部参数名称是非常有用的，尽管这不是默认的行为。你可以自己添加一个显式的外部名称或者用一个井号（`#`）作为第一个参数的前缀来把这个局部名称当作外部名称使用。
+有时为方法的第一个参数提供一个外部参数名称是非常有用的，尽管这不是默认的行为。你可以自己添加一个显式的外部名称作为第一个参数的前缀来把这个局部名称当作外部名称使用。
 
 相反，如果你不想为方法的第二个及后续的参数提供一个外部名称，可以通过使用下划线（`_`）作为该参数的显式外部名称，这样做将覆盖默认行为。
 
@@ -157,7 +161,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX(_:y:)`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字，这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](10_Properties.html#global_and_local_variables)：
+注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](./10_Properties.html#global_and_local_variables)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -209,7 +213,7 @@ ovenLight.next()
 <a name="type_methods"></a>
 ## 类型方法 (Type Methods)
 
-实例方法是被类型的某个实例调用的方法。你也可以定义类型本身调用的方法，这种方法就叫做**类型方法**。声明结构体和枚举的类型方法，在方法的`func`关键字之前加上关键字`static`。类可能会用关键字`Class`来允许子类重写父类的实现方法。
+实例方法是被类型的某个实例调用的方法。你也可以定义类型本身调用的方法，这种方法就叫做**类型方法**。声明结构体和枚举的类型方法，在方法的`func`关键字之前加上关键字`static`。类可能会用关键字`class`来允许子类重写父类的实现方法。
 
 > 注意：  
 > 在 Objective-C 里面，你只能为 Objective-C 的类定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法：每一个类型方法都被它所支持的类型显式包含。  
@@ -218,7 +222,7 @@ ovenLight.next()
 
 ```swift
 class SomeClass {
-  class func someTypeMethod() {
+  static func someTypeMethod() {
     // type method implementation goes here
   }
 }

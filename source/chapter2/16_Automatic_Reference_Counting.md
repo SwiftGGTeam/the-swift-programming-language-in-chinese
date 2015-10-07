@@ -1,8 +1,12 @@
-> 翻译：[TimothyYe](https://github.com/TimothyYe)  
+# 自动引用计数（Automatic Reference Counting）
+-----------------
+
+> 1.0
+> 翻译：[TimothyYe](https://github.com/TimothyYe)
 > 校对：[Hawstein](https://github.com/Hawstein)
 
-# 自动引用计数
------------------
+> 2.0
+> 翻译+校对：[Channe](https://github.com/Channe)
 
 本页包含内容：
 
@@ -117,10 +121,10 @@ class Person {
 
 ```swift
 class Apartment {
-    let number: Int
-    init(number: Int) { self.number = number }
+    let unit: String
+    init(unit: String) { self.unit = unit }
     var tenant: Person?
-    deinit { print("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
@@ -130,45 +134,45 @@ class Apartment {
 
 这两个类都定义了析构函数，用以在类实例被析构的时候输出信息。这让你能够知晓`Person`和`Apartment`的实例是否像预期的那样被销毁。
 
-接下来的代码片段定义了两个可选类型的变量`john`和`number73`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选的优点：
+接下来的代码片段定义了两个可选类型的变量`john`和`unit4A`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选的优点：
 
 ```swift
 var john: Person?
-var number73: Apartment?
+var unit4A: Apartment?
 ```
 
-现在你可以创建特定的`Person`和`Apartment`实例并将赋值给`john`和`number73`变量：
+现在你可以创建特定的`Person`和`Apartment`实例并将赋值给`john`和`unit4A`变量：
 
 ```swift
 john = Person(name: "John Appleseed")
-number73 = Apartment(number: 73)
+unit4A = Apartment(unit: "4A")
 ```
 
-在两个实例被创建和赋值后，下图表现了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`number73`有一个指向`Apartment`实例的强引用：
+在两个实例被创建和赋值后，下图表现了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`unit4A`有一个指向`Apartment`实例的强引用：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle01_2x.png)
 
-现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来展开和访问可选变量`john`和`number73`中的实例，这样实例的属性才能被赋值：
+现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来展开和访问可选变量`john`和`unit4A`中的实例，这样实例的属性才能被赋值：
 
 ```swift
-john!.apartment = number73
-number73!.tenant = john
+john!.apartment = unit4A
+unit4A!.tenant = john
 ```
 
 在将两个实例联系在一起之后，强引用的关系如图所示：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle02_2x.png)
 
-不幸的是，这两个实例关联后会产生一个循环强引用。`Person`实例现在有了一个指向`Apartment`实例的强引用，而`Apartment`实例也有了一个指向`Person`实例的强引用。因此，当你断开`john`和`number73`变量所持有的强引用时，引用计数并不会降为 0，实例也不会被 ARC 销毁：
+不幸的是，这两个实例关联后会产生一个循环强引用。`Person`实例现在有了一个指向`Apartment`实例的强引用，而`Apartment`实例也有了一个指向`Person`实例的强引用。因此，当你断开`john`和`unit4A`变量所持有的强引用时，引用计数并不会降为 0，实例也不会被 ARC 销毁：
 
 ```swift
 john = nil
-number73 = nil
+unit4A = nil
 ```
 
 注意，当你把这两个变量设为`nil`时，没有任何一个析构函数被调用。循环强引用会一直阻止`Person`和`Apartment`类实例的销毁，这就在你的应用程序中造成了内存泄漏。
 
-在你将`john`和`number73`赋值为`nil`后，强引用关系如下图：
+在你将`john`和`unit4A`赋值为`nil`后，强引用关系如下图：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle03_2x.png)
 
@@ -209,24 +213,24 @@ class Person {
 
 ```swift
 class Apartment {
-    let number: Int
-    init(number: Int) { self.number = number }
+    let unit: String
+    init(unit: String) { self.unit = unit }
     weak var tenant: Person?
-    deinit { print("Apartment #\(number) is being deinitialized") }
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
-然后跟之前一样，建立两个变量（`john`和`number73`）之间的强引用，并关联两个实例：
+然后跟之前一样，建立两个变量（`john`和`unit4A`）之间的强引用，并关联两个实例：
 
 ```swift
 var john: Person?
-var number73: Apartment?
+var unit4A: Apartment?
 
 john = Person(name: "John Appleseed")
-number73 = Apartment(number: 73)
+unit4A = Apartment(unit: "4A")
 
-john!.apartment = number73
-number73!.tenant = john
+john!.apartment = unit4A
+unit4A!.tenant = john
 ```
 
 现在，两个关联在一起的实例的引用关系如下图所示：
@@ -244,18 +248,18 @@ john = nil
 // prints "John Appleseed is being deinitialized"
 ```
 
-唯一剩下的指向`Apartment`实例的强引用来自于变量`number73`。如果你断开这个强引用，再也没有指向`Apartment`实例的强引用了：
+唯一剩下的指向`Apartment`实例的强引用来自于变量`unit4A`。如果你断开这个强引用，再也没有指向`Apartment`实例的强引用了：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/weakReference03_2x.png)
 
 由于再也没有指向`Apartment`实例的强引用，该实例也会被销毁：
 
 ```swift
-number73 = nil
-// prints "Apartment #73 is being deinitialized"
+unit4A = nil
+// prints "Apartment 4A is being deinitialized"
 ```
 
-上面的两段代码展示了变量`john`和`number73`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
+上面的两段代码展示了变量`john`和`unit4A`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
 
 <a name="2"></a>
 ### 无主引用
@@ -299,7 +303,7 @@ class CreditCard {
 }
 ```
 
-> 注意: 
+> 注意:
 > `CreditCard`类的`number`属性被定义为`UInt64`类型而不是`Int`类型，以确保`number`属性的存储量在32位和64位系统上都能足够容纳16位的卡号。
 
 下面的代码片段定义了一个叫`john`的可选类型`Customer`变量，用来保存某个特定客户的引用。由于是可选类型，所以变量被初始化为`nil`。
@@ -335,6 +339,8 @@ john = nil
 
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
 
+
+<a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
 ###无主引用以及隐式解析可选属性
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
@@ -373,9 +379,9 @@ class City {
 
 为了建立两个类的依赖关系，`City`的构造函数有一个`Country`实例的参数，并且将实例保存为`country`属性。
 
-`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（[在两段式构造过程中有具体描述](14_Initialization.html)）
+`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（在[两段式构造过程](./14_Initialization.html#two_phase_initialization)中有具体描述）
 
-为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。（[在隐式解析可选类型中有描述](01_The_Basics.html)）
+为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。（在[隐式解析可选类型](./01_The_Basics.html#implicityly_unwrapped_optionals)中有描述）
 
 由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这代表一旦`name`属性被赋值后，`Country`的构造函数就能引用并传递隐式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
 
@@ -456,7 +462,7 @@ print(paragraph!.asHTML())
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/closureReferenceCycle01_2x.png)
 
-实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](07_Closures.html)）。
+实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](./07_Closures.html#capturing_values)）。
 
 >注意:  
 虽然闭包多次使用了`self`，它只捕获`HTMLElement`实例的一个强引用。
@@ -557,4 +563,3 @@ print(paragraph!.asHTML())
 paragraph = nil
 // prints "p is being deinitialized"
 ```
-

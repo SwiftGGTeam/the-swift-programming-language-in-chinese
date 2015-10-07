@@ -1,8 +1,8 @@
-> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)  
-> 校对：[老码团队翻译组-Ayra](http://weibo.com/littlekok/)
-
 # 可选类型完美解决占位问题
 -----------------
+
+> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)  
+> 校对：[老码团队翻译组-Ayra](http://weibo.com/littlekok/)
 
 本页包含内容：
 

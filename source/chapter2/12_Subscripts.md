@@ -1,9 +1,12 @@
-> 翻译：[siemenliu](https://github.com/siemenliu)  
-> 校对：[zq54zquan](https://github.com/zq54zquan)
-
-
 # 下标脚本（Subscripts）
 -----------------
+
+> 1.0
+> 翻译：[siemenliu](https://github.com/siemenliu)
+> 校对：[zq54zquan](https://github.com/zq54zquan)
+
+> 2.0
+> 翻译+校对：[shanksyang](https://github.com/shanksyang)
 
 本页包含内容：
 
@@ -54,7 +57,7 @@ struct TimesTable {
     }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
-println("3的6倍是\(threeTimesTable[6])")
+print("3的6倍是\(threeTimesTable[6])")
 // 输出 "3的6倍是18"
 ```
 
@@ -79,7 +82,7 @@ numberOfLegs["bird"] = 2
 
 上例定义一个名为`numberOfLegs`的变量并用一个字典字面量初始化出了包含三对键值的字典实例。`numberOfLegs`的字典存放值类型推断为`[String:Int]`。字典实例创建完成之后通过下标脚本的方式将整型值`2`赋值到字典实例的索引为`bird`的位置中。
 
-更多关于字典（Dictionary）下标脚本的信息请参考[读取和修改字典](../chapter2/04_Collection_Types.html)
+更多关于字典（Dictionary）下标脚本的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
 
 > 注意：  
 > Swift 中字典的附属脚本实现中，在`get`部分返回值是`Int?`，上例中的`numberOfLegs`字典通过附属脚本返回的是一个`Int?`或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是`nil`；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为`nil`即可。  
@@ -89,7 +92,7 @@ numberOfLegs["bird"] = 2
 
 下标脚本允许任意数量的入参索引，并且每个入参类型也没有限制。下标脚本的返回值也可以是任何类型。下标脚本可以使用变量参数和可变参数，但使用写入读出（in-out）参数或给参数设置默认值都是不允许的。
 
-一个类或结构体可以根据自身需要提供多个下标脚本实现，在定义下标脚本时通过入参个类型进行区分，使用下标脚本时会自动匹配合适的下标脚本实现运行，这就是*下标脚本的重载*。
+一个类或结构体可以根据自身需要提供多个下标脚本实现，在定义下标脚本时通过入参的类型进行区分，使用下标脚本时会自动匹配合适的下标脚本实现运行，这就是*下标脚本的重载*。
 
 一个下标脚本入参是最常见的情况，但只要有合适的场景也可以定义多个下标脚本入参。如下例定义了一个`Matrix`结构体，将呈现一个`Double`类型的二维矩阵。`Matrix`结构体的下标脚本需要两个整型参数：
 
@@ -118,7 +121,7 @@ struct Matrix {
 }
 ```
 
-`Matrix`提供了一个两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个数的`Double`类型数组。通过传入数组长度和初始值0.0到数组的一个构造器，将`Matrix`中每个元素初始值0.0。关于数组的构造方法和析构方法请参考[创建并且构造一个数组](../chapter2/04_Collection_Types.html)。
+`Matrix`提供了一个两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个数的`Double`类型数组。通过传入数组长度和初始值0.0到数组的一个构造器，将`Matrix`中每个元素初始值0.0。关于数组的构造方法和析构方法请参考[创建一个空数组](./04_Collection_Types.html#creating_an_empty_array)。
 
 你可以通过传入合适的`row`和`column`的数量来构造一个新的`Matrix`实例：
 

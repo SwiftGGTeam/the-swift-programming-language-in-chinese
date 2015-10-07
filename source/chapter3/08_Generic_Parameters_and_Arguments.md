@@ -1,8 +1,12 @@
-> 翻译：[fd5788](https://github.com/fd5788)  
-> 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai), [wardenNScaiyi](https:github.com/wardenNScaiyi)
-
-# 泛型参数
+# 泛型参数（Generic Parameters and Arguments）
 ---------
+
+> 1.0
+> 翻译：[fd5788](https://github.com/fd5788)
+> 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[wardenNScaiyi](https:github.com/wardenNScaiyi)
 
 本页包含内容：
 
@@ -11,7 +15,7 @@
 
 本节涉及泛型类型、泛型函数以及泛型初始化器（**initializer**）的参数，包括形参和实参。声明泛型类型、函数或初始化器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型初始化器时，就用具体的类型实参替代之。
 
-关于 Swift 语言的泛型概述，见[泛型](../charpter2/22_Generics.md)(第二部分第22章)。
+关于 Swift 语言的泛型概述，见[泛型](../chapter2/23_Generics.md)(第二部分第23章)。
 
 <a name="generic_parameter"></a>
 ## 泛型形参子句
@@ -67,15 +71,15 @@ simpleMax(3.14159, 2.71828) // T被推断出为Double类型
 > 泛型形参子句语法  
 > *泛型参数子句* → **<** [*泛型参数列表*](GenericParametersAndArguments.html#generic_parameter_list) [*约束子句*](GenericParametersAndArguments.html#requirement_clause) _可选_ **>**  
 > *泛型参数列表* → [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) | [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) **,** [*泛型参数列表*](GenericParametersAndArguments.html#generic_parameter_list)  
-> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name)  
-> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name) **:** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
-> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name) **:** [*协议合成类型*](..\chapter3\03_Types.html#protocol_composition_type)  
+> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name)  
+> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name) **:** [*类型标识*](../chapter3/03_Types.html#type_identifier)  
+> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name) **:** [*协议合成类型*](../chapter3/03_Types.html#protocol_composition_type)  
 > *约束子句* → **where** [*约束列表*](GenericParametersAndArguments.html#requirement_list)  
 > *约束列表* → [*约束*](GenericParametersAndArguments.html#requirement) | [*约束*](GenericParametersAndArguments.html#requirement) **,** [*约束列表*](GenericParametersAndArguments.html#requirement_list)  
 > *约束* → [*一致性约束*](GenericParametersAndArguments.html#conformance_requirement) | [*同类型约束*](GenericParametersAndArguments.html#same_type_requirement)  
-> *一致性约束* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) **:** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
-> *一致性约束* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) **:** [*协议合成类型*](..\chapter3\03_Types.html#protocol_composition_type)  
-> *同类型约束* → [*类型标识*](..\chapter3\03_Types.html#type_identifier) **==** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
+> *一致性约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **:** [*类型标识*](../chapter3/03_Types.html#type_identifier)  
+> *一致性约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **:** [*协议合成类型*](../chapter3/03_Types.html#protocol_composition_type)  
+> *同类型约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **==** [*类型标识*](../chapter3/03_Types.html#type_identifier)  
 
 
 <a name="generic_argument"></a>
@@ -109,4 +113,4 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 > 泛型实参子句语法  
 > *(泛型参数子句Generic Argument Clause)* → **<** [*泛型参数列表*](GenericParametersAndArguments.html#generic_argument_list) **>**  
 > *泛型参数列表* → [*泛型参数*](GenericParametersAndArguments.html#generic_argument) | [*泛型参数*](GenericParametersAndArguments.html#generic_argument) **,** [*泛型参数列表*](GenericParametersAndArguments.html#generic_argument_list)  
-> *泛型参数* → [*类型*](..\chapter3\03_Types.html#type)  
+> *泛型参数* → [*类型*](../chapter3/03_Types.html#type)  

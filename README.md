@@ -3,26 +3,59 @@
 
 中文版Apple官方Swift教程《The Swift Programming Language》
 
-中文Swift社区[Swiftist](http://swiftist.org/)，新社区，正在建设中，感兴趣的朋友可以一起参与进来。
+[英文原版](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
 
-**如果想帮忙翻译或者校对，请加QQ群：364279588，谢谢！**
+**如果想帮忙翻译或者校对，请加QQ群：480616051，谢谢！**
 
 # 在线阅读
 
-使用Gitbook制作，可以直接[在线阅读](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/)。
-
-# 电子书下载
-
-CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/1402621206)
-
-其他格式可以通过PDF转换
+使用Gitbook制作，可以直接[在线阅读](http://swiftguide.cn/)。
 
 # 当前阶段
 
-文章已经全部翻译完成，当前阶段为自由校对阶段，可以随意提issue和pr。
+已经更新到Swift 2.0，对应苹果官方文档7.23的更新。
 
+# 2.0译者记录
 
-# 译者记录
+- About Swift （[xtymichael](https://github.com/xtymichael)）
+- A Swift Tour（[xtymichael](https://github.com/xtymichael)）
+- The Basics（[xtymichael](https://github.com/xtymichael)）
+- Basic Operators（[AlanMelody](https://github.com/AlanMelody)）
+- Strings and Characters（[DianQK](https://github.com/DianQK)）
+- Collection Types（[AlanMelody](https://github.com/AlanMelody)）
+- Control Flow（[AlanMelody](https://github.com/AlanMelody)）
+- Functions（[dreamkidd](https://github.com/dreamkidd)）
+- Closures（[100mango](https://github.com/100mango)）
+- Enumerations（[futantan](https://github.com/futantan)）
+- Classes and Structures（[SkyJean](https://github.com/SkyJean)）
+- Properties（[yangsiy](https://github.com/yangsiy)）
+- Methods（[DianQK](https://github.com/DianQK)）
+- Subscripts（[shanksyang](https://github.com/shanksyang)）
+- Inheritance（[shanksyang](https://github.com/shanksyang)）
+- Initialization（[chenmingbiao](https://github.com/chenmingbiao)）
+- Deinitialization（[chenmingbiao](https://github.com/chenmingbiao)）
+- Automatic Reference Counting（[Channe](https://github.com/Channe)）
+- Optional Chaining（[lyojo](https://github.com/lyojo)）
+- Error Handling（[lyojo](https://github.com/lyojo)）
+- Type Casting（[yangsiy](https://github.com/yangsiy)）
+- Nested Types（[SergioChan](https://github.com/SergioChan)）
+- Extensions（[shanksyang](https://github.com/shanksyang)）
+- Protocols（[futantan](https://github.com/futantan)）
+- Generics（[SergioChan](https://github.com/SergioChan)）
+- Access Control（[mmoaay](https://github.com/mmoaay)）
+- Advanced Operators（[buginux](https://github.com/buginux)）
+- About the Language Reference（[KYawn](https://github.com/KYawn)）
+- Lexical Structure（[buginux](https://github.com/buginux)）
+- Types（[EudeMorgen](https://github.com/EudeMorgen)）
+- Expressions（[EudeMorgen](https://github.com/EudeMorgen)）
+- Statements（[littledogboy](https://github.com/littledogboy)）
+- Declarations（[Lenhoon](https://github.com/Lenhoon)）
+- Attributes（[KYawn](https://github.com/KYawn)）
+- Patterns（[ray16897188](https://github.com/ray16897188)）
+- Generic Parameters and Arguments（[wardenNScaiyi](https://github.com/wardenNScaiyi)）
+- Summary of the Grammar（[miaosiqi](https://github.com/miaosiqi)）
+
+# 1.0译者记录
 
 * 欢迎使用 Swift
    * 关于 Swift ([numbbbbb])
