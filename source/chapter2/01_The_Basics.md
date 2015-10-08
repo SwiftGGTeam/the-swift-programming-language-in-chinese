@@ -609,7 +609,7 @@ if convertedNumber != nil {
 <a name="optional_binding"></a>
 ### 可选绑定
 
-使用可选绑定（optional binding）来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在`if`和`while`语句中来对可选类型的值进行判断并把值赋给一个常量或者变量。`if`和`while`语句，请参考[控制流](./05_Control_Flow.html)。
+使用可选绑定（optional binding）来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在`if`和`while`语句中，这条语句不仅可以用来判断可选类型中是否有值，同时可以将可选类型中的值赋给一个常量或者变量。`if`和`while`语句，请参考[控制流](./05_Control_Flow.html)。
 
 像下面这样在`if`语句中写一个可选绑定：
 
@@ -770,6 +770,9 @@ assert(age >= 0, "A person's age cannot be less than zero")
 ```swift
 assert(age >= 0)
 ```
+
+> 注意：  
+当代码使用优化编译的时候，断言将会被禁用，例如在 Xcode 中，使用默认的 target Release 配置选项来 build 时，断言会被禁用。
 
 ### 何时使用断言
 
