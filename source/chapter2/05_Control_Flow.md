@@ -14,6 +14,8 @@
 - [While 循环](#while_loops)
 - [条件语句](#conditional_statement)
 - [控制转移语句（Control Transfer Statements）](#control_transfer_statements)
+- [提前退出](#early_exit)
+- [检测API是否可用](#checking_api_availability)
 
 Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`、`guard`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
 
@@ -713,7 +715,7 @@ print("Game over!")
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
 <a name="early_exit"></a>
-### 提前退出
+## 提前退出
 
 像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`分句，如果条件不为真则执行`else`分局中的代码。
 
@@ -746,7 +748,7 @@ greet(["name": "Jane", "location": "Cupertino"])
 它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你处理违反要求的代码接近要求。
 
 <a name="checking_api_availability"></a>
-### 检测API是否可用
+## 检测API是否可用
 
 Swift 有内置支持去检查接口的可用性的，这可以确保我们不会不小心地使用对于当前部署目标不可用的API。
 
