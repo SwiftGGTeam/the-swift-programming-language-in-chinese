@@ -839,7 +839,7 @@ for _ in 1...5 {
 
 使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
 
-例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用协议中要求的`random()`方法来实现:
+例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用`random()`方法返回一个随机的`Bool`值:
 
 ```swift
 extension RandomNumberGenerator {
@@ -866,12 +866,12 @@ print("And here's a random Boolean: \(generator.randomBool())")
 > 注意  
 > 通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。
 
-例如，`PrettyTextRepresentable`协议，继承了`TextRepresentable`协议，可以为其提供一个默认的`asPrettyText()`方法来简化返回值
+例如，`PrettyTextRepresentable`协议，继承自`TextRepresentable`协议，可以为其提供一个默认的`prettyTextualDescription`属性，来简化访问`textualDescription`属性。
 
 ```swift
 extension PrettyTextRepresentable  {
-    func asPrettyText() -> String {
-        return asText()
+    var prettyTextualDescription: String {
+        return textualDescription
     }
 }
 ```
@@ -884,15 +884,16 @@ extension PrettyTextRepresentable  {
 
 ```swift
 extension CollectionType where Generator.Element : TextRepresentable {
-    func asList() -> String {
-        return "(" + ", ".join(map({$0.asText()})) + ")"
+    var textualDescription: String {
+        let itemsAsText = self.map { $0.textualDescription }
+        return "[" + itemsAsText.joinWithSeparator(", ") + "]"
     }
 }
 ```
 
-`asList()`方法将每个元素以`asText()`的方式表示，最后以逗号分隔链接起来。
+`textualDescription`属性将每个元素的文本描述以逗号分隔的方式连接起来。
 
-现在我们来看`Hamster`，它遵循`TextRepresentable`:
+现在我们来看`Hamster`，它遵循`TextRepresentable`协议，:
 
 ```swift
 let murrayTheHamster = Hamster(name: "Murray")
@@ -901,10 +902,10 @@ let mauriceTheHamster = Hamster(name: "Maurice")
 let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 ```
 
-因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`asList()`方法得到数组内容的文本表示:
+因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`textualDescription`属性得到数组内容的文本表示:
 
 ```swift
-print(hamsters.asList())
+print(hamsters.textualDescription)
 // 输出 "(A hamster named Murray, A hamster named Morgan, A hamster named Maurice)"
 ```
 
