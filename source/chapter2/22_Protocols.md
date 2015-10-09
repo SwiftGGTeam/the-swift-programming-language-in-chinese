@@ -6,7 +6,7 @@
 > 校对：[dabing1022](https://github.com/dabing1022)
 
 > 2.0
-> 翻译+校对：[futantan](https://github.com/futantan)
+> 翻译+校对：[futantan](https://github.com/futantan)，[小铁匠Linus](https://github.com/kevin833752)
 
 本页包含内容：
 
@@ -893,7 +893,7 @@ extension CollectionType where Generator.Element : TextRepresentable {
 
 `textualDescription`属性将每个元素的文本描述以逗号分隔的方式连接起来。
 
-现在我们来看`Hamster`，它遵循`TextRepresentable`协议，:
+现在我们来看`Hamster`，它遵循`TextRepresentable`协议:
 
 ```swift
 let murrayTheHamster = Hamster(name: "Murray")
