@@ -261,6 +261,13 @@ unit4A = nil
 
 上面的两段代码展示了变量`john`和`unit4A`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
 
+<!--
+NOTE
+In systems that use garbage collection, weak pointers are sometimes used to implement a simple caching mechanism because objects with no strong references are deallocated only when memory pressure triggers garbage collection. However, with ARC, values are deallocated as soon as their last strong reference is removed, making weak references unsuitable for such a purpose.
+ -->
+ >注意：
+ 在使用垃圾收集的系统里，弱指针有时用来实现简单的缓冲机制，因为没有强引用的对象只会在内存压力触发垃圾收集时才被销毁。但是在 ARC 中，一旦值的最后一个强引用被删除，就会被立即销毁，这导致弱引用并不适合上面的用途。
+ 
 <a name="2"></a>
 ### 无主引用
 
@@ -442,6 +449,20 @@ class HTMLElement {
 
 可以像实例方法那样去命名、使用`asHTML`属性。然而，由于`asHTML`是闭包而不是实例方法，如果你想改变特定元素的 HTML 处理的话，可以用自定义的闭包来取代默认值。
 
+<!--
+For example, the asHTML property could be set to a closure that defaults to some text if the text property is nil, in order to prevent the representation from returning an empty HTML tag:
+-->
+例如，可以将一个闭包赋值给`asHTML`属性，这个闭包能在文本属性是 nil 时用默认文本，这是为了避免返回一个空的 `HTML` 标签：
+```swift
+let heading = HTMLElement(name: "h1")
+let defaultText = "some default text"
+heading.asHTML = {
+    return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+}
+print(heading.asHTML())
+// prints "<h1>some default text</h1>"
+```
+
 > 注意:  
 `asHTML`声明为`lazy`属性，因为只有当元素确实需要处理为HTML输出的字符串时，才需要使用`asHTML`。也就是说，在默认的闭包中可以使用`self`，因为只有当初始化完成以及`self`确实存在后，才能访问`lazy`属性。
 
@@ -480,8 +501,8 @@ paragraph = nil
 
 在定义闭包时同时定义捕获列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。捕获列表定义了闭包体内捕获一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个捕获的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
 
->注意:  
-Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod`（而不只是`someProperty`或`someMethod`）。这提醒你可能会一不小心就捕获了`self`。
+>注意：
+Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod()`（而不只是`someProperty`或`someMethod()`）。这提醒你可能会一不小心就捕获了`self`。
 
 ###定义捕获列表
 

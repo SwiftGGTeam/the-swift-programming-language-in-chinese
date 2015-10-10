@@ -16,13 +16,13 @@
 - [原始值（Raw Values）](#raw_values)
 - [递归枚举（Recursive Enumerations）](#recursive_enumerations)
 
-*枚举*定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
+**枚举**定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
 
 如果你熟悉 C 语言，你就会知道，在 C 语言中枚举将枚举名和一个整型值相对应。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
 
 此外，枚举成员可以指定任何类型的相关值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。
 
-在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
+在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息，实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
 欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./20_Extensions.html)和[协议（Protocols）](./21_Protocols.html)。
 
@@ -33,11 +33,11 @@
 
 ```swift
 enum SomeEnumeration {
-  // enumeration definition goes here
+  // 枚举定义放在这里
 }
 ```
 
-以下是指南针四个方向的一个例子：
+下面是指南针四个方向的例子：
 
 ```swift
 enum CompassPoint {
@@ -48,10 +48,10 @@ enum CompassPoint {
 }
 ```
 
-一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的*成员值*（或者*成员*）。`case`关键词表明新的一行成员值将被定义。
+枚举中定义的值（如 `North`，`South`，`East`和`West`）是这个枚举的**成员值**（或**成员**）。`case`关键词表示一行新的成员值将被定义。
 
-> 注意：  
-> 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为了`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
+> 注意：
+> 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoint`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为`0`，`1`，`2`和`3`。相反，这些枚举成员本身就有完备的值，这些值是已经明确定义好的`CompassPoint`类型。
 
 多个成员值可以出现在同一行上，用逗号隔开：
 
@@ -83,14 +83,14 @@ directionToHead = .East
 ```swift
 directionToHead = .South
 switch directionToHead {
-case .North:
-    print("Lots of planets have a north")
-case .South:
-    print("Watch out for penguins")
-case .East:
-    print("Where the sun rises")
-case .West:
-    print("Where the skies are blue")
+	case .North:
+	    print("Lots of planets have a north")
+	case .South:
+	    print("Watch out for penguins")
+	case .East:
+	    print("Where the sun rises")
+	case .West:
+	    print("Where the skies are blue")
 }
 // 输出 "Watch out for penguins”
 ```
@@ -131,7 +131,7 @@ default:
 
 <img width="169" height="169" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_QR_2x.png">
 
-对于库存跟踪系统来说，能够把 UPC-A 码作为三个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
+对于库存跟踪系统来说，能够把 UPC-A 码作为四个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
 
 在 Swift 中，使用如下方式定义两种商品条码的枚举：
 
@@ -229,7 +229,7 @@ enum Planet: Int {
 
 当使用字符串作为枚举类型的初值时，每个枚举成员的隐式初值则为该成员的名称。
 
-下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为咩个方向的名称：
+下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为各个方向的名称：
 
 ```swift
 enum CompassPoint: String {
