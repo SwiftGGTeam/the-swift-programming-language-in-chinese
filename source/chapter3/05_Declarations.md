@@ -7,7 +7,8 @@
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
-> 翻译+校对：[Lenhoon](https://github.com/Lenhoon)
+> 翻译+校对：[Lenhoon](https://github.com/Lenhoon),
+> [BridgeQ](https://github.com/WXGBridgeQ)
 
 本页包含内容：
 
@@ -487,7 +488,7 @@ plusOne(10)
 <a name="enumerations_with_cases_of_any_type"></a>
 ###任意事件类型的枚举
 
-如下的形式声明了一个包含任意类型枚举时间的枚举变量
+如下的形式声明了一个包含任意类型枚举事件的枚举变量
 
 > enum `enumeration name`: `adopted protocols`{  
 >     case `enumeration case 1`  
@@ -496,8 +497,25 @@ plusOne(10)
 
 这种形式的枚举声明在其他语言中有时被叫做*可识别联合(discrinminated)*。
 
-这种形式中，每一个事件块由关键字`case`开始，后面紧接着一个或多个以逗号分隔的枚举事件。每一个事件名必须是独一无二的。每一个事件也可以指定它所存储的指定类型的值，这些类型在*关联值类型(associated values types)*的元组里被指定，立即书写在事件
-名后。获得更多关于关联值类型的信息和例子，请查看[关联值(Associated Values)](TODO)一节。
+这种形式中，每一个事件块由关键字`case`开始，后面紧接着一个或多个以逗号分隔的枚举事件。每一个事件名必须是独一无二的。每一个事件也可以指定它所存储的指定类型的值，这些类型在*关联值类型(associated values types)*的元组里被指定，立即书写在事件名后。
+
+枚举事件也可以指定函数作为其存储的值，从而通过特定的关联值创建一个枚举实例。和真正的函数一样，你可以获取一个枚举事件的引用，以便在后续代码中使用它。
+
+```swift
+enum Number {
+    case Integer(Int)
+    case Real(Double)
+}
+let f = Number.Integer
+// f is a function of type (Int) -> Number
+// f 是一个传入 Int 返回 Number 类型的函数
+ 
+// Apply f to create an array of Number instances with integer values
+// 利用函数 f 把一个整数数组转成 Number 数组
+let evenInts: [Number] = [0, 2, 4, 6].map(f)
+```
+
+获得更多关于关联值类型的信息和例子，请查看[关联值(Associated Values)](TODO)一节。
 
 枚举有一个递归结构，就是说，枚举有着枚举类型自身实例的关联值的事件。然而，枚举类型的实例有值语义，意味着它们在内存中有着固定的位置。为了支持递归，编译器必需插入一个间接层。
 
