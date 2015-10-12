@@ -782,10 +782,7 @@ even if you omit the parameter names, parameter types, and return type.
 
 The entries in the capture list are initialized
 when the closure is created.
-If you write an explicit name and expression,
-a constant with the given name is initialized
-to the value of the expression.
-If you write the name a variable or constant,
+For each entry in the capture list,
 a constant is initialized
 to the value of the variable or constant that has the same name
 in the surrounding scope.
