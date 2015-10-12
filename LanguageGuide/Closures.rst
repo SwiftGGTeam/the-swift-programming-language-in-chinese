@@ -614,16 +614,29 @@ Escaping and Nonescaping Closures
 A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
+For example,
+many functions that start an asynchronous operation,
+take a closure argument as a completion handler.
+The function returns after it starts the operation,
+but the closure isn't called until the operation is completed ---
+the closure needs to escape
+so that it can be called at the correct time.
+
+In other functions,
+you can guarantee that the closure never escapes.
+For example,
+the closure you pass to the ``sort(_:)`` method of a collection
+is used to compare elements of the collection while sorting,
+but is never needed after the method returns.
+
 When you declare a function that takes a closure as one of its parameters,
 you can write ``@noescape`` before the parameter name
 to indicate that the closure is not allowed to escape.
 Otherwise, the closure is allowed to escape the function.
-
 Marking a closure with ``@noescape``
 lets the compiler make more aggressive optimizations
 because it knows more information about the closure's lifespan.
 It also lets you refer to ``self`` implicitly within the closure.
-For example:
 
 .. FIXME: Replace code with non-placeholder
 
@@ -644,20 +657,6 @@ For example:
     func g(@noescape closure: () -> Void) {
         closure()
     }
-
-
-.. When calling f() you have to write self.x
-   but when calling g() you can just write x.
-   That's because the closure in g() is marked with @noescape.
-
-.. sort() in the stdlib is noescape
-   because the closure is used in running the function
-
-.. But some closures aren't used at that time,
-   they're saved to be used later.
-   For example, the callback in a network I/O function
-   is called when the I/O completes,
-   after the enqueue-operation function returns.
 
 
 .. _Closures_Autoclosures:
