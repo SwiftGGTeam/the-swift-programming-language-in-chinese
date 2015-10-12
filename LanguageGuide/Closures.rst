@@ -625,16 +625,14 @@ Otherwise, the closure is allowed to escape the function.
            closure()
        }
 
-.. Is this example still needed?
-    For example,
-    the ``sort(_:)`` method takes a closure as its parameter
-    which is used to compare elements.
-    The parameter is marked ``@noescape``,
-    which guarantees that the ``sort(_:)`` method
-    doesn't store the sorting closure in a way that lets it escape.
+The ``sort(_:)`` method takes a closure as its parameter
+which is used to compare elements.
+The parameter is marked ``@noescape``
+because it is guaranteed not to be needed after the sorting is completed.
 
 One way that a closure can escape
 is by being stored in a variable that is defined outside the function.
+For example:
 
 .. testcode:: noescape-closure-as-argument
 
@@ -649,14 +647,11 @@ and adds it to an array that's declared outside the function.
 If you tried to mark the parameter of this function with ``@noescape``,
 you would get a compiler error.
 
-..
-    For example,
-    many functions that start an asynchronous operation,
-    take a closure argument as a completion handler.
-    The function returns after it starts the operation,
-    but the closure isn't called until the operation is completed ---
-    the closure needs to escape
-    so that it can be called at the correct time.
+Many functions that start an asynchronous operation
+take a closure argument as a completion handler.
+The function returns after it starts the operation,
+but the closure isn't called until the operation is completed ---
+the closure needs to escape, to be called later.
 
 Marking a closure with ``@noescape``
 lets the compiler make more aggressive optimizations
