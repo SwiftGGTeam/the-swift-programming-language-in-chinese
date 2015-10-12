@@ -780,8 +780,13 @@ before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
 
-When the closure is created,
-the entries in the capture list are initialized
+The entries in the capture list are initialized
+when the closure is created.
+If you write an explicit name and expression,
+a constant with the given name is initialized
+to the value of the expression.
+If you write the name a variable or constant,
+a constant is initialized
 to the value of the variable or constant that has the same name
 in the surrounding scope.
 For example in the code below,
@@ -803,23 +808,36 @@ which gives them different behavior.
     -> closure()
     <- 0 10
 
-There are two different variables both named ``a``,
-the one in the surrounding scope and the one inside the closure's scope,
+There are two different things named``a``,
+the variable in the surrounding scope
+and the constant inside the closure's scope,
 but only one variable named ``b``.
-The inner ``a`` is initialized with the value of the outer ``a``
-when the closure is created.
+The ``a`` in the inner scope is initialized
+with the value of the ``a`` in the outer scope
+when the closure is created,
+but their values are not connected in any special way.
 This means that the change to the value of ``a`` in the outer scope
 does not effect the value of ``a`` in the inner scope,
-nor would changes to ``a`` inside the closure
+nor do changes to ``a`` inside the closure
 effect the value of ``a`` outside the closure.
 In contrast, there is only only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 
+.. [Contributor 6004] also describes the destinction as
+   "capturing the variable, not the value"
+   but he notes that we don't have a rigorous definition of
+   capturing a variable in Swift
+   (unlike some other languages)
+   so that description's not likely to be very helpful for developers.
+
 This distinction is not visible
-when the captured variable or constant has reference semantics,
-because capturing by reference and by value
-both allow the changes to be visible in both scopes.
+when the captured variable has reference semantics.
+For example, in the code below,
+there are still two things named ``x``,
+a variable in the outer scope and a constant in the inner scope,
+but because of reference semantics
+they both refer to the same object.
 
 .. testcode:: capture-list-reference-semantics
 
