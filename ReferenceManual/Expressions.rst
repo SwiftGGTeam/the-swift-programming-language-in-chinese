@@ -807,7 +807,7 @@ which gives them different behavior.
 
 There are two different things named ``a``,
 the variable in the surrounding scope
-and the constant inside the closure's scope,
+and the constant in the closure's scope,
 but only one variable named ``b``.
 The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
@@ -830,11 +830,11 @@ so changes from inside or outside the closure are visible in both places.
 
 This distinction is not visible
 when the captured variable has reference semantics.
-For example, in the code below,
-there are still two things named ``x``,
+For example,
+there are two things named ``x`` in the code below,
 a variable in the outer scope and a constant in the inner scope,
-but because of reference semantics
-they both refer to the same object.
+but they both refer to the same object
+because of reference semantics.
 
 .. testcode:: capture-list-reference-semantics
 
