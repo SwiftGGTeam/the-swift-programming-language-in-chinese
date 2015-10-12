@@ -614,29 +614,27 @@ Escaping and Nonescaping Closures
 A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
-For example,
-many functions that start an asynchronous operation,
-take a closure argument as a completion handler.
-The function returns after it starts the operation,
-but the closure isn't called until the operation is completed ---
-the closure needs to escape
-so that it can be called at the correct time.
-
-In other functions,
-you can guarantee that the closure never escapes.
-For example,
-the closure you pass to the ``sort(_:)`` method of a collection
-is used to compare elements of the collection while sorting,
-but is never needed after the method returns.
-
 When you declare a function that takes a closure as one of its parameters,
 you can write ``@noescape`` before the parameter name
 to indicate that the closure is not allowed to escape.
 Otherwise, the closure is allowed to escape the function.
-Marking a closure with ``@noescape``
-lets the compiler make more aggressive optimizations
-because it knows more information about the closure's lifespan.
-It also lets you refer to ``self`` implicitly within the closure.
+
+.. testcode:: noescape-closure-as-argument
+
+    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+           closure()
+       }
+
+.. Is this example still needed?
+    For example,
+    the ``sort(_:)`` method takes a closure as its parameter
+    which is used to compare elements.
+    The parameter is marked ``@noescape``,
+    which guarantees that the ``sort(_:)`` method
+    doesn't store the sorting closure in a way that lets it escape.
+
+One way that a closure can escape
+is by being stored in a variable that is defined outside the function.
 
 .. testcode:: noescape-closure-as-argument
 
@@ -645,10 +643,28 @@ It also lets you refer to ``self`` implicitly within the closure.
     -> func someFunctionWithEscapingClosure(closure: () -> Void) {
            closures.append(closure)
        }
-    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
-           closure()
-       }
-    ---
+
+The function ``someFunctionWithEscapingClosure(_:)`` takes a closure as its argument
+and adds it to an array that's declared outside the function.
+If you tried to mark the parameter of this function with ``@noescape``,
+you would get a compiler error.
+
+..
+    For example,
+    many functions that start an asynchronous operation,
+    take a closure argument as a completion handler.
+    The function returns after it starts the operation,
+    but the closure isn't called until the operation is completed ---
+    the closure needs to escape
+    so that it can be called at the correct time.
+
+Marking a closure with ``@noescape``
+lets the compiler make more aggressive optimizations
+because it knows more information about the closure's lifespan.
+It also lets you refer to ``self`` implicitly within the closure.
+
+.. testcode:: noescape-closure-as-argument
+
     -> class SomeClass {
            var x = 10
            func doSomething() {
