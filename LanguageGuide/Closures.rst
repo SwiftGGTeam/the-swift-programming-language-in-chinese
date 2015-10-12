@@ -638,25 +638,35 @@ lets the compiler make more aggressive optimizations
 because it knows more information about the closure's lifespan.
 It also lets you refer to ``self`` implicitly within the closure.
 
-.. FIXME: Replace code with non-placeholder
+.. testcode:: noescape-closure-as-argument
 
-::
-
-    class K {
-        var x = 10
-        func doSomething() {
-            f { self.x = 100 }
-            g { x = 200 }
-        }
-    }
-
-    func f(closure: () -> Void) {
-        closure()
-    }
-
-    func g(@noescape closure: () -> Void) {
-        closure()
-    }
+    -> var closures: [() -> Void] = []
+    << // closures : [() -> Void] = []
+    -> func someFunctionWithEscapingClosure(closure: () -> Void) {
+           closures.append(closure)
+       }
+    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+           closure()
+       }
+    ---
+    -> class SomeClass {
+           var x = 10
+           func doSomething() {
+               someFunctionWithEscapingClosure { self.x = 100 }
+               someFunctionWithNoescapeClosure { x = 200 }
+           }
+       }
+    ---
+    -> let instance = SomeClass()
+    << // instance : SomeClass = REPL.SomeClass
+    -> instance.doSomething()
+    -> print(instance.x)
+    <- 200
+    ---
+    -> closures.first?()
+    << // r0 : Void? = Optional(())
+    -> print(instance.x)
+    <- 100
 
 
 .. _Closures_Autoclosures:
