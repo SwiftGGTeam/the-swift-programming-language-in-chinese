@@ -608,7 +608,7 @@ both of those constants or variables will refer to the same closure:
 
 .. _Closures_Noescape:
 
-Escaping and Nonescaping Closures
+Escaping and Non-Escaping Closures
 ---------------------------------
 
 A closure is said to :newTerm:`escape` a function
