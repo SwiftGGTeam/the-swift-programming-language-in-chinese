@@ -1310,7 +1310,7 @@ to respond to different error conditions:
 In this example, the ``makeASandwich()`` function will throw an error
 if no clean dishes are available
 or if any ingredients are missing.
-Because ``makeASandwich()`` throws,
+Because ``makeASandwich()`` can throw an error,
 the function call is wrapped in a ``try`` expression.
 By wrapping the function call in a ``do`` statement,
 any errors that are thrown will be propagated
