@@ -805,7 +805,7 @@ which gives them different behavior.
     -> closure()
     <- 0 10
 
-There are two different things named``a``,
+There are two different things named ``a``,
 the variable in the surrounding scope
 and the constant inside the closure's scope,
 but only one variable named ``b``.
