@@ -420,7 +420,7 @@ The ``number`` variable is then divided by ``10``.
 Because it is an integer, it is rounded down during the division,
 so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
-The process is repeated until ``number /= 10`` is equal to ``0``,
+The process is repeated until ``number`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
 and is added to the output array by the ``map(_:)`` method.
 
