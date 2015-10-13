@@ -6,6 +6,11 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-10-20  * Added the section :ref:`Closures_Noescape` section
+              with information about the ``@noescape`` attribute.
+
+            * Added information to the :ref:`Expressions_CaptureLists` section.
+
 2015-09-23  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
