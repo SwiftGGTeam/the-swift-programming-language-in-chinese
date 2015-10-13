@@ -885,7 +885,8 @@ because of reference semantics.
     -> g()
     << // r1 : Int = 107
 
-You can mark a class-type expression in a capture list
+If the type of the expression's value is a class,
+you can mark the expression in a capture list
 with ``weak`` or ``unowned`` to capture a weak or unowned reference
 to the expression's value.
 
