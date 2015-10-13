@@ -801,6 +801,7 @@ which gives them different behavior.
         print(a, b)
     }
     << // closure : () -> () = (Function)
+    ---
     -> a = 10
     -> b = 10
     -> closure()
@@ -850,6 +851,7 @@ because of reference semantics.
            print(x.value, y.value)
        }
     << // closure : () -> () = (Function)
+    ---
     -> x.value = 10
     -> y.value = 10
     -> closure()
