@@ -785,7 +785,7 @@ The entries in the capture list are initialized
 when the closure is created.
 For each entry in the capture list,
 a constant is initialized
-to the value of the variable or constant that has the same name
+to the value of the constant or variable that has the same name
 in the surrounding scope.
 For example in the code below,
 ``a`` is included in the capture list but ``b`` is not,
@@ -818,7 +818,7 @@ This means that the change to the value of ``a`` in the outer scope
 does not effect the value of ``a`` in the inner scope,
 nor do changes to ``a`` inside the closure
 effect the value of ``a`` outside the closure.
-In contrast, there is only only one variable named ``b`` ---
+In contrast, there is only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 
