@@ -284,6 +284,8 @@ the ``noreturn`` attribute to a function or method *type*.
     such that it is guaranteed not to outlive the lifetime of the call.
     Function type parameters with the ``noescape`` declaration attribute
     do not require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``noescape`` attribute,
+    see :ref:`Closures_Noescape`.
 
 ``nonobjc``
     Apply this attribute to a

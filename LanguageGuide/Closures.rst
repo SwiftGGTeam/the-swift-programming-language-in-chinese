@@ -420,7 +420,7 @@ The ``number`` variable is then divided by ``10``.
 Because it is an integer, it is rounded down during the division,
 so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
-The process is repeated until ``number /= 10`` is equal to ``0``,
+The process is repeated until ``number`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
 and is added to the output array by the ``map(_:)`` method.
 
@@ -605,6 +605,82 @@ both of those constants or variables will refer to the same closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
+
+.. _Closures_Noescape:
+
+Nonescaping Closures
+--------------------
+
+A closure is said to :newTerm:`escape` a function
+when the closure is passed as an argument to the function,
+but is called after the function returns.
+When you declare a function that takes a closure as one of its parameters,
+you can write ``@noescape`` before the parameter name
+to indicate that the closure is not allowed to escape.
+Marking a closure with ``@noescape``
+lets the compiler make more aggressive optimizations
+because it knows more information about the closure's lifespan.
+
+.. testcode:: noescape-closure-as-argument
+
+    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+           closure()
+       }
+
+As an example,
+the ``sort(_:)`` method takes a closure as its parameter,
+which is used to compare elements.
+The parameter is marked ``@noescape``
+because it is guaranteed not to be needed after the sorting is completed.
+
+One way that a closure can escape
+is by being stored in a variable that is defined outside the function.
+As an example,
+many functions that start an asynchronous operation
+take a closure argument as a completion handler.
+The function returns after it starts the operation,
+but the closure isn't called until the operation is completed ---
+the closure needs to escape, to be called later.
+For example:
+
+.. testcode:: noescape-closure-as-argument
+
+    -> var completionHandlers: [() -> Void] = []
+    << // completionHandlers: [() -> Void] = []
+    -> func someFunctionWithEscapingClosure(completionHandler: () -> Void) {
+           completionHandlers.append(completionHandler)
+       }
+
+The ``someFunctionWithEscapingClosure(_:)`` function takes a closure as its argument
+and adds it to an array that's declared outside the function.
+If you tried to mark the parameter of this function with ``@noescape``,
+you would get a compiler error.
+
+Marking a closure with ``@noescape``
+lets you refer to ``self`` implicitly within the closure.
+
+.. testcode:: noescape-closure-as-argument
+
+    -> class SomeClass {
+           var x = 10
+           func doSomething() {
+               someFunctionWithEscapingClosure { self.x = 100 }
+               someFunctionWithNoescapeClosure { x = 200 }
+           }
+       }
+    ---
+    -> let instance = SomeClass()
+    << // instance : SomeClass = REPL.SomeClass
+    -> instance.doSomething()
+    -> print(instance.x)
+    <- 200
+    ---
+    -> completionHandlers.first?()
+    << // r0 : Void? = Optional(())
+    -> print(instance.x)
+    <- 100
+
+
 .. _Closures_Autoclosures:
 
 Autoclosures
@@ -716,10 +792,7 @@ with the ``@autoclosure`` attribute.
    that evaluation is being deferred.
 
 The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
-which indicates that the closure is used only within the function.
-That is, the closure isn't allowed to be stored in a way
-that would let it "escape" the scope of the function
-and be executed after the function returns.
+which is described above in :ref:`Closures_Noescape`.
 If you want an autoclosure that is allowed to escape,
 use the ``@autoclosure(escaping)`` form of the attribute.
 
@@ -753,6 +826,3 @@ The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
 the value of the ``customer`` argument must be allowed to escape the function's scope.
-
-For more information about the ``@autoclosure`` and ``@noescape`` attributes,
-see :ref:`Attributes_DeclarationAttributes`.
