@@ -138,6 +138,7 @@
     "closures-closuresarereferencetypes": "ID104", 
     "closures-implicitreturnsfromsingleexpressionclosures": "ID99", 
     "closures-inferringtypefromcontext": "ID98", 
+    "closures-noescape": "ID546", 
     "closures-operatorfunctions": "ID101", 
     "closures-shorthandargumentnames": "ID100", 
     "closures-thesortedfunction": "ID96", 
@@ -564,5 +565,5 @@
     "control-transfer-statements", 
     "in-out-parameters"
   ], 
-  "next_id": 546
+  "next_id": 547
 }
