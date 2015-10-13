@@ -1360,9 +1360,7 @@ or because the data source does not implement ``incrementForCount(_:)`` ---
 then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
-and so its name is also written using optional chaining,
-to indicate that the attempt to access the property's value can fail.
-As before, the returned value is an optional ``Int`` value,
+so its value is an optional ``Int`` value,
 even though ``fixedIncrement`` is defined as a nonoptional ``Int`` property
 as part of the ``CounterDataSource`` protocol definition.
 

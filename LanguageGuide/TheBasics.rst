@@ -27,16 +27,19 @@ Swift also introduces optional types,
 which handle the absence of a value.
 Optionals say either “there *is* a value, and it equals *x*”
 or “there *isn't* a value at all”.
-Optionals are similar to using ``nil`` with pointers in Objective-C,
+Using optionals is similar to using ``nil`` with pointers in Objective-C,
 but they work for any type, not just classes.
-Optionals are safer and more expressive than ``nil`` pointers in Objective-C
-and are at the heart of many of Swift's most powerful features.
+Not only are optionals safer and more expressive than ``nil`` pointers in Objective-C,
+they are at the heart of many of Swift's most powerful features.
 
-Optionals are an example of the fact that Swift is a *type safe* language.
-Swift helps you to be clear about the types of values your code can work with.
+Swift is a *type-safe* language,
+which means the language helps you to be clear about the types of values your code can work with.
 If part of your code expects a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
-This restriction enables you to catch and fix errors as early as possible in the development process.
+Likewise, type safety prevents you from
+accidentally passing an optional ``String``
+to a piece of code that expects a nonoptional ``String``.
+Type safety helps you catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
 
@@ -435,7 +438,7 @@ Swift provides two signed floating-point number types:
 Type Safety and Type Inference
 ------------------------------
 
-Swift is a :newTerm:`type safe` language.
+Swift is a :newTerm:`type-safe` language.
 A type safe language encourages you to be clear about
 the types of values your code can work with.
 If part of your code expects a ``String``, you can't pass it an ``Int`` by mistake.
@@ -1307,7 +1310,7 @@ to respond to different error conditions:
 In this example, the ``makeASandwich()`` function will throw an error
 if no clean dishes are available
 or if any ingredients are missing.
-Because ``makeASandwich()`` throws,
+Because ``makeASandwich()`` can throw an error,
 the function call is wrapped in a ``try`` expression.
 By wrapping the function call in a ``do`` statement,
 any errors that are thrown will be propagated

@@ -926,6 +926,17 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     <$ : Int = 11
     -> // returns a value of 11
 
+.. assertion:: curried-function-param-labels
+
+   // As with regular functions and methods, by default, the first parameter
+   // gets no label and everything that follows gets a label.
+   -> func add(a: Int)(b: Int) -> Int { return a + b }
+   -> add(1)(2)
+   !! <REPL Input>:1:8: error: missing argument label 'b:' in call
+   !! add(1)(2)
+   !!       ^
+   !!       b: 
+
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods

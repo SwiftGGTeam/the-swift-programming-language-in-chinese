@@ -317,8 +317,8 @@ They have the following form:
     <#expression#> as! <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
-can be downcast to the specified *type*.
-It returns ``true`` if the *expression* can be downcast to the specified *type*;
+can be cast to the specified *type*.
+It returns ``true`` if the *expression* can be cast to the specified *type*;
 otherwise, it returns ``false``.
 
 .. assertion:: triviallyTrueIsAndAs
@@ -334,13 +334,20 @@ otherwise, it returns ``false``.
     !! "hello" is Int
     !! ~~~~~~~ ^  ~~~
 
-.. If the bugs are fixed, this can be reworded:
-    The ``is`` operator checks at runtime
-    to see whether the *expression*
-    can be cast to the specified *type*
-    If so, it returns ``true``; otherwise, it returns ``false``.
+.. assertion:: is-operator-tautology
 
-    See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
+   -> class Base {}
+   -> class Subclass: Base {}
+   -> var s = Subclass()
+   << // s : Subclass = REPL.Subclass
+   -> var b = Base()
+   << // b : Base = REPL.Base
+   ---
+   -> s is Base
+   !! <REPL Input>:1:3: warning: 'is' test is always true
+   !! s is Base
+   !!   ^
+   << // r0 : Bool = true
 
 The ``as`` operator performs a cast
 when it is known at compile time
