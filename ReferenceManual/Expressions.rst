@@ -707,9 +707,9 @@ Closure Expression
 A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*
 in other programming languages.
-Like function declarations,
-closures contain statements which they execute,
-and they capture values from their enclosing scope.
+Like a function declaration,
+a closure contains statements which it executes,
+and it captures constants and variables from its enclosing scope.
 It has the following form:
 
 .. syntax-outline::
@@ -769,7 +769,8 @@ see :ref:`Expressions_FunctionCallExpression`.
 Capture Lists
 +++++++++++++
 
-By default, a closure expression captures values from its surrounding scope
+By default, a closure expression captures
+constants and variables from its surrounding scope
 with strong references to those values.
 You can use a :newTerm:`capture list` to explicitly control
 how values are captured in a closure.
@@ -821,7 +822,7 @@ In contrast, there is only only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 
-.. [Contributor 6004] also describes the destinction as
+.. [Contributor 6004] also describes the distinction as
    "capturing the variable, not the value"
    but he notes that we don't have a rigorous definition of
    capturing a variable in Swift
@@ -829,7 +830,7 @@ so changes from inside or outside the closure are visible in both places.
    so that description's not likely to be very helpful for developers.
 
 This distinction is not visible
-when the captured variable has reference semantics.
+when the captured variable's type has reference semantics.
 For example,
 there are two things named ``x`` in the code below,
 a variable in the outer scope and a constant in the inner scope,
