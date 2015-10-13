@@ -489,8 +489,8 @@ operator precedence explains why the following expression equals ``17``.
 .. testcode:: evaluationOrder
 
    -> 2 + 3 % 4 * 5
-   << // r0 : Int = 4
-   /> this equals \(2 + 3 * 4 % 5)
+   << // r0 : Int = 17
+   /> this equals \(2 + 3 % 4 * 5)
    </ this equals 17
 
 If you read strictly from left to right,
@@ -517,14 +517,14 @@ starting from their left:
 .. testcode:: evaluationOrder
 
    -> 2 + ((3 % 4) * 5)
-   << // r1 : Int = 4
+   << // r1 : Int = 17
 
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
    -> 2 + (3 * 5)
-   << // r2 : Int = 4
+   << // r2 : Int = 17
 
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 

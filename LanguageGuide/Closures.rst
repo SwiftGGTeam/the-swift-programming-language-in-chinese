@@ -646,7 +646,7 @@ For example:
 .. testcode:: noescape-closure-as-argument
 
     -> var completionHandlers: [() -> Void] = []
-    << // completionHandlers: [() -> Void] = []
+    << // completionHandlers : [() -> Void] = []
     -> func someFunctionWithEscapingClosure(completionHandler: () -> Void) {
            completionHandlers.append(completionHandler)
        }
