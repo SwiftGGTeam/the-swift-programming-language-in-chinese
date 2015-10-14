@@ -6,7 +6,8 @@
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
-> 翻译+校对：[ray16897188](https://github.com/ray16897188)  
+> 翻译+校对：[ray16897188](https://github.com/ray16897188),
+> [BridgeQ](https://github.com/WXGBridgeQ)
 
 本页内容包括：
 
@@ -132,7 +133,7 @@ let (a): Int = 2 // a: Int = 2
 <a name="optional_pattern"></a>
 ## 可选模式（Optional Pattern）
 
-可选模式与封装在一个`Optional(T)`或者一个`ExplicitlyUnwrappedOptional(T)`枚举中的`Some(T)`用例相匹配。可选模式由一个标识符模式和紧随其后的一个问号组成，在某些情况下表现为枚举用例模式。
+可选模式与封装在一个`Optional(Wrapped)`或者一个`ExplicitlyUnwrappedOptional(Wrapped)`枚举中的`Some(Wrapped)`用例相匹配。可选模式由一个标识符模式和紧随其后的一个问号组成，在某些情况下表现为枚举用例模式。
 
 由于可选模式是`optional`和`ImplicitlyUnwrappedOptional`枚举用例模式的语法糖（syntactic sugar），下面的2种写法是一样的：
 
