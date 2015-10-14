@@ -822,9 +822,9 @@ The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
 when the closure is created,
 but their values are not connected in any special way.
-This means that the change to the value of ``a`` in the outer scope
+This means that a change to the value of ``a`` in the outer scope
 does not effect the value of ``a`` in the inner scope,
-nor do changes to ``a`` inside the closure
+nor does a change to ``a`` inside the closure
 effect the value of ``a`` outside the closure.
 In contrast, there is only one variable named ``b`` ---
 the ``b`` in the outer scope ---
