@@ -1851,7 +1851,7 @@ from its superclass during initialization.
 
 In this case, if the ``init(name:)`` initializer of the superclass
 were ever called with an empty string as the name,
-the forced unwrap operation would result in a runtime error.
+the forced unwrapping operation would result in a runtime error.
 However, because it's called with a string constant,
 you can see that the initializer won't fail,
 so no runtime error can occur in this case.
