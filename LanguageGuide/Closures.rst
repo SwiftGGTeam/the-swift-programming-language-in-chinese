@@ -631,7 +631,7 @@ As an example,
 the ``sort(_:)`` method takes a closure as its parameter,
 which is used to compare elements.
 The parameter is marked ``@noescape``
-because it is guaranteed not to be needed after the sorting is completed.
+because it is guaranteed not to be needed after sorting is complete.
 
 One way that a closure can escape
 is by being stored in a variable that is defined outside the function.
