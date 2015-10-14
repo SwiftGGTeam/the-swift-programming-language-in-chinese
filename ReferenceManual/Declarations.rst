@@ -679,8 +679,9 @@ The optimized behavior is known as :newTerm:`call by reference`;
 it satisfies all of the requirements
 of the copy-in copy-out model
 while removing the overhead of copying.
-Do not depend on the behavioral differences
-between copy-in copy-out and call by reference.
+Write your code using the model given by copy-in copy-out,
+without depending on the call-by-reference optimization,
+so that it behaves correctly with or without the optimization.
 
 Do not access the value that was passed as an in-out argument,
 even if the original argument is available in the current scope.
