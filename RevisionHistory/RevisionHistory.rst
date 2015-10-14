@@ -12,7 +12,7 @@ Date        Notes
               and :ref:`LexicalStructure_StringLiterals` sections
               now that string interpolations can contain string literals.
 
-            * Added the section :ref:`Closures_Noescape` section
+            * Added the :ref:`Closures_Noescape` section
               with information about the ``@noescape`` attribute.
 
             * Updated the :ref:`Attributes_DeclarationAttributes`
