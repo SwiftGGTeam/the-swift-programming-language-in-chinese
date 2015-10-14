@@ -24,18 +24,18 @@
 - [字符串的 Unicode 表示形式](#unicode_representations_of_strings)
 
 
-`String`是例如"hello, world"，"albatross"这样的有序的`Character`（字符）类型的值的集合，通过`String`类型来表示。
-Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode 的方式来处理代码中的文本。
+`String`是例如"hello, world"，"albatross"这样的有序的`Character`（字符）类型的值的集合。通过`String`类型来表示。
+一个`String`的内容可以用变量的方式读取，它包括一个`Character`值的集合。    
 创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
 字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。
-与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。
+与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。    
 尽管语法简易，但`String`类型是一种快速、现代化的字符串实现。
 每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式（representations）。
 你也可以在常量、变量、字面量和表达式中进行字符串插值操作，这可以帮助你轻松创建用于展示、存储和打印的自定义字符串。
 
 > 注意：  
 > Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [`AnyObject`类型](./19_Type_Casting.html#anyobject) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
-> 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。  
+> 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 2)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。  
 
 
 
@@ -100,9 +100,6 @@ Swift 的`String`类型是值类型。
 如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。
 任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。
 值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
-
-> 注意：  
-与 Cocoa 中的`NSString`不同，当您在 Cocoa 中创建了一个`NSString`实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该`NSString`实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
 
 Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值。
 很明显无论该值来自于哪里，都是您独自拥有的。
