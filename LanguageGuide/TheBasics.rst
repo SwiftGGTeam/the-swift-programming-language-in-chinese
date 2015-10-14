@@ -277,7 +277,7 @@ Wrap the name in parentheses and escape it with a backslash before the opening p
 Comments
 --------
 
-Use comments to include non-executable text in your code,
+Use comments to include nonexecutable text in your code,
 as a note or reminder to yourself.
 Comments are ignored by the Swift compiler when your code is compiled.
 
@@ -1067,7 +1067,7 @@ For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 .. note::
 
-   Trying to use ``!`` to access a non-existent optional value triggers
+   Trying to use ``!`` to access a nonexistent optional value triggers
    a runtime error.
    Always make sure that an optional contains a non-``nil`` value
    before using ``!`` to force-unwrap its value.

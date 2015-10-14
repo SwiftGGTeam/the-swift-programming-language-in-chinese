@@ -118,7 +118,7 @@ The first, ``resolution``, is initialized with a new ``Resolution`` structure in
 which infers a property type of ``Resolution``.
 For the other three properties,
 new ``VideoMode`` instances will be initialized with
-an ``interlaced`` setting of ``false`` (meaning “non-interlaced video”),
+an ``interlaced`` setting of ``false`` (meaning “noninterlaced video”),
 a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``.
 The ``name`` property is automatically given a default value of ``nil``,

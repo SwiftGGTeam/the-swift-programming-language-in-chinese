@@ -1795,7 +1795,7 @@ but cannot be an empty string:
          var name: String?
          // this initializer creates a document with a nil name value
          init() {}
-         // this initializer creates a document with a non-empty name value
+         // this initializer creates a document with a nonempty name value
          init?(name: String) {
             self.name = name
             if name.isEmpty { return nil }
