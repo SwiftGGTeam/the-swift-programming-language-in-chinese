@@ -296,7 +296,7 @@ The ``catch`` clauses don't have to handle every possible error
 that the code in its ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
-However, the error must handled by *some* surrounding scope ---
+However, the error must be handled by *some* surrounding scope ---
 either by an enclosing ``do``-``catch`` clause
 that handles the error
 or by being inside a throwing function.
