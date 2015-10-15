@@ -503,14 +503,13 @@ when the default value expression is evaluated at the call site.
     -> func myFunction() {
           logFunctionName() // Prints "myFunction()".
        }
-    ---
-    -> myFunction()
+    >> myFunction()
     << myFunction()
     >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    namedArgs(1, withJay: 2)
+    >> namedArgs(1, withJay: 2)
     << namedArgs(_:withJay:)
 
 .. Additional hidden tests above illustrate
