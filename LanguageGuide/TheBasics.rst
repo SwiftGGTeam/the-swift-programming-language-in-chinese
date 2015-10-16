@@ -1136,7 +1136,10 @@ would be made available as a variable rather than a constant.
 .. ^-- use guard-let instead of if-let
 
 You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition:
+and use a ``where`` clause to check for a Boolean condition.
+If any of the values in the optional bindings is ``nil``
+or if the ``where`` clause evaluates to ``false``,
+the whole optional binding is considered unsuccessful.
 
 .. testcode:: multipleOptionalBindings
 
