@@ -1133,6 +1133,8 @@ would be made available as a variable rather than a constant.
    declare a constant or variable yourself
    before the ``if`` statement begins.
 
+.. ^-- use guard-let instead of if-let
+
 You can include multiple optional bindings in a single ``if`` statement
 and use a ``where`` clause to check for a Boolean condition:
 
