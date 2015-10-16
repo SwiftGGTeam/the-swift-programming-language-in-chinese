@@ -113,14 +113,14 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
 
 ```swift
-for character in "Dog!🐶".characters {
+for character in "Dog!�".characters {
     print(character)
 }
 // D
 // o
 // g
 // !
-// 🐶
+// �
 ```
 
 `for-in`循环在 [For Loops](./05_Control_Flow.html#for_loops) 中进行了详细描述。
@@ -133,10 +133,10 @@ let exclamationMark: Character = "!"
 字符串可以通过传递一个值类型为`Character`的数组作为自变量来初始化：
 
 ```swift
-let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+let catCharacters: [Character] = ["C", "a", "t", "!", "�"]
 let catString = String(catCharacters)
 print(catString)
-// 打印输出："Cat!🐱"
+// 打印输出："Cat!�"
 ```
 
 <a name="concatenating_strings_and_characters"></a>
@@ -205,7 +205,7 @@ Swift 的`String`和`Character`类型是完全兼容 Unicode 标准的。
 ### Unicode 标量（Unicode Scalars）
 
 Swift 的`String`类型是基于 *Unicode 标量* 建立的。
-Unicode 标量是对应字符或者修饰符的唯一的21位数字，例如`U+0061`表示小写的拉丁字母(`LATIN SMALL LETTER A`)("`a`")，`U+1F425`表示小鸡表情(`FRONT-FACING BABY CHICK`) ("`🐥`")。
+Unicode 标量是对应字符或者修饰符的唯一的21位数字，例如`U+0061`表示小写的拉丁字母(`LATIN SMALL LETTER A`)("`a`")，`U+1F425`表示小鸡表情(`FRONT-FACING BABY CHICK`) ("`�`")。
 
 > 注意：
 > Unicode *码位(code poing)* 的范围是`U+0000`到`U+D7FF`或者`U+E000`到`U+10FFFF`。Unicode 标量不包括 Unicode *代理项(surrogate pair)* 码位，其码位范围是`U+D800`到`U+DFFF`。
@@ -229,7 +229,7 @@ let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
 // "Imageination is more important than knowledge" - Enistein
 let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
 let blackHeart = "\u{2665}"           // ♥, Unicode 标量 U+2665
-let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
+let sparklingHeart = "\u{1F496}"      // �, Unicode 标量 U+1F496
 ```
 
 <a name="extended_grapheme_clusters"></a>  
@@ -272,7 +272,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 
 ```swift
 let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
-// regionalIndicatorForUS 是 🇺🇸
+// regionalIndicatorForUS 是 ��
 ```
 
 <a name="counting_characters"></a>
@@ -281,7 +281,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 如果想要获得一个字符串中`Character`值的数量，可以使用字符串的`characters`属性的`count`属性：
 
 ```swift
-let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+let unusualMenagerie = "Koala �, Snail �, Penguin �, Dromedary �"
 print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 // 打印输出 "unusualMenagerie has 40 characters"
 ```
@@ -512,10 +512,10 @@ Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式�
 * UTF-16 代码单元集合 (利用字符串的`utf16`属性进行访问)
 * 21位的 Unicode 标量值集合，也就是字符串的 UTF-32 编码格式 (利用字符串的`unicodeScalars`属性进行访问)
 
-下面由`D``o``g``‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`🐶`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
+下面由`D``o``g``‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`�`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
 
 ```swift
-let dogString = "Dog‼🐶"
+let dogString = "Dog‼�"
 ```
 
 
@@ -526,16 +526,16 @@ let dogString = "Dog‼🐶"
 其为`String.UTF8View`类型的属性，`UTF8View`是无符号8位 (`UInt8`) 值的集合，每一个`UInt8`值都是一个字符的 UTF-8 表示：
 
 <table style='text-align:center'>
- <tr height=77>
+ <tr height="77">
   <td>Character</td>
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
-  <td colspan=3>‼<br>U+203C</td>
-  <td colspan=4>🐶<br>U+1F436</td>
+  <td colspan="3">‼<br>U+203C</td>
+  <td colspan="4">�<br>U+1F436</td>
  </tr>
- <tr height=77>
-  <td height=77>UTF-8<br>Code Unit</td>
+ <tr height="77">
+  <td height="77">UTF-8<br>Code Unit</td>
   <td>68</td>
   <td>111</td>
   <td>103</td>
@@ -548,7 +548,7 @@ let dogString = "Dog‼🐶"
   <td>182</td>
  </tr>
  <tr>
-  <td height=77>Position</td>
+  <td height="77">Position</td>
   <td>0</td>
   <td>1</td>
   <td>2</td>
@@ -583,16 +583,16 @@ print("")
 其为`String.UTF16View`类型的属性，`UTF16View`是无符号16位 (`UInt16`) 值的集合，每一个`UInt16`都是一个字符的 UTF-16 表示：
 
 <table style='text-align:center'>
- <tr height=77>
+ <tr height="77">
   <td>Character</td>
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
   <td>‼<br>U+203C</td>
-  <td colspan=2>🐶<br>U+1F436</td>
+  <td colspan="2">�<br>U+1F436</td>
  </tr>
- <tr height=77>
-  <td height=77>UTF-16<br>Code Unit</td>
+ <tr height="77">
+  <td height="77">UTF-16<br>Code Unit</td>
   <td>68</td>
   <td>111</td>
   <td>103</td>
@@ -601,7 +601,7 @@ print("")
   <td>56374</td>
  </tr>
  <tr>
-  <td height=77>Position</td>
+  <td height="77">Position</td>
   <td>0</td>
   <td>1</td>
   <td>2</td>
@@ -638,16 +638,16 @@ print("")
 
 
 <table style='text-align:center'>
- <tr height=77>
+ <tr height="77">
   <td>Character</td>
   <td>D<br>U+0044</td>
   <td>o<br>U+006F</td>
   <td>g<br>U+0067</td>
   <td>‼<br>U+203C</td>
-  <td>🐶<br>U+1F436</td>
+  <td>�<br>U+1F436</td>
  </tr>
- <tr height=77>
-  <td height=77>UTF-16<br>Code Unit</td>
+ <tr height="77">
+  <td height="77">UTF-16<br>Code Unit</td>
   <td>68</td>
   <td>111</td>
   <td>103</td>
@@ -655,7 +655,7 @@ print("")
   <td>128054</td>
  </tr>
  <tr>
-  <td height=77>Position</td>
+  <td height="77">Position</td>
   <td>0</td>
   <td>1</td>
   <td>2</td>
@@ -688,5 +688,5 @@ for scalar in dogString.unicodeScalars {
 // o
 // g
 // ‼
-// 🐶
+// �
 ```

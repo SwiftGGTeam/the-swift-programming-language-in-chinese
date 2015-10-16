@@ -228,6 +228,7 @@ let fromTheTop = stackOfStrings.pop()
 ```
 
 下图展示了如何从栈中pop一个值的过程：
+
 ![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
 
 <a name="extending_a_generic_type"></a>
