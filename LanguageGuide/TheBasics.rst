@@ -1125,16 +1125,6 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-.. TODO: This note is not actually correct. How *do* you do this?
-   Constants or variables created with optional binding
-   are only available within the code block following their creation,
-   as in the first branch of the ``if`` statement above.
-   If you want to work with the optional's value outside of this code block,
-   declare a constant or variable yourself
-   before the ``if`` statement begins.
-
-.. ^-- use guard-let instead of if-let
-
 You can include multiple optional bindings in a single ``if`` statement
 and use a ``where`` clause to check for a Boolean condition.
 If any of the values in the optional bindings is ``nil``
@@ -1147,6 +1137,16 @@ the whole optional binding is considered unsuccessful.
          print("\(firstNumber) < \(secondNumber)")
       } 
    <- 4 < 42
+
+.. note::
+
+   Constants or variables created with optional binding
+   are only available within the code block following their creation,
+   as in the first branch of the ``if`` statement above.
+   If you want to work with the optional's value
+   in the code that comes after the optional binding,
+   and not just within the first branch of the ``if`` statement,
+   use a ``guard`` statement as described in :ref:`ControlFlow_Guard`.
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
