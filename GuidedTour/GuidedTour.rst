@@ -1250,6 +1250,29 @@ is to use ``try?`` to convert the error to an optional.
 .. Experiment: Write a function that calls sendToPrinter()
    and handles errors by throwing.
 
+Use ``defer`` to write a block of code
+this as always executed before a function returns,
+regardless of whether an error was thrown.
+You can use ``defer`` even when there is no error handling going on
+to simplify functions that can return from several different places.
+
+::
+
+    func something() throws {
+        let x = allocateResource()
+        defer { x.returnToResourcePool() }
+
+        try somethingThatMightThrow()
+    }
+
+
+    func complain(tasks: [String]) {
+        var result = "I have to "
+        defer { result += ". It's a lot of work." }
+
+        tasks.forEach { result += $0 }
+    }
+
 
 Generics
 --------
