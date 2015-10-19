@@ -1190,6 +1190,67 @@ This means that you can't accidentally access
 methods or properties that the class implements
 in addition to its protocol conformance.
 
+Error Handling
+--------------
+
+You can use any type that adopts the ``ErrorType`` protocol
+to represent errors.
+
+::
+
+    enum PrinterError: ErrorType {
+        case OutOfPaper
+        case LowToner
+        case OnFire
+    }
+
+Use ``throw`` to throw an error
+and ``throws`` to mark a function that can throw an error.
+If you throw an error in a function,
+the function returns early and the code that called the function
+gets to handle the error.
+
+::
+
+    func sendToPrinter(printerName: String) throws -> String {
+        if printerName == "Johannes Gutenberg" {
+            throw PrinterError.LowToner
+        }
+        return "Job sent"
+    }
+
+There are several ways to handle errors.
+One way is to use ``do``-``catch``.
+Inside the ``do`` block,
+you mark code that can throw an error by writing ``try`` in front of it.
+Inside the ``catch`` block,
+the error is automatically given the name ``error``
+unless you can give it a different name.
+
+::
+
+    do {
+        let printerResponse = try sendToPrinter("Bi Sheng")
+        print(printerResponse)
+        throw(PrinterError.OnFire)
+    } catch {
+        print(error)
+    }
+
+.. Bi Sheng is credited with inventing the first movable type
+   out of porcelain during the Song dynasty in China.
+
+Another way to handle errors
+is to use ``try?`` to convert the error to an optional.
+
+::
+
+    let optionalPrinterResponse = try? sendToPrinter("◊◊◊")
+
+.. Experiment: Write a function that calls sendToPrinter()
+   and handles errors by throwing.
+
+
 Generics
 --------
 
