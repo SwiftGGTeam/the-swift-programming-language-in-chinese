@@ -1,9 +1,13 @@
-> 翻译：coverxit
-
-> 校对：numbbbbb, coverxit
-
-# 语句
+<a name="statement_statements"></a>
+# 语句（Statements）
 -----------------
+
+> 1.0
+> 翻译：[coverxit](https://github.com/coverxit)
+> 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai),
+
+> 2.0
+> 翻译+校对：[littledogboy](https://github.com/littledogboy)
 
 本页包含内容：
 
@@ -12,27 +16,21 @@
 - [带标签的语句](#labeled_statement)
 - [控制传递语句](#control_transfer_statements)
 
-在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式和声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。
+在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。
 
 循环语句用于重复执行代码块；分支语句用于执行满足特定条件的代码块；控制传递语句则用于修改代码的执行顺序。在稍后的叙述中，将会详细地介绍每一种类型的控制流语句。
 
 是否将分号（`;`）添加到语句的结尾处是可选的。但若要在同一行内写多条独立语句，请务必使用分号。
 
-> GRAMMAR OF A STATEMENT
-
-> *statement* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)**;** *opt*
-
-> *statement* → [*declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declaration)**;** *opt*
-
-> *statement* → [*loop-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/loop-statement)**;** *opt*
-
-> *statement* → [*branch-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/branch-statement)**;** *opt*
-
-> *statement* → [*labeled-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/labeled-statement)
-
-> *statement* → [*control-transfer-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/control-transfer-statement)**;** *opt*
-
-> *statement* → [*statment*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement) [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements)**;** *opt*
+> 语句语法  
+> *语句* → [*表达式*](../chapter3/04_Expressions.html#expression) **;** _可选_  
+> *语句* → [*声明*](../chapter3/05_Declarations.html#declaration) **;** _可选_  
+> *语句* → [*循环语句*](../chapter3/10_Statements.html#loop_statement) **;** _可选_  
+> *语句* → [*分支语句*](../chapter3/10_Statements.html#branch_statement) **;** _可选_  
+> *语句* → [*标记语句(Labeled Statement)*](../chapter3/10_Statements.html#labeled_statement)  
+> *语句* → [*控制转移语句*](../chapter3/10_Statements.html#control_transfer_statement) **;** _可选_  
+> *语句* → [*XXX语句*](../chapter3/10_Statements.html#control_transfer_statement) **;** _可选_     
+> *多条语句(Statements)* → [*语句*](../chapter3/10_Statements.html#statement) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements) _可选_  
 
 <a name="loop_statements"></a>
 ## 循环语句
@@ -41,122 +39,117 @@
 
 通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
 
-> GRAMMAR OF A LOOP STATEMENT
+> 循环语句语法  
+> *循环语句* → [*for语句*](../chapter3/10_Statements.html#for_statement)  
+> *循环语句* → [*for-in语句*](../chapter3/10_Statements.html#for_in_statement)  
+> *循环语句* → [*while语句*](../chapter3/10_Statements.html#wheetatype类型ile_statement)  
+> *循环语句* → [*do-while语句*](../chapter3/10_Statements.html#do_while_statement)  
 
-> *loop-statement* → [*for-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-statement)
-
-> *loop-statement* → [*for-in-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-in-statement)
-
-> *loop-statement* → [*while-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-statement)
-
-> *loop-statement* → [*do-while-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/do-while-statement)
-
+<a name="for_statements"></a>
 ### For 语句
 
-`for`语句允许在重复执行代码块的同时，递增一个计数器。
+`for`语句只有在循环条件为真时重复执行代码块，此时计数器递增。
 
 `for`语句的形式如下：
 
-```swift
-for `initialzation`; `condition`; `increment` {
-	`statements`
-}
-```
+> for `initialzation`; `condition`; `increment` {  
+> 	`statements`  
+> }  
 
 *initialzation*、*condition* 和 *increment* 之间的分号，以及包围循环体 *statements* 的大括号都是不可省略的。
 
 `for`语句的执行流程如下：
 
-1. *initialzation* 只会被执行一次，通常用于声明和初始化在接下来的循环中需要使用的变量。
-
-2. 计算 *condition* 表达式：
-	如果为`true`，*statements* 将会被执行，然后转到第3步。如果为`false`，*statements* 和 *increment* 都不会被执行，`for`至此执行完毕。
-
+1. *initialzation* *循环变量* 只会被执行一次，通常用于声明和初始化在接下来的循环中需要使用的变量。
+2. 判断 *condition* 循环条件：
+	如果为`true`，*statements* *循环体* 将会被执行，然后转到第3步。如果为`false`，*statements* 和 *increment* *循环增量* 都不会被执行，`for`至此执行完毕。
 3. 计算 *increment* 表达式，然后转到第2步。
 
-定义在 *initialzation* 中的变量仅在`for`语句的作用域以内有效。*condition* 表达式的值的类型必须遵循`LogicValue`协议。
+在 *initialzation* 中定义的变量仅在`for`循环的作用域内有效。*condition* 表达式的值的类型必须遵循`BooleanType `协议。
 
-> GRAMMAR OF A FOR STATEMENT
+> For 循环语法  
+> *for语句* → **for** [*for初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *for语句* → **for** **(** [*for初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **)** [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *for初始条件* → [*变量声明*](../chapter3/05_Declarations.html#variable_declaration) | [*表达式列表*](../chapter3/04_Expressions.html#expression_list)  
 
-> *for-statement* → **for** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
 
-> *for-statement* → **for (** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **)** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
-
-> *for-statement* → [*variable-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration) | [*expression-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-list)
-
+<a name="for-in_statements"></a>
 ### For-In 语句
 
 `for-in`语句允许在重复执行代码块的同时，迭代集合（或遵循`Sequence`协议的任意类型）中的每一项。
 
 `for-in`语句的形式如下：
 
-```swift
-for `item` in `collection` {
-	`statements`
-}
-```
+> for `item` in `collection` {  
+> 	`statements`  
+> }  
 
 `for-in`语句在循环开始前会调用 *collection* 表达式的`generate`方法来获取一个生成器类型（这是一个遵循`Generator`协议的类型）的值。接下来循环开始，调用 *collection* 表达式的`next`方法。如果其返回值不是`None`，它将会被赋给 *item*，然后执行 *statements*，执行完毕后回到循环开始处；否则，将不会赋值给 *item* 也不会执行 *statements*，`for-in`至此执行完毕。
 
-> GRAMMAR OF A FOR-IN STATEMENT
+> For-In 循环语法  
+> *for-in语句* → **for** [*模式*](../chapter3/07_Patterns.html#pattern) **in** [*表达式*](../chapter3/04_Expressions.html#expression) [*代码块*](../chapter3/05_Declarations.html#code_block)  
 
-> *for-in-statement* → **for** [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) **in** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
 
+<a name="while_statements"></a>
 ### While 语句
 
-`while`语句允许重复执行代码块。
+`while`语句当循环条件为真时，允许重复执行代码块。
 
 `while`语句的形式如下：
 
-```swift
-while `condition` {
-	`statements`
-}
-```
+> while `condition` {  
+> 	`statements`  
+> }  
 
 `while`语句的执行流程如下：
 
 1. 计算 *condition* 表达式：
 	如果为真`true`，转到第2步。如果为`false`，`while`至此执行完毕。
-
 2. 执行 *statements* ，然后转到第1步。
 
 由于 *condition* 的值在 *statements* 执行前就已计算出，因此`while`语句中的 *statements* 可能会被执行若干次，也可能不会被执行。
 
-*condition* 表达式的值的类型必须遵循`LogicValue`协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+*condition* 表达式的值的类型必须遵循`BooleanType `协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
-> GRAMMAR OF A WHILE STATEMENT
+> While 循环语法  
+> *while语句* → **while** [*while条件*](../chapter3/10_Statements.html#while_condition) [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*声明*](../chapter3/05_Declarations.html#declaration)   
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression)   
+> *条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*条件列表*](TODO)    
+> *条件* → [*可用条件*](../chapter3/10_Statement.html#availability) [*表达式*](../chapter3/04_Expressions.html#expression)    
+> *条件列表* → [*条件条件*](TODO)  [*条件列表*](TODO)      
+> *条件* → [*可用条件*](../chapter3/10_Statement.html#availability) [可选绑定条件](../chapter2/01_The_Basics.html#optional_binding)    
+> *case条件* → **case** [*模式*](../chapter3/07_Patterns.html#pattern) [构造器](TODO) [where](DOTO)    
+> *可选绑定条件* → [可选绑定头](TODO) [持续可选绑定](TODO) [持续可选绑定列表](TODO)    
+> *可选绑定头* → **let** [*模式*](../chapter3/07_Patterns.html#pattern)  [构造器](TODO)  **var**  [*模式*](../chapter3/07_Patterns.html#pattern)  [构造器](TODO)    
+>  *可持续绑定列表* →  [*模式*](../chapter3/07_Patterns.html#pattern) |  [构造器](TODO) [可选绑定头](TODO)
+> 
 
-> *while-statement* → **while** [*while-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition) [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
 
-> *while-condition* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) | [*declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declaration)
 
-### Do-While 语句
+<a name="while-while_statements"></a>
+### Repeat-While 语句
 
-`do-while`语句允许代码块被执行一次或多次。
+`repeat-while`语句允许代码块被执行一次或多次。
 
-`do-while`语句的形式如下：
+`repeat-while`语句的形式如下：
 
-```swift
-do {
-	`statements`
-} while `condition`
-```
+> repeat {  
+> 	`statements`  
+> } while `condition`  
 
-`do-while`语句的执行流程如下：
+`repeat-while`语句的执行流程如下：
 
 1. 执行 *statements*，然后转到第2步。
-
 2. 计算 *condition* 表达式：
-	如果为`true`，转到第1步。如果为`false`，`do-while`至此执行完毕。
+	如果为`true`，转到第1步。如果为`false`，`repeat-while`至此执行完毕。
 
-由于 *condition* 表达式的值是在 *statements* 执行后才计算出，因此`do-while`语句中的 *statements* 至少会被执行一次。
+由于 *condition* 表达式的值是在 *statements* 执行后才计算出，因此`repeat-while`语句中的 *statements* 至少会被执行一次。
 
-*condition* 表达式的值的类型必须遵循`LogicValue`协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+*condition* 表达式的值的类型必须遵循`BooleanType `协议。同时，*condition* 表达式也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
-> GRAMMAR OF A DO-WHILE STATEMENT
-
-> *do-while-statement* → **do** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) **while** [*while-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition)
+> Repeat-While 循环语法  
+> * repeat-while语句* → **repeat** [*代码块*](../chapter3/05_Declarations.html#code_block) **while** [*while条件*](../chapter3/10_Statements.html#while_condition)  
 
 <a name="branch_statements"></a>
 ## 分支语句
@@ -165,12 +158,12 @@ do {
 
 `switch`语句中的控制流可以用`break`语句修改，详情请见[Break 语句](#break_statement)。
 
-> GRAMMAR OF A BRANCH STATEMENT
+> 分支语句语法  
+> *分支语句* → [*if语句*](../chapter3/10_Statements.html#if_statement)  
+> *分支语句* → [*switch语句*](../chapter3/10_Statements.html#switch_statement)  
 
-> *branch-statement* → [*if-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/if-statement)
 
-> *branch-statement* → [*switch-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-statement)
-
+<a name="if_statements"></a>
 ### If 语句
 
 取决于一个或多个条件的值，`if`语句将决定执行哪一块代码。
@@ -179,64 +172,78 @@ do {
 
 第一种形式是当且仅当条件为真时执行代码，像下面这样：
 
-```swift
-if `condition` {
-	`statements`
-}
-```
+> if `condition` {  
+> 	`statements`  
+> }  
 
 第二种形式是在第一种形式的基础上添加 *else 语句*，当只有一个 else 语句时，像下面这样：
 
-```swift
-if `condition` {
-	`statements to execute if condition is true`
-} else {
-	`statements to execute if condition is false`
-}
-```
+> if `condition` {    
+> 	`statements to execute if condition is true`    
+> } else {           
+> 	`statements to execute if condition is false`    
+> }
 
 同时，else 语句也可包含`if`语句，从而形成一条链来测试更多的条件，像下面这样：
 
-```swift
-if `condition 1` {
-	`statements to execute if condition 1 is true`
-} else if `condition 2` {
-	`statements to execute if condition 2 is true`
-}
-else {
-	`statements to execute if both conditions are false`
-}
-```
+> if `condition 1` {  
+> 	`statements to execute if condition 1 is true`  
+> } else if `condition 2` {  
+> 	`statements to execute if condition 2 is true`  
+> }  
+> else {  
+> 	`statements to execute if both conditions are false`  
+> }  
 
 `if`语句中条件的值的类型必须遵循`LogicValue`协议。同时，条件也可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
-> GRAMMAR OF AN IF STATEMENT
+> If语句语法  
+> *if语句* → **if** [*if条件*](../chapter3/10_Statements.html#if_condition) [*代码块*](../chapter3/05_Declarations.html#code_block) [*else(Clause)*](../chapter3/10_Statements.html#else_clause) _可选_  
+> *if条件* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*声明*](../chapter3/05_Declarations.html#declaration)  
+> *else(Clause)* → **else** [*代码块*](../chapter3/05_Declarations.html#code_block) | **else** [*if语句*](../chapter3/10_Statements.html#if_statement)     
 
-> *if-statement* → **if** [*if-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/if-condition) [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) [*else-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/else-clause) *opt*
 
-> *if-condition* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) | [*declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declaration)
+<a name="guard_statements"></a>
+### Guard 语句    
+    
+`guard` 语句用来转移程序控制出其作用域，如果一个或者多个条件不成立。
+ `guard` 语句的格式如下：    
+ > guard `condition` else {    
+   `statements`    
+ >}    
+ 
+ `guard`语句中条件值的类型必须遵循`LogicValue`协议。且条件可以使用可选绑定，详情参见[可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+ 
+ 在`guard`语句中声明的常量或者变量，可用范围从声明开始到作用域结束,常量和变量的值从可选绑定声明中分配。
+ 
+ `guard`语句需要有`else`子句，并且必须调用被`noreturn`属性标记的函数,或者使用下面的语句把程序执行转移到guard语句的作用域外。    
+ 
+ *  `return`
+ *  `break`
+ *  `continue`
+ *  `throw`    
+ 
+执行转移语句详情参见[控制传递语句](TODO)
 
-> *else-clause* → **else** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) | **else** [*if-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/if-statement) *opt*
 
+<a name="switch_statements"></a>
 ### Switch 语句
 
 取决于`switch`语句的*控制表达式（control expression）*，`switch`语句将决定执行哪一块代码。
 
 `switch`语句的形式如下：
 
-```swift
-switch `control expression` {
-	case `pattern 1`:
-	    `statements`
-	case `pattern 2` where `condition`:
-	    `statements`
-	case `pattern 3` where `condition`,
-	`pattern 4` where `condition`:
-	    `statements`
-	default:
-	    `statements`
-}
-```
+> switch `control expression` {  
+> 	case `pattern 1`:  
+> 	    `statements`  
+> 	case `pattern 2` where `condition`:  
+> 	    `statements`  
+> 	case `pattern 3` where `condition`,  
+> 	`pattern 4` where `condition`:  
+> 	    `statements`  
+> 	default:  
+> 	    `statements`  
+> }  
 
 `switch`语句的*控制表达式（control expression）*会首先被计算，然后与每一个 case 的模式（pattern）进行匹配。如果匹配成功，程序将会执行对应的 case 分支里的 *statements*。另外，每一个 case 分支都不能为空，也就是说在每一个 case 分支中至少有一条语句。如果你不想在匹配到的 case 分支中执行代码，只需在该分支里写一条`break`语句即可。
 
@@ -262,28 +269,20 @@ case let (x, y) where x == y:
 
 当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这就意味着，如果你想执行下一个 case 分支，需要显式地在你需要的 case 分支里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，详情参见 [Fallthrough 语句](#fallthrough_statement)。
 
-> GRAMMAR OF A SWITCH STATEMENT
+> Switch语句语法  
+> *switch语句* → **switch** [*表达式*](../chapter3/04_Expressions.html#expression) **{** [*SwitchCase列表*](../chapter3/10_Statements.html#switch_cases) _可选_ **}**  
+> *SwitchCase列表* → [*SwitchCase*](../chapter3/10_Statements.html#switch_case) [*SwitchCase列表*](../chapter3/10_Statements.html#switch_cases) _可选_  
+> *SwitchCase* → [*case标签*](../chapter3/10_Statements.html#case_label) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements) | [*default标签*](../chapter3/10_Statements.html#default_label) [*多条语句(Statements)*](../chapter3/10_Statements.html#statements)  
+> *SwitchCase* → [*case标签*](../chapter3/10_Statements.html#case_label) **;** | [*default标签*](../chapter3/10_Statements.html#default_label) **;**  
+> *case标签* → **case** [*case项列表*](../chapter3/10_Statements.html#case_item_list) **:**  
+> *case项列表* → [*模式*](../chapter3/07_Patterns.html#pattern) [*guard-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ | [*模式*](../chapter3/07_Patterns.html#pattern) [*guard-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ **,** [*case项列表*](../chapter3/10_Statements.html#case_item_list)  
+> *default标签* → **default** **:**  
+> *where-clause* → **where** [*guard-expression*](../chapter3/10_Statements.html#guard)  
+> *where-expression* → [*表达式*](../chapter3/04_Expressions.html#expression)  
 
-> *switch-statement* → **switch** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **{** [*switch-cases*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-cases) *opt* **}**
-
-> *switch-cases* → [*switch-case*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-case) [*switch-cases*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-cases) *opt*
-
-> *switch-case* → [*case-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-label) [*statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements) | [*default-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/default-label) [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements)
-
-> *switch-case* → [*case-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-label) **;** | [*default-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/default-label) **;**
-
-> *case-label* → **case** [*case-item-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-item-list) **:**
-
-> *case-item-list* → [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) [*guard-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-clause) *opt* | [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) [*guard-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-clause) *opt*, [*case-item-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-item-list)
-
-> *default-label* → **default :**
-
-> *guard-clause* → **where** [*guard-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-expression)
-
-> *guard-expression* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)
-
-<a name="labeled_statement"></a>
-<a name="control_transfer_statements"></a> 带标签的语句
+<a name="labeled_statements"></a>
+<a name="control_transfer_statements"></a>
+## 带标签的语句
 
 你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
 
@@ -291,38 +290,30 @@ case let (x, y) where x == y:
 
 关于使用带标签的语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
-> GRAMMAR OF A LABELED STATEMENT
+> 标记语句语法  
+> *标记语句(Labeled Statement)* → [*语句标签*](../chapter3/10_Statements.html#statement_label) [*循环语句*](../chapter3/10_Statements.html#loop_statement) | [*语句标签*](../chapter3/10_Statements.html#statement_label) [*switch语句*](../chapter3/10_Statements.html#switch_statement)  
+> *语句标签* → [*标签名称*](../chapter3/10_Statements.html#label_name) **:**  
+> *标签名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)  
 
-> *labeled-statement* → [*statement-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement-label) [*loop-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/loop-statement) | [*statement-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement-label) [*switch-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-statement)
-
-> *statement-label* → [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) **:**
-
-> *label-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)
-
-
+<a name="control_transfer_statements"></a>
 ## 控制传递语句
 
 通过无条件地把控制权从一片代码传递到另一片代码，控制传递语句能够改变代码执行的顺序。Swift 提供四种类型的控制传递语句：`break`语句、`continue`语句、`fallthrough`语句和`return`语句。
 
-> GRAMMAR OF A CONTROL TRANSER STATEMENT
+> 控制传递语句(Control Transfer Statement) 语法  
+> *控制传递语句* → [*break语句*](../chapter3/10_Statements.html#break_statement)  
+> *控制传递语句* → [*continue语句*](../chapter3/10_Statements.html#continue_statement)  
+> *控制传递语句* → [*fallthrough语句*](../chapter3/10_Statements.html#fallthrough_statement)  
+> *控制传递语句* → [*return语句*](../chapter3/10_Statements.html#return_statement)     
+> *控制传递语句* → [*throw语句*](../chapter3/10_Statements.html#throw_statement)  
 
-> *control-transfer-statement* → [*break-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/break-statement)
-
-> *control-transfer-statement* → [*continue-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/continue-statement)
-
-> *control-transfer-statement* → [*fallthrough-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/fallthrough-statement)
-
-> *control-transfer-statement* → [*return-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/return-statement)
-
-<a name="break_statement"></a>
+<a name="break_statements"></a>
 ### Break 语句
 
 `break`语句用于终止循环或`switch`语句的执行。使用`break`语句时，可以只写`break`这个关键词，也可以在`break`后面跟上标签名（label name），像下面这样：
 
-```swift
-break
-break `label name`
-```
+> break  
+> break `label name`
 
 当`break`语句后面带标签名时，可用于终止由这个标签标记的循环或`switch`语句的执行。
 
@@ -332,19 +323,16 @@ break `label name`
 
 关于使用`break`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Break](../chapter2/05_Control_Flow.html#break) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
-> GRAMMAR OF A BREAK STATEMENT
+> Break 语句语法  
+> *break语句* → **break** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_  
 
-> *break-statement* → **break** [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) *opt*
-
-<a name="continue_statement"></a>
+<a name="continue_statements"></a>
 ### Continue 语句
 
 `continue`语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用`continue`语句时，可以只写`continue`这个关键词，也可以在`continue`后面跟上标签名（label name），像下面这样：
 
-```swift
-continue
-continue `label name`
-```
+> continue  
+> continue `label name`  
 
 当`continue`语句后面带标签名时，可用于终止由这个标签标记的循环中当前迭代的执行。
 
@@ -356,11 +344,10 @@ continue `label name`
 
 关于使用`continue`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Continue](../chapter2/05_Control_Flow.html#continue) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
-> GRAMMAR OF A CONTINUE STATEMENT
+> Continue 语句语法  
+> *continue语句* → **continue** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_  
 
-> *continue-statement* → **continue** [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) *opt*
-
-<a name="fallthrough_statement"></a>
+<a name="fallthrough_statements"></a>
 ### Fallthrough 语句
 
 `fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个 case 传递给下一个 case 。这种传递是无条件的，即使下一个 case 的模式与`switch`语句的控制表达式的值不匹配。
@@ -369,25 +356,143 @@ continue `label name`
 
 关于在`switch`语句中使用`fallthrough`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[控制传递语句](../chapter2/05_Control_Flow.html#control_transfer_statements)。
 
-> GRAMMAR OF A FALLTHROUGH STATEMENT
+> Fallthrough 语句语法  
+> *fallthrough语句* → **fallthrough**  
 
-> *continue-statement* → **fallthrough**
-
+<a name="return_statements"></a>
 ### Return 语句
 
 `return`语句用于在函数或方法的实现中将控制权传递给调用者，接着程序将会从调用者的位置继续向下执行。
 
 使用`return`语句时，可以只写`return`这个关键词，也可以在`return`后面跟上表达式，像下面这样：
 
-```swift
-return
-return `expression`
-```
+> return  
+> return `expression`  
 
 当`return`语句后面带表达式时，表达式的值将会返回给调用者。如果表达式值的类型与调用者期望的类型不匹配，Swift 则会在返回表达式的值之前将表达式值的类型转换为调用者期望的类型。
 
 而当只写`return`时，仅仅是将控制权从该函数或方法传递给调用者，而不返回一个值。（这就是说，该函数或方法的返回类型为`Void`或`()`）
 
-> GRAMMAR OF A RETURN STATEMENT
+> Return 语句语法  
+> *return语句* → **return** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_     
 
-> *return-statement* → **return** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt*
+<a name="availability_statements"></a>
+### Availability 语句    
+
+可用性条件，被当做`if` ，`while` 语句的条件，并且 `guard` 语句在运行时会基于特定的语法格式查询接口的可用性。    
+
+avaliability 语句的形式如下：
+> if #available(`platform name version`,` ...`, *) {    
+>   `statements to execute if the APIs are available`    
+> } else {    
+>  `fallback statements to execute if the APIs are unavailable`   
+> }    
+
+可用性条件执行一个代码块时，取决于在运行时想要使用的接口是否可用。
+当编译器检查到代码块中的接口是可用的，则从可用性条件中获取相应信息。    
+
+可用性条件使用逗号分隔平台名称和版本列表。使用`iOS`，`OSX`，以及`watchOS`为平台名称，包括相应的版本号。*参数是必需的。在任何平台上代码块主体都被可用性条件保护起来，由满足最低部署条件的目标设备运行。        
+   
+与布尔类型条件不同，不能用逻辑运算符 **&&** 和 **||** 合并可用性条件。 
+
+> 可用性条件语法    
+> *可用性条件* → **#available** ( [availability-arguments­](TODO) )    
+> *可用性条件* → [availability-argument­](TODO) |  [availability-argument](TODO)­ ,­ [availability-arguments­](TODO)    
+> *可用性条件* → [平台名称](TODO)  [版本号](TODO)    
+> *可用性条件* →   **\***    
+> *平台名称* →  **iOS** |  **iOSApplicationExtension**  
+> *平台名称* → **OSX**  |  **OSXApplicationExtension­**   
+> *平台名称* → **watchOS**     
+> *版本号* → [十进制数字](TODO)     
+> *版本号* → [十进制数字](TODO)  **.** [十进制数字](TODO)  
+> *版本号* → [十进制数字](TODO)  **.** [十进制数字](TODO) **.** [十进制数字](TODO)
+    
+
+<a name="throw_statements"></a>
+### Throw 语句    
+`throw`语句出现在抛出函数或者抛出方法体内，或者类型被`throws`关键字标记的表达式体内。   
+ 
+`throw`语句使程序结束执行当前的作用域，并在封闭作用域中传播错误。抛出的错误会一直传播，直到被`do`语句的`catch`子句处理掉。    
+
+`throw`语句由`throw`关键字 跟一个表达式组成 ，如下所示。    
+
+> throw `expression`    
+
+表达式值的类型必须遵循 `LogicValue`协议     
+
+关于如何使用`throw`语句的例子，详情参见[错误处理](TODO)一章的[抛出错误](TODO)。    
+
+> throw 语句语法    
+> *抛出语句* → **throw**  *[表达式­](TODO)*    
+
+<a name="defer_statements"></a>
+### Defer 语句
+
+ `defer` 语句用于转移程序控制出延迟语句作用域之前执行代码。    
+ 
+在 `defer` 语句中的语句无论程序控制如何转移都会执行。这意味着 `defer` 语句可以被使用在以下这些情况，像手动得执行资源管理，关闭文件描述，或者即使抛出了错误也需要去实现执行一些动作。    
+
+如果多个 `defer` 语句出现在同一范围内，那么它们执行的顺序与出现的顺序相反。给定作用域中的第一个`defer` 语句，会在最后执行，这意味着最后执行的延迟语句中的语句涉及的资源可以被其他 `defer`语句清理掉。    
+
+> 1  func f( ) {    
+> 2  defer { print("First") }    
+> 3  defer { print("Second") }    
+> 4  defer { print("Third") }    
+> 5  }    
+> 6  f()    
+> 7  // prints "Third"    
+> 8  // prints "Second"    
+> 9  // prints "First"    
+
+
+`defer` 语句中的语句无法转移程序控制出延迟语句。    
+
+> defer 语句语法        
+> *延迟语句*  → **defer** *[代码块](TODO)*    
+
+
+<a name="do_statements"></a>
+### Do 语句    
+
+`do` 语句用于引入一个新的作用域,该作用域中可以含有一个或多个`catch`子句,catch子句中定义了一些匹配错误情况的模式。`do` 语句作用域内定义的常量和变量，只能在do语句作用域内访问。    
+
+swift 中的 do 语句与C 中限定代码块界限的大括号 （{}）很相似，并且在程序运行的时候并不会造成系统开销。    
+
+> do {    
+>    try `expression`    
+>    `statements`    
+> } catch `pattern 1` {    
+    `statements`    
+> } catch `pattern 2` where condition {    
+    `statements`    
+> }    
+
+
+如同`switch`语句,编译器会判断`catch`子句是否被遗漏。如果catch没有被遗漏，则认为错误被处理。否则，错误会自动传播出包含作用域,被一个封闭的`catch`语句或抛出函数处理掉，包含函数必须以`throws`关键字声明。    
+
+    
+
+为了确保错误已经被处理，使用一个匹配所有错误的`catch`子句，如通配符模式（_）。如果一个`catch`子句不指定一种模式，`catch`子句会匹配和约束任何局部变量命名的`error`。有关在`catch`子句中使用模式的更多信息，详见[模式](TODO)。    
+
+关于在一些`catch`子句中如何使用` do`语句的例子，详情参见[错误处理](TODO)一章的[抛出错误](TODO)。       
+
+> do 语句语法  → **do** *[*代码块*](../chapter3/05_Declarations.html#code_block) [catch](TODO)*    
+> catch  → *[catch子句](TODO) [catch子句](TODO)*    
+> catch  → **catch** *[*模式*](../chapter3/07_Patterns.html#pattern)** *可选的* [*where*]() *可选的*  [*代码块*](../chapter3/05_Declarations.html#code_block)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
