@@ -1204,6 +1204,10 @@ to represent errors.
         case OnFire
     }
 
+.. PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
+   fire" error message, used when the kernel can't identify the specific
+   error.
+
 Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
 If you throw an error in a function,
