@@ -6,7 +6,9 @@
 > 校对：[dabing1022](https://github.com/dabing1022)
 
 > 2.0
-> 翻译+校对：[futantan](https://github.com/futantan)
+> 翻译：[futantan](https://github.com/futantan)
+> 校对：[小铁匠Linus](https://github.com/kevin833752)
+> 定稿：[shanksyang](http://codebuild.me)
 
 本页包含内容：
 
@@ -19,7 +21,7 @@
 - [委托(代理)模式（Delegation）](#delegation)
 - [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
 - [通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
-- [集合中的协议类型（Collections of Protocol Types）](#collections_of_protocol_types)
+- [协议类型的集合（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
 - [类专属协议（Class-Only Protocol）](#class_only_protocol)
 - [协议合成（Protocol Composition）](#protocol_composition)
@@ -30,6 +32,7 @@
 
 `协议`定义了一个蓝图，规定了用来实现某一特定工作或者功能所必需的方法和属性。类，结构体或枚举类型都可以遵循协议，并提供具体实现来完成协议定义的方法和功能。任意能够满足协议要求的类型被称为`遵循(conform)`这个协议。
 
+除了遵循协议的类型必须实现那些指定的规定以外，还可以对协议进行扩展，实现一些特殊的规定或者一些附加的功能，使得遵循的类型能够收益。
 <a name="protocol_syntax"></a>
 ## 协议的语法
 
@@ -60,11 +63,11 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 对属性的规定
 
-协议可以规定其`遵循者`提供特定名称和类型的`实例属性(instance property)`或`类属性(type property)`，而不指定是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外还必须指明是只读的还是可读可写的。
+协议可以规定其`遵循者`提供特定名称和类型的`实例属性(instance property)`或`类属性(type property)`，而不用指定是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外还必须指明是只读的还是可读可写的。
 
 如果协议规定属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。
 
-协议中的通常用var来声明属性，在类型声明后加上`{ set get }`来表示属性是可读可写的，只读属性则用`{ get }`来表示。
+协议中的通常用var来声明变量属性，在类型声明后加上`{ set get }`来表示属性是可读可写的，只读属性则用`{ get }`来表示。
 
 ```swift
 protocol SomeProtocol {
@@ -73,7 +76,7 @@ protocol SomeProtocol {
 }
 ```
 
-在协议中定义类属性(type property)时，总是使用`static`关键字作为前缀。当协议的遵循者是类时，可以使用`class`或`static`关键字来声明类属性，但是在协议的定义中，仍然要使用`static`关键字。
+在协议中定义类属性(type property)时，总是使用`static`关键字作为前缀。当协议的遵循者是类时，可以使用`class`或`static`关键字来声明类属性：
 
 ```swift
 protocol AnotherProtocol {
@@ -81,7 +84,7 @@ protocol AnotherProtocol {
 }
 ```
 
-如下所示，这是一个含有一个实例属性要求的协议。
+如下所示，这是一个含有一个实例属性要求的协议：
 
 ```swift
 protocol FullyNamed {
@@ -89,9 +92,9 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed`协议除了要求协议的遵循者提供fullName属性外，对协议对遵循者的类型并没有特别的要求。这个协议表示，任何遵循`FullyNamed`协议的类型，都具有一个可读的`String`类型实例属性`fullName`。
+`FullyNamed`协议除了要求协议的遵循者提供全名属性外，对协议对遵循者的类型并没有特别的要求。这个协议表示，任何遵循`FullyNamed`协议的类型，都具有一个可读的`String`类型实例属性`fullName`。
 
-下面是一个遵循`FullyNamed`协议的简单结构体。
+下面是一个遵循`FullyNamed`协议的简单结构体：
 
 ```swift
 struct Person: FullyNamed{
@@ -103,7 +106,7 @@ let john = Person(fullName: "John Appleseed")
 
 这个例子中定义了一个叫做`Person`的结构体，用来表示具有名字的人。从第一行代码中可以看出，它遵循了`FullyNamed`协议。
 
-`Person`结构体的每一个实例都有一个叫做`fullName`，`String`类型的存储型属性。这正好满足了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
+`Person`结构体的每一个实例都有一个`String`类型的存储型属性`fullName`。这正好满足了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
 
 下面是一个更为复杂的类，它采用并遵循了`FullyNamed`协议:
 
@@ -120,17 +123,17 @@ class Starship: FullyNamed {
     }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-// ncc1701.fullName is "USS Enterprise"
+// ncc1701.fullName 是 "USS Enterprise"
 ```
 
-Starship类把`fullName`属性实现为只读的计算型属性。每一个`Starship`类的实例都有一个名为`name`的属性和一个名为`prefix`的可选属性。 当`prefix`存在时，将`prefix`插入到`name`之前来为Starship构建`fullName`，`prefix`不存在时，则将直接用`name`构建`fullName`。
+`Starship`类把`fullName`属性实现为只读的计算型属性。每一个`Starship`类的实例都有一个名为`name`的属性和一个名为`prefix`的可选属性。 当`prefix`存在时，将`prefix`插入到`name`之前来为Starship构建`fullName`，`prefix`不存在时，则将直接用`name`构建`fullName`。
 
 <a name="method_requirements"></a>
 ## 对方法的规定
 
 协议可以要求其遵循者实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通的方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是在协议的方法定义中，不支持参数默认值。
 
-正如对属性的规定中所说的，在协议中定义类方法的时候，总是使用`static`关键字作为前缀。当协议的遵循者是类的时候，虽然你可以在类的实现中使用`class`或者`static`来实现类方法，但是在协议中声明类方法，仍然要使用`static`关键字。
+正如对属性的规定中所说的，在协议中定义类方法的时候，总是使用`static`关键字作为前缀。当协议的遵循者是类的时候，你可以在类的实现中使用`class`或者`static`来实现类方法：
 
 ```swift
 protocol SomeProtocol {
@@ -138,7 +141,7 @@ protocol SomeProtocol {
 }
 ```
 
-下面的例子定义了含有一个实例方法的协议。
+下面的例子定义了含有一个实例方法的协议：
 
 ```swift
 protocol RandomNumberGenerator {
@@ -184,7 +187,7 @@ print("And another one: \(generator.random())")
 
 如下所示，`Togglable`协议含有名为`toggle`的实例方法。根据名称推测，`toggle()`方法将通过改变实例属性，来切换遵循该协议的实例的状态。
 
-`toggle()`方法在定义的时候，使用`mutating`关键字标记，这表明当它被调用时该方法将会改变协议遵循者实例的状态。
+`toggle()`方法在定义的时候，使用`mutating`关键字标记，这表明当它被调用时该方法将会改变协议遵循者实例的状态：
 
 ```swift
 protocol Togglable {
@@ -194,7 +197,7 @@ protocol Togglable {
 
 当使用`枚举`或`结构体`来实现`Togglable`协议时，需要提供一个带有`mutating`前缀的`toggle`方法。
 
-下面定义了一个名为`OnOffSwitch`的枚举类型。这个枚举类型在两种状态之间进行切换，用枚举成员`On`和`Off`表示。枚举类型的`toggle`方法被标记为`mutating`以满足`Togglable`协议的要求。
+下面定义了一个名为`OnOffSwitch`的枚举类型。这个枚举类型在两种状态之间进行切换，用枚举成员`On`和`Off`表示。枚举类型的`toggle`方法被标记为`mutating`以满足`Togglable`协议的要求：
 
 ```swift
 enum OnOffSwitch: Togglable {
@@ -243,7 +246,7 @@ class SomeClass: SomeProtocol {
 >注意  
 >如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
 
-如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符
+如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符：
 
 ```swift
 protocol SomeProtocol {
@@ -287,7 +290,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 > 注意  
 > 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用大写字母开头的驼峰式写法，例如(`FullyNamed`和`RandomNumberGenerator`)
 
-如下所示，这个示例中将协议当做类型来使用
+如下所示，这个示例中将协议当做类型来使用：
 
 ```swift
 class Dice {
@@ -329,9 +332,9 @@ for _ in 1...5 {
 <a name="delegation"></a>
 ## 委托(代理)模式
 
-委托是一种设计模式，它允许`类`或`结构体`将一些需要它们负责的功能`交由(委托)`给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法， 使其`遵循者`拥有这些被委托的`函数和方法`。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。
+委托是一种设计模式，它允许`类`或`结构体`将一些需要它们负责的功能`交由(或委托)`给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法，使其`遵循者`拥有这些被委托的`函数和方法`。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。
 
-下面的例子是两个基于骰子游戏的协议:
+下面的例子是两个基于骰子游戏的协议：
 
 ```swift
 protocol DiceGame {
@@ -346,7 +349,7 @@ protocol DiceGameDelegate {
 }
 ```
 
-`DiceGame`协议可以在任意含有骰子的游戏中实现。`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
+`DiceGame`协议可以在任意含有骰子的游戏中实现。`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程。
 
 如下所示，`SnakesAndLadders`是`Snakes and Ladders`([Control Flow](./05_Control_Flow.html)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
 
@@ -393,7 +396,7 @@ class SnakesAndLadders: DiceGame {
 
 因为`delegate`是一个遵循`DiceGameDelegate`的可选属性，因此在`play()`方法中使用了`可选链`来调用委托方法。 若`delegate`属性为`nil`， 则delegate所调用的方法失效，并不会产生错误。若`delegate`不为`nil`，则方法能够被调用
 
-如下所示，`DiceGameTracker`遵循了`DiceGameDelegate`协议
+如下所示，`DiceGameTracker`遵循了`DiceGameDelegate`协议：
 
 ```swift
 class DiceGameTracker: DiceGameDelegate {
@@ -421,20 +424,20 @@ class DiceGameTracker: DiceGameDelegate {
 
 无论当前进行的是何种游戏，`game`都遵循`DiceGame`协议以确保`game`含有`dice`属性，因此在`gameDidStart(_:)`方法中可以通过传入的`game`参数来访问`dice`属性，进而打印出`dice`的`sides`属性的值。
 
-`DiceGameTracker`的运行情况，如下所示:
+`DiceGameTracker`的运行情况，如下所示：
 
 ```swift
 let tracker = DiceGameTracker()
 let game = SnakesAndLadders()
 game.delegate = tracker
 game.play()
-// Started a new game of Snakes and Ladders
-// The game is using a 6-sided dice
-// Rolled a 3
-// Rolled a 5
-// Rolled a 4
-// Rolled a 5
-// The game lasted for 4 turns
+// 开始一个新的Snakes and Ladders的游戏
+// 游戏使用 6 面的骰子
+// 翻转得到 3
+// 翻转得到 5
+// 翻转得到 4
+// 翻转得到 5
+// 游戏进行了 4 轮
 ```
 
 <a name="adding_protocol_conformance_with_an_extension"></a>
@@ -445,19 +448,19 @@ game.play()
 > 注意  
 > 通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法
 
-例如`TextRepresentable`协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本:
+例如`TextRepresentable`协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本：
 
 ```swift
 protocol TextRepresentable {
-	func asText() -> String
+    var textualDescription: String { get }
 }
 ```
 
-可以通过扩展，为上一节中提到的`Dice`增加类遵循`TextRepresentable`协议的功能
+可以通过扩展，为上一节中提到的`Dice`增加类遵循`TextRepresentable`协议的功能：
 
 ```swift
 extension Dice: TextRepresentable {
-	func asText() -> String {
+    var textualDescription: String {
 		return "A \(sides)-sided dice"
 	}
 }
@@ -468,7 +471,7 @@ extension Dice: TextRepresentable {
 
 ```swift
 let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
-print(d12.asText())
+print(d12. textualDescription)
 // 输出 "A 12-sided dice"
 ```
 
@@ -476,11 +479,11 @@ print(d12.asText())
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
-	func asText() -> String {
+    var textualDescription: String {
 		return "A game of Snakes and Ladders with \(finalSquare) squares"
 	}
 }
-print(game.asText())
+print(game.textualDescription)
 // 输出 "A game of Snakes and Ladders with 25 squares"
 ```
 
@@ -492,29 +495,29 @@ print(game.asText())
 ```swift
 struct Hamster {
 	var name: String
-	func asText() -> String {
+   	var textualDescription: String {
 		return "A hamster named \(name)"
 	}
 }
 extension Hamster: TextRepresentable {}
 ```
 
-从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用
+从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用：
 
 ```swift
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
-print(somethingTextRepresentable.asText())
+print(somethingTextRepresentable.textualDescription)
 // 输出 "A hamster named Simon"
 ```
 
 > 注意  
-> 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明
+> 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明。
 
 <a name="collections_of_protocol_types"></a>
-## 集合中的协议类型
+## 协议类型的集合
 
-协议类型可以在集合使用，表示集合中的元素均为协议类型，下面的例子创建了一个类型为`TextRepresentable`的数组:
+协议类型可以在数组或者字典这样的集合中使用，在[协议类型](./22_Protocols.html##protocols_as_types)提到了这样的用法。下面的例子创建了一个类型为`TextRepresentable`的数组:
 
 ```swift
 let things: [TextRepresentable] = [game,d12,simonTheHamster]
@@ -524,19 +527,20 @@ let things: [TextRepresentable] = [game,d12,simonTheHamster]
 
 ```swift
 for thing in things {
-	print(thing.asText())
+	print(thing.textualDescription)
 }
+// 输出：
 // A game of Snakes and Ladders with 25 squares
 // A 12-sided dice
 // A hamster named Simon
 ```
 
-`thing`被当做是`TextRepresentable`类型而不是`Dice`，`DiceGame`，`Hamster`等类型。因此能且仅能调用`asText`方法
+`thing`被当做是`TextRepresentable`类型而不是`Dice`，`DiceGame`，`Hamster`等类型，即使真实的实例是它们中的一种类型。尽管如此，由于它是`TextRepresentable`类型，任何`TextRepresentable`都拥有一个`textualDescription`属性，所以每次循环访问`thing.textualDescription`是安全的。
 
 <a name="protocol_inheritance"></a>
 ## 协议的继承
 
-协议能够继承一个或多个其他协议，可以在继承的协议基础上增加新的内容要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔:
+协议能够继承一个或多个其他协议，可以在继承的协议基础上增加新的内容要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔：
 
 ```swift
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
@@ -544,22 +548,22 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
 }
 ```
 
-如下所示，`PrettyTextRepresentable`协议继承了`TextRepresentable`协议
+如下所示，`PrettyTextRepresentable`协议继承了`TextRepresentable`协议：
 
 ```swift
 protocol PrettyTextRepresentable: TextRepresentable {
-	func asPrettyText() -> String
+	var prettyTextualDescription: String { get }
 }
 ```
 
-例子中定义了一个新的协议`PrettyTextRepresentable`，它继承自`TextRepresentable`协议。任何遵循`PrettyTextRepresentable`协议的类型在满足该协议的要求时，也必须满足`TextRepresentable`协议的要求。在这个例子中，`PrettyTextRepresentable`协议要求其遵循者提供一个返回值为`String`类型的`asPrettyText`方法。
+例子中定义了一个新的协议`PrettyTextRepresentable`，它继承自`TextRepresentable`协议。任何遵循`PrettyTextRepresentable`协议的类型在满足该协议的要求时，也必须满足`TextRepresentable`协议的要求。在这个例子中，`PrettyTextRepresentable`协议要求其遵循者提供一个返回值为`String`类型的`prettyTextualDescription`属性。
 
-如下所示，扩展`SnakesAndLadders`，让其遵循`PrettyTextRepresentable`协议:
+如下所示，扩展`SnakesAndLadders`，让其遵循`PrettyTextRepresentable`协议：
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
-    func asPrettyText() -> String {
-        var output = asText() + ":\n"
+    var prettyTextualDescription: String {
+        var output = textualDescription + ":\n"
         for index in 1...finalSquare {
             switch board[index] {
             	case let ladder where ladder > 0:
@@ -575,17 +579,17 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 }
 ```
 
-上述扩展使得`SnakesAndLadders`遵循了`PrettyTextRepresentable`协议，并为每个`SnakesAndLadders`类型提供了了协议要求的`asPrettyText()`方法。每个`PrettyTextRepresentable`类型同时也是`TextRepresentable`类型，所以在`asPrettyText`的实现中，可以调用`asText()`方法。之后在每一行加上换行符，作为输出的开始。然后遍历数组中的元素，输出一个几何图形来表示遍历的结果:
+上述扩展使得`SnakesAndLadders`遵循了`PrettyTextRepresentable`协议，并为每个`SnakesAndLadders`类型提供了协议要求的`prettyTextualDescription`属性。每个`PrettyTextRepresentable`类型同时也是`TextRepresentable`类型，所以在`prettyTextualDescription`的实现中，可以调用`textualDescription`属性。之后在每一行加上换行符，作为输出的开始。然后遍历数组中的元素，输出一个几何图形来表示遍历的结果:
 
 * 当从数组中取出的元素的值大于0时，用`▲`表示
 * 当从数组中取出的元素的值小于0时，用`▼`表示
 * 当从数组中取出的元素的值等于0时，用`○`表示
 
-任意`SankesAndLadders`的实例都可以使用`asPrettyText()`方法。
+任意`SankesAndLadders`的实例都可以使用`prettyTextualDescription`属性。
 
 ```swift
-print(game.asPrettyText())
-// A game of Snakes and Ladders with 25 squares:
+print(game.prettyTextualDescription)
+// A game of Snakes and Ladders with 25 squares:TODO
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
@@ -595,13 +599,11 @@ print(game.asPrettyText())
 
 ```swift
 protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
-    // class-only protocol definition goes here
+    // 协议定义
 }
 ```
 
 在以上例子中，协议`SomeClassOnlyProtocol`只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
-
-<!--TODO 链接-->
 
 >注意  
 >当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
@@ -612,7 +614,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 
 有时候需要同时遵循多个协议。你可以将多个协议采用`protocol<SomeProtocol， AnotherProtocol>`这样的格式进行组合，称为`协议合成(protocol composition)`。你可以在`<>`中罗列任意多个你想要遵循的协议，以逗号分隔。
 
-下面的例子中，将`Named`和`Aged`两个协议按照上述的语法组合成一个协议:
+下面的例子中，将`Named`和`Aged`两个协议按照上述的语法组合成一个协议：
 
 ```swift
 protocol Named {
@@ -645,14 +647,13 @@ wishHappyBirthday(birthdayPerson)
 <a name="checking_for_protocol_conformance"></a>
 ## 检验协议的一致性
 
-<!--TODO 链接-->
 你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[类型转换](./20_Type_Casting.html)*):
 
-* `is`操作符用来检查实例是否`遵循`了某个`协议`
-* `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`
+* `is`操作符用来检查实例是否`遵循`了某个`协议`。
+* `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`。
 * `as`用以强制向下转型，如果强转失败，会引起运行时错误。
 
-下面的例子定义了一个`HasArea`的协议，要求有一个`Double`类型可读的`area`:
+下面的例子定义了一个`HasArea`的协议，要求有一个`Double`类型可读的`area`：
 
 ```swift
 protocol HasArea {
@@ -660,7 +661,7 @@ protocol HasArea {
 }
 ```
 
-如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议
+如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议：
 
 ```swift
 class Circle: HasArea {
@@ -677,7 +678,7 @@ class Country: HasArea {
 
 `Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`HasArea`协议。
 
-如下所示，Animal是一个没有实现`HasArea`协议的类
+如下所示，`Animal`是一个没有实现`HasArea`协议的类：
 
 ```swift
 class Animal {
@@ -719,19 +720,16 @@ for object in objects {
 
 <a name="optional_protocol_requirements"></a>
 ## 对可选协议的规定
+协议可以含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`optional`关键字作为前缀来定义可选成员。当需要使用可选规定的方法或者属性时，他的类型自动会变成可选的。比如，一个定义为`(Int) -> String`的方法变成`((Int) -> String)?`。需要注意的是整个函数定义包裹在可选中，而不是放在函数的返回值后面。
 
-协议可以含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`optional`关键字作为前缀来定义可选成员。
-
-<!--TODO 链接-->
-可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容，详细内容在[可空链式调用](./17_Optional_Chaining.html)章节中查看。
-
-像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。可选方法和可选属性都会返回一个`可选值(optional value)`，当其不可访问时，`?`之后语句不会执行，并整体返回`nil`
+可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容。像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。详细内容在[可空链式调用](./17_Optional_Chaining.html)章节中查看。
 
 > 注意  
-> 可选协议只能在含有`@objc`前缀的协议中生效。且`@objc`的协议只能被`类`遵循  
-> 这个前缀表示协议将暴露给Objective-C代码，详情参见`Using Swift with Cocoa and Objective-C`。即使你不打算和Objective-C有什么交互，如果你想要指明协议包含可选属性，那么还是要加上`@obj`前缀
+> 可选协议只能在含有`@objc`前缀的协议中生效。 
+> 这个前缀表示协议将暴露给Objective-C代码，详情参见[`Using Swift with Cocoa and Objective-C(Swift 2.1)`](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。即使你不打算和Objective-C有什么交互，如果你想要指明协议包含可选属性，那么还是要加上`@obj`前缀。
+> 还需要注意的是，`@objc`的协议只能由继承自 Objective-C 类的类或者其他的`@objc`类来遵循。它也不能被结构体和枚举遵循。
 
-下面的例子定义了一个叫`Counter`的整数加法类，它使用外部的数据源来实现每次的增量。数据源是两个可选属性，在`CounterDataSource`协议中定义:
+下面的例子定义了一个叫`Counter`的整数加法类，它使用外部的数据源来提供每次的增量。数据源是两个可选规定，在`CounterDataSource`协议中定义：
 
 ```swift
 @objc protocol CounterDataSource {
@@ -740,12 +738,12 @@ for object in objects {
 }
 ```
 
-`CounterDataSource`含有`incrementForCount`可选方法和`fiexdIncrement`可选属性，它们使用了不同的方法来从数据源中获取合适的增量值。
+`CounterDataSource`含有`incrementForCount(_:)`可选方法和`fiexdIncrement`可选属性，它们使用了不同的方法来从数据源中获取合适的增量值。
 
 > 注意  
-> `CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明都不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
+> 严格来讲，`CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明都不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
 
-`Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示:
+`Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示：
 
 ```swift
 @objc class Counter {
@@ -765,15 +763,16 @@ for object in objects {
 
 `increment()`方法首先试图使用`incrementForCount(_:)`方法来得到每次的增量。`increment()`方法使用可选链来尝试调用`incrementForCount(_:)`，并将当前的`count`值作为参数传入。
 
-这里使用了两种可选链方法。由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount`方法。即使`dataSource`存在，但是也无法保证其是否实现了`incrementForCount`方法，因此在`incrementForCount`方法后边也加有`?`标记。
+这里使用了两种可选链方法。首先，由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount(_:)`方法。其次，即使`dataSource`存在，也无法保证其是否实现了`incrementForCount(_:)`方法，因为这个方法是可选的。在这里，有可能未被实现的`incrementForCount(_:)`方法同样使用可选链进行调用。只有在`incrementForCount(_:)`存在的情况下才能调用`incrementForCount(_:)`-也就是说，它是`nil`的时候。这就是为什么要在`incrementForCount(_:)`方法后边也加有`?`标记的原因。
 
-调用`incrementForCount`方法在上述两种情形都有可能失败，所以返回值为*可选*`Int`类型。虽然在`CounterDataSource`中，`incrementForCount`被定义为一个非可选`Int`(non-optional)，但是这里我们仍然需要返回*可选*`Int`类型。
 
-在调用`incrementForCount`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。如果可选值确实包含一个数值，这表示`delegate`和方法都存在，之后便将`amount`加到`count`上，增加操作完成。
+调用`incrementForCount(_:)`方法在上述两种情形都有可能失败，所以返回值为*可选*`Int`类型。虽然在`CounterDataSource`中，`incrementForCount`被定义为一个非可选`Int`(non-optional)，但是这里我们仍然需要返回*可选*`Int`类型。想获得更多的关于如何使用多可选链的操作的信息，请查阅[多层链接](./17_Optional_Chaining)
 
-如果没有从`incrementForCount(_:)`获取到值，可能是`dataSource`为nil，或者它并没有实现`incrementForCount`方法——那么`increment()`方法将试图从数据源的`fixedIncrement`属性中获取增量。`fixedIncrement`也是一个可选型，所以在属性名的后面添加`?`来试图取回可选属性的值。和之前一样，返回值为可选型。
+在调用`incrementForCount(_:)`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。如果可选值确实包含一个数值，这表示`delegate`和方法都存在，之后便将`amount`加到`count`上，增加操作完成。
 
-`ThreeSource`实现了`CounterDataSource`协议，它实现来可选属性`fixedIncrement`，每次返回值`3`:
+如果没有从`incrementForCount(_:)`获取到值，可能是`dataSource`为nil，或者它并没有实现`incrementForCount(_:)`方法——那么`increment()`方法将试图从数据源的`fixedIncrement`属性中获取增量。`fixedIncrement`也是一个可选型，所以在属性名的后面添加`?`来试图取回可选属性的值。和之前一样，返回值为可选型，即使在`CounterDataSource`中定义的是一个非可选的`Int`类型的`fixedIncrement`属性。
+
+`ThreeSource`实现了`CounterDataSource`协议，它实现来可选属性`fixedIncrement`，设置值为`3`:
 
 ```swift
 @objc class ThreeSource: CounterDataSource {
@@ -839,7 +838,7 @@ for _ in 1...5 {
 
 使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
 
-例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用协议中要求的`random()`方法来实现:
+例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用`random()`方法返回一个随机的`Bool`值：
 
 ```swift
 extension RandomNumberGenerator {
@@ -866,12 +865,12 @@ print("And here's a random Boolean: \(generator.randomBool())")
 > 注意  
 > 通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。
 
-例如，`PrettyTextRepresentable`协议，继承了`TextRepresentable`协议，可以为其提供一个默认的`asPrettyText()`方法来简化返回值
+例如，`PrettyTextRepresentable`协议，继承自`TextRepresentable`协议，可以为其提供一个默认的`prettyTextualDescription`属性，来简化访问`textualDescription`属性：
 
 ```swift
 extension PrettyTextRepresentable  {
-    func asPrettyText() -> String {
-        return asText()
+    var prettyTextualDescription: String {
+        return textualDescription
     }
 }
 ```
@@ -880,19 +879,20 @@ extension PrettyTextRepresentable  {
 
 在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where语句](./23_Generics.html#where_clauses))。:
 
-例如，你可以扩展`CollectionType`协议，但是只适用于元素遵循`TextRepresentable`的情况:
+例如，你可以扩展`CollectionType`协议，但是只适用于元素遵循`TextRepresentable`的情况：
 
 ```swift
 extension CollectionType where Generator.Element : TextRepresentable {
-    func asList() -> String {
-        return "(" + ", ".join(map({$0.asText()})) + ")"
+    var textualDescription: String {
+        let itemsAsText = self.map { $0.textualDescription }
+        return "[" + itemsAsText.joinWithSeparator(", ") + "]"
     }
 }
 ```
 
-`asList()`方法将每个元素以`asText()`的方式表示，最后以逗号分隔链接起来。
+`textualDescription`属性将每个元素的文本描述以逗号分隔的方式连接起来。
 
-现在我们来看`Hamster`，它遵循`TextRepresentable`:
+现在我们来看`Hamster`，它遵循`TextRepresentable`协议：
 
 ```swift
 let murrayTheHamster = Hamster(name: "Murray")
@@ -901,10 +901,10 @@ let mauriceTheHamster = Hamster(name: "Maurice")
 let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 ```
 
-因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`asList()`方法得到数组内容的文本表示:
+因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`textualDescription`属性得到数组内容的文本表示:
 
 ```swift
-print(hamsters.asList())
+print(hamsters.textualDescription)
 // 输出 "(A hamster named Murray, A hamster named Morgan, A hamster named Maurice)"
 ```
 

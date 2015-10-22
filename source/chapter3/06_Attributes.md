@@ -6,7 +6,7 @@
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
-> 翻译+校对：[KYawn](https://github.com/KYawn)
+> 翻译+校对：[KYawn](https://github.com/KYawn)，[小铁匠Linus](https://github.com/kevin833752)
 
 本页内容包括：
 
@@ -71,6 +71,9 @@
 protocol MyProtocol {
     // protocol definition
 }
+```
+
+```swift
 // Subsequent release renames MyProtocol
 protocol MyRenamedProtocol {
     // protocol definition
@@ -80,14 +83,14 @@ protocol MyRenamedProtocol {
 typealias MyProtocol = MyRenamedProtocol
 ```
 
-
-你可以在一个单独的声明上使用多个`available`特性，以详细说明该声明在不同平台上的有效性。编译器只有在当前的目标平台和`available`特性中指定的平台匹配时，才会使用`available`特性
+你可以在一个单独的声明上使用多个`available`特性，以详细说明该声明在不同平台上的有效性。编译器只有在当前的目标平台和`available`特性中指定的平台匹配时，才会使用`available`特性。
 
 如果`available`特性除了平台名称参数外，只指定了一个`introduced `参数，那么可以使用以下简写语法代替：
 
 @available(`platform name` `version number`, *)
 
 `available`特性的简写语法可以简明地表达出多个平台的可用性。尽管这两种形式在功能上是相同的，但请尽可能地使用简明语法形式。
+
 ```swift
 @available(iOS 8.0, OSX 10.10, *)
 class MyClass {
@@ -107,11 +110,11 @@ class MyClass {
 
 ```swift
 @objc
-class ExampleClass {
+class ExampleClass: NSObject {
     var enabled: Bool {
     @objc(isEnabled) get {
         // Return the appropriate value
-    }
+        }
     }
 }
 ```
@@ -138,7 +141,7 @@ class ExampleClass {
 
 在类上使用该特性表示该类是应用程序委托类，使用该特性与调用`NSApplicationMain(_:_:)`函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
-如果你不想使用这个特性，可以提供一个`main.swift`文件，并且提供一个`main`函数去调用`NSApplicationMain(_:_:)`函数。比如，如果你的应用程序使用一个派生于`NSApplication`的自定义子类作为主要类，你可以调用`NSApplicationMain`函数而不是使用该特性。
+如果你不想使用这个特性，可以提供一个`main.swift`文件，并且提供一个`main()`函数去调用`NSApplicationMain(_:_:)`函数。比如，如果你的应用程序使用一个派生于`NSApplication`的自定义子类作为主要类，你可以调用`NSApplicationMain`函数而不是使用该特性。
 
 `NSCopying`
 
@@ -148,7 +151,7 @@ class ExampleClass {
 
 `NSManaged`
 
-该特性用于修饰`NSManagedObject`子类中的存储型变量属性，表明属性的存储和实现由Core Data在运行时基于相关实体描述动态提供。
+该特性用于修饰`NSManagedObject`子类中的实例方法或存储型变量属性，表明属性的存储和实现由Core Data在运行时基于相关实体描述动态提供。对于标记了`NSManaged`特性的属性，Core Data也会在运行时提供存储。
 
 `testable`
 
@@ -164,16 +167,15 @@ class ExampleClass {
 
 该特性应用于方法或函数声明，当方法或函数被调用，但其结果未被使用时，该特性会让编译器会产生警告。
 
-你可以使用这个特性提供一个警告信息，这个警告信息是关于不正确地使用未变异的方法的，这个方法也有一个对应的变异方法。
+你可以使用这个特性提供一个警告信息，这个警告信息是关于不正确地使用未变异的方法，这个方法也有一个对应的变异方法。
 
-`warn_unused_result`有下面两个可选的参数。
+`warn_unused_result`特性会有选择地采用下面两个参数之一。
 
-- `message`参数用来提供警告信息，并在因当方法或函数被调用，但其结果未被使用时，显示警告信息。格式如下：
+- `message`参数用来提供警告信息。在当方法或函数被调用，但其结果未被使用时，会显示警告信息。格式如下：
 <p>`message=message`<p>这里的`message`由一个字符串文字构成。
 
 - `mutable_variant`参数用于提供变异方法的名称，如果未变异方法以一个可变的值被调用而且其结果并未被使用时，应该使用此变异方法。格式如下（方法名有字符串构成）：<p>`mutable_variant=method name`<p>
-
-比如，Swift标准库提供了变异方法`sortInPlace()`和未变异方法`sort()`集合，它们的元素生成器符合`Comparable`协议。如果你调用了`sort()`方法，而没有使用它的结果，很有可能，你打算使用变异方法`sortInPlace()`替代。
+比如，Swift标准库同时提供了变异方法`sortInPlace()`和未变异方法`sort()`集合，它们的元素生成器符合`Comparable`协议。如果你调用了`sort()`方法，而没有使用它的结果，其实很有可能，你是打算使用变异方法`sortInPlace()`。
 
 ### Interface Builder使用的声明特性
 
@@ -190,7 +192,7 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 
 该特性用于函数的类型，它指出函数调用的约定。
 
-`convention`特性有下面几个可选的参数。
+`convention`特性总是与下面的参数之一一起出现。
 
 - `swift`参数用于表明一个Swift函数引用。这是Swift中标准的函数值调用约定。
 
@@ -205,14 +207,14 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，`T`，是`@noreturn T`。
 
 > 特性语法
-> *特性* → **@** [*特性名*](#attribute_name) [*特性参数子句*](#attribute_argument_clause) <sub>_可选_</sub>  
+> *特性* → **@** [*特性名*](#attribute_name) [*特性参数子句*](#attribute_argument_clause) (可选)
 > *特性名* → [*标识符*](02_Lexical_Structure.html#identifiers)  
-> *特性参数子句* → **(** [*平衡令牌列表*](#balanced_tokens) <sub>_可选_</sub> **)**  
-> *特性(Attributes)列表* → [*特色*](#attribute) [*特性(Attributes)列表*](#attributes) <sub>_可选_</sub>  
-> *平衡令牌列表* → [*平衡令牌*](#balanced_token) [*平衡令牌列表*](#balanced_tokens) <sub>_可选_</sub>  
-> *平衡令牌* → **(** [*平衡令牌列表*](#balanced_tokens) <sub>_可选_</sub> **)**  
-> *平衡令牌* → **[** [*平衡令牌列表*](#balanced_tokens) <sub>_可选_</sub> **]**  
-> *平衡令牌* → **{** [*平衡令牌列表*](#balanced_tokens) <sub>_可选_</sub> **}**  
+> *特性参数子句* → **(** [*平衡令牌列表*](#balanced_tokens) (可选) **)**  
+> *特性(Attributes)列表* → [*特色*](#attribute) [*特性(Attributes)列表*](#attributes) (可选)  
+> *平衡令牌列表* → [*平衡令牌*](#balanced_token) [*平衡令牌列表*](#balanced_tokens) (可选)  
+> *平衡令牌* → **(** [*平衡令牌列表*](#balanced_tokens) (可选) **)**  
+> *平衡令牌* → **[** [*平衡令牌列表*](#balanced_tokens) (可选) **]**  
+> *平衡令牌* → **{** [*平衡令牌列表*](#balanced_tokens) (可选) **}**  
 > *平衡令牌* → **任意标识符, 关键字, 字面量或运算符**  
 > *平衡令牌* → **任意标点除了(, ), [, ], {, 或 }**
 

@@ -16,13 +16,13 @@
 - [原始值（Raw Values）](#raw_values)
 - [递归枚举（Recursive Enumerations）](#recursive_enumerations)
 
-*枚举*定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
+**枚举**定义了一个通用类型的一组相关值，使你可以在你的代码中以一种安全的方式来使用这些值。
 
 如果你熟悉 C 语言，你就会知道，在 C 语言中枚举将枚举名和一个整型值相对应。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
 
 此外，枚举成员可以指定任何类型的相关值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。
 
-在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
+在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息，实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
 欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./20_Extensions.html)和[协议（Protocols）](./21_Protocols.html)。
 
@@ -33,11 +33,11 @@
 
 ```swift
 enum SomeEnumeration {
-  // enumeration definition goes here
+  // 枚举定义放在这里
 }
 ```
 
-以下是指南针四个方向的一个例子：
+下面是指南针四个方向的例子：
 
 ```swift
 enum CompassPoint {
@@ -48,10 +48,10 @@ enum CompassPoint {
 }
 ```
 
-一个枚举中被定义的值（例如 `North`，`South`，`East`和`West`）是枚举的*成员值*（或者*成员*）。`case`关键词表明新的一行成员值将被定义。
+枚举中定义的值（如 `North`，`South`，`East`和`West`）是这个枚举的**成员值**（或**成员**）。`case`关键词表示一行新的成员值将被定义。
 
-> 注意：  
-> 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoints`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为了`0`，`1`，`2`和`3`。相反的，这些不同的枚举成员在`CompassPoint`的一种显示定义中拥有各自不同的值。  
+> 注意：
+> 和 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoint`例子中，`North`，`South`，`East`和`West`不会隐式地赋值为`0`，`1`，`2`和`3`。相反，这些枚举成员本身就有完备的值，这些值是已经明确定义好的`CompassPoint`类型。
 
 多个成员值可以出现在同一行上，用逗号隔开：
 
@@ -83,14 +83,14 @@ directionToHead = .East
 ```swift
 directionToHead = .South
 switch directionToHead {
-case .North:
-    print("Lots of planets have a north")
-case .South:
-    print("Watch out for penguins")
-case .East:
-    print("Where the sun rises")
-case .West:
-    print("Where the skies are blue")
+	case .North:
+	    print("Lots of planets have a north")
+	case .South:
+	    print("Watch out for penguins")
+	case .East:
+	    print("Where the sun rises")
+	case .West:
+	    print("Where the skies are blue")
 }
 // 输出 "Watch out for penguins”
 ```
@@ -119,19 +119,19 @@ default:
 <a name="associated_values"></a>
 ## 相关值（Associated Values）
 
-上一小节的例子演示了如何定义（分类）枚举的成员。你可以为`Planet.Earth`设置一个常量或者变量，并且在赋值之后查看这个值。不管怎样，如果有时候能够把其他类型的*相关值*和成员值一起存储起来会很有用。这能让你存储成员值之外的自定义信息，并且当你每次在代码中使用该成员时允许这个信息产生变化。
+上一小节的例子演示了如何定义（分类）枚举的成员。你可以为`Planet.Earth`设置一个常量或者变量，并且在赋值之后查看这个值。不管怎样，如果有时候能够把其他类型的**相关值**和成员值一起存储起来会很有用。这能让你存储成员值之外的自定义信息，并且当你每次在代码中使用该成员时允许这个信息产生变化。
 
 你可以定义 Swift 的枚举存储任何类型的相关值，如果需要的话，每个成员的数据类型可以是各不相同的。枚举的这种特性跟其他语言中的可辨识联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。
 
-例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有 UPC-A 格式的一维t条形码，它使用数字 0 到 9。每一个条形码都有一个代表“数字系统”的数字，该数字后接 5 个代表“生产代码”的数字，接下来是5位“产品代码”。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
+例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有 UPC-A 格式的一维条形码，它使用数字 0 到 9。每一个条形码都有一个代表“数字系统”的数字，该数字后接 5 个代表“生产代码”的数字，接下来是5位“产品代码”。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
 
 <img width="252" height="120" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png">
 
-其他商品上标有 QR 码格式的二维码，它可以使用任何 ISO8859-1 字符，并且可以编码一个最多拥有 2,953 字符的字符串:
+其他商品上标有 QR 码格式的二维码，它可以使用任何 ISO 8859-1 字符，并且可以编码一个最多拥有 2953 个字符的字符串:
 
 <img width="169" height="169" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_QR_2x.png">
 
-对于库存跟踪系统来说，能够把 UPC-A 码作为三个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
+对于库存跟踪系统来说，能够把 UPC-A 码作为四个整型值的元组，和把 QR 码作为一个任何长度的字符串存储起来是方便的。
 
 在 Swift 中，使用如下方式定义两种商品条码的枚举：
 
@@ -229,7 +229,7 @@ enum Planet: Int {
 
 当使用字符串作为枚举类型的初值时，每个枚举成员的隐式初值则为该成员的名称。
 
-下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为咩个方向的名称：
+下面的例子是`CompassPoint`枚举类型的精简版，使用字符串作为初值类型，隐式初始化为各个方向的名称：
 
 ```swift
 enum CompassPoint: String {
@@ -248,11 +248,10 @@ let earthsOrder = Planet.Earth.rawValue
 let sunsetDirection = CompassPoint.West.rawValue
 // sunsetDirection 值为 "West"
 ```
-### 使用原始值来初始化(Initializing from a Raw Value)
 
 ### 使用原始值初始化枚举变量（Initializing from a Raw Value）
 
-如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法将原始值类型作为参数，返回枚举成员或者`nil`。你可以使用这种初始化方法来创建一个新的枚举变量。
+如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法将原始值类型作为参数，返回值是枚举成员或`nil`。你可以使用这种初始化方法来创建一个新的枚举变量。
 
 这个例子通过原始值`7`从而创建枚举成员：
 
@@ -261,9 +260,9 @@ let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet 类型为 Planet? 值为 Planet.Uranus
 ```
 
-然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个**可选**的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
->注意：  
+>注意：
 >原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations#failable_initializers)
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
@@ -288,9 +287,9 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 <a name="recursive_enumerations"></a>
 ## 递归枚举（Recursive Enumerations）
 
-在对操作符进行描述的时候，使用枚举类型来对数据建模很方便，因为需要考虑的情况固定可枚举。操作符可以将两个由数字组成的算数表达式连接起来，例如，将`5`连接成复杂一些的表达式`5+4`.
+在对操作符进行描述的时候，使用枚举类型来对数据建模很方便，因为需要考虑的情况固定可枚举。操作符可以将两个由数字组成的算数表达式连接起来，例如，将`5`连接成复杂一些的表达式`5+4`。
 
-算数表达式的一个重要特性是，表达式可以嵌套使用。例如，表达式`(5 + 4) * 2`乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也许要支持这种嵌套————这表示枚举类型需要支持递归。
+算术表达式的一个重要特性是，表达式可以嵌套使用。例如，表达式`(5 + 4) * 2`乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也许要支持这种嵌套————这表示枚举类型需要支持递归。
 
 `递归枚举（recursive enumeration）`是一种枚举类型，表示它的枚举中，有一个或多个枚举成员拥有该枚举的其他成员作为相关值。使用递归枚举时，编译器会插入一个中间层。你可以在枚举成员前加上`indirect`来表示这成员可递归。
 
@@ -317,7 +316,7 @@ indirect enum ArithmeticExpression {
 
 上面定义的枚举类型可以存储三种算数表达式：纯数字、两个表达式的相加、两个表达式相乘。`Addition` 和 `Multiplication`成员的相关值也是算数表达式————这些相关值使得嵌套表达式成为可能。
 
-递归函数可以很直观地使用具有递归性质的数据结构。例如，下面是一个计算算数表达式的函数：
+递归函数可以很直观地使用具有递归性质的数据结构。例如，下面是一个计算算术表达式的函数：
 
 ```swift
 func evaluate(expression: ArithmeticExpression) -> Int {
@@ -340,4 +339,4 @@ print(evaluate(product))
 // 输出 "18"
 ```
 
-该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法元算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
+该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
