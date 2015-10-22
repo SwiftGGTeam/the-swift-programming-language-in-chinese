@@ -111,8 +111,8 @@ You can use this initializer to initialize a new constant called ``theAceOfSpade
 
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can be inferred from context,
-and so the initialization of this instance is able to refer to the enumeration members
-by their member names (``.Ace`` and ``.Spades``) alone.
+and so the initialization of this instance is able to refer to the enumeration cases
+by their case names (``.Ace`` and ``.Spades``) alone.
 In the example above, the ``description`` property correctly reports that
 the Ace of Spades has a value of ``1`` or ``11``.
 

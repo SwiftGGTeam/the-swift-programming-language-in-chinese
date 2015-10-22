@@ -582,8 +582,8 @@ Write ``var`` in front of a parameter's name to make it a variable,
 scoping any changes made to the variable just to the function body,
 or write ``inout`` to make those changes also apply
 to the argument that was passed in the caller's scope.
-For a discussion of in-out parameters,
-see :ref:`Functions_InOutParameters`.
+In-out parameters are discussed in detail
+in :ref:`Declarations_InOutParameters`, below.
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
@@ -649,6 +649,106 @@ The corresponding argument must have no name in function or method calls.
    -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
    << // r0 : Int = 6
+
+.. _Declarations_InOutParameters:
+
+In-Out Parameters
+~~~~~~~~~~~~~~~~~
+
+In-out parameters are passed as follows:
+
+1. When the function is called,
+   the value of the argument is copied.
+2. In the body of the function,
+   the copy is modified.
+3. When the function returns,
+   the copy's value is assigned to the original argument.
+
+This behavior is known as :newTerm:`copy-in copy-out`
+or :newTerm:`call by value result`.
+For example,
+when a computed property or a property with observers
+is passed as an in-out parameter,
+its getter is called as part of the function call
+and its setter is called as part of the function return.
+
+As an optimization,
+when the argument is a value stored at a physical address in memory,
+the same memory location is used both inside and outside the function body.
+The optimized behavior is known as :newTerm:`call by reference`;
+it satisfies all of the requirements
+of the copy-in copy-out model
+while removing the overhead of copying.
+Do not depend on the behavioral differences
+between copy-in copy-out and call by reference.
+
+Do not access the value that was passed as an in-out argument,
+even if the original argument is available in the current scope.
+When the function returns,
+your changes to the original are overwritten
+with the value of the copy.
+Do not depend on the implementation of the call-by-reference optimization
+to try to keep the changes from being overwritten.
+
+.. When the call-by-reference optimization is in play,
+   it would happen to do what you want.
+   But you still shouldn't do that --
+   as noted above, you're not allowed to depend on
+   behavioral differences that happen because of call by reference.
+
+You can't pass the same argument to multiple in-out parameters
+because the order in which the copies are written back
+is not well defined,
+which means the final value of the original
+would also not be well defined.
+For example:
+
+.. testcode:: cant-pass-inout-aliasing
+
+   -> var x = 10
+   << // x : Int = 10
+   -> func f(inout a: Int, inout _ b: Int) {
+          a += 1
+          b += 10
+      }
+   -> f(&x, &x) // Invalid, in-out arguments alias each other
+   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
+   !! f(&x, &x) // Invalid, in-out arguments alias each other
+   !!       ^~
+   !! <REPL Input>:1:3: note: previous aliasing argument
+   !! f(&x, &x) // Invalid, in-out arguments alias each other
+   !!   ^~
+
+There is no copy-out at the end of closures or nested functions.
+This means if a closure is called after the function returns,
+any changes that closure makes to the in-out parameters
+do not get copied back to the original.
+For example:
+
+.. testcode:: closure-doesnt-copy-out-inout
+
+    -> func outer(inout a: Int) -> () -> Void {
+           func inner() {
+               a += 1
+           }
+           return inner
+       }
+    ---
+    -> var x = 10
+    << // x : Int = 10
+    -> let f = outer(&x)
+    << // f : () -> Void = (Function)
+    -> f()
+    -> print(x)
+    <- 10
+
+The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
+because ``inner()`` is called after ``outer()`` returns.
+To change the value of ``x``,
+``inner()`` would need to be called before ``outer()`` returned.
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
@@ -825,6 +925,17 @@ as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1
     -> plusOne(10)
     <$ : Int = 11
     -> // returns a value of 11
+
+.. assertion:: curried-function-param-labels
+
+   // As with regular functions and methods, by default, the first parameter
+   // gets no label and everything that follows gets a label.
+   -> func add(a: Int)(b: Int) -> Int { return a + b }
+   -> add(1)(2)
+   !! <REPL Input>:1:8: error: missing argument label 'b:' in call
+   !! add(1)(2)
+   !!       ^
+   !!       b: 
 
 .. _Declarations_ThrowingFunctionsAndMethods:
 

@@ -30,10 +30,11 @@ Defining and Calling Functions
 ------------------------------
 
 When you define a function,
-you can optionally define one or more named, typed values that the function takes as input
-(known as :newTerm:`parameters`),
-and/or a type of value that the function will pass back as output when it is done
-(known as its :newTerm:`return type`).
+you can optionally define one or more named, typed values that the function takes as input,
+known as :newTerm:`parameters`.
+You can also optionally define
+a type of value that the function will pass back as output when it is done,
+known as its :newTerm:`return type`.
 
 Every function has a :newTerm:`function name`,
 which describes the task that the function performs.
@@ -600,12 +601,15 @@ at the start of its parameter definition.
 An in-out parameter has a value that is passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
+For a detailed discussion of the behavior of in-out parameters
+and associated compiler optimizations,
+see :ref:`Declarations_InOutParameters`.
 
 You can only pass a variable as the argument for an in-out parameter.
 You cannot pass a constant or a literal value as the argument,
 because constants and literals cannot be modified.
 You place an ampersand (``&``) directly before a variable's name
-when you pass it as an argument to an inout parameter,
+when you pass it as an argument to an in-out parameter,
 to indicate that it can be modified by the function.
 
 .. note::

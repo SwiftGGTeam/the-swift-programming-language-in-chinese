@@ -60,6 +60,9 @@ the ``noreturn`` attribute to a function or method *type*.
     * ``OSX``
     * ``OSXApplicationExtension``
     * ``watchOS``
+    * ``watchOSApplicationExtension``
+    * ``tvOS``
+    * ``tvOSApplicationExtension``
 
     You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
@@ -281,6 +284,8 @@ the ``noreturn`` attribute to a function or method *type*.
     such that it is guaranteed not to outlive the lifetime of the call.
     Function type parameters with the ``noescape`` declaration attribute
     do not require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``noescape`` attribute,
+    see :ref:`Closures_Noescape`.
 
 ``nonobjc``
     Apply this attribute to a
@@ -292,7 +297,7 @@ the ``noreturn`` attribute to a function or method *type*.
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
     and to allow overloading of methods and initializers
-    in an a class marked with the ``objc`` attribute.
+    in a class marked with the ``objc`` attribute.
 
     A method marked with the ``nonobjc`` attribute
     cannot override a method marked with the ``objc`` attribute.

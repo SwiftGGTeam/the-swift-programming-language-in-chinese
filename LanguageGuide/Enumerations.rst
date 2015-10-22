@@ -7,15 +7,15 @@ and enables you to work with those values in a type-safe way within your code.
 If you are familiar with C,
 you will know that C enumerations assign related names to a set of integer values.
 Enumerations in Swift are much more flexible,
-and do not have to provide a value for each member of the enumeration.
-If a value (known as a “raw” value) *is* provided for each enumeration member,
+and do not have to provide a value for each case of the enumeration.
+If a value (known as a “raw” value) *is* provided for each enumeration case,
 the value can be a string, a character,
 or a value of any integer or floating-point type.
 
-Alternatively, enumeration members can specify
-associated values of *any* type to be stored along with each different member value,
+Alternatively, enumeration cases can specify
+associated values of *any* type to be stored along with each different case value,
 much as unions or variants do in other languages.
-You can define a common set of related members as part of one enumeration,
+You can define a common set of related cases as part of one enumeration,
 each of which has a different set of values of appropriate types associated with it.
 
 Enumerations in Swift are first-class types in their own right.
@@ -24,7 +24,7 @@ such as computed properties to provide additional information about
 the enumeration's current value,
 and instance methods to provide functionality related to
 the values the enumeration represents.
-Enumerations can also define initializers to provide an initial member value;
+Enumerations can also define initializers to provide an initial case value;
 can be extended to expand their functionality beyond their original implementation;
 and can conform to protocols to provide standard functionality.
 
@@ -62,21 +62,21 @@ Here's an example for the four main points of a compass:
 
 The values defined in an enumeration
 (such as ``North``, ``South``, ``East``, and ``West``)
-are the :newTerm:`member values` (or :newTerm:`members`) of that enumeration.
-The ``case`` keyword indicates that a new line of member values is about to be defined.
+are its :newTerm:`enumeration cases`.
+You use the ``case`` keyword to introduce new enumeration cases.
 
 .. note::
 
    Unlike C and Objective-C,
-   Swift enumeration members are not assigned a default integer value when they are created.
+   Swift enumeration cases are not assigned a default integer value when they are created.
    In the ``CompassPoint`` example above,
    ``North``, ``South``, ``East`` and ``West``
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
-   Instead, the different enumeration members are fully-fledged values in their own right,
+   Instead, the different enumeration cases are fully-fledged values in their own right,
    with an explicitly-defined type of ``CompassPoint``.
 
-Multiple member values can appear on a single line, separated by commas:
+Multiple cases can appear on a single line, separated by commas:
 
 .. testcode:: enums
 
@@ -142,14 +142,14 @@ print ``"Watch out for penguins"``.”
 …and so on.
 
 As described in :doc:`ControlFlow`,
-a ``switch`` statement must be exhaustive when considering an enumeration's members.
+a ``switch`` statement must be exhaustive when considering an enumeration's cases.
 If the ``case`` for ``.West`` is omitted,
 this code does not compile,
-because it does not consider the complete list of ``CompassPoint`` members.
-Requiring exhaustiveness ensures that enumeration members are not accidentally omitted.
+because it does not consider the complete list of ``CompassPoint`` cases.
+Requiring exhaustiveness ensures that enumeration cases are not accidentally omitted.
 
-When it is not appropriate to provide a ``case`` for every enumeration member,
-you can provide a ``default`` case to cover any members that are not addressed explicitly:
+When it is not appropriate to provide a ``case`` for every enumeration case,
+you can provide a ``default`` case to cover any cases that are not addressed explicitly:
 
 .. testcode:: enums
 
@@ -168,17 +168,17 @@ you can provide a ``default`` case to cover any members that are not addressed e
 Associated Values
 -----------------
 
-The examples in the previous section show how the members of an enumeration are
+The examples in the previous section show how the cases of an enumeration are
 a defined (and typed) value in their own right.
 You can set a constant or variable to ``Planet.Earth``,
 and check for this value later.
 However, it is sometimes useful to be able to store
-:newTerm:`associated values` of other types alongside these member values.
-This enables you to store additional custom information along with the member value,
-and permits this information to vary each time you use that member in your code.
+:newTerm:`associated values` of other types alongside these case values.
+This enables you to store additional custom information along with the case value,
+and permits this information to vary each time you use that case in your code.
 
 You can define Swift enumerations to store associated values of any given type,
-and the value types can be different for each member of the enumeration if needed.
+and the value types can be different for each case of the enumeration if needed.
 Enumerations similar to these are known as
 :newTerm:`discriminated unions`, :newTerm:`tagged unions`, or :newTerm:`variants`
 in other programming languages.
@@ -266,9 +266,9 @@ for use within the ``switch`` case's body:
       }
    <- QR code: ABCDEFGHIJKLMNOP.
 
-If all of the associated values for an enumeration member
+If all of the associated values for an enumeration case
 are extracted as constants, or if all are extracted as variables,
-you can place a single ``var`` or ``let`` annotation before the member name, for brevity:
+you can place a single ``var`` or ``let`` annotation before the case name, for brevity:
 
 .. testcode:: enums
 
@@ -286,14 +286,14 @@ Raw Values
 ----------
 
 The barcode example in :ref:`Enumerations_AssociatedValues`
-shows how members of an enumeration can declare that they store
+shows how cases of an enumeration can declare that they store
 associated values of different types.
 As an alternative to associated values,
-enumeration members can come prepopulated with default values
+enumeration cases can come prepopulated with default values
 (called :newTerm:`raw values`),
 which are all of the same type.
 
-Here's an example that stores raw ASCII values alongside named enumeration members:
+Here's an example that stores raw ASCII values alongside named enumeration cases:
 
 .. testcode:: rawValues
 
@@ -318,9 +318,9 @@ Each raw value must be unique within its enumeration declaration.
    Raw values are set to prepopulated values
    when you first define the enumeration in your code,
    like the three ASCII codes above.
-   The raw value for a particular enumeration member is always the same.
+   The raw value for a particular enumeration case is always the same.
    Associated values are set when you create a new constant or variable
-   based on one of the enumeration's members,
+   based on one of the enumeration's cases,
    and can be different each time you do so.
 
 .. _Enumerations_ImplicitlyAssignedRawValues:
@@ -329,12 +329,12 @@ Implicitly Assigned Raw Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you're working with enumerations that store integer or string raw values,
-you don't have to explicitly assign a raw value for each member.
+you don't have to explicitly assign a raw value for each case.
 When you don't, Swift will automatically assign the values for you.
 
 For instance, when integers are used for raw values,
-the implicit value for each member is one more than the previous member.
-If the first member doesn't have a value set, it's value is ``0``.
+the implicit value for each case is one more than the previous case.
+If the first case doesn't have a value set, it's value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
 with integer raw values to represent each planet's order from the sun:
@@ -350,7 +350,7 @@ In the example above,
 ``Planet.Venus`` has an implicit raw value of ``2``, and so on.
 
 When strings are used for raw values,
-the implicit value for each member is the text of that member's name.
+the implicit value for each case is the text of that case's name.
 
 The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
 with string raw values to represent each direction's name:
@@ -364,7 +364,7 @@ with string raw values to represent each direction's name:
 In the example above,
 ``CompassPoint.South`` has an implicit raw value of ``"South"``, and so on.
 
-You access the raw value of an enumeration member with its ``rawValue`` property:
+You access the raw value of an enumeration case with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
@@ -387,7 +387,7 @@ Initializing from a Raw Value
 If you define an enumeration with a raw-value type,
 the enumeration automatically receives an initializer
 that takes a value of the raw value's type (as a parameter called ``rawValue``)
-and returns either an enumeration member or ``nil``.
+and returns either an enumeration case or ``nil``.
 You can use this initializer to try to create a new instance of the enumeration.
 
 This example identifies Uranus from its raw value of ``7``:
@@ -399,14 +399,14 @@ This example identifies Uranus from its raw value of ``7``:
    // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 Not all possible ``Int`` values will find a matching planet, however.
-Because of this, the raw value initializer always returns an *optional* enumeration member.
+Because of this, the raw value initializer always returns an *optional* enumeration case.
 In the example above, ``possiblePlanet`` is of type ``Planet?``,
 or “optional ``Planet``.”
 
 .. note::
 
    The raw value initializer is a failable initializer,
-   because not every raw value will return an enumeration member.
+   because not every raw value will return an enumeration case.
    For more information, see :ref:`Declarations_FailableInitializers`.
 
 If you try to find a planet with a position of ``9``,
@@ -460,10 +460,10 @@ this means the enumeration needs to be recursive.
 
 A :newTerm:`recursive enumeration` is an enumeration
 that has another instance of the enumeration
-as the associated value for one or more of the enumeration members.
+as the associated value for one or more of the enumeration cases.
 The compiler has to insert a layer of indirection
 when it works with recursive enumerations.
-You indicate that an enumeration member is recursive
+You indicate that an enumeration case is recursive
 by writing ``indirect`` before it.
 
 For example, here is an enumeration that stores simple arithmetic expressions:
@@ -479,7 +479,7 @@ For example, here is an enumeration that stores simple arithmetic expressions:
 .. TODO Conceptual art would really help here.
 
 You can also write ``indirect`` before the beginning of the enumeration,
-to enable indirection for all of the enumeration's members that need it:
+to enable indirection for all of the enumeration's cases that need it:
 
 .. testcode:: recursive-enum
 
@@ -493,7 +493,7 @@ This enumeration can store three kinds of arithmetic expressions:
 a plain number,
 the addition of two expressions,
 and the multiplication of two expressions.
-The ``Addition`` and ``Multiplication`` members have associated values
+The ``Addition`` and ``Multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
 

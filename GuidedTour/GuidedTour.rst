@@ -218,7 +218,7 @@ Braces around the body are required.
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
-   with past incartations of the Doctor in Dr. Who.
+   with past incarnations of the Doctor in Dr. Who.
 
 ..
    -> let haveJellyBabies = true
@@ -275,6 +275,20 @@ Otherwise, the optional value is unwrapped and assigned
 to the constant after ``let``,
 which makes the unwrapped value available
 inside the block of code.
+
+Another way to handle optional values
+is to provide a default value using the ``??`` operator.
+If the optional value is missing,
+the default value is used instead.
+
+.. testcode:: guided-tour
+
+    -> let nickName: String? = nil
+    << // nickName : String? = nil
+    -> let fullName: String = "John Appleseed"
+    << // fullName : String = "John Appleseed"
+    -> let informalGreeting = "Hi \(nickName ?? fullName)"
+    << // informalGreeting : String = "Hi John Appleseed"
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
@@ -505,8 +519,6 @@ You can use nested functions
 to organize the code in a function
 that is long or complex.
 
-.. TR: Any objections to this guidance?
-
 .. testcode:: guided-tour
 
     -> func returnFifteen() -> Int {
@@ -525,14 +537,14 @@ This means that a function can return another function as its value.
 
 .. testcode:: guided-tour
 
-    -> func makeIncrementer() -> (Int -> Int) {
+    -> func makeIncrementer() -> ((Int) -> Int) {
            func addOne(number: Int) -> Int {
                return 1 + number
            }
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : Int -> Int = (Function)
+    << // increment : (Int) -> Int = (Function)
     -> increment(7)
     <$ : Int = 8
 
@@ -540,7 +552,7 @@ A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
 
-    -> func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+    -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
            for item in list {
                if condition(item) {
                    return true
@@ -909,7 +921,7 @@ so you only have to specify the first raw value.
 The rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
-Use the ``rawValue`` property to access the raw value of an enumeration member.
+Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
@@ -922,7 +934,7 @@ to make an instance of an enumeration from a raw value.
     << 3
     -> }
 
-The member values of an enumeration are actual values,
+The case values of an enumeration are actual values,
 not just another way of writing their raw values.
 In fact,
 in cases where there isn't a meaningful raw value,
@@ -959,13 +971,13 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-Notice the two ways that the ``Hearts`` member of the enumeration
+Notice the two ways that the ``Hearts`` case of the enumeration
 is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` is referred to by its full name
+the enumeration case ``Suit.Hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
 Inside the switch,
-the enumeration member is referred to by the abbreviated form ``.Hearts``
+the enumeration case is referred to by the abbreviated form ``.Hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -998,13 +1010,13 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-An instance of an enumeration member
+An instance of an enumeration case
 can have values associated with the instance.
-Instances of the same enumeration member
+Instances of the same enumeration case
 can have different values associated with them.
 You provide the associated values when you create the instance.
 Associated values and raw values are different:
-The raw value of an enumeration member
+The raw value of an enumeration case
 is the same for all of its instances,
 and you provide the raw value when you define the enumeration.
 
@@ -1037,12 +1049,12 @@ or it responds with some error information.
    As the story goes, during the course of a rather wild party,
    one of the computer's vacuum tube cabinets
    was opened to provide heat to a cold room in the winter.
-   As the story goes, through great coincidence,
-   when got a cheese tray bashed into it during the celebration,
+   Through great coincidence,
+   when a cheese tray got bashed into it during the celebration,
    the computer kept on working even though some of the tubes were broken
    and had cheese splattered & melted all over them.
    Tech were dispatched to make sure the computer was ok
-   and told add more cheese if necesary --
+   and told add more cheese if necessary --
    the officer in charge said that he didn't want
    an "out of cheese error" interrupting the calculation.
 
@@ -1058,29 +1070,13 @@ or it responds with some error information.
     -> let failure = ServerResponse.Error("Out of cheese.")
     << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
     ---
-    >> var test_response: String = ""
-    << // test_response : String = ""
-    >> switch success {
-    >>     case let .Result(sunrise, sunset):
-    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>     case let .Error(error):
-    >>         test_response = "Failure...  \(error)"
-    >> }
-    >> test_response
-    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
            case let .Result(sunrise, sunset):
-               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+               print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
            case let .Error(error):
-               let serverResponse = "Failure...  \(error)"
+               print("Failure...  \(error)")
        }
-
-.. Note:
-   The repetition and odd structure for the switch above is because
-   the REPL requires an initial value for variables to make it testable.
-   From a playground side, I can see the value of a variable
-   that's scoped only within the switch,
-   so I don't need a variable in the outer scope.
+    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 

@@ -110,6 +110,9 @@ the optional chaining attempt returns a value of type ``Int?``, or “optional `
 When ``residence`` is ``nil``, as in the example above,
 this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
+The optional ``Int`` is accessed through optional binding
+to unwrap the integer and assign the nonoptional value
+to the ``roomCount`` variable.
 
 Note that this is true even though ``numberOfRooms`` is a nonoptional ``Int``.
 The fact that it is queried through an optional chain
@@ -292,6 +295,37 @@ You can also attempt to set a property's value through optional chaining:
 In this example,
 the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
+
+The assignment is part of the optional chaining,
+which means none of the code on the right hand side of the ``=`` operator
+is evaluated.
+In the previous example,
+it's not easy to see that ``someAddress`` is never evaluated,
+because accessing a constant doesn't have any side effects.
+The listing below does the same assignment,
+but it uses a function to create the address.
+The function prints "Function was called" before returning a value,
+which lets you see
+whether the right hand side of the ``=`` operator was evaluated.
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> func createAddress() -> Address {
+          print("Function was called.")
+   ---
+          let someAddress = Address()
+          someAddress.buildingNumber = "29"
+          someAddress.street = "Acacia Road"
+   ---
+          return someAddress
+      }
+   -> john.residence?.address = createAddress()
+   >> createAddress()
+   << Function was called.
+
+You can tell that the ``createAddress()`` function isn't called,
+because nothing is printed.
 
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 

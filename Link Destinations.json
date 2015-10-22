@@ -138,6 +138,7 @@
     "closures-closuresarereferencetypes": "ID104", 
     "closures-implicitreturnsfromsingleexpressionclosures": "ID99", 
     "closures-inferringtypefromcontext": "ID98", 
+    "closures-noescape": "ID546", 
     "closures-operatorfunctions": "ID101", 
     "closures-shorthandargumentnames": "ID100", 
     "closures-thesortedfunction": "ID96", 
@@ -214,6 +215,7 @@
     "declarations-functiondeclaration": "ID362", 
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
+    "declarations-inoutparameters": "ID545", 
     "declarations-operatordeclaration": "ID380", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
@@ -252,6 +254,7 @@
     "expression-optionalchainingoperator": "ID405", 
     "expressions-assignmentoperator": "ID386", 
     "expressions-binaryexpressions": "ID385", 
+    "expressions-capturelists": "ID544", 
     "expressions-closureexpression": "ID393", 
     "expressions-dynamictypeexpression": "ID402", 
     "expressions-explicitmemberexpression": "ID400", 
@@ -559,7 +562,8 @@
     "ternary-conditional-operator", 
     "where-clauses", 
     "string-literals", 
-    "control-transfer-statements"
+    "control-transfer-statements", 
+    "in-out-parameters"
   ], 
-  "next_id": 544
+  "next_id": 547
 }

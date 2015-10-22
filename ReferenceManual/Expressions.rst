@@ -317,8 +317,8 @@ They have the following form:
     <#expression#> as! <#type#>
 
 The ``is`` operator checks at runtime whether the *expression*
-can be downcast to the specified *type*.
-It returns ``true`` if the *expression* can be downcast to the specified *type*;
+can be cast to the specified *type*.
+It returns ``true`` if the *expression* can be cast to the specified *type*;
 otherwise, it returns ``false``.
 
 .. assertion:: triviallyTrueIsAndAs
@@ -334,13 +334,20 @@ otherwise, it returns ``false``.
     !! "hello" is Int
     !! ~~~~~~~ ^  ~~~
 
-.. If the bugs are fixed, this can be reworded:
-    The ``is`` operator checks at runtime
-    to see whether the *expression*
-    can be cast to the specified *type*
-    If so, it returns ``true``; otherwise, it returns ``false``.
+.. assertion:: is-operator-tautology
 
-    See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
+   -> class Base {}
+   -> class Subclass: Base {}
+   -> var s = Subclass()
+   << // s : Subclass = REPL.Subclass
+   -> var b = Base()
+   << // b : Base = REPL.Base
+   ---
+   -> s is Base
+   !! <REPL Input>:1:3: warning: 'is' test is always true
+   !! s is Base
+   !!   ^
+   << // r0 : Bool = true
 
 The ``as`` operator performs a cast
 when it is known at compile time
@@ -707,9 +714,9 @@ Closure Expression
 A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*
 in other programming languages.
-Like function declarations,
-closures contain statements which they execute,
-and they capture values from their enclosing scope.
+Like a function declaration,
+a closure contains statements which it executes,
+and it captures constants and variables from its enclosing scope.
 It has the following form:
 
 .. syntax-outline::
@@ -764,13 +771,98 @@ The following closure expressions are equivalent:
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
 
-A closure expression can explicitly specify
-the values that it captures from the surrounding scope
-using a :newTerm:`capture list`.
-A capture list is written as a comma separated list surrounded by square brackets,
+.. _Expressions_CaptureLists:
+
+Capture Lists
++++++++++++++
+
+By default, a closure expression captures
+constants and variables from its surrounding scope
+with strong references to those values.
+You can use a :newTerm:`capture list` to explicitly control
+how values are captured in a closure.
+
+A capture list is written as a comma separated list of expressions
+surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
 even if you omit the parameter names, parameter types, and return type.
+
+The entries in the capture list are initialized
+when the closure is created.
+For each entry in the capture list,
+a constant is initialized
+to the value of the constant or variable that has the same name
+in the surrounding scope.
+For example in the code below,
+``a`` is included in the capture list but ``b`` is not,
+which gives them different behavior.
+
+.. testcode:: capture-list-value-semantics
+
+    -> var a = 0
+    << // a : Int = 0
+    -> var b = 0
+    << // b : Int = 0
+    -> let closure = { [a] in
+        print(a, b)
+    }
+    << // closure : () -> () = (Function)
+    ---
+    -> a = 10
+    -> b = 10
+    -> closure()
+    <- 0 10
+
+There are two different things named ``a``,
+the variable in the surrounding scope
+and the constant in the closure's scope,
+but only one variable named ``b``.
+The ``a`` in the inner scope is initialized
+with the value of the ``a`` in the outer scope
+when the closure is created,
+but their values are not connected in any special way.
+This means that the change to the value of ``a`` in the outer scope
+does not effect the value of ``a`` in the inner scope,
+nor do changes to ``a`` inside the closure
+effect the value of ``a`` outside the closure.
+In contrast, there is only one variable named ``b`` ---
+the ``b`` in the outer scope ---
+so changes from inside or outside the closure are visible in both places.
+
+.. [Contributor 6004] also describes the distinction as
+   "capturing the variable, not the value"
+   but he notes that we don't have a rigorous definition of
+   capturing a variable in Swift
+   (unlike some other languages)
+   so that description's not likely to be very helpful for developers.
+
+This distinction is not visible
+when the captured variable's type has reference semantics.
+For example,
+there are two things named ``x`` in the code below,
+a variable in the outer scope and a constant in the inner scope,
+but they both refer to the same object
+because of reference semantics.
+
+.. testcode:: capture-list-reference-semantics
+
+    -> class SimpleClass {
+           var value: Int = 0
+       }
+    -> var x = SimpleClass()
+    << // x : SimpleClass = REPL.SimpleClass
+    -> var y = SimpleClass()
+    << // y : SimpleClass = REPL.SimpleClass
+    -> let closure = { [x] in
+           print(x.value, y.value)
+       }
+    << // closure : () -> () = (Function)
+    ---
+    -> x.value = 10
+    -> y.value = 10
+    -> closure()
+    <- 10 10
 
 .. assertion:: capture-list-with-commas
 
@@ -782,7 +874,6 @@ even if you omit the parameter names, parameter types, and return type.
     << // f : () -> Int = (Function)
     >> f()
     << // r0 : Int = 107
-
 
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
@@ -803,8 +894,10 @@ even if you omit the parameter names, parameter types, and return type.
     -> g()
     << // r1 : Int = 107
 
-Each entry in the capture list can be marked as ``weak`` or ``unowned``
-to capture a weak or unowned reference to the value.
+If the type of the expression's value is a class,
+you can mark the expression in a capture list
+with ``weak`` or ``unowned`` to capture a weak or unowned reference
+to the expression's value.
 
 .. testcode:: closure-expression-weak
 
@@ -822,9 +915,9 @@ to capture a weak or unowned reference to the value.
     << Title
 
 You can also bind an arbitrary expression
-to a named value in the capture list.
-The expression is evaluated when the closure is formed,
-and captured with the specified strength.
+to a named value in a capture list.
+The expression is evaluated when the closure is created,
+and the value is captured with the specified strength.
 For example:
 
 .. testcode:: closure-expression-capture
@@ -842,6 +935,8 @@ For example:
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
+For more information and examples of capture lists,
+see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 .. langref-grammar
 
@@ -1425,12 +1520,15 @@ It has the following form:
 
     <#expression#>?
 
+The postfix ``?`` operator makes an optional-chaining expression
+from an expression without changing the expression's value.
+
 Optional-chaining expressions must appear within a postfix expression,
 and they cause the postfix expression to be evaluated in a special way.
-If the optional-chaining expression is ``nil``,
+If the value of the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-If the optional-chaining expression is not ``nil``,
+If the value of the optional-chaining expression is not ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,

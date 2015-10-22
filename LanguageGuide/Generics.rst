@@ -792,12 +792,12 @@ a generic function or type.
 It can also be useful to define requirements for associated types.
 You do this by defining :newTerm:`where clauses` as part of a type parameter list.
 A where clause enables you to require that
-an associated type conforms to a certain protocol,
-and/or that certain type parameters and associated types be the same.
+an associated type must conform to a certain protocol,
+or that certain type parameters and associated types must be the same.
 You write a where clause by placing the ``where`` keyword
 immediately after the list of type parameters,
-followed by one or more constraints for associated types,
-and/or one or more equality relationships between types and associated types.
+followed by constraints for associated types
+or equality relationships between types and associated types.
 
 The example below defines a generic function called ``allItemsMatch``,
 which checks to see if two ``Container`` instances contain

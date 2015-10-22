@@ -248,7 +248,7 @@ It is sometimes necessary for a method to modify (or *mutate*) the instance it b
 For instance methods on value types (that is, structures and enumerations)
 you place the ``mutating`` keyword before a method's ``func`` keyword
 to indicate that the method is allowed to modify the instance it belongs to
-and/or any properties of that instance.
+and any properties of that instance.
 This process is described in :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`.
 
 If you define a protocol instance method requirement
@@ -1360,9 +1360,7 @@ or because the data source does not implement ``incrementForCount(_:)`` ---
 then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
-and so its name is also written using optional chaining,
-to indicate that the attempt to access the property's value can fail.
-As before, the returned value is an optional ``Int`` value,
+so its value is an optional ``Int`` value,
 even though ``fixedIncrement`` is defined as a nonoptional ``Int`` property
 as part of the ``CounterDataSource`` protocol definition.
 
