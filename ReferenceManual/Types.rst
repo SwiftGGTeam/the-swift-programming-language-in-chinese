@@ -583,11 +583,11 @@ whether an instance's runtime type is the same as its compile-time type.
 .. testcode:: metatype-type
 
     -> if someInstance.dynamicType === someInstance.self {
-          print("The dynamic type of someInstance is SomeBaseCass")
+          print("The dynamic and static type of someInstance are the same")
        } else {
-          print("The dynamic type of someInstance isn't SomeBaseClass")
+          print("The dynamic and static type of someInstance are different")
        }
-    <- The dynamic type of someInstance isn't SomeBaseClass
+    <- The dynamic and static type of someInstance are different
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
