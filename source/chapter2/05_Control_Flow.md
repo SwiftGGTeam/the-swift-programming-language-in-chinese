@@ -5,9 +5,9 @@
 > 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
 > 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
-> 2.0
+> 2.0,2.1
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-
+> 定稿：[shanksyang](http//codebuild.me)
 本页包含内容：
 
 - [For 循环](#for_loops)
@@ -15,7 +15,7 @@
 - [条件语句](#conditional_statement)
 - [控制转移语句（Control Transfer Statements）](#control_transfer_statements)
 - [提前退出](#early_exit)
-- [检测API是否可用](#checking_api_availability)
+- [检测API可用性](#checking_api_availability)
 
 Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`、`guard`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
 
@@ -29,7 +29,7 @@ Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某
 Swift 提供两种`for`循环形式以来按照指定的次数多次执行一系列语句：
 
 * `for-in`循环对一个集合里面的每个元素执行一系列语句。
-* for循环，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
+* for 循环，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
 
 <a name="for_in"></a>
 ### For-In
@@ -49,11 +49,11 @@ for index in 1...5 {
 // 5 times 5 is 25
 ```
 
-例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的数字。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`print(_:)`函数会再执行一次。整个过程会进行到闭区间结尾为止。
+例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的数字。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`print(_:separator:terminator:)`函数会再执行一次。整个过程会进行到闭区间结尾为止。
 
 上面的例子中，`index`是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index`在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用`let`关键字声明。
 
-如果你不需要知道区间内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
+如果你不需要知道区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
 
 ```swift
 let base = 3
@@ -96,6 +96,7 @@ for (animalName, legCount) in numberOfLegs {
 字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。
 
 <a name="for"></a>
+### For
 
 除了`for-in`循环，Swift 提供使用条件判断和递增方法的标准 C 样式`for`循环:
 
@@ -118,10 +119,9 @@ for var index = 0; index < 3; ++index {
 
 这个循环执行流程如下：
 
-1. 循环首次启动时，初始化表达式被调用一次，用来初始化循环所需的所有常量和变量。
-2. 条件表达式被调用，如果表达式调用结果为`false`，循环结束，继续执行`for`循环关闭大括号
-（`}`）之后的代码。如果表达式调用结果为`true`，则会执行大括号内部的代码。
-3. 执行所有语句之后，执行递增表达式。通常会增加或减少计数器的值，或者根据语句输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第 2 步，条件表达式会再次执行。
+1. 循环首次启动时，*初始化表达式（ initialization expression ）*被调用一次，用来初始化循环所需的所有常量和变量。
+2. *条件表达式（condition expression）*被调用，如果表达式调用结果为`false`，循环结束，继续执行`for`循环关闭大括号（`}`）之后的代码。如果表达式调用结果为`true`，则会执行大括号内部的代码。
+3. 执行所有语句之后，执行*递增表达式（increment expression）*。通常会增加或减少计数器的值，或者根据语句输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第 2 步，条件表达式会再次执行。
 
 
 在初始化表达式中声明的常量和变量（比如`var index = 0`）只在`for`循环的生命周期里有效。如果想在循环结束后访问`index`的值，你必须要在循环生命周期开始前声明`index`。
@@ -748,13 +748,13 @@ greet(["name": "Jane", "location": "Cupertino"])
 它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你处理违反要求的代码接近要求。
 
 <a name="checking_api_availability"></a>
-## 检测API是否可用
+## 检测 API 可用性
 
-Swift 有内置支持去检查接口的可用性的，这可以确保我们不会不小心地使用对于当前部署目标不可用的API。
+Swift 有内置支持去检查接口的可用性的，这可以确保我们不会不小心地使用对于当前部署目标不可用的 API。
 
-编译器使用SDK中的可用信息来验证在我们在可用部署目标指定项目的代码中所有的API调用。如果我们尝试使用一个不可用的API，Swift会在编译期报错。
+编译器使用 SDK 中的可用信息来验证在我们在可用部署目标指定项目的代码中所有的 API 调用。如果我们尝试使用一个不可用的 API，Swift 会在编译期报错。
 
-我们使用一个可用性条件在一个`if`或`guard`语句中去有条件的执行一段代码，这取决于我们想要使用的API是否在运行时是可用的。编译器使用从可用性条件语句中获取的信息，这时它会去验证在代码块中调用的API是否都可用。
+我们使用一个可用性条件在一个`if`或`guard`语句中去有条件的执行一段代码，这取决于我们想要使用的 API 是否在运行时是可用的。编译器使用从可用性条件语句中获取的信息，这时它会去验证在代码块中调用的 API 是否都可用。
 
 ```swift
 if #available(iOS 9, OSX 10.10, *) {
@@ -764,14 +764,12 @@ if #available(iOS 9, OSX 10.10, *) {
 }
 ```
 
-以上可用性条件指定在iOS，`if`段的代码仅仅在iOS9及更高可运行；在OS X，仅在OS X v10.10及更高可运行。最后一个参数，`*`，是必须的并且指定在任何其他平台上，`if`段的代码在最小可用部署目标指定项目中执行。
+以上可用性条件指定在iOS，`if`段的代码仅仅在 iOS 9 及更高可运行；在 OS X，仅在 OS X v10.10 及更高可运行。最后一个参数，`*`，是必须的并且指定在任何其他平台上，`if`段的代码在最小可用部署目标指定项目中执行。
 
-在它普遍的形式中，可用性条件获取了平台名字和版本的清单。平台名字可以是`iOS`，`OSX`或`watchOS`。除了特定的主板本号像iOS8，我们可以指定较小的版本号像iOS8.3以及 OS X v10.10.3。
+在它普遍的形式中，可用性条件获取了平台名字和版本的清单。平台名字可以是`iOS`，`OSX`或`watchOS`。除了特定的主板本号像 iOS 8，我们可以指定较小的版本号像 iOS 8.3 以及 OS X v10.10.3。
 
-```swift
-if #available(`platform name` `version`, `...`, *) {
-    `statements to execute if the APIs are available`
-} else {
-    `fallback statements to execute if the APIs are unavailable`
-}
-```
+>if #available(`platform name` `version`, `...`, *) {
+>    `statements to execute if the APIs are available`
+>} else {
+>    `fallback statements to execute if the APIs are unavailable`
+>}
