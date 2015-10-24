@@ -1,87 +1,107 @@
 # 错误处理（Error Handling）
 -----------------
 
-> 2.0
-> 翻译+校对：[lyojo](https://github.com/lyojo)
+> 2.1
+> 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
 
-错误处理是响应错误以及从错误中返回的过程。swift提供第一类错误支持，包括在运行时抛出，捕获，传送和控制可回收错误。
+> 定稿：[shanks](http://codebuild.me) 2015-10-24
 
-一些函数和方法不能总保证能够执行所有代码或产生有用的输出。可空类型用来表示值可能为空，但是当函数执行失败的时候，可空通常可以用来确定执行失败的原因，因此代码可以正确地响应失败。在Swift中，这叫做抛出函数或者抛出方法。
+本页包含内容：
 
-举个例子，考虑到一个从磁盘上的一个文件读取以及处理数据的任务，有几种情况可能会导致这个任务失败，包括指定路径的文件不存在，文件不具有可读属性，或者文件没有被编码成合适的格式。区分这些错误可以让程序解决并且修复这些错误，并且，如果可能的话，把这些错误报告给用户。
+- [表示并抛出错误](#representing_and_throwing_errors)
+- [处理错误](#handling_errors)
+- [指定清理操作](#specifying_cleanup_actions)
+
+*错误处理（Error handling）*是响应错误以及从错误中恢复的过程。swift提供了在运行对可恢复错误抛出，捕获，传送和操作的高级支持。
+
+某些操作并不能总是保证执行所有代码都可以执行或总会产出有用的结果。可选类型用来表示值可能为空，但是当执行失败的时候，通常要去了解此次失败是由何引起，你的代码就可以做出与之相应的反应。
+
+举个例子，假如有个从磁盘上的某个文件读取以并做数据处理的任务，该任务会有多种可能失败的情形，包括指定路径下文件并不存在，文件不具有可读权限，或者文件编码格式不兼容。区分这些错误情形可以让程序解决并处理一部分错误，然后把它解决不了的错误报告给用户。
 
 >
 注意：
-Swift中的错误处理涉及到错误处理样式，这会用到Cocoa中的NSError和Objective-C。更多信息请参见：[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
+Swift中的错误处理涉及到错误处理模式，这会用到Cocoa和Objective-C中的`NSError`。关于这个class的更多信息请参见：[ Using Swift with Cocoa and Objective-C (Swift 2.1)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
 
-###错误的表示：
-在Swift中，错误用符合`ErrorType`协议的值表示。
-Swift枚举特别适合把一系列相关的错误组合在一起，同时可以把一些相关的值和错误关联在一起。因此编译器会为实现`ErrorType`协议的Swift枚举类型自动实现相应合成。
-
-比如说，你可以这样表示操作自动贩卖机会出现的错误：
+<a name="representing_and_throwing_errors"></a>
+##表示并抛出错误
+在Swift中，错误用遵循`ErrorType`协议类型的值来表示。这个空协议表示一种可以用做错误处理的类型。
+Swift的枚举类型尤为适合塑造一组相关的错误情形(error conditions)，枚举的关联值(assiciated values)还可以提供额外信息，表示某些错误情形的性质。比如你可以这样表示在一个游戏中操作自动贩卖机会出现的错误情形：
 
 ```swift
 enum VendingMachineError: ErrorType {
-	case InvalidSelection
-	case InsufficientFunds(required: Double)
-	case OutOfStock
+	case InvalidSelection	//选择无效
+	case InsufficientFunds(coinsNeeded: Int)	//金额不足
+	case OutOfStock			//缺货
 }
 ```
+抛出一个错误会让你对所发生的意外情况做出提示，表示正常的执行流程不能被执行下去。抛出错误使用`throws`关键字。比如下面的代码抛出一个错误，提示贩卖机还需要5个硬币：
 
-在这种情况下，自动贩卖机可能会因为以下原因失败：
-请求的物品不存在，用`InvalidSelection`表示。
-请求的物品的价格高于已投入金额，用`InsufficientFunds`表示。相关的双精度值表示还需要多少钱来完成此次交易。
-请求的物品已经卖完了，用`OutOfStock`表示。
+```swift
+throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+```
+<a name="handling_errors"></a>
+##处理错误
+某个错误被抛出时，那个地方的某部分代码必须要负责处理这个错误 - 比如纠正这个问题、尝试另外一种方式、或是给用户提示这个错误。
+Swift中有 4 种处理错误的方式。你可以把函数抛出的错误传递给调用此函数的代码、用`do-catch`语句处理错误、将错误作为可选类型处理、或者断言此错误根本不会发生。每种方式在下面相应小节都有描述。
+当一个函数抛出一个错误时，你的程序流程会发生改变，所以关键是你要迅速的标识出代码中抛出错误的地方。为了标识出这些地方，在调用一个能抛出错误的函数，方法，或者构造器之前，加上`try`关键字 - 或者`try?`或者`try!`的变体。这些关键字在下面的小节中有具体讲解。
+>注意
+>Swift中的错误处理和其他语言中的用`try`，`catch`和`throw`的异常处理(exception handling)很像。和其他语言中(包括Objective-C)的异常处理不同的是，Swift中的错误处理并不涉及堆栈解退(Stack unwinding)，这是一个计算昂贵(computationally expensive)的过程。就此而言，`throw`语句的性能特性是可以和`return`语句相当的。
 
-<a name="throwing_errors"></a>
-错误抛出
-通过在函数或方法声明的参数后面加上`throws`关键字，表明这个函数或方法可以抛出错误。如果指定一个返回值，可以把`throws`关键字放在返回箭头(->)的前面。除非明确地指出，一个函数，方法或者闭包就不能抛出错误。
+###用throwing函数传递错误
+用`throws`关键字标来识一个可抛出错误的函数，方法或是构造器。在函数声明中的参数列表之后加上`throws`。一个标识了`throws`的函数被称作*throwing函数*。如果这个函数还有返回值类型，`throws`关键词需要写在箭头(->)的前面。
 
 ```swift
 func canThrowErrors() throws -> String
-
 func cannotThrowErrors() -> String
 ```
+一个throwing函数从其内部抛出错误，并传递到该函数被调用时所在的区域中。
+>注意
+只有throwing函数可以传递错误。任何在某个非throwing函数内部抛出的错误只能在此函数内部处理
 
-在抛出函数体的任意一个地方，可以通过`throw`语句抛出错误。在下面的例子中，如果请求的物品不存在，或者卖完了，或者超出投入金额，`vend(itemNamed:)`函数会抛出一个错误：
+下面的例子中`VendingMechine`类有一个`vend(itemNamed:)`方法，如果需要的物品不存在，缺货或者花费超过了已投入金额，该方法就会抛出一个相称的`VendingMachineError`。
+
 
 ```swift
 struct Item {
-	var price: Double
+	var price: Int
 	var count: Int
 }
 
-var inventory = [
-	"Candy Bar": Item(price: 1.25, count: 7),
-	"Chips": Item(price: 1.00, count: 4),
-	"Pretzels": Item(price: 0.75, count: 11)
-]
-var amountDeposited = 1.00
-
-func vend(itemNamed name: String) throws {
-	guard var item = inventory[name] else {
-		throw VendingMachineError.InvalidSelection
+class VendingMachine {
+    var inventory = [
+        "Candy Bar": Item(price: 12, count: 7),
+        "Chips": Item(price: 10, count: 4),
+        "Pretzels": Item(price: 7, count: 11)
+    ]
+    var coinsDeposited = 0
+    func dispenseSnack(snack: String) {
+        print("Dispensing \(snack)")
     }
-
-	guard item.count > 0 else {
-		throw VendingMachineError.OutOfStock
+    
+    func vend(itemNamed name: String) throws {
+        guard var item = inventory[name] else {
+            throw VendingMachineError.InvalidSelection
+        }
+        
+        guard item.count > 0 else {
+            throw VendingMachineError.OutOfStock
+        }
+        
+        guard item.price <= coinsDeposited else {
+            throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
+        }
+        
+        coinsDeposited -= item.price
+        --item.count
+        inventory[name] = item
+        dispenseSnack(name)
     }
-
-	if amountDeposited >= item.price {
-		// Dispense the snack
-		amountDeposited -= item.price
-	    --item.count
-		inventory[name] = item
-	} else {
-		let amountRequired = item.price - amountDeposited
-		throw VendingMachineError.InsufficientFunds(required: 	amountRequired)
-	}
 }
 ```
 
-首先，`guard`语句用来把绑定`item`常量和`count`变量到在库存中对应的值。如果物品不在库存中，将会抛出`InvalidSelection`错误。然后，物品是否可获取有物品的剩余数量决定。如果`count`小于等于0，将会抛出`OutOfStock`错误。最后，把请求物品的价格和已经投入的金额进行比较，如果如果投入的金额大于物品的价格，将会从投入的金额从减去物品的价格，然后库存中该物品的数量减1，然后返回请求的物品。否则，将会计算还需要多少钱，然后把这个值作为`InsufficientFunds`错误的关联值。因为`throw`语句会马上改变程序流程，当所有的购买条件（物品存在，库存足够以及投入金额足够）都满足的时候，物品才会出售。
+`vend(itemNamed:)`方法的实现使用了`guard`语句，确保在购买某个零食所需的条件有任一不被满足时能够尽早退出此方法并抛出相匹配的错误。由于`throw`语句会立即将程序控制转移，所以某件物品只有在所有条件都满足时才会被售出。
 
-当调用一个抛出函数的时候，在调用前面加上`try`。这个关键字表明函数可以抛出错误，而且在`try`后面代码将不会执行。
+因为`vend(itemNamed:)`方法会传递出它抛出的任何错误，在你代码中调用它的地方必须要么直接处理这些错误 - 使用`do-catch`语句，`try?`或`try!`，要么继续将这些错误传递下去。例如下面例子中`buyFavoriteSnack(_:vendingMachine)`同样是一个 throwing 函数，任何由`vend(itemNamed:)`方法抛出的错误会一直被传递到`buyFavoriteSnack(_:vendingMachine)`函数被调用的那个地方。
 
 ```swift
 let favoriteSnacks = [
@@ -89,89 +109,104 @@ let favoriteSnacks = [
 	"Bob": "Licorice",
 	"Eve": "Pretzels",
 ]
-func buyFavoriteSnack(person: String) throws {
+func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 	let snackName = favoriteSnacks[person] ?? "Candy Bar"
-	try vend(itemNamed: snackName)
+	try vendingMachine.vend(itemNamed: snackName)
 }
 ```
+上例中`buyFavoriteSnack(_:vendingMachine)`函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。
 
-`buyFavoriteSnack(_:)` 函数查找某个人的最喜欢的零食，然后尝试买给他。如果这个人在列表中没有喜欢的零食，就会购买`Candy Bar`。这个函数会调用`vend`函数，`vend`函数可能会抛出错误，所以在`vend`前面加上了`try`关键字。因为`buyFavoriteSnack`函数也是一个抛出函数，所以`vend`函数抛出的任何错误都会向上传递到`buyFavoriteSnack`被调用的地方。
 
-###捕捉和处理错误
-使用do-catch语句来就捕获和处理错误
+###用 Do-Catch 处理错误
+可以使用一个`do-catch`语句运行一段闭包代码来做错误处理。如果在`do`语句中的代码抛出了一个错误，则这个错误会与`catch`语句做匹配来决定哪条语句能处理它。
+下面是`do-catch`语句的通用形式：
 
 ```swift
 do {
-
-    try function that throws
-
+    try expression
     statements
-	
-} catch pattern {
-
+} catch pattern 1 {
     statements
-
+} catch pattern 2 where condition {
+    statements
 }
 ```
+在`catch`后面写一个模式(pattern)来表示这个语句能处理什么样的错误。如果一条`catch`语句没带一个模式，那么这条语句可以和任何错误相匹配，并且把错误和一个名字为`name`的局部常量做绑定。关于模式匹配的更多信息请参考[Patterns](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/doc/uid/TP40014097-CH36-ID419)。
 
-如果一个错误被抛出了，这个错误会被传递到外部域，直到被一个`catch`分句处理。一个`catch`分句包含一个`catch`关键字，跟着一个`pattern`来匹配错误和相应的执行语句。
-
-类似`switch`语句，编译器会检查`catch`分句是否能够处理全部错误。如果能够处理所有错误情况，就认为这个错误被完全处理。否者，包含这个抛出函数的所在域就要处理这个错误，或者包含这个抛出函数的函数也用`throws`声明。为了保证错误被处理，用一个带`pattern`的`catch`分句来匹配所有错误。如果一个`catch`分句没有指定样式，这个分句会匹配并且绑定任何错误到一个本地`error`常量。更多关于`pattern`的信息，参见[模式](../chapter3/07_Patterns.html)。
+`catch`语句不必将`do`语句中代码所抛出的每个可能的错误都处理。如果没有一条`catch`字句来处理错误，错误就会传播到周围的作用域。然而错误还是必须要被某个周围的作用域处理的 - 要么是一个外围的`do-catch`错误处理语句，要么是一个throwing函数的内部。举例来说，下面的代码处理了`VendingMachineError`枚举类型的全部3个枚举实例，但是所有其它的错误就必须由它周围作用域所处理：
 
 ```swift
-do {	
-	try vend(itemNamed: "Candy Bar")	
-	// Enjoy delicious snack	
-} catch VendingMachineError.InvalidSelectio {
-	print("Invalid Selection")
+var vendingMachine = VendingMachine()
+vendingMachine.coinsDeposited = 8
+do {
+    try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
+} catch VendingMachineError.InvalidSelection {
+    print("Invalid Selection.")
 } catch VendingMachineError.OutOfStock {
-	print("Out of Stock.")
-} catch VendingMachineError.InsufficientFunds(let 	amountRequired) {
-	print("Insufficient funds. Please insert an additional $\(amountRequired).")
+    print("Out of Stock.")
+} catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+    print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
 }
+// prints "Insufficient funds. Please insert an additional 2 coins."
 ```
+上面的例子中`buyFavoriteSnack(_:vendingMachine:)`在一个`try`表达式中被调用，因为它能抛出一个错误。如果一个错误被抛出，相应的执行会被马上转移到`catch`语句中来，判断这个错误是否要被继续传递下去。如果没有错误抛出，`do`语句中余下的语句就会被执行。
 
-在上面的例子中，`vend(itemNamed:)` 函数在`try`表达式中被调用，因为这个函数会抛出错误。如果抛出了错误，程序执行流程马上转到`catch`分句，在`catch`分句中确定错误传递是否继续传送。如果没有抛出错误，将会执行在`do`语句中剩余的语句。
-
-> 注意：Swift中的错误处理和其他语言中的异常处理很像，使用了`try`、`catch`和`throw`关键字。但是和这些语言——包括Objective-C——不同的是，Swift不会展开调用堆栈，那会带来很大的性能损耗。因此，在Swift中`throw`语句的性能可以做到几乎和`return`语句一样。
-
-###禁止错误传播
-在运行时，有几种情况抛出函数事实上是不会抛出错误的。在这几种情况下，你可以用`forced-try`表达式来调用抛出函数或方法，即使用`try!`来代替`try`。
-
-通过`try!`来调用抛出函数或方法禁止了错误传送，并且把调用包装在运行时断言，这样就不会抛出错误。如果错误真的抛出了，会触发运行时错误。
+###将错误转换成可选值
+可以使用`try?`通过将其转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么这个表达式的值就是`nil`。例如下面代码中的`x`和`y`有相同的值和特性：
 
 ```swift
-func willOnlyThrowIfTrue(value: Bool) throws {
-	if value { throw someError }
+func someThrowingFunction() throws -> Int {
+    // ...
 }
-
+ 
+let x = try? someThrowingFunction()
+ 
+let y: Int?
 do {
-	try willOnlyThrowIfTrue(false)
+    y = try someThrowingFunction()
 } catch {
-	// Handle Error
+    y = nil
 }
-
-try! willOnlyThrowIfTrue(false)
 ```
 
-###收尾操作
-使用defer语句来在执行一系列的语句。这样不管有没有错误发生，都可以执行一些必要的收尾操作。包括关闭打开的文件描述符以及释放所有手动分配的内存。
-
-`defer`语句把执行推迟到退出当前域的时候。`defer`语句包括`defer`关键字以及后面要执行的语句。被推迟的语句可能不包含任何将执行流程转移到外部的代码，比如`break`或者`return`语句，或者通过抛出一个错误。被推迟的操作的执行的顺序和他们定义的顺序相反，也就是说，在第一个`defer`语句中的代码在第二个`defer`语句中的代码之后执行。
+如果`someThrowingFunction()`抛出一个错误，`x`和`y`的值是`nil`。否则`x`和`y`的值就是该函数的返回值。注意无论`someThrowingFunction()`的返回值类型是什么类型，`x`和`y`都是这个类型的可选类型。例子中此函数返回一个整型，所以`x`和`y`是整型的可选类型。
+如果你想对所有的错误都采用同样的方式来处理，用`try?`就可以让你写出简洁的错误处理代码。比如下面的代码用一些的方式来获取数据，如果所有的方法都失败则返回`nil`。
 
 ```swift
-func processFile(filename: String) throws {
-	if exists(filename) {
-		let file = open(filename)
-		defer {
-			close(file)
-	    }
-		while let line = try file.readline() {
-			// Work with the file.
-	    }
-		// close(file) is called here, at the end of the scope.
-    }
+func fetchData() -> Data? {
+    if let data = try? fetchDataFromDisk() { return data }
+    if let data = try? fetchDataFromServer() { return data }
+    return nil
 }
 ```
+###使错误传递失效
+有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的。在这种条件下，你可以在表达式前面写`try!`来使错误传递失效，并把调用包装在一个运行时断言(runtime assertion)中来断定不会有错误抛出。如果实际上确实抛出了错误，你就会得到一个运行时错误。
+例如下面的代码使用了`loadImage(_:)`函数，该函数从给定的路径下装载图片资源，如果图片不能够被载入则抛出一个错误。此种情况下因为图片是和应用绑定的，运行时不会有错误被抛出，所以是错误传递失效是没问题的。
 
-上面这个例子使用了`defer`语句来保证`open`有对应的`close`。这个调用不管是否有抛出都会执行。
+```swift
+let photo = try! loadImage("./Resources/John Appleseed.jpg")
+```
+
+<a name="specifying_cleanup_actions"></a>
+##指定清理操作
+可以使用`defer`语句在代码执行到要离开当前的代码段之前去执行一套语句。该语句让你能够做一些应该被执行的必要清理工作，不管是以何种方式离开当前的代码段的 - 无论是由于抛出错误而离开，或是因为一条`return`或者`break`的类似语句。比如你可以用`defer`语句来保证文件描述符(file descriptors)已被关闭，并且手动分配的内存也被释放了。
+`defer`语句将代码的执行延迟到当前的作用域退出之前。该语句由`defer`关键字和要被延时执行的语句组成。延时执行的语句不会包含任何会将控制权移交到语句外面的代码，例如一条`break`或是`return`语句，或是抛出一个错误。延迟执行的操作是按照它们被指定的相反顺序执行 - 意思是第一条`defer`语句中的代码执行是在第二条`defer`语句中代码被执行之后，以此类推。
+
+```swift
+	func processFile(filename: String) throws {
+    	if exists(filename) {
+        	let file = open(filename)
+	        defer {
+    	        close(file)
+        	}
+	        while let line = try file.readline() {
+    	        // 处理文件
+        	}
+        	// 在这里，作用域的最后调用 close(file)
+    	}	
+	}
+```
+上面的代码用了一条`defer`语句来确保`open(_:)`函数有一个相应的对`close(_:)`的调用。
+
+>注意
+>即使没有涉及到错误处理代码，你也可以用`defer`语句。
