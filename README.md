@@ -27,7 +27,7 @@ CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/14026
 # 译者记录
 
 * 欢迎使用 Swift
-   * 关于 Swift ([numbbbbb])
+
    * Swift 初见 ([numbbbbb])
 * Swift 教程
    * 基础部分 ([numbbbbb], [lyuka], [JaySurplus])
