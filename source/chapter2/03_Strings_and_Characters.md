@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [字符串字面量](#string_literals)
@@ -29,7 +32,7 @@
 创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
 字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。     
 尽管语法简易，但`String`类型是一种快速、现代化的字符串实现。
-每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式（representations）。你也可以在常量、变量、字面量和表达式中进行字符串插值操作，这可以帮助你轻松创建用于展示、存储和打印的自定义字符串。
+每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式（representations）。
 
 > 注意：    
 > Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。就像 [`AnyObject`类型](./19_Type_Casting.html#anyobject) 中提到的一样，在使用 Cocoa 中的 Foundation 框架时，您可以将创建的任何字符串的值转换成`NSString`，并调用任意的`NSString` API。您也可以在任意要求传入`NSString`实例作为参数的 API 中用`String`类型的值代替。
@@ -121,7 +124,7 @@ for character in "Dog!🐶".characters {
 // 🐶
 ```
 
-`for-in`循环在 [For Loops](./05_Control_Flow.html#for_loops) 中进行了详细描述。
+`for-in`循环在 [For 循环](./05_Control_Flow.html#for_loops) 中进行了详细描述。
 
 另外，通过标明一个`Character`类型并用字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
