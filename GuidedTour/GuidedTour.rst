@@ -1218,7 +1218,7 @@ gets to handle the error.
 ::
 
     func sendToPrinter(printerName: String) throws -> String {
-        if printerName == "Johannes Gutenberg" {
+        if printerName == "Bi Sheng" {
             throw PrinterError.NoToner
         }
         return "Job sent"
@@ -1239,7 +1239,7 @@ unless you can give it a different name.
 ::
 
     do {
-        let printerResponse = try sendToPrinter("Bi Sheng")
+        let printerResponse = try sendToPrinter("Johannes Gutenberg")
         print(printerResponse)
         throw(PrinterError.OnFire)
     } catch {
