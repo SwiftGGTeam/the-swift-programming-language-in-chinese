@@ -98,25 +98,15 @@ var someValue: ExampleModule.MyType
 
 由于 *参数类型* 和 *返回值类型* 可以是元组类型，所以函数类型支持多参数与多返回值的函数与方法。。
 
-对于参数类型是空元组类型`()`以及返回值类型为表达式类型的函数类型，你可以对其参数声明使用`autoclosure`（见声明属性章节）。一个自动闭包函数捕获特定表达式上的隐式闭包而非表达式本身。下面的例子使用`autoclosure`属性来定义一个很简单的assert函数：
+对于参数类型是空元组类型`()`以及返回值类型为表达式类型的函数类型，你可以对其参数声明使用`autoclosure`（见声明属性章节）。一个自动闭包函数捕获特定表达式上的隐式闭包而非表达式本身。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到在函数体中有使用它的值。以自动闭包函数类型做为参数的例子详见 [自动闭包（Autoclosures）](TODO：添加链接) 。
 
-```swift
-func simpleAssert(@autoclosure condition: Void -> Bool, _ message: String) {
-    if !condition() {
-        print(message)
-    }
-}
-let testNumber = 5
-simpleAssert(testNumber % 2 == 0, "testNumber isn't an even number.")
-// prints "testNumber isn't an even number."
-```
-函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点`(...)`组成，如`Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即`Int...`就是`[Int]`。关于使用可变长参数的例子，见章节Variadic Parameters。
+函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点`(...)`组成，如`Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即`Int...`就是`[Int]`。关于使用可变长参数的例子，见章节[Variadic Parameters](TODO：添加链接)。
 
-为了指定一个`in-out`参数，可以在参数类型前加`inout`前缀。但是你不可以对可变长参数或返回值类型使用`inout`。关于In-Out参数的讨论见章节In-Out参数部分。
+为了指定一个`in-out`参数，可以在参数类型前加`inout`前缀。但是你不可以对可变长参数或返回值类型使用`inout`。关于In-Out参数的讨论见章节[In-Out参数部分](TODO：添加链接)。
 
-柯里化函数（Curried fuction）的函数类型从右向左递归地组成一组。例如，函数类型`Int -> Int -> Int`可以被理解为`Int -> (Int -> Int)`——也就是说，一个函数的参数为`Int`类型，其返回类型是一个参数类型为`Int`返回类型为`Int`的函数类型。关于柯里化函数的讨论见章节Curried Fuctions。
+柯里化函数（Curried fuction）的函数类型从右向左递归地组成一组。例如，函数类型`Int -> Int -> Int`可以被理解为`Int -> (Int -> Int)`——也就是说，一个函数的参数为`Int`类型，其返回类型是一个参数类型为`Int`返回类型为`Int`的函数类型。关于柯里化函数的讨论见章节[Curried Fuctions](TODO：添加链接)。
 
-函数类型若要抛出错误就必须使用`throws`关键字来标记，若要重抛错误则必须使用`rethrows`关键字来标记。`throws`关键字是函数类型的一部分，不抛出函数（nonthrowing function）是抛出函数（throwing function）函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。对于柯里化函数，`throws`关键字只应用于最里层的函数。抛出和重抛函数（rethrowing function）的相关描述见章节抛出函数与方法和重抛函数与方法。
+函数类型若要抛出错误就必须使用`throws`关键字来标记，若要重抛错误则必须使用`rethrows`关键字来标记。`throws`关键字是函数类型的一部分，不抛出函数（nonthrowing function）是抛出函数（throwing function）函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。对于柯里化函数，`throws`关键字只应用于最里层的函数。抛出和重抛函数（rethrowing function）的相关描述见章节[抛出函数与方法](TODO：添加链接)和[重抛函数与方法](TODO：添加链接)。
 
 > 函数类型语法  
 > *函数类型* → [*类型*](../chapter3/03_Types.html#type) _抛出_ _可选_ **->** [*类型*](../chapter3/03_Types.html#type)  
@@ -141,7 +131,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 ```
 访问一个多维数组的元素时，最左边的下标指向最外层数组的相应位置元素。接下来往右的下标指向第一层嵌入的相应位置元素，依次类推。这就意味着，在上面的例子中，`array3D[0]`是指`[[1, 2], [3, 4]]`，`array3D[0][1]`是指`[3, 4]`，`array3D[0][1][1]`则是指值`4`。
 
-关于Swift标准库中`Array`类型的细节讨论，见章节Arrays。
+关于Swift标准库中`Array`类型的细节讨论，见章节[Arrays](TODO：添加链接)。
 
 > 数组类型语法  
 > *数组类型* → [*类型*](../chapter3/03_Types.html#type)
@@ -162,7 +152,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 字典中键的类型必须遵循Swift标准库中的可哈希协议。
 
-关于Swift标准库中`Dictionary`类型的更多细节可查看章节Dictionaries。
+关于Swift标准库中`Dictionary`类型的更多细节可查看章节[Dictionaries](TODO：添加链接)。
 
 > 字典类型语法  
 > *字典类型* → **[**[*类型*](../chapter3/03_Types.html#type) **:** [*类型*](../chapter3/03_Types.html#type) **]** 
@@ -192,7 +182,7 @@ optionalInteger!      // 42
 
 你也可以使用可选链和可选绑定来选择性的执行可选表达式上的操作。如果值为`nil`，不会执行任何操作因此也就没有运行错误产生。
 
-更多细节以及更多如何使用可选类型的例子，见章节Optionals。
+更多细节以及更多如何使用可选类型的例子，见章节[Optionals](TODO：添加链接)。
 
 > 可选类型语法  
 > *可选类型* → [*类型*](../chapter3/03_Types.html#type) **?**  
@@ -216,7 +206,7 @@ var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 
 使用可选链会选择性的执行隐式解析可选表达式上的某一个操作。如果值为`nil`，就不会执行任何操作，因此也不会产生运行错误。
 
-关于隐式解析可选的更多细节，见章节Implicitly Unwrapped Optionals。
+关于隐式解析可选的更多细节，见章节[Implicitly Unwrapped Optionals](TODO：添加链接)。
 
 > 隐式解析可选类型(Implicitly Unwrapped Optional Type)语法  
 > *隐式解析可选类型* → [*类型*](../chapter3/03_Types.html#type) **!**  
@@ -267,9 +257,33 @@ let someInstance: SomeBaseClass = SomeSubClass()
 someInstance.dynamicType.printClassName()
 // prints "SomeSubClass
 ```
-> 注意
-> **不能创建元类型类的实例，因为不能保证其子类会提供初始化的代码。**
 
+可以使用恒等运算符（`===`和 `!==`）来测试一个实例的运行时类型和它的编译时类型是否一致。
+
+```
+if someInstance.dynamicType === someInstance.self {
+    print("The dynamic type of someInstance is SomeBaseCass")
+} else {
+    print("The dynamic type of someInstance isn't SomeBaseClass")
+}
+// prints "The dynamic type of someInstance isn't SomeBaseClass"
+```
+
+可以使用初始化表达式从某个类型的元类型构造出一个该类型的实例。对于类实例，必须使用 `required` 关键字标记被调用的构造器，或者使用 `final` 关键字标记整个类。
+
+```
+class AnotherSubClass: SomeBaseClass {
+    let string: String
+    required init(string: String) {
+        self.string = string
+    }
+    override class func printClassName() {
+        print("AnotherSubClass")
+    }
+}
+let metatype: AnotherSubClass.Type = AnotherSubClass.self
+let anotherInstance = metatype.init(string: "some string")
+```
 
 > 元(Metatype)类型语法  
 > *元类型* → [*类型*](../chapter3/03_Types.html#type) **.** **Type** | [*类型*](../chapter3/03_Types.html#type) **.** **Protocol** 
