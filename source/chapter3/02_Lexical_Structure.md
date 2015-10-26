@@ -17,7 +17,7 @@
 - [字面量（*Literals*）](#literals)
 - [运算符（*Operators*）](#operators)
 
-Swift 的“词法结构（*lexical structure*）”描述了能构成该语言中合法标记（*tokens*）的字符序列。这些合法标记组成了语言中最底层的构建基块，并在之后的章节中用于描述语言的其他部分。
+Swift 的“词法结构（*lexical structure*）”描述了能构成该语言中合法标记（*tokens*）的字符序列。这些合法标记组成了语言中最底层的构建基块，并在之后的章节中用于描述语言的其他部分。一个合法标记由一个标识符、关键字、标点符号、文字或运算符组成。
 
 通常情况下，标记是在随后将介绍的语法约束下，由 Swift 源文件的输入文本中提取可能的最长子串生成。这种方法称为“最长匹配项（*longest match*）”，或者“最大适合”（*maximal munch*）。
 
@@ -27,6 +27,8 @@ Swift 的“词法结构（*lexical structure*）”描述了能构成该语言�
 空白（*whitespace*）有两个用途：分隔源文件中的标记和帮助区分运算符属于前缀还是后缀（参见 [运算符](#operators)），在其他情况下则会被忽略。以下的字符会被当作空白：空格（*space*）（U+0020）、换行符（*line feed*）（U+000A）、回车符（*carriage return*）（U+000D）、水平制表符（*horizontal tab*）（U+0009）、垂直制表符（*vertical tab*）（U+000B）、换页符（*form feed*）（U+000C）以及空（*null*）（U+0000）。
 
 注释（*comments*）被编译器当作空白处理。单行注释由 `//` 开始直至遇到换行符（*line feed*）（U+000A）或者回车符（*carriage return*）（U+000D）。多行注释由 `/*` 开始，以 `*/` 结束。注释允许嵌套，但注释标记必须匹配。
+
+就像 [标记格式引用（Markup Formatting Reference）](https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497) 所说的那样，注释可以包含附加的格式和标记。
 
 <a id="identifiers"></a>
 ## 标识符
@@ -207,7 +209,14 @@ true			   // 布尔型字面量
 let x = 3; "1 2 \(x)"
 ```
 
-字符串字面量的默认推导类型为 `String`。组成字符串的字符默认推导类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](../chapter2/03_Strings_and_Characters.html)。
+字符串字面量的默认推导类型为 `String`。组成字符串的字符默认推导类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](../chapter2/03_Strings_and_Characters.html) 以及[字符串结构参考](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.html#//apple_ref/doc/uid/TP40015181)。
+
+用 `＋` 操作符连接的字符型字面量是在编译时进行连接的。比如下面的 `textA` 和 `textB` 时完全一样的—— `textA` 没有任何运行时的连接操作。
+
+```
+let textA = "Hello " + "world"
+let textB = "Hello world"
+```
 
 > 字符型字面量语法  
 > *字符串字面量* → **"** [*引用文本*](#quoted_text)<sub>可选</sub> **"**  
