@@ -1198,8 +1198,20 @@ to represent errors.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
-   fire" error message, used when the kernel can't identify the specific
-   error.
+   fire" error message, used when the kernel can't identify the specific error.
+   The names of printers used in the examples in this section are names of
+   people who were important in the development of printing.
+   
+   Bi Sheng is credited with inventing the first movable type out of porcelain
+   in China in the 1040s.  It was a mixed success, in large part because of the
+   vast number of characters needed to write Chinese, and failed to replace
+   wood block printing.  Johannes Gutenberg is credited as the first European
+   to use movable type in the 1440s --- his metal type enabled the printing
+   revolution.  Ottmar Mergenthaler invented the Linotype machine in the 1884,
+   which dramatically increased the speed of setting type for printing compared
+   to the previous manual typesetting.  It set an entire line of type (hence
+   the name) at a time, and was controlled by a keyboard.  The Monotype
+   machine, invented in 1885 by Tolbert Lanston, performed similar work.
 
 ::
 
@@ -1212,13 +1224,13 @@ to represent errors.
 Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
 If you throw an error in a function,
-the function returns early and the code that called the function
+the function returns immediately and the code that called the function
 gets to handle the error.
 
 ::
 
     func sendToPrinter(printerName: String) throws -> String {
-        if printerName == "Bi Sheng" {
+        if printerName == "No Toner" {
             throw PrinterError.NoToner
         }
         return "Job sent"
@@ -1232,39 +1244,62 @@ Inside the ``catch`` block,
 the error is automatically given the name ``error``
 unless you can give it a different name.
 
-.. REFERENCE
-   Bi Sheng is credited with inventing the first movable type
-   out of porcelain during the Song dynasty in China.
-
 ::
 
     do {
-        let printerResponse = try sendToPrinter("Johannes Gutenberg")
+        let printerResponse = try sendToPrinter("Bi Sheng")
         print(printerResponse)
         throw(PrinterError.OnFire)
     } catch {
         print(error)
     }
 
-Another way to handle errors
-is to use ``try?`` to convert the error to an optional.
+.. admonition:: Experiment
 
-.. REFERENCE
-   Ottmar Mergenthaler invented the Linotype machine in the late 1884,
-   which dramatically increased the speed of setting type for printing
-   compared to the previous manual typesetting.
-   It set an entire line of type (hence the name) at a time,
-   and was controlled by a keyboard.
-   The Monotype machine, invented in 1885 by Tolbert Lanston,
-   performed similar work.
+   Add a line of code inside the ``do`` block after the ``throw``.
+   Why is it never executed?
+
+   Change the printer name from ``Bi Sheng`` to ``No Toner``.
+   Why does the error on the last line change from ``PrinterError.OnFire``
+   to ``PrinterError.NoToner``?
+
+A ``do``-``catch`` block can have multiple ``catch`` blocks
+that handle specific errors.
+You write a pattern after ``catch`` just like
+after ``case`` in a switch.
 
 ::
 
-    let optionalPrinterResponse = try? sendToPrinter("Mergenthaler")
+    do {
+        let printerResponse = try sendToPrinter("Gutenberg")
+        print(printerResponse)
+        throw(PrinterError.OnFire)
+    } catch PrinterError.OnFire {
+        print("I'll just put this over here, with the rest of the fire.")
+    } catch let printerError as PrinterError {
+        print("Printer error: \(printerError).")
+    } catch {
+        print(error)
+    }
 
-.. Experiment: Write a function that calls sendToPrinter()
-   and handles errors by throwing.
-   ^-- this isn't actually that great of an experiment...
+.. admonition:: Experiment
+
+   Define two new errors --
+   one that's a new case of the ``PrinterError`` enumeration
+   and one that is a case of a new enumeration.
+   Change the code above to throw the new errors.
+   Which ``catch`` block handles each error?
+
+Another way to handle errors
+is to use ``try?`` to convert the result to an optional.
+If the function throws an error,
+the specific error is discarded and the result is ``nil``.
+Otherwise, the result is the value that the function returned.
+
+::
+
+    let printerSuccess = try? sendToPrinter("Mergenthaler")
+    let printerFailure = try? sendToPrinter("No Toner")
 
 Use ``defer`` to write a block of code
 this as always executed before a function returns,
