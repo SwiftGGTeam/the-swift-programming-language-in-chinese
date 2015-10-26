@@ -7,7 +7,9 @@
 
 > 2.0
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
-> 定稿：[shanks](http://codebuild.me)
+
+> 2.1
+> 校队：[shanks](http://codebuild.me)
 
 本页包含内容：
 
