@@ -394,3 +394,55 @@ print("Now serving \(customerProvider())!")
 print(customersInLine.count)
 // prints "4"
 ```
+
+尽管在闭包的代码中，`customersInLine`的第一个元素被移除了，不过在闭包被调用之前，这个元素是不会被真正移除的。如果这个闭包永远不被调用，那么在闭包里面的表达式将永远不会之行，那意味着列表中的元素永远不会被移除。请注意，`customerProvider`的类型不是一个字符（String），而是一个`() -> String`，一个没有参数而返回值为字符（String）的函数。    
+
+你当你将一个闭包作为参数传递到函数中，你能够看到相同的延时计算的行为。    
+
+```swift
+// customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
+func serveCustomer(customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serveCustomer( { customersInLine.removeAtIndex(0) } )
+// prints "Now serving Alex!"
+```
+
+`serveCustomer(_:) ` 需要一个显式的闭包用来返回一个顾客的名字。下面这个版本的`serveCustomer(_:)`完成了相同的操作，不过他通过将一个参数标记为`@autoclosure`特性，来代替一个显式的闭包作为参数。现在你可以使用一个‘以字符为参数的函数’作为参数，而不是用一个‘闭包’作为参数来调用这个函数了。这个被调用的函数参数将自动转化为一个闭包参数，因为`customerProvider`被打上了`@autoclosure`特性标志。
+
+```swift
+// customersInLine is ["Ewa", "Barry", "Daniella"]
+func serveCustomer(@autoclosure customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serveCustomer(customersInLine.removeAtIndex(0))
+// prints "Now serving Ewa!"
+```
+
+> 注意：
+> 过度使用 `autoclosures` 会让你的代码变得难以理解，上下文和函数名应该能够明确的表示出，他是被延迟执行的。
+
+`@autoclosure` 特性隐式包括了 `@noescape` 特性, 它意味着闭包仅仅在函数中被使用，这个闭包不允许以被保存起来的方式，让它’逃逸‘出当前的作用域，然后在函数返回之后再被执行，如果你想让这个闭包可以‘逃逸’，则应该使用 `@autoclosure(escaping)`特性.
+
+```swift
+// customersInLine is ["Barry", "Daniella"]
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(@autoclosure(escaping) customerProvider: () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.removeAtIndex(0))
+collectCustomerProviders(customersInLine.removeAtIndex(0))
+ 
+print("Collected \(customerProviders.count) closures.")
+// prints "Collected 2 closures."
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
+// prints "Now serving Barry!"
+// prints "Now serving Daniella!"
+```
+
+在上面的代码中，代替调用传入的customer参数闭包，`collectCustomerProviders(_:) `函数将闭包追加到了`customerProviders`队列中，这个队列定义在函数作用域范围外，那就意味着，在队列里面的闭包将会在函数返回之后被执行。作为结果，customer参数的值必须允许‘逃逸’出函数作用域。
+
+更多关于 `@autoclosure` 和 `@noescape` 特性的信息, 参见 Declaration Attributes.
+
