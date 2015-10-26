@@ -1196,17 +1196,18 @@ Error Handling
 You can use any type that adopts the ``ErrorType`` protocol
 to represent errors.
 
+.. REFERENCE
+   PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
+   fire" error message, used when the kernel can't identify the specific
+   error.
+
 ::
 
     enum PrinterError: ErrorType {
         case OutOfPaper
-        case LowToner
+        case NoToner
         case OnFire
     }
-
-.. PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
-   fire" error message, used when the kernel can't identify the specific
-   error.
 
 Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
@@ -1218,7 +1219,7 @@ gets to handle the error.
 
     func sendToPrinter(printerName: String) throws -> String {
         if printerName == "Johannes Gutenberg" {
-            throw PrinterError.LowToner
+            throw PrinterError.NoToner
         }
         return "Job sent"
     }
@@ -1231,6 +1232,10 @@ Inside the ``catch`` block,
 the error is automatically given the name ``error``
 unless you can give it a different name.
 
+.. REFERENCE
+   Bi Sheng is credited with inventing the first movable type
+   out of porcelain during the Song dynasty in China.
+
 ::
 
     do {
@@ -1241,18 +1246,25 @@ unless you can give it a different name.
         print(error)
     }
 
-.. Bi Sheng is credited with inventing the first movable type
-   out of porcelain during the Song dynasty in China.
-
 Another way to handle errors
 is to use ``try?`` to convert the error to an optional.
 
+.. REFERENCE
+   Ottmar Mergenthaler invented the Linotype machine in the late 1884,
+   which dramatically increased the speed of setting type for printing
+   compared to the previous manual typesetting.
+   It set an entire line of type (hence the name) at a time,
+   and was controlled by a keyboard.
+   The Monotype machine, invented in 1885 by Tolbert Lanston,
+   performed similar work.
+
 ::
 
-    let optionalPrinterResponse = try? sendToPrinter("◊◊◊")
+    let optionalPrinterResponse = try? sendToPrinter("Mergenthaler")
 
 .. Experiment: Write a function that calls sendToPrinter()
    and handles errors by throwing.
+   ^-- this isn't actually that great of an experiment...
 
 Use ``defer`` to write a block of code
 this as always executed before a function returns,
@@ -1277,6 +1289,7 @@ to simplify functions that can return from several different places.
         tasks.forEach { result += $0 }
     }
 
+.. TODO: Need a better example of `defer` usage.
 
 Generics
 --------
