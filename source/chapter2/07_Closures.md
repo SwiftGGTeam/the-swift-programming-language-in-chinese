@@ -374,3 +374,23 @@ let alsoIncrementByTen = incrementByTen
 alsoIncrementByTen()
 // 返回的值为50
 ```
+
+## 自动闭包（Autoclosures）
+一个自动闭包，是一个自动被创建的，用于将一个表达式包装为一个参数，进而传递到函数的闭包。当它被调用的时候，它无需任何的参数，然后返回被包装在其中的表达式的值。这种语法糖（syntactic convenience），让你能够用一个普通的表达式，省略围绕在函数参数外的括号，来代替显式的闭包。   
+调用一个闭包作为参数的函数是很常见的，不过，实现那样的函数却不常见。举个例子来说，`assert(condition:message:file:line:)`函数，将一个闭包作为它的condition参数和message参数；它的condition参数仅仅在编译时被计算求值，它的message参数仅当Condition参数为false时被计算求值。  
+一个自动闭包让你能够延迟计算求值，因为代码段不会被执行直到你调用这个闭包。延迟计算求值对于哪些有副作用（Side Effect）的代码和大量繁杂计算的代码来说是很有益处的，因为它让你控制了代码什么时候被运行。下面的代码展示了一个闭包的延时执行。
+
+```swift
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// prints "5"
+ 
+let customerProvider = { customersInLine.removeAtIndex(0) }
+print(customersInLine.count)
+// prints "5"
+ 
+print("Now serving \(customerProvider())!")
+// prints "Now serving Chris!"
+print(customersInLine.count)
+// prints "4"
+```
