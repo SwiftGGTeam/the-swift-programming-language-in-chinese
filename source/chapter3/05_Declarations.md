@@ -10,6 +10,9 @@
 > 翻译+校对：[Lenhoon](https://github.com/Lenhoon),
 > [BridgeQ](https://github.com/WXGBridgeQ)
 
+> 2.1 
+> 翻译+校队：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [顶级代码](#top-level_code)
@@ -54,10 +57,10 @@
 <a name="top-level_code"></a>
 ##顶级代码
 
-Swift的源文件中的顶级代码由零个或多个语句，声明和表达式组成。默认情况下，在一个源文件的顶层声明的变量，常量和其他命名的声明语句可以被同一模块部分里的每一个源文件中的代码访问。可以通过使用一个访问级别修饰符来标记这个声明，从而重写这个默认行为，[访问控制级别(Access Control Levels)](#access_control_levels)中有所介绍。
+Swift 的源文件中的顶级代码由零个或多个语句，声明和表达式组成。默认情况下，在一个源文件的顶层声明的变量，常量和其他命名的声明语句可以被同一模块部分里的每一个源文件中的代码访问。可以通过使用一个访问级别修饰符来标记这个声明，从而重写这个默认行为，[访问控制级别(Access Control Levels)](#access_control_levels)中有所介绍。
 
 > 顶级(Top Level) 声明语法  
-> *顶级声明* → [*多条语句(Statements)*](TODO) _可选_  
+> *顶级声明* → [*多条语句(Statements)*](../chapter3/04_Expressions.html) _可选_  
 
 <a name="code_blocks"></a>
 ##代码块
@@ -71,7 +74,7 @@ Swift的源文件中的顶级代码由零个或多个语句，声明和表达式
 代码块中的*语句(statements)*包括声明，表达式和各种其他类型的语句，它们按照在源码中的出现顺序被依次执行。
 
 > 代码块语法  
-> *代码块* → **{** [*多条语句(Statements)*](TODO) _可选_ **}**  
+> *代码块* → **{** [*多条语句(Statements)*](../chapter3/04_Expressions.html) _可选_ **}**  
 
 <a name="import_declaration"></a>
 ##引入声明
@@ -89,10 +92,10 @@ Swift的源文件中的顶级代码由零个或多个语句，声明和表达式
 
 <a name="grammer_of_an_import_declaration"></a>
 > 导入(Import)声明语法  
-> *导入声明* → [*特性(attributes)列表*](TODO) _可选_ **import** [*导入类型*](../chapter3/05_Declarations.html#import_kind) _可选_ [*导入路径*](../chapter3/05_Declarations.html#import_path)  
+> *导入声明* → [*特性(attributes)列表*](../chapter3/06_Attributes.html) _可选_ **import** [*导入类型*](../chapter3/05_Declarations.html#import_kind) _可选_ [*导入路径*](../chapter3/05_Declarations.html#import_path)  
 > *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **var** | **func**  
 > *导入路径* → [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) | [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) **.** [*导入路径*](../chapter3/05_Declarations.html#import_path)  
-> *导入路径标识符* → [*标识符*](TODO) | [*运算符*](TODO)  
+> *导入路径标识符* → [*标识符*](../chapter3/02_Lexical_Structure.html) | [*运算符*](../chapter3/02_Lexical_Structure.html)  
 
 <a name="constant_declaration"></a>
 ##常量声明
@@ -122,11 +125,11 @@ println("The second number is /(secondNumber).")
 // prints "The second number is 42."
 ```
 
-当*常量名称(constant name)*的类型可以被推断出时，类型标注*（:type）*在常量声明中是一个可选项，它可以用来描述在[类型推断(Type Inference)](TODO)中找到的类型。
+当*常量名称(constant name)*的类型可以被推断出时，类型标注*（:type）*在常量声明中是一个可选项，它可以用来描述在[类型推断(Type Inference)](./03_Types.html#type_inference)中找到的类型。
 
-声明一个常量类型属性要使用关键字`static`声明修饰符。类型属性在[类型属性(Type Properties)](TODO)中有介绍。
+声明一个常量类型属性要使用关键字`static`声明修饰符。类型属性在[类型属性(Type Properties)](../chapter2/10_Properties.html#type_properties)中有介绍。
 
-如果还想获得更多关于常量的信息或者想在使用中获得帮助，请查看[常量和变量(Constants and Variables)](TODO)和[存储属性(Stored Properties)](TODO)等节。
+如果还想获得更多关于常量的信息或者想在使用中获得帮助，请查看[常量和变量](../chapter2/01_The_Basics.html#constants_and_variables)和[存储属性(Stored Properties)](../chapter2/10_Properties.html#stored_properties)等节。
 
 <a name="grammer_of_a_constant_declaration"></a>
 > 常数声明语法  
@@ -143,9 +146,9 @@ println("The second number is /(secondNumber).")
 变量声明有几种不同的形式声明不同种类的命名值和计算型值，如存储和计算变量和属性，存储变量和属性监视，和静态变量属性。所使用的声明形式取决于变量所声明的范围和打算声明的变量类型。
 
 >注意：  
->也可以在协议声明的上下文声明属性，详情参见[协议属性声明(Protocal Property Declaration)](TODO)。
+>也可以在协议声明的上下文声明属性，详情参见[协议属性声明(Protocal Property Declaration)](./05_Declarations.html#protocol_declaration)。
 
-可以重载一个子类中的属性，通过使用'override'声明修饰符来标记子类的属性声明，[重写(Overriding)](TODO)中有所介绍。
+可以重载一个子类中的属性，通过使用'override'声明修饰符来标记子类的属性声明，[重写(Overriding)](../chapter2/13_Inheritance.html#overriding)中有所介绍。
 
 <a name="stored_variables_and_stored_variable_properties"></a>
 ###存储型变量和存储型属性
@@ -180,13 +183,13 @@ println("The second number is /(secondNumber).")
 可以在全局，函数体内或者类，结构体，枚举，扩展声明的上下文中使用这种形式的声明。当变量以这种形式在全局或者一个函数内被声明时，它代表一个*计算型变量(computed variable)*。当它在类，结构体，枚举，扩展声明的上下文中中被声明时，它代表一个*计算型变量(computed variable)*。
 
 getter用来读取变量值，setter用来写入变量值。setter子句是可选择的，只有getter是必需的，可以将这些语句
-都省略，只是简单的直接返回请求值，正如在[只读计算属性(Read-Only Computed Properties)](TODO)中描述的那样。但是如果提供了一个setter语句，也必需提供一个getter语句。
+都省略，只是简单的直接返回请求值，正如在[只读计算属性(Read-Only Computed Properties)](../chapter2/10_Properties.html#computed_properties)中描述的那样。但是如果提供了一个setter语句，也必需提供一个getter语句。
 
-setter的名字和圆括号内的语句是可选的。如果写了一个setter名，它就会作为setter的参数被使用。如果不写setter名，setter的初始名为'newValue'，正如在[setter声明速记(Shorthand Setter Declaration)](TODO)中提到的那样。
+setter的名字和圆括号内的语句是可选的。如果写了一个setter名，它就会作为setter的参数被使用。如果不写setter名，setter的初始名为'newValue'，正如在[便捷 setter 声明(Shorthand Setter Declaration)](../chapter2/10_Properties.html#shorthand_setter_declaration)中提到的那样。
 
 不像存储型变量和存储型属性那样，计算型属性和计算型变量的值不存储在内存中。
 
-获得更多信息，查看更多关于计算型属性的例子，请查看[计算型属性(Computed Properties)](TODO)一节。
+获得更多信息，查看更多关于计算型属性的例子，请查看[计算属性(Computed Properties)](../chapter2/10_Properties.html#computed_properties)一节。
 
 <a name="stored_variable_observers_and_property_observers"></a>
 ###存储型变量监视器和属性监视器
@@ -205,7 +208,7 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 可以在全局，函数体内或者类，结构体，枚举，扩展声明的上下文中使用这种形式的声明。当变量以这种形式在全局或者一个函数内被声明时，监视器代表一个*存储型变量监视器(stored variable observers)*；当它在类，结构体，枚举，扩展声明的上下文中被声明时，监视器代表*属性监视器(property observers)*。
 
 可以为适合的监视器添加任何存储型属性。也可以通过重写子类属性的方式为适合的监视器添加任何继承的属性
-(无论是存储型还是计算型的)，参见[重写属性监视器(Overriding Property Observers)](TODO)。
+(无论是存储型还是计算型的)，参见[重写属性监视器(Overriding Property Observers)](../chapter2/13_Inheritance.html#overriding)。
 
 初始化*表达式(expression)*在一个类中或者结构体的声明中是可选的，但是在其他地方是必需的。当类型可以从初始化*表达式(expression)*中推断而来，那么这个*类型(type)*标注是可选的。
 
@@ -219,13 +222,13 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 
 当提供一个`willset`语句时，`didset`语句是可选的。同样的，在提供了一个`didset`语句时，`willset`语句是可选的。
 
-获得更多信息，查看如何使用属性监视器的例子，请查看[属性监视器(Property Observers)](TODO)一节。
+获得更多信息，查看如何使用属性监视器的例子，请查看[属性监视器(Property Observers)](../chapter2/10_Properties.html#property_observers)一节。
 声明修饰符
 
 <a name="type_variable_properties"></a>
 ###类型变量属性
 
-声明一个类型变量属性，要用`static`声明修饰符标记该声明。类可能需要`class`声明修饰符去标记类的类型计算型属性从而允许子类可以重写超类的实现。类型属性在[类型属性(Type Properties)](TODO)章节讨论。
+声明一个类型变量属性，要用`static`声明修饰符标记该声明。类可能需要`class`声明修饰符去标记类的类型计算型属性从而允许子类可以重写超类的实现。类型属性在[类型属性(Type Properties)](../chapter2/10_Properties.html#type_properties)章节讨论。
 
 >>注意
 >>
@@ -264,12 +267,12 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 
 当声明一个类型的别名后，可以在程序的任何地方使用别*名(name)*来代替*已存在的类型(existing type)*。已存在的类型可以是已经被命名的类型或者是混合类型。类型的别名不产生新的类型，它只是简单的和已存在的类型做名称替换。
 
-查看更多[协议关联类型声明(Protocol Associated Type Declaration)](TODO).
+查看更多[协议关联类型声明(Protocol Associated Type Declaration)](./05_Declarations.html#protocol_associated_type_declaration).
 
 <a name="grammer_of_a_type_alias_declaration"></a>
 > 类型别名声明语法  
 > *类型别名声明* → [*类型别名头(Head)*](../chapter3/05_Declarations.html#typealias_head) [*类型别名赋值*](../chapter3/05_Declarations.html#typealias_assignment)  
-> *类型别名头(Head)* → [*属性列表*](todo) _可选_ [*访问级别修饰符*]((TODO) _可选_ **typealias** [*类型别名名称*](../chapter3/05_Declarations.html#typealias_name)  
+> *类型别名头(Head)* → [*属性列表*](../chapter3/06_Attributes.html) _可选_ [*访问级别修饰符*](../chapter3/05_Declarations.html#declaration_modifiers) _可选_ **typealias** [*类型别名名称*](../chapter3/05_Declarations.html#typealias_name)  
 > *类型别名名称* → [*标识符*](LexicalStructure.html#identifier)  
 > *类型别名赋值* → **=** [*类型*](../chapter3/03_Types.html#type)  
 
@@ -289,11 +292,11 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 >     `statements`  
 > }  
 
-每个参数的类型都要标明，它们不能被推断出来。虽然函数的参数默认是常量，也可以使用参数名前使用`let`来强调这一行为。在这些参数前面添加`var`使它们成为变量，作用域内任何对变量的改变只在函数体内有效，或者用`inout`使的这些改变可以在调用域内生效。更多关于in-out参数的讨论，参见[In-Out参数(In-Out Parameters)](TODO)
+每个参数的类型都要标明，它们不能被推断出来。虽然函数的参数默认是常量，也可以使用参数名前使用`let`来强调这一行为。在这些参数前面添加`var`使它们成为变量，作用域内任何对变量的改变只在函数体内有效，或者用`inout`使的这些改变可以在调用域内生效。更多关于in-out参数的讨论，参见[In-Out参数(In-Out Parameters)](#)
 
 函数可以使用元组类型作为返回值来返回多个变量。
 
-函数定义可以出现在另一个函数声明内。这种函数被称作nested函数。更多关于*嵌套函数(Nested Functions)*的讨论，参见[嵌套函数(Nested Functions)](TODO)。
+函数定义可以出现在另一个函数声明内。这种函数被称作nested函数。更多关于*嵌套函数(Nested Functions)*的讨论，参见[嵌套函数(Nested Functions)](../chapter2/06_Functions.html#Nested_Functions)。
 
 <a name="parameter_names"></a>
 ###参数名
@@ -325,6 +328,8 @@ func f(x x: Int, withY y: Int, _z: Int) -> Int{
 f(x: 1, withY: 2, 3) // x和y是有标记的，z没有
 ```
 
+<!--TODO：缺少in-out参数段落-->
+
 <a name="special_kinds_of_parameters"></a>
 ###特殊类型的参数
 
@@ -336,7 +341,7 @@ f(x: 1, withY: 2, 3) // x和y是有标记的，z没有
 
 以下划线(_)命名的参数是明确忽略的，在函数体内不能被访问。
 
-一个以基础类型名的参数，如果紧跟着三个点(`...`)，被理解为是可变参数。一个函数至多可以拥有一个可变参数，且必须是最后一个参数。可变参数被作为该基本类型名的数组来看待。举例来讲，可变参数`Int...`被看做是`[Int]`。查看可变参数的使用例子，详见[可变参数(Variadic Parameters)](TODO)一节。
+一个以基础类型名的参数，如果紧跟着三个点(`...`)，被理解为是可变参数。一个函数至多可以拥有一个可变参数，且必须是最后一个参数。可变参数被作为该基本类型名的数组来看待。举例来讲，可变参数`Int...`被看做是`[Int]`。查看可变参数的使用例子，详见[可变参数(Variadic Parameters)](../chapter2/06_Functions.html#Function_Parameters_and_Return_Values)一节。
 
 在参数的类型后面有一个以等号(`=`)连接的表达式，这样的参数被看做有着给定表达式的初始值。当函数被调用时，给定的表达式被求值。如果参数在函数调用时被省略了，就会使用初始值。
 
@@ -481,9 +486,9 @@ plusOne(10)
 不像类或者结构体。枚举类型并不提供隐式的初始构造器，所有构造器必须显式的声明。构造器可以委托枚举中的其他构造器，但是构造过程仅当构造器将一个枚举用例指定给`self`才全部完成。
 
 和结构体类似但是和类不同，枚举是值类型：枚举实例在赋予变量或常量时，或者被函数调用时被复制。
-更多关于值类型的信息，参见结构体和枚举都是[值类型(Structures and Enumerations Are Value Types)](TODO)一节。
+更多关于值类型的信息，参见结构体和枚举都是[值类型(Structures and Enumerations Are Value Types)](../chapter2/09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)一节。
 
-可以扩展枚举类型，正如在[扩展声明(Extension Declaration)](TODO)中讨论的一样。
+可以扩展枚举类型，正如在[扩展声明(Extension Declaration)](./05_Declarations.html#extension_declaration)中讨论的一样。
 
 <a name="enumerations_with_cases_of_any_type"></a>
 ###任意用例类型的枚举
@@ -515,7 +520,11 @@ let f = Number.Integer
 let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
 
-获得更多关于关联值类型的信息和例子，请查看[关联值(Associated Values)](TODO)一节。
+获得更多关于关联值类型的信息和例子，请查看[关联值(Associated Values)](../chapter2/08_Enumerations.html#associated_values)一节。
+
+
+<a name="enumerations_with_indirection"></a>
+### 间接的枚举
 
 枚举有一个递归结构，就是说，枚举有着枚举类型自身实例的关联值的用例。然而，枚举类型的实例有值语义，意味着它们在内存中有着固定的位置。为了支持递归，编译器必需插入一个间接层。
 
@@ -561,14 +570,14 @@ num ExampleEnum: Int {
 
 在上面这个例子中，`WeekendDay.Saturday`的原始值是`"Saturday"`,`WeekendDay.Sunday`的原始值是`"Sunday"`。
 
-拥有多种用例的原始值类型的枚举含蓄地遵循定义在Swift标准库中的`RawRepresentable`协议。所以，它们拥有一个原始值(`rawValue`)属性和一个有着`init?(rawValue: RawValue)`签名的可失败构造器(a failable initializer)。可以使用原始值属性去取的枚举用例的原始值，就像在`ExampleEnum.B.rawValue`中一样。如果有一个用例符合，也可以使用原始值去找到一个符合的用例，通过调用枚举的可失败构造器，如`ExampleEnum(rawValue: 5)`,这个可失败构造器返回一个可选的用例。想得到更多的信息和关于原始值类型查看更多信息和获取初始值类型用例的信息，参阅初始值[原始值(Raw Values)](TODO)。
+拥有多种用例的原始值类型的枚举含蓄地遵循定义在Swift标准库中的`RawRepresentable`协议。所以，它们拥有一个原始值(`rawValue`)属性和一个有着`init?(rawValue: RawValue)`签名的可失败构造器(a failable initializer)。可以使用原始值属性去取的枚举用例的原始值，就像在`ExampleEnum.B.rawValue`中一样。如果有一个用例符合，也可以使用原始值去找到一个符合的用例，通过调用枚举的可失败构造器，如`ExampleEnum(rawValue: 5)`,这个可失败构造器返回一个可选的用例。想得到更多的信息和关于原始值类型查看更多信息和获取初始值类型用例的信息，参阅初始值[原始值(Raw Values)](../chapter2/08_Enumerations.html#raw_values)。
 
 <a name="accessing_enumeration_cases"></a>
 ###获得枚举用例
 
-使用点(.)来引用枚举类型的用例，如`EnumerationType.EnumerationCase`。当枚举类型可以上下文推断出时，可以省略它(.仍然需要)，参照枚举语法[(Enumeration Syntax)](TODO)和[显式成员表达(Implicit Member Expression)](TODO)。
+使用点(.)来引用枚举类型的用例，如`EnumerationType.EnumerationCase`。当枚举类型可以上下文推断出时，可以省略它(.仍然需要)，参照枚举语法[(Enumeration Syntax)](../chapter2/08_Enumerations.html#enumeration_syntax)和[显式成员表达(Implicit Member Expression)](./04_Expressions.html#primary_expressions)。
 
-使用`switch`语句来检验枚举用例的值，正如使用[switch语句匹配枚举值（Matching Enumeration Values with a Switch Statement)](TODO)一节描述的那样。枚举类型是模式匹配(pattern-matched)的，和其相反的是`switch`语句case块中枚举用例匹配，在[枚举用例类型(Enumeration Case Pattern)](TODO)中有描述。
+使用`switch`语句来检验枚举用例的值，正如使用[switch语句匹配枚举值（Matching Enumeration Values with a Switch Statement)](../chapter2/08_Enumerations.html#matching_enumeration_values_with_a_switch_statement)一节描述的那样。枚举类型是模式匹配(pattern-matched)的，和其相反的是`switch`语句case块中枚举用例匹配，在[枚举用例类型(Enumeration Case Pattern)](./07_Patterns.html#enumeration_case_pattern)中有描述。
 
 <a name="grammer_of_an_enumeration_declaration"></a>
 > 枚举声明语法 
@@ -600,26 +609,26 @@ num ExampleEnum: Int {
 >     `declarations`  
 > }  
 
-结构体内包含零或多个声明*声明(declarations)*。这些*声明(declarations)*可以包括存储型和计算型属性，类型属性，实例方法，类型方法，构造器，下标脚本，类型别名，甚至其他结构体，类，和枚举声明。结构体声明不能包含析构器或者协议声明。详细讨论和包含多种结构体声明的实例，参见[类和结构体(Classes and Structures)](TODO)一节。
+结构体内包含零或多个声明*声明(declarations)*。这些*声明(declarations)*可以包括存储型和计算型属性，类型属性，实例方法，类型方法，构造器，下标脚本，类型别名，甚至其他结构体，类，和枚举声明。结构体声明不能包含析构器或者协议声明。详细讨论和包含多种结构体声明的实例，参见[类和结构体(Classes and Structures)](../chapter2/09_Classes_and_Structures.html)一节。
 
 结构体可以包含任意数量的协议，但是不能继承自类，枚举或者其他结构体。
 
 有三种方法可以创建一个声明过的结构体实例：
 
-* 调用结构体内声明的构造器，参照[构造器(Initializers)](TODO)一节。
+* 调用结构体内声明的构造器，参照[构造器(Initializers)](../chapter2/14_Initialization.html#setting_initial_values_for_stored_properties)一节。
 
-* 如果没有声明构造器，调用结构体的逐个构造器，详情参见[Memberwise Initializers for Structure Types](TODO)。
+* 如果没有声明构造器，调用结构体的逐个构造器，详情参见[Memberwise Initializers for Structure Types](../chapter2/14_Initialization.html#memberwise_initializers_for_structure_types)。
 
-* 如果没有声明析构器，结构体的所有属性都有初始值，调用结构体的默认构造器，详情参见[默认构造器(Default Initializers)](TODO)。
+* 如果没有声明析构器，结构体的所有属性都有初始值，调用结构体的默认构造器，详情参见[默认构造器(Default Initializers)](../chapter2/14_Initialization.html#default_initializers)。
 
-结构体的构造过程参见[构造过程(Initiaization)](TODO)一节。
+结构体的构造过程参见[构造过程(Initiaization)](../chapter2/14_Initialization.html)一节。
 
-结构体实例属性可以用点(.)来获得，详情参见[获得属性(Accessing Properties)](TODO)一节。
+结构体实例属性可以用点(.)来获得，详情参见[属性访问(Accessing Properties)](../chapter2/09_Classes_and_Structures.html#comparing_classes_and_structures)一节。
 
 结构体是值类型；结构体的实例在被赋予变量或常量，被函数调用时被复制。获得关于值类型更多信息，参见
-[结构体和枚举是值类型(Structures and Enumerations Are Value Types)](TODO)一节。
+[结构体和枚举是值类型(Structures and Enumerations Are Value Types)](../chapter2/09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)一节。
 
-可以使用扩展声明来扩展结构体类型的行为，参见[扩展声明(Extension Declaration)](TODO)。
+可以使用扩展声明来扩展结构体类型的行为，参见[扩展声明(Extension Declaration)](../chapter3/05_Declarations.html#extension_declaration)。
 
 <a name="grammer_of_a_structure_declaration"></a>
 > 结构体声明语法  
@@ -636,11 +645,11 @@ num ExampleEnum: Int {
 >     `declarations`  
 > }  
 
-一个类内包含零或多个*声明(declarations)*。这些*声明(declarations)*可以包括存储型和计算型属性，实例方法，类型方法，构造器，单独的析构器，下标脚本，类型别名，甚至其他结构体，类，和枚举声明。类声明不能包含协议声明。详细讨论和包含多种类声明的实例，参见[类和结构体(Classes and Structures)](TODO)一节。
+一个类内包含零或多个*声明(declarations)*。这些*声明(declarations)*可以包括存储型和计算型属性，实例方法，类型方法，构造器，单独的析构器，下标脚本，类型别名，甚至其他结构体，类，和枚举声明。类声明不能包含协议声明。详细讨论和包含多种类声明的实例，参见[类和结构体(Classes and Structures)](../chapter2/09_Classes_and_Structures.html)一节。
 
 一个类只能继承一个父类，*超类(superclass)*，但是可以包含任意数量的协议。*超类(superclass)*第一次出现在*类名(class name)*和冒号后面，其后跟着*采用的协议(adopted protocols)*。泛型类可以继承其它类型类和非泛型类，但是非泛型类只能继承其它的非泛型类。当在冒号后面写泛型超类的名称时，必须写那个泛型类的全名，包括它的泛型参数子句。
 
-正如在[初始化声明(Initializer Declaration)](TODO)谈及的那样，类可以有指定构造器和方便构造器。类的指定构造器必须初始化类所有的已声明的属性，它必须在超类构造器调用前被执行。
+正如在[初始化声明(Initializer Declaration)](./chapter3/05_Declarations.html#initializer_declaration)谈及的那样，类可以有指定构造器和方便构造器。类的指定构造器必须初始化类所有的已声明的属性，它必须在超类构造器调用前被执行。
 
 类可以重写属性，方法，下表脚本和它的超类构造器。重写的属性，方法，下标脚本，和指定构造器必须以`override`声明修饰符标记。
 
@@ -650,15 +659,15 @@ num ExampleEnum: Int {
 
 有两种方法来创建已声明的类的实例：
 
-* 调用类的一个构造器，参见[构造器(Initializers)](TODO)。
+* 调用类的一个构造器，参见[构造器(Initializers)](../chapter2/14_Initialization.html)。
 
-* 如果没有声明构造器，而且类的所有属性都被赋予了初始值，调用类的默认构造器，参见[默认构造器(Default Initializers)](TODO)。
+* 如果没有声明构造器，而且类的所有属性都被赋予了初始值，调用类的默认构造器，参见[默认构造器(Default Initializers)](../chapter2/14_Initialization.html#default_initializers)。
 
-类实例属性可以用点(.)来获得，详情参见[获得属性(Accessing Properties)](TODO)一节。
+类实例属性可以用点(.)来获得，详情参见[属性访问(Accessing Properties)](../chapter2/09_Classes_and_Structures.html#comparing_classes_and_structures)一节。
 
-类是引用类型；当被赋予常量或变量，函数调用时，类的实例是被引用，而不是复制。获得更多关于引用类型的信息，[结构体和枚举都是值类型(Structures and Enumerations Are Value Types)](TODO)一节。
+类是引用类型；当被赋予常量或变量，函数调用时，类的实例是被引用，而不是复制。获得更多关于引用类型的信息，[结构体和枚举都是值类型(Structures and Enumerations Are Value Types)](../chapter2/09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)一节。
 
-可以使用扩展声明来扩展类的行为，参见[扩展声明(Extension Declaration)](TODO)。
+可以使用扩展声明来扩展类的行为，参见[扩展声明(Extension Declaration)](./05_Declarations.html#extension_declaration)。
 
 <a name="grammer_of_a_class_declaration"></a>
 > 类声明语法  
@@ -735,11 +744,11 @@ protocol SomeProtocol:class{
 <a name="protocol_method_declaration"></a>
 ###协议方法声明
 
-协议声明了一致性类型必须在协议声明的主体里通过引入一个协议方法声明来实现一个方法。协议方法声明和函数方法声明有着相同的形式，包含如下两条规则：它们不包括函数体，不能在类的声明内为它们的参数提供初始值.举例来说，符合的类型执行协议必需的方法。参见[必需方法(Method Requirements)](TODO)一节。
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议方法声明来实现一个方法。协议方法声明和函数方法声明有着相同的形式，包含如下两条规则：它们不包括函数体，不能在类的声明内为它们的参数提供初始值.举例来说，符合的类型执行协议必需的方法。参见[必需方法(Method Requirements)](../chapter2/22_Protocols.html#method_requirements)一节。
 
 使用`static`声明修饰符可以在协议声明中声明一个类或必需的静态方法。执行这些方法的类用修饰符`class`声明。相反的，执行这些方法的结构体必须以`static`声明修饰符声明。如果想使用扩展方法，在扩展类时使用`class`修饰符，在扩展结构体时使用`static`修饰符。
 
-更多请参阅[函数声明(Function Declaration)](TODO)。
+更多请参阅[函数声明(Function Declaration)](../chapter3/05_Declarations.html#function_declaration)。
 
 <a name="grammer_of_a_protocol_declaration"></a>
 > 协议方法声明语法  
@@ -755,7 +764,7 @@ protocol SomeProtocol:class{
 
 当一个类去实现一个构造器去满足一个协议的构造器的需求，如果这个类还没有用`final`声明修饰符标记，这个构造器必需使用`required`声明修饰符去标记。
 
-更多请参阅[构造器声明(Initializer Declaration)](TODO)。
+更多请参阅[构造器声明(Initializer Declaration)](../chapter3/05_Declarations.html#initializer_declaration)。
 
 <a name="grammer_of_a_protocol_initializer_declaration"></a>
 > 协议构造器声明语法  
@@ -770,7 +779,7 @@ protocol SomeProtocol:class{
 
 下标脚本声明只为和协议一致的类型声明了必需的最小数量的的getter和setter。如果下标脚本申明包含get和set关键字，一致的类型也必须有一个getter和setter语句。如果下标脚本声明值包含get关键字，一致的类型必须*至少(at least)*包含一个getter语句，可以选择是否包含setter语句。
 
-更多参阅[下标脚本声明(Subscript Declaration)](TODO)。
+更多参阅[下标脚本声明(Subscript Declaration)](../chapter3/05_Declarations.html#subscript_declaration)。
 
 <a name="grammer_of_a_protocol_subscript_declaration"></a>
 > 协议附属脚本声明语法  
@@ -779,7 +788,7 @@ protocol SomeProtocol:class{
 <a name="protocol_associated_type_declaration"></a>
 ###协议相关类型声明
 
-协议声明相关类型使用关键字`typealias`。相关类型为作为协议声明的一部分的类型提供了一个别名。相关类型和参数语句中的类型参数很相似，但是它们在声明的协议中包含`self`关键字。在这些语句中，`self`指代和协议一致的可能的类型。获得更多信息和例子，查看[关联类型(Associated Types)](TODO)一节或[类型别名声明(Type Alias Declaration)](TODO)一节。
+协议声明相关类型使用关键字`typealias`。相关类型为作为协议声明的一部分的类型提供了一个别名。相关类型和参数语句中的类型参数很相似，但是它们在声明的协议中包含`self`关键字。在这些语句中，`self`指代和协议一致的可能的类型。获得更多信息和例子，查看[关联类型(Associated Types)](../chapter2/23_Generics.html#associated_types)一节或[类型别名声明(Type Alias Declaration)](../chapter3/05_Declarations.html#type_alias_declaration)一节。
 
 <a name="grammer_of_a_protocol_associated_type_declaration"></a>
 > 协议关联类型声明语法  
@@ -790,7 +799,7 @@ protocol SomeProtocol:class{
 
 *构造器(initializer)*声明会为程序内的类，结构体或枚举引入构造器。构造器使用关键字`init`来声明，遵循两条基本形式。
 
-结构体，枚举，类可以有任意数量的构造器，但是类的构造器的规则和行为是不一样的。不像结构体和枚举那样，类有两种结构体，designed initializers 和convenience initializers，参见[构造器(Initialization)](TODO)一节。
+结构体，枚举，类可以有任意数量的构造器，但是类的构造器的规则和行为是不一样的。不像结构体和枚举那样，类有两种结构体，designed initializers 和convenience initializers，参见[构造过程(Initialization)](../chapter2/14_Initialization.html)一节。
 
 如下的形式声明了结构体，枚举和类的指定构造器：
 
@@ -822,7 +831,7 @@ protocol SomeProtocol:class{
 >注意
 >如果使用`required`声明修饰符去标记一个构造器，当在子类中重写必要构造器时，也不要用`override`修饰符去标记构造器。
 
-查看更多关于不同声明方法的构造器的例子，参阅[构造过程(Initialization)](TODO)一节。
+查看更多关于不同声明方法的构造器的例子，参阅[构造过程(Initialization)](../chapter2/14_Initialization.html)一节。
 
 <a name="failable_initializers"></a>
 ###可失败构造器(Failable Initializers)
@@ -862,7 +871,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 可失败指定构造器可以在子类中任何一种指定构造器重写。非可失败指定构造器在子类中仅能通过非可失败构造器被重写。
 
-得到更多的信息并且了解更多关于可失败构造器的例子，请参阅[可失败构造器(Failable Initializer)](TODO)
+得到更多的信息并且了解更多关于可失败构造器的例子，请参阅[可失败构造器(Failable Initializer)](。。/chapter2/14_Initialization.html#failable_initializers)
 
 <a name="grammer_of_an_initializer_declaration"></a>
 > 构造器声明语法  
@@ -888,7 +897,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 析构器不会被直接调用。
 
-查看例子和如何在类的声明中使用析构器，参见[析构过程Deinitialization](TODO)一节。
+查看例子和如何在类的声明中使用析构器，参见[析构过程Deinitialization](../chapter2/15_Deinitialization.html)一节。
 
 <a name="grammer_of_a_deinitializer_declaration"></a>
 > 析构器声明语法  
@@ -903,7 +912,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 >    `declarations`  
 > }  
 
-一个扩展声明体包括零个或多个*声明语句(declarations)*。这些*声明语句(declarations)*可以包括计算型属性，计算型类型属性，实例方法，类型方法，构造器，下标脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构器，协议声明，存储型属性，属性监测器或其他的扩展属性。详细讨论和查看包含多种扩展声明的实例，参见[扩展(Extensions)](TODO)一节。
+一个扩展声明体包括零个或多个*声明语句(declarations)*。这些*声明语句(declarations)*可以包括计算型属性，计算型类型属性，实例方法，类型方法，构造器，下标脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构器，协议声明，存储型属性，属性监测器或其他的扩展属性。详细讨论和查看包含多种扩展声明的实例，参见[扩展(Extensions)](../chapter2/21_Extensions.html)一节。
 
 扩展声明可以向现存的类，结构体，枚举内添加*一致的协议(adopted protocols)*。扩展声明不能向一个类中添加继承的类，因此在*类型名称*的冒号后面仅能指定一个协议列表。
 
@@ -941,9 +950,9 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 可以在下标脚本声明的类型中，可以重载下标脚本，只要*参数列表(parameters)*或*返回类型(return type)*与先前的不同即可。也可以重写继承自超类的下标脚本声明。此时，必须使用`override`声明修饰符声明那个被重写的下标脚本。(待定)
 
-同样可以在协议声明的上下文中声明下标脚本，[协议下标脚本声明(Protocol Subscript Declaration)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_619)中有所描述。
+同样可以在协议声明的上下文中声明下标脚本，[协议下标脚本声明(Protocol Subscript Declaration)](../chapter3/05_Declarations.html#protocol_subscript_declaration)中有所描述。
 
-更多关于下标脚本和下标脚本声明的例子，请参考[下标脚本(Subscripts)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html#//apple_ref/doc/uid/TP40014097-CH16-XID_393)。
+更多关于下标脚本和下标脚本声明的例子，请参考[下标脚本(Subscripts)](../chapter2/12_Subscripts.html)。
 
 <a name="grammer_of_a_subscript_declaration"></a>
 > 附属脚本声明语法  
@@ -960,7 +969,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 可以声明三种不同的缀性：中缀、前缀和后缀。操作符的*缀性(fixity)*描述了操作符与它的操作数的相对位置。
 
-运算符声明有三种基本形式，每种缀性各一种。运算符的缀性通过在`operator`关键字之前添加声明修饰符`infix`，`prefix`或`postfix`来指定。每种形式中，运算符的名字只能包含[运算符(Operators)](TODO)中定义的运算符字符。
+运算符声明有三种基本形式，每种缀性各一种。运算符的缀性通过在`operator`关键字之前添加声明修饰符`infix`，`prefix`或`postfix`来指定。每种形式中，运算符的名字只能包含[运算符(Operators)](../chapter3/02_Lexical_Structure.html#operators)中定义的运算符字符。
 
 下面的这种形式声明了一个新的中缀运算符：
 > 	infix operator `operator name` {  
@@ -994,7 +1003,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 和前缀运算符一样，后缀运算符的声明中不指定优先级。后缀运算符是非结合的。
 
-声明了一个新的运算符以后，需要声明一个跟这个运算符同名的函数来实现这个运算符。如果在实现一个前缀或者后缀操作符，也必须使用相符的`prefix`或者`postfix`声明修饰符标记函数声明。如果实现中缀操作符，不需要使用`infix`声明修饰符标记函数声明。如何实现一个新的运算符，请参考[Custom Operators](TODO)。
+声明了一个新的运算符以后，需要声明一个跟这个运算符同名的函数来实现这个运算符。如果在实现一个前缀或者后缀操作符，也必须使用相符的`prefix`或者`postfix`声明修饰符标记函数声明。如果实现中缀操作符，不需要使用`infix`声明修饰符标记函数声明。如何实现一个新的运算符，请参考[Custom Operators](../chapter2/25_Advanced_Operators.html#custom_operators)。
 
 <a name="grammer_of_an_operator_declaration"></a>
 > 运算符声明语法  
@@ -1024,12 +1033,12 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 `lazy`
 
-该修饰符用于修饰类或结构体中的存储型变量属性，表示该属性的初始值最多只被计算和存储一次，且发生在第一次访问它时。如何使用`lazy`特性的一个例子，请见：[惰性存储型属性(Lazy Stored Properties)](TODO)。
+该修饰符用于修饰类或结构体中的存储型变量属性，表示该属性的初始值最多只被计算和存储一次，且发生在第一次访问它时。如何使用`lazy`特性的一个例子，请见：[惰性存储型属性(Lazy Stored Properties)](../chapter2/10_Properties.html#lazy_stored_properties)。
 
 `optional`
 
 该修饰符用于修饰一个类或类中的属性，方法，以及下标成员,表示遵循类型没有被要求实现这些成员。
-只能将`optional`修饰符用于被`objc`标识的协议。这样一来，只有类类型可以适配或遵循拥有可选成员需求的协议。关于如何使用`optional`修饰符,以及如何访问可选协议成员的指导(比如，不确定遵循类型是否已经实现了这些可选成员)，可以参见[可选成员需求(Optional Protocol Requirements)](TODO)一章
+只能将`optional`修饰符用于被`objc`标识的协议。这样一来，只有类类型可以适配或遵循拥有可选成员需求的协议。关于如何使用`optional`修饰符,以及如何访问可选协议成员的指导(比如，不确定遵循类型是否已经实现了这些可选成员)，可以参见[对可选协议的规定(Optional Protocol Requirements)](../chapter2/22_Protocols.html#optional_protocol_requirements)一章
 
 `required`
 
@@ -1038,12 +1047,12 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 `weak`
 
-`weak`修饰符用于修饰一个变量或一个存储型变量属性，表示该变量或属性通过一个弱引用指向存储其值的对象。该变量或属性的类型必须是一个可选类类型。通过`weak`修饰符可避免强引用循环。关于`weak`修饰符的例子和更多信息，可以参见[弱引用(Weak References)](TODO)一章
+`weak`修饰符用于修饰一个变量或一个存储型变量属性，表示该变量或属性通过一个弱引用指向存储其值的对象。该变量或属性的类型必须是一个可选类类型。通过`weak`修饰符可避免强引用循环。关于`weak`修饰符的例子和更多信息，可以参见[弱引用(Weak References)](../chapter2/16_Automatic_Reference_Counting.html#resolving_strong_reference_cycles_between_class_instances)一章
 
 <a name="access_control_levels"></a>
 ### 访问控制级别
 
-Swift提供了三个级别的权限控制：`public`, `internal`, 和 `private`。可以给声明标识以下访问级别修饰符中的一个以指定声明的权限级别。访问控制在[访问控制(Access Control)](TODO)一章有详细说明。
+Swift提供了三个级别的权限控制：`public`, `internal`, 和 `private`。可以给声明标识以下访问级别修饰符中的一个以指定声明的权限级别。访问控制在[访问控制(Access Control)](../chapter2/24_Access_Control.html)一章有详细说明。
 
 `public`
 
@@ -1059,7 +1068,7 @@ Swift提供了三个级别的权限控制：`public`, `internal`, 和 `private`�
 修饰符用于修饰声明时，表示该声明只能被同一源文件中的代码访问。
 
 
-以上的任意一个权限级别修饰符都可以有选择的带上一个参数，该参数由关键字`set`和一对括号组成（比如，`private(set)`）。当想要指明一个变量或下标脚注的setter的访问级别要低于或等于该变量或下标脚注的实际访问级别时，使用这种格式的权限级别修饰符，就像[Getters and Setters](TODO)一章中讨论的一样。
+以上的任意一个权限级别修饰符都可以有选择的带上一个参数，该参数由关键字`set`和一对括号组成（比如，`private(set)`）。当想要指明一个变量或下标脚注的setter的访问级别要低于或等于该变量或下标脚注的实际访问级别时，使用这种格式的权限级别修饰符，就像[Getters and Setters](../chapter2/24_Access_Control.html#getters_and_setters)一章中讨论的一样。
 
 <a name="grammer_of_a_declaration_modifier"></a>
 >声明修饰符的语法
@@ -1074,5 +1083,5 @@ Swift提供了三个级别的权限控制：`public`, `internal`, 和 `private`�
 >
 >访问级别修饰符 → **public­** | **public­(­set­)­**
 >
->访问级别修饰符 → [访问级别修饰符(access-level-modeifier)](TODO) [访问级别修饰符列表(access-level-modeifiers)](TODO) _可选_
+>访问级别修饰符 → [访问级别修饰符(access-level-modeifier)](#) [访问级别修饰符列表(access-level-modeifiers)](#) _可选_
 ­
