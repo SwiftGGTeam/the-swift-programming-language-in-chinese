@@ -5,9 +5,11 @@
 > 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
 > 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
 
-> 2.0,2.1
+> 2.0
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-> 定稿：[shanksyang](http//codebuild.me)
+
+> 2.1
+> 校对：[shanks](http://codebuild.me)
 
 本页包含内容：
 

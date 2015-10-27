@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[dreamkidd](https://github.com/dreamkidd)
 
+> 2.1
+> 定稿：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [函数定义与调用（Defining and Calling Functions）](#Defining_and_Calling_Functions)
@@ -16,7 +19,7 @@
 - [函数类型（Function Types）](#Function_Types)
 - [函数嵌套（Nested Functions）](#Nested_Functions)
 
-函数是用来完成特定任务的独立的代码块。你给一个函数起一个合适的名字，用来标识函数做什么，并且当函数需要执行的时候，这个名字会被“调用”。
+*函数*是用来完成特定任务的独立的代码块。你给一个函数起一个合适的名字，用来标识函数做什么，并且当函数需要执行的时候，这个名字会被“调用”。
 
 Swift 统一的函数语法足够灵活，可以用来表示任何函数，包括从最简单的没有参数名字的 C 风格函数，到复杂的带局部和外部参数名的 Objective-C 风格函数。参数可以提供默认值，以简化函数调用。参数也可以既当做传入参数，也当做传出参数，也就是说，一旦函数执行结束，传入的参数值可以被修改。
 
@@ -25,9 +28,9 @@ Swift 统一的函数语法足够灵活，可以用来表示任何函数，包�
 <a name="Defining_and_Calling_Functions"></a>
 ## 函数的定义与调用（Defining and Calling Functions）
 
-当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入（称为参数，parameters），也可以定义某种类型的值作为函数执行结束的输出（称为返回类型）。
+当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入（称为*参数，parameters*），也可以定义某种类型的值作为函数执行结束的输出（称为*返回类型，return type*）。
 
-每个函数有个函数名，用来描述函数执行的任务。要使用一个函数时，你用函数名“调用”，并传给它匹配的输入值（称作实参，arguments）。一个函数的实参必须与函数参数表里参数的顺序一致。
+每个函数有个*函数名*，用来描述函数执行的任务。要使用一个函数时，你用函数名“调用”，并传给它匹配的输入值（称作*实参，arguments*）。一个函数的实参必须与函数参数表里参数的顺序一致。
 
 在下面例子中的函数叫做`"sayHello(_:)"`，之所以叫这个名字,是因为这个函数用一个人的名字当做输入，并返回给这个人的问候语。为了完成这个任务，你定义一个输入参数-一个叫做 `personName` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
 
@@ -38,7 +41,7 @@ func sayHello(personName: String) -> String {
 }
 ```
 
-所有的这些信息汇总起来成为函数的定义，并以 `func` 作为前缀。指定函数返回类型时，用返回箭头 `->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
+所有的这些信息汇总起来成为函数的*定义*，并以 `func` 作为前缀。指定函数返回类型时，用返回箭头 `->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
 
 该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么类型。这样的定义使得函数可以在别的地方以一种清晰的方式被调用：
 
@@ -70,20 +73,6 @@ print(sayHelloAgain("Anna"))
 
 函数参数与返回值在Swift中极为灵活。你可以定义任何类型的函数，包括从只带一个未名参数的简单函数到复杂的带有表达性参数名和不同参数选项的复杂函数。
 
-### 多重输入参数（Multiple Input Parameters）
-
-函数可以有多个输入参数，写在圆括号中，用逗号分隔。
-
-下面这个函数用一个半开区间的开始点和结束点，计算出这个范围内包含多少数字：
-
-```swift
-func halfOpenRangeLength(start: Int, end: Int) -> Int {
-    return end - start
-}
-print(halfOpenRangeLength(1, 10))
-// prints "9"
-```
-
 ### 无参函数（Functions Without Parameters）
 
 函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的 `String` 消息：
@@ -98,7 +87,7 @@ print(sayHelloWorld())
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
 
-### 多参量函数 (Functions With Multiple Parameters)
+### 多参数函数 (Functions With Multiple Parameters)
 
 函数可以有多种输入参数，这些参数被包含在函数的括号之中，以逗号分隔。
 
@@ -160,6 +149,7 @@ printWithoutCounting("hello, world")
 > 注意：
 > 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，并且试图这样做,这将导致编译错误（compile-time error）。
 
+<a name="functions_with_multiple_return_values"></a>
 ### 多重返回值函数（Functions with Multiple Return Values）
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
@@ -195,7 +185,8 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型中有了定义。
 
-可选元组返回类型(Optional Tuple Return Types)
+<a name="optional_tuple_return_types"></a>
+###可选元组返回类型(Optional Tuple Return Types)
 
 如果函数返回的元组类型中有可能在整个元组中含有“没有值”，你可以使用*可选的(Optional)* 元组返回类型反映整个元组可以是`nil`的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如`(Int,Int)?`或`(String,Int,Bool)?`
 
@@ -310,6 +301,7 @@ someFunction() // parameterWithDefault is 12
 > 注意：
 > 将带有默认值的参数放在函数参数列表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。
 
+<a name="variadic_parameters"></a>
 ### 可变参数（Variadic Parameters）
 
 一个`可变参数（variadic parameter）`可以接受零个或多个值。函数调用时，你可以用可变参数来传入不确定数量的输入参数。通过在变量类型名后面加入`（...）`的方式来定义可变参数。
@@ -337,6 +329,7 @@ arithmeticMean(3, 8.25, 18.75)
 
 如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
 
+<a name="constant_and_variable_parameters"></a>
 ### 常量参数和变量参数（Constant and Variable Parameters）
 
 函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。
@@ -367,7 +360,7 @@ let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
 
 `alignRight(_:totalLength:pad:)` 函数将参数 `string` 定义为变量参数。这意味着 `string` 现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。
 
-　函数首先找出有多少字符需要被添加到左边的字符串以右对齐在整个字符串。这个值是存储在一个本地常数称为amountToPad。如果不需要填充(也就是说,如果amountToPad小于1),该函数返回字符串没有填充的输入值。
+函数首先找出有多少字符需要被添加到左边的字符串以右对齐在整个字符串。这个值是存储在一个本地常数称为amountToPad。如果不需要填充(也就是说,如果amountToPad小于1),该函数返回字符串没有填充的输入值。
 　　
 　　否则,该函数创建一个新的临时字符串常量称为padString，初始化填充字符，并将amountToPad padString副本添加到现有的左边的字符串。(一个字符串值不能被添加到一个字符值，所以padString常数用于确保双方+操作符的字符串值)。
 
@@ -383,7 +376,9 @@ let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
 
 变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。
 
-定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。
+定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](../chapter3/05_Declarations.html#function_declaration)一节。
+
+<!--上面的链接对应的内容没有更新翻译-->
 
 你只能将变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加`&`符，表示这个值可以被函数修改。
 
@@ -447,6 +442,7 @@ func printHelloWorld() {
 
 这个函数的类型是：`() -> void`，或者叫“没有参数，并返回 `Void` 类型的函数”。
 
+<a name="using_function_types"></a>
 ### 使用函数类型（Using Function Types）
 
 在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：
@@ -482,7 +478,7 @@ print("Result: \(mathFunction(2, 3))")
 let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 ```
-
+<a name="function_types_as_parameter_types"></a>
 ### 函数类型作为参数类型（Function Types as Parameter Types）
 
 你可以用`(Int, Int) -> Int`这样的函数类型作为另一个函数的参数类型。这样你可以将函数的一部分实现交由给函数的调用者。
@@ -503,7 +499,8 @@ printMathResult(addTwoInts, 3, 5)
 
 `printMathResult(_:_:_:)` 函数的作用就是输出另一个合适类型的数学函数的调用结果。它不关心传入函数是如何实现的，它只关心这个传入的函数类型是正确的。这使得 `printMathResult(_:_:_:)` 可以以一种类型安全（type-safe）的方式来保证传入函数的调用是正确的。
 
-### 函数类型作为返回类型（Function Type as Return Types）
+<a name="function_types_as_return_types"></a>
+### 函数类型作为返回类型（Function Types as Return Types）
 
 你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（`->`）后写一个完整的函数类型。
 
