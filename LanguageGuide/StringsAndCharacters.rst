@@ -12,7 +12,7 @@ a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
 with a string literal syntax that is similar to C.
 String concatenation is as simple as
-adding together two strings with the ``+`` operator,
+combining two strings with the ``+`` operator,
 and string mutability is managed by choosing between a constant or a variable,
 just like any other value in Swift.
 You can also use strings to insert
