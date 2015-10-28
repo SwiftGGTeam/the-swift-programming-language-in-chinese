@@ -8,13 +8,18 @@
 > 2.0
 > 翻译+校对：[100mango](https://github.com/100mango)
 
+> 2.1
+> 翻译+校对：[magicdict](https://github.com/magicdict)
+
 本页包含内容：
 
 - [闭包表达式（Closure Expressions）](#closure_expressions)
 - [尾随闭包（Trailing Closures）](#trailing_closures)
 - [值捕获（Capturing Values）](#capturing_values)
 - [闭包是引用类型（Closures Are Reference Types）](#closures_are_reference_types)
-
+- [非逃逸闭包(Nonescaping Closures) ](#Nonescaping_Closures)
+- [自动闭包（Autoclosures）](#Autoclosures)
+- 
 闭包是自包含的函数代码块，可以在代码中被传递和使用。
 Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的 匿名函数比较相似。
 
@@ -374,7 +379,48 @@ let alsoIncrementByTen = incrementByTen
 alsoIncrementByTen()
 // 返回的值为50
 ```
+<a name="Nonescaping_Closures"></a>
+## 非逃逸闭包(Nonescaping Closures)
+如果当一个闭包被作为一个参数传到一个函数中，但是这个闭包在函数返回之后才被执行，我们称为一个闭包从函数中“逃逸”。当你定义了一个具有一个闭包参数的函数时，你可以标注`@noescape`在参数之前，用来指示这个闭包时不允许“逃逸”出这个函数的。被标注了`@noescape`的闭包，由于编译器知道这个闭包的生命周期（译者注：闭包只能在函数体中被执行，不能脱离函数体执行，所以编译器明确知道运行时的上下文），所以编译器可以进行一些比较激进的优化。   
 
+```swift
+func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+    closure()
+}
+```
+
+举个例子， `sort(_:)`方法具有一个闭包参数用来进行函数比较。这个参数被标注了`@noescape`，因为它确保在排序结束之后就不需要了。   
+一种方法使得闭包能够‘逃逸’出函数就是，将这个闭包保存在一个函数外部定义的变量中。举个例子，很多函数开始一个异步操作，并且使用一个completion（操作完成）处理器的闭包。这个函数将会在开始异步操作之后立刻返回，但是这个时候闭包还没有被执行，直到所有的异步操作结束后。这种情况，闭包需要能够“逃逸”出函数，闭包能够在函数返回之后被执行。例如：   
+```swift
+var completionHandlers: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: () -> Void) {
+    completionHandlers.append(completionHandler)
+}
+```
+
+`someFunctionWithEscapingClosure(_:)` 函数带有一个闭包参数，他被追加到一个函数外定义的列表中。如果你尝试着将这个参数标注为`@noescape`,你将会获得一个编译错误。    
+如果你将一个闭包标注为`@noescape`，那么这个闭包将隐式的指向（refer）到自身（self）
+
+```swift
+class SomeClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 }
+        someFunctionWithNoescapeClosure { x = 200 }
+    }
+}
+ 
+let instance = SomeClass()
+instance.doSomething()
+print(instance.x)
+// prints "200"
+ 
+completionHandlers.first?()
+print(instance.x)
+// prints "100"
+```
+
+<a name="Autoclosures"></a>
 ## 自动闭包（Autoclosures）
 一个自动闭包，是一个自动被创建的，用于将一个表达式包装为一个参数，进而传递到函数的闭包。当它被调用的时候，它无需任何的参数，然后返回被包装在其中的表达式的值。这种语法糖（syntactic convenience），让你能够用一个普通的表达式，省略围绕在函数参数外的括号，来代替显式的闭包。   
 调用一个闭包作为参数的函数是很常见的，不过，实现那样的函数却不常见。举个例子来说，`assert(condition:message:file:line:)`函数，将一个闭包作为它的condition参数和message参数；它的condition参数仅仅在编译时被计算求值，它的message参数仅当Condition参数为false时被计算求值。  
@@ -395,7 +441,7 @@ print(customersInLine.count)
 // prints "4"
 ```
 
-尽管在闭包的代码中，`customersInLine`的第一个元素被移除了，不过在闭包被调用之前，这个元素是不会被真正移除的。如果这个闭包永远不被调用，那么在闭包里面的表达式将永远不会之行，那意味着列表中的元素永远不会被移除。请注意，`customerProvider`的类型不是一个字符（String），而是一个`() -> String`，一个没有参数而返回值为字符（String）的函数。    
+尽管在闭包的代码中，`customersInLine`的第一个元素被移除了，不过在闭包被调用之前，这个元素是不会被真正移除的。如果这个闭包永远不被调用，那么在闭包里面的表达式将永远不会执行，那意味着列表中的元素永远不会被移除。请注意，`customerProvider`的类型不是一个字符（String），而是一个`() -> String`，一个没有参数而返回值为字符（String）的函数。    
 
 你当你将一个闭包作为参数传递到函数中，你能够看到相同的延时计算的行为。    
 
