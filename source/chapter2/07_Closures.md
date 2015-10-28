@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[100mango](https://github.com/100mango)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [闭包表达式（Closure Expressions）](#closure_expressions)
@@ -176,13 +179,13 @@ Swift 的`String`类型定义了关于大于号 (`>`) 的字符串实现，其�
 reversed = names.sort(>)
 ```
 
-更多关于运算符表达式的内容请查看 [运算符函数](./24_Advanced_Operators.html#operator_functions)。
+更多关于运算符表达式的内容请查看 [运算符函数](./25_Advanced_Operators.html#operator_functions)。
 
 <a name="trailing_closures"></a>
 ## 尾随闭包（Trailing Closures）
 
 
-如果您需要将一个很长的闭包表达式作为最后一个参数传递给函数，可以使用尾随闭包来增强函数的可读性。
+如果您需要将一个很长的闭包表达式作为最后一个参数传递给函数，可以使用*尾随闭包*来增强函数的可读性。
 尾随闭包是一个书写在函数括号之后的闭包表达式，函数支持将其作为最后一个参数调用。
 
 ```swift
@@ -202,16 +205,21 @@ someFunctionThatTakesAClosure() {
 ```
 
 > 注意：
-> 如果函数只需要闭包表达式一个参数，当您使用尾随闭包时，您甚至可以把`()`省略掉。
+> 。
 
-在上例中作为`sorted`函数参数的字符串排序闭包可以改写为：
+在[闭包表达式语法](#closure_expression_syntax)一节中作为`sort(_:)`方法参数的字符串排序闭包可以改写为：
 
 ```swift
 reversed = names.sort() { $0 > $1 }
 ```
+如果函数只需要闭包表达式一个参数，当您使用尾随闭包时，您甚至可以把`()`省略掉:
+
+```
+reversed = names.sort { $0 > $1 }
+```
 
 当闭包非常长以至于不能在一行中进行书写时，尾随闭包变得非常有用。
-举例来说，Swift 的`Array`类型有一个`map`方法，其获取一个闭包表达式作为其唯一参数。
+举例来说，Swift 的`Array`类型有一个`map(_:)`方法，其获取一个闭包表达式作为其唯一参数。
 数组中的每一个元素调用一次该闭包函数，并返回该元素所映射的值(也可以是不同类型的值)。
 具体的映射方式和返回值类型由闭包来指定。
 
@@ -247,7 +255,7 @@ let strings = numbers.map {
 // 其值为 ["OneSix", "FiveEight", "FiveOneZero"]
 ```
 
-`map`在数组中为每一个元素调用了闭包表达式。
+`map(_:)`在数组中为每一个元素调用了闭包表达式。
 您不需要指定闭包的输入参数`number`的类型，因为可以通过要映射的数组类型进行推断。
 
 闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](./06_Functions.html#constant_and_variable_parameters)），因此可以在闭包函数体内对其进行修改。闭包表达式制定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
@@ -267,15 +275,15 @@ let strings = numbers.map {
 因为其是整数，在计算过程中未除尽部分被忽略。
 因此 16变成了1，58变成了5，510变成了51。
 
-整个过程重复进行，直到`number /= 10`为0，这时闭包会将字符串输出，而`map`函数则会将字符串添加到所映射的数组中。
+整个过程重复进行，直到`number /= 10`为0，这时闭包会将字符串输出，而`map(_:)`函数则会将字符串添加到所映射的数组中。
 
-上例中尾随闭包语法在函数后整洁封装了具体的闭包功能，而不再需要将整个闭包包裹在`map`函数的括号内。
+上例中尾随闭包语法在函数后整洁封装了具体的闭包功能，而不再需要将整个闭包包裹在`map(_:)`函数的括号内。
 
 <a name="capturing_values"></a>
 ## 捕获值（Capturing Values）
 
 
-闭包可以在其定义的上下文中捕获常量或变量。
+闭包可以在其定义的上下文中*捕获*常量或变量。
 即使定义这些常量和变量的原域已经不存在，闭包仍然可以在闭包函数体内引用和修改这些值。
 
 Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的函数体内的函数。
@@ -343,13 +351,16 @@ incrementByTen()
 // 返回的值为30
 ```
 
-如果您创建了另一个`incrementor`，其会有一个属于自己的独立的`runningTotal`变量的引用。
-下面的例子中，`incrementBySevne`捕获了一个新的`runningTotal`变量，该变量和`incrementByTen`中捕获的变量没有任何联系：
+如果您创建了另一个`incrementor`，其会有一个属于自己的独立的`runningTotal`变量的引用：
 
 ```swift
 let incrementBySeven = makeIncrementor(forIncrement: 7)
 incrementBySeven()
 // 返回的值为7
+```
+再次调用原来的`incrementByTen`会在原来的变量`runningTotal`上继续增加值，该变量和`incrementByTen`中捕获的变量没有任何联系：
+
+```swift
 incrementByTen()
 // 返回的值为40
 ```
