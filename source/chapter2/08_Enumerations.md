@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[futantan](https://github.com/futantan)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)
+
 本页内容包含：
 
 - [枚举语法（Enumeration Syntax）](#enumeration_syntax)
@@ -24,7 +27,7 @@
 
 在 Swift 中，枚举类型是一等公民（first-class）。它们采用了很多传统上只被类（class）所支持的特征，例如计算型属性（computed properties），用于提供关于枚举当前值的附加信息，实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
-欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./20_Extensions.html)和[协议（Protocols）](./21_Protocols.html)。
+欲了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./21_Extensions.html)和[协议（Protocols）](./22_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -211,6 +214,8 @@ enum ASCIIControlCharacter: Character {
 >注意：  
 >原始值和相关值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终是相同的。相关值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
 
+
+<a name="implicitly_assigned_raw_values"></a>
 ### 原始值的隐式赋值（Implicitly Assigned Raw Values）
 
 在使用原始值为整数或者字符串类型的枚举时，不需要显式的为每一个成员赋值，这时，Swift将会自动为你赋值。
@@ -249,6 +254,7 @@ let sunsetDirection = CompassPoint.West.rawValue
 // sunsetDirection 值为 "West"
 ```
 
+<a name="initializing_from_a_raw_value"></a>
 ### 使用原始值初始化枚举变量（Initializing from a Raw Value）
 
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法将原始值类型作为参数，返回值是枚举成员或`nil`。你可以使用这种初始化方法来创建一个新的枚举变量。
@@ -263,7 +269,7 @@ let possiblePlanet = Planet(rawValue: 7)
 然而，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，构造函数可以返回一个**可选**的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
 
 >注意：
->原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations#failable_initializers)
+>原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations.html#failable_initializers)
 
 如果你试图寻找一个位置为9的行星，通过参数为`rawValue`构造函数返回的可选`Planet`值将是`nil`：
 
