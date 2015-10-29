@@ -1213,13 +1213,13 @@ to represent errors.
    the name) at a time, and was controlled by a keyboard.  The Monotype
    machine, invented in 1885 by Tolbert Lanston, performed similar work.
 
-::
+.. testcode:: guided-tour
 
-    enum PrinterError: ErrorType {
-        case OutOfPaper
-        case NoToner
-        case OnFire
-    }
+    -> enum PrinterError: ErrorType {
+           case OutOfPaper
+           case NoToner
+           case OnFire
+       }
 
 Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
@@ -1227,14 +1227,14 @@ If you throw an error in a function,
 the function returns immediately and the code that called the function
 gets to handle the error.
 
-::
+.. testcode:: guided-tour
 
-    func sendToPrinter(printerName: String) throws -> String {
-        if printerName == "No Toner" {
-            throw PrinterError.NoToner
-        }
-        return "Job sent"
-    }
+    -> func sendToPrinter(printerName: String) throws -> String {
+           if printerName == "No Toner" {
+               throw PrinterError.NoToner
+           }
+           return "Job sent"
+       }
 
 There are several ways to handle errors.
 One way is to use ``do``-``catch``.
@@ -1244,15 +1244,17 @@ Inside the ``catch`` block,
 the error is automatically given the name ``error``
 unless you can give it a different name.
 
-::
+.. testcode:: guided-tour
 
-    do {
-        let printerResponse = try sendToPrinter("Bi Sheng")
-        print(printerResponse)
-        throw(PrinterError.OnFire)
-    } catch {
-        print(error)
-    }
+    -> do {
+           let printerResponse = try sendToPrinter("Bi Sheng")
+           print(printerResponse)
+           throw(PrinterError.OnFire)
+       } catch {
+           print(error)
+       }
+    << Job sent
+    << OnFire
 
 .. admonition:: Experiment
 
@@ -1262,24 +1264,37 @@ unless you can give it a different name.
    Change the printer name from ``Bi Sheng`` to ``No Toner``.
    What error does the ``catch`` block handle now?
 
+.. Test the change that the Experiment box instructs you to try.
+
+.. assertion:: guided-tour
+
+    >> do {
+           let printerResponse = try sendToPrinter("No Toner")
+           print(printerResponse)
+           throw(PrinterError.OnFire)
+       } catch {
+           print(error)
+       }
+    << NoToner
+
 A ``do``-``catch`` block can have multiple ``catch`` blocks
 that handle specific errors.
 You write a pattern after ``catch`` just like
 after ``case`` in a switch.
 
-::
+.. testcode:: guided-tour
 
-    do {
-        let printerResponse = try sendToPrinter("Gutenberg")
-        print(printerResponse)
-        throw(PrinterError.OnFire)
-    } catch PrinterError.OnFire {
-        print("I'll just put this over here, with the rest of the fire.")
-    } catch let printerError as PrinterError {
-        print("Printer error: \(printerError).")
-    } catch {
-        print(error)
-    }
+    -> do {
+           let printerResponse = try sendToPrinter("Gutenberg")
+           print(printerResponse)
+       } catch PrinterError.OnFire {
+           print("I'll just put this over here, with the rest of the fire.")
+       } catch let printerError as PrinterError {
+           print("Printer error: \(printerError).")
+       } catch {
+           print(error)
+       }
+    << Job sent
 
 .. admonition:: Experiment
 
@@ -1295,10 +1310,12 @@ If the function throws an error,
 the specific error is discarded and the result is ``nil``.
 Otherwise, the result is the value that the function returned.
 
-::
+.. testcode:: guided-tour
 
-    let printerSuccess = try? sendToPrinter("Mergenthaler")
-    let printerFailure = try? sendToPrinter("No Toner")
+    -> let printerSuccess = try? sendToPrinter("Mergenthaler")
+    << // printerSuccess : String? = Optional("Job sent")
+    -> let printerFailure = try? sendToPrinter("No Toner")
+    << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
 this as always executed before a function returns,
@@ -1306,18 +1323,22 @@ regardless of whether an error was thrown.
 You can use ``defer`` even when there is no error handling going on
 to simplify functions that can return from several different places.
 
-::
+.. testcode:: guided-tour
 
-    var teaKettleHeating = false
-    func morningRoutine() {
-        teaKettleHeating = true
-        defer {
-            teaKettleHeating = false
-        }
-
-        let newspaper = try sendToPrinter("Lanston")
-        // Drink tea and read the newspaper.
-    }
+    -> var teaKettleHeating = false
+    << // teaKettleHeating : Bool = false
+    -> func morningRoutine() throws {
+           teaKettleHeating = true
+           defer {
+               teaKettleHeating = false
+           }
+    ---
+           let newspaper = try sendToPrinter("Lanston")
+    >>     print(newspaper)  // Supress unused-constant warning
+    ->     // Drink tea and read the newspaper.
+       }
+    >> try morningRoutine()
+    << Job sent
 
 Generics
 --------
