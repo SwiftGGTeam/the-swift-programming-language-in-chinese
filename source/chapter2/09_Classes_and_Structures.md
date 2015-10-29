@@ -7,6 +7,9 @@
 > 2.0
 > 翻译+校对：[SkyJean](https://github.com/SkyJean)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-10-29
+
 本页包含内容：
 
 - [类和结构体对比](#comparing_classes_and_structures)
@@ -16,7 +19,7 @@
 - [字符串(String)、数组(Array)、和字典(Dictionary)类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
 
 
-类和结构体是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
+*类*和*结构体*是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
 
@@ -35,7 +38,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 通过扩展以增加默认实现的功能
 * 实现协议以提供某种标准功能
 
-更多信息请参见 [属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标脚本](./12_Subscripts.html)，[初始过程](./14_Initialization.html)，[扩展](./20_Extensions.html)，和[协议](./21_Protocols.html)。
+更多信息请参见 [属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标脚本](./12_Subscripts.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)，和[协议](./22_Protocols.html)。
 
 与结构体相比，类还有如下的附加功能：
 
@@ -44,12 +47,13 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 解构器允许一个类实例释放任何其所被分配的资源
 * 引用计数允许对一个类的多次引用
 
-更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./20_Type_Casting.html)，[析构过程](./15_Deinitialization)，和[自动引用计数](./16_Automatic_Reference_Counting)。
+更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./19_Type_Casting.html)，[析构过程](./15_Deinitialization.html)，和[自动引用计数](./16_Automatic_Reference_Counting.html)。
 
 > 注意：
 结构体总是通过被复制的方式在代码中传递，因此请不要使用引用计数。
 
-### 定义
+<a name="definition_syntax"></a>
+### 定义语法
 
 类和结构体有着类似的定义方式。我们通过关键字`class`和`struct`来分别表示类和结构体，并在一对大括号中定义它们的具体内容：
 
@@ -84,6 +88,7 @@ class VideoMode {
 
 在上面的示例中我们还定义了一个名为`VideoMode`的类，用来描述一个视频显示器的特定模式。这个类包含了四个储存属性变量。第一个是`分辨率`，它被初始化为一个新的`Resolution`结构体的实例，具有`Resolution`的属性类型。新`VideoMode`实例同时还会初始化其它三个属性，它们分别是，初始值为`false`(意为“非隔行扫描视频”)的`interlaced`，回放帧率初始值为`0.0`的`frameRate`和值为可选`String`的`name`。`name`属性会被自动赋予一个默认值`nil`，意为“没有`name`值”，因为它是一个可选类型。
 
+<a name="class_and_structure_instances"></a>
 ### 类和结构体实例
 
 `Resolution`结构体和`VideoMode`类的定义仅描述了什么是`Resolution`和`VideoMode`。它们并没有描述一个特定的分辨率（resolution）或者视频模式（video mode）。为了描述一个特定的分辨率或者视频模式，我们需要生成一个它们的实例。
@@ -97,6 +102,7 @@ let someVideoMode = VideoMode()
 
 结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](./14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
 
+<a name="accessing_properties"></a>
 ### 属性访问
 
 通过使用*点语法*（*dot syntax*），你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：
@@ -126,6 +132,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 >  注意：
 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新设置`resolution`属性。
 
+<a name="memberwise_initializers_for_structure_types"></a>
 ### 结构体类型的成员逐一构造器(Memberwise Initializers for Structure Types)
 
 所有结构体都有一个自动生成的*成员逐一构造器*，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
@@ -230,6 +237,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 
 需要注意的是`tenEighty`和`alsoTenEighty`被声明为*常量（（constants）*而不是变量。然而你依然可以改变`tenEighty.frameRate`和`alsoTenEighty.frameRate`,因为这两个常量本身不会改变。它们并不`存储`这个`VideoMode`实例，在后台仅仅是对`VideoMode`实例的引用。所以，改变的是被引用的基础`VideoMode`的`frameRate`参数，而不改变常量的值。
 
+<a name="identity_operators"></a>
 ### 恒等运算符
 
 因为类是引用类型，有可能有多个常量和变量在后台同时引用某一个类实例。（对于结构体和枚举来说，这并不成立。因为它们作为值类型，在被赋予到常量、变量或者传递到函数时，其值总是会被拷贝。）
@@ -253,8 +261,9 @@ if tenEighty === alsoTenEighty {
 * “等价于”表示两个类类型（class type）的常量或者变量引用同一个类实例。
 * “等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。
 
-当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[等价操作符](./24_Advanced_Operators.html#equivalence_operators)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
+当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[等价操作符](./25_Advanced_Operators.html#equivalence_operators)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
 
+<a name="pointers"></a>
 ### 指针
 
 如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用*指针*来引用内存中的地址。一个 Swift 常量或者变量引用一个引用类型的实例与 C 语言中的指针类似，不同的是并不直接指向内存中的某个地址，而且也不要求你使用星号（*）来表明你在创建一个引用。Swift 中这些引用与其它的常量或变量的定义方式相同。
