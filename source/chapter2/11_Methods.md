@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-10-29
+
 本页包含内容：
 
 - [实例方法(Instance Methods)](#instance_methods)
@@ -90,6 +93,7 @@ counter.incrementBy(5, numberOfTimes: 3)
 ```
 
 你不必为第一个参数值再定义一个外部变量名：因为从函数名`incrementBy(_numberOfTimes:)`已经能很清楚地看出它的作用。但是第二个参数，就要被一个外部参数名称所限定，以便在方法被调用时明确它的作用。
+
 这种默认行为使上面代码意味着：在 Swift 中定义方法使用了与 Objective-C 同样的语法风格，并且方法将以自然表达式的方式被调用。
 
 
@@ -161,7 +165,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX(_:y:)`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字，这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[存储属性和实例变量](./10_Properties.html#global_and_local_variables)：
+注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
