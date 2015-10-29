@@ -1260,8 +1260,7 @@ unless you can give it a different name.
    Why is it never executed?
 
    Change the printer name from ``Bi Sheng`` to ``No Toner``.
-   Why does the error on the last line change from ``PrinterError.OnFire``
-   to ``PrinterError.NoToner``?
+   What error does the ``catch`` block handle now?
 
 A ``do``-``catch`` block can have multiple ``catch`` blocks
 that handle specific errors.
@@ -1309,22 +1308,16 @@ to simplify functions that can return from several different places.
 
 ::
 
-    func something() throws {
-        let x = allocateResource()
-        defer { x.returnToResourcePool() }
+    var teaKettleHeating = false
+    func morningRoutine() {
+        teaKettleHeating = true
+        defer {
+            teaKettleHeating = false
+        }
 
-        try somethingThatMightThrow()
+        let newspaper = try sendToPrinter("Lanston")
+        // Drink tea and read the newspaper.
     }
-
-
-    func complain(tasks: [String]) {
-        var result = "I have to "
-        defer { result += ". It's a lot of work." }
-
-        tasks.forEach { result += $0 }
-    }
-
-.. TODO: Need a better example of `defer` usage.
 
 Generics
 --------
