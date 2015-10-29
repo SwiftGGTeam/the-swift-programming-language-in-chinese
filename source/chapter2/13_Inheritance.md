@@ -5,8 +5,8 @@
 > 翻译：[Hawstein](https://github.com/Hawstein)
 > 校对：[menlongsheng](https://github.com/menlongsheng)
 
-> 2.0
-> 翻译+校对：[shanksyang](https://github.com/shanksyang)
+> 2.0，2.1
+> 翻译+校对：[shanks](http://codebuild.me)
 
 本页包含内容：
 
