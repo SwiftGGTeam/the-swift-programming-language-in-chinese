@@ -468,7 +468,7 @@ tuples, instances of custom classes, and optionals.
 The value of the *control expression* can even be matched to the value of a case in an enumeration
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
-see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
+see :ref:`ControlFlow_Switch` in :doc:`../LanguageGuide/ControlFlow`.
 
 A ``switch`` case can optionally contain a where clause after each pattern.
 A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
@@ -582,7 +582,7 @@ You can nest labeled statements, but the name of each statement label must be un
 
 For more information and to see examples
 of how to use statement labels,
-see :ref:`ControlFlow_LabeledStatements` in the :doc:`../LanguageGuide/ControlFlow` chapter.
+see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
 .. assertion:: backtick-identifier-is-legal-label
 
@@ -666,7 +666,7 @@ of code following the enclosing loop or ``switch`` statement, if any.
 
 For examples of how to use a ``break`` statement,
 see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -712,7 +712,7 @@ because the increment expression is evaluated after the execution of the loop's 
 
 For examples of how to use a ``continue`` statement,
 see :ref:`ControlFlow_Continue` and :ref:`ControlFlow_LabeledStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -747,7 +747,7 @@ whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
 see :ref:`ControlFlow_ControlTransferStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -886,7 +886,7 @@ the ``ErrorType`` protocol.
 
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
-in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+in :doc:`../LanguageGuide/ErrorHandling`.
 
 .. langref-grammar
 
