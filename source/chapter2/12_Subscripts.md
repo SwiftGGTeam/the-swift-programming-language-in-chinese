@@ -5,8 +5,8 @@
 > 翻译：[siemenliu](https://github.com/siemenliu)
 > 校对：[zq54zquan](https://github.com/zq54zquan)
 
-> 2.0
-> 翻译+校对：[shanksyang](https://github.com/shanksyang)
+> 2.0,2.1
+> 翻译+校对：[shanks](http://codebuild.me)，2015-10-29
 
 本页包含内容：
 
