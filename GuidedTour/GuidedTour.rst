@@ -1316,7 +1316,7 @@ Otherwise, the result is the value that the function returned.
 Use ``defer`` to write a block of code
 this as always executed before a function returns,
 regardless of whether an error was thrown.
-You can use ``defer`` even when there is no error handling going on
+You can use ``defer`` even when there is no error handling,
 to simplify functions that can return from several different places.
 
 .. testcode:: guided-tour
