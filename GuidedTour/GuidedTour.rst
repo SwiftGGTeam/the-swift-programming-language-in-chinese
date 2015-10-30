@@ -1249,29 +1249,23 @@ unless you can give it a different name.
     -> do {
            let printerResponse = try sendToPrinter("Bi Sheng")
            print(printerResponse)
-           throw(PrinterError.OnFire)
        } catch {
            print(error)
        }
     << Job sent
-    << OnFire
 
 .. admonition:: Experiment
 
-   Add a line of code inside the ``do`` block after the ``throw``.
-   Why is it never executed?
+   Change the printer name to ``No Toner``,
+   so that the ``sendToPrinter(_:)`` function throws an error.
 
-   Change the printer name from ``Bi Sheng`` to ``No Toner``.
-   What error does the ``catch`` block handle now?
-
-.. Test the change that the Experiment box instructs you to try.
+.. Assertion tests the change that the Experiment box instructs you to make.
 
 .. assertion:: guided-tour
 
     >> do {
            let printerResponse = try sendToPrinter("No Toner")
            print(printerResponse)
-           throw(PrinterError.OnFire)
        } catch {
            print(error)
        }
@@ -1281,6 +1275,9 @@ A ``do``-``catch`` block can have multiple ``catch`` blocks
 that handle specific errors.
 You write a pattern after ``catch`` just like
 after ``case`` in a switch.
+
+.. REFERENCE
+   The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
 
 .. testcode:: guided-tour
 
@@ -1298,11 +1295,10 @@ after ``case`` in a switch.
 
 .. admonition:: Experiment
 
-   Define two new errors --
-   one that's a new case of the ``PrinterError`` enumeration
-   and one that is a case of a new enumeration.
-   Change the code above to throw the new errors.
-   Which ``catch`` block handles each error?
+   Add code to throw an error inside the ``do`` block.
+   What kind of error do you need to throw
+   so that the first ``catch`` block handles it?
+   The second?  The third?
 
 Another way to handle errors
 is to use ``try?`` to convert the result to an optional.
