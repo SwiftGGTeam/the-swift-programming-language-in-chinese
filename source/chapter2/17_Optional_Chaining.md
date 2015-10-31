@@ -9,6 +9,18 @@
 > 2.0
 > 翻译+校对：[lyojo](https://github.com/lyojo)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-10-31
+
+本页包含内容：
+
+- [使用可空链式调用来强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)
+- [为可空链式调用定义模型类](#defining_model_classes_for_optional_chaining)
+- [通过可空链式调用访问属性](#accessing_properties_through_optional_chaining)
+- [通过可空链式调用来调用方法](#calling_methods_through_optional_chaining)
+- [通过可空链式调用来访问下标](#accessing_subscripts_through_optional_chaining)
+- [多层链接](#linking_multiple_levels_of_chaining)
+- [对返回可空值的函数进行链接](#chaining_on_methods_with_optional_return_values)
 
 可空链式调用（Optional Chaining）是一种可以请求和调用属性、方法及下标的过程，它的可空性体现于请求或调用的目标当前可能为空（nil）。如果可空的目标有值，那么调用就会成功；如果选择的目标为空（nil），那么这种调用将返回空（nil）。多个连续的调用可以被链接在一起形成一个调用链，如果其中任何一个节点为空（nil）将导致整个链调用失败。
 
@@ -17,7 +29,7 @@
 Swift 的可空链式调用和 Objective-C 中的消息为空有些相像，但是 Swift 可以使用在任意类型中，并且能够检查调用是否成功。
 
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
-##使用可空链式调用来强制展开
+## 使用可空链式调用来强制展开
 通过在想调用非空的属性、方法、或下标的可空值（optional value）后面放一个问号，可以定义一个可空链。这一点很像在可空值后面放一个叹号（！）来强制展开其中值。它们的主要的区别在于当可空值为空时可空链式只是调用失败，然而强制展开将会触发运行时错误。
 
 为了反映可空链式调用可以在空对象（nil）上调用，不论这个调用的属性、方法、下标等返回的值是不是可空值，它的返回结果都是一个可空值。你可以利用这个返回值来判断你的可空链式调用是否调用成功，如果调用有返回值则说明调用成功，返回`nil`则说明调用失败。
@@ -87,8 +99,8 @@ if let roomCount = john.residence?.numberOfRooms {
 }
 // prints "John's residence has 1 room(s)."
 ```
-
-##为可空链式调用定义模型类
+<a name="defining_model_classes_for_optional_chaining"></a>
+## 为可空链式调用定义模型类
 通过使用可空链式调用可以调用多层属性，方法，和下标。这样可以通过各种模型向下访问各种子属性。并且判断能否访问子属性的属性，方法或下标。
 
 下面这段代码定义了四个模型类，这些例子包括多层可空链式调用。为了方便说明，在`Person`和`Residence`的基础上增加了`Room`和`Address`，以及相关的属性，方法以及下标。
@@ -156,7 +168,8 @@ class Address {
 
 类`Address`提供`buildingIdentifier()`方法，返回值为`String?`。 如果`buildingName`不为空则返回`buildingName`， 如果`buildingNumber`不为空则返回`buildingNumber`。如果这两个属性都为空则返回`nil`。
 
-##通过可空链式调用访问属性
+<a name="accessing_properties_through_optional_chaining"></a>
+## 通过可空链式调用访问属性
 正如[使用可空链式调用来强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)中所述，可以通过可空链式调用访问属性的可空值，并且判断访问是否成功。
 
 下面的代码创建了一个`Person`实例，然后访问`numberOfRooms`属性：
@@ -184,7 +197,8 @@ john.residence?.address = someAddress
 
 在这个例子中，通过`john.residence`来设定`address`属性也是不行的，因为`john.residence`为`nil`。
 
-##通过可空链式调用来调用方法
+<a name="calling_methods_through_optional_chaining"></a>
+## 通过可空链式调用来调用方法
 可以通过可空链式调用来调用方法，并判断是否调用成功，即使这个方法没有返回值。
 `Residence`中的`printNumberOfRooms()`方法输出当前的`numberOfRooms`值：
 
@@ -218,8 +232,8 @@ if (john.residence?.address = someAddress) != nil {
 // prints "It was not possible to set the address."
 ```
 
-
-##通过可空链式调用来访问下标
+<a name="accessing_subscripts_through_optional_chaining"></a>
+## 通过可空链式调用来访问下标
 通过可空链式调用，我们可以用下标来对可空值进行读取或写入，并且判断下标调用是否成功。
 >
 注意：
@@ -263,8 +277,8 @@ if let firstRoomName = john.residence?[0].name {
 }
 // prints "The first room name is Living Room."
 ```
-
-##访问可空类型的下标：
+<a name="accessing_subscripts_of_optional_type"></a>
+### 访问可空类型的下标
 如果下标返回可空类型值，比如Swift中`Dictionary`的`key`下标。可以在下标的闭合括号后面放一个问号来链接下标的可空返回值：
 
 ```swift
@@ -277,7 +291,8 @@ testScores["Brian"]?[0] = 72
 
 上面的例子中定义了一个`testScores`数组，包含了两个键值对， 把`String`类型的`key`映射到一个整形数组。这个例子用可空链式调用把“Dave”数组中第一个元素设为91，把”Bev”数组的第一个元素+1，然后尝试把”Brian”数组中的第一个元素设为72。前两个调用是成功的，因为这两个`key`存在。但是key“Brian”在字典中不存在，所以第三个调用失败。
 
-##多层链接
+<a name="linking_multiple_levels_of_chaining"></a>
+## 多层链接
 可以通过多个链接多个可空链式调用来向下访问属性，方法以及下标。但是多层可空链式调用不会添加返回值的可空性。
 
 也就是说：
@@ -323,7 +338,8 @@ if let johnsStreet = john.residence?.address?.street {
 
 在上面的例子中，因为`john.residence`是一个可用的`Residence`实例，所以对`john.residence`的`address`属性赋值成功。
 
-##对返回可空值的函数进行链接
+<a name="chaining_on_methods_with_optional_return_values"></a>
+## 对返回可空值的函数进行链接
 上面的例子说明了如何通过可空链式调用来获取可空属性值。我们还可以通过可空链式调用来调用返回可空值的方法，并且可以继续对可空值进行链接。
 
 在下面的例子中，通过可空链式调用来调用`Address`的`buildingIdentifier()`方法。这个方法返回`String?`类型。正如上面所说，通过可空链式调用的方法的最终返回值还是`String?`：
