@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
+
 本页包含内容：
 
 - [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
@@ -198,7 +201,7 @@ for movie in someObjects as! [Movie] {
 // Movie: 'Moon', dir. Duncan Jones
 // Movie: 'Alien', dir. Ridley Scott
 ```
-
+<a name="any"></a>
 ### `Any`类型
 
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括方法类型和非 `class` 类型。它创建了一个可以存储`Any`类型的数组 `things`。
@@ -256,6 +259,3 @@ for thing in things {
 // Hello, Michael
 ```
 
-
-> 注意：  
-> 在一个switch语句的case中使用强制形式的类型转换操作符（as, 而不是 as?）来检查和转换到一个明确的类型。在 `switch` case 语句的内容中这种检查总是安全的。
