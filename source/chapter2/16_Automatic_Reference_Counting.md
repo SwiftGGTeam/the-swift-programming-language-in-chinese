@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[Channe](https://github.com/Channe)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-10-31
+
 本页包含内容：
 
 - [自动引用计数的工作机制](#how_arc_works)
@@ -187,11 +190,12 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 对于生命周期中会变为`nil`的实例使用弱引用。相反地，对于初始化赋值后再也不会被赋值为`nil`的实例，使用无主引用。
 
+<a name="weak_references"></a>
 ### 弱引用
 
 弱引用不会对其引用的实例保持强引用，因而不会阻止 ARC 销毁被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上`weak`关键字表明这是一个弱引用。
 
-在实例的生命周期中，如果某些时候引用没有值，那么弱引用可以避免循环强引用。如果引用总是有值，则可以使用无主引用，在[无主引用](#2)中有描述。在上面`Apartment`的例子中，一个公寓的生命周期中，有时是没有“居民”的，因此适合使用弱引用来解决循环强引用。
+在实例的生命周期中，如果某些时候引用没有值，那么弱引用可以避免循环强引用。如果引用总是有值，则可以使用无主引用，在[无主引用](#unowned_references)中有描述。在上面`Apartment`的例子中，一个公寓的生命周期中，有时是没有“居民”的，因此适合使用弱引用来解决循环强引用。
 
 > 注意:  
 > 弱引用必须被声明为变量，表明其值能在运行时被修改。弱引用不能被声明为常量。  
@@ -261,14 +265,10 @@ unit4A = nil
 
 上面的两段代码展示了变量`john`和`unit4A`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
 
-<!--
-NOTE
-In systems that use garbage collection, weak pointers are sometimes used to implement a simple caching mechanism because objects with no strong references are deallocated only when memory pressure triggers garbage collection. However, with ARC, values are deallocated as soon as their last strong reference is removed, making weak references unsuitable for such a purpose.
- -->
  >注意：
  在使用垃圾收集的系统里，弱指针有时用来实现简单的缓冲机制，因为没有强引用的对象只会在内存压力触发垃圾收集时才被销毁。但是在 ARC 中，一旦值的最后一个强引用被删除，就会被立即销毁，这导致弱引用并不适合上面的用途。
  
-<a name="2"></a>
+<a name="unowned_references"></a>
 ### 无主引用
 
 和弱引用类似，无主引用不会牢牢保持住引用的实例。和弱引用不同的是，无主引用是永远有值的。因此，无主引用总是被定义为非可选类型（non-optional type）。你可以在声明属性或者变量时，在前面加上关键字`unowned`表示这是一个无主引用。
@@ -449,10 +449,8 @@ class HTMLElement {
 
 可以像实例方法那样去命名、使用`asHTML`属性。然而，由于`asHTML`是闭包而不是实例方法，如果你想改变特定元素的 HTML 处理的话，可以用自定义的闭包来取代默认值。
 
-<!--
-For example, the asHTML property could be set to a closure that defaults to some text if the text property is nil, in order to prevent the representation from returning an empty HTML tag:
--->
 例如，可以将一个闭包赋值给`asHTML`属性，这个闭包能在文本属性是 nil 时用默认文本，这是为了避免返回一个空的 `HTML` 标签：
+
 ```swift
 let heading = HTMLElement(name: "h1")
 let defaultText = "some default text"
@@ -504,6 +502,7 @@ paragraph = nil
 >注意：
 Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod()`（而不只是`someProperty`或`someMethod()`）。这提醒你可能会一不小心就捕获了`self`。
 
+<a name="defining_a_capture_list"></a>
 ###定义捕获列表
 
 捕获列表中的每一项都由一对元素组成，一个元素是`weak`或`unowned`关键字，另一个元素是类实例的引用（如`self`）或初始化过的变量（如`delegate = self.delegate!`）。这些项在方括号中用逗号分开。
@@ -525,7 +524,7 @@ lazy var someClosure: Void -> String = {
     // closure body goes here
 }
 ```
-
+<a name="weak_and_unowned_references"></a>
 ###弱引用和无主引用
 
 在闭包和捕获的实例总是互相引用时并且总是同时销毁时，将闭包内的捕获定义为无主引用。
@@ -584,3 +583,6 @@ print(paragraph!.asHTML())
 paragraph = nil
 // prints "p is being deinitialized"
 ```
+
+For more information about capture lists, see Capture Lists.
+你可以查看[捕获列表](../chapter3/04_Expressions.html)章节，获取更多关于捕获列表的信息
