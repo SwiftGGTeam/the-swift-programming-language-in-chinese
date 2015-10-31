@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[SergioChan](https://github.com/SergioChan)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
+
 本页包含内容：
 
 - [嵌套类型实例](#nested_types_in_action)
