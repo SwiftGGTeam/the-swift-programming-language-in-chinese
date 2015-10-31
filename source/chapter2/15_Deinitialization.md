@@ -8,12 +8,15 @@
 > 2.0
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-10-31
+
 本页包含内容：
 
 - [析构过程原理](#how_deinitialization_works)
 - [析构器操作](#deinitializers_in_action)
 
-析构器只适用于类类型，当一个类的实例被释放之前，析构器会被立即调用。析构器用关键字`deinit`来标示，类似于构造器要用`init`来标示。
+*析构器*只适用于类类型，当一个类的实例被释放之前，析构器会被立即调用。析构器用关键字`deinit`来标示，类似于构造器要用`init`来标示。
 
 <a name="how_deinitialization_works"></a>
 ##析构过程原理
