@@ -6,7 +6,10 @@
 > 校对：[Hawstein](https://github.com/Hawstein)
 
 > 2.0
-> 翻译+校对：[shanksyang](https://github.com/shanksyang)
+> 翻译+校对：[shanks](http://codebuild.me)
+
+> 2.1
+> 校对：[shanks](http://codebuild.me)
 
 本页包含内容：
 
@@ -32,8 +35,8 @@ Swift 中的扩展可以：
 
 >注意：  
 扩展可以对一个类型添加新的功能，但是不能重写已有的功能。
-<a name="extension_syntax"></a>
 
+<a name="extension_syntax"></a>
 ## 扩展语法（Extension Syntax）
 
 声明一个扩展使用关键字`extension`：
@@ -51,7 +54,7 @@ extension SomeType: SomeProtocol, AnotherProctocol {
 }
 ```
 
-按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议遵循者](./22_Protocols.html#adding_protocol_conformance_with_an_extension)
+按照这种方式添加的协议遵循者（protocol conformance）被称之为[在扩展中添加协议成员](./22_Protocols.html#adding_protocol_conformance_with_an_extension)
 
 >注意：  
 如果你定义了一个扩展向一个已有类型添加新功能，那么这个新功能对该类型的所有已有实例中都是可用的，即使它们是在你的这个扩展的前面定义的。
@@ -191,7 +194,7 @@ extension Int {
 ```
 
 <a name="mutating_instance_methods"></a>
-### 修改实例方法（Mutating Instance Methods）
+### 可变实例方法（Mutating Instance Methods）
 
 通过扩展添加的实例方法也可以修改该实例本身。结构体和枚举类型中修改`self`或其属性的方法必须将该实例方法标注为`mutating`，正如来自原始实现的修改方法一样。
 
