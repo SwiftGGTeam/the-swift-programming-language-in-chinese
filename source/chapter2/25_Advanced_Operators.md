@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[buginux](https://github.com/buginux)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
+
 本页内容包括：
 
 - [位运算符](#bitwise_operators)
@@ -31,9 +34,11 @@
 
 Swift 支持C语言中的全部位运算符，具体如下：
 
-### 按位取反运算符(`bitwise NOT operator`)
+<a name="bitwise_not_operator"></a>
+### 按位取反运算符(Bitwise NOT Operator)
 
 按位取反运算符(`~`) 可以对一个数值的全部位进行取反：
+
 
 ![Art/bitwiseNOT_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseNOT_2x.png)
 
@@ -48,6 +53,7 @@ let invertedBits = ~initialBits  // 等于 0b11110000
 
 接着使用按位取反运算符创建了一个名为 `invertedBits` 的常量，这个常量的值与全部位取反后的 `initialBits` 相等。即所有的 `0` 都变成了 `1`，同时所有的 `1` 都变成 `0`。`invertedBits` 的二进制值为 `11110000`，等价于无符号十进制数的 `240`。
 
+<a name="bitwise_and_operator"></a>
 ### 按位与运算符(Bitwise AND Operator)
 
 按位与运算符(`&`)可以对两个数的比特位进行合并。它返回一个新的数，只有当两个操作数的对应位*都*为 `1` 的时候，该数的对应位才为 `1`。
@@ -61,7 +67,7 @@ let firstSixBits: UInt8 = 0b11111100
 let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // 等于 00111100
 ```
-
+<a name="bitwise_or_operator"></a>
 ### 按位或运算符(Bitwise OR Operator)
 
 按位或运算符(`|`)可以对两个数的比特位进行比较。它返回一个新的数，只要两个操作数的对应位中有*任意*一个为 `1` 时，该数的对应位就为 `1`。
@@ -75,7 +81,7 @@ let someBits: UInt8 = 0b10110010
 let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // 等于 11111110
 ```
-
+<a name="bitwise_xor_operator"></a>
 ### 按位异或运算符(Bitwise XOR Opoerator)
 
 按位异或运算符(`^`)可以对两个数的比特位进行比较。它返回一个新的数，当两个操作数的对应位不相同时，该数的对应位就为 `1`：
@@ -89,13 +95,14 @@ let firstBits: UInt8 = 0b00010100
 let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // 等于 00010001
 ```
-
-### 按位左移/右移运算符
+<a name="bitwise_left_and_right_shift_operators"></a>
+### 按位左移/右移运算符(Bitwise Left and Right Shift Operators)
 
 按位左移运算符(`<<`)和按位右移运算符(`>>`)可以对一个数进行指定位数的左移和右移，但是需要遵守下面定义的规则。
 
 对一个数进行按位左移或按位右移，相当于对这个数进行乘以 2 或除以 2 的运算。将一个整数左移一位，等价于将这个数乘以 2，同样地，将一个整数右移一位，等价于将这个数除以 2。
 
+<a name="shifting_behavior_for_unsigned_integers"></a>
 #### 无符号整型的移位操作
 
 对无符号整型进行移位的规则如下：
@@ -140,6 +147,7 @@ let blueComponent = pink & 0x0000FF           // blueComponent 是 0x99, 即 153
 
 最后，蓝色部分通过对 `0xCC6699` 和 `0x0000FF` 进行按位与运算得到 `0x000099`。并且不需要进行向右移位，所以结果为 `0x99` ，也就是十进制数值的 `153`。
 
+<a name="shifting_behavior_for_signed_integers"></a>
 #### 有符号整型的移位操作
 
 对比无符号整型来说，有符整型的移位操作相对复杂得多，这种复杂性源于有符号整数的二进制表现形式。(为了简单起见，以下的示例都是基于 8 位有符号整数的，但是其中的原理对任何位数的有符号整数都是通用的。)
@@ -201,6 +209,7 @@ potentialOverflow += 1
 * 溢出减法 `&-`
 * 溢出乘法 `&*`
 
+<a name="value_overflow"></a>
 ### 数值溢出
 
 数值有可能出现上溢或者下溢。
@@ -232,7 +241,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 ![Art/overflowUnsignedSubtraction_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowUnsignedSubtraction_2x.png "Art/overflowAddition_2x.png")
 
-溢出也会发生在有符号整型数值上。在对有符号整型数值进行溢出加法或溢出减法运算时，符号位也需要参与计算，正如[按位左移/右移运算符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID34)所描述的。
+溢出也会发生在有符号整型数值上。在对有符号整型数值进行溢出加法或溢出减法运算时，符号位也需要参与计算，正如[按位左移/右移运算符](#bitwise_left_and_right_shift_operators)所描述的。
 
 ```
 var signedOverflow = Int8.min
@@ -291,7 +300,7 @@ signedOverflow = signedOverflow &- 1
 
 此时可以容易地看出计算的结果为 `4`。
 
-如果想查看完整的 Swift 运算符优先级和结合性规则，请参考[表达式](../chapter3/04_Expressions.html)。
+如果想查看完整的 Swift 运算符优先级和结合性规则，请参考[表达式](../chapter3/04_Expressions.html)。如果想查看 Swift 标准库提供所有的操作符，请查看[Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)
 
 > 注意：  
 > 对于C语言和 Objective-C 来说，Swift 的运算符优先级和结合性规则是更加简洁和可预测的。但是，这也意味着它们于那些基于C的语言不是完全一致的。在对现有的代码进行移植的时候，要注意确保运算符的行为仍然是按照你所想的那样去执行。
@@ -332,6 +341,7 @@ let combinedVector = vector + anotherVector
 
 ![Art/vectorAddition_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/vectorAddition_2x.png "Art/vectorAddition_2x.png")
 
+<a name="prefix_and_postfix_operators"></a>
 ### 前缀和后缀运算符
 
 上个例子演示了一个双目中缀运算符的自定义实现。类与结构体也能提供标准单目运算符(`unary operators`)的实现。单目运算符只有一个操作目标。当运算符出现在操作目标之前时，它就是前缀(`prefix`)的(比如 `-a`)，而当它出现在操作目标之后时，它就是后缀(`postfix`)的(比如 `i++`)。
@@ -356,7 +366,7 @@ let negative = -positive
 let alsoPositive = -negative
 // alsoPositive 是一个值为 (3.0, 4.0) 的 Vector2D 实例
 ```
-
+<a name="compound_assignment_operators"></a>
 ### 复合赋值运算符
 
 复合赋值运算符(`Compound assignment operators`)将赋值运算符(`=`)与其它运算符进行结合。比如，将加法与赋值结合成加法赋值运算符(`+=`)。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。
@@ -427,7 +437,7 @@ if twoThree == anotherTwoThree {
 ```
 
 <a name="custom_operators"></a>
-### 自定义运算符
+## 自定义运算符
 
 除了实现标准运算符，在 Swift 当中还可以声明和实现自定义运算符(`custom operators`)。可以用来自定义运算符的字符列表请参考[操作符](../chapter3/02_Lexical_Structure.html#operators)
 
@@ -454,10 +464,10 @@ let afterDoubling = +++toBeDoubled
 // toBeDoubled 现在的值为 (2.0, 8.0)
 // afterDoubling 现在的值也为 (2.0, 8.0)
 ```
-
+<a name="precedence_and_associativity_for_custom_infix_operators"></a>
 ### 自定义中缀运算符的优先级和结合性
 
-自定义的中缀(`infix`)运算符也可以指定优先级(`precedence`)和结合性(`associativity`)。[优先级和结合性](#PrecedenceandAssociativity)中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
+自定义的中缀(`infix`)运算符也可以指定优先级(`precedence`)和结合性(`associativity`)。[优先级和结合性](#precedence_and_associativity)中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
 
 结合性(`associativity`)可取的值有` left`，`right` 和 `none`。当左结合运算符跟其他相同优先级的左结合运算符写在一起时，会跟左边的操作数进行结合。同理，当右结合运算符跟其他相同优先级的右结合运算符写在一起时，会跟右边的操作数进行结合。而非结合运算符不能跟其他相同优先级的运算符写在一起。
 
@@ -476,7 +486,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 类型，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“加型”运算符，所以将它的结合性和优先级被设置为(`left` 和 `140`)，这与 `+` 和 `-` 等默认的中缀加型操作符是相同的。完整的 Swift 操作符默认结合性与优先级请参考[表达式](../chapter3/04_Expressions.html)。
+这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“加型”运算符，所以将它的结合性和优先级被设置为(`left` 和 `140`)，这与 `+` 和 `-` 等默认的中缀加型操作符是相同的。完整的 Swift 操作符默认结合性与优先级请参考[Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
 > 注意：
 > 当定义前缀与后缀操作符的时候，我们并没有指定优先级。然而，如果对同一个操作数同时使用前缀与后缀操作符，则后缀操作符会先被执行。
