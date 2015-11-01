@@ -9,6 +9,9 @@
 > 2.0
 > 翻译+校对： [SergioChan](https://github.com/SergioChan)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
+
 本页包含内容：
 
 - [泛型所解决的问题](#the_problem_that_generics_solve)
@@ -108,9 +111,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoValues(&someInt, &anotherInt)
 // someInt 现在等于 107, anotherInt 现在等于 3
-```
 
-```swift
 var someString = "hello"
 var anotherString = "world"
 swapTwoValues(&someString, &anotherString)
@@ -270,6 +271,7 @@ if let topItem = stackOfStrings.topItem {
 
 当你创建自定义泛型类型时，你可以定义你自己的类型约束，当然，这些约束要支持泛型编程的强力特征中的多数。抽象概念如`可哈希`具有的类型特征是根据它们概念特征来界定的，而不是它们的直接类型特征。
 
+<a name="type_constraint_syntax"></a>
 ### 类型约束语法
 
 你可以写一个在一个类型参数名后面的类型约束，通过冒号分割，来作为类型参数链的一部分。这种作用于泛型函数的类型约束的基础语法如下所示（和泛型类型的语法相同）：
@@ -282,7 +284,8 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 
 上面这个假定函数有两个类型参数。第一个类型参数`T`，有一个需要`T`必须是`SomeClass`子类的类型约束；第二个类型参数`U`，有一个需要`U`必须遵循`SomeProtocol`协议的类型约束。
 
-### 类型约束行为
+<a name="type_constraints_in_action"></a>
+### 类型约束实例
 
 这里有个名为`findStringIndex`的非泛型函数，该函数功能是去查找包含一给定`String`值的数组。若查找到匹配的字符串，`findStringIndex(_:_:)`函数返回该字符串在数组中的索引值（`Int`），反之则返回`nil`：
 
@@ -357,7 +360,8 @@ let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
 
 当定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分是非常有用的。一个关联类型作为协议的一部分，给定了类型的一个占位名（或别名）。作用于关联类型上实际类型在协议被实现前是不需要指定的。关联类型被指定为`typealias`关键字。
 
-### 关联类型行为
+<a name="associated_types_in_action"></a>
+### 关联类型实例
 
 这里是一个`Container`协议的例子，定义了一个`ItemType`关联类型：
 
@@ -444,12 +448,12 @@ struct Stack<T>: Container {
 
 这个时候，占位类型参数`T`被用作`append(_:)`方法的`item`参数和下标的返回类型。Swift 因此可以推断出被用作这个特定容器的`ItemType`的`T`的合适类型。
 
-
+<a name="extending_an_existing_type_to_specify_an_associated_type"></a>
 ### 扩展一个存在的类型为一指定关联类型
 
-在[在扩展中添加协议成员](./21_Protocols.html#adding_protocol_conformance_with_an_extension)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
+在[在扩展中添加协议成员](./22_Protocols.html#adding_protocol_conformance_with_an_extension)中有描述扩展一个存在的类型添加遵循一个协议。这个类型包含一个关联类型的协议。
 
-Swift的`Array`已经提供`append(_:)`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[通过扩展补充协议声明](./21_Protocols.html#declaring_protocol_adoption_with_an_extension)中有描述这样一个实现一个空扩展的行为：
+Swift的`Array`已经提供`append(_:)`方法，一个`count`属性和通过下标来查找一个自己的元素。这三个功能都达到`Container`协议的要求。也就意味着你可以扩展`Array`去遵循`Container`协议，只要通过简单声明`Array`适用于该协议而已。如何实践这样一个空扩展，在[通过扩展补充协议声明](./22_Protocols.html#declaring_protocol_adoption_with_an_extension)中有描述这样一个实现一个空扩展的行为：
 
 ```swift
 extension Array: Container {}
