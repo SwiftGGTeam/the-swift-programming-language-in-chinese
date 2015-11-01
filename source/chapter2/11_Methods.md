@@ -163,9 +163,9 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 // 打印输出: "The point is now at (3.0, 4.0)"
 ```
 
-上面的`Point`结构体定义了一个变异方法（mutating method）`moveByX(_:y:)`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字，这才让方法可以修改值类型的属性。
+上面的`Point`结构体定义了一个可变方法（mutating method）`moveByX(_:y:)`用来移动点。`moveByX`方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上`mutating`关键字，这才让方法可以修改值类型的属性。
 
-注意：不能在结构体类型常量上调用变异方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
+注意：不能在结构体类型常量上调用可变方法，因为常量的属性不能被改变，即使想改变的是常量的变量属性也不行，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -174,9 +174,9 @@ fixedPoint.moveByX(2.0, y: 3.0)
 ```
 
 <a name="assigning_to_self_within_a_mutating_method"></a>
-### 在变异方法中给self赋值(Assigning to self Within a Mutating Method)
+### 在可变方法中给 self 赋值(Assigning to self Within a Mutating Method)
 
-变异方法能够赋给隐含属性`self`一个全新的实例。上面`Point`的例子可以用下面的方式改写：
+可变方法能够赋给隐含属性`self`一个全新的实例。上面`Point`的例子可以用下面的方式改写：
 
 ```swift
 struct Point {
@@ -187,9 +187,9 @@ struct Point {
 }
 ```
 
-新版的变异方法`moveByX(_:y:)`创建了一个新的结构（它的 x 和 y 的值都被设定为目标值）。调用这个版本的方法和调用上个版本的最终结果是一样的。
+新版的可变方法`moveByX(_:y:)`创建了一个新的结构（它的 x 和 y 的值都被设定为目标值）。调用这个版本的方法和调用上个版本的最终结果是一样的。
 
-枚举的变异方法可以把`self`设置为相同的枚举类型中不同的成员：
+枚举的可变方法可以把`self`设置为相同的枚举类型中不同的成员：
 
 ```swift
 enum TriStateSwitch {
