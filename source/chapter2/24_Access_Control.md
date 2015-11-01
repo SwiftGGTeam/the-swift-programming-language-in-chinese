@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[mmoaay](https://github.com/mmoaay)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
+
 本页内容包括：
 
 - [模块和源文件](#modules_and_source_files)
@@ -238,7 +241,7 @@ private var privateInstance = SomePrivateClass()
 ```
 
 <a name="getters_and_setters"></a>
-### Getter和Setter
+### Getter 和 Setter
 常量、变量、属性、下标索引的`Getters`和`Setters`的访问级别继承自它们所属成员的访问级别。
 
 `Setter`的访问级别可以低于对应的`Getter`的访问级别，这样就可以控制变量、属性或下标索引的读写权限。在`var`或`subscript`定义作用域之前，你可以通过`private(set)`或`internal(set)`先为它们的写权限申明一个较低的访问级别。
