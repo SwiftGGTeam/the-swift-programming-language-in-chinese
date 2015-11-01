@@ -8,7 +8,9 @@
 > 2.0
 > 翻译：[futantan](https://github.com/futantan)
 > 校对：[小铁匠Linus](https://github.com/kevin833752)
-> 定稿：[shanksyang](http://codebuild.me)
+
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
 
 本页包含内容：
 
@@ -175,7 +177,7 @@ print("And another one: \(generator.random())")
 ```
 
 <a name="mutating_method_requirements"></a>
-## 对Mutating方法的规定
+## 对 Mutating 方法的规定
 
 有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改它所属的实例及其实例属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
 
@@ -857,7 +859,7 @@ print("Here's a random number: \(generator.random())")
 print("And here's a random Boolean: \(generator.randomBool())")
 // 输出 "And here's a random Boolean: true"
 ```
-
+<a name="providing_default_implementations"></a>
 ### 提供默认实现
 
 可以通过协议扩展的方式来为协议规定的属性和方法提供默认的实现。如果协议的遵循者对规定的属性和方法提供了自己的实现，那么遵循者提供的实现将被使用。
@@ -875,6 +877,7 @@ extension PrettyTextRepresentable  {
 }
 ```
 
+<a name="adding_constraints_to_protocol_extensions"></a>
 ### 为协议扩展添加限制条件
 
 在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where语句](./23_Generics.html#where_clauses))。:
