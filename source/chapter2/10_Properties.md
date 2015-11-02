@@ -9,6 +9,7 @@
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
 
 > 2.1
+> 翻译：[buginux](https://github.com/buginux)
 > 校对：[shanks](http://codebuild.me)，2015-10-29
 
 本页包含内容：

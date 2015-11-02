@@ -9,6 +9,7 @@
 > 翻译+校对：[futantan](https://github.com/futantan)
 
 > 2.1
+> 翻译：[Channe](https://github.com/Channe)
 > 校对：[shanks](http://codebuild.me)
 
 本页内容包含：

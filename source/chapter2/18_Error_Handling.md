@@ -3,8 +3,7 @@
 
 > 2.1
 > 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
-
-> 定稿：[shanks](http://codebuild.me) 2015-10-24
+> 校对：[shanks](http://codebuild.me) 2015-10-24
 
 本页包含内容：
 

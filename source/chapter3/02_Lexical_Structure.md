@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[buginux](https://github.com/buginux)
 
+> 2.1
+> 翻译：[mmoaay](https://github.com/mmoaay)
+
 
 本页包含内容：
 

@@ -11,7 +11,8 @@
 > [BridgeQ](https://github.com/WXGBridgeQ)
 
 > 2.1 
-> 翻译+校队：[shanks](http://codebuild.me)
+> 翻译：[mmoaay](https://github.com/mmoaay), [shanks](http://codebuild.me)
+> 校队：[shanks](http://codebuild.me)
 
 本页包含内容：
 

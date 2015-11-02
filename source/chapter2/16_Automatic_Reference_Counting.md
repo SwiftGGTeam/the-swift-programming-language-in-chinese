@@ -9,6 +9,7 @@
 > 翻译+校对：[Channe](https://github.com/Channe)
 
 > 2.1
+> 翻译：[Channe](https://github.com/Channe)
 > 校对：[shanks](http://codebuild.me)，2015-10-31
 
 本页包含内容：

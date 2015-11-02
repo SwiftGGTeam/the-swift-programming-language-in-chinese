@@ -9,7 +9,7 @@
 > 翻译+校对：[100mango](https://github.com/100mango)
 
 > 2.1
-> 翻译：[magicdict](https://github.com/magicdict)
+> 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
 > 校对：[shanks](http://codebuild.me)
 
 本页包含内容：

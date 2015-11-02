@@ -9,6 +9,7 @@
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 > 2.1
+> 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)
 
 本页包含内容：

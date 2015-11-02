@@ -6,10 +6,10 @@
 > 校对：[dabing1022](https://github.com/dabing1022)
 
 > 2.0
-> 翻译：[futantan](https://github.com/futantan)
-> 校对：[小铁匠Linus](https://github.com/kevin833752)
+> 翻译+校对：[futantan](https://github.com/futantan)
 
 > 2.1
+> 翻译：[小铁匠Linus](https://github.com/kevin833752)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 
 本页包含内容：

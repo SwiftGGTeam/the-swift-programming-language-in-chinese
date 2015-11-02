@@ -9,6 +9,7 @@
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
 
 > 2.1
+> 翻译：[Channe](https://github.com/Channe)
 > 校对：[shanks](http://codebuild.me)，2015-10-30
 
 本页包含内容：

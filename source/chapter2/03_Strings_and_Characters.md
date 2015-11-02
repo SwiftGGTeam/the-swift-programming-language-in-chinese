@@ -9,6 +9,7 @@
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
 > 2.1
+> 翻译：[DianQK](https://github.com/DianQK)
 > 校对：[shanks](http://codebuild.me)
 
 本页包含内容：

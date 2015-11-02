@@ -9,6 +9,7 @@
 > 翻译+校对：[mmoaay](https://github.com/mmoaay)
 
 > 2.1
+> 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 
 本页内容包括：

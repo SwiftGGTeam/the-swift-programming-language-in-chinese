@@ -7,7 +7,9 @@
 
 > 2.0
 > 翻译+校对：[ray16897188](https://github.com/ray16897188),
-> [BridgeQ](https://github.com/WXGBridgeQ)
+
+> 2.1
+> 翻译：[BridgeQ](https://github.com/WXGBridgeQ)
 
 本页内容包括：
 
