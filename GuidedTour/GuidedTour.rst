@@ -624,7 +624,7 @@ you can omit the parentheses entirely.
 
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
-.. Omitted curried functions and custom operators as "advanced" topics.
+.. Omitted custom operators as "advanced" topics.
 
 Objects and Classes
 -------------------
