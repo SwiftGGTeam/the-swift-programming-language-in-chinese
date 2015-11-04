@@ -908,14 +908,6 @@ declares a tuple of two placeholder constants that can match any value.
 As a result, it matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
-In the example above,
-``x`` and ``y`` are declared as constants with the ``let`` keyword,
-because there is no need to modify their values within the body of the case.
-However, they could have been declared as variables instead, with the ``var`` keyword.
-If this had been done, a temporary variable would have been created
-and initialized with the appropriate value.
-Any changes to that variable would only have an effect within the body of the case.
-
 .. _ControlFlow_Where:
 
 Where
