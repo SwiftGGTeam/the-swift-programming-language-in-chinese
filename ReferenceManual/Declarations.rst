@@ -950,12 +950,11 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
-    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
+    function-signature --> parameter-clause ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clause ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
-    parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
