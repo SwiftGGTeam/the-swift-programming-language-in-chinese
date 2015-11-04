@@ -120,8 +120,7 @@ Value-Binding Pattern
 
 A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
 Value-binding patterns that bind a matched value to the name of a constant
-begin with the ``let`` keyword; those that bind to the name of variable
-begin with the ``var`` keyword.
+begin with the ``let`` keyword.
 
 Identifiers patterns within a value-binding pattern
 bind new named variables or constants to their matching values. For example,
@@ -152,11 +151,11 @@ tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
 
     Grammar of a value-binding pattern
 
-    value-binding-pattern --> ``var`` pattern | ``let`` pattern
+    value-binding-pattern --> ``let`` pattern
 
 .. NOTE: We chose to call this "value-binding pattern"
     instead of "variable pattern",
-    because it's a pattern that binds values to either variables or constants,
+    because it's a pattern that binds values to constants,
     not a pattern that varies.
     "Variable pattern" is ambiguous between those two meanings.
 
