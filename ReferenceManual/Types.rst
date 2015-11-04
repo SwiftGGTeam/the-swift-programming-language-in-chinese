@@ -212,7 +212,6 @@ and function types that can rethrow an error must be marked with the ``rethrows`
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
-For curried functions, the ``throws`` keyword applies only to the innermost function.
 Throwing and rethrowing functions are described in
 :ref:`Declarations_ThrowingFunctionsAndMethods`
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
