@@ -531,7 +531,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 为间接使用特殊的枚举用例，使用`indirect`声明修饰符标记。
 
-> enum Tree<T> {
+> enum Tree&lt;T&gt; {
 > 		case Empty
 > 		indirect case Node(value: T, left: Tree, right:Tree)
 > }
