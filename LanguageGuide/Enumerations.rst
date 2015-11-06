@@ -334,7 +334,7 @@ When you don't, Swift will automatically assign the values for you.
 
 For instance, when integers are used for raw values,
 the implicit value for each case is one more than the previous case.
-If the first case doesn't have a value set, it's value is ``0``.
+If the first case doesn't have a value set, its value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
 with integer raw values to represent each planet's order from the sun:
