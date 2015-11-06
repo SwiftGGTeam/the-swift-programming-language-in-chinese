@@ -201,11 +201,12 @@ To specify an in-out parameter, prefix the parameter type with the ``inout`` key
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
-The function types of a curried function are grouped from right to left. For instance,
-the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
+If a function type includes more than a single arrow (``->``),
+the function types are grouped from right to left.
+For example,
+the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)`` ---
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
-Curried function are described in :ref:`Declarations_CurriedFunctions`.
 
 Function types that can throw an error must be marked with the ``throws`` keyword,
 and function types that can rethrow an error must be marked with the ``rethrows`` keyword.
