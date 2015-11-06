@@ -832,59 +832,6 @@ rather than an instance of a type
 must be marked with the ``static`` declaration modifier for enumerations and structures
 or the ``class`` declaration modifier for classes.
 
-.. _Declarations_CurriedFunctions:
-
-Curried Functions
-~~~~~~~~~~~~~~~~~
-
-You can rewrite a function that takes multiple parameters as an equivalent function
-that takes a single parameter and returns a function.
-The returned function takes the next parameter and returns another function.
-This continues until there are no remaining parameters,
-at which point the last function returns the return value of the original multiparameter function.
-The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
-
-.. testcode:: curried-function
-
-    -> func addTwoInts(a a: Int, b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-          func addTheOtherInt(b: Int) -> Int {
-             return a + b
-          }
-          return addTheOtherInt
-       }
-
-The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
-that takes the second integer and adds it to the first.
-(The nested function captures the value of the first integer argument from the enclosing
-function.)
-
-Although you must provide the arguments to a noncurried function all at once in a single call,
-you can use the curried form of a function to provide arguments in several function calls,
-one at a time (even in different places in your code).
-This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
-and assign the result to the constant ``plusOne``:
-
-.. testcode:: curried-function
-
-    -> let plusOne = addTwoIntsCurried(a: 1)
-    << // plusOne : Int -> Int = (Function)
-    -> // plusOne is a function of type Int -> Int
-
-Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
-as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
-
-.. testcode:: curried-function
-
-    -> plusOne(10)
-    <$ : Int = 11
-    -> // returns a value of 11
-
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
