@@ -71,7 +71,7 @@ rangeOfFourItems.firstValue = 6
 
 延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用`lazy`来标示一个延迟存储属性。
 
-> 注意：  
+> 注意  
 > 必须将延迟存储属性声明成变量（使用`var`关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
 
 延迟属性很有用，当属性的值依赖于在实例的构造过程结束后才会知道具体值的外部因素时，或者当获得属性的初始值需要复杂或大量计算时，可以只在需要的时候计算它。
@@ -81,17 +81,17 @@ rangeOfFourItems.firstValue = 6
 ```swift
 class DataImporter {
     /*
-    DataImporter 是一个将外部文件中的数据导入的类。
+    DataImporter 是一个负责将外部文件中的数据导入的类。
     这个类的初始化会消耗不少时间。
     */
     var fileName = "data.txt"
-    // 这是提供数据导入功能
+    // 这里会提供数据导入功能
 }
 
 class DataManager {
     lazy var importer = DataImporter()
     var data = [String]()
-    // 这是提供数据管理功能
+    // 这里会提供数据管理功能
 }
 
 let manager = DataManager()
@@ -100,11 +100,11 @@ manager.data.append("Some more data")
 // DataImporter 实例的 importer 属性还没有被创建
 ```
 
-`DataManager`类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。虽然没有写出全部代码，`DataManager`类的目的是管理和提供对这个字符串数组的访问。
+`DataManager`类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。这里没有给出全部代码，只需知道`DataManager`类的目的是管理和提供对这个字符串数组的访问即可。
 
 `DataManager`的一个功能是从文件导入数据。该功能由`DataImporter`类提供，`DataImporter`完成初始化需要消耗不少时间：因为它的实例在初始化时可能要打开文件，还要读取文件内容到内存。
 
-`DataManager`也可能不从文件中导入数据就完成了管理数据的功能。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的是当第一次用到`DataImporter`的时候才去创建它。
+`DataManager`管理数据时也可能不从文件中导入数据。所以当`DataManager`的实例被创建时，没必要创建一个`DataImporter`的实例，更明智的做法是第一次用到`DataImporter`的时候才去创建它。
 
 由于使用了`lazy`，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
 
@@ -114,15 +114,15 @@ print(manager.importer.fileName)
 // 输出 "data.txt”
 ```
 
-> 注意：  
+> 注意  
 > 如果一个被标记为`lazy`的属性在没有初始化时就同时被多个线程访问，则无法保证该属性只会被初始化一次。
 
 <a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
-如果您有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。除了属性之外，还可以使用实例变量作为属性值的后端存储。
 
-Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
+Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方（类型定义中）定义。
 
 <a name="computed_properties"></a>
 ## 计算属性
@@ -203,7 +203,7 @@ struct AlternativeRect {
 
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
-> 注意：  
+> 注意  
 > 必须使用`var`关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
 
 只读计算属性的声明可以去掉`get`关键字和花括号：
@@ -220,16 +220,16 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // 输出 "the volume of fourByFiveByTwo is 40.0"
 ```
 
-这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性。结构体还有一个名为`volume`的只读计算属性用来返回立方体的体积。设置`volume`的值毫无意义，因为无法确定修改`width`、`height`和`depth`三者中的哪些值来匹配新的`volume`，从而造成歧义。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
+这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性。结构体还有一个名为`volume`的只读计算属性用来返回立方体的体积。为`volume`提供 setter 毫无意义，因为无法确定如何修改`width`、`height`和`depth`三者的值来匹配新的`volume`。然而，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
 <a name="property_observers"></a>
 ## 属性观察器
 
-*属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，甚至新的值和现在的值相同的时候也不例外。
+*属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，甚至新值和当前值相同的时候也不例外。
 
 可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重写请参考[重写](./13_Inheritance.html#overriding)。
 
-> 注意：  
+> 注意  
 > 不需要为非重写的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。  
 
 可以为属性添加如下的一个或全部观察器：
@@ -241,11 +241,11 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 类似地，`didSet`观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名`oldValue`。
 
-> 注意：  
+> 注意  
 > 父类的属性在子类的构造器中被赋值时，它在父类中的`willSet`和`didSet`观察器会被调用。  
 > 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)和[类的构造器代理规则](./14_Initialization.html#initializer_delegation_for_class_types)。
 
-这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
+这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
 ```swift
 class StepCounter {
@@ -274,49 +274,49 @@ stepCounter.totalSteps = 896
 
 `StepCounter`类定义了一个`Int`类型的属性`totalSteps`，它是一个存储属性，包含`willSet`和`didSet`观察器。
 
-当`totalSteps`设置新值的时候，它的`willSet`和`didSet`观察器都会被调用，甚至当新的值和现在的值完全相同也会调用。
+当`totalSteps`被设置新值的时候，它的`willSet`和`didSet`观察器都会被调用，甚至新值和当前值完全相同时也会被调用。
 
 例子中的`willSet`观察器将表示新值的参数自定义为`newTotalSteps`，这个观察器只是简单的将新的值输出。
 
-`didSet`观察器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有为旧的值提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
+`didSet`观察器在`totalSteps`的值改变后被调用，它把新值和旧值进行对比，如果总步数增加了，就输出一个消息表示增加了多少步。`didSet`没有为旧值提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
 
-> 注意：  
-> 如果在一个属性的`didSet`观察器里为它赋值，这个值会替换该观察器之前设置的值。  
+> 注意  
+> 如果在一个属性的`didSet`观察器里为它赋值，这个值会替换之前设置的值。  
 
 <a name="global_and_local_variables"></a>
 ##全局变量和局部变量
 
-计算属性和属性观察器所描述的模式也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
+计算属性和属性观察器所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
-前面章节提到的全局或局部变量都属于存储型变量，跟存储属性类似，它提供特定类型的存储空间，并允许读取和写入。
+前面章节提到的全局或局部变量都属于存储型变量，跟存储属性类似，它为特定类型的值提供存储空间，并允许读取和写入。
 
-另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器。计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。
+另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义观察器。计算型变量跟计算属性一样，返回一个计算结果而不是存储值，声明格式也完全一样。
 
-> 注意：  
-> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`特性。  
-> 局部范围的常量或变量不会延迟计算。  
+> 注意  
+> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`修饰符。  
+> 局部范围的常量或变量从不延迟计算。  
 
 <a name="type_properties"></a>
 ##类型属性
 
-实例的属性属于一个特定类型实例，每次类型实例化后都拥有自己的一套属性值，实例之间的属性相互独立。
+实例属性属于一个特定类型的实例，每创建一个实例，实例都拥有属于自己的一套属性值，实例之间的属性相互独立。
 
-也可以为类型本身定义属性，不管类型有多少个实例，这些属性都只有唯一一份。这种属性就是*类型属性*。
+也可以为类型本身定义属性，无论创建了多少个该类型的实例，这些属性都只有唯一一份。这种属性就是*类型属性*。
 
-类型属性用于定义特定类型所有实例共享的数据，比如所有实例都能用的一个常量（就像 C 语言中的静态常量），或者所有实例都能访问的一个变量（就像 C 语言中的静态变量）。
+类型属性用于定义某个类型所有实例共享的数据，比如所有实例都能用的一个常量（就像 C 语言中的静态常量），或者所有实例都能访问的一个变量（就像 C 语言中的静态变量）。
 
-值类型的存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算属性一样只能定义成变量属性。
+存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算型属性一样只能定义成变量属性。
 
-> 注意：  
-> 跟实例的存储属性不同，必须给存储型类型属性指定默认值，因为类型本身无法在初始化过程中使用构造器给类型属性赋值。  
-> 存储型类型属性是延迟初始化的(lazily initialized)，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行初始化一次，并且不需要对其使用 `lazy` 修饰符。
+> 注意  
+> 跟实例的存储型属性不同，必须给存储型类型属性指定默认值，因为类型本身没有构造器，也就无法在初始化过程中使用构造器给类型属性赋值。  
+> 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用`lazy`修饰符。
 
 <a name="type_property_syntax"></a>
 ###类型属性语法
 
-在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为全局（*global*）静态变量定义的。但是在 Swift 编程语言中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
+在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为全局（*global*）静态变量定义的。但是在 Swift 中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
 
-使用关键字`static`来定义类型属性。在为类（class）定义计算型类型属性时，可以使用关键字`class`来支持子类对父类的实现进行重写。下面的例子演示了存储型和计算型类型属性的语法：
+使用关键字`static`来定义类型属性。在为类定义计算型类型属性时，可以改用关键字`class`来支持子类对父类的实现进行重写。下面的例子演示了存储型和计算型类型属性的语法：
 
 ```swift
 struct SomeStructure {
@@ -342,13 +342,13 @@ class SomeClass {
 }
 ```
 
-> 注意：  
-> 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟实例计算属性的语法类似。  
+> 注意  
+> 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟计算型实例属性的语法相同。  
 
 <a name="querying_and_setting_type_properties"></a>
 ###获取和设置类型属性的值
 
-跟实例的属性一样，类型属性的访问也是通过点运算符来进行。但是，类型属性是通过类型本身来获取和设置，而不是通过实例。比如：
+跟实例属性一样，类型属性也是通过点运算符来访问。但是，类型属性是通过类型本身来访问，而不是通过实例。比如：
 
 ```swift
 print(SomeStructure.storedTypeProperty)
@@ -362,9 +362,9 @@ print(SomeClass.computedTypeProperty)
 // 输出 "27"
 ```
 
-下面的例子定义了一个结构体，使用两个存储型类型属性来表示多个声道的声音电平值，每个声道有一个 0 到 10 之间的整数表示声音电平值。
+下面的例子定义了一个结构体，使用两个存储型类型属性来表示两个声道的音量，每个声道具有`0`到`10`之间的整数音量。
 
-后面的图表展示了如何联合使用两个声道来表示一个立体声的声音电平值。当声道的电平值是 0，没有一个灯会亮；当声道的电平值是 10，所有灯点亮。本图中，左声道的电平是 9，右声道的电平是 7。
+下图展示了如何把两个声道结合来模拟立体声的音量。当声道的音量是`0`，没有一个灯会亮；当声道的音量是`10`，所有灯点亮。本图中，左声道的音量是`9`，右声道的音量是`7`：
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png" alt="Static Properties VUMeter" width="243" height="357" />
 
@@ -377,11 +377,11 @@ struct AudioChannel {
     var currentLevel: Int = 0 {
         didSet {
             if currentLevel > AudioChannel.thresholdLevel {
-                // 将新电平值设置为阀值
+                // 将当前音量限制在阀值之内
                 currentLevel = AudioChannel.thresholdLevel
             }
             if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-                // 存储当前电平值作为新的最大输入电平
+                // 存储当前音量作为新的最大输入音量
                 AudioChannel.maxInputLevelForAllChannels = currentLevel
             }
         }
@@ -389,28 +389,28 @@ struct AudioChannel {
 }
 ```
 
-结构`AudioChannel`定义了 2 个存储型类型属性来实现上述功能。第一个是`thresholdLevel`，表示声音电平的最大上限阈值，它是一个取值为 10 的常量，对所有实例都可见，如果声音电平高于 10，则取最大上限值 10（见后面描述）。
+结构`AudioChannel`定义了 2 个存储型类型属性来实现上述功能。第一个是`thresholdLevel`，表示音量的最大上限阈值，它是一个值为`10`的常量，对所有实例都可见，如果音量高于`10`，则取最大上限值`10`（见后面描述）。
 
-第二个类型属性是变量存储型属性`maxInputLevelForAllChannels`，它用来表示所有`AudioChannel`实例的电平值的最大值，初始值是 0。
+第二个类型属性是变量存储型属性`maxInputLevelForAllChannels`，它用来表示所有`AudioChannel`实例的最大音量，初始值是`0`。
 
-`AudioChannel`也定义了一个名为`currentLevel`的实例存储属性，表示当前声道现在的电平值，取值为 0 到 10。
+`AudioChannel`也定义了一个名为`currentLevel`的存储型实例属性，表示当前声道现在的音量，取值为`0`到`10`。
 
-属性`currentLevel`包含`didSet`属性观察器来检查每次新设置后的属性值，它有如下两个检查：
+属性`currentLevel`包含`didSet`属性观察器来检查每次设置后的属性值，它做如下两个检查：
 
 - 如果`currentLevel`的新值大于允许的阈值`thresholdLevel`，属性观察器将`currentLevel`的值限定为阈值`thresholdLevel`。
-- 如果前一个修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性观察器将新值保存在静态类型属性`maxInputLevelForAllChannels`中。
+- 如果修正后的`currentLevel`值大于静态类型属性`maxInputLevelForAllChannels`的值，属性观察器就将新值保存在`maxInputLevelForAllChannels`中。
 
-> 注意：  
-> 在第一个检查过程中，`didSet`属性观察器将`currentLevel`设置成了不同的值，但这时不会再次调用属性观察器。  
+> 注意  
+> 在第一个检查过程中，`didSet`属性观察器将`currentLevel`设置成了不同的值，但这不会造成属性观察器被再次调用。  
 
-可以使用结构体`AudioChannel`来创建表示立体声系统的两个声道`leftChannel`和`rightChannel`：
+可以使用结构体`AudioChannel`创建两个声道`leftChannel`和`rightChannel`，用以表示立体声系统的音量：
 
 ```swift
 var leftChannel = AudioChannel()
 var rightChannel = AudioChannel()
 ```
 
-如果将左声道的电平设置成 7，类型属性`maxInputLevelForAllChannels`也会更新成 7：
+如果将左声道的`currentLevel`设置成`7`，类型属性`maxInputLevelForAllChannels`也会更新成`7`：
 
 ```swift
 leftChannel.currentLevel = 7
@@ -420,7 +420,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
 // 输出 "7"
 ```
 
-如果试图将右声道的电平设置成 11，则会将右声道的`currentLevel`修正到最大值 10，同时`maxInputLevelForAllChannels`的值也会更新到 10：
+如果试图将右声道的`currentLevel`设置成`11`，它会被修正到最大值`10`，同时`maxInputLevelForAllChannels`的值也会更新到`10`：
 
 ```swift
 rightChannel.currentLevel = 11
