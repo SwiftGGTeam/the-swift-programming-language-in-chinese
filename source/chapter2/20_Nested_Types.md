@@ -1,8 +1,15 @@
-> 翻译：[Lin-H](https://github.com/Lin-H)  
+# 嵌套类型（Nested Types）
+-----------------
+
+> 1.0
+> 翻译：[Lin-H](https://github.com/Lin-H)
 > 校对：[shinyzhu](https://github.com/shinyzhu)
 
-# 嵌套类型
------------------
+> 2.0
+> 翻译+校对：[SergioChan](https://github.com/SergioChan)
+
+> 2.1
+> 校对：[shanks](http://codebuild.me)，2015-11-01
 
 本页包含内容：
 
@@ -41,15 +48,15 @@ struct BlackjackCard {
         case .Jack, .Queen, .King:
             return Values(first: 10, second: nil)
         default:
-            return Values(first: self.toRaw(), second: nil)
+            return Values(first: self.rawValue, second: nil)
             }
        }
     }
-    
+
     // BlackjackCard 的属性和方法
     let rank: Rank, suit: Suit
     var description: String {
-    var output = "suit is \(suit.toRaw()),"
+    	var output = "suit is \(suit.rawValue),"
         output += " value is \(rank.values.first)"
         if let second = rank.values.second {
             output += " or \(second)"
@@ -63,20 +70,20 @@ struct BlackjackCard {
 
 枚举型的`Rank`用来描述扑克牌从`Ace`~10,`J`,`Q`,`K`,13张牌，并分别用一个`Int`类型的值表示牌的面值。(这个`Int`类型的值不适用于`Ace`,`J`,`Q`,`K`的牌)。
 
-如上文所提到的，枚举型`Rank`在自己内部定义了一个嵌套结构体`Values`。这个结构体包含两个变量，只有`Ace`有两个数值，其余牌都只有一个数值。结构体`Values`中定义的两个属性：
+如上文所提到的，枚举型`Rank`在自己内部定义了一个嵌套结构体`Values`。在这个结构体中，只有`Ace`有两个数值，其余牌都只有一个数值。结构体`Values`中定义的两个属性：
 
-`first`, 为` Int`
-`second`, 为 `Int?`, 或 “optional `Int`”
+- `first`为` Int`
+- `second`为 `Int?` 或 “optional `Int`”
 
-`Rank`定义了一个计算属性`values`，这个计算属性会根据牌的面值，用适当的数值去初始化`Values`实例，并赋值给`values`。对于`J`,`Q`,`K`,`Ace`会使用特殊数值，对于数字面值的牌使用`Int`类型的值。
+`Rank`定义了一个计算属性`values`，它将会返回一个结构体`Values`的实例。这个计算属性会根据牌的面值，用适当的数值去初始化`Values`实例，并赋值给`values`。对于`J`,`Q`,`K`,`Ace`会使用特殊数值，对于数字面值的牌使用`Int`类型的值。
 
 `BlackjackCard`结构体自身有两个属性—`rank`与`suit`，也同样定义了一个计算属性`description`，`description`属性用`rank`和`suit`的中内容来构建对这张扑克牌名字和数值的描述，并用可选类型`second`来检查是否存在第二个值，若存在，则在原有的描述中增加对第二数值的描述。
 
-因为`BlackjackCard`是一个没有自定义构造函数的结构体，在[Memberwise Initializers for Structure Types](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/14Initialization.md)中知道结构体有默认的成员构造函数，所以你可以用默认的`initializer`去初始化新的常量`theAceOfSpades`:
+因为`BlackjackCard`是一个没有自定义构造函数的结构体，在[结构体的逐一成员构造器](./14_Initialization.html#memberwise_initializers_for_structure_types)中知道结构体有默认的成员构造函数，所以你可以用默认的`initializer`去初始化新的常量`theAceOfSpades`:
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
-println("theAceOfSpades: \(theAceOfSpades.description)")
+print("theAceOfSpades: \(theAceOfSpades.description)")
 // 打印出 "theAceOfSpades: suit is ♠, value is 1 or 11"
 ```
 
@@ -88,10 +95,8 @@ println("theAceOfSpades: \(theAceOfSpades.description)")
 在外部对嵌套类型的引用，以被嵌套类型的名字为前缀，加上所要引用的属性名：
 
 ```swift
-let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
 // 红心的符号 为 "♡"
 ```
 
-对于上面这个例子，这样可以使`Suit`, `Rank`, 和 `Values`的名字尽可能的短，因为它们的名字会自然的由被定义的上下文来限定。
-
-preview
+对于上面这个例子，这样可以使`Suit`, `Rank`, 和 `Values`的名字尽可能的短，因为它们的名字会自然的由定义它们的上下文来限定。
