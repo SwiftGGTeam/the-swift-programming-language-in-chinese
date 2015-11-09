@@ -291,6 +291,9 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to a
     method, property, subscript, or initializer declaration
     to suppress an implicit or inherited ``objc`` attribute.
+    The ``nonobjc`` attribute tells the compiler
+    to make the declaration unavailable in Objective-C code
+    even though it is possible to represent it in Objective-C.
 
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
