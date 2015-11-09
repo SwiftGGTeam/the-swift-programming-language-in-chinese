@@ -136,8 +136,8 @@ the ``BooleanType`` protocol.
 
     Grammar of a for statement
 
-    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
-    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
+    for-statement --> ``for`` for-init-OPT ``;`` expression-list-OPT ``;`` expression-list-OPT code-block
+    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-list-OPT ``;`` expression-list-OPT ``)`` code-block
 
     for-init --> variable-declaration | expression-list
 
