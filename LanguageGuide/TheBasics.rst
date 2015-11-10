@@ -1127,8 +1127,8 @@ would be made available as a variable rather than a constant.
 
 You can include multiple optional bindings in a single ``if`` statement
 and use a ``where`` clause to check for a Boolean condition.
-If any of the values in the optional bindings is ``nil``
-or if the ``where`` clause evaluates to ``false``,
+If any of the values in the optional bindings are ``nil``
+or the ``where`` clause evaluates to ``false``,
 the whole optional binding is considered unsuccessful.
 
 .. testcode:: multipleOptionalBindings
@@ -1140,13 +1140,11 @@ the whole optional binding is considered unsuccessful.
 
 .. note::
 
-   Constants or variables created with optional binding
-   are only available within the code block following their creation,
-   as in the first branch of the ``if`` statement above.
-   If you want to work with the optional's value
-   in the code that comes after the optional binding,
-   and not just within the first branch of the ``if`` statement,
-   use a ``guard`` statement as described in :ref:`ControlFlow_Guard`.
+   Constants and variables created with optional binding in an ``if`` statement.
+   are available only within the body of the ``if`` statement.
+   In contrast, the constants and variables created with a ``guard`` statement
+   are available in the lines of code that follow the ``guard`` statement,
+   as described in :ref:`ControlFlow_Guard`,
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
