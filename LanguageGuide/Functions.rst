@@ -166,9 +166,11 @@ You call the ``sayHello(_:alreadyGreeted:)`` function
 by passing it both a ``String`` argument value
 and a ``Bool`` argument value labeled ``alreadyGreeted``
 in parentheses, separated by commas.
-Note that this is a distinct function from ``sayHello(_:)``,
-although their names both both begin with ``sayHello``,
-because this function takes two arguments and that function takes only one.
+Note that this function is distinct from the ``sayHello(_:)`` function
+shown in an earlier section.
+Although both functions have names that begin with ``sayHello``,
+the ``sayHello(_:alreadyGreeted:)``  function takes two arguments
+but the ``sayHello(_:)`` function takes only one.
 
 When calling a function with more than one parameter,
 any argument after the first is labeled according to its corresponding parameter name.
