@@ -654,8 +654,7 @@ For example:
 
     Grammar of a self expression
 
-    self-expression -->  self-method-expression | self-subscript-expression | self-initializer-expression
-    self-expression --> ``self``
+    self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
     self-method-expression --> ``self`` ``.`` identifier
     self-subscript-expression --> ``self`` ``[`` expression-list ``]``
