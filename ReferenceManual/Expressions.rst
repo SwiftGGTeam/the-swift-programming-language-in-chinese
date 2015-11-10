@@ -653,13 +653,11 @@ For example:
 
     Grammar of a self expression
 
-    self-expression --> ``self``
-    self-expression --> ``self`` ``.`` identifier
-    self-expression --> ``self`` ``[`` expression-list ``]``
-    self-expression --> ``self`` ``.`` ``init``
+    self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
-.. TODO Would be nice to make the self-expression grammar more parallel to the
-   superclass-expression grammar.
+    self-method-expression --> ``self`` ``.`` identifier
+    self-subscript-expression --> ``self`` ``[`` expression-list ``]``
+    self-initializer-expression --> ``self`` ``.`` ``init``
 
 
 .. _Expressions_SuperclassExpression:
