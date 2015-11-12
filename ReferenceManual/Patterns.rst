@@ -118,12 +118,10 @@ the identifier pattern is implicitly a subpattern of a value-binding pattern.
 Value-Binding Pattern
 ---------------------
 
-A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
-Value-binding patterns that bind a matched value to the name of a constant
-begin with the ``let`` keyword.
+A :newTerm:`value-binding pattern` binds matched values to constant names.
 
 Identifiers patterns within a value-binding pattern
-bind new named variables or constants to their matching values. For example,
+bind new named constants to their matching values. For example,
 you can decompose the elements of a tuple and bind the value of each element to a
 corresponding identifier pattern.
 
