@@ -267,7 +267,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     case-condition --> ``case`` pattern initializer where-clause-OPT
 
     optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
-    optional-binding-head --> ``let`` pattern initializer | ``var`` pattern initializer
+    optional-binding-head --> ``let`` pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
     optional-binding-continuation --> pattern initializer | optional-binding-head
 
