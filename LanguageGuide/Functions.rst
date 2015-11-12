@@ -146,6 +146,11 @@ Functions With Multiple Parameters
 Functions can have multiple input parameters,
 which are written within the function's parentheses, separated by commas.
 
+Function parameters are always constants.
+Trying to change the value of a function parameter
+from within the body of that function results in a compile-time error.
+This means that you can't change the value of a parameter by mistake.
+
 This function takes a person's name
 and whether they have already been greeted as input,
 and returns an appropriate greeting for that person:
@@ -522,11 +527,6 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 Constant and Variable Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Function parameters are constants by default.
-Trying to change the value of a function parameter
-from within the body of that function results in a compile-time error.
-This means that you can't change the value of a parameter by mistake.
 
 However, sometimes it is useful for a function to have
 a *variable* copy of a parameter's value to work with.
