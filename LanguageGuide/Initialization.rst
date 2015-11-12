@@ -1609,6 +1609,12 @@ As a result, the failable initializer for ``Product``
 can trigger an initialization failure at the start of the initializer if it is passed an empty string,
 *before* assigning a specific value to the ``name`` property within the initializer.
 
+.. An IUO is used above essentially as a workaround --
+   the deallocation logic can't properly handly partially-initialized instances,
+   so you have to complete the definite initialization before you can return nil.
+   By using an IUO, everything has an initial value of nil
+   so definite initialization is complete at the very beginning of the initializer.
+
 Because the ``name`` property is a constant,
 you can be confident that it will always contain
 a non-``nil`` value if initialization succeeds.

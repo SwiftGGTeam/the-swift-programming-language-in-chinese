@@ -79,7 +79,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
           introduced=<#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The *version number* consists of one or more positive integers, separated by periods.
     * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
       It has the following form:
 
@@ -87,7 +87,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
           deprecated=<#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The *version number* consists of one or more positive integers, separated by periods.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
       It has the following form:
@@ -96,7 +96,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
           obsoleted=<#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The *version number* consists of one or more positive integers, separated by periods.
     * The ``message`` argument is used to provide a textual message that's displayed by the compiler
       when emitting a warning or error about the use of a deprecated or obsoleted declaration.
       It has the following form:
@@ -290,9 +290,10 @@ the ``noreturn`` attribute to a function or method *type*.
 ``nonobjc``
     Apply this attribute to a
     method, property, subscript, or initializer declaration
-    that can be represented in Objective-C.
+    to suppress an implicit ``objc`` attribute.
     The ``nonobjc`` attribute tells the compiler
-    that a declaration is not available to use in Objective-C code.
+    to make the declaration unavailable in Objective-C code,
+    even though it is possible to represent it in Objective-C.
 
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,

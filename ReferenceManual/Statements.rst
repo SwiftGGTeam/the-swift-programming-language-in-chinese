@@ -132,12 +132,45 @@ the ``BooleanType`` protocol.
     stmt-for-c-style-init ::= decl-var
     stmt-for-c-style-init ::= expr
 
+.. assertion:: c-style-for-allows-expression-list
+
+   -> // Init and increment can be a list
+   -> for var i = 0, j = 0; i < 5; i++, j++ {
+          print(i, j)
+      }
+   << 0 0
+   << 1 1
+   << 2 2
+   << 3 3
+   << 4 4
+   -> // Test can't be a list
+   -> for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! <REPL Input>:1:28: error: expected ';' in 'for' statement
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                            ^
+   !! <REPL Input>:1:28: error: expected expression
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                            ^
+   !! <REPL Input>:1:35: error: expected '{' in 'for' statement
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                                   ^
+   !! <REPL Input>:1:46: error: statement cannot begin with a closure expression
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                                              ^
+   !! <REPL Input>:1:46: note: explicitly discard the result of the closure by assigning to '_'
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                                              ^
+   !!                                              _ = 
+   !! <REPL Input>:1:46: error: braced block of statements is an unused closure
+   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !!                                              ^
+
 .. syntax-grammar::
 
     Grammar of a for statement
 
-    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
-    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
+    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-list-OPT code-block
+    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-list-OPT ``)`` code-block
 
     for-init --> variable-declaration | expression-list
 

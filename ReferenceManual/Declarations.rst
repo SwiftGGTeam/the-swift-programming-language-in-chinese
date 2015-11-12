@@ -955,7 +955,7 @@ They have the following form:
     }
 
 Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` expression
-(that is, in the scope a ``try`` or ``try!`` operator).
+(that is, in the scope of a ``try`` or ``try!`` operator).
 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
