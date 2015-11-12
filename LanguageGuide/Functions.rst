@@ -554,8 +554,6 @@ to indicate that it can be modified by the function.
 
    In-out parameters cannot have default values,
    and variadic parameters cannot be marked as ``inout``.
-   If you mark a parameter as ``inout``,
-   it cannot also be marked as ``var`` or ``let``.
 
 Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:
