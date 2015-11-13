@@ -389,9 +389,9 @@ You do not need to specify the type of the closure's input parameter, ``number``
 because the type can be inferred from the values in the array to be mapped.
 
 In this example,
-the variable ``number`` is initialized with the value of the closure's ``number`` parameter
+the variable ``number`` is initialized with the value of the closure's ``number`` parameter,
 so that the value can be modified within the closure body.
-(Parameters to functions and closures are always constants.)
+(The parameters to functions and closures are always constants.)
 The closure expression also specifies a return type of ``String``,
 to indicate the type that will be stored in the mapped output array.
 
