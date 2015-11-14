@@ -139,7 +139,7 @@ the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
-``Void`` is a typealias for the empty tuple type, ``()``.
+``Void`` is a type alias for the empty tuple type, ``()``.
 If there is only one element inside the parentheses,
 the type is simply the type of that element.
 For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
