@@ -264,8 +264,8 @@ for (index, value) in shoppingList.enumerate() {
 *集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意：  
-> Swift的`Set`类型被桥接到`Fundation`中的`NSSet`类。  
-> 关于使用`Fundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+> Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。  
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
