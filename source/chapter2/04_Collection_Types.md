@@ -30,10 +30,10 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。�
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
 
-如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着我们可以在创建之后添加更多或移除已存在的数据项来改变这个集合的大小。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小不能被改变。
+如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着我们可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
 > 注意：  
-在我们不需要改变集合大小的时候创建不可变集合是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。
+在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
 
 <a name="arrays"></a>
 ## 数组(Arrays)
@@ -264,8 +264,8 @@ for (index, value) in shoppingList.enumerate() {
 *集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意：  
-> Swift的`Set`类型被桥接到`Fundation`中的`NSSet`类。  
-> 关于使用`Fundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+> Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。  
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值

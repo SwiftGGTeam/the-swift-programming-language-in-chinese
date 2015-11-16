@@ -21,7 +21,7 @@
 - [类的继承和构造过程](#class_inheritance_and_initialization)
 - [可失败构造器](#failable_initializers)
 - [必要构造器](#required_initializers)
-- [通过闭包和函数来设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
+- [通过闭包或函数设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
 
 
 构造过程是使用类、结构体或枚举类型的实例之前的准备过程。在新实例可用前必须执行这个过程，具体操作包括设置实例中每个存储型属性的初始值和执行其他必须的设置或初始化工作。
@@ -162,7 +162,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 下面是之前`Celsius`例子的扩展，跟之前相比添加了一个带有`Double`类型参数的构造器，其外部名用`_`代替：
 
 ```swift
-struct Celsius {I
+struct Celsius {
     var temperatureInCelsius: Double
     init(fromFahrenheit fahrenheit: Double) {
         temperatureInCelsius = (fahrenheit - 32.0) / 1.8
@@ -390,7 +390,7 @@ convenience init(parameters) {
 便利构造器必须调用同一类中定义的其它构造器。
 
 ##### 规则 3
-便利构造器必须最终以调用一个指定构造器结束。
+便利构造器必须最终导致一个指定构造器被调用。
 
 一个更方便记忆的方法是：
 
@@ -689,19 +689,19 @@ for item in breakfastList {
 <a name="failable_initializers"></a>
 ## 可失败构造器
 
-如果一个类、结构体或枚举类型的对象，在构造自身的过程中有可能失败，则为其定义一个可失败构造器，是非常有用的。这里所指的“失败”是指，如给构造器传入无效的参数值，或缺少某种所需的外部资源，又或是不满足某种必要的条件等。
+如果一个类、结构体或枚举类型的对象，在构造过程中有可能失败，则为其定义一个可失败构造器。这里所指的“失败”是指，如给构造器传入无效的参数值，或缺少某种所需的外部资源，又或是不满足某种必要的条件等。
 
 为了妥善处理这种构造过程中可能会失败的情况。你可以在一个类，结构体或是枚举类型的定义中，添加一个或多个可失败构造器。其语法为在`init`关键字后面加添问号`(init?)`。
 
-> 注意：
-可失败构造器的参数名和参数类型，不能与其它非可失败构造器的参数名，及其类型相同。
+> 注意  
+可失败构造器的参数名和参数类型，不能与其它非可失败构造器的参数名，及其参数类型相同。
 
-可失败构造器，在构建对象的过程中，创建一个其自身类型为可选类型的对象。你通过`return nil` 语句，来表明可失败构造器在何种情况下“失败”。
+可失败构造器会创建一个类型为自身类型的可选类型的对象。你通过`return nil`语句来表明可失败构造器在何种情况下应该“失败”。
 
-> 注意：
-严格来说，构造器都不支持返回值。因为构造器本身的作用，只是为了能确保对象自身能被正确构建。所以即使你在表明可失败构造器，失败的这种情况下，用到了`return nil`。也不要在表明可失败构造器成功的这种情况下，使用关键字 `return`。
+> 注意  
+严格来说，构造器都不支持返回值。因为构造器本身的作用，只是为了确保对象能被正确构造。因此你只是用`return nil`表明可失败构造器构造失败，而不要用关键字`return`来表明构造成功。
 
-下例中，定义了一个名为`Animal`的结构体，其中有一个名为`species`的，`String`类型的常量属性。同时该结构体还定义了一个，带一个`String`类型参数`species`的,可失败构造器。这个可失败构造器，被用来检查传入的参数是否为一个空字符串，如果为空字符串，则该可失败构造器，构建对象失败，否则成功。
+下例中，定义了一个名为`Animal`的结构体，其中有一个名为`species`的`String`类型的常量属性。同时该结构体还定义了一个接受一个名为`species`的`String`类型参数的可失败构造器。这个可失败构造器检查传入的参数是否为一个空字符串。如果为空字符串，则构造失败。否则，`species`属性被赋值，构造成功。
 
 ```swift
 struct Animal {
@@ -713,7 +713,7 @@ struct Animal {
 }
 ```
 
-你可以通过该可失败构造器来构建一个Animal的对象，并检查其构建过程是否成功。
+你可以通过该可失败构造器来构建一个`Animal`的实例，并检查构造过程是否成功：
 
 ```swift
 let someCreature = Animal(species: "Giraffe")
@@ -725,7 +725,7 @@ if let giraffe = someCreature {
 // 打印 "An animal was initialized with a species of Giraffe"
 ```
 
-如果你给该可失败构造器传入一个空字符串作为其参数，则该可失败构造器失败。
+如果你给该可失败构造器传入一个空字符串作为其参数，则会导致构造失败：
 
 ```swift
 let anonymousCreature = Animal(species: "")
@@ -737,15 +737,15 @@ if anonymousCreature == nil {
 // 打印 "The anonymous creature could not be initialized"
 ```
 
-> 注意：
-空字符串（如`""`，而不是`"Giraffe"`）和一个值为`nil`的可选类型的字符串是两个完全不同的概念。上例中的空字符串（`""`）其实是一个有效的，非可选类型的字符串。这里我们只所以让`Animal`的可失败构造器，构建对象失败，只是因为对于`Animal`这个类的`species`属性来说，它更适合有一个具体的值，而不是空字符串。
+> 注意  
+空字符串（如`""`，而不是`"Giraffe"`）和一个值为`nil`的可选类型的字符串是两个完全不同的概念。上例中的空字符串（`""`）其实是一个有效的，非可选类型的字符串。这里我们之所以让`Animal`的可失败构造器构造失败，只是因为对于`Animal`这个类的`species`属性来说，它更适合有一个具体的值，而不是空字符串。
 
 <a name="failable_nitializers_for_enumerations"></a>
-###枚举类型的可失败构造器
+### 枚举类型的可失败构造器
 
-你可以通过构造一个带一个或多个参数的可失败构造器来获取枚举类型中特定的枚举成员。还能在参数不满足枚举成员期望的条件时，构造失败。
+你可以通过一个带一个或多个参数的可失败构造器来获取枚举类型中特定的枚举成员。如果提供的参数无法匹配任何枚举成员，则构造失败。
 
-下例中，定义了一个名为TemperatureUnit的枚举类型。其中包含了三个可能的枚举成员(`Kelvin`，`Celsius`，和 `Fahrenheit`)和一个被用来找到`Character`值所对应的枚举成员的可失败构造器：
+下例中，定义了一个名为`TemperatureUnit`的枚举类型。其中包含了三个可能的枚举成员(`Kelvin`，`Celsius`，和`Fahrenheit`)，以及一个根据`Character`值找出所对应的枚举成员的可失败构造器：
 
 ```swift
 enum TemperatureUnit {
@@ -765,7 +765,7 @@ enum TemperatureUnit {
 }
 ```
 
-你可以通过给该可失败构造器传递合适的参数来获取这三个枚举成员中相匹配的其中一个枚举成员。当参数的值不能与任意一枚举成员相匹配时，该枚举类型的构建过程失败：
+你可以利用该可失败构造器在三个枚举成员中获取一个相匹配的枚举成员，当参数的值不能与任何枚举成员相匹配时，则构造失败：
 
 ```swift
 let fahrenheitUnit = TemperatureUnit(symbol: "F")
@@ -782,11 +782,11 @@ if unknownUnit == nil {
 ```
 
 <a name="failable_initializers_for_enumerations_with_raw_values"></a>
-###带原始值的枚举类型的可失败构造器
+### 带原始值的枚举类型的可失败构造器
 
-带原始值的枚举类型会自带一个可失败构造器`init?(rawValue:)`,该可失败构造器有一个名为`rawValue`的默认参数,其类型和枚举类型的原始值类型一致，如果该参数的值能够和枚举类型成员所带的原始值匹配，则该构造器构造一个带此原始值的枚举成员，否则构造失败。
+带原始值的枚举类型会自带一个可失败构造器`init?(rawValue:)`，该可失败构造器有一个名为`rawValue`的参数，其类型和枚举类型的原始值类型一致，如果该参数的值能够和某个枚举成员的原始值匹配，则该构造器会构造相应的枚举成员，否则构造失败。
 
-因此上面的 TemperatureUnit的例子可以重写为：
+因此上面的`TemperatureUnit`的例子可以重写为：
 
 ```swift
 enum TemperatureUnit: Character {
@@ -797,23 +797,23 @@ let fahrenheitUnit = TemperatureUnit(rawValue: "F")
 if fahrenheitUnit != nil {
     print("This is a defined temperature unit, so initialization succeeded.")
 }
-// prints "This is a defined temperature unit, so initialization succeeded."
+// 打印 "This is a defined temperature unit, so initialization succeeded."
 
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil {
     print("This is not a defined temperature unit, so initialization failed.")
 }
-// prints "This is not a defined temperature unit, so initialization failed."
+// 打印 "This is not a defined temperature unit, so initialization failed."
 ```
 
 <a name="failable_initializers_for_classes"></a>
-###类的可失败构造器
+### 类的可失败构造器
 
-值类型（如结构体或枚举类型）的可失败构造器，对何时何地触发构造失败这个行为没有任何的限制。比如在前面的例子中，结构体`Animal`的可失败构造器触发失败的行为，甚至发生在`species`属性的值被初始化以前。
+值类型（也就是结构体或枚举）的可失败构造器，可以在构造过程中的任意时间点触发构造失败。比如在前面的例子中，结构体`Animal`的可失败构造器在构造过程一开始就触发了构造失败，甚至在`species`属性被初始化前。
 
-而对类而言，就没有那么幸运了。类的可失败构造器只能在所有的类属性被初始化后和所有类之间的构造器之间的代理调用发生完后触发失败行为。
+而对类而言，可失败构造器只能在类引入的所有存储型属性被初始化后，以及构造器代理调用完成后，才能触发构造失败。
 
-下面例子展示了如何使用隐式解析可选类型来实现这个类的可失败构造器的要求：
+下面例子展示了如何在类的可失败构造器中使用隐式解包可选类型来满足上述要求：
 
 ```swift
 class Product {
@@ -824,33 +824,37 @@ class Product {
     }
 }
 ```
-上面定义的`Product`类，其内部结构和之前`Animal`结构体很相似。`Product`类有一个不能为空字符串的`name`常量属性。为了强制满足这个要求，`Product`类使用了可失败构造器来确保这个属性的值在构造器成功时不为空。
 
-毕竟，`Product`是一个类而不是结构体，也就不能和`Animal`一样了。`Product`类的所有可失败构造器必须在自己失败前给`name`属性一个初始值。
+上面定义的`Product`类和之前的`Animal`结构体很相似。`Product`类有一个不能为空字符串的常量属性`name`。为了强制这个要求，`Product`类使用了可失败构造器确保这个属性的值不是空字符串后，才允许构造成功。
 
-上面的例子中，`Product`类的`name`属性被定义为隐式解析可选字符串类型（`String!`）。因为它是一个可选类型，所以在构造过程里的赋值前，`name`属性有个默认值`nil`。用默认值`nil`意味着`Product`类的所有属性都有一个合法的初始值。因而，在构造器中给`name`属性赋一个特定的值前，可失败构造器能够在传入一个空字符串时触发构造过程的失败。
+毕竟，`Product`是一个类而不是结构体，这意味着不同于`Animal`，`Product`类的所有可失败构造器必须给`name`属性一个初始值，然后才能触发构造失败。
 
-因为`name`属性是一个常量，所以一旦`Product`类构造成功，`name`属性肯定有一个非`nil`的值。即使它被定义为隐式解析可选类型，也完全可以放心大胆地直接访问，而不用考虑`name`属性是否有值。
+上面的例子中，`Product`类的`name`属性被定义为隐式解包可选字符串类型（`String!`）。因为它是一个可选类型，所以它在构造过程中被赋值前，具有默认值`nil`。这个默认值`nil`意味着`Product`类引入的所有存储型属性都有一个有效的初始值。因此，一旦传入一个空字符串，该可失败构造器可以在`name`属性被赋值前触发构造失败。
+
+> 译者注  
+> 上面的示例代码和描述并不相符，根据描述，`if name.isEmpty { return nil }`这句代码应该在`self.name = name`之前，而这却会导致编译错误`error: all stored properties of a class instance must be initialized before returning nil from an initializer`，除非将`let name: String!`改为`var name: String!`。
+
+因为`name`属性是一个常量，所以一旦构造成功，`name`属性肯定有一个非`nil`的值。即使它被定义为隐式解包可选类型，也完全可以放心大胆地直接访问，而不用检查`name`属性的值是否为`nil`：
 
 ```swift
 if let bowTie = Product(name: "bow tie") {
-    // 不需要检查 bowTie.name == nil
+    // 不需要检查 bowTie.name 是否为 nil
     print("The product's name is \(bowTie.name)")
 }
 // 打印 "The product's name is bow tie"
 ```
 
 <a name="propagation_of_initialization_failure"></a>
-###构造失败的传递
+### 构造失败的传递
 
-可失败构造器允许在同一类，结构体和枚举中横向代理其他的可失败构造器。类似的，子类的可失败构造器也能向上代理基类的可失败构造器。
+类，结构体，枚举的可失败构造器可以横向代理到类型中的其他可失败构造器。类似的，子类的可失败构造器也能向上代理到父类的可失败构造器。
 
-无论是向上代理还是横向代理，如果你代理的可失败构造器，在构造过程中触发了构造失败的行为，整个构造过程都将被立即终止，接下来任何的构造代码都将不会被执行。
+无论是向上代理还是横向代理，如果你代理到的其他可失败构造器触发构造失败，整个构造过程将立即终止，接下来的任何构造代码不会再被执行。
 
->注意：
-可失败构造器也可以代理调用其它的非可失败构造器。通过这个方法，你可以为已有的构造过程加入构造失败的条件。
+> 注意  
+可失败构造器也可以代理到其它的非可失败构造器。通过这种方式，你可以增加一个可能的失败状态到现有的构造过程中。
 
-下面这个例子，定义了一个名为`CartItem`的`Product`类的子类。这个类建立了一个在线购物车中的物品的模型，它有一个名为`quantity`的常量参数，用来表示该物品的数量至少为1：
+下面这个例子，定义了一个名为`CartItem`的`Product`类的子类。这个类建立了一个在线购物车中的物品的模型，它有一个名为`quantity`的常量存储型属性，并确保该属性的值至少为`1`：
 
 ```swift
 class CartItem: Product {
@@ -859,18 +863,20 @@ class CartItem: Product {
         self.quantity = quantity
         super.init(name: name)
         if quantity < 1 { return nil }
-        
     }
 }
 ```
 
-和`Product`类中的`name`属性相类似的，`CartItem`类中的`quantity`属性的类型也是一个隐式解析可选类型，只不过由（`String!`）变为了（`Int!`）。这样做都是为了确保在构造过程中，该属性在被赋予特定的值之前能有一个默认的初始值nil。
+和`Product`类中的`name`属性类似，`CartItem`类中的`quantity`属性也是隐式解包可选类型。这意味着在构造过程中，该属性在被赋予特定的值之前能有一个默认的初始值`nil`。
 
-可失败构造器总是先向上代理调用基类,`Product`的构造器 `init(name:)`。这满足了可失败构造器在触发构造失败这个行为前必须总是执行构造代理调用这个条件。
+该可失败构造器以向上代理到父类的可失败构造器`init(name:)`开始。这满足了可失败构造器在触发构造失败前必须总是完成构造器代理调用这个条件。
 
-如果由于`name`的值为空而导致基类的构造器在构造过程中失败。则整个`CartIem`类的构造过程都将失败，后面的子类的构造过程都将不会被执行。如果基类构建成功，则继续运行子类的构造器代码。
+如果由于`name`的值为空字符串而导致父类的可失败构造器构造失败，则`CartIem`类的整个构造过程都将立即失败，之后的构造代码将不会再被执行。如果父类构造成功，`CartIem`的可失败构造器会进一步验证`quantity`的值是否不小于`1`。
 
-如果你构造了一个`CartItem`对象，并且该对象的`name`属性不为空以及`quantity`属性为 1 或者更多，则构造成功：
+> 译者注  
+> 上面的示例代码和描述也不相符，根据描述，`self.quantity = quantity`这句代码应该放在最后一行，而这却会导致编译错误`error: property 'self.quantity' not initialized at super.init call`，除非将`let quantity: Int!`改为`var quantity: Int!`。
+
+如果你构造一个`name`的值为非空字符串，`quantity`的值不小于`1`的`CartItem`实例，则可成功构造：
 
 ```swift
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
@@ -878,7 +884,8 @@ if let twoSocks = CartItem(name: "sock", quantity: 2) {
 }
 // 打印 "Item: sock, quantity: 2"
 ```
-如果你构造一个`CartItem`对象，其`quantity`的值`0`, 则`CartItem`的可失败构造器触发构造失败的行为:
+
+如果你试图构造一个`quantity`的值为`0`的`CartItem`实例, 则`CartItem`的可失败构造器会触发构造失败：
 
 ```swift
 if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
@@ -889,7 +896,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 // 打印 "Unable to initialize zero shirts"
 ```
 
-类似的, 如果你构造一个`CartItem`对象，但其`name`的值为空, 则基类`Product`的可失败构造器将触发构造失败的行为，整个`CartItem`的构造行为同样为失败：
+类似的，如果你试图构造一个`name`的值为空字符串的`CartItem`实例，则父类`Product`的可失败构造器会触发构造失败：
 
 ```swift
 if let oneUnnamed = CartItem(name: "", quantity: 1) {
@@ -903,29 +910,29 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 <a name="overriding_a_failable_initializer"></a>
 ### 重写一个可失败构造器
 
-就如同其它构造器一样，你也可以用子类的可失败构造器重写基类的可失败构造器。或者你也可以用子类的非可失败构造器重写一个基类的可失败构造器。这样做的好处是，即使基类的构造器为可失败构造器，但当子类的构造器在构造过程不可能失败时，我们也可以把它修改过来。
+如同其它的构造器，你可以在子类中重写父类的可失败构造器。或者你也可以用子类的非可失败构造器重写一个父类的可失败构造器。这使你可以定义一个不会构造失败的子类，即使父类的构造器允许构造失败。
 
-注意当你用一个子类的非可失败构造器重写了一个父类的可失败构造器时，子类的构造器将不再能向上代理父类的可失败构造器。一个非可失败的构造器永远也不能代理调用一个可失败构造器。
+注意，当你用子类的非可失败构造器重写父类的可失败构造器时，向上代理到父类的可失败构造器的唯一方式是对父类的可失败构造器的返回值进行强制解包。
 
->注意：
-你可以用一个非可失败构造器重写一个可失败构造器，但反过来却行不通。
+> 注意  
+你可以用非可失败构造器重写可失败构造器，但反过来却不行。
 
-下例定义了一个名为`Document`的类，这个类中的`name`属性允许为`nil`和一个非空字符串，但不能是一个空字符串：
+下例定义了一个名为`Document`的类，`name`属性的值必须为一个非空字符串或`nil`，但不能是一个空字符串：
 
 ```swift
 class Document {
     var name: String?
-    // 该构造器构建了一个name属性值为nil的document对象
+    // 该构造器创建了一个 name 属性的值为 nil 的 document 实例
     init() {}
-    // 该构造器构建了一个name属性值为非空字符串的document对象
+    // 该构造器创建了一个 name 属性的值为非空字符串的 document 实例
     init?(name: String) {
-        if name.isEmpty { return nil }
         self.name = name
+        if name.isEmpty { return nil }
     }
 }
 ```
 
-下面这个例子，定义了一个`Document`类的子类`AutomaticallyNamedDocument`。这个子类重写了父类的两个指定构造器，确保不论是通过没有 name 参数的构造器，还是通过传一个空字符串给`init(name:)`构造器，生成的实例中的`name`属性总有初始值`"[Untitled]"`。
+下面这个例子，定义了一个`Document`类的子类`AutomaticallyNamedDocument`。这个子类重写了父类的两个指定构造器，确保了无论是使用`init()`构造器，还是使用`init(name:)`构造器并为参数传递空字符串，生成的实例中的`name`属性总有初始`"[Untitled]"`：
 
 ```swift
 class AutomaticallyNamedDocument: Document {
@@ -944,9 +951,9 @@ class AutomaticallyNamedDocument: Document {
 }
 ```
 
-`AutomaticallyNamedDocument`用一个非可失败构造器`init(name:)`,重写了父类的可失败构造器`init?(name:)`。因为子类用不同的方法处理了`name`属性的值为一个空字符串的这种情况。所以子类将不再需要一个可失败的构造器，用一个非可失败版本代替了父类的版本。
+`AutomaticallyNamedDocument`用一个非可失败构造器`init(name:)`重写了父类的可失败构造器`init?(name:)`。因为子类用另一种方式处理了空字符串的情况，所以不再需要一个可失败构造器，因此子类用一个非可失败构造器代替了父类的可失败构造器。
 
-你可以在构造器中调用父类的可失败构造器强制解包，以实现子类的非可失败构造器。比如，下面的`UntitledDocument `子类总有值为`"[Untitled]"`的 name 属性，它在构造过程中用了父类的可失败的构造器`init(name:)`。
+你可以在子类的非可失败构造器中使用强制解包来调用父类的可失败构造器。比如，下面的`UntitledDocument`子类的`name`属性的值总是`"[Untitled]"`，它在构造过程中使用了父类的可失败构造器`init?(name:)`：
 
 ```swift
 class UntitledDocument: Document {
@@ -955,50 +962,50 @@ class UntitledDocument: Document {
     }
 }
 ```
-在这个例子中，如果在调用父类的构造器`init(name:)`时传给 name 的是空字符串，那么强制解绑操作会造成运行时错误。不过，因为这里是通过字符串常量来调用它，所以并不会发生运行时错误。
+
+在这个例子中，如果在调用父类的可失败构造器`init?(name:)`时传入的是空字符串，那么强制解包操作会引发运行时错误。不过，因为这里是通过非空的字符串常量来调用它，所以并不会发生运行时错误。
 
 <a name="the_init!_failable_initializer"></a>
 ### 可失败构造器 init!
 
-通常来说我们通过在`init`关键字后添加问号的方式（`init?`）来定义一个可失败构造器，但你也可以使用通过在`init`后面添加惊叹号的方式来定义一个可失败构造器`(init!)`，该可失败构造器将会构建一个特定类型的隐式解析可选类型的对象。
+通常来说我们通过在`init`关键字后添加问号的方式（`init?`）来定义一个可失败构造器，但你也可以通过在`init`后面添加惊叹号的方式来定义一个可失败构造器（`(init!)`），该可失败构造器将会构建一个对应类型的隐式解包可选类型的对象。
 
-你可以在 `init? `构造器中代理调用 `init!`构造器，反之亦然。
-你也可以用 `init?`重写 `init!`，反之亦然。
-你还可以用 `init`代理调用`init!`，但这会触发一个断言： `init!` 构造器是否会触发构造失败？
+你可以在`init?`中代理到`init!`，反之亦然。你也可以用`init?`重写`init!`，反之亦然。你还可以用`init`代理到`init!`，不过，一旦`init!`构造失败，则会触发一个断言。
 
 <a name="required_initializers"></a>
-##必要构造器
+## 必要构造器
 
-在类的构造器前添加 `required` 修饰符表明所有该类的子类都必须实现该构造器：
+在类的构造器前添加`required`修饰符表明所有该类的子类都必须实现该构造器：
 
 ```swift
 class SomeClass {
     required init() {
-        // 在这里添加该必要构造器的实现代码
+        // 构造器的实现代码
     }
 }
 ```
-在子类重写父类的必要构造器时，必须在子类的构造器前也添加`required`修饰符，这是为了保证继承链上子类的构造器也是必要构造器。在重写父类的必要构造器时，不需要添加`override`修饰符：
+
+在子类重写父类的必要构造器时，必须在子类的构造器前也添加`required`修饰符，表明该构造器要求也应用于继承链后面的子类。在重写父类中必要的指定构造器时，不需要添加`override`修饰符：
 
 ```swift
 class SomeSubclass: SomeClass {
     required init() {
-        // 在这里添加子类必要构造器的实现代码
+        // 构造器的实现代码
     }
 }
 ```
 
->注意：
-如果子类继承的构造器能满足必要构造器的需求，则你无需显示的在子类中提供必要构造器的实现。
+> 注意  
+如果子类继承的构造器能满足必要构造器的要求，则无须在子类中显式提供必要构造器的实现。
 
 <a name="setting_a_default_property_value_with_a_closure_or_function"></a>
-## 通过闭包和函数来设置属性的默认值
+## 通过闭包或函数设置属性的默认值
 
-如果某个存储型属性的默认值需要特别的定制或准备，你就可以使用闭包或全局函数来为其属性提供定制的默认值。每当某个属性所属的新类型实例创建时，对应的闭包或函数会被调用，而它们的返回值会当做默认值赋值给这个属性。
+如果某个存储型属性的默认值需要一些定制或设置，你可以使用闭包或全局函数为其提供定制的默认值。每当某个属性所在类型的新实例被创建时，对应的闭包或函数会被调用，而它们的返回值会当做默认值赋值给这个属性。
 
-这种类型的闭包或函数一般会创建一个跟属性类型相同的临时变量，然后修改它的值以满足预期的初始状态，最后将这个临时变量的值作为属性的默认值进行返回。
+这种类型的闭包或函数通常会创建一个跟属性类型相同的临时变量，然后修改它的值以满足预期的初始状态，最后返回这个临时变量，作为属性的默认值。
 
-下面列举了闭包如何提供默认值的代码概要：
+下面介绍了如何用闭包为属性提供默认值：
 
 ```swift
 class SomeClass {
@@ -1006,22 +1013,22 @@ class SomeClass {
         // 在这个闭包中给 someProperty 创建一个默认值
         // someValue 必须和 SomeType 类型相同
         return someValue
-        }()
+    }()
 }
 ```
 
-注意闭包结尾的大括号后面接了一对空的小括号。这是用来告诉 Swift 需要立刻执行此闭包。如果你忽略了这对括号，相当于是将闭包本身作为值赋值给了属性，而不是将闭包的返回值赋值给属性。
+注意闭包结尾的大括号后面接了一对空的小括号。这用来告诉 Swift 立即执行此闭包。如果你忽略了这对括号，相当于将闭包本身作为值赋值给了属性，而不是将闭包的返回值赋值给属性。
 
->注意：  
-如果你使用闭包来初始化属性的值，请记住在闭包执行时，实例的其它部分都还没有初始化。这意味着你不能够在闭包里访问其它的属性，就算这个属性有默认值也不允许。同样，你也不能使用隐式的`self`属性，或者调用其它的实例方法。
+> 注意  
+如果你使用闭包来初始化属性，请记住在闭包执行时，实例的其它部分都还没有初始化。这意味着你不能在闭包里访问其它属性，即使这些属性有默认值。同样，你也不能使用隐式的`self`属性，或者调用任何实例方法。
 
 下面例子中定义了一个结构体`Checkerboard`，它构建了西洋跳棋游戏的棋盘：
 
-![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Art/checkersBoard_2x.png)
+![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/checkersBoard_2x.png)
 
-西洋跳棋游戏在一副黑白格交替的 10x10 的棋盘中进行。为了呈现这副游戏棋盘，`Checkerboard`结构体定义了一个属性`boardColors`，它是一个包含 100 个布尔值的数组。数组中的某元素布尔值为`true`表示对应的是一个黑格，布尔值为`false`表示对应的是一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
+西洋跳棋游戏在一副黑白格交替的`10x10`的棋盘中进行。为了呈现这副游戏棋盘，`Checkerboard`结构体定义了一个属性`boardColors`，它是一个包含`100`个`Bool`值的数组。在数组中，值为`true`的元素表示一个黑格，值为`false`的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
-`boardColor`数组是通过一个闭包来初始化和组装颜色值的：
+`boardColor`数组是通过一个闭包来初始化并设置颜色值的：
 
 ```swift
 struct Checkerboard {
@@ -1036,19 +1043,19 @@ struct Checkerboard {
             isBlack = !isBlack
         }
         return temporaryBoard
-        }()
+    }()
     func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
         return boardColors[(row * 10) + column]
     }
 }
 ```
 
-每当一个新的`Checkerboard`实例创建时，对应的赋值闭包会执行，一系列颜色值会被计算出来作为默认值赋值给`boardColors`。上面例子中描述的闭包将计算出棋盘中每个格子合适的颜色，将这些颜色值保存到一个临时数组`temporaryBoard`中，并在构建完成时将此数组作为闭包返回值返回。这个返回的值将保存到`boardColors`中，并可以通`squareIsBlackAtRow`这个工具函数来查询。
+每当一个新的`Checkerboard`实例被创建时，赋值闭包会被执行，`boardColors`的默认值会被计算出来并返回。上面例子中描述的闭包将计算出棋盘中每个格子对应的颜色，并将这些值保存到一个临时数组`temporaryBoard`中，最后在构建完成时将此数组作为闭包返回值返回。这个返回的数组会保存到`boardColors`中，并可以通过工具函数`squareIsBlackAtRow`来查询：
 
 ```swift
 let board = Checkerboard()
 print(board.squareIsBlackAtRow(0, column: 1))
-// 输出 "true"
+// 打印 "true"
 print(board.squareIsBlackAtRow(9, column: 9))
-// 输出 "false"
+// 打印 "false"
 ```
