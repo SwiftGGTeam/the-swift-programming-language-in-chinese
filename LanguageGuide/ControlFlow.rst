@@ -17,7 +17,7 @@ The cases of a ``switch`` statement do not “fall through” to the next case i
 avoiding common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
 including interval matches, tuples, and casts to a specific type.
-Matched values in a ``switch`` case can be bound to temporary constants or variables
+Matched values in a ``switch`` case can be bound to temporary constants
 for use within the case's body,
 and complex matching conditions can be expressed with a ``where`` clause for each case.
 
@@ -858,10 +858,10 @@ and so all other matching cases would be ignored.
 Value Bindings
 ______________
 
-A ``switch`` case can bind the value or values it matches to temporary constants or variables,
+A ``switch`` case can bind the value or values it matches to temporary constants,
 for use in the body of the case.
 This is known as :newTerm:`value binding`,
-because the values are “bound” to temporary constants or variables within the case's body.
+because the values are “bound” to temporary constants within the case's body.
 
 The example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``
@@ -907,14 +907,6 @@ The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
 As a result, it matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
-
-In the example above,
-``x`` and ``y`` are declared as constants with the ``let`` keyword,
-because there is no need to modify their values within the body of the case.
-However, they could have been declared as variables instead, with the ``var`` keyword.
-If this had been done, a temporary variable would have been created
-and initialized with the appropriate value.
-Any changes to that variable would only have an effect within the body of the case.
 
 .. _ControlFlow_Where:
 

@@ -252,8 +252,7 @@ but they can only store one of them at any given time.
 
 The different barcode types can be checked using a switch statement, as before.
 This time, however, the associated values can be extracted as part of the switch statement.
-You extract each associated value as a constant (with the ``let`` prefix)
-or a variable (with the ``var`` prefix)
+You extract each associated value as a constant with the ``let`` prefix
 for use within the ``switch`` case's body:
 
 .. testcode:: enums
@@ -268,7 +267,7 @@ for use within the ``switch`` case's body:
 
 If all of the associated values for an enumeration case
 are extracted as constants, or if all are extracted as variables,
-you can place a single ``var`` or ``let`` annotation before the case name, for brevity:
+you can place a single ``let`` annotation before the case name, for brevity:
 
 .. testcode:: enums
 
