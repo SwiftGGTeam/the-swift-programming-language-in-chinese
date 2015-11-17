@@ -420,7 +420,7 @@ Date        Notes
             * Added information about how type inference works
               with :ref:`LexicalStructure_Literals`.
 
-            * Added more information about :ref:`Declarations_CurriedFunctions`.
+            * Added more information about curried functions.
 
             * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 

@@ -832,112 +832,6 @@ rather than an instance of a type
 must be marked with the ``static`` declaration modifier for enumerations and structures
 or the ``class`` declaration modifier for classes.
 
-.. _Declarations_CurriedFunctions:
-
-Curried Functions
-~~~~~~~~~~~~~~~~~
-
-You can rewrite a function that takes multiple parameters as an equivalent function
-that takes a single parameter and returns a function.
-The returned function takes the next parameter and returns another function.
-This continues until there are no remaining parameters,
-at which point the last function returns the return value of the original multiparameter function.
-The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
-
-.. testcode:: curried-function
-
-    -> func addTwoInts(a a: Int, b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-          func addTheOtherInt(b: Int) -> Int {
-             return a + b
-          }
-          return addTheOtherInt
-       }
-
-The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
-that takes the second integer and adds it to the first.
-(The nested function captures the value of the first integer argument from the enclosing
-function.)
-
-In Swift, you can write a curried function more concisely using the following syntax:
-
-.. syntax-outline::
-
-    func <#function name#>(<#parameter#>)(<#parameter#>) -> <#return type#> {
-       <#statements#>
-    }
-
-For example, the following two declarations are equivalent:
-
-.. testcode:: curried-function-syntactic-sugar
-
-    -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-          func addTheOtherInt(b: Int) -> Int {
-             return a + b
-          }
-          return addTheOtherInt
-       }
-
-In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(a:b:)`` function,
-you must call the ``addTwoIntsCurried(a:)(b:)`` function with the first integer argument
-and then call its returned function with the second integer argument:
-
-.. testcode:: curried-function-usage
-
-    >> func addTwoInts(a a: Int, b: Int) -> Int {
-    >>    return a + b
-    >> }
-    >> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-    >>    return a + b
-    >> }
-    -> addTwoInts(a: 4, b: 5)
-    <$ : Int = 9
-    -> // returns a value of 9
-    -> addTwoIntsCurried(a: 4)(b: 5)
-    <$ : Int = 9
-    -> // returns a value of 9
-
-Although you must provide the arguments to a noncurried function all at once in a single call,
-you can use the curried form of a function to provide arguments in several function calls,
-one at a time (even in different places in your code).
-This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
-and assign the result to the constant ``plusOne``:
-
-.. testcode:: curried-function
-
-    -> let plusOne = addTwoIntsCurried(a: 1)
-    << // plusOne : Int -> Int = (Function)
-    -> // plusOne is a function of type Int -> Int
-
-Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
-as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
-
-.. testcode:: curried-function
-
-    -> plusOne(10)
-    <$ : Int = 11
-    -> // returns a value of 11
-
-.. assertion:: curried-function-param-labels
-
-   // As with regular functions and methods, by default, the first parameter
-   // gets no label and everything that follows gets a label.
-   -> func add(a: Int)(b: Int) -> Int { return a + b }
-   -> add(1)(2)
-   !! <REPL Input>:1:8: error: missing argument label 'b:' in call
-   !! add(1)(2)
-   !!       ^
-   !!       b: 
-
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
@@ -960,7 +854,6 @@ Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
-For curried functions, the ``throws`` keyword applies only to the innermost function.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1003,12 +896,11 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
-    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
+    function-signature --> parameter-clause ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clause ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
-    parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    

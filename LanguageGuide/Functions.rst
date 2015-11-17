@@ -918,12 +918,3 @@ to use and return nested functions:
    </ -2...
    </ -1...
    </ zero!
-
-.. TODO: Curried Functions
-   -----------------------
-
-.. TODO: function currying syntax 
-
-.. TODO: partial application
-
-.. TODO: currying example from /test/Serialization/Inputs/def_transparent.swift
