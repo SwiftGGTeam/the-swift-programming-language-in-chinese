@@ -204,7 +204,7 @@ The loop is executed as follows:
    execution returns to step 2,
    and the condition expression is evaluated again.
 
-Constants variables declared within the initialization expression
+Constants and variables declared within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the ``for`` loop itself.
 To retrieve the final value of ``index`` after the loop ends,
