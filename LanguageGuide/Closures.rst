@@ -8,13 +8,12 @@ and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
 from the context in which they are defined.
-This is known as :newTerm:`closing` over those constants and variables,
-hence the name “closures”.
+This is known as :newTerm:`closing over` those constants and variables.
 Swift handles all of the memory management of capturing for you.
 
 .. note::
 
-   Don't worry if you are not familiar with the concept of “capturing”.
+   Don't worry if you are not familiar with the concept of capturing.
    It is explained in detail below in :ref:`Closures_CapturingValues`.
 
 Global and nested functions, as introduced in :doc:`Functions`,
@@ -482,8 +481,7 @@ with an external name of ``forIncrement``, and a local name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementer function is called.
-
-``makeIncrementer`` defines a nested function called ``incrementer``,
+The ``makeIncrementer`` function defines a nested function called ``incrementer``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
