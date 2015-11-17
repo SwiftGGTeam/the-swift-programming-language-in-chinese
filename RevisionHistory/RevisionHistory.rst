@@ -3,17 +3,15 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-.. write-me::
-
-    2015-12-03  * Updated for Swift 2.2.
-
-                * Removed discussion of ``var`` patterns, variable function arguments,
-                  and the special syntax for curried functions.
-                  These features have been removed from Swift.
-
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-12-03  * Updated for Swift 2.2.
+
+            * Removed discussion of ``var`` patterns,
+              variable function arguments,
+              and the special syntax for curried functions.
+
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
