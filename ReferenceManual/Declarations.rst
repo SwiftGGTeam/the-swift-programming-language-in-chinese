@@ -854,7 +854,6 @@ Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
-For curried functions, the ``throws`` keyword applies only to the innermost function.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
