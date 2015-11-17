@@ -512,7 +512,8 @@ the next time the ``incrementer`` function is called.
 
    As an optimization,
    Swift may instead capture and store a *copy* of a value
-   if that value is not mutated by or outside a closure.
+   if that value is not mutated by a closure,
+   and if the value is not mutated after the closure is created.
 
    Swift also handles all memory management involved in disposing of
    variables when they are no longer needed.
