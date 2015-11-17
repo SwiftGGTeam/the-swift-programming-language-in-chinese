@@ -578,8 +578,8 @@ The type of each parameter must be included ---
 it can't be inferred.
 Although the parameters to a function are constants by default,
 you can write ``let`` in front of a parameter's name to emphasize this behavior.
-Write ``inout`` to make changes to the variable also apply
-to the argument that was passed in the caller's scope.
+If you write ``inout`` in front of a parameter's name,
+the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
 
