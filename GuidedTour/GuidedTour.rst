@@ -1193,8 +1193,7 @@ in addition to its protocol conformance.
 Error Handling
 --------------
 
-You can use any type that adopts the ``ErrorType`` protocol
-to represent errors.
+You represent errors using any type that adopts the ``ErrorType`` protocol.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
@@ -1225,7 +1224,7 @@ Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
 If you throw an error in a function,
 the function returns immediately and the code that called the function
-gets to handle the error.
+handles the error.
 
 .. testcode:: guided-tour
 
@@ -1273,7 +1272,7 @@ unless you can give it a different name.
 
 A ``do``-``catch`` block can have multiple ``catch`` blocks
 that handle specific errors.
-You write a pattern after ``catch`` just like
+You write a pattern after ``catch`` just as you do
 after ``case`` in a switch.
 
 .. REFERENCE
@@ -1314,7 +1313,7 @@ Otherwise, the result is the value that the function returned.
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
-this as always executed before a function returns,
+that is always executed before a function returns,
 regardless of whether an error was thrown.
 You can use ``defer`` even when there is no error handling,
 to simplify functions that can return from several different places.
