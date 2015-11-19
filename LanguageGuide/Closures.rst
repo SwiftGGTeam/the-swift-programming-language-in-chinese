@@ -819,9 +819,11 @@ use the ``@autoclosure(escaping)`` form of the attribute.
 
 In the code above,
 instead of calling the closure passed to it
-as its ``customer`` argument,
-the ``collectCustomerProviders(_:)`` function appends the closure to the ``customerProviders`` array.
+as its ``customerProvider`` argument,
+the ``collectCustomerProviders(_:)`` function
+appends the closure to the ``customerProviders`` array.
 The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
-the value of the ``customer`` argument must be allowed to escape the function's scope.
+the value of the ``customerProvider`` argument
+must be allowed to escape the function's scope.
