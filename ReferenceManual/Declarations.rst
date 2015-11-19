@@ -977,7 +977,7 @@ Rethrowing Functions and Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A function or method can be declared with the ``rethrows`` keyword
-to indicate that it throws an error only if one of it's function parameters throws an error.
+to indicate that it throws an error only if one of its function parameters throws an error.
 These functions and methods are known as :newTerm:`rethrowing functions`
 and :newTerm:`rethrowing methods`.
 Rethrowing functions and methods
