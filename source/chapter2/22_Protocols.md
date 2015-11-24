@@ -14,71 +14,71 @@
 
 本页包含内容：
 
-- [协议的语法（Protocol Syntax）](#protocol_syntax)
-- [对属性的规定（Property Requirements）](#property_requirements)
-- [对方法的规定（Method Requirements）](#method_requirements)
-- [对Mutating方法的规定（Mutating Method Requirements）](#mutating_method_requirements)
-- [对构造器的规定（Initializer Requirements）](#initializer_requirements)
-- [协议类型（Protocols as Types）](#protocols_as_types)
-- [委托(代理)模式（Delegation）](#delegation)
-- [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
-- [通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
+- [协议语法（Protocol Syntax）](#protocol_syntax)
+- [属性要求（Property Requirements）](#property_requirements)
+- [方法要求（Method Requirements）](#method_requirements)
+- [Mutating 方法要求（Mutating Method Requirements）](#mutating_method_requirements)
+- [构造器要求（Initializer Requirements）](#initializer_requirements)
+- [协议作为类型（Protocols as Types）](#protocols_as_types)
+- [委托（代理）模式（Delegation）](#delegation)
+- [通过扩展添加协议一致性（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
+- [通过扩展声明采纳协议（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [协议类型的集合（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
-- [类专属协议（Class-Only Protocol）](#class_only_protocol)
+- [类类型专属协议（Class-Only Protocol）](#class_only_protocol)
 - [协议合成（Protocol Composition）](#protocol_composition)
-- [检验协议的一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
-- [对可选协议的规定（Optional Protocol Requirements）](#optional_protocol_requirements)
+- [检查协议一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
+- [可选协议要求（Optional Protocol Requirements）](#optional_protocol_requirements)
 - [协议扩展（Protocol Extensions）](#protocol_extensions)
 
+协议定义了一个蓝图，规定了用来实现某一特定任务或者功能的方法、属性，以及其他需要的东西。类、结构体或枚举都可以采纳协议，并为协议定义的这些要求提供具体实现。某个类型能够满足某个协议的要求，就可以说该类型“符合”这个协议。
 
-`协议`定义了一个蓝图，规定了用来实现某一特定工作或者功能所必需的方法和属性。类，结构体或枚举类型都可以遵循协议，并提供具体实现来完成协议定义的方法和功能。任意能够满足协议要求的类型被称为`遵循(conform)`这个协议。
+除了符合协议的类型必须实现的要求外，还可以对协议进行扩展，通过扩展来实现一部分要求或者实现一些附加功能，这样符合协议的类型就能够使用这些功能。
 
-除了遵循协议的类型必须实现那些指定的规定以外，还可以对协议进行扩展，实现一些特殊的规定或者一些附加的功能，使得遵循的类型能够收益。
 <a name="protocol_syntax"></a>
-## 协议的语法
+## 协议语法
 
-协议的定义方式与类，结构体，枚举的定义非常相似。
+协议的定义方式与类、结构体和枚举的定义非常相似：
 
 ```swift
 protocol SomeProtocol {
-	// 协议内容
+	// 这里是协议的定义部分
 }
 ```
 
-要使类遵循某个协议，需要在类型名称后加上协议名称，中间以冒号`:`分隔，作为类型定义的一部分。遵循多个协议时，各协议之间用逗号`,`分隔。
+要让自定义类型采纳某个协议，在定义类型时，需要在类型名称后加上协议名称，中间以冒号（`:`）分隔。采纳多个协议时，各协议之间用逗号（`,`）分隔：
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
-	// 结构体内容
+	// 这里是结构体的定义部分
 }
 ```
 
-如果类在遵循协议的同时拥有父类，应该将父类名放在协议名之前，以逗号分隔。
+拥有父类的类在采纳协议时，应该将父类名放在协议名之前，以逗号分隔：
 
 ```swift
 class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
-	// 类的内容
+	// 这里是类的定义部分
 }
 ```
 
 <a name="property_requirements"></a>
-## 对属性的规定
+## 属性要求
 
-协议可以规定其`遵循者`提供特定名称和类型的`实例属性(instance property)`或`类属性(type property)`，而不用指定是`存储型属性(stored property)`还是`计算型属性(calculate property)`。此外还必须指明是只读的还是可读可写的。
+协议可以要求符合协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是只读的还是可读可写的。
 
-如果协议规定属性是可读可写的，那么这个属性不能是常量或只读的计算属性。如果协议只要求属性是只读的(gettable)，那个属性不仅可以是只读的，如果你代码需要的话，也可以是可写的。
+如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是只读的，那么该属性不仅可以是只读的，如果代码需要的话，还可以是可写的。
 
-协议中的通常用var来声明变量属性，在类型声明后加上`{ set get }`来表示属性是可读可写的，只读属性则用`{ get }`来表示。
+协议通常用 `var` 关键字来声明变量属性，在类型声明后加上 `{ set get }` 来表示属性是可读可写的，只读属性则用 `{ get }` 来表示：
 
 ```swift
 protocol SomeProtocol {
-	var mustBeSettable : Int { get set }
+	var mustBeSettable: Int { get set }
 	var doesNotNeedToBeSettable: Int { get }
 }
 ```
 
-在协议中定义类属性(type property)时，总是使用`static`关键字作为前缀。当协议的遵循者是类时，可以使用`class`或`static`关键字来声明类属性：
+在协议中定义类型属性时，总是使用 `static` 关键字作为前缀。当类类型采纳协议时，除了 `static` 关键字，还可以使用 `class` 关键字来声明类型属性：
 
 ```swift
 protocol AnotherProtocol {
@@ -86,7 +86,7 @@ protocol AnotherProtocol {
 }
 ```
 
-如下所示，这是一个含有一个实例属性要求的协议：
+如下所示，这是一个只含有一个实例属性要求的协议：
 
 ```swift
 protocol FullyNamed {
@@ -94,23 +94,23 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed`协议除了要求协议的遵循者提供全名属性外，对协议对遵循者的类型并没有特别的要求。这个协议表示，任何遵循`FullyNamed`协议的类型，都具有一个可读的`String`类型实例属性`fullName`。
+`FullyNamed` 协议除了要求符合协议的类型提供 `fullName` 属性外，并没有其他特别的要求。这个协议表示，任何符合 `FullyNamed` 的类型，都必须有一个只读的 `String` 类型的实例属性 `fullName`。
 
-下面是一个遵循`FullyNamed`协议的简单结构体：
+下面是一个采纳 `FullyNamed` 协议的简单结构体：
 
 ```swift
-struct Person: FullyNamed{
+struct Person: FullyNamed {
 	var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
-//john.fullName 为 "John Appleseed"
+// john.fullName 为 "John Appleseed"
 ```
 
-这个例子中定义了一个叫做`Person`的结构体，用来表示具有名字的人。从第一行代码中可以看出，它遵循了`FullyNamed`协议。
+这个例子中定义了一个叫做 `Person` 的结构体，用来表示一个具有名字的人。从第一行代码可以看出，它采纳了 `FullyNamed` 协议。
 
-`Person`结构体的每一个实例都有一个`String`类型的存储型属性`fullName`。这正好满足了`FullyNamed`协议的要求，也就意味着，`Person`结构体完整的`遵循`了协议。(如果协议要求未被完全满足,在编译时会报错)
+`Person` 结构体的每一个实例都有一个 `String` 类型的存储型属性 `fullName`。这正好满足了 `FullyNamed` 协议的要求，也就意味着 `Person` 结构体正确地符合了协议。（如果协议要求未被完全满足，在编译时会报错。）
 
-下面是一个更为复杂的类，它采用并遵循了`FullyNamed`协议:
+下面是一个更为复杂的类，它采纳并符合了 `FullyNamed` 协议：
 
 ```swift
 class Starship: FullyNamed {
@@ -128,14 +128,14 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName 是 "USS Enterprise"
 ```
 
-`Starship`类把`fullName`属性实现为只读的计算型属性。每一个`Starship`类的实例都有一个名为`name`的属性和一个名为`prefix`的可选属性。 当`prefix`存在时，将`prefix`插入到`name`之前来为Starship构建`fullName`，`prefix`不存在时，则将直接用`name`构建`fullName`。
+`Starship` 类把 `fullName` 属性实现为只读的计算型属性。每一个 `Starship` 类的实例都有一个名为 `name` 的非可选属性和一个名为 `prefix` 的可选属性。 当 `prefix` 存在时，计算型属性 `fullName` 会将 `prefix` 插入到 `name` 之前，从而为星际飞船构建一个全名。
 
 <a name="method_requirements"></a>
-## 对方法的规定
+## 方法要求
 
-协议可以要求其遵循者实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通的方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是在协议的方法定义中，不支持参数默认值。
+协议可以要求符合协议的类型实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是，不支持为协议中的方法的参数提供默认值。
 
-正如对属性的规定中所说的，在协议中定义类方法的时候，总是使用`static`关键字作为前缀。当协议的遵循者是类的时候，你可以在类的实现中使用`class`或者`static`来实现类方法：
+正如属性要求中所述，在协议中定义类方法的时候，总是使用 `static` 关键字作为前缀。当类类型采纳协议时，除了 `static` 关键字，还可以使用 `class` 关键字作为前缀：
 
 ```swift
 protocol SomeProtocol {
@@ -143,7 +143,7 @@ protocol SomeProtocol {
 }
 ```
 
-下面的例子定义了含有一个实例方法的协议：
+下面的例子定义了一个只含有一个实例方法的协议：
 
 ```swift
 protocol RandomNumberGenerator {
@@ -151,12 +151,11 @@ protocol RandomNumberGenerator {
 }
 ```
 
-`RandomNumberGenerator`协议要求其遵循者必须拥有一个名为`random`， 返回值类型为`Double`的实例方法。尽管这里并未指明，但是我们假设返回值在[0，1)区间内。
+`RandomNumberGenerator` 协议要求符合协议的类型必须拥有一个名为 `random`， 返回值类型为 `Double` 的实例方法。尽管这里并未指明，但是我们假设返回值在 `[0.0,1.0)` 区间内。
 
-`RandomNumberGenerator`协议并不在意每一个随机数是怎样生成的，它只强调这里有一个随机数生成器。
+`RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的，它只要求必须提供一个随机数生成器。
 
-如下所示，下边的是一个遵循了`RandomNumberGenerator`协议的类。该类实现了一个叫做*线性同余生成器(linear congruential generator)*的伪随机数算法。
-
+如下所示，下边是一个采纳了 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 *线性同余生成器（linear congruential generator）* 的伪随机数算法。
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
@@ -171,25 +170,24 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 输出 : "Here's a random number: 0.37464991998171"
+// 打印 “Here's a random number: 0.37464991998171”
 print("And another one: \(generator.random())")
-// 输出 : "And another one: 0.729023776863283"
+// 打印 “And another one: 0.729023776863283”
 ```
 
 <a name="mutating_method_requirements"></a>
-## 对 Mutating 方法的规定
+## Mutating 方法要求
 
-有时需要在方法中改变它的实例。例如，值类型(结构体，枚举)的实例方法中，将`mutating`关键字作为函数的前缀，写在`func`之前，表示可以在该方法中修改它所属的实例及其实例属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
+有时需要在方法中改变方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
 
-如果你在协议中定义了一个方法旨在改变遵循该协议的实例，那么在协议定义时需要在方法前加`mutating`关键字。这使得结构和枚举遵循协议并满足此方法要求。
+如果你在协议中定义了一个实例方法，该方法会改变采纳该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够采纳此协议并满足此方法要求。
 
+> 注意  
+> 实现协议中的 `mutating` 方法时，若是类类型，则不用写 `mutating` 关键字。而对于结构体和枚举，则必须写 `mutating` 关键字。
 
->注意:  
->用类实现协议中的`mutating`方法时，不用写`mutating`关键字;用结构体，枚举实现协议中的`mutating`方法时，必须写`mutating`关键字。
+如下所示，`Togglable` 协议只要求实现一个名为 `toggle` 的实例方法。根据名称的暗示，`toggle()` 方法将改变实例属性，从而切换符合该协议类型的实例的状态。
 
-如下所示，`Togglable`协议含有名为`toggle`的实例方法。根据名称推测，`toggle()`方法将通过改变实例属性，来切换遵循该协议的实例的状态。
-
-`toggle()`方法在定义的时候，使用`mutating`关键字标记，这表明当它被调用时该方法将会改变协议遵循者实例的状态：
+`toggle()` 方法在定义的时候，使用 `mutating` 关键字标记，这表明当它被调用时，该方法将会改变符合协议的类型的实例：
 
 ```swift
 protocol Togglable {
@@ -197,9 +195,9 @@ protocol Togglable {
 }
 ```
 
-当使用`枚举`或`结构体`来实现`Togglable`协议时，需要提供一个带有`mutating`前缀的`toggle`方法。
+当使用枚举或结构体来实现 `Togglable` 协议时，需要提供一个带有 `mutating` 前缀的 `toggle()` 方法。
 
-下面定义了一个名为`OnOffSwitch`的枚举类型。这个枚举类型在两种状态之间进行切换，用枚举成员`On`和`Off`表示。枚举类型的`toggle`方法被标记为`mutating`以满足`Togglable`协议的要求：
+下面定义了一个名为 `OnOffSwitch` 的枚举。这个枚举在两种状态之间进行切换，用枚举成员 `On` 和 `Off` 表示。枚举的 `toggle()` 方法被标记为 `mutating`，以满足 `Togglable` 协议的要求：
 
 ```swift
 enum OnOffSwitch: Togglable {
@@ -215,13 +213,13 @@ enum OnOffSwitch: Togglable {
 }
 var lightSwitch = OnOffSwitch.Off
 lightSwitch.toggle()
-//lightSwitch 现在的值为 .On
+// lightSwitch 现在的值为 .On
 ```
 
 <a name="initializer_requirements"></a>
-## 对构造器的规定
+## 构造器要求
 
-协议可以要求它的遵循者实现指定的构造器。你可以像书写普通的构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
+协议可以要求符合协议的类型实现指定的构造器。你可以像编写普通构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
 
 ```swift
 protocol SomeProtocol {
@@ -229,70 +227,68 @@ protocol SomeProtocol {
 }
 ```
 
-### 协议构造器规定在类中的实现
+### 构造器要求在类中的实现
 
-你可以在遵循该协议的类中实现构造器，并指定其为类的指定构造器(designated initializer)或者便利构造器(convenience initializer)。在这两种情况下，你都必须给构造器实现标上"required"修饰符：
+你可以在符合协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
 
 ```swift
 class SomeClass: SomeProtocol {
     required init(someParameter: Int) {
-        //构造器实现
+        // 这里是构造器的实现部分
     }
 }
 ```
 
-使用`required`修饰符可以保证：所有的遵循该协议的子类，同样能为构造器规定提供一个显式的实现或继承实现。
+使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能符合协议。
 
-关于`required`构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
+关于 `required` 构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
 
->注意  
->如果类已经被标记为`final`，那么不需要在协议构造器的实现中使用`required`修饰符。因为final类不能有子类。关于`final`修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
+> 注意  
+> 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
 
-如果一个子类重写了父类的指定构造器，并且该构造器遵循了某个协议的规定，那么该构造器的实现需要被同时标示`required`和`override`修饰符：
+如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，那么该构造器的实现需要同时标注 `required` 和 `override` 修饰符：
 
 ```swift
 protocol SomeProtocol {
     init()
 }
 
-
 class SomeSuperClass {
     init() {
-        // 构造器的实现
+        // 这里是构造器的实现部分
     }
 }
 
-
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-    // 因为遵循协议，需要加上"required"; 因为继承自父类，需要加上"override"
+    // 因为符合协议，需要加上 required
+    // 因为继承自父类，需要加上 override
     required override init() {
-        // 构造器实现
+        // 这里是构造器的实现部分
     }
 }
 ```
 
-### 可失败构造器的规定
+### 可失败构造器要求
 
-可以通过给协议`Protocols`中添加[可失败构造器](./14_Initialization.html#failable_initializers)来使遵循该协议的类型必须实现该可失败构造器。
+协议还可以为符合协议的类型定义可失败构造器要求，详见[可失败构造器](./14_Initialization.html#failable_initializers)。
 
-如果在协议中定义一个可失败构造器，则在遵顼该协议的类型中必须添加同名同参数的可失败构造器或非可失败构造器。如果在协议中定义一个非可失败构造器，则在遵循该协议的类型中必须添加同名同参数的非可失败构造器或隐式解析类型的可失败构造器（`init!`）。
-
+符合协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
 <a name="protocols_as_types"></a>
-## 协议类型
+## 协议作为类型
 
-尽管协议本身并不实现任何功能，但是协议可以被当做类型来使用。
+尽管协议本身并未实现任何功能，但是协议可以被当做一个成熟的类型来使用。
 
-协议可以像其他普通类型一样使用，使用场景:
+协议可以像其他普通类型一样使用，使用场景如下：
 
 * 作为函数、方法或构造器中的参数类型或返回值类型
 * 作为常量、变量或属性的类型
 * 作为数组、字典或其他容器中的元素类型
 
 > 注意  
-> 协议是一种类型，因此协议类型的名称应与其他类型(Int，Double，String)的写法相同，使用大写字母开头的驼峰式写法，例如(`FullyNamed`和`RandomNumberGenerator`)
+> 协议是一种类型，因此协议类型的名称应与其他类型（例如 `Int`，`Double`，`String`）的写法相同，使用大写字母开头的驼峰式写法，例如（`FullyNamed` 和 `RandomNumberGenerator`）。
 
-如下所示，这个示例中将协议当做类型来使用：
+下面是将协议作为类型使用的例子：
 
 ```swift
 class Dice {
@@ -308,31 +304,30 @@ class Dice {
 }
 ```
 
-例子中定义了一个`Dice`类，用来代表桌游中的拥有N个面的骰子。`Dice`的实例含有`sides`和`generator`两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器。
+例子中定义了一个 `Dice` 类，用来代表桌游中拥有 N 个面的骰子。`Dice` 的实例含有 `sides` 和 `generator` 两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器，从而生成随机点数。
 
- `generator`属性的类型为`RandomNumberGenerator`，因此任何遵循了`RandomNumberGenerator`协议的类型的实例都可以赋值给`generator`，除此之外，无其他要求。
+`generator` 属性的类型为 `RandomNumberGenerator`，因此任何采纳了 `RandomNumberGenerator` 协议的类型的实例都可以赋值给 `generator`，除此之外并无其他要求。
 
-`Dice`类中也有一个构造器(initializer)，用来进行初始化操作。构造器中含有一个名为`generator`，类型为`RandomNumberGenerator`的形参。在调用构造方法时创建`Dice`的实例时，可以传入任何遵循`RandomNumberGenerator`协议的实例给generator。
+`Dice` 类还有一个构造器，用来设置初始状态。构造器有一个名为 `generator`，类型为 `RandomNumberGenerator` 的形参。在调用构造方法创建 `Dice` 的实例时，可以传入任何采纳 `RandomNumberGenerator` 协议的实例给 `generator`。
 
-`Dice`类也提供了一个名为`roll`的实例方法用来模拟骰子的面值。它先使用`generator`的`random()`方法来创建一个[0,1)区间内的随机数，然后使用这个随机数生成正确的骰子面值。因为generator遵循了`RandomNumberGenerator`协议，因而保证了`random`方法可以被调用。
+`Dice` 类提供了一个名为 `roll` 的实例方法，用来模拟骰子的面值。它先调用 `generator` 的 `random()` 方法来生成一个 `[0.0,1.0)` 区间内的随机数，然后使用这个随机数生成正确的骰子面值。因为 `generator` 采纳了 `RandomNumberGenerator` 协议，可以确保它有个 `random()` 方法可供调用。
 
-下面的例子展示了如何使用`LinearCongruentialGenerator`的实例作为随机数生成器创建一个六面骰子:
+下面的例子展示了如何使用 `LinearCongruentialGenerator` 的实例作为随机数生成器来创建一个六面骰子：
 
 ```swift
 var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
 for _ in 1...5 {
 	print("Random dice roll is \(d6.roll())")
 }
-//输出结果
-//Random dice roll is 3
-//Random dice roll is 5
-//Random dice roll is 4
-//Random dice roll is 5
-//Random dice roll is 4
+// Random dice roll is 3
+// Random dice roll is 5
+// Random dice roll is 4
+// Random dice roll is 5
+// Random dice roll is 4
 ```
 
 <a name="delegation"></a>
-## 委托(代理)模式
+## 委托（代理）模式
 
 委托是一种设计模式，它允许`类`或`结构体`将一些需要它们负责的功能`交由(或委托)`给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法，使其`遵循者`拥有这些被委托的`函数和方法`。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。
 
