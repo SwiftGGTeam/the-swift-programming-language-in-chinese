@@ -22,7 +22,7 @@
 - [协议作为类型（Protocols as Types）](#protocols_as_types)
 - [委托（代理）模式（Delegation）](#delegation)
 - [通过扩展添加协议一致性（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
-- [通过扩展声明采纳协议（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
+- [通过扩展声明已采纳协议（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [协议类型的集合（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
 - [类类型专属协议（Class-Only Protocol）](#class_only_protocol)
@@ -329,9 +329,9 @@ for _ in 1...5 {
 <a name="delegation"></a>
 ## 委托（代理）模式
 
-委托是一种设计模式，它允许`类`或`结构体`将一些需要它们负责的功能`交由(或委托)`给其他的类型的实例。委托模式的实现很简单: 定义协议来封装那些需要被委托的函数和方法，使其`遵循者`拥有这些被委托的`函数和方法`。委托模式可以用来响应特定的动作或接收外部数据源提供的数据，而无需要知道外部数据源的类型信息。
+委托是一种设计模式，它允许类或结构体将一些需要它们负责的功能委托给其他类型的实例。委托模式的实现很简单：定义协议来封装那些需要被委托的功能，这样就能确保符合协议的类型能提供这些功能。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。
 
-下面的例子是两个基于骰子游戏的协议：
+下面的例子定义了两个基于骰子游戏的协议：
 
 ```swift
 protocol DiceGame {
@@ -346,9 +346,9 @@ protocol DiceGameDelegate {
 }
 ```
 
-`DiceGame`协议可以在任意含有骰子的游戏中实现。`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程。
+`DiceGame` 协议可以被任意涉及骰子的游戏采纳。`DiceGameDelegate` 协议可以被任意类型采纳，用来追踪 `DiceGame` 的游戏过程。
 
-如下所示，`SnakesAndLadders`是`Snakes and Ladders`([Control Flow](./05_Control_Flow.html)章节有该游戏的详细介绍)游戏的新版本。新版本使用`Dice`作为骰子，并且实现了`DiceGame`和`DiceGameDelegate`协议，后者用来记录游戏的过程:
+如下所示，`SnakesAndLadders` 是 [Control Flow](./05_Control_Flow.html) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
 
 ```swift
 class SnakesAndLadders: DiceGame {
@@ -367,15 +367,15 @@ class SnakesAndLadders: DiceGame {
  		delegate?.gameDidStart(self)
  		gameLoop: while square != finalSquare {
  			let diceRoll = dice.roll()
- 			delegate?.game(self,didStartNewTurnWithDiceRoll: diceRoll)
+ 			delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
  			switch square + diceRoll {
  			case finalSquare:
  				break gameLoop
  			case let newSquare where newSquare > finalSquare:
  				continue gameLoop
  			default:
- 			square += diceRoll
- 			square += board[square]
+ 			    square += diceRoll
+ 			    square += board[square]
  			}
  		}
  		delegate?.gameDidEnd(self)
@@ -383,17 +383,19 @@ class SnakesAndLadders: DiceGame {
 }
 ```
 
-这个版本的游戏封装到了`SnakesAndLadders`类中，该类遵循了`DiceGame`协议，并且提供了相应的可读的`dice`属性和`play`实例方法。(`dice`属性在构造之后就不再改变，且协议只要求`dice`为只读的，因此将`dice`声明为常量属性。)
+关于这个蛇梯棋游戏的详细描述请参阅 [Control Flow](./05_Control_Flow.html) 章节中的 [Break](./05_Control_Flow.html#break) 部分。
 
-游戏使用`SnakesAndLadders`类的`构造器(initializer)`初始化游戏。所有的游戏逻辑被转移到了协议中的`play`方法，`play`方法使用协议规定的`dice`属性提供骰子摇出的值。
+这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类采纳了 `DiceGame` 协议，并且提供了相应的只读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为只读的，因此将 `dice` 声明为常量属性。）
 
-注意:`delegate`并不是游戏的必备条件，因此`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性。因为`delegate`是可选值，因此在初始化的时候被自动赋值为`nil`。随后，可以在游戏中为`delegate`设置适当的值。
+游戏使用 `SnakesAndLadders` 类的 `init()` 构造器来初始化游戏。所有的游戏逻辑被转移到了协议中的 `play()` 方法，`play()` 方法使用协议要求的 `dice` 属性提供骰子摇出的值。
 
-`DicegameDelegate`协议提供了三个方法用来追踪游戏过程。被放置于游戏的逻辑中，即`play()`方法内。分别在游戏开始时，新一轮开始时，游戏结束时被调用。
+注意，`delegate` 并不是游戏的必备条件，因此 `delegate` 被定义为 `DiceGameDelegate` 类型的可选属性。因为 `delegate` 是可选值，因此会被自动赋予初始值 `nil`。随后，可以在游戏中为 `delegate` 设置适当的值。
 
-因为`delegate`是一个遵循`DiceGameDelegate`的可选属性，因此在`play()`方法中使用了`可选链`来调用委托方法。 若`delegate`属性为`nil`， 则delegate所调用的方法失效，并不会产生错误。若`delegate`不为`nil`，则方法能够被调用
+`DicegameDelegate` 协议提供了三个方法用来追踪游戏过程。这三个方法被放置于游戏的逻辑中，即 `play()` 方法内。分别在游戏开始时，新一轮开始时，以及游戏结束时被调用。
 
-如下所示，`DiceGameTracker`遵循了`DiceGameDelegate`协议：
+因为 `delegate` 是一个 `DiceGameDelegate` 类型的可选属性，因此在 `play()` 方法中通过可选链式调用来调用它的方法。若 `delegate` 属性为 `nil`，则调用方法会优雅地失败，并不会产生错误。若 `delegate` 不为 `nil`，则方法能够被调用，并传递 `SnakesAndLadders` 实例作为参数。
+
+如下示例定义了 `DiceGameTracker` 类，它采纳了 `DiceGameDelegate` 协议：
 
 ```swift
 class DiceGameTracker: DiceGameDelegate {
@@ -415,37 +417,37 @@ class DiceGameTracker: DiceGameDelegate {
 }
 ```
 
-`DiceGameTracker`实现了`DiceGameDelegate`协议规定的三个方法，用来记录游戏已经进行的轮数。 当游戏开始时，`numberOfTurns`属性被赋值为0; 在每新一轮中递增; 游戏结束后，输出打印游戏的总轮数。
+`DiceGameTracker` 实现了 `DiceGameDelegate` 协议要求的三个方法，用来记录游戏已经进行的轮数。当游戏开始时，`numberOfTurns` 属性被赋值为 `0`，然后在每新一轮中递增，游戏结束后，打印游戏的总轮数。
 
-`gameDidStart`方法从`game`参数获取游戏信息并输出。`game`在方法中被当做`DiceGame`类型而不是`SnakeAndLadders`类型，所以方法中只能访问`DiceGame`协议中的成员。当然了，这些方法也可以在类型转换之后调用。在上例代码中，通过`is`操作符检查`game`是否为 `SnakesAndLadders`类型的实例，如果是，则打印出相应的内容。
+`gameDidStart(_:)` 方法从 `game` 参数获取游戏信息并打印。`game` 参数是 `DiceGame` 类型而不是 `SnakeAndLadders` 类型，所以在方法中只能访问 `DiceGame` 协议中的内容。当然了，`SnakeAndLadders` 的方法也可以在类型转换之后调用。在上例代码中，通过 `is` 操作符检查 `game` 是否为 `SnakesAndLadders` 类型的实例，如果是，则打印出相应的消息。
 
-无论当前进行的是何种游戏，`game`都遵循`DiceGame`协议以确保`game`含有`dice`属性，因此在`gameDidStart(_:)`方法中可以通过传入的`game`参数来访问`dice`属性，进而打印出`dice`的`sides`属性的值。
+无论当前进行的是何种游戏，由于 `game` 符合 `DiceGame` 协议，可以确保 `game` 含有 `dice` 属性。因此在 `gameDidStart(_:)` 方法中可以通过传入的 `game` 参数来访问 `dice` 属性，进而打印出 `dice` 的 `sides` 属性的值。
 
-`DiceGameTracker`的运行情况，如下所示：
+`DiceGameTracker` 的运行情况如下所示：
 
 ```swift
 let tracker = DiceGameTracker()
 let game = SnakesAndLadders()
 game.delegate = tracker
 game.play()
-// 开始一个新的Snakes and Ladders的游戏
-// 游戏使用 6 面的骰子
-// 翻转得到 3
-// 翻转得到 5
-// 翻转得到 4
-// 翻转得到 5
-// 游戏进行了 4 轮
+// Started a new game of Snakes and Ladders
+// The game is using a 6-sided dice
+// Rolled a 3
+// Rolled a 5
+// Rolled a 4
+// Rolled a 5
+// The game lasted for 4 turns
 ```
 
 <a name="adding_protocol_conformance_with_an_extension"></a>
-## 在扩展中添加协议成员
+## 通过扩展添加协议一致性
 
-即便无法修改源代码，依然可以通过扩展(Extension)来扩充已存在类型(*译者注: 类，结构体，枚举等*)。扩展可以为已存在的类型添加属性，方法，下标脚本，协议等成员。详情请在[扩展](./21_Extensions.html)章节中查看。
+即便无法修改源代码，依然可以通过扩展令已有类型采纳并符合协议。扩展可以为已有类型添加属性、方法、下标脚本以及构造器，因此可以符合协议中的相应要求。详情请在[扩展](./21_Extensions.html)章节中查看。
 
 > 注意  
-> 通过扩展为已存在的类型遵循协议时，该类型的所有实例也会随之添加协议中的方法
+> 通过扩展令已有类型采纳并符合协议时，该类型的所有实例也会随之获得协议中定义的各项功能。
 
-例如`TextRepresentable`协议，任何想要表示一些文本内容的类型都可以遵循该协议。这些想要表示的内容可以是类型本身的描述，也可以是当前内容的版本：
+例如下面这个 `TextRepresentable` 协议，任何想要通过文本表示一些内容的类型都可以实现该协议。这些想要表示的内容可以是实例本身的描述，也可以是实例当前状态的文本描述：
 
 ```swift
 protocol TextRepresentable {
@@ -453,7 +455,7 @@ protocol TextRepresentable {
 }
 ```
 
-可以通过扩展，为上一节中提到的`Dice`增加类遵循`TextRepresentable`协议的功能：
+可以通过扩展，令先前提到的 `Dice` 类采纳并符合 `TextRepresentable` 协议：
 
 ```swift
 extension Dice: TextRepresentable {
@@ -462,17 +464,18 @@ extension Dice: TextRepresentable {
 	}
 }
 ```
-现在，通过扩展使得`Dice`类型遵循了一个新的协议，这和`Dice`类型在定义的时候声明为遵循`TextRepresentable`协议的效果相同。在扩展的时候，协议名称写在类型名之后，以冒号隔开，在大括号内写明新添加的协议内容。
 
-现在所有`Dice`的实例都遵循了`TextRepresentable`协议:
+通过扩展采纳并符合协议，和在原始定义中采纳并符合协议的效果完全相同。协议名称写在类型名之后，以冒号隔开，然后在扩展的大括号内实现协议要求的内容。
+
+现在所有 `Dice` 的实例都可以看做 `TextRepresentable` 类型：
 
 ```swift
 let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
 print(d12. textualDescription)
-// 输出 "A 12-sided dice"
+// 打印 “A 12-sided dice”
 ```
 
-同样`SnakesAndLadders`类也可以通过`扩展`的方式来遵循`TextRepresentable`协议：
+同样，`SnakesAndLadders` 类也可以通过扩展采纳并符合 `TextRepresentable` 协议：
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
@@ -481,13 +484,13 @@ extension SnakesAndLadders: TextRepresentable {
 	}
 }
 print(game.textualDescription)
-// 输出 "A game of Snakes and Ladders with 25 squares"
+// 打印 “A game of Snakes and Ladders with 25 squares”
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
-## 通过扩展补充协议声明
+## 通过扩展声明已采纳协议
 
-当一个类型已经实现了协议中的所有要求，却没有声明为遵循该协议时，可以通过扩展(空的扩展体)来补充协议声明:
+当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空扩展体的扩展来采纳该协议：
 
 ```swift
 struct Hamster {
@@ -499,53 +502,52 @@ struct Hamster {
 extension Hamster: TextRepresentable {}
 ```
 
-从现在起，`Hamster`的实例可以作为`TextRepresentable`类型使用：
+从现在起，`Hamster` 的实例可以作为 `TextRepresentable` 类型使用：
 
 ```swift
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
 print(somethingTextRepresentable.textualDescription)
-// 输出 "A hamster named Simon"
+// 打印 “A hamster named Simon”
 ```
 
 > 注意  
-> 即使满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出显式的协议声明。
+> 即使满足了协议的所有要求，类型也不会自动采纳协议，必须显式地采纳协议。
 
 <a name="collections_of_protocol_types"></a>
 ## 协议类型的集合
 
-协议类型可以在数组或者字典这样的集合中使用，在[协议类型](./22_Protocols.html##protocols_as_types)提到了这样的用法。下面的例子创建了一个类型为`TextRepresentable`的数组:
+协议类型可以在数组或者字典这样的集合中使用，在[协议类型](./22_Protocols.html##protocols_as_types)提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
 ```swift
-let things: [TextRepresentable] = [game,d12,simonTheHamster]
+let things: [TextRepresentable] = [game, d12, simonTheHamster]
 ```
 
-如下所示，`things`数组可以被直接遍历，并打印每个元素的文本表示:
+如下所示，可以遍历 `things` 数组，并打印每个元素的文本表示：
 
 ```swift
 for thing in things {
 	print(thing.textualDescription)
 }
-// 输出：
 // A game of Snakes and Ladders with 25 squares
 // A 12-sided dice
 // A hamster named Simon
 ```
 
-`thing`被当做是`TextRepresentable`类型而不是`Dice`，`DiceGame`，`Hamster`等类型，即使真实的实例是它们中的一种类型。尽管如此，由于它是`TextRepresentable`类型，任何`TextRepresentable`都拥有一个`textualDescription`属性，所以每次循环访问`thing.textualDescription`是安全的。
+`thing` 是 `TextRepresentable` 类型而不是 `Dice`，`DiceGame`，`Hamster` 等类型，即使实例在幕后确实是这些类型中的一种。由于 `thing` 是 `TextRepresentable` 类型，任何 `TextRepresentable` 的实例都有一个 `textualDescription` 属性，所以在每次循环中可以安全地访问 `thing.textualDescription`。
 
 <a name="protocol_inheritance"></a>
 ## 协议的继承
 
-协议能够继承一个或多个其他协议，可以在继承的协议基础上增加新的内容要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔：
+协议能够继承一个或多个其他协议，可以在继承的协议的基础上增加新的要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔：
 
 ```swift
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
-	// 协议定义
+	// 这里是协议的定义部分
 }
 ```
 
-如下所示，`PrettyTextRepresentable`协议继承了`TextRepresentable`协议：
+如下所示，`PrettyTextRepresentable` 协议继承了 `TextRepresentable` 协议：
 
 ```swift
 protocol PrettyTextRepresentable: TextRepresentable {
@@ -553,9 +555,9 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-例子中定义了一个新的协议`PrettyTextRepresentable`，它继承自`TextRepresentable`协议。任何遵循`PrettyTextRepresentable`协议的类型在满足该协议的要求时，也必须满足`TextRepresentable`协议的要求。在这个例子中，`PrettyTextRepresentable`协议要求其遵循者提供一个返回值为`String`类型的`prettyTextualDescription`属性。
+例子中定义了一个新的协议 `PrettyTextRepresentable`，它继承自 `TextRepresentable` 协议。任何采纳 `PrettyTextRepresentable` 协议的类型在满足该协议的要求时，也必须满足 `TextRepresentable` 协议的要求。在这个例子中，`PrettyTextRepresentable` 协议额外要求符合协议的类型提供一个返回值为 `String` 类型的 `prettyTextualDescription` 属性。
 
-如下所示，扩展`SnakesAndLadders`，让其遵循`PrettyTextRepresentable`协议：
+如下所示，扩展 `SnakesAndLadders`，使其采纳并符合 `PrettyTextRepresentable` 协议：
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
@@ -563,7 +565,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
         var output = textualDescription + ":\n"
         for index in 1...finalSquare {
             switch board[index] {
-            	case let ladder where ladder > 0:
+            case let ladder where ladder > 0:
                 output += "▲ "
             case let snake where snake < 0:
                 output += "▼ "
@@ -576,35 +578,35 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 }
 ```
 
-上述扩展使得`SnakesAndLadders`遵循了`PrettyTextRepresentable`协议，并为每个`SnakesAndLadders`类型提供了协议要求的`prettyTextualDescription`属性。每个`PrettyTextRepresentable`类型同时也是`TextRepresentable`类型，所以在`prettyTextualDescription`的实现中，可以调用`textualDescription`属性。之后在每一行加上换行符，作为输出的开始。然后遍历数组中的元素，输出一个几何图形来表示遍历的结果:
+上述扩展令 `SnakesAndLadders` 采纳了 `PrettyTextRepresentable` 协议，并提供了协议要求的 `prettyTextualDescription` 属性。每个 `PrettyTextRepresentable` 类型同时也是 `TextRepresentable` 类型，所以在 `prettyTextualDescription` 的实现中，可以访问 `textualDescription` 属性。然后，拼接上了冒号和换行符。接着，遍历数组中的元素，拼接一个几何图形来表示每个棋盘方格的内容：
 
-* 当从数组中取出的元素的值大于0时，用`▲`表示
-* 当从数组中取出的元素的值小于0时，用`▼`表示
-* 当从数组中取出的元素的值等于0时，用`○`表示
+* 当从数组中取出的元素的值大于 `0` 时，用 `▲` 表示。
+* 当从数组中取出的元素的值小于 `0` 时，用 `▼` 表示。
+* 当从数组中取出的元素的值等于 `0` 时，用 `○` 表示。
 
-任意`SankesAndLadders`的实例都可以使用`prettyTextualDescription`属性。
+任意 `SankesAndLadders` 的实例都可以使用 `prettyTextualDescription` 属性来打印一个漂亮的文本描述：
 
 ```swift
 print(game.prettyTextualDescription)
-// A game of Snakes and Ladders with 25 squares:TODO
+// A game of Snakes and Ladders with 25 squares:
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
 <a name="class_only_protocol"></a>
-## 类专属协议
-你可以在协议的继承列表中,通过添加`class`关键字,限制协议只能适配到类（class）类型。（结构体或枚举不能遵循该协议）。该`class`关键字必须是第一个出现在协议的继承列表中，其后，才是其他继承协议。
+## 类类型专属协议
+
+你可以在协议的继承列表中，通过添加 `class` 关键字来限制协议只能被类类型采纳，而结构体或枚举不能采纳该协议。`class` 关键字必须第一个出现在协议的继承列表中，在其他继承的协议之前：
 
 ```swift
 protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
-    // 协议定义
+    // 这里是类类型专属协议的定义部分
 }
 ```
 
-在以上例子中，协议`SomeClassOnlyProtocol`只能被类（class）类型适配。如果尝试让结构体或枚举类型适配该协议，则会出现编译错误。
+在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳该协议，则会导致编译错误。
 
->注意  
->当协议想要定义的行为，要求（或假设）它的遵循类型必须是引用语义而非值语义时，应该采用类专属协议。关于引用语义，值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
-
+> 注意  
+> 当协议定义的要求需要符合协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
 
 <a name="protocol_composition"></a>
 ## 协议合成
