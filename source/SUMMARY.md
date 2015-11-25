@@ -29,8 +29,8 @@
    * [扩展](chapter2/21_Extensions.md)
    * [协议](chapter2/22_Protocols.md)
    * [泛型](chapter2/23_Generics.md)
-   * [权限控制](chapter2/24_Access_Control.md)
-   * [高级操作符](chapter2/25_Advanced_Operators.md)
+   * [访问控制](chapter2/24_Access_Control.md)
+   * [高级运算符](chapter2/25_Advanced_Operators.md)
 * 语言参考
    * [关于语言参考](chapter3/01_About_the_Language_Reference.md)
    * [词法结构](chapter3/02_Lexical_Structure.md)
