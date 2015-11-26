@@ -28,12 +28,12 @@
 - [类类型专属协议（Class-Only Protocol）](#class_only_protocol)
 - [协议合成（Protocol Composition）](#protocol_composition)
 - [检查协议一致性（Checking for Protocol Conformance）](#checking_for_protocol_conformance)
-- [可选协议要求（Optional Protocol Requirements）](#optional_protocol_requirements)
+- [可选的协议要求（Optional Protocol Requirements）](#optional_protocol_requirements)
 - [协议扩展（Protocol Extensions）](#protocol_extensions)
 
 协议定义了一个蓝图，规定了用来实现某一特定任务或者功能的方法、属性，以及其他需要的东西。类、结构体或枚举都可以采纳协议，并为协议定义的这些要求提供具体实现。某个类型能够满足某个协议的要求，就可以说该类型“符合”这个协议。
 
-除了符合协议的类型必须实现的要求外，还可以对协议进行扩展，通过扩展来实现一部分要求或者实现一些附加功能，这样符合协议的类型就能够使用这些功能。
+除了采纳协议的类型必须实现的要求外，还可以对协议进行扩展，通过扩展来实现一部分要求或者实现一些附加功能，这样采纳协议的类型就能够使用这些功能。
 
 <a name="protocol_syntax"></a>
 ## 协议语法
@@ -65,7 +65,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 属性要求
 
-协议可以要求符合协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是只读的还是可读可写的。
+协议可以要求采纳协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是只读的还是可读可写的。
 
 如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是只读的，那么该属性不仅可以是只读的，如果代码需要的话，还可以是可写的。
 
@@ -94,7 +94,7 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed` 协议除了要求符合协议的类型提供 `fullName` 属性外，并没有其他特别的要求。这个协议表示，任何符合 `FullyNamed` 的类型，都必须有一个只读的 `String` 类型的实例属性 `fullName`。
+`FullyNamed` 协议除了要求采纳协议的类型提供 `fullName` 属性外，并没有其他特别的要求。这个协议表示，任何采纳 `FullyNamed` 的类型，都必须有一个只读的 `String` 类型的实例属性 `fullName`。
 
 下面是一个采纳 `FullyNamed` 协议的简单结构体：
 
@@ -133,7 +133,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 <a name="method_requirements"></a>
 ## 方法要求
 
-协议可以要求符合协议的类型实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是，不支持为协议中的方法的参数提供默认值。
+协议可以要求采纳协议的类型实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是，不支持为协议中的方法的参数提供默认值。
 
 正如属性要求中所述，在协议中定义类方法的时候，总是使用 `static` 关键字作为前缀。当类类型采纳协议时，除了 `static` 关键字，还可以使用 `class` 关键字作为前缀：
 
@@ -151,7 +151,7 @@ protocol RandomNumberGenerator {
 }
 ```
 
-`RandomNumberGenerator` 协议要求符合协议的类型必须拥有一个名为 `random`， 返回值类型为 `Double` 的实例方法。尽管这里并未指明，但是我们假设返回值在 `[0.0,1.0)` 区间内。
+`RandomNumberGenerator` 协议要求采纳协议的类型必须拥有一个名为 `random`， 返回值类型为 `Double` 的实例方法。尽管这里并未指明，但是我们假设返回值在 `[0.0,1.0)` 区间内。
 
 `RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的，它只要求必须提供一个随机数生成器。
 
@@ -185,9 +185,9 @@ print("And another one: \(generator.random())")
 > 注意  
 > 实现协议中的 `mutating` 方法时，若是类类型，则不用写 `mutating` 关键字。而对于结构体和枚举，则必须写 `mutating` 关键字。
 
-如下所示，`Togglable` 协议只要求实现一个名为 `toggle` 的实例方法。根据名称的暗示，`toggle()` 方法将改变实例属性，从而切换符合该协议类型的实例的状态。
+如下所示，`Togglable` 协议只要求实现一个名为 `toggle` 的实例方法。根据名称的暗示，`toggle()` 方法将改变实例属性，从而切换采纳该协议类型的实例的状态。
 
-`toggle()` 方法在定义的时候，使用 `mutating` 关键字标记，这表明当它被调用时，该方法将会改变符合协议的类型的实例：
+`toggle()` 方法在定义的时候，使用 `mutating` 关键字标记，这表明当它被调用时，该方法将会改变采纳协议的类型的实例：
 
 ```swift
 protocol Togglable {
@@ -219,7 +219,7 @@ lightSwitch.toggle()
 <a name="initializer_requirements"></a>
 ## 构造器要求
 
-协议可以要求符合协议的类型实现指定的构造器。你可以像编写普通构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
+协议可以要求采纳协议的类型实现指定的构造器。你可以像编写普通构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
 
 ```swift
 protocol SomeProtocol {
@@ -229,7 +229,7 @@ protocol SomeProtocol {
 
 ### 构造器要求在类中的实现
 
-你可以在符合协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
+你可以在采纳协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
 
 ```swift
 class SomeClass: SomeProtocol {
@@ -260,7 +260,7 @@ class SomeSuperClass {
 }
 
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-    // 因为符合协议，需要加上 required
+    // 因为采纳协议，需要加上 required
     // 因为继承自父类，需要加上 override
     required override init() {
         // 这里是构造器的实现部分
@@ -270,9 +270,9 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器要求
 
-协议还可以为符合协议的类型定义可失败构造器要求，详见[可失败构造器](./14_Initialization.html#failable_initializers)。
+协议还可以为采纳协议的类型定义可失败构造器要求，详见[可失败构造器](./14_Initialization.html#failable_initializers)。
 
-符合协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
+采纳协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
 <a name="protocols_as_types"></a>
 ## 协议作为类型
@@ -329,7 +329,7 @@ for _ in 1...5 {
 <a name="delegation"></a>
 ## 委托（代理）模式
 
-委托是一种设计模式，它允许类或结构体将一些需要它们负责的功能委托给其他类型的实例。委托模式的实现很简单：定义协议来封装那些需要被委托的功能，这样就能确保符合协议的类型能提供这些功能。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。
+委托是一种设计模式，它允许类或结构体将一些需要它们负责的功能委托给其他类型的实例。委托模式的实现很简单：定义协议来封装那些需要被委托的功能，这样就能确保采纳协议的类型能提供这些功能。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。
 
 下面的例子定义了两个基于骰子游戏的协议：
 
@@ -555,7 +555,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-例子中定义了一个新的协议 `PrettyTextRepresentable`，它继承自 `TextRepresentable` 协议。任何采纳 `PrettyTextRepresentable` 协议的类型在满足该协议的要求时，也必须满足 `TextRepresentable` 协议的要求。在这个例子中，`PrettyTextRepresentable` 协议额外要求符合协议的类型提供一个返回值为 `String` 类型的 `prettyTextualDescription` 属性。
+例子中定义了一个新的协议 `PrettyTextRepresentable`，它继承自 `TextRepresentable` 协议。任何采纳 `PrettyTextRepresentable` 协议的类型在满足该协议的要求时，也必须满足 `TextRepresentable` 协议的要求。在这个例子中，`PrettyTextRepresentable` 协议额外要求采纳协议的类型提供一个返回值为 `String` 类型的 `prettyTextualDescription` 属性。
 
 如下所示，扩展 `SnakesAndLadders`，使其采纳并符合 `PrettyTextRepresentable` 协议：
 
@@ -606,14 +606,14 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳该协议，则会导致编译错误。
 
 > 注意  
-> 当协议定义的要求需要符合协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
+> 当协议定义的要求需要采纳协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
 
 <a name="protocol_composition"></a>
 ## 协议合成
 
-有时候需要同时遵循多个协议。你可以将多个协议采用`protocol<SomeProtocol， AnotherProtocol>`这样的格式进行组合，称为`协议合成(protocol composition)`。你可以在`<>`中罗列任意多个你想要遵循的协议，以逗号分隔。
+有时候需要同时采纳多个协议，你可以将多个协议采用 `protocol<SomeProtocol, AnotherProtocol>` 这样的格式进行组合，称为 *协议合成（protocol composition）*。你可以在 `<>` 中罗列任意多个你想要采纳的协议，以逗号分隔。
 
-下面的例子中，将`Named`和`Aged`两个协议按照上述的语法组合成一个协议：
+下面的例子中，将 `Named` 和 `Aged` 两个协议按照上述语法组合成一个协议，作为函数参数的类型：
 
 ```swift
 protocol Named {
@@ -631,28 +631,28 @@ func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(birthdayPerson)
-// 输出 "Happy birthday Malcolm - you're 21!
+// 打印 “Happy birthday Malcolm - you're 21!”
 ```
 
-`Named`协议包含`String`类型的`name`属性;`Aged`协议包含`Int`类型的`age`属性。`Person`结构体`遵循`了这两个协议。
+`Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体采纳了这两个协议。
 
-`wishHappyBirthday`函数的形参`celebrator`的类型为`protocol<Named，Aged>`。可以传入任意`遵循`这两个协议的类型的实例。
+`wishHappyBirthday(_:)` 函数的参数 `celebrator` 的类型为 `protocol<Named，Aged>`。这意味着它不关心参数的具体类型，只要参数符合这两个协议即可。
 
-上面的例子创建了一个名为`birthdayPerson`的`Person`实例，作为参数传递给了`wishHappyBirthday(_:)`函数。因为`Person`同时遵循这两个协议，所以这个参数合法，函数将输出生日问候语。
+上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(_:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
 
 > 注意  
-> `协议合成`并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。
+> 协议合成并不会生成新的、永久的协议类型，而是将多个协议中的要求合成到一个只在局部作用域有效的临时协议中。
 
 <a name="checking_for_protocol_conformance"></a>
-## 检验协议的一致性
+## 检查协议一致性
 
-你可以使用`is`和`as`操作符来检查是否遵循某一协议或强制转化为某一类型。检查和转化的语法和之前相同(*详情查看[类型转换](./20_Type_Casting.html)*):
+你可以使用[类型转换](./20_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换到某个协议类型在语法上和类型的检查和转换完全相同：
 
-* `is`操作符用来检查实例是否`遵循`了某个`协议`。
-* `as?`返回一个可选值，当实例`遵循`协议时，返回该协议类型;否则返回`nil`。
-* `as`用以强制向下转型，如果强转失败，会引起运行时错误。
+* `is` 用来检查实例是否符合某个协议，若符合则返回 `true`，否则返回 `false`。
+* `as?` 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 `nil`。
+* `as!` 将实例强制向下转换到某个协议类型，如果强转失败，会引发运行时错误。
 
-下面的例子定义了一个`HasArea`的协议，要求有一个`Double`类型可读的`area`：
+下面的例子定义了一个 `HasArea` 协议，该协议定义了一个 `Double` 类型的只读属性 `area`：
 
 ```swift
 protocol HasArea {
@@ -660,7 +660,7 @@ protocol HasArea {
 }
 ```
 
-如下所示，定义了`Circle`和`Country`类，它们都遵循了`HasArea`协议：
+如下所示，`Circle` 类和 `Country` 类都采纳了 `HasArea` 协议：
 
 ```swift
 class Circle: HasArea {
@@ -675,9 +675,9 @@ class Country: HasArea {
 }
 ```
 
-`Circle`类把`area`实现为基于`存储型属性`radius的`计算型属性`，`Country`类则把`area`实现为`存储型属性`。这两个类都`遵循`了`HasArea`协议。
+`Circle` 类把 `area` 属性实现为基于存储型属性 `radius` 的计算型属性。`Country` 类则把 `area` 属性实现为存储型属性。这两个类都正确地符合了 `HasArea` 协议。
 
-如下所示，`Animal`是一个没有实现`HasArea`协议的类：
+如下所示，`Animal` 是一个未采纳 `HasArea` 协议的类：
 
 ```swift
 class Animal {
@@ -686,7 +686,7 @@ class Animal {
 }
 ```
 
-`Circle`，`Country`，`Animal`并没有一个相同的基类，然而，它们都是类，它们的实例都可以作为`AnyObject`类型的变量，存储在同一个数组中:
+`Circle`，`Country`，`Animal` 并没有一个共同的基类，尽管如此，它们都是类，它们的实例都可以作为 `AnyObject` 类型的值，存储在同一个数组中：
 
 ```swift
 let objects: [AnyObject] = [
@@ -696,9 +696,9 @@ let objects: [AnyObject] = [
 ]
 ```
 
-`objects`数组使用字面量初始化，数组包含一个`radius`为2的`Circle`的实例，一个保存了英国面积的`Country`实例和一个`legs`为4的`Animal`实例。
+`objects` 数组使用字面量初始化，数组包含一个 `radius` 为 `2` 的 `Circle` 的实例，一个保存了英国国土面积的 `Country` 实例和一个 `legs` 为 `4` 的 `Animal` 实例。
 
-如下所示，`objects`数组可以被迭代，对迭代出的每一个元素进行检查，看它是否遵循了`HasArea`协议:
+如下所示，`objects` 数组可以被迭代，并对迭代出的每一个元素进行检查，看它是否符合 `HasArea` 协议：
 
 ```swift
 for object in objects {
@@ -713,22 +713,23 @@ for object in objects {
 // Something that doesn't have an area
 ```
 
-当迭代出的元素遵循`HasArea`协议时，通过`as?`操作符将其`可选绑定(optional binding)`到`objectWithArea`常量上。`objectWithArea`是`HasArea`协议类型的实例，因此`area`属性是可以被访问和打印的。
+当迭代出的元素符合 `HasArea` 协议时，将 `as?` 操作符返回的可选值通过可选绑定，绑定到 `objectWithArea` 常量上。`objectWithArea` 是 `HasArea` 协议类型的实例，因此 `area` 属性可以被访问和打印。
 
-`objects`数组中元素的类型并不会因为强转而丢失类型信息，它们仍然是`Circle`，`Country`，`Animal`类型。然而，当它们被赋值给`objectWithArea`常量时，则只被视为`HasArea`类型，因此只有`area`属性能够被访问。
+`objects` 数组中的元素的类型并不会因为强转而丢失类型信息，它们仍然是 `Circle`，`Country`，`Animal` 类型。然而，当它们被赋值给 `objectWithArea` 常量时，只被视为 `HasArea` 类型，因此只有 `area` 属性能够被访问。
 
 <a name="optional_protocol_requirements"></a>
-## 对可选协议的规定
-协议可以含有可选成员，其`遵循者`可以选择是否实现这些成员。在协议中使用`optional`关键字作为前缀来定义可选成员。当需要使用可选规定的方法或者属性时，他的类型自动会变成可选的。比如，一个定义为`(Int) -> String`的方法变成`((Int) -> String)?`。需要注意的是整个函数定义包裹在可选中，而不是放在函数的返回值后面。
+## 可选的协议要求
 
-可选协议在调用时使用`可选链`，因为协议的遵循者可能没有实现可选内容。像`someOptionalMethod?(someArgument)`这样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。详细内容在[可空链式调用](./17_Optional_Chaining.html)章节中查看。
+协议可以定义可选要求，采纳协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
+
+协议中的可选要求可通过可选链式调用来使用，因为采纳协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./17_Optional_Chaining.html)章节中查看。
 
 > 注意  
-> 可选协议只能在含有`@objc`前缀的协议中生效。 
-> 这个前缀表示协议将暴露给Objective-C代码，详情参见[`Using Swift with Cocoa and Objective-C(Swift 2.1)`](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。即使你不打算和Objective-C有什么交互，如果你想要指明协议包含可选属性，那么还是要加上`@obj`前缀。
-> 还需要注意的是，`@objc`的协议只能由继承自 Objective-C 类的类或者其他的`@objc`类来遵循。它也不能被结构体和枚举遵循。
+> 可选的协议要求只能用在标记 `@objc` 特性的协议中。  
+> 该特性表示协议将暴露给 Objective-C 代码，详情参见[`Using Swift with Cocoa and Objective-C(Swift 2.1)`](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。即使你不打算和 Objective-C 有什么交互，如果你想要指定可选的协议要求，那么还是要为协议加上 `@obj` 特性。  
+> 还需要注意的是，标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类采纳，其他类以及结构体和枚举均不能采纳这种协议。
 
-下面的例子定义了一个叫`Counter`的整数加法类，它使用外部的数据源来提供每次的增量。数据源是两个可选规定，在`CounterDataSource`协议中定义：
+下面的例子定义了一个名为 `Counter` 的用于整数计数的类，它使用外部的数据源来提供每次的增量。数据源由 `CounterDataSource` 协议定义，包含两个可选要求：
 
 ```swift
 @objc protocol CounterDataSource {
@@ -737,49 +738,49 @@ for object in objects {
 }
 ```
 
-`CounterDataSource`含有`incrementForCount(_:)`可选方法和`fiexdIncrement`可选属性，它们使用了不同的方法来从数据源中获取合适的增量值。
+`CounterDataSource` 协议定义了一个可选方法 `incrementForCount(_:)` 和一个可选属性 `fiexdIncrement`，它们使用了不同的方法来从数据源中获取适当的增量值。
 
 > 注意  
-> 严格来讲，`CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明都不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
+> 严格来讲，`CounterDataSource` 协议中的方法和属性都是可选的，因此采纳协议的类可以不实现这些要求，尽管技术上允许这样做，不过最好不要这样写。
 
-`Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示：
+`Counter` 类含有 `CounterDataSource?` 类型的可选属性 `dataSource`，如下所示：
 
 ```swift
-@objc class Counter {
+class Counter {
     var count = 0
     var dataSource: CounterDataSource?
     func increment() {
         if let amount = dataSource?.incrementForCount?(count) {
             count += amount
-        } else if let amount = dataSource?.fixedIncrement? {
+        } else if let amount = dataSource?.fixedIncrement {
             count += amount
         }
     }
 }
 ```
 
-类`Counter`使用`count`来存储当前的值。该类同时定义了一个`increment`方法，每次调用该方法的时候，将会增加`count`的值。
+`Counter` 类使用变量属性 `count` 来存储当前值。该类还定义了一个 `increment()` 方法，每次调用该方法的时候，将会增加 `count` 的值。
 
-`increment()`方法首先试图使用`incrementForCount(_:)`方法来得到每次的增量。`increment()`方法使用可选链来尝试调用`incrementForCount(_:)`，并将当前的`count`值作为参数传入。
+`increment()` 方法首先试图使用 `incrementForCount(_:)` 方法来得到每次的增量。`increment()` 方法使用可选链式调用来尝试调用 `incrementForCount(_:)`，并将当前的 `count` 值作为参数传入。
 
-这里使用了两种可选链方法。首先，由于`dataSource`可能为`nil`，因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用`incrementForCount(_:)`方法。其次，即使`dataSource`存在，也无法保证其是否实现了`incrementForCount(_:)`方法，因为这个方法是可选的。在这里，有可能未被实现的`incrementForCount(_:)`方法同样使用可选链进行调用。只有在`incrementForCount(_:)`存在的情况下才能调用`incrementForCount(_:)`-也就是说，它是`nil`的时候。这就是为什么要在`incrementForCount(_:)`方法后边也加有`?`标记的原因。
+这里使用了两层可选链式调用。首先，由于 `dataSource` 可能为 `nil`，因此在 `dataSource` 后边加上了 `?`，以此表明只在 `dataSource` 非空时才去调用 `incrementForCount(_:)` 方法。其次，即使 `dataSource` 存在，也无法保证其是否实现了 `incrementForCount(_:)` 方法，因为这个方法是可选的。因此，`incrementForCount(_:)` 方法同样使用可选链式调用进行调用，只有在该方法被实现的情况下才能调用它，所以在 `incrementForCount(_:)` 方法后边也加上了 `?`。
 
 
-调用`incrementForCount(_:)`方法在上述两种情形都有可能失败，所以返回值为*可选*`Int`类型。虽然在`CounterDataSource`中，`incrementForCount`被定义为一个非可选`Int`(non-optional)，但是这里我们仍然需要返回*可选*`Int`类型。想获得更多的关于如何使用多可选链的操作的信息，请查阅[多层链接](./17_Optional_Chaining)
+调用 `incrementForCount(_:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`incrementForCount(_:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型，即 `Int?` 而不是 `Int??`。关于这一点的更多信息，请查阅[连接多层可选链式调用](./17_Optional_Chaining)
 
-在调用`incrementForCount(_:)`方法后，`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`。如果可选值确实包含一个数值，这表示`delegate`和方法都存在，之后便将`amount`加到`count`上，增加操作完成。
+在调用 `incrementForCount(_:)` 方法后，`Int?` 型的返回值通过可选绑定解包并赋值给常量 `amount`。如果可选值确实包含一个数值，也就是说，数据源和方法都存在，数据源方法返回了一个有效值。之后便将解包后的 `amount` 加到 `count` 上，增量操作完成。
 
-如果没有从`incrementForCount(_:)`获取到值，可能是`dataSource`为nil，或者它并没有实现`incrementForCount(_:)`方法——那么`increment()`方法将试图从数据源的`fixedIncrement`属性中获取增量。`fixedIncrement`也是一个可选型，所以在属性名的后面添加`?`来试图取回可选属性的值。和之前一样，返回值为可选型，即使在`CounterDataSource`中定义的是一个非可选的`Int`类型的`fixedIncrement`属性。
+如果没有从 `incrementForCount(_:)` 方法获取到值，可能由于 `dataSource` 为 `nil`，或者它并没有实现 `incrementForCount(_:)` 方法，那么 `increment()` 方法将试图从数据源的 `fixedIncrement` 属性中获取增量。`fixedIncrement` 是一个可选属性，因此属性值是一个 `Int?` 值，即使该属性在 `CounterDataSource` 协议中的类型是非可选的 `Int`。
 
-`ThreeSource`实现了`CounterDataSource`协议，它实现来可选属性`fixedIncrement`，设置值为`3`:
+下面的例子展示了 `CounterDataSource` 的简单实现。`ThreeSource` 类采纳了 `CounterDataSource` 协议，它实现了可选属性 `fixedIncrement`，每次会返回 `3`：
 
 ```swift
-@objc class ThreeSource: CounterDataSource {
-	let fixedIncrement = 3
+class ThreeSource: NSObject, CounterDataSource {
+    let fixedIncrement = 3
 }
 ```
 
-可以使用`ThreeSource`的实例作为`Counter`实例的数据源:
+可以使用 `ThreeSource` 的实例作为 `Counter` 实例的数据源：
 
 ```swift
 var counter = Counter()
@@ -794,13 +795,13 @@ for _ in 1...4 {
 // 12
 ```
 
-上述代码新建了一个`Counter`实例；将它的数据源设置为`TreeSource`实例；调用`increment()`4次。和你预想的一样，每次在调用的时候，`count`的值增加3.
+上述代码新建了一个 `Counter` 实例，并将它的数据源设置为一个 `TreeSource` 的实例，然后调用 `increment()` 方法四次。和预期一样，每次调用都会将 `count` 的值增加 `3`.
 
-下面是一个更为复杂的数据源`TowardsZeroSource`，它将使得最后的值变为0:
+下面是一个更为复杂的数据源 `TowardsZeroSource`，它将使得最后的值变为 `0`：
 
 ```swift
-class TowardsZeroSource: CounterDataSource {
-func incrementForCount(count: Int) -> Int {
+@objc class TowardsZeroSource: NSObject, CounterDataSource {
+    func incrementForCount(count: Int) -> Int {
         if count == 0 {
             return 0
         } else if count < 0 {
@@ -812,11 +813,9 @@ func incrementForCount(count: Int) -> Int {
 }
 ```
 
-`TowardsZeroSource`实现了`CounterDataSource`协议中的`incrementForCount(_:)`方法，以`count`参数为依据，计算出每次的增量。如果`count`已经为0，方法返回0，这表示之后不会再有增量。
+`TowardsZeroSource` 实现了 `CounterDataSource` 协议中的 `incrementForCount(_:)` 方法，以 `count` 参数为依据，计算出每次的增量。如果 `count` 已经为 `0`，此方法返回 `0`，以此表明之后不应再有增量操作发生。
 
-你可以配合使用`TowardsZeroSource`实例和`Counter`实例来从`-4`增加到`0`.一旦增加到`0`，数值便不会再有变动。
-
-在下面的例子中，将从`-4`增加到`0`。一旦结果为`0`，便不在增加:
+你可以使用 `TowardsZeroSource` 实例将 `Counter` 实例来从 `-4` 增加到 `0`。一旦增加到 `0`，数值便不会再有变动：
 
 ```swift
 counter.count = -4
@@ -835,9 +834,9 @@ for _ in 1...5 {
 <a name="protocol_extensions"></a>
 ## 协议扩展
 
-使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
+协议可以通过扩展来为采纳协议的类型提供属性、方法以及下标脚本的实现。通过这种方式，你可以基于协议本身来实现这些功能，而无需在每个采纳协议的类型中都重复同样的实现，也无需使用全局函数。
 
-例如，可以扩展`RandomNumberGenerator`协议，让其提供`randomBool()`方法。该方法使用`random()`方法返回一个随机的`Bool`值：
+例如，可以扩展 `RandomNumberGenerator` 协议来提供 `randomBool()` 方法。该方法使用协议中定义的 `random()` 方法来返回一个随机的 `Bool` 值：
 
 ```swift
 extension RandomNumberGenerator {
@@ -847,24 +846,25 @@ extension RandomNumberGenerator {
 }
 ```
 
-通过扩展协议，所有协议的遵循者，在不用任何修改的情况下，都自动得到了这个扩展所增加的方法。
+通过协议扩展，所有采纳协议的类型，都能自动获得这个扩展所增加的方法实现，无需任何额外修改：
 
 ```swift
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 输出 "Here's a random number: 0.37464991998171"
+// 打印 “Here's a random number: 0.37464991998171”
 print("And here's a random Boolean: \(generator.randomBool())")
-// 输出 "And here's a random Boolean: true"
+// 打印 “And here's a random Boolean: true”
 ```
+
 <a name="providing_default_implementations"></a>
 ### 提供默认实现
 
-可以通过协议扩展的方式来为协议规定的属性和方法提供默认的实现。如果协议的遵循者对规定的属性和方法提供了自己的实现，那么遵循者提供的实现将被使用。
+可以通过协议扩展来为协议要求的属性、方法以及下标脚本提供默认的实现。如果采纳协议的类型为这些要求提供了自己的实现，那么这些自定义实现将会替代扩展中的默认实现被使用。
 
 > 注意  
-> 通过扩展协议提供的协议实现和可选协议规定有区别。虽然协议遵循者无需自己实现，通过扩展提供的默认实现，可以不是用可选链调用。
+> 通过协议扩展为协议要求提供的默认实现和可选的协议要求不同。虽然在这两种情况下，采纳协议的类型都无需自己实现这些要求，但是通过扩展提供的默认实现可以直接调用，而无需使用可选链式调用。
 
-例如，`PrettyTextRepresentable`协议，继承自`TextRepresentable`协议，可以为其提供一个默认的`prettyTextualDescription`属性，来简化访问`textualDescription`属性：
+例如，`PrettyTextRepresentable` 协议继承自 `TextRepresentable` 协议，可以为其提供一个默认的 `prettyTextualDescription` 属性，只是简单地返回 `textualDescription` 属性的值：
 
 ```swift
 extension PrettyTextRepresentable  {
@@ -877,12 +877,12 @@ extension PrettyTextRepresentable  {
 <a name="adding_constraints_to_protocol_extensions"></a>
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制，只有满足这些限制的协议遵循者，才能获得协议扩展提供的属性和方法。这些限制写在协议名之后，使用`where`关键字来描述限制情况。([Where语句](./23_Generics.html#where_clauses))。:
+在扩展协议的时候，可以指定一些限制条件，只有采纳协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[Where子句](./23_Generics.html#where_clauses))中所描述的。
 
-例如，你可以扩展`CollectionType`协议，但是只适用于元素遵循`TextRepresentable`的情况：
+例如，你可以扩展 `CollectionType` 协议，但是只适用于集合中的元素采纳了 `TextRepresentable` 协议的情况：
 
 ```swift
-extension CollectionType where Generator.Element : TextRepresentable {
+extension CollectionType where Generator.Element: TextRepresentable {
     var textualDescription: String {
         let itemsAsText = self.map { $0.textualDescription }
         return "[" + itemsAsText.joinWithSeparator(", ") + "]"
@@ -890,9 +890,9 @@ extension CollectionType where Generator.Element : TextRepresentable {
 }
 ```
 
-`textualDescription`属性将每个元素的文本描述以逗号分隔的方式连接起来。
+`textualDescription` 属性返回整个集合的文本描述，它将集合中的每个元素的文本描述以逗号分隔的方式连接起来，包在一对方括号中。
 
-现在我们来看`Hamster`，它遵循`TextRepresentable`协议：
+现在我们来看看先前的 `Hamster` 结构体，它符合 `TextRepresentable` 协议，同时这里还有个装有 `Hamster` 的实例的数组：
 
 ```swift
 let murrayTheHamster = Hamster(name: "Murray")
@@ -901,12 +901,12 @@ let mauriceTheHamster = Hamster(name: "Maurice")
 let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 ```
 
-因为`Array`遵循`CollectionType`协议，数组的元素又遵循`TextRepresentable`协议，所以数组可以使用`textualDescription`属性得到数组内容的文本表示:
+因为 `Array` 符合 `CollectionType` 协议，而数组中的元素又符合 `TextRepresentable` 协议，所以数组可以使用 `textualDescription` 属性得到数组内容的文本表示：
 
 ```swift
 print(hamsters.textualDescription)
-// 输出 "(A hamster named Murray, A hamster named Morgan, A hamster named Maurice)"
+// 打印 “[A hamster named Murray, A hamster named Morgan, A hamster named Maurice]”
 ```
 
 > 注意  
-> 如果有多个协议扩展，而一个协议的遵循者又同时满足它们的限制，那么将会使用所满足限制最多的那个扩展。
+> 如果多个协议扩展都为同一个协议要求提供了默认实现，而采纳协议的类型又同时满足这些协议扩展的限制条件，那么将会使用限制条件最多的那个协议扩展提供的默认实现。
