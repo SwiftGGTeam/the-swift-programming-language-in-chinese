@@ -22,7 +22,7 @@
 - [协议作为类型（Protocols as Types）](#protocols_as_types)
 - [委托（代理）模式（Delegation）](#delegation)
 - [通过扩展添加协议一致性（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
-- [通过扩展声明已采纳协议（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
+- [通过扩展采纳协议（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [协议类型的集合（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
 - [类类型专属协议（Class-Only Protocol）](#class_only_protocol)
@@ -488,7 +488,7 @@ print(game.textualDescription)
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
-## 通过扩展声明已采纳协议
+## 通过扩展采纳协议
 
 当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空扩展体的扩展来采纳该协议：
 
