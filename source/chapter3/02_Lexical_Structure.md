@@ -45,8 +45,8 @@ Swift 的“词法结构（*lexical structure*）”描述了能构成该语言�
 > 标识符语法
 
 <a id="identifier"></a>
-> *标识符* → [*头部标识符*](#identifier_head) [*标识符字符组*](#identifier_characters) <sub>可选</sub>  
-> *标识符* → \`[*头部标识符*](#identifier_head) [*标识符字符组*](#identifier_characters) <sub>可选</sub>\`  
+> *标识符* → [*头部标识符*](#identifier_head) [*标识符字符组*](#identifier_characters)<sub>可选</sub>  
+> *标识符* → \`[*头部标识符*](#identifier_head) [*标识符字符组*](#identifier_characters)<sub>可选</sub>\`  
 > *标识符* → [*隐式参数名*](#implicit_parameter_name)  
 <a id="identifier_list"></a>
 > *标识符列表* → [*标识符*](#identifier) | [*标识符*](#identifier) **,** [*标识符列表*](#identifier_list)
@@ -74,7 +74,7 @@ Swift 的“词法结构（*lexical structure*）”描述了能构成该语言�
 > *标识符字符* → U+0300–U+036F，U+1DC0–U+1DFF，U+20D0–U+20FF，或者 U+FE20–U+FE2F  
 > *标识符字符* → [*头部标识符*](#identifier_head)
 <a id="identifier_characters"></a>        
-> *标识符字符组* → [*标识符字符*](#identifier_character) [*标识符字符组*](#identifier_characters) <sub>可选</sub>  
+> *标识符字符组* → [*标识符字符*](#identifier_character) [*标识符字符组*](#identifier_characters)<sub>可选</sub>  
 
 <a id="implicit_parameter_name"></a>    
 > *隐式参数名* → **$** [*十进制数字列表*](#decimal_digits)  
@@ -115,7 +115,7 @@ true			// 布尔型字面量
 > *字面量* → [*数字型字面量*](#numeric_literal) | [*字符串型字面量*](#string_literal) | [*布尔型字面量*](#boolean_literal) | [*nil型字面量*](#nil_literal)    
 
 <a id="numeric_literal"></a>    
-> *数字型字面量* → **-** <sub>可选</sub> [*整型字面量*](#integer_literal) | **-** <sub>可选</sub> [*浮点型字面量*](#floating_point_literal)   
+> *数字型字面量* → **-**<sub>可选</sub> [*整型字面量*](#integer_literal) | **-**<sub>可选</sub> [*浮点型字面量*](#floating_point_literal)   
 <a id="boolean_literal"></a> 
 > *布尔型字面量* → **true** | **false**    
 <a id="nil_literal"></a> 
@@ -142,41 +142,41 @@ true			// 布尔型字面量
 > *整型字面量* → [*十六进制字面量*](#hexadecimal_literal)  
 
 <a id="binary_literal"></a>
-> *二进制字面量* → **0b** [*二进制数字*](#binary_digit) [*二进制字面量字符组*](#binary_literal_characters) <sub>可选</sub> <a id="binary_digit"></a>   
+> *二进制字面量* → **0b** [*二进制数字*](#binary_digit) [*二进制字面量字符组*](#binary_literal_characters)<sub>可选</sub> <a id="binary_digit"></a>   
 > *二进制数字* → 数值 0 到 1  
 <a id="binary_literal_character"></a> 
 > *二进制字面量字符* → [*二进制数字*](#binary_digit) | _    
 <a id="binary_literal_characters"></a> 
-> *二进制字面量字符组* → [*二进制字面量字符*](#binary_literal_character) [*二进制字面量字符组*](#binary_literal_characters) <sub>可选</sub>  
+> *二进制字面量字符组* → [*二进制字面量字符*](#binary_literal_character) [*二进制字面量字符组*](#binary_literal_characters)<sub>可选</sub>  
 
 <a id="octal_literal"></a>    
-> *八进制字面量* → **0o** [*八进字数字*](#octal_digit) [*八进制字符组*](#octal_literal_characters) <sub>可选</sub>    
+> *八进制字面量* → **0o** [*八进字数字*](#octal_digit) [*八进制字符组*](#octal_literal_characters)<sub>可选</sub>    
 <a id="octal_digit"></a>  
 > *八进字数字* → 数值 0 到 7  
 <a id="octal_literal_character"></a> 
 > *八进制字符* → [*八进字数字*](#octal_digit) | _    
 <a id="octal_literal_characters"></a> 
-> *八进制字符组* → [*八进制字符*](#octal_literal_character) [*八进制字符组*](#octal_literal_characters) <sub>可选</sub>
+> *八进制字符组* → [*八进制字符*](#octal_literal_character) [*八进制字符组*](#octal_literal_characters)<sub>可选</sub>
 
 <a id="decimal_literal"></a>    
 > *十进制字面量* → [*十进制数字*](#decimal_digit) [*十进制字符组*](#decimal_literal_characters)<sub>可选</sub>    
 <a id="decimal_digit"></a>
 > *十进制数字* → 数值 0 到 9  
 <a id="decimal_digits"></a>
-> *十进制数字组* → [*十进制数字*](#decimal_digit) [*十进制数字组*](#decimal_digits) <sub>可选</sub>  
+> *十进制数字组* → [*十进制数字*](#decimal_digit) [*十进制数字组*](#decimal_digits)<sub>可选</sub>  
 <a id="decimal_literal_character"></a>
 > *十进制字符* → [*十进制数字*](#decimal_digit) | _    
 <a id="decimal_literal_characters"></a>
-> *十进制字符组* → [*十进制字符*](#decimal_literal_character) [*十进制字符组*](#decimal_literal_characters) <sub>可选</sub> 
+> *十进制字符组* → [*十进制字符*](#decimal_literal_character) [*十进制字符组*](#decimal_literal_characters)<sub>可选</sub> 
 
 <a id="hexadecimal_literal"></a>    
-> *十六进制字面量* → **0x** [*十六进制数字*](#hexadecimal_digit) [*十六进制字面量字符组*](#hexadecimal_literal_characters) <sub>可选</sub>  
+> *十六进制字面量* → **0x** [*十六进制数字*](#hexadecimal_digit) [*十六进制字面量字符组*](#hexadecimal_literal_characters)<sub>可选</sub>  
 <a id="hexadecimal_digit"></a>
 > *十六进制数字* → 数值 0 到 9, 字母 a 到 f, 或 A 到 F  
 <a id="hexadecimal_literal_character"></a>
 > *十六进制字符* → [*十六进制数字*](#hexadecimal_digit) | _     
 <a id="hexadecimal_literal_characters"></a>
-> *十六进制字面量字符组* → [*十六进制字符*](#hexadecimal_literal_character) [*十六进制字面量字符组*](#hexadecimal_literal_characters) <sub>可选</sub>  
+> *十六进制字面量字符组* → [*十六进制字符*](#hexadecimal_literal_character) [*十六进制字面量字符组*](#hexadecimal_literal_characters)<sub>可选</sub>  
 
 ### 浮点型字面量
 
@@ -197,18 +197,18 @@ true			// 布尔型字面量
 > 浮点型字面量语法  
 
 <a id="floating_point_literal"></a> 
-> *浮点数字面量* → [*十进制字面量*](#decimal_literal) [*十进制分数*](#decimal_fraction) <sub>可选</sub> [*十进制指数*](#decimal_exponent) <sub>可选</sub>      
-> *浮点数字面量* → [*十六进制字面量*](#hexadecimal_literal) [*十六进制分数*](#hexadecimal_fraction) <sub>可选</sub> [*十六进制指数*](#hexadecimal_exponent)
+> *浮点数字面量* → [*十进制字面量*](#decimal_literal) [*十进制分数*](#decimal_fraction)<sub>可选</sub> [*十进制指数*](#decimal_exponent)<sub>可选</sub>      
+> *浮点数字面量* → [*十六进制字面量*](#hexadecimal_literal) [*十六进制分数*](#hexadecimal_fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal_exponent)
 
 <a id="decimal_fraction"></a>    
 > *十进制分数* → **.** [*十进制字面量*](#decimal_literal) 
 <a id="decimal_exponent"></a>  
-> *十进制指数* → [*十进制指数 e*](#floating_point_e) [*正负号*](#sign) <sub>可选</sub> [*十进制字面量*](#decimal_literal)  
+> *十进制指数* → [*十进制指数 e*](#floating_point_e) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal_literal)  
 
 <a id="hexadecimal_fraction"></a>
-> *十六进制分数* → **.** [*十六进制数字*](#hexadecimal_digit) [*十六进制字面量字符组*](#hexadecimal_literal_characters) <sub>可选</sub>  
+> *十六进制分数* → **.** [*十六进制数字*](#hexadecimal_digit) [*十六进制字面量字符组*](#hexadecimal_literal_characters)<sub>可选</sub>  
 <a id="hexadecimal_exponent"></a>
-> *十六进制指数* → [*十六进制指数 p*](#floating_point_p) [*正负号*](#sign) <sub>可选</sub> [*十进制字面量*](#decimal_literal)  
+> *十六进制指数* → [*十六进制指数 p*](#floating_point_p) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal_literal)  
 
 <a id="floating_point_e"></a>
 > *十进制指数 e* → **e** | **E**  
@@ -265,17 +265,17 @@ let textB = "Hello world"
 > *字符串字面量* → [*静态字符串字面量*](#static_string_literal) | [*插值字符串字面量*](#interpolated_string_literal) 
 
 <a id="static_string_literal"></a>
-> *静态字符串字面量* → **"**[*引用文本*](#quoted_text) <sub>可选</sub>**"**  
+> *静态字符串字面量* → **"**[*引用文本*](#quoted_text)<sub>可选</sub>**"**  
 <a id="quoted_text"></a> 
-> *引用文本* → [*引用文本项*](#quoted_text_item) [*引用文本*](#quoted_text) <sub>可选</sub> 
+> *引用文本* → [*引用文本项*](#quoted_text_item) [*引用文本*](#quoted_text)<sub>可选</sub> 
 <a id="quoted_text_item"></a>  
 > *引用文本项* → [*转义字符*](#escaped_character)  
 > *引用文本项* → 除了 **"**、**\\**、U+000A、U+000D 以外的所有 Unicode 字符
 
 <a id="interpolated_string_literal"></a>
-> *插值字符串字面量* → **"**[*插值文本*](#interpolated_text) <sub>可选</sub>**"**  
+> *插值字符串字面量* → **"**[*插值文本*](#interpolated_text)<sub>可选</sub>**"**  
 <a id="interpolated_text"></a> 
-> *插值文本* → [*插值文本项*](#interpolated_text_item) [*插值文本*](#interpolated_text) <sub>可选</sub> 
+> *插值文本* → [*插值文本项*](#interpolated_text_item) [*插值文本*](#interpolated_text)<sub>可选</sub> 
 <a id="interpolated_text_item"></a>  
 > *插值文本项* → **\\****(**[*表达式*](./04_Expressions.html)**)** | [*引用文本项*](#quoted_text_item)
 
@@ -313,8 +313,8 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > 运算符语法  
 
 <a id="operator"></a>
-> *运算符* → [*头部运算符*](#operator_head) [*运算符字符组*](#operator_characters) <sub>可选</sub>  
-> *运算符* → [*头部点运算符*](#dot_operator_head) [*点运算符字符组*](#dot_operator_characters) <sub>可选</sub>    
+> *运算符* → [*头部运算符*](#operator_head) [*运算符字符组*](#operator_characters)<sub>可选</sub>  
+> *运算符* → [*头部点运算符*](#dot_operator_head) [*点运算符字符组*](#dot_operator_characters)<sub>可选</sub>    
 
 <a id="operator_head"></a>    
 > *头部运算符* → **/** | **=** | **-** | **+** | **!** | __*__ | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **?**  
@@ -342,14 +342,14 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > *运算符字符* → U+FE20–U+FE2F    
 > *运算符字符* → U+E0100–U+E01EF  
 <a id="operator_characters"></a>
-> *运算符字符组* → [*运算符字符*](#operator_character) [*运算符字符组*](#operator_characters) <sub>可选</sub>    
+> *运算符字符组* → [*运算符字符*](#operator_character) [*运算符字符组*](#operator_characters)<sub>可选</sub>    
 
 <a id="dot_operator_head"></a>    
 > *头部点运算符* → **..**    
 <a id="dot_operator_character"></a> 
 > *点运算符字符* → **.** | [*运算符字符*](#operator_character)    
 <a id="dot_operator_characters"></a> 
-> *点运算符字符组* → [*点运算符字符*](#dot_operator_character) [*点运算符字符组*](#dot_operator_characters) <sub>可选</sub>
+> *点运算符字符组* → [*点运算符字符*](#dot_operator_character) [*点运算符字符组*](#dot_operator_characters)<sub>可选</sub>
  
 > *二元运算符* → [*运算符*](#operator)  
 > *前置运算符* → [*运算符*](#operator)  
