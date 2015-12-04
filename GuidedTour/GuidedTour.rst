@@ -1296,8 +1296,8 @@ after ``case`` in a switch.
 
    Add code to throw an error inside the ``do`` block.
    What kind of error do you need to throw
-   so that the first ``catch`` block handles it?
-   The second?  The third?
+   so that the error is handled by the first ``catch`` block?
+   What about the second and third blocks?
 
 Another way to handle errors
 is to use ``try?`` to convert the result to an optional.
