@@ -6,6 +6,12 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2015-12-03  * Updated for Swift 2.2.
+
+            * Removed discussion of ``var`` patterns,
+              variable function arguments,
+              and the special syntax for curried functions.
+
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
@@ -412,7 +418,7 @@ Date        Notes
             * Added information about how type inference works
               with :ref:`LexicalStructure_Literals`.
 
-            * Added more information about :ref:`Declarations_CurriedFunctions`.
+            * Added more information about curried functions.
 
             * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 

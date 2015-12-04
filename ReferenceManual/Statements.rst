@@ -267,7 +267,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     case-condition --> ``case`` pattern initializer where-clause-OPT
 
     optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
-    optional-binding-head --> ``let`` pattern initializer | ``var`` pattern initializer
+    optional-binding-head --> ``let`` pattern initializer
     optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
     optional-binding-continuation --> pattern initializer | optional-binding-head
 
@@ -433,7 +433,7 @@ must have a type that conforms to the ``BooleanType`` protocol.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
-Any constants or variables assigned a value
+Any constants assigned a value
 from an optional binding declaration in a ``guard`` statement condition
 can be used for the rest of the guard statement's enclosing scope.
 
@@ -522,11 +522,11 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
     >> }
 
 As the above example shows, patterns in a case can also bind constants
-using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
-These constants (or variables) can then be referenced in a corresponding where clause
+using the ``let`` keyword.
+These constants can then be referenced in a corresponding where clause
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
-none of those patterns can contain constant or variable bindings.
+none of those patterns can contain constant bindings.
 
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.

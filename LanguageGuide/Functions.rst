@@ -518,85 +518,15 @@ The example below calculates the :newTerm:`arithmetic mean`
 
    A function may have at most one variadic parameter.
 
-.. _Functions_ConstantAndVariableParameters:
-
-Constant and Variable Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Function parameters are constants by default.
-Trying to change the value of a function parameter
-from within the body of that function results in a compile-time error.
-This means that you can't change the value of a parameter by mistake.
-
-However, sometimes it is useful for a function to have
-a *variable* copy of a parameter's value to work with.
-You can avoid defining a new variable yourself within the function
-by specifying one or more parameters as :newTerm:`variable parameters` instead.
-Variable parameters are available as variables rather than as constants,
-and give a new modifiable copy of the parameter's value for your function to work with.
-
-Define variable parameters by prefixing the parameter name with the ``var`` keyword:
-
-.. testcode:: constantAndVariableParameters
-
-   -> func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
-         let amountToPad = totalLength - string.characters.count
-         if amountToPad < 1 {
-            return string
-         }
-         let padString = String(pad)
-         for _ in 1...amountToPad {
-            string = padString + string
-         }
-         return string
-      }
-   -> let originalString = "hello"
-   << // originalString : String = "hello"
-   -> let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
-   << // paddedString : String = "-----hello"
-   /> paddedString is equal to \"\(paddedString)\"
-   </ paddedString is equal to "-----hello"
-   /> originalString is still equal to \"\(originalString)\"
-   </ originalString is still equal to "hello"
-
-This example defines a new function called ``alignRight(_:totalLength:pad:)``,
-which aligns an input string to the right edge of a longer output string.
-Any space on the left is filled with a specified padding character.
-In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
-
-The ``alignRight(_:totalLength:pad:)`` function defines the input parameter ``string`` to be a variable parameter.
-This means that ``string`` is now available as a local variable,
-initialized with the passed-in string value,
-and can be manipulated within the body of the function.
-
-The function starts by working out how many characters need to be added to the left of ``string``
-in order to right-align it within the overall string.
-This value is stored in a local constant called ``amountToPad``.
-If no padding is needed (that is, if ``amountToPad`` is less than ``1``),
-the function simply returns the input value of ``string`` without any padding.
-
-Otherwise, the function creates a new temporary ``String`` constant called ``padString``,
-initialized with the ``pad`` character,
-and adds ``amountToPad`` copies of ``padString``
-to the left of the existing string.
-(A ``String`` value cannot be added on to a ``Character`` value,
-and so the ``padString`` constant is used to ensure that
-both sides of the ``+`` operator are ``String`` values.)
-
-.. note::
-
-   The changes you make to a variable parameter do not
-   persist beyond the end of each call to the function,
-   and are not visible outside the function's body.
-   The variable parameter only exists for the lifetime of that function call.
-
 .. _Functions_InOutParameters:
 
 In-Out Parameters
 ~~~~~~~~~~~~~~~~~
 
-Variable parameters, as described above,
-can only be changed within the function itself.
+Function parameters are constants by default.
+Trying to change the value of a function parameter
+from within the body of that function results in a compile-time error.
+This means that you can't change the value of a parameter by mistake.
 If you want a function to modify a parameter's value,
 and you want those changes to persist after the function call has ended,
 define that parameter as an :newTerm:`in-out parameter` instead.
@@ -621,8 +551,6 @@ to indicate that it can be modified by the function.
 
    In-out parameters cannot have default values,
    and variadic parameters cannot be marked as ``inout``.
-   If you mark a parameter as ``inout``,
-   it cannot also be marked as ``var`` or ``let``.
 
 Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:
@@ -918,12 +846,3 @@ to use and return nested functions:
    </ -2...
    </ -1...
    </ zero!
-
-.. TODO: Curried Functions
-   -----------------------
-
-.. TODO: function currying syntax 
-
-.. TODO: partial application
-
-.. TODO: currying example from /test/Serialization/Inputs/def_transparent.swift

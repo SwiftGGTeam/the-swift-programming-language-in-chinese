@@ -387,7 +387,7 @@ use the ``enumerate()`` method to iterate over the array instead.
 For each item in the array,
 the ``enumerate()`` method returns a tuple
 composed of the index and the value for that item.
-You can decompose the tuple into temporary constants or variables
+You can decompose the tuple into temporary constants
 as part of the iteration:
 
 .. testcode:: arraysInferred
@@ -1008,7 +1008,7 @@ Iterating Over a Dictionary
 
 You can iterate over the key-value pairs in a dictionary with a ``for``-``in`` loop.
 Each item in the dictionary is returned as a ``(key, value)`` tuple,
-and you can decompose the tuple's members into temporary constants or variables
+and you can decompose the tuple's members into temporary constants
 as part of the iteration:
 
 .. testcode:: dictionariesInferred
