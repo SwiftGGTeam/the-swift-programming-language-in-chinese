@@ -13,22 +13,22 @@
 
 本页包含内容：
 
-- [类型注解（Type Annotation）](#type_annotation)
-- [类型标识符（Type Identifier）](#type_identifier)
-- [元组类型（Tuple Type）](#tuple_type)
-- [函数类型（Function Type）](#function_type)
-- [数组类型（Array Type）](#array_type)
-- [字典类型（Dictionary Type）](#dictionary_type)
-- [可选类型（Optional Type）](#optional_type)
-- [隐式解析可选类型（Implicitly Unwrapped Optional Type）](#implicitly_unwrapped_optional_type)
-- [协议合成类型（Protocol Composition Type）](#protocol_composition_type)
-- [元类型（Metatype Type）](#metatype_type)
-- [类型继承子句（Type Inheritance Clause）](#type_inheritance_clause)
-- [类型推断（Type Inference）](#type_inference)
+- [类型注解](#type_annotation)
+- [类型标识符](#type_identifier)
+- [元组类型](#tuple_type)
+- [函数类型](#function_type)
+- [数组类型](#array_type)
+- [字典类型](#dictionary_type)
+- [可选类型](#optional_type)
+- [隐式解析可选类型](#implicitly_unwrapped_optional_type)
+- [协议合成类型](#protocol_composition_type)
+- [元类型](#metatype_type)
+- [类型继承子句](#type_inheritance_clause)
+- [类型推断](#type_inference)
 
 Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 MyClass 的实例拥有类型 MyClass。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照“扩展和扩展声明”章节里讨论的那样，声明一个扩展来增加它们的行为以迎合你程序的需求。
+那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.html) 和 [扩展声明](05_Declarations.html#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
 复合型类型是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
 
@@ -36,7 +36,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。命名型�
 
 > 类型语法  
 <a name="type"></a>
-> *类型* → [*数组类型*](#array_type) | [*字典类型*](#dictionary_type) | [*函数类型*](#function_type) | [*类型标识*](#type_identifier) | [*元组类型*](#tuple_type) | [*可选类型*](#optional_type) | [*隐式解析可选类型*](#implicitly_unwrapped_optional_type) | [*协议合成类型*](#protocol_composition_type) | [*元型类型*](#metatype_type)  
+> *类型* → [*数组类型*](#array-type) | [*字典类型*](#dictionary-type) | [*函数类型*](#function-type) | [*类型标识*](#type-identifier) | [*元组类型*](#tuple-type) | [*可选类型*](#optional-type) | [*隐式解析可选类型*](#implicitly-unwrapped-optional-type) | [*协议合成类型*](#protocol-composition-type) | [*元型类型*](#metatype-type)  
 
 <a name="type_annotation"></a>
 ## 类型注解
@@ -52,7 +52,8 @@ func someFunction(a: Int) { /* ... */ }
 类型注解可以在类型之前包含一个类型特性的可选列表。
 
 > 类型注解语法  
-> *类型注解* → **:** [*特性列表*](../chapter3/06_Attributes.html#attributes)<sub>可选</sub> [*类型*](#type)  
+<a name="type-annotation"></a>
+> *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*类型*](#type)  
 
 <a name="type_identifier"></a>
 ## 类型标识符
@@ -75,9 +76,10 @@ var someValue: ExampleModule.MyType
 ```
 
 > 类型标识符语法  
-> *类型标识符* → [*类型名称*](#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type_identifier)  
-<a name="type_name"></a>
-> *类型名称* → [*标识符*](LexicalStructure.html#identifier)  
+<a name="type-identifier"></a>
+> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)  
+<a name="type-name"></a>
+> *类型名称* → [*标识符*](02_Lexical_Structure.html#identifier)  
 
 <a name="tuple_type"></a>
 ## 元组类型
@@ -89,15 +91,16 @@ var someValue: ExampleModule.MyType
 `Void` 是空元组类型 `()` 的别名。如果括号内只有一个元素，那么该类型就是括号内元素的类型。比如，`(Int)` 的类型是 `Int` 而不是 `(Int)`。所以，只有当元组类型包含的元素个数在两个及以上时才可以命名元组元素。
 
 > 元组类型语法  
-> *元组类型* → **(** [*元组类型主体*](#tuple_type_body)<sub>可选</sub> **)**  
-<a name="tuple_type_body"></a>
-> *元组类型主体* → [*元组类型元素列表*](#tuple_type_element_list) **...**<sub>可选</sub>  
-<a name="tuple_type_element_list"></a>
-> *元组类型元素列表* → [*元组类型元素*](#tuple_type_element) | [*元组类型元素*](#tuple_type_element) **,** [*元组类型元素列表*](#tuple_type_element_list)  
-<a name="tuple_type_element"></a>
-> *元组类型元素* → [*特性列表*](../chapter3/06_Attributes.html#attributes)<sub>可选</sub> **inout**<sub>可选</sub> [*类型*](#type) | **inout**<sub>可选</sub> [*元素名*](#element_name) [*类型注解*](#type_annotation)  
-<a name="element_name"></a>
-> *元素名* → [*标识符*](LexicalStructure.html#identifier)  
+<a name="tuple-type"></a>
+> *元组类型* → **(** [*元组类型主体*](#tuple-type-body)<sub>可选</sub> **)**  
+<a name="tuple-type-body"></a>
+> *元组类型主体* → [*元组类型元素列表*](#tuple-type-element-list) **...**<sub>可选</sub>  
+<a name="tuple-type-element-list"></a>
+> *元组类型元素列表* → [*元组类型元素*](#tuple-type-element) | [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list)  
+<a name="tuple-type-element"></a>
+> *元组类型元素* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **inout**<sub>可选</sub> [*类型*](#type) | **inout**<sub>可选</sub> [*元素名*](#element-name) [*类型注解*](#type-annotation)  
+<a name="element-name"></a>
+> *元素名* → [*标识符*](02_Lexical_Structure.html#identifier)  
 
 <a name="function_type"></a>
 ## 函数类型
@@ -114,11 +117,12 @@ var someValue: ExampleModule.MyType
 
 为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
 
-柯里化函数（Curried fuction）的函数类型从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。关于柯里化函数的讨论见章节 [柯里化函数](05_Declarations.html#curried_functions)。
+柯里化函数的函数类型从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。关于柯里化函数的讨论见章节 [柯里化函数](05_Declarations.html#curried_functions)。
 
-函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，不抛出函数（nonthrowing function）是抛出函数（throwing function）函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。对于柯里化函数，`throws` 关键字只应用于最里层的函数。抛出和重抛函数（rethrowing function）的相关描述见章节 [抛出函数与方法](05_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](05_Declarations.html#rethrowing_functions_and_methods)。
+函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。对于柯里化函数，`throws` 关键字只应用于最里层的函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](05_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](05_Declarations.html#rethrowing_functions_and_methods)。
 
 > 函数类型语法  
+<a name="function-type"></a>
 > *函数类型* → [*类型*](#type) **throws**<sub>可选</sub> **->** [*类型*](#type)  
 > *函数类型* → [*类型*](#type) **rethrows**<sub>可选</sub> **->** [*类型*](#type)  
 
@@ -149,6 +153,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 关于 Swift 标准库中 `Array` 类型的详细讨论，请参阅 [数组](../chapter2/04_Collection_Types.html#arrays)。
 
 > 数组类型语法  
+<a name="array-type"></a>
 > *数组类型* → **[** [*类型*](#type) **]**
 
 <a name="dictionary_type"></a>
@@ -174,6 +179,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 关于 Swift 标准库中 `Dictionary` 类型的详细讨论，请参阅 [字典](../chapter2/04_Collection_Types.html#dictionaries)。
 
 > 字典类型语法  
+<a name="dictionary-type"></a>
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]** 
 
 <a name="optional_type"></a>
@@ -204,6 +210,7 @@ optionalInteger! // 42
 更多细节以及更多如何使用可选类型的例子，请参阅 [可选类型](../chapter2/01_The_Basics.html#optionals)。
 
 > 可选类型语法  
+<a name="optional-type"></a>
 > *可选类型* → [*类型*](#type) **?**  
 
 <a name="implicitly_unwrapped_optional_type"></a>
@@ -229,6 +236,7 @@ var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../chapter2/01_The_Basics.html#implicityly_unwrapped_optionals)。
 
 > 隐式解析可选类型语法  
+<a name="implicitly-unwrapped-optional-type"></a>
 > *隐式解析可选类型* → [*类型*](#type) **!**  
 
 <a name="protocol_composition_type"></a>
@@ -245,11 +253,12 @@ protocol<`Protocol 1`, `Procotol 2`>
 协议合成列表中的每项必须是协议名或协议合成类型的类型别名。如果列表为空，它就会指定一个空协议合成列表，每个类型都符合它。
 
 > 协议合成类型语法  
-> *协议合成类型* → **protocol** **<** [*协议标识符列表*](#protocol_identifier_list)<sub>可选</sub> **>**  
-<a name="protocol_identifier_list"></a>
-> *协议标识符列表* → [*协议标识符*](#protocol_identifier) | [*协议标识符*](#protocol_identifier) **,** [*协议标识符列表*](#protocol_identifier_list)  
-<a name="protocol_identifier"></a>
-> *协议标识符* → [*类型标识符*](#type_identifier)  
+<a name="protocol-composition-type"></a>
+> *协议合成类型* → **protocol** **<** [*协议标识符列表*](#protocol-identifier-list)<sub>可选</sub> **>**  
+<a name="protocol-identifier-list"></a>
+> *协议标识符列表* → [*协议标识符*](#protocol-identifier) | [*协议标识符*](#protocol-identifier) **,** [*协议标识符列表*](#protocol-identifier-list)  
+<a name="protocol-identifier"></a>
+> *协议标识符* → [*类型标识符*](#type-identifier)  
 
 <a name="metatype_type"></a>
 ## 元类型
@@ -306,6 +315,7 @@ let anotherInstance = metatype.init(string: "some string")
 ```
 
 > 元类型语法  
+<a name="metatype-type"></a>
 > *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol** 
 
 <a name="type_inheritance_clause"></a>
@@ -321,12 +331,12 @@ let anotherInstance = metatype.init(string: "some string")
 
 > 类型继承子句语法  
 <a name="type_inheritance_clause"></a>
-> *类型继承子句* → **:** [*类要求*](#class_requirement) **,** [*类型继承列表*](#type_inheritance_list)  
-> *类型继承子句* → **:** [*类要求*](#class_requirement)  
-> *类型继承子句* → **:** [*类型继承列表*](#type_inheritance_list)  
-<a name="type_inheritance_list"></a>
-> *类型继承列表* → [*类型标识符*](#type_identifier) | [*类型标识符*](#type_identifier) **,** [*类型继承列表*](#type_inheritance_list)  
-<a name="class_requirement"></a>
+> *类型继承子句* → **:** [*类要求*](#class-requirement) **,** [*类型继承列表*](#type-inheritance-list)  
+> *类型继承子句* → **:** [*类要求*](#class-requirement)  
+> *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)  
+<a name="type-inheritance-list"></a>
+> *类型继承列表* → [*类型标识符*](#type-identifier) | [*类型标识符*](#type-identifier) **,** [*类型继承列表*](#type-inheritance-list)  
+<a name="class-requirement"></a>
 > *类要求* → **class**
 
 <a name="type_inference"></a>

@@ -245,10 +245,13 @@ setter的名字和圆括号内的语句是可选的。如果写了一个setter�
 > *变量声明* → [*变量声明头(Head)*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型标注*](../chapter3/03_Types.html#type_annotation) [*构造器*](../chapter3/05_Declarations.html#initializer) _可选_ [*willSet-didSet代码块*](../chapter3/05_Declarations.html#willSet_didSet_block)  
 > *变量声明头(Head)* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修饰符(Specifiers)列表*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **var**  
 > *变量名称* → [*标识符*](LexicalStructure.html#identifier)  
+<a name="getter-setter-block"></a>
 > *getter-setter块* → **{** [*getter子句*](../chapter3/05_Declarations.html#getter_clause) [*setter子句*](../chapter3/05_Declarations.html#setter_clause) _可选_ **}**  
 > *getter-setter块* → **{** [*setter子句*](../chapter3/05_Declarations.html#setter_clause) [*getter子句*](../chapter3/05_Declarations.html#getter_clause) **}**  
-> *getter子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **get** [*代码块*](../chapter3/05_Declarations.html#code_block)  
-> *setter子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **set** [*setter名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
+<a name="getter-clause"></a>
+> *getter 子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **get** [*代码块*](../chapter3/05_Declarations.html#code_block)  
+<a name="setter-clause"></a>
+> *setter 子句* → [*特性(Attributes)列表*](../chapter3/06_Attributes.html#attributes) _可选_ **set** [*setter名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)  
 > *setter名称* → **(** [*标识符*](LexicalStructure.html#identifier) **)**  
 > *getter-setter关键字(Keyword)块* → **{** [*getter关键字(Keyword)子句*](../chapter3/05_Declarations.html#getter_keyword_clause) [*setter关键字(Keyword)子句*](../chapter3/05_Declarations.html#setter_keyword_clause) _可选_ **}**  
 > *getter-setter关键字(Keyword)块* → **{** [*setter关键字(Keyword)子句*](../chapter3/05_Declarations.html#setter_keyword_clause) [*getter关键字(Keyword)子句*](../chapter3/05_Declarations.html#getter_keyword_clause) **}**  
