@@ -107,7 +107,7 @@ var someValue: ExampleModule.MyType
 
 函数类型表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
-`参数类型` -> `返回值类型`
+> `参数类型` -> `返回值类型`
 
 由于参数类型和返回值类型可以是元组类型，所以函数类型支持多参数与多返回值的函数与方法。
 
@@ -131,7 +131,7 @@ var someValue: ExampleModule.MyType
 
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
 
-[`类型`]
+> [`类型`]
 
 换句话说，下面两个声明是等价的：
 
@@ -161,7 +161,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 Swift 语言为标准库中定义的 `Dictionary<Key, Value>` 类型提供了如下语法糖：
 
-[`键类型` : `值类型`]
+> [`键类型` : `值类型`]
 
 换句话说，下面两个声明是等价的：
 
@@ -246,7 +246,7 @@ var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 
 协议合成类型的形式如下：
 
-protocol<`Protocol 1`, `Procotol 2`>
+> protocol<`Protocol 1`, `Procotol 2`>
 
 协议合成类型允许你指定一个值，其类型符合多个协议的要求且不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `protocol<Protocol A, Protocol B, Protocol C>` 等效于一个从 `Protocol A`，`Protocol B`， `Protocol C` 继承而来的新协议 `Protocol D`，很显然这样做有效率的多，甚至不需引入一个新名字。
 
