@@ -1229,7 +1229,7 @@ handles the error.
 .. testcode:: guided-tour
 
     -> func sendToPrinter(printerName: String) throws -> String {
-           if printerName == "No Toner" {
+           if printerName == "Never Has Toner" {
                throw PrinterError.NoToner
            }
            return "Job sent"
@@ -1255,7 +1255,7 @@ unless you can give it a different name.
 
 .. admonition:: Experiment
 
-   Change the printer name to ``No Toner``,
+   Change the printer name to ``"Never Has Toner"``,
    so that the ``sendToPrinter(_:)`` function throws an error.
 
 .. Assertion tests the change that the Experiment box instructs you to make.
@@ -1263,14 +1263,14 @@ unless you can give it a different name.
 .. assertion:: guided-tour
 
     >> do {
-           let printerResponse = try sendToPrinter("No Toner")
+           let printerResponse = try sendToPrinter("Never Has Toner")
            print(printerResponse)
        } catch {
            print(error)
        }
     << NoToner
 
-A ``do``-``catch`` block can have multiple ``catch`` blocks
+You can provide multiple ``catch`` blocks
 that handle specific errors.
 You write a pattern after ``catch`` just as you do
 after ``case`` in a switch.
@@ -1303,13 +1303,14 @@ Another way to handle errors
 is to use ``try?`` to convert the result to an optional.
 If the function throws an error,
 the specific error is discarded and the result is ``nil``.
-Otherwise, the result is the value that the function returned.
+Otherwise, the result is an optional containing
+the value that the function returned.
 
 .. testcode:: guided-tour
 
     -> let printerSuccess = try? sendToPrinter("Mergenthaler")
     << // printerSuccess : String? = Optional("Job sent")
-    -> let printerFailure = try? sendToPrinter("No Toner")
+    -> let printerFailure = try? sendToPrinter("Never Has Toner")
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
