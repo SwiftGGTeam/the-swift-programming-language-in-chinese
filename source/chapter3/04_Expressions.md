@@ -532,7 +532,7 @@ x = .AnotherValue
 > *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)  
 > *后缀表达式* → [*函数调用表达式*](#function-call-expression)  
 > *后缀表达式* → [*构造器表达式*](#initializer-expression)  
-> *后缀表达式* → [*显示成员表达式*](#explicit-member-expression)  
+> *后缀表达式* → [*显式成员表达式*](#explicit-member-expression)  
 > *后缀表达式* → [*后缀 self 表达式*](#postfix-self-expression)  
 > *后缀表达式* → [*dynamicType 表达式*](#dynamic-type-expression)  
 > *后缀表达式* → [*下标表达式*](#subscript-expression)  
@@ -622,7 +622,7 @@ let s3 = someValue.dynamicType.init(data: 7) // 有效
 <a name="explicit_member_expression"></a>
 ### 显式成员表达式
 
-显示成员表达式允许我们访问命名类型、元组或者模块的成员，形式如下：
+显式成员表达式允许我们访问命名类型、元组或者模块的成员，形式如下：
 
 > `表达式`.`成员名`
 
@@ -648,8 +648,8 @@ t.0 = t.1
 
 > 显式成员表达式语法  
 <a name="explicit-member-expression"></a>
-> *显示成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)  
-> *显示成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)  
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
 
 <a name="postfix_self_expression"></a>
 ### 后缀 self 表达式
