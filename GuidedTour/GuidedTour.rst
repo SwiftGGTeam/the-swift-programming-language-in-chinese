@@ -1074,8 +1074,8 @@ or it responds with some error information.
     -> switch success {
            case let .Result(sunrise, sunset):
                print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .Failure(error):
-               print("Failure...  \(error)")
+           case let .Failure(message):
+               print("Failure...  \(message)")
        }
     << Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
