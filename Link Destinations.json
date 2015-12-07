@@ -562,7 +562,8 @@
     "where-clauses", 
     "string-literals", 
     "control-transfer-statements", 
-    "in-out-parameters"
+    "in-out-parameters", 
+    "error-handling"
   ], 
   "next_id": 547
 }
