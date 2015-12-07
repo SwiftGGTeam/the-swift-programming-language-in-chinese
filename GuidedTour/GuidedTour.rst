@@ -915,10 +915,11 @@ enumerations can have methods associated with them.
    Write a function that compares two ``Rank`` values
    by comparing their raw values.
 
-In the example above,
-the raw-value type of the enumeration is ``Int``,
-so you only have to specify the first raw value.
-The rest of the raw values are assigned in order.
+By default, Swift assigns the raw values starting at zero
+and incrementing by one each time,
+but you can change this behavior by explicitly specifying values.
+In the example above, ``Ace`` is explicitly given a raw value of ``1``,
+and the rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
 Use the ``rawValue`` property to access the raw value of an enumeration case.
