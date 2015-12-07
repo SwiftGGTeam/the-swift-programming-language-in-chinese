@@ -8,6 +8,9 @@ Date        Notes
 ==========  ==========================================================================
 2015-12-03  * Updated for Swift 2.2.
 
+            * Added a section about error handling
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
+
             * Removed discussion of ``var`` patterns,
               variable function arguments,
               and the special syntax for curried functions.
