@@ -22,7 +22,7 @@
 - [基本表达式](#primary_expressions)
     - [字面量表达式](#literal_expression)
     - [self 表达式](#self_expression)
-    - [super 表达式](#superclass_expression)
+    - [超类表达式](#superclass_expression)
     - [闭包表达式](#closure_expression)
     - [隐式成员表达式](#implicit_member_expression)
     - [圆括号表达式](#parenthesized_expression)
@@ -114,8 +114,8 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 注意  
 > 在解析时，一个二元表达式将作为一个简单列表表示，然后根据运算符的优先级，再进一步进行组合。例如，`2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + (3 * 5))`。
 
-> 二元表达式语法  
 <a name="binary-expression"></a>
+> 二元表达式语法  
 > *二元表达式* → [*二元运算符*](02_Lexical_Structure.html#binary-operator) [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*赋值运算符*](#assignment-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*条件运算符*](#conditional-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
@@ -195,8 +195,8 @@ f(x as Any)
 
 关于类型转换的更多内容和例子，请参阅 [类型转换](../chapter2/19_Type_Casting.html)。
 
+<a name="type-casting-operator"></a>
 > 类型转换运算符语法  
-<a name="type-casting-operator"></a>  
 > *类型转换运算符* → **is** [*类型*](03_Types.html#type)  
 > *类型转换运算符* → **as** [*类型*](03_Types.html#type)  
 > *类型转换运算符* → **is** **?** [*类型*](03_Types.html#type)  
@@ -208,6 +208,7 @@ f(x as Any)
 基本表达式是最基本的表达式。 它们可以跟前缀表达式、二元表达式、后缀表达式以及其他基本表达式组合使用。
 
 > 基本表达式语法  
+<a name="primary-expression"></a>
 > *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
 > *基本表达式* → [*字面量表达式*](#literal-expression)  
 > *基本表达式* → [*self表达式*](#self-expression)  
@@ -238,9 +239,9 @@ func logFunctionName(string: String = __FUNCTION__) {
     print(string)
 }
 func myFunction() {
-    logFunctionName() // 打印 “myFunction()”
+    logFunctionName() 
 }
-myFunction()
+myFunction() // 打印 “myFunction()”
 ```
 
 数组字面量是值的有序集合，形式如下：
@@ -287,18 +288,17 @@ var emptyDictionary: [String : Double] = [:]
 <a name="self_expression"></a>
 ### self 表达式
 
-self表达式是对 当前type 或者当前instance的引用。它的形式如下：
+`self` 表达式是对当前类型或者当前实例的显式引用，它有如下形式：
 
 > self  
-> self.`member name`  
-> self[`subscript index`]  
-> self(`initializer arguments`)
-> self.init(`initializer arguments`)
+> self.`成员名称`  
+> self[`下标索引`]  
+> self(`构造器参数`)  
+> self.init(`构造器参数`)
 
-如果在 initializer, subscript, instance method中，self等同于当前type的instance. 在一个静态方法（static method）, 类方法（class method）中， self等同于当前的type.
+如果在构造器、下标、实例方法中，`self` 引用的是当前类型的实例。在一个类型方法中，`self` 引用的是当前的类型。
 
-当访问 member（成员变量时）， self 用来区分重名变量（例如函数的参数）.  例如，
-（下面的 self.greeting 指的是 var greeting: String, 而不是 init（greeting: String） ）
+当访问成员时，`self` 可用来区分重名变量，例如函数的参数：
 
 ```swift
 class SomeClass {
@@ -309,7 +309,7 @@ class SomeClass {
 }
 ```
 
-在mutating 方法中， 你可以使用self 对 该instance进行赋值。
+在 `mutating` 方法中，你可以对 `self` 重新赋值：
 
 ```swift
 struct Point {
@@ -328,48 +328,48 @@ struct Point {
 > *self 表达式* → **self** **.** **init**  
 
 <a name="superclass_expression"></a>
-### super 表达式
+### 超类表达式
 
-超类表达式可以使我们在某个class中访问它的超类. 它有如下形式：
+超类表达式可以使我们在某个类中访问它的超类，它有如下形式：
 
-> super.`member name`  
-> super[`subscript index`]  
-> super.init(`initializer arguments`)
+> super.`成员名称`  
+> super[`下标索引`]  
+> super.init(`构造器参数`)
 
-形式1 用来访问超类的某个成员（member）. 形式2 用来访问该超类的 subscript 实现。 形式3 用来访问该超类的 initializer.
+第一种形式用来访问超类的某个成员，第二种形式用来访问超类的下标，第三种形式用来访问超类的构造器。
 
-子类（subclass）可以通过超类（superclass）表达式在它们的 member, subscripting 和 initializers 中来利用它们超类中的某些实现（既有的方法或者逻辑）。
+子类可以通过超类表达式在它们的成员、下标和构造器中使用超类中的实现。
 
-> super 表达式语法  
+> 超类表达式语法  
 <a name="superclass-expression"></a>
-> *super 表达式* → [*超类方法表达式*](../chapter3/04_Expressions.html#superclass_method_expression) | [*超类下标表达式*](../chapter3/04_Expressions.html#超类下标表达式) | [*超类构造器表达式*](../chapter3/04_Expressions.html#superclass_initializer_expression)  
+> *超类表达式* → [*超类方法表达式*](#superclass-method-expression) | [*超类下标表达式*](#superclass-subscript-expression) | [*超类构造器表达式*](#superclass-initializer-expression)  
 <a name="superclass-method-expression"></a>
-> *超类方法表达式* → **super** **.** [*标识符*](LexicalStructure.html#identifier)  
+> *超类方法表达式* → **super** **.** [*标识符*](02_Lexical_Structure.md#identifier)  
 <a name="superclass-subscript-expression"></a>
-> *超类下标表达式* → **super** **[** [*表达式*](../chapter3/04_Expressions.html#expression) **]**  
+> *超类下标表达式* → **super** **[** [*表达式*](#expression) **]**  
 <a name="superclass-initializer-expression"></a>
 > *超类构造器表达式* → **super** **.** **init**  
 
 <a name="closure_expression"></a>
 ### 闭包表达式
 
-闭包（closure） 表达式可以建立一个闭包（在其他语言中也叫 lambda, 或者 匿名函数（anonymous function））. 跟函数（function）的声明一样， 闭包（closure）包含了可执行的代码（跟方法主体（statement）类似） 以及接收（capture）的参数。 它的形式如下：
+闭包表达式会创建一个闭包，在其他语言中也叫匿名函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
-{ (parameters) -> return type in
-    statements
+{ (parameters) -> return type in  
+    statements  
 }
 ```
 
-闭包的参数声明形式跟方法中的声明一样, 请参见：[Function Declaration](TODO：添加链接).
+闭包的参数声明形式跟函数一样，请参阅 [函数声明](05_Declarations.md#function_declaration)。
 
-闭包还有几种特殊的形式, 让使用更加简洁：
+闭包还有几种特殊的形式，能让闭包使用起来更加简洁：
 
-- 闭包可以省略 它的参数的type 和返回值的type. 如果省略了参数和参数类型，就也要省略 'in'关键字。 如果被省略的type 无法被编译器获知（inferred） ，那么就会抛出编译错误。
-- 闭包可以省略参数，转而在方法体（statement）中使用 $0, $1, $2 来引用出现的第一个，第二个，第三个参数。
-- 如果闭包中只包含了一个表达式，那么该表达式就会自动成为该闭包的返回值。 在执行 'type inference '时，该表达式也会返回。
+- 闭包可以省略它的参数和返回值的类型。如果省略了参数名和参数类型，也要省略 `in` 关键字。如果被省略的类型无法被编译器推断，那么就会导致编译错误。
+- 闭包可以省略参数名，参数会被隐式命名为 `$` 跟上其索引位置，例如 `$0`、`$1`、`$2` 分别表示第一个、第二个、第三个参数，以此类推。
+- 如果闭包中只包含一个表达式，那么该表达式的结果就会自动成为闭包的返回值。表达式结果的类型也会被推断为闭包的返回类型。
 
-下面几个 闭包表达式是 等价的：
+下面几个闭包表达式是等价的：
 
 ```swift
 myFunction {
@@ -387,58 +387,95 @@ myFunction { return $0 + $1 }
 myFunction { $0 + $1 }
 ```
 
-关于 向闭包中传递参数的内容，参见： [Function Call Expression](TODO：添加链接).
+关于如何将闭包作为参数来传递的内容，请参阅 [函数调用表达式](#function_call_expression)。
 
 #### 捕获列表
 
-闭包表达式可以通过一个参数列表（capture list） 来显式指定它需要的参数。 参数列表由中括号 [] 括起来，里面的参数由逗号','分隔。一旦使用了参数列表，就必须使用'in'关键字（在任何情况下都得这样做，包括忽略参数的名字，type, 返回值时等等）。
+默认情况下，闭包会通过强引用捕获所在环境中的常量和变量。你可以通过一个捕获列表来显式指定它的捕获行为。
 
-在闭包的参数列表（ capture list）中， 参数可以声明为 'weak' 或者 'unowned' .
+捕获列表在参数列表之前，由中括号括起来，里面是由逗号分隔的一系列表达式。一旦使用了捕获列表，就必须使用 `in` 关键字，即使省略了参数名、参数类型、返回类型。
+
+捕获列表中的条目会在闭包创建时被初始化。每一个条目都会被闭包所在环境中的同名常量或者变量初始化。例如下面的代码示例中，捕获列表包含 `a` 而不包含 `b`，这将导致这两个变量具有不同的行为。
 
 ```swift
-myFunction { print(self.title) }                    // strong capture
-myFunction { [weak self] in print(self!.title) }    // weak capture
-myFunction { [unowned self] in print(self.title) }  // unowned capture
+var a = 0
+var b = 0
+let closure = { [a] in
+    print(a, b)
+}
+
+a = 10
+b = 10
+closure()
+// 打印 “0 10”
 ```
 
-在参数列表中，也可以使用任意表达式来赋值. 该表达式会在 闭包被执行时赋值，然后按照不同的力度来获取（这句话请慎重理解）。（captured with the specified strength. ） 例如：
+在示例中，变量 `b` 只有一个，然而，变量 `a` 有两个，一个在闭包外，一个在闭包内。闭包内的变量 `a` 会在闭包创建时用闭包外的变量 `a` 的值来初始化，除此之外它们并无其他联系。这意味着在闭包创建后，改变某个 `a` 的值都不会对另一个 `a` 的值造成任何影响。与此相反，闭包内外都是同一个变量 `b`，因此在闭包外改变其值，闭包内的值也会受影响。
+
+如果闭包捕获的值是引用语义，则又会有所不同。例如，下面示例中，有两个变量 `x`，一个在闭包外，一个在闭包内，由于它们的值是引用语义，虽然这是两个不同的变量，它们却都引用着同一实例。
 
 ```swift
-// Weak capture of "self.parent" as "parent"
+class SimpleClass {
+    var value: Int = 0
+}
+var x = SimpleClass()
+var y = SimpleClass()
+let closure = { [x] in
+    print(x.value, y.value)
+}
+
+x.value = 10
+y.value = 10
+closure()
+// 打印 “10 10”
+```
+
+如果捕获列表中的值是类类型，你可以使用 `weak` 或者 `unowned` 来修饰它，闭包会分别用弱引用和无主引用来捕获该值。
+
+```swift
+myFunction { print(self.title) }                   // 以强引用捕获
+myFunction { [weak self] in print(self!.title) }   // 以弱引用捕获
+myFunction { [unowned self] in print(self.title) } // 以无主引用捕获
+```
+
+在捕获列表中，也可以使用任意表达式来赋值。该表达式会在闭包被创建时进行求值，闭包会按照指定的引用类型来捕获表达式的值。例如：
+
+```swift
+// 以弱引用捕获 self.parent 并赋值给 parent
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-关于闭包表达式的更多信息和例子，请参见： [Closure Expressions](TODO：添加链接)，关于更多参数列表的信息和例子，请参见： [Resolving Strong Reference Cycles for Closures](TODO：添加链接)。
+关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.md#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/16_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_for_closures)。
 
 > 闭包表达式语法  
 
 <a name="closure-expression"></a>
-> *闭包表达式* → **{** [*闭包签名(Signational)*](../chapter3/04_Expressions.html#closure_signature)<sub>可选</sub> [*多条语句(Statements)*](../chapter3/10_Statements.html#statements) **}**  
+> *闭包表达式* → **{** [*闭包签名*](#closure-signature)<sub>可选</sub> [*语句*](10_Statements.md#statements) **}**  
 
 <a name="closure-signature"></a>
-> *闭包签名(Signational)* → [*参数子句*](../chapter3/05_Declarations.html#parameter_clause) [*函数结果*](../chapter3/05_Declarations.html#function_result)<sub>可选</sub> **in**  
-> *闭包签名(Signational)* → [*标识符列表*](LexicalStructure.html#identifier_list) [*函数结果*](../chapter3/05_Declarations.html#function_result)<sub>可选</sub> **in**  
-> *闭包签名(Signational)* → [*捕获(Capature)列表*](../chapter3/04_Expressions.html#capture_list) [*参数子句*](../chapter3/05_Declarations.html#parameter_clause) [*函数结果*](../chapter3/05_Declarations.html#function_result)<sub>可选</sub> **in**  
-> *闭包签名(Signational)* → [*捕获(Capature)列表*](../chapter3/04_Expressions.html#capture_list) [*标识符列表*](LexicalStructure.html#identifier_list) [*函数结果*](../chapter3/05_Declarations.html#function_result)<sub>可选</sub> **in**  
-> *闭包签名(Signational)* → [*捕获(Capature)列表*](../chapter3/04_Expressions.html#capture_list) **in**  
+> *闭包签名* → [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
+> *闭包签名* → [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
+> *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
+> *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
+> *闭包签名* → [*捕获列表*](#capture-list) **in**  
 
 <a name="capture-list"></a>
-> *捕获列表* → **[** [*捕获说明符*](#capture-specifier) [*表达式*](#expression) **]**  
+> *捕获列表* → **[** [*捕获列表项列表*](#capture-list-items) **]**  
 <a name="capture-list-items"></a>
 > *捕获列表项列表* → [*捕获列表项*](#capture-list-item) | [*捕获列表项*](#capture-list-item) **,** [*捕获列表项列表*](#capture-list-items)
-<a name="capture-list-item"></a>
+<a name="capture-list-item"></a>  
 > *捕获列表项* → [*捕获说明符*](#capture-specifier)<sub>可选</sub> [*表达式*](#expression)
-<a name="capture-specifier"></a>
+<a name="capture-specifier"></a>  
 > *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**  
 
 <a name="implicit_member_expression"></a>
 ### 隐式成员表达式
 
-在可以判断出类型（type）的上下文（context）中，隐式成员表达式是访问某个type的member（ 例如 class method, enumeration case） 的简洁方法。 它的形式是：
+在可以判断出类型的上下文中，隐式成员表达式是访问某个类型的成员（例如某个枚举成员或某个类型方法）的简洁方法，形式如下：
 
-> .`member name`
+> .`成员名称`
 
-例子：
+例如：
 
 ```swift
 var x = MyEnumeration.SomeValue
@@ -447,33 +484,33 @@ x = .AnotherValue
 
 > 隐式成员表达式语法  
 <a name="implicit-member-expression"></a>
-> *隐式成员表达式* → **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)  
+> *隐式成员表达式* → **.** [*标识符*](02_Lexical_Structure.md#identifier)  
 
 <a name="parenthesized_expression"></a>
 ### 圆括号表达式
 
-圆括号表达式由多个子表达式和逗号','组成。 每个子表达式前面可以有 identifier x: 这样的可选前缀。形式如下：
+圆括号表达式由多个逗号分隔的子表达式组成。每个子表达式前面可以有一个标识符，用冒号隔开，其形式如下：
 
->（`identifier 1`: `expression 1`, `identifier 2`: `expression 2`, `...`）
+> (`标识符 1` : `表达式 1`, `标识符 2` : `表达式 2`, `...`)
 
-圆括号表达式用来建立tuples ， 然后把它做为参数传递给 function. 如果某个圆括号表达式中只有一个 子表达式，那么它的type就是 子表达式的type。例如： （1）的 type是Int, 而不是（Int）
+使用圆括号表达式来创建元组，然后将其作为参数传递给函数。如果某个圆括号表达式中只有一个子表达式，那么它的类型就是子表达式的类型。例如，表达式 `(1)` 的类型是 `Int`，而不是 `(Int)`。
 
 > 圆括号表达式语法  
 <a name="parenthesized-expression"></a>
-> *圆括号表达式* → **(** [*表达式元素列表*](#expression-element-list)<sub>可选</sub> **)**  
-<a name="expression-element-list"></a>
-> *表达式元素列表* → [*表达式元素*](#expression-element) | [*表达式元素*](#expression-element) **,** [*表达式元素列表*](#expression-element-list)  
-<a name="expression-element"></a>
+> *圆括号表达式* → **(** [*表达式元素列表*](#expression-element-list)<sub>可选</sub> **)**
+<a name="expression-element-list"></a>  
+> *表达式元素列表* → [*表达式元素*](#expression-element) | [*表达式元素*](#expression-element) **,** [*表达式元素列表*](#expression-element-list)
+<a name="expression-element"></a>  
 > *表达式元素* → [*表达式*](#expression) | [*标识符*](02_Lexical_Structure.md#identifier) **:** [*表达式*](#expression)  
 
 <a name="wildcard_expression"></a>
 ### 通配符表达式
 
-通配符表达式用来忽略传递进来的某个参数。例如：下面的代码中，10被传递给x, 20被忽略（译注：好奇葩的语法。。。）
+通配符表达式用来忽略传递进来的某个参数。例如，下面的代码中，`10` 被传递给 `x`，`20` 被忽略：
 
 ```swift
 (x, _) = (10, 20)
-// x is 10, 20 is ignored
+// x 为 10，20 被忽略
 ```
 
 > 通配符表达式语法  
@@ -483,257 +520,268 @@ x = .AnotherValue
 <a name="postfix_expressions"></a>
 ## 后缀表达式
 
-后缀表达式就是在某个表达式的后面加上 操作符。 严格的讲，每个主要表达式（primary expression）都是一个后缀表达式
+后缀表达式就是在某个表达式的后面加上后缀运算符。严格地讲，每个基本表达式也是一个后缀表达式。
 
-Swift 标准库提供了下列后缀表达式：
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/25_Advanced_Operators.html)。
 
-- ++ Increment
-- -- Decrement
-
-对于这些操作符的使用，请参见： Basic Operators and Advanced Operators
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
 > 后缀表达式语法  
 <a name="postfix-expression"></a>
-> *后缀表达式* → [*主表达式*](../chapter3/04_Expressions.html#primary_expression)  
-> *后缀表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) [*后缀运算符*](../chapter3/02_Lexical_Structure.html#postfix_operator)  
-> *后缀表达式* → [*函数调用表达式*](../chapter3/04_Expressions.html#function_call_expression)  
-> *后缀表达式* → [*构造器表达式*](../chapter3/04_Expressions.html#initializer_expression)  
-> *后缀表达式* → [*显示成员表达式*](../chapter3/04_Expressions.html#explicit_member_expression)  
-> *后缀表达式* → [*后缀self表达式*](../chapter3/04_Expressions.html#postfix_self_expression)  
-> *后缀表达式* → [*动态类型表达式*](../chapter3/04_Expressions.html#dynamic_type_expression)  
-> *后缀表达式* → [*下标表达式*](../chapter3/04_Expressions.html#subscript_expression)  
-> *后缀表达式* → [*强制取值(Forced Value)表达式*](../chapter3/04_Expressions.html#forced_value_expression)  
-> *后缀表达式* → [*可选链(Optional Chaining)表达式*](../chapter3/04_Expressions.html#optional_chaining_expression)  
+> *后缀表达式* → [*基本表达式*](#primary-expression)  
+> *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)  
+> *后缀表达式* → [*函数调用表达式*](#function-call-expression)  
+> *后缀表达式* → [*构造器表达式*](#initializer-expression)  
+> *后缀表达式* → [*显式成员表达式*](#explicit-member-expression)  
+> *后缀表达式* → [*后缀 self 表达式*](#postfix-self-expression)  
+> *后缀表达式* → [*dynamicType 表达式*](#dynamic-type-expression)  
+> *后缀表达式* → [*下标表达式*](#subscript-expression)  
+> *后缀表达式* → [*强制取值表达式*](#forced-value-expression)  
+> *后缀表达式* → [*可选链表达式*](#optional-chaining-expression)
 
 <a name="function_call_expression"></a>
 ### 函数调用表达式
 
-函数调用表达式由函数名和参数列表组成。它的形式如下：
+函数调用表达式由函数名和参数列表组成，形式如下：
 
-> `function name`(`argument value 1`, `argument value 2`)
+> `函数名`(`参数 1`, `参数 2`)
 
-如果该function 的声明中指定了参数的名字，那么在调用的时候也必须得写出来. 例如：
+函数名可以是值为函数类型的任意表达式。
 
-> `function name`(`argument name 1`: `argument value 1`, `argument name 2`: `argument value 2`)
+如果函数声明中指定了参数的名字，那么在调用的时候也必须得写出来。这种函数调用表达式具有以下形式：
 
-可以在 函数调用表达式的尾部（最后一个参数之后）加上 一个闭包（closure） ， 该闭包会被目标函数理解并执行。它具有如下两种写法：
+> `函数名`(`参数名 1`: `参数 1`, `参数名 2`: `参数 2`)
+
+如果函数的最后一个参数是函数类型，可以在函数调用表达式的尾部（右圆括号之后）加上一个闭包，该闭包会作为函数的最后一个参数。如下两种写法是等价的：
 
 ```swift
-// someFunction takes an integer and a closure as its arguments
-someFunction(x, {$0 == 13}+
+// someFunction 接受整数和闭包参数
+someFunction(x, f: {$0 == 13})
 someFunction(x) {$0 == 13}
 ```
 
 如果闭包是该函数的唯一参数，那么圆括号可以省略。
 
 ```swift
-// someFunction takes a closure as its only argument
+// someFunction 只接受一个闭包参数
 myData.someMethod() {$0 == 13}
 myData.someMethod {$0 == 13}
 ```
 
 > 函数调用表达式语法  
-> *函数调用表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) [*圆括号表达式*](../chapter3/04_Expressions.html#parenthesized_expression)  
-> *函数调用表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) [*圆括号表达式*](../chapter3/04_Expressions.html#parenthesized_expression) _可选_ [*后缀闭包(Trailing Closure)*](../chapter3/04_Expressions.html#trailing_closure)  
-> *后缀闭包(Trailing Closure)* → [*闭包表达式*](../chapter3/04_Expressions.html#closure_expression)  
+<a name="function-call-expression"></a>
+> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)  
+> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)<sub>可选</sub> [*尾随闭包*](#trailing-closure)  
+<a name="trailing-closure"></a>
+> *尾随闭包* → [*闭包表达式*](#closure-expression)  
 
 <a name="initializer_expression"></a>
 ### 构造器表达式
 
-Initializer表达式用来给某个Type初始化。 它的形式如下：
+构造器表达式用于访问某个类型的构造器，形式如下：
 
-> `expression`.init(`initializer arguments`)
+> `表达式`.init(`构造器参数`)
 
-初始化函数表达式在调用函数时用来初始某个Type。 也可以使用初始化函数表达式来委托调用（delegate to ）到superclass的initializers.
+你可以在函数调用表达式中使用构造器表达式来初始化某个类型的新实例。也可以使用构造器表达式来代理到超类的构造器。
 
 
 ```swift
 class SomeSubClass: SomeSuperClass {
     init() {
-        // subclass initialization goes here
+        // 此处为子类构造过程
         super.init()
     }
 }
 ```
 
-和函数类似， 初始化表达式可以用作数值。 举例来说：
+和函数类似，构造器表达式可以作为一个值。 例如：
 
 ```swift
-// Type annotation is required because String has multiple initializers.
+// 类型注解是必须的，因为 String 类型有多种构造器
 let initializer: Int -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
 print(oneTwoThree)
-// prints "123"
+// 打印 “123”
 ```
 
-如果要用名字来指定某个type， 可以不用初始化函数表达式直接使用type的initializer。在其他情况下， 你必须使用初始化函数表达式。
+如果通过名字来指定某个类型，可以不用构造器表达式而直接使用类型的构造器。在其他情况下，你必须使用构造器表达式。
 
 
 ```swift
-let s1 = SomeType.init(data: 3)  // Valid
-let s2 = SomeType(data: 1)       // Also valid
+let s1 = SomeType.init(data: 3) // 有效
+let s2 = SomeType(data: 1)      // 有效
 
-let s4 = someValue.dynamicType(data: 5)       // Error
-let s3 = someValue.dynamicType.init(data: 7)  // Valid
+let s4 = someValue.dynamicType(data: 5)      // 错误
+let s3 = someValue.dynamicType.init(data: 7) // 有效
 ```
 
 > 构造器表达式语法  
-> *构造器表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **init**  
+<a name="initializer-expression"></a>
+> *构造器表达式* → [*后缀表达式*](postfix-expression) **.** **init**  
 
 <a name="explicit_member_expression"></a>
 ### 显式成员表达式
 
-显示成员表达式允许我们访问type, tuple, module的成员变量。它的形式如下：
+显式成员表达式允许我们访问命名类型、元组或者模块的成员，形式如下：
 
-> `expression`.`member name`
+> `表达式`.`成员名`
 
-该member 就是某个type在声明时候所定义（declaration or extension） 的变量, 例如：
+命名类型的某个成员在原始实现或者扩展中定义，例如：
 
 ```swift
 class SomeClass {
     var someProperty = 42
 }
 let c = SomeClass()
-let y = c.someProperty  // Member access
+let y = c.someProperty // 访问成员
 ```
 
-对于tuple, 要根据它们出现的顺序（0, 1, 2...）来使用:
+元组的成员会根据表示它们出现顺序的整数来隐式命名，以 0 开始，例如：
 
 ```swift
 var t = (10, 20, 30)
 t.0 = t.1
-// Now t is (20, 20, 30)
+// 现在元组 t 为 (20, 20, 30)
 ```
 
-对于某个module的member的调用，只能调用在top-level声明中的member.
+对于模块的成员来说，只能直接访问顶级声明中的成员。
 
 > 显式成员表达式语法  
-> *显示成员表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** [*十进制数字*](../chapter3/02_Lexical_Structure.html#decimal_digit)  
-> *显示成员表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_  
+<a name="explicit-member-expression"></a>
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)  
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
 
 <a name="postfix_self_expression"></a>
 ### 后缀 self 表达式
 
-后缀表达式由 某个表达式 + '.self' 组成. 形式如下：
+后缀 `self` 表达式由某个表达式紧跟 `.self` 组成，形式如下：
 
-> `expression`.self  
-> `type`.self  
+> `表达式`.self  
+> `类型`.self  
 
-形式1 表示会返回 expression 的值。例如： x.self 返回 x
+第一种形式返回表达式的值。例如：`x.self` 返回 `x`。
 
-形式2：返回对应的type。我们可以用它来动态的获取某个instance的type。
+第二种形式返回表示对应类型的值。我们可以用它来动态地获取某个实例的类型。例如，`SomeClass.self` 会返回 `SomeClass` 类型本身，你可以将其传递给相应函数或者方法作为参数。
 
-> 后缀Self 表达式语法  
-> *后缀self表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **self**  
+> 后缀 self 表达式语法  
+<a name="postfix-self-expression"></a>
+> *后缀 self 表达式* → [*后缀表达式*](#postfix-expression) **.** **self**  
 
 <a name="dynamic_type_expression"></a>
 ### dynamicType 表达式
 
-（因为 dynamicType 是一个独有的方法，所以这里保留了英文单词，未作翻译, --- 类似与self expression）
+`dynamicType` 表达式由某个表达式紧跟 `.dynamicType` 组成，形式如下：
 
-dynamicType 表达式由 某个表达式 + '.dynamicType' 组成。
+> `表达式`.dynamicType
 
-> `expression`.dynamicType
-
-上面的形式中， expression 不能是某type的名字（当然了，如果我都知道它的名字了还需要动态来获取它吗）。动态类型表达式会返回"运行时"某个instance的type, 具体请看下面的列子：
+上述形式中的表达式不能是类型名。`dynamicType` 表达式会返回某个实例在运行时的类型，具体请看下面的列子：
 
 ```swift
 class SomeBaseClass {
     class func printClassName() {
-        println("SomeBaseClass")
+        print("SomeBaseClass")
     }
 }
 class SomeSubClass: SomeBaseClass {
     override class func printClassName() {
-        println("SomeSubClass")
+        print("SomeSubClass")
     }
 }
 let someInstance: SomeBaseClass = SomeSubClass()
-
-// someInstance is of type SomeBaseClass at compile time, but
-// someInstance is of type SomeSubClass at runtime
+// someInstance 在编译时的静态类型为 SomeBaseClass，
+// 在运行时的动态类型为 SomeSubClass
 someInstance.dynamicType.printClassName()
-// prints "SomeSubClass"
+// 打印 “SomeSubClass”
 ```
 
 > 动态类型表达式语法  
-> *动态类型表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **dynamicType**  
+<a name="dynamic-type-expression"></a>
+> *动态类型表达式* → [*后缀表达式*](#postfix-expression) **.** **dynamicType**  
 
 <a name="subscript_expression"></a>
-### 下标脚本表达式
+### 下标表达式
 
-下标脚本表达式提供了通过下标脚本访问getter/setter 的方法。它的形式是：
+可通过下标表达式访问相应的下标，形式如下：
 
-> `expression`[`index expressions`]
+> `表达式`[`索引表达式`]
 
-可以通过下标脚本表达式通过getter获取某个值，或者通过setter赋予某个值.
+要获取下标表达式的值，可将索引表达式作为下标表达式的参数，调用表达式类型的下标 getter。下标 setter 的调用方式与之一样。
 
-关于subscript的声明，请参见： Protocol Subscript Declaration.
+关于下标的声明，请参阅 [协议下标声明](05_Declarations.md#protocol_subscript_declaration)。
 
-> 附属脚本表达式语法  
-> *附属脚本表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **[** [*表达式列表*](../chapter3/04_Expressions.html#expression_list) **]**  
+> 下标表达式语法  
+<a name="subscript-expression"></a>
+> *下标表达式* → [*后缀表达式*](#postfix-expression) **[** [*表达式列表*](#expression-list) **]**  
 
 <a name="forced-Value_expression"></a>
 ### 强制取值表达式
 
-强制取值表达式用来获取某个目标表达式的值（该目标表达式的值必须不是nil ）。它的形式如下：
+当你确定可选值不是 `nil` 时，可以使用强制取值表达式来强制解包，形式如下：
 
-> `expression`!
+> `表达式`!
 
-如果该表达式的值不是nil, 则返回对应的值。 否则，抛出运行时错误（runtime error）。
-返回的值可能会被需改，可以是被赋值了，也可以是出现异常造成的。比如：
+如果该表达式的值不是 `nil`，则返回解包后的值。否则，抛出运行时错误。
+
+返回的值可以被修改，无论是修改值本身，还是修改值的成员。例如：
+
 ```swift
 var x: Int? = 0
 x!++
-// x is now 1
+// x 现在是 1
  
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 someDictionary["a"]![0] = 100
-// someDictionary is now [b: [10, 20], a: [100, 2, 3]] 
+// someDictionary 现在是 [b: [10, 20], a: [100, 2, 3]] 
 ```
 
-> 强制取值(Forced Value)语法  
-> *强制取值(Forced Value)表达式* → [*后缀表达式*](../chapter3/04_Expressions.html#postfix_expression) **!**  
+> 强制取值语法  
+<a name="forced-value-expression"></a>
+> *强制取值表达式* → [*后缀表达式*](#postfix-expression) **!**  
 
 <a name="optional-chaining_expression"></a>
 ### 可选链表达式
 
-可选链表达式由目标表达式 + '?' 组成，形式如下：
+可选链表达式提供了一种使用可选值的便捷方法，形式如下：
 
-> `expression`?
+> `表达式`?
 
-后缀'?' 返回目标表达式的值，把它做为可选的参数传递给后续的表达式
+后缀 `?` 根据表达式生成可选链表达式，而不会改变表达式的值。
 
-如果某个后缀表达式包含了可选链表达式，那么它的执行过程就比较特殊： 首先先判断该可选链表达式的值，如果是 nil, 整个后缀表达式都返回 nil, 如果该可选链的值不是nil, 则正常返回该后缀表达式的值（依次执行它的各个子表达式）。在这两种情况下，该后缀表达式仍然是一个optional type（In either case, the value of the postfix expression is still of an optional type）
+如果某个后缀表达式包含可选链表达式，那么它的执行过程会比较特殊。如果该可选链表达式的值是 `nil`，整个后缀表达式会直接返回 `nil`。如果该可选链表达式的值不是 `nil`，则返回可选链表达式解包后的值，并用于后缀表达式中剩余的表达式。在这两种情况下，整个后缀表达式的值都会是可选类型。
 
-如果某个"后缀表达式"的"子表达式"中包含了"可选链表达式"，那么只有最外层的表达式返回的才是一个optional type. 例如，在下面的例子中， 如果c 不是nil, 那么 c?.property.performAction（） 这句代码在执行时，就会先获得c 的property方法，然后调用 performAction（）方法。 然后对于 "c?.property.performAction（）" 这个整体，它的返回值是一个optional type.
+如果某个后缀表达式中包含了可选链表达式，那么只有最外层的表达式会返回一个可选类型。例如，在下面的例子中，如果 `c` 不是 `nil`，那么它的值会被解包，然后通过 `.property` 访问它的属性，接着进一步通过 `.performAction()` 调用相应方法。整个 `c?.property.performAction()` 表达式返回一个可选类型的值。
 
 ```swift
 var c: SomeClass?
 var result: Bool? = c?.property.performAction()
 ```
 
-如果不使用可选链表达式，那么 上面例子的代码跟下面例子等价：
+上面的例子跟下面的不使用可选链表达式的例子等价：
 
 ```swift
+var result: Bool? = nil
 if let unwrappedC = c {
     result = unwrappedC.property.performAction()
 }
 ```
-后缀'?' 返回目标表达式的值可能会被修改，可能是由于出现了赋值，也有可能是出现异常而产生的修改。如果可选链表达式为`nil`，则表达式右边的复制操作不会被执行。比如：
+
+可选链表达式解包后的值可以被修改，无论是修改值本身，还是修改值的成员。如果可选链表达式的值为 `nil`，则表达式右侧的赋值操作不会被执行。例如：
+
 ```swift
 func someFunctionWithSideEffects() -> Int {
-    return 42  // No actual side effects.
+    // 译者注：为了能看出此函数是否被执行，加上了一句打印
+    print("someFunctionWithSideEffects") 
+    return 42 
 }
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
- 
+
 someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-// someFunctionWithSideEffects is not evaluated
-// someDictionary is still [b: [10, 20], a: [1, 2, 3]]
- 
+// someFunctionWithSideEffects 不会被执行
+// someDictionary 依然是 ["b": [10, 20], "a": [1, 2, 3]]
+
 someDictionary["a"]?[0] = someFunctionWithSideEffects()
-// someFunctionWithSideEffects is evaluated and returns 42
-// someDictionary is now [b: [10, 20], a: [42, 2, 3]]
+// someFunctionWithSideEffects 被执行并返回 42
+// someDictionary 现在是 ["b": [10, 20], "a": [42, 2, 3]]
 ```
 
 > 可选链表达式语法  
