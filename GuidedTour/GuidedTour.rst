@@ -915,10 +915,11 @@ enumerations can have methods associated with them.
    Write a function that compares two ``Rank`` values
    by comparing their raw values.
 
-In the example above,
-the raw-value type of the enumeration is ``Int``,
-so you only have to specify the first raw value.
-The rest of the raw values are assigned in order.
+By default, Swift assigns the raw values starting at zero
+and incrementing by one each time,
+but you can change this behavior by explicitly specifying values.
+In the example above, ``Ace`` is explicitly given a raw value of ``1``,
+and the rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
 Use the ``rawValue`` property to access the raw value of an enumeration case.
@@ -1062,18 +1063,18 @@ or it responds with some error information.
 
     -> enum ServerResponse {
            case Result(String, String)
-           case Error(String)
+           case Failure(String)
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
     << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
-    -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.Error("Out of cheese.")
+    -> let failure = ServerResponse.Failure("Out of cheese.")
+    << // failure : ServerResponse = REPL.ServerResponse.Failure("Out of cheese.")
     ---
     -> switch success {
            case let .Result(sunrise, sunset):
                print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .Error(error):
+           case let .Failure(error):
                print("Failure...  \(error)")
        }
     << Sunrise is at 6:00 am and sunset is at 8:09 pm.
@@ -1189,6 +1190,152 @@ the compiler treats it as the given type of ``ExampleProtocol``.
 This means that you can't accidentally access
 methods or properties that the class implements
 in addition to its protocol conformance.
+
+Error Handling
+--------------
+
+You represent errors using any type that adopts the ``ErrorType`` protocol.
+
+.. REFERENCE
+   PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
+   fire" error message, used when the kernel can't identify the specific error.
+   The names of printers used in the examples in this section are names of
+   people who were important in the development of printing.
+   
+   Bi Sheng is credited with inventing the first movable type out of porcelain
+   in China in the 1040s.  It was a mixed success, in large part because of the
+   vast number of characters needed to write Chinese, and failed to replace
+   wood block printing.  Johannes Gutenberg is credited as the first European
+   to use movable type in the 1440s --- his metal type enabled the printing
+   revolution.  Ottmar Mergenthaler invented the Linotype machine in the 1884,
+   which dramatically increased the speed of setting type for printing compared
+   to the previous manual typesetting.  It set an entire line of type (hence
+   the name) at a time, and was controlled by a keyboard.  The Monotype
+   machine, invented in 1885 by Tolbert Lanston, performed similar work.
+
+.. testcode:: guided-tour
+
+    -> enum PrinterError: ErrorType {
+           case OutOfPaper
+           case NoToner
+           case OnFire
+       }
+
+Use ``throw`` to throw an error
+and ``throws`` to mark a function that can throw an error.
+If you throw an error in a function,
+the function returns immediately and the code that called the function
+handles the error.
+
+.. testcode:: guided-tour
+
+    -> func sendToPrinter(printerName: String) throws -> String {
+           if printerName == "Never Has Toner" {
+               throw PrinterError.NoToner
+           }
+           return "Job sent"
+       }
+
+There are several ways to handle errors.
+One way is to use ``do``-``catch``.
+Inside the ``do`` block,
+you mark code that can throw an error by writing ``try`` in front of it.
+Inside the ``catch`` block,
+the error is automatically given the name ``error``
+unless you can give it a different name.
+
+.. testcode:: guided-tour
+
+    -> do {
+           let printerResponse = try sendToPrinter("Bi Sheng")
+           print(printerResponse)
+       } catch {
+           print(error)
+       }
+    << Job sent
+
+.. admonition:: Experiment
+
+   Change the printer name to ``"Never Has Toner"``,
+   so that the ``sendToPrinter(_:)`` function throws an error.
+
+.. Assertion tests the change that the Experiment box instructs you to make.
+
+.. assertion:: guided-tour
+
+    >> do {
+           let printerResponse = try sendToPrinter("Never Has Toner")
+           print(printerResponse)
+       } catch {
+           print(error)
+       }
+    << NoToner
+
+You can provide multiple ``catch`` blocks
+that handle specific errors.
+You write a pattern after ``catch`` just as you do
+after ``case`` in a switch.
+
+.. REFERENCE
+   The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
+
+.. testcode:: guided-tour
+
+    -> do {
+           let printerResponse = try sendToPrinter("Gutenberg")
+           print(printerResponse)
+       } catch PrinterError.OnFire {
+           print("I'll just put this over here, with the rest of the fire.")
+       } catch let printerError as PrinterError {
+           print("Printer error: \(printerError).")
+       } catch {
+           print(error)
+       }
+    << Job sent
+
+.. admonition:: Experiment
+
+   Add code to throw an error inside the ``do`` block.
+   What kind of error do you need to throw
+   so that the error is handled by the first ``catch`` block?
+   What about the second and third blocks?
+
+Another way to handle errors
+is to use ``try?`` to convert the result to an optional.
+If the function throws an error,
+the specific error is discarded and the result is ``nil``.
+Otherwise, the result is an optional containing
+the value that the function returned.
+
+.. testcode:: guided-tour
+
+    -> let printerSuccess = try? sendToPrinter("Mergenthaler")
+    << // printerSuccess : String? = Optional("Job sent")
+    -> let printerFailure = try? sendToPrinter("Never Has Toner")
+    << // printerFailure : String? = nil
+
+Use ``defer`` to write a block of code
+that is always executed before a function returns,
+regardless of whether an error was thrown.
+You can use ``defer`` even when there is no error handling,
+to simplify functions that can return from several different places.
+
+.. testcode:: guided-tour
+
+    -> var teaKettleHeating = false
+    << // teaKettleHeating : Bool = false
+    -> func morningRoutine() throws {
+           teaKettleHeating = true
+           defer {
+               teaKettleHeating = false
+           }
+    ---
+           let newspaper = try sendToPrinter("Lanston")
+    >>     print(newspaper)  // Supress unused-constant warning
+    ->     // Drink tea and read the newspaper.
+       }
+    >> try morningRoutine()
+    << Job sent
 
 Generics
 --------
