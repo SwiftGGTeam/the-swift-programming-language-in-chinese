@@ -303,8 +303,7 @@ that performs both tasks at the same time.
 .. note::
 
    The compound assignment operators do not return a value.
-   You cannot write ``let b = a += 2``, for example.
-   This behavior is different from the increment and decrement operators mentioned above.
+   For example, you cannot write ``let b = a += 2``.
 
 A complete list of compound assignment operators can be found in :doc:`../ReferenceManual/Expressions`.
 
