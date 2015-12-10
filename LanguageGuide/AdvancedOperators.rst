@@ -620,7 +620,7 @@ Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
 They are :newTerm:`prefix` if they precede their target (such as ``-a``)
-and :newTerm:`postfix` operators if they follow their target (such as ``i++``).
+and :newTerm:`postfix` operators if they follow their target (such as ``i!``).
 
 You implement a prefix or postfix unary operator by writing
 the ``prefix`` or ``postfix`` modifier
