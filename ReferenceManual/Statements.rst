@@ -135,7 +135,7 @@ the ``BooleanType`` protocol.
 .. assertion:: c-style-for-allows-expression-list
 
    -> // Init and increment can be a list
-   -> for var i = 0, j = 0; i < 5; i++, j++ {
+   -> for var i = 0, j = 0; i < 5; i += 1, j += 1 {
           print(i, j)
       }
    << 0 0
@@ -144,25 +144,25 @@ the ``BooleanType`` protocol.
    << 3 3
    << 4 4
    -> // Test can't be a list
-   -> for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   -> for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !! <REPL Input>:1:28: error: expected ';' in 'for' statement
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                            ^
    !! <REPL Input>:1:28: error: expected expression
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                            ^
    !! <REPL Input>:1:35: error: expected '{' in 'for' statement
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                   ^
    !! <REPL Input>:1:46: error: statement cannot begin with a closure expression
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
    !! <REPL Input>:1:46: note: explicitly discard the result of the closure by assigning to '_'
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
    !!                                              _ = 
    !! <REPL Input>:1:46: error: braced block of statements is an unused closure
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
+   !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
 
 .. syntax-grammar::
@@ -622,7 +622,7 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
    -> var i = 0
    << // i : Int = 0
    -> `return`: while i < 100 {
-          i++
+          i += 1
           if i == 10 {
               break `return`
           }
