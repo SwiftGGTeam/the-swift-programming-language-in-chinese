@@ -418,7 +418,7 @@ These two loops do the same thing:
    ---
    -> var secondForLoop = 0
    << // secondForLoop : Int = 0
-   -> for var i = 0; i < 4; ++i {
+   -> for var i = 0; i < 4; i += 1 {
           secondForLoop += i
       }
    -> print(secondForLoop)
