@@ -161,6 +161,9 @@ Keywords and Punctuation
 The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
+Keywords can be used external parameter names for a function
+without being escaped,
+except for ``inout``, ``var``, and ``let``.
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
