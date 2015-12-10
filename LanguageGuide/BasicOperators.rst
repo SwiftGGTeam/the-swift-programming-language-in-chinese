@@ -3,12 +3,10 @@ Basic Operators
 
 An :newTerm:`operator` is a special symbol or phrase that you use to
 check, change, or combine values.
-For example, the addition operator (``+``) adds two numbers together
-(as in ``let i = 1 + 2``).
-More complex examples include the logical AND operator ``&&``
-(as in ``if enteredDoorCode && passedRetinaScan``)
-and the increment operator ``++i``,
-which is a shortcut to increase the value of ``i`` by ``1``.
+For example, the addition operator (``+``) adds two numbers,
+as in ``let i = 1 + 2``,
+and the logical AND operator ``&&`` combines two Boolean values,
+as in ``if enteredDoorCode && passedRetinaScan``.
 
 Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
@@ -41,7 +39,7 @@ Operators are unary, binary, or ternary:
 
 * :newTerm:`Unary` operators operate on a single target (such as ``-a``).
   Unary :newTerm:`prefix` operators appear immediately before their target (such as ``!b``),
-  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``i++``).
+  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``c!``).
 * :newTerm:`Binary` operators operate on two targets (such as ``2 + 3``)
   and are :newTerm:`infix` because they appear in between their two targets.
 * :newTerm:`Ternary` operators operate on three targets.
