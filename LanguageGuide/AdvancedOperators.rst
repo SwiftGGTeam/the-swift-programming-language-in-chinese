@@ -692,8 +692,8 @@ and uses it to set the left value to be the left value plus the right value:
    </ original now has values of (4.0, 6.0)
 
 You can combine assignment with either the ``prefix`` or ``postfix`` modifier,
-as in this implementation of the prefix increment operator (``++a``)
-for ``Vector2D`` instances:
+as in this implementation of a prefix operator that increments
+``Vector2D`` instances by one:
 
 .. testcode:: customOperators
 
