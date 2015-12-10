@@ -650,7 +650,7 @@ which keeps track of the number of times a string property is modified:
          private(set) var numberOfEdits = 0
          var value: String = "" {
             didSet {
-               numberOfEdits++
+               numberOfEdits += 1
             }
          }
       }
@@ -712,7 +712,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
          public private(set) var numberOfEdits = 0
          public var value: String = "" {
             didSet {
-               numberOfEdits++
+               numberOfEdits += 1
             }
          }
          public init() {}
@@ -724,7 +724,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
          public private(set) var numberOfEdits = 0
          public var value: String = "" {
             didSet {
-               numberOfEdits++
+               numberOfEdits += 1
             }
          }
          public init() {}
