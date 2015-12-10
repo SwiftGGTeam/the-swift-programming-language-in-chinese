@@ -165,6 +165,12 @@ Keywords can be used external parameter names for a function
 without being escaped,
 except for ``inout``, ``var``, and ``let``.
 
+.. assertion:: keywords-without-backticks
+
+   -> func f(x: Int, in y: Int) {
+         print(x+y)
+      }
+
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
 
