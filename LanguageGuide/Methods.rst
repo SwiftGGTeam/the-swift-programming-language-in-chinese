@@ -40,7 +40,7 @@ which can be used to count the number of times an action occurs:
    -> class Counter {
          var count = 0
          func increment() {
-            ++count
+            count += 1
          }
          func incrementBy(amount: Int) {
             count += amount
@@ -171,7 +171,7 @@ The ``increment()`` method in the example above could have been written like thi
    >> class Counter {
    >> var count: Int = 0
       func increment() {
-         self.count++
+         self.count += 1
       }
    >> }
 
