@@ -731,22 +731,21 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
       }
    // check that we can set its value with the private setter from the same file
    -> var stringToEdit_Module1A = TrackedString()
-   -> stringToEdit_Module1A.numberOfEdits += 1
+   -> let resultA: Void = { stringToEdit_Module1A.numberOfEdits += 1 }()
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed
 
    // check that we can retrieve its value with the public getter from another file in the same module
    -> var stringToEdit_Module1B = TrackedString()
-   -> stringToEdit_Module1B.numberOfEdits
 
 .. sourcefile:: reducedSetterScopePublic_Module1_NotAllowed
 
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
-   -> stringToEdit_Module1C.numberOfEdits += 1
-   !! /tmp/sourcefile_1.swift:2:53: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
-   !! stringToEdit_Module1C.numberOfEdits += 1
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+   -> let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
+   !! /tmp/sourcefile_1.swift:2:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
+   !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
 
@@ -754,10 +753,10 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    -> import reducedSetterScopePublic_Module1_Allowed
    -> var stringToEdit_Module2 = TrackedString()
    // check that we can't change its value from another module
-   -> stringToEdit_Module2.numberOfEdits += 1
-   !! /tmp/sourcefile_0.swift:3:52: error: cannot pass immutable value to mutating operator: 'numberOfEdits' setter is inaccessible
-   !! stringToEdit_Module2.numberOfEdits += 1
-   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+   -> let result2: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+   !! /tmp/sourcefile_0.swift:3:58: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! let result2: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+   !!                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
 .. _AccessControl_Initializers:
 

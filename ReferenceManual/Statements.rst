@@ -154,14 +154,14 @@ the ``BooleanType`` protocol.
    !! <REPL Input>:1:35: error: expected '{' in 'for' statement
    !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                   ^
-   !! <REPL Input>:1:46: error: statement cannot begin with a closure expression
+   !! <REPL Input>:1:52: error: statement cannot begin with a closure expression
    !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
-   !! <REPL Input>:1:46: note: explicitly discard the result of the closure by assigning to '_'
+   !! <REPL Input>:1:52: note: explicitly discard the result of the closure by assigning to '_'
    !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
    !!                                              _ = 
-   !! <REPL Input>:1:46: error: braced block of statements is an unused closure
+   !! <REPL Input>:1:52: error: braced block of statements is an unused closure
    !! for var i = 0, j = 0; i < 5, j < 5; i += 1, j += 1 { }
    !!                                              ^
 

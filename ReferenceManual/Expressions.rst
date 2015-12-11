@@ -1483,7 +1483,6 @@ For example:
    -> var x: Int? = 0
    << // x : Int? = Optional(0)
    -> x! += 1
-   <$ Int = 0
    /> x is now \(x!)
    </ x is now 1
    ---
