@@ -737,6 +737,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
 
    // check that we can retrieve its value with the public getter from another file in the same module
    -> var stringToEdit_Module1B = TrackedString()
+   -> let resultB = stringToEdit_Module1B.numberOfEdits
 
 .. sourcefile:: reducedSetterScopePublic_Module1_NotAllowed
 
@@ -752,11 +753,12 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can retrieve its value with the public getter from a different module
    -> import reducedSetterScopePublic_Module1_Allowed
    -> var stringToEdit_Module2 = TrackedString()
+   -> let result2Read = stringToEdit_Module2.numberOfEdits
    // check that we can't change its value from another module
-   -> let result2: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
-   !! /tmp/sourcefile_0.swift:3:58: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
-   !! let result2: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
-   !!                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+   -> let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+   !! /tmp/sourcefile_0.swift:4:63: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+   !!                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
 .. _AccessControl_Initializers:
 
