@@ -841,59 +841,6 @@ it can be used only to return from a function or method that does not return a v
     return-statement --> ``return`` expression-OPT
 
 
-.. _Statements_AvailabilityCondition:
-
-Availability Condition
-~~~~~~~~~~~~~~~~~~~~~~
-
-An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
-and ``guard`` statement to query the availability of APIs at runtime,
-based on specified platforms arguments.
-
-An availability condition has the following form:
-
-.. syntax-outline::
-
-   if #available(<#platform name#> <#version#>, <#...#>, *) {
-       <#statements to execute if the APIs are available#>
-   } else {
-       <#fallback statements to execute if the APIs are unavailable#>
-   }
-
-You use an availability condition to execute a block of code,
-depending on whether the APIs you want to use are available at runtime.
-The compiler uses the information from the availability condition
-when it verifies that the APIs in that block of code are available.
-
-The availability condition takes a comma-separated list of platform names and versions.
-Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
-and include the corresponding version numbers.
-The ``*`` argument is required and specifies that on any other platform,
-the body of the code block guarded by the availability condition
-executes on the minimum deployment target specified by your target.
-
-Unlike Boolean conditions, you can't combine availability conditions using
-logical operators such as ``&&`` and ``||``.
-
-.. syntax-grammar::
-
-    Grammar of an availability condition
-
-    availability-condition --> ``#available`` ``(`` availability-arguments ``)``
-    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
-    availability-argument --> platform-name platform-version
-    availability-argument --> ``*``
-
-    platform-name --> ``iOS`` | ``iOSApplicationExtension``
-    platform-name --> ``OSX`` | ``OSXApplicationExtension``
-    platform-name --> ``watchOS``
-    platform-version --> decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
-
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
-
-
 .. _Statements_ThrowStatement:
 
 Throw Statement
@@ -1194,3 +1141,58 @@ and can't be the last line of a source code file.
     line-control-statement --> ``#line`` line-number file-name
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
+
+
+.. _Statements_AvailabilityCondition:
+
+Availability Condition
+----------------------
+
+An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
+and ``guard`` statement to query the availability of APIs at runtime,
+based on specified platforms arguments.
+
+An availability condition has the following form:
+
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statements to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+You use an availability condition to execute a block of code,
+depending on whether the APIs you want to use are available at runtime.
+The compiler uses the information from the availability condition
+when it verifies that the APIs in that block of code are available.
+
+The availability condition takes a comma-separated list of platform names and versions.
+Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
+and include the corresponding version numbers.
+The ``*`` argument is required and specifies that on any other platform,
+the body of the code block guarded by the availability condition
+executes on the minimum deployment target specified by your target.
+
+Unlike Boolean conditions, you can't combine availability conditions using
+logical operators such as ``&&`` and ``||``.
+
+.. syntax-grammar::
+
+    Grammar of an availability condition
+
+    availability-condition --> ``#available`` ``(`` availability-arguments ``)``
+    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
+    availability-argument --> platform-name platform-version
+    availability-argument --> ``*``
+
+    platform-name --> ``iOS`` | ``iOSApplicationExtension``
+    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``watchOS``
+    platform-version --> decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
+
+.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+
+
