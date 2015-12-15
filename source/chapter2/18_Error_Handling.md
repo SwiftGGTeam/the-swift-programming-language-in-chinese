@@ -53,7 +53,8 @@ Swift 中有`4`种处理错误的方式。你可以把函数抛出的错误传�
 > 注意  
 > Swift 中的错误处理和其他语言中用`try`，`catch`和`throw`进行异常处理很像。和其他语言中（包括 Objective-C ）的异常处理不同的是，Swift 中的错误处理并不涉及解除调用栈，这是一个计算代价高昂的过程。就此而言，`throw`语句的性能特性是可以和`return`语句相媲美的。
 
-###用 throwing 函数传递错误
+<a name="propagating_errors_using_throwing_functions"></a>
+### 用 throwing 函数传递错误
 
 为了表示一个函数、方法或构造器可以抛出错误，在函数声明的参数列表之后加上`throws`关键字。一个标有`throws`关键字的函数被称作*throwing 函数*。如果这个函数指明了返回值类型，`throws`关键词需要写在箭头（`->`）的前面。
 
