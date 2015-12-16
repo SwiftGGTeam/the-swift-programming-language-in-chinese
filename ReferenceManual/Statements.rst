@@ -1029,12 +1029,12 @@ The *build configuration* can include the ``true`` and ``false`` Boolean literal
 an identifier used with the ``-D`` command line flag, or any of the platform
 testing functions listed in the table below.
 
-====================  =========================================
+====================  ==================================================
 Function              Valid arguments
-====================  =========================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``
+====================  ==================================================
+``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
-====================  =========================================
+====================  ==================================================
 
 .. note::
 
