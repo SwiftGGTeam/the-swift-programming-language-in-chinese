@@ -681,10 +681,16 @@ defined in the grammar below
 Unicode blocks, among others).
 After the first character,
 combining Unicode characters are also allowed.
+
 You can also define custom operators
 that have a dot (``.``) as their first character.
-These operators are are allowed to contain additional dots ---
-for example ``.*.`` is allowed, but ``*.`` is invalid.
+These operators are are allowed to contain additional dots
+such as ``.+.``.
+If a dot appears after the first character,
+it is treated as the beginning of a new operator ---
+for example, ``+.+`` is treated as
+the ``+`` operator followed by the ``.+`` operator.
+
 Although you can define custom operators that contain a question mark character (``?``),
 they can't consist of a single question mark character only.
 
