@@ -681,7 +681,10 @@ defined in the grammar below
 Unicode blocks, among others).
 After the first character,
 combining Unicode characters are also allowed.
-You can also define custom operators as a sequence of two or more dots (for example, ``....``).
+You can also define custom operators
+that have a dot (``.``) as their first character.
+These operators are are allowed to contain additional dots ---
+for example ``.*.`` is allowed, but ``*.`` is invalid.
 Although you can define custom operators that contain a question mark character (``?``),
 they can't consist of a single question mark character only.
 
@@ -818,7 +821,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-character --> U+E0100--U+E01EF
     operator-characters --> operator-character operator-characters-OPT
 
-    dot-operator-head --> ``..``
+    dot-operator-head --> ``.``
     dot-operator-character --> ``.`` | operator-character
     dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
