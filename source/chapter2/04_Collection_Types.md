@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
+> 2.1
+> 校对：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [集合的可变性（Mutability of Collections）](#mutability_of_collections)
@@ -15,22 +18,22 @@
 - [集合（Sets）](#sets)
 - [字典（Dictionaries）](#dictionaries)
 
-Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的集合类型用来存储集合数据。数组是有序数据的集。集合是无序无重复数据的集。字典是无序的键值对的集。
+Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的集合类型用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
 
 Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把不正确的数据类型插入其中。同时这也说明我们完全可以对取回值的类型非常自信。
 
 > 注意：  
-Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为泛型集合。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
+Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
 
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
 
-如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是可变的。这意味着我们可以在创建之后添加更多或移除已存在的数据项来改变这个集合的大小。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是不可变的，它的大小不能被改变。
+如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着我们可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
 > 注意：  
-在我们不需要改变集合大小的时候创建不可变集合是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。
+在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
 
 <a name="arrays"></a>
 ## 数组(Arrays)
@@ -256,13 +259,13 @@ for (index, value) in shoppingList.enumerate() {
 更多关于`for-in`循环的介绍请参见[for 循环](05_Control_Flow.html#for_loops)。
 
 <a name="sets"></a>
-## 集合
+## 集合（Sets）
 
-集合(Set)用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
+*集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意：  
-> Swift的`Set`类型被桥接到`Fundation`中的`NSSet`类。  
-> 关于使用`Fundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+> Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。  
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
@@ -415,7 +418,7 @@ for genre in favoriteGenres.sort() {
 ```
 
 <a name="performing_set_operations"></a>
-### 完成集合操作
+### 集合操作
 
 你可以高效地完成`Set`的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
 
@@ -475,11 +478,11 @@ farmAnimals.isDisjointWith(cityAnimals)
 <a name="dictionaries"></a>
 ## 字典
 
-字典是一种存储多个相同类型的值的容器。每个值（value）都关联唯一的键（key），键作为字典中的这个值数据的标识符。和数组中的数据项不同，字典中的数据项并没有具体顺序。我们在需要通过标识符（键）访问数据的时候使用字典，这种方法很大程度上和我们在现实世界中使用字典查字义的方法一样。
+*字典*是一种存储多个相同类型的值的容器。每个值（value）都关联唯一的键（key），键作为字典中的这个值数据的标识符。和数组中的数据项不同，字典中的数据项并没有具体顺序。我们在需要通过标识符（键）访问数据的时候使用字典，这种方法很大程度上和我们在现实世界中使用字典查字义的方法一样。
 
 > 注意：  
 > Swift 的`Dictionary`类型被桥接到`Foundation`的`NSDictionary`类。  
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Objective-C (Swift 2.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
 
 <a name="dictionary_type_shorthand_syntax"></a>
 ## 字典类型快捷语法

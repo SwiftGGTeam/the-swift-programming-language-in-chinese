@@ -6,7 +6,10 @@
 > 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
 
 > 2.0
-> 翻译+校对：[KYawn](https://github.com/KYawn)，[小铁匠Linus](https://github.com/kevin833752)
+> 翻译+校对：[KYawn](https://github.com/KYawn)
+
+> 2.1
+> 翻译：[小铁匠Linus](https://github.com/kevin833752)
 
 本页内容包括：
 

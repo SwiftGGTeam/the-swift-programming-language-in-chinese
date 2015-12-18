@@ -1,15 +1,14 @@
+> 已同步更新到 Swift 2.1
+
 # 2.0 新的开始
 
 > Swift 兴趣交流群：`131595168`, `146932759`, `151336833`, `153549217`. **加入一个群即可，请勿重复添加**
 
-> <a target='_blank' href="http://swiftist.org">Swift 开发者社区</a>
-
-> <a target='_blank' href="https://github.com/ipader/SwiftGuide">Swift 资源汇总</a>
-
-> <a target='_blank' href="http://swiftsandbox.io">Swift 优秀newsletter</a>
+> <a target='_blank' href="http://swiftweekly.cn">订阅 Swift 开发者周报，每周获取最新 Swift 资源</a>
 
 <!-- -->
 > 如果您觉得这个项目不错，请<a target='_blank' href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese">点击Star一下</a>，您的支持是我们最大的动力。
+
 
 ## 1
 

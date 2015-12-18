@@ -8,6 +8,10 @@
 > 2.0
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
+> 2.1
+> 翻译：[Prayer](https://github.com/futantan)
+> 校对：[shanks](http://codebuild.me)
+
 本页包含内容：
 
 - [For 循环](#for_loops)
@@ -15,9 +19,9 @@
 - [条件语句](#conditional_statement)
 - [控制转移语句（Control Transfer Statements）](#control_transfer_statements)
 - [提前退出](#early_exit)
-- [检测API是否可用](#checking_api_availability)
+- [检测API可用性](#checking_api_availability)
 
-Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`、`guard`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
+Swift 提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`、`guard`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
 
 除了 C 语言里面传统的 for 循环，Swift 还增加了`for-in`循环，用来更简单地遍历数组（array），字典（dictionary），区间（range），字符串（string）和其他序列类型。
 
@@ -29,7 +33,7 @@ Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某
 Swift 提供两种`for`循环形式以来按照指定的次数多次执行一系列语句：
 
 * `for-in`循环对一个集合里面的每个元素执行一系列语句。
-* for循环，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
+* for 循环，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
 
 <a name="for_in"></a>
 ### For-In
@@ -49,11 +53,11 @@ for index in 1...5 {
 // 5 times 5 is 25
 ```
 
-例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的数字。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`print(_:)`函数会再执行一次。整个过程会进行到闭区间结尾为止。
+例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的数字。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`print(_:separator:terminator:)`函数会再执行一次。整个过程会进行到闭区间结尾为止。
 
 上面的例子中，`index`是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index`在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用`let`关键字声明。
 
-如果你不需要知道区间内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
+如果你不需要知道区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
 
 ```swift
 let base = 3
@@ -96,6 +100,7 @@ for (animalName, legCount) in numberOfLegs {
 字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。
 
 <a name="for"></a>
+### For
 
 除了`for-in`循环，Swift 提供使用条件判断和递增方法的标准 C 样式`for`循环:
 
@@ -110,18 +115,19 @@ for var index = 0; index < 3; ++index {
 
 下面是一般情况下这种循环方式的格式：
 
-> for `initialization`; `condition`; `increment` {
->     `statements`
-> }
+```swift
+for initialization; condition; increment {
+	statements
+}
+```
 
 和 C 语言中一样，分号将循环的定义分为 3 个部分，不同的是，Swift 不需要使用圆括号将“initialization; condition; increment”包括起来。
 
 这个循环执行流程如下：
 
-1. 循环首次启动时，初始化表达式被调用一次，用来初始化循环所需的所有常量和变量。
-2. 条件表达式被调用，如果表达式调用结果为`false`，循环结束，继续执行`for`循环关闭大括号
-（`}`）之后的代码。如果表达式调用结果为`true`，则会执行大括号内部的代码。
-3. 执行所有语句之后，执行递增表达式。通常会增加或减少计数器的值，或者根据语句输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第 2 步，条件表达式会再次执行。
+1. 循环首次启动时，*初始化表达式（ initialization expression ）*被调用一次，用来初始化循环所需的所有常量和变量。
+2. *条件表达式（condition expression）*被调用，如果表达式调用结果为`false`，循环结束，继续执行`for`循环关闭大括号（`}`）之后的代码。如果表达式调用结果为`true`，则会执行大括号内部的代码。
+3. 执行所有语句之后，执行*递增表达式（increment expression）*。通常会增加或减少计数器的值，或者根据语句输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第 2 步，条件表达式会再次执行。
 
 
 在初始化表达式中声明的常量和变量（比如`var index = 0`）只在`for`循环的生命周期里有效。如果想在循环结束后访问`index`的值，你必须要在循环生命周期开始前声明`index`。
@@ -155,9 +161,11 @@ print("The loop statements were executed \(index) times")
 
 下面是一般情况下 `while` 循环格式：
 
-> while `condition` {
->     `statements`
-> }
+```swift
+while condition {  
+	statements
+}
+```
 
 下面的例子来玩一个叫做蛇和梯子的小游戏，也叫做滑道和梯子：
 
@@ -225,9 +233,11 @@ print("Game over!")
 
 下面是一般情况下 `repeat-while`循环的格式：
 
-> repeat {
->     `statements`
-> } while `condition`
+```swift
+repeat {
+	statements
+} while condition
+```
 
 还是蛇和梯子的游戏，使用`repeat-while`循环来替代`while`循环。`finalSquare`、`board`、`square`和`diceRoll`的值初始化同`while`循环一样：
 
@@ -315,7 +325,7 @@ if temperatureInFahrenheit <= 32 {
 实际上，最后的`else`语句是可选的：
 
 ```swift
-temperatureInFahrenheit = 90
+temperatureInFahrenheit = 72
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 } else if temperatureInFahrenheit >= 86 {
@@ -332,15 +342,16 @@ if temperatureInFahrenheit <= 32 {
 
 `switch`语句最简单的形式就是把某个值与一个或若干个相同类型的值作比较：
 
-> switch `some value to consider` {
-> case `value 1`:
->     `respond to value 1`
-> case `value 2`,
-> `value 3`:
->     `respond to value 2 or 3`
-> default:
->     `otherwise, do something else`
-> }
+```swift
+switch some value to consider {
+case value 1:
+    respond to value 1
+case value 2, value 3:
+    respond to value 2 or 3
+default:
+    otherwise, do something else
+}
+```
 
 `switch`语句都由*多个 case* 构成。为了匹配某些更特定的值，Swift 提供了几种更复杂的匹配模式，这些模式将在本节的稍后部分提到。
 
@@ -394,11 +405,12 @@ default:
 
 一个 case 也可以包含多个模式，用逗号把它们分开（如果太长了也可以分行写）：
 
-> switch `some value to consider` {
-> case `value 1`,
-> `value 2`:
->     `statements`
-> }
+```swift
+switch some value to consider {
+case value 1, value 2:
+	statements
+}
+```
 
 > 注意：
 如果想要贯穿至特定的 case 分支中，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)。
@@ -408,7 +420,7 @@ default:
 
 case 分支的模式也可以是一个值的区间。下面的例子展示了如何使用区间匹配来输出任意数字对应的自然语言格式：
 
-```
+```swift
 let approximateCount = 62
 let countedThings = "moons orbiting Saturn"
 var naturalCount: String
@@ -492,7 +504,7 @@ case let (x, y):
 
 这三个 case 都声明了常量`x`和`y`的占位符，用于临时获取元组`anotherPoint`的一个或两个值。第一个 case ——`case (let x, 0)`将匹配一个纵坐标为`0`的点，并把这个点的横坐标赋给临时的常量`x`。类似的，第二个 case ——`case (0, let y)`将匹配一个横坐标为`0`的点，并把这个点的纵坐标赋给临时的常量`y`。
 
-一旦声明了这些临时的常量，它们就可以在其对应的 case 分支里引用。在这个例子中，它们用于简化`print(_:)`的书写。
+一旦声明了这些临时的常量，它们就可以在其对应的 case 分支里引用。在这个例子中，它们用于简化`print(_:separator:terminator:)`的书写。
 
 请注意，这个`switch`语句不包含默认分支。这是因为最后一个 case ——`case let(x, y)`声明了一个可以匹配余下所有值的元组。这使得`switch`语句已经完备了，因此不需要再书写默认分支。
 
@@ -529,7 +541,7 @@ case let (x, y):
 <a name="control_transfer_statements"></a>
 ## 控制转移语句（Control Transfer Statements）
 
-控制转移语句改变你代码的执行顺序，通过它你可以实现代码的跳转。Swift有四种控制转移语句。
+控制转移语句改变你代码的执行顺序，通过它你可以实现代码的跳转。Swift 有五种控制转移语句：
 
 - `continue`
 - `break`
@@ -537,7 +549,7 @@ case let (x, y):
 - `return`
 - `throw`
 
-我们将会在下面讨论`continue`、`break`和`fallthrough`语句。`return`语句将会在[函数](./06_Functions.html)章节讨论，`throw`语句会在[错误抛出](./18_Error_Handling.html#throwing_errors)
+我们将会在下面讨论`continue`、`break`和`fallthrough`语句。`return`语句将会在[函数](./06_Functions.html)章节讨论，`throw`语句会在[错误抛出](./18_Error_Handling.html#throwing_errors)章节讨论。
 
 <a name="continue"></a>
 ### Continue
@@ -561,7 +573,7 @@ for character in puzzleInput.characters {
     }
 }
 print(puzzleOutput)
-    // 输出 "grtmndsthnklk"
+// 输出 "grtmndsthnklk"
 ```
 
 在上面的代码中，只要匹配到元音字母或者空格字符，就调用`continue`语句，使本次循环迭代结束，从新开始下次循环迭代。这种行为使`switch`匹配到元音字母和空格字符时不做处理，而不是让每一个匹配到的字符都被打印。
@@ -620,7 +632,7 @@ if let integerValue = possibleIntegerValue {
 <a name="fallthrough"></a>
 ### 贯穿（Fallthrough）
 
-Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显示的插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
+Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
 如果你确实需要 C 风格的贯穿的特性，你可以在每个需要该特性的 case 分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
 
@@ -642,7 +654,7 @@ print(description)
 
 如果`integerToDescribe`的值不属于列表中的任何质数，那么它不会匹配到第一个`switch`分支。而这里没有其他特别的分支情况，所以`integerToDescribe`匹配到包含所有的`default`分支中。
 
-当`switch`代码块执行完后，使用`print`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
+当`switch`代码块执行完后，使用`print(_:separator:terminator:)`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
 
 > 注意：
 > `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码执行继续连接到下一个 case 中的执行代码，这和 C 语言标准中的`switch`语句特性是一样的。
@@ -650,15 +662,17 @@ print(description)
 <a name="labeled_statements"></a>
 ### 带标签的语句
 
-在 Swift 中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显示地指明`break`语句想要终止的是哪个循环体或者`switch`代码块，会很有用。类似地，如果你有许多嵌套的循环体，显示指明`continue`语句想要影响哪一个循环体也会非常有用。
+在 Swift 中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显式地指明`break`语句想要终止的是哪个循环体或者`switch`代码块，会很有用。类似地，如果你有许多嵌套的循环体，显式指明`continue`语句想要影响哪一个循环体也会非常有用。
 
 为了实现这个目的，你可以使用标签来标记一个循环体或者`switch`代码块，当使用`break`或者`continue`时，带上这个标签，可以控制该标签代表对象的中断或者执行。
 
 产生一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，并且该标签后面还需带着一个冒号。下面是一个`while`循环体的语法，同样的规则适用于所有的循环体和`switch`代码块。
 
-> `label name`: while `condition` {
->     `statements`
-> }
+```swift
+label name: while condition {
+	statements
+}
+```
 
 下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是前面章节中*蛇和梯子*的改编版本。这次，游戏增加了一条额外的规则：
 
@@ -710,28 +724,31 @@ print("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环的迭代，开始下一次循环迭代。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到`while`循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。
 
->注意：
-如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`代码块而不是`while`循环体。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
+> 注意：  
+> 如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`代码块而不是`while`循环体。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
 <a name="early_exit"></a>
 ## 提前退出
 
-像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`分句，如果条件不为真则执行`else`分局中的代码。
+像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`分句，如果条件不为真则执行`else`分句中的代码。
 
 ```swift
 func greet(person: [String: String]) {
 	guard let name = person["name"] else {
 		return
 	}
+	
 	print("Hello \(name)")
 
 	guard let location = person["location"] else {
 		print("I hope the weather is nice near you.")
 		return
 	}
+	
 	print("I hope the weather is nice in \(location).")
 }
+
 greet(["name": "John"])
 // prints "Hello John!"
 // prints "I hope the weather is nice near you."
@@ -742,36 +759,36 @@ greet(["name": "Jane", "location": "Cupertino"])
 
 如果`guard`语句的条件被满足，则在保护语句的封闭大括号结束后继续执行代码。任何使用了可选绑定作为条件的一部分并被分配了值的变量或常量对于剩下的保护语句出现的代码段是可用的。
 
-如果条件不被满足，在`else`分支上的代码就会被执行。这个分支必须转移控制以退出`guard`语句出现的代码段。它可以用控制转移语句如`return`,`break`或`continue`做这件事，或者它调用了一个不返回的方法或函数，例如`fatalError()`。
+如果条件不被满足，在`else`分支上的代码就会被执行。这个分支必须转移控制以退出`guard`语句出现的代码段。它可以用控制转移语句如`return`,`break`,`continue`或者`throw`做这件事，或者调用一个不返回的方法或函数，例如`fatalError()`。
 
 相比于可以实现同样功能的`if`语句，按需使用`guard`语句会提升我们代码的可靠性。
-它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你处理违反要求的代码接近要求。
+它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你处理违反要求的代码使其接近要求。
 
 <a name="checking_api_availability"></a>
-## 检测API是否可用
+## 检测 API 可用性
 
-Swift 有内置支持去检查接口的可用性的，这可以确保我们不会不小心地使用对于当前部署目标不可用的API。
+Swift 有检查 API 可用性的内置支持，这可以确保我们不会不小心地使用对于当前部署目标不可用的 API。
 
-编译器使用SDK中的可用信息来验证在我们在可用部署目标指定项目的代码中所有的API调用。如果我们尝试使用一个不可用的API，Swift会在编译期报错。
+编译器使用 SDK 中的可用信息来验证我们的代码中使用的所有 API 在项目指定的部署目标上是否可用。如果我们尝试使用一个不可用的 API，Swift 会在编译期报错。
 
-我们使用一个可用性条件在一个`if`或`guard`语句中去有条件的执行一段代码，这取决于我们想要使用的API是否在运行时是可用的。编译器使用从可用性条件语句中获取的信息，这时它会去验证在代码块中调用的API是否都可用。
+我们使用一个可用性条件在一个`if`或`guard`语句中去有条件的执行一段代码，这取决于我们想要使用的 API 是否在运行时是可用的。编译器使用从可用性条件语句中获取的信息去验证在代码块中调用的 API 是否都可用。
 
 ```swift
 if #available(iOS 9, OSX 10.10, *) {
-    // 在 iOS 使用 iOS 9 APIs , 并且在 OS X 使用 OS X v10.10 APIs
+    // 在 iOS 使用 iOS 9 的 API, 在 OS X 使用 OS X v10.10 的 API
 } else {
-    // 回滚至早前 iOS and OS X 的API
+    // 使用先前版本的 iOS 和 OS X 的 API
 }
 ```
 
-以上可用性条件指定在iOS，`if`段的代码仅仅在iOS9及更高可运行；在OS X，仅在OS X v10.10及更高可运行。最后一个参数，`*`，是必须的并且指定在任何其他平台上，`if`段的代码在最小可用部署目标指定项目中执行。
+以上可用性条件指定了在 iOS 系统上，`if`段的代码仅会在 iOS 9 及更高版本的系统上执行；在 OS X，仅会在 OS X v10.10 及更高版本的系统上执行。最后一个参数，`*`，是必须写的，用于处理未来潜在的平台。
 
-在它普遍的形式中，可用性条件获取了平台名字和版本的清单。平台名字可以是`iOS`，`OSX`或`watchOS`。除了特定的主板本号像iOS8，我们可以指定较小的版本号像iOS8.3以及 OS X v10.10.3。
+在它的一般形式中，可用性条件获取了一系列平台名字和版本。平台名字可以是`iOS`，`OSX`或`watchOS`。除了特定的主板本号像 iOS 8，我们可以指定较小的版本号像 iOS 8.3 以及 OS X v10.10.3。
 
 ```swift
-if #available(`platform name` `version`, `...`, *) {
-    `statements to execute if the APIs are available`
+if #available(platform name version, ..., *) {
+	statements to execute if the APIs are available
 } else {
-    `fallback statements to execute if the APIs are unavailable`
+	fallback statements to execute if the APIs are unavailable
 }
 ```
