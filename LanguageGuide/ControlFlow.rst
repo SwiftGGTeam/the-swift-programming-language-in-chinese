@@ -1366,6 +1366,42 @@ the code inside the ``else`` clause is executed if the condition is not true.
 
 .. testcode:: guard
 
+    -> func greet(name: String) {
+           guard name != "" else {
+               return
+           }
+
+           print("Hello \(name)!")
+       }
+
+If the ``guard`` statement's condition is met,
+code execution continues after the ``guard`` statement's closing brace.
+If that condition is not met,
+the code inside the ``else`` branch is executed.
+That branch must transfer control to exit the code block
+that that ``guard`` statement appears in.
+It can do this with a control transfer statement
+such as ``return``, ``break``, ``continue``, or ``throw``,
+or it can call a function or method
+that doesn't return, such as ``fatalError()``.
+
+
+Any variables or constants that were assigned values
+using an optional binding as part of the condition
+are available for the rest of the code block
+that the ``guard`` statement appears in.
+
+
+Using a ``guard`` statement for requirements
+improves the readability of your code,
+compared to doing the same check with an ``if`` statement.
+It lets you write the code that's typically executed
+without wrapping it in an ``else`` block,
+and it lets you keep the code that handles a violated requirement
+next to the requirement.
+
+.. testcode:: guard
+
     -> func greet(person: [String: String]) {
            guard let name = person["name"] else {
                return
@@ -1387,30 +1423,6 @@ the code inside the ``else`` clause is executed if the condition is not true.
     -> greet(["name": "Jane", "location": "Cupertino"])
     <- Hello Jane!
     <- I hope the weather is nice in Cupertino.
-
-If the ``guard`` statement's condition is met,
-code execution continues after the ``guard`` statement's closing brace.
-Any variables or constants that were assigned values
-using an optional binding as part of the condition
-are available for the rest of the code block
-that the ``guard`` statement appears in.
-
-If that condition is not met,
-the code inside the ``else`` branch is executed.
-That branch must transfer control to exit the code block
-that that ``guard`` statement appears in.
-It can do this with a control transfer statement
-such as ``return``, ``break``, ``continue``, or ``throw``,
-or it can call a function or method
-that doesn't return, such as ``fatalError()``.
-
-Using a ``guard`` statement for requirements
-improves the readability of your code,
-compared to doing the same check with an ``if`` statement.
-It lets you write the code that's typically executed
-without wrapping it in an ``else`` block,
-and it lets you keep the code that handles a violated requirement
-next to the requirement.
 
 .. _ControlFlow_Available:
 
