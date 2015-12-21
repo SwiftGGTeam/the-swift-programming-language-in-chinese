@@ -348,7 +348,6 @@
     "initialization-designatedandconvenienceinitializersinaction": "ID223", 
     "initialization-designatedinitializersandconvenienceinitializers": "ID217", 
     "initialization-failableinitializers": "ID224", 
-    "initialization-failableinitializersforclasses": "ID227", 
     "initialization-failableinitializersforenumerations": "ID225", 
     "initialization-failableinitializersforenumerationswithrawvalues": "ID226", 
     "initialization-implicitlyunwrappedfailableinitializers": "ID230", 
