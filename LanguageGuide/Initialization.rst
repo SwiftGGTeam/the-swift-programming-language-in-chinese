@@ -1621,12 +1621,22 @@ and ensures that this property always has a value of at least ``1``:
 
 .. testcode:: failableInitializers
 
+   -> class Product {
+         let name: String
+         init?(name: String) {
+            if name.isEmpty { return nil }
+            self.name = name
+         }
+      }
+   >> let p = Product(name: "")
+   << // p : Product? = nil
+   ---
    -> class CartItem: Product {
          let quantity: Int!
          init?(name: String, quantity: Int) {
+            if quantity < 1 { return nil }
             self.quantity = quantity
             super.init(name: name)
-            if quantity < 1 { return nil }
          }
       }
 
@@ -1639,6 +1649,8 @@ The failable initializer for ``CartItem`` starts by delegating up to
 the ``init(name:)`` initializer from its superclass, ``Product``.
 This satisfies the requirement that a failable initializer
 must always perform initializer delegation before triggering an initialization failure.
+
+.. TODO: ^-- Probably not true anymore.
 
 If the superclass initialization fails because of an empty ``name`` value,
 the entire initialization process fails immediately
