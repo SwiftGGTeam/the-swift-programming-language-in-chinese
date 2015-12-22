@@ -1632,7 +1632,7 @@ and ensures that this property always has a value of at least ``1``:
    << // p : Product? = nil
    ---
    -> class CartItem: Product {
-         let quantity: Int!
+         let quantity: Int
          init?(name: String, quantity: Int) {
             if quantity < 1 { return nil }
             self.quantity = quantity
@@ -1640,24 +1640,15 @@ and ensures that this property always has a value of at least ``1``:
          }
       }
 
-The ``quantity`` property has an implicitly unwrapped integer type (``Int!``).
-As with the ``name`` property of the ``Product`` class,
-this means that the ``quantity`` property has a default value of ``nil``
-before it is assigned a specific value during initialization.
-
-The failable initializer for ``CartItem`` starts by delegating up to
-the ``init(name:)`` initializer from its superclass, ``Product``.
-This satisfies the requirement that a failable initializer
-must always perform initializer delegation before triggering an initialization failure.
-
-.. TODO: ^-- Probably not true anymore.
-
-If the superclass initialization fails because of an empty ``name`` value,
+The failable initializer for ``CartItem`` starts by
+validating that it has received a ``quantity`` value of ``1`` or more.
+If the ``quantity`` is invalid,
 the entire initialization process fails immediately
 and no further initialization code is executed.
-If the superclass initialization succeeds,
-the ``CartItem`` initializer validates that it has received
-a ``quantity`` value of ``1`` or more.
+Likewise, the failable initializer for ``Product``
+checks the ``name`` value,
+and the initializer process fails immediately
+if ``name`` is the empty string.
 
 If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
