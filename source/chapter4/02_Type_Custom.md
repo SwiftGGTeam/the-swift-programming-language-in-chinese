@@ -1,8 +1,8 @@
-> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
-> 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-
 # 造个类型不是梦-白话Swift类型创建
 -----------------
+
+> 翻译：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
+> 校对：[老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 
 本页包含内容：
 
@@ -170,7 +170,8 @@ Program ended with exit code: 0
 - 如果小伙伴们现在用的是Beta版的Xcode，注意苹果官方Blog中，在代码第17行如果在Xcode Beta4下是错误的，这里的协议是，LogicValue而不是BooleanVue，所以记得看错误提示才是好习惯。
 - 注意代码第34行，完美支持if判断，且输出结果为“老码请你吃火锅”，老码也是说说而已，请不要当真。
 
-</a><a name="support-all-type"></a>
+<a name="support-all-type"></a>
+
 ####支持兼容各们各派的类型
 小伙伴们，江湖风险，门派众多，老码有自己的OCBool类型，可能嵩山少林有自己的SSBool类型，甚至连郭美美都可能有自己的MMBool类型，所以OCBool必须能够识别这些类型，这些各门各派的类型，只要支持LogicValue协议，就应该可以被识别，看老码怎么做，
 

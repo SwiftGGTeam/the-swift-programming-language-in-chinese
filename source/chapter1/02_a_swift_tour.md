@@ -1,9 +1,13 @@
-> 翻译：[numbbbbb](https://github.com/numbbbbb)  
-> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
-
-# Swift 初见
+# Swift 初见（A Swift Tour）
 
 ---
+
+> 1.0
+> 翻译：[numbbbbb](https://github.com/numbbbbb)
+> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
+
+> 2.0
+> 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 本页内容包括：
 
@@ -18,16 +22,16 @@
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
-println("Hello, world")
+print("Hello, world!")
 ```
 
-如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main`函数。你同样不需要在每个语句结尾写上分号。
+如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main()`函数。你同样不需要在每个语句结尾写上分号。
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
-> 注意：  
-> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。  
-> <a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese/raw/gh-pages/source/chapter1/GuidedTour.playground.zip">打开Playground</a>
+> 注意：
+> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip">下载Playground</a>
 
 <a name="simple_values"></a>
 ## 简单值
@@ -40,7 +44,7 @@ myVariable = 50
 let myConstant = 42
 ```
 
-常量或者变量的类型必须和你赋给它们的值一样。然而，声明时类型是可选的，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
+常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
@@ -50,7 +54,7 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 ```
 
-> 练习：  
+> 练习：
 > 创建一个常量，显式指定类型为`Float`并指定初始值为4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
@@ -60,7 +64,7 @@ let label = "The width is"
 let width = 94
 let widthLabel = label + String(width)
 ```
-> 练习：  
+> 练习：
 > 删除最后一行中的`String`，错误提示是什么？
 
 有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：
@@ -72,17 +76,15 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
-> 练习：  
+> 练习：
 > 使用`\()`来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
-使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。
+使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。最后一个元素后面允许有个逗号。
 
 ```swift
 var shoppingList = ["catfish", "water", "tulips", "blue paint"]
 shoppingList[1] = "bottle of water"
-```
 
-```swift
 var occupations = [
     "Malcolm": "Captain",
     "Kaylee": "Mechanic",
@@ -107,7 +109,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`do-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
+使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`repeat-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -119,16 +121,16 @@ for score in individualScores {
         teamScore += 1
     }
 }
-teamScore
+print(teamScore)
 ```
 
 在`if`语句中，条件必须是一个布尔表达式——这意味着像`if score { ... }`这样的代码将报错，而不会隐形地与 0 做对比。
 
-你可以一起使用`if`和`let`来处理值缺失的情况。有些变量的值是可选的。一个可选的值可能是一个具体的值或者是`nil`，表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
+你可以一起使用`if`和`let`来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是`nil`以表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
 
 ```swift
 var optionalString: String? = "Hello"
-optionalString == nil
+print(optionalString == nil)
 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
@@ -137,10 +139,16 @@ if let name = optionalName {
 }
 ```
 
-> 练习：  
+> 练习：
 > 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给greeting赋一个不同的值。
 
-如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。
+如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。  
+另一种处理可选值的方法是通过使用 ?? 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
+```swift
+let nickName: String? = nil
+let fullName: String = "John Appleseed"
+let informalGreeting = "Hi \(nickName ?? fullName)"
+```
 
 `switch`支持任意类型的数据以及各种比较操作——不仅仅是整数以及测试相等。
 
@@ -148,18 +156,21 @@ if let name = optionalName {
 let vegetable = "red pepper"
 switch vegetable {
 case "celery":
-    let vegetableComment = "Add some raisins and make ants on a log."
+    print("Add some raisins and make ants on a log.")
 case "cucumber", "watercress":
-    let vegetableComment = "That would make a good tea sandwich."
+    print("That would make a good tea sandwich.")
 case let x where x.hasSuffix("pepper"):
-    let vegetableComment = "Is it a spicy \(x)?"
+    print("Is it a spicy \(x)?")
 default:
-    let vegetableComment = "Everything tastes good in soup."
+    print("Everything tastes good in soup.")
 }
 ```
 
-> 练习：  
+> 练习：
 > 删除`default`语句，看看会有什么错误？
+
+
+注意`let`在上述例子的等式中是如何使用的，它将匹配等式的值赋给常量`x`。
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
@@ -179,26 +190,26 @@ for (kind, numbers) in interestingNumbers {
         }
     }
 }
-largest
+print(largest)
 ```
 
-> 练习：  
-> 添加另一个变量来记录哪种类型的数字是最大的。
+> 练习：
+> 添加另一个变量来记录现在和之前最大数字的类型。
 
-使用`while`来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。
+使用`while`来重复运行一段代码直到不满足条件。循环条件也可以在结尾，保证能至少循环一次。
 
 ```swift
 var n = 2
 while n < 100 {
     n = n * 2
 }
-n
+print(n)
 
 var m = 2
-do {
+repeat {
     m = m * 2
 } while m < 100
-m
+print(m)
 ```
 
 你可以在循环中使用`..<`来表示范围，也可以使用传统的写法，两者是等价的：
@@ -208,13 +219,13 @@ var firstForLoop = 0
 for i in 0..<4 {
     firstForLoop += i
 }
-firstForLoop
+print(firstForLoop)
 
 var secondForLoop = 0
 for var i = 0; i < 4; ++i {
     secondForLoop += i
 }
-secondForLoop
+print(secondForLoop)
 ```
 
 使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
@@ -222,16 +233,16 @@ secondForLoop
 <a name="functions_and_closures"></a>
 ## 函数和闭包
 
-使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值。
+使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值的类型。
 
 ```swift
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
-greet("Bob", "Tuesday")
+greet("Bob", day: "Tuesday")
 ```
 
-> 练习：  
+> 练习：
 > 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
 
 使用元组来让一个函数返回多个值。该元组的元素可以用名称或数字来表示。
@@ -241,7 +252,7 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
     var min = scores[0]
     var max = scores[0]
     var sum = 0
-    
+
     for score in scores {
         if score > max {
             max = score
@@ -250,12 +261,12 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
         }
         sum += score
     }
-    
+
     return (min, max, sum)
 }
 let statistics = calculateStatistics([5, 3, 100, 3, 9])
-statistics.sum
-statistics.2
+print(statistics.sum)
+print(statistics.2)
 ```
 
 函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
@@ -272,7 +283,7 @@ sumOf()
 sumOf(42, 597, 12)
 ```
 
-> 练习：  
+> 练习：
 > 写一个计算参数平均值的函数。
 
 函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。
@@ -317,10 +328,10 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, lessThanTen)
+hasAnyMatches(numbers, condition: lessThanTen)
 ```
 
-函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
+函数实际上是一种特殊的闭包:它是一段能之后被调取的代码。闭包中的代码能访问闭包所建作用域中能得到的变量和函数，即使闭包是在一个不同的作用域被执行的 - 你已经在嵌套函数例子中所看到。你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
 
 ```swift
 numbers.map({
@@ -330,21 +341,21 @@ numbers.map({
 })
 ```
 
-> 练习：  
+> 练习：
 > 重写闭包，对所有奇数返回0。
 
-有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
+有很多种创建更简洁的闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
-mappedNumbers
+print(mappedNumbers)
 ```
 
-你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
+你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。当一个闭包是传给函数的唯一参数，你可以完全忽略括号。
 
 ```swift
-let sortedNumbers = sorted(numbers) { $0 > $1 }
-sortedNumbers
+let sortedNumbers = numbers.sort { $0 > $1 }
+print(sortedNumbers)
 ```
 
 <a name="objects_and_classes"></a>
@@ -361,7 +372,7 @@ class Shape {
 }
 ```
 
-> 练习：  
+> 练习：
 > 使用`let`添加一个常量属性，再添加一个接收一个参数的方法。
 
 要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。
@@ -420,10 +431,10 @@ test.area()
 test.simpleDescription()
 ```
 
-> 练习：  
-> 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，实现`area`和`describe`方法。
+> 练习：
+> 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，在子类`Circle`中实现`area()`和`simpleDescription()`方法。
 
-属性可以有 getter 和 setter 。
+除了储存简单的属性之外，属性可以有 getter 和 setter 。
 
 ```swift
 class EquilateralTriangle: NamedShape {
@@ -436,12 +447,12 @@ class EquilateralTriangle: NamedShape {
     }
 
     var perimeter: Double {
-    get {
-        return 3.0 * sideLength
-    }
-    set {
-        sideLength = newValue / 3.0
-    }
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
     }
 
     override func simpleDescription() -> String {
@@ -449,9 +460,9 @@ class EquilateralTriangle: NamedShape {
     }
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-triangle.perimeter
+print(triangle.perimeter)
 triangle.perimeter = 9.9
-triangle.sideLength
+print(triangle.sideLength)
 ```
 
 在`perimeter`的 setter 中，新值的名字是`newValue`。你可以在`set`之后显式的设置一个名字。
@@ -469,14 +480,14 @@ triangle.sideLength
 ```swift
 class TriangleAndSquare {
     var triangle: EquilateralTriangle {
-    willSet {
-        square.sideLength = newValue.sideLength
-    }
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
     }
     var square: Square {
-    willSet {
-        triangle.sideLength = newValue.sideLength
-    }
+        willSet {
+            triangle.sideLength = newValue.sideLength
+        }
     }
     init(size: Double, name: String) {
         square = Square(sideLength: size, name: name)
@@ -484,23 +495,10 @@ class TriangleAndSquare {
     }
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-triangleAndSquare.square.sideLength
-triangleAndSquare.triangle.sideLength
+print(triangleAndSquare.square.sideLength)
+print(triangleAndSquare.triangle.sideLength)
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-triangleAndSquare.triangle.sideLength
-```
-
-类中的方法和一般的函数有一个重要的区别，函数的参数名只在函数内部使用，但是方法的参数名需要在调用的时候显式说明（除了第一个参数）。默认情况下，方法的参数名和它在方法内部的名字一样，不过你也可以定义第二个名字，这个名字被用在方法内部。
-
-```swift
-class Counter {
-    var count: Int = 0
-    func incrementBy(amount: Int, numberOfTimes times: Int) {
-        count += amount * times
-    }
-}
-var counter = Counter()
-counter.incrementBy(2, numberOfTimes: 7)
+print(triangleAndSquare.triangle.sideLength)
 ```
 
 处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加`?`。如果`?`之前的值是`nil`，`?`后面的东西都会被忽略，并且整个表达式返回`nil`。否则，`?`之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
@@ -531,20 +529,20 @@ enum Rank: Int {
         case .King:
             return "king"
         default:
-            return String(self.rawValue())
+            return String(self.rawValue)
         }
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.rawValue()
+let aceRawValue = ace.rawValue
 ```
 
-> 练习：  
+> 练习：
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
-在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
+在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`属性来访问一个枚举成员的原始值。
 
-使用'rawValue'在原始值和枚举值之间进行转换。
+使用`init?(rawValue:)`初始化构造器在原始值和枚举值之间进行转换。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -552,7 +550,7 @@ if let convertedRank = Rank(rawValue: 3) {
 }
 ```
 
-枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，如果原始值没有意义，你不需要设置。
+枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，以防原始值没有意义，你不需要设置。
 
 ```swift
 enum Suit {
@@ -569,19 +567,17 @@ enum Suit {
             return "clubs"
         }
     }
-
 }
 let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 ```
 
-> 练习：  
-> 给`Suit`添加一个`color`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
+> 练习：
+> 给`Suit`添加一个`color()`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
 
 注意，有两种方式可以引用`Hearts`成员：给`hearts`常量赋值时，枚举成员`Suit.Hearts`需要用全名来引用，因为常量没有显式指定类型。在`switch`里，枚举成员使用缩写`.Hearts`来引用，因为`self`的值已经知道是一个`suit`。已知变量类型的情况下你可以使用缩写。
 
-使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是
-结构体是传值，类是传引用。
+使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
 
 ```swift
 struct Card {
@@ -595,7 +591,7 @@ let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
-> 练习：  
+> 练习：
 > 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
@@ -607,10 +603,10 @@ enum ServerResponse {
     case Result(String, String)
     case Error(String)
 }
-
+ 
 let success = ServerResponse.Result("6:00 am", "8:09 pm")
 let failure = ServerResponse.Error("Out of cheese.")
-
+ 
 switch success {
 case let .Result(sunrise, sunset):
     let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
@@ -619,10 +615,10 @@ case let .Error(error):
 }
 ```
 
-> 练习：  
+> 练习：
 > 给`ServerResponse`和`switch`添加第三种情况。
 
-注意如何从`ServerResponse`中提取日升和日落时间。
+注意如何从`ServerResponse`中提取日升和日落时间并用得到的值用来和`switch`的情况作比较。
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
@@ -661,34 +657,34 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
-> 练习：  
+> 练习：
 > 写一个实现这个协议的枚举。
 
-注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
+注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
-使用`extension`来为现有的类型添加功能，比如新的方法和参数。你可以使用扩展来改造定义在别处，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
+使用`extension`来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
 
 ```swift
 extension Int: ExampleProtocol {
     var simpleDescription: String {
-    return "The number \(self)"
+        return "The number \(self)"
     }
     mutating func adjust() {
         self += 42
     }
 }
-7.simpleDescription
+print(7.simpleDescription)
 ```
 
-> 练习：  
+> 练习：
 > 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
 你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
 
 ```swift
 let protocolValue: ExampleProtocol = a
-protocolValue.simpleDescription
-// protocolValue.anotherProperty  // Uncomment to see the error
+print(protocolValue.simpleDescription)
+// print(protocolValue.anotherProperty)  // Uncomment to see the error
 ```
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
@@ -699,32 +695,32 @@ protocolValue.simpleDescription
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeat<ItemType>(item: ItemType, times: Int) -> [ItemType] {
-    var result = [ItemType]()
-    for i in 0..<times {
+func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
         result.append(item)
     }
     return result
 }
-repeat("knock", 4)
+repeatItem("knock", numberOfTimes:4)
 ```
 
-你也可以创建泛型类、枚举和结构体。
+你也可以创建泛型函数、方法、类、枚举和结构体。
 
 ```swift
 // Reimplement the Swift standard library's optional type
-enum OptionalValue<T> {
+enum OptionalValue<Wrapped> {
     case None
-    case Some(T)
+    case Some(Wrapped)
 }
 var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 ```
 
-在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类
+在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
 
 ```swift
-func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, rhs: U) -> Bool {
+func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
             if lhsItem == rhsItem {
@@ -737,7 +733,7 @@ func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator
 anyCommonElements([1, 2, 3], [3])
 ```
 
-> 练习：  
-> 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
+> 练习：
+> 修改`anyCommonElements(_:_:)`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-简单起见，你可以忽略`where`，只在冒号后面写协议或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
+`<T: Equatable>`和`<T where T: Equatable>`是等价的。
