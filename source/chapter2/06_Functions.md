@@ -437,7 +437,7 @@ func printHelloWorld() {
 }
 ```
 
-这个函数的类型是：`() -> void`，或者叫“没有参数，并返回 `Void` 类型的函数”。
+这个函数的类型是：`() -> Void`，或者叫“没有参数，并返回 `Void` 类型的函数”。
 
 <a name="using_function_types"></a>
 ### 使用函数类型（Using Function Types）
