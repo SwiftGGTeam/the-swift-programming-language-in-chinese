@@ -121,7 +121,7 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> var sum = 0
     << // sum : Int = 0
     -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
     -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
