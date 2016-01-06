@@ -1243,7 +1243,7 @@ For example,
 a method of type ``(Int) -> String`` becomes ``((Int) -> String)?``.
 Note that the entire function type
 is wrapped in the optional,
-not method's the return value.
+not the method's return value.
 
 An optional protocol requirement can be called with optional chaining,
 to account for the possibility that the requirement was not implemented

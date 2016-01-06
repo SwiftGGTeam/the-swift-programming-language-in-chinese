@@ -961,8 +961,9 @@ A ``do`` statement has the following form:
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
 If such a determination can be made, the error is considered handled.
-Otherwise, the error automatically propagates out of the containing scope,
-either to an enclosing ``catch`` clause or out of the throwing function must handle the error,
+Otherwise, the error can propagate out of the containing scope,
+which means
+the error must be handled by an enclosing ``catch`` clause
 or the containing function must be declared with ``throws``.
 
 To ensure that an error is handled,

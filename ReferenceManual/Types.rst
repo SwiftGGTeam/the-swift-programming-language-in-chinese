@@ -573,7 +573,7 @@ as the following example shows:
     -> let someInstance: SomeBaseClass = SomeSubClass()
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
-    -> // and the runtime type of someInstance is SomeBaseClass
+    -> // and the runtime type of someInstance is SomeSubClass
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 

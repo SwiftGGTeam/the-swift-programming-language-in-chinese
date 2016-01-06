@@ -121,7 +121,7 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> var sum = 0
     << // sum : Int = 0
     -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
     -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
@@ -820,9 +820,9 @@ with the value of the ``a`` in the outer scope
 when the closure is created,
 but their values are not connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
-does not effect the value of ``a`` in the inner scope,
+does not affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
-effect the value of ``a`` outside the closure.
+affect the value of ``a`` outside the closure.
 In contrast, there is only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.

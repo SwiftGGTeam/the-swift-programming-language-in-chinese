@@ -305,7 +305,7 @@ and the seven value bits have a binary value of ``124`` (which is ``128 - 4``):
 .. image:: ../images/bitshiftSignedMinusFourValue_2x.png
    :align: center
 
-The encoding for negative numbers is known as a :newTerm:`two's complement` representation.
+This encoding for negative numbers is known as a :newTerm:`two's complement` representation.
 It may seem an unusual way to represent negative numbers,
 but it has several advantages.
 
