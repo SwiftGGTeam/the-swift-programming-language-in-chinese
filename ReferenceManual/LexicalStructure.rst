@@ -691,7 +691,7 @@ it can't contain a dot elsewhere.
 For example, ``+.+`` is treated as
 the ``+`` operator followed by the ``.+`` operator.
 
-.. assertion:
+.. assertion::
 
    >> infix operator +.+ { }
    !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
