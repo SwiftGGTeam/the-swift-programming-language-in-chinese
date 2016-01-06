@@ -161,6 +161,16 @@ Keywords and Punctuation
 The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
+Keywords other than ``inout``, ``var``, and ``let``
+can be used as external parameter names
+in a function declaration or function call
+without being escaped with backticks.
+
+.. assertion:: keywords-without-backticks
+
+   -> func f(x: Int, in y: Int) {
+         print(x+y)
+      }
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
