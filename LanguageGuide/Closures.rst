@@ -622,7 +622,7 @@ because it knows more information about the closure's lifespan.
 
 .. testcode:: noescape-closure-as-argument
 
-    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+    -> func someFunctionWithNonescapingClosure(@noescape closure: () -> Void) {
            closure()
        }
 
@@ -664,7 +664,7 @@ lets you refer to ``self`` implicitly within the closure.
            var x = 10
            func doSomething() {
                someFunctionWithEscapingClosure { self.x = 100 }
-               someFunctionWithNoescapeClosure { x = 200 }
+               someFunctionWithNonescapingClosure { x = 200 }
            }
        }
     ---
