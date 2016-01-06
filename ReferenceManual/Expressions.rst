@@ -820,9 +820,9 @@ with the value of the ``a`` in the outer scope
 when the closure is created,
 but their values are not connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
-does not effect the value of ``a`` in the inner scope,
+does not affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
-effect the value of ``a`` outside the closure.
+affect the value of ``a`` outside the closure.
 In contrast, there is only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
