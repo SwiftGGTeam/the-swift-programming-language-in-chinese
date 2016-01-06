@@ -681,7 +681,34 @@ defined in the grammar below
 Unicode blocks, among others).
 After the first character,
 combining Unicode characters are also allowed.
-You can also define custom operators as a sequence of two or more dots (for example, ``....``).
+
+You can also define custom operators
+that begin with a dot (``.``).
+These operators are can contain additional dots
+such as ``.+.``.
+If an operator doesn't begin with a dot,
+it can't contain a dot elsewhere.
+For example, ``+.+`` is treated as
+the ``+`` operator followed by the ``.+`` operator.
+
+.. assertion::
+
+   >> infix operator +.+ { }
+   !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
+   !! infix operator +.+ { }
+   !!                 ^
+   !! <REPL Input>:1:20: error: statement cannot begin with a closure expression
+   !! infix operator +.+ { }
+   !!                    ^
+   !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
+   !! infix operator +.+ { }
+   !!                    ^
+   !!                    _ = 
+   !! <REPL Input>:1:20: error: braced block of statements is an unused closure
+   !! infix operator +.+ { }
+   >> infix operator .+ { }
+   >> infix operator .+. { }
+
 Although you can define custom operators that contain a question mark character (``?``),
 they can't consist of a single question mark character only.
 
@@ -818,7 +845,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-character --> U+E0100--U+E01EF
     operator-characters --> operator-character operator-characters-OPT
 
-    dot-operator-head --> ``..``
+    dot-operator-head --> ``.``
     dot-operator-character --> ``.`` | operator-character
     dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
