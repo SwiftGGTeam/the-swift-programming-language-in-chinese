@@ -365,8 +365,8 @@ it can't be further modified.
 .. note::
 
    For class instances,
-   a constant property can only be modified during initialization
-   by the class that introduces it.
+   a constant property can be modified during initialization
+   only by the class that introduces it.
    It cannot be modified by a subclass.
 
 You can revise the ``SurveyQuestion`` example from above to use
