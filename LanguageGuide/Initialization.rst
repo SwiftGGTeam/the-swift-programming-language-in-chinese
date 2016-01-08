@@ -738,7 +738,7 @@ from the superclass, to satisfy rule 1 from above.
    These rules don't affect how users of your classes *create* instances of each class.
    Any initializer in the diagram above can be used to create
    a fully-initialized instance of the class they belong to.
-   The rules only affect how you write the class's implementation.
+   The rules only affect how you write the implementation of the class's initializers.
 
 The figure below shows a more complex class hierarchy for four classes.
 It illustrates how the designated initializers in this hierarchy
