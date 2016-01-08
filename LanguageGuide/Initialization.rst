@@ -76,7 +76,7 @@ The ``Fahrenheit`` structure has one stored property,
 
 The structure defines a single initializer, ``init``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
-(the freezing point of water when expressed in the Fahrenheit scale).
+(the freezing point of water in degrees Fahrenheit).
 
 .. _Initialization_DefaultPropertyValues:
 
@@ -133,7 +133,7 @@ Initialization parameters have the same capabilities and syntax
 as function and method parameters.
 
 The following example defines a structure called ``Celsius``,
-which stores temperatures expressed in the Celsius scale.
+which stores temperatures expressed in degrees Celsius.
 The ``Celsius`` structure implements two custom initializers called
 ``init(fromFahrenheit:)`` and ``init(fromKelvin:)``,
 which initialize a new instance of the structure
@@ -164,7 +164,7 @@ with an external name of ``fromFahrenheit`` and a local name of ``fahrenheit``.
 The second initializer has a single initialization parameter
 with an external name of ``fromKelvin`` and a local name of ``kelvin``.
 Both initializers convert their single argument into
-a value in the Celsius scale
+the corresponding Celsius value
 and store this value in a property called ``temperatureInCelsius``.
 
 .. TODO: I need to provide an example of default values for initializer parameters,
