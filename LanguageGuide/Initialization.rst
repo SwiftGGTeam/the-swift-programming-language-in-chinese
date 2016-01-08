@@ -512,14 +512,14 @@ These responsibilities are described in
 
 For value types, you use ``self.init`` to refer to other initializers
 from the same value type when writing your own custom initializers.
-You can only call ``self.init`` from within an initializer.
+You can call ``self.init`` only from within an initializer.
 
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
 (or the memberwise initializer, if it is a structure) for that type.
 This constraint prevents a situation in which additional essential setup
 provided in a more complex initializer
-is circumvented by someone accidentally using one of the automatic initializers instead.
+is accidentally circumvented by someone using one of the automatic initializers.
 
 .. note::
 
