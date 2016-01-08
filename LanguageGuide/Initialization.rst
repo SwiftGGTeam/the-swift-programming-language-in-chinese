@@ -2037,8 +2037,9 @@ You do not write the ``override`` modifier when overriding a required designated
 .. FIXME: This section still does not describe why required initializers are useful.
    This is because the reason for their usefulness -
    construction through a metatype of some protocol type with an initializer requirement -
-   is currently broken due to
+   used to be broken due to
    <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   As of early 2015 that bug has been fixed.
    See the corresponding FIXME in the Protocols chapter introduction too.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
