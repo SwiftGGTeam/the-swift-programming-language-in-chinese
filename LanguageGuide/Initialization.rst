@@ -571,8 +571,7 @@ The first ``Rect`` initializer, ``init()``,
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
-represented by an empty pair of curly braces ``{}``,
-and does not perform any initialization.
+represented by an empty pair of curly braces ``{}``.
 Calling this initializer returns a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
 the default values of ``Point(x: 0.0, y: 0.0)``
