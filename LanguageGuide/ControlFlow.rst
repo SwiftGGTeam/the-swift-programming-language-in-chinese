@@ -1398,7 +1398,7 @@ that the ``guard`` statement appears in.
 If that condition is not met,
 the code inside the ``else`` branch is executed.
 That branch must transfer control to exit the code block
-that that ``guard`` statement appears in.
+in which the ``guard`` statement appears.
 It can do this with a control transfer statement
 such as ``return``, ``break``, ``continue``, or ``throw``,
 or it can call a function or method
