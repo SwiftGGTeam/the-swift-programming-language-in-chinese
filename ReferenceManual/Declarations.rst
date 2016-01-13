@@ -1865,11 +1865,8 @@ except that you must deal with the optionality of the result.
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
 
-A failable initializer of a structure or an enumeration can return ``nil``
+A failable initializer can return ``nil``
 at any point in the implementation of the initializer's body.
-A failable initializer of a class, however, can return ``nil`` only after all
-stored properties of that class are initialized and ``self.init`` or ``super.init``
-is called (that is, any initializer delegation is performed).
 
 A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
