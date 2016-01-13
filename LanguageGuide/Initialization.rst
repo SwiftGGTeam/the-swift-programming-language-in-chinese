@@ -33,6 +33,7 @@ or by assigning a default property value as part of the property's definition.
 These actions are described in the following sections.
 
 .. note::
+
    When you assign a default value to a stored property,
    or set its initial value within an initializer,
    the value of that property is set directly,
@@ -75,7 +76,7 @@ The ``Fahrenheit`` structure has one stored property,
 
 The structure defines a single initializer, ``init``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
-(the freezing point of water when expressed in the Fahrenheit scale).
+(the freezing point of water in degrees Fahrenheit).
 
 .. _Initialization_DefaultPropertyValues:
 
@@ -132,7 +133,7 @@ Initialization parameters have the same capabilities and syntax
 as function and method parameters.
 
 The following example defines a structure called ``Celsius``,
-which stores temperatures expressed in the Celsius scale.
+which stores temperatures expressed in degrees Celsius.
 The ``Celsius`` structure implements two custom initializers called
 ``init(fromFahrenheit:)`` and ``init(fromKelvin:)``,
 which initialize a new instance of the structure
@@ -163,7 +164,7 @@ with an external name of ``fromFahrenheit`` and a local name of ``fahrenheit``.
 The second initializer has a single initialization parameter
 with an external name of ``fromKelvin`` and a local name of ``kelvin``.
 Both initializers convert their single argument into
-a value in the Celsius scale
+the corresponding Celsius value
 and store this value in a property called ``temperatureInCelsius``.
 
 .. TODO: I need to provide an example of default values for initializer parameters,
@@ -364,8 +365,8 @@ it can't be further modified.
 .. note::
 
    For class instances,
-   a constant property can only be modified during initialization
-   by the class that introduces it.
+   a constant property can be modified during initialization
+   only by the class that introduces it.
    It cannot be modified by a subclass.
 
 You can revise the ``SurveyQuestion`` example from above to use
@@ -511,14 +512,14 @@ These responsibilities are described in
 
 For value types, you use ``self.init`` to refer to other initializers
 from the same value type when writing your own custom initializers.
-You can only call ``self.init`` from within an initializer.
+You can call ``self.init`` only from within an initializer.
 
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
 (or the memberwise initializer, if it is a structure) for that type.
 This constraint prevents a situation in which additional essential setup
 provided in a more complex initializer
-is circumvented by someone accidentally using one of the automatic initializers instead.
+is accidentally circumvented by someone using one of the automatic initializers.
 
 .. note::
 
@@ -570,8 +571,7 @@ The first ``Rect`` initializer, ``init()``,
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
-represented by an empty pair of curly braces ``{}``,
-and does not perform any initialization.
+represented by an empty pair of curly braces ``{}``.
 Calling this initializer returns a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
 the default values of ``Point(x: 0.0, y: 0.0)``
@@ -738,7 +738,7 @@ from the superclass, to satisfy rule 1 from above.
    These rules don't affect how users of your classes *create* instances of each class.
    Any initializer in the diagram above can be used to create
    a fully-initialized instance of the class they belong to.
-   The rules only affect how you write the class's implementation.
+   The rules only affect how you write the implementation of the class's initializers.
 
 The figure below shows a more complex class hierarchy for four classes.
 It illustrates how the designated initializers in this hierarchy
@@ -1557,79 +1557,6 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
       }
    <- This is not a defined temperature unit, so initialization failed.
 
-.. _Initialization_FailableInitializersForClasses:
-
-Failable Initializers for Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A failable initializer for a value type (that is, a structure or enumeration)
-can trigger an initialization failure at any point within its initializer implementation.
-In the ``Animal`` structure example above,
-the initializer triggers an initialization failure at the very start of its implementation,
-before the ``species`` property has been set.
-
-For classes, however, a failable initializer can trigger an initialization failure
-only *after* all stored properties introduced by that class have been set to an initial value
-and any initializer delegation has taken place.
-
-The example below shows how you can use an implicitly unwrapped optional property
-to satisfy this requirement within a failable class initializer:
-
-.. testcode:: failableInitializers
-
-   -> class Product {
-         let name: String!
-         init?(name: String) {
-            self.name = name
-            if name.isEmpty { return nil }
-         }
-      }
-
-The ``Product`` class defined above is very similar to the ``Animal`` structure seen earlier.
-The ``Product`` class has a constant ``name`` property
-that must not be allowed to take an empty string value.
-To enforce this requirement,
-the ``Product`` class uses a failable initializer to ensure that
-the property's value is nonempty before allowing initialization to succeed.
-
-However, ``Product`` is a class, not a structure.
-This means that unlike ``Animal``,
-any failable initializer for the ``Product`` class must provide
-an initial value for the ``name`` property *before* triggering an initialization failure.
-
-In the example above,
-the ``name`` property of the ``Product`` class is defined as having
-an implicitly unwrapped optional string type (``String!``).
-Because it is of an optional type,
-this means that the ``name`` property has a default value of ``nil``
-before it is assigned a specific value during initialization.
-This default value of ``nil`` in turn means that
-all of the properties introduced by the ``Product`` class have a valid initial value.
-As a result, the failable initializer for ``Product``
-can trigger an initialization failure at the start of the initializer if it is passed an empty string,
-*before* assigning a specific value to the ``name`` property within the initializer.
-
-.. An IUO is used above essentially as a workaround --
-   the deallocation logic can't properly handly partially-initialized instances,
-   so you have to complete the definite initialization before you can return nil.
-   By using an IUO, everything has an initial value of nil
-   so definite initialization is complete at the very beginning of the initializer.
-
-Because the ``name`` property is a constant,
-you can be confident that it will always contain
-a non-``nil`` value if initialization succeeds.
-Even though it is defined with an implicitly unwrapped optional type,
-you can always access its implicitly unwrapped value with confidence,
-without needing to check for a value of ``nil``:
-
-.. testcode:: failableInitializers
-
-   -> if let bowTie = Product(name: "bow tie") {
-         // no need to check if bowTie.name == nil
-         print("The product's name is \(bowTie.name)")
-      }
-   <- The product's name is bow tie
-
 .. _Initialization_PropagationOfInitializationFailure:
 
 Propagation of Initialization Failure
@@ -1694,31 +1621,34 @@ and ensures that this property always has a value of at least ``1``:
 
 .. testcode:: failableInitializers
 
+   -> class Product {
+         let name: String
+         init?(name: String) {
+            if name.isEmpty { return nil }
+            self.name = name
+         }
+      }
+   >> let p = Product(name: "")
+   << // p : Product? = nil
+   ---
    -> class CartItem: Product {
-         let quantity: Int!
+         let quantity: Int
          init?(name: String, quantity: Int) {
+            if quantity < 1 { return nil }
             self.quantity = quantity
             super.init(name: name)
-            if quantity < 1 { return nil }
          }
       }
 
-The ``quantity`` property has an implicitly unwrapped integer type (``Int!``).
-As with the ``name`` property of the ``Product`` class,
-this means that the ``quantity`` property has a default value of ``nil``
-before it is assigned a specific value during initialization.
-
-The failable initializer for ``CartItem`` starts by delegating up to
-the ``init(name:)`` initializer from its superclass, ``Product``.
-This satisfies the requirement that a failable initializer
-must always perform initializer delegation before triggering an initialization failure.
-
-If the superclass initialization fails because of an empty ``name`` value,
+The failable initializer for ``CartItem`` starts by
+validating that it has received a ``quantity`` value of ``1`` or more.
+If the ``quantity`` is invalid,
 the entire initialization process fails immediately
 and no further initialization code is executed.
-If the superclass initialization succeeds,
-the ``CartItem`` initializer validates that it has received
-a ``quantity`` value of ``1`` or more.
+Likewise, the failable initializer for ``Product``
+checks the ``name`` value,
+and the initializer process fails immediately
+if ``name`` is the empty string.
 
 If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
@@ -2107,8 +2037,9 @@ You do not write the ``override`` modifier when overriding a required designated
 .. FIXME: This section still does not describe why required initializers are useful.
    This is because the reason for their usefulness -
    construction through a metatype of some protocol type with an initializer requirement -
-   is currently broken due to
+   used to be broken due to
    <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   As of early 2015 that bug has been fixed.
    See the corresponding FIXME in the Protocols chapter introduction too.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
