@@ -415,14 +415,6 @@ These two loops do the same thing:
       }
    -> print(firstForLoop)
    << 6
-   ---
-   -> var secondForLoop = 0
-   << // secondForLoop : Int = 0
-   -> for var i = 0; i < 4; i += 1 {
-          secondForLoop += i
-      }
-   -> print(secondForLoop)
-   << 6
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
