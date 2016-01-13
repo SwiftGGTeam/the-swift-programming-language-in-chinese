@@ -63,8 +63,9 @@ Loop Statements
 
 Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-Swift has four loop statements:
-a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
+Swift has three loop statements:
+a ``for``-``in`` statement,
+a ``while`` statement,
 and a ``repeat``-``while`` statement.
 
 Control flow in a loop statement can be changed by a ``break`` statement
@@ -75,104 +76,9 @@ and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement
 
     Grammar of a loop statement
 
-    loop-statement --> for-statement
     loop-statement --> for-in-statement
     loop-statement --> while-statement
     loop-statement --> repeat-while-statement
-
-
-.. _Statements_ForStatement:
-
-For Statement
-~~~~~~~~~~~~~
-
-A ``for`` statement allows a block of code to be executed repeatedly
-while incrementing a counter,
-as long as a condition remains true.
-
-A ``for`` statement has the following form:
-
-.. syntax-outline::
-
-    for <#initialization#>; <#condition#>; <#increment#> {
-       <#statements#>
-    }
-
-The semicolons between the *initialization*, *condition*, and *increment* are required.
-The braces around the *statements* in the body of the loop are also required.
-
-A ``for`` statement is executed as follows:
-
-1. The *initialization* is evaluated only once.
-   It is typically used to declare and initialize any variables
-   that are needed for the remainder of the loop.
-
-2. The *condition* expression is evaluated.
-
-   If ``true``,
-   the program executes the *statements*,
-   and execution continues to step 3.
-   If ``false``,
-   the program does not execute the *statements* or the *increment* expression,
-   and the program is finished executing the ``for`` statement.
-
-3. The *increment* expression is evaluated,
-   and execution returns to step 2.
-
-Variables defined within the *initialization*
-are valid only within the scope of the ``for`` statement itself.
-
-The value of the *condition* expression must have a type that conforms to
-the ``BooleanType`` protocol.
-
-.. langref-grammar
-
-    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
-    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
-    stmt-for-c-style-init ::= decl-var
-    stmt-for-c-style-init ::= expr
-
-.. assertion:: c-style-for-allows-expression-list
-
-   -> // Init and increment can be a list
-   -> for var i = 0, j = 0; i < 5; i++, j++ {
-          print(i, j)
-      }
-   << 0 0
-   << 1 1
-   << 2 2
-   << 3 3
-   << 4 4
-   -> // Test can't be a list
-   -> for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !! <REPL Input>:1:28: error: expected ';' in 'for' statement
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                            ^
-   !! <REPL Input>:1:28: error: expected expression
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                            ^
-   !! <REPL Input>:1:35: error: expected '{' in 'for' statement
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                                   ^
-   !! <REPL Input>:1:46: error: statement cannot begin with a closure expression
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                                              ^
-   !! <REPL Input>:1:46: note: explicitly discard the result of the closure by assigning to '_'
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                                              ^
-   !!                                              _ = 
-   !! <REPL Input>:1:46: error: braced block of statements is an unused closure
-   !! for var i = 0, j = 0; i < 5, j < 5; i++, j++ { }
-   !!                                              ^
-
-.. syntax-grammar::
-
-    Grammar of a for statement
-
-    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-list-OPT code-block
-    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-list-OPT ``)`` code-block
-
-    for-init --> variable-declaration | expression-list
 
 
 .. _Statements_For-InStatement:

@@ -401,10 +401,8 @@ ensuring that the loop is run at least once.
    -> print(m)
    << 128
 
-You can keep an index in a loop ---
-either by using ``..<`` to make a range of indexes
-or by writing an explicit initialization, condition, and increment.
-These two loops do the same thing:
+You can keep an index in a loop
+by using ``..<`` to make a range of indexes.
 
 .. testcode:: guided-tour
 
@@ -414,14 +412,6 @@ These two loops do the same thing:
           firstForLoop += i
       }
    -> print(firstForLoop)
-   << 6
-   ---
-   -> var secondForLoop = 0
-   << // secondForLoop : Int = 0
-   -> for var i = 0; i < 4; ++i {
-          secondForLoop += i
-      }
-   -> print(secondForLoop)
    << 6
 
 Use ``..<`` to make a range that omits its upper value,

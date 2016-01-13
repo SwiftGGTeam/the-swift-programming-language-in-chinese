@@ -1,18 +1,18 @@
 Control Flow
 ============
 
-Swift provides all the familiar control flow statements from C-like languages.
-These include ``for`` and ``while`` loops to perform a task multiple times;
+Swift provides a variety of control flow statements.
+These include ``while`` loops to perform a task multiple times;
 ``if``, ``guard``, and ``switch`` statements
 to execute different branches of code based on certain conditions;
 and statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
 
-In addition to the traditional ``for`` loop found in C,
-Swift adds a ``for``-``in`` loop that makes it easy to iterate over
+Swift also provides a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
+Swift's ``switch`` statement is also considerably more powerful
+than its counterpart in many C-like languages.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
@@ -23,21 +23,8 @@ and complex matching conditions can be expressed with a ``where`` clause for eac
 
 .. _ControlFlow_ForLoops:
 
-For Loops
----------
-
-Swift provides two kinds of loop
-that perform a set of statements a certain number of times:
-
-* The ``for``-``in`` loop performs a set of statements for each item in
-  a sequence.
-* The ``for`` loop performs a set of statements until
-  a specific condition is met, typically by incrementing a counter each time the loop ends.
-
-.. _ControlFlow_ForIn:
-
-For-In
-~~~~~~
+For-In Loops
+------------
 
 You use the ``for``-``in`` loop to iterate over a sequence,
 such as ranges of numbers, items in an array, or characters in a string.
@@ -154,84 +141,6 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
-
-.. _ControlFlow_ForConditionIncrement:
-
-For
-~~~
-
-In addition to ``for``-``in`` loops,
-Swift supports traditional C-style ``for`` loops with a condition and an incrementer:
-
-.. testcode:: forLoops
-
-   -> for var index = 0; index < 3; ++index {
-         print("index is \(index)")
-      }
-   </ index is 0
-   </ index is 1
-   </ index is 2
-
-Here's the general form of this loop format:
-
-.. syntax-outline::
-
-   for <#initialization#>; <#condition#>; <#increment#> {
-      <#statements#>
-   }
-
-Semicolons separate the three parts of the loop's definition, as in C.
-However, unlike C, Swift doesn't need parentheses around
-the entire “initialization; condition; increment” block.
-
-The loop is executed as follows:
-
-1. When the loop is first entered,
-   the :newTerm:`initialization expression` is evaluated once,
-   to set up any constants or variables that are needed for the loop.
-
-2. The :newTerm:`condition expression` is evaluated.
-   If it evaluates to ``false``, the loop ends,
-   and code execution continues after the ``for`` loop's closing brace (``}``).
-   If the expression evaluates to ``true``,
-   code execution continues by executing the statements inside the braces.
-
-3. After all statements are executed,
-   the :newTerm:`increment expression` is evaluated.
-   It might increase or decrease the value of a counter,
-   or set one of the initialized variables to a new value based on the outcome of the statements.
-   After the increment expression has been evaluated,
-   execution returns to step 2,
-   and the condition expression is evaluated again.
-
-Constants and variables declared within the initialization expression
-(such as ``var index = 0``)
-are only valid within the scope of the ``for`` loop itself.
-To retrieve the final value of ``index`` after the loop ends,
-you must declare ``index`` before the loop's scope begins:
-
-.. testcode:: forLoopsOutside
-   :compile: true
-
-   -> var index: Int
-   -> for index = 0; index < 3; ++index {
-         print("index is \(index)")
-      }
-   </ index is 0
-   </ index is 1
-   </ index is 2
-   -> print("The loop statements were executed \(index) times")
-   <- The loop statements were executed 3 times
-
-Note that the final value of ``index`` after this loop is completed is ``3``, not ``2``.
-The last time the increment statement ``++index`` is called,
-it sets ``index`` to ``3``,
-which causes ``index < 3`` to equate to ``false``,
-ending the loop.
-
-.. TODO: Need to mention that loop variables are constants by default.
-
-.. _ControlFlow_WhileLoops:
 
 While Loops
 -----------
