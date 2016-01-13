@@ -1,7 +1,7 @@
 Control Flow
 ============
 
-Swift provides all the familiar control flow statements from C-like languages.
+Swift provides a variety of control flow statements.
 These include ``while`` loops to perform a task multiple times;
 ``if``, ``guard``, and ``switch`` statements
 to execute different branches of code based on certain conditions;
@@ -11,7 +11,8 @@ to transfer the flow of execution to another point in your code.
 Swift also provides a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
+Swift's ``switch`` statement is also considerably more powerful
+than its counterpart in many C-like languages.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
 avoiding common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
