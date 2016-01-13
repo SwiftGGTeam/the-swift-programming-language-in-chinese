@@ -257,9 +257,10 @@ Swift provides two special type aliases for working with non-specific types:
 AnyObject
 ~~~~~~~~~
 
-When working with Cocoa APIs, it is common to receive
+When working with Cocoa APIs, sometimes you receive
 an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
-This is because Objective-C does not have explicitly typed arrays.
+Objective-C currently supports explicitly typed arrays,
+but older versions of the language did not have this feature.
 However, you can often be confident about the type of objects contained in such an array
 just from the information you know about the API that provided the array.
 
