@@ -440,7 +440,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 ```
 
 > 注意：
-> 在 Swift 中，字符串和字符并不区分区域。
+> 在 Swift 中，字符串和字符并不区分地域(not locale-sensitive)。
 
 
 <a name="prefix_and_suffix_equality"></a>
