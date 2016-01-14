@@ -633,7 +633,7 @@ print("")
 ### Unicode 标量表示 (Unicode Scalars Representation)
 
 您可以通过遍历`String`值的`unicodeScalars`属性来访问它的 Unicode 标量表示。
-其为`UnicodeScalarView`类型的属性，`UnicodeScalarView`是`UnicodeScalar`的集合。
+其为`UnicodeScalarView`类型的属性，`UnicodeScalarView`是`UnicodeScalar`类型的值的集合。
 `UnicodeScalar`是21位的 Unicode 代码点。
 
 每一个`UnicodeScalar`拥有一个`value`属性，可以返回对应的21位数值，用`UInt32`来表示：
