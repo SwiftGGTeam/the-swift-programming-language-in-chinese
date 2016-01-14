@@ -736,17 +736,17 @@ or a binary operator. This behavior is summarized in the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
   it is treated as a binary operator.
-  As an example, the ``+`` operator in ``a+b`` and ``a + b`` is treated as a binary operator.
+  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
 * If an operator has whitespace on the left side only,
   it is treated as a prefix unary operator.
-  As an example, the ``++`` operator in ``a ++b`` is treated as a prefix unary operator.
+  As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
 * If an operator has whitespace on the right side only,
   it is treated as a postfix unary operator.
-  As an example, the ``++`` operator in ``a++ b`` is treated as a postfix unary operator.
+  As an example, the ``+++`` operator in ``a+++ b`` is treated as a postfix unary operator.
 * If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
   it is treated as a postfix unary operator.
-  As an example, the  ``++`` operator in ``a++.b`` is treated as a postfix unary operator
-  (``a++ .b`` rather than ``a ++ .b``).
+  As an example, the  ``+++`` operator in ``a+++.b`` is treated as a postfix unary operator
+  (``a+++ .b`` rather than ``a +++ .b``).
 
 For the purposes of these rules,
 the characters ``(``, ``[``, and ``{`` before an operator,

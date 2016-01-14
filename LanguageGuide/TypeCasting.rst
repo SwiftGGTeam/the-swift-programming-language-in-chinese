@@ -116,9 +116,9 @@ which count the number of ``Movie`` and ``Song`` instances in the ``library`` ar
    ---
    -> for item in library {
          if item is Movie {
-            ++movieCount
+            movieCount += 1
          } else if item is Song {
-            ++songCount
+            songCount += 1
          }
       }
    ---

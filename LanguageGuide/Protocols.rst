@@ -728,7 +728,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             print("The game is using a \(game.dice.sides)-sided dice")
          }
          func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-            ++numberOfTurns
+            numberOfTurns += 1
             print("Rolled a \(diceRoll)")
          }
          func gameDidEnd(game: DiceGame) {

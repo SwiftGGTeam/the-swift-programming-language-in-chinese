@@ -214,7 +214,7 @@ or has a cost that exceeds the current deposited amount:
               }
 
               coinsDeposited -= item.price
-              --item.count
+              item.count -= 1
               inventory[name] = item
               dispenseSnack(name)
           }

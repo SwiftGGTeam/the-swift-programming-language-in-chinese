@@ -2159,7 +2159,7 @@ The following form declares a new prefix operator:
     prefix operator <#operator name#> {}
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
-such as the prefix increment operator (``++``) is in the expression ``++i``.
+such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
@@ -2173,7 +2173,7 @@ The following form declares a new postfix operator:
     postfix operator <#operator name#> {}
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
-such as the postfix increment operator (``++``) is in the expression ``i++``.
+such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
 
 As with prefix operators, postfix operator declarations don't specify a precedence level.
 Postfix operators are nonassociative.

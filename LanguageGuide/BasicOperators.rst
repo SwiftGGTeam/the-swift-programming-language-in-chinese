@@ -3,12 +3,10 @@ Basic Operators
 
 An :newTerm:`operator` is a special symbol or phrase that you use to
 check, change, or combine values.
-For example, the addition operator (``+``) adds two numbers together
-(as in ``let i = 1 + 2``).
-More complex examples include the logical AND operator ``&&``
-(as in ``if enteredDoorCode && passedRetinaScan``)
-and the increment operator ``++i``,
-which is a shortcut to increase the value of ``i`` by ``1``.
+For example, the addition operator (``+``) adds two numbers,
+as in ``let i = 1 + 2``,
+and the logical AND operator (``&&``) combines two Boolean values,
+as in ``if enteredDoorCode && passedRetinaScan``.
 
 Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
@@ -41,7 +39,7 @@ Operators are unary, binary, or ternary:
 
 * :newTerm:`Unary` operators operate on a single target (such as ``-a``).
   Unary :newTerm:`prefix` operators appear immediately before their target (such as ``!b``),
-  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``i++``).
+  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``c!``).
 * :newTerm:`Binary` operators operate on two targets (such as ``2 + 3``)
   and are :newTerm:`infix` because they appear in between their two targets.
 * :newTerm:`Ternary` operators operate on three targets.
@@ -243,71 +241,6 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
 .. image:: ../images/remainderFloat_2x.png
    :align: center
 
-.. _BasicOperators_IncrementAndDecrementOperators:
-
-Increment and Decrement Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Like C, Swift provides an :newTerm:`increment operator` (``++``)
-and a :newTerm:`decrement operator` (``--``)
-as a shortcut to increase or decrease the value of a numeric variable by ``1``.
-You can use these operators with variables of any integer or floating-point type.
-
-.. testcode:: arithmeticOperators
-
-   -> var i = 0
-   << // i : Int = 0
-   -> ++i      // i now equals 1
-   << // r8 : Int = 1
-
-Each time you call ``++i``, the value of ``i`` is increased by ``1``.
-Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
-Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
-
-The ``++`` and ``--`` symbols can be used as prefix operators or as postfix operators.
-``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
-Similarly, ``--i`` and ``i--`` are both valid ways to decrease the value of ``i`` by ``1``.
-
-Note that these operators modify ``i`` and also return a value.
-If you only want to increment or decrement the value stored in ``i``,
-you can ignore the returned value.
-However, if you *do* use the returned value,
-it will be different based on whether you used the prefix or postfix version of the operator,
-according to the following rules:
-
-* If the operator is written *before* the variable,
-  it increments the variable *before* returning its value.
-* If the operator is written *after* the variable,
-  it increments the variable *after* returning its value.
-
-For example:
-
-.. testcode:: arithmeticOperators
-
-   -> var a = 0
-   << // a : Int = 0
-   -> let b = ++a
-   << // b : Int = 1
-   /> a and b are now both equal to \(a)
-   </ a and b are now both equal to 1
-   -> let c = a++
-   << // c : Int = 1
-   /> a is now equal to \(a), but c has been set to the pre-increment value of \(c)
-   </ a is now equal to 2, but c has been set to the pre-increment value of 1
-
-In the example above,
-``let b = ++a`` increments ``a`` *before* returning its value.
-This is why both ``a`` and ``b`` are equal to the new value of ``1``.
-
-However, ``let c = a++`` increments ``a`` *after* returning its value.
-This means that ``c`` gets the old value of ``1``,
-and ``a`` is then updated to equal ``2``.
-
-Unless you need the specific behavior of ``i++``,
-it is recommended that you use ``++i`` and ``--i`` in all cases,
-because they have the typical expected behavior of modifying ``i``
-and returning the result.
-
 .. _BasicOperators_UnaryMinusOperator:
 
 Unary Minus Operator
@@ -370,8 +303,7 @@ that performs both tasks at the same time.
 .. note::
 
    The compound assignment operators do not return a value.
-   You cannot write ``let b = a += 2``, for example.
-   This behavior is different from the increment and decrement operators mentioned above.
+   For example, you cannot write ``let b = a += 2``.
 
 A complete list of compound assignment operators can be found in :doc:`../ReferenceManual/Expressions`.
 

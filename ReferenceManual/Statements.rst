@@ -528,7 +528,7 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
    -> var i = 0
    << // i : Int = 0
    -> `return`: while i < 100 {
-          i++
+          i += 1
           if i == 10 {
               break `return`
           }

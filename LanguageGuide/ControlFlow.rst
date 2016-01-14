@@ -230,7 +230,8 @@ The first dice roll always moves the player on to the board:
    << // diceRoll : Int = 0
    -> while square < finalSquare {
          // roll the dice
-         if ++diceRoll == 7 { diceRoll = 1 }
+         diceRoll += 1
+         if diceRoll == 7 { diceRoll = 1 }
    >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
@@ -277,10 +278,8 @@ This example uses a very simple approach to dice rolling.
 Instead of a random number generator,
 it starts with a ``diceRoll`` value of ``0``.
 Each time through the ``while`` loop,
-``diceRoll`` is incremented with the prefix increment operator (``++i``),
+``diceRoll`` is incremented by one
 and is then checked to see if it has become too large.
-The return value of ``++diceRoll`` is equal to
-the value of ``diceRoll`` *after* it is incremented.
 Whenever this return value equals ``7``,
 the dice roll has become too large, and is reset to a value of ``1``.
 This gives a sequence of ``diceRoll`` values that is always
@@ -369,7 +368,8 @@ and has no effect:
          square += board[square]
    >>      print("after snakes or ladders, square is \(square)")
          // roll the dice
-         if ++diceRoll == 7 { diceRoll = 1 }
+         diceRoll += 1
+         if diceRoll == 7 { diceRoll = 1 }
    >>    print("diceRoll is \(diceRoll)")
          // move by the rolled amount
          square += diceRoll
@@ -1161,7 +1161,8 @@ to reflect that you must land exactly on square 25:
 .. testcode:: labels
 
    -> gameLoop: while square != finalSquare {
-         if ++diceRoll == 7 { diceRoll = 1 }
+         diceRoll += 1
+         if diceRoll == 7 { diceRoll = 1 }
    >>    print("diceRoll is \(diceRoll)")
          switch square + diceRoll {
             case finalSquare:
