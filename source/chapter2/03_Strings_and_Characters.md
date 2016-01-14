@@ -353,7 +353,7 @@ greeting.endIndex.successor() // error
 for index in greeting.characters.indices {
    print("\(greeting[index]) ", terminator: "")
 }
-// 打印输出 "G u t e n   T a g !"
+// 打印输出 "G u t e n   T a g ! "
 ```
 
 <a name="inserting_and_removing"></a>
