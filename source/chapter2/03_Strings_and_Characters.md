@@ -312,7 +312,7 @@ print("the number of characters in \(word) is \(word.characters.count)")
 <a name="accessing_and_modifying_a_string"></a>
 ## 访问和修改字符串 (Accessing and Modifying a String)
 
-你可以通字符串的属性和方法来访问和读取它，当然也可以用下标语法完成。
+你可以通过字符串的属性和方法来访问和修改它，当然也可以用下标语法完成。
 
 <a name="string_indices"></a>
 ### 字符串索引 (String Indices)
