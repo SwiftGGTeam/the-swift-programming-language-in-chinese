@@ -351,7 +351,7 @@ greeting.endIndex.successor() // error
 
 ```swift
 for index in greeting.characters.indices {
-   print("\(greeting[index]) ", terminator: " ")
+   print("\(greeting[index]) ", terminator: "")
 }
 // 打印输出 "G u t e n   T a g !"
 ```
