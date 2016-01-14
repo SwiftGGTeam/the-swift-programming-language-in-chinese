@@ -269,7 +269,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 // enclosedEAcute 是 é⃝
 ```
 
-局部的指示符号的 Unicode 标量可以组合成一个单一的`Character`值，例如`REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：
+地域性指示符号的 Unicode 标量可以组合成一个单一的`Character`值，例如`REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：
 
 
 ```swift
