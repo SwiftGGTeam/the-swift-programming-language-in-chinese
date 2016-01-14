@@ -649,7 +649,7 @@ print("")
   <td>🐶<br>U+1F436</td>
  </tr>
  <tr height="77">
-  <td height="77">UTF-16<br>Code Unit</td>
+  <td height="77">Unicode Scalar<br>Code Unit</td>
   <td>68</td>
   <td>111</td>
   <td>103</td>
