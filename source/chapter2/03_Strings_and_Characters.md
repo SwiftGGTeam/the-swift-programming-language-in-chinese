@@ -514,7 +514,7 @@ Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式�
 * UTF-16 代码单元集合 (利用字符串的`utf16`属性进行访问)
 * 21位的 Unicode 标量值集合，也就是字符串的 UTF-32 编码格式 (利用字符串的`unicodeScalars`属性进行访问)
 
-下面由`D``o``g``‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`�`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
+下面由`D`,`o`,`g`,`‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`🐶`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
 
 ```swift
 let dogString = "Dog‼🐶"
