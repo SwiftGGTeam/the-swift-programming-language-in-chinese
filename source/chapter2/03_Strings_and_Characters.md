@@ -502,7 +502,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 <a name="unicode_representations_of_strings"></a>
 ## 字符串的 Unicode 表示形式（Unicode Representations of Strings）
 
-当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种编码格式编码。每一个字符串中的小块编码都被称为代码单元。这些包括 UTF-8 编码格式（编码字符串为8位的代码单元）， UTF-16 编码格式（编码字符串位16位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
+当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种`编码格式`（encoding forms））））编码。每一个字符串中的小块编码都被称`代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为8位的代码单元）， UTF-16 编码格式（编码字符串位16位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
 
 Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。
 您可以利用`for-in`来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个`Character`值。
