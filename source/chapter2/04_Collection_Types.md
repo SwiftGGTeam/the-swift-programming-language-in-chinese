@@ -223,7 +223,7 @@ firstItem = shoppingList[0]
 ```swift
 let apples = shoppingList.removeLast()
 // 数组的最后一项被移除了
-// shoppingList 现在只有5项，不包括 cheese
+// shoppingList 现在只有5项，不包括 Apples
 // apples 常量的值现在等于 "Apples" 字符串
 ```
 
@@ -460,7 +460,7 @@ oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
 * 使用`isSubsetOf(_:)`方法来判断一个集合中的值是否也被包含在另外一个集合中。
 * 使用`isSupersetOf(_:)`方法来判断一个集合中包含另一个集合中所有的值。
 * 使用`isStrictSubsetOf(_:)`或者`isStrictSupersetOf(_:)`方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
-* 使用`isDisjointWith(_:)`方法来判断两个集合是否不含有相同的值。
+* 使用`isDisjointWith(_:)`方法来判断两个集合是否不含有相同的值(是否没有交集)。
 
 ```swift
 let houseAnimals: Set = ["🐶", "🐱"]
