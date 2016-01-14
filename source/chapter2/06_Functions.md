@@ -55,7 +55,7 @@ print(sayHello("Brian"))
 
 调用 `sayHello(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `sayHello("Anna")`。因为这个函数返回一个 `String` 类型的值，`sayHello` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值，正如上面所示。
 
-在 `sayHello(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时赋值了给 `personName` 的一个简单问候消息。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
+在 `sayHello(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时，把对 `personName` 的问候消息赋值给了 `greeting` 。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
 你可以用不同的输入值多次调用 `sayHello(_:)`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
 
