@@ -92,7 +92,7 @@ print(sayHelloWorld())
 
 函数可以有多种输入参数，这些参数被包含在函数的括号之中，以逗号分隔。
 
-这个函数取得一个人的名字和是否被招呼作为输入，并对那个人返回适当的问候语:
+这个函数用一个人名和是否已经打过招呼作为输入，并返回对这个人的适当问候语:
 
 ```swift
 func sayHello(personName: String, alreadyGreeted: Bool) -> String {
