@@ -68,7 +68,7 @@ var anotherEmptyString = String()  // 初始化方法
 // 两个字符串均为空并等价。
 ```
 
-您可以通过检查其`Boolean`类型的`isEmpty`属性来判断该字符串是否为空：
+您可以通过检查其`Bool`类型的`isEmpty`属性来判断该字符串是否为空：
 
 ```swift
 if emptyString.isEmpty {
