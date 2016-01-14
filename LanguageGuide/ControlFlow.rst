@@ -142,6 +142,8 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
 
+.. _ControlFlow_WhileLoops:
+
 While Loops
 -----------
 
