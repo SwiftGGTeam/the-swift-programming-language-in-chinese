@@ -411,17 +411,15 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
 The preceding example is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorPart2
+   :compile: true
 
    -> let contentHeight = 40
-   << // contentHeight : Int = 40
    -> let hasHeader = true
-   << // hasHeader : Bool = true
-   -> var rowHeight = contentHeight
-   << // rowHeight : Int = 40
+   -> let rowHeight: Int
    -> if hasHeader {
-         rowHeight = rowHeight + 50
+         rowHeight = contentHeight + 50
       } else {
-         rowHeight = rowHeight + 20
+         rowHeight = contentHeight + 20
       }
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90
