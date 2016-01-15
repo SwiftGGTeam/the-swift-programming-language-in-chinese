@@ -10,7 +10,7 @@
 
 > 2.1
 > 翻译：[DianQK](https://github.com/DianQK)
-> 校对：[shanks](http://codebuild.me)
+> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank)
 
 本页包含内容：
 
@@ -68,7 +68,7 @@ var anotherEmptyString = String()  // 初始化方法
 // 两个字符串均为空并等价。
 ```
 
-您可以通过检查其`Boolean`类型的`isEmpty`属性来判断该字符串是否为空：
+您可以通过检查其`Bool`类型的`isEmpty`属性来判断该字符串是否为空：
 
 ```swift
 if emptyString.isEmpty {
@@ -269,7 +269,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 // enclosedEAcute 是 é⃝
 ```
 
-局部的指示符号的 Unicode 标量可以组合成一个单一的`Character`值，例如`REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：
+地域性指示符号的 Unicode 标量可以组合成一个单一的`Character`值，例如`REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：
 
 
 ```swift
@@ -312,7 +312,7 @@ print("the number of characters in \(word) is \(word.characters.count)")
 <a name="accessing_and_modifying_a_string"></a>
 ## 访问和修改字符串 (Accessing and Modifying a String)
 
-你可以通字符串的属性和方法来访问和读取它，当然也可以用下标语法完成。
+你可以通过字符串的属性和方法来访问和修改它，当然也可以用下标语法完成。
 
 <a name="string_indices"></a>
 ### 字符串索引 (String Indices)
@@ -351,9 +351,9 @@ greeting.endIndex.successor() // error
 
 ```swift
 for index in greeting.characters.indices {
-   print("\(greeting[index]) ", terminator: " ")
+   print("\(greeting[index]) ", terminator: "")
 }
-// 打印输出 "G u t e n   T a g !"
+// 打印输出 "G u t e n   T a g ! "
 ```
 
 <a name="inserting_and_removing"></a>
@@ -440,7 +440,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 ```
 
 > 注意：
-> 在 Swift 中，字符串和字符并不区分区域。
+> 在 Swift 中，字符串和字符并不区分地域(not locale-sensitive)。
 
 
 <a name="prefix_and_suffix_equality"></a>
@@ -502,7 +502,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 <a name="unicode_representations_of_strings"></a>
 ## 字符串的 Unicode 表示形式（Unicode Representations of Strings）
 
-当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种编码格式编码。每一个字符串中的小块编码都被称为代码单元。这些包括 UTF-8 编码格式（编码字符串为8位的代码单元）， UTF-16 编码格式（编码字符串位16位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
+当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种`编码格式`（encoding forms）编码。每一个字符串中的小块编码都被称`代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为8位的代码单元）， UTF-16 编码格式（编码字符串位16位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
 
 Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。
 您可以利用`for-in`来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个`Character`值。
@@ -514,7 +514,7 @@ Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式�
 * UTF-16 代码单元集合 (利用字符串的`utf16`属性进行访问)
 * 21位的 Unicode 标量值集合，也就是字符串的 UTF-32 编码格式 (利用字符串的`unicodeScalars`属性进行访问)
 
-下面由`D``o``g``‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`�`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
+下面由`D`,`o`,`g`,`‼`(`DOUBLE EXCLAMATION MARK`, Unicode 标量 `U+203C`)和`🐶`(`DOG FACE`，Unicode 标量为`U+1F436`)组成的字符串中的每一个字符代表着一种不同的表示：
 
 ```swift
 let dogString = "Dog‼🐶"
@@ -633,7 +633,7 @@ print("")
 ### Unicode 标量表示 (Unicode Scalars Representation)
 
 您可以通过遍历`String`值的`unicodeScalars`属性来访问它的 Unicode 标量表示。
-其为`UnicodeScalarView`类型的属性，`UnicodeScalarView`是`UnicodeScalar`的集合。
+其为`UnicodeScalarView`类型的属性，`UnicodeScalarView`是`UnicodeScalar`类型的值的集合。
 `UnicodeScalar`是21位的 Unicode 代码点。
 
 每一个`UnicodeScalar`拥有一个`value`属性，可以返回对应的21位数值，用`UInt32`来表示：
@@ -649,7 +649,7 @@ print("")
   <td>🐶<br>U+1F436</td>
  </tr>
  <tr height="77">
-  <td height="77">UTF-16<br>Code Unit</td>
+  <td height="77">Unicode Scalar<br>Code Unit</td>
   <td>68</td>
   <td>111</td>
   <td>103</td>
