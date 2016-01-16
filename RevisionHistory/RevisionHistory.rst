@@ -6,15 +6,32 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-12-03  * Updated for Swift 2.2.
+2015-01-25  * Updated for Swift 2.2.
 
-            * Added a section about error handling
+            * Added information about initializers that return ``nil``
+              before the instance is fully initialized
+              to the :ref:`Initialization_FailableInitializers` section
+              of the :doc:`../LanguageGuide/Initialization` chapter.
+
+            * Added information about using keywords as external parameter names
+              to the :ref:`LexicalStructure_Keywords` section
+              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+
+            * Updated the discussion of custom operators that contain a dot
+              in the :ref:`LexicalStructure_Operators` section
+              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+
+            * Removed discussion of C-style ``for`` loops,
+              the ``++`` prefix and postfix operators,
+              and the ``--`` prefix and postfix operators.
+----------  --------------------------------------------------------------------------
+2015-12-03  * Added a section about error handling
               to the :doc:`../GuidedTour/GuidedTour` chapter.
 
             * Removed discussion of ``var`` patterns,
               variable function arguments,
               and the special syntax for curried functions.
-
+----------  --------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
