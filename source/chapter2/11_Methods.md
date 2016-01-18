@@ -9,7 +9,7 @@
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-29
+> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18
 
 本页包含内容：
 
@@ -84,7 +84,7 @@ class Counter {
 }
 ```
 
-`incrementBy(_:numverOfTimes:)`方法有两个参数： `amount`和`numberOfTimes`。默认情况下，Swift 只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作局部名称又看作外部名称。下面调用这个方法：
+`incrementBy(_:numberOfTimes:)`方法有两个参数： `amount`和`numberOfTimes`。默认情况下，Swift 只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作局部名称又看作外部名称。下面调用这个方法：
 
 ```swift
 let counter = Counter()
@@ -141,11 +141,11 @@ if somePoint.isToTheRightOfX(1.0) {
 <a name="modifying_value_types_from_within_instance_methods"></a>
 ### 在实例方法中修改值类型(Modifying Value Types from Within Instance Methods)
 
-结构体和枚举是**值类型**。一般情况下，值类型的属性不能在它的实例方法中被修改。
+结构体和枚举是**值类型**。默认情况下，值类型的属性不能在它的实例方法中被修改。
 
-但是，如果你确实需要在某个特定的方法中修改结构体或者枚举的属性，你可以选择`变异(mutating)`这个方法，然后方法就可以从方法内部改变它的属性；并且它做的任何改变在方法结束时还会保留在原始结构中。方法还可以给它隐含的`self`属性赋值一个全新的实例，这个新实例在方法结束后将替换原来的实例。
+但是，如果你确实需要在某个特定的方法中修改结构体或者枚举的属性，你可以为这个方法选择`可变(mutating)`行为，然后就可以从其方法内部改变它的属性；并且这个方法做的任何改变都会在方法执行结束时写回到原始结构中。方法还可以给它隐含的`self`属性赋予一个全新的实例，这个新实例在方法结束时会替换现存实例。
 
-要使用`变异`方法，将关键字`mutating` 放到方法的`func`关键字之前就可以了：
+要使用`可变`方法，将关键字`mutating` 放到方法的`func`关键字之前就可以了：
 
 ```swift
 struct Point {
@@ -161,9 +161,9 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 // 打印输出: "The point is now at (3.0, 4.0)"
 ```
 
-上面的`Point`结构体定义了一个可变方法（mutating method）`moveByX(_:y:)`用来移动点。该方法在被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了`mutating`关键字，从而可以修改属性。
+上面的`Point`结构体定义了一个可变方法 `moveByX(_:y:)` 来移动`Point`实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了`mutating`关键字，从而允许修改属性。
 
-注意，不能在结构体类型的常量上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
+注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -185,7 +185,7 @@ struct Point {
 }
 ```
 
-新版的可变方法`moveByX(_:y:)`创建了一个新的结构（它的 x 和 y 的值都被设定为目标值）。调用这个版本的方法和调用上个版本的最终结果是一样的。
+新版的可变方法`moveByX(_:y:)`创建了一个新的结构体实例，它的 x 和 y 的值都被设定为目标值。调用这个版本的方法和调用上个版本的最终结果是一样的。
 
 枚举的可变方法可以把`self`设置为同一枚举类型中不同的成员：
 
@@ -215,12 +215,12 @@ ovenLight.next()
 <a name="type_methods"></a>
 ## 类型方法 (Type Methods)
 
-实例方法是被类型的某个实例调用的方法。你也可以定义类型本身调用的方法，这种方法就叫做**类型方法**。声明结构体和枚举的类型方法，在方法的`func`关键字之前加上关键字`static`。类可能会用关键字`class`来允许子类重写父类的方法实现。
+实例方法是被某个类型的实例调用的方法。你也可以定义在类型本身上调用的方法，这种方法就叫做**类型方法**（Type Methods）。在方法的`func`关键字之前加上关键字`static`，来指定类型方法。类还可以用关键字`class`来允许子类重写父类的方法实现。
 
 > 注意  
-> 在 Objective-C 中，你只能为 Objective-C 的类定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。  
+> 在 Objective-C 中，你只能为 Objective-C 的类类型（classes）定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。  
 
-类型方法和实例方法一样用点语法调用。但是，你是在类型层面上调用这个方法，而不是在实例层面上调用。下面是如何在`SomeClass`类上调用类型方法的例子：
+类型方法和实例方法一样用点语法调用。但是，你是在类型上调用这个方法，而不是在实例上调用。下面是如何在`SomeClass`类上调用类型方法的例子：
 
 ```swift
 class SomeClass {
@@ -233,7 +233,7 @@ SomeClass.someTypeMethod()
 
 在类型方法的方法体（body）中，`self`指向这个类型本身，而不是类型的某个实例。这意味着你可以用`self`来消除类型属性和类型方法参数之间的歧义（类似于我们在前面处理实例属性和实例方法参数时做的那样）。
 
-一般来说，在类型方法的方法体中，任何未限定的方法和属性名称，将会指代本类中其他类型方法和类型属性。一个类型方法可以通过类型方法的名称调用本类中的类型方法，而无需在方法名称前面加上类型名称前缀。同样，也能够直接通过类型属性的名称访问本类中的类型属性，而不需要类型名称前缀。
+一般来说，在类型方法的方法体中，任何未限定的方法和属性名称，可以被本类中其他的类型方法和类型属性引用。一个类型方法可以直接通过类型方法的名称调用本类中的其它类型方法，而无需在方法名称前面加上类型名称。类似地，在结构体和枚举中，也能够直接通过类型属性的名称访问本类中的类型属性，而不需要前面加上类型名称。
 
 下面的例子定义了一个名为`LevelTracker`结构体。它监测玩家的游戏发展情况（游戏的不同层次或阶段）。这是一个单人游戏，但也可以存储多个玩家在同一设备上的游戏信息。
 
@@ -264,7 +264,7 @@ struct LevelTracker {
 
 `LevelTracker`还定义了两个类型方法与`highestUnlockedLevel`配合工作。第一个类型方法是`unlockLevel`，一旦新等级被解锁，它会更新`highestUnlockedLevel`的值。第二个类型方法是`levelIsUnlocked`，如果某个给定的等级已经被解锁，它将返回`true`。（注意，尽管我们没有使用类似`LevelTracker.highestUnlockedLevel`的写法，这个类型方法还是能够访问类型属性`highestUnlockedLevel`）
 
-除了类型属性和类型方法，`LevelTracker`还监测每个玩家的进度。它用实例属性`currentLevel`来监测玩家当前的等级。
+除了类型属性和类型方法，`LevelTracker`还监测每个玩家的进度。它用实例属性`currentLevel`来监测每个玩家当前的等级。
 
 为了便于管理`currentLevel`属性，`LevelTracker`定义了实例方法`advanceToLevel`。这个方法会在更新`currentLevel`之前检查所请求的新等级是否已经解锁。`advanceToLevel`方法返回布尔值以指示是否能够设置`currentLevel`。
 
