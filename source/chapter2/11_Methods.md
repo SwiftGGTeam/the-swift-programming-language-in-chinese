@@ -84,7 +84,7 @@ class Counter {
 }
 ```
 
-`incrementBy(_:numverOfTimes:)`方法有两个参数： `amount`和`numberOfTimes`。默认情况下，Swift 只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作局部名称又看作外部名称。下面调用这个方法：
+`incrementBy(_:numberOfTimes:)`方法有两个参数： `amount`和`numberOfTimes`。默认情况下，Swift 只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作局部名称又看作外部名称。下面调用这个方法：
 
 ```swift
 let counter = Counter()
