@@ -8,7 +8,7 @@
 > 翻译+校对：[SkyJean](https://github.com/SkyJean)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-29
+> 校对：[shanks](http://codebuild.me)
 
 本页包含内容：
 
