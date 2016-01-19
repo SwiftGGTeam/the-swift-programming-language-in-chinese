@@ -236,7 +236,7 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
 <a name="default_initializers"></a>
 ## 默认构造器
 
-如果结构体或类的所有属性都有默认值，同时没有自定义的构造器，那么 Swift 会给这些结构体或类提供一个默认构造器。这个默认构造器将简单地创建一个所有属性值都设置为默认值的实例。
+如果结构体或类的所有属性都有默认值，同时没有自定义的构造器，那么 Swift 会给这些结构体或类提供一个默认构造器（default initializers）。这个默认构造器将简单地创建一个所有属性值都设置为默认值的实例。
 
 下面例子中创建了一个类`ShoppingListItem`，它封装了购物清单中的某一物品的属性：名字（`name`）、数量（`quantity`）和购买状态 `purchase state`：
 
@@ -260,7 +260,7 @@ var item = ShoppingListItem()
 
 下面例子中定义了一个结构体`Size`，它包含两个属性`width`和`height`。Swift 可以根据这两个属性的初始赋值`0.0`自动推导出它们的类型为`Double`。
 
-由于这两个存储型属性都有默认值，结构体`Size`自动获得了一个逐一成员构造器`init(width:height:)`。你可以用它来为`Size`创建新的实例：
+结构体`Size`自动获得了一个逐一成员构造器`init(width:height:)`。你可以用它来为`Size`创建新的实例：
 
 ```swift
 struct Size {
@@ -270,11 +270,12 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
 <a name="initializer_delegation_for_value_types"></a>
+
 ## 值类型的构造器代理
 
 构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为构造器代理，它能减少多个构造器间的代码重复。
 
-构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给提供给它的构造器。类则不同，它可以继承自其它类（请参考[继承](./13_Inheritance.html)），这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节[类的继承和构造过程](#class_inheritance_and_initialization)中介绍。
+构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。类则不同，它可以继承自其它类（请参考[继承](./13_Inheritance.html)），这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节[类的继承和构造过程](#class_inheritance_and_initialization)中介绍。
 
 对于值类型，你可以使用`self.init`在自定义的构造器中引用类型中的其它构造器。并且你只能在构造器内部调用`self.init`。
 
