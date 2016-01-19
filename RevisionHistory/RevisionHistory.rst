@@ -10,23 +10,20 @@ Date        Notes
 
             * Added information about initializers that return ``nil``
               before the instance is fully initialized
-              to the :ref:`Initialization_FailableInitializers` section
-              of the :doc:`../LanguageGuide/Initialization` chapter.
+              to the :ref:`Initialization_FailableInitializers` section.
 
             * Added information about using keywords as external parameter names
-              to the :ref:`LexicalStructure_Keywords` section
-              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+              to the :ref:`LexicalStructure_Keywords` section.
+
+            * Added a section about error handling
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
 
             * Updated the discussion of custom operators that contain a dot
-              in the :ref:`LexicalStructure_Operators` section
-              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+              in the :ref:`LexicalStructure_Operators` section.
 
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
               and the ``--`` prefix and postfix operators.
-----------  --------------------------------------------------------------------------
-2015-12-03  * Added a section about error handling
-              to the :doc:`../GuidedTour/GuidedTour` chapter.
 
             * Removed discussion of ``var`` patterns,
               variable function arguments,
