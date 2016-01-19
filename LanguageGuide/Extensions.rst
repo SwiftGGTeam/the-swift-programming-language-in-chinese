@@ -351,11 +351,10 @@ from the right of the number:
 .. testcode:: extensionsSubscripts
 
    -> extension Int {
-         subscript(var digitIndex: Int) -> Int {
+         subscript(digitIndex: Int) -> Int {
             var decimalBase = 1
-            while digitIndex > 0 {
+            for _ in 0..<digitIndex {
                decimalBase *= 10
-               digitIndex -= 1
             }
             return (self / decimalBase) % 10
          }
@@ -376,6 +375,10 @@ from the right of the number:
    << // r3 : Int = 7
    /> returns \(r3)
    </ returns 7
+
+.. TODO: Replace the for loop above with an exponent,
+   if/when integer exponents land in the stdlib.
+   Darwin's pow() function is only for floating point.
 
 If the ``Int`` value does not have enough digits for the requested index,
 the subscript implementation returns ``0``,
