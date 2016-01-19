@@ -204,7 +204,7 @@ cheeseQuestion.ask()
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
-调查问题的答案在回答前是无法确定的，因此我们将属性`response`声明为`String?`类型，或者说是可选字符串类型`optional String`。当`SurveyQuestion`实例化时，它将自动赋值为`nil`，表明此字符串暂时还没有值。
+调查问题的答案在回答前是无法确定的，因此我们将属性`response`声明为`String?`类型，或者说是`可选字符串类型`（optional String）。当`SurveyQuestion`实例化时，它将自动赋值为`nil`，表明此字符串暂时还没有值。
 
 <a name="assigning_constant_properties_during_initialization"></a>
 ### 构造过程中常量属性的修改
