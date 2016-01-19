@@ -8,7 +8,7 @@
 > 2.0
 > 翻译+校对：[shanks](http://codebuild.me)
 
-> 2.0,2.1
+> 2.1
 > 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)
 
 
