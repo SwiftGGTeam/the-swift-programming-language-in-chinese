@@ -1733,8 +1733,8 @@ but cannot be an empty string:
          init() {}
          // this initializer creates a document with a nonempty name value
          init?(name: String) {
-            self.name = name
             if name.isEmpty { return nil }
+            self.name = name
          }
       }
 
