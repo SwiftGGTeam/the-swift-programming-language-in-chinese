@@ -828,7 +828,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     Grammar of operators
 
     operator --> operator-head operator-characters-OPT
-    operator --> dot-operator-head dot-operator-characters-OPT
+    operator --> dot-operator-head dot-operator-characters
 
     operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``?``
     operator-head --> U+00A1--U+00A7
