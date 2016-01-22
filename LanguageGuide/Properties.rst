@@ -626,8 +626,8 @@ provide storage for a value of a certain type and allow that value to be set and
 However, you can also define :newTerm:`computed variables`
 and define observers for stored variables,
 in either a global or local scope.
-Computed variables calculate rather than store a value,
-and are written in the same way as computed properties.
+Computed variables calculate their value, rather than storing it,
+and they are written in the same way as computed properties.
 
 .. assertion:: computedVariables
    :compile: true
