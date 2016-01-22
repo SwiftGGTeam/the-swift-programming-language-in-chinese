@@ -9,8 +9,8 @@
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
 
 > 2.1
-> 翻译：[Channe](https://github.com/Channe)
-> 校对：[shanks](http://codebuild.me)，2015-10-30
+> 翻译：[Channe](https://github.com/Channe)，[Realank](https://github.com/Realank) 
+> 校对：[shanks](http://codebuild.me)，2016-1-23
 
 本页包含内容：
 
@@ -209,7 +209,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
 <a name="assigning_constant_properties_during_initialization"></a>
 ### 构造过程中常量属性的修改
 
-你可以在构造过程中的任意时间点修改常量属性的值，只要在构造过程结束时是一个确定的值。一旦常量属性被赋值，它将永远不可更改。
+你可以在构造过程中的任意时间点给常量属性的指定一个值，只要在构造过程结束时是一个确定的值。一旦常量属性被赋值，它将永远不可更改。
 
 > 注意  
 对于类的实例来说，它的常量属性只能在定义它的类的构造过程中修改；不能在子类中修改。
@@ -416,14 +416,14 @@ convenience init(parameters) {
 <a name="two_phase_initialization"></a>
 ### 两段式构造过程
 
-Swift 中类的构造过程包含两个阶段。第一个阶段，每个存储型属性通过引入它们的类的构造器来设置初始值。当每一个存储型属性值被确定后，第二阶段开始，它给每个类一次机会在新实例准备使用之前进一步定制它们的存储型属性。
+Swift 中类的构造过程包含两个阶段。第一个阶段，每个存储型属性被引入它们的类指定一个初始值。当每个存储型属性的初始值被确定后，第二阶段开始，它给每个类一次机会，在新实例准备使用之前进一步定制它们的存储型属性。
 
 两段式构造过程的使用让构造过程更安全，同时在整个类层级结构中给予了每个类完全的灵活性。两段式构造过程可以防止属性值在初始化之前被访问，也可以防止属性被另外一个构造器意外地赋予不同的值。
 
 > 注意  
 Swift 的两段式构造过程跟 Objective-C 中的构造过程类似。最主要的区别在于阶段 1，Objective-C 给每一个属性赋值`0`或空值（比如说`0`或`nil`）。Swift  的构造流程则更加灵活，它允许你设置定制的初始值，并自如应对某些属性不能以`0`或`nil`作为合法默认值的情况。
 
-Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造过程能顺利完成：
+Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造过程能不出错地完成：
 
 ##### 安全检查 1
 
@@ -560,7 +560,7 @@ print("Bicycle: \(bicycle.description)")
 
 ##### 规则 2
 
-如果子类提供了所有父类指定构造器的实现——无论是通过规则 1 继承过来的，还是提供了自定义实现——它将自动继承所有父类的便利构造器。（即使属性没有默认值，只要实现了父类的所有指定构造器，就会自动继承父类的所有便利构造器）
+如果子类提供了所有父类指定构造器的实现——无论是通过规则 1 继承过来的，还是提供了自定义实现——它将自动继承所有父类的便利构造器。
 
 即使你在子类中添加了更多的便利构造器，这两条规则仍然适用。
 
@@ -692,7 +692,7 @@ for item in breakfastList {
 
 如果一个类、结构体或枚举类型的对象，在构造过程中有可能失败，则为其定义一个可失败构造器。这里所指的“失败”是指，如给构造器传入无效的参数值，或缺少某种所需的外部资源，又或是不满足某种必要的条件等。
 
-为了妥善处理这种构造过程中可能会失败的情况。你可以在一个类，结构体或是枚举类型的定义中，添加一个或多个可失败构造器。其语法为在`init`关键字后面加添问号`(init?)`。
+为了妥善处理这种构造过程中可能会失败的情况。你可以在一个类，结构体或是枚举类型的定义中，添加一个或多个可失败构造器。其语法为在`init`关键字后面添加问号(`init?`)。
 
 > 注意  
 可失败构造器的参数名和参数类型，不能与其它非可失败构造器的参数名，及其参数类型相同。
@@ -834,6 +834,8 @@ class Product {
 
 > 译者注  
 > 上面的示例代码和描述并不相符，根据描述，`if name.isEmpty { return nil }`这句代码应该在`self.name = name`之前，而这却会导致编译错误`error: all stored properties of a class instance must be initialized before returning nil from an initializer`，除非将`let name: String!`改为`var name: String!`。
+> 
+> 根据前面的介绍和实测，常量存储属性，只能被初始化一次。上面的代码，在构造器中有初始化常量属性`name`的过程，所以在此之前不会被赋予默认值`nil`，而在构造器的初始化`name`过程之前，因为并不是所有存储型属性都被初始化，是不可以返回`nil`的；而如果将`name`声明为变量存储属性，那么就可以被多次赋值，所以在执行构造器方法之前，就会获得默认值`nil`，和构造器中的再次赋值并不冲突，所以此时，`if name.isEmpty { return nil }`才可以放在构造器前面。英文原文在这里表述有误
 
 因为`name`属性是一个常量，所以一旦构造成功，`name`属性肯定有一个非`nil`的值。即使它被定义为隐式解包可选类型，也完全可以放心大胆地直接访问，而不用检查`name`属性的值是否为`nil`：
 
@@ -875,7 +877,7 @@ class CartItem: Product {
 如果由于`name`的值为空字符串而导致父类的可失败构造器构造失败，则`CartIem`类的整个构造过程都将立即失败，之后的构造代码将不会再被执行。如果父类构造成功，`CartIem`的可失败构造器会进一步验证`quantity`的值是否不小于`1`。
 
 > 译者注  
-> 上面的示例代码和描述也不相符，根据描述，`self.quantity = quantity`这句代码应该放在最后一行，而这却会导致编译错误`error: property 'self.quantity' not initialized at super.init call`，除非将`let quantity: Int!`改为`var quantity: Int!`。
+> 上面的示例代码和描述也不相符，`name`属性在被赋予特定的值之前不能获得一个默认的初始值`nil`，并且根据描述，`self.quantity = quantity`这句代码应该放在最后一行，而这却会导致编译错误`error: property 'self.quantity' not initialized at super.init call`，除非将`let quantity: Int!`改为`var quantity: Int!`。
 
 如果你构造一个`name`的值为非空字符串，`quantity`的值不小于`1`的`CartItem`实例，则可成功构造：
 
