@@ -323,7 +323,7 @@ and tests for equality.
    What error do you get?
 
 Notice how ``let`` can be used in a pattern
-to assign the value that matched that part of a pattern
+to assign the value that matched the pattern
 to a constant.
 
 After executing the code inside the switch case that matched,
