@@ -254,8 +254,10 @@ the ``noreturn`` attribute to a function or method *type*.
     which consists of an identifier.
     Use this attribute when you want to expose a different
     name to Objective-C for the entity the ``objc`` attribute applies to.
-    You can use this argument to name classes, protocols, methods,
-    getters, setters, and initializers. The example below exposes
+    You can use this argument to name
+    classes, enumerations, enumeration cases, protocols,
+    methods, getters, setters, and initializers.
+    The example below exposes
     the getter for the ``enabled`` property of the ``ExampleClass``
     to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
