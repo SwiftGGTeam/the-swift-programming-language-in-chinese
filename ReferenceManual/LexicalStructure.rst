@@ -720,8 +720,44 @@ the ``+`` operator followed by the ``.+`` operator.
    >> infix operator .+ { }
    >> infix operator .+. { }
 
-Although you can define custom operators that contain a question mark character (``?``),
+Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
+Additionally, although operators can contain an exclamation mark (``!``),
+postfix operators cannot begin with either a question mark or an exclamation mark.
+
+.. assertion:: postfix-operators-dont-need-unique-prefix
+
+
+   >> struct Num { var value: Int }
+      postfix operator + {}
+      postfix operator +* {}
+      postfix func + (x: Num) -> Int { return x.value + 1 }
+      postfix func +* (x: Num) -> Int { return x.value * 100 }
+   >> let n = Num(value: 5)
+   << // n : Num = REPL.Num(value: 5)
+   >> print(n+)
+   << 6
+   >> print(n+*)
+   << 500
+
+.. assertion:: postfix-operator-cant-start-with-question-mark
+
+   >> postfix operator ?+ {}
+      postfix func ?+ (x: Int) -> Int {
+          if x > 10 {
+              return x
+          }
+          return x + 1
+      }
+   print(1?+)
+   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !! print(1?+)
+   !!         ^
+   >> print(99?+)
+   !! <REPL Input>:1:10: error: '+' is not a postfix unary operator
+   !! print(99?+)
+   !!         ^
+
 
 .. note::
 
