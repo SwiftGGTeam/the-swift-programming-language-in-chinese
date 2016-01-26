@@ -701,7 +701,7 @@ it can't contain a dot elsewhere.
 For example, ``+.+`` is treated as
 the ``+`` operator followed by the ``.+`` operator.
 
-.. assertion::
+.. assertion:: dot-operator-must-start-with-dot
 
    >> infix operator +.+ { }
    !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
@@ -716,6 +716,7 @@ the ``+`` operator followed by the ``.+`` operator.
    !!                    _ = 
    !! <REPL Input>:1:20: error: braced block of statements is an unused closure
    !! infix operator +.+ { }
+   !!                    ^
    >> infix operator .+ { }
    >> infix operator .+. { }
 
