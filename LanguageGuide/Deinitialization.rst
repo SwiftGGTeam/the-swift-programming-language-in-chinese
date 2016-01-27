@@ -64,8 +64,8 @@ to store and manage its current state:
 
    -> class Bank {
          static var coinsInBank = 10_000
-         static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
-            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+         static func vendCoins(numberOfCoinsRequested: Int) -> Int {
+            let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
             coinsInBank -= numberOfCoinsToVend
             return numberOfCoinsToVend
          }
@@ -82,9 +82,6 @@ to handle the distribution and collection of coins.
 If there are not enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
-``vendCoins(_:)`` declares ``numberOfCoinsToVend`` as a variable parameter,
-so that the number can be modified within the method's body
-without the need to declare a new variable.
 It returns an integer value to indicate the actual number of coins that were provided.
 
 The ``receiveCoins(_:)`` method simply adds the received number of coins back into the bank's coin store.

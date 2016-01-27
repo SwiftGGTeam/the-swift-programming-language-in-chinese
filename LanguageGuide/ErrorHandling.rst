@@ -201,7 +201,7 @@ or has a cost that exceeds the current deposited amount:
           }
    ---
    ->     func vend(itemNamed name: String) throws {
-              guard var item = inventory[name] else {
+              guard let item = inventory[name] else {
                   throw VendingMachineError.InvalidSelection
               }
 
@@ -214,8 +214,11 @@ or has a cost that exceeds the current deposited amount:
               }
 
               coinsDeposited -= item.price
-              item.count -= 1
-              inventory[name] = item
+
+              var newItem = item
+              newItem.count -= 1
+              inventory[name] = newItem
+
               dispenseSnack(name)
           }
       }
