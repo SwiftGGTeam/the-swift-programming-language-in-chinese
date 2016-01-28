@@ -24,7 +24,7 @@
 <a name="defining_a_base_class"></a>
 ## 定义一个基类（Base class）
 
-不继承于其它类的类，称之为*基类（base calss）*。
+不继承于其它类的类，称之为*基类（base class）*。
 
 > 注意  
 Swift 中的类并不是从一个通用的基类继承而来。如果你不为你定义的类指定一个超类的话，这个类就自动成为基类。

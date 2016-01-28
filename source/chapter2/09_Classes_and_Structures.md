@@ -38,7 +38,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 通过扩展以增加默认实现的功能
 * 实现协议以提供某种标准功能
 
-更多信息请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标脚本](./12_Subscripts.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)，和[协议](./22_Protocols.html)。
+更多信息请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标](./12_Subscripts.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)，和[协议](./22_Protocols.html)。
 
 与结构体相比，类还有如下的附加功能：
 
