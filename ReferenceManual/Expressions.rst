@@ -1320,26 +1320,26 @@ For example:
 
     -> class SomeClass {
            func someMethod(x: Int, y: Int) {}
-           func someMethod(x: Int, y: Int, z: Int) {}
+           func someMethod(x: Int, z: Int) {}
            func overloadedMethod(x: Int, y: Int) {}
            func overloadedMethod(x: Int, y: Bool) {}
        }
     -> let instance = SomeClass()
+    ---
     << // instance : SomeClass = REPL.SomeClass
-    -> let a = instance.someMethod        // Ambiguous
+    -> let a = instance.someMethod              // Ambiguous
     !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
-    !! let a = instance.someMethod        // Ambiguous
+    !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
     !!              func someMethod(x: Int, y: Int) {}
     !!                   ^
     !! <REPL Input>:3:12: note: found this candidate
-    !!              func someMethod(x: Int, y: Int, z: Int) {}
+    !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
-    -> let b = instance.someMethod(_:y:)
+    -> let b = instance.someMethod(_:y:)        // Unambiguous
     << // b : (Int, y: Int) -> () = (Function)
-    -> let c = instance.someMethod(_:y:z:) 
-    << // c : (Int, y: Int, z: Int) -> () = (Function)
+    ---
     -> let d = instance.overloadedMethod        // Ambiguous
     !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
@@ -1360,7 +1360,7 @@ For example:
     !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
-    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
     << // d : (Int, Bool) -> Void = (Function)
 
 If a period appears at the beginning of a line,
