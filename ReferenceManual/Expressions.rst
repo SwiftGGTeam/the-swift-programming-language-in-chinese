@@ -1310,6 +1310,58 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
+A class can have multiple methods that share a base name.
+To distinguish between them, include the argument labels.
+To distinguish between overloaded methods,
+use a type annotation.
+For example:
+
+.. testcode:: function-with-argument-labels
+
+    -> class SomeClass {
+           func someMethod(x: Int, y: Int) {}
+           func someMethod(x: Int, y: Int, z: Int) {}
+           func overloadedMethod(x: Int, y: Int) {}
+           func overloadedMethod(x: Int, y: Bool) {}
+       }
+    -> let instance = SomeClass()
+    << // instance : SomeClass = REPL.SomeClass
+    -> let a = instance.someMethod        // Ambiguous
+    !! let a = instance.someMethod        // Ambiguous
+    !!         ^
+    !! <REPL Input>:2:19: note: found this candidate
+    !!              func someMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:3:19: note: found this candidate
+    !!              func someMethod(x: Int, y: Int, z: Int) {}
+    !!                   ^
+    -> let b = instance.someMethod(_:y:)
+    << // b : (Int, y: Int) -> () = (Function)
+    -> let c = instance.someMethod(_:y:z:) 
+    << // c : (Int, y: Int, z: Int) -> () = (Function)
+    -> let d = instance.overloadedMethod        // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! let d = instance.overloadedMethod        // Ambiguous
+    !!         ^
+    !! <REPL Input>:4:19: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:19: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !! <REPL Input>:1:13: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !!             ^
+    !! <REPL Input>:4:19: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:19: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)
+    << // d : (Int, Bool) -> Void = (Function)
+
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
 not as an implicit member expression.
@@ -1337,6 +1389,16 @@ split over several lines:
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
+    explicit-member-expression --> postfix-expression ``.`` method-name
+
+    method-name --> identifier ``(`` argument-labels ``)``
+    argument-labels --> argument-label argument-labels-OPT
+    argument-label --> identifier ``:``
+
+.. The grammar for method-name doesn't include the following:
+       method-name --> identifier argument-labels-OPT
+   because the "potsfix-expression . identifier" line above already covers that case.
+
 
 
 .. _Expressions_PostfixSelfExpression:
