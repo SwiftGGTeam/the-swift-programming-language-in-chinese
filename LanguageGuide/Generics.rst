@@ -616,7 +616,7 @@ An associated type gives a placeholder name (or :newTerm:`alias`)
 to a type that is used as part of the protocol.
 The actual type to use for that associated type
 is not specified until the protocol is adopted.
-Associated types are specified with the ``typealias`` keyword.
+Associated types are specified with the ``associatedtype`` keyword.
 
 .. _Generics_AssociatedTypesInAction:
 
@@ -629,7 +629,7 @@ which declares an associated type called ``ItemType``:
 .. testcode:: associatedTypes
 
    -> protocol Container {
-         typealias ItemType
+         associatedtype ItemType
          mutating func append(item: ItemType)
          var count: Int { get }
          subscript(i: Int) -> ItemType { get }
@@ -669,8 +669,8 @@ will be of the same type as the container's element type.
 
 To achieve this,
 the ``Container`` protocol declares an associated type called ``ItemType``,
-written as  ``typealias ItemType``.
-The protocol does not define what ``ItemType`` is an alias *for* ---
+written as  ``associatedtype ItemType``.
+The protocol does not define what ``ItemType`` is ---
 that information is left for any conforming type to provide.
 Nonetheless, the ``ItemType`` alias provides a way to refer to
 the type of the items in a ``Container``,

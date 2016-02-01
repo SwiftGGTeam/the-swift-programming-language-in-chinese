@@ -537,8 +537,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> typealias-head typealias-assignment
-    typealias-head --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -1661,7 +1660,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protocols declare associated types using the ``typealias`` keyword.
+Protocols declare associated types using the ``associatedtype`` keyword.
 An associated type provides an alias for a type
 that is used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
@@ -1738,8 +1737,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
-
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
 
 .. _Declarations_InitializerDeclaration:
 
