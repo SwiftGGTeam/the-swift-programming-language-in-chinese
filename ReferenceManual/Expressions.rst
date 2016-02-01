@@ -1310,15 +1310,16 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
-To distinguish between methods
-whose names differ only by the labels for their arguments,
-include the argument labels in parentheses,
+To distinguish between methods or initializers
+whose names differ only by the names of their arguments,
+include the argument names in parentheses,
 with each argument name followed by a colon (``:``).
+Write an underscore (``_``) for an argument with no name.
 To distinguish between overloaded methods,
 use a type annotation.
 For example:
 
-.. testcode:: function-with-argument-labels
+.. testcode:: function-with-argument-names
 
     -> class SomeClass {
            func someMethod(x: Int, y: Int) {}
@@ -1392,13 +1393,13 @@ split over several lines:
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
-    explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-labels ``)``
+    explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
 
-    argument-labels --> argument-label argument-labels-OPT
-    argument-label --> identifier ``:``
+    argument-names --> argument-label argument-names-OPT
+    argument-name --> identifier ``:``
 
 .. The grammar for method-name doesn't include the following:
-       method-name --> identifier argument-labels-OPT
+       method-name --> identifier argument-names-OPT
    because the "potsfix-expression . identifier" line above already covers that case.
 
 
