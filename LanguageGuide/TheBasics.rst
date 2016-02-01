@@ -1352,7 +1352,7 @@ and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling
-the Swift standard library global ``assert(_:_file:line:)`` function.
+the Swift standard library global ``assert(_:_:file:line:)`` function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 

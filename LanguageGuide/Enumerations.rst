@@ -408,13 +408,13 @@ or “optional ``Planet``.”
    because not every raw value will return an enumeration case.
    For more information, see :ref:`Declarations_FailableInitializers`.
 
-If you try to find a planet with a position of ``9``,
+If you try to find a planet with a position of ``11``,
 the optional ``Planet`` value returned by the raw value initializer will be ``nil``:
 
 .. testcode:: rawValues
 
-   -> let positionToFind = 9
-   << // positionToFind : Int = 9
+   -> let positionToFind = 11
+   << // positionToFind : Int = 11
    -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
             case .Earth:
@@ -425,12 +425,12 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
       } else {
          print("There isn't a planet at position \(positionToFind)")
       }
-   <- There isn't a planet at position 9
+   <- There isn't a planet at position 11
 
-This example uses optional binding to try to access a planet with a raw value of ``9``.
-The statement ``if let somePlanet = Planet(rawValue: 9)`` creates an optional ``Planet``,
+This example uses optional binding to try to access a planet with a raw value of ``11``.
+The statement ``if let somePlanet = Planet(rawValue: 11)`` creates an optional ``Planet``,
 and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
-In this case, it is not possible to retrieve a planet with a position of ``9``,
+In this case, it is not possible to retrieve a planet with a position of ``11``,
 and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
