@@ -1264,6 +1264,7 @@ In all other cases, you must use an initializer expression.
     Grammar of an initializer expression
 
     initializer-expression --> postfix-expression ``.`` ``init``
+    initializer-expression --> postfix-expression ``.`` ``init`` ``(`` argument-names ``)``
 
 .. _Expressions_ExplicitMemberExpression:
 
@@ -1310,6 +1311,62 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
+To distinguish between methods or initializers
+whose names differ only by the names of their arguments,
+include the argument names in parentheses,
+with each argument name followed by a colon (``:``).
+Write an underscore (``_``) for an argument with no name.
+To distinguish between overloaded methods,
+use a type annotation.
+For example:
+
+.. testcode:: function-with-argument-names
+
+    -> class SomeClass {
+           func someMethod(x: Int, y: Int) {}
+           func someMethod(x: Int, z: Int) {}
+           func overloadedMethod(x: Int, y: Int) {}
+           func overloadedMethod(x: Int, y: Bool) {}
+       }
+    -> let instance = SomeClass()
+    ---
+    << // instance : SomeClass = REPL.SomeClass
+    -> let a = instance.someMethod              // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
+    !! let a = instance.someMethod              // Ambiguous
+    !!         ^
+    !! <REPL Input>:2:12: note: found this candidate
+    !!              func someMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:3:12: note: found this candidate
+    !!              func someMethod(x: Int, z: Int) {}
+    !!                   ^
+    -> let b = instance.someMethod(_:y:)        // Unambiguous
+    << // b : (Int, y: Int) -> () = (Function)
+    ---
+    -> let d = instance.overloadedMethod        // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! let d = instance.overloadedMethod        // Ambiguous
+    !!         ^
+    !! <REPL Input>:4:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !!             ^
+    !! <REPL Input>:4:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
+    << // d : (Int, Bool) -> Void = (Function)
+
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
 not as an implicit member expression.
@@ -1337,6 +1394,17 @@ split over several lines:
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
+    explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
+
+    argument-names --> argument-label argument-names-OPT
+    argument-name --> identifier ``:``
+
+.. The grammar for method-name doesn't include the following:
+       method-name --> identifier argument-names-OPT
+   because the "potsfix-expression . identifier" line above already covers that case.
+
+.. See grammar for initializer-expression for the related "argument name" production there.
+
 
 
 .. _Expressions_PostfixSelfExpression:
