@@ -1310,13 +1310,13 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
-To distinguish between methods that share a base name,
-include the argument labels in the method name.
+To distinguish between methods
+whose names differ only by the labels for their arguments,
+include the argument labels in parentheses,
+with each argument name followed by a colon (``:``).
 To distinguish between overloaded methods,
 use a type annotation.
 For example:
-
-.. FIXME: We don't use the term "base name" elsewhere.
 
 .. testcode:: function-with-argument-labels
 
