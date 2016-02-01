@@ -537,8 +537,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> typealias-head  ``typealias`` typealias-name typealias-assignment
-    typealias-head --> attributes-OPT access-level-modifier-OPT
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -1738,7 +1737,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> typealias-head  ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
 
 .. _Declarations_InitializerDeclaration:
 
