@@ -1310,11 +1310,13 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
-A class can have multiple methods that share a base name.
-To distinguish between them, include the argument labels.
+To distinguish between methods that share a base name,
+include the argument labels in the method name.
 To distinguish between overloaded methods,
 use a type annotation.
 For example:
+
+.. FIXME: We don't use the term "base name" elsewhere.
 
 .. testcode:: function-with-argument-labels
 
