@@ -1327,12 +1327,13 @@ For example:
     -> let instance = SomeClass()
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod        // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
     !! let a = instance.someMethod        // Ambiguous
     !!         ^
-    !! <REPL Input>:2:19: note: found this candidate
+    !! <REPL Input>:2:12: note: found this candidate
     !!              func someMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:3:19: note: found this candidate
+    !! <REPL Input>:3:12: note: found this candidate
     !!              func someMethod(x: Int, y: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(_:y:)
@@ -1343,20 +1344,20 @@ For example:
     !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
     !!         ^
-    !! <REPL Input>:4:19: note: found this candidate
+    !! <REPL Input>:4:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:19: note: found this candidate
+    !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
-    !! <REPL Input>:1:13: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
     !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
     !!             ^
-    !! <REPL Input>:4:19: note: found this candidate
+    !! <REPL Input>:4:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:19: note: found this candidate
+    !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)
