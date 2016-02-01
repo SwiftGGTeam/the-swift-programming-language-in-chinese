@@ -1392,9 +1392,8 @@ split over several lines:
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
-    explicit-member-expression --> postfix-expression ``.`` method-name
+    explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-labels ``)``
 
-    method-name --> identifier ``(`` argument-labels ``)``
     argument-labels --> argument-label argument-labels-OPT
     argument-label --> identifier ``:``
 
