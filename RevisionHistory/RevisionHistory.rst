@@ -8,19 +8,19 @@ Date        Notes
 ==========  ==========================================================================
 2016-02-08  * Updated for Swift 2.2.
 
-            * Added discussion of how distinguish
+            * Added discussion of how to distinguish
               between methods or initializers whose names differ
               only by the names of their arguments
-              in :ref:`Expressions_ExplicitMemberExpression`.
+              in the :ref:`Expressions_ExplicitMemberExpression` section.
 
-            * Updated discussion of ``@objc``
-              in :ref:`Attributes_DeclarationAttributes` to note that
+            * Updated the discussion of ``@objc``
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
               enumerations and enumeration cases can use this attribute.
 
-            * Updated discussion of associated types
+            * Updated the discussion of associated types
               to use the ``associatedtype`` keyword
-              in :ref:`Generics_AssociatedTypes`
-              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
+              in the :ref:`Generics_AssociatedTypes`
+              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
 
 ----------  --------------------------------------------------------------------------
 2016-01-25  * Added information about initializers that return ``nil``
