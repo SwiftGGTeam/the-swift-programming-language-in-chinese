@@ -6,9 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2016-02-08  * Updated for Swift 2.2.
-
-            * Added discussion of how to distinguish
+2016-02-08  * Added discussion of how to distinguish
               between methods or initializers whose names differ
               only by the names of their arguments
               in the :ref:`Expressions_ExplicitMemberExpression` section.
@@ -23,7 +21,9 @@ Date        Notes
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
 
 ----------  --------------------------------------------------------------------------
-2016-01-25  * Added information about initializers that return ``nil``
+2016-01-25  * Updated for Swift 2.2.
+
+            * Added information about initializers that return ``nil``
               before the instance is fully initialized
               to the :ref:`Initialization_FailableInitializers` section.
 
