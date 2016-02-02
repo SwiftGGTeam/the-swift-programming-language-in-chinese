@@ -6,9 +6,24 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2015-01-25  * Updated for Swift 2.2.
+2016-02-08  * Updated for Swift 2.2.
 
-            * Added information about initializers that return ``nil``
+            * Added discussion of how distinguish
+              between methods or initializers whose names differ
+              only by the names of their arguments
+              in :ref:`Expressions_ExplicitMemberExpression`.
+
+            * Updated discussion of ``@objc``
+              in :ref:`Attributes_DeclarationAttributes` to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated discussion of associated types
+              to use the ``associatedtype`` keyword
+              in :ref:`Generics_AssociatedTypes`
+              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
+
+----------  --------------------------------------------------------------------------
+2016-01-25  * Added information about initializers that return ``nil``
               before the instance is fully initialized
               to the :ref:`Initialization_FailableInitializers` section.
 
