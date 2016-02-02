@@ -219,9 +219,9 @@ Initializers are described in more detail in :doc:`Initialization`.
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
-   !! <REPL Input>:1:10: error: extra argument 'x' in call
+   !! <REPL Input>:1:14: error: argument passed to call that takes no arguments
    !! let c = C(x: 1, y: 1)
-   !! ^   ~
+   !!         ~~~~^~~~~~~~
 
 .. FIXME: The current plan is to introduce a memberwise initializer for classes too,
    as described in rdar://16704095.
