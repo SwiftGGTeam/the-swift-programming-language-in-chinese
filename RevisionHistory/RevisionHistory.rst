@@ -6,10 +6,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2016-02-08  * Added discussion of how to distinguish
+2016-02-08  * Added information about how to distinguish
               between methods or initializers whose names differ
               only by the names of their arguments
-              in the :ref:`Expressions_ExplicitMemberExpression` section.
+              to the :ref:`Expressions_ExplicitMemberExpression` section.
 
             * Updated the discussion of ``@objc``
               in the :ref:`Attributes_DeclarationAttributes` section to note that
