@@ -87,7 +87,10 @@ the ``noreturn`` attribute to a function or method *type*.
 
           deprecated=<#version number#>
 
-      The *version number* consists of one or more positive integers, separated by periods.
+      The optional *version number* consists of one or more positive integers, separated by periods.
+      Omitting the version number, indicates that the declaration is currently deprecated,
+      without giving any information about when the deprecation occurred.
+      If you omit the version number, omit the equal sign (``=``) as well.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
       It has the following form:
