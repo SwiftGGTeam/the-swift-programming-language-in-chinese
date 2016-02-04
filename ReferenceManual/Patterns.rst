@@ -235,7 +235,7 @@ equivalent:
 
     tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
-    tuple-pattern-element --> pattern
+    tuple-pattern-element --> pattern | identifier ``:`` pattern
 
 
 .. _Patterns_EnumerationCasePattern:
