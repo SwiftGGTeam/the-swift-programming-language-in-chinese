@@ -406,12 +406,12 @@ by using ``..<`` to make a range of indexes.
 
 .. testcode:: guided-tour
 
-   -> var firstForLoop = 0
-   << // firstForLoop : Int = 0
+   -> var total = 0
+   << // total : Int = 0
    -> for i in 0..<4 {
-          firstForLoop += i
+          total += i
       }
-   -> print(firstForLoop)
+   -> print(total)
    << 6
 
 Use ``..<`` to make a range that omits its upper value,
