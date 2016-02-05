@@ -1998,6 +1998,18 @@ to ensure members of that type are properly initialized.
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
 
+.. assertion:: extension-can-have-where-clause
+
+   >> extension Array where Element: Equatable {
+          func f(x: Array) -> Int { return 7 }
+      }
+   >> let x = [1, 2, 3]
+   << // x : [Int] = [1, 2, 3]
+   >> let y = [10, 20, 30]
+   << // y : [Int] = [10, 20, 30]
+   >> x.f(y)
+   << // r0 : Int = 7
+
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
@@ -2006,7 +2018,7 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT requirement-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
