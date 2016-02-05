@@ -2097,13 +2097,13 @@ and not the return value of the closure.
    or call any of the instance's methods.
 
 The example below defines a structure called ``Chessboard``,
-which models a board for the game of *Chess*:
+which models a board for the game of *Chess*.
+The game of *Chess* is played on a ten-by-ten board,
+with alternating black and white squares.
 
 .. image:: ../images/chessBoard_2x.png
    :align: center
 
-The game of *Chess* is played on a ten-by-ten board,
-with alternating black and white squares.
 To represent this game board,
 the ``Chessboard`` structure has a single property called ``boardColors``,
 which is an array of 100 ``Bool`` values.
