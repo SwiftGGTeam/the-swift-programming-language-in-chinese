@@ -245,9 +245,10 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.4499999999999993, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    -> // a is "test", b is 12, c is 3, and 9.45 is ignored
+    /> a is \(a), b is \(b), c is \(c), and 9.45 is ignored
+    </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 

@@ -415,6 +415,9 @@ or passed to a function.)
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ~~ ^   ~~
+   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !!       ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -427,6 +430,9 @@ or passed to a function.)
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ~~ ^   ~~
+   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !!       ^
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.

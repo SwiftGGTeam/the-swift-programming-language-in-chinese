@@ -732,7 +732,7 @@ that don't actually override any method in the superclass.
     -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = REPL.Square
     -> test.area()
-    <$ : Double = 27.04
+    <$ : Double = 27.040000000000003
     -> test.simpleDescription()
     <$ : String = "A square with sides of length 5.2."
 

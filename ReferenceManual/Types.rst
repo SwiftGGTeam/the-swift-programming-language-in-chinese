@@ -59,7 +59,7 @@ as the following examples show:
 .. testcode:: type-annotation
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
-    << // someTuple : (Double, Double) = (3.14159, 2.71828)
+    << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
 In the first example,
@@ -702,7 +702,7 @@ causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` ins
     -> let e = 2.71828 // The type of e is inferred to be Double.
     << // e : Double = 2.71828
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828
+    << // eFloat : Float = 2.71828008
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

@@ -116,11 +116,11 @@ to provide basic support for working with distance units:
          var ft: Double { return self / 3.28084 }
       }
    -> let oneInch = 25.4.mm
-   << // oneInch : Double = 0.0254
+   << // oneInch : Double = 0.025399999999999999
    -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.914399970739201
+   << // threeFeet : Double = 0.91439997073920098
    -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 

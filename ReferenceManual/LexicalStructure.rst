@@ -345,7 +345,7 @@ The following are examples of literals:
     -> "Hello, world!"  // String literal
     -> true             // Boolean literal
     <$ : Int = 42
-    <$ : Double = 3.14159
+    <$ : Double = 3.1415899999999999
     <$ : String = "Hello, world!"
     <$ : Bool = true
 

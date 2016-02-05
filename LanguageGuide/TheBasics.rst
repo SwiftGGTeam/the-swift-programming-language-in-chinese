@@ -164,7 +164,7 @@ including Unicode characters:
 .. testcode:: constantsAndVariables
 
    -> let π = 3.14159
-   << // π : Double = 3.14159
+   << // π : Double = 3.1415899999999999
    -> let 你好 = "你好世界"
    << // 你好 : String = "你好世界"
    -> let 🐶🐮 = "dogcow"
@@ -486,7 +486,7 @@ Swift infers that you want to create a ``Double``:
 .. testcode:: typeInference
 
    -> let pi = 3.14159
-   << // pi : Double = 3.14159
+   << // pi : Double = 3.1415899999999999
    // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -498,7 +498,7 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.14159
+   << // anotherPi : Double = 3.1415899999999999
    // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
@@ -684,9 +684,9 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let three = 3
    << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14159
+   << // pointOneFourOneFiveNine : Double =  0.14158999999999999
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.14159
+   << // pi : Double = 3.1415899999999999
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
