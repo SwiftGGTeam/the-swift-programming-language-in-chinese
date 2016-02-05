@@ -2097,8 +2097,8 @@ and not the return value of the closure.
    or call any of the instance's methods.
 
 The example below defines a structure called ``Chessboard``,
-which models a board for the game of *Chess*.
-The game of *Chess* is played on a ten-by-ten board,
+which models a board for the game of chess.
+Chess is played on a ten-by-ten board,
 with alternating black and white squares.
 
 .. image:: ../images/chessBoard_2x.png
