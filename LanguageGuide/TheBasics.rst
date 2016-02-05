@@ -684,7 +684,7 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let three = 3
    << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double =  0.14158999999999999
+   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
    -> let pi = Double(three) + pointOneFourOneFiveNine
    << // pi : Double = 3.1415899999999999
    /> pi equals \(pi), and is inferred to be of type Double
