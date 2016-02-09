@@ -341,8 +341,6 @@ just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
 
-.. TODO: I'm not actually demonstrating this fact. Should I?
-
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
 This time around, the ``Apartment`` type's ``tenant`` property
