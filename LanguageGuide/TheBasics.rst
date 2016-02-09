@@ -930,10 +930,10 @@ For example:
   200 is less than 404.
   The second elements, ``"Ok"`` and ``Not found"``, aren't compared.
 
-* ``(200, "OK")`` is less than ``(200, "ZZZ Sleeping")`` because
+* ``(200, "OK")`` is less than ``(200, "Zzz Sleeping")`` because
   the first elements are equal,
   and the second elements aren't equal:
-  ``"OK"`` is less than ``"ZZZ Sleeping "``.
+  ``"OK"`` is less than ``"Zzz Sleeping "``.
 
 * ``(200 "OK")`` is equal to ``(200, OK)`` because
   the first elements are equal
