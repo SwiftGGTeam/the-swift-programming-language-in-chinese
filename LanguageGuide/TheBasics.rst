@@ -917,24 +917,27 @@ you can use the element names to access the values of those elements:
    -> print("The status message is \(http200Status.description)")
    <- The status message is OK
 
-If all the values in a tuple support comparison,
-the whole tuple can be compared to another tuple
-that's made up of values that have the same type.
+Tuples that have the same number of values
+can be compared if all of the values in the tuple support comparison.
 For example, both ``Int`` and ``String`` support comparison,
 which means tuples of the type ``(Int, String)`` can be compared.
-Tuple comparison is done one element at a time,
-starting from the left:
+Tuple comparison is done one value at a time,
+starting from the leftmost value in the tuple.
+For example:
 
-* ``(200, "OK")`` is less than ``(404, "Not found")``.
-  The first elements aren't equal ---
-  200 is less than 404 ---
-  so she second elements ``"Ok"`` and ``Not found"`` aren't compared.
+* ``(200, "OK")`` is less than ``(404, "Not found")`` because
+  the first elements aren't equal:
+  200 is less than 404.
+  The second elements, ``"Ok"`` and ``Not found"``, aren't compared.
 
-* ``(200, "OK")`` is less than ``(200, "ZZZ Sleeping")``.
-  The first elements are equal, so the second elements are compared.
+* ``(200, "OK")`` is less than ``(200, "ZZZ Sleeping")`` because
+  the first elements are equal,
+  and the second elements aren't equal:
+  ``"OK"`` is less than ``"ZZZ Sleeping "``.
 
-* ``(200 "OK")`` is equal to ``(200, OK)`` because each element in the first tuple
-  is equal to the corresponding element in the second tuple.
+* ``(200 "OK")`` is equal to ``(200, OK)`` because
+  the first elements are equal
+  and the second elements are also equal.
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return the ``(Int, String)`` tuple type
