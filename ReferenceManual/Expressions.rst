@@ -1402,7 +1402,7 @@ split over several lines:
 
 .. The grammar for method-name doesn't include the following:
        method-name --> identifier argument-names-OPT
-   because the "potsfix-expression . identifier" line above already covers that case.
+   because the "postfix-expression . identifier" line above already covers that case.
 
 .. See grammar for initializer-expression for the related "argument name" production there.
 
