@@ -973,7 +973,7 @@ have the following form:
 .. note::
 
     Each statement in the body of a build configuration statement is parsed
-    even if it's not complied.
+    even if it's not compiled.
 
 .. syntax-grammar::
 
