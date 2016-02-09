@@ -386,14 +386,8 @@ Here's how the references look now that you've linked the two instances together
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
 but the ``Apartment`` instance now has a *weak* reference to the ``Person`` instance.
 This means that when you break the strong reference held by
-the ``john`` variables,
+the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
-
-.. image:: ../images/weakReference02_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Person`` instance,
-it is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -401,22 +395,29 @@ it is deallocated:
    -> john = nil
    <- John Appleseed is being deinitialized
 
+Because there are no more strong references to the ``Person`` instance,
+it is deallocated
+and the ``tenant`` variable is set to ``nil``:
+
+.. image:: ../images/weakReference02_2x.png
+   :align: center
+
 The only remaining strong reference to the ``Apartment`` instance
 is from the ``unit4A`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
-
-.. image:: ../images/weakReference03_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Apartment`` instance,
-it too is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
 
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
+
+Because there are no more strong references to the ``Apartment`` instance,
+it too is deallocated:
+
+.. image:: ../images/weakReference03_2x.png
+   :align: center
 
 The final two code snippets above show that
 the deinitializers for the ``Person`` instance and ``Apartment`` instance
