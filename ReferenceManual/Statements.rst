@@ -985,6 +985,7 @@ have the following form:
     build-configuration-else-clause --> ``#else`` statements-OPT
 
     build-configuration --> platform-testing-function
+    build-configuration --> language-version-function
     build-configuration --> identifier
     build-configuration --> boolean-literal
     build-configuration --> ``(`` build-configuration ``)``
@@ -994,8 +995,10 @@ have the following form:
 
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    platform-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+    swift-version --> decimal-digits ``.`` decimal-digits
 
 .. Testing notes:
 
