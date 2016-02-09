@@ -1028,11 +1028,11 @@ A line control statement has the following form:
 
     #line <#line number#> <#filename#>
 
-A line control statement changes the values of the ``__LINE__`` and ``__FILE__``
+A line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of ``__LINE__``
+The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
-The *filename* changes the value of ``__FILE__`` and is a string literal.
+The *filename* changes the value of ``#file`` and is a string literal.
 
 You can reset the source code location back to the default line numbering and filename
 by writing a line control statement without specifying a *line number* and *filename*.
