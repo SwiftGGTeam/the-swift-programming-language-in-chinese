@@ -451,6 +451,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
+    primary-expression --> selector-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -1059,6 +1060,37 @@ For example, in the following assignment
     Grammar of a wildcard expression
 
     wildcard-expression --> ``_``
+
+
+.. _Expression_SelectorExpression:
+
+Selector Expression
+~~~~~~~~~~~~~~~~~~~
+
+A selector expression lets you access the selector
+used to refer to a method in Objective-C.
+
+.. syntax-outline::
+
+   #selector(<#method name#>)
+
+The value of a selector expression is an instance of the ``Selector`` type.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Objective-C Selectors <//apple_ref/doc/uid/TP40014216-CH4-ID59>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+
+.. syntax-grammar::
+
+    Grammar of an Objective-C selector expression
+
+    selector-expression --> ``#selector`` ``(`` expression  ``)``
+
+.. Note: The parser does allow an arbitrary expression inside #selector(), not
+   just a member name.  For example, see changes in Swift commit ef60d7289d in
+   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
+   optional binding.
 
 
 .. _Expressions_PostfixExpressions:
@@ -1672,34 +1704,3 @@ For example:
    Grammar of an optional-chaining expression
 
    optional-chaining-expression --> postfix-expression ``?``
-
-
-.. _Expression_SelectorExpression:
-
-Selector Expression
--------------------
-
-A selector expression lets you access the selector
-used to refer to a method in Objective-C.
-
-.. syntax-outline::
-
-   #selector(<#method name#>)
-
-The value of a selector expression is an instance of the ``Selector`` type.
-
-For more information about using selectors
-in Swift code that interacts with Objective-C APIs,
-see `Objective-C Selectors <//apple_ref/doc/uid/TP40014216-CH4-ID59>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-
-.. syntax-grammar::
-
-    Grammar of an Objective-C selector expression
-
-    selector-expression --> ``#selector`` ``(`` expression  ``)``
-
-.. Note: The parser does allow an arbitrary expression inside #selector(), not
-   just a member name.  For example, see changes in Swift commit ef60d7289d in
-   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
-   optional binding.
