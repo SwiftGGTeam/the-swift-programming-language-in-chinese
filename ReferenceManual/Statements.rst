@@ -1102,4 +1102,3 @@ logical operators such as ``&&`` and ``||``.
 
 .. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
 
-
