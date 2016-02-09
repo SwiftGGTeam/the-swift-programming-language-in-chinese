@@ -1069,6 +1069,8 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
+.. x*  (Junk * to fix syntax highlighting from previous listing)
+
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
 The compiler uses the information from the availability condition
