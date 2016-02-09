@@ -467,45 +467,62 @@ wraps around from the minimum value to the maximum.
 
 .. _AdvancedOperators_TupleComparison:
 
-Tuple Comparison
-----------------
+Tuple Comparison Operators
+--------------------------
 
 Tuples that have the same number of values
-can be compared if all of the values in the tuple support comparison
+can be compared if all of the values in the tuple support comparison.
 For example, both ``Int`` and ``String`` support comparison,
 which means tuples of the type ``(Int, String)`` can be compared.
 In contrast, ``Bool`` doesn't support comparison,
 which means tuples that contain a Boolean value can't be compared.
 
-.. assertion::
+.. assertion:: boolean-is-not-comparable
 
     -> true < false
     !! repl.swift:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
     !! true < false
     !! ~~~~ ^ ~~~~~
+    !! <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists: (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (T?, T?), (T, T), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
 
-Tuples are compared one value at a time,
-starting from the left.
-If the elements aren't equal,
-that comparison determines the final result;
-otherwise, the next pair of elements to the right are compared.
-If all of the elements are equal,
-then the tuples are also equal.
+..
+
+Tuples are compared from left to right,
+one value at a time,
+until the comparison finds two values
+that are not equal.
+If all the elements are equal,
+then the tuples themselves are equal.
 For example:
+
+.. alternate example
+
+    (1, "zebra") < (2, "apple")
+    (3, "apple") < (3, "bird") 
+    (4, "dog") < (3, "dog") 
 
 * ``(200, "OK")`` is less than ``(404, "Not Found")`` because
   the first elements aren't equal:
-  200 is less than 404.
-  The second elements, ``"Ok"`` and ``Not Found"``, aren't compared.
+  ``200`` is less than ``404``.
+  The second elements, ``"OK"`` and ``Not Found"``, aren't compared.
 
 * ``(200, "OK")`` is less than ``(200, "Zzz Sleeping")`` because
   the first elements are equal,
   and the second elements aren't equal:
   ``"OK"`` is less than ``"Zzz Sleeping "``.
 
-* ``(200 "OK")`` is equal to ``(200, OK)`` because
+* ``(200, "OK")`` is equal to ``(200, "OK")`` because
   the first elements are equal
   and the second elements are also equal.
+
+.. assertion:: tuple-comparison-operators
+
+   >> (200, "OK") < (400, "Not Found")
+   >> (200, "OK") < (200 "Zzz Sleeping")
+   >> (200, "OK") == (200, "OK")
+   << // r0 : Bool = true
+   << // r1 : Bool = true
+   << // r2 : Bool = true
 
 .. note::
 
