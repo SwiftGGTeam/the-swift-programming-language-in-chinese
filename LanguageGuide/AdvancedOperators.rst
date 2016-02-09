@@ -465,6 +465,54 @@ wraps around from the maximum valid integer value back to the minimum,
 and overflow in the negative direction
 wraps around from the minimum value to the maximum.
 
+.. _AdvancedOperators_TupleComparison:
+
+Tuple Comparison
+----------------
+
+Tuples that have the same number of values
+can be compared if all of the values in the tuple support comparison
+For example, both ``Int`` and ``String`` support comparison,
+which means tuples of the type ``(Int, String)`` can be compared.
+In contrast, ``Bool`` doesn't support comparison,
+which means tuples that contain a Boolean value can't be compared.
+
+.. assertion::
+
+    -> true < false
+    !! repl.swift:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
+    !! true < false
+    !! ~~~~ ^ ~~~~~
+
+Tuples are compared one value at a time,
+starting from the left.
+If the elements aren't equal,
+that comparison determines the final result;
+otherwise, the next pair of elements to the right are compared.
+If all of the elements are equal,
+then the tuples are also equal.
+For example:
+
+* ``(200, "OK")`` is less than ``(404, "Not Found")`` because
+  the first elements aren't equal:
+  200 is less than 404.
+  The second elements, ``"Ok"`` and ``Not Found"``, aren't compared.
+
+* ``(200, "OK")`` is less than ``(200, "Zzz Sleeping")`` because
+  the first elements are equal,
+  and the second elements aren't equal:
+  ``"OK"`` is less than ``"Zzz Sleeping "``.
+
+* ``(200 "OK")`` is equal to ``(200, OK)`` because
+  the first elements are equal
+  and the second elements are also equal.
+
+.. note::
+
+   The Swift standard library includes tuple comparison operators
+   for tuples with less than seven elements.
+   To compare tuples with seven or more elements,
+   you must implement the comparison operators yourself.
 
 .. _AdvancedOperators_PrecedenceAndAssociativity:
 
