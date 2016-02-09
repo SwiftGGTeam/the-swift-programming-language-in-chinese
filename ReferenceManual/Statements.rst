@@ -941,14 +941,38 @@ Function              Valid arguments
 ====================  ===================================================
 ``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``           ``>=`` followed by a major and minor version number
+``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
+
+The version number for the ``swift()`` function
+consists of a major and minor number, separated by a dot (``.``).
+There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
    The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
    The ``arch(i386)`` build configuration returns ``true``
    when code is compiled for the 32–bit iOS simulator.
+
+.. assertion:: pound-if-swift-version
+
+   -> #if swift(>=2.1)
+          print(1)
+      #endif
+   << 1
+   -> #if swift(>=2.1) && true
+          print(2)
+      #endif
+   << 2
+   -> #if swift(>=2.1) && false
+          print(3)
+      #endif
+   -> #if swift(>= 2.1)
+          print(1)
+      #endif
+   !! test.swift:10:11: error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
 
 You can combine build configurations using the logical operators
 ``&&``, ``||``, and ``!``
