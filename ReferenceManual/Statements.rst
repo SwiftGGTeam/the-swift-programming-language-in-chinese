@@ -975,6 +975,13 @@ have the following form:
 
     Each statement in the body of a build configuration statement is parsed
     even if it's not compiled.
+    However, there is an exception
+    if the build configuration includes a Swift language version check:
+    The statements are parsed
+    only if the compiler's version of the Swift matches
+    what is specified in the language version check.
+    This exception ensures that an older compiler does not attempt to parse
+    syntax that is introduced in a future version of Swift.
 
 .. syntax-grammar::
 
