@@ -2096,17 +2096,17 @@ and not the return value of the closure.
    You also cannot use the implicit ``self`` property,
    or call any of the instance's methods.
 
-The example below defines a structure called ``Checkerboard``,
-which models a board for the game of *Checkers* (also known as *Draughts*):
+The example below defines a structure called ``Chessboard``,
+which models a board for the game of chess.
+Chess is played on an 8 x 8 board,
+with alternating black and white squares.
 
-.. image:: ../images/checkersBoard_2x.png
+.. image:: ../images/chessBoard_2x.png
    :align: center
 
-The game of *Checkers* is played on a ten-by-ten board,
-with alternating black and white squares.
 To represent this game board,
-the ``Checkerboard`` structure has a single property called ``boardColors``,
-which is an array of 100 ``Bool`` values.
+the ``Chessboard`` structure has a single property called ``boardColors``,
+which is an array of 64 ``Bool`` values.
 A value of ``true`` in the array represents a black square
 and a value of ``false`` represents a white square.
 The first item in the array represents the top left square on the board
@@ -2114,14 +2114,14 @@ and the last item in the array represents the bottom right square on the board.
 
 The ``boardColors`` array is initialized with a closure to set up its color values:
 
-.. testcode:: checkers
+.. testcode:: chessboard
 
-   -> struct Checkerboard {
+   -> struct Chessboard {
          let boardColors: [Bool] = {
             var temporaryBoard = [Bool]()
             var isBlack = false
-            for i in 1...10 {
-               for j in 1...10 {
+            for i in 1...8 {
+               for j in 1...8 {
                   temporaryBoard.append(isBlack)
                   isBlack = !isBlack
                }
@@ -2130,11 +2130,11 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             return temporaryBoard
          }()
          func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
-            return boardColors[(row * 10) + column]
+            return boardColors[(row * 8) + column]
          }
       }
 
-Whenever a new ``Checkerboard`` instance is created, the closure is executed,
+Whenever a new ``Chessboard`` instance is created, the closure is executed,
 and the default value of ``boardColors`` is calculated and returned.
 The closure in the example above calculates and sets
 the appropriate color for each square on the board
@@ -2144,11 +2144,11 @@ once its setup is complete.
 The returned array value is stored in ``boardColors``
 and can be queried with the ``squareIsBlackAtRow`` utility function:
 
-.. testcode:: checkers
+.. testcode:: chessboard
 
-   -> let board = Checkerboard()
-   << // board : Checkerboard = REPL.Checkerboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   -> let board = Chessboard()
+   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true])
    -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(9, column: 9))
+   -> print(board.squareIsBlackAtRow(7, column: 7))
    <- false
