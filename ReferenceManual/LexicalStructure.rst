@@ -279,6 +279,19 @@ without being escaped with backticks.
 * Keywords used in patterns:
   ``_``.
 
+* Keywords that begin with a number sign (``#``):
+
+  ``#available``,
+  ``#column``,
+  ``#else``
+  ``#elseif``,
+  ``#endif``,
+  ``#file``,
+  ``#function``,
+  ``#if``,
+  ``#line``,
+  and ``#selector``.
+
 .. langref-grammar
 
     get
