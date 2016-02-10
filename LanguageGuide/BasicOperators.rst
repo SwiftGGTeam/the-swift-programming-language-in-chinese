@@ -331,17 +331,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 
 .. testcode:: comparisonOperators
 
-   -> 1 == 1   // true, because 1 is equal to 1
+   -> 1 == 1   // true because 1 is equal to 1
    << // r0 : Bool = true
-   -> 2 != 1   // true, because 2 is not equal to 1
+   -> 2 != 1   // true because 2 is not equal to 1
    << // r1 : Bool = true
-   -> 2 > 1    // true, because 2 is greater than 1
+   -> 2 > 1    // true because 2 is greater than 1
    << // r2 : Bool = true
-   -> 1 < 2    // true, because 1 is less than 2
+   -> 1 < 2    // true because 1 is less than 2
    << // r3 : Bool = true
-   -> 1 >= 1   // true, because 1 is greater than or equal to 1
+   -> 1 >= 1   // true because 1 is greater than or equal to 1
    << // r4 : Bool = true
-   -> 2 <= 1   // false, because 2 is not less than or equal to 1
+   -> 2 <= 1   // false because 2 is not less than or equal to 1
    << // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
@@ -361,11 +361,12 @@ such as the ``if`` statement:
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
-Tuples that have the same number of values
-can be compared if all of the values in the tuple support comparison.
-For example, both ``Int`` and ``String`` support comparison,
+You can also compare
+tuples that have the same number of values,
+as long as each of the values in the tuple can be compared.
+For example, both ``Int`` and ``String`` can be compared,
 which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` doesn't support comparison,
+In contrast, ``Bool`` doesn't can be compared,
 which means tuples that contain a Boolean value can't be compared.
 
 .. assertion:: boolean-is-not-comparable
@@ -380,36 +381,16 @@ which means tuples that contain a Boolean value can't be compared.
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
-that are not equal.
+that aren't equal.
 If all the elements are equal,
 then the tuples themselves are equal.
 For example:
 
-.. alternate example
+.. testcode:: tuple-comparison-operators
 
-    (1, "zebra") < (2, "apple")
-    (3, "apple") < (3, "bird") 
-    (4, "dog") < (3, "dog") 
-
-* ``(200, "OK")`` is less than ``(404, "Not Found")`` because
-  the first elements aren't equal:
-  ``200`` is less than ``404``.
-  The second elements, ``"OK"`` and ``Not Found"``, aren't compared.
-
-* ``(200, "OK")`` is less than ``(200, "Zzz Sleeping")`` because
-  the first elements are equal,
-  and the second elements aren't equal:
-  ``"OK"`` is less than ``"Zzz Sleeping "``.
-
-* ``(200, "OK")`` is equal to ``(200, "OK")`` because
-  the first elements are equal
-  and the second elements are also equal.
-
-.. assertion:: tuple-comparison-operators
-
-   >> (200, "OK") < (400, "Not Found")
-   >> (200, "OK") < (200 "Zzz Sleeping")
-   >> (200, "OK") == (200, "OK")
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2
+   -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
+   -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
    << // r0 : Bool = true
    << // r1 : Bool = true
    << // r2 : Bool = true
