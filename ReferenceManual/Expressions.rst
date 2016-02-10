@@ -481,6 +481,12 @@ Literal          Type         Value
 ``#function``   ``String``   The name of the declaration in which it appears.
 =============    ===========  ===============================================
 
+The ``#line`` token has two meanings depending on how it is used.
+If it appears on its own line,
+it is understood as a line control statement,
+as described in :ref:`Statements_LineControlStatement`.
+Otherwise, it is understood with the meaning described above.
+
 Inside a function,
 the value of ``#function`` is the name of that function,
 inside a method it is the name of that method,

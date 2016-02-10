@@ -1037,10 +1037,11 @@ The *filename* changes the value of ``#file`` and is a string literal.
 You can reset the source code location back to the default line numbering and filename
 by writing a line control statement without specifying a *line number* and *filename*.
 
-A line control statement must appear as the first token on a line,
-it must appear on its own line,
-and it can't be the last line of a source code file.
-If the ``#line`` token appears elsewhere in a line,
+The ``#line`` token has two meanings depending on how it is used.
+If it is used as a line control statement,
+it must appear on its own line
+and can't be the last line of a source code file.
+If it appears elsewhere in a line,
 it is understood as the special literal described in
 :ref:`Expressions_LiteralExpression`.
 
