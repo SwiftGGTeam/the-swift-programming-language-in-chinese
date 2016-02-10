@@ -216,6 +216,7 @@ without being escaped with backticks.
     keyword ::= '#line'
 
 * Keywords used in declarations:
+  ``associatedtype``,
   ``class``,
   ``deinit``,
   ``enum``,
