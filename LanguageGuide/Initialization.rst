@@ -2106,7 +2106,7 @@ with alternating black and white squares.
 
 To represent this game board,
 the ``Chessboard`` structure has a single property called ``boardColors``,
-which is an array of 100 ``Bool`` values.
+which is an array of 64 ``Bool`` values.
 A value of ``true`` in the array represents a black square
 and a value of ``false`` represents a white square.
 The first item in the array represents the top left square on the board
@@ -2120,8 +2120,8 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
          let boardColors: [Bool] = {
             var temporaryBoard = [Bool]()
             var isBlack = false
-            for i in 1...10 {
-               for j in 1...10 {
+            for i in 1...8 {
+               for j in 1...8 {
                   temporaryBoard.append(isBlack)
                   isBlack = !isBlack
                }
@@ -2130,7 +2130,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             return temporaryBoard
          }()
          func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
-            return boardColors[(row * 10) + column]
+            return boardColors[(row * 8) + column]
          }
       }
 
@@ -2147,8 +2147,8 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: chessboard
 
    -> let board = Chessboard()
-   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true])
    -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(9, column: 9))
+   -> print(board.squareIsBlackAtRow(8, column: 8))
    <- false
