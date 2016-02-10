@@ -364,7 +364,7 @@ a constant of the specified type to enable its value to be printed:
             case let (x, y) as (Double, Double):
                print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
-               print("a movie called "\(movie.name)", dir. \(movie.director)")
+               print("a movie called \(movie.name), dir. \(movie.director)")
             case let stringConverter as String -> String:
                print(stringConverter("Michael"))
             default:
@@ -378,6 +378,6 @@ a constant of the specified type to enable its value to be printed:
    </ a positive double value of 3.14159
    </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
-   </ a movie called 'Ghostbusters', dir. Ivan Reitman
+   </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 

@@ -2016,7 +2016,7 @@ to ensure members of that type are properly initialized.
    >> extension Array: P where Element: Equatable {
    >>    func foo() {}
    >> }
-   !! <REPL Input>:1:4: error: extension of type 'Array' with constraints cannot have an inheritance clause
+   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
    !!    extension Array: P where Element: Equatable {
    !!    ^                ~
 
