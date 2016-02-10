@@ -187,11 +187,11 @@ to check the downcast each time through the loop:
          }
       }
    ---
-   </ Movie: 'Casablanca', dir. Michael Curtiz
-   </ Song: 'Blue Suede Shoes', by Elvis Presley
-   </ Movie: 'Citizen Kane', dir. Orson Welles
-   </ Song: 'The One And Only', by Chesney Hawkes
-   </ Song: 'Never Gonna Give You Up', by Rick Astley
+   </ Movie: "Casablanca", dir. Michael Curtiz
+   </ Song: "Blue Suede Shoes", by Elvis Presley
+   </ Movie: "Citizen Kane", dir. Orson Welles
+   </ Song: "The One And Only", by Chesney Hawkes
+   </ Song: "Never Gonna Give You Up", by Rick Astley
 
 The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
