@@ -331,17 +331,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 
 .. testcode:: comparisonOperators
 
-   -> 1 == 1   // true, because 1 is equal to 1
+   -> 1 == 1   // true because 1 is equal to 1
    << // r0 : Bool = true
-   -> 2 != 1   // true, because 2 is not equal to 1
+   -> 2 != 1   // true because 2 is not equal to 1
    << // r1 : Bool = true
-   -> 2 > 1    // true, because 2 is greater than 1
+   -> 2 > 1    // true because 2 is greater than 1
    << // r2 : Bool = true
-   -> 1 < 2    // true, because 1 is less than 2
+   -> 1 < 2    // true because 1 is less than 2
    << // r3 : Bool = true
-   -> 1 >= 1   // true, because 1 is greater than or equal to 1
+   -> 1 >= 1   // true because 1 is greater than or equal to 1
    << // r4 : Bool = true
-   -> 2 <= 1   // false, because 2 is not less than or equal to 1
+   -> 2 <= 1   // false because 2 is not less than or equal to 1
    << // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
@@ -361,9 +361,50 @@ such as the ``if`` statement:
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
+You can also compare
+tuples that have the same number of values,
+as long as each of the values in the tuple can be compared.
+For example, both ``Int`` and ``String`` can be compared,
+which means tuples of the type ``(Int, String)`` can be compared.
+In contrast, ``Bool`` doesn't can be compared,
+which means tuples that contain a Boolean value can't be compared.
+
+.. assertion:: boolean-is-not-comparable
+
+    -> true < false
+    !! repl.swift:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
+    !! true < false
+    !! ~~~~ ^ ~~~~~
+    !! <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists: (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (T?, T?), (T, T), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+
+
+Tuples are compared from left to right,
+one value at a time,
+until the comparison finds two values
+that aren't equal.
+If all the elements are equal,
+then the tuples themselves are equal.
+For example:
+
+.. testcode:: tuple-comparison-operators
+
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2
+   -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
+   -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
+   << // r0 : Bool = true
+   << // r1 : Bool = true
+   << // r2 : Bool = true
+
+.. note::
+
+   The Swift standard library includes tuple comparison operators
+   for tuples with less than seven elements.
+   To compare tuples with seven or more elements,
+   you must implement the comparison operators yourself.
+
 .. TODO: which types do these operate on by default?
    How do they work with strings?
-   How about with tuples / with your own types?
+   How about with your own types?
 
 .. _BasicOperators_TernaryConditionalOperator:
 

@@ -465,7 +465,6 @@ wraps around from the maximum valid integer value back to the minimum,
 and overflow in the negative direction
 wraps around from the minimum value to the maximum.
 
-
 .. _AdvancedOperators_PrecedenceAndAssociativity:
 
 Precedence and Associativity
