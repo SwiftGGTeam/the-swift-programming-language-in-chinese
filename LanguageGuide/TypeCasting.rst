@@ -181,17 +181,17 @@ to check the downcast each time through the loop:
 
    -> for item in library {
          if let movie = item as? Movie {
-            print("Movie: '\(movie.name)', dir. \(movie.director)")
+            print("Movie: \(movie.name), dir. \(movie.director)")
          } else if let song = item as? Song {
-            print("Song: '\(song.name)', by \(song.artist)")
+            print("Song: \(song.name), by \(song.artist)")
          }
       }
    ---
-   </ Movie: 'Casablanca', dir. Michael Curtiz
-   </ Song: 'Blue Suede Shoes', by Elvis Presley
-   </ Movie: 'Citizen Kane', dir. Orson Welles
-   </ Song: 'The One And Only', by Chesney Hawkes
-   </ Song: 'Never Gonna Give You Up', by Rick Astley
+   </ Movie: Casablanca, dir. Michael Curtiz
+   </ Song: Blue Suede Shoes, by Elvis Presley
+   </ Movie: Citizen Kane, dir. Orson Welles
+   </ Song: The One And Only, by Chesney Hawkes
+   </ Song: Never Gonna Give You Up, by Rick Astley
 
 The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
@@ -288,11 +288,11 @@ with the forced version of the type cast operator (``as!``):
 
    -> for object in someObjects {
          let movie = object as! Movie
-         print("Movie: '\(movie.name)', dir. \(movie.director)")
+         print("Movie: \(movie.name), dir. \(movie.director)")
       }
-   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-   </ Movie: 'Moon', dir. Duncan Jones
-   </ Movie: 'Alien', dir. Ridley Scott
+   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
+   </ Movie: Moon, dir. Duncan Jones
+   </ Movie: Alien, dir. Ridley Scott
 
 For an even shorter form of this loop,
 downcast the ``someObjects`` array to a type of ``[Movie]``
@@ -301,11 +301,11 @@ instead of downcasting each item:
 .. testcode:: typeCasting
 
    -> for movie in someObjects as! [Movie] {
-         print("Movie: '\(movie.name)', dir. \(movie.director)")
+         print("Movie: \(movie.name), dir. \(movie.director)")
       }
-   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-   </ Movie: 'Moon', dir. Duncan Jones
-   </ Movie: 'Alien', dir. Ridley Scott
+   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
+   </ Movie: Moon, dir. Duncan Jones
+   </ Movie: Alien, dir. Ridley Scott
 
 .. _TypeCasting_Any:
 
@@ -364,7 +364,7 @@ a constant of the specified type to enable its value to be printed:
             case let (x, y) as (Double, Double):
                print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
-               print("a movie called '\(movie.name)', dir. \(movie.director)")
+               print("a movie called \(movie.name), dir. \(movie.director)")
             case let stringConverter as String -> String:
                print(stringConverter("Michael"))
             default:
@@ -378,6 +378,6 @@ a constant of the specified type to enable its value to be printed:
    </ a positive double value of 3.14159
    </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
-   </ a movie called 'Ghostbusters', dir. Ivan Reitman
+   </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 

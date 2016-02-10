@@ -1998,6 +1998,28 @@ to ensure members of that type are properly initialized.
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
 
+.. assertion:: extension-can-have-where-clause
+
+   >> extension Array where Element: Equatable {
+          func f(x: Array) -> Int { return 7 }
+      }
+   >> let x = [1, 2, 3]
+   << // x : [Int] = [1, 2, 3]
+   >> let y = [10, 20, 30]
+   << // y : [Int] = [10, 20, 30]
+   >> x.f(y)
+   << // r0 : Int = 7
+
+.. assertion:: extensions-can-have-where-clause-and-inheritance
+
+   >> protocol P { func foo() }
+   >> extension Array: P where Element: Equatable {
+   >>    func foo() {}
+   >> }
+   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
+   !!    extension Array: P where Element: Equatable {
+   !!    ^                ~
+
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
@@ -2007,6 +2029,7 @@ to ensure members of that type are properly initialized.
     Grammar of an extension declaration
 
     extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
@@ -2196,7 +2219,8 @@ see :ref:`AdvancedOperators_CustomOperators`.
     postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
     infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
 
-    infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    infix-operator-attributes --> associativity-clause precedence-clause-OPT
+    infix-operator-attributes --> precedence-clause associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
     precedence-level --> A decimal integer between 0 and 255, inclusive
     associativity-clause --> ``associativity`` associativity

@@ -1100,11 +1100,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\'\(possibleNumber)\' could not be converted to an integer")
+         print("\"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- '123' has an integer value of 123
+   <- "123" has an integer value of 123
 
 This code can be read as:
 
