@@ -2150,5 +2150,5 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
    << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true])
    -> print(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(8, column: 8))
+   -> print(board.squareIsBlackAtRow(7, column: 7))
    <- false
