@@ -2219,8 +2219,8 @@ see :ref:`AdvancedOperators_CustomOperators`.
     postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
     infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
 
-    infix-operator-attributes --> associativity-clause-OPT precedence-clause-OPT
-    infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    infix-operator-attributes --> associativity-clause precedence-clause-OPT
+    infix-operator-attributes --> precedence-clause associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
     precedence-level --> A decimal integer between 0 and 255, inclusive
     associativity-clause --> ``associativity`` associativity
