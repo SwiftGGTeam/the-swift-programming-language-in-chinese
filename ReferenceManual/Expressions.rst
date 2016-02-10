@@ -473,17 +473,23 @@ either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
 or one of the following special literals:
 
-================    ===========  ===============================================
-Literal             Type         Value
-================    ===========  ===============================================
-``__FILE__``        ``String``   The name of the file in which it appears.
-``__LINE__``        ``Int``      The line number on which it appears.
-``__COLUMN__``      ``Int``      The column number in which it begins.
-``__FUNCTION__``    ``String``   The name of the declaration in which it appears.
-================    ===========  ===============================================
+=============    ===========  ===============================================
+Literal          Type         Value
+=============    ===========  ===============================================
+``#file``       ``String``   The name of the file in which it appears.
+``#line``       ``Int``      The line number on which it appears.
+``#column``     ``Int``      The column number in which it begins.
+``#function``   ``String``   The name of the declaration in which it appears.
+=============    ===========  ===============================================
+
+The ``#line`` token has two meanings depending on how it is used.
+If it appears on its own line,
+it is understood as a line control statement,
+as described in :ref:`Statements_LineControlStatement`.
+Otherwise, it is understood with the meaning described above.
 
 Inside a function,
-the value of ``__FUNCTION__`` is the name of that function,
+the value of ``#function`` is the name of that function,
 inside a method it is the name of that method,
 inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript``
@@ -499,7 +505,7 @@ when the default value expression is evaluated at the call site.
 
 .. testcode:: special-literal-evaluated-at-call-site
 
-    -> func logFunctionName(string: String = __FUNCTION__) {
+    -> func logFunctionName(string: String = #function) {
            print(string)
        }
     -> func myFunction() {
@@ -515,7 +521,7 @@ when the default value expression is evaluated at the call site.
     << namedArgs(_:withJay:)
 
 .. Additional hidden tests above illustrate
-   the somewhat irregular rules used by __FUNCTION__
+   the somewhat irregular rules used by #function
    to write out the name of a function.
    In particular, the rule used for functions with no named arguments
    doesn't match the display in Xcode or our documentation.
@@ -574,9 +580,9 @@ of specified key and value types.
     expr-literal ::= floating_literal
     expr-literal ::= character_literal
     expr-literal ::= string_literal
-    expr-literal ::= '__FILE__'
-    expr-literal ::= '__LINE__'
-    expr-literal ::= '__COLUMN__'
+    expr-literal ::= '#file'
+    expr-literal ::= '#line'
+    expr-literal ::= '#column'
 
 .. syntax-grammar::
 
@@ -584,7 +590,7 @@ of specified key and value types.
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal
-    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
+    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items

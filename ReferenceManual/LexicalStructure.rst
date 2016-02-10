@@ -211,11 +211,12 @@ without being escaped with backticks.
     keyword ::= 'super'
     keyword ::= 'self'
     keyword ::= 'Self'
-    keyword ::= '__COLUMN__'
-    keyword ::= '__FILE__'
-    keyword ::= '__LINE__'
+    keyword ::= '#column'
+    keyword ::= '#file'
+    keyword ::= '#line'
 
 * Keywords used in declarations:
+  ``associatedtype``,
   ``class``,
   ``deinit``,
   ``enum``,
@@ -270,13 +271,26 @@ without being escaped with backticks.
   ``throws``,
   ``true``,
   ``try``,
-  ``__COLUMN__``,
-  ``__FILE__``,
-  ``__FUNCTION__``,
-  and ``__LINE__``.
+  ``#column``,
+  ``#file``,
+  ``#function``,
+  and ``#line``.
 
 * Keywords used in patterns:
   ``_``.
+
+* Keywords that begin with a number sign (``#``):
+
+  ``#available``,
+  ``#column``,
+  ``#else``
+  ``#elseif``,
+  ``#endif``,
+  ``#file``,
+  ``#function``,
+  ``#if``,
+  ``#line``,
+  and ``#selector``.
 
 .. langref-grammar
 
