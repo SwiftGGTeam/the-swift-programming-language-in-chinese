@@ -2010,6 +2010,16 @@ to ensure members of that type are properly initialized.
    >> x.f(y)
    << // r0 : Int = 7
 
+.. assertion:: extensions-can-have-where-clause-and-inheritance
+
+   >> protocol P { func foo() }
+   >> extension Array: P where Element: Equatable {
+   >>    func foo() {}
+   >> }
+   !! <REPL Input>:1:4: error: extension of type 'Array' with constraints cannot have an inheritance clause
+   !!    extension Array: P where Element: Equatable {
+   !!    ^                ~
+
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
@@ -2018,7 +2028,8 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT requirement-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
