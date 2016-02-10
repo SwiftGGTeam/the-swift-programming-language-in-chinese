@@ -2098,7 +2098,7 @@ and not the return value of the closure.
 
 The example below defines a structure called ``Chessboard``,
 which models a board for the game of chess.
-Chess is played on an eight-by-eight board,
+Chess is played on an 8 x 8 board,
 with alternating black and white squares.
 
 .. image:: ../images/chessBoard_2x.png
