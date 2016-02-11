@@ -1106,7 +1106,7 @@ For example:
            @objc(doSomethingWithString:)
            func doSomething(x: String) { }
        }
-    -> let selector = #selector(SomeClass.doSomething(_:) as String -> Void)
+    -> let selector = #selector(SomeClass.doSomething(_:) as (String) -> Void)
    << // selector : Selector = doSomethingWithString:
 
 Because the selector is created at compile time, not at runtime,
