@@ -1092,7 +1092,9 @@ For example:
            @objc(doSomethingWithInt:)
            func doSomething(x: Int) { }
       }
-   -> let selector = #selector(SomeClass.doSomething(_:))
+   -> let x = SomeClass()
+   <~ // x : SomeClass = <REPL.SomeClass: 0x
+   -> let selector = #selector(x.doSomething(_:))
    << // selector : Selector = doSomethingWithInt:
 
 The *method name* can contain parentheses for grouping,
@@ -1102,12 +1104,12 @@ For example:
 
 .. testcode:: selector-expression
 
-    -> extension SomeClass {
-           @objc(doSomethingWithString:)
-           func doSomething(x: String) { }
-       }
-    -> let selector = #selector(SomeClass.doSomething(_:) as (String) -> Void)
-   << // selector : Selector = doSomethingWithString:
+   -> extension SomeClass {
+          @objc(doSomethingWithString:)
+          func doSomething(x: String) { }
+      }
+   -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+   << // anotherSelector : Selector = doSomethingWithString:
 
 Because the selector is created at compile time, not at runtime,
 the compiler can check that the method exists
