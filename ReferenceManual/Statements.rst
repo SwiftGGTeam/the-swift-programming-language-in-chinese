@@ -934,20 +934,45 @@ evaluates to ``true`` at compile time.
 
 The *build configuration* can include the ``true`` and ``false`` Boolean literals,
 an identifier used with the ``-D`` command line flag, or any of the platform
-testing functions listed in the table below.
+or language-version testing functions listed in the table below.
 
-====================  ==================================================
+====================  ===================================================
 Function              Valid arguments
-====================  ==================================================
+====================  ===================================================
 ``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
-====================  ==================================================
+``swift()``           ``>=`` followed by a version number
+====================  ===================================================
+
+The version number for the ``swift()`` language-version testing function
+consists of a major and minor number, separated by a dot (``.``).
+There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
-   The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
-   The ``arch(i386)`` build configuration returns ``true``
+   The ``arch(arm)`` platform testing function does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` platform testing function returns ``true``
    when code is compiled for the 32–bit iOS simulator.
+
+.. assertion:: pound-if-swift-version
+
+   -> #if swift(>=2.1)
+          print(1)
+      #endif
+   << 1
+   -> #if swift(>=2.1) && true
+          print(2)
+      #endif
+   << 2
+   -> #if swift(>=2.1) && false
+          print(3)
+      #endif
+   -> #if swift(>= 2.1)
+          print(1)
+      #endif
+   !! test.swift:10:11: error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
 
 You can combine build configurations using the logical operators
 ``&&``, ``||``, and ``!``
@@ -973,7 +998,14 @@ have the following form:
 .. note::
 
     Each statement in the body of a build configuration statement is parsed
-    even if it's not complied.
+    even if it's not compiled.
+    However, there is an exception
+    if the build configuration includes a language-version testing function:
+    The statements are parsed
+    only if the compiler's version of Swift matches
+    what is specified in the language-version testing function.
+    This exception ensures that an older compiler doesn't attempt to parse
+    syntax introduced in a newer version of Swift.
 
 .. syntax-grammar::
 
@@ -985,6 +1017,7 @@ have the following form:
     build-configuration-else-clause --> ``#else`` statements-OPT
 
     build-configuration --> platform-testing-function
+    build-configuration --> language-version-testing-function
     build-configuration --> identifier
     build-configuration --> boolean-literal
     build-configuration --> ``(`` build-configuration ``)``
@@ -994,8 +1027,10 @@ have the following form:
 
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    language-version-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+    swift-version --> decimal-digits ``.`` decimal-digits
 
 .. Testing notes:
 
