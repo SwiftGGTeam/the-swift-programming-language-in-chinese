@@ -934,7 +934,7 @@ evaluates to ``true`` at compile time.
 
 The *build configuration* can include the ``true`` and ``false`` Boolean literals,
 an identifier used with the ``-D`` command line flag, or any of the platform
-testing functions listed in the table below.
+or language-version testing functions listed in the table below.
 
 ====================  ===================================================
 Function              Valid arguments
@@ -944,14 +944,14 @@ Function              Valid arguments
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
 
-The version number for the ``swift()`` function
+The version number for the ``swift()`` language-version testing function
 consists of a major and minor number, separated by a dot (``.``).
 There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
-   The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
-   The ``arch(i386)`` build configuration returns ``true``
+   The ``arch(arm)`` platform testing function does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` platform testing function returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 
 .. assertion:: pound-if-swift-version
@@ -1000,12 +1000,12 @@ have the following form:
     Each statement in the body of a build configuration statement is parsed
     even if it's not compiled.
     However, there is an exception
-    if the build configuration includes a Swift language version check:
+    if the build configuration includes a language-version testing function:
     The statements are parsed
-    only if the compiler's version of the Swift matches
-    what is specified in the language version check.
-    This exception ensures that an older compiler does not attempt to parse
-    syntax that is introduced in a future version of Swift.
+    only if the compiler's version of Swift matches
+    what is specified in the language-version testing function.
+    This exception ensures that an older compiler doesn't attempt to parse
+    syntax introduced in a newer version of Swift.
 
 .. syntax-grammar::
 
@@ -1017,7 +1017,7 @@ have the following form:
     build-configuration-else-clause --> ``#else`` statements-OPT
 
     build-configuration --> platform-testing-function
-    build-configuration --> language-version-function
+    build-configuration --> language-version-testing-function
     build-configuration --> identifier
     build-configuration --> boolean-literal
     build-configuration --> ``(`` build-configuration ``)``
@@ -1027,7 +1027,7 @@ have the following form:
 
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
-    platform-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
+    language-version-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
