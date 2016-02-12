@@ -970,9 +970,10 @@ There must not be whitespace between ``>=`` and the version number.
    -> #if swift(>= 2.1)
           print(1)
       #endif
-   !! test.swift:10:11: error: unary operator cannot be separated from its operand
+   !! <REPL Input>:10:11: error: unary operator cannot be separated from its operand
    !! #if swift(>= 2.1)
    !!           ^ ~
+   !!-
 
 You can combine build configurations using the logical operators
 ``&&``, ``||``, and ``!``
