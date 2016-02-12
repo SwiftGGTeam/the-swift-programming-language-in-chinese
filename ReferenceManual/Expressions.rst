@@ -476,10 +476,10 @@ or one of the following special literals:
 =============    ===========  ===============================================
 Literal          Type         Value
 =============    ===========  ===============================================
-``#file``       ``String``    The name of the file in which it appears.
-``#line``       ``Int``       The line number on which it appears.
-``#column``     ``Int``       The column number in which it begins.
-``#function``   ``String``    The name of the declaration in which it appears.
+``#file``        ``String``   The name of the file in which it appears.
+``#line``        ``Int``      The line number on which it appears.
+``#column``      ``Int``      The column number in which it begins.
+``#function``    ``String``   The name of the declaration in which it appears.
 =============    ===========  ===============================================
 
 The ``#line`` token has two meanings depending on how it is used.
