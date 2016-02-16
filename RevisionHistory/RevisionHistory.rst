@@ -6,10 +6,22 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2016-02-08  * Added information about how to distinguish
+2016-02-22  * Added information about how to conditionally compile code
+              depending on the version of Swift being used
+              using the ``swift()`` language-version testing function
+              to the :ref:`Statements_BuildConfigurationStatement` section.
+
+            * Added information about how to distinguish
               between methods or initializers whose names differ
               only by the names of their arguments
               to the :ref:`Expressions_ExplicitMemberExpression` section.
+
+            * Added information about the ``#selector`` syntax
+              for Objective-C selectors
+              to the :ref:`Expression_SelectorExpression` section.
+
+            * Added information about comparing tuples
+              to the :ref:`BasicOperators_ComparisonOperators` section.
 
             * Updated the discussion of ``@objc``
               in the :ref:`Attributes_DeclarationAttributes` section to note that
@@ -20,6 +32,22 @@ Date        Notes
               in the :ref:`Generics_AssociatedTypes`
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
 
+            * Updated the discussion of special literals
+              to use the new literal names names
+              in the :ref:`Expressions_LiteralExpression` section.
+
+            * Corrected the grammar for *extension-declaration*
+              in the :ref:`Declarations_ExtensionDeclaration` section
+              to allow a ``where`` clause.
+
+            * Corrected the grammar for *infix-operator-attributes*
+              in the :ref:`Declarations_OperatorDeclaration` section
+              to show that the precedence and associativity clauses
+              can appear in either order.
+
+            * Corrected the grammar for *tuple-pattern-element*
+              in the :ref:`Patterns_TuplePattern` section
+              to allow an identifier.
 ----------  --------------------------------------------------------------------------
 2016-01-25  * Updated for Swift 2.2.
 
