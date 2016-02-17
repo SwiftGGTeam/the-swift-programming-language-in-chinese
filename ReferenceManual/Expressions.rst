@@ -1480,7 +1480,7 @@ split over several lines:
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
     explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
 
-    argument-names --> argument-label argument-names-OPT
+    argument-names --> argument-name argument-names-OPT
     argument-name --> identifier ``:``
 
 .. The grammar for method-name doesn't include the following:
