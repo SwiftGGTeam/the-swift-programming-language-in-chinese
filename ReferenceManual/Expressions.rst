@@ -1114,9 +1114,14 @@ For example:
 Because the selector is created at compile time, not at runtime,
 the compiler can check that the method exists
 and that the method is exposed to the Objective-C runtime.
-It also checks that,
-when the method is called,
-the arguments have the correct types.
+
+.. TODO: Is there any truth to this?
+   Brian and I looked at the proposal, and it doesn't discuss this,
+   but I remember reading something about information being
+   "exposed to the typechecker".
+        It also checks that,
+        when the method is called,
+        the arguments have the correct types.
 
 .. note::
 
