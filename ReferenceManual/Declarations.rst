@@ -50,10 +50,6 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
-.. NOTE: Removed enum-member-declaration, because we don't need it anymore.
-
-.. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
-
 
 .. _LexicalStructure_ModuleScope:
 
