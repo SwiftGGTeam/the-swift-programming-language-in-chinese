@@ -1084,16 +1084,6 @@ the parentheses can be omitted.
     -> myData.someMethod {$0 == 13}
     << // r1 : Bool = false
 
-.. FIXME Should we document the fact that you can use a tuple as a
-   function's only argument, assuming that tuple has the same type as the
-   function's argument list?  Or is that an implementation detail?  For
-   example, the following works:
-        let x = (1, 3)
-        func f(a: Int, b: Int) -> Int { return a + b }
-        f(x)  // Returns 4
-    Is that meant to be a feature, or is the fact that function arguments are passed as a tuple
-    just an implementation detail?
-
 .. langref-grammar
 
     expr-call ::= expr-postfix expr-paren
