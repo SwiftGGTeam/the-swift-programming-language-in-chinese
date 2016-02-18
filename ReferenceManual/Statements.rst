@@ -970,7 +970,7 @@ There must not be whitespace between ``>=`` and the version number.
    -> #if swift(>= 2.1)
           print(1)
       #endif
-   !! <REPL Input>:10:11: error: unary operator cannot be separated from its operand
+   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
    !! #if swift(>= 2.1)
    !!           ^ ~
    !!-

@@ -476,10 +476,10 @@ or one of the following special literals:
 =============    ===========  ===============================================
 Literal          Type         Value
 =============    ===========  ===============================================
-``#file``       ``String``   The name of the file in which it appears.
-``#line``       ``Int``      The line number on which it appears.
-``#column``     ``Int``      The column number in which it begins.
-``#function``   ``String``   The name of the declaration in which it appears.
+``#file``        ``String``   The name of the file in which it appears.
+``#line``        ``Int``      The line number on which it appears.
+``#column``      ``Int``      The column number in which it begins.
+``#function``    ``String``   The name of the declaration in which it appears.
 =============    ===========  ===============================================
 
 The ``#line`` token has two meanings depending on how it is used.
@@ -1114,9 +1114,14 @@ For example:
 Because the selector is created at compile time, not at runtime,
 the compiler can check that the method exists
 and that the method is exposed to the Objective-C runtime.
-It also checks that,
-when the method is called,
-the arguments have the correct types.
+
+.. TODO: Is there any truth to this?
+   Brian and I looked at the proposal, and it doesn't discuss this,
+   but I remember reading something about information being
+   "exposed to the typechecker".
+        It also checks that,
+        when the method is called,
+        the arguments have the correct types.
 
 .. note::
 
@@ -1475,7 +1480,7 @@ split over several lines:
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
     explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
 
-    argument-names --> argument-label argument-names-OPT
+    argument-names --> argument-name argument-names-OPT
     argument-name --> identifier ``:``
 
 .. The grammar for method-name doesn't include the following:

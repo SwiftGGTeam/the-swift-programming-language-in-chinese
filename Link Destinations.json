@@ -251,6 +251,7 @@
     "errorhandling-rethrow": "ID511", 
     "errorhandling-throw": "ID510", 
     "expression-optionalchainingoperator": "ID405", 
+    "expression-selectorexpression": "ID547", 
     "expressions-assignmentoperator": "ID386", 
     "expressions-binaryexpressions": "ID385", 
     "expressions-capturelists": "ID544", 
@@ -564,5 +565,5 @@
     "in-out-parameters", 
     "error-handling"
   ], 
-  "next_id": 547
+  "next_id": 548
 }
