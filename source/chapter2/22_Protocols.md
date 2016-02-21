@@ -65,11 +65,11 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 属性要求
 
-协议可以要求采纳协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是只读的还是可读可写的。
+协议可以要求采纳协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是可读的还是可读可写的。
 
-如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是只读的，那么该属性不仅可以是只读的，如果代码需要的话，还可以是可写的。
+如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是可读的，那么该属性不仅可以是可读的，如果代码需要的话，还可以是可写的。
 
-协议通常用 `var` 关键字来声明变量属性，在类型声明后加上 `{ set get }` 来表示属性是可读可写的，只读属性则用 `{ get }` 来表示：
+协议总是用 `var` 关键字来声明变量属性，在类型声明后加上 `{ set get }` 来表示属性是可读可写的，可读属性则用 `{ get }` 来表示：
 
 ```swift
 protocol SomeProtocol {
@@ -94,7 +94,7 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed` 协议除了要求采纳协议的类型提供 `fullName` 属性外，并没有其他特别的要求。这个协议表示，任何采纳 `FullyNamed` 的类型，都必须有一个只读的 `String` 类型的实例属性 `fullName`。
+`FullyNamed` 协议除了要求采纳协议的类型提供 `fullName` 属性外，并没有其他特别的要求。这个协议表示，任何采纳 `FullyNamed` 的类型，都必须有一个可读的 `String` 类型的实例属性 `fullName`。
 
 下面是一个采纳 `FullyNamed` 协议的简单结构体：
 
@@ -155,7 +155,7 @@ protocol RandomNumberGenerator {
 
 `RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的，它只要求必须提供一个随机数生成器。
 
-如下所示，下边是一个采纳了 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 *线性同余生成器（linear congruential generator）* 的伪随机数算法。
+如下所示，下边是一个采纳并符合 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 *线性同余生成器（linear congruential generator）* 的伪随机数算法。
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
@@ -385,7 +385,7 @@ class SnakesAndLadders: DiceGame {
 
 关于这个蛇梯棋游戏的详细描述请参阅 [Control Flow](./05_Control_Flow.html) 章节中的 [Break](./05_Control_Flow.html#break) 部分。
 
-这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类采纳了 `DiceGame` 协议，并且提供了相应的只读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为只读的，因此将 `dice` 声明为常量属性。）
+这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类采纳了 `DiceGame` 协议，并且提供了相应的可读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为可读的，因此将 `dice` 声明为常量属性。）
 
 游戏使用 `SnakesAndLadders` 类的 `init()` 构造器来初始化游戏。所有的游戏逻辑被转移到了协议中的 `play()` 方法，`play()` 方法使用协议要求的 `dice` 属性提供骰子摇出的值。
 
@@ -470,8 +470,8 @@ extension Dice: TextRepresentable {
 现在所有 `Dice` 的实例都可以看做 `TextRepresentable` 类型：
 
 ```swift
-let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
-print(d12. textualDescription)
+let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
+print(d12.textualDescription)
 // 打印 “A 12-sided dice”
 ```
 
@@ -652,7 +652,7 @@ wishHappyBirthday(birthdayPerson)
 * `as?` 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 `nil`。
 * `as!` 将实例强制向下转换到某个协议类型，如果强转失败，会引发运行时错误。
 
-下面的例子定义了一个 `HasArea` 协议，该协议定义了一个 `Double` 类型的只读属性 `area`：
+下面的例子定义了一个 `HasArea` 协议，该协议定义了一个 `Double` 类型的可读属性 `area`：
 
 ```swift
 protocol HasArea {
@@ -877,7 +877,7 @@ extension PrettyTextRepresentable  {
 <a name="adding_constraints_to_protocol_extensions"></a>
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制条件，只有采纳协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[Where子句](./23_Generics.html#where_clauses))中所描述的。
+在扩展协议的时候，可以指定一些限制条件，只有采纳协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[Where子句](./23_Generics.html#where_clauses)中所描述的。
 
 例如，你可以扩展 `CollectionType` 协议，但是只适用于集合中的元素采纳了 `TextRepresentable` 协议的情况：
 
