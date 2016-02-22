@@ -441,22 +441,6 @@ and so the ``else`` branch is executed instead.
 Recursive Enumerations
 ----------------------
 
-Enumerations work well for modeling data
-when there is a fixed number of possibilities that need to be considered,
-such as the operations used for doing simple integer arithmetic.
-These operations let you combine simple arithmetic expressions
-that are made up of integers such as ``5``
-into more complex ones such as ``5 + 4``.
-
-One important characteristic of arithmetic expressions
-is that they can be nested.
-For example, the expression ``(5 + 4) * 2``
-has a number on the right hand side of the multiplication
-and another expression on the left hand side of the multiplication.
-Because the data is nested,
-the enumeration used to store the data also needs to support nesting ---
-this means the enumeration needs to be recursive.
-
 A :newTerm:`recursive enumeration` is an enumeration
 that has another instance of the enumeration
 as the associated value for one or more of the enumeration cases.
@@ -495,6 +479,25 @@ and the multiplication of two expressions.
 The ``Addition`` and ``Multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
+For example, the expression ``(5 + 4) * 2``
+has a number on the right hand side of the multiplication
+and another expression on the left hand side of the multiplication.
+Because the data is nested,
+the enumeration used to store the data also needs to support nesting ---
+this means the enumeration needs to be recursive.
+The code below shows the ``ArithmeticExpression`` recursive enumeration
+being created for ``(5 + 4) * 2``:
+
+.. testcode:: recursive-enum
+
+    -> let five = ArithmeticExpression.Number(5)
+    -> let four = ArithmeticExpression.Number(4)
+    -> let sum = ArithmeticExpression.Addition(five, four)
+    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
 
 A recursive function is a straightforward way
 to work with data that has a recursive structure.
@@ -513,15 +516,6 @@ For example, here's a function that evaluates an arithmetic expression:
            }
        }
     ---
-    // evaluate (5 + 4) * 2
-    -> let five = ArithmeticExpression.Number(5)
-    -> let four = ArithmeticExpression.Number(4)
-    -> let sum = ArithmeticExpression.Addition(five, four)
-    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
-    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
-    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
-    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
-    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
     -> print(evaluate(product))
     <- 18
 
