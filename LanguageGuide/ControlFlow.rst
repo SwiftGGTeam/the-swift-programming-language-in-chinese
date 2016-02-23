@@ -85,8 +85,8 @@ by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
-The underscore character ``_``
-(used in place of a loop variable)
+The underscore character (``_``)
+used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
