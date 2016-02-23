@@ -132,7 +132,7 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
 .. TODO: include the note below once we have some documentation for Sequence:
-   The examples above uses a ``for``-``in`` loop to iterate
+   The examples above use a ``for``-``in`` loop to iterate
    ranges, arrays, dictionaries, and strings.
    However, you can use this syntax to iterate *any* collection,
    including your own classes and collection types,
