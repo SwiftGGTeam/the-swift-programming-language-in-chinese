@@ -750,7 +750,7 @@ and categorizes it on the graph that follows the example.
    :align: center
 
 The ``switch`` statement determines whether the point is
-at the origin (0, 0)
+at the origin (0, 0),
 on the red x-axis,
 on the orange y-axis,
 inside the blue 4-by-4 box centered on the origin,
