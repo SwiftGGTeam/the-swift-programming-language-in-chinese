@@ -507,11 +507,11 @@ For example, here's a function that evaluates an arithmetic expression:
 
     -> func evaluate(expression: ArithmeticExpression) -> Int {
            switch expression {
-               case .Number(let value):
+               case let .Number(value):
                    return value
-               case .Addition(let left, let right):
+               case let .Addition(left, right):
                    return evaluate(left) + evaluate(right)
-               case .Multiplication(let left, let right):
+               case let .Multiplication(left, right):
                    return evaluate(left) * evaluate(right)
            }
        }
