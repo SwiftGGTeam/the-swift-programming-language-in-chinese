@@ -230,7 +230,7 @@ Because a ``throw`` statement immediately transfers program control,
 an item will be vended only if all of these requirements are met.
 
 Because the ``vend(itemNamed:)`` method propagates any errors it throws,
-places in your code that call it must either handle the errors directly---
+any code that calls this method must either handle the errors ---
 using a ``do``-``catch`` statement, ``try?``, or ``try!``---
 or continue to propagate them.
 For example,
