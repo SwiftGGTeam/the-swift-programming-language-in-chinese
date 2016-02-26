@@ -515,6 +515,17 @@ the parameter is made available with a default parameter name of ``newValue``.
 Similarly, if you implement a ``didSet`` observer,
 it is passed a constant parameter containing the old property value.
 You can name the parameter or use the default parameter name of ``oldValue``.
+If you assign a value to a property within its own ``didSet`` observer,
+the new value that you assign replaces the one that was just set.
+
+.. assertion:: assigningANewValueInADidSetReplacesTheNewValue
+
+   -> class C { var x: Int = 0 { didSet { x = -273 } } }
+   -> let c = C()
+   << // c : C = REPL.C
+   -> c.x = 24
+   -> print(c.x)
+   <- -273
 
 .. note::
 
@@ -586,20 +597,6 @@ If the total number of steps has increased,
 a message is printed to indicate how many new steps have been taken.
 The ``didSet`` observer does not provide a custom parameter name for the old value,
 and the default name of ``oldValue`` is used instead.
-
-.. note::
-
-   If you assign a value to a property within its own ``didSet`` observer,
-   the new value that you assign replaces the one that was just set.
-
-.. assertion:: assigningANewValueInADidSetReplacesTheNewValue
-
-   -> class C { var x: Int = 0 { didSet { x = -273 } } }
-   -> let c = C()
-   << // c : C = REPL.C
-   -> c.x = 24
-   -> print(c.x)
-   <- -273
 
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
