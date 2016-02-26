@@ -883,8 +883,9 @@ A rethrowing method can't throw any errors of its own.
 The only way it can throw an error
 is by propagating an error that was thrown
 by the throwing function it takes as a parameter.
-It cannot call that throwing function inside a ``do``-``catch`` block
-and handle the error by throwing a different error in the ``catch`` block.
+This means, for example,
+it can't call that throwing function inside a ``do``-``catch`` block
+and handle the error by throwing a different error.
 
 .. assertion:: rethrows-cant-throw
 
