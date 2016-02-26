@@ -263,6 +263,35 @@ and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
 Because the ``vend(itemNamed:)`` method can throw an error,
 it's called with the ``try`` keyword in front of it.
 
+Throwing initializers can also propagate errors in the same way.
+For example,
+the initializer for the ``PurchacedSnack`` structure in the listing below
+calls a throwing function as part of the initialization process,
+and it handles any errors that in encounters by propagating them to its caller.
+
+.. testcode:: errorHandling
+
+    -> struct PurchasedSnack {
+           let name: String
+           init(name: String, vendingMachine: VendingMachine) throws {
+               try vendingMachine.vend(itemNamed: name)
+               self.name = name
+           }
+       }
+    >> do {
+    >>     let succeeds = try PurchasedSnack(name: "Candy Bar", vendingMachine: v)
+    >> } catch {
+    >>     print("Threw unexpected error.")
+    >> }
+    << Dispensing Candy Bar
+    >> do {
+    >>     let throwsError = try PurchasedSnack(name: "Jelly Baby", vendingMachine: v)
+    >> } catch {
+    >>     print("Threw EXPECTED error.")
+    >> }
+    << Threw EXPECTED error.
+
+
 .. _ErrorHandling_DoCatch:
 
 Handling Errors Using Do-Catch
