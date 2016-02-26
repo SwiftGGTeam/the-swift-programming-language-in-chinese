@@ -879,7 +879,7 @@ must have at least one throwing function parameter.
           try callback()
       }
 
-A rethrowing method can not throw any errors of its own.
+A rethrowing method can't throw any errors of its own.
 The only way it can throw an error
 is by propagating an error that was thrown
 by the throwing function it takes as a parameter.
