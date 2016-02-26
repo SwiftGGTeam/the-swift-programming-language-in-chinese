@@ -513,7 +513,7 @@ If you don't write the parameter name and parentheses within your implementation
 the parameter is made available with a default parameter name of ``newValue``.
 
 Similarly, if you implement a ``didSet`` observer,
-it will be passed a constant parameter containing the old property value.
+it is passed a constant parameter containing the old property value.
 You can name the parameter or use the default parameter name of ``oldValue``.
 
 .. note::
@@ -590,7 +590,7 @@ and the default name of ``oldValue`` is used instead.
 .. note::
 
    If you assign a value to a property within its own ``didSet`` observer,
-   the new value that you assign will replace the one that was just set.
+   the new value that you assign replaces the one that was just set.
 
 .. assertion:: assigningANewValueInADidSetReplacesTheNewValue
 
