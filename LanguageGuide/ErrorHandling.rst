@@ -263,7 +263,7 @@ and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
 Because the ``vend(itemNamed:)`` method can throw an error,
 it's called with the ``try`` keyword in front of it.
 
-Throwing initializers can also propagate errors in the same way.
+Throwing initializers can propagate errors in the same way as throwing functions.
 For example,
 the initializer for the ``PurchacedSnack`` structure in the listing below
 calls a throwing function as part of the initialization process,
