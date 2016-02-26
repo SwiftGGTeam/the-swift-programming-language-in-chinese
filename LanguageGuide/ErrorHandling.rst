@@ -267,7 +267,7 @@ Throwing initializers can propagate errors in the same way as throwing functions
 For example,
 the initializer for the ``PurchacedSnack`` structure in the listing below
 calls a throwing function as part of the initialization process,
-and it handles any errors that in encounters by propagating them to its caller.
+and it handles any errors that it encounters by propagating them to its caller.
 
 .. testcode:: errorHandling
 
