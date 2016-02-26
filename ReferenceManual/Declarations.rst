@@ -879,6 +879,27 @@ must have at least one throwing function parameter.
           try callback()
       }
 
+A rethrowing method can not throw any errors of its own.
+The only way it can throw an error
+is by propagating an error that was thrown
+by the throwing function it takes as a parameter.
+It cannot call that throwing function inside a ``do``-``catch`` block
+and handle the error by throwing a different error in the ``catch`` block.
+
+.. assertion:: rethrows-cant-throw
+
+   -> enum SomeError: ErrorType { case C }
+   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+          do {
+              try callback()
+          } catch {
+              throw SomeError.C
+          }
+      }
+   !! <REPL Input>:5:11: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.C
+   !! ^
+
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
 That said, a rethrowing method can override a throwing method,
