@@ -455,6 +455,9 @@ You can add property observers to any stored properties you define,
 except for lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
+You don't need to define property observers for non-overridden computed properties,
+because you can observe and respond to changes to their value
+in the computed property's setter.
 Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. assertion:: lazyPropertiesCannotHaveObservers
@@ -494,12 +497,6 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
    -> d.y = 42
    <- D willSet y to 42
    <- D didSet y from 42
-
-.. note::
-
-   You don't need to define property observers for non-overridden computed properties,
-   because you can observe and respond to changes to their value
-   in the computed property's setter.
 
 You have the option to define either or both of these observers on a property:
 
