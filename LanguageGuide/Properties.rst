@@ -612,6 +612,27 @@ a message is printed to indicate how many new steps have been taken.
 The ``didSet`` observer does not provide a custom parameter name for the old value,
 and the default name of ``oldValue`` is used instead.
 
+.. note::
+
+   If you pass a property that has observers
+   to a function as an in-out parameter,
+   the ``willSet`` and ``didSet`` observers are always called.
+   This is because of the copy-in copy-out memory model for in-out parameters:
+   the value is always written back to the property at the end of the function.
+
+.. assertion:: observersCalledAfterInout
+
+   -> var a: Int = 0 {
+          willSet { print("willSet") }
+          didSet { print("didSet") }
+      }
+   << // a : Int = 0
+   -> func f(inout b: Int) { print("in f") }
+   -> f(&a)
+   << in f
+   << willSet
+   << didSet
+
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
    of that structure instance are set. This is cool, but non-obvious.
