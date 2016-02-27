@@ -577,10 +577,8 @@ The type of each parameter must be included ---
 it can't be inferred.
 Although the parameters to a function are constants by default,
 you can write ``let`` in front of a parameter's name to emphasize this behavior.
-Write ``var`` in front of a parameter's name to make it a variable,
-scoping any changes made to the variable just to the function body,
-or write ``inout`` to make those changes also apply
-to the argument that was passed in the caller's scope.
+If you write ``inout`` in front of a parameter's name,
+the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
 
@@ -903,7 +901,6 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
-    parameter --> ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
