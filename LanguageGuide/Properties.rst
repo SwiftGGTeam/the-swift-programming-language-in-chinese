@@ -452,7 +452,7 @@ even if the new value is the same as the property's current value.
    <- didSet
 
 You can add property observers to any stored properties you define,
-apart from lazy stored properties.
+except for lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
 Property overriding is described in :ref:`Inheritance_Overriding`.
