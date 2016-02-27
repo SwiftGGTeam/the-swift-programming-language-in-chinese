@@ -369,8 +369,7 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
 .. testcode:: arrayMap
 
    -> let strings = numbers.map {
-            (number) -> String in
-         var number = number
+            (var number) -> String in
          var output = ""
          while number > 0 {
             output = digitNames[number % 10]! + output
@@ -387,10 +386,10 @@ The ``map(_:)`` method calls the closure expression once for each item in the ar
 You do not need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
-In this example,
-the variable ``number`` is initialized with the value of the closure's ``number`` parameter,
-so that the value can be modified within the closure body.
-(The parameters to functions and closures are always constants.)
+In this example, the closure's ``number`` parameter is defined as a *variable parameter*,
+as described in :ref:`Functions_ConstantAndVariableParameters`,
+so that the parameter's value can be modified within the closure body,
+rather than declaring a new local variable and assigning the passed ``number`` value to it.
 The closure expression also specifies a return type of ``String``,
 to indicate the type that will be stored in the mapped output array.
 

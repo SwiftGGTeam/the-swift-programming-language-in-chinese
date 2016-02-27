@@ -78,18 +78,6 @@ its elements can be decomposed into multiple constants or variables at once:
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
 
-.. assertion:: tuple-unwrapping-with-var
-
-   >> var (x, y) = (1, 2)
-   << // (x, y) : (Int, Int) = (1, 2)
-
-.. This still allows assignment to variables,
-   even though var patterns have been removed,
-   because it's parsed as a variable-declaration,
-   using the first alternative where (x, y) is a pattern,
-   but `var` comes from the variable-declaration-head
-   rather than from the pattern.
-
 Unlike the assignment operator in C and Objective-C,
 the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
