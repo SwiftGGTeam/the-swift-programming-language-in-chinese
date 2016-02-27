@@ -527,23 +527,40 @@ the new value that you assign replaces the one that was just set.
 .. note::
 
    The ``willSet`` and ``didSet`` observers of superclass properties
-   are called when a property is set in a subclass initializer.
+   are called when a property is set in a subclass initializer,
+   after it has called the superclass initializer.
+   They are not called while a class is setting its own properties,
+   before it has called the superclass initializer.
 
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
    and :ref:`Initialization_InitializerChaining`.
 
-.. assertion:: observersAreNotCalledDuringInitialization
+.. assertion:: observersDuringInitialization
 
    -> class C {
-         var x: Int { willSet { print("willSet") } didSet { print("didSet") } }
+         var x: Int { willSet { print("willSet x") } didSet { print("didSet x") } }
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
    << // c : C = REPL.C
    -> c.x = 24
-   <- willSet
-   <- didSet
+   <- willSet x
+   <- didSet x
+   -> class C2: C {
+         var y: Int { willSet { print("willSet y") } didSet { print("didSet y") } }
+         init() {
+             self.y = 1
+             print("calling super")
+             super.init(x: 100)
+             self.x = 10
+         }
+      }
+   -> let c2 = C2()
+   <- calling super
+   <- willSet x
+   <- didSet x
+   << // c2 : C2 = REPL.C2
 
 Here's an example of ``willSet`` and ``didSet`` in action.
 The example below defines a new class called ``StepCounter``,
