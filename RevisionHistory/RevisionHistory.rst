@@ -6,7 +6,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2016-02-22  * Added information about how to conditionally compile code
+            * Updated for Swift 2.2.
+
+            * Added information about how to conditionally compile code
               depending on the version of Swift being used
               to the :ref:`Statements_BuildConfigurationStatement` section.
 
@@ -15,12 +17,22 @@ Date        Notes
               only by the names of their arguments
               to the :ref:`Expressions_ExplicitMemberExpression` section.
 
+            * Added information about initializers that return ``nil``
+              before the instance is fully initialized
+              to the :ref:`Initialization_FailableInitializers` section.
+
             * Added information about the ``#selector`` syntax
               for Objective-C selectors
               to the :ref:`Expression_SelectorExpression` section.
 
             * Added information about comparing tuples
               to the :ref:`BasicOperators_ComparisonOperators` section.
+
+            * Added information about using keywords as external parameter names
+              to the :ref:`LexicalStructure_Keywords` section.
+
+            * Added a section about error handling
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
 
             * Updated the discussion of the ``@objc`` attribute
               in the :ref:`Attributes_DeclarationAttributes` section to note that
@@ -30,18 +42,6 @@ Date        Notes
               to use the ``associatedtype`` keyword
               in the :ref:`Generics_AssociatedTypes`
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
-----------  --------------------------------------------------------------------------
-2016-01-25  * Updated for Swift 2.2.
-
-            * Added information about initializers that return ``nil``
-              before the instance is fully initialized
-              to the :ref:`Initialization_FailableInitializers` section.
-
-            * Added information about using keywords as external parameter names
-              to the :ref:`LexicalStructure_Keywords` section.
-
-            * Added a section about error handling
-              to the :doc:`../GuidedTour/GuidedTour` chapter.
 
             * Updated the discussion of custom operators that contain a dot
               in the :ref:`LexicalStructure_Operators` section.
