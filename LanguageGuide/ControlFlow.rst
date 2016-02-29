@@ -565,8 +565,8 @@ Every ``switch`` statement must be :newTerm:`exhaustive`.
 That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it's not appropriate to provide a case for every possible value,
-you can define a default catch-all case to cover any values that are not addressed explicitly.
-This catch-all case is indicated by the ``default`` keyword,
+you can define a default case to cover any values that are not addressed explicitly.
+This default case is indicated by the ``default`` keyword,
 and must always appear last.
 
 This example uses a ``switch`` statement to consider
@@ -1016,7 +1016,7 @@ if ``possibleIntegerValue`` was set to an actual value
 by one of the ``switch`` statement's first four cases.
 
 Because it's not practical to list every possible ``Character`` value in the example above,
-a ``default`` case provides a catch-all for any characters that are not matched.
+a ``default`` case handles any characters that are not matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
 As soon as the ``default`` case is matched,
@@ -1069,7 +1069,7 @@ and the ``switch`` statement is complete.
 Unless the value of ``integerToDescribe`` is in the list of known prime numbers,
 it is not matched by the first ``switch`` case at all.
 Because there are no other specific cases,
-``integerToDescribe`` is matched by the catch-all ``default`` case.
+``integerToDescribe`` is matched by the ``default`` case.
 
 After the ``switch`` statement has finished executing,
 the number's description is printed using the ``print(_:separator:terminator:)`` function.
