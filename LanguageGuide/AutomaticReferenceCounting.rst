@@ -419,12 +419,6 @@ it too is deallocated:
 .. image:: ../images/weakReference03_2x.png
    :align: center
 
-The final two code snippets above show that
-the deinitializers for the ``Person`` instance and ``Apartment`` instance
-print their “deinitialized” messages
-after the ``john`` and ``unit4A`` variables are set to ``nil``.
-This proves that the reference cycle has been broken.
-
 .. note::
 
    In systems that use garbage collection,
