@@ -458,8 +458,6 @@ For example, here is an enumeration that stores simple arithmetic expressions:
            indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
-.. TODO Conceptual art would really help here.
-
 You can also write ``indirect`` before the beginning of the enumeration,
 to enable indirection for all of the enumeration's cases that need it:
 
