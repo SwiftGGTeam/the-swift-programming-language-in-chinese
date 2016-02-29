@@ -104,7 +104,7 @@ Use a ``for``-``in`` loop with an array to iterate over its items.
    </ Hello, Brian!
    </ Hello, Jack!
 
-You can also iterate over a dictionary in order to access its key-value pairs.
+You can also iterate over a dictionary to access its key-value pairs.
 Each item in the dictionary is returned as a ``(key, value)`` tuple
 when the dictionary is iterated,
 and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
