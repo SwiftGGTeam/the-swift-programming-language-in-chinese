@@ -397,7 +397,7 @@ there are no more strong references to the ``Person`` instance:
 
 Because there are no more strong references to the ``Person`` instance,
 it is deallocated
-and the ``tenant`` variable is set to ``nil``:
+and the ``tenant`` property is set to ``nil``:
 
 .. image:: ../images/weakReference02_2x.png
    :align: center
