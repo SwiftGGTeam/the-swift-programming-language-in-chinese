@@ -265,7 +265,7 @@ it's called with the ``try`` keyword in front of it.
 
 Throwing initializers can propagate errors in the same way as throwing functions.
 For example,
-the initializer for the ``PurchacedSnack`` structure in the listing below
+the initializer for the ``PurchasedSnack`` structure in the listing below
 calls a throwing function as part of the initialization process,
 and it handles any errors that it encounters by propagating them to its caller.
 
