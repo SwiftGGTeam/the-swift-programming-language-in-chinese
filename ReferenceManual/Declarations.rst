@@ -879,13 +879,13 @@ must have at least one throwing function parameter.
           try callback()
       }
 
-A rethrowing method can't throw any errors of its own.
-The only way it can throw an error
-is by propagating an error that was thrown
+A rethrowing function or method can't directly throw any errors of its own,
+which means it can't contain a ``throw`` statement.
+It can only propagate errors thrown
 by the throwing function it takes as a parameter.
-This means, for example,
-it can't call that throwing function inside a ``do``-``catch`` block
-and handle the error by throwing a different error.
+For example, it is not possible
+to call the throwing function inside a ``do``-``catch`` block
+and handle errors in the ``catch`` clause by throwing a different error.
 
 .. assertion:: rethrows-cant-throw
 
