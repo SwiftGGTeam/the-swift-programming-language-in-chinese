@@ -50,8 +50,7 @@ Date        Notes
               the ``++`` prefix and postfix operators,
               and the ``--`` prefix and postfix operators.
 
-            * Removed discussion of ``var`` patterns,
-              variable function arguments,
+            * Removed discussion of variable function arguments
               and the special syntax for curried functions.
 ----------  --------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
