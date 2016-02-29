@@ -444,10 +444,9 @@ Recursive Enumerations
 A :newTerm:`recursive enumeration` is an enumeration
 that has another instance of the enumeration
 as the associated value for one or more of the enumeration cases.
-The compiler has to insert a layer of indirection
-when it works with recursive enumerations.
 You indicate that an enumeration case is recursive
-by writing ``indirect`` before it.
+by writing ``indirect`` before it,
+which tells the compiler to insert the necessary layer of indirection.
 
 For example, here is an enumeration that stores simple arithmetic expressions:
 
