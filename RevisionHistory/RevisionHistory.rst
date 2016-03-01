@@ -32,10 +32,10 @@ Date        Notes
               to the :ref:`LexicalStructure_Keywords` section.
 
             * Added a note
-              in the :ref:`Declarations_RethrowingFunctionsAndMethods` section
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
               that rethrowing functions can't directly throw errors.
 
-            * Added a note in the :ref:`Properties_PropertyObservers` section
+            * Added a note to the :ref:`Properties_PropertyObservers` section
               about property observers being called
               when you pass a property as an in-out parameter.
 
@@ -54,9 +54,9 @@ Date        Notes
             * Updated the :ref:`LexicalStructure_Operators` section
               with discussion of custom operators that contain a dot.
 
-            * Updated figures in
-              the :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
-              to show the deallocation process more clearly.
+            * Updated figures in the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section to show the deallocation process more clearly.
 
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
