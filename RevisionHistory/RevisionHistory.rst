@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-            * Updated for Swift 2.2.
+2016-03-21  * Updated for Swift 2.2.
 
             * Added information about how to conditionally compile code
               depending on the version of Swift being used
