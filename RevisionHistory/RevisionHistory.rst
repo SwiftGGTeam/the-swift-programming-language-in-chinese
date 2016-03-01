@@ -31,6 +31,13 @@ Date        Notes
             * Added information about using keywords as external parameter names
               to the :ref:`LexicalStructure_Keywords` section.
 
+            * Added a note that rethrowing functions can't directly throw errors
+              in the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+
+            * Added a note that property observers are always called
+              when you pass a property as an in-out parameter
+              in the :ref:`Properties_PropertyObservers` section.
+
             * Added a section about error handling
               to the :doc:`../GuidedTour/GuidedTour` chapter.
 
@@ -45,6 +52,10 @@ Date        Notes
 
             * Updated the discussion of custom operators that contain a dot
               in the :ref:`LexicalStructure_Operators` section.
+
+            * Updated figures to show the deallocation process more clearly
+              in the :ref:`AutomaticReferenceCounting.rst` section
+
 
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
