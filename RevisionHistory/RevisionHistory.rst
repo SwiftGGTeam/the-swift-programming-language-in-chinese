@@ -6,7 +6,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
-2016-02-22  * Added information about how to conditionally compile code
+2016-03-21  * Updated for Swift 2.2.
+
+            * Added information about how to conditionally compile code
               depending on the version of Swift being used
               to the :ref:`Statements_BuildConfigurationStatement` section.
 
@@ -19,39 +21,48 @@ Date        Notes
               for Objective-C selectors
               to the :ref:`Expression_SelectorExpression` section.
 
-            * Added information about comparing tuples
-              to the :ref:`BasicOperators_ComparisonOperators` section.
-
-            * Updated the discussion of the ``@objc`` attribute
-              in the :ref:`Attributes_DeclarationAttributes` section to note that
-              enumerations and enumeration cases can use this attribute.
-
             * Updated the discussion of associated types
               to use the ``associatedtype`` keyword
               in the :ref:`Generics_AssociatedTypes`
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
-----------  --------------------------------------------------------------------------
-2016-01-25  * Updated for Swift 2.2.
 
             * Added information about initializers that return ``nil``
               before the instance is fully initialized
               to the :ref:`Initialization_FailableInitializers` section.
 
+            * Added information about comparing tuples
+              to the :ref:`BasicOperators_ComparisonOperators` section.
+
             * Added information about using keywords as external parameter names
               to the :ref:`LexicalStructure_Keywords` section.
+
+            * Updated the discussion of the ``@objc`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated the :ref:`LexicalStructure_Operators` section
+              with discussion of custom operators that contain a dot.
+
+            * Added a note
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
+              that rethrowing functions can't directly throw errors.
+
+            * Added a note to the :ref:`Properties_PropertyObservers` section
+              about property observers being called
+              when you pass a property as an in-out parameter.
 
             * Added a section about error handling
               to the :doc:`../GuidedTour/GuidedTour` chapter.
 
-            * Updated the discussion of custom operators that contain a dot
-              in the :ref:`LexicalStructure_Operators` section.
+            * Updated figures in the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section to show the deallocation process more clearly.
 
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
               and the ``--`` prefix and postfix operators.
 
-            * Removed discussion of ``var`` patterns,
-              variable function arguments,
+            * Removed discussion of variable function arguments
               and the special syntax for curried functions.
 ----------  --------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
