@@ -504,13 +504,13 @@ You have the option to define either or both of these observers on a property:
 * ``didSet`` is called immediately after the new value is stored.
 
 If you implement a ``willSet`` observer,
-it is passed the new property value as a constant parameter.
+it's passed the new property value as a constant parameter.
 You can specify a name for this parameter as part of your ``willSet`` implementation.
 If you don't write the parameter name and parentheses within your implementation,
 the parameter is made available with a default parameter name of ``newValue``.
 
 Similarly, if you implement a ``didSet`` observer,
-it is passed a constant parameter containing the old property value.
+it's passed a constant parameter containing the old property value.
 You can name the parameter or use the default parameter name of ``oldValue``.
 If you assign a value to a property within its own ``didSet`` observer,
 the new value that you assign replaces the one that was just set.
