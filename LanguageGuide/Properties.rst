@@ -619,6 +619,8 @@ and the default name of ``oldValue`` is used instead.
    the ``willSet`` and ``didSet`` observers are always called.
    This is because of the copy-in copy-out memory model for in-out parameters:
    The value is always written back to the property at the end of the function.
+   For a detailed discussion of the behavior of in-out parameters,
+   see :ref:`Declarations_InOutParameters`.
 
 .. assertion:: observersCalledAfterInout
 
