@@ -17,7 +17,7 @@ Because the cases of a ``switch`` statement do not fall through to the next case
 it avoids common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
 including interval matches, tuples, and casts to a specific type.
-Matched values in a ``switch`` case can be bound to temporary constants
+Matched values in a ``switch`` case can be bound to temporary constants or variables
 for use within the case's body,
 and complex matching conditions can be expressed with a ``where`` clause for each case.
 
@@ -768,10 +768,10 @@ and so all other matching cases would be ignored.
 Value Bindings
 ______________
 
-A ``switch`` case can bind the value or values it matches to temporary constants,
+A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
-because the values are “bound” to temporary constants within the case's body.
+because the values are “bound” to temporary constants or variables within the case's body.
 
 The example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,

@@ -1078,10 +1078,10 @@ Optional Binding
 ~~~~~~~~~~~~~~~~
 
 You use :newTerm:`optional binding` to find out whether an optional contains a value,
-and if so, to make that value available as a temporary constant.
+and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with ``if`` and ``while`` statements
 to check for a value inside an optional,
-and to extract that value into a constant,
+and to extract that value into a constant or variable,
 as part of a single action.
 ``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -1118,6 +1118,13 @@ It has already been initialized with the value contained *within* the optional,
 and so there is no need to use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
+You can use both constants and variables with optional binding.
+If you wanted to manipulate the value of ``actualNumber``
+within the first branch of the ``if`` statement,
+you could write ``if var actualNumber`` instead,
+and the value contained within the optional
+would be made available as a variable rather than a constant.
+
 You can include multiple optional bindings in a single ``if`` statement
 and use a ``where`` clause to check for a Boolean condition.
 If any of the values in the optional bindings are ``nil``
@@ -1133,9 +1140,9 @@ the whole optional binding is considered unsuccessful.
 
 .. note::
 
-   Constants created with optional binding in an ``if`` statement.
+   Constants and variables created with optional binding in an ``if`` statement.
    are available only within the body of the ``if`` statement.
-   In contrast, the constants created with a ``guard`` statement
+   In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
    as described in :ref:`ControlFlow_Guard`,
 
