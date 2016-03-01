@@ -455,7 +455,7 @@ You can add property observers to any stored properties you define,
 except for lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
-You don't need to define property observers for non-overridden computed properties,
+You don't need to define property observers for nonoverridden computed properties,
 because you can observe and respond to changes to their value
 in the computed property's setter.
 Property overriding is described in :ref:`Inheritance_Overriding`.
