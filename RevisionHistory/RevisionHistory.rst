@@ -17,19 +17,31 @@ Date        Notes
               only by the names of their arguments
               to the :ref:`Expressions_ExplicitMemberExpression` section.
 
-            * Added information about initializers that return ``nil``
-              before the instance is fully initialized
-              to the :ref:`Initialization_FailableInitializers` section.
-
             * Added information about the ``#selector`` syntax
               for Objective-C selectors
               to the :ref:`Expression_SelectorExpression` section.
+
+            * Updated the discussion of associated types
+              to use the ``associatedtype`` keyword
+              in the :ref:`Generics_AssociatedTypes`
+              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
+
+            * Added information about initializers that return ``nil``
+              before the instance is fully initialized
+              to the :ref:`Initialization_FailableInitializers` section.
 
             * Added information about comparing tuples
               to the :ref:`BasicOperators_ComparisonOperators` section.
 
             * Added information about using keywords as external parameter names
               to the :ref:`LexicalStructure_Keywords` section.
+
+            * Updated the discussion of the ``@objc`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated the :ref:`LexicalStructure_Operators` section
+              with discussion of custom operators that contain a dot.
 
             * Added a note
               to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
@@ -41,18 +53,6 @@ Date        Notes
 
             * Added a section about error handling
               to the :doc:`../GuidedTour/GuidedTour` chapter.
-
-            * Updated the discussion of the ``@objc`` attribute
-              in the :ref:`Attributes_DeclarationAttributes` section to note that
-              enumerations and enumeration cases can use this attribute.
-
-            * Updated the discussion of associated types
-              to use the ``associatedtype`` keyword
-              in the :ref:`Generics_AssociatedTypes`
-              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
-
-            * Updated the :ref:`LexicalStructure_Operators` section
-              with discussion of custom operators that contain a dot.
 
             * Updated figures in the
               :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
