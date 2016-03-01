@@ -56,7 +56,6 @@ Date        Notes
             * Updated figures to show the deallocation process more clearly
               in the :ref:`AutomaticReferenceCounting.rst` section
 
-
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
               and the ``--`` prefix and postfix operators.
