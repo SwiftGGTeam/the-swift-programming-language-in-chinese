@@ -1376,7 +1376,7 @@ the absence of a required external resource,
 or some other condition that prevents initialization from succeeding.
 
 To cope with initialization conditions that can fail,
-define one or more :newTerm:`failable initializers` as part of
+define one or more failable initializers as part of
 a class, structure, or enumeration definition.
 You write a failable initializer
 by placing a question mark after the ``init`` keyword (``init?``).
