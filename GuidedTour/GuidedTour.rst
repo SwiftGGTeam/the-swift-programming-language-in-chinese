@@ -1305,8 +1305,10 @@ the value that the function returned.
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
-that is always executed before a function returns,
+that is always executed,
 regardless of whether an error was thrown.
+The block of code is executed after all code in the function has finished,
+just before the function returns.
 You can use ``defer`` even when there is no error handling,
 to simplify functions that can return from several different places.
 
