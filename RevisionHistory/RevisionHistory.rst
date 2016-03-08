@@ -26,9 +26,9 @@ Date        Notes
               in the :ref:`Generics_AssociatedTypes`
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
 
-            * Added information about initializers that return ``nil``
+            * Updated information about initializers that return ``nil``
               before the instance is fully initialized
-              to the :ref:`Initialization_FailableInitializers` section.
+              in the :ref:`Initialization_FailableInitializers` section.
 
             * Added information about comparing tuples
               to the :ref:`BasicOperators_ComparisonOperators` section.
