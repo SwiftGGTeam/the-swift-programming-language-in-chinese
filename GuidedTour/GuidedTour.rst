@@ -1305,29 +1305,30 @@ the value that the function returned.
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
-that is always executed,
-regardless of whether an error was thrown.
-The block of code is executed after all code in the function has finished,
+that is executed after all other code in the function,
 just before the function returns.
-You can use ``defer`` even when there is no error handling,
-to simplify functions that can return from several different places.
+The code is executed regardless of whether the function throws an error.
+You can use ``defer`` to write setup and cleanup code next to each other,
+even though they need to be executed at different times.
 
 .. testcode:: guided-tour
 
-    -> var teaKettleHeating = false
-    << // teaKettleHeating : Bool = false
-    -> func morningRoutine() throws {
-           teaKettleHeating = true
+    -> var fridgeIsOpen = false
+    -> let fridgeContent = ["milk", "eggs", "leftovers"]
+    ---
+    -> func fridgeContains(itemName: String) -> Bool {
+           fridgeIsOpen = true
            defer {
-               teaKettleHeating = false
+               fridgeIsOpen = false
            }
     ---
-           let newspaper = try sendToPrinter("Lanston")
-    >>     print(newspaper)  // Supress unused-constant warning
-    ->     // Drink tea and read the newspaper.
+           let result = fridgeContent.contains(itemName)
+           return result
        }
-    >> try morningRoutine()
-    << Job sent
+    -> fridgeContains("banana")
+    <$ : Bool = false
+    -> print(fridgeIsOpen)
+    << false
 
 Generics
 --------
