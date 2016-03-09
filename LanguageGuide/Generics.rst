@@ -613,9 +613,9 @@ Associated Types
 ----------------
 
 When defining a protocol,
-it is sometimes useful to declare one or more :newterm:`associated types`
+it is sometimes useful to declare one or more associated types
 as part of the protocol's definition.
-An associated type gives a placeholder name
+An :newterm:`associated type` gives a placeholder name
 to a type that is used as part of the protocol.
 The actual type to use for that associated type
 is not specified until the protocol is adopted.
