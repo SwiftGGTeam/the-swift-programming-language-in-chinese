@@ -16,9 +16,9 @@ to free up resources.
 Swift handles the memory management of instances through
 :newTerm:`automatic reference counting` (:newTerm:`ARC`),
 as described in :doc:`AutomaticReferenceCounting`.
-Typically you don't need to perform manual clean-up when your instances are deallocated.
+Typically you don't need to perform manual cleanup when your instances are deallocated.
 However, when you are working with your own resources,
-you might need to perform some additional clean-up yourself.
+you might need to perform some additional cleanup yourself.
 For example, if you create a custom class to open a file and write some data to it,
 you might need to close the file before the class instance is deallocated.
 
