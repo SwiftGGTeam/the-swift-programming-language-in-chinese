@@ -153,8 +153,8 @@ you write the ``throws`` keyword before the return arrow (``->``).
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
-   -> func f(callback: Void -> Int) { }
-   -> func f(callback: Void throws -> Int) { } // Allowed
+   -> func f(callback: () -> Int) { }
+   -> func f(callback: () throws -> Int) { } // Allowed
 
 .. TODO: Add more assertions to test these behaviors
 
