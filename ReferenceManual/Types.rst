@@ -180,7 +180,7 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
 and return multiple values.
 
-A parameter of the function type ``Void -> T``
+A parameter of the function type ``() -> T``
 (where ``T`` is any type)
 can apply the ``autoclosure`` attribute
 to implicitly create a closure at its call sites.
