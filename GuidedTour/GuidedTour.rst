@@ -1314,7 +1314,9 @@ even though they need to be executed at different times.
 .. testcode:: guided-tour
 
     -> var fridgeIsOpen = false
+    << // fridgeIsOpen : Bool = false
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
+    << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
     -> func fridgeContains(itemName: String) -> Bool {
            fridgeIsOpen = true
