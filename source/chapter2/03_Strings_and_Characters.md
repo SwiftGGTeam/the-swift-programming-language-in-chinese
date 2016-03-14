@@ -29,7 +29,7 @@
 
 
 `String`是例如"hello, world"，"albatross"这样的有序的`Character`（字符）类型的值的集合。通过`String`类型来表示。
-一个`String`的内容可以用变量的方式读取，它包括一个`Character`值的集合。       
+一个`String`的内容可以用许多方式读取，它包括一个`Character`值的集合。       
 创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
 字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。     
 尽管语法简易，但`String`类型是一种快速、现代化的字符串实现。
@@ -248,7 +248,7 @@ let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
 ```swift
 let eAcute: Character = "\u{E9}"                         // é
 let combinedEAcute: Character = "\u{65}\u{301}"          // e 后面加上  ́
-// eAcute 是 é, combinedEAcute 是 é
+// eAcute 是 é, combinedEAcute 是 é
 ```
 
 可扩展的字符群集是一个灵活的方法，用许多复杂的脚本字符表示单一的`Character`值。
@@ -259,7 +259,7 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e 后面加上  ́
 ```swift
 let precomposed: Character = "\u{D55C}"                  // 한
 let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
-// precomposed 是 한, decomposed 是 한
+// precomposed 是 한, decomposed 是 한
 ```
 
 可拓展的字符群集可以使包围记号(例如`COMBINING ENCLOSING CIRCLE`或者`U+20DD`)的标量包围其他 Unicode 标量，作为一个单一的`Character`值：
@@ -290,7 +290,7 @@ print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 
 注意在 Swift 中，使用可拓展的字符群集作为`Character`值来连接或改变字符串时，并不一定会更改字符串的字符数量。
 
-例如，如果你用四个字符的单词`cafe`初始化一个新的字符串，然后添加一个`COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是`4`，因为第四个字符是`é`，而不是`e`：
+例如，如果你用四个字符的单词`cafe`初始化一个新的字符串，然后添加一个`COMBINING ACTUE ACCENT`(`U+0301`)作为字符串的结尾。最终这个字符串的字符数量仍然是`4`，因为第四个字符是`é`，而不是`e`：
 
 ```swift
 var word = "cafe"
@@ -417,7 +417,7 @@ if quotation == sameQuotation {
 // "Voulez-vous un café?" 使用 LATIN SMALL LETTER E WITH ACUTE
 let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
 
-// "Voulez-vous un café?" 使用 LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+// "Voulez-vous un café?" 使用 LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
 let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
 
 if eAcuteQuestion == combinedEAcuteQuestion {
