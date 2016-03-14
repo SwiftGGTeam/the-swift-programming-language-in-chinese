@@ -1118,7 +1118,7 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 The availability condition takes a comma-separated list of platform names and versions.
-Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
+Use ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` for the platform names,
 and include the corresponding version numbers.
 The ``*`` argument is required and specifies that on any other platform,
 the body of the code block guarded by the availability condition
@@ -1139,6 +1139,7 @@ logical operators such as ``&&`` and ``||``.
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``OSX`` | ``OSXApplicationExtension``
     platform-name --> ``watchOS``
+    platform-name --> ``tvOS``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
