@@ -651,6 +651,9 @@ For example:
            completionHandlers.append(completionHandler)
        }
 
+.. Explicit type annotations instead of [Foo]() constructor syntax to work around
+   <rdar://problem/25150801> Array constructor syntax - can't parse arrays of function type
+
 The ``someFunctionWithEscapingClosure(_:)`` function takes a closure as its argument
 and adds it to an array that's declared outside the function.
 If you tried to mark the parameter of this function with ``@noescape``,
@@ -817,6 +820,9 @@ use the ``@autoclosure(escaping)`` form of the attribute.
        }
     <- Now serving Barry!
     <- Now serving Daniella!
+
+.. Explicit type annotations instead of [Foo]() constructor syntax to work around
+   <rdar://problem/25150801> Array constructor syntax - can't parse arrays of function type
 
 In the code above,
 instead of calling the closure passed to it
