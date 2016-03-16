@@ -97,9 +97,9 @@ and to pass it in as an argument to the ``sort(_:)`` method:
    -> func backwards(s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversed = names.sort(backwards)
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-   // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> var reversedNames = names.sort(backwards)
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
 the ``backwards(_:_:)`` function will return ``true``,
@@ -149,11 +149,11 @@ from earlier:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort({ (s1: String, s2: String) -> Bool in
+   -> reversedNames = names.sort({ (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
 is identical to the declaration from the ``backwards(_:_:)`` function.
@@ -172,9 +172,9 @@ it can even be written on a single line:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort( { (s1: String, s2: String) -> Bool in return s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort( { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sort(_:)`` method has remained the same.
 A pair of parentheses still wrap the entire argument for the method.
@@ -198,9 +198,9 @@ can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort( { s1, s2 in return s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort( { s1, s2 in return s1 > s2 } )
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer the parameter types and return type
 when passing a closure to a function or method as an inline closure expression.
@@ -226,9 +226,9 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort( { s1, s2 in s1 > s2 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort( { s1, s2 in s1 > s2 } )
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, the function type of the ``sort(_:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
@@ -254,9 +254,9 @@ because the closure expression is made up entirely of its body:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort( { $0 > $1 } )
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort( { $0 > $1 } )
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` arguments.
 
@@ -276,9 +276,9 @@ and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort(>)
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort(>)
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 For more about operator functions, see :ref:`AdvancedOperators_OperatorFunctions`.
 
@@ -316,9 +316,9 @@ can be written outside of the ``sort(_:)`` method's parentheses as a trailing cl
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort() { $0 > $1 }
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort() { $0 > $1 }
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If a closure expression is provided as the function or method's only argument
 and you provide that expression as a trailing closure,
@@ -327,9 +327,9 @@ after the function or method's name when you call the function:
 
 .. testcode:: closureSyntax
 
-   -> reversed = names.sort { $0 > $1 }
-   >> reversed
-   << // reversed : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> reversedNames = names.sort { $0 > $1 }
+   >> reversedNames
+   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
