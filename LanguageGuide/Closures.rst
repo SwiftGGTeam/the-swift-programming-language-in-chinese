@@ -716,7 +716,7 @@ The code below shows how a closure delays evaluation.
     -> print(customersInLine.count)
     <- 5
     ---
-    -> let customerProvider = { customersInLine.removeAtIndex(0) }
+    -> let customerProvider = { customersInLine.remove(at: 0) }
     << // customerProvider : () -> String = (Function)
     -> print(customersInLine.count)
     <- 5
@@ -726,7 +726,7 @@ The code below shows how a closure delays evaluation.
     -> print(customersInLine.count)
     <- 4
 
-.. Using removeAtIndex(_:) instead of popFirst() because the latter only works
+.. Using remove(at:) instead of popFirst() because the latter only works
    with ArraySlice, not with Array:
        customersInLine[0..<3].popLast()     // fine
        customersInLine[0..<3].popFirst()    // fine
@@ -758,7 +758,7 @@ when you pass a closure as an argument to a function.
     -> func serveCustomer(customerProvider: () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer( { customersInLine.removeAtIndex(0) } )
+    -> serveCustomer( { customersInLine.remove(at: 0) } )
     <- Now serving Alex!
 
 The ``serveCustomer(_:)`` function in the listing above
@@ -782,7 +782,7 @@ with the ``@autoclosure`` attribute.
     -> func serveCustomer(@autoclosure customerProvider: () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer(customersInLine.removeAtIndex(0))
+    -> serveCustomer(customersInLine.remove(at: 0))
     <- Now serving Ewa!
 
 .. note::
@@ -807,8 +807,8 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     -> func collectCustomerProviders(@autoclosure(escaping) customerProvider: () -> String) {
            customerProviders.append(customerProvider)
        }
-    -> collectCustomerProviders(customersInLine.removeAtIndex(0))
-    -> collectCustomerProviders(customersInLine.removeAtIndex(0))
+    -> collectCustomerProviders(customersInLine.remove(at: 0))
+    -> collectCustomerProviders(customersInLine.remove(at: 0))
     ---
     -> print("Collected \(customerProviders.count) closures.")
     <- Collected 2 closures.
