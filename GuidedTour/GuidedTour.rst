@@ -605,7 +605,7 @@ you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = numbers.sort { $0 > $1 }
+    -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
