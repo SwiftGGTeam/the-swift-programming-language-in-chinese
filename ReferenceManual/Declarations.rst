@@ -889,7 +889,7 @@ and handle errors in the ``catch`` clause by throwing a different error.
 
 .. assertion:: rethrows-cant-throw
 
-   -> enum SomeError: ErrorType { case C }
+   -> enum SomeError: ErrorProtocol { case C }
    -> func functionWithCallback(callback: () throws -> Int) rethrows {
           do {
               try callback()

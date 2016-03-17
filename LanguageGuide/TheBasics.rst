@@ -1250,7 +1250,7 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 
 .. testcode:: errorHandling
 
-   >> enum Error: ErrorType {
+   >> enum Error: ErrorProtocol {
    >>    case SomeError
    >> }
    >> let condition = true
@@ -1290,7 +1290,7 @@ to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
 
-   >> enum Error: ErrorType {
+   >> enum Error: ErrorProtocol {
    >>     case OutOfCleanDishes
    >>     case MissingIngredients([String])
    >> }
