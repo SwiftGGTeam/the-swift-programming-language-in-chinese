@@ -88,7 +88,7 @@ For-In Statement
 
 A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
-that conforms to the ``SequenceType`` protocol.
+that conforms to the ``Sequence`` protocol.
 
 A ``for``-``in`` statement has the following form:
 
