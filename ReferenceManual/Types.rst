@@ -332,9 +332,9 @@ In other words, the following two declarations are equivalent:
 .. assertion:: dictionary-literal
 
     >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary1 : [String : Int] = ["Paul": 39, "Alex": 31]
+    << // someDictionary1 : [String : Int] = ["Alex": 31, "Paul": 39]
     >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    << // someDictionary2 : Dictionary<String, Int> = ["Paul": 39, "Alex": 31]
+    << // someDictionary2 : Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     >> someDictionary1 == someDictionary2
     <$ : Bool = true
 
