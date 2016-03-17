@@ -273,7 +273,7 @@ see :ref:`Enumerations_AssociatedValues`.
 Optional Pattern
 ----------------
 
-An :newTerm:`optional pattern` matches values wrapped in a ``Some(Wrapped)`` case
+An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
 of an ``Optional<Wrapped>`` or ``ImplicitlyUnwrappedOptional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
@@ -287,7 +287,7 @@ the following are equivalent:
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
    -> // Match using an enumeration case pattern
-   -> if case .Some(let x) = someOptional {
+   -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42

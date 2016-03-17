@@ -1357,12 +1357,12 @@ as well as classes, enumerations, and structures.
 
     // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<Wrapped> {
-           case None
-           case Some(Wrapped)
+           case none
+           case some(Wrapped)
        }
-    -> var possibleInteger: OptionalValue<Int> = .None
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
-    -> possibleInteger = .Some(100)
+    -> var possibleInteger: OptionalValue<Int> = .none
+    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
+    -> possibleInteger = .some(100)
 
 Use ``where`` after the type name
 to specify a list of requirements ---
