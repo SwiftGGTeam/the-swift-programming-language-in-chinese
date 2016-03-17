@@ -1529,7 +1529,7 @@ to the ``TextRepresentable`` protocol from the example above.
 
 .. testcode:: protocols
 
-   -> extension Collection where Generator.Element: TextRepresentable {
+   -> extension Collection where Iterator.Element: TextRepresentable {
           var textualDescription: String {
               let itemsAsText = self.map { $0.textualDescription }
               return "[" + itemsAsText.joinWithSeparator(", ") + "]"
