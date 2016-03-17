@@ -1523,13 +1523,13 @@ using a ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 For instance,
-you can define an extension to the ``CollectionType`` protocol
+you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
 to the ``TextRepresentable`` protocol from the example above.
 
 .. testcode:: protocols
 
-   -> extension CollectionType where Generator.Element: TextRepresentable {
+   -> extension Collection where Generator.Element: TextRepresentable {
           var textualDescription: String {
               let itemsAsText = self.map { $0.textualDescription }
               return "[" + itemsAsText.joinWithSeparator(", ") + "]"
@@ -1551,7 +1551,7 @@ and an array of ``Hamster`` values:
    -> let mauriceTheHamster = Hamster(name: "Maurice")
    -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 
-Because ``Array`` conforms to ``CollectionType``
+Because ``Array`` conforms to ``Collection``
 and the array's elements conform to the ``TextRepresentable`` protocol,
 the array can use the ``textualDescription`` property
 to get a textual representation of its contents:
