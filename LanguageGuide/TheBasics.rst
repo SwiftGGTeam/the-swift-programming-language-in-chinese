@@ -1250,7 +1250,7 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 
 .. testcode:: errorHandling
 
-   >> enum Error: ErrorProtocol {
+   >> enum SimpleError: ErrorProtocol {
    >>    case SomeError
    >> }
    >> let condition = true
@@ -1258,7 +1258,7 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
    -> func canThrowAnError() throws {
          // this function may or may not throw an error
    >>    if condition {
-   >>       throw Error.SomeError
+   >>       throw SimpleError.SomeError
    >>    }
       }
 
@@ -1290,7 +1290,7 @@ to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
 
-   >> enum Error: ErrorProtocol {
+   >> enum SandwichError: ErrorProtocol {
    >>     case OutOfCleanDishes
    >>     case MissingIngredients([String])
    >> }
@@ -1304,9 +1304,9 @@ to respond to different error conditions:
    -> do {
           try makeASandwich()
           eatASandwich()
-      } catch Error.OutOfCleanDishes {
+      } catch SandwichError.OutOfCleanDishes {
           washDishes()
-      } catch Error.MissingIngredients(let ingredients) {
+      } catch SandwichError.MissingIngredients(let ingredients) {
           buyGroceries(ingredients)
       }
 
@@ -1320,9 +1320,9 @@ any errors that are thrown will be propagated
 to the provided ``catch`` clauses.
 
 If no error is thrown, the ``eatASandwich()`` function is called.
-If an error is thrown and it matches the ``Error.OutOfCleanDishes`` case,
+If an error is thrown and it matches the ``SandwichError.OutOfCleanDishes`` case,
 then the ``washDishes()`` function will be called.
-If an error is thrown and it matches the ``Error.MissingIngredients`` case,
+If an error is thrown and it matches the ``SandwichError.MissingIngredients`` case,
 then the ``buyGroceries(_:)`` function is called
 with the associated ``[String]`` value captured by the ``catch`` pattern.
 
