@@ -100,7 +100,7 @@ A ``for``-``in`` statement has the following form:
 
 The ``generate()`` method is called on the *collection* expression
 to obtain a value of a generator type---that is,
-a type that conforms to the ``GeneratorType`` protocol.
+a type that conforms to the ``IteratorProtocol`` protocol.
 The program begins executing a loop
 by calling the ``next()`` method on the stream.
 If the value returned is not ``None``,
