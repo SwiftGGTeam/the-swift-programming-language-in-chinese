@@ -799,20 +799,20 @@ Conditional statements such as the ``if`` statement are covered in more detail i
 Swift's type safety prevents non-Boolean values from being substituted for ``Bool``.
 The following example reports a compile-time error:
 
-.. testcode:: booleansNotBooleanType
+.. testcode:: booleansNotBoolean
 
    -> let i = 1
    << // i : Int = 1
    -> if i {
          // this example will not compile, and will report an error
       }
-   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'BooleanType'
+   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'Boolean'
    !! if i {
    !!   ^
 
 However, the alternative example below is valid:
 
-.. testcode:: booleansIsBooleanType
+.. testcode:: booleansIsBoolean
 
    -> let i = 1
    << // i : Int = 1
@@ -829,12 +829,12 @@ this approach avoids accidental errors
 and ensures that the intention of a particular section of code is always clear.
 
 .. TODO: add a note to this effect once we have some documentation
-   that actually describes how BooleanType works:
+   that actually describes how Boolean works:
    Strictly speaking, an ``if`` statement's condition expression
-   can be of any type that conforms to the ``BooleanType`` protocol.
+   can be of any type that conforms to the ``Boolean`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
    but there are others, such as optionals, described below.
-   The ``BooleanType`` protocol is described in <link>.
+   The ``Boolean`` protocol is described in <link>.
 
 .. _TheBasics_Tuples:
 

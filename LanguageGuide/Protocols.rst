@@ -1577,7 +1577,7 @@ to get a textual representation of its contents:
 .. TODO: Class-only protocols
 .. TODO: @obj-c protocols
 .. TODO: Standard-library protocols such as Sequence, Equatable etc.?
-.. TODO: Show how to make a custom type conform to BooleanType or some other protocol
+.. TODO: Show how to make a custom type conform to Boolean or some other protocol
 .. TODO: Show a protocol being used by an enumeration
 .. TODO: accessing protocol methods, properties etc.
    through a constant or variable that is *just* of protocol type
