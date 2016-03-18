@@ -16,7 +16,7 @@ only when certain conditions are met,
 and control transfer statements provide a way to alter the order in which code is executed.
 In addition, Swift provides a ``do`` statement to introduce scope,
 and catch and handle errors,
-and a ``defer`` statement for running clean-up actions just before the current scope exits.
+and a ``defer`` statement for running cleanup actions just before the current scope exits.
 
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
@@ -63,8 +63,9 @@ Loop Statements
 
 Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-Swift has four loop statements:
-a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
+Swift has three loop statements:
+a ``for``-``in`` statement,
+a ``while`` statement,
 and a ``repeat``-``while`` statement.
 
 Control flow in a loop statement can be changed by a ``break`` statement
@@ -75,71 +76,9 @@ and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement
 
     Grammar of a loop statement
 
-    loop-statement --> for-statement
     loop-statement --> for-in-statement
     loop-statement --> while-statement
     loop-statement --> repeat-while-statement
-
-
-.. _Statements_ForStatement:
-
-For Statement
-~~~~~~~~~~~~~
-
-A ``for`` statement allows a block of code to be executed repeatedly
-while incrementing a counter,
-as long as a condition remains true.
-
-A ``for`` statement has the following form:
-
-.. syntax-outline::
-
-    for <#initialization#>; <#condition#>; <#increment#> {
-       <#statements#>
-    }
-
-The semicolons between the *initialization*, *condition*, and *increment* are required.
-The braces around the *statements* in the body of the loop are also required.
-
-A ``for`` statement is executed as follows:
-
-1. The *initialization* is evaluated only once.
-   It is typically used to declare and initialize any variables
-   that are needed for the remainder of the loop.
-
-2. The *condition* expression is evaluated.
-
-   If ``true``,
-   the program executes the *statements*,
-   and execution continues to step 3.
-   If ``false``,
-   the program does not execute the *statements* or the *increment* expression,
-   and the program is finished executing the ``for`` statement.
-
-3. The *increment* expression is evaluated,
-   and execution returns to step 2.
-
-Variables defined within the *initialization*
-are valid only within the scope of the ``for`` statement itself.
-
-The value of the *condition* expression must have a type that conforms to
-the ``BooleanType`` protocol.
-
-.. langref-grammar
-
-    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
-    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
-    stmt-for-c-style-init ::= decl-var
-    stmt-for-c-style-init ::= expr
-
-.. syntax-grammar::
-
-    Grammar of a for statement
-
-    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
-    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
-
-    for-init --> variable-declaration | expression-list
 
 
 .. _Statements_For-InStatement:
@@ -468,7 +407,7 @@ tuples, instances of custom classes, and optionals.
 The value of the *control expression* can even be matched to the value of a case in an enumeration
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
-see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
+see :ref:`ControlFlow_Switch` in :doc:`../LanguageGuide/ControlFlow`.
 
 A ``switch`` case can optionally contain a where clause after each pattern.
 A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
@@ -582,14 +521,14 @@ You can nest labeled statements, but the name of each statement label must be un
 
 For more information and to see examples
 of how to use statement labels,
-see :ref:`ControlFlow_LabeledStatements` in the :doc:`../LanguageGuide/ControlFlow` chapter.
+see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
 .. assertion:: backtick-identifier-is-legal-label
 
    -> var i = 0
    << // i : Int = 0
    -> `return`: while i < 100 {
-          i++
+          i += 1
           if i == 10 {
               break `return`
           }
@@ -666,7 +605,7 @@ of code following the enclosing loop or ``switch`` statement, if any.
 
 For examples of how to use a ``break`` statement,
 see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -712,7 +651,7 @@ because the increment expression is evaluated after the execution of the loop's 
 
 For examples of how to use a ``continue`` statement,
 see :ref:`ControlFlow_Continue` and :ref:`ControlFlow_LabeledStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -747,7 +686,7 @@ whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
 see :ref:`ControlFlow_ControlTransferStatements`
-in the :doc:`../LanguageGuide/ControlFlow` chapter.
+in :doc:`../LanguageGuide/ControlFlow`.
 
 .. langref-grammar
 
@@ -808,59 +747,6 @@ it can be used only to return from a function or method that does not return a v
     return-statement --> ``return`` expression-OPT
 
 
-.. _Statements_AvailabilityCondition:
-
-Availability Condition
-~~~~~~~~~~~~~~~~~~~~~~
-
-An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
-and ``guard`` statement to query the availability of APIs at runtime,
-based on specified platforms arguments.
-
-An availability condition has the following form:
-
-.. syntax-outline::
-
-   if #available(<#platform name#> <#version#>, <#...#>, *) {
-       <#statements to execute if the APIs are available#>
-   } else {
-       <#fallback statements to execute if the APIs are unavailable#>
-   }
-
-You use an availability condition to execute a block of code,
-depending on whether the APIs you want to use are available at runtime.
-The compiler uses the information from the availability condition
-when it verifies that the APIs in that block of code are available.
-
-The availability condition takes a comma-separated list of platform names and versions.
-Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
-and include the corresponding version numbers.
-The ``*`` argument is required and specifies that on any other platform,
-the body of the code block guarded by the availability condition
-executes on the minimum deployment target specified by your target.
-
-Unlike Boolean conditions, you can't combine availability conditions using
-logical operators such as ``&&`` and ``||``.
-
-.. syntax-grammar::
-
-    Grammar of an availability condition
-
-    availability-condition --> ``#available`` ``(`` availability-arguments ``)``
-    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
-    availability-argument --> platform-name platform-version
-    availability-argument --> ``*``
-
-    platform-name --> ``iOS`` | ``iOSApplicationExtension``
-    platform-name --> ``OSX`` | ``OSXApplicationExtension``
-    platform-name --> ``watchOS``
-    platform-version --> decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits
-    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
-
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
-
-
 .. _Statements_ThrowStatement:
 
 Throw Statement
@@ -886,7 +772,7 @@ the ``ErrorType`` protocol.
 
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
-in the :doc:`../LanguageGuide/ErrorHandling` chapter.
+in :doc:`../LanguageGuide/ErrorHandling`.
 
 .. langref-grammar
 
@@ -981,8 +867,9 @@ A ``do`` statement has the following form:
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
 If such a determination can be made, the error is considered handled.
-Otherwise, the error automatically propagates out of the containing scope,
-either to an enclosing ``catch`` clause or out of the throwing function must handle the error,
+Otherwise, the error can propagate out of the containing scope,
+which means
+the error must be handled by an enclosing ``catch`` clause
 or the containing function must be declared with ``throws``.
 
 To ensure that an error is handled,
@@ -1047,20 +934,46 @@ evaluates to ``true`` at compile time.
 
 The *build configuration* can include the ``true`` and ``false`` Boolean literals,
 an identifier used with the ``-D`` command line flag, or any of the platform
-testing functions listed in the table below.
+or language-version testing functions listed in the table below.
 
-====================  =========================================
+====================  ===================================================
 Function              Valid arguments
-====================  =========================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``
+====================  ===================================================
+``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
-====================  =========================================
+``swift()``           ``>=`` followed by a version number
+====================  ===================================================
+
+The version number for the ``swift()`` language-version testing function
+consists of a major and minor number, separated by a dot (``.``).
+There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
-   The ``arch(arm)`` build configuration does not return ``true`` for ARM 64 devices.
-   The ``arch(i386)`` build configuration returns ``true``
+   The ``arch(arm)`` platform testing function does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` platform testing function returns ``true``
    when code is compiled for the 32–bit iOS simulator.
+
+.. assertion:: pound-if-swift-version
+
+   -> #if swift(>=2.1)
+          print(1)
+      #endif
+   << 1
+   -> #if swift(>=2.1) && true
+          print(2)
+      #endif
+   << 2
+   -> #if swift(>=2.1) && false
+          print(3)
+      #endif
+   -> #if swift(>= 2.1)
+          print(1)
+      #endif
+   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
+   !!-
 
 You can combine build configurations using the logical operators
 ``&&``, ``||``, and ``!``
@@ -1086,7 +999,14 @@ have the following form:
 .. note::
 
     Each statement in the body of a build configuration statement is parsed
-    even if it's not complied.
+    even if it's not compiled.
+    However, there is an exception
+    if the build configuration includes a language-version testing function:
+    The statements are parsed
+    only if the compiler's version of Swift matches
+    what is specified in the language-version testing function.
+    This exception ensures that an older compiler doesn't attempt to parse
+    syntax introduced in a newer version of Swift.
 
 .. syntax-grammar::
 
@@ -1098,6 +1018,7 @@ have the following form:
     build-configuration-else-clause --> ``#else`` statements-OPT
 
     build-configuration --> platform-testing-function
+    build-configuration --> language-version-testing-function
     build-configuration --> identifier
     build-configuration --> boolean-literal
     build-configuration --> ``(`` build-configuration ``)``
@@ -1107,8 +1028,10 @@ have the following form:
 
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
+    language-version-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+    swift-version --> decimal-digits ``.`` decimal-digits
 
 .. Testing notes:
 
@@ -1141,17 +1064,22 @@ A line control statement has the following form:
 
     #line <#line number#> <#filename#>
 
-A line control statement changes the values of the ``__LINE__`` and ``__FILE__``
+A line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of ``__LINE__``
+The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
-The *filename* changes the value of ``__FILE__`` and is a string literal.
+The *filename* changes the value of ``#file`` and is a string literal.
 
 You can reset the source code location back to the default line numbering and filename
 by writing a line control statement without specifying a *line number* and *filename*.
 
-A line control statement must appear on its own line
+The ``#line`` token has two meanings depending on how it is used.
+If it is used as a line control statement,
+it must appear on its own line
 and can't be the last line of a source code file.
+If it appears elsewhere in a line,
+it is understood as the special literal described in
+:ref:`Expressions_LiteralExpression`.
 
 .. syntax-grammar::
 
@@ -1161,3 +1089,59 @@ and can't be the last line of a source code file.
     line-control-statement --> ``#line`` line-number file-name
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
+
+
+.. _Statements_AvailabilityCondition:
+
+Availability Condition
+----------------------
+
+An :newTerm:`availability condition` is used as a condition of an ``if``, ``while``,
+and ``guard`` statement to query the availability of APIs at runtime,
+based on specified platforms arguments.
+
+An availability condition has the following form:
+
+.. syntax-outline::
+
+   if #available(<#platform name#> <#version#>, <#...#>, *) {
+       <#statements to execute if the APIs are available#>
+   } else {
+       <#fallback statements to execute if the APIs are unavailable#>
+   }
+
+.. x*  (Junk * to fix syntax highlighting from previous listing)
+
+You use an availability condition to execute a block of code,
+depending on whether the APIs you want to use are available at runtime.
+The compiler uses the information from the availability condition
+when it verifies that the APIs in that block of code are available.
+
+The availability condition takes a comma-separated list of platform names and versions.
+Use ``iOS``, ``OSX``, and ``watchOS`` for the platform names,
+and include the corresponding version numbers.
+The ``*`` argument is required and specifies that on any other platform,
+the body of the code block guarded by the availability condition
+executes on the minimum deployment target specified by your target.
+
+Unlike Boolean conditions, you can't combine availability conditions using
+logical operators such as ``&&`` and ``||``.
+
+.. syntax-grammar::
+
+    Grammar of an availability condition
+
+    availability-condition --> ``#available`` ``(`` availability-arguments ``)``
+    availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
+    availability-argument --> platform-name platform-version
+    availability-argument --> ``*``
+
+    platform-name --> ``iOS`` | ``iOSApplicationExtension``
+    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``watchOS``
+    platform-version --> decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits
+    platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
+
+.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+

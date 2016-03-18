@@ -334,7 +334,7 @@ When you don't, Swift will automatically assign the values for you.
 
 For instance, when integers are used for raw values,
 the implicit value for each case is one more than the previous case.
-If the first case doesn't have a value set, it's value is ``0``.
+If the first case doesn't have a value set, its value is ``0``.
 
 The enumeration below is a refinement of the earlier ``Planet`` enumeration,
 with integer raw values to represent each planet's order from the sun:
@@ -409,13 +409,13 @@ or “optional ``Planet``.”
    because not every raw value will return an enumeration case.
    For more information, see :ref:`Declarations_FailableInitializers`.
 
-If you try to find a planet with a position of ``9``,
+If you try to find a planet with a position of ``11``,
 the optional ``Planet`` value returned by the raw value initializer will be ``nil``:
 
 .. testcode:: rawValues
 
-   -> let positionToFind = 9
-   << // positionToFind : Int = 9
+   -> let positionToFind = 11
+   << // positionToFind : Int = 11
    -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
             case .Earth:
@@ -426,12 +426,12 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
       } else {
          print("There isn't a planet at position \(positionToFind)")
       }
-   <- There isn't a planet at position 9
+   <- There isn't a planet at position 11
 
-This example uses optional binding to try to access a planet with a raw value of ``9``.
-The statement ``if let somePlanet = Planet(rawValue: 9)`` creates an optional ``Planet``,
+This example uses optional binding to try to access a planet with a raw value of ``11``.
+The statement ``if let somePlanet = Planet(rawValue: 11)`` creates an optional ``Planet``,
 and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
-In this case, it is not possible to retrieve a planet with a position of ``9``,
+In this case, it is not possible to retrieve a planet with a position of ``11``,
 and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
@@ -442,29 +442,12 @@ and so the ``else`` branch is executed instead.
 Recursive Enumerations
 ----------------------
 
-Enumerations work well for modeling data
-when there is a fixed number of possibilities that need to be considered,
-such as the operations used for doing simple integer arithmetic.
-These operations let you combine simple arithmetic expressions
-that are made up of integers such as ``5``
-into more complex ones such as ``5 + 4``.
-
-One important characteristic of arithmetic expressions
-is that they can be nested.
-For example, the expression ``(5 + 4) * 2``
-has a number on the right hand side of the multiplication
-and another expression on the left hand side of the multiplication.
-Because the data is nested,
-the enumeration used to store the data also needs to support nesting ---
-this means the enumeration needs to be recursive.
-
 A :newTerm:`recursive enumeration` is an enumeration
 that has another instance of the enumeration
 as the associated value for one or more of the enumeration cases.
-The compiler has to insert a layer of indirection
-when it works with recursive enumerations.
 You indicate that an enumeration case is recursive
-by writing ``indirect`` before it.
+by writing ``indirect`` before it,
+which tells the compiler to insert the necessary layer of indirection.
 
 For example, here is an enumeration that stores simple arithmetic expressions:
 
@@ -475,8 +458,6 @@ For example, here is an enumeration that stores simple arithmetic expressions:
            indirect case Addition(ArithmeticExpression, ArithmeticExpression)
            indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
        }
-
-.. TODO Conceptual art would really help here.
 
 You can also write ``indirect`` before the beginning of the enumeration,
 to enable indirection for all of the enumeration's cases that need it:
@@ -496,6 +477,25 @@ and the multiplication of two expressions.
 The ``Addition`` and ``Multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
+For example, the expression ``(5 + 4) * 2``
+has a number on the right hand side of the multiplication
+and another expression on the left hand side of the multiplication.
+Because the data is nested,
+the enumeration used to store the data also needs to support nesting ---
+this means the enumeration needs to be recursive.
+The code below shows the ``ArithmeticExpression`` recursive enumeration
+being created for ``(5 + 4) * 2``:
+
+.. testcode:: recursive-enum
+
+    -> let five = ArithmeticExpression.Number(5)
+    -> let four = ArithmeticExpression.Number(4)
+    -> let sum = ArithmeticExpression.Addition(five, four)
+    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
 
 A recursive function is a straightforward way
 to work with data that has a recursive structure.
@@ -505,24 +505,15 @@ For example, here's a function that evaluates an arithmetic expression:
 
     -> func evaluate(expression: ArithmeticExpression) -> Int {
            switch expression {
-               case .Number(let value):
+               case let .Number(value):
                    return value
-               case .Addition(let left, let right):
+               case let .Addition(left, right):
                    return evaluate(left) + evaluate(right)
-               case .Multiplication(let left, let right):
+               case let .Multiplication(left, right):
                    return evaluate(left) * evaluate(right)
            }
        }
     ---
-    // evaluate (5 + 4) * 2
-    -> let five = ArithmeticExpression.Number(5)
-    -> let four = ArithmeticExpression.Number(4)
-    -> let sum = ArithmeticExpression.Addition(five, four)
-    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
-    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
-    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
-    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
-    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
     -> print(evaluate(product))
     <- 18
 

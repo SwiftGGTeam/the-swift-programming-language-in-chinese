@@ -59,7 +59,7 @@ as the following examples show:
 .. testcode:: type-annotation
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
-    << // someTuple : (Double, Double) = (3.14159, 2.71828)
+    << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
 In the first example,
@@ -139,7 +139,7 @@ the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
-``Void`` is a typealias for the empty tuple type, ``()``.
+``Void`` is a type alias for the empty tuple type, ``()``.
 If there is only one element inside the parentheses,
 the type is simply the type of that element.
 For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
@@ -180,12 +180,14 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
 and return multiple values.
 
-A parameter declaration for
-a function type with a parameter type of ``Void``
+A parameter of the function type ``() -> T``
+(where ``T`` is any type)
 can apply the ``autoclosure`` attribute
-to capture an implicit closure over a specified expression instead of the expression itself.
-This provides a syntactically convenient way to defer the evaluation of an expression
-until its value is used in the function body.
+to implicitly create a closure at its call sites.
+This provides a syntactically convenient way
+to defer the evaluation of an expression
+without needing to write an explicit closure
+when you call the function.
 For an example of an autoclosure function type parameter,
 see :ref:`Closures_Autoclosures`.
 
@@ -201,18 +203,18 @@ To specify an in-out parameter, prefix the parameter type with the ``inout`` key
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
-The function types of a curried function are grouped from right to left. For instance,
-the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
+If a function type includes more than a single arrow (``->``),
+the function types are grouped from right to left.
+For example,
+the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)`` ---
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
-Curried function are described in :ref:`Declarations_CurriedFunctions`.
 
 Function types that can throw an error must be marked with the ``throws`` keyword,
 and function types that can rethrow an error must be marked with the ``rethrows`` keyword.
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
-For curried functions, the ``throws`` keyword applies only to the innermost function.
 Throwing and rethrowing functions are described in
 :ref:`Declarations_ThrowingFunctionsAndMethods`
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
@@ -573,7 +575,7 @@ as the following example shows:
     -> let someInstance: SomeBaseClass = SomeSubClass()
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
-    -> // and the runtime type of someInstance is SomeBaseClass
+    -> // and the runtime type of someInstance is SomeSubClass
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 
@@ -583,11 +585,11 @@ whether an instance's runtime type is the same as its compile-time type.
 .. testcode:: metatype-type
 
     -> if someInstance.dynamicType === someInstance.self {
-          print("The dynamic type of someInstance is SomeBaseCass")
+          print("The dynamic and static type of someInstance are the same")
        } else {
-          print("The dynamic type of someInstance isn't SomeBaseClass")
+          print("The dynamic and static type of someInstance are different")
        }
-    <- The dynamic type of someInstance isn't SomeBaseClass
+    <- The dynamic and static type of someInstance are different
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
@@ -702,7 +704,7 @@ causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` ins
     -> let e = 2.71828 // The type of e is inferred to be Double.
     << // e : Double = 2.71828
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828
+    << // eFloat : Float = 2.71828008
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

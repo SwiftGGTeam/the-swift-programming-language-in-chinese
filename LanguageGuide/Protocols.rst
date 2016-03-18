@@ -676,7 +676,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
       }
 
 For a description of the *Snakes and Ladders* gameplay,
-see the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter.
+see :ref:`ControlFlow_Break` section of the :doc:`ControlFlow`.
 
 This version of the game is wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
@@ -728,7 +728,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             print("The game is using a \(game.dice.sides)-sided dice")
          }
          func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-            ++numberOfTurns
+            numberOfTurns += 1
             print("Rolled a \(diceRoll)")
          }
          func gameDidEnd(game: DiceGame) {
@@ -1243,7 +1243,7 @@ For example,
 a method of type ``(Int) -> String`` becomes ``((Int) -> String)?``.
 Note that the entire function type
 is wrapped in the optional,
-not method's the return value.
+not the method's return value.
 
 An optional protocol requirement can be called with optional chaining,
 to account for the possibility that the requirement was not implemented
@@ -1576,7 +1576,6 @@ to get a textual representation of its contents:
 
 .. TODO: Class-only protocols
 .. TODO: @obj-c protocols
-.. TODO: Curried functions in protocols
 .. TODO: Standard-library protocols such as Sequence, Equatable etc.?
 .. TODO: Show how to make a custom type conform to BooleanType or some other protocol
 .. TODO: Show a protocol being used by an enumeration

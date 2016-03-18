@@ -537,8 +537,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> typealias-head typealias-assignment
-    typealias-head --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -578,10 +577,8 @@ The type of each parameter must be included ---
 it can't be inferred.
 Although the parameters to a function are constants by default,
 you can write ``let`` in front of a parameter's name to emphasize this behavior.
-Write ``var`` in front of a parameter's name to make it a variable,
-scoping any changes made to the variable just to the function body,
-or write ``inout`` to make those changes also apply
-to the argument that was passed in the caller's scope.
+If you write ``inout`` in front of a parameter's name,
+the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
 
@@ -679,8 +676,9 @@ The optimized behavior is known as :newTerm:`call by reference`;
 it satisfies all of the requirements
 of the copy-in copy-out model
 while removing the overhead of copying.
-Do not depend on the behavioral differences
-between copy-in copy-out and call by reference.
+Write your code using the model given by copy-in copy-out,
+without depending on the call-by-reference optimization,
+so that it behaves correctly with or without the optimization.
 
 Do not access the value that was passed as an in-out argument,
 even if the original argument is available in the current scope.
@@ -831,112 +829,6 @@ rather than an instance of a type
 must be marked with the ``static`` declaration modifier for enumerations and structures
 or the ``class`` declaration modifier for classes.
 
-.. _Declarations_CurriedFunctions:
-
-Curried Functions
-~~~~~~~~~~~~~~~~~
-
-You can rewrite a function that takes multiple parameters as an equivalent function
-that takes a single parameter and returns a function.
-The returned function takes the next parameter and returns another function.
-This continues until there are no remaining parameters,
-at which point the last function returns the return value of the original multiparameter function.
-The rewritten function is known as a :newTerm:`curried function`.
-For example, you can rewrite the ``addTwoInts(a:b:)`` function as the equivalent ``addTwoIntsCurried(a:)(b:)`` function:
-
-.. testcode:: curried-function
-
-    -> func addTwoInts(a a: Int, b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-          func addTheOtherInt(b: Int) -> Int {
-             return a + b
-          }
-          return addTheOtherInt
-       }
-
-The ``addTwoInts(a:b:)`` function takes two integers and returns the result of adding them together.
-The ``addTwoIntsCurried(a:)(b:)`` function takes a single integer, and returns another function
-that takes the second integer and adds it to the first.
-(The nested function captures the value of the first integer argument from the enclosing
-function.)
-
-In Swift, you can write a curried function more concisely using the following syntax:
-
-.. syntax-outline::
-
-    func <#function name#>(<#parameter#>)(<#parameter#>) -> <#return type#> {
-       <#statements#>
-    }
-
-For example, the following two declarations are equivalent:
-
-.. testcode:: curried-function-syntactic-sugar
-
-    -> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-          return a + b
-       }
-    -> func addTwoIntsCurried(a a: Int) -> (Int -> Int) {
-          func addTheOtherInt(b: Int) -> Int {
-             return a + b
-          }
-          return addTheOtherInt
-       }
-
-In order to use the ``addTwoIntsCurried(a:)(b:)`` function in the same way
-as the noncurried ``addTwoInts(a:b:)`` function,
-you must call the ``addTwoIntsCurried(a:)(b:)`` function with the first integer argument
-and then call its returned function with the second integer argument:
-
-.. testcode:: curried-function-usage
-
-    >> func addTwoInts(a a: Int, b: Int) -> Int {
-    >>    return a + b
-    >> }
-    >> func addTwoIntsCurried(a a: Int)(b: Int) -> Int {
-    >>    return a + b
-    >> }
-    -> addTwoInts(a: 4, b: 5)
-    <$ : Int = 9
-    -> // returns a value of 9
-    -> addTwoIntsCurried(a: 4)(b: 5)
-    <$ : Int = 9
-    -> // returns a value of 9
-
-Although you must provide the arguments to a noncurried function all at once in a single call,
-you can use the curried form of a function to provide arguments in several function calls,
-one at a time (even in different places in your code).
-This is known as :newTerm:`partial function application`.
-For example, you can apply the ``addTwoIntsCurried(a:)(b:)`` function to an integer argument ``1``
-and assign the result to the constant ``plusOne``:
-
-.. testcode:: curried-function
-
-    -> let plusOne = addTwoIntsCurried(a: 1)
-    << // plusOne : Int -> Int = (Function)
-    -> // plusOne is a function of type Int -> Int
-
-Because ``plusOne`` refers to the ``addTwoIntsCurried(a:)(b:)`` function with its argument bound
-as the value ``1``, calling ``plusOne`` with an integer argument simply adds ``1`` to the argument.
-
-.. testcode:: curried-function
-
-    -> plusOne(10)
-    <$ : Int = 11
-    -> // returns a value of 11
-
-.. assertion:: curried-function-param-labels
-
-   // As with regular functions and methods, by default, the first parameter
-   // gets no label and everything that follows gets a label.
-   -> func add(a: Int)(b: Int) -> Int { return a + b }
-   -> add(1)(2)
-   !! <REPL Input>:1:8: error: missing argument label 'b:' in call
-   !! add(1)(2)
-   !!       ^
-   !!       b: 
-
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
@@ -954,12 +846,11 @@ They have the following form:
     }
 
 Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` expression
-(that is, in the scope a ``try`` or ``try!`` operator).
+(that is, in the scope of a ``try`` or ``try!`` operator).
 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
-For curried functions, the ``throws`` keyword applies only to the innermost function.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -976,7 +867,7 @@ Rethrowing Functions and Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A function or method can be declared with the ``rethrows`` keyword
-to indicate that it throws an error only if one of it's function parameters throws an error.
+to indicate that it throws an error only if one of its function parameters throws an error.
 These functions and methods are known as :newTerm:`rethrowing functions`
 and :newTerm:`rethrowing methods`.
 Rethrowing functions and methods
@@ -987,6 +878,28 @@ must have at least one throwing function parameter.
    -> func functionWithCallback(callback: () throws -> Int) rethrows {
           try callback()
       }
+
+A rethrowing function or method can't directly throw any errors of its own,
+which means it can't contain a ``throw`` statement.
+It can only propagate errors thrown
+by the throwing function it takes as a parameter.
+For example, it is not possible
+to call the throwing function inside a ``do``-``catch`` block
+and handle errors in the ``catch`` clause by throwing a different error.
+
+.. assertion:: rethrows-cant-throw
+
+   -> enum SomeError: ErrorType { case C }
+   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+          do {
+              try callback()
+          } catch {
+              throw SomeError.C
+          }
+      }
+   !! <REPL Input>:5:11: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.C
+   !! ^
 
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
@@ -1002,16 +915,14 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clauses ``throws``-OPT function-result-OPT
-    function-signature --> parameter-clauses ``rethrows`` function-result-OPT
+    function-signature --> parameter-clause ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clause ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
-    parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
-    parameter --> ``var`` external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
@@ -1497,7 +1408,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -1771,7 +1682,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Protocols declare associated types using the ``typealias`` keyword.
+Protocols declare associated types using the ``associatedtype`` keyword.
 An associated type provides an alias for a type
 that is used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
@@ -1848,8 +1759,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
-
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
 
 .. _Declarations_InitializerDeclaration:
 
@@ -1975,11 +1885,8 @@ except that you must deal with the optionality of the result.
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
 
-A failable initializer of a structure or an enumeration can return ``nil``
+A failable initializer can return ``nil``
 at any point in the implementation of the initializer's body.
-A failable initializer of a class, however, can return ``nil`` only after all
-stored properties of that class are initialized and ``self.init`` or ``super.init``
-is called (that is, any initializer delegation is performed).
 
 A failable initializer can delegate to any kind of initializer.
 A nonfailable initializer can delegate to another nonfailable initializer
@@ -2113,6 +2020,28 @@ to ensure members of that type are properly initialized.
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
 
+.. assertion:: extension-can-have-where-clause
+
+   >> extension Array where Element: Equatable {
+          func f(x: Array) -> Int { return 7 }
+      }
+   >> let x = [1, 2, 3]
+   << // x : [Int] = [1, 2, 3]
+   >> let y = [10, 20, 30]
+   << // y : [Int] = [10, 20, 30]
+   >> x.f(y)
+   << // r0 : Int = 7
+
+.. assertion:: extensions-can-have-where-clause-and-inheritance
+
+   >> protocol P { func foo() }
+   >> extension Array: P where Element: Equatable {
+   >>    func foo() {}
+   >> }
+   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
+   !!    extension Array: P where Element: Equatable {
+   !!    ^                ~
+
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
@@ -2122,6 +2051,7 @@ to ensure members of that type are properly initialized.
     Grammar of an extension declaration
 
     extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
@@ -2272,7 +2202,7 @@ The following form declares a new prefix operator:
     prefix operator <#operator name#> {}
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
-such as the prefix increment operator (``++``) is in the expression ``++i``.
+such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
@@ -2286,7 +2216,7 @@ The following form declares a new postfix operator:
     postfix operator <#operator name#> {}
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
-such as the postfix increment operator (``++``) is in the expression ``i++``.
+such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
 
 As with prefix operators, postfix operator declarations don't specify a precedence level.
 Postfix operators are nonassociative.
@@ -2311,7 +2241,8 @@ see :ref:`AdvancedOperators_CustomOperators`.
     postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
     infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
 
-    infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    infix-operator-attributes --> associativity-clause precedence-clause-OPT
+    infix-operator-attributes --> precedence-clause associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
     precedence-level --> A decimal integer between 0 and 255, inclusive
     associativity-clause --> ``associativity`` associativity

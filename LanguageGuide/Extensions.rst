@@ -11,7 +11,7 @@ Extensions are similar to categories in Objective-C.
 
 Extensions in Swift can:
 
-* Add computed properties and computed type properties
+* Add computed instance properties and computed type properties
 * Define instance methods and type methods
 * Provide new initializers
 * Define subscripts
@@ -116,11 +116,11 @@ to provide basic support for working with distance units:
          var ft: Double { return self / 3.28084 }
       }
    -> let oneInch = 25.4.mm
-   << // oneInch : Double = 0.0254
+   << // oneInch : Double = 0.025399999999999999
    -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.914399970739201
+   << // threeFeet : Double = 0.91439997073920098
    -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
@@ -351,11 +351,10 @@ from the right of the number:
 .. testcode:: extensionsSubscripts
 
    -> extension Int {
-         subscript(var digitIndex: Int) -> Int {
+         subscript(digitIndex: Int) -> Int {
             var decimalBase = 1
-            while digitIndex > 0 {
+            for _ in 0..<digitIndex {
                decimalBase *= 10
-               --digitIndex
             }
             return (self / decimalBase) % 10
          }
@@ -376,6 +375,10 @@ from the right of the number:
    << // r3 : Int = 7
    /> returns \(r3)
    </ returns 7
+
+.. TODO: Replace the for loop above with an exponent,
+   if/when integer exponents land in the stdlib.
+   Darwin's pow() function is only for floating point.
 
 If the ``Int`` value does not have enough digits for the requested index,
 the subscript implementation returns ``0``,

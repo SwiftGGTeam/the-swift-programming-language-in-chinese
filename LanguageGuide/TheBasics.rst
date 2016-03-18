@@ -1,7 +1,7 @@
 The Basics
 ==========
 
-Swift is a new programming language for iOS, OS X, and watchOS app development.
+Swift is a new programming language for iOS, OS X, watchOS, and tvOS app development.
 Nonetheless, many parts of Swift will be familiar
 from your experience of developing in C and Objective-C.
 
@@ -164,7 +164,7 @@ including Unicode characters:
 .. testcode:: constantsAndVariables
 
    -> let π = 3.14159
-   << // π : Double = 3.14159
+   << // π : Double = 3.1415899999999999
    -> let 你好 = "你好世界"
    << // 你好 : String = "你好世界"
    -> let 🐶🐮 = "dogcow"
@@ -277,7 +277,7 @@ Wrap the name in parentheses and escape it with a backslash before the opening p
 Comments
 --------
 
-Use comments to include non-executable text in your code,
+Use comments to include nonexecutable text in your code,
 as a note or reminder to yourself.
 Comments are ignored by the Swift compiler when your code is compiled.
 
@@ -486,7 +486,7 @@ Swift infers that you want to create a ``Double``:
 .. testcode:: typeInference
 
    -> let pi = 3.14159
-   << // pi : Double = 3.14159
+   << // pi : Double = 3.1415899999999999
    // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -498,7 +498,7 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.14159
+   << // anotherPi : Double = 3.1415899999999999
    // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
@@ -684,9 +684,9 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let three = 3
    << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14159
+   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.14159
+   << // pi : Double = 3.1415899999999999
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
@@ -1067,7 +1067,7 @@ For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 .. note::
 
-   Trying to use ``!`` to access a non-existent optional value triggers
+   Trying to use ``!`` to access a nonexistent optional value triggers
    a runtime error.
    Always make sure that an optional contains a non-``nil`` value
    before using ``!`` to force-unwrap its value.
@@ -1100,11 +1100,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\'\(possibleNumber)\' could not be converted to an integer")
+         print("\"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- '123' has an integer value of 123
+   <- "123" has an integer value of 123
 
 This code can be read as:
 
@@ -1125,16 +1125,11 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-.. TODO: This note is not actually correct. How *do* you do this?
-   Constants or variables created with optional binding
-   are only available within the code block following their creation,
-   as in the first branch of the ``if`` statement above.
-   If you want to work with the optional's value outside of this code block,
-   declare a constant or variable yourself
-   before the ``if`` statement begins.
-
 You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition:
+and use a ``where`` clause to check for a Boolean condition.
+If any of the values in the optional bindings are ``nil``
+or the ``where`` clause evaluates to ``false``,
+the whole optional binding is considered unsuccessful.
 
 .. testcode:: multipleOptionalBindings
 
@@ -1142,6 +1137,14 @@ and use a ``where`` clause to check for a Boolean condition:
          print("\(firstNumber) < \(secondNumber)")
       } 
    <- 4 < 42
+
+.. note::
+
+   Constants and variables created with optional binding in an ``if`` statement.
+   are available only within the body of the ``if`` statement.
+   In contrast, the constants and variables created with a ``guard`` statement
+   are available in the lines of code that follow the ``guard`` statement,
+   as described in :ref:`ControlFlow_Guard`,
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
@@ -1356,7 +1359,7 @@ and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling
-the Swift standard library global ``assert(_:_file:line:)`` function.
+the Swift standard library global ``assert(_:_:file:line:)`` function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 

@@ -543,6 +543,9 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
+   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (_MirrorDisposition, _MirrorDisposition), (Mirror.DisplayStyle, Mirror.DisplayStyle), (Bool, Bool), (Any.Type?, Any.Type?), (COpaquePointer, COpaquePointer), (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Memory>, AutoreleasingUnsafeMutablePointer<Memory>), (T, T), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !! if value == valueToFind {
+   !!          ^
 
 This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
@@ -610,13 +613,13 @@ Associated Types
 ----------------
 
 When defining a protocol,
-it is sometimes useful to declare one or more :newterm:`associated types`
+it is sometimes useful to declare one or more associated types
 as part of the protocol's definition.
-An associated type gives a placeholder name (or :newTerm:`alias`)
+An :newterm:`associated type` gives a placeholder name
 to a type that is used as part of the protocol.
 The actual type to use for that associated type
 is not specified until the protocol is adopted.
-Associated types are specified with the ``typealias`` keyword.
+Associated types are specified with the ``associatedtype`` keyword.
 
 .. _Generics_AssociatedTypesInAction:
 
@@ -629,7 +632,7 @@ which declares an associated type called ``ItemType``:
 .. testcode:: associatedTypes
 
    -> protocol Container {
-         typealias ItemType
+         associatedtype ItemType
          mutating func append(item: ItemType)
          var count: Int { get }
          subscript(i: Int) -> ItemType { get }
@@ -669,8 +672,8 @@ will be of the same type as the container's element type.
 
 To achieve this,
 the ``Container`` protocol declares an associated type called ``ItemType``,
-written as  ``typealias ItemType``.
-The protocol does not define what ``ItemType`` is an alias *for* ---
+written as  ``associatedtype ItemType``.
+The protocol does not define what ``ItemType`` is ---
 that information is left for any conforming type to provide.
 Nonetheless, the ``ItemType`` alias provides a way to refer to
 the type of the items in a ``Container``,

@@ -203,7 +203,6 @@
     "declarations-classdeclaration": "ID368", 
     "declarations-computedvariablesandcomputedproperties": "ID358", 
     "declarations-constantdeclaration": "ID355", 
-    "declarations-curriedfunctions": "ID363", 
     "declarations-declarationmodifiers": "ID381", 
     "declarations-deinitializerdeclaration": "ID377", 
     "declarations-enumerationdeclaration": "ID364", 
@@ -252,6 +251,7 @@
     "errorhandling-rethrow": "ID511", 
     "errorhandling-throw": "ID510", 
     "expression-optionalchainingoperator": "ID405", 
+    "expression-selectorexpression": "ID547", 
     "expressions-assignmentoperator": "ID386", 
     "expressions-binaryexpressions": "ID385", 
     "expressions-capturelists": "ID544", 
@@ -349,7 +349,6 @@
     "initialization-designatedandconvenienceinitializersinaction": "ID223", 
     "initialization-designatedinitializersandconvenienceinitializers": "ID217", 
     "initialization-failableinitializers": "ID224", 
-    "initialization-failableinitializersforclasses": "ID227", 
     "initialization-failableinitializersforenumerations": "ID225", 
     "initialization-failableinitializersforenumerationswithrawvalues": "ID226", 
     "initialization-implicitlyunwrappedfailableinitializers": "ID230", 
@@ -563,7 +562,8 @@
     "where-clauses", 
     "string-literals", 
     "control-transfer-statements", 
-    "in-out-parameters"
+    "in-out-parameters", 
+    "error-handling"
   ], 
-  "next_id": 547
+  "next_id": 548
 }

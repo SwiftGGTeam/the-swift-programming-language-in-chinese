@@ -238,7 +238,7 @@ equivalent:
 
     tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
-    tuple-pattern-element --> pattern
+    tuple-pattern-element --> pattern | identifier ``:`` pattern
 
 
 .. _Patterns_EnumerationCasePattern:
@@ -380,7 +380,7 @@ using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
 two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in an ``Range`` object, as the following example shows:
+value with a range of integers in a ``Range`` object, as the following example shows:
 
 .. testcode:: expression-pattern
 

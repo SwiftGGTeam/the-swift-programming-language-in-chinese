@@ -8,13 +8,12 @@ and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
 from the context in which they are defined.
-This is known as :newTerm:`closing` over those constants and variables,
-hence the name “closures”.
+This is known as :newTerm:`closing over` those constants and variables.
 Swift handles all of the memory management of capturing for you.
 
 .. note::
 
-   Don't worry if you are not familiar with the concept of “capturing”.
+   Don't worry if you are not familiar with the concept of capturing.
    It is explained in detail below in :ref:`Closures_CapturingValues`.
 
 Global and nested functions, as introduced in :doc:`Functions`,
@@ -370,7 +369,8 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
 .. testcode:: arrayMap
 
    -> let strings = numbers.map {
-            (var number) -> String in
+            (number) -> String in
+         var number = number
          var output = ""
          while number > 0 {
             output = digitNames[number % 10]! + output
@@ -387,10 +387,10 @@ The ``map(_:)`` method calls the closure expression once for each item in the ar
 You do not need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
-In this example, the closure's ``number`` parameter is defined as a *variable parameter*,
-as described in :ref:`Functions_ConstantAndVariableParameters`,
-so that the parameter's value can be modified within the closure body,
-rather than declaring a new local variable and assigning the passed ``number`` value to it.
+In this example,
+the variable ``number`` is initialized with the value of the closure's ``number`` parameter,
+so that the value can be modified within the closure body.
+(The parameters to functions and closures are always constants.)
 The closure expression also specifies a return type of ``String``,
 to indicate the type that will be stored in the mapped output array.
 
@@ -482,8 +482,7 @@ with an external name of ``forIncrement``, and a local name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementer function is called.
-
-``makeIncrementer`` defines a nested function called ``incrementer``,
+The ``makeIncrementer`` function defines a nested function called ``incrementer``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
@@ -512,7 +511,8 @@ the next time the ``incrementer`` function is called.
 
    As an optimization,
    Swift may instead capture and store a *copy* of a value
-   if that value is not mutated by or outside a closure.
+   if that value is not mutated by a closure,
+   and if the value is not mutated after the closure is created.
 
    Swift also handles all memory management involved in disposing of
    variables when they are no longer needed.
@@ -623,7 +623,7 @@ because it knows more information about the closure's lifespan.
 
 .. testcode:: noescape-closure-as-argument
 
-    -> func someFunctionWithNoescapeClosure(@noescape closure: () -> Void) {
+    -> func someFunctionWithNonescapingClosure(@noescape closure: () -> Void) {
            closure()
        }
 
@@ -631,7 +631,7 @@ As an example,
 the ``sort(_:)`` method takes a closure as its parameter,
 which is used to compare elements.
 The parameter is marked ``@noescape``
-because it is guaranteed not to be needed after the sorting is completed.
+because it is guaranteed not to be needed after sorting is complete.
 
 One way that a closure can escape
 is by being stored in a variable that is defined outside the function.
@@ -665,7 +665,7 @@ lets you refer to ``self`` implicitly within the closure.
            var x = 10
            func doSomething() {
                someFunctionWithEscapingClosure { self.x = 100 }
-               someFunctionWithNoescapeClosure { x = 200 }
+               someFunctionWithNonescapingClosure { x = 200 }
            }
        }
     ---
@@ -820,9 +820,11 @@ use the ``@autoclosure(escaping)`` form of the attribute.
 
 In the code above,
 instead of calling the closure passed to it
-as its ``customer`` argument,
-the ``collectCustomerProviders(_:)`` function appends the closure to the ``customerProviders`` array.
+as its ``customerProvider`` argument,
+the ``collectCustomerProviders(_:)`` function
+appends the closure to the ``customerProviders`` array.
 The array is declared outside the scope of the function,
 which means the closures in the array can be executed after the function returns.
 As a result,
-the value of the ``customer`` argument must be allowed to escape the function's scope.
+the value of the ``customerProvider`` argument
+must be allowed to escape the function's scope.

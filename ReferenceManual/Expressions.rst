@@ -121,7 +121,7 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> var sum = 0
     << // sum : Int = 0
     -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try apllies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
     -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
@@ -245,9 +245,10 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.4499999999999993, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    -> // a is "test", b is 12, c is 3, and 9.45 is ignored
+    /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
+    </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 
@@ -450,6 +451,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
+    primary-expression --> selector-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -471,17 +473,23 @@ either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
 or one of the following special literals:
 
-================    ===========  ===============================================
-Literal             Type         Value
-================    ===========  ===============================================
-``__FILE__``        ``String``   The name of the file in which it appears.
-``__LINE__``        ``Int``      The line number on which it appears.
-``__COLUMN__``      ``Int``      The column number in which it begins.
-``__FUNCTION__``    ``String``   The name of the declaration in which it appears.
-================    ===========  ===============================================
+=============    ===========  ===============================================
+Literal          Type         Value
+=============    ===========  ===============================================
+``#file``        ``String``   The name of the file in which it appears.
+``#line``        ``Int``      The line number on which it appears.
+``#column``      ``Int``      The column number in which it begins.
+``#function``    ``String``   The name of the declaration in which it appears.
+=============    ===========  ===============================================
+
+The ``#line`` token has two meanings depending on how it is used.
+If it appears on its own line,
+it is understood as a line control statement,
+as described in :ref:`Statements_LineControlStatement`.
+Otherwise, it is understood with the meaning described above.
 
 Inside a function,
-the value of ``__FUNCTION__`` is the name of that function,
+the value of ``#function`` is the name of that function,
 inside a method it is the name of that method,
 inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript``
@@ -497,24 +505,23 @@ when the default value expression is evaluated at the call site.
 
 .. testcode:: special-literal-evaluated-at-call-site
 
-    -> func logFunctionName(string: String = __FUNCTION__) {
+    -> func logFunctionName(string: String = #function) {
            print(string)
        }
     -> func myFunction() {
           logFunctionName() // Prints "myFunction()".
        }
-    ---
-    -> myFunction()
+    >> myFunction()
     << myFunction()
     >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    namedArgs(1, withJay: 2)
+    >> namedArgs(1, withJay: 2)
     << namedArgs(_:withJay:)
 
 .. Additional hidden tests above illustrate
-   the somewhat irregular rules used by __FUNCTION__
+   the somewhat irregular rules used by #function
    to write out the name of a function.
    In particular, the rule used for functions with no named arguments
    doesn't match the display in Xcode or our documentation.
@@ -573,9 +580,9 @@ of specified key and value types.
     expr-literal ::= floating_literal
     expr-literal ::= character_literal
     expr-literal ::= string_literal
-    expr-literal ::= '__FILE__'
-    expr-literal ::= '__LINE__'
-    expr-literal ::= '__COLUMN__'
+    expr-literal ::= '#file'
+    expr-literal ::= '#line'
+    expr-literal ::= '#column'
 
 .. syntax-grammar::
 
@@ -583,7 +590,7 @@ of specified key and value types.
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal
-    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
+    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
@@ -654,13 +661,11 @@ For example:
 
     Grammar of a self expression
 
-    self-expression --> ``self``
-    self-expression --> ``self`` ``.`` identifier
-    self-expression --> ``self`` ``[`` expression-list ``]``
-    self-expression --> ``self`` ``.`` ``init``
+    self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
-.. TODO Would be nice to make the self-expression grammar more parallel to the
-   superclass-expression grammar.
+    self-method-expression --> ``self`` ``.`` identifier
+    self-subscript-expression --> ``self`` ``[`` expression-list ``]``
+    self-initializer-expression --> ``self`` ``.`` ``init``
 
 
 .. _Expressions_SuperclassExpression:
@@ -822,10 +827,10 @@ The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
 when the closure is created,
 but their values are not connected in any special way.
-This means that the change to the value of ``a`` in the outer scope
-does not effect the value of ``a`` in the inner scope,
-nor do changes to ``a`` inside the closure
-effect the value of ``a`` outside the closure.
+This means that a change to the value of ``a`` in the outer scope
+does not affect the value of ``a`` in the inner scope,
+nor does a change to ``a`` inside the closure
+affect the value of ``a`` outside the closure.
 In contrast, there is only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
@@ -1063,6 +1068,82 @@ For example, in the following assignment
     wildcard-expression --> ``_``
 
 
+.. _Expression_SelectorExpression:
+
+Selector Expression
+~~~~~~~~~~~~~~~~~~~
+
+A selector expression lets you access the selector
+used to refer to a method in Objective-C.
+
+.. syntax-outline::
+
+   #selector(<#method name#>)
+
+The *method name* must be a reference to a method
+that is available in the Objective-C runtime.
+The value of a selector expression is an instance of the ``Selector`` type.
+For example:
+
+.. testcode:: selector-expression
+
+   >> import Foundation
+   -> class SomeClass: NSObject {
+           @objc(doSomethingWithInt:)
+           func doSomething(x: Int) { }
+      }
+   -> let x = SomeClass()
+   <~ // x : SomeClass = <REPL.SomeClass: 0x
+   -> let selector = #selector(x.doSomething(_:))
+   << // selector : Selector = doSomethingWithInt:
+
+The *method name* can contain parentheses for grouping,
+as well the ``as`` operator to disambiguate between methods that share a name
+but have different type signatures.
+For example:
+
+.. testcode:: selector-expression
+
+   -> extension SomeClass {
+          @objc(doSomethingWithString:)
+          func doSomething(x: String) { }
+      }
+   -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+   << // anotherSelector : Selector = doSomethingWithString:
+
+Because the selector is created at compile time, not at runtime,
+the compiler can check that the method exists
+and that the method is exposed to the Objective-C runtime.
+
+.. TODO: Is there any truth to this?
+   Brian and I looked at the proposal, and it doesn't discuss this,
+   but I remember reading something about information being
+   "exposed to the typechecker".
+        It also checks that,
+        when the method is called,
+        the arguments have the correct types.
+
+.. note::
+
+    Although the *method name* is an expression, it is never evaluated.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Objective-C Selectors <//apple_ref/doc/uid/TP40014216-CH4-ID59>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+
+.. syntax-grammar::
+
+    Grammar of an Objective-C selector expression
+
+    selector-expression --> ``#selector`` ``(`` expression  ``)``
+
+.. Note: The parser does allow an arbitrary expression inside #selector(), not
+   just a member name.  For example, see changes in Swift commit ef60d7289d in
+   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
+   optional binding.
+
+
 .. _Expressions_PostfixExpressions:
 
 Postfix Expressions
@@ -1267,6 +1348,7 @@ In all other cases, you must use an initializer expression.
     Grammar of an initializer expression
 
     initializer-expression --> postfix-expression ``.`` ``init``
+    initializer-expression --> postfix-expression ``.`` ``init`` ``(`` argument-names ``)``
 
 .. _Expressions_ExplicitMemberExpression:
 
@@ -1313,6 +1395,62 @@ the top-level declarations of that module.
 
 .. TR: Confirm?
 
+To distinguish between methods or initializers
+whose names differ only by the names of their arguments,
+include the argument names in parentheses,
+with each argument name followed by a colon (``:``).
+Write an underscore (``_``) for an argument with no name.
+To distinguish between overloaded methods,
+use a type annotation.
+For example:
+
+.. testcode:: function-with-argument-names
+
+    -> class SomeClass {
+           func someMethod(x: Int, y: Int) {}
+           func someMethod(x: Int, z: Int) {}
+           func overloadedMethod(x: Int, y: Int) {}
+           func overloadedMethod(x: Int, y: Bool) {}
+       }
+    -> let instance = SomeClass()
+    ---
+    << // instance : SomeClass = REPL.SomeClass
+    -> let a = instance.someMethod              // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
+    !! let a = instance.someMethod              // Ambiguous
+    !!         ^
+    !! <REPL Input>:2:12: note: found this candidate
+    !!              func someMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:3:12: note: found this candidate
+    !!              func someMethod(x: Int, z: Int) {}
+    !!                   ^
+    -> let b = instance.someMethod(_:y:)        // Unambiguous
+    << // b : (Int, y: Int) -> () = (Function)
+    ---
+    -> let d = instance.overloadedMethod        // Ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! let d = instance.overloadedMethod        // Ambiguous
+    !!         ^
+    !! <REPL Input>:4:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    !!             ^
+    !! <REPL Input>:4:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Int) {}
+    !!                   ^
+    !! <REPL Input>:5:12: note: found this candidate
+    !!              func overloadedMethod(x: Int, y: Bool) {}
+    !!                   ^
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
+    << // d : (Int, Bool) -> Void = (Function)
+
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
 not as an implicit member expression.
@@ -1340,6 +1478,17 @@ split over several lines:
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
+    explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
+
+    argument-names --> argument-name argument-names-OPT
+    argument-name --> identifier ``:``
+
+.. The grammar for method-name doesn't include the following:
+       method-name --> identifier argument-names-OPT
+   because the "postfix-expression . identifier" line above already covers that case.
+
+.. See grammar for initializer-expression for the related "argument name" production there.
+
 
 
 .. _Expressions_PostfixSelfExpression:
@@ -1485,8 +1634,7 @@ For example:
 
    -> var x: Int? = 0
    << // x : Int? = Optional(0)
-   -> x!++
-   <$ Int = 0
+   -> x! += 1
    /> x is now \(x!)
    </ x is now 1
    ---

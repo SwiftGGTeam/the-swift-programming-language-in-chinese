@@ -3,12 +3,10 @@ Basic Operators
 
 An :newTerm:`operator` is a special symbol or phrase that you use to
 check, change, or combine values.
-For example, the addition operator (``+``) adds two numbers together
-(as in ``let i = 1 + 2``).
-More complex examples include the logical AND operator ``&&``
-(as in ``if enteredDoorCode && passedRetinaScan``)
-and the increment operator ``++i``,
-which is a shortcut to increase the value of ``i`` by ``1``.
+For example, the addition operator (``+``) adds two numbers,
+as in ``let i = 1 + 2``,
+and the logical AND operator (``&&``) combines two Boolean values,
+as in ``if enteredDoorCode && passedRetinaScan``.
 
 Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
@@ -41,7 +39,7 @@ Operators are unary, binary, or ternary:
 
 * :newTerm:`Unary` operators operate on a single target (such as ``-a``).
   Unary :newTerm:`prefix` operators appear immediately before their target (such as ``!b``),
-  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``i++``).
+  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``c!``).
 * :newTerm:`Binary` operators operate on two targets (such as ``2 + 3``)
   and are :newTerm:`infix` because they appear in between their two targets.
 * :newTerm:`Ternary` operators operate on three targets.
@@ -79,6 +77,18 @@ its elements can be decomposed into multiple constants or variables at once:
    << // (x, y) : (Int, Int) = (1, 2)
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
+
+.. assertion:: tuple-unwrapping-with-var
+
+   >> var (x, y) = (1, 2)
+   << // (x, y) : (Int, Int) = (1, 2)
+
+.. This still allows assignment to variables,
+   even though var patterns have been removed,
+   because it's parsed as a variable-declaration,
+   using the first alternative where (x, y) is a pattern,
+   but `var` comes from the variable-declaration-head
+   rather than from the pattern.
 
 Unlike the assignment operator in C and Objective-C,
 the assignment operator in Swift does not itself return a value.
@@ -231,71 +241,6 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
 .. image:: ../images/remainderFloat_2x.png
    :align: center
 
-.. _BasicOperators_IncrementAndDecrementOperators:
-
-Increment and Decrement Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Like C, Swift provides an :newTerm:`increment operator` (``++``)
-and a :newTerm:`decrement operator` (``--``)
-as a shortcut to increase or decrease the value of a numeric variable by ``1``.
-You can use these operators with variables of any integer or floating-point type.
-
-.. testcode:: arithmeticOperators
-
-   -> var i = 0
-   << // i : Int = 0
-   -> ++i      // i now equals 1
-   << // r8 : Int = 1
-
-Each time you call ``++i``, the value of ``i`` is increased by ``1``.
-Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
-Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
-
-The ``++`` and ``--`` symbols can be used as prefix operators or as postfix operators.
-``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
-Similarly, ``--i`` and ``i--`` are both valid ways to decrease the value of ``i`` by ``1``.
-
-Note that these operators modify ``i`` and also return a value.
-If you only want to increment or decrement the value stored in ``i``,
-you can ignore the returned value.
-However, if you *do* use the returned value,
-it will be different based on whether you used the prefix or postfix version of the operator,
-according to the following rules:
-
-* If the operator is written *before* the variable,
-  it increments the variable *before* returning its value.
-* If the operator is written *after* the variable,
-  it increments the variable *after* returning its value.
-
-For example:
-
-.. testcode:: arithmeticOperators
-
-   -> var a = 0
-   << // a : Int = 0
-   -> let b = ++a
-   << // b : Int = 1
-   /> a and b are now both equal to \(a)
-   </ a and b are now both equal to 1
-   -> let c = a++
-   << // c : Int = 1
-   /> a is now equal to \(a), but c has been set to the pre-increment value of \(c)
-   </ a is now equal to 2, but c has been set to the pre-increment value of 1
-
-In the example above,
-``let b = ++a`` increments ``a`` *before* returning its value.
-This is why both ``a`` and ``b`` are equal to the new value of ``1``.
-
-However, ``let c = a++`` increments ``a`` *after* returning its value.
-This means that ``c`` gets the old value of ``1``,
-and ``a`` is then updated to equal ``2``.
-
-Unless you need the specific behavior of ``i++``,
-it is recommended that you use ``++i`` and ``--i`` in all cases,
-because they have the typical expected behavior of modifying ``i``
-and returning the result.
-
 .. _BasicOperators_UnaryMinusOperator:
 
 Unary Minus Operator
@@ -358,8 +303,7 @@ that performs both tasks at the same time.
 .. note::
 
    The compound assignment operators do not return a value.
-   You cannot write ``let b = a += 2``, for example.
-   This behavior is different from the increment and decrement operators mentioned above.
+   For example, you cannot write ``let b = a += 2``.
 
 A complete list of compound assignment operators can be found in :doc:`../ReferenceManual/Expressions`.
 
@@ -387,17 +331,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 
 .. testcode:: comparisonOperators
 
-   -> 1 == 1   // true, because 1 is equal to 1
+   -> 1 == 1   // true because 1 is equal to 1
    << // r0 : Bool = true
-   -> 2 != 1   // true, because 2 is not equal to 1
+   -> 2 != 1   // true because 2 is not equal to 1
    << // r1 : Bool = true
-   -> 2 > 1    // true, because 2 is greater than 1
+   -> 2 > 1    // true because 2 is greater than 1
    << // r2 : Bool = true
-   -> 1 < 2    // true, because 1 is less than 2
+   -> 1 < 2    // true because 1 is less than 2
    << // r3 : Bool = true
-   -> 1 >= 1   // true, because 1 is greater than or equal to 1
+   -> 1 >= 1   // true because 1 is greater than or equal to 1
    << // r4 : Bool = true
-   -> 2 <= 1   // false, because 2 is not less than or equal to 1
+   -> 2 <= 1   // false because 2 is not less than or equal to 1
    << // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
@@ -417,9 +361,53 @@ such as the ``if`` statement:
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
+You can also compare
+tuples that have the same number of values,
+as long as each of the values in the tuple can be compared.
+For example, both ``Int`` and ``String`` can be compared,
+which means tuples of the type ``(Int, String)`` can be compared.
+In contrast, ``Bool`` can't be compared,
+which means tuples that contain a Boolean value can't be compared.
+
+.. assertion:: boolean-is-not-comparable
+
+   -> true < false
+   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
+   !! true < false
+   !! ~~~~ ^ ~~~~~
+   !! <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists: (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (T?, T?), (T, T), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !! true < false
+   !!      ^
+
+
+
+Tuples are compared from left to right,
+one value at a time,
+until the comparison finds two values
+that aren't equal.
+If all the elements are equal,
+then the tuples themselves are equal.
+For example:
+
+.. testcode:: tuple-comparison-operators
+
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2
+   -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
+   -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
+   << // r0 : Bool = true
+   << // r1 : Bool = true
+   << // r2 : Bool = true
+
+.. note::
+
+   The Swift standard library includes tuple comparison operators
+   for tuples with less than seven elements.
+   To compare tuples with seven or more elements,
+   you must implement the comparison operators yourself.
+
 .. TODO: which types do these operate on by default?
    How do they work with strings?
-   How about with tuples / with your own types?
+   How about with your own types?
 
 .. _BasicOperators_TernaryConditionalOperator:
 
@@ -467,17 +455,15 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
 The preceding example is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorPart2
+   :compile: true
 
    -> let contentHeight = 40
-   << // contentHeight : Int = 40
    -> let hasHeader = true
-   << // hasHeader : Bool = true
-   -> var rowHeight = contentHeight
-   << // rowHeight : Int = 40
+   -> let rowHeight: Int
    -> if hasHeader {
-         rowHeight = rowHeight + 50
+         rowHeight = contentHeight + 50
       } else {
-         rowHeight = rowHeight + 20
+         rowHeight = contentHeight + 20
       }
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90

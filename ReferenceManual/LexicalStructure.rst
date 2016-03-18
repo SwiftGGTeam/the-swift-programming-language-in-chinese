@@ -161,6 +161,16 @@ Keywords and Punctuation
 The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
+Keywords other than ``inout``, ``var``, and ``let``
+can be used as external parameter names
+in a function declaration or function call
+without being escaped with backticks.
+
+.. assertion:: keywords-without-backticks
+
+   -> func f(x: Int, in y: Int) {
+         print(x+y)
+      }
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
@@ -201,11 +211,12 @@ as described above in :ref:`LexicalStructure_Identifiers`.
     keyword ::= 'super'
     keyword ::= 'self'
     keyword ::= 'Self'
-    keyword ::= '__COLUMN__'
-    keyword ::= '__FILE__'
-    keyword ::= '__LINE__'
+    keyword ::= '#column'
+    keyword ::= '#file'
+    keyword ::= '#line'
 
 * Keywords used in declarations:
+  ``associatedtype``,
   ``class``,
   ``deinit``,
   ``enum``,
@@ -260,13 +271,26 @@ as described above in :ref:`LexicalStructure_Identifiers`.
   ``throws``,
   ``true``,
   ``try``,
-  ``__COLUMN__``,
-  ``__FILE__``,
-  ``__FUNCTION__``,
-  and ``__LINE__``.
+  ``#column``,
+  ``#file``,
+  ``#function``,
+  and ``#line``.
 
 * Keywords used in patterns:
   ``_``.
+
+* Keywords that begin with a number sign (``#``):
+
+  ``#available``,
+  ``#column``,
+  ``#else``
+  ``#elseif``,
+  ``#endif``,
+  ``#file``,
+  ``#function``,
+  ``#if``,
+  ``#line``,
+  and ``#selector``.
 
 .. langref-grammar
 
@@ -335,7 +359,7 @@ The following are examples of literals:
     -> "Hello, world!"  // String literal
     -> true             // Boolean literal
     <$ : Int = 42
-    <$ : Double = 3.14159
+    <$ : Double = 3.1415899999999999
     <$ : String = "Hello, world!"
     <$ : Bool = true
 
@@ -681,9 +705,73 @@ defined in the grammar below
 Unicode blocks, among others).
 After the first character,
 combining Unicode characters are also allowed.
-You can also define custom operators as a sequence of two or more dots (for example, ``....``).
-Although you can define custom operators that contain a question mark character (``?``),
+
+You can also define custom operators
+that begin with a dot (``.``).
+These operators are can contain additional dots
+such as ``.+.``.
+If an operator doesn't begin with a dot,
+it can't contain a dot elsewhere.
+For example, ``+.+`` is treated as
+the ``+`` operator followed by the ``.+`` operator.
+
+.. assertion:: dot-operator-must-start-with-dot
+
+   >> infix operator +.+ { }
+   !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
+   !! infix operator +.+ { }
+   !!                 ^
+   !! <REPL Input>:1:20: error: statement cannot begin with a closure expression
+   !! infix operator +.+ { }
+   !!                    ^
+   !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
+   !! infix operator +.+ { }
+   !!                    ^
+   !!                    _ = 
+   !! <REPL Input>:1:20: error: braced block of statements is an unused closure
+   !! infix operator +.+ { }
+   !!                    ^
+   >> infix operator .+ { }
+   >> infix operator .+. { }
+
+Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
+Additionally, although operators can contain an exclamation mark (``!``),
+postfix operators cannot begin with either a question mark or an exclamation mark.
+
+.. assertion:: postfix-operators-dont-need-unique-prefix
+
+
+   >> struct Num { var value: Int }
+      postfix operator + {}
+      postfix operator +* {}
+      postfix func + (x: Num) -> Int { return x.value + 1 }
+      postfix func +* (x: Num) -> Int { return x.value * 100 }
+   >> let n = Num(value: 5)
+   << // n : Num = REPL.Num(value: 5)
+   >> print(n+)
+   << 6
+   >> print(n+*)
+   << 500
+
+.. assertion:: postfix-operator-cant-start-with-question-mark
+
+   >> postfix operator ?+ {}
+      postfix func ?+ (x: Int) -> Int {
+          if x > 10 {
+              return x
+          }
+          return x + 1
+      }
+   print(1?+)
+   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !! print(1?+)
+   !!         ^
+   >> print(99?+)
+   !! <REPL Input>:1:10: error: '+' is not a postfix unary operator
+   !! print(99?+)
+   !!         ^
+
 
 .. note::
 
@@ -699,17 +787,17 @@ or a binary operator. This behavior is summarized in the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
   it is treated as a binary operator.
-  As an example, the ``+`` operator in ``a+b`` and ``a + b`` is treated as a binary operator.
+  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
 * If an operator has whitespace on the left side only,
   it is treated as a prefix unary operator.
-  As an example, the ``++`` operator in ``a ++b`` is treated as a prefix unary operator.
+  As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
 * If an operator has whitespace on the right side only,
   it is treated as a postfix unary operator.
-  As an example, the ``++`` operator in ``a++ b`` is treated as a postfix unary operator.
+  As an example, the ``+++`` operator in ``a+++ b`` is treated as a postfix unary operator.
 * If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
   it is treated as a postfix unary operator.
-  As an example, the  ``++`` operator in ``a++.b`` is treated as a postfix unary operator
-  (``a++ .b`` rather than ``a ++ .b``).
+  As an example, the  ``+++`` operator in ``a+++.b`` is treated as a postfix unary operator
+  (``a+++ .b`` rather than ``a +++ .b``).
 
 For the purposes of these rules,
 the characters ``(``, ``[``, and ``{`` before an operator,
@@ -791,7 +879,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     Grammar of operators
 
     operator --> operator-head operator-characters-OPT
-    operator --> dot-operator-head dot-operator-characters-OPT
+    operator --> dot-operator-head dot-operator-characters
 
     operator-head --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``?``
     operator-head --> U+00A1--U+00A7
@@ -818,7 +906,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-character --> U+E0100--U+E01EF
     operator-characters --> operator-character operator-characters-OPT
 
-    dot-operator-head --> ``..``
+    dot-operator-head --> ``.``
     dot-operator-character --> ``.`` | operator-character
     dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 

@@ -153,8 +153,8 @@ you write the ``throws`` keyword before the return arrow (``->``).
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
-   -> func f(callback: Void -> Int) { }
-   -> func f(callback: Void throws -> Int) { } // Allowed
+   -> func f(callback: () -> Int) { }
+   -> func f(callback: () throws -> Int) { } // Allowed
 
 .. TODO: Add more assertions to test these behaviors
 
@@ -201,7 +201,7 @@ or has a cost that exceeds the current deposited amount:
           }
    ---
    ->     func vend(itemNamed name: String) throws {
-              guard var item = inventory[name] else {
+              guard let item = inventory[name] else {
                   throw VendingMachineError.InvalidSelection
               }
 
@@ -214,8 +214,11 @@ or has a cost that exceeds the current deposited amount:
               }
 
               coinsDeposited -= item.price
-              --item.count
-              inventory[name] = item
+
+              var newItem = item
+              newItem.count -= 1
+              inventory[name] = newItem
+
               dispenseSnack(name)
           }
       }
@@ -227,7 +230,7 @@ Because a ``throw`` statement immediately transfers program control,
 an item will be vended only if all of these requirements are met.
 
 Because the ``vend(itemNamed:)`` method propagates any errors it throws,
-places in your code that call it must either handle the errors directly---
+any code that calls this method must either handle the errors ---
 using a ``do``-``catch`` statement, ``try?``, or ``try!``---
 or continue to propagate them.
 For example,
@@ -259,6 +262,35 @@ the ``buyFavoriteSnack(_:vendingMachine:)`` function looks up a given person's f
 and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
 Because the ``vend(itemNamed:)`` method can throw an error,
 it's called with the ``try`` keyword in front of it.
+
+Throwing initializers can propagate errors in the same way as throwing functions.
+For example,
+the initializer for the ``PurchasedSnack`` structure in the listing below
+calls a throwing function as part of the initialization process,
+and it handles any errors that it encounters by propagating them to its caller.
+
+.. testcode:: errorHandling
+
+    -> struct PurchasedSnack {
+           let name: String
+           init(name: String, vendingMachine: VendingMachine) throws {
+               try vendingMachine.vend(itemNamed: name)
+               self.name = name
+           }
+       }
+    >> do {
+    >>     let succeeds = try PurchasedSnack(name: "Candy Bar", vendingMachine: v)
+    >> } catch {
+    >>     print("Threw unexpected error.")
+    >> }
+    << Dispensing Candy Bar
+    >> do {
+    >>     let throwsError = try PurchasedSnack(name: "Jelly Baby", vendingMachine: v)
+    >> } catch {
+    >>     print("Threw EXPECTED error.")
+    >> }
+    << Threw EXPECTED error.
+
 
 .. _ErrorHandling_DoCatch:
 
@@ -296,7 +328,7 @@ The ``catch`` clauses don't have to handle every possible error
 that the code in its ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
-However, the error must handled by *some* surrounding scope ---
+However, the error must be handled by *some* surrounding scope ---
 either by an enclosing ``do``-``catch`` clause
 that handles the error
 or by being inside a throwing function.

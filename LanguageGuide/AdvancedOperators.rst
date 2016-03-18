@@ -305,7 +305,7 @@ and the seven value bits have a binary value of ``124`` (which is ``128 - 4``):
 .. image:: ../images/bitshiftSignedMinusFourValue_2x.png
    :align: center
 
-The encoding for negative numbers is known as a :newTerm:`two's complement` representation.
+This encoding for negative numbers is known as a :newTerm:`two's complement` representation.
 It may seem an unusual way to represent negative numbers,
 but it has several advantages.
 
@@ -465,7 +465,6 @@ wraps around from the maximum valid integer value back to the minimum,
 and overflow in the negative direction
 wraps around from the minimum value to the maximum.
 
-
 .. _AdvancedOperators_PrecedenceAndAssociativity:
 
 Precedence and Associativity
@@ -620,7 +619,7 @@ Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
 They are :newTerm:`prefix` if they precede their target (such as ``-a``)
-and :newTerm:`postfix` operators if they follow their target (such as ``i++``).
+and :newTerm:`postfix` operators if they follow their target (such as ``b!``).
 
 You implement a prefix or postfix unary operator by writing
 the ``prefix`` or ``postfix`` modifier
@@ -690,34 +689,6 @@ and uses it to set the left value to be the left value plus the right value:
    -> original += vectorToAdd
    /> original now has values of (\(original.x), \(original.y))
    </ original now has values of (4.0, 6.0)
-
-You can combine assignment with either the ``prefix`` or ``postfix`` modifier,
-as in this implementation of the prefix increment operator (``++a``)
-for ``Vector2D`` instances:
-
-.. testcode:: customOperators
-
-   -> prefix func ++ (inout vector: Vector2D) -> Vector2D {
-         vector += Vector2D(x: 1.0, y: 1.0)
-         return vector
-      }
-
-The prefix increment operator function above takes advantage
-of the addition assignment operator defined earlier.
-It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
-to the ``Vector2D`` on which it is called,
-and returns the result:
-
-.. testcode:: customOperators
-
-   -> var toIncrement = Vector2D(x: 3.0, y: 4.0)
-   << // toIncrement : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
-   -> let afterIncrement = ++toIncrement
-   << // afterIncrement : Vector2D = REPL.Vector2D(x: 4.0, y: 5.0)
-   /> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
-   </ toIncrement now has values of (4.0, 5.0)
-   /> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
-   </ afterIncrement also has values of (4.0, 5.0)
 
 .. note::
 

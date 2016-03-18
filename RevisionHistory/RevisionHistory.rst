@@ -6,6 +6,65 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==========================================================================
 Date        Notes
 ==========  ==========================================================================
+2016-03-21  * Updated for Swift 2.2.
+
+            * Added information about how to conditionally compile code
+              depending on the version of Swift being used
+              to the :ref:`Statements_BuildConfigurationStatement` section.
+
+            * Added information about how to distinguish
+              between methods or initializers whose names differ
+              only by the names of their arguments
+              to the :ref:`Expressions_ExplicitMemberExpression` section.
+
+            * Added information about the ``#selector`` syntax
+              for Objective-C selectors
+              to the :ref:`Expression_SelectorExpression` section.
+
+            * Updated the discussion of associated types
+              to use the ``associatedtype`` keyword
+              in the :ref:`Generics_AssociatedTypes`
+              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
+
+            * Updated information about initializers that return ``nil``
+              before the instance is fully initialized
+              in the :ref:`Initialization_FailableInitializers` section.
+
+            * Added information about comparing tuples
+              to the :ref:`BasicOperators_ComparisonOperators` section.
+
+            * Added information about using keywords as external parameter names
+              to the :ref:`LexicalStructure_Keywords` section.
+
+            * Updated the discussion of the ``@objc`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated the :ref:`LexicalStructure_Operators` section
+              with discussion of custom operators that contain a dot.
+
+            * Added a note
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
+              that rethrowing functions can't directly throw errors.
+
+            * Added a note to the :ref:`Properties_PropertyObservers` section
+              about property observers being called
+              when you pass a property as an in-out parameter.
+
+            * Added a section about error handling
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
+
+            * Updated figures in the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section to show the deallocation process more clearly.
+
+            * Removed discussion of C-style ``for`` loops,
+              the ``++`` prefix and postfix operators,
+              and the ``--`` prefix and postfix operators.
+
+            * Removed discussion of variable function arguments
+              and the special syntax for curried functions.
+----------  --------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
@@ -25,7 +84,7 @@ Date        Notes
             * Added information to the :ref:`Expressions_CaptureLists` section
               about how values specified in closure capture lists are captured.
 
-            * Updated the 
+            * Updated the
               :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining`
               section to clarify how assignment through optional chaining
               behaves.
@@ -50,7 +109,7 @@ Date        Notes
 
             * Added information about the new ``try?`` keyword
               to the :ref:`ErrorHandling_Optional` section.
-            
+
             * Added information about recursive enumerations
               to the :ref:`Enumerations_RecursiveEnumerations` section
               of the :doc:`../LanguageGuide/Enumerations` chapter
@@ -91,7 +150,7 @@ Date        Notes
             * Added information about the new Swift standard library
               ``print(_:separator:terminator)`` function
               to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
-              
+
             * Added information about the behavior
               of enumeration cases with ``String`` raw values
               to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
@@ -102,7 +161,7 @@ Date        Notes
             * Added information about the ``@autoclosure`` attribute ---
               including its ``@autoclosure(escaping)`` form ---
               to the :ref:`Closures_Autoclosures` section.
-              
+
             * Updated the :ref:`Attributes_DeclarationAttributes` section
               with information about the ``@available``
               and ``@warn_unused_result`` attributes.
@@ -113,22 +172,22 @@ Date        Notes
             * Added an example of using multiple optional bindings
               with a ``where`` clause
               to the :ref:`TheBasics_OptionalBinding` section.
-            
+
             * Added information to the :ref:`LexicalStructure_StringLiterals` section
               about how concatenating string literals using the ``+`` operator
               happens at compile time.
-              
+
             * Added information to the :ref:`Types_MetatypeType` section
               about comparing metatype values and using them
               to construct instances with initializer expressions.
-            
+
             * Added a note to the :ref:`TheBasics_DebuggingWithAssertions` section
               about when user-defined assertions are disabled.
 
             * Updated the discussion of the ``@NSManaged`` attribute
               in the :ref:`Attributes_DeclarationAttributes` section,
               now that the attribute can be applied to certain instance methods.
-              
+
             * Updated the :ref:`Functions_VariadicParameters` section,
               now that variadic parameters can be declared in any position
               in a function's parameter list.
@@ -412,7 +471,7 @@ Date        Notes
             * Added information about how type inference works
               with :ref:`LexicalStructure_Literals`.
 
-            * Added more information about :ref:`Declarations_CurriedFunctions`.
+            * Added more information about curried functions.
 
             * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 
