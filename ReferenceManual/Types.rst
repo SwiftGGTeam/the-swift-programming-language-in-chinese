@@ -180,12 +180,14 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
 and return multiple values.
 
-A parameter declaration for
-a function type with a parameter type of ``Void``
+A parameter of the function type ``() -> T``
+(where ``T`` is any type)
 can apply the ``autoclosure`` attribute
-to capture an implicit closure over a specified expression instead of the expression itself.
-This provides a syntactically convenient way to defer the evaluation of an expression
-until its value is used in the function body.
+to implicitly create a closure at its call sites.
+This provides a syntactically convenient way
+to defer the evaluation of an expression
+without needing to write an explicit closure
+when you call the function.
 For an example of an autoclosure function type parameter,
 see :ref:`Closures_Autoclosures`.
 

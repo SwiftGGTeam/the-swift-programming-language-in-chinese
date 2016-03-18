@@ -16,7 +16,7 @@ only when certain conditions are met,
 and control transfer statements provide a way to alter the order in which code is executed.
 In addition, Swift provides a ``do`` statement to introduce scope,
 and catch and handle errors,
-and a ``defer`` statement for running clean-up actions just before the current scope exits.
+and a ``defer`` statement for running cleanup actions just before the current scope exits.
 
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.

@@ -762,7 +762,7 @@ Both functions have a type of ``(Int) -> Int``:
 
 Here's a function called ``chooseStepFunction(_:)``,
 whose return type is “a function of type ``(Int) -> Int``”.
-The ``chooseStepFunction(_:)``function returns the ``stepForward(_:)`` function
+The ``chooseStepFunction(_:)`` function returns the ``stepForward(_:)`` function
 or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backwards``:
 
 .. testcode:: functionTypes

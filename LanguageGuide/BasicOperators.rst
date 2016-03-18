@@ -366,7 +366,7 @@ tuples that have the same number of values,
 as long as each of the values in the tuple can be compared.
 For example, both ``Int`` and ``String`` can be compared,
 which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` doesn't can be compared,
+In contrast, ``Bool`` can't be compared,
 which means tuples that contain a Boolean value can't be compared.
 
 .. assertion:: boolean-is-not-comparable
