@@ -1352,6 +1352,7 @@ when it verifies that the APIs in that block of code are available.
           // Fall back to earlier iOS and OS X APIs
       }
 
+.. x*  Bogus * paired with the in the listing, to fix VIM syntax highlighting.
 
 The availability condition above specifies that on iOS,
 the body of the ``if`` executes only on iOS 9 and later;
@@ -1373,6 +1374,8 @@ you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
    } else {
        <#fallback statements to execute if the APIs are unavailable#>
    }
+
+.. x*  Bogus * paired with the in the listing, to fix VIM syntax highlighting.
 
 .. FIXME
     Not a general purpose condition; can't combine with &&, etc.
