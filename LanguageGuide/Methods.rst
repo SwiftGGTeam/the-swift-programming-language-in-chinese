@@ -79,11 +79,12 @@ You call instance methods with the same dot syntax as properties:
 
 .. _Methods_LocalAndExternalNamesForMethods:
 
-Local and External Parameter Names for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Function parameters can have both a local name (for use within the function's body)
-and an external name (for use when calling the function),
+Parameter Names and Argument Labels for Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function parameters can have both a name (for use within the function's body)
+and an argument label (for use when calling the function),
 as described in :ref:`Functions_ExternalParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
@@ -95,13 +96,14 @@ the method's first parameter using a preposition such as
 as seen in the ``incrementBy(_:)`` method from the preceding ``Counter`` class example.
 The use of a preposition enables the method to be read as a sentence when it is called.
 
-Swift gives the *first* parameter name in a method
-a local parameter name by default,
-and gives the second and subsequent parameter names
-both local *and* external parameter names by default.
+Swift gives the *first* parameter in a method
+a parameter name by default,
+but no argument label.
+It gives the second and subsequent parameters
+both a parameter name and an argument label by default.
 This convention matches the typical naming and calling convention
 you will be familiar with from writing Objective-C methods,
-and makes for expressive method calls without the need to qualify your parameter names.
+and makes for expressive method calls.
 
 Consider this alternative version of the ``Counter`` class,
 which defines a more complex form of the ``incrementBy(_:)`` method:
@@ -117,8 +119,8 @@ which defines a more complex form of the ``incrementBy(_:)`` method:
 
 This ``incrementBy(_:numberOfTimes:)`` method has two parameters ---
 ``amount`` and ``numberOfTimes``.
-By default, Swift treats ``amount`` as a local name only,
-but treats ``numberOfTimes`` as both a local *and* an external name.
+By default, Swift uses ``amount`` only as a parameter name,
+but uses ``numberOfTimes`` as both a parameter name and an argument label.
 You call the method as follows:
 
 .. testcode:: externalParameterNames
@@ -129,9 +131,9 @@ You call the method as follows:
    /> counter value is now \(counter.count)
    </ counter value is now 15
 
-You don't need to define an external parameter name for the first argument value,
+You don't need to define an argument label for the first argument value,
 because its purpose is clear from the function name ``incrementBy(_:numberOfTimes:)``.
-The second argument, however, is qualified by an external parameter name
+The second argument, however, has an argument label
 to make its purpose clear when the method is called.
 
 The behavior described above means that method definitions in Swift
@@ -140,17 +142,17 @@ and are called in a natural, expressive way.
 
 .. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
 
-Modifying External Parameter Name Behavior for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Modifying Argument Label and Parameter Name Behavior for Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes it's useful to provide an external parameter name
+Sometimes it's useful to provide an argument label
 for a method's first parameter, even though this is not the default behavior.
 To do so, you can add an explicit external name yourself.
 
-Conversely, if you do not want to provide an external name
+Conversely, if you do not want to provide an argument label
 for the second or subsequent parameter of a method,
 override the default behavior by using an underscore character (``_``)
-as an explicit external parameter name for that parameter.
+as an explicit argument label for that parameter.
 
 .. TODO: provide (good, would-actually-be-appropriate) examples here.
 

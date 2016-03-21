@@ -172,19 +172,19 @@ and store this value in a property called ``temperatureInCelsius``.
 
 .. _Initialization_LocalAndExternalNames:
 
-Local and External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parameter Names and Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As with function and method parameters,
-initialization parameters can have both a local name
+initialization parameters can have both a parameter name
 for use within the initializer's body
-and an external name for use when calling the initializer.
+and an argument label for use when calling the initializer.
 
 However, initializers do not have an identifying function name before their parentheses
 in the way that functions and methods do.
 Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
-Because of this, Swift provides an automatic external name
+Because of this, Swift provides an automatic argument label
 for *every* parameter in an initializer if you don't provide an external name yourself.
 
 The following example defines a structure called ``Color``,
@@ -225,8 +225,8 @@ by providing named values for each initializer parameter:
    << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
-without using external parameter names.
-External names must always be used in an initializer if they are defined,
+without using argument label.
+Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
 .. testcode:: externalParameterNames
@@ -240,11 +240,11 @@ and omitting them is a compile-time error:
 
 .. _Initialization_InitializerParametersWithoutExternalNames:
 
-Initializer Parameters Without External Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializer Parameters Without Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an external name for an initializer parameter,
-write an underscore (``_``) instead of an explicit external name for that parameter
+If you do not want to use an argument label for an initializer parameter,
+write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
 Here's an expanded version of the ``Celsius`` example from earlier,
@@ -271,7 +271,7 @@ from a ``Double`` value that is already in the Celsius scale:
    </ bodyTemperature.temperatureInCelsius is 37.0
 
 The initializer call ``Celsius(37.0)`` is clear in its intent
-without the need for an external parameter name.
+without the need for an argument label.
 It is therefore appropriate to write this initializer as ``init(_ celsius: Double)``
 so that it can be called by providing an unnamed ``Double`` value.
 
