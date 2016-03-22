@@ -390,9 +390,9 @@ the ``noreturn`` attribute to a function or method *type*.
    Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
 
 ``warn_unused_result``
-   Apply this attribute to a method or function declaration
+   Apply this attribute to a function or method declaration
    to have the compiler emit a warning
-   when the method or function is called without using its result.
+   when the function or method is called without using its result.
 
    You can use this attribute to provide a warning message about incorrect
    usage of a nonmutating method that has a mutating counterpart.
