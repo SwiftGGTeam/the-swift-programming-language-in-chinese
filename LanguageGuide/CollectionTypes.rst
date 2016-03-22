@@ -924,9 +924,7 @@ You can also use subscript syntax to change the value associated with a particul
 .. testcode:: dictionariesInferred
 
    -> airports["LHR"] = "London Heathrow"
-   >> var lhr = "LHR" // a hack to get around rdar://16336177
-   << // lhr : String = "LHR"
-   /> the value for \"LHR\" has been changed to \"\(airports[lhr]!)\"
+   /> the value for \"LHR\" has been changed to \"\(airports["LHR"]!)\"
    </ the value for "LHR" has been changed to "London Heathrow"
 
 As an alternative to subscripting,
