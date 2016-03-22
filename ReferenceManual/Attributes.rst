@@ -173,36 +173,6 @@ the ``noreturn`` attribute to a function or method *type*.
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
-.. NOTE: As of Beta 5, 'assignment' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-
-    ``assignment``
-        Apply this attribute to functions that overload
-        a compound assignment operator.
-        Functions that overload a compound assignment operator must mark
-        their initial input parameter as ``inout``.
-        For an example of how to use the ``assignment`` attribute,
-        see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
-
-.. NOTE: ``assignment doesn't seem to be required as of r16459.
-    Emailed swift-dev on 4/17/14 with the following example:
-
-    (swift) struct Vector2D {
-             var x = 0.0, y = 0.0
-        }
-    (swift) func += (inout lhs: Vector2D, rhs: Vector2D) {
-              lhs = Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
-            }
-    (swift) var original = Vector2D(1.0, 2.0)
-    // original : Vector2D = Vector2D(1.0, 2.0)
-    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
-    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
-    (swift) original += vectorToAdd
-    (swift) original
-    // original : Vector2D = Vector2D(4.0, 6.0)
-
-    Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
-
 .. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
     I'm keeping the prose here in case it comes back for some reason.
     Semantically, the it's replaced with a 'class' requirement,
