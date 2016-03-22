@@ -77,68 +77,11 @@ You call instance methods with the same dot syntax as properties:
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 0
 
-.. _Methods_LocalAndExternalNamesForMethods:
-
-
-Parameter Names and Argument Labels for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Function parameters can have both a name (for use within the function's body)
 and an argument label (for use when calling the function),
-as described in :ref:`Functions_ExternalParameterNames`.
+as described in :ref:`Functions_FunctionParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-
-Methods in Swift are very similar to their counterparts in Objective-C.
-As in Objective-C, the name of a method in Swift typically refers to
-the method's first parameter using a preposition such as
-``with``, ``for``, or ``by``,
-as seen in the ``incrementBy(_:)`` method from the preceding ``Counter`` class example.
-The use of a preposition enables the method to be read as a sentence when it is called.
-
-Swift gives the *first* parameter in a method
-a parameter name by default,
-but no argument label.
-It gives the second and subsequent parameters
-both a parameter name and an argument label by default.
-This convention matches the typical naming and calling convention
-you will be familiar with from writing Objective-C methods,
-and makes for expressive method calls.
-
-Consider this alternative version of the ``Counter`` class,
-which defines a more complex form of the ``incrementBy(_:)`` method:
-
-.. testcode:: externalParameterNames
-
-   -> class Counter {
-         var count: Int = 0
-         func incrementBy(amount: Int, numberOfTimes: Int) {
-            count += amount * numberOfTimes
-         }
-      }
-
-This ``incrementBy(_:numberOfTimes:)`` method has two parameters ---
-``amount`` and ``numberOfTimes``.
-By default, Swift uses ``amount`` only as a parameter name,
-but uses ``numberOfTimes`` as both a parameter name and an argument label.
-You call the method as follows:
-
-.. testcode:: externalParameterNames
-
-   -> let counter = Counter()
-   << // counter : Counter = REPL.Counter
-   -> counter.incrementBy(5, numberOfTimes: 3)
-   /> counter value is now \(counter.count)
-   </ counter value is now 15
-
-You don't need to define an argument label for the first argument value,
-because its purpose is clear from the function name ``incrementBy(_:numberOfTimes:)``.
-The second argument, however, has an argument label
-to make its purpose clear when the method is called.
-
-The behavior described above means that method definitions in Swift
-are written with the same grammatical style as Objective-C,
-and are called in a natural, expressive way.
 
 .. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
 
