@@ -129,17 +129,11 @@ Closure expression syntax has the following general form:
       <#statements#>
    }
 
-Closure expression syntax can use
-constant parameters, variable parameters, and ``inout`` parameters.
-Default values cannot be provided.
+The *parameters* in closure expression syntax
+can be ``inout`` parameters,
+but they can't have a default value.
 Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
-
-.. FIXME: the note about default values is tracked by rdar://16535452.
-   Remove this note if and when that Radar is fixed.
-
-.. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
-   Remove this note if and when that Radar is fixed.
 
 .. QUESTION: is "reversed" the right name to use here?
    it's a backwards sort, not a reversed version of the original array

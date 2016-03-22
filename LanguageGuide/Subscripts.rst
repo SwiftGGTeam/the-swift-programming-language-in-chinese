@@ -149,8 +149,8 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
-Subscripts can use variable parameters and variadic parameters,
-but cannot use in-out parameters or provide default parameter values. 
+Subscripts can use variadic parameters,
+but they can't use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
