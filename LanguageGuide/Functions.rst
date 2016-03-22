@@ -8,7 +8,7 @@ and this name is used to “call” the function to perform its task when needed
 Swift's unified function syntax is flexible enough to express anything from
 a simple C-style function with no parameter names
 to a complex Objective-C-style method
-with local and external parameter names for each parameter.
+with names and argument labels for each parameter.
 Parameters can provide default values to simplify function calls
 and can be passed as in-out parameters,
 which modify a passed variable once the function has completed its execution.
@@ -359,10 +359,10 @@ returns an actual tuple value or ``nil``:
 Function Parameter Names
 ------------------------
 
-Function parameters have both an :newTerm:`external parameter name`
-and a :newTerm:`local parameter name`.
-An external parameter name is used to label arguments passed to a function call.
-A local parameter name is used in the implementation of the function.
+Function parameters have both an :newTerm:`argument label`
+and a :newTerm:`parameter name`.
+An argument label is used to label arguments passed to a function call.
+A parameter name is used in the implementation of the function.
 
 .. testcode:: functionParameterNames
 
@@ -373,13 +373,13 @@ A local parameter name is used in the implementation of the function.
       }
    -> someFunction(1, secondParameterName: 2)
 
-By default, the first parameter omits its external name,
+By default, the first parameter doesn't have an argument label,
 and the second and subsequent parameters
-use their local name as their external name.
-All parameters must have unique local names.
+use their parameter name as their argument label.
+All parameters must have unique names.
 Although it's possible for multiple parameters
-to have the same external name,
-unique external names help make your code more readable.
+to have the same argument label,
+unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
 
@@ -388,23 +388,23 @@ unique external names help make your code more readable.
 
 .. _Functions_ExternalParameterNames:
 
-Specifying External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Specifying Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You write an external parameter name before the local parameter name it supports,
+You write an argument label before the parameter name,
 separated by a space:
 
 .. testcode:: externalParameterNames
 
-   -> func someFunction(externalParameterName localParameterName: Int) {
-         // function body goes here, and can use localParameterName
+   -> func someFunction(argumentLabel parameterName: Int) {
+         // function body goes here, and can use parameterName
          // to refer to the argument value for that parameter
       }
 
 .. note::
 
-   If you provide an external parameter name for a parameter,
-   that external name must *always* be used when you call the function.
+   If you provide an argument label for a parameter,
+   the argument *must* be labeled when you call the function.
 
 Here's a version of the ``sayHello(_:)`` function
 that takes the names of two people
@@ -418,23 +418,23 @@ and returns a greeting for both of them:
    -> print(sayHello(to: "Bill", and: "Ted"))
    <- Hello Bill and Ted!
 
-By specifying external parameter names for both parameters,
+By specifying argument labels for both parameters,
 both the first and second arguments to the ``sayHello(to:and:)`` function
 must be labeled when you call it.
 
-The use of external parameter names can allow a function
+The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
 while still providing a function body that is readable and clear in intent.
 
 
 .. _Functions_OmittingParameterNames:
 
-Omitting External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Omitting Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an external name for the second or subsequent parameters
+If you do not want to use an argument label for the second or subsequent parameters
 of a function,
-write an underscore (``_``) instead of an explicit external name for that parameter.
+write an underscore (``_``) instead of an explicit argument label for that parameter.
 
 .. testcode:: omittedExternalParameterNames
 
@@ -447,7 +447,7 @@ write an underscore (``_``) instead of an explicit external name for that parame
 
 .. note::
 
-   Because the first parameter omits its external parameter name by default,
+   Because the first parameter doesn't have an argument label by default,
    explicitly writing an underscore is extraneous.
 
 .. _Functions_DefaultParameterValues:

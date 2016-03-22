@@ -162,7 +162,7 @@ The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
 Keywords other than ``inout``, ``var``, and ``let``
-can be used as external parameter names
+can be used as parameter names
 in a function declaration or function call
 without being escaped with backticks.
 
