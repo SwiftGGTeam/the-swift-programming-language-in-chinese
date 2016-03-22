@@ -607,13 +607,13 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-A parameter has a local name,
+A parameter has a name,
 which is used within the function body,
-as well as an external name,
-which is used as a label for the argument when calling the method.
-By default, the external name of the first parameter is omitted,
+as well as an argument label,
+which is used when calling the function or method.
+By default, the first parameter does not have an argument label,
 and the second and subsequent parameters
-use their local names as external names.
+use their parameter names as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
@@ -628,18 +628,18 @@ with one of the following forms:
 
 .. syntax-outline::
 
-    <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    _ <#local parameter name#>: <#parameter type#>
+    <#argument label#> <#parameter name#>: <#parameter type#>
+    _ <#parameter name#>: <#parameter type#>
 
-A name before the local parameter name
-gives the parameter an external name,
-which can be different from the local parameter name.
-The external parameter name must be used when the function is called.
-The corresponding argument must have the external name in function or method calls.
+A name before the parameter name
+gives the parameter an argument label,
+which can be different from the parameter name.
+The corresponding argument must use the given argument label
+in function or method calls.
 
-An underscore (``_``) before a local parameter name
-gives that parameter no name to be used in function calls.
-The corresponding argument must have no name in function or method calls.
+An underscore (``_``) before a parameter name
+suppresses the argument label.
+The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
