@@ -225,7 +225,7 @@ by providing named values for each initializer parameter:
    << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
-without using argument label.
+without using argument labels.
 Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 

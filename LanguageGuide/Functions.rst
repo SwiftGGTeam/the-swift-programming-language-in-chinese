@@ -8,7 +8,7 @@ and this name is used to “call” the function to perform its task when needed
 Swift's unified function syntax is flexible enough to express anything from
 a simple C-style function with no parameter names
 to a complex Objective-C-style method
-with parameter names and argument labels for each parameter.
+with names and argument labels for each parameter.
 Parameters can provide default values to simplify function calls
 and can be passed as in-out parameters,
 which modify a passed variable once the function has completed its execution.
@@ -373,13 +373,13 @@ A parameter name is used in the implementation of the function.
       }
    -> someFunction(1, secondParameterName: 2)
 
-By default, the first parameter omits its argument label,
+By default, the first parameter doesn't have an argument label,
 and the second and subsequent parameters
 use their parameter name as their argument label.
 All parameters must have unique names.
 Although it's possible for multiple parameters
 to have the same argument label,
-unique labels help make your code more readable.
+unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
 
@@ -434,7 +434,7 @@ Omitting Argument Labels
 
 If you do not want to use an argument label for the second or subsequent parameters
 of a function,
-write an underscore (``_``) instead of an explicit label for that parameter.
+write an underscore (``_``) instead of an explicit argument label for that parameter.
 
 .. testcode:: omittedExternalParameterNames
 
@@ -447,7 +447,7 @@ write an underscore (``_``) instead of an explicit label for that parameter.
 
 .. note::
 
-   Because the first parameter omits its argument label by default,
+   Because the first parameter doesn't have an argument label by default,
    explicitly writing an underscore is extraneous.
 
 .. _Functions_DefaultParameterValues:
