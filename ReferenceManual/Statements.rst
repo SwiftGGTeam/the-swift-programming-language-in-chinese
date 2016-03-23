@@ -939,12 +939,8 @@ or language-version testing functions listed in the table below.
 ====================  ===================================================
 Function              Valid arguments
 ====================  ===================================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``,
-                      ``FreeBSD``, ``Windows``
---------------------  ---------------------------------------------------
-``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``,
-                      ``powerpc64``, ``powerpc64le``
---------------------  ---------------------------------------------------
+``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
 
@@ -1039,8 +1035,8 @@ have the following form:
     platform-testing-function --> ``os`` ``(`` operating-system ``)``
     platform-testing-function --> ``arch`` ``(`` architecture ``)``
     language-version-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``FreeBSD`` | ``Windows``
-    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64`` | ``powerpc64`` | ``powerpc64le``
+    operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
 
 .. Testing notes:
