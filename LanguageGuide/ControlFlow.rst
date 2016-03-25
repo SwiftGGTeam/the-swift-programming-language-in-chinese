@@ -896,7 +896,6 @@ each constant or variable that's bound
 has to be get a value of the same type
 from all of the value bindings in the different patterns.
 
-
 .. _ControlFlow_ControlTransferStatements:
 
 Control Transfer Statements
