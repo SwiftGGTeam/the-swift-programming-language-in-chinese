@@ -599,7 +599,7 @@ This provision ensures that the ``switch`` statement is exhaustive.
 .. _ControlFlow_NoImplicitFallthrough:
 
 No Implicit Fallthrough
-_______________________
++++++++++++++++++++++++
 
 In contrast with ``switch`` statements in C and Objective-C,
 ``switch`` statements in Swift do not
@@ -664,7 +664,7 @@ and can be written over multiple lines if the list is long.
 .. _ControlFlow_RangeMatching:
 
 Interval Matching
-_________________
++++++++++++++++++
 
 Values in ``switch`` cases can be checked for their inclusion in an interval.
 This example uses number intervals
@@ -716,7 +716,7 @@ and execution is transferred out of the ``switch`` statement.
 .. _ControlFlow_Tuples:
 
 Tuples
-______
+++++++
 
 You can use tuples to test multiple values in the same ``switch`` statement.
 Each element of the tuple can be tested against a different value or interval of values.
@@ -766,7 +766,7 @@ and so all other matching cases would be ignored.
 .. _ControlFlow_ValueBindings:
 
 Value Bindings
-______________
+++++++++++++++
 
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
@@ -821,7 +821,7 @@ and a ``default`` case is not needed to make the ``switch`` statement exhaustive
 .. _ControlFlow_Where:
 
 Where
-_____
++++++
 
 A ``switch`` case can use a ``where`` clause to check for additional conditions.
 
@@ -928,7 +928,7 @@ earlier than would otherwise be the case.
 .. _ControlFlow_BreakInALoop:
 
 Break in a Loop Statement
-_________________________
++++++++++++++++++++++++++
 
 When used inside a loop statement,
 ``break`` ends the loop's execution immediately
@@ -941,7 +941,7 @@ and no further iterations of the loop are started.
 .. _ControlFlow_BreakInASwitchStatement:
 
 Break in a Switch Statement
-___________________________
++++++++++++++++++++++++++++
 
 When used inside a ``switch`` statement,
 ``break`` causes the ``switch`` statement to end its execution immediately

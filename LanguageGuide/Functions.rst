@@ -300,7 +300,7 @@ because their names are already specified as part of the function's return type.
 .. _Functions_OptionalTupleReturnTypes:
 
 Optional Tuple Return Types
-___________________________
++++++++++++++++++++++++++++
 
 If the tuple type to be returned from a function
 has the potential to have “no value” for the entire tuple,

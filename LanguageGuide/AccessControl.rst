@@ -405,7 +405,7 @@ therefore also have an access level of “public”:
    -> let north = CompassPoint.North
 
 Raw Values and Associated Values
-________________________________
+++++++++++++++++++++++++++++++++
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.

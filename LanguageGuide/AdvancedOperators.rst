@@ -179,7 +179,7 @@ whereas shifting it to the right by one position halves its value.
 .. _AdvancedOperators_ShiftingBehaviorForUnsignedIntegers:
 
 Shifting Behavior for Unsigned Integers
-_______________________________________
++++++++++++++++++++++++++++++++++++++++
 
 The bit-shifting behavior for unsigned integers is as follows:
 
@@ -265,7 +265,7 @@ which has a decimal value of ``153``.
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
 Shifting Behavior for Signed Integers
-_____________________________________
++++++++++++++++++++++++++++++++++++++
 
 The shifting behavior is more complex for signed integers than for unsigned integers,
 because of the way signed integers are represented in binary.
