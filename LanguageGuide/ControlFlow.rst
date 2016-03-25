@@ -888,13 +888,6 @@ and start again at the beginning of the next iteration through the loop.
 It says “I am done with the current loop iteration”
 without leaving the loop altogether.
 
-.. note::
-
-   In a ``for`` loop with a condition and incrementer,
-   the loop's incrementer is still evaluated after calling the ``continue`` statement.
-   The loop itself continues to work as usual;
-   only the code within the loop's body is skipped.
-
 The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
 
