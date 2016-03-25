@@ -976,7 +976,7 @@ For brevity, multiple values are covered in a single ``switch`` case.
 
 .. testcode:: breakInASwitchStatement
 
-   -> let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
+   -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
    << // numberSymbol : Character = "三"
    -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = nil
