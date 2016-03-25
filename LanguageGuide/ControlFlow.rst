@@ -860,6 +860,43 @@ only if the ``where`` clause's condition evaluates to ``true`` for that value.
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
+.. _ControlFlow_CompoundCases:
+
+Compound Cases
+++++++++++++++
+
+Multiple switch cases that share the same body
+can be combined by writing several patterns after ``case``,
+with a comma between each of the patterns.
+If any of the patterns match, then the case is considered to match.
+For example:
+
+.. testcode:: compound-switch-case
+
+    -> let stillAnotherPoint = (9, 0)
+    -> switch stillAnotherPoint {
+           case let (distance, 0), let (0, distance):
+               print("On an axis, \(distance) from the origin")
+           default:
+               print("Not on an axis")
+       }
+    <- On an axis, 9 from the origin
+
+Note that ``distance`` appears in different places in the two patterns.
+When a case has multiple patterns joined by commas,
+each one of the patterns has to include the same value bindings.
+For example, rewriting the example above as
+``case let (x, 0), let (0, y)`` would be invalid ---
+one pattern binds ``x`` and the other pattern binds ``y``.
+Requiring the same bindings in each of the patterns
+means that the code in the body of the case
+can always access a value for the variables and constants that are being bound.
+Likewise,
+each constant or variable that's bound
+has to be get a value of the same type
+from all of the value bindings in the different patterns.
+
+
 .. _ControlFlow_ControlTransferStatements:
 
 Control Transfer Statements
