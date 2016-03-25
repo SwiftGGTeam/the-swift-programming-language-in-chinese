@@ -771,7 +771,7 @@ Value Bindings
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
-because the values are “bound” to temporary constants or variables within the case's body.
+because the values are bound to temporary constants or variables within the case's body.
 
 The example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
