@@ -810,12 +810,13 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 After the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``print(_:separator:terminator:)`` function.
+Here, they are used to print the categorization of the point.
 
 This ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
-As a result, this case matches all possible remaining values,
+Because ``anotherPoint`` is always a tuple of two values,
+this case matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_Where:
