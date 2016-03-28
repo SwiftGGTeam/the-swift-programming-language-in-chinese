@@ -575,8 +575,6 @@ the return type can be omitted as follows:
 
 The type of each parameter must be included ---
 it can't be inferred.
-Although the parameters to a function are constants by default,
-you can write ``let`` in front of a parameter's name to emphasize this behavior.
 If you write ``inout`` in front of a parameter's name,
 the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
@@ -922,7 +920,7 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
     parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
