@@ -707,11 +707,6 @@ An integer type can be initialized with a ``Double`` or ``Float`` value:
 Floating-point values are always truncated when used to initialize a new integer value in this way.
 This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
-.. FIXME: negative floating-point numbers cause an overflow when used
-   to initialize an unsigned integer type.
-   This has been filed as rdar://problem/16206455,
-   and this section may need updating based on the outcome of that Radar.
-
 .. note::
 
    The rules for combining numeric constants and variables are different from
