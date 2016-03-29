@@ -882,19 +882,19 @@ For example:
        }
     <- On an axis, 9 from the origin
 
-Note that ``distance`` appears in different places in the two patterns.
+Note that ``distance`` appears in a different place in the two patterns.
 When a case has multiple patterns joined by commas,
 each one of the patterns has to include the same value bindings.
 For example, rewriting the example above as
-``case let (x, 0), let (0, y)`` would be invalid ---
-one pattern binds ``x`` and the other pattern binds ``y``.
+``case let (x, 0), let (0, y)`` would be invalid
+because one pattern binds ``x`` and the other pattern binds ``y``.
 Requiring the same bindings in each of the patterns
 means that the code in the body of the case
 can always access a value for the variables and constants that are being bound.
 Likewise,
 each constant or variable that's bound
 has to be get a value of the same type
-from all of the value bindings in the different patterns.
+from all of the value bindings in the case's patterns.
 
 .. _ControlFlow_ControlTransferStatements:
 
