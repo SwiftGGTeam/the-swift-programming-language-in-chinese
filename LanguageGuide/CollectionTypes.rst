@@ -124,7 +124,7 @@ and the number of times that value is repeated in the new array (called ``count`
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = Array(repeating: 0.0, count: 3)
-   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
+   << // threeDoubles : Array<Double> = [0.0, 0.0, 0.0]
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
    </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
@@ -140,7 +140,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
-   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
