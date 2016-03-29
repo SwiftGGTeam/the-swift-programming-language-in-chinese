@@ -879,26 +879,52 @@ must have at least one throwing function parameter.
           try callback()
       }
 
-A rethrowing function or method can't directly throw any errors of its own,
-which means it can't contain a ``throw`` statement.
-It can only propagate errors thrown
-by the throwing function it takes as a parameter.
-For example, it is not possible
-to call the throwing function inside a ``do``-``catch`` block
+A rethrowing function or method can contain a ``throw`` statement
+only inside a ``catch`` clause.
+This lets you call the throwing function inside a ``do``-``catch`` block
 and handle errors in the ``catch`` clause by throwing a different error.
+In addition,
+the ``catch`` clause must handle
+only errors thrown by one of the rethrowing function's
+throwing parameters.
+For example, the following is invalid
+because the ``catch`` clause would handle
+the error thrown by ``alwaysThrows()``.
 
-.. assertion:: rethrows-cant-throw
+.. testcode:: double-negative-rethrows
 
-   -> enum SomeError: ErrorType { case C }
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   >> enum SomeError: ErrorProtocol { case error }
+   >> enum AnotherError: ErrorProtocol { case error }
+   -> func alwaysThrows() throws {
+          throw SomeError.error
+      }
+   -> func someFunction(callback: () throws -> Int) rethrows {
+         do {
+            try callback()
+            try alwaysThrows()
+         } catch {
+            throw AnotherError.error
+         }
+      }
+
+   !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
+   !!               throw AnotherError.error
+   !!               ^
+.. assertion:: throwing-in-rethrowing-function
+
+   -> enum SomeError: ErrorProtocol { case C, D }
+   -> func f1(callback: () throws -> Int) rethrows {
           do {
               try callback()
           } catch {
-              throw SomeError.C
+              throw SomeError.C  // OK
           }
       }
-   !! <REPL Input>:5:11: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.C
+   -> func f2(callback: () throws -> Int) rethrows {
+          throw SomeError.D  // ERROR
+      }
+   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.D  // ERROR
    !! ^
 
 A throwing method can't override a rethrowing method,
