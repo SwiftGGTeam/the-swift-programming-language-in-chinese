@@ -891,26 +891,26 @@ enumerations can have methods associated with them.
 .. testcode:: guided-tour
 
     -> enum Rank: Int {
-           case Ace = 1
-           case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-           case Jack, Queen, King
+           case ace = 1
+           case two, three, four, five, six, seven, eight, nine, ten
+           case jack, queen, king
            func simpleDescription() -> String {
                switch self {
-                   case .Ace:
+                   case .ace:
                        return "ace"
-                   case .Jack:
+                   case .jack:
                        return "jack"
-                   case .Queen:
+                   case .queen:
                        return "queen"
-                   case .King:
+                   case .king:
                        return "king"
                    default:
                        return String(self.rawValue)
                }
            }
        }
-    -> let ace = Rank.Ace
-    << // ace : Rank = REPL.Rank.Ace
+    -> let ace = Rank.ace
+    << // ace : Rank = REPL.Rank.ace
     -> let aceRawValue = ace.rawValue
     <$ : Int = 1
 
@@ -948,24 +948,24 @@ you don't have to provide one.
 .. testcode:: guided-tour
 
     -> enum Suit {
-           case Spades, Hearts, Diamonds, Clubs
+           case spades, hearts, diamonds, clubs
            func simpleDescription() -> String {
                switch self {
-                   case .Spades:
+                   case .spades:
                        return "spades"
-                   case .Hearts:
+                   case .hearts:
                        return "hearts"
-                   case .Diamonds:
+                   case .diamonds:
                        return "diamonds"
-                   case .Clubs:
+                   case .clubs:
                        return "clubs"
                }
            }
        }
-    -> let hearts = Suit.Hearts
-    << // hearts : Suit = REPL.Suit.Hearts
+    -> let hearts = Suit.hearts
+    << // hearts : Suit = REPL.Suit.hearts
     -> let heartsDescription = hearts.simpleDescription()
-    << // heartsDescription : String = "hearts"
+    << // heartsDescription : String = "Hearts"
 
 .. admonition:: Experiment
 
@@ -976,13 +976,13 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-Notice the two ways that the ``Hearts`` case of the enumeration
+Notice the two ways that the ``hearts`` case of the enumeration
 is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration case ``Suit.Hearts`` is referred to by its full name
+the enumeration case ``Suit.hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
 Inside the switch,
-the enumeration case is referred to by the abbreviated form ``.Hearts``
+the enumeration case is referred to by the abbreviated form ``.hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -1004,8 +1004,8 @@ but classes are passed by reference.
                return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
            }
        }
-    -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.Three, suit: REPL.Suit.Spades)
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1066,19 +1066,19 @@ or it responds with some error information.
 .. testcode:: guided-tour
 
     -> enum ServerResponse {
-           case Result(String, String)
-           case Failure(String)
+           case result(String, String)
+           case failure(String)
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
     -> let failure = ServerResponse.Failure("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.Failure("Out of cheese.")
+    << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
     ---
     -> switch success {
-           case let .Result(sunrise, sunset):
+           case let .result(sunrise, sunset):
                print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .Failure(message):
+           case let .failure(message):
                print("Failure...  \(message)")
        }
     << Sunrise is at 6:00 am and sunset is at 8:09 pm.
@@ -1220,9 +1220,9 @@ You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
 .. testcode:: guided-tour
 
     -> enum PrinterError: ErrorProtocol {
-           case OutOfPaper
-           case NoToner
-           case OnFire
+           case outOfPaper
+           case noToner
+           case onFire
        }
 
 Use ``throw`` to throw an error
@@ -1235,7 +1235,7 @@ handles the error.
 
     -> func send(job: Int, toPrinter printerName: String) throws -> String {
            if printerName == "Never Has Toner" {
-               throw PrinterError.NoToner
+               throw PrinterError.noToner
            }
            return "Job sent"
        }
@@ -1273,7 +1273,7 @@ unless you can give it a different name.
        } catch {
            print(error)
        }
-    << NoToner
+    << noToner
 
 You can provide multiple ``catch`` blocks
 that handle specific errors.
@@ -1288,7 +1288,7 @@ after ``case`` in a switch.
     -> do {
            let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
            print(printerResponse)
-       } catch PrinterError.OnFire {
+       } catch PrinterError.onFire {
            print("I'll just put this over here, with the rest of the fire.")
        } catch let printerError as PrinterError {
            print("Printer error: \(printerError).")
