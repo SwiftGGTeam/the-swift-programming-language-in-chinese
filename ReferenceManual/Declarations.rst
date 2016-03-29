@@ -884,18 +884,21 @@ only inside a ``catch`` clause.
 This lets you call the throwing function inside a ``do``-``catch`` block
 and handle errors in the ``catch`` clause by throwing a different error.
 
-.. assertion:: rethrows-cant-throw
+.. assertion:: throwing-in-rethrowing-function
 
-   -> enum SomeError: ErrorType { case C }
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   -> enum SomeError: ErrorProtocol { case C, D }
+   -> func f1(callback: () throws -> Int) rethrows {
           do {
               try callback()
           } catch {
-              throw SomeError.C
+              throw SomeError.C  // OK
           }
       }
-   !! <REPL Input>:5:11: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.C
+   -> func f2(callback: () throws -> Int) rethrows {
+          throw SomeError.D  // ERROR
+      }
+   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.D  // ERROR
    !! ^
 
 A throwing method can't override a rethrowing method,
