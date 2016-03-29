@@ -883,7 +883,33 @@ A rethrowing function or method can contain a ``throw`` statement
 only inside a ``catch`` clause.
 This lets you call the throwing function inside a ``do``-``catch`` block
 and handle errors in the ``catch`` clause by throwing a different error.
+In addition,
+the ``catch`` clause must handle
+only errors thrown by one of the rethrowing function's
+throwing parameters.
+For example, the following is invalid
+because the ``catch`` clause would handle
+the error thrown by ``alwaysThrows()``.
 
+.. testcode:: double-negative-rethrows
+
+   >> enum SomeError: ErrorProtocol { case error }
+   >> enum AnotherError: ErrorProtocol { case error }
+   -> func alwaysThrows() throws {
+          throw SomeError.error
+      }
+   -> func someFunction(callback: () throws -> Int) rethrows {
+         do {
+            try callback()
+            try alwaysThrows()
+         } catch {
+            throw AnotherError.error
+         }
+      }
+
+   !! <REPL Input>:6:15: error: a function declared 'rethrows' may only throw if its parameter does
+   !!               throw AnotherError.error
+   !!               ^
 .. assertion:: throwing-in-rethrowing-function
 
    -> enum SomeError: ErrorProtocol { case C, D }
