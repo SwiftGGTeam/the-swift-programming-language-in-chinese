@@ -226,7 +226,7 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted( { s1, s2 in s1 > s2 } )
+   -> reversedNames = names.sorted(isOrderedBefore: { s1, s2 in s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
