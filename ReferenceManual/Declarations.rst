@@ -879,12 +879,9 @@ must have at least one throwing function parameter.
           try callback()
       }
 
-A rethrowing function or method can't directly throw any errors of its own,
-which means it can't contain a ``throw`` statement.
-It can only propagate errors thrown
-by the throwing function it takes as a parameter.
-For example, it is not possible
-to call the throwing function inside a ``do``-``catch`` block
+A rethrowing function or method can contain a ``throw`` statement
+only inside a ``catch`` clause.
+This lets you call the throwing function inside a ``do``-``catch`` block
 and handle errors in the ``catch`` clause by throwing a different error.
 
 .. assertion:: rethrows-cant-throw
