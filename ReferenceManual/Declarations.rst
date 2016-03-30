@@ -951,8 +951,8 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
     parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
-    external-parameter-name --> identifier | ``_``
-    local-parameter-name --> identifier | ``_``
+    external-parameter-name --> identifier
+    local-parameter-name --> identifier
     default-argument-clause --> ``=`` expression
 
 

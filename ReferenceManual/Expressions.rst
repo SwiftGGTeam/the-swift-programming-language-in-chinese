@@ -960,11 +960,14 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
 
-    closure-signature --> parameter-clause function-result-OPT ``in``
-    closure-signature --> identifier-list function-result-OPT ``in``
-    closure-signature --> capture-list parameter-clause function-result-OPT ``in``
-    closure-signature --> capture-list identifier-list function-result-OPT ``in``
+    closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
+
+    closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | identifier-list
+    closure-parameter-list --> closure-parameter | closure-parameter ``,`` closure-parameter-list
+    closure-parameter --> closure-parameter-name type-annotation-OPT
+    closure-parameter --> closure-parameter-name type-annotation ``...``
+    closure-parameter-name --> identifier
 
     capture-list --> ``[`` capture-list-items ``]``
     capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
