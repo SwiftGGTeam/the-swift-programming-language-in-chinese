@@ -629,7 +629,7 @@ and the default name of ``oldValue`` is used instead.
           didSet { print("didSet") }
       }
    << // a : Int = 0
-   -> func f(inout b: Int) { print("in f") }
+   -> func f(b: inout Int) { print("in f") }
    -> f(&a)
    << in f
    << willSet
