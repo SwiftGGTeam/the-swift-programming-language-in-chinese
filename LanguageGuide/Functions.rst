@@ -532,7 +532,7 @@ and you want those changes to persist after the function call has ended,
 define that parameter as an :newTerm:`in-out parameter` instead.
 
 You write an in-out parameter by placing the ``inout`` keyword
-right before a parameters type.
+right before a parameter's type.
 An in-out parameter has a value that is passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
