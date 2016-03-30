@@ -577,7 +577,7 @@ The type of each parameter must be included ---
 it can't be inferred.
 Although the parameters to a function are constants by default,
 you can write ``let`` in front of a parameter's name to emphasize this behavior.
-If you write ``inout`` in front of a parameter's name,
+If you write ``inout`` in front of a parameter's type,
 the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
@@ -705,7 +705,7 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(inout a: Int, inout _ b: Int) {
+   -> func f(a: inout Int, _ b: inout Int) {
           a += 1
           b += 10
       }
@@ -725,7 +725,7 @@ For example:
 
 .. testcode:: closure-doesnt-copy-out-inout
 
-    -> func outer(inout a: Int) -> () -> Void {
+    -> func outer(a: inout Int) -> () -> Void {
            func inner() {
                a += 1
            }
@@ -948,8 +948,8 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
-    parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
+    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``

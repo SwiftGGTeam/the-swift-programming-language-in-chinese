@@ -161,8 +161,7 @@ Keywords and Punctuation
 The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
-Keywords other than ``inout``, ``var``, and ``let``
-can be used as parameter names
+Keywords can be used as parameter names or argument labels
 in a function declaration or function call
 without being escaped with backticks.
 
@@ -727,7 +726,7 @@ the ``+`` operator followed by the ``.+`` operator.
    !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
    !! infix operator +.+ { }
    !!                    ^
-   !!                    _ = 
+   !!                    _ =
    !! <REPL Input>:1:20: error: braced block of statements is an unused closure
    !! infix operator +.+ { }
    !!                    ^

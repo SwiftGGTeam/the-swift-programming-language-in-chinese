@@ -532,7 +532,7 @@ and you want those changes to persist after the function call has ended,
 define that parameter as an :newTerm:`in-out parameter` instead.
 
 You write an in-out parameter by placing the ``inout`` keyword
-at the start of its parameter definition.
+right before a parameters type.
 An in-out parameter has a value that is passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
@@ -557,7 +557,7 @@ which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
 
-   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
+   -> func swapTwoInts(a: inout Int, _ b: inout Int) {
          let temporaryA = a
          a = b
          b = temporaryA

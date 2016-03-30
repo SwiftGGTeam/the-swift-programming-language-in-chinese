@@ -73,7 +73,7 @@ Type annotations can contain an optional list of type attributes before the type
 
     Grammar of a type annotation
 
-    type-annotation --> ``:`` attributes-OPT type
+    type-annotation --> ``:`` attributes-OPT ``inout``-OPT type
 
 
 .. _Types_TypeIdentifier:
@@ -160,7 +160,7 @@ or more elements.
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attributes-OPT ``inout``-OPT type | ``inout``-OPT element-name type-annotation
+    tuple-type-element --> attributes-OPT ``inout``-OPT type | element-name type-annotation
     element-name --> identifier
 
 
