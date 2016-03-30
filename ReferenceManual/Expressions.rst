@@ -963,7 +963,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
     closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
 
-    closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | closure-parameter-list
+    closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | identifier-list
     closure-parameter-list --> closure-parameter | closure-parameter ``,`` closure-parameter-list
     closure-parameter --> closure-parameter-name type-annotation-OPT
     closure-parameter --> closure-parameter-name type-annotation ``...``
