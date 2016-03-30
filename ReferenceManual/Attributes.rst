@@ -77,7 +77,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          introduced=<#version number#>
+          introduced: <#version number#>
 
       The *version number* consists of one or more positive integers, separated by periods.
     * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
@@ -85,19 +85,19 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          deprecated=<#version number#>
+          deprecated: <#version number#>
 
       The optional *version number* consists of one or more positive integers, separated by periods.
       Omitting the version number indicates that the declaration is currently deprecated,
       without giving any information about when the deprecation occurred.
-      If you omit the version number, omit the equal sign (``=``) as well.
+      If you omit the version number, omit the colon (``:``) as well.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
       It has the following form:
 
       .. syntax-outline::
 
-          obsoleted=<#version number#>
+          obsoleted: <#version number#>
 
       The *version number* consists of one or more positive integers, separated by periods.
     * The ``message`` argument is used to provide a textual message that's displayed by the compiler
@@ -106,7 +106,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          message=<#message#>
+          message: <#message#>
 
       The *message* consists of a string literal.
     * The ``renamed`` argument is used to provide a textual message
@@ -116,7 +116,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          renamed=<#new name#>
+          renamed: <#new name#>
 
       The *new name* consists of a string literal.
 
@@ -141,7 +141,7 @@ the ``noreturn`` attribute to a function or method *type*.
                 // protocol definition
             }
          ---
-         -> @available(*, unavailable, renamed="MyRenamedProtocol")
+         -> @available(*, unavailable, renamed: "MyRenamedProtocol")
             typealias MyProtocol = MyRenamedProtocol
 
     You can apply multiple ``available`` attributes on a single declaration
@@ -317,7 +317,7 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to an instance method or stored variable property
     of a class that inherits from ``NSManagedObject``
     to indicate that Core Data dynamically provides its implementation at runtime,
-    based on the associated entity description.    
+    based on the associated entity description.
     For a property marked with the ``NSManaged`` attribute,
     Core Data also provides the storage at runtime.
 
@@ -364,7 +364,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
      .. syntax-outline::
 
-         message=<#message#>
+         message: <#message#>
 
      The *message* consists of a string literal.
 
@@ -375,7 +375,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
      .. syntax-outline::
 
-         mutable_variant=<#method name#>
+         mutable_variant: <#method name#>
 
      For example, the Swift standard library provides both
      the mutating method ``sortInPlace()``
