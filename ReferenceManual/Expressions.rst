@@ -967,7 +967,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
     closure-parameter-list --> closure-parameter | closure-parameter ``,`` closure-parameter-list
     closure-parameter --> closure-parameter-name type-annotation-OPT
     closure-parameter --> closure-parameter-name type-annotation ``...``
-    closure-parameter-name --> identifier | ``_``
+    closure-parameter-name --> identifier
 
     capture-list --> ``[`` capture-list-items ``]``
     capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
