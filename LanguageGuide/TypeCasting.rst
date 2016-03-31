@@ -326,7 +326,7 @@ The example creates an array called ``things``, which can store values of type `
    -> things.append(42)
    -> things.append(3.14159)
    -> things.append("hello")
-   -> things.append((3.0, 5.0))
+   -> things.append((3.0, 5.0) as Any)
    -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
    -> things.append({ (name: String) -> String in "Hello, \(name)" })
 
