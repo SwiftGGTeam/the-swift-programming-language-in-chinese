@@ -611,15 +611,14 @@ A parameter has a name,
 which is used within the function body,
 as well as an argument label,
 which is used when calling the function or method.
-By default, the first parameter does not have an argument label,
-and the second and subsequent parameters
-use their parameter names as argument labels.
+By default,
+parameters use their parameter names as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(1, y: 2) // y is labeled, x is not
+   -> f(x: 1, y: 2) // y is labeled, x is not
    << // r0 : Int = 3
 
 You can override the default behavior
