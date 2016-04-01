@@ -334,9 +334,9 @@ In other words, the following two declarations are equivalent:
 .. assertion:: dictionary-literal
 
     >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary1 : [String : Int] = ["Paul": 39, "Alex": 31]
+    << // someDictionary1 : [String : Int] = ["Alex": 31, "Paul": 39]
     >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    << // someDictionary2 : Dictionary<String, Int> = ["Paul": 39, "Alex": 31]
+    << // someDictionary2 : Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
     >> someDictionary1 == someDictionary2
     <$ : Bool = true
 
@@ -393,7 +393,7 @@ In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?``.
 
-The type ``Optional<Wrapped>`` is an enumeration with two cases, ``None`` and ``Some(Wrapped)``,
+The type ``Optional<Wrapped>`` is an enumeration with two cases, ``none`` and ``some(Wrapped)``,
 which are used to represent values that may or may not be present.
 Any type can be explicitly declared to be (or implicitly converted to) an optional type.
 If you don't provide an initial value when you declare an

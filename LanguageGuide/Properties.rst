@@ -787,7 +787,7 @@ The example below shows the syntax for stored and computed type properties:
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:1:34: error: class var overrides a 'final' class var
+   !! <REPL Input>:1:34: error: cannot override static var
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
    !! <REPL Input>:1:22: note: overridden declaration is here

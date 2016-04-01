@@ -461,12 +461,18 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
    ---
-   !! /tmp/sourcefile_1.swift:1:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
+   !! /tmp/sourcefile_1.swift:1:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_1.swift:2:35: error: type 'InternalStruct' has no member 'PrivateEnumInsideInternalStruct'
+   !!                                 ^
+   !! /tmp/sourcefile_0.swift:4:17: note: 'PrivateEnumInsidePublicStruct' declared here
+   !! private enum PrivateEnumInsidePublicStruct { case A, B }
+   !! ^
+   !! /tmp/sourcefile_1.swift:2:50: error: 'PrivateEnumInsideInternalStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
-   !!                                   ^~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !!                                   ^
+   !! /tmp/sourcefile_0.swift:9:17: note: 'PrivateEnumInsideInternalStruct' declared here
+   !! private enum PrivateEnumInsideInternalStruct { case A, B }
+   !! ^
    !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
    !!                                  ^~~~~~~~~~~~~
@@ -495,15 +501,18 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
    ---
-   !! /tmp/sourcefile_0.swift:2:34: error: type 'PublicStruct' has no member 'InternalEnumInsidePublicStruct'
+   !! /tmp/sourcefile_0.swift:2:47: error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
    !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.A
-   !!                                  ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:35: error: type 'PublicStruct' has no member 'AutomaticEnumInsidePublicStruct'
+   !!                                  ^
+   !! <unknown>:0: note: 'InternalEnumInsidePublicStruct' declared here
+   !! /tmp/sourcefile_0.swift:3:48: error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
    !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.A
-   !!                                   ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
+   !!                                   ^
+   !! <unknown>:0: note: 'AutomaticEnumInsidePublicStruct' declared here
+   !! /tmp/sourcefile_0.swift:4:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !!                                 ^
+   !! <unknown>:0: note: 'PrivateEnumInsidePublicStruct' declared here
    !! /tmp/sourcefile_0.swift:5:36: error: use of unresolved identifier 'InternalStruct'
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
    !!                                    ^~~~~~~~~~~~~~
@@ -1031,9 +1040,13 @@ for individual type members.
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileC = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:2:22: error: value of type 'PublicStruct' has no member 'privateMethod'
+   !! /tmp/sourcefile_1.swift:2:50: error: 'privateMethod' is inaccessible due to 'private' protection level
    !! let differentFileC = publicStructInDifferentFile.privateMethod()
-   !!                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
+   !!                                                  ^
+   !! /tmp/sourcefile_0.swift:9:9: note: 'privateMethod' declared here
+   !! func privateMethod() -> Int { return 0 }
+   !! ^
+
 
 .. sourcefile:: extensions_Module2
 
@@ -1042,15 +1055,18 @@ for individual type members.
    -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    -> let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !! /tmp/sourcefile_0.swift:3:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromStruct'
+   !! /tmp/sourcefile_0.swift:3:54: error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromExtension'
+   !!                                                      ^
+   !! <unknown>:0: note: 'implicitlyInternalMethodFromStruct' declared here
+   !! /tmp/sourcefile_0.swift:4:54: error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:5:24: error: value of type 'PublicStruct' has no member 'privateMethod'
+   !!                                                      ^
+   !! <unknown>:0: note: 'implicitlyInternalMethodFromExtension' declared here
+   !! /tmp/sourcefile_0.swift:5:54: error: 'privateMethod' is inaccessible due to 'private' protection level
    !! let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
+   !!                                                      ^
+   !! <unknown>:0: note: 'privateMethod' declared here
 
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

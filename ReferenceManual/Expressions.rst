@@ -1466,7 +1466,7 @@ split over several lines:
    :compile: true
 
    -> let x = [10, 3, 20, 15, 4]
-   ->     .sort()
+   ->     .sorted()
    ->     .filter { $0 > 5 }
    ->     .map { $0 * 100 }
    >> print(x)

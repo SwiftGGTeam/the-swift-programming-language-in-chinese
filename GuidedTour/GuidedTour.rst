@@ -355,7 +355,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25]]
+   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -605,7 +605,7 @@ you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = numbers.sort { $0 > $1 }
+    -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
@@ -1184,7 +1184,7 @@ in addition to its protocol conformance.
 Error Handling
 --------------
 
-You represent errors using any type that adopts the ``ErrorType`` protocol.
+You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
@@ -1205,7 +1205,7 @@ You represent errors using any type that adopts the ``ErrorType`` protocol.
 
 .. testcode:: guided-tour
 
-    -> enum PrinterError: ErrorType {
+    -> enum PrinterError: ErrorProtocol {
            case OutOfPaper
            case NoToner
            case OnFire
@@ -1362,12 +1362,12 @@ as well as classes, enumerations, and structures.
 
     // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<Wrapped> {
-           case None
-           case Some(Wrapped)
+           case none
+           case some(Wrapped)
        }
-    -> var possibleInteger: OptionalValue<Int> = .None
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
-    -> possibleInteger = .Some(100)
+    -> var possibleInteger: OptionalValue<Int> = .none
+    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
+    -> possibleInteger = .some(100)
 
 Use ``where`` after the type name
 to specify a list of requirements ---
@@ -1378,7 +1378,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements <T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> (lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

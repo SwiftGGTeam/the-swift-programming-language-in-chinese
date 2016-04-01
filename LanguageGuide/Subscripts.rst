@@ -117,7 +117,7 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -173,7 +173,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            grid = Array(count: rows * columns, repeatedValue: 0.0)
+            grid = Array(repeating: 0.0, count: rows * columns)
          }
          func indexIsValidForRow(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns

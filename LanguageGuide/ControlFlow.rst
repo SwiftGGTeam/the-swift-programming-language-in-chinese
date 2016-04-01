@@ -115,13 +115,13 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
    -> for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
       }
    </ ants have 6 legs
-   </ cats have 4 legs
    </ spiders have 8 legs
+   </ cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -197,7 +197,7 @@ The board is initialized with 26 zero ``Int`` values, not 25
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
@@ -346,7 +346,7 @@ are initialized in exactly the same way as with a ``while`` loop.
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -1135,7 +1135,7 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08

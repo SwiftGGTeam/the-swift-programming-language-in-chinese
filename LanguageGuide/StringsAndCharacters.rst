@@ -527,7 +527,7 @@ its immediately preceding index by calling the ``predecessor()`` method,
 and its immediately succeeding index by calling the ``successor()`` method.
 Any index in a ``String`` can be accessed from any other index
 by chaining these methods together,
-or by using the ``advancedBy(_:)`` method.
+or by using the ``advanced(by:)`` method.
 Attempting to access an index outside of a string's range
 will trigger a runtime error.
 
@@ -547,8 +547,8 @@ the ``Character`` at a particular ``String`` index.
    -> greeting[greeting.startIndex.successor()]
    <$ : Character = "u"
    // u
-   -> let index = greeting.startIndex.advancedBy(7)
-   << // index : Index = 7
+   -> let index = greeting.startIndex.advanced(by: 7)
+   <~ // index : Index = Swift.String.CharacterView.Index
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -594,43 +594,43 @@ Inserting and Removing
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To insert a character into a string at a specified index,
-use the ``insert(_:atIndex:)`` method.
+use the ``insert(_:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
    -> var welcome = "hello"
    << // welcome : String = "hello"
-   -> welcome.insert("!", atIndex: welcome.endIndex)
+   -> welcome.insert("!", at: welcome.endIndex)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
 
 To insert the contents of another string at a specified index,
-use the ``insertContentsOf(_:at:)`` method.
+use the ``insert(contentsOf:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.insertContentsOf(" there".characters, at: welcome.endIndex.predecessor())
+   -> welcome.insert(contentsOf:" there".characters, at: welcome.endIndex.predecessor())
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
 To remove a character from a string at a specified index,
-use the ``removeAtIndex(_:)`` method.
+use the ``remove(at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.removeAtIndex(welcome.endIndex.predecessor())
+   -> welcome.remove(at: welcome.endIndex.predecessor())
    << // r0 : Character = "!"
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there"
 
 To remove a substring at a specified range,
-use the ``removeRange(_:)`` method:
+use the ``removeSubrange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> let range = welcome.endIndex.advancedBy(-6)..<welcome.endIndex
-   << // range : Range<Index> = Range(5..<11)
-   -> welcome.removeRange(range)
+   -> let range = welcome.endIndex.advanced(by: -6)..<welcome.endIndex
+   <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
+   -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
 

@@ -650,7 +650,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
          var square = 0
          var board: [Int]
          init() {
-            board = [Int](count: finalSquare + 1, repeatedValue: 0)
+            board = Array(repeating: 0, count: finalSquare + 1)
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -1523,16 +1523,16 @@ using a ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 For instance,
-you can define an extension to the ``CollectionType`` protocol
+you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
 to the ``TextRepresentable`` protocol from the example above.
 
 .. testcode:: protocols
 
-   -> extension CollectionType where Generator.Element: TextRepresentable {
+   -> extension Collection where Iterator.Element: TextRepresentable {
           var textualDescription: String {
               let itemsAsText = self.map { $0.textualDescription }
-              return "[" + itemsAsText.joinWithSeparator(", ") + "]"
+              return "[" + itemsAsText.joined(separator: ", ") + "]"
           }
       }
 
@@ -1551,7 +1551,7 @@ and an array of ``Hamster`` values:
    -> let mauriceTheHamster = Hamster(name: "Maurice")
    -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
 
-Because ``Array`` conforms to ``CollectionType``
+Because ``Array`` conforms to ``Collection``
 and the array's elements conform to the ``TextRepresentable`` protocol,
 the array can use the ``textualDescription`` property
 to get a textual representation of its contents:
@@ -1577,7 +1577,7 @@ to get a textual representation of its contents:
 .. TODO: Class-only protocols
 .. TODO: @obj-c protocols
 .. TODO: Standard-library protocols such as Sequence, Equatable etc.?
-.. TODO: Show how to make a custom type conform to BooleanType or some other protocol
+.. TODO: Show how to make a custom type conform to Boolean or some other protocol
 .. TODO: Show a protocol being used by an enumeration
 .. TODO: accessing protocol methods, properties etc.
    through a constant or variable that is *just* of protocol type
