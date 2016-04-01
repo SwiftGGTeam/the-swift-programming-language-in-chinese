@@ -1062,7 +1062,7 @@ A line control statement has the following form:
 
 .. syntax-outline::
 
-    #sourceLocation <#line number#> <#filename#>
+    #sourceLocation(file: <#filename#>, line: <#line number#>)
 
 A line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
@@ -1078,7 +1078,7 @@ by writing a line control statement without specifying a *line number* and *file
     Grammar of a line control statement
 
     line-control-statement --> ``#sourceLocation``
-    line-control-statement --> ``#sourceLocation`` line-number file-name
+    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 
