@@ -371,10 +371,9 @@ A parameter name is used in the implementation of the function.
          // firstParameterName and secondParameterName refer to
          // the argument values for the first and second parameters
       }
-   -> someFunction(1, secondParameterName: 2)
+   -> someFunction(firstParameterName: 1, secondParameterName: 2)
 
-By default, the first parameter doesn't have an argument label,
-and the second and subsequent parameters
+By default, parameters
 use their parameter name as their argument label.
 All parameters must have unique names.
 Although it's possible for multiple parameters
@@ -438,12 +437,12 @@ write an underscore (``_``) instead of an explicit argument label for that param
 
 .. testcode:: omittedExternalParameterNames
 
-   -> func someFunction(firstParameterName: Int, _ secondParameterName: Int) {
+   -> func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
          // function body goes here
          // firstParameterName and secondParameterName refer to
          // the argument values for the first and second parameters
       }
-   -> someFunction(1, 2)
+   -> someFunction(1, secondParameterName: 2)
 
 .. note::
 
@@ -466,7 +465,7 @@ If a default value is defined, you can omit that parameter when calling the func
          // if no arguments are passed to the function call,
          // value of parameterWithDefault is 12
       }
-   -> someFunction(6) // parameterWithDefault is 6
+   -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction() // parameterWithDefault is 12
 
 .. note::
