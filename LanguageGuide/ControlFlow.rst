@@ -625,7 +625,7 @@ It is not valid to write the following code, because the first case is empty:
    -> let anotherCharacter: Character = "a"
    << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
-         case "a":
+         case "a":      // ERROR
          case "A":
             print("The letter A")
          default:
