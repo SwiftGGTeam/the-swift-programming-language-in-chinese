@@ -1062,7 +1062,7 @@ A line control statement has the following form:
 
 .. syntax-outline::
 
-    #line <#line number#> <#filename#>
+    #sourceLocation <#line number#> <#filename#>
 
 A line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
@@ -1073,20 +1073,12 @@ The *filename* changes the value of ``#file`` and is a string literal.
 You can reset the source code location back to the default line numbering and filename
 by writing a line control statement without specifying a *line number* and *filename*.
 
-The ``#line`` token has two meanings depending on how it is used.
-If it is used as a line control statement,
-it must appear on its own line
-and can't be the last line of a source code file.
-If it appears elsewhere in a line,
-it is understood as the special literal described in
-:ref:`Expressions_LiteralExpression`.
-
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#line``
-    line-control-statement --> ``#line`` line-number file-name
+    line-control-statement --> ``#sourceLocation``
+    line-control-statement --> ``#sourceLocation`` line-number file-name
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 

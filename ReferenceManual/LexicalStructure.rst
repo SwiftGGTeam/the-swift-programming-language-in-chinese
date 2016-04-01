@@ -316,7 +316,7 @@ without being escaped with backticks.
   ``#file``,
   ``#function``,
   ``#if``,
-  ``#line``,
+  ``#sourceLocation``,
   and ``#selector``.
 
 .. langref-grammar
