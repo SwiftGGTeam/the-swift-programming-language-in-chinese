@@ -98,12 +98,12 @@ A ``for``-``in`` statement has the following form:
        <#statements#>
     }
 
-The ``generate()`` method is called on the *collection* expression
-to obtain a value of a generator type---that is,
+The ``makeIterator()`` method is called on the *collection* expression
+to obtain a value of an iterator type---that is,
 a type that conforms to the ``IteratorProtocol`` protocol.
 The program begins executing a loop
-by calling the ``next()`` method on the stream.
-If the value returned is not ``none``,
+by calling the ``next()`` method on the iterator.
+If the value returned is not ``nil``,
 it is assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.

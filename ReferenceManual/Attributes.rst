@@ -380,7 +380,7 @@ the ``noreturn`` attribute to a function or method *type*.
      For example, the Swift standard library provides both
      the mutating method ``sort()``
      and the nonmutating method ``sorted()`` to collections
-     whose generator element conforms to the ``Comparable`` protocol.
+     whose iterator element conforms to the ``Comparable`` protocol.
      If you call the ``sorted()`` method without using its result,
      it's likely that you actually intended to use the mutating variant,
      ``sort()`` instead.
