@@ -83,22 +83,6 @@ as described in :ref:`Functions_FunctionParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
 
-.. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
-
-Modifying Argument Label and Parameter Name Behavior for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sometimes it's useful to provide an argument label
-for a method's first parameter, even though this is not the default behavior.
-To do so, you can add an explicit external name yourself.
-
-Conversely, if you do not want to provide an argument label
-for the second or subsequent parameter of a method,
-override the default behavior by using an underscore character (``_``)
-as an explicit argument label for that parameter.
-
-.. TODO: provide (good, would-actually-be-appropriate) examples here.
-
 .. _Methods_TheSelfProperty:
 
 The self Property
