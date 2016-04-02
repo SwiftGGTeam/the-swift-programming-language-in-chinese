@@ -12,6 +12,10 @@
 > 翻译：[Channe](https://github.com/Channe)，[Realank](https://github.com/Realank) 
 > 校对：[shanks](http://codebuild.me)，2016-1-23
 
+> 2.2
+> 翻译：[pmst](https://github.com/colourful987)
+> 校对：[]()
+
 本页包含内容：
 
 - [存储属性的初始赋值](#setting_initial_values_for_stored_properties)
@@ -807,46 +811,6 @@ if unknownUnit == nil {
 // 打印 "This is not a defined temperature unit, so initialization failed."
 ```
 
-<a name="failable_initializers_for_classes"></a>
-### 类的可失败构造器
-
-值类型（也就是结构体或枚举）的可失败构造器，可以在构造过程中的任意时间点触发构造失败。比如在前面的例子中，结构体`Animal`的可失败构造器在构造过程一开始就触发了构造失败，甚至在`species`属性被初始化前。
-
-而对类而言，可失败构造器只能在类引入的所有存储型属性被初始化后，以及构造器代理调用完成后，才能触发构造失败。
-
-下面例子展示了如何在类的可失败构造器中使用隐式解包可选类型来满足上述要求：
-
-```swift
-class Product {
-    let name: String!
-    init?(name: String) {
-        self.name = name
-        if name.isEmpty { return nil }
-    }
-}
-```
-
-上面定义的`Product`类和之前的`Animal`结构体很相似。`Product`类有一个不能为空字符串的常量属性`name`。为了强制这个要求，`Product`类使用了可失败构造器确保这个属性的值不是空字符串后，才允许构造成功。
-
-毕竟，`Product`是一个类而不是结构体，这意味着不同于`Animal`，`Product`类的所有可失败构造器必须给`name`属性一个初始值，然后才能触发构造失败。
-
-上面的例子中，`Product`类的`name`属性被定义为隐式解包可选字符串类型（`String!`）。因为它是一个可选类型，所以它在构造过程中被赋值前，具有默认值`nil`。这个默认值`nil`意味着`Product`类引入的所有存储型属性都有一个有效的初始值。因此，一旦传入一个空字符串，该可失败构造器可以在`name`属性被赋值前触发构造失败。
-
-> 译者注  
-> 上面的示例代码和描述并不相符，根据描述，`if name.isEmpty { return nil }`这句代码应该在`self.name = name`之前，而这却会导致编译错误`error: all stored properties of a class instance must be initialized before returning nil from an initializer`，除非将`let name: String!`改为`var name: String!`。
-> 
-> 根据前面的介绍和实测，常量存储属性，只能被初始化一次。上面的代码，在构造器中有初始化常量属性`name`的过程，所以在此之前不会被赋予默认值`nil`，而在构造器的初始化`name`过程之前，因为并不是所有存储型属性都被初始化，是不可以返回`nil`的；而如果将`name`声明为变量存储属性，那么就可以被多次赋值，所以在执行构造器方法之前，就会获得默认值`nil`，和构造器中的再次赋值并不冲突，所以此时，`if name.isEmpty { return nil }`才可以放在构造器前面。英文原文在这里表述有误
-
-因为`name`属性是一个常量，所以一旦构造成功，`name`属性肯定有一个非`nil`的值。即使它被定义为隐式解包可选类型，也完全可以放心大胆地直接访问，而不用检查`name`属性的值是否为`nil`：
-
-```swift
-if let bowTie = Product(name: "bow tie") {
-    // 不需要检查 bowTie.name 是否为 nil
-    print("The product's name is \(bowTie.name)")
-}
-// 打印 "The product's name is bow tie"
-```
-
 <a name="propagation_of_initialization_failure"></a>
 ### 构造失败的传递
 
@@ -859,36 +823,38 @@ if let bowTie = Product(name: "bow tie") {
 
 下面这个例子，定义了一个名为`CartItem`的`Product`类的子类。这个类建立了一个在线购物车中的物品的模型，它有一个名为`quantity`的常量存储型属性，并确保该属性的值至少为`1`：
 
+
 ```swift
+class Product {
+    let name: String
+    init?(name: String) {   
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+
 class CartItem: Product {
-    let quantity: Int!
+    let quantity: Int
     init?(name: String, quantity: Int) {
+        if quantity < 1 { return nil }
         self.quantity = quantity
         super.init(name: name)
-        if quantity < 1 { return nil }
     }
 }
 ```
 
-和`Product`类中的`name`属性类似，`CartItem`类中的`quantity`属性也是隐式解包可选类型。这意味着在构造过程中，该属性在被赋予特定的值之前能有一个默认的初始值`nil`。
+`CartItem` 可失败构造器首先验证接收的 `quantity` 值是否大于等于 1 。倘若 `quantity` 值无效，则立即终止整个构造过程，返回失败结果，且不再执行余下代码。同样地，`Product` 的可失败构造器首先检查 `name` 值，假如 `name` 值为空字符串，则构造器立即执行失败。
 
-该可失败构造器以向上代理到父类的可失败构造器`init(name:)`开始。这满足了可失败构造器在触发构造失败前必须总是完成构造器代理调用这个条件。
-
-如果由于`name`的值为空字符串而导致父类的可失败构造器构造失败，则`CartIem`类的整个构造过程都将立即失败，之后的构造代码将不会再被执行。如果父类构造成功，`CartIem`的可失败构造器会进一步验证`quantity`的值是否不小于`1`。
-
-> 译者注  
-> 上面的示例代码和描述也不相符，`name`属性在被赋予特定的值之前不能获得一个默认的初始值`nil`，并且根据描述，`self.quantity = quantity`这句代码应该放在最后一行，而这却会导致编译错误`error: property 'self.quantity' not initialized at super.init call`，除非将`let quantity: Int!`改为`var quantity: Int!`。
-
-如果你构造一个`name`的值为非空字符串，`quantity`的值不小于`1`的`CartItem`实例，则可成功构造：
+如果你通过传入一个非空字符串 `name` 以及一个值大于等于 1 的 `quantity` 来创建一个 `CartItem` 实例，那么构造方法能够成功被执行：
 
 ```swift
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// 打印 "Item: sock, quantity: 2"
+// 打印 "Item: sock, quantity: 2”
 ```
 
-如果你试图构造一个`quantity`的值为`0`的`CartItem`实例, 则`CartItem`的可失败构造器会触发构造失败：
+倘若你以一个值为 0 的 `quantity` 来创建一个 `CartItem` 实例，那么将导致 `CartItem` 构造器失败：
 
 ```swift
 if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
@@ -896,10 +862,10 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// 打印 "Unable to initialize zero shirts"
-```
+// 打印 "Unable to initialize zero shirts”
+```  
 
-类似的，如果你试图构造一个`name`的值为空字符串的`CartItem`实例，则父类`Product`的可失败构造器会触发构造失败：
+同样地，如果你尝试传入一个值为空字符串的 `name`来创建一个 `CartItem` 实例，那么将导致父类 `Product` 的构造过程失败：
 
 ```swift
 if let oneUnnamed = CartItem(name: "", quantity: 1) {
@@ -907,7 +873,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// 打印 "Unable to initialize one unnamed product"
+// 打印 "Unable to initialize one unnamed product”
 ```
 
 <a name="overriding_a_failable_initializer"></a>
