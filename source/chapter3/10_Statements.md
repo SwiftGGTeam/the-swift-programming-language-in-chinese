@@ -35,7 +35,7 @@
 - [编译器控制语句](#compiler_control_statements)
 	- [编译配置语句](#build_config_statements) 
 	- [源代码控制语句](#line_control_statements)
-- [可用性语句](#availability_condition)
+- [可用性条件](#availability_condition)
 
 在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和线路控制语句。
 
