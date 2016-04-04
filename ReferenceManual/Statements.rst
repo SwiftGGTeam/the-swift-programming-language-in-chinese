@@ -1058,27 +1058,28 @@ that can be different from the line number and filename of the source code being
 Use a line control statement to change the source code location
 used by Swift for diagnostic and debugging purposes.
 
-A line control statement has the following form:
+A line control statement has the following forms:
 
 .. syntax-outline::
 
     #sourceLocation(file: <#filename#>, line: <#line number#>)
+    #sourceLocation()
 
-A line control statement changes the values of the ``#line`` and ``#file``
+The first form of a line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
 The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
 The *filename* changes the value of ``#file`` and is a string literal.
 
-You can reset the source code location back to the default line numbering and filename
-by writing a line control statement without specifying a *line number* and *filename*.
+The second form of a line control statement, ``#sourceLocation()``,
+resets the source code location back to the default line numbering and filename.
 
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#sourceLocation``
     line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
+    line-control-statement --> ``#sourceLocation`` ``(`` ``)``
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 
