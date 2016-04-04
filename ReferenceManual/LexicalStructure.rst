@@ -297,17 +297,12 @@ without being escaped with backticks.
   ``throw``,
   ``throws``,
   ``true``,
-  ``try``,
-  ``#column``,
-  ``#file``,
-  ``#function``,
-  and ``#line``.
+  and ``try``
 
 * Keywords used in patterns:
   ``_``.
 
 * Keywords that begin with a number sign (``#``):
-
   ``#available``,
   ``#column``,
   ``#else``
@@ -317,7 +312,8 @@ without being escaped with backticks.
   ``#function``,
   ``#if``,
   ``#line``,
-  and ``#selector``.
+  ``#selector``.
+  and ``#sourceLocation``,
 
 .. langref-grammar
 
