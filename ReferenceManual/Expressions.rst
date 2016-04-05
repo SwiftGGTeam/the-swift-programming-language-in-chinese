@@ -482,12 +482,6 @@ Literal          Type         Value
 ``#function``    ``String``   The name of the declaration in which it appears.
 =============    ===========  ===============================================
 
-The ``#line`` token has two meanings depending on how it is used.
-If it appears on its own line,
-it is understood as a line control statement,
-as described in :ref:`Statements_LineControlStatement`.
-Otherwise, it is understood with the meaning described above.
-
 Inside a function,
 the value of ``#function`` is the name of that function,
 inside a method it is the name of that method,
@@ -960,11 +954,14 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
 
-    closure-signature --> parameter-clause function-result-OPT ``in``
-    closure-signature --> identifier-list function-result-OPT ``in``
-    closure-signature --> capture-list parameter-clause function-result-OPT ``in``
-    closure-signature --> capture-list identifier-list function-result-OPT ``in``
+    closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
+
+    closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | identifier-list
+    closure-parameter-list --> closure-parameter | closure-parameter ``,`` closure-parameter-list
+    closure-parameter --> closure-parameter-name type-annotation-OPT
+    closure-parameter --> closure-parameter-name type-annotation ``...``
+    closure-parameter-name --> identifier
 
     capture-list --> ``[`` capture-list-items ``]``
     capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
@@ -1062,8 +1059,6 @@ For example, in the following assignment
     << // (x, _) : (Int, Int) = (10, 20)
     -> (x, _) = (10, 20)
     -> // x is 10, and 20 is ignored
-
-.. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
 
 .. syntax-grammar::
 
@@ -1465,7 +1460,7 @@ split over several lines:
    :compile: true
 
    -> let x = [10, 3, 20, 15, 4]
-   ->     .sort()
+   ->     .sorted()
    ->     .filter { $0 > 5 }
    ->     .map { $0 * 100 }
    >> print(x)

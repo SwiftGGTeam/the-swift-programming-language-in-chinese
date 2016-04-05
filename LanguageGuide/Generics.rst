@@ -28,7 +28,7 @@ which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
+   -> func swapTwoInts(a: inout Int, _ b: inout Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -59,13 +59,13 @@ such as the ``swapTwoStrings(_:_:)`` and ``swapTwoDoubles(_:_:)`` functions show
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoStrings(inout a: String, inout _ b: String) {
+   -> func swapTwoStrings(a: inout String, _ b: inout String) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
    ---
-   -> func swapTwoDoubles(inout a: Double, inout _ b: Double) {
+   -> func swapTwoDoubles(a: inout Double, _ b: inout Double) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -104,7 +104,7 @@ called ``swapTwoValues(_:_:)``:
 
 .. testcode:: genericFunctions
 
-   -> func swapTwoValues<T>(inout a: T, inout _ b: T) {
+   -> func swapTwoValues<T>(a: inout T, _ b: inout T) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -118,13 +118,13 @@ Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
 
-   -> func swapTwoInts(inout a: Int, inout _ b: Int)
+   -> func swapTwoInts(a: inout Int, _ b: inout Int)
    >> {
    >>    let temporaryA = a
    >>    a = b
    >>    b = temporaryA
    >> }
-   -> func swapTwoValues<T>(inout a: T, inout _ b: T)
+   -> func swapTwoValues<T>(a: inout T, _ b: inout T)
    >> {
    >>    let temporaryA = a
    >>    a = b
@@ -499,7 +499,7 @@ or ``nil`` if the string cannot be found:
 .. testcode:: typeConstraints
 
    -> func findStringIndex(array: [String], _ valueToFind: String) -> Int? {
-         for (index, value) in array.enumerate() {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }
@@ -533,7 +533,7 @@ for reasons explained after the example:
 .. testcode:: typeConstraints
 
    -> func findIndex<T>(array: [T], _ valueToFind: T) -> Int? {
-         for (index, value) in array.enumerate() {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }
@@ -543,7 +543,7 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (_MirrorDisposition, _MirrorDisposition), (Mirror.DisplayStyle, Mirror.DisplayStyle), (Bool, Bool), (Any.Type?, Any.Type?), (COpaquePointer, COpaquePointer), (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Memory>, AutoreleasingUnsafeMutablePointer<Memory>), (T, T), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (Mirror.DisplayStyle, Mirror.DisplayStyle), (_MirrorDisposition, _MirrorDisposition), (Bool, Bool), (Any.Type?, Any.Type?), (Character, Character), (OpaquePointer, OpaquePointer), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeDecodingResult, UnicodeDecodingResult), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Pointee>, AutoreleasingUnsafeMutablePointer<Pointee>), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Pointee>, UnsafeMutablePointer<Pointee>), (UnsafePointer<Pointee>, UnsafePointer<Pointee>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F))
    !! if value == valueToFind {
    !!          ^
 
@@ -578,7 +578,7 @@ as part of the type parameter's definition when you define the function:
 .. testcode:: typeConstraintsEquatable
 
    -> func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
-         for (index, value) in array.enumerate() {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }

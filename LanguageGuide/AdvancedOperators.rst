@@ -662,7 +662,7 @@ Compound Assignment Operators
 :newTerm:`Compound assignment operators` combine assignment (``=``) with another operation.
 For example, the addition assignment operator (``+=``)
 combines addition and assignment into a single operation.
-You mark a compound assignment operator's left input parameter as ``inout``,
+You mark a compound assignment operator's left input parameter type as ``inout``,
 because the parameter's value will be modified directly from within the operator function.
 
 The example below implements
@@ -670,7 +670,7 @@ an addition assignment operator function for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> func += (inout left: Vector2D, right: Vector2D) {
+   -> func += (left: inout Vector2D, right: Vector2D) {
          left = left + right
       }
 
@@ -770,7 +770,7 @@ by adding the vector to itself with the addition assignment operator defined ear
 
 .. testcode:: customOperators
 
-   -> prefix func +++ (inout vector: Vector2D) -> Vector2D {
+   -> prefix func +++ (vector: inout Vector2D) -> Vector2D {
          vector += vector
          return vector
       }

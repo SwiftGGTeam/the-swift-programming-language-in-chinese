@@ -77,7 +77,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          introduced=<#version number#>
+          introduced: <#version number#>
 
       The *version number* consists of one or more positive integers, separated by periods.
     * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
@@ -85,19 +85,19 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          deprecated=<#version number#>
+          deprecated: <#version number#>
 
       The optional *version number* consists of one or more positive integers, separated by periods.
       Omitting the version number indicates that the declaration is currently deprecated,
       without giving any information about when the deprecation occurred.
-      If you omit the version number, omit the equal sign (``=``) as well.
+      If you omit the version number, omit the colon (``:``) as well.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
       It has the following form:
 
       .. syntax-outline::
 
-          obsoleted=<#version number#>
+          obsoleted: <#version number#>
 
       The *version number* consists of one or more positive integers, separated by periods.
     * The ``message`` argument is used to provide a textual message that's displayed by the compiler
@@ -106,7 +106,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          message=<#message#>
+          message: <#message#>
 
       The *message* consists of a string literal.
     * The ``renamed`` argument is used to provide a textual message
@@ -116,7 +116,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          renamed=<#new name#>
+          renamed: <#new name#>
 
       The *new name* consists of a string literal.
 
@@ -141,7 +141,7 @@ the ``noreturn`` attribute to a function or method *type*.
                 // protocol definition
             }
          ---
-         -> @available(*, unavailable, renamed="MyRenamedProtocol")
+         -> @available(*, unavailable, renamed: "MyRenamedProtocol")
             typealias MyProtocol = MyRenamedProtocol
 
     You can apply multiple ``available`` attributes on a single declaration
@@ -173,36 +173,6 @@ the ``noreturn`` attribute to a function or method *type*.
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
-.. NOTE: As of Beta 5, 'assignment' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-
-    ``assignment``
-        Apply this attribute to functions that overload
-        a compound assignment operator.
-        Functions that overload a compound assignment operator must mark
-        their initial input parameter as ``inout``.
-        For an example of how to use the ``assignment`` attribute,
-        see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
-
-.. NOTE: ``assignment doesn't seem to be required as of r16459.
-    Emailed swift-dev on 4/17/14 with the following example:
-
-    (swift) struct Vector2D {
-             var x = 0.0, y = 0.0
-        }
-    (swift) func += (inout lhs: Vector2D, rhs: Vector2D) {
-              lhs = Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
-            }
-    (swift) var original = Vector2D(1.0, 2.0)
-    // original : Vector2D = Vector2D(1.0, 2.0)
-    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
-    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
-    (swift) original += vectorToAdd
-    (swift) original
-    // original : Vector2D = Vector2D(4.0, 6.0)
-
-    Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
-
 .. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
     I'm keeping the prose here in case it comes back for some reason.
     Semantically, the it's replaced with a 'class' requirement,
@@ -215,18 +185,6 @@ the ``noreturn`` attribute to a function or method *type*.
         If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
         is implicitly applied to that protocol; there's no need to mark the protocol with
         the ``class_protocol`` attribute explicitly.
-
-.. Note: At the design meeting on June 17th,
-    it was decided that we don't want people to be using "exported" at the moment.
-    It's really only intended for framework development (it's used in the Obj-C overlay).
-    Commenting this out until this attribute is ready for prime time,
-    to fix <rdar://problem/17346713> Remove the "exported" attribute from the Reference
-
-    ``exported``
-        Apply this attribute to an import declaration to export
-        the imported module, submodule, or declaration from the current module.
-        If another module imports the current module, that other module can access
-        the items exported by the current module.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
@@ -359,7 +317,7 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to an instance method or stored variable property
     of a class that inherits from ``NSManagedObject``
     to indicate that Core Data dynamically provides its implementation at runtime,
-    based on the associated entity description.    
+    based on the associated entity description.
     For a property marked with the ``NSManaged`` attribute,
     Core Data also provides the storage at runtime.
 
@@ -406,7 +364,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
      .. syntax-outline::
 
-         message=<#message#>
+         message: <#message#>
 
      The *message* consists of a string literal.
 
@@ -417,15 +375,15 @@ the ``noreturn`` attribute to a function or method *type*.
 
      .. syntax-outline::
 
-         mutable_variant=<#method name#>
+         mutable_variant: <#method name#>
 
      For example, the Swift standard library provides both
-     the mutating method ``sortInPlace()``
-     and the nonmutating method ``sort()`` to collections
-     whose generator element conforms to the ``Comparable`` protocol.
-     If you call the ``sort()`` method without using its result,
+     the mutating method ``sort()``
+     and the nonmutating method ``sorted()`` to collections
+     whose iterator element conforms to the ``Comparable`` protocol.
+     If you call the ``sorted()`` method without using its result,
      it's likely that you actually intended to use the mutating variant,
-     ``sortInPlace()`` instead.
+     ``sort()`` instead.
 
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:

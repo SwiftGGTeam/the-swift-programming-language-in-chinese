@@ -88,7 +88,7 @@ For-In Statement
 
 A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
-that conforms to the ``SequenceType`` protocol.
+that conforms to the ``Sequence`` protocol.
 
 A ``for``-``in`` statement has the following form:
 
@@ -98,12 +98,12 @@ A ``for``-``in`` statement has the following form:
        <#statements#>
     }
 
-The ``generate()`` method is called on the *collection* expression
-to obtain a value of a generator type---that is,
-a type that conforms to the ``GeneratorType`` protocol.
+The ``makeIterator()`` method is called on the *collection* expression
+to obtain a value of an iterator type---that is,
+a type that conforms to the ``IteratorProtocol`` protocol.
 The program begins executing a loop
-by calling the ``next()`` method on the stream.
-If the value returned is not ``None``,
+by calling the ``next()`` method on the iterator.
+If the value returned is not ``nil``,
 it is assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
@@ -150,7 +150,7 @@ Because the value of the *condition* is evaluated before the *statements* are ex
 the *statements* in a ``while`` statement can be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
-the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
+the ``Boolean`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -215,7 +215,7 @@ Because the value of the *condition* is evaluated after the *statements* are exe
 the *statements* in a ``repeat``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
-the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
+the ``Boolean`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -302,7 +302,7 @@ An ``if`` statement chained together in this way has the following form:
     }
 
 The value of any condition in an ``if`` statement must have a type that conforms to
-the ``BooleanType`` protocol. The condition can also be an optional binding declaration,
+the ``Boolean`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -335,7 +335,7 @@ A ``guard`` statement has the following form:
     }
 
 The value of any condition in a ``guard`` statement
-must have a type that conforms to the ``BooleanType`` protocol.
+must have a type that conforms to the ``Boolean`` protocol.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
@@ -768,7 +768,7 @@ followed by an expression, as shown below.
     throw <#expression#>
 
 The value of the *expression* must have a type that conforms to
-the ``ErrorType`` protocol.
+the ``ErrorProtocol`` protocol.
 
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
@@ -1058,35 +1058,28 @@ that can be different from the line number and filename of the source code being
 Use a line control statement to change the source code location
 used by Swift for diagnostic and debugging purposes.
 
-A line control statement has the following form:
+A line control statement has the following forms:
 
 .. syntax-outline::
 
-    #line <#line number#> <#filename#>
+    #sourceLocation(file: <#filename#>, line: <#line number#>)
+    #sourceLocation()
 
-A line control statement changes the values of the ``#line`` and ``#file``
+The first form of a line control statement changes the values of the ``#line`` and ``#file``
 literal expressions, beginning with the line of code following the line control statement.
 The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
 The *filename* changes the value of ``#file`` and is a string literal.
 
-You can reset the source code location back to the default line numbering and filename
-by writing a line control statement without specifying a *line number* and *filename*.
-
-The ``#line`` token has two meanings depending on how it is used.
-If it is used as a line control statement,
-it must appear on its own line
-and can't be the last line of a source code file.
-If it appears elsewhere in a line,
-it is understood as the special literal described in
-:ref:`Expressions_LiteralExpression`.
+The second form of a line control statement, ``#sourceLocation()``,
+resets the source code location back to the default line numbering and filename.
 
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#line``
-    line-control-statement --> ``#line`` line-number file-name
+    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
+    line-control-statement --> ``#sourceLocation`` ``(`` ``)``
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 

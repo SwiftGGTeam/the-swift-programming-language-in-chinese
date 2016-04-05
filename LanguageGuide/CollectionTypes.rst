@@ -117,13 +117,14 @@ Creating an Array with a Default Value
 Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
 with all of its values set to the same default value.
-You pass this initializer the number of items to be added to the new array (called ``count``)
-and a default value of the appropriate type (called ``repeatedValue``):
+You pass this initializer
+a default value of the appropriate type (called ``repeating``):
+and the number of times that value is repeated in the new array (called ``count``):
 
 .. testcode:: arraysEmpty
 
-   -> var threeDoubles = [Double](count: 3, repeatedValue: 0.0)
-   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
+   -> var threeDoubles = Array(repeating: 0.0, count: 3)
+   << // threeDoubles : Array<Double> = [0.0, 0.0, 0.0]
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
    </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
@@ -138,8 +139,8 @@ The new array's type is inferred from the type of the two arrays you add togethe
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
-   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
+   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
+   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
@@ -301,27 +302,27 @@ with ``"Bananas"`` and ``"Apples"``:
    You can't use subscript syntax to append a new item to the end of an array.
 
 To insert an item into the array at a specified index,
-call the array's ``insert(_:atIndex:)`` method:
+call the array's ``insert(_:at:)`` method:
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.insert("Maple Syrup", atIndex: 0)
+   -> shoppingList.insert("Maple Syrup", at: 0)
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 7 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert(_:atIndex:)`` method inserts a new item with a value of ``"Maple Syrup"``
+This call to the ``insert(_:at:)`` method inserts a new item with a value of ``"Maple Syrup"``
 at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
-Similarly, you remove an item from the array with the ``removeAtIndex(_:)`` method.
+Similarly, you remove an item from the array with the ``remove(at:)`` method.
 This method removes the item at the specified index and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
 
-   -> let mapleSyrup = shoppingList.removeAtIndex(0)
+   -> let mapleSyrup = shoppingList.remove(at: 0)
    << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
@@ -350,9 +351,9 @@ and so the value at index ``0`` is once again equal to ``"Six eggs"``:
    </ firstItem is now equal to "Six eggs"
 
 If you want to remove the final item from an array,
-use the ``removeLast()`` method rather than the ``removeAtIndex(_:)`` method
+use the ``removeLast()`` method rather than the ``remove(at:)`` method
 to avoid the need to query the array's ``count`` property.
-Like the ``removeAtIndex(_:)`` method, ``removeLast()`` returns the removed item:
+Like the ``remove(at:)`` method, ``removeLast()`` returns the removed item:
 
 .. testcode:: arraysInferred
 
@@ -383,16 +384,16 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Bananas
 
 If you need the integer index of each item as well as its value,
-use the ``enumerate()`` method to iterate over the array instead.
+use the ``enumerated()`` method to iterate over the array instead.
 For each item in the array,
-the ``enumerate()`` method returns a tuple
+the ``enumerated()`` method returns a tuple
 composed of the index and the value for that item.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: arraysInferred
 
-   -> for (index, value) in shoppingList.enumerate() {
+   -> for (index, value) in shoppingList.enumerated() {
          print("Item \(index + 1): \(value)")
       }
    </ Item 1: Six eggs
@@ -519,7 +520,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
+   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -545,7 +546,7 @@ The initialization of ``favoriteGenres`` could have been written in a shorter fo
 .. testcode:: setsInferred
 
    -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
+   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``Set<String>`` is
@@ -564,7 +565,7 @@ check its read-only ``count`` property:
 .. testcode:: setUsage
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Classical", "Hip hop"])
+   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
    -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
@@ -627,21 +628,21 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
    -> for genre in favoriteGenres {
          print("\(genre)")
       }
-   </ Classical
    </ [Tool J]
    </ Hip hop
+   </ Classical
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 Swift's ``Set`` type does not have a defined ordering.
 To iterate over the values of a set in a specific order,
-use the ``sort()`` method,
+use the ``sorted()`` method,
 which returns the set's elements as an array
 sorted using the ``<`` operator.
 
 .. testcode:: setUsage
 
-   -> for genre in favoriteGenres.sort() {
+   -> for genre in favoriteGenres.sorted() {
          print("\(genre)")
       }
    </ Classical
@@ -685,16 +686,16 @@ with the results of various set operations represented by the shaded regions.
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
    << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
    ---
-   -> oddDigits.union(evenDigits).sort()
+   -> oddDigits.union(evenDigits).sorted()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   -> oddDigits.intersect(evenDigits).sort()
+   -> oddDigits.intersect(evenDigits).sorted()
    << // r1 : [Int] = []
    // []
-   -> oddDigits.subtract(singleDigitPrimeNumbers).sort()
+   -> oddDigits.subtract(singleDigitPrimeNumbers).sorted()
    << // r2 : [Int] = [1, 9]
    // [1, 9]
-   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
+   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sorted()
    << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
@@ -924,9 +925,7 @@ You can also use subscript syntax to change the value associated with a particul
 .. testcode:: dictionariesInferred
 
    -> airports["LHR"] = "London Heathrow"
-   >> var lhr = "LHR" // a hack to get around rdar://16336177
-   << // lhr : String = "LHR"
-   /> the value for \"LHR\" has been changed to \"\(airports[lhr]!)\"
+   /> the value for \"LHR\" has been changed to \"\(airports["LHR"]!)\"
    </ the value for "LHR" has been changed to "London Heathrow"
 
 As an alternative to subscripting,
@@ -987,14 +986,14 @@ by assigning a value of ``nil`` for that key:
    << APL has now been removed from the dictionary
 
 Alternatively, remove a key-value pair from a dictionary
-with the ``removeValueForKey(_:)`` method.
+with the ``removeValue(forKey:)`` method.
 This method removes the key-value pair if it exists
 and returns the removed value,
 or returns ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
 
-   -> if let removedValue = airports.removeValueForKey("DUB") {
+   -> if let removedValue = airports.removeValue(forKey: "DUB") {
          print("The removed airport's name is \(removedValue).")
       } else {
          print("The airports dictionary does not contain a value for DUB.")
@@ -1056,4 +1055,4 @@ with the ``keys`` or ``values`` property:
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
-use the ``sort()`` method on its ``keys`` or ``values`` property.
+use the ``sorted()`` method on its ``keys`` or ``values`` property.

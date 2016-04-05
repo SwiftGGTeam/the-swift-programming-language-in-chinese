@@ -172,6 +172,33 @@ without being escaped with backticks.
          print(x+y)
       }
 
+.. assertion:: var-requires-backticks
+
+   -> func f(`var` x: Int) { }
+   -> func f(var x: Int) { }
+   !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
+   !! func f(var x: Int) { }
+   !!        ^~~
+   !! var x = x
+
+.. assertion:: let-requires-backticks
+
+   -> func f(`let` x: Int) { }
+   -> func f(let x: Int) { }
+   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !! func f(let x: Int) { }
+   !!        ^~~
+   !!-
+
+.. assertion:: inout-requires-backticks
+
+   -> func f(`inout` x: Int) { }
+   -> func f(inout x: Int) { }
+   !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !! func f(inout x: Int) { }
+   !!        ~~~~~    ^
+   !!                 inout
+
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
 
@@ -270,17 +297,12 @@ without being escaped with backticks.
   ``throw``,
   ``throws``,
   ``true``,
-  ``try``,
-  ``#column``,
-  ``#file``,
-  ``#function``,
-  and ``#line``.
+  and ``try``
 
 * Keywords used in patterns:
   ``_``.
 
 * Keywords that begin with a number sign (``#``):
-
   ``#available``,
   ``#column``,
   ``#else``
@@ -290,7 +312,8 @@ without being escaped with backticks.
   ``#function``,
   ``#if``,
   ``#line``,
-  and ``#selector``.
+  ``#selector``.
+  and ``#sourceLocation``,
 
 .. langref-grammar
 
@@ -727,7 +750,7 @@ the ``+`` operator followed by the ``.+`` operator.
    !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
    !! infix operator +.+ { }
    !!                    ^
-   !!                    _ = 
+   !!                    _ =
    !! <REPL Input>:1:20: error: braced block of statements is an unused closure
    !! infix operator +.+ { }
    !!                    ^
