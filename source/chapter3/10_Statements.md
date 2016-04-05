@@ -9,10 +9,13 @@
 > 2.0
 > 翻译+校对：[littledogboy](https://github.com/littledogboy)
 
+> 2.2
+> 翻译：[chenmingbiao](https://github.com/chenmingbiao)
+> 校对：[]()
+
 本页包含内容：
 
 - [循环语句](#loop_statements)
-	- [For 语句](#for_statements)
 	- [For-In 语句](#for-in_statements) 
 	- [While 语句](#while_statements)
 	- [Repeat-While 语句](#repeat-while_statements)
@@ -26,13 +29,13 @@
 	- [Continue 语句](#continue_statement)
 	- [Fallthrough 语句](#fallthrough_statements)
 	- [Return 语句](#return_statements)
-	- [Available 语句](#availability_statements)
 	- [Throw 语句](#throw_statements)
 - [Defer 语句](#defer_statements)
 - [Do 语句](#do_statements)
 - [编译器控制语句](#compiler_control_statements)
 	- [编译配置语句](#build_config_statements) 
 	- [源代码控制语句](#line_control_statements)
+- [可用性条件](#availability_condition)
 
 在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和线路控制语句。
 
@@ -57,53 +60,20 @@
 <a name="loop_statements"></a>
 ## 循环语句
 
-循环语句会根据特定的循环条件来重复执行代码块。Swift 提供四种类型的循环语句：`for` 语句、`for-in` 语句、`while` 语句和 `repeat-while` 语句。
+循环语句会根据特定的循环条件来重复执行代码块。Swift 提供三种类型的循环语句：`for-in` 语句、`while` 语句和 `repeat-while` 语句。
 
 通过 `break` 语句和 `continue` 语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement) 和 [Continue 语句](#continue_statement)。
 
 > 循环语句语法  
 <a name="loop-statement"></a>
-> *循环语句* → [*for 语句*](#for-statement)  
 > *循环语句* → [*for-in 语句*](#for-in-statement)  
 > *循环语句* → [*while 语句*](#while-statement)  
 > *循环语句* → [*repeat-while 语句*](#repeat-while-statement)  
 
-<a name="for_statements"></a>
-### For 语句
-
-`for` 语句只有在循环条件为真时重复执行代码块，同时计数器递增。
-
-`for` 语句的形式如下：
-
-```swift
-for 初始化; 条件; 增量 {  
-    语句  
-}
-```
-
-初始化、条件和增量语句之间必须以分号相隔，循环体中的语句必须以花括号包裹。
-
-`for` 语句的执行流程如下：
-
-1. 初始化只会被执行一次，通常用于声明和初始化在接下来的循环中需要使用的变量。
-2. 判断条件的值。如果为 `true`，循环体中的语句将会被执行，然后转到第 3 步；如果为 `false`，循环体中的语句以及增量语句都不会被执行，`for` 语句至此执行完毕。
-3. 执行增量语句，然后重复第 2 步。
-
-在初始化语句中定义的变量仅在 `for` 循环的作用域内有效。
-
-条件的结果必须符合 `BooleanType` 协议。
-
-> for 语句语法  
-<a name="for-statement"></a>
-> *for 语句* → **for** [*for初始条件*](#for-init)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)  
-> *for语句* → **for** **(** [*for初始条件*](#for-init)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **)** [*代码块*](05_Declarations.md#code-block)  
-<a name="for-init"></a>
-> *for 初始条件* → [*变量声明*](05_Declarations.md#variable-declaration) | [*表达式列表*](04_Expressions.md#expression-list)  
-
 <a name="for-in_statements"></a>
 ### For-In 语句
 
-`for-in` 语句会为集合（或符合 `Sequence` 协议的任意类型）中的每一项执行一次代码块。
+`for-in` 语句会为集合（或实现了 `SequenceType` 协议的任意类型）中的每一项执行一次代码块。
 
 `for-in` 语句的形式如下：
 
@@ -113,7 +83,7 @@ for 项 in 集合 {
 }  
 ```
 
-`for-in` 语句在循环开始前会调用集合表达式的 `generate()` 方法来获取一个符合 `Generator` 协议的类型的值。接下来循环开始，反复调用该值的 `next()` 方法。如果其返回值不是 `None`，它将会被赋给“项”，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
+`for-in` 语句在循环开始前会调用集合表达式的 `generate()` 方法来获取一个符合 `GeneratorType` 协议的类型的值。接下来循环开始，反复调用该值的 `next()` 方法。如果其返回值不是 `None`，它将会被赋给“项”，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
 
 > for-in 语句语法  
 <a name="for-in-statement"></a>
@@ -452,46 +422,6 @@ case let (x, y) where x == y:
 > return 语句语法  
 <a name="return-statement"></a>
 > *return 语句* → **return** [*表达式*](04_Expressions.html#expression)<sub>可选</sub>
-
-<a name="availability_statements"></a>
-### Available 语句    
-
-可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。    
-
-可用性条件的形式如下：
-
-```swift
-if #available(平台名称 版本, ..., *) {    
-	如果 API 可用，则执行这部分语句    
-} else {    
-	如果 API 不可用，则执行这部分语句
-}    
-```
-
-使用可用性条件来执行一个代码块时，取决于使用的接口在运行时是否可用。编译器会根据可用性条件提供的信息以及运行时的平台来决定是否执行相应的代码块。
-
-可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`OSX`，以及 `watchOS` 等作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
-   
-与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 合并可用性条件。 
-
-> 可用性条件语法    
-
-<a name="availability-condition"></a>
-> *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**   
-<a name="availability-arguments"></a>
-> *可用性参数列表* → [*可用性参数*](#availability-argument) | [*可用性参数*](#availability-argument) **,** [*可用性参数列表*](#availability-arguments)  
-<a name="availability-argument"></a>
-> *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)    
-> *可用性条件* → __*__
-
-<a name="platform-name"></a>
-> *平台名称* → **iOS** | **iOSApplicationExtension**  
-> *平台名称* → **OSX** | **OSXApplicationExtension**   
-> *平台名称* → **watchOS**     
-<a name="platform-version"></a>
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
     
 <a name="throw_statements"></a>
 ### Throw 语句    
@@ -612,6 +542,9 @@ do {
 | --- | --- |
 | `os()` | `OSX`, `iOS`, `watchOS`, `tvOS` |
 | `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `swift()` | 	>= followed by a version number |
+
+`swift()` (语言版本检测函数)的版本号参数主要由主版本号和次版本号组成并且使用点号(`.`)分割开，`>=` 和版本号之间不能有空白符。
 
 > 注意
 > `arch(arm)` 编译配置在 ARM 64位设备上不会返回 `true`。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 编译配置返回 `true`。
@@ -631,7 +564,7 @@ do {
 ```
 
 > 注意  
-> 即使没有被编译，编译配置中的语句仍然会被解析。
+> 即使没有被编译，编译配置中的语句仍然会被解析。但是，在编译配置语句中如果包含语言版本检测函数则是例外：仅当 `Swift` 编译器版本和语言版本检测函数中指定的版本号匹配时语句才能被解析。这种设定能确保旧的编译器不会尝试去解析新 ｀Swift` 版本的语法。
 
 <a name=""></a>
 > 编译配置语句语法  
@@ -660,7 +593,8 @@ do {
 <a name="operating-system"></a>
 > *操作系统* → **OSX** | **iOS** | **watchOS** | **tvOS**  
 <a name="architecture"></a>
-> *架构* → **i386** | **x86_64** | **arm** | **arm64**
+> *架构* → **i386** | **x86_64** | **arm** | **arm64**  
+> *swift 版本* → [*十进制数字*](02_Lexical_Structure.md#decimal-digit) ­**.** ­[*十进制数字*](02_Lexical_Structure.md#decimal-digit)
 
 <a name="line_control_statements"></a>
 ### 线路控制语句
@@ -685,3 +619,43 @@ do {
 > *行号* → 大于 0 的十进制整数  
 <a name="file-name"></a>
 > *文件名* → [*静态字符串字面量*](02_Lexical_Structure.md#static-string-literal)
+
+<a name="availability_condition"></a>
+### 可用性条件    
+
+可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。    
+
+可用性条件的形式如下：
+
+```swift
+if #available(平台名称 版本, ..., *) {    
+	如果 API 可用，则执行这部分语句    
+} else {    
+	如果 API 不可用，则执行这部分语句
+}    
+```
+
+使用可用性条件来执行一个代码块时，取决于使用的接口在运行时是否可用。编译器会根据可用性条件提供的信息以及运行时的平台来决定是否执行相应的代码块。
+
+可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`OSX`，以及 `watchOS` 等作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
+   
+与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 合并可用性条件。 
+
+> 可用性条件语法    
+
+<a name="availability-condition"></a>
+> *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**   
+<a name="availability-arguments"></a>
+> *可用性参数列表* → [*可用性参数*](#availability-argument) | [*可用性参数*](#availability-argument) **,** [*可用性参数列表*](#availability-arguments)  
+<a name="availability-argument"></a>
+> *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)    
+> *可用性条件* → __*__
+
+<a name="platform-name"></a>
+> *平台名称* → **iOS** | **iOSApplicationExtension**  
+> *平台名称* → **OSX** | **OSXApplicationExtension**   
+> *平台名称* → **watchOS**     
+<a name="platform-version"></a>
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
