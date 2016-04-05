@@ -632,7 +632,7 @@ It is not valid to write the following code, because the first case is empty:
             print("Not the letter A")
       }
    !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
-   !!      case "a":
+   !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
    // this will report a compile-time error
