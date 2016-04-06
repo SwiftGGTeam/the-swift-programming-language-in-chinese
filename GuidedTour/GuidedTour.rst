@@ -434,10 +434,10 @@ from the function's return type.
 
 .. testcode:: guided-tour
 
-    -> func greet(name: String, day: String) -> String {
+    -> func makeGreeting(name: String, day: String) -> String {
            return "Hello \(name), today is \(day)."
        }
-    -> greet("Bob", day: "Tuesday")
+    -> makeGreeting(name: "Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
@@ -474,7 +474,7 @@ either by name or by number.
 
            return (min, max, sum)
        }
-    -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
+    -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> print(statistics.sum)
     << 120
@@ -495,7 +495,7 @@ collecting them into an array.
       }
    -> sumOf()
    <$ : Int = 0
-   -> sumOf(42, 597, 12)
+   -> sumOf(numbers: 42, 597, 12)
    <$ : Int = 651
 
 .. admonition:: Experiment
@@ -535,7 +535,7 @@ This means that a function can return another function as its value.
        }
     -> var increment = makeIncrementer()
     << // increment : (Int) -> Int = (Function)
-    -> increment(7)
+    -> increment(number: 7)
     <$ : Int = 8
 
 A function can take another function as one of its arguments.
@@ -555,7 +555,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, condition: lessThanTen)
+    -> hasAnyMatches(list: numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
@@ -1345,14 +1345,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArrayByRepeating<Item>(item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> repeatItem("knock", numberOfTimes:4)
+    -> makeArrayByRepeating(item: "knock", numberOfTimes:4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
