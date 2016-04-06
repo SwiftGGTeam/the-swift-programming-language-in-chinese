@@ -445,6 +445,20 @@ from the function's return type.
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
 
+By default,
+functions use their parameter names
+as labels for their arguments.
+Write an custom argument label before the parameter name,
+or write ``_`` to use no argument label.
+
+.. testcode:: guided-tour
+
+    -> func greet(_ name: String, on day: String) -> String {
+           return "Hello \(name), today is \(day)."
+       }
+    -> greet("John", on: "Wednesday")
+    <$ : String = "Hello John, today is Wednesday."
+
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
 The elements of a tuple can be referred to
