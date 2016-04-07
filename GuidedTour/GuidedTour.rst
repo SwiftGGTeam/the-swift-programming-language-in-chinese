@@ -1332,16 +1332,16 @@ even though they need to be executed at different times.
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
     << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
-    -> func fridgeContains(itemName: String) -> Bool {
+    -> func fridgeContains(itemNamed name: String) -> Bool {
            fridgeIsOpen = true
            defer {
                fridgeIsOpen = false
            }
     ---
-           let result = fridgeContent.contains(itemName)
+           let result = fridgeContent.contains(name)
            return result
        }
-    -> fridgeContains("banana")
+    -> fridgeContains(itemNamed: "banana")
     <$ : Bool = false
     -> print(fridgeIsOpen)
     << false
