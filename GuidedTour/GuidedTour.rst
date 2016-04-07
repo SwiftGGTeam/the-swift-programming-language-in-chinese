@@ -549,7 +549,7 @@ This means that a function can return another function as its value.
        }
     -> var increment = makeIncrementer()
     << // increment : (Int) -> Int = (Function)
-    -> increment(number: 7)
+    -> increment(7)
     <$ : Int = 8
 
 A function can take another function as one of its arguments.
@@ -1392,7 +1392,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements <T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> (_ lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
