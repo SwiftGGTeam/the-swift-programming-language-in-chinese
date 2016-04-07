@@ -1233,7 +1233,7 @@ handles the error.
 
 .. testcode:: guided-tour
 
-    -> func sendToPrinter(printerName: String) throws -> String {
+    -> func send(job: Int, toPrinter printerName: String) throws -> String {
            if printerName == "Never Has Toner" {
                throw PrinterError.NoToner
            }
@@ -1251,7 +1251,7 @@ unless you can give it a different name.
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Bi Sheng")
+           let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
            print(printerResponse)
        } catch {
            print(error)
@@ -1261,14 +1261,14 @@ unless you can give it a different name.
 .. admonition:: Experiment
 
    Change the printer name to ``"Never Has Toner"``,
-   so that the ``sendToPrinter(_:)`` function throws an error.
+   so that the ``send(job:toPrinter:)`` function throws an error.
 
 .. Assertion tests the change that the Experiment box instructs you to make.
 
 .. assertion:: guided-tour
 
     >> do {
-           let printerResponse = try sendToPrinter("Never Has Toner")
+           let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
            print(printerResponse)
        } catch {
            print(error)
@@ -1286,7 +1286,7 @@ after ``case`` in a switch.
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Gutenberg")
+           let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
            print(printerResponse)
        } catch PrinterError.OnFire {
            print("I'll just put this over here, with the rest of the fire.")
@@ -1313,9 +1313,9 @@ the value that the function returned.
 
 .. testcode:: guided-tour
 
-    -> let printerSuccess = try? sendToPrinter("Mergenthaler")
+    -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
     << // printerSuccess : String? = Optional("Job sent")
-    -> let printerFailure = try? sendToPrinter("Never Has Toner")
+    -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
