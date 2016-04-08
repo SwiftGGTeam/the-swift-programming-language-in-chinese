@@ -256,7 +256,7 @@ Functions with Multiple Return Values
 You can use a tuple type as the return type for a function
 to return multiple values as part of one compound return value.
 
-The example below defines a function called ``minMax(_:)``,
+The example below defines a function called ``minMax(array:)``,
 which finds the smallest and largest numbers in an array of ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
@@ -274,11 +274,11 @@ which finds the smallest and largest numbers in an array of ``Int`` values:
          return (currentMin, currentMax)
       }
 
-The ``minMax(_:)`` function returns a tuple containing two ``Int`` values.
+The ``minMax(array:)`` function returns a tuple containing two ``Int`` values.
 These values are labeled ``min`` and ``max``
 so that they can be accessed by name when querying the function's return value.
 
-The body of the ``minMax(_:)`` function starts by setting
+The body of the ``minMax(array:)`` function starts by setting
 two working variables called ``currentMin`` and ``currentMax``
 to the value of the first integer in the array.
 The function then iterates over the remaining values in the array
@@ -292,7 +292,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 
 .. testcode:: tupleTypesAsReturnTypes
 
-   -> let bounds = minMax([8, -6, 2, 109, 3, 71])
+   -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
    << // bounds : (min: Int, max: Int) = (-6, 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
@@ -322,14 +322,14 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    With an optional tuple type, the entire tuple is optional,
    not just each individual value within the tuple.
 
-The ``minMax(_:)`` function above returns a tuple containing two ``Int`` values.
+The ``minMax(array:)`` function above returns a tuple containing two ``Int`` values.
 However, the function does not perform any safety checks on the array it is passed.
 If the ``array`` argument contains an empty array,
-the ``minMax(_:)`` function, as defined above,
+the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
 To handle this “empty array” scenario safely,
-write the ``minMax(_:)`` function with an optional tuple return type
+write the ``minMax(array:)`` function with an optional tuple return type
 and return a value of ``nil`` when the array is empty:
 
 .. testcode:: tupleTypesAsReturnTypes2
@@ -348,12 +348,12 @@ and return a value of ``nil`` when the array is empty:
          return (currentMin, currentMax)
       }
 
-You can use optional binding to check whether this version of the ``minMax(_:)`` function
+You can use optional binding to check whether this version of the ``minMax(array:)`` function
 returns an actual tuple value or ``nil``:
 
 .. testcode:: tupleTypesAsReturnTypes2
 
-   -> if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
+   -> if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
          print("min is \(bounds.min) and max is \(bounds.max)")
       }
    <- min is -6 and max is 109
