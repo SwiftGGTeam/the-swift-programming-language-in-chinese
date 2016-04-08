@@ -85,6 +85,15 @@ Because the function returns a ``String`` value,
 ``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
 
+.. note::
+
+    The ``print(_:separator:terminator:)`` function
+    doesn't have a label for its first argument,
+    and its other arguments are optional because they have a default value.
+    Declaring functions like ``print(_:separator:terminator:)`` is discussed
+    in :ref:`Functions_FunctionParameterNames`
+    and :ref:`Functions_DefaultParameterValues`.
+
 The body of the ``greet(person:)`` function starts by
 defining a new ``String`` constant called ``greeting``
 and setting it to a simple greeting message.
@@ -172,11 +181,6 @@ shown in an earlier section.
 Although both functions have names that begin with ``greet``,
 the ``greet(person:alreadyGreeted:)``  function takes two arguments
 but the ``greet(person:)`` function takes only one.
-
-When calling a function with more than one parameter,
-any argument after the first is labeled according to its corresponding parameter name.
-Function parameter naming is described in more detail
-in :ref:`Functions_FunctionParameterNames`.
 
 .. _Functions_FunctionsWithoutReturnValues:
 
