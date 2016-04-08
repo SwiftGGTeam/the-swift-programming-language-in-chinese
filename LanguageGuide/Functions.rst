@@ -44,18 +44,18 @@ that match the types of the function's parameters.
 A function's arguments must always be provided in the same order
 as the function's parameter list.
 
-The function in the example below is called ``sayHello(_:)``,
+The function in the example below is called ``greet(person:)``,
 because that's what it does ---
 it takes a person's name as input and returns a greeting for that person.
 To accomplish this, you define one input parameter ---
-a ``String`` value called ``personName`` ---
+a ``String`` value called ``person`` ---
 and a return type of ``String``,
 which will contain a greeting for that person:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHello(personName: String) -> String {
-         let greeting = "Hello, " + personName + "!"
+   -> func greet(person: String) -> String {
+         let greeting = "Hello, " + person + "!"
          return greeting
       }
 
@@ -73,25 +73,26 @@ from elsewhere in your code:
 
 .. testcode:: definingAndCalling
 
-   -> print(sayHello("Anna"))
+   -> print(greet(person: "Anna"))
    <- Hello, Anna!
-   -> print(sayHello("Brian"))
+   -> print(greet(person: "Brian"))
    <- Hello, Brian!
 
-You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
-such as ``sayHello("Anna")``.
+You call the ``greet(person:)`` function
+by passing it a ``String`` argument value labeled ``person`` in parentheses,
+such as ``sayHello(person: "Anna")``.
 Because the function returns a ``String`` value,
-``sayHello(_:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
+``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
 
-The body of the ``sayHello(_:)`` function starts by
+The body of the ``greet(person:)`` function starts by
 defining a new ``String`` constant called ``greeting``
-and setting it to a simple greeting message for ``personName``.
+and setting it to a simple greeting message.
 This greeting is then passed back out of the function using the ``return`` keyword.
-As soon as ``return greeting`` is called,
+In the line of code ``return greeting``
 the function finishes its execution and returns the current value of ``greeting``.
 
-You can call the ``sayHello(_:)`` function multiple times with different input values.
+You can call the ``greet(person:)`` function multiple times with different input values.
 The example above shows what happens if it is called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
@@ -101,10 +102,10 @@ combine the message creation and the return statement into one line:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHelloAgain(personName: String) -> String {
-         return "Hello again, " + personName + "!"
+   -> func greetAgain(person: String) -> String {
+         return "Hello again, " + person + "!"
       }
-   -> print(sayHelloAgain("Anna"))
+   -> print(greetAgain(person: "Anna"))
    <- Hello again, Anna!
 
 .. _Functions_FunctionParametersAndReturnValues:
@@ -152,25 +153,25 @@ and returns an appropriate greeting for that person:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHello(personName: String, alreadyGreeted: Bool) -> String {
+   -> func greet(person: String, alreadyGreeted: Bool) -> String {
           if alreadyGreeted {
-              return sayHelloAgain(personName)
+              return greetAgain(person: person)
           } else {
-              return sayHello(personName)
+              return greet(person: person)
           }
       }
-   -> print(sayHello("Tim", alreadyGreeted: true))
+   -> print(greet(person: "Tim", alreadyGreeted: true))
    <- Hello again, Tim!
 
-You call the ``sayHello(_:alreadyGreeted:)`` function
-by passing it both a ``String`` argument value
+You call the ``greet(person:alreadyGreeted:)`` function
+by passing it both a ``String`` argument value labeled ``person``
 and a ``Bool`` argument value labeled ``alreadyGreeted``
 in parentheses, separated by commas.
-Note that this function is distinct from the ``sayHello(_:)`` function
+Note that this function is distinct from the ``greet(person:)`` function
 shown in an earlier section.
-Although both functions have names that begin with ``sayHello``,
-the ``sayHello(_:alreadyGreeted:)``  function takes two arguments
-but the ``sayHello(_:)`` function takes only one.
+Although both functions have names that begin with ``greet``,
+the ``greet(person:alreadyGreeted:)``  function takes two arguments
+but the ``greet(person:)`` function takes only one.
 
 When calling a function with more than one parameter,
 any argument after the first is labeled according to its corresponding parameter name.
@@ -183,17 +184,16 @@ Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions are not required to define a return type.
-Here's a version of the ``sayHello(_:)`` function,
-called ``sayGoodbye(_:)``,
+Here's a version of the ``greet(person:)`` function,
 which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
 
-   -> func sayGoodbye(personName: String) {
-         print("Goodbye, \(personName)!")
+   -> func greet(person: String) {
+         print("Hello, \(person)!")
       }
-   -> sayGoodbye("Dave")
-   <- Goodbye, Dave!
+   -> greet(person: "Dave")
+   <- Hello, Dave!
 
 Because it does not need to return a value,
 the function's definition does not include the return arrow (``->``)
@@ -201,7 +201,7 @@ or a return type.
 
 .. note::
 
-   Strictly speaking, the ``sayGoodbye(_:)`` function *does* still return a value,
+   Strictly speaking, this version of the ``greet(person:)`` function *does* still return a value,
    even though no return value is defined.
    Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
@@ -405,21 +405,17 @@ separated by a space:
    If you provide an argument label for a parameter,
    the argument *must* be labeled when you call the function.
 
-Here's a version of the ``sayHello(_:)`` function
+Here's a variation of the ``greet(person:)`` function
 that takes the names of two people
 and returns a greeting for both of them:
 
 .. testcode:: externalParameterNames
 
-   -> func sayHello(to person: String, and anotherPerson: String) -> String {
+   -> func greet(person: String, and anotherPerson: String) -> String {
           return "Hello \(person) and \(anotherPerson)!"
       }
-   -> print(sayHello(to: "Bill", and: "Ted"))
+   -> print(greet(person: "Bill", and: "Ted"))
    <- Hello Bill and Ted!
-
-By specifying argument labels for both parameters,
-both the first and second arguments to the ``sayHello(to:and:)`` function
-must be labeled when you call it.
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
