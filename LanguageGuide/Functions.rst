@@ -444,11 +444,6 @@ write an underscore (``_``) instead of an explicit argument label for that param
       }
    -> someFunction(1, secondParameterName: 2)
 
-.. note::
-
-   Because the first parameter doesn't have an argument label by default,
-   explicitly writing an underscore is extraneous.
-
 .. _Functions_DefaultParameterValues:
 
 Default Parameter Values
