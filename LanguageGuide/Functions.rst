@@ -216,18 +216,18 @@ The return value of a function can be ignored when it is called:
 
 .. testcode:: functionsWithoutReturnValues
 
-   -> func printAndCount(stringToPrint: String) -> Int {
-         print(stringToPrint)
-         return stringToPrint.characters.count
+   -> func printAndCount(string: String) -> Int {
+         print(string)
+         return string.characters.count
       }
-   -> func printWithoutCounting(stringToPrint: String) {
-         printAndCount(stringToPrint)
+   -> func printWithoutCounting(string: String) {
+         printAndCount(string: string)
       }
-   -> printAndCount("hello, world")
+   -> printAndCount(string: "hello, world")
    << hello, world
    // prints "hello, world" and returns a value of 12
    << // r0 : Int = 12
-   -> printWithoutCounting("hello, world")
+   -> printWithoutCounting(string: "hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
 
