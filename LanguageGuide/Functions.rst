@@ -761,18 +761,18 @@ or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backw
 
 .. testcode:: functionTypes
 
-   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
-         return backwards ? stepBackward : stepForward
+   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+         return backward ? stepBackward : stepForward
       }
 
-You can now use ``chooseStepFunction(_:)`` to obtain a function
+You can now use ``chooseStepFunction(backward:)`` to obtain a function
 that will step in one direction or the other:
 
 .. testcode:: functionTypes
 
    -> var currentValue = 3
    << // currentValue : Int = 3
-   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the stepBackward() function
 
@@ -780,7 +780,7 @@ The preceding example determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,
-causing ``chooseStepFunction(_:)`` to return the ``stepBackward(_:)`` function.
+causing ``chooseStepFunction(backward:)`` to return the ``stepBackward(_:)`` function.
 A reference to the returned function is stored in a constant called ``moveNearerToZero``.
 
 Now that ``moveNearerToZero`` refers to the correct function,
@@ -815,19 +815,19 @@ but can still be called and used by their enclosing function.
 An enclosing function can also return one of its nested functions
 to allow the nested function to be used in another scope.
 
-You can rewrite the ``chooseStepFunction(_:)`` example above
+You can rewrite the ``chooseStepFunction(backward:)`` example above
 to use and return nested functions:
 
 .. testcode:: nestedFunctions
 
-   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
          func stepForward(input: Int) -> Int { return input + 1 }
          func stepBackward(input: Int) -> Int { return input - 1 }
-         return backwards ? stepBackward : stepForward
+         return backward ? stepBackward : stepForward
       }
    -> var currentValue = -4
    << // currentValue : Int = -4
-   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
