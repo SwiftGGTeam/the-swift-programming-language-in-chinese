@@ -551,7 +551,7 @@ which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
 
-   -> func swapTwoInts(a: inout Int, _ b: inout Int) {
+   -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -606,12 +606,12 @@ For example:
 
 .. testcode:: functionTypes
 
-   -> func addTwoInts(a: Int, _ b: Int) -> Int {
+   -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
          return a + b
       }
    >> addTwoInts
    << // r0 : (Int, Int) -> Int = (Function)
-   -> func multiplyTwoInts(a: Int, _ b: Int) -> Int {
+   -> func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
          return a * b
       }
    >> multiplyTwoInts
@@ -708,7 +708,7 @@ Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
 
-   -> func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+   -> func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
          print("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)
@@ -747,10 +747,10 @@ Both functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
 
-   -> func stepForward(input: Int) -> Int {
+   -> func stepForward(_ input: Int) -> Int {
          return input + 1
       }
-   -> func stepBackward(input: Int) -> Int {
+   -> func stepBackward(_ input: Int) -> Int {
          return input - 1
       }
 
