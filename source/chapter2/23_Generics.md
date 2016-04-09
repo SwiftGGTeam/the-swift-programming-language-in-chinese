@@ -12,6 +12,8 @@
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 
+> 2.2：翻译+校对：[Lanford](https://github.com/LanfordCai)，2016-04-08
+
 本页包含内容：
 
 - [泛型所解决的问题](#the_problem_that_generics_solve)
