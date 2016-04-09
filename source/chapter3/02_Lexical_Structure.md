@@ -18,7 +18,7 @@
 
 
 > 2.2
-> 翻译+校对：[星夜暮晨](https://github.com/semperidem)
+> 翻译+校对：[星夜暮晨](https://github.com/semperidem)，2016-04-06
 
 
 本页包含内容：
