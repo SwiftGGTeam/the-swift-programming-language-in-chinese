@@ -37,11 +37,11 @@
 <a name="stored_properties"></a>
 ## 存储属性
 
-简单来说，一个存储属性就是存储在特定类或结构体的实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
+简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
 可以在定义存储属性的时候指定默认值，请参考[默认构造器](./14_Initialization.html#default_initializers)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程中常量属性的修改](./14_Initialization.html#assigning_constant_properties_during_initialization)一节。
 
-下面的例子定义了一个名为 `FixedLengthRange` 的结构体，它描述了一个在创建后无法修改值域宽度的区间：
+下面的例子定义了一个名为 `FixedLengthRange` 的结构体，它描述了一个用于表示整型范围的常量，在创建后就不能进行修改：
 
 ```swift
 struct FixedLengthRange {
@@ -59,7 +59,7 @@ rangeOfThreeItems.firstValue = 6
 <a name="stored_properties_of_constant_structure_instances"></a>
 ### 常量结构体的存储属性
 
-如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使定义了变量存储属性：
+如果创建了一个结构体的实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使有属性被声明为变量也不行：
 
 ```swift
 let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
@@ -82,9 +82,9 @@ rangeOfFourItems.firstValue = 6
 > 注意  
 > 必须将延迟存储属性声明成变量（使用 `var` 关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
 
-延迟属性很有用，当属性的值依赖于在实例的构造过程结束后才会知道具体值的外部因素时，或者当获得属性的初始值需要复杂或大量计算时，可以只在需要的时候计算它。
+延迟属性很有用，当属性的值依赖于在实例的构造过程结束后才会知道影响值的外部因素时，或者当获得属性的初始值需要复杂或大量计算时，可以只在需要的时候计算它。
 
-下面的例子使用了延迟存储属性来避免复杂类中不必要的初始化。例子中定义了 `DataImporter`和`DataManager` 两个类，下面是部分代码：
+下面的例子使用了延迟存储属性来避免复杂类中不必要的初始化。例子中定义了 `DataImporter` 和 `DataManager` 两个类，下面是部分代码：
 
 ```swift
 class DataImporter {
@@ -108,7 +108,7 @@ manager.data.append("Some more data")
 // DataImporter 实例的 importer 属性还没有被创建
 ```
 
-`DataManager` 类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。这里没有给出全部代码，只需知道 `DataManager` 类的目的是管理和提供对这个字符串数组的访问即可。
+`DataManager` 类包含一个名为 `data` 的存储属性，初始值是一个空的字符串（`String`）数组。这里没有给出全部代码，只需知道 `DataManager` 类的目的是管理和提供对这个字符串数组的访问即可。
 
 `DataManager` 的一个功能是从文件导入数据。该功能由 `DataImporter` 类提供，`DataImporter` 完成初始化需要消耗不少时间：因为它的实例在初始化时可能要打开文件，还要读取文件内容到内存。
 
@@ -169,11 +169,11 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 这个例子定义了 3 个结构体来描述几何形状：
 
-- `Point`封装了一个`(x, y)`的坐标
-- `Size`封装了一个`width`和一个`height`
-- `Rect`表示一个有原点和尺寸的矩形
+- `Point` 封装了一个 `(x, y)` 的坐标
+- `Size` 封装了一个 `width` 和一个 `height`
+- `Rect` 表示一个有原点和尺寸的矩形
 
-`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点（`origin`）和尺寸（`size`）算出，所以不需要将它以显式声明的`Point`来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
+`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点（`origin`）和大小（`size`）算出，所以不需要将它以显式声明的 `Point` 来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
 
 上述例子中创建了一个名为 `square` 的 `Rect` 实例，初始值原点是 `(0, 0)`，宽度高度都是 `10`。如下图中蓝色正方形所示。
 
@@ -233,12 +233,10 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 <a name="property_observers"></a>
 ## 属性观察器
 
-*属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，甚至新值和当前值相同的时候也不例外。
+*属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。属性重写请参考[重写](./13_Inheritance.html#overriding)。
+可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。你不必为非重写的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。 属性重写请参考[重写](./13_Inheritance.html#overriding)。  
 
-> 注意  
-> 不需要为非重写的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。  
 
 可以为属性添加如下的一个或全部观察器：
 
@@ -247,13 +245,13 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 `willSet` 观察器会将新的属性值作为常量参数传入，在 `willSet` 的实现代码中可以为这个参数指定一个名称，如果不指定则参数仍然可用，这时使用默认名称 `newValue` 表示。
 
-类似地，`didSet` 观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名 `oldValue`。
+同样，`didSet` 观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名 `oldValue`。如果在 `didSet` 方法中再次对该属性赋值，那么新值会覆盖旧的值。
 
 > 注意  
-> 父类的属性在子类的构造器中被赋值时，它在父类中的 `willSet` 和 `didSet` 观察器会被调用。  
+> 父类的属性在子类的构造器中被赋值时，它在父类中的 `willSet` 和 `didSet` 观察器会被调用，随后才会调用子类的观察器。在父类书初始化方法调用之前，子类给属性赋值时，观察器不会被调用。
 > 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)和[类的构造器代理规则](./14_Initialization.html#initializer_delegation_for_class_types)。
 
-这里是一个 `willSet` 和 `didSet` 的实际例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
+下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
 ```swift
 class StepCounter {
@@ -282,7 +280,7 @@ stepCounter.totalSteps = 896
 
 `StepCounter` 类定义了一个`Int`类型的属性 `totalSteps`，它是一个存储属性，包含 `willSet` 和 `didSet` 观察器。
 
-当 `totalSteps` 被设置新值的时候，它的 `willSet` 和 `didSet` 观察器都会被调用，甚至新值和当前值完全相同时也会被调用。
+当 `totalSteps` 被设置新值的时候，它的 `willSet` 和 `didSet` 观察器都会被调用，即使新值和当前值完全相同时也会被调用。
 
 例子中的 `willSet` 观察器将表示新值的参数自定义为 `newTotalSteps`，这个观察器只是简单的将新的值输出。
 
