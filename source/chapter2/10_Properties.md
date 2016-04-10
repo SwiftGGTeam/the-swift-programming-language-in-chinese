@@ -5,12 +5,19 @@
 > 翻译：[shinyzhu](https://github.com/shinyzhu)
 > 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
 
+
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
+
 
 > 2.1
 > 翻译：[buginux](https://github.com/buginux)
 > 校对：[shanks](http://codebuild.me)，2015-10-29
+
+>   2.2
+>
+>   翻译：[saitjr](https://github.com/saitjr)
+
 
 本页包含内容：
 
@@ -280,8 +287,9 @@ stepCounter.totalSteps = 896
 
 `didSet`观察器在`totalSteps`的值改变后被调用，它把新值和旧值进行对比，如果总步数增加了，就输出一个消息表示增加了多少步。`didSet`没有为旧值提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
 
-> 注意  
-> 如果在一个属性的`didSet`观察器里为它赋值，这个值会替换之前设置的值。  
+>注意
+>
+>如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
 
 <a name="global_and_local_variables"></a>
 ##全局变量和局部变量
