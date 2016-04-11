@@ -16,7 +16,7 @@
 
 
 >   2.2
->   翻译：[saitjr](https://github.com/saitjr)
+>   翻译：[saitjr](https://github.com/saitjr)，2016-04-11
 
 
 
