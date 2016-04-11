@@ -16,8 +16,8 @@
 
 
 >   2.2
->
 >   翻译：[saitjr](https://github.com/saitjr)
+
 
 
 本页包含内容：
@@ -173,7 +173,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 - `Size` 封装了一个 `width` 和一个 `height`
 - `Rect` 表示一个有原点和尺寸的矩形
 
-`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点（`origin`）和大小（`size`）算出，所以不需要将它以显式声明的 `Point` 来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
+`Rect`也提供了一个名为`center` 的计算属性。一个矩形的中心点可以从原点（`origin`）和大小（`size`）算出，所以不需要将它以显式声明的 `Point` 来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
 
 上述例子中创建了一个名为 `square` 的 `Rect` 实例，初始值原点是 `(0, 0)`，宽度高度都是 `10`。如下图中蓝色正方形所示。
 
@@ -278,7 +278,7 @@ stepCounter.totalSteps = 896
 // Added 536 steps
 ```
 
-`StepCounter` 类定义了一个`Int`类型的属性 `totalSteps`，它是一个存储属性，包含 `willSet` 和 `didSet` 观察器。
+`StepCounter` 类定义了一个 `Int` 类型的属性 `totalSteps`，它是一个存储属性，包含 `willSet` 和 `didSet` 观察器。
 
 当 `totalSteps` 被设置新值的时候，它的 `willSet` 和 `didSet` 观察器都会被调用，即使新值和当前值完全相同时也会被调用。
 
@@ -316,7 +316,7 @@ stepCounter.totalSteps = 896
 
 > 注意  
 > 跟实例的存储型属性不同，必须给存储型类型属性指定默认值，因为类型本身没有构造器，也就无法在初始化过程中使用构造器给类型属性赋值。  
-> 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用`lazy`修饰符。
+> 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用 `lazy` 修饰符。
 
 <a name="type_property_syntax"></a>
 ###类型属性语法
