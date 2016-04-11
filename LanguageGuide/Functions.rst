@@ -21,9 +21,6 @@ and to return functions from functions.
 Functions can also be written within other functions
 to encapsulate useful functionality within a nested function scope.
 
-.. TODO: should this chapter mention #function
-   (as described in the release notes for 2014-03-12)?
-
 .. _Functions_DefiningAndCallingFunctions:
 
 Defining and Calling Functions
