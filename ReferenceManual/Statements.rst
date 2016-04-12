@@ -5,7 +5,7 @@ In Swift, there are three kinds of statements: simple statements, compiler contr
 and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
 Compiler control statements allow the program to change aspects of the compiler's behavior
-and include a build configuration and line control statement.
+and include a conditional compilation block and a line control statement.
 
 Control flow statements are used to control the flow of execution in a program.
 There are several types of control flow statements in Swift, including
@@ -898,60 +898,61 @@ Compiler Control Statements
 ---------------------------
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has two complier control statements: a build configuration statement
+Swift has two complier control statements: a conditional compilation block
 and a line control statement.
 
 .. syntax-grammar::
 
     Grammar of a compiler control statement
 
-    compiler-control-statement --> build-configuration-statement
+    compiler-control-statement --> conditional-compilation-block
     compiler-control-statement --> line-control-statement
 
 
 .. _Statements_BuildConfigurationStatement:
 
-Build Configuration Statement
+Conditional Compilation Block
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A build configuration statement allows code to be conditionally compiled
-depending on the value of one or more build configurations.
+A conditional compilation block allows code to be conditionally compiled
+depending on the value of one or more compilation conditions.
 
-Every build configuration statement begins with ``#if`` and ends with ``#endif``.
-A simple build configuration statement has the following form:
+Every conditional compilation block begins with the ``#if`` compilation directive
+and ends with the ``#endif`` compilation directive.
+A simple conditional compilation block has the following form:
 
 .. syntax-outline::
 
-    #if <#build configuration#>
+    #if <#compilation condition#>
         <#statements#>
     #endif
 
 Unlike the condition of an ``if`` statement,
-the *build configuration* is evaluated at compile time.
+the *compilation condition* is evaluated at compile time.
 As a result,
-the *statements* are compiled and executed only if the *build configuration*
+the *statements* are compiled and executed only if the *compilation condition*
 evaluates to ``true`` at compile time.
 
-The *build configuration* can include the ``true`` and ``false`` Boolean literals,
+The *compilation condition* can include the ``true`` and ``false`` Boolean literals,
 an identifier used with the ``-D`` command line flag, or any of the platform
-or language-version testing functions listed in the table below.
+conditions listed in the table below.
 
 ====================  ===================================================
-Function              Valid arguments
+Platform condition    Valid arguments
 ====================  ===================================================
 ``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
 
-The version number for the ``swift()`` language-version testing function
+The version number for the ``swift()`` platform condition
 consists of a major and minor number, separated by a dot (``.``).
 There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
-   The ``arch(arm)`` platform testing function does not return ``true`` for ARM 64 devices.
-   The ``arch(i386)`` platform testing function returns ``true``
+   The ``arch(arm)`` platform condition does not return ``true`` for ARM 64 devices.
+   The ``arch(i386)`` platform condition returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 
 .. assertion:: pound-if-swift-version
@@ -975,60 +976,65 @@ There must not be whitespace between ``>=`` and the version number.
    !!           ^ ~
    !!-
 
-You can combine build configurations using the logical operators
+You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
 
 Similar to an ``if`` statement,
-you can add multiple conditional branches to test for different build configurations.
+you can add multiple conditional branches to test for different compilation conditions.
 You can add any number of additional branches using ``#elseif`` clauses.
 You can also add a final additional branch using an ``#else`` clause.
-Build configuration statements that contain multiple branches
+Conditional compilation blocks that contain multiple branches
 have the following form:
 
 .. syntax-outline::
 
-    #if <#build configuration 1#>
-        <#statements to compile if build configuration 1 is true#>
-    #elseif <#build configuration 2#>
-        <#statements to compile if build configuration 2 is true#>
+    #if <#compilation condition 1#>
+        <#statements to compile if compilation condition 1 is true#>
+    #elseif <#compilation condition 2#>
+        <#statements to compile if compilation condition 2 is true#>
     #else
-        <#statements to compile if both build configurations are false#>
+        <#statements to compile if both compilation conditions are false#>
     #endif
 
 .. note::
 
-    Each statement in the body of a build configuration statement is parsed
+    Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
     However, there is an exception
-    if the build configuration includes a language-version testing function:
+    if the compilation condition includes a ``swift()`` platform condition:
     The statements are parsed
     only if the compiler's version of Swift matches
-    what is specified in the language-version testing function.
+    what is specified in the platform condition.
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
 
 .. syntax-grammar::
 
-    Grammar of a build configuration statement
+    Grammar of a conditional compilation block
 
-    build-configuration-statement --> ``#if`` build-configuration statements-OPT build-configuration-elseif-clauses-OPT build-configuration-else-clause-OPT ``#endif``
-    build-configuration-elseif-clauses --> build-configuration-elseif-clause build-configuration-elseif-clauses-OPT
-    build-configuration-elseif-clause --> ``#elseif`` build-configuration statements-OPT
-    build-configuration-else-clause --> ``#else`` statements-OPT
+    conditional-compilation-block --> if-directive-clause elseif-directive-clauses-OPT else-directive-clause-OPT endif-directive
 
-    build-configuration --> platform-testing-function
-    build-configuration --> language-version-testing-function
-    build-configuration --> identifier
-    build-configuration --> boolean-literal
-    build-configuration --> ``(`` build-configuration ``)``
-    build-configuration --> ``!`` build-configuration
-    build-configuration --> build-configuration ``&&`` build-configuration
-    build-configuration --> build-configuration ``||`` build-configuration
+    if-directive-clause --> if-directive compilation-condition statements-OPT
+    elseif-directive-clauses --> elseif-directive-clause elseif-directive-clauses-OPT
+    elseif-directive-clause --> elseif-directive compilation-condition statements-OPT
+    else-directive-clause --> else-directive statements-OPT
+    if-directive --> ``#if``
+    elseif--directive --> ``#elseif``
+    else-directive --> ``#else``
+    endif-directive --> ``#endif``
 
-    platform-testing-function --> ``os`` ``(`` operating-system ``)``
-    platform-testing-function --> ``arch`` ``(`` architecture ``)``
-    language-version-testing-function --> ``swift`` ``(`` ``>=`` swift-version ``)``
+    compilation-condition --> platform-condition
+    compilation-condition --> identifier
+    compilation-condition --> boolean-literal
+    compilation-condition --> ``(`` compilation-condition ``)``
+    compilation-condition --> ``!`` compilation-condition
+    compilation-condition --> compilation-condition ``&&`` compilation-condition
+    compilation-condition --> compilation-condition ``||`` compilation-condition
+
+    platform-condition --> ``os`` ``(`` operating-system ``)``
+    platform-condition --> ``arch`` ``(`` architecture ``)``
+    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
@@ -1040,7 +1046,7 @@ have the following form:
    let's not explicitly document the broken precedence between && and ||
        <rdar://problem/21692106> #if evaluates boolean operators without precedence
 
-   Also, the body of a build configuration statement contains *zero* or more statements.
+   Also, the body of a conditional compilation block contains *zero* or more statements.
    Thus, this is allowed:
        #if
        #elseif
