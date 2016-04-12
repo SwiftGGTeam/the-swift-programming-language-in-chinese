@@ -1039,7 +1039,6 @@ have the following form:
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
 
-
 .. Testing notes:
 
    !!true doesn't work but !(!true) does -- this matches normal expressions
