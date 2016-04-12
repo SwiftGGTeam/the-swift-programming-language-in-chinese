@@ -1009,6 +1009,8 @@ have the following form:
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
 
+.. The above note also appears in USWCAOC in Interoperability/InteractingWithCAPIs.rst
+
 .. syntax-grammar::
 
     Grammar of a conditional compilation block
