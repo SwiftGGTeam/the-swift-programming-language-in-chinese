@@ -883,8 +883,8 @@ For example:
     <- On an axis, 9 from the origin
 
 The ``case`` above has two patterns:
-``(let distance, 0)`` matches points on the y-axis
-and ``(0, let distance)`` matches points on the x-axis.
+``(let distance, 0)`` matches points on the x-axis
+and ``(0, let distance)`` matches points on the y-axis.
 Both patterns include a binding for ``distance``
 and ``distance`` is an integer in both patterns ---
 which means that the code in the body of the ``case``
