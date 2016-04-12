@@ -950,7 +950,7 @@ Function              Valid arguments
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
 
-The version number for the ``swift()`` language-version testing function
+The version number for the ``swift()`` platform condition
 consists of a major and minor number, separated by a dot (``.``).
 There must not be whitespace between ``>=`` and the version number.
 
