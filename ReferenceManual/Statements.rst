@@ -945,6 +945,12 @@ Platform condition    Valid arguments
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
 
+.. This table is duplicated in USWCAOC in Interoperability/InteractingWithCAPIs.rst
+
+.. For the full list in the compiler, see the values of
+   SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
+   in the file lib/Basic/LangOptions.cpp.
+
 The version number for the ``swift()`` platform condition
 consists of a major and minor number, separated by a dot (``.``).
 There must not be whitespace between ``>=`` and the version number.

@@ -1345,6 +1345,7 @@ when it verifies that the APIs in that block of code are available.
           // Fall back to earlier iOS and OS X APIs
       }
 
+.. x*  Bogus * paired with the in the listing, to fix VIM syntax highlighting.
 
 The availability condition above specifies that on iOS,
 the body of the ``if`` executes only on iOS 9 and later;
@@ -1354,7 +1355,8 @@ the body of the ``if`` executes on the minimum deployment target specified by yo
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` for the platform names.
+You use platform names such as ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` ---
+for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8,
 you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
 
@@ -1365,6 +1367,8 @@ you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
    } else {
        <#fallback statements to execute if the APIs are unavailable#>
    }
+
+.. x*  Bogus * paired with the in the listing, to fix VIM syntax highlighting.
 
 .. FIXME
     Not a general purpose condition; can't combine with &&, etc.
