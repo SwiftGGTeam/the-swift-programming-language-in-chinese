@@ -87,7 +87,7 @@ to print that string and see its return value, as shown above.
     The ``print(_:separator:terminator:)`` function
     doesn't have a label for its first argument,
     and its other arguments are optional because they have a default value.
-    Declaring functions like ``print(_:separator:terminator:)`` is discussed
+    These variations on function syntax are discussed below
     in :ref:`Functions_FunctionParameterNames`
     and :ref:`Functions_DefaultParameterValues`.
 
@@ -95,7 +95,7 @@ The body of the ``greet(person:)`` function starts by
 defining a new ``String`` constant called ``greeting``
 and setting it to a simple greeting message.
 This greeting is then passed back out of the function using the ``return`` keyword.
-In the line of code ``return greeting``
+In the line of code that says ``return greeting``,
 the function finishes its execution and returns the current value of ``greeting``.
 
 You can call the ``greet(person:)`` function multiple times with different input values.
@@ -103,8 +103,8 @@ The example above shows what happens if it is called with an input value of ``"A
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
-To simplify the body of this function,
-combine the message creation and the return statement into one line:
+To make the body of this function shorter,
+you can combine the message creation and the return statement into one line:
 
 .. testcode:: definingAndCalling
 
@@ -206,8 +206,7 @@ or a return type.
    even though no return value is defined.
    Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
-   in effect a tuple with zero elements,
-   which can be written as ``()``.
+   which is written as ``()``.
 
 The return value of a function can be ignored when it is called:
 
@@ -325,7 +324,7 @@ If the ``array`` argument contains an empty array,
 the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
-To handle this “empty array” scenario safely,
+To handle an empty array safely,
 write the ``minMax(array:)`` function with an optional tuple return type
 and return a value of ``nil`` when the array is empty:
 
@@ -357,25 +356,25 @@ returns an actual tuple value or ``nil``:
 
 .. _Functions_FunctionParameterNames:
 
-Function Parameter Names
-------------------------
+Function Argument Labels And Parameter Names
+--------------------------------------------
 
-Function parameters have both an :newTerm:`argument label`
+Each function parameter has both an :newTerm:`argument label`
 and a :newTerm:`parameter name`.
-An argument label is used to label arguments passed to a function call.
-A parameter name is used in the implementation of the function.
+The argument label is used when calling the function;
+each argument is written in the function call with its argument label before it.
+The parameter name is used in the implementation of the function.
+By default, parameters
+use their parameter name as their argument label.
 
 .. testcode:: functionParameterNames
 
    -> func someFunction(firstParameterName: Int, secondParameterName: Int) {
-         // function body goes here
-         // firstParameterName and secondParameterName refer to
-         // the argument values for the first and second parameters
+         // In the function body, firstParameterName and secondParameterName
+         // refer to the argument values for the first and second parameters.
       }
    -> someFunction(firstParameterName: 1, secondParameterName: 2)
 
-By default, parameters
-use their parameter name as their argument label.
 All parameters must have unique names.
 Although it's possible for multiple parameters
 to have the same argument label,
@@ -397,8 +396,8 @@ separated by a space:
 .. testcode:: externalParameterNames
 
    -> func someFunction(argumentLabel parameterName: Int) {
-         // function body goes here, and can use parameterName
-         // to refer to the argument value for that parameter
+         // In the function body, parameterName refers to the argument value
+         // for that parameter.
       }
 
 .. note::
@@ -412,32 +411,29 @@ and returns a greeting for both of them:
 
 .. testcode:: externalParameterNames
 
-   -> func greet(person: String, and anotherPerson: String) -> String {
-          return "Hello \(person) and \(anotherPerson)!"
+   -> func greet(person: String, from hometown: String) -> String {
+          return "Hello \(person)!  Glad you could visit from \(hometown)."
       }
-   -> print(greet(person: "Bill", and: "Ted"))
-   <- Hello Bill and Ted!
+   -> print(greet(person: "Bill", from: "Cupertino"))
+   <- Hello Bill!  Glad you could visit from Cupertino.
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
 while still providing a function body that is readable and clear in intent.
-
 
 .. _Functions_OmittingParameterNames:
 
 Omitting Argument Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an argument label for the second or subsequent parameters
-of a function,
+If you don't want an argument label for a parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter.
 
 .. testcode:: omittedExternalParameterNames
 
    -> func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
-         // function body goes here
-         // firstParameterName and secondParameterName refer to
-         // the argument values for the first and second parameters
+         // In the function body, firstParameterName and secondParameterName
+         // refer to the argument values for the first and second parameters.
       }
    -> someFunction(1, secondParameterName: 2)
 
@@ -453,9 +449,8 @@ If a default value is defined, you can omit that parameter when calling the func
 .. testcode:: omittedExternalParameterNames
 
    -> func someFunction(parameterWithDefault: Int = 12) {
-         // function body goes here
-         // if no arguments are passed to the function call,
-         // value of parameterWithDefault is 12
+         // In the function body, if no arguments are passed to the function
+         // call, value of parameterWithDefault is 12.
       }
    -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction() // parameterWithDefault is 12
@@ -752,9 +747,9 @@ Both functions have a type of ``(Int) -> Int``:
       }
 
 Here's a function called ``chooseStepFunction(_:)``,
-whose return type is “a function of type ``(Int) -> Int``”.
+whose return type is ``(Int) -> Int``.
 The ``chooseStepFunction(_:)`` function returns the ``stepForward(_:)`` function
-or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backwards``:
+or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backward``:
 
 .. testcode:: functionTypes
 
