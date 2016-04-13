@@ -472,7 +472,7 @@ to store the current running total of the incrementer that will be returned.
 This variable is initialized with a value of ``0``.
 
 The ``makeIncrementer(forIncrement:)`` function has a single ``Int`` parameter
-with an external name of ``forIncrement``, and a local name of ``amount``.
+with an argument label of ``forIncrement``, and a parameter name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementer function is called.

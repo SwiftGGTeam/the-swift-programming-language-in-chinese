@@ -160,9 +160,9 @@ with a value from a different temperature scale:
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
 The first initializer has a single initialization parameter
-with an external name of ``fromFahrenheit`` and a local name of ``fahrenheit``.
+with an argument label of ``fromFahrenheit`` and a parameter name of ``fahrenheit``.
 The second initializer has a single initialization parameter
-with an external name of ``fromKelvin`` and a local name of ``kelvin``.
+with an argument label of ``fromKelvin`` and a parameter name of ``kelvin``.
 Both initializers convert their single argument into
 the corresponding Celsius value
 and store this value in a property called ``temperatureInCelsius``.
@@ -185,7 +185,7 @@ in the way that functions and methods do.
 Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
 Because of this, Swift provides an automatic argument label
-for *every* parameter in an initializer if you don't provide an external name yourself.
+for *every* parameter in an initializer if you don't provide one.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
@@ -232,7 +232,7 @@ and omitting them is a compile-time error:
 .. testcode:: externalParameterNames
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
-   // this reports a compile-time error - external names are required
+   // this reports a compile-time error - argument labels are required
    !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
