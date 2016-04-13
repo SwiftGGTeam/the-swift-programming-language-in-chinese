@@ -127,13 +127,13 @@ a method parameter called ``x`` and an instance property that is also called ``x
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         func isToTheRightOfX(x: Double) -> Bool {
+         func isToTheRightOf(x: Double) -> Bool {
             return self.x > x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
    << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
-   -> if somePoint.isToTheRightOfX(1.0) {
+   -> if somePoint.isToTheRightOf(x: 1.0) {
          print("This point is to the right of the line where x == 1.0")
       }
    <- This point is to the right of the line where x == 1.0
