@@ -94,15 +94,15 @@ and to pass it in as an argument to the ``sorted(isOrderedBefore:)`` method:
 
 .. testcode:: closureSyntax
 
-   -> func backwards(s1: String, _ s2: String) -> Bool {
+   -> func backward(_ s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversedNames = names.sorted(isOrderedBefore: backwards)
+   -> var reversedNames = names.sorted(isOrderedBefore: backward)
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
-the ``backwards(_:_:)`` function will return ``true``,
+the ``backward(_:_:)`` function will return ``true``,
 indicating that ``s1`` should appear before ``s2`` in the sorted array.
 For characters in strings,
 “greater than” means “appears later in the alphabet than”.
@@ -136,9 +136,9 @@ Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
 .. QUESTION: is "reversed" the right name to use here?
-   it's a backwards sort, not a reversed version of the original array
+   it's a backward sort, not a reversed version of the original array
 
-The example below shows a closure expression version of the ``backwards(_:_:)`` function
+The example below shows a closure expression version of the ``backward(_:_:)`` function
 from earlier:
 
 .. testcode:: closureSyntax
@@ -150,7 +150,7 @@ from earlier:
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
-is identical to the declaration from the ``backwards(_:_:)`` function.
+is identical to the declaration from the ``backward(_:_:)`` function.
 In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
 However, for the inline closure expression,
 the parameters and return type are written *inside* the curly braces,
