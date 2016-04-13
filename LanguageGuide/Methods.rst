@@ -168,18 +168,18 @@ before the ``func`` keyword for that method:
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             x += deltaX
             y += deltaY
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-   -> somePoint.moveByX(2.0, y: 3.0)
+   -> somePoint.moveBy(x: 2.0, y: 3.0)
    -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveByX(_:y:)`` method,
+The ``Point`` structure above defines a mutating ``moveBy(x:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -194,9 +194,9 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
    << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
-   -> fixedPoint.moveByX(2.0, y: 3.0)
+   -> fixedPoint.moveBy(x: 2.0, y: 3.0)
    !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
-   !! fixedPoint.moveByX(2.0, y: 3.0)
+   !! fixedPoint.moveBy(x: 2.0, y: 3.0)
    !!  ^~~~~~~~~~
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -221,17 +221,17 @@ The ``Point`` example shown above could have been written in the following way i
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             self = Point(x: x + deltaX, y: y + deltaY)
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-   >> somePoint.moveByX(2.0, y: 3.0)
+   >> somePoint.moveBy(x: 2.0, y: 3.0)
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveByX(_:y:)`` method creates a brand new structure
+This version of the mutating ``moveBy(x:y:)`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
