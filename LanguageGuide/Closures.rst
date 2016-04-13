@@ -752,15 +752,15 @@ when you pass a closure as an argument to a function.
     << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
-    -> func serveCustomer(customerProvider: () -> String) {
+    -> func serve(customer customerProvider: () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer( { customersInLine.remove(at: 0) } )
+    -> serve(customer: { customersInLine.remove(at: 0) } )
     <- Now serving Alex!
 
-The ``serveCustomer(_:)`` function in the listing above
+The ``serve(customer:)`` function in the listing above
 takes an explicit closure that returns a customer's name.
-The version of ``serveCustomer(_:)`` below
+The version of ``serve(customer:)`` below
 performs the same operation but, instead of taking an explicit closure,
 it takes an autoclosure
 by marking its parameter with the ``@autoclosure`` attribute.
@@ -776,10 +776,10 @@ with the ``@autoclosure`` attribute.
     << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
-    -> func serveCustomer(@autoclosure customerProvider: () -> String) {
+    -> func serve(@autoclosure customer customerProvider: () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer(customersInLine.remove(at: 0))
+    -> serve(customer: customersInLine.remove(at: 0))
     <- Now serving Ewa!
 
 .. note::
