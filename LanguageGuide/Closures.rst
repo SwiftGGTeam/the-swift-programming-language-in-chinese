@@ -661,8 +661,8 @@ lets you refer to ``self`` implicitly within the closure.
     -> class SomeClass {
            var x = 10
            func doSomething() {
-               someFunctionWithEscapingClosure { self.x = 100 }
                someFunctionWithNonescapingClosure { x = 200 }
+               someFunctionWithEscapingClosure { self.x = 100 }
            }
        }
     ---
