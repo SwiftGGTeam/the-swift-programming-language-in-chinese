@@ -295,7 +295,7 @@ that is written outside of (and *after*) the parentheses of the function call it
    ---
    -> // here's how you call this function without using a trailing closure:
    ---
-   -> someFunctionThatTakesAClosure({
+   -> someFunctionThatTakesAClosure(closure: {
          // closure's body goes here
       })
    ---
