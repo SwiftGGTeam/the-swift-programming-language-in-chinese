@@ -801,7 +801,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(@autoclosure(escaping) customerProvider: () -> String) {
+    -> func collectCustomerProviders(@autoclosure(escaping) _ customerProvider: () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))
