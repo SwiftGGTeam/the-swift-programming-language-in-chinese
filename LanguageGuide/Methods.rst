@@ -42,7 +42,7 @@ which can be used to count the number of times an action occurs:
          func increment() {
             count += 1
          }
-         func incrementBy(amount: Int) {
+         func increment(by amount: Int) {
             count += amount
          }
          func reset() {
@@ -52,9 +52,9 @@ which can be used to count the number of times an action occurs:
 
 The ``Counter`` class defines three instance methods:
 
-* ``increment`` increments the counter by ``1``.
-* ``incrementBy(amount: Int)`` increments the counter by a specified integer amount.
-* ``reset`` resets the counter to zero.
+* ``increment()`` increments the counter by ``1``.
+* ``increment(by: Int)`` increments the counter by a specified integer amount.
+* ``reset()`` resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
 to keep track of the current counter value.
@@ -70,7 +70,7 @@ You call instance methods with the same dot syntax as properties:
    -> counter.increment()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 1
-   -> counter.incrementBy(5)
+   -> counter.increment(by: 5)
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 6
    -> counter.reset()
