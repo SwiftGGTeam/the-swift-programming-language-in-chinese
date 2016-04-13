@@ -260,7 +260,3 @@ that is outside of the matrix bounds:
    -> let someValue = matrix[2, 2]
    xx assert
    // this triggers an assert, because [2, 2] is outside of the matrix bounds
-
-.. TODO: subscripts can provide external names for their parameters,
-   to enable subscript overloading (e.g. subscript(row: Int) and subscript(column: Int)
-   to get a slice of the matrix). This would make a great example!
