@@ -196,7 +196,7 @@ or has a cost that exceeds the current deposited amount:
               "Pretzels": Item(price: 7, count: 11)
           ]
    ->     var coinsDeposited = 0
-   ->     func dispenseSnack(snack: String) {
+   ->     func dispense(snack: String) {
               print("Dispensing \(snack)")
           }
    ---
@@ -219,7 +219,7 @@ or has a cost that exceeds the current deposited amount:
               newItem.count -= 1
               inventory[name] = newItem
 
-              dispenseSnack(name)
+              dispense(snack: name)
           }
       }
 
@@ -234,10 +234,10 @@ any code that calls this method must either handle the errors ---
 using a ``do``-``catch`` statement, ``try?``, or ``try!``---
 or continue to propagate them.
 For example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` in the example below
+the ``buyFavoriteSnack(person:vendingMachine:)`` in the example below
 is also a throwing function,
 and any errors that the ``vend(itemNamed:)`` method throws will
-propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` function is called.
+propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)`` function is called.
 
 .. testcode:: errorHandling
 
@@ -254,11 +254,11 @@ propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` func
    >> var v = VendingMachine()
    << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
-   >> try buyFavoriteSnack("Alice", vendingMachine: v)
+   >> try buyFavoriteSnack(person: "Alice", vendingMachine: v)
    << Dispensing Chips
 
 In this example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` function looks up a given person's favorite snack
+the ``buyFavoriteSnack(person: vendingMachine:)`` function looks up a given person's favorite snack
 and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
 Because the ``vend(itemNamed:)`` method can throw an error,
 it's called with the ``try`` keyword in front of it.
@@ -346,7 +346,7 @@ but all other errors have to be handled by its surrounding scope:
    << // vendingMachine : VendingMachine = REPL.VendingMachine
    -> vendingMachine.coinsDeposited = 8
    -> do {
-          try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
+          try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
       } catch VendingMachineError.InvalidSelection {
           print("Invalid Selection.")
       } catch VendingMachineError.OutOfStock {
@@ -357,7 +357,7 @@ but all other errors have to be handled by its surrounding scope:
    <- Insufficient funds. Please insert an additional 2 coins.
 
 In the above example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` function is called in a ``try`` expression,
+the ``buyFavoriteSnack(person:vendingMachine:)`` function is called in a ``try`` expression,
 because it can throw an error.
 If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
