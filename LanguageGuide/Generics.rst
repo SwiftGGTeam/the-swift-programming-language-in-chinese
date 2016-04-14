@@ -823,7 +823,7 @@ This requirement is expressed through a combination of type constraints and wher
    -> func allItemsMatch<
             C1: Container, C2: Container
             where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-            (someContainer: C1, _ anotherContainer: C2) -> Bool {
+            (_ someContainer: C1, _ anotherContainer: C2) -> Bool {
    ---
          // check that both containers contain the same number of items
          if someContainer.count != anotherContainer.count {
