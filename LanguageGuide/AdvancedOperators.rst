@@ -322,11 +322,10 @@ shift the bits of negative numbers to the left and right like positive numbers,
 and still end up doubling them for every shift you make to the left,
 or halving them for every shift you make to the right.
 To achieve this, an extra rule is used when signed integers are shifted to the right:
-
-* When you shift signed integers to the right,
-  apply the same rules as for unsigned integers,
-  but fill any empty bits on the left with the *sign bit*,
-  rather than with a zero.
+When you shift signed integers to the right,
+apply the same rules as for unsigned integers,
+but fill any empty bits on the left with the *sign bit*,
+rather than with a zero.
 
 .. image:: ../images/bitshiftSigned_2x.png
    :align: center
