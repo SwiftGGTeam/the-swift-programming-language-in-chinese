@@ -365,7 +365,7 @@ Here's how ``stackOfStrings`` looks after pushing these four values on to the st
 .. image:: ../images/stackPushedFourStrings_2x.png
    :align: center
 
-Popping a value from the stack returns and removes the top value, ``"cuatro"``:
+Popping a value from the stack removes and returns the top value, ``"cuatro"``:
 
 .. testcode:: genericStack
 
