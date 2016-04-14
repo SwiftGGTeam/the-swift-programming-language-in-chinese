@@ -289,23 +289,12 @@ to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.repetitions({
-         print("Hello!")
-      })
-   </ Hello!
-   </ Hello!
-   </ Hello!
-
-Use trailing closure syntax to make the call more succinct:
-
-.. testcode:: extensionsInstanceMethods
-
    -> 3.repetitions {
-         print("Goodbye!")
+         print("Hello!")
       }
-   </ Goodbye!
-   </ Goodbye!
-   </ Goodbye!
+   </ Hello!
+   </ Hello!
+   </ Hello!
 
 .. _Extensions_MutatingInstanceMethods:
 
