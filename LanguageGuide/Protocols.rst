@@ -1277,12 +1277,12 @@ which has two optional requirements:
 
    >> import Foundation
    -> @objc protocol CounterDataSource {
-         optional func incrementForCount(count: Int) -> Int
+         optional func increment(forCount count: Int) -> Int
          optional var fixedIncrement: Int { get }
       }
 
 The ``CounterDataSource`` protocol defines
-an optional method requirement called ``incrementForCount(_:)``
+an optional method requirement called ``increment(forCount:)``
 and an optional property requirement called ``fixedIncrement``.
 These requirements define two different ways for data sources to provide
 an appropriate increment amount for a ``Counter`` instance.
@@ -1304,7 +1304,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
-            if let amount = dataSource?.incrementForCount?(count) {
+            if let amount = dataSource?.increment?(forCount: count) {
                count += amount
             } else if let amount = dataSource?.fixedIncrement {
                count += amount
@@ -1317,27 +1317,27 @@ The ``Counter`` class also defines a method called ``increment``,
 which increments the ``count`` property every time the method is called.
 
 The ``increment()`` method first tries to retrieve an increment amount
-by looking for an implementation of the ``incrementForCount(_:)`` method on its data source.
-The ``increment()`` method uses optional chaining to try to call ``incrementForCount(_:)``,
+by looking for an implementation of the ``increment(forCount:)`` method on its data source.
+The ``increment()`` method uses optional chaining to try to call ``increment(forCount:)``,
 and passes the current ``count`` value as the method's single argument.
 
 Note that *two* levels of optional chaining are at play here.
 First, it is possible that ``dataSource`` may be ``nil``,
 and so ``dataSource`` has a question mark after its name to indicate that
-``incrementForCount(_:)`` should be called only if ``dataSource`` isn't ``nil``.
+``incrementForCount(forCount:)`` should be called only if ``dataSource`` isn't ``nil``.
 Second, even if ``dataSource`` *does* exist,
-there is no guarantee that it implements ``incrementForCount(_:)``,
+there is no guarantee that it implements ``incrementForCount(forCount:)``,
 because it is an optional requirement.
-Here, the possibility that ``incrementForCount(_:)`` might not be implemented
+Here, the possibility that ``incrementForCount(forCount:)`` might not be implemented
 is also handled by optional chaining.
-The call to ``incrementForCount(_:)`` happens
-only if ``incrementForCount(_:)`` exists ---
+The call to ``incrementForCount(forCount:)`` happens
+only if ``incrementForCount(forCount:)`` exists ---
 that is, if it isn't ``nil``.
-This is why ``incrementForCount(_:)`` is also written with a question mark after its name.
+This is why ``incrementForCount(forCount:)`` is also written with a question mark after its name.
 
-Because the call to ``incrementForCount(_:)`` can fail for either of these two reasons,
+Because the call to ``incrementForCount(forCount:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
-This is true even though ``incrementForCount(_:)`` is defined as returning
+This is true even though ``incrementForCount(forCount:)`` is defined as returning
 a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,
@@ -1345,7 +1345,7 @@ the result is still wrapped in a single optional.
 For more information about using multiple optional chaining operations,
 see :ref:`OptionalChaining_LinkingMultipleLevelsOfChaining`.
 
-After calling ``incrementForCount(_:)``, the optional ``Int`` that it returns
+After calling ``increment(forCount:)``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.
 If the optional ``Int`` does contain a value ---
 that is, if the delegate and method both exist,
@@ -1353,9 +1353,9 @@ and the method returned a value ---
 the unwrapped ``amount`` is added onto the stored ``count`` property,
 and incrementation is complete.
 
-If it is *not* possible to retrieve a value from the ``incrementForCount(_:)`` method ---
+If it is *not* possible to retrieve a value from the ``increment(forCount:)`` method ---
 either because ``dataSource`` is nil,
-or because the data source does not implement ``incrementForCount(_:)`` ---
+or because the data source does not implement ``increment(forCount:)`` ---
 then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
@@ -1402,7 +1402,7 @@ from its current ``count`` value:
 .. testcode:: protocolConformance
 
    -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
-         func incrementForCount(count: Int) -> Int {
+         func increment(forCount count: Int) -> Int {
             if count == 0 {
                return 0
             } else if count < 0 {
@@ -1414,7 +1414,7 @@ from its current ``count`` value:
       }
 
 The ``TowardsZeroSource`` class implements
-the optional ``incrementForCount(_:)`` method from the ``CounterDataSource`` protocol
+the optional ``increment(forCount:)`` method from the ``CounterDataSource`` protocol
 and uses the ``count`` argument value to work out which direction to count in.
 If ``count`` is already zero, the method returns ``0``
 to indicate that no further counting should take place.
