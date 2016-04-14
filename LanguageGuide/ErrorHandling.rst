@@ -433,7 +433,7 @@ you can write ``try!`` before the expression to disable error propagation
 and wrap the call in a runtime assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
-For example, the following code uses a ``loadImage(_:)`` function,
+For example, the following code uses a ``loadImage(atPath:)`` function,
 which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
@@ -443,10 +443,10 @@ so it is appropriate to disable error propagation.
 .. testcode:: forceTryStatement
 
    >> struct Image {}
-   >> func loadImage(path: String) throws -> Image {
+   >> func loadImage(atPath path: String) throws -> Image {
    >>     return Image()
    >> }
-   -> let photo = try! loadImage("./Resources/John Appleseed.jpg")
+   -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
    << // photo : Image = REPL.Image()
 
 .. _ErrorHandling_Defer:
