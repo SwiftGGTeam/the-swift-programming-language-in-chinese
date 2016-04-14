@@ -324,11 +324,11 @@ the most restrictive access level of the function's parameter types and return t
 You must specify the access level explicitly as part of the function's definition
 if the function's calculated access level does not match the contextual default.
 
-The example below defines a global function called ``someFunction``,
+The example below defines a global function called ``someFunction()``,
 without providing a specific access level modifier for the function itself.
 You might expect this function to have the default access level of “internal”,
 but this is not the case.
-In fact, ``someFunction`` will not compile as written below:
+In fact, ``someFunction()`` will not compile as written below:
 
 .. testcode:: accessControlWrong
 
@@ -361,7 +361,7 @@ for the function declaration to be valid:
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
 
-It is not valid to mark the definition of ``someFunction``
+It is not valid to mark the definition of ``someFunction()``
 with the ``public`` or ``internal`` modifiers,
 or to use the default setting of internal,
 because public or internal users of the function might not have appropriate access
