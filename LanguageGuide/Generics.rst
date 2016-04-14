@@ -591,7 +591,7 @@ as part of the type parameter's definition when you define the function:
          return nil
       }
 
-The single type parameter for ``findIndex`` is written as ``T: Equatable``,
+The single type parameter for ``findIndex(ofValue:inArray)`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
 The ``findIndex(ofValue:inArray:)`` function now compiles successfully
