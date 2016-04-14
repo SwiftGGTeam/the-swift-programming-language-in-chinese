@@ -280,11 +280,11 @@ The following example adds a new instance method called ``repetitions`` to the `
          }
       }
 
-The ``repetitions(_:)`` method takes a single argument of type ``() -> Void``,
+The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``repetitions(_:)`` method on any integer number
+you can call the ``repetitions(task:)`` method on any integer number
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
