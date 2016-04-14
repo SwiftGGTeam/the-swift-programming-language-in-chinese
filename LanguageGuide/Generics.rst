@@ -524,7 +524,7 @@ The ``findIndex(ofString:inArray:)`` function can be used to find a string value
    <- The index of llama is 2
 
 The principle of finding the index of a value in an array isn't useful only for strings, however.
-You can write the same functionality as a generic function called ``findIndex``,
+You can write the same functionality as a generic function
 by replacing any mention of strings with values of some type ``T`` instead.
 
 Here's how you might expect a generic version of ``findIndex(ofString:inArray:)``,
