@@ -775,10 +775,7 @@ by adding the vector to itself with the addition assignment operator defined ear
          return vector
       }
 
-This implementation of ``+++`` is very similar to
-the implementation of ``++`` for ``Vector2D``,
-except that this operator function adds the vector to itself,
-rather than adding ``Vector2D(1.0, 1.0)``:
+This implementation of ``+++`` adds the vector to itself:
 
 .. testcode:: customOperators
 
