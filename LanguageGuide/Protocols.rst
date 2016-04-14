@@ -626,9 +626,9 @@ The example below defines two protocols for use with dice-based board games:
          func play()
       }
    -> protocol DiceGameDelegate {
-         func gameDidStart(game: DiceGame)
-         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-         func gameDidEnd(game: DiceGame)
+         func gameDidStart(_ game: DiceGame)
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+         func gameDidEnd(_ game: DiceGame)
       }
 
 The ``DiceGame`` protocol is a protocol that can be adopted
@@ -720,18 +720,18 @@ which adopts the ``DiceGameDelegate`` protocol:
 
    -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
-         func gameDidStart(game: DiceGame) {
+         func gameDidStart(_ game: DiceGame) {
             numberOfTurns = 0
             if game is SnakesAndLadders {
                print("Started a new game of Snakes and Ladders")
             }
             print("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             numberOfTurns += 1
             print("Rolled a \(diceRoll)")
          }
-         func gameDidEnd(game: DiceGame) {
+         func gameDidEnd(_ game: DiceGame) {
             print("The game lasted for \(numberOfTurns) turns")
          }
       }
@@ -742,10 +742,10 @@ It resets a ``numberOfTurns`` property to zero when the game starts,
 increments it each time a new turn begins,
 and prints out the total number of turns once the game has ended.
 
-The implementation of ``gameDidStart`` shown above uses the ``game`` parameter
+The implementation of ``gameDidStart(_:)`` shown above uses the ``game`` parameter
 to print some introductory information about the game that is about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
-and so ``gameDidStart`` can access and use only methods and properties that
+and so ``gameDidStart(_:)`` can access and use only methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
 However, the method is still able to use type casting to
 query the type of the underlying instance.
@@ -753,7 +753,7 @@ In this example, it checks whether ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
 and prints an appropriate message if so.
 
-``gameDidStart`` also accesses the ``dice`` property of the passed ``game`` parameter.
+The ``gameDidStart(_:)`` method also accesses the ``dice`` property of the passed ``game`` parameter.
 Because ``game`` is known to conform to the ``DiceGame`` protocol,
 it is guaranteed to have a ``dice`` property,
 and so the ``gameDidStart(_:)`` method is able to access and print the dice's ``sides`` property,
