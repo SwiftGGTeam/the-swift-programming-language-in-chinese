@@ -110,6 +110,11 @@ called ``swapTwoValues(_:_:)``:
          b = temporaryA
       }
 
+.. This could be done in one line using a tuple pattern: (a, b) = (b, a)
+   That's probably not as approachable here, and the novel syntax to avoid an
+   explicit placeholder variable might distract from the discussion of
+   generics.
+
 The body of the ``swapTwoValues(_:_:)`` function
 is identical to the body of the ``swapTwoInts(_:_:)`` function.
 However, the first line of ``swapTwoValues(_:_:)``
