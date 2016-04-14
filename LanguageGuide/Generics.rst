@@ -280,7 +280,7 @@ in this case for a stack of ``Int`` values:
 
    -> struct IntStack {
          var items = [Int]()
-         mutating func push(item: Int) {
+         mutating func push(_ item: Int) {
             items.append(item)
          }
          mutating func pop() -> Int {
@@ -312,7 +312,7 @@ Here's a generic version of the same code:
 
    -> struct Stack<Element> {
          var items = [Element]()
-         mutating func push(item: Element) {
+         mutating func push(_ item: Element) {
             items.append(item)
          }
          mutating func pop() -> Element {
@@ -638,7 +638,7 @@ which declares an associated type called ``ItemType``:
 
    -> protocol Container {
          associatedtype ItemType
-         mutating func append(item: ItemType)
+         mutating func append(_ item: ItemType)
          var count: Int { get }
          subscript(i: Int) -> ItemType { get }
       }
@@ -693,7 +693,7 @@ adapted to conform to the ``Container`` protocol:
    -> struct IntStack: Container {
          // original IntStack implementation
          var items = [Int]()
-         mutating func push(item: Int) {
+         mutating func push(_ item: Int) {
             items.append(item)
          }
          mutating func pop() -> Int {
@@ -701,7 +701,7 @@ adapted to conform to the ``Container`` protocol:
          }
          // conformance to the Container protocol
          typealias ItemType = Int
-         mutating func append(item: Int) {
+         mutating func append(_ item: Int) {
             self.push(item)
          }
          var count: Int {
@@ -738,14 +738,14 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
          var items = [Element]()
-         mutating func push(item: Element) {
+         mutating func push(_ item: Element) {
             items.append(item)
          }
          mutating func pop() -> Element {
             return items.removeLast()
          }
          // conformance to the Container protocol
-         mutating func append(item: Element) {
+         mutating func append(_ item: Element) {
             self.push(item)
          }
          var count: Int {
