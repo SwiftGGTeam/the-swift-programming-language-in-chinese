@@ -218,7 +218,7 @@ to generate a new random number.
 Here's an implementation of a class that adopts and conforms to
 the ``RandomNumberGenerator`` protocol.
 This class implements a pseudorandom number generator algorithm known as
-a :newTerm:`linear congruential generator`:
+a linear congruential generator:
 
 .. testcode:: protocols
    :compile: true
