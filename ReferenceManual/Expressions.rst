@@ -360,8 +360,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { print("Function for Any") }
-   -> func f(int: Int) { print("Function for Int") }
+   -> func f(_ any: Any) { print("Function for Any") }
+   -> func f(_ int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
