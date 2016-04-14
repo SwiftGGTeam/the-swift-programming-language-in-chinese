@@ -376,6 +376,8 @@ from the right of the number:
    /> returns \(r3)
    </ returns 7
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 .. TODO: Replace the for loop above with an exponent,
    if/when integer exponents land in the stdlib.
    Darwin's pow() function is only for floating point.
