@@ -438,10 +438,10 @@ The nested enumeration can now be used with any ``Int`` value:
          }
          print("")
       }
-   -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
+   -> printIntegerKinds(numbers: [3, 19, -27, 0, -6, 0, 7])
    <- + + - 0 - 0 +
 
-This function, ``printIntegerKinds``,
+This function, ``printIntegerKinds(numbers:)``,
 takes an input array of ``Int`` values and iterates over those values in turn.
 For each integer in the array,
 the function considers the ``kind`` computed property for that integer,
