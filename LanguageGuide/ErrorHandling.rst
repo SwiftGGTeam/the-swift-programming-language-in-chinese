@@ -477,12 +477,12 @@ after code in the second, and so on.
 
 .. testcode:: defer
 
-   >> func exists(file: String) -> Bool { return true }
+   >> func exists(_ file: String) -> Bool { return true }
    >> struct File {
    >>    func readline() throws -> String? { return nil }
    >> }
-   >> func open(file: String) -> File { return File() }
-   >> func close(fileHandle: File) { }
+   >> func open(_ file: String) -> File { return File() }
+   >> func close(_ fileHandle: File) { }
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)
