@@ -321,12 +321,9 @@ it is appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
 
-.. note::
-
-   Weak references must be declared as variables,
-   to indicate that their value can change at runtime.
-   A weak reference cannot be declared as a constant.
-
+Weak references must be declared as variables of an optional type.
+They have to be variables, not constants,
+to indicate that their value can change at runtime.
 Because a weak reference does not keep a strong hold on the instance it refers to,
 it is possible for that instance to be deallocated
 while the weak reference is still referring to it.
