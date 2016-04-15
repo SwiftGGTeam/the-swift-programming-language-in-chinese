@@ -704,17 +704,17 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(a: inout Int, _ b: inout Int) {
+   -> func f(a: inout Int, b: inout Int) {
           a += 1
           b += 10
       }
-   -> f(&x, &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!       ^~
-   !! <REPL Input>:1:3: note: previous aliasing argument
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!   ^~
+   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!             ^~
+   !! <REPL Input>:1:6: note: previous aliasing argument
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!      ^~
 
 There is no copy-out at the end of closures or nested functions.
 This means if a closure is called after the function returns,
@@ -733,16 +733,16 @@ For example:
     ---
     -> var x = 10
     << // x : Int = 10
-    -> let f = outer(&x)
+    -> let f = outer(a: &x)
     << // f : () -> Void = (Function)
     -> f()
     -> print(x)
     <- 10
 
 The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer()`` returns.
+because ``inner()`` is called after ``outer(a:)`` returns.
 To change the value of ``x``,
-``inner()`` would need to be called before ``outer()`` returned.
+``inner()`` would need to be called before ``outer(a:)`` returned.
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
@@ -783,15 +783,15 @@ the default value is used instead.
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()  // Valid, uses default value
-   -> f(7) // Valid, value provided without its name
-   -> f(x: 7) // Invalid, name and value provided
+   -> f()       // Valid, uses default value
+   -> f(x: 7)   // Valid, uses the value provided
+   -> f(7)      // Invalid, missing argument label
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
-   !! f(x: 7) // Invalid, name and value provided
-   !! ^~~~
-   !!-
+   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !! f(7)      // Invalid, missing argument label
+   !!   ^
+   !!   x:
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -800,7 +800,7 @@ the default value is used instead.
           return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(100)
+    -> foo(x: 100)
     << x is 100
     -> foo()
     << evaluated
@@ -2054,7 +2054,7 @@ to ensure members of that type are properly initialized.
    << // x : [Int] = [1, 2, 3]
    >> let y = [10, 20, 30]
    << // y : [Int] = [10, 20, 30]
-   >> x.f(y)
+   >> x.f(x: y)
    << // r0 : Int = 7
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance
