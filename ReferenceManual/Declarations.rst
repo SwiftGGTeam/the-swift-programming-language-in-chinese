@@ -642,7 +642,7 @@ The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
-   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
+   -> func f(x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
    << // r0 : Int = 6
 
