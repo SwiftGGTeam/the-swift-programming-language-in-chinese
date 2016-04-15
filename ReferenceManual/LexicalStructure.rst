@@ -305,7 +305,7 @@ without being escaped with backticks.
 * Keywords that begin with a number sign (``#``):
   ``#available``,
   ``#column``,
-  ``#else``
+  ``#else``,
   ``#elseif``,
   ``#endif``,
   ``#file``,
