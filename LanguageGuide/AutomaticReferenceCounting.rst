@@ -336,6 +336,31 @@ just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
 
+.. note::
+
+    When ARC sets a weak reference to ``nil``,
+    this change in the property's value
+    doesn't cause property observers to be called.
+
+.. assertion:: weak-reference-doesnt-trigger-didset
+
+    -> class C {
+           weak var w: C? { didSet { print("did set") } }
+       }
+    -> var c1 = C()
+    << // c1 : C = REPL.C
+    -> do {
+    -> var c2 = C()  // Inside a do{} block, so no REPL result.
+    -> print(c1.w)
+    << nil
+    -> c1.w = c2
+    << did set
+    -> print(c1.w)
+    << Optional(REPL.C)
+    -> } // ARC deallocates c2; didSet doesn't fire.
+    -> print(c1.w)
+    << nil
+
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
 This time around, the ``Apartment`` type's ``tenant`` property
