@@ -224,7 +224,7 @@ ovenLight.next()
 
 ```swift
 class SomeClass {
-    static func someTypeMethod() {
+    class func someTypeMethod() {
         // type method implementation goes here
     }
 }
