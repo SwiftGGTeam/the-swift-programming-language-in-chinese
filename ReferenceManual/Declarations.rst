@@ -612,7 +612,7 @@ which is used within the function body,
 as well as an argument label,
 which is used when calling the function or method.
 By default,
-parameters use their parameter names as argument labels.
+parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
@@ -621,8 +621,7 @@ For example:
    -> f(x: 1, y: 2) // y is labeled, x is not
    << // r0 : Int = 3
 
-You can override the default behavior
-for how parameter names are used
+You can override the default behavior for argument labels
 with one of the following forms:
 
 .. syntax-outline::
@@ -631,7 +630,7 @@ with one of the following forms:
     _ <#parameter name#>: <#parameter type#>
 
 A name before the parameter name
-gives the parameter an argument label,
+gives the parameter an explicit argument label,
 which can be different from the parameter name.
 The corresponding argument must use the given argument label
 in function or method calls.
