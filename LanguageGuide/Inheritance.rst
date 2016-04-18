@@ -77,7 +77,7 @@ a human-readable description of the vehicle's current speed:
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
 but is not much use in itself.
 To make it more useful,
-you need to refine it to describe more specific kinds of vehicle.
+you need to refine it to describe more specific kinds of vehicles.
 
 .. _Inheritance_Subclassing:
 

@@ -184,7 +184,7 @@ Enumerations similar to these are known as
 in other programming languages.
 
 For example, suppose an inventory tracking system needs to
-track products by two different types of barcode.
+track products by two different types of barcodes.
 Some products are labeled with 1D barcodes in UPC-A format,
 which uses the numbers ``0`` to ``9``.
 Each barcode has a “number system” digit,
