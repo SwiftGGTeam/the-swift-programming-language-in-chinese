@@ -857,7 +857,7 @@ you can overload a function based on whether a function *parameter* can throw an
 A throwing method can't override a nonthrowing method,
 and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
 That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing.
+and a nonthrowing method can satisfy a protocol requirement for a throwing method.
 
 .. _Declarations_RethrowingFunctionsAndMethods:
 
