@@ -2231,8 +2231,6 @@ such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
 
-.. TR: Do all prefix operators default to the same precedence level? If so, what is it?
-
 The following form declares a new postfix operator:
 
 .. syntax-outline::
