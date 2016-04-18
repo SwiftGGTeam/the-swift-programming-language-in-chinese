@@ -2129,6 +2129,11 @@ as long as the *parameters* or the *return type* differ from the one you're over
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
 
+By default, the parameters used in subscripting don't have argument labels,
+unlike functions, methods, and initializers.
+However, you can provide explicit argument labels
+using the same syntax that functions, methods, and initializers use.
+
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
