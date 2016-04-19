@@ -1359,7 +1359,7 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func makeArray<Item>(repating item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
