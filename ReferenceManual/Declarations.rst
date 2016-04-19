@@ -618,7 +618,7 @@ For example:
 .. testcode:: default-parameter-names
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(x: 1, y: 2) // y is labeled, x is not
+   -> f(x: 1, y: 2) // both x and y are labeled
    << // r0 : Int = 3
 
 You can override the default behavior for argument labels
