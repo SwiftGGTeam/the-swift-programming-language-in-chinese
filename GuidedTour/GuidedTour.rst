@@ -1359,14 +1359,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func makeArrayByRepeating<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArray<Item>(repating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> makeArrayByRepeating(item: "knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes:4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
