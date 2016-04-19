@@ -434,10 +434,10 @@ from the function's return type.
 
 .. testcode:: guided-tour
 
-    -> func makeGreeting(name: String, day: String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(person: String, day: String) -> String {
+           return "Hello \(person), today is \(day)."
        }
-    -> makeGreeting(name: "Bob", day: "Tuesday")
+    -> greet(person: "Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
@@ -453,8 +453,8 @@ or write ``_`` to use no argument label.
 
 .. testcode:: guided-tour
 
-    -> func greet(_ name: String, on day: String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(_ person: String, on day: String) -> String {
+           return "Hello \(person), today is \(day)."
        }
     -> greet("John", on: "Wednesday")
     <$ : String = "Hello John, today is Wednesday."
