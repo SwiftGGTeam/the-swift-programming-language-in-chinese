@@ -612,7 +612,7 @@ A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
 When you declare a function that takes a closure as one of its parameters,
-you can write ``@noescape`` before the parameter name
+you can write ``@noescape`` before the parameter's type
 to indicate that the closure is not allowed to escape.
 Marking a closure with ``@noescape``
 lets the compiler make more aggressive optimizations
@@ -766,11 +766,11 @@ takes an explicit closure that returns a customer's name.
 The version of ``serve(customer:)`` below
 performs the same operation but, instead of taking an explicit closure,
 it takes an autoclosure
-by marking its parameter with the ``@autoclosure`` attribute.
+by marking its parameter's type with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
 The argument is automatically converted to a closure,
-because the ``customerProvider`` parameter is marked
+because the ``customerProvider`` parameter's type is marked
 with the ``@autoclosure`` attribute.
 
 .. testcode:: autoclosures-function-with-autoclosure
