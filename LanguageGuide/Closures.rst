@@ -620,7 +620,7 @@ because it knows more information about the closure's lifespan.
 
 .. testcode:: noescape-closure-as-argument
 
-    -> func someFunctionWithNonescapingClosure(@noescape closure: () -> Void) {
+    -> func someFunctionWithNonescapingClosure(closure: @noescape () -> Void) {
            closure()
        }
 
@@ -779,7 +779,7 @@ with the ``@autoclosure`` attribute.
     << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
-    -> func serve(@autoclosure customer customerProvider: () -> String) {
+    -> func serve(customer customerProvider: @autoclosure () -> String) {
            print("Now serving \(customerProvider())!")
        }
     -> serve(customer: customersInLine.remove(at: 0))
@@ -804,7 +804,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(@autoclosure(escaping) _ customerProvider: () -> String) {
+    -> func collectCustomerProviders(_ customerProvider: @autoclosure(escaping) () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))
