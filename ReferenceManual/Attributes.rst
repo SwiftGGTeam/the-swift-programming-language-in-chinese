@@ -39,9 +39,9 @@ the ``noreturn`` attribute to a function or method *type*.
 ``autoclosure``
     This attribute is used to delay the evaluation of an expression
     by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a parameter declaration for
-    a function or method type that takes no arguments
-    and that returns the type of the expression.
+    Apply this attribute to a parameter's type in a method or function declaration,
+    for a parameter of a function type that takes no arguments
+    and that returns a value of the type of the expression.
     Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
     except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute,
@@ -244,9 +244,9 @@ the ``noreturn`` attribute to a function or method *type*.
     Possibly link to Anna and Jack's guide too.
 
 ``noescape``
-    Apply this attribute to a function or method declaration
-    to indicate that a parameter will not be stored for later execution,
-    such that it is guaranteed not to outlive the lifetime of the call.
+    Apply this attribute to a parameter's type in a method or function declaration
+    to indicate that the parameter's value will not be stored for later execution.
+    This means that the value is guaranteed not to outlive the lifetime of the call.
     Function type parameters with the ``noescape`` declaration attribute
     do not require explicit use of ``self.`` for properties or methods.
     For an example of how to use the ``noescape`` attribute,
