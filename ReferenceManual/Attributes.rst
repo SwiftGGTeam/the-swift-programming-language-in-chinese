@@ -349,44 +349,33 @@ the ``noreturn`` attribute to a function or method *type*.
    `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
    Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
 
-``warn_unused_result``
+``discardableResult``
    Apply this attribute to a function or method declaration
-   to have the compiler emit a warning
-   when the function or method is called without using its result.
+   to suppress the compiler warning
+   when the function or method that returns a value
+   is called without using its result.
 
    You can use this attribute to provide a warning message about incorrect
-   usage of a nonmutating method that has a mutating counterpart.
+   usage of a nonmutating method that has a mutating counterpart
+   using the ``MutatingVariant`` and ``NonmutatingVariant`` documentation comment keywords.
+   For example, the Swift standard library provides both
+   the mutating method ``sort()``
+   and the nonmutating method ``sorted()`` to collections
+   whose iterator element conforms to the ``Comparable`` protocol.
+   If you call the ``sorted()`` method without using its result,
+   it's likely that you actually intended to use the mutating variant,
+   ``sort()`` instead.
 
-   The ``warn_unused_result`` attribute optionally accepts
-   one of the two attribute arguments below.
+   The ``discardableResult`` attribute optionally accepts a ``message`` argument,
+   which is used to provide a textual warning message
+   that's displayed when the function or method is called, but its result isn't used.
+   It has the following form:
 
-   * The ``message`` argument is used to provide a textual warning message
-     that's displayed when the function or method is called, but its result isn't used.
-     It has the following form:
+   .. syntax-outline::
 
-     .. syntax-outline::
+       message: <#message#>
 
-         message: <#message#>
-
-     The *message* consists of a string literal.
-
-   * The ``mutable_variant`` argument is used to provide the name of the mutating version
-     of the method that should be used if the nonmutating method is called on a mutable
-     value and the result isn't used.
-     It has the following form, where the *method name* consists of a string literal:
-
-     .. syntax-outline::
-
-         mutable_variant: <#method name#>
-
-     For example, the Swift standard library provides both
-     the mutating method ``sort()``
-     and the nonmutating method ``sorted()`` to collections
-     whose iterator element conforms to the ``Comparable`` protocol.
-     If you call the ``sorted()`` method without using its result,
-     it's likely that you actually intended to use the mutating variant,
-     ``sort()`` instead.
-
+   The *message* consists of a string literal.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
