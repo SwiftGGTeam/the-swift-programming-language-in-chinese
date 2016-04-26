@@ -406,8 +406,8 @@ separated by a space:
    the argument *must* be labeled when you call the function.
 
 Here's a variation of the ``greet(person:)`` function
-that takes the names of two people
-and returns a greeting for both of them:
+that takes a person's name and hometown
+and returns a greeting:
 
 .. testcode:: externalParameterNames
 
