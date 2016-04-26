@@ -77,7 +77,7 @@ from elsewhere in your code:
 
 You call the ``greet(person:)`` function
 by passing it a ``String`` argument value labeled ``person`` in parentheses,
-such as ``sayHello(person: "Anna")``.
+such as ``greet(person: "Anna")``.
 Because the function returns a ``String`` value,
 ``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
