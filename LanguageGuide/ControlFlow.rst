@@ -574,26 +574,25 @@ a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
 
-   -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
+   -> let someCharacter: Character = "z"
+   << // someCharacter : Character = "z"
    -> switch someCharacter {
-         case "a", "e", "i", "o", "u":
-            print("\(someCharacter) is a vowel")
-         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            print("\(someCharacter) is a consonant")
+         case "a":
+            print("The first letter of the alphabet")
+         case "z":
+            print("The last letter of the alphabet")
          default:
-            print("\(someCharacter) is not a vowel or a consonant")
+            print("A character")
       }
-   <- e is a vowel
+   <- The last letter of the alphabet
 
 The ``switch`` statement's first case matches
-all five lowercase vowels in the English language.
-Similarly, its second case matches all lowercase English consonants.
+the first letter of the English alphabet, A,
+and its second case matches the last letter, Z.
 
 Because it's not practical to write all other possible characters as part of a ``switch`` case,
 this ``switch`` statement provides a ``default`` case
-to match all other characters that are not vowels or consonants.
+to match all other characters.
 This provision ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
