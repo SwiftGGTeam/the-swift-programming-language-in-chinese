@@ -76,7 +76,7 @@ from elsewhere in your code:
    <- Hello, Brian!
 
 You call the ``greet(person:)`` function
-by passing it a ``String`` argument value labeled ``person`` in parentheses,
+by passing it a ``String`` value after the ``person`` argument label,
 such as ``greet(person: "Anna")``.
 Because the function returns a ``String`` value,
 ``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
