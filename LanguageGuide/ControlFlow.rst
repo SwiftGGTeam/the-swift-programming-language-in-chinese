@@ -645,22 +645,15 @@ does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
-Multiple matches for a single ``switch`` case can be separated by commas
-and can be written over multiple lines if the list is long.
-
-.. syntax-outline::
-
-   switch <#some value to consider#> {
-      case <#value 1#>,
-          <#value 2#>:
-         <#statements#>
-   }
-
 .. note::
 
    To opt in to fallthrough behavior for a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
+
+   To include multiple patterns in a single switch case,
+   use a compound case
+   as described in :ref:`ControlFlow_CompoundCases`.
 
 .. _ControlFlow_RangeMatching:
 
@@ -870,6 +863,21 @@ Multiple switch cases that share the same body
 can be combined by writing several patterns after ``case``,
 with a comma between each of the patterns.
 If any of the patterns match, then the case is considered to match.
+The patterns can be written over multiple lines if the list is long.
+
+..
+    Here's the general form of a ``switch`` statement with compound cases:
+
+    .. syntax-outline::
+
+       switch <#some value to consider#> {
+          case <#value 1#>, <#value 2#>:
+             <#statements#>
+          case <#value 1#>,
+              <#value 2#>:
+             <#statements#>
+       }
+
 For example:
 
 .. testcode:: compound-switch-case
