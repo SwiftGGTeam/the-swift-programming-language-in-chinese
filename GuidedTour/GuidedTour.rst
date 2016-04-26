@@ -448,7 +448,7 @@ from the function's return type.
 By default,
 functions use their parameter names
 as labels for their arguments.
-Write an custom argument label before the parameter name,
+Write a custom argument label before the parameter name,
 or write ``_`` to use no argument label.
 
 .. testcode:: guided-tour
