@@ -448,7 +448,7 @@ from the function's return type.
 By default,
 functions use their parameter names
 as labels for their arguments.
-Write an custom argument label before the parameter name,
+Write a custom argument label before the parameter name,
 or write ``_`` to use no argument label.
 
 .. testcode:: guided-tour
@@ -1332,16 +1332,16 @@ even though they need to be executed at different times.
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
     << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
-    -> func fridgeContains(itemNamed name: String) -> Bool {
+    -> func fridgeContains(_ food: String) -> Bool {
            fridgeIsOpen = true
            defer {
                fridgeIsOpen = false
            }
     ---
-           let result = fridgeContent.contains(name)
+           let result = fridgeContent.contains(food)
            return result
        }
-    -> fridgeContains(itemNamed: "banana")
+    -> fridgeContains("banana")
     <$ : Bool = false
     -> print(fridgeIsOpen)
     << false
@@ -1392,7 +1392,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> (_ lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element>(_ lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

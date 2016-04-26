@@ -76,8 +76,8 @@ from elsewhere in your code:
    <- Hello, Brian!
 
 You call the ``greet(person:)`` function
-by passing it a ``String`` argument value labeled ``person`` in parentheses,
-such as ``sayHello(person: "Anna")``.
+by passing it a ``String`` value after the ``person`` argument label,
+such as ``greet(person: "Anna")``.
 Because the function returns a ``String`` value,
 ``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
@@ -176,7 +176,7 @@ in parentheses, separated by commas.
 Note that this function is distinct from the ``greet(person:)`` function
 shown in an earlier section.
 Although both functions have names that begin with ``greet``,
-the ``greet(person:alreadyGreeted:)``  function takes two arguments
+the ``greet(person:alreadyGreeted:)`` function takes two arguments
 but the ``greet(person:)`` function takes only one.
 
 .. _Functions_FunctionsWithoutReturnValues:
@@ -406,8 +406,8 @@ separated by a space:
    the argument *must* be labeled when you call the function.
 
 Here's a variation of the ``greet(person:)`` function
-that takes the names of two people
-and returns a greeting for both of them:
+that takes a person's name and hometown
+and returns a greeting:
 
 .. testcode:: externalParameterNames
 
@@ -484,18 +484,18 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 .. testcode:: variadicParameters
 
-   -> func arithmeticMean(numbers: Double...) -> Double {
+   -> func arithmeticMean(_ numbers: Double...) -> Double {
          var total: Double = 0
          for number in numbers {
             total += number
          }
          return total / Double(numbers.count)
       }
-   -> arithmeticMean(numbers: 1, 2, 3, 4, 5)
+   -> arithmeticMean(1, 2, 3, 4, 5)
    << // r0 : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
-   -> arithmeticMean(numbers: 3, 8.25, 18.75)
+   -> arithmeticMean(3, 8.25, 18.75)
    << // r1 : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
