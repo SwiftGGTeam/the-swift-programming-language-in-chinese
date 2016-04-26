@@ -484,18 +484,18 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 .. testcode:: variadicParameters
 
-   -> func arithmeticMean(numbers: Double...) -> Double {
+   -> func arithmeticMean(_ numbers: Double...) -> Double {
          var total: Double = 0
          for number in numbers {
             total += number
          }
          return total / Double(numbers.count)
       }
-   -> arithmeticMean(numbers: 1, 2, 3, 4, 5)
+   -> arithmeticMean(1, 2, 3, 4, 5)
    << // r0 : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
-   -> arithmeticMean(numbers: 3, 8.25, 18.75)
+   -> arithmeticMean(3, 8.25, 18.75)
    << // r1 : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
