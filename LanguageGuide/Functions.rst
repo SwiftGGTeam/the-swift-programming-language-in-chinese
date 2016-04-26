@@ -176,7 +176,7 @@ in parentheses, separated by commas.
 Note that this function is distinct from the ``greet(person:)`` function
 shown in an earlier section.
 Although both functions have names that begin with ``greet``,
-the ``greet(person:alreadyGreeted:)``  function takes two arguments
+the ``greet(person:alreadyGreeted:)`` function takes two arguments
 but the ``greet(person:)`` function takes only one.
 
 .. _Functions_FunctionsWithoutReturnValues:
