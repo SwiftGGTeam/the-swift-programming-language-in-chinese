@@ -873,6 +873,7 @@ For example:
 .. testcode:: compound-switch-case
 
     -> let stillAnotherPoint = (9, 0)
+    << // stillAnotherPoint : (Int, Int) = (9, 0)
     -> switch stillAnotherPoint {
            case (let distance, 0), (0, let distance):
                print("On an axis, \(distance) from the origin")
