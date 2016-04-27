@@ -591,7 +591,6 @@ a single lowercase character called ``someCharacter``:
 The ``switch`` statement's first case matches
 the first letter of the English alphabet, A,
 and its second case matches the last letter, Z.
-
 Because it's not practical to write all other possible characters as part of a ``switch`` case,
 this ``switch`` statement provides a ``default`` case
 to match all other characters.
@@ -647,12 +646,12 @@ and makes for safer code that is clearer in its intent.
 
 .. note::
 
-   To opt in to fallthrough behavior for a particular ``switch`` case,
+   To explicitly fall through at the end of a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
 
    To include multiple patterns in a single switch case,
-   use a compound case
+   use a compound case,
    as described in :ref:`ControlFlow_CompoundCases`.
 
 .. _ControlFlow_RangeMatching:
