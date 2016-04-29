@@ -391,7 +391,7 @@ as if the number had been padded with zeros to the left:
 Nested Types
 ------------
 
-Extensions can add new nested types to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures, and enumerations:
 
 .. testcode:: extensionsNestedTypes
 
