@@ -1070,13 +1070,13 @@ into a single protocol composition requirement on a function parameter:
          var name: String
          var age: Int
       }
-   -> func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-         print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+   -> func wishHappyBirthday(to celebrator: protocol<Named, Aged>) {
+         print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
    << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
-   -> wishHappyBirthday(celebrator: birthdayPerson)
-   <- Happy birthday Malcolm - you're 21!
+   -> wishHappyBirthday(to: birthdayPerson)
+   <- Happy birthday, Malcolm, you're 21!
 
 This example defines a protocol called ``Named``,
 with a single requirement for a gettable ``String`` property called ``name``.
@@ -1084,16 +1084,16 @@ It also defines a protocol called ``Aged``,
 with a single requirement for a gettable ``Int`` property called ``age``.
 Both of these protocols are adopted by a structure called ``Person``.
 
-The example also defines a ``wishHappyBirthday(celebrator:)`` function,
+The example also defines a ``wishHappyBirthday(to:)`` function,
 The type of the ``celebrator`` parameter is ``protocol<Named, Aged>``,
 which means “any type that conforms to both the ``Named`` and ``Aged`` protocols.”
 It doesn't matter what specific type is passed to the function,
 as long as it conforms to both of the required protocols.
 
 The example then creates a new ``Person`` instance called ``birthdayPerson``
-and passes this new instance to the ``wishHappyBirthday(celebrator:)`` function.
+and passes this new instance to the ``wishHappyBirthday(to:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
-and the ``wishHappyBirthday(celebrator:)`` function is able to print its birthday greeting.
+and the ``wishHappyBirthday(to:)`` function is able to print its birthday greeting.
 
 .. note::
 
