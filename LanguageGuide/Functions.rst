@@ -21,9 +21,6 @@ and to return functions from functions.
 Functions can also be written within other functions
 to encapsulate useful functionality within a nested function scope.
 
-.. TODO: should this chapter mention #function
-   (as described in the release notes for 2014-03-12)?
-
 .. _Functions_DefiningAndCallingFunctions:
 
 Defining and Calling Functions
@@ -44,18 +41,18 @@ that match the types of the function's parameters.
 A function's arguments must always be provided in the same order
 as the function's parameter list.
 
-The function in the example below is called ``sayHello(_:)``,
+The function in the example below is called ``greet(person:)``,
 because that's what it does ---
 it takes a person's name as input and returns a greeting for that person.
 To accomplish this, you define one input parameter ---
-a ``String`` value called ``personName`` ---
+a ``String`` value called ``person`` ---
 and a return type of ``String``,
 which will contain a greeting for that person:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHello(personName: String) -> String {
-         let greeting = "Hello, " + personName + "!"
+   -> func greet(person: String) -> String {
+         let greeting = "Hello, " + person + "!"
          return greeting
       }
 
@@ -73,38 +70,48 @@ from elsewhere in your code:
 
 .. testcode:: definingAndCalling
 
-   -> print(sayHello("Anna"))
+   -> print(greet(person: "Anna"))
    <- Hello, Anna!
-   -> print(sayHello("Brian"))
+   -> print(greet(person: "Brian"))
    <- Hello, Brian!
 
-You call the ``sayHello(_:)`` function by passing it a ``String`` argument value in parentheses,
-such as ``sayHello("Anna")``.
+You call the ``greet(person:)`` function
+by passing it a ``String`` value after the ``person`` argument label,
+such as ``greet(person: "Anna")``.
 Because the function returns a ``String`` value,
-``sayHello(_:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
+``greet(person:)`` can be wrapped in a call to the ``print(_:separator:terminator:)`` function
 to print that string and see its return value, as shown above.
 
-The body of the ``sayHello(_:)`` function starts by
+.. note::
+
+    The ``print(_:separator:terminator:)`` function
+    doesn't have a label for its first argument,
+    and its other arguments are optional because they have a default value.
+    These variations on function syntax are discussed below
+    in :ref:`Functions_FunctionParameterNames`
+    and :ref:`Functions_DefaultParameterValues`.
+
+The body of the ``greet(person:)`` function starts by
 defining a new ``String`` constant called ``greeting``
-and setting it to a simple greeting message for ``personName``.
+and setting it to a simple greeting message.
 This greeting is then passed back out of the function using the ``return`` keyword.
-As soon as ``return greeting`` is called,
+In the line of code that says ``return greeting``,
 the function finishes its execution and returns the current value of ``greeting``.
 
-You can call the ``sayHello(_:)`` function multiple times with different input values.
+You can call the ``greet(person:)`` function multiple times with different input values.
 The example above shows what happens if it is called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
-To simplify the body of this function,
-combine the message creation and the return statement into one line:
+To make the body of this function shorter,
+you can combine the message creation and the return statement into one line:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHelloAgain(personName: String) -> String {
-         return "Hello again, " + personName + "!"
+   -> func greetAgain(person: String) -> String {
+         return "Hello again, " + person + "!"
       }
-   -> print(sayHelloAgain("Anna"))
+   -> print(greetAgain(person: "Anna"))
    <- Hello again, Anna!
 
 .. _Functions_FunctionParametersAndReturnValues:
@@ -152,30 +159,25 @@ and returns an appropriate greeting for that person:
 
 .. testcode:: definingAndCalling
 
-   -> func sayHello(personName: String, alreadyGreeted: Bool) -> String {
+   -> func greet(person: String, alreadyGreeted: Bool) -> String {
           if alreadyGreeted {
-              return sayHelloAgain(personName)
+              return greetAgain(person: person)
           } else {
-              return sayHello(personName)
+              return greet(person: person)
           }
       }
-   -> print(sayHello("Tim", alreadyGreeted: true))
+   -> print(greet(person: "Tim", alreadyGreeted: true))
    <- Hello again, Tim!
 
-You call the ``sayHello(_:alreadyGreeted:)`` function
-by passing it both a ``String`` argument value
+You call the ``greet(person:alreadyGreeted:)`` function
+by passing it both a ``String`` argument value labeled ``person``
 and a ``Bool`` argument value labeled ``alreadyGreeted``
 in parentheses, separated by commas.
-Note that this function is distinct from the ``sayHello(_:)`` function
+Note that this function is distinct from the ``greet(person:)`` function
 shown in an earlier section.
-Although both functions have names that begin with ``sayHello``,
-the ``sayHello(_:alreadyGreeted:)``  function takes two arguments
-but the ``sayHello(_:)`` function takes only one.
-
-When calling a function with more than one parameter,
-any argument after the first is labeled according to its corresponding parameter name.
-Function parameter naming is described in more detail
-in :ref:`Functions_FunctionParameterNames`.
+Although both functions have names that begin with ``greet``,
+the ``greet(person:alreadyGreeted:)`` function takes two arguments
+but the ``greet(person:)`` function takes only one.
 
 .. _Functions_FunctionsWithoutReturnValues:
 
@@ -183,17 +185,16 @@ Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions are not required to define a return type.
-Here's a version of the ``sayHello(_:)`` function,
-called ``sayGoodbye(_:)``,
+Here's a version of the ``greet(person:)`` function,
 which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
 
-   -> func sayGoodbye(personName: String) {
-         print("Goodbye, \(personName)!")
+   -> func greet(person: String) {
+         print("Hello, \(person)!")
       }
-   -> sayGoodbye("Dave")
-   <- Goodbye, Dave!
+   -> greet(person: "Dave")
+   <- Hello, Dave!
 
 Because it does not need to return a value,
 the function's definition does not include the return arrow (``->``)
@@ -201,29 +202,28 @@ or a return type.
 
 .. note::
 
-   Strictly speaking, the ``sayGoodbye(_:)`` function *does* still return a value,
+   Strictly speaking, this version of the ``greet(person:)`` function *does* still return a value,
    even though no return value is defined.
    Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
-   in effect a tuple with zero elements,
-   which can be written as ``()``.
+   which is written as ``()``.
 
 The return value of a function can be ignored when it is called:
 
 .. testcode:: functionsWithoutReturnValues
 
-   -> func printAndCount(stringToPrint: String) -> Int {
-         print(stringToPrint)
-         return stringToPrint.characters.count
+   -> func printAndCount(string: String) -> Int {
+         print(string)
+         return string.characters.count
       }
-   -> func printWithoutCounting(stringToPrint: String) {
-         printAndCount(stringToPrint)
+   -> func printWithoutCounting(string: String) {
+         printAndCount(string: string)
       }
-   -> printAndCount("hello, world")
+   -> printAndCount(string: "hello, world")
    << hello, world
    // prints "hello, world" and returns a value of 12
    << // r0 : Int = 12
-   -> printWithoutCounting("hello, world")
+   -> printWithoutCounting(string: "hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
 
@@ -252,7 +252,7 @@ Functions with Multiple Return Values
 You can use a tuple type as the return type for a function
 to return multiple values as part of one compound return value.
 
-The example below defines a function called ``minMax(_:)``,
+The example below defines a function called ``minMax(array:)``,
 which finds the smallest and largest numbers in an array of ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
@@ -270,11 +270,11 @@ which finds the smallest and largest numbers in an array of ``Int`` values:
          return (currentMin, currentMax)
       }
 
-The ``minMax(_:)`` function returns a tuple containing two ``Int`` values.
+The ``minMax(array:)`` function returns a tuple containing two ``Int`` values.
 These values are labeled ``min`` and ``max``
 so that they can be accessed by name when querying the function's return value.
 
-The body of the ``minMax(_:)`` function starts by setting
+The body of the ``minMax(array:)`` function starts by setting
 two working variables called ``currentMin`` and ``currentMax``
 to the value of the first integer in the array.
 The function then iterates over the remaining values in the array
@@ -288,7 +288,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 
 .. testcode:: tupleTypesAsReturnTypes
 
-   -> let bounds = minMax([8, -6, 2, 109, 3, 71])
+   -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
    << // bounds : (min: Int, max: Int) = (-6, 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
@@ -318,14 +318,14 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    With an optional tuple type, the entire tuple is optional,
    not just each individual value within the tuple.
 
-The ``minMax(_:)`` function above returns a tuple containing two ``Int`` values.
+The ``minMax(array:)`` function above returns a tuple containing two ``Int`` values.
 However, the function does not perform any safety checks on the array it is passed.
 If the ``array`` argument contains an empty array,
-the ``minMax(_:)`` function, as defined above,
+the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
 
-To handle this “empty array” scenario safely,
-write the ``minMax(_:)`` function with an optional tuple return type
+To handle an empty array safely,
+write the ``minMax(array:)`` function with an optional tuple return type
 and return a value of ``nil`` when the array is empty:
 
 .. testcode:: tupleTypesAsReturnTypes2
@@ -344,38 +344,37 @@ and return a value of ``nil`` when the array is empty:
          return (currentMin, currentMax)
       }
 
-You can use optional binding to check whether this version of the ``minMax(_:)`` function
+You can use optional binding to check whether this version of the ``minMax(array:)`` function
 returns an actual tuple value or ``nil``:
 
 .. testcode:: tupleTypesAsReturnTypes2
 
-   -> if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
+   -> if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
          print("min is \(bounds.min) and max is \(bounds.max)")
       }
    <- min is -6 and max is 109
 
 .. _Functions_FunctionParameterNames:
 
-Function Parameter Names
-------------------------
+Function Argument Labels and Parameter Names
+--------------------------------------------
 
-Function parameters have both an :newTerm:`argument label`
+Each function parameter has both an :newTerm:`argument label`
 and a :newTerm:`parameter name`.
-An argument label is used to label arguments passed to a function call.
-A parameter name is used in the implementation of the function.
+The argument label is used when calling the function;
+each argument is written in the function call with its argument label before it.
+The parameter name is used in the implementation of the function.
+By default, parameters
+use their parameter name as their argument label.
 
 .. testcode:: functionParameterNames
 
    -> func someFunction(firstParameterName: Int, secondParameterName: Int) {
-         // function body goes here
-         // firstParameterName and secondParameterName refer to
-         // the argument values for the first and second parameters
+         // In the function body, firstParameterName and secondParameterName
+         // refer to the argument values for the first and second parameters.
       }
-   -> someFunction(1, secondParameterName: 2)
+   -> someFunction(firstParameterName: 1, secondParameterName: 2)
 
-By default, the first parameter doesn't have an argument label,
-and the second and subsequent parameters
-use their parameter name as their argument label.
 All parameters must have unique names.
 Although it's possible for multiple parameters
 to have the same argument label,
@@ -397,8 +396,8 @@ separated by a space:
 .. testcode:: externalParameterNames
 
    -> func someFunction(argumentLabel parameterName: Int) {
-         // function body goes here, and can use parameterName
-         // to refer to the argument value for that parameter
+         // In the function body, parameterName refers to the argument value
+         // for that parameter.
       }
 
 .. note::
@@ -406,49 +405,37 @@ separated by a space:
    If you provide an argument label for a parameter,
    the argument *must* be labeled when you call the function.
 
-Here's a version of the ``sayHello(_:)`` function
-that takes the names of two people
-and returns a greeting for both of them:
+Here's a variation of the ``greet(person:)`` function
+that takes a person's name and hometown
+and returns a greeting:
 
 .. testcode:: externalParameterNames
 
-   -> func sayHello(to person: String, and anotherPerson: String) -> String {
-          return "Hello \(person) and \(anotherPerson)!"
+   -> func greet(person: String, from hometown: String) -> String {
+          return "Hello \(person)!  Glad you could visit from \(hometown)."
       }
-   -> print(sayHello(to: "Bill", and: "Ted"))
-   <- Hello Bill and Ted!
-
-By specifying argument labels for both parameters,
-both the first and second arguments to the ``sayHello(to:and:)`` function
-must be labeled when you call it.
+   -> print(greet(person: "Bill", from: "Cupertino"))
+   <- Hello Bill!  Glad you could visit from Cupertino.
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
 while still providing a function body that is readable and clear in intent.
-
 
 .. _Functions_OmittingParameterNames:
 
 Omitting Argument Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an argument label for the second or subsequent parameters
-of a function,
+If you don't want an argument label for a parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter.
 
 .. testcode:: omittedExternalParameterNames
 
-   -> func someFunction(firstParameterName: Int, _ secondParameterName: Int) {
-         // function body goes here
-         // firstParameterName and secondParameterName refer to
-         // the argument values for the first and second parameters
+   -> func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
+         // In the function body, firstParameterName and secondParameterName
+         // refer to the argument values for the first and second parameters.
       }
-   -> someFunction(1, 2)
-
-.. note::
-
-   Because the first parameter doesn't have an argument label by default,
-   explicitly writing an underscore is extraneous.
+   -> someFunction(1, secondParameterName: 2)
 
 .. _Functions_DefaultParameterValues:
 
@@ -462,11 +449,10 @@ If a default value is defined, you can omit that parameter when calling the func
 .. testcode:: omittedExternalParameterNames
 
    -> func someFunction(parameterWithDefault: Int = 12) {
-         // function body goes here
-         // if no arguments are passed to the function call,
-         // value of parameterWithDefault is 12
+         // In the function body, if no arguments are passed to the function
+         // call, the value of parameterWithDefault is 12.
       }
-   -> someFunction(6) // parameterWithDefault is 6
+   -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction() // parameterWithDefault is 12
 
 .. note::
@@ -498,7 +484,7 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 .. testcode:: variadicParameters
 
-   -> func arithmeticMean(numbers: Double...) -> Double {
+   -> func arithmeticMean(_ numbers: Double...) -> Double {
          var total: Double = 0
          for number in numbers {
             total += number
@@ -557,7 +543,7 @@ which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
 
-   -> func swapTwoInts(a: inout Int, _ b: inout Int) {
+   -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -612,12 +598,12 @@ For example:
 
 .. testcode:: functionTypes
 
-   -> func addTwoInts(a: Int, _ b: Int) -> Int {
+   -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
          return a + b
       }
    >> addTwoInts
    << // r0 : (Int, Int) -> Int = (Function)
-   -> func multiplyTwoInts(a: Int, _ b: Int) -> Int {
+   -> func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
          return a * b
       }
    >> multiplyTwoInts
@@ -714,7 +700,7 @@ Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
 
-   -> func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+   -> func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
          print("Result: \(mathFunction(a, b))")
       }
    -> printMathResult(addTwoInts, 3, 5)
@@ -753,32 +739,32 @@ Both functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
 
-   -> func stepForward(input: Int) -> Int {
+   -> func stepForward(_ input: Int) -> Int {
          return input + 1
       }
-   -> func stepBackward(input: Int) -> Int {
+   -> func stepBackward(_ input: Int) -> Int {
          return input - 1
       }
 
-Here's a function called ``chooseStepFunction(_:)``,
-whose return type is “a function of type ``(Int) -> Int``”.
-The ``chooseStepFunction(_:)`` function returns the ``stepForward(_:)`` function
-or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backwards``:
+Here's a function called ``chooseStepFunction(backward:)``,
+whose return type is ``(Int) -> Int``.
+The ``chooseStepFunction(backward:)`` function returns the ``stepForward(_:)`` function
+or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backward``:
 
 .. testcode:: functionTypes
 
-   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
-         return backwards ? stepBackward : stepForward
+   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+         return backward ? stepBackward : stepForward
       }
 
-You can now use ``chooseStepFunction(_:)`` to obtain a function
+You can now use ``chooseStepFunction(backward:)`` to obtain a function
 that will step in one direction or the other:
 
 .. testcode:: functionTypes
 
    -> var currentValue = 3
    << // currentValue : Int = 3
-   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the stepBackward() function
 
@@ -786,7 +772,7 @@ The preceding example determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,
-causing ``chooseStepFunction(_:)`` to return the ``stepBackward(_:)`` function.
+causing ``chooseStepFunction(backward:)`` to return the ``stepBackward(_:)`` function.
 A reference to the returned function is stored in a constant called ``moveNearerToZero``.
 
 Now that ``moveNearerToZero`` refers to the correct function,
@@ -821,19 +807,19 @@ but can still be called and used by their enclosing function.
 An enclosing function can also return one of its nested functions
 to allow the nested function to be used in another scope.
 
-You can rewrite the ``chooseStepFunction(_:)`` example above
+You can rewrite the ``chooseStepFunction(backward:)`` example above
 to use and return nested functions:
 
 .. testcode:: nestedFunctions
 
-   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
          func stepForward(input: Int) -> Int { return input + 1 }
          func stepBackward(input: Int) -> Int { return input - 1 }
-         return backwards ? stepBackward : stepForward
+         return backward ? stepBackward : stepForward
       }
    -> var currentValue = -4
    << // currentValue : Int = -4
-   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {

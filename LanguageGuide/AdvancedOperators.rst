@@ -170,7 +170,7 @@ move all bits in a number to the left or the right by a certain number of places
 according to the rules defined below.
 
 Bitwise left and right shifts have the effect of
-multiplying or dividing an integer number by a factor of two.
+multiplying or dividing an integer by a factor of two.
 Shifting an integer's bits to the left by one position doubles its value,
 whereas shifting it to the right by one position halves its value.
 
@@ -350,7 +350,7 @@ by default Swift reports an error rather than allowing an invalid value to be cr
 This behavior gives extra safety when you work with numbers that are too large or too small.
 
 For example, the ``Int16`` integer type can hold
-any signed integer number between ``-32768`` and ``32767``.
+any signed integer between ``-32768`` and ``32767``.
 Trying to set an ``Int16`` constant or variable to a number outside of this range
 causes an error:
 

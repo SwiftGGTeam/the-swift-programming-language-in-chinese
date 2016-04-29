@@ -609,19 +609,17 @@ A parameter has a name,
 which is used within the function body,
 as well as an argument label,
 which is used when calling the function or method.
-By default, the first parameter does not have an argument label,
-and the second and subsequent parameters
-use their parameter names as argument labels.
+By default,
+parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(1, y: 2) // y is labeled, x is not
+   -> f(x: 1, y: 2) // both x and y are labeled
    << // r0 : Int = 3
 
-You can override the default behavior
-for how parameter names are used
+You can override the default behavior for argument labels
 with one of the following forms:
 
 .. syntax-outline::
@@ -630,7 +628,7 @@ with one of the following forms:
     _ <#parameter name#>: <#parameter type#>
 
 A name before the parameter name
-gives the parameter an argument label,
+gives the parameter an explicit argument label,
 which can be different from the parameter name.
 The corresponding argument must use the given argument label
 in function or method calls.
@@ -641,7 +639,7 @@ The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
-   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
+   -> func f(x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
    -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
    << // r0 : Int = 6
 
@@ -703,17 +701,17 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(a: inout Int, _ b: inout Int) {
+   -> func f(a: inout Int, b: inout Int) {
           a += 1
           b += 10
       }
-   -> f(&x, &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!       ^~
-   !! <REPL Input>:1:3: note: previous aliasing argument
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!   ^~
+   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!             ^~
+   !! <REPL Input>:1:6: note: previous aliasing argument
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!      ^~
 
 There is no copy-out at the end of closures or nested functions.
 This means if a closure is called after the function returns,
@@ -732,16 +730,16 @@ For example:
     ---
     -> var x = 10
     << // x : Int = 10
-    -> let f = outer(&x)
+    -> let f = outer(a: &x)
     << // f : () -> Void = (Function)
     -> f()
     -> print(x)
     <- 10
 
 The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer()`` returns.
+because ``inner()`` is called after ``outer(a:)`` returns.
 To change the value of ``x``,
-``inner()`` would need to be called before ``outer()`` returned.
+``inner()`` would need to be called before ``outer(a:)`` returned.
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
@@ -782,15 +780,15 @@ the default value is used instead.
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()  // Valid, uses default value
-   -> f(7) // Valid, value provided without its name
-   -> f(x: 7) // Invalid, name and value provided
+   -> f()       // Valid, uses default value
+   -> f(x: 7)   // Valid, uses the value provided
+   -> f(7)      // Invalid, missing argument label
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
-   !! f(x: 7) // Invalid, name and value provided
-   !! ^~~~
-   !!-
+   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !! f(7)      // Invalid, missing argument label
+   !!   ^
+   !!   x:
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -799,7 +797,7 @@ the default value is used instead.
           return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(100)
+    -> foo(x: 100)
     << x is 100
     -> foo()
     << evaluated
@@ -2053,7 +2051,7 @@ to ensure members of that type are properly initialized.
    << // x : [Int] = [1, 2, 3]
    >> let y = [10, 20, 30]
    << // y : [Int] = [10, 20, 30]
-   >> x.f(y)
+   >> x.f(x: y)
    << // r0 : Int = 7
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance
@@ -2128,6 +2126,11 @@ You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
+
+By default, the parameters used in subscripting don't have argument labels,
+unlike functions, methods, and initializers.
+However, you can provide explicit argument labels
+using the same syntax that functions, methods, and initializers use.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.

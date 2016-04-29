@@ -360,8 +360,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { print("Function for Any") }
-   -> func f(int: Int) { print("Function for Int") }
+   -> func f(_ any: Any) { print("Function for Any") }
+   -> func f(_ int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
@@ -507,12 +507,15 @@ when the default value expression is evaluated at the call site.
        }
     >> myFunction()
     << myFunction()
-    >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
+    >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
+    >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
+    >> oneNamedArg(1, withJay: 2)
+    << oneNamedArg(_:withJay:)
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    >> namedArgs(1, withJay: 2)
-    << namedArgs(_:withJay:)
+    >> namedArgs(i: 1, withJay: 2)
+    << namedArgs(i:withJay:)
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by #function
@@ -645,13 +648,13 @@ For example:
 
     -> struct Point {
           var x = 0.0, y = 0.0
-          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+          mutating func moveBy(x deltaX: Double, y deltaY: Double) {
              self = Point(x: x + deltaX, y: y + deltaY)
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
     << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-    >> somePoint.moveByX(2.0, y: 3.0)
+    >> somePoint.moveBy(x: 2.0, y: 3.0)
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
@@ -1089,7 +1092,7 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
            @objc(doSomethingWithInt:)
-           func doSomething(x: Int) { }
+           func doSomething(_ x: Int) { }
       }
    -> let x = SomeClass()
    <~ // x : SomeClass = <REPL.SomeClass: 0x
@@ -1105,7 +1108,7 @@ For example:
 
    -> extension SomeClass {
           @objc(doSomethingWithString:)
-          func doSomething(x: String) { }
+          func doSomething(_ x: String) { }
       }
    -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
@@ -1229,9 +1232,9 @@ The following function calls are equivalent:
     >> let x = 10
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x, f: {$0 == 13})
+    -> someFunction(x: x, f: {$0 == 13})
     << // r0 : Bool = false
-    -> someFunction(x) {$0 == 13}
+    -> someFunction(x: x) {$0 == 13}
     << // r1 : Bool = false
 
 If the trailing closure is the function's only argument,
@@ -1415,7 +1418,7 @@ For example:
     ---
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(x:y:)'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
@@ -1424,11 +1427,11 @@ For example:
     !! <REPL Input>:3:12: note: found this candidate
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
-    -> let b = instance.someMethod(_:y:)        // Unambiguous
-    << // b : (Int, y: Int) -> () = (Function)
+    -> let b = instance.someMethod(x:y:)        // Unambiguous
+    << // b : (x: Int, y: Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
     !!         ^
     !! <REPL Input>:4:12: note: found this candidate
@@ -1437,9 +1440,9 @@ For example:
     !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
-    -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
-    !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
     !!             ^
     !! <REPL Input>:4:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
@@ -1447,7 +1450,7 @@ For example:
     !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
-    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
     << // d : (Int, Bool) -> Void = (Function)
 
 If a period appears at the beginning of a line,

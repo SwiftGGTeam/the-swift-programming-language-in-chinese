@@ -64,27 +64,27 @@ to store and manage its current state:
 
    -> class Bank {
          static var coinsInBank = 10_000
-         static func vendCoins(numberOfCoinsRequested: Int) -> Int {
+         static func give(coins numberOfCoinsRequested: Int) -> Int {
             let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
             coinsInBank -= numberOfCoinsToVend
             return numberOfCoinsToVend
          }
-         static func receiveCoins(coins: Int) {
+         static func receive(coins: Int) {
             coinsInBank += coins
          }
       }
 
 ``Bank`` keeps track of the current number of coins it holds with its ``coinsInBank`` property.
-It also offers two methods --- ``vendCoins(_:)`` and ``receiveCoins(_:)`` ---
+It also offers two methods --- ``give(coins:)`` and ``receive(coins:)`` ---
 to handle the distribution and collection of coins.
 
-``vendCoins(_:)`` checks that there are enough coins in the bank before distributing them.
+The ``give(coins:)`` method checks that there are enough coins in the bank before distributing them.
 If there are not enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
 It returns an integer value to indicate the actual number of coins that were provided.
 
-The ``receiveCoins(_:)`` method simply adds the received number of coins back into the bank's coin store.
+The ``receive(coins:)`` method simply adds the received number of coins back into the bank's coin store.
 
 The ``Player`` class describes a player in the game.
 Each player has a certain number of coins stored in their purse at any time.
@@ -95,13 +95,13 @@ This is represented by the player's ``coinsInPurse`` property:
    -> class Player {
          var coinsInPurse: Int
          init(coins: Int) {
-            coinsInPurse = Bank.vendCoins(coins)
+            coinsInPurse = Bank.give(coins: coins)
          }
-         func winCoins(coins: Int) {
-            coinsInPurse += Bank.vendCoins(coins)
+         func win(coins: Int) {
+            coinsInPurse += Bank.give(coins: coins)
          }
          deinit {
-            Bank.receiveCoins(coinsInPurse)
+            Bank.receive(coins: coinsInPurse)
          }
       }
 
@@ -110,7 +110,7 @@ a specified number of coins from the bank during initialization,
 although a ``Player`` instance may receive fewer than that number
 if not enough coins are available.
 
-The ``Player`` class defines a ``winCoins(_:)`` method,
+The ``Player`` class defines a ``win(coins:)`` method,
 which retrieves a certain number of coins from the bank
 and adds them to the player's purse.
 The ``Player`` class also implements a deinitializer,
@@ -137,7 +137,7 @@ and whenever its ``winCoins(_:)`` method is called:
 
 .. testcode:: deinitializer
 
-   -> playerOne!.winCoins(2_000)
+   -> playerOne!.win(coins: 2_000)
    -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
    <- PlayerOne won 2000 coins & now has 2100 coins
    -> print("The bank now only has \(Bank.coinsInBank) coins left")

@@ -2129,7 +2129,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
+         func squareIsBlackAt(row: Int, column: Int) -> Bool {
             return boardColors[(row * 8) + column]
          }
       }
@@ -2148,7 +2148,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 
    -> let board = Chessboard()
    << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
-   -> print(board.squareIsBlackAtRow(0, column: 1))
+   -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(7, column: 7))
+   -> print(board.squareIsBlackAt(row: 7, column: 7))
    <- false

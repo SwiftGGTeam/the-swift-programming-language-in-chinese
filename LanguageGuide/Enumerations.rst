@@ -503,7 +503,7 @@ For example, here's a function that evaluates an arithmetic expression:
 
 .. testcode:: recursive-enum
 
-    -> func evaluate(expression: ArithmeticExpression) -> Int {
+    -> func evaluate(_ expression: ArithmeticExpression) -> Int {
            switch expression {
                case let .Number(value):
                    return value

@@ -434,16 +434,30 @@ from the function's return type.
 
 .. testcode:: guided-tour
 
-    -> func greet(name: String, day: String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(person: String, day: String) -> String {
+           return "Hello \(person), today is \(day)."
        }
-    -> greet("Bob", day: "Tuesday")
+    -> greet(person: "Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
 
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
+
+By default,
+functions use their parameter names
+as labels for their arguments.
+Write a custom argument label before the parameter name,
+or write ``_`` to use no argument label.
+
+.. testcode:: guided-tour
+
+    -> func greet(_ person: String, on day: String) -> String {
+           return "Hello \(person), today is \(day)."
+       }
+    -> greet("John", on: "Wednesday")
+    <$ : String = "Hello John, today is Wednesday."
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
@@ -474,7 +488,7 @@ either by name or by number.
 
            return (min, max, sum)
        }
-    -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
+    -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> print(statistics.sum)
     << 120
@@ -495,7 +509,7 @@ collecting them into an array.
       }
    -> sumOf()
    <$ : Int = 0
-   -> sumOf(42, 597, 12)
+   -> sumOf(numbers: 42, 597, 12)
    <$ : Int = 651
 
 .. admonition:: Experiment
@@ -555,7 +569,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, condition: lessThanTen)
+    -> hasAnyMatches(list: numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
@@ -1219,7 +1233,7 @@ handles the error.
 
 .. testcode:: guided-tour
 
-    -> func sendToPrinter(printerName: String) throws -> String {
+    -> func send(job: Int, toPrinter printerName: String) throws -> String {
            if printerName == "Never Has Toner" {
                throw PrinterError.NoToner
            }
@@ -1237,7 +1251,7 @@ unless you can give it a different name.
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Bi Sheng")
+           let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
            print(printerResponse)
        } catch {
            print(error)
@@ -1247,14 +1261,14 @@ unless you can give it a different name.
 .. admonition:: Experiment
 
    Change the printer name to ``"Never Has Toner"``,
-   so that the ``sendToPrinter(_:)`` function throws an error.
+   so that the ``send(job:toPrinter:)`` function throws an error.
 
 .. Assertion tests the change that the Experiment box instructs you to make.
 
 .. assertion:: guided-tour
 
     >> do {
-           let printerResponse = try sendToPrinter("Never Has Toner")
+           let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
            print(printerResponse)
        } catch {
            print(error)
@@ -1272,7 +1286,7 @@ after ``case`` in a switch.
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Gutenberg")
+           let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
            print(printerResponse)
        } catch PrinterError.OnFire {
            print("I'll just put this over here, with the rest of the fire.")
@@ -1299,9 +1313,9 @@ the value that the function returned.
 
 .. testcode:: guided-tour
 
-    -> let printerSuccess = try? sendToPrinter("Mergenthaler")
+    -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
     << // printerSuccess : String? = Optional("Job sent")
-    -> let printerFailure = try? sendToPrinter("Never Has Toner")
+    -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
@@ -1318,13 +1332,13 @@ even though they need to be executed at different times.
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
     << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
-    -> func fridgeContains(itemName: String) -> Bool {
+    -> func fridgeContains(_ food: String) -> Bool {
            fridgeIsOpen = true
            defer {
                fridgeIsOpen = false
            }
     ---
-           let result = fridgeContent.contains(itemName)
+           let result = fridgeContent.contains(food)
            return result
        }
     -> fridgeContains("banana")
@@ -1345,14 +1359,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> repeatItem("knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes:4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
@@ -1378,7 +1392,7 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element>(_ lhs: T, _ rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

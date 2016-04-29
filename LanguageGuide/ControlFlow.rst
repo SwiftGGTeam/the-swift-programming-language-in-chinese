@@ -1285,10 +1285,10 @@ the code inside the ``else`` clause is executed if the condition is not true.
            print("I hope the weather is nice in \(location).")
        }
     ---
-    -> greet(["name": "John"])
+    -> greet(person: ["name": "John"])
     <- Hello John!
     <- I hope the weather is nice near you.
-    -> greet(["name": "Jane", "location": "Cupertino"])
+    -> greet(person: ["name": "Jane", "location": "Cupertino"])
     <- Hello Jane!
     <- I hope the weather is nice in Cupertino.
 
