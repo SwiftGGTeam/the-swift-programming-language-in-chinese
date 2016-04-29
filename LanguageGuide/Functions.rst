@@ -450,7 +450,7 @@ If a default value is defined, you can omit that parameter when calling the func
 
    -> func someFunction(parameterWithDefault: Int = 12) {
          // In the function body, if no arguments are passed to the function
-         // call, value of parameterWithDefault is 12.
+         // call, the value of parameterWithDefault is 12.
       }
    -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction() // parameterWithDefault is 12
