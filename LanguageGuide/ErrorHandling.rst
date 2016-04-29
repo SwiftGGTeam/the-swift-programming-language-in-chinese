@@ -216,7 +216,7 @@ or has a cost that exceeds the current deposited amount:
               newItem.count -= 1
               inventory[name] = newItem
 
-              print("Dispensing \(snack)")
+              print("Dispensing \(name)")
           }
       }
 
