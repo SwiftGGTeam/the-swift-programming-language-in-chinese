@@ -196,9 +196,6 @@ or has a cost that exceeds the current deposited amount:
               "Pretzels": Item(price: 7, count: 11)
           ]
    ->     var coinsDeposited = 0
-   ->     func dispense(snack: String) {
-              print("Dispensing \(snack)")
-          }
    ---
    ->     func vend(itemNamed name: String) throws {
               guard let item = inventory[name] else {
@@ -219,7 +216,7 @@ or has a cost that exceeds the current deposited amount:
               newItem.count -= 1
               inventory[name] = newItem
 
-              dispense(snack: name)
+              print("Dispensing \(snack)")
           }
       }
 
