@@ -394,7 +394,7 @@ to indicate the type that will be stored in the mapped output array.
 The closure expression builds a string called ``output`` each time it is called.
 It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
 and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
-The closure can be used to create a string representation of any integer number greater than zero.
+The closure can be used to create a string representation of any integer greater than zero.
 
 .. note::
 
