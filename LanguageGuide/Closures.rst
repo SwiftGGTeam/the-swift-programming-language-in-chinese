@@ -284,8 +284,11 @@ Trailing Closures
 If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
 it can be useful to write it as a :newTerm:`trailing closure` instead.
-A trailing closure is a closure expression
-that is written outside of (and *after*) the parentheses of the function call it supports:
+A trailing closure is written after the function call's parentheses,
+even though it is still an argument to the function.
+When you use the trailing closure syntax,
+you don't write the argument label for the closure
+as part of the function call.
 
 .. testcode:: closureSyntax
 
@@ -293,13 +296,13 @@ that is written outside of (and *after*) the parentheses of the function call it
          // function body goes here
       }
    ---
-   -> // here's how you call this function without using a trailing closure:
+   -> // Here's how you call this function without using a trailing closure:
    ---
    -> someFunctionThatTakesAClosure(closure: {
          // closure's body goes here
       })
    ---
-   -> // here's how you call this function with a trailing closure instead:
+   -> // Here's how you call this function with a trailing closure instead:
    ---
    -> someFunctionThatTakesAClosure() {
          // trailing closure's body goes here
