@@ -330,15 +330,15 @@ It also tracks the current level for an individual player.
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
-         static func unlock(level: Int) {
+         static func unlock(_ level: Int) {
             if level > highestUnlockedLevel { highestUnlockedLevel = level }
          }
-         static func isUnlocked(level: Int) -> Bool {
+         static func isUnlocked(_ level: Int) -> Bool {
             return level <= highestUnlockedLevel
          }
          var currentLevel = 1
-         mutating func advanceTo(level: Int) -> Bool {
-            if LevelTracker.isUnlocked(level: level) {
+         mutating func advance(to level: Int) -> Bool {
+            if LevelTracker.isUnlocked(level) {
                currentLevel = level
                return true
             } else {
@@ -352,9 +352,9 @@ This value is stored in a type property called ``highestUnlockedLevel``.
 
 ``LevelTracker`` also defines two type functions to work with
 the ``highestUnlockedLevel`` property.
-The first is a type function called ``unlock(level:)``,
+The first is a type function called ``unlock(_:)``,
 which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
-The second is a convenience type function called ``isUnlocked(level:)``,
+The second is a convenience type function called ``isUnlocked(_:)``,
 which returns ``true`` if a particular level number is already unlocked.
 (Note that these type methods can access the ``highestUnlockedLevel`` type property
 without your needing to write it as ``LevelTracker.highestUnlockedLevel``.)
@@ -365,10 +365,10 @@ It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
-``LevelTracker`` defines an instance method called ``advanceTo(level:)``.
+``LevelTracker`` defines an instance method called ``advance(to:)``.
 Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
-The ``advanceTo(level:)`` method returns a Boolean value to indicate
+The ``advance(to:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
@@ -380,8 +380,8 @@ to track and update the progress of an individual player:
          var tracker = LevelTracker()
          let playerName: String
          func complete(level: Int) {
-            LevelTracker.unlock(level: level + 1)
-            tracker.advanceTo(level: level + 1)
+            LevelTracker.unlock(level + 1)
+            tracker.advance(to: level + 1)
          }
          init(name: String) {
             playerName = name
@@ -394,9 +394,9 @@ It also provides a method called ``complete(level:)``,
 which is called whenever a player completes a particular level.
 This method unlocks the next level for all players
 and updates the player's progress to move them to the next level.
-(The Boolean return value of ``advanceTo(level:)`` is ignored,
+(The Boolean return value of ``advance(to:)`` is ignored,
 because the level is known to have been unlocked
-by the call to ``LevelTracker.unlock(level:)`` on the previous line.)
+by the call to ``LevelTracker.unlock(_:)`` on the previous line.)
 
 You can create an instance of the ``Player`` class for a new player,
 and see what happens when the player completes level one:
@@ -416,7 +416,7 @@ the attempt to set the player's current level fails:
 .. testcode:: typeMethods
 
    -> player = Player(name: "Beto")
-   -> if player.tracker.advanceTo(level: 6) {
+   -> if player.tracker.advance(to: 6) {
          print("player is now on level 6")
       } else {
          print("level 6 has not yet been unlocked")

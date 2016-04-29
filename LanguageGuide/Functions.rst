@@ -356,7 +356,7 @@ returns an actual tuple value or ``nil``:
 
 .. _Functions_FunctionParameterNames:
 
-Function Argument Labels And Parameter Names
+Function Argument Labels and Parameter Names
 --------------------------------------------
 
 Each function parameter has both an :newTerm:`argument label`
@@ -450,7 +450,7 @@ If a default value is defined, you can omit that parameter when calling the func
 
    -> func someFunction(parameterWithDefault: Int = 12) {
          // In the function body, if no arguments are passed to the function
-         // call, value of parameterWithDefault is 12.
+         // call, the value of parameterWithDefault is 12.
       }
    -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction() // parameterWithDefault is 12
@@ -746,9 +746,9 @@ Both functions have a type of ``(Int) -> Int``:
          return input - 1
       }
 
-Here's a function called ``chooseStepFunction(_:)``,
+Here's a function called ``chooseStepFunction(backward:)``,
 whose return type is ``(Int) -> Int``.
-The ``chooseStepFunction(_:)`` function returns the ``stepForward(_:)`` function
+The ``chooseStepFunction(backward:)`` function returns the ``stepForward(_:)`` function
 or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backward``:
 
 .. testcode:: functionTypes

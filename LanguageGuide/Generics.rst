@@ -494,16 +494,16 @@ that requires ``U`` to conform to the protocol ``SomeProtocol``.
 Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here's a non-generic function called ``findIndex(ofString:inArray:)``,
+Here's a non-generic function called ``findIndex(ofString:in:)``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
-The ``findIndex(ofString:inArray:)`` function returns an optional ``Int`` value,
+The ``findIndex(ofString:in:)`` function returns an optional ``Int`` value,
 which will be the index of the first matching string in the array if it is found,
 or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
-   -> func findIndex(ofString valueToFind: String, inArray array: [String]) -> Int? {
+   -> func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
          for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
@@ -512,13 +512,13 @@ or ``nil`` if the string cannot be found:
          return nil
       }
 
-The ``findIndex(ofString:inArray:)`` function can be used to find a string value in an array of strings:
+The ``findIndex(ofString:in:)`` function can be used to find a string value in an array of strings:
 
 .. testcode:: typeConstraints
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   -> if let foundIndex = findIndex(ofString: "llama", inArray: strings) {
+   -> if let foundIndex = findIndex(ofString: "llama", in: strings) {
          print("The index of llama is \(foundIndex)")
       }
    <- The index of llama is 2
@@ -527,8 +527,8 @@ The principle of finding the index of a value in an array isn't useful only for 
 You can write the same functionality as a generic function
 by replacing any mention of strings with values of some type ``T`` instead.
 
-Here's how you might expect a generic version of ``findIndex(ofString:inArray:)``,
-called ``findIndex(ofValue:inArray:)``, to be written.
+Here's how you might expect a generic version of ``findIndex(ofString:in:)``,
+called ``findIndex(of:in:)``, to be written.
 Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
 not an optional value from the array.
@@ -537,7 +537,7 @@ for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
-   -> func findIndex<T>(ofValue valueToFind: T, inArray array:[T]) -> Int? {
+   -> func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
          for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
@@ -548,7 +548,7 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (Mirror.DisplayStyle, Mirror.DisplayStyle), (_MirrorDisposition, _MirrorDisposition), (Bool, Bool), (Any.Type?, Any.Type?), (Character, Character), (OpaquePointer, OpaquePointer), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeDecodingResult, UnicodeDecodingResult), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Pointee>, AutoreleasingUnsafeMutablePointer<Pointee>), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Pointee>, UnsafeMutablePointer<Pointee>), (UnsafePointer<Pointee>, UnsafePointer<Pointee>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F))
+   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (Mirror.DisplayStyle, Mirror.DisplayStyle), (_MirrorDisposition, _MirrorDisposition), (Bool, Bool), (Any.Type?, Any.Type?), (Character, Character), (OpaquePointer, OpaquePointer), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeDecodingResult, UnicodeDecodingResult), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (AnyIndex, AnyIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Pointee>, AutoreleasingUnsafeMutablePointer<Pointee>), (ClosedRangeIndex<B>, ClosedRangeIndex<B>), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Bound>, Range<Bound>), (CountableRange<Bound>, CountableRange<Bound>), (ClosedRange<Bound>, ClosedRange<Bound>), (CountableClosedRange<Bound>, CountableClosedRange<Bound>), (ReversedIndex<Base>, ReversedIndex<Base>), (ReversedRandomAccessIndex<Base>, ReversedRandomAccessIndex<Base>), (UnsafeMutablePointer<Pointee>, UnsafeMutablePointer<Pointee>), (UnsafePointer<Pointee>, UnsafePointer<Pointee>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F))
    !! if value == valueToFind {
    !!          ^
 
@@ -575,14 +575,14 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findIndex(ofValue:inArray:)`` function,
+Any type that is ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
 because it is guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findIndex<T: Equatable>(ofValue valueToFind: T, inArray array:[T]) -> Int? {
+   -> func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
          for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
@@ -591,19 +591,19 @@ as part of the type parameter's definition when you define the function:
          return nil
       }
 
-The single type parameter for ``findIndex(ofValue:inArray)`` is written as ``T: Equatable``,
+The single type parameter for ``findIndex(of:in:)`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
-The ``findIndex(ofValue:inArray:)`` function now compiles successfully
+The ``findIndex(of:in:)`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> let doubleIndex = findIndex(ofValue: 9.3, inArray: [3.14159, 0.1, 0.25])
+   -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
    << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findIndex(ofValue: "Andrea", inArray: ["Mike", "Malcolm", "Andrea"])
+   -> let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
    << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2

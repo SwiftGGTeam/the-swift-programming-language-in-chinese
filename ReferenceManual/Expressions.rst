@@ -1098,11 +1098,11 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
            @objc(doSomethingWithInt:)
-           func doSomething(x: Int) { }
+           func doSomething(_ x: Int) { }
       }
    -> let x = SomeClass()
    <~ // x : SomeClass = <REPL.SomeClass: 0x
-   -> let selector = #selector(x.doSomething(x:))
+   -> let selector = #selector(x.doSomething(_:))
    << // selector : Selector = doSomethingWithInt:
 
 The *method name* can contain parentheses for grouping,
@@ -1114,9 +1114,9 @@ For example:
 
    -> extension SomeClass {
           @objc(doSomethingWithString:)
-          func doSomething(x: String) { }
+          func doSomething(_ x: String) { }
       }
-   -> let anotherSelector = #selector(x.doSomething(x:) as (String) -> Void)
+   -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
 
 Because the selector is created at compile time, not at runtime,

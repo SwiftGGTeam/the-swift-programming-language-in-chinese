@@ -284,7 +284,7 @@ The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``repetitions(task:)`` method on any integer number
+you can call the ``repetitions(task:)`` method on any integer
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
@@ -391,7 +391,7 @@ as if the number had been padded with zeros to the left:
 Nested Types
 ------------
 
-Extensions can add new nested types to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures, and enumerations:
 
 .. testcode:: extensionsNestedTypes
 
@@ -425,7 +425,7 @@ The nested enumeration can now be used with any ``Int`` value:
 
 .. testcode:: extensionsNestedTypes
 
-   -> func printIntegerKinds(numbers: [Int]) {
+   -> func printIntegerKinds(_ numbers: [Int]) {
          for number in numbers {
             switch number.kind {
                case .Negative:
@@ -438,10 +438,13 @@ The nested enumeration can now be used with any ``Int`` value:
          }
          print("")
       }
-   -> printIntegerKinds(numbers: [3, 19, -27, 0, -6, 0, 7])
-   <- + + - 0 - 0 +
+   -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
+   << + + - 0 - 0 +
+   // Prints "+ + - 0 - 0 + "
 
-This function, ``printIntegerKinds(numbers:)``,
+.. Workaround for rdar://26016325
+
+This function, ``printIntegerKinds(_:)``,
 takes an input array of ``Int`` values and iterates over those values in turn.
 For each integer in the array,
 the function considers the ``kind`` computed property for that integer,
