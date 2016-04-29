@@ -578,15 +578,9 @@ indexes used to access individual characters in a string.
       }
    >> print("")
    << G u t e n   T a g ! 
-   // prints "G u t e n   T a g ! "
+   // Prints "G u t e n   T a g ! "
 
-.. Guten Tag! above has a space after it,
-   but the test harness is losing the whitespace
-   somewhere in [Tool J] Hands or Sphinx.
-   The test still passes, even though the space at the end of the line
-   is present in the REPL output but lost in the expectation,
-   but the manual comment line ensures that the space is present
-   in the [Tool S] XML output.
+.. Workaround for rdar://26016325
 
 .. _StringsAndCharacters_InsertingAndRemoving:
 

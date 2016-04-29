@@ -439,7 +439,10 @@ The nested enumeration can now be used with any ``Int`` value:
          print("")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-   <- + + - 0 - 0 +
+   << + + - 0 - 0 +
+   // Prints "+ + - 0 - 0 + "
+
+.. Workaround for rdar://26016325
 
 This function, ``printIntegerKinds(_:)``,
 takes an input array of ``Int`` values and iterates over those values in turn.
