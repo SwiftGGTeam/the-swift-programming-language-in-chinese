@@ -425,7 +425,7 @@ The nested enumeration can now be used with any ``Int`` value:
 
 .. testcode:: extensionsNestedTypes
 
-   -> func printIntegerKinds(numbers: [Int]) {
+   -> func printIntegerKinds(_ numbers: [Int]) {
          for number in numbers {
             switch number.kind {
                case .Negative:
@@ -438,10 +438,10 @@ The nested enumeration can now be used with any ``Int`` value:
          }
          print("")
       }
-   -> printIntegerKinds(numbers: [3, 19, -27, 0, -6, 0, 7])
+   -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
    <- + + - 0 - 0 +
 
-This function, ``printIntegerKinds(numbers:)``,
+This function, ``printIntegerKinds(_:)``,
 takes an input array of ``Int`` values and iterates over those values in turn.
 For each integer in the array,
 the function considers the ``kind`` computed property for that integer,
