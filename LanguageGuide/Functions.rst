@@ -356,7 +356,7 @@ returns an actual tuple value or ``nil``:
 
 .. _Functions_FunctionParameterNames:
 
-Function Argument Labels And Parameter Names
+Function Argument Labels and Parameter Names
 --------------------------------------------
 
 Each function parameter has both an :newTerm:`argument label`
