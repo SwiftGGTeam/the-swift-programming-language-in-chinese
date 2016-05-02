@@ -522,14 +522,11 @@ As a result,
 the ``endIndex`` property isn't a valid argument to a string's subscript.
 If a ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
-A ``String.Index`` value can access
-its immediately preceding index by calling the ``predecessor()`` method,
-and its immediately succeeding index by calling the ``successor()`` method.
-Any index in a ``String`` can be accessed from any other index
-by chaining these methods together,
-or by using the ``advanced(by:)`` method.
-Attempting to access an index outside of a string's range
-will trigger a runtime error.
+You access the indices before and after a given index
+using the ``index(before:)`` and ``index(after:)`` methods of ``String``.
+Instead of calling these methods multiple times on the same index,
+use the ``index(_:offsetBy:)`` method,
+which is more efficient.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
@@ -541,25 +538,26 @@ the ``Character`` at a particular ``String`` index.
    -> greeting[greeting.startIndex]
    <$ : Character = "G"
    // G
-   -> greeting[greeting.endIndex.predecessor()]
+   -> greeting[greeting.index(before: greeting.endIndex)]
    <$ : Character = "!"
    // !
-   -> greeting[greeting.startIndex.successor()]
+   -> greeting[greeting.index(after: greeting.startIndex)]
    <$ : Character = "u"
    // u
-   -> let index = greeting.startIndex.advanced(by: 7)
+   -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
    <~ // index : Index = Swift.String.CharacterView.Index
    -> greeting[index]
    <$ : Character = "a"
    // a
 
-Attempting to access a ``Character`` at an index outside of a string's range
+Attempting to access an index outside of a string's range
+or a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
 .. code-block:: swift
 
    greeting[greeting.endIndex] // error
-   greeting.endIndex.successor() // error
+   greeting.index(after: endIndex) // error
 
 .. assertion:: emptyStringIndexes
 
@@ -603,7 +601,7 @@ use the ``insert(contentsOf:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.insert(contentsOf:" there".characters, at: welcome.endIndex.predecessor())
+   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -612,7 +610,7 @@ use the ``remove(at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.remove(at: welcome.endIndex.predecessor())
+   -> welcome.remove(at: welcome.index(before: welcome.endIndex))
    << // r0 : Character = "!"
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there"
@@ -622,7 +620,7 @@ use the ``removeSubrange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> let range = welcome.endIndex.advanced(by: -6)..<welcome.endIndex
+   -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
    <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
    -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
