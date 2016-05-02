@@ -741,6 +741,10 @@ but do not have the same linguistic meaning:
 
    String and character comparisons in Swift are not locale-sensitive.
 
+.. TODO: Add a cross reference to NSString.localizedCompare and
+   NSString.localizedCaseInsensitiveCompare.  See also
+   https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
+
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
 Prefix and Suffix Equality
