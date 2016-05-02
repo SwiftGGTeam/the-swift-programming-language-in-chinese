@@ -559,7 +559,7 @@ will trigger a runtime error.
    greeting[greeting.endIndex] // error
    greeting.index(after: endIndex) // error
 
-.. assertion:: emptyStringIndexes
+.. assertion:: emptyStringIndices
 
    -> let emptyString = ""
    << // emptyString : String = ""
@@ -567,7 +567,7 @@ will trigger a runtime error.
    << // r0 : Bool = true
 
 Use the ``indices`` property of the ``characters`` property to create a ``Range`` of all of the
-indexes used to access individual characters in a string.
+indices used to access individual characters in a string.
 
 .. testcode:: stringIndex
 
