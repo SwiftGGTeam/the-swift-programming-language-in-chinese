@@ -943,7 +943,10 @@ one for each 16-bit code unit in the string's UTF-16 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 55357 56374
+   << 68 111 103 8252 55357 56374
+   // Prints "68 111 103 8252 55357 56374 "
+
+.. Workaround for rdar://26016325
 
 Again, the first three ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -984,7 +987,10 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
          print("\(scalar.value) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 128054
+   << 68 111 103 8252 128054
+   // Prints "68 111 103 8252 128054 "
+
+.. Workaround for rdar://26016325
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
 (``68``, ``111``, ``103``)
