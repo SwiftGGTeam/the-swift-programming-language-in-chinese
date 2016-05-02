@@ -827,14 +827,6 @@ As with other examples of type safety in Swift,
 this approach avoids accidental errors
 and ensures that the intention of a particular section of code is always clear.
 
-.. TODO: add a note to this effect once we have some documentation
-   that actually describes how Boolean works:
-   Strictly speaking, an ``if`` statement's condition expression
-   can be of any type that conforms to the ``Boolean`` protocol.
-   ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as optionals, described below.
-   The ``Boolean`` protocol is described in <link>.
-
 .. _TheBasics_Tuples:
 
 Tuples
