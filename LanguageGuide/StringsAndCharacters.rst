@@ -733,9 +733,9 @@ but do not have the same linguistic meaning:
    << // cyrillicCapitalLetterA : Character = "А"
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent")
+         print("These two characters are not equivalent.")
       }
-   <- These two characters are not equivalent
+   <- These two characters are not equivalent.
 
 .. note::
 
@@ -755,32 +755,32 @@ both of which take a single argument of type ``String`` and return a Boolean val
    -> let ecole = "\u{E9}cole"
    << // ecole : String = "école"
    -> if ecole.hasPrefix("\u{E9}") {
-         print("has U+00E9 prefix, as expected")
+         print("Has U+00E9 prefix, as expected.")
       } else {
-         print("does not have U+00E9 prefix, which is unexpected")
+         print("Does not have U+00E9 prefix, which is unexpected.")
       }
    <- has U+00E9 prefix, as expected
    -> if ecole.hasPrefix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 prefix, as expected")
+         print("Has U+0065 U+0301 prefix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 prefix, which is unexpected")
+         print("Does not have U+0065 U+0301 prefix, which is unexpected.")
       }
-   <- has U+0065 U+0301 prefix, as expected
+   <- Has U+0065 U+0301 prefix, as expected.
 
 .. assertion:: suffixComparisonUsesCharactersNotScalars
 
    -> let cafe = "caf\u{E9}"
    << // cafe : String = "café"
    -> if cafe.hasSuffix("\u{E9}") {
-         print("has U+00E9 suffix, as expected")
+         print("Has U+00E9 suffix, as expected.")
       } else {
-         print("does not have U+00E9 suffix, which is unexpected")
+         print("Does not have U+00E9 suffix, which is unexpected.")
       }
    <- has U+00E9 suffix, as expected
    -> if cafe.hasSuffix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 suffix, as expected")
+         print("Has U+0065 U+0301 suffix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 suffix, which is unexpected")
+         print("Does not have U+0065 U+0301 suffix, which is unexpected.")
       }
    <- has U+0065 U+0301 suffix, as expected
 
