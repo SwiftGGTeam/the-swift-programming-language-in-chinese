@@ -965,7 +965,7 @@ you don't have to provide one.
     -> let hearts = Suit.hearts
     << // hearts : Suit = REPL.Suit.hearts
     -> let heartsDescription = hearts.simpleDescription()
-    << // heartsDescription : String = "Hearts"
+    << // heartsDescription : String = "hearts"
 
 .. admonition:: Experiment
 
@@ -1070,9 +1070,9 @@ or it responds with some error information.
            case failure(String)
        }
     ---
-    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
+    -> let success = ServerResponse.result("6:00 am", "8:09 pm")
     << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
-    -> let failure = ServerResponse.Failure("Out of cheese.")
+    -> let failure = ServerResponse.failure("Out of cheese.")
     << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
     ---
     -> switch success {
