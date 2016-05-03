@@ -36,17 +36,6 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
-``autoclosure``
-    This attribute is used to delay the evaluation of an expression
-    by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a parameter declaration for
-    a function or method type that takes no arguments
-    and that returns the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
-    For an example of how to use the ``autoclosure`` attribute,
-    see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
-
 ``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
     relative to certain platforms and operating system versions.
@@ -243,15 +232,6 @@ the ``noreturn`` attribute to a function or method *type*.
     provide a link to the relevant section.
     Possibly link to Anna and Jack's guide too.
 
-``noescape``
-    Apply this attribute to a function or method declaration
-    to indicate that a parameter will not be stored for later execution,
-    such that it is guaranteed not to outlive the lifetime of the call.
-    Function type parameters with the ``noescape`` declaration attribute
-    do not require explicit use of ``self.`` for properties or methods.
-    For an example of how to use the ``noescape`` attribute,
-    see :ref:`Closures_Noescape`.
-
 ``nonobjc``
     Apply this attribute to a
     method, property, subscript, or initializer declaration
@@ -417,6 +397,17 @@ You can apply type attributes to types only.
 However, you can also apply the ``noreturn`` attribute
 to a function or method *declaration*.
 
+``autoclosure``
+    This attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    Apply this attribute to a parameter's type in a method or function declaration,
+    for a parameter of a function type that takes no arguments
+    and that returns a value of the type of the expression.
+    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
+    except when passed the optional attribute argument ``escaping``.
+    For an example of how to use the ``autoclosure`` attribute,
+    see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
+
 ``convention``
    Apply this attribute to the type of a function
    to indicate its calling conventions.
@@ -441,6 +432,15 @@ to a function or method *declaration*.
    However, only nongeneric global functions, and
    local functions or closures that don't capture any local variables,
    can be used as a function with C function calling conventions.
+
+``noescape``
+    Apply this attribute to a parameter's type in a method or function declaration
+    to indicate that the parameter's value will not be stored for later execution.
+    This means that the value is guaranteed not to outlive the lifetime of the call.
+    Function type parameters with the ``noescape`` declaration attribute
+    do not require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``noescape`` attribute,
+    see :ref:`Closures_Noescape`.
 
 ``noreturn``
     Apply this attribute to the type of a function or method

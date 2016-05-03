@@ -612,7 +612,7 @@ A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
 When you declare a function that takes a closure as one of its parameters,
-you can write ``@noescape`` before the parameter name
+you can write ``@noescape`` before the parameter's type
 to indicate that the closure is not allowed to escape.
 Marking a closure with ``@noescape``
 lets the compiler make more aggressive optimizations
@@ -620,7 +620,7 @@ because it knows more information about the closure's lifespan.
 
 .. testcode:: noescape-closure-as-argument
 
-    -> func someFunctionWithNonescapingClosure(@noescape closure: () -> Void) {
+    -> func someFunctionWithNonescapingClosure(closure: @noescape () -> Void) {
            closure()
        }
 
@@ -766,11 +766,11 @@ takes an explicit closure that returns a customer's name.
 The version of ``serve(customer:)`` below
 performs the same operation but, instead of taking an explicit closure,
 it takes an autoclosure
-by marking its parameter with the ``@autoclosure`` attribute.
+by marking its parameter's type with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
 The argument is automatically converted to a closure,
-because the ``customerProvider`` parameter is marked
+because the ``customerProvider`` parameter's type is marked
 with the ``@autoclosure`` attribute.
 
 .. testcode:: autoclosures-function-with-autoclosure
@@ -779,7 +779,7 @@ with the ``@autoclosure`` attribute.
     << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
-    -> func serve(@autoclosure customer customerProvider: () -> String) {
+    -> func serve(customer customerProvider: @autoclosure () -> String) {
            print("Now serving \(customerProvider())!")
        }
     -> serve(customer: customersInLine.remove(at: 0))
@@ -804,7 +804,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(@autoclosure(escaping) _ customerProvider: () -> String) {
+    -> func collectCustomerProviders(_ customerProvider: @autoclosure(escaping) () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))
