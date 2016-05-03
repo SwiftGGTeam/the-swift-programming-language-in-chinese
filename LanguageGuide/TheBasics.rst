@@ -295,8 +295,8 @@ and end with an asterisk followed by a forward-slash (``*/``):
 .. testcode:: comments
    :compile: true
 
-   -> /* This is also a comment,
-      but written over multiple lines. */
+   -> /* This is also a comment
+      but is written over multiple lines. */
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
