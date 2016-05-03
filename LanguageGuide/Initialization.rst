@@ -788,7 +788,7 @@ As mentioned above,
 the memory for an object is only considered fully initialized
 once the initial state of all of its stored properties is known.
 In order for this rule to be satisfied, a designated initializer must make sure that
-all its own properties are initialized before it hands off up the chain.
+all of its own properties are initialized before it hands off up the chain.
 
 **Safety check 2**
   A designated initializer must delegate up to a superclass initializer

@@ -97,7 +97,7 @@ The following statement is not valid:
 .. testcode:: assignmentOperatorInvalid
 
    -> if x = y {
-         // this is not valid, because x = y does not return a value
+         // This is not valid, because x = y does not return a value.
       }
    !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
    !! if x = y {
@@ -357,7 +357,7 @@ such as the ``if`` statement:
          print("I'm sorry \(name), but I don't recognize you")
       }
    << hello, world
-   // prints "hello, world", because name is indeed equal to "world"
+   // Prints "hello, world", because name is indeed equal to "world".
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 

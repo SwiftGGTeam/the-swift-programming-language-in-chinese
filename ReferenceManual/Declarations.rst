@@ -855,7 +855,7 @@ you can overload a function based on whether a function *parameter* can throw an
 A throwing method can't override a nonthrowing method,
 and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
 That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing.
+and a nonthrowing method can satisfy a protocol requirement for a throwing method.
 
 .. _Declarations_RethrowingFunctionsAndMethods:
 
@@ -2234,8 +2234,6 @@ such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
 
-.. TR: Do all prefix operators default to the same precedence level? If so, what is it?
-
 The following form declares a new postfix operator:
 
 .. syntax-outline::
@@ -2304,11 +2302,8 @@ that introduces the declaration.
     or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
     to indicate that a class member can't be overridden in any subclass.
-
-.. TODO: Dave may or may not include an example of how to use the 'final' attribute
-    in the guide. If he does, include the following sentence:
     For an example of how to use the ``final`` attribute,
-    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+    see :ref:`_Inheritance_PreventingOverrides`.
 
 ``lazy``
     Apply this modifier to a stored variable property of a class or structure

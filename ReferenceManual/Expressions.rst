@@ -1333,9 +1333,9 @@ In all other cases, you must use an initializer expression.
     ---
     >> let someValue = s1
     << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s4 = someValue.dynamicType(data: 5)       // Error
-    << // s3 : SomeType = REPL.SomeType(data: 7)
     -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    << // s3 : SomeType = REPL.SomeType(data: 7)
+    -> let s4 = someValue.dynamicType(data: 5)       // Error
     !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
     !! let s4 = someValue.dynamicType(data: 5)       // Error
     !!                               ^

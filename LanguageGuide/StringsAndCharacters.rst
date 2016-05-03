@@ -727,13 +727,17 @@ but do not have the same linguistic meaning:
    << // cyrillicCapitalLetterA : Character = "А"
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent")
+         print("These two characters are not equivalent.")
       }
-   <- These two characters are not equivalent
+   <- These two characters are not equivalent.
 
 .. note::
 
    String and character comparisons in Swift are not locale-sensitive.
+
+.. TODO: Add a cross reference to NSString.localizedCompare and
+   NSString.localizedCaseInsensitiveCompare.  See also
+   https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
 
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
@@ -749,32 +753,32 @@ both of which take a single argument of type ``String`` and return a Boolean val
    -> let ecole = "\u{E9}cole"
    << // ecole : String = "école"
    -> if ecole.hasPrefix("\u{E9}") {
-         print("has U+00E9 prefix, as expected")
+         print("Has U+00E9 prefix, as expected.")
       } else {
-         print("does not have U+00E9 prefix, which is unexpected")
+         print("Does not have U+00E9 prefix, which is unexpected.")
       }
    <- has U+00E9 prefix, as expected
    -> if ecole.hasPrefix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 prefix, as expected")
+         print("Has U+0065 U+0301 prefix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 prefix, which is unexpected")
+         print("Does not have U+0065 U+0301 prefix, which is unexpected.")
       }
-   <- has U+0065 U+0301 prefix, as expected
+   <- Has U+0065 U+0301 prefix, as expected.
 
 .. assertion:: suffixComparisonUsesCharactersNotScalars
 
    -> let cafe = "caf\u{E9}"
    << // cafe : String = "café"
    -> if cafe.hasSuffix("\u{E9}") {
-         print("has U+00E9 suffix, as expected")
+         print("Has U+00E9 suffix, as expected.")
       } else {
-         print("does not have U+00E9 suffix, which is unexpected")
+         print("Does not have U+00E9 suffix, which is unexpected.")
       }
    <- has U+00E9 suffix, as expected
    -> if cafe.hasSuffix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 suffix, as expected")
+         print("Has U+0065 U+0301 suffix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 suffix, which is unexpected")
+         print("Does not have U+0065 U+0301 suffix, which is unexpected.")
       }
    <- has U+0065 U+0301 suffix, as expected
 
@@ -933,7 +937,10 @@ one for each 16-bit code unit in the string's UTF-16 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 55357 56374
+   << 68 111 103 8252 55357 56374
+   // Prints "68 111 103 8252 55357 56374 "
+
+.. Workaround for rdar://26016325
 
 Again, the first three ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -974,7 +981,10 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
          print("\(scalar.value) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 128054
+   << 68 111 103 8252 128054
+   // Prints "68 111 103 8252 128054 "
+
+.. Workaround for rdar://26016325
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
 (``68``, ``111``, ``103``)
