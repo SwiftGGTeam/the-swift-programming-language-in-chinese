@@ -585,8 +585,10 @@ indices used to access individual characters in a string.
 Inserting and Removing
 ~~~~~~~~~~~~~~~~~~~~~~
 
-To insert a character into a string at a specified index,
-use the ``insert(_:at:)`` method.
+To insert a single character into a string at a specified index,
+use the ``insert(_:at:)`` method,
+and to insert the contents of another string at a specified index,
+use the ``insert(contentsOf:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
@@ -595,18 +597,15 @@ use the ``insert(_:at:)`` method.
    -> welcome.insert("!", at: welcome.endIndex)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
-
-To insert the contents of another string at a specified index,
-use the ``insert(contentsOf:at:)`` method.
-
-.. testcode:: stringInsertionAndRemoval
-
+   ---
    -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
-To remove a character from a string at a specified index,
-use the ``remove(at:)`` method.
+To remove a single character from a string at a specified index,
+use the ``remove(at:)`` method,
+and to remove a substring at a specified range,
+use the ``removeSubrange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
@@ -614,12 +613,7 @@ use the ``remove(at:)`` method.
    << // r0 : Character = "!"
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there"
-
-To remove a substring at a specified range,
-use the ``removeSubrange(_:)`` method:
-
-.. testcode:: stringInsertionAndRemoval
-
+   ---
    -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
    <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
    -> welcome.removeSubrange(range)
