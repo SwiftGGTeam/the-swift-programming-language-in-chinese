@@ -870,7 +870,7 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. TODO: Self as the dynamic type of the current type that is implementing the protocols
    protocol Comparable {
-      func <(Self, Self) -> Bool
+      func < (Self, Self) -> Bool
    }
 
 .. TODO: generic operators
