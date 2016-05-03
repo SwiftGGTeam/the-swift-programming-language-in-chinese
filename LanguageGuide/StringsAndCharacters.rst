@@ -524,9 +524,9 @@ If a ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
 You access the indices before and after a given index
 using the ``index(before:)`` and ``index(after:)`` methods of ``String``.
-Instead of calling these methods multiple times on the same index,
-use the ``index(_:offsetBy:)`` method,
-which is more efficient.
+To access an index farther away from the given index,
+you can use the ``index(_:offsetBy:)`` method
+instead of calling one these methods multiple times.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
