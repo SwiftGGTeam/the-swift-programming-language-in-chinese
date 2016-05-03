@@ -773,11 +773,7 @@ by adding the vector to itself with the addition assignment operator defined ear
          vector += vector
          return vector
       }
-
-This implementation of ``+++`` adds the vector to itself:
-
-.. testcode:: customOperators
-
+   ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
    << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
