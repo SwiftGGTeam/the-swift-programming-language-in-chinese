@@ -13,6 +13,9 @@ about the relationships between parts of your code
 in order to manage memory for you.
 This chapter describes those situations
 and shows how you enable ARC to manage all of your app's memory.
+Using ARC in Swift is very similar to the approach described in
+`Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
+for using ARC with Objective-C.
 
 .. note::
 
