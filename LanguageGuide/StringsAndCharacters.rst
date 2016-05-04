@@ -580,6 +580,14 @@ indices used to access individual characters in a string.
 
 .. Workaround for rdar://26016325
 
+.. note::
+
+   You can use the ``startIndex`` and ``endIndex`` properties
+   and the ``index(before:)``, ``index(after:)``, and ``index(_:offsetBy:)`` methods
+   on any type that conforms to the ``Indexable`` protocol.
+   This includes ``String``, as shown here,
+   as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
+
 .. _StringsAndCharacters_InsertingAndRemoving:
 
 Inserting and Removing
@@ -621,6 +629,14 @@ use the ``removeSubrange(_:)`` method:
    </ welcome now equals "hello"
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
+
+.. note::
+
+   You can use the the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
+   ``remove(at:)``, and ``removeSubrange(_:)`` methods
+   on any type that conforms to the ``RangeReplaceableIndexable`` protocol.
+   This includes ``String``, as shown here,
+   as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
 .. _StringsAndCharacters_ComparingStrings:
 
