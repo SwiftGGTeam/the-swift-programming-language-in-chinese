@@ -77,6 +77,8 @@ you can ignore the values by using an underscore in place of a variable name.
    -> print("\(base) to the power of \(power) is \(answer)")
    <- 3 to the power of 10 is 59049
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
