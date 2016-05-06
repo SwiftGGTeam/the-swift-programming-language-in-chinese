@@ -47,7 +47,8 @@ and its size and contents cannot be changed.
 
    It is good practice to create immutable collections
    in all cases where the collection does not need to change.
-   Doing so enables the Swift compiler to optimize the performance of
+   Doing so makes it easier for you to reason about your code
+   and enables the Swift compiler to optimize the performance of
    the collections you create.
 
 .. _CollectionTypes_Arrays:
@@ -451,7 +452,7 @@ are also hashable by default.
    or in different programs.
 
    Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must also provide an implementation of the “is equal” operator (``==``).
+   conforming types must also provide an implementation of the equals operator (``==``).
    The ``Equatable`` protocol requires
    any conforming implementation of ``==`` to be an equivalence relation.
    That is, an implementation of ``==`` must satisfy the following three conditions,
