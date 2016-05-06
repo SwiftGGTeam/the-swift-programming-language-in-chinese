@@ -1308,7 +1308,7 @@ in which the ``guard`` statement appears.
 It can do this with a control transfer statement
 such as ``return``, ``break``, ``continue``, or ``throw``,
 or it can call a function or method
-that doesn't return, such as ``fatalError()``.
+that doesn't return, such as ``fatalError(_:file:line:)``.
 
 Using a ``guard`` statement for requirements
 improves the readability of your code,
