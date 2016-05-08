@@ -12,7 +12,7 @@
 > 翻译：[mmoaay](https://github.com/mmoaay)
 
 > 2.2 
-> 校对 [175](https://github.com/Brian175)
+> 校对：[175](https://github.com/Brian175)
 
 本页包含内容：
 
