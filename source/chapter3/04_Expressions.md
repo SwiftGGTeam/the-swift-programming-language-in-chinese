@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[mmoaay](https://github.com/mmoaay)
 
+> 2.2 
+> 校对 [175](https://github.com/Brian175)
+
 本页包含内容：
 
 - [前缀表达式](#prefix_expressions)
@@ -27,6 +30,7 @@
     - [隐式成员表达式](#implicit_member_expression)
     - [圆括号表达式](#parenthesized_expression)
     - [通配符表达式](#wildcard_expression)
+    - [选择器表达式](#selector_expression)
 - [后缀表达式](#postfix_expressions)
     - [函数调用表达式](#function_call_expression) 
     - [构造器表达式](#initializer_expression)
@@ -37,9 +41,9 @@
     - [强制取值表达式](#forced-Value_expression)
     - [可选链表达式](#optional-chaining_expression)
 
-Swift 中存在四种表达式：前缀表达式，二元表达式，基本表达式和后缀表达式。表达式可以返回一个值，还可以执行某些代码。
+Swift 中存在四种表达式：前缀表达式，二元表达式，基本表达式和后缀表达式。表达式在返回一个值的同时还可以引发副作用。
 
-前缀表达式和二元表达式就是对某些表达式使用各种运算符。基本表达式是最短小的表达式，它提供了获取值的一种途径。后缀表达式则允许你建立复杂的表达式，例如函数调用和成员访问。每种表达式都在下面有详细论述。
+通过前缀表达式和二元表达式可以对简单表达式使用各种运算符。基本表达式从概念上讲是最简单的一种表达式，它是一种访问值的方式。后缀表达式则允许你建立复杂的表达式，例如函数调用和成员访问。每种表达式都在下面有详细论述。
 
 > 表达式语法  
 <a name="expression"></a>
@@ -50,20 +54,20 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 <a name="prefix_expressions"></a>
 ## 前缀表达式
  
-前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数。
+前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数，表达式则紧随其后。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/25_Advanced_Operators.html)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
-除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。 更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
+除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
 > 前缀表达式语法  
 <a name="prefix-expression"></a>
-> *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.html#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)  
+> *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)  
 > *前缀表达式* → [*输入输出表达式*](#in-out-expression)  
 <a name="in-out-expression"></a>
-> *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.html#identifier)  
+> *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.md#identifier)  
 
 <a name="try_operator"></a>
 ### try 运算符
@@ -94,7 +98,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 `try` 表达式不能出现在二进制运算符的的右侧，除非二进制运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
 
-关于 `try`、`try?` 和 `try!` 的更多信息，以及如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.html)。
+关于 `try`、`try?` 和 `try!` 的更多信息，以及如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.md)。
 
 > try 表达式语法  
 <a name="try-operator"></a> 
@@ -103,20 +107,20 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 <a name="binary_expressions"></a>
 ## 二元表达式
 
-二元表达式形式如下：
+二元表达式由中缀运算符和左右参数表达式组成。形式如下：
 
 > `左侧参数` `二元运算符` `右侧参数`
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/25_Advanced_Operators.html)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
 > 注意  
-> 在解析时，一个二元表达式将作为一个简单列表表示，然后根据运算符的优先级，再进一步进行组合。例如，`2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + (3 * 5))`。
+> 在解析时，一个二元表达式将作为一个扁平列表表示，然后根据运算符的优先级，再进一步进行组合。例如，`2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + (3 * 5))`。
 
 <a name="binary-expression"></a>
 > 二元表达式语法  
-> *二元表达式* → [*二元运算符*](02_Lexical_Structure.html#binary-operator) [*前缀表达式*](#prefix-expression)  
+> *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*赋值运算符*](#assignment-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*条件运算符*](#conditional-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*类型转换运算符*](#type-casting-operator)  
@@ -130,7 +134,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 > `表达式` = `值`
 
-右边的值会被赋值给左边的表达式。如果左边表达式是一个元组，那么右边必须是一个具有同样元素个数的元组。嵌套元组也是允许的。
+右边的值会被赋值给左边的表达式。如果左边表达式是一个元组，那么右边必须是一个具有同样元素个数的元组。（嵌套元组也是允许的。）右边的值中的每一部分都会被赋值给左边的表达式中的相应部分。例如：
 
 ```swift
 (a, _, (b, c)) = ("test", 9.45, (12, 3))
@@ -152,7 +156,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 如果条件为真，那么对第一个表达式进行求值并返回结果。否则，对第二个表达式进行求值并返回结果。未使用的表达式不会进行求值。
 
-关于使用三元条件运算符的例子，请参阅 [三元条件运算符](../chapter2/02_Basic_Operators.html#ternary_conditional_operator)。
+关于使用三元条件运算符的例子，请参阅 [三元条件运算符](../chapter2/02_Basic_Operators.md#ternary_conditional_operator)。
 
 > 三元条件运算符语法  
 <a name="conditional-operator"></a>
@@ -161,11 +165,11 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 <a name="type-casting_operators"></a>
 ### 类型转换运算符
 
-有 4 种类型转换运算符：`is`、`as`、`? `和`!`。它们有如下的形式：
+有 4 种类型转换运算符：`is`、`as`、`as? `和`as!`。它们有如下的形式：
 
 > `表达式` is `类型`  
 `表达式` as `类型`  
-`表达式` is? `类型`  
+`表达式` as? `类型`  
 `表达式` as! `类型`  
 
 `is` 运算符在运行时检查表达式能否向下转化为指定的类型，如果可以则返回 `ture`，否则返回 `false`。
@@ -187,25 +191,25 @@ f(x as Any)
 // 打印 “Function for Any”
 ```
 
-桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)。
+桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C (Swift2.2)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)。
 
 `as?` 运算符有条件地执行类型转换，返回目标类型的可选值。在运行时，如果转换成功，返回的可选值将包含转换后的值，否则返回 `nil`。如果在编译时就能确定转换一定会成功或是失败，则会编译出错。
 
-`as!` 运算符执行强制类型转换，返回目标类型的非可选值。如果转换失败，则会导致运行时错误。表达式 `x as T` 效果等同于 `(x as? T)!`。
+`as!` 运算符执行强制类型转换，返回目标类型的非可选值。如果转换失败，则会导致运行时错误。表达式 `x as! T` 效果等同于 `(x as? T)!`。
 
-关于类型转换的更多内容和例子，请参阅 [类型转换](../chapter2/19_Type_Casting.html)。
+关于类型转换的更多内容和例子，请参阅 [类型转换](../chapter2/19_Type_Casting.md)。
 
 <a name="type-casting-operator"></a>
 > 类型转换运算符语法  
-> *类型转换运算符* → **is** [*类型*](03_Types.html#type)  
-> *类型转换运算符* → **as** [*类型*](03_Types.html#type)  
-> *类型转换运算符* → **is** **?** [*类型*](03_Types.html#type)  
-> *类型转换运算符* → **as** **!** [*类型*](03_Types.html#type)   
+> *类型转换运算符* → **is** [*类型*](03_Types.md#type)  
+> *类型转换运算符* → **as** [*类型*](03_Types.md#type)  
+> *类型转换运算符* → **as** **?** [*类型*](03_Types.md#type)  
+> *类型转换运算符* → **as** **!** [*类型*](03_Types.md#type)   
 
 <a name="primary_expressions"></a>
 ## 基本表达式
 
-基本表达式是最基本的表达式。 它们可以跟前缀表达式、二元表达式、后缀表达式以及其他基本表达式组合使用。
+基本表达式是最基本的表达式。它们可以单独使用，也可以跟前缀表达式、二元表达式、后缀表达式组合使用。
 
 > 基本表达式语法  
 <a name="primary-expression"></a>
@@ -225,17 +229,19 @@ f(x as Any)
 
 字面量 | 类型 | 值
 :------------- | :---------- | :----------
-`__FILE__` | `String` | 所在的文件名
-`__LINE__` | `Int` | 所在的行数
-`__COLUMN__` | `Int` | 所在的列数
-`__FUNCTION__` | `String` | 所在的声明的名字
+`#file` | `String` | 所在的文件名
+`#line` | `Int` | 所在的行数
+`#column` | `Int` | 所在的列数
+`#function` | `String` | 所在的声明的名字
 
-对于 `__FUNCTION__`，在函数中会返回当前函数的名字，在方法中会返回当前方法的名字，在属性的存取器中会返回属性的名字，在特殊的成员如 `init` 或 `subscript` 中会返回这个关键字的名字，在某个文件中会返回当前模块的名字。
+`#line`除了上述含义外，还有另一种含义。当它出现在单独一行时，会被理解成行控制语句，请参阅[线路控制语句](../chapter3/10_Statements.md#线路控制语句)。
 
-`__FUNCTION__` 作为函数或者方法的默认参数值时，该字面量的值取决于函数或方法调用时所处的环境。
+对于 `＃function`，在函数中会返回当前函数的名字，在方法中会返回当前方法的名字，在属性的存取器中会返回属性的名字，在特殊的成员如 `init` 或 `subscript` 中会返回这个关键字的名字，在某个文件中会返回当前模块的名字。
+
+`#function` 作为函数或者方法的默认参数值时，该字面量的值取决于函数或方法的调用环境。
 
 ```swift
-func logFunctionName(string: String = __FUNCTION__) {
+func logFunctionName(string: String = #function) {
     print(string)
 }
 func myFunction() {
@@ -258,7 +264,7 @@ var emptyArray: [Double] = []
 
 > [`键 1` : `值 1`, `键 2` : `值 2`, `...`]
 
-字典中的最后一个表达式可以紧跟一个逗号。字典字面量的类型是 `[Key : Value]`，`Key` 表示键的类型，`Value` 表示值的类型。如果字典中包含多种类型，那么 `Key` 表示的类型则为所有键最接近的公共父类型，`Value` 也是同样如此。一个空的字典字面量由方括号中加一个冒号组成（`[:]`），从而与空数组字面量区分开，可以使用空字典字面量来创建特定类型的字典。
+字典中的最后一个表达式可以紧跟一个逗号。字典字面量的类型是 `[Key : Value]`，`Key` 表示键的类型，`Value` 表示值的类型。如果字典中包含多种类型，那么 `Key` 表示的类型则为所有键最接近的公共父类型，`Value` 与之相似。一个空的字典字面量由方括号中加一个冒号组成（`[:]`），从而与空数组字面量区分开，可以使用空字典字面量来创建特定类型的字典。
 
 ```swift
 var emptyDictionary: [String : Double] = [:]
@@ -269,7 +275,7 @@ var emptyDictionary: [String : Double] = [:]
 <a name="literal-expression"></a>
 > *字面量表达式* → [*字面量*](02_Lexical_Structure.md#literal)  
 > *字面量表达式* → [*数组字面量*](#array-literal) | [*字典字面量*](#dictionary-literal)  
-> *字面量表达式* → **\_\_FILE\_\_** | **\_\_LINE\_\_** | **\_\_COLUMN\_\_** | **\_\_FUNCTION\_\_**  
+> *字面量表达式* → **#file** | **#line** | **#column** | **#function**  
 
 <a name="array-literal"></a>
 > *数组字面量* → **[** [*数组字面量项列表*](#array-literal-items)<sub>可选</sub> **]**  
@@ -322,10 +328,14 @@ struct Point {
 
 > self 表达式语法  
 <a name="self-expression"></a>
-> *self 表达式* → **self**  
-> *self 表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)  
-> *self 表达式* → **self** **[** [*表达式*](#expression) **]**  
-> *self 表达式* → **self** **.** **init**  
+> *self 表达式* → **self**  | [*self 方法表达式*](#self-method-expression) ｜ [*self 下标表达式*](#self-subscript-expression) | [*self 构造器表达式*](#self-initializer-expression)
+>
+<a name="self-method-expression"></a>
+> *self 方法表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)  
+<a name="self-subscript-expression"></a>
+> *self 下标表达式* → **self** **[** [*表达式*](#expression) **]** 
+<a name="self-initializer-expression"></a> 
+> *self 构造器表达式* → **self** **.** **init**  
 
 <a name="superclass_expression"></a>
 ### 超类表达式
@@ -353,7 +363,7 @@ struct Point {
 <a name="closure_expression"></a>
 ### 闭包表达式
 
-闭包表达式会创建一个闭包，在其他语言中也叫匿名函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
+闭包表达式会创建一个闭包，在其他语言中也叫 *lambda* 或匿名函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
 { (parameters) -> return type in  
@@ -391,11 +401,11 @@ myFunction { $0 + $1 }
 
 #### 捕获列表
 
-默认情况下，闭包会通过强引用捕获所在环境中的常量和变量。你可以通过一个捕获列表来显式指定它的捕获行为。
+默认情况下，闭包会捕获附近作用域中的常量和变量，并使用强引用指向它们。你可以通过一个捕获列表来显式指定它的捕获行为。
 
 捕获列表在参数列表之前，由中括号括起来，里面是由逗号分隔的一系列表达式。一旦使用了捕获列表，就必须使用 `in` 关键字，即使省略了参数名、参数类型、返回类型。
 
-捕获列表中的条目会在闭包创建时被初始化。每一个条目都会被闭包所在环境中的同名常量或者变量初始化。例如下面的代码示例中，捕获列表包含 `a` 而不包含 `b`，这将导致这两个变量具有不同的行为。
+捕获列表中的项会在闭包创建时被初始化。每一项都会用闭包附近作用域中的同名常量或者变量的值初始化。例如下面的代码示例中，捕获列表包含 `a` 而不包含 `b`，这将导致这两个变量具有不同的行为。
 
 ```swift
 var a = 0
@@ -412,7 +422,7 @@ closure()
 
 在示例中，变量 `b` 只有一个，然而，变量 `a` 有两个，一个在闭包外，一个在闭包内。闭包内的变量 `a` 会在闭包创建时用闭包外的变量 `a` 的值来初始化，除此之外它们并无其他联系。这意味着在闭包创建后，改变某个 `a` 的值都不会对另一个 `a` 的值造成任何影响。与此相反，闭包内外都是同一个变量 `b`，因此在闭包外改变其值，闭包内的值也会受影响。
 
-如果闭包捕获的值是引用语义，则又会有所不同。例如，下面示例中，有两个变量 `x`，一个在闭包外，一个在闭包内，由于它们的值是引用语义，虽然这是两个不同的变量，它们却都引用着同一实例。
+如果闭包捕获的值具有引用语义则有所不同。例如，下面示例中，有两个变量 `x`，一个在闭包外，一个在闭包内，由于它们的值是引用语义，虽然这是两个不同的变量，它们却都引用着同一实例。
 
 ```swift
 class SimpleClass {
@@ -438,7 +448,7 @@ myFunction { [weak self] in print(self!.title) }   // 以弱引用捕获
 myFunction { [unowned self] in print(self.title) } // 以无主引用捕获
 ```
 
-在捕获列表中，也可以使用任意表达式来赋值。该表达式会在闭包被创建时进行求值，闭包会按照指定的引用类型来捕获表达式的值。例如：
+在捕获列表中，也可以将任意表达式的值绑定到一个常量上。该表达式会在闭包被创建时进行求值，闭包会按照指定的引用类型来捕获表达式的值。例如：
 
 ```swift
 // 以弱引用捕获 self.parent 并赋值给 parent
@@ -471,7 +481,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 <a name="implicit_member_expression"></a>
 ### 隐式成员表达式
 
-在可以判断出类型的上下文中，隐式成员表达式是访问某个类型的成员（例如某个枚举成员或某个类型方法）的简洁方法，形式如下：
+若类型可被推断出来，可以使用隐式成员表达式来访问某个类型的成员（例如某个枚举成员或某个类型方法），形式如下：
 
 > .`成员名称`
 
@@ -517,12 +527,51 @@ x = .AnotherValue
 <a name="wildcard-expression"></a>
 > *通配符表达式* → **_**  
 
+<a name="selector_expression"></a>
+### 选择器表达式
+
+可通过选择器表达式来获取引用 Objective-C 方法的选择器。
+
+> \#selector(方法名)
+
+方法名必须是存在于 Objective-C 运行时中的方法的引用。选择器表达式的返回值是一个 `Selector` 类型的实例。例如：
+
+```swift
+class SomeClass: NSObject {
+    @objc(doSomethingWithInt:)
+    func doSomething(x: Int) { }
+}
+let x = SomeClass()
+let selector = #selector(x.doSomething(_:))
+```
+
+具有相同方法名但类型不同的方法可以使用 `as` 操作符来区分：
+
+```swift
+extension SomeClass {
+    @objc(doSomethingWithString:)
+    func doSomething(x: String) { }
+}
+let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+```
+
+由于选择器是在编译时创建的，因此编译器可以检查方法是否存在，以及方法是否在运行时暴露给了 Objective-C 。
+
+> 注意  
+> 虽然方法名是个表达式，但是它不会被求值。
+
+更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [*Objective-C Selectors*](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID59) 部分。
+
+> 选择器表达式语法  
+<a name="selector-expression"></a>
+> *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**
+
 <a name="postfix_expressions"></a>
 ## 后缀表达式
 
-后缀表达式就是在某个表达式的后面加上后缀运算符。严格地讲，每个基本表达式也是一个后缀表达式。
+后缀表达式就是在某个表达式的后面运用后缀运算符或其他后缀语法。从语法构成上来看，基本表达式也是后缀表达式。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/25_Advanced_Operators.html)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
@@ -587,7 +636,7 @@ myData.someMethod {$0 == 13}
 
 ```swift
 class SomeSubClass: SomeSuperClass {
-    init() {
+    override init() {
         // 此处为子类构造过程
         super.init()
     }
@@ -617,7 +666,8 @@ let s3 = someValue.dynamicType.init(data: 7) // 有效
 
 > 构造器表达式语法  
 <a name="initializer-expression"></a>
-> *构造器表达式* → [*后缀表达式*](postfix-expression) **.** **init**  
+> *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init**  
+> *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init** **(** [*参数名称*](#argument-names) **)**
 
 <a name="explicit_member_expression"></a>
 ### 显式成员表达式
@@ -646,10 +696,44 @@ t.0 = t.1
 
 对于模块的成员来说，只能直接访问顶级声明中的成员。
 
+为了区分只有参数名有所不同的方法或构造器，在圆括号中写出参数名，参数名后紧跟一个冒号，对于没有参数名的参数，使用下划线代替参数名。而对于重载方法，则需使用类型标注进行区分。例如：
+
+```swift
+class SomeClass {
+    func someMethod(x: Int, y: Int) {}
+    func someMethod(x: Int, z: Int) {}
+    func overloadedMethod(x: Int, y: Int) {}
+    func overloadedMethod(x: Int, y: Bool) {}
+}
+let instance = SomeClass()
+
+let a = instance.someMethod              // 有歧义
+let b = instance.someMethod(_:y:)        // 无歧义
+
+let d = instance.overloadedMethod        // 有歧义
+let d = instance.overloadedMethod(_:y:)  // 有歧义
+let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // 无歧义
+```
+
+如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是隐式成员表达式的一部分。例如如下代码所展示的被分为多行的链式方法调用：
+
+```swift
+let x = [10, 3, 20, 15, 4]
+    .sort()
+    .filter { $0 > 5 }
+    .map { $0 * 100 }
+```
+
 > 显式成员表达式语法  
 <a name="explicit-member-expression"></a>
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)  
-> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/> 
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) **(** [*参数名称*](#argument-names) **)**
+> 
+<a name="argument-names"></a>
+> *参数名称* → [*参数名*](#argument-name) [*参数名称*](#argument-names)<sub>可选</sub><br/>
+<a name="argument-name"></a>
+> *参数名* → [*标识符*](02_Lexical_Structure.md#identifier) **:**
 
 <a name="postfix_self_expression"></a>
 ### 后缀 self 表达式
@@ -661,7 +745,7 @@ t.0 = t.1
 
 第一种形式返回表达式的值。例如：`x.self` 返回 `x`。
 
-第二种形式返回表示对应类型的值。我们可以用它来动态地获取某个实例的类型。例如，`SomeClass.self` 会返回 `SomeClass` 类型本身，你可以将其传递给相应函数或者方法作为参数。
+第二种形式返回相应的类型。我们可以用它来获取某个实例的类型作为一个值来使用。例如，`SomeClass.self` 会返回 `SomeClass` 类型本身，你可以将其传递给相应函数或者方法作为参数。
 
 > 后缀 self 表达式语法  
 <a name="postfix-self-expression"></a>
@@ -705,7 +789,7 @@ someInstance.dynamicType.printClassName()
 
 > `表达式`[`索引表达式`]
 
-要获取下标表达式的值，可将索引表达式作为下标表达式的参数，调用表达式类型的下标 getter。下标 setter 的调用方式与之一样。
+要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
 关于下标的声明，请参阅 [协议下标声明](05_Declarations.md#protocol_subscript_declaration)。
 
@@ -745,11 +829,11 @@ someDictionary["a"]![0] = 100
 
 > `表达式`?
 
-后缀 `?` 根据表达式生成可选链表达式，而不会改变表达式的值。
+后缀 `?` 运算符会根据表达式生成可选链表达式而不会改变表达式的值。
 
-如果某个后缀表达式包含可选链表达式，那么它的执行过程会比较特殊。如果该可选链表达式的值是 `nil`，整个后缀表达式会直接返回 `nil`。如果该可选链表达式的值不是 `nil`，则返回可选链表达式解包后的值，并用于后缀表达式中剩余的表达式。在这两种情况下，整个后缀表达式的值都会是可选类型。
+如果某个后缀表达式包含可选链表达式，那么它的执行过程会比较特殊。如果该可选链表达式的值是 `nil`，整个后缀表达式会直接返回 `nil`。如果该可选链表达式的值不是 `nil`，则返回可选链表达式解包后的值，并将该值用于后缀表达式中剩余的表达式。在这两种情况下，整个后缀表达式的值都会是可选类型。
 
-如果某个后缀表达式中包含了可选链表达式，那么只有最外层的表达式会返回一个可选类型。例如，在下面的例子中，如果 `c` 不是 `nil`，那么它的值会被解包，然后通过 `.property` 访问它的属性，接着进一步通过 `.performAction()` 调用相应方法。整个 `c?.property.performAction()` 表达式返回一个可选类型的值。
+如果某个后缀表达式中包含了可选链表达式，那么只有最外层的表达式会返回一个可选类型。例如，在下面的例子中，如果 `c` 不是 `nil`，那么它的值会被解包，然后通过 `.property` 访问它的属性，接着进一步通过 `.performAction()` 调用相应方法。整个 `c?.property.performAction()` 表达式返回一个可选类型的值，而不是多重可选类型。
 
 ```swift
 var c: SomeClass?
