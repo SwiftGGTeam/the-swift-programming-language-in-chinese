@@ -16,14 +16,279 @@
 > 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)
 > 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
 [changkun](http://changkun.us/about/)
+> 
+> 2.0
+> 翻译+校对：[changkun](http://changkun.us/about/)
+> 
+> 2.1
+> 翻译+校对：[changkun](http://changkun.us/about/)
+> 
+> 2.2
+> 翻译+校对：[changkun](http://changkun.us/about/)
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
 
+-   [Swift 2.2 更新](#swift_2_2)
+-   [Swift 2.1 更新](#swift_2_1)
+-   [Swift 2.0 更新](#swift_2_0)
 -   [Swift 1.2 更新](#swift_1_2)
 -   [Swift 1.1 更新](#swift_1_1)
 -   [Swift 1.0 更新](#swift_1_0)
+
+<a name="swift_2_2"></a>
+### Swift 2.2 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <td scope="row">2016-03-21</td>
+    <td><ul class="list-bullet">
+        <li>
+            更新至 Swift 2.2。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539">编译配置语句</a>一节中关于如何根据 Swift 版本进行条件编译。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID400">显示成员表达式</a>一节中关于如何区分只有参数名不同的方法和构造器的信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID547">选择器表达式</a>一节中针对 Objective-C 选择器的 <code>#selector</code> 语法。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID189">关联类型</a>和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID374">协议关联类型</a>声明，使用 <code>associatedtype</code> 关键词修改了对于关联类型的讨论。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID224">可失败构造器</a>一节中关于当构造器在实例完全初始化之前返回 <code>nil</code>的相关信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-ID70">比较运算符</a>一节中关于比较元组的信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-ID413">关键字和标点符号</a>一节中关于使用关键字作为外部参数名的信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-ID413">声明特性</a>一节中关于<code>@objc</code>特性的讨论，并指出枚举(Enumeration)和枚举用例(Enumaration Case)。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-ID418">操作符</a>一节中对于自定义运算符的讨论包含了<code>.</code>。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID531">重新抛出错误的函数和方法</a>一节中关于重新抛出错误函数不能直接抛出错误的笔记。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID262">属性观察器</a>一节中关于当作为 in-out 参数传递属性时，属性观察器的调用行为。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.html#//apple_ref/doc/uid/TP40014097-CH2-ID1">Swift 初见</a>一节中关于错误处理的内容。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID53">弱引用</a>一节中的图片用以更清楚的展示重新分配过程。
+        </li>
+        <li>
+            删除了 C 语言风格的 <code>for</code> 循环，<code>++</code> 前缀和后缀运算符，以及<code>--</code> 前缀和后缀运算符。
+        </li>
+        <li>
+            删除了对变量函数参数和柯里化函数的特殊语法的讨论。
+        </li>
+        </ul>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<a name="swift_2_1"></a>
+### Swift 2.1 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <td scope="row">2015-10-20</td>
+    <td><ul class="list-bullet">
+        <li>
+            更新至 Swift 2.1。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID292">字符串插值(String Interprolation)</a>和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-ID417">字符串字面量(String Literals)</a>小节，现在字符串插值可包含字符串字面量。
+        </li>
+        <li>
+            增加了在<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID546">非逃逸闭包(Nonescaping Closures)</a>一节中关于 <code>@noescape</code> 属性的相关内容。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明特性(Declaration Attributes)</a>和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539">编译配置语句(Build Configuration Statement)</a>小节中与 tvOS 相关的信息。
+        </li>
+        <li>
+            增加了 <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545">In-Out 参数(In-Out Parameters)</a>小节中与  in-out 参数行为相关的信息。
+        </li>
+        <li>
+            增加了在<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID544">捕获列表(Capture Lists)</a>一节中关于指定闭包捕获列表被捕获时捕获值的相关内容。
+        </li>
+        <li>
+            更新了通过<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-ID248">可选链式调用访问属性(Accessing Properties Through Optional Chaining)</a>一节，阐明了如何通过可选链式调用进行赋值。
+        </li>
+        <li>
+            改进了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID543">自闭包(Autoclosure)</a>一节中对自闭包的讨论。
+        </li>
+        <li>
+            在<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.html#//apple_ref/doc/uid/TP40014097-CH2-ID1">Swift 初见(A Swift Tour)</a>一节中更新了一个使用<code>??</code>操作符的例子。
+        </li>
+        </ul>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<a name="swift_2_0"></a>
+### Swift 2.0 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <td scope="row">2015-09-16</td>
+    <td><ul class="list-bullet">
+        <li>
+            更新至 Swift 2.0。
+        </li>
+        <li>
+            增加了对于错误处理相关内容，包括 <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID508">错误处理</a>一章、<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID533">Do 语句</a>、<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID518">Throw 语句</a>、<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID532">Defer 语句</a>以及<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID516">try 运算符</a> 的多个小节。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID509">表示并抛出错误</a>一节，现在所有类型均可遵循 <code>ErrorType</code> 协议。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID542">将错误转换成可选值</a>一节 <code>try?</code> 关键字的相关信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID145">枚举</a>一章的<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID536">递归枚举</a>一节和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID351">声明</a>一章的<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID365">任意类型用例的枚举</a>一节中关于递归枚举的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID120">控制流</a>一章中a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID523">检查 API 可用性</a>一节和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID428">语句</a>一章中<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID522">可用性条件</a>一节中关于 API 可用性检查的内容。
+        </li>
+        
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID120">控制流</a>一章的<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID525">早期退出</a>一节和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID428">语句</a>一章的<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID524">guard语句</a>中关于新 <code>guard</code> 语句的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID267">协议</a>一章中<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID521">协议扩展</a>一节中关于协议扩展的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-ID3">访问控制</a>一章中<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-ID519">单元测试 target 的访问级别</a>一节中关于单元测试的访问控制相关的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/doc/uid/TP40014097-CH36-ID419">模式</a>一章中<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/doc/uid/TP40014097-CH36-ID520">可选模式</a>一节中的新可选模式。
+        </li>
+        <li>
+            更新了 <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID126">Repeat-While</a> 一节中关于<code>repeat-while</code>循环的信息。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID285">字符串和字符</a>一章，现在<code>String</code>在 Swift 标准库中不再遵循<code>CollectionType</code>协议。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID314">打印常量和变量</a>一节中关于新 Swift 标准库中关于 <code>print(_:separator:terminator)</code> 的信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID145">枚举</a>一章中<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-ID535">原始值的隐式赋值</a>一节和<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID351">声明</a>一章的<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID366">包含原始值类型的枚举</a>一节中关于包含<code>String</code>原始值的枚举用例的行为。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID543">自闭包</a>一节中关于<code>@autoclosure</code>特性的相关信息，包括它的<code>@autoclosure(escaping)</code>形式。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明特性</a>一节中关于<code>@avaliable</code>和<code>warn_unused_result</code>特性的相关内容。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID350">类型特性</a>一节中关于<code>@convention</code>特性的相关信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID333">可选绑定</a>一节中关于使用<code>where</code>子句进行多可选绑定的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID292">字符串字面量</a>一节中关于在编译时使用 <code>+</code> 运算符凭借字符串字面量的相关信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID455">元类型</a>一节中关于元类型值的比较和使用它们通过构造器表达式构造实例。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID336">断言调试</a>一节中关于用户定义断言是被警用的相关内容。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明特性</a>一节中，对<code>@NSManaged</code>特性的讨论，现在这个特性可以被应用到一个确定实例方法。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-ID171">可变参数</a>一节，现在可变参数可以声明在函数参数列表的任意位置中。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID229">重写可失败构造器</a>一节中，关于非可失败构造器相当于一个可失败构造器通过父类构造器的结果进行强制拆包的相关内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID365">任意类型用例的枚举</a>一节中关于枚举用例作为函数的内容。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID399">构造器表达式</a>一节中关于显式引用一个构造器的内容。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID538">编译控制语句</a>一节中关于编译信息以及行控制语句的相关信息。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID455">元类型</a>一节中关于如何从元类型值中构造类实例。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID53">弱引用</a>一节中关于弱引用作为缓存的显存的不足。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID292">类型特性</a>一节，提到了存储型特性其实是懒加载。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID264">捕获类型</a>一节，阐明了变量和常量在闭包中如何被捕获。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明特性</a>一节用以描述如何在类中使用<code>@objc</code>关键字。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID512">错误处理</a>一节中关于执行<code>throw</code>语句的性能的讨论。增加了 Do 语句一节中相似的信息。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID533">类型特性</a>一节中关于类、结构体和枚举的存储型和计算型特性的信息。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID441">Break 语句</a>一节中关于带标签的 break 语句。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-ID262">属性观察器</a>一节，阐明了<code>willSet</code>和<code>didSet</code>观察器的行为。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-ID5">访问级</a>一节中关于<code>private</code>作用域访问的相关信息。
+        </li>
+        <li>
+            增加了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID53">弱引用</a>一节中关于若应用在垃圾回收系统和 ARC 之间的区别。
+        </li>
+        <li>
+            更新了<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-ID295">字符串字面量中特殊字符</a>一节中对 Unicode 标量更精确的定义。
+        </li>
+        </ul>
+    </td>
+  </tr>
+</tbody>
+</table>
 
 
 <a name="swift_1_2"></a>
