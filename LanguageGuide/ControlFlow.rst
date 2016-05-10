@@ -576,26 +576,25 @@ a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
 
-   -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
+   -> let someCharacter: Character = "z"
+   << // someCharacter : Character = "z"
    -> switch someCharacter {
-         case "a", "e", "i", "o", "u":
-            print("\(someCharacter) is a vowel")
-         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            print("\(someCharacter) is a consonant")
+         case "a":
+            print("The first letter of the alphabet")
+         case "z":
+            print("The last letter of the alphabet")
          default:
-            print("\(someCharacter) is not a vowel or a consonant")
+            print("Some other character")
       }
-   <- e is a vowel
+   <- The last letter of the alphabet
 
 The ``switch`` statement's first case matches
-all five lowercase vowels in the English language.
-Similarly, its second case matches all lowercase English consonants.
-
-Because it's not practical to write all other possible characters as part of a ``switch`` case,
-this ``switch`` statement provides a ``default`` case
-to match all other characters that are not vowels or consonants.
+the first letter of the English alphabet, ``a``,
+and its second case matches the last letter, ``z``.
+Because the ``switch`` must have a case for every possible character,
+not just every alphabetic character,
+this ``switch`` statement uses a ``default`` case
+to match all characters other than ``a`` and ``z``.
 This provision ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
@@ -646,20 +645,30 @@ does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
-Multiple matches for a single ``switch`` case can be separated by commas
-and can be written over multiple lines if the list is long.
+To make a ``switch`` with a single case that
+matches both ``"a"`` and ``"A"``,
+combine the two values into a compound case,
+separating the values with commas.
 
-.. syntax-outline::
+.. testcode:: compoundCaseInsteadOfFallthrough
 
-   switch <#some value to consider#> {
-      case <#value 1#>,
-          <#value 2#>:
-         <#statements#>
-   }
+   -> let anotherCharacter: Character = "a"
+   << // anotherCharacter : Character = "a"
+   -> switch anotherCharacter {
+         case "a", "A":
+            print("The letter A")
+         default:
+            print("Not the letter A")
+      }
+
+For readability,
+a compound case can also be written over multiple lines.
+For more information about compound cases,
+see :ref:`ControlFlow_CompoundCases`.
 
 .. note::
 
-   To opt in to fallthrough behavior for a particular ``switch`` case,
+   To explicitly fall through at the end of a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
 
@@ -773,7 +782,7 @@ Value Bindings
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
-because the values are “bound” to temporary constants or variables within the case's body.
+because the values are bound to temporary constants or variables within the case's body.
 
 The example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
@@ -812,12 +821,13 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 After the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``print(_:separator:terminator:)`` function.
+Here, they are used to print the categorization of the point.
 
 This ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
-As a result, this case matches all possible remaining values,
+Because ``anotherPoint`` is always a tuple of two values,
+this case matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_Where:
@@ -860,6 +870,68 @@ only if the ``where`` clause's condition evaluates to ``true`` for that value.
 
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+
+.. _ControlFlow_CompoundCases:
+
+Compound Cases
+++++++++++++++
+
+Multiple switch cases that share the same body
+can be combined by writing several patterns after ``case``,
+with a comma between each of the patterns.
+If any of the patterns match, then the case is considered to match.
+The patterns can be written over multiple lines if the list is long.
+For example:
+
+.. testcode:: compound-switch-case
+
+   -> let someCharacter: Character = "e"
+   << // someCharacter : Character = "e"
+         case "a", "e", "i", "o", "u":
+            print("\(someCharacter) is a vowel")
+         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+            print("\(someCharacter) is a consonant")
+        default:
+            print("\(someCharacter) is not a vowel or a consonant")
+   <- e is a vowel
+
+The ``switch`` statement's first case matches
+all five lowercase vowels in the English language.
+Similarly, its second case matches all lowercase English consonants.
+Finally, the ``default`` case matches any other character.
+
+Compound cases can also include value bindings.
+All of the patterns of a compound case
+have to include the same set of value bindings,
+and each binding has to get a value of the same type
+from all of the patterns in the compound case.
+This ensures that,
+no matter which part of the compound case matched,
+the code in the body of the case
+can always access a value for the bindings
+and that the value always has the same type.
+
+.. testcode:: compound-switch-case
+
+    -> let stillAnotherPoint = (9, 0)
+    << // stillAnotherPoint : (Int, Int) = (9, 0)
+    -> switch stillAnotherPoint {
+           case (let distance, 0), (0, let distance):
+               print("On an axis, \(distance) from the origin")
+           default:
+               print("Not on an axis")
+       }
+    <- On an axis, 9 from the origin
+
+
+The ``case`` above has two patterns:
+``(let distance, 0)`` matches points on the x-axis
+and ``(0, let distance)`` matches points on the y-axis.
+Both patterns include a binding for ``distance``
+and ``distance`` is an integer in both patterns ---
+which means that the code in the body of the ``case``
+can always access a value for ``distance``.
 
 .. _ControlFlow_ControlTransferStatements:
 
