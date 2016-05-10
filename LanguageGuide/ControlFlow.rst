@@ -584,16 +584,17 @@ a single lowercase character called ``someCharacter``:
          case "z":
             print("The last letter of the alphabet")
          default:
-            print("A character")
+            print("Some other character")
       }
    <- The last letter of the alphabet
 
 The ``switch`` statement's first case matches
-the first letter of the English alphabet, A,
-and its second case matches the last letter, Z.
-Because it's not practical to write all other possible characters as part of a ``switch`` case,
-this ``switch`` statement provides a ``default`` case
-to match all other characters.
+the first letter of the English alphabet, ``a``,
+and its second case matches the last letter, ``z``.
+Because the ``switch`` must have a case for every possible character,
+not just every alphabetic character,
+this ``switch`` statement uses a ``default`` case
+to match all characters other than ``a`` and ``z``.
 This provision ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
@@ -644,15 +645,32 @@ does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
+To make a ``switch`` with a single case that
+matches both ``"a"`` and ``"A"``,
+combine the two values into a compound case,
+separating the values with commas.
+
+.. testcode:: compoundCaseInsteadOfFallthrough
+
+   -> let anotherCharacter: Character = "a"
+   << // anotherCharacter : Character = "a"
+   -> switch anotherCharacter {
+         case "a", "A":
+            print("The letter A")
+         default:
+            print("Not the letter A")
+      }
+
+For readability,
+a compound case can also be written over multiple lines.
+For more information about compound cases,
+see :ref:`ControlFlow_CompoundCases`.
+
 .. note::
 
    To explicitly fall through at the end of a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
-
-   To include multiple patterns in a single switch case,
-   use a compound case,
-   as described in :ref:`ControlFlow_CompoundCases`.
 
 .. _ControlFlow_RangeMatching:
 
@@ -863,21 +881,36 @@ can be combined by writing several patterns after ``case``,
 with a comma between each of the patterns.
 If any of the patterns match, then the case is considered to match.
 The patterns can be written over multiple lines if the list is long.
-
-..
-    Here's the general form of a ``switch`` statement with compound cases:
-
-    .. syntax-outline::
-
-       switch <#some value to consider#> {
-          case <#value 1#>, <#value 2#>:
-             <#statements#>
-          case <#value 1#>,
-              <#value 2#>:
-             <#statements#>
-       }
-
 For example:
+
+.. testcode:: compound-switch-case
+
+   -> let someCharacter: Character = "e"
+   << // someCharacter : Character = "e"
+         case "a", "e", "i", "o", "u":
+            print("\(someCharacter) is a vowel")
+         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+            print("\(someCharacter) is a consonant")
+        default:
+            print("\(someCharacter) is not a vowel or a consonant")
+   <- e is a vowel
+
+The ``switch`` statement's first case matches
+all five lowercase vowels in the English language.
+Similarly, its second case matches all lowercase English consonants.
+Finally, the ``default`` case matches any other character.
+
+Compound cases can also include value bindings.
+All of the patterns of a compound case
+have to include the same set of value bindings,
+and each binding has to get a value of the same type
+from all of the patterns in the compound case.
+This ensures that,
+no matter which part of the compound case matched,
+the code in the body of the case
+can always access a value for the bindings
+and that the value always has the same type.
 
 .. testcode:: compound-switch-case
 
@@ -891,6 +924,7 @@ For example:
        }
     <- On an axis, 9 from the origin
 
+
 The ``case`` above has two patterns:
 ``(let distance, 0)`` matches points on the x-axis
 and ``(0, let distance)`` matches points on the y-axis.
@@ -898,16 +932,6 @@ Both patterns include a binding for ``distance``
 and ``distance`` is an integer in both patterns ---
 which means that the code in the body of the ``case``
 can always access a value for ``distance``.
-
-All of the patterns of a compound case
-have to include the same set of value bindings,
-and each binding has to get a value of the same type
-from all of the patterns in the compound case.
-This ensures that,
-no matter which part of the compound case matched,
-the code in the body of the case
-can always access a value for the bindings
-and that the value always has the same type.
 
 .. _ControlFlow_ControlTransferStatements:
 
