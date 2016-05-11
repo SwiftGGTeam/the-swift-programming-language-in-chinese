@@ -87,7 +87,7 @@ var threeDoubles = [Double](count: 3, repeatedValue:0.0)
 我们可以使用加法操作符（`+`）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：
 
 ```swift
-var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
 // anotherThreeDoubles 被推断为 [Double]，等价于 [2.5, 2.5, 2.5]
 
 var sixDoubles = threeDoubles + anotherThreeDoubles

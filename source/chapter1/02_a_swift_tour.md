@@ -713,7 +713,7 @@ func sendToPrinter(printerName: String) throws -> String {
 有多种方式可以用来进行错误处理。一种方式是使用`do-catch`。在`do`代码块中，使用`try`来标记可以抛出错误的代码。在`catch`代码块中，除非你另外命名，否则错误会自动命名为`error`。
 
 ```swift
-do{
+do {
 	let printerResponse = try sendToPrinter("Bi Sheng")
 	print(printerResponse)
 } catch {
