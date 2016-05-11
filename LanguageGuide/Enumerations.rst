@@ -54,14 +54,14 @@ Here's an example for the four main points of a compass:
 .. testcode:: enums
 
    -> enum CompassPoint {
-         case North
-         case South
-         case East
-         case West
+         case north
+         case south
+         case east
+         case west
       }
 
 The values defined in an enumeration
-(such as ``North``, ``South``, ``East``, and ``West``)
+(such as ``north``, ``south``, ``east``, and ``west``)
 are its :newTerm:`enumeration cases`.
 You use the ``case`` keyword to introduce new enumeration cases.
 
@@ -70,7 +70,7 @@ You use the ``case`` keyword to introduce new enumeration cases.
    Unlike C and Objective-C,
    Swift enumeration cases are not assigned a default integer value when they are created.
    In the ``CompassPoint`` example above,
-   ``North``, ``South``, ``East`` and ``West``
+   ``north``, ``south``, ``east`` and ``west``
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
    Instead, the different enumeration cases are fully-fledged values in their own right,
@@ -81,7 +81,7 @@ Multiple cases can appear on a single line, separated by commas:
 .. testcode:: enums
 
    -> enum Planet {
-         case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+         case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
       }
 
 Each enumeration definition defines a brand new type.
@@ -93,8 +93,8 @@ so that they read as self-evident:
 
 .. testcode:: enums
 
-   -> var directionToHead = CompassPoint.West
-   << // directionToHead : CompassPoint = REPL.CompassPoint.West
+   -> var directionToHead = CompassPoint.west
+   << // directionToHead : CompassPoint = REPL.CompassPoint.west
 
 The type of ``directionToHead`` is inferred
 when it is initialized with one of the possible values of ``CompassPoint``.
@@ -103,7 +103,7 @@ you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
-   -> directionToHead = .East
+   -> directionToHead = .east
 
 The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
@@ -118,15 +118,15 @@ You can match individual enumeration values with a ``switch`` statement:
 
 .. testcode:: enums
 
-   -> directionToHead = .South
+   -> directionToHead = .south
    -> switch directionToHead {
-         case .North:
+         case .north:
             print("Lots of planets have a north")
-         case .South:
+         case .south:
             print("Watch out for penguins")
-         case .East:
+         case .east:
             print("Where the sun rises")
-         case .West:
+         case .west:
             print("Where the skies are blue")
       }
    <- Watch out for penguins
@@ -134,16 +134,16 @@ You can match individual enumeration values with a ``switch`` statement:
 You can read this code as:
 
 “Consider the value of ``directionToHead``.
-In the case where it equals ``.North``,
+In the case where it equals ``.north``,
 print ``"Lots of planets have a north"``.
-In the case where it equals ``.South``,
+In the case where it equals ``.south``,
 print ``"Watch out for penguins"``.”
 
 …and so on.
 
 As described in :doc:`ControlFlow`,
 a ``switch`` statement must be exhaustive when considering an enumeration's cases.
-If the ``case`` for ``.West`` is omitted,
+If the ``case`` for ``.west`` is omitted,
 this code does not compile,
 because it does not consider the complete list of ``CompassPoint`` cases.
 Requiring exhaustiveness ensures that enumeration cases are not accidentally omitted.
@@ -153,10 +153,10 @@ you can provide a ``default`` case to cover any cases that are not addressed exp
 
 .. testcode:: enums
 
-   -> let somePlanet = Planet.Earth
-   << // somePlanet : Planet = REPL.Planet.Earth
+   -> let somePlanet = Planet.earth
+   << // somePlanet : Planet = REPL.Planet.earth
    -> switch somePlanet {
-         case .Earth:
+         case .earth:
             print("Mostly harmless")
          default:
             print("Not a safe place for humans")
@@ -170,7 +170,7 @@ Associated Values
 
 The examples in the previous section show how the cases of an enumeration are
 a defined (and typed) value in their own right.
-You can set a constant or variable to ``Planet.Earth``,
+You can set a constant or variable to ``Planet.earth``,
 and check for this value later.
 However, it is sometimes useful to be able to store
 :newTerm:`associated values` of other types alongside these case values.
@@ -185,7 +185,7 @@ in other programming languages.
 
 For example, suppose an inventory tracking system needs to
 track products by two different types of barcode.
-Some products are labeled with 1D barcodes in UPC-A format,
+Some products are labeled with 1D barcodes in UPC format,
 which uses the numbers ``0`` to ``9``.
 Each barcode has a “number system” digit,
 followed by five “manufacturer code” digits and five “product code” digits.
@@ -201,7 +201,7 @@ and can encode a string up to 2,953 characters long:
 .. image:: ../images/barcode_QR_2x.png
    :align: center
 
-It would be convenient for an inventory tracking system to be able to store UPC-A barcodes
+It would be convenient for an inventory tracking system to be able to store UPC barcodes
 as a tuple of four integers,
 and QR code barcodes as a string of any length.
 
@@ -210,43 +210,43 @@ In Swift, an enumeration to define product barcodes of either type might look li
 .. testcode:: enums
 
    -> enum Barcode {
-         case UPCA(Int, Int, Int, Int)
-         case QRCode(String)
+         case upc(Int, Int, Int, Int)
+         case qrCode(String)
       }
 
 This can be read as:
 
 “Define an enumeration type called ``Barcode``,
-which can take either a value of ``UPCA``
+which can take either a value of ``upc``
 with an associated value of type (``Int``, ``Int``, ``Int``, ``Int``),
-or a value of ``QRCode`` with an associated value of type ``String``.”
+or a value of ``qrCode`` with an associated value of type ``String``.”
 
 This definition does not provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
-when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
+when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 
 New barcodes can then be created using either type:
 
 .. testcode:: enums
 
-   -> var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
-   << // productBarcode : Barcode = REPL.Barcode.UPCA(8, 85909, 51226, 3)
+   -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+   << // productBarcode : Barcode = REPL.Barcode.upc(8, 85909, 51226, 3)
 
 This example creates a new variable called ``productBarcode``
-and assigns it a value of ``Barcode.UPCA``
+and assigns it a value of ``Barcode.upc``
 with an associated tuple value of ``(8, 85909, 51226, 3)``.
 
 The same product can be assigned a different type of barcode:
 
 .. testcode:: enums
 
-   -> productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+   -> productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 
 At this point,
-the original ``Barcode.UPCA`` and its integer values are replaced by
-the new ``Barcode.QRCode`` and its string value.
-Constants and variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
+the original ``Barcode.upc`` and its integer values are replaced by
+the new ``Barcode.qrCode`` and its string value.
+Constants and variables of type ``Barcode`` can store either a ``.upc`` or a ``.qrCode``
 (together with their associated values),
 but they can only store one of them at any given time.
 
@@ -259,9 +259,9 @@ for use within the ``switch`` case's body:
 .. testcode:: enums
 
    -> switch productBarcode {
-         case .UPCA(let numberSystem, let manufacturer, let product, let check):
-            print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-         case .QRCode(let productCode):
+         case .upc(let numberSystem, let manufacturer, let product, let check):
+            print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+         case .qrCode(let productCode):
             print("QR code: \(productCode).")
       }
    <- QR code: ABCDEFGHIJKLMNOP.
@@ -273,9 +273,9 @@ you can place a single ``var`` or ``let`` annotation before the case name, for b
 .. testcode:: enums
 
    -> switch productBarcode {
-         case let .UPCA(numberSystem, manufacturer, product, check):
-            print("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-         case let .QRCode(productCode):
+         case let .upc(numberSystem, manufacturer, product, check):
+            print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+         case let .qrCode(productCode):
             print("QR code: \(productCode).")
       }
    <- QR code: ABCDEFGHIJKLMNOP.
@@ -298,9 +298,9 @@ Here's an example that stores raw ASCII values alongside named enumeration cases
 .. testcode:: rawValues
 
    -> enum ASCIIControlCharacter: Character {
-         case Tab = "\t"
-         case LineFeed = "\n"
-         case CarriageReturn = "\r"
+         case tab = "\t"
+         case lineFeed = "\n"
+         case carriageReturn = "\r"
       }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
@@ -342,12 +342,12 @@ with integer raw values to represent each planet's order from the sun:
 .. testcode:: rawValues
 
    -> enum Planet: Int {
-         case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
       }
 
 In the example above,
-``Planet.Mercury`` has an explicit raw value of ``1``,
-``Planet.Venus`` has an implicit raw value of ``2``, and so on.
+``Planet.mercury`` has an explicit raw value of ``1``,
+``Planet.venus`` has an implicit raw value of ``2``, and so on.
 
 When strings are used for raw values,
 the implicit value for each case is the text of that case's name.
@@ -358,25 +358,25 @@ with string raw values to represent each direction's name:
 .. testcode:: rawValues
 
    -> enum CompassPoint: String {
-         case North, South, East, West
+         case north, south, east, west
       }
 
 In the example above,
-``CompassPoint.South`` has an implicit raw value of ``"South"``, and so on.
+``CompassPoint.south`` has an implicit raw value of ``"south"``, and so on.
 
 You access the raw value of an enumeration case with its ``rawValue`` property:
 
 .. testcode:: rawValues
 
-   -> let earthsOrder = Planet.Earth.rawValue
+   -> let earthsOrder = Planet.earth.rawValue
    << // earthsOrder : Int = 3
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
    ---
-   -> let sunsetDirection = CompassPoint.West.rawValue
-   << // sunsetDirection : String = "West"
+   -> let sunsetDirection = CompassPoint.west.rawValue
+   << // sunsetDirection : String = "west"
    /> sunsetDirection is \"\(sunsetDirection)\"
-   </ sunsetDirection is "West"
+   </ sunsetDirection is "west"
 
 
 .. _Enumerations_InitializingFromARawValue:
@@ -395,8 +395,8 @@ This example identifies Uranus from its raw value of ``7``:
 .. testcode:: rawValues
 
    -> let possiblePlanet = Planet(rawValue: 7)
-   << // possiblePlanet : Planet? = Optional(REPL.Planet.Uranus)
-   // possiblePlanet is of type Planet? and equals Planet.Uranus
+   << // possiblePlanet : Planet? = Optional(REPL.Planet.uranus)
+   // possiblePlanet is of type Planet? and equals Planet.uranus
 
 Not all possible ``Int`` values will find a matching planet, however.
 Because of this, the raw value initializer always returns an *optional* enumeration case.
@@ -418,7 +418,7 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
    << // positionToFind : Int = 11
    -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
-            case .Earth:
+            case .earth:
                print("Mostly harmless")
             default:
                print("Not a safe place for humans")
@@ -454,9 +454,9 @@ For example, here is an enumeration that stores simple arithmetic expressions:
 .. testcode:: recursive-enum-intro
 
     -> enum ArithmeticExpression {
-           case Number(Int)
-           indirect case Addition(ArithmeticExpression, ArithmeticExpression)
-           indirect case Multiplication(ArithmeticExpression, ArithmeticExpression)
+           case number(Int)
+           indirect case addition(ArithmeticExpression, ArithmeticExpression)
+           indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
 You can also write ``indirect`` before the beginning of the enumeration,
@@ -465,16 +465,16 @@ to enable indirection for all of the enumeration's cases that need it:
 .. testcode:: recursive-enum
 
     -> indirect enum ArithmeticExpression {
-           case Number(Int)
-           case Addition(ArithmeticExpression, ArithmeticExpression)
-           case Multiplication(ArithmeticExpression, ArithmeticExpression)
+           case number(Int)
+           case addition(ArithmeticExpression, ArithmeticExpression)
+           case multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
 This enumeration can store three kinds of arithmetic expressions:
 a plain number,
 the addition of two expressions,
 and the multiplication of two expressions.
-The ``Addition`` and ``Multiplication`` cases have associated values
+The ``addition`` and ``multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
 For example, the expression ``(5 + 4) * 2``
@@ -488,14 +488,14 @@ being created for ``(5 + 4) * 2``:
 
 .. testcode:: recursive-enum
 
-    -> let five = ArithmeticExpression.Number(5)
-    -> let four = ArithmeticExpression.Number(4)
-    -> let sum = ArithmeticExpression.Addition(five, four)
-    -> let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
-    << // five : ArithmeticExpression = REPL.ArithmeticExpression.Number(5)
-    << // four : ArithmeticExpression = REPL.ArithmeticExpression.Number(4)
-    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4))
-    << // product : ArithmeticExpression = REPL.ArithmeticExpression.Multiplication(REPL.ArithmeticExpression.Addition(REPL.ArithmeticExpression.Number(5), REPL.ArithmeticExpression.Number(4)), REPL.ArithmeticExpression.Number(2))
+    -> let five = ArithmeticExpression.number(5)
+    -> let four = ArithmeticExpression.number(4)
+    -> let sum = ArithmeticExpression.addition(five, four)
+    -> let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+    << // five : ArithmeticExpression = REPL.ArithmeticExpression.number(5)
+    << // four : ArithmeticExpression = REPL.ArithmeticExpression.number(4)
+    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.addition(REPL.ArithmeticExpression.number(5), REPL.ArithmeticExpression.number(4))
+    << // product : ArithmeticExpression = REPL.ArithmeticExpression.multiplication(REPL.ArithmeticExpression.addition(REPL.ArithmeticExpression.number(5), REPL.ArithmeticExpression.number(4)), REPL.ArithmeticExpression.number(2))
 
 A recursive function is a straightforward way
 to work with data that has a recursive structure.
@@ -505,11 +505,11 @@ For example, here's a function that evaluates an arithmetic expression:
 
     -> func evaluate(_ expression: ArithmeticExpression) -> Int {
            switch expression {
-               case let .Number(value):
+               case let .number(value):
                    return value
-               case let .Addition(left, right):
+               case let .addition(left, right):
                    return evaluate(left) + evaluate(right)
-               case let .Multiplication(left, right):
+               case let .multiplication(left, right):
                    return evaluate(left) * evaluate(right)
            }
        }
