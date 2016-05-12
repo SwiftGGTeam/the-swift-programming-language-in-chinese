@@ -223,10 +223,6 @@ Initializers are described in more detail in :doc:`Initialization`.
    !! let c = C(x: 1, y: 1)
    !!         ~~~~^~~~~~~~
 
-.. FIXME: The current plan is to introduce a memberwise initializer for classes too,
-   as described in rdar://16704095.
-   We hope to have this by WWDC, and this section will need updating if this lands.
-
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
 Structures and Enumerations Are Value Types
