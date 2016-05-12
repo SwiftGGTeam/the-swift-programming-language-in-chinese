@@ -10,7 +10,7 @@
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 > 2.2
-> 翻译：[175](https://github.com/Brian175)，2016-04-09
+> 翻译：[175](https://github.com/Brian175)，2016-04-09 校对：[SketchK](https://github.com/SketchK)，2016-05-11
 
 本页内容包括：
 

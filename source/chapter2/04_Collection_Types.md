@@ -9,7 +9,11 @@
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)
+> 校对：[shanks](http://codebuild.me)  
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
+
 
 本页包含内容：
 
