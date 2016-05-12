@@ -12,6 +12,9 @@
 > 翻译：[DianQK](https://github.com/DianQK)
 > 定稿：[shanks](http://codebuild.me)
 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
+
 本页包含内容：
 
 - [函数定义与调用（Defining and Calling Functions）](#Defining_and_Calling_Functions)
@@ -330,57 +333,18 @@ arithmeticMean(3, 8.25, 18.75)
 
 如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
 
-<a name="constant_and_variable_parameters"></a>
-### 常量参数和变量参数（Constant and Variable Parameters）
-
-函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。
-
-但是，有时候，如果函数中有传入参数的变量值副本将是很有用的。你可以通过指定一个或多个参数为变量参数，从而避免自己在函数中定义新的变量。变量参数不是常量，你可以在函数中把它当做新的可修改副本来使用。
-
-通过在参数名前加关键字 `var` 来定义变量参数：
-
-```swift
-func alignRight(var string: String, totalLength: Int, pad: Character) -> String {
-    let amountToPad = totalLength - string.characters.count
-    if amountToPad < 1 {
-        return string
-    }
-    let padString = String(pad)
-    for _ in 1...amountToPad {
-        string = padString + string
-    }
-    return string
-}
-let originalString = "hello"
-let paddedString = alignRight(originalString, totalLength: 10, pad: "-")
-// paddedString is equal to "-----hello"
-// originalString is still equal to "hello"
-```
-
-这个例子中定义了一个叫做 `alignRight(_:totalLength:pad:)` 的新函数，用来将输入的字符串对齐到更长的输出字符串的右边缘。左侧空余的地方用指定的填充字符填充。这个例子中，字符串`"hello"`被转换成了`"-----hello"`。
-
-`alignRight(_:totalLength:pad:)` 函数将输入参数 `string` 定义为变量参数。这意味着 `string` 现在可以作为一个局部变量，被传入的字符串值初始化，并且可以在函数体中进行操作。
-
-函数首先计算出有多少字符需要被添加到`string`的左边，从而将其在整个字符串中右对齐。这个值存储在一个称为`amountToPad`的本地常量。如果不需要填充（也就是说，如果`amountToPad`小于1），该函数简单地返回没有任何填充的输入值`string`。
-
-否则，该函数用`pad`字符创建一个叫做`padString`的临时`String`常量，并将`amountToPad`个 `padString`添加到现有字符串的左边。（一个`String`值不能被添加到一个`Character`值上，所以`padString`常量用于确保`+`操作符两侧都是`String`值）。
-
-> 注意  
-> 对变量参数所进行的修改在函数调用结束后便消失了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
-
-<a name="in_out_parameters"></a>
 ### 输入输出参数（In-Out Parameters）
 
-变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。
+函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。
 
-定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](../chapter3/05_Declarations.html#function_declaration)一节。
 
-<!--上面的链接对应的内容没有更新翻译-->
+定义一个输入输出参数时，在参数定义前加 inout 关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](../chapter3/05_Declarations.html#function_declaration)一节。
+
 
 你只能传递变量给输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数名前加`&`符，表示这个值可以被函数修改。
 
 > 注意  
-> 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。如果你用 `inout` 标记一个参数，这个参数不能被 `var` 或者 `let` 标记。
+> 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。
 
 下面是例子，`swapTwoInts(_:_:)` 函数，有两个分别叫做 `a` 和 `b` 的输入输出参数：
 

@@ -14,7 +14,7 @@
 
 > 2.2
 > 翻译：[LinusLing](https://github.com/linusling)
-> 校对：[]()
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-12
 
 本页包含内容：
 
@@ -150,7 +150,8 @@ var square = 0
 var diceRoll = 0
 while square < finalSquare {
     // 掷骰子
-    if ++diceRoll == 7 { diceRoll = 1 }
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
     // 根据点数移动
     square += diceRoll
     if square < board.count {
@@ -209,7 +210,8 @@ repeat {
     // 顺着梯子爬上去或者顺着蛇滑下去
     square += board[square]
     // 掷骰子
-    if ++diceRoll == 7 { diceRoll = 1 }
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
     // 根据点数移动
     square += diceRoll
 } while square < finalSquare
@@ -275,7 +277,7 @@ if temperatureInFahrenheit <= 32 {
 实际上，最后的`else`语句是可选的：
 
 ```swift
-temperatureInFahrenheit = 90
+temperatureInFahrenheit = 72
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 } else if temperatureInFahrenheit >= 86 {

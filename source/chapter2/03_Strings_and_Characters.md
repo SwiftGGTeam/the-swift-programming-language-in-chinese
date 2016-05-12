@@ -10,7 +10,10 @@
 
 > 2.1
 > 翻译：[DianQK](https://github.com/DianQK)
-> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank)
+> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank), 
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
 
 本页包含内容：
 

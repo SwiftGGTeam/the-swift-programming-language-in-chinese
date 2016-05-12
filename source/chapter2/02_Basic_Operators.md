@@ -12,7 +12,7 @@
 > 校对：[shanks](http://codebuild.me)
 
 > 2.2
-> 翻译+校对：[Cee](https://github.com/Cee)
+> 翻译+校对：[Cee](https://github.com/Cee) 校对：[SketchK](https://github.com/SketchK)，2016-05-11
 
 本页包含内容：
 

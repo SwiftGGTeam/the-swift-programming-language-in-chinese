@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
 > 校对：[shanks](http://codebuild.me)
+>
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
 
 本页包含内容：
 
@@ -213,7 +216,8 @@ let numbers = [16, 58, 510]
 
 ```swift
 let strings = numbers.map {
-    (var number) -> String in
+    (number) -> String in
+    var number = number
     var output = ""
     while number > 0 {
         output = digitNames[number % 10]! + output
@@ -227,7 +231,7 @@ let strings = numbers.map {
 
 `map(_:)`为数组中每一个元素调用了闭包表达式。您不需要指定闭包的输入参数`number`的类型，因为可以通过要映射的数组类型进行推断。
 
-在该例中，闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](./06_Functions.html#constant_and_variable_parameters)），因此可以在闭包函数体内对其进行修改，而不用再定义一个新的局部变量并将`number`的值赋值给它。闭包表达式指定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
+在该例中，局部变量`number`的值由闭包中的`number`参数获得,因此可以在闭包函数体内对其进行修改，(闭包或者函数的参数总是固定的),闭包表达式指定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
 
 闭包表达式在每次被调用的时候创建了一个叫做`output`的字符串并返回。其使用求余运算符（`number % 10`）计算最后一位数字并利用`digitNames`字典获取所映射的字符串。
 
