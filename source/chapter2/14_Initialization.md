@@ -993,7 +993,7 @@ class SomeClass {
 
 下面例子中定义了一个结构体`Checkerboard`，它构建了西洋跳棋游戏的棋盘：
 
-![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/checkersBoard_2x.png)
+![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/chessBoard_2x.png)
 
 西洋跳棋游戏在一副黑白格交替的`10x10`的棋盘中进行。为了呈现这副游戏棋盘，`Checkerboard`结构体定义了一个属性`boardColors`，它是一个包含`100`个`Bool`值的数组。在数组中，值为`true`的元素表示一个黑格，值为`false`的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
