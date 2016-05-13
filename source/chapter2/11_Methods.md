@@ -9,7 +9,10 @@
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
 > 2.1
-> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18
+> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18  
+> 
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
 
 本页包含内容：
 
@@ -33,7 +36,7 @@
 class Counter {
     var count = 0
     func increment() {
-        ++count
+        count += 1
     }
     func incrementBy(amount: Int) {
         count += amount
@@ -112,7 +115,7 @@ counter.incrementBy(5, numberOfTimes: 3)
 
 ```swift
 func increment() {
-    self.count++
+    self.count += 1
 }
 ```
 

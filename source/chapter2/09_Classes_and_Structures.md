@@ -10,6 +10,9 @@
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-10-29
 
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
+
 本页包含内容：
 
 - [类和结构体对比](#comparing_classes_and_structures)

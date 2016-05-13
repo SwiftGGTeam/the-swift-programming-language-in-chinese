@@ -9,7 +9,10 @@
 > 翻译+校对：[shanks](http://codebuild.me)
 
 > 2.1
-> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)
+> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)  
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
 
 
 本页包含内容：
