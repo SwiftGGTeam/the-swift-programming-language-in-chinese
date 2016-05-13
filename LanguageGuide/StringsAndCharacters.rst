@@ -566,8 +566,8 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property to create a ``Range`` of all of the
-indices used to access individual characters in a string.
+Use the ``indices`` property of the ``characters`` property access all of the
+indices of individual characters in a string.
 
 .. testcode:: stringIndex
 
