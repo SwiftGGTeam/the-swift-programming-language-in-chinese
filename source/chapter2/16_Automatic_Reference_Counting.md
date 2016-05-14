@@ -10,7 +10,10 @@
 
 > 2.1
 > 翻译：[Channe](https://github.com/Channe)
-> 校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank) ，2016-01-23
+> 校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank) ，2016-01-23  
+> 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
 
 本页包含内容：
 

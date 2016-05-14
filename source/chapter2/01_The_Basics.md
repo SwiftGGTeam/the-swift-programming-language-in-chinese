@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，[overtrue](https://github.com/overtrue)
+> 
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
 
 本页包含内容：
 
