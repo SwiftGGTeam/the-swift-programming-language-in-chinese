@@ -58,9 +58,9 @@ of operating a vending machine inside a game:
 .. testcode:: throw-enum-error
 
    -> enum VendingMachineError: ErrorProtocol {
-          case InvalidSelection
-          case InsufficientFunds(coinsNeeded: Int)
-          case OutOfStock
+          case invalidSelection
+          case insufficientFunds(coinsNeeded: Int)
+          case outOfStock
       }
 
 Throwing an error lets you indicate that something unexpected happened
@@ -72,7 +72,7 @@ that five additional coins are needed by the vending machine:
 
 .. testcode:: throw-enum-error
 
-   -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+   -> throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
    xx fatal error
 
 .. _ErrorHandling_Catch:
@@ -180,9 +180,9 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    >> enum VendingMachineError: ErrorProtocol {
-   >>     case InvalidSelection
-   >>     case InsufficientFunds(coinsNeeded: Int)
-   >>     case OutOfStock
+   >>     case invalidSelection
+   >>     case insufficientFunds(coinsNeeded: Int)
+   >>     case outOfStock
    >> }
    -> struct Item {
          var price: Int
@@ -199,15 +199,15 @@ or has a cost that exceeds the current deposited amount:
    ---
    ->     func vend(itemNamed name: String) throws {
               guard let item = inventory[name] else {
-                  throw VendingMachineError.InvalidSelection
+                  throw VendingMachineError.invalidSelection
               }
 
               guard item.count > 0 else {
-                  throw VendingMachineError.OutOfStock
+                  throw VendingMachineError.outOfStock
               }
 
               guard item.price <= coinsDeposited else {
-                  throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
+                  throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
               }
 
               coinsDeposited -= item.price
@@ -344,11 +344,11 @@ but all other errors have to be handled by its surrounding scope:
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
-      } catch VendingMachineError.InvalidSelection {
+      } catch VendingMachineError.invalidSelection {
           print("Invalid Selection.")
-      } catch VendingMachineError.OutOfStock {
+      } catch VendingMachineError.outOfStock {
           print("Out of Stock.")
-      } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+      } catch VendingMachineError.insufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
    <- Insufficient funds. Please insert an additional 2 coins.
