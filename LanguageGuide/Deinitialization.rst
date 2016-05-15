@@ -64,7 +64,7 @@ to store and manage its current state:
 
    -> class Bank {
          static var coinsInBank = 10_000
-         static func give(coins numberOfCoinsRequested: Int) -> Int {
+         static func distribute(coins numberOfCoinsRequested: Int) -> Int {
             let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
             coinsInBank -= numberOfCoinsToVend
             return numberOfCoinsToVend
@@ -75,10 +75,10 @@ to store and manage its current state:
       }
 
 ``Bank`` keeps track of the current number of coins it holds with its ``coinsInBank`` property.
-It also offers two methods --- ``give(coins:)`` and ``receive(coins:)`` ---
+It also offers two methods --- ``distribute(coins:)`` and ``receive(coins:)`` ---
 to handle the distribution and collection of coins.
 
-The ``give(coins:)`` method checks that there are enough coins in the bank before distributing them.
+The ``distribute(coins:)`` method checks that there are enough coins in the bank before distributing them.
 If there are not enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
@@ -95,10 +95,10 @@ This is represented by the player's ``coinsInPurse`` property:
    -> class Player {
          var coinsInPurse: Int
          init(coins: Int) {
-            coinsInPurse = Bank.give(coins: coins)
+            coinsInPurse = Bank.distribute(coins: coins)
          }
          func win(coins: Int) {
-            coinsInPurse += Bank.give(coins: coins)
+            coinsInPurse += Bank.distribute(coins: coins)
          }
          deinit {
             Bank.receive(coins: coinsInPurse)
