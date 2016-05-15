@@ -566,7 +566,7 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property access all of the
+Use the ``indices`` property of the ``characters`` property to access all of the
 indices of individual characters in a string.
 
 .. testcode:: stringIndex
