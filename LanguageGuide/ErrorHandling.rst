@@ -31,13 +31,6 @@ and to communicate to the user any errors it can't resolve.
    see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-.. NOTE:
-
-    If want to make a comparison to exception handling in other languages,
-    we'll need to take about performance and other subtle differences.
-    Leaving this discussion out for Xcode 7 beta 1.
-
-
 .. _ErrorHandling_Represent:
 
 Representing and Throwing Errors
