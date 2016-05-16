@@ -397,16 +397,16 @@ Extensions can add new nested types to existing classes, structures, and enumera
 
    -> extension Int {
          enum Kind {
-            case Negative, Zero, Positive
+            case negative, zero, positive
          }
          var kind: Kind {
             switch self {
                case 0:
-                  return .Zero
+                  return .zero
                case let x where x > 0:
-                  return .Positive
+                  return .positive
                default:
-                  return .Negative
+                  return .negative
             }
          }
       }
@@ -428,11 +428,11 @@ The nested enumeration can now be used with any ``Int`` value:
    -> func printIntegerKinds(_ numbers: [Int]) {
          for number in numbers {
             switch number.kind {
-               case .Negative:
+               case .negative:
                   print("- ", terminator: "")
-               case .Zero:
+               case .zero:
                   print("0 ", terminator: "")
-               case .Positive:
+               case .positive:
                   print("+ ", terminator: "")
             }
          }
@@ -455,4 +455,4 @@ and prints an appropriate description.
    ``number.kind`` is already known to be of type ``Int.Kind``.
    Because of this, all of the ``Int.Kind`` case values
    can be written in shorthand form inside the ``switch`` statement,
-   such as ``.Negative`` rather than ``Int.Kind.Negative``.
+   such as ``.negative`` rather than ``Int.Kind.negative``.
