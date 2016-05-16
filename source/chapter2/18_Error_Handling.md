@@ -3,7 +3,10 @@
 
 > 2.1
 > 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
-> 校对：[shanks](http://codebuild.me) 2015-10-24
+> 校对：[shanks](http://codebuild.me) 2015-10-24  
+>  
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
 
 本页包含内容：
 
@@ -18,7 +21,7 @@
 举个例子，假如有个从磁盘上的某个文件读取数据并进行处理的任务，该任务会有多种可能失败的情况，包括指定路径下文件并不存在，文件不具有可读权限，或者文件编码格式不兼容。区分这些不同的失败情况可以让程序解决并处理某些错误，然后把它解决不了的错误报告给用户。
 
 > 注意  
-Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 2.1)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
+Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 2.2)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
 
 <a name="representing_and_throwing_errors"></a>
 ##表示并抛出错误
@@ -35,7 +38,7 @@ enum VendingMachineError: ErrorType {
 }
 ```
 
-抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throws`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
+抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throw`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
 
 ```swift
 throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
@@ -68,7 +71,7 @@ func cannotThrowErrors() -> String
 > 注意  
 只有 throwing 函数可以传递错误。任何在某个非 throwing 函数内部抛出的错误只能在函数内部处理。
 
-下面的例子中，`VendingMechine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者花费超过了投入金额，该方法就会抛出一个相应的`VendingMachineError`：
+下面的例子中，`VendingMechine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者投入金额小于物品价格，该方法就会抛出一个相应的`VendingMachineError`：
 
 ```swift
 struct Item {
@@ -88,7 +91,7 @@ class VendingMachine {
     }
     
     func vend(itemNamed name: String) throws {
-        guard var item = inventory[name] else {
+        guard let item = inventory[name] else {
             throw VendingMachineError.InvalidSelection
         }
         
@@ -101,8 +104,11 @@ class VendingMachine {
         }
         
         coinsDeposited -= item.price
-        --item.count
-        inventory[name] = item
+        
+        var newItem = item
+        newItem.count -= 1
+        inventory[name] = newItem
+
         dispenseSnack(name)
     }
 }
@@ -124,7 +130,20 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 }
 ```
 
-上例中，`buyFavoriteSnack(_:vendingMachine:)`函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们购买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。
+上例中，`buyFavoriteSnack(_:vendingMachine:)`函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们购买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。  
+
+throwing构造器能像throwing函数一样传递错误.例如下面代码中的`PurchasedSnack`构造器在构造过程中调用了throwing函数,并且通过传递到它的调用者来处理这些错误。  
+
+```swift
+struct PurchasedSnack {
+    let name: String
+    init(name: String, vendingMachine: VendingMachine) throws {
+        try vendingMachine.vend(itemNamed: name)
+        self.name = name
+    }
+}
+```
+
 
 ###用 Do-Catch 处理错误
 
@@ -166,7 +185,7 @@ do {
 
 ###将错误转换成可选值
 
-可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如下面代码中的`x`和`y`具有相同的值：
+可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如,在下面的代码中,`x`和`y`有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -197,7 +216,7 @@ func fetchData() -> Data? {
 
 ### 禁用错误传递
 
-有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写`try!`来禁用错误传递，这会把调用包装在一个断言不会有错误抛出的运行时断言中。如果实际上抛出了错误，你会得到一个运行时错误。
+有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写`try!`来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误。
 
 例如，下面的代码使用了`loadImage(_:)`函数，该函数从给定的路径加载图片资源，如果图片无法载入则抛出一个错误。在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递：
 
