@@ -426,7 +426,7 @@ you must explicitly declare the nested type as public.
 .. sourcefile:: nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private
 
    -> public struct PublicStruct {
-         public enum PublicEnumInsidePublicStruct { case A, B }
+         public enum PublicEnumInsidePublicStruct { case a, b }
          internal enum InternalEnumInsidePublicStruct { case a, b }
          private enum PrivateEnumInsidePublicStruct { case a, b }
          enum AutomaticEnumInsidePublicStruct { case a, b }
