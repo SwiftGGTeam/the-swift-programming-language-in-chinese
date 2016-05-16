@@ -378,25 +378,25 @@ You cannot specify a different access level for individual enumeration cases.
 
 In the example below,
 the ``CompassPoint`` enumeration has an explicit access level of “public”.
-The enumeration cases ``North``, ``South``, ``East``, and ``West``
+the enumeration cases ``north``, ``south``, ``east``, and ``west``
 therefore also have an access level of “public”:
 
 .. testcode:: enumerationCases
 
    -> public enum CompassPoint {
-         case North
-         case South
-         case East
-         case West
+         case north
+         case south
+         case east
+         case west
       }
 
 .. sourcefile:: enumerationCases_Module1
 
    -> public enum CompassPoint {
-         case North
-         case South
-         case East
-         case West
+         case north
+         case south
+         case east
+         case west
       }
 
 .. sourcefile:: enumerationCases_Module2

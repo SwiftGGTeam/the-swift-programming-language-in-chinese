@@ -308,17 +308,17 @@ The same behavior applies to enumerations:
 .. testcode:: ClassesAndStructures
 
    -> enum CompassPoint {
-         case North, South, East, West
+         case north, south, east, west
       }
-   -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = REPL.CompassPoint.West
+   -> var currentDirection = CompassPoint.west
+   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
-   -> currentDirection = .East
-   -> if rememberedDirection == .West {
-         print("The remembered direction is still .West")
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
+   -> currentDirection = .east
+   -> if rememberedDirection == .west {
+         print("The remembered direction is still .west")
       }
-   <- The remembered direction is still .West
+   <- The remembered direction is still .west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it is actually set to a copy of that value.
