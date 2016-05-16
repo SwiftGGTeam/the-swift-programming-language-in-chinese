@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[小铁匠Linus](https://github.com/kevin833752)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
+> 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
 
 本页包含内容：
 
@@ -348,7 +351,7 @@ protocol DiceGameDelegate {
 
 `DiceGame` 协议可以被任意涉及骰子的游戏采纳。`DiceGameDelegate` 协议可以被任意类型采纳，用来追踪 `DiceGame` 的游戏过程。
 
-如下所示，`SnakesAndLadders` 是 [Control Flow](./05_Control_Flow.html) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
+如下所示，`SnakesAndLadders` 是 [控制流](./05_Control_Flow.html) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
 
 ```swift
 class SnakesAndLadders: DiceGame {
@@ -383,7 +386,7 @@ class SnakesAndLadders: DiceGame {
 }
 ```
 
-关于这个蛇梯棋游戏的详细描述请参阅 [Control Flow](./05_Control_Flow.html) 章节中的 [Break](./05_Control_Flow.html#break) 部分。
+关于这个蛇梯棋游戏的详细描述请参阅 [控制流](./05_Control_Flow.html) 章节中的 [Break](./05_Control_Flow.html#break) 部分。
 
 这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类采纳了 `DiceGame` 协议，并且提供了相应的可读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为可读的，因此将 `dice` 声明为常量属性。）
 
@@ -408,7 +411,7 @@ class DiceGameTracker: DiceGameDelegate {
         print("The game is using a \(game.dice.sides)-sided dice")
     }
     func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-        ++numberOfTurns
+        numberOfTurns += 1
         print("Rolled a \(diceRoll)")
     }
     func gameDidEnd(game: DiceGame) {
@@ -726,7 +729,7 @@ for object in objects {
 
 > 注意  
 > 可选的协议要求只能用在标记 `@objc` 特性的协议中。  
-> 该特性表示协议将暴露给 Objective-C 代码，详情参见[`Using Swift with Cocoa and Objective-C(Swift 2.1)`](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。即使你不打算和 Objective-C 有什么交互，如果你想要指定可选的协议要求，那么还是要为协议加上 `@obj` 特性。  
+> 该特性表示协议将暴露给 Objective-C 代码，详情参见[`Using Swift with Cocoa and Objective-C(Swift 2.2)`](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。即使你不打算和 Objective-C 有什么交互，如果你想要指定可选的协议要求，那么还是要为协议加上 `@objc` 特性。  
 > 还需要注意的是，标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类采纳，其他类以及结构体和枚举均不能采纳这种协议。
 
 下面的例子定义了一个名为 `Counter` 的用于整数计数的类，它使用外部的数据源来提供每次的增量。数据源由 `CounterDataSource` 协议定义，包含两个可选要求：
