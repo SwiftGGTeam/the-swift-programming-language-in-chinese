@@ -12,7 +12,7 @@
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 
-> 2.2：翻译+校对：[Lanford](https://github.com/LanfordCai)，2016-04-08
+> 2.2：翻译+校对：[Lanford](https://github.com/LanfordCai)，2016-04-08 [SketchK](https://github.com/SketchK) 2016-05-16
 
 本页包含内容：
 
