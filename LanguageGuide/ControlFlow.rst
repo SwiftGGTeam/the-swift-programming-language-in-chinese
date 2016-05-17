@@ -660,6 +660,7 @@ separating the values with commas.
          default:
             print("Not the letter A")
       }
+   <- The letter A
 
 For readability,
 a compound case can also be written over multiple lines.
@@ -887,13 +888,15 @@ For example:
 
    -> let someCharacter: Character = "e"
    << // someCharacter : Character = "e"
-         case "a", "e", "i", "o", "u":
-            print("\(someCharacter) is a vowel")
-         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            print("\(someCharacter) is a consonant")
-        default:
-            print("\(someCharacter) is not a vowel or a consonant")
+   -> switch someCharacter {
+          case "a", "e", "i", "o", "u":
+              print("\(someCharacter) is a vowel")
+          case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+              "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+              print("\(someCharacter) is a consonant")
+          default:
+              print("\(someCharacter) is not a vowel or a consonant")
+      }
    <- e is a vowel
 
 The ``switch`` statement's first case matches
