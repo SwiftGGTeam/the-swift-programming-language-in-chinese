@@ -1277,8 +1277,8 @@ which has two optional requirements:
 
    >> import Foundation
    -> @objc protocol CounterDataSource {
-         optional func increment(forCount count: Int) -> Int
-         optional var fixedIncrement: Int { get }
+         @objc optional func increment(forCount count: Int) -> Int
+         @objc optional var fixedIncrement: Int { get }
       }
 
 The ``CounterDataSource`` protocol defines
