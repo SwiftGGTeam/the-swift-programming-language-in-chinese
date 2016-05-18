@@ -174,7 +174,7 @@ and consists of a parameter and return type separated by an arrow (``->``):
 
 .. syntax-outline::
 
-    <#parameter type#> -> <#return type#>
+    (<#parameter type#>) -> <#return type#>
 
 Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple parameters
