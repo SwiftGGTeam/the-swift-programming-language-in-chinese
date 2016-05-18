@@ -206,7 +206,7 @@ In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
 For example,
-the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)`` ---
+the function type ``(Int) -> (Int) -> Int`` is understood as ``(Int) -> ((Int) -> Int)`` ---
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
 
@@ -218,6 +218,23 @@ As a result, you can use a nonthrowing function in the same places as a throwing
 Throwing and rethrowing functions are described in
 :ref:`Declarations_ThrowingFunctionsAndMethods`
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
+
+.. assertion:: function-arrow-is-right-associative
+
+   >> func f(i: Int) -> (Int) -> Int {
+   >>     func g(j: Int) -> Int {
+   >>         return i + j
+   >>     }
+   >>     return g
+   >> }
+   >> let a: (Int) -> (Int) -> Int = f
+   << // a : (Int) -> (Int) -> Int = (Function)
+   >> a(3)(5)
+   << // r0 : Int = 8
+   >> let b: (Int) -> ((Int) -> Int) = f
+   << // b : (Int) -> ((Int) -> Int) = (Function)
+   >> b(3)(5)
+   << // r1 : Int = 8
 
 .. langref-grammar
 
