@@ -1226,7 +1226,7 @@ The following function calls are equivalent:
 
 .. testcode:: trailing-closure
 
-    >> func someFunction (x: Int, f: Int -> Bool) -> Bool {
+    >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
     >>    return f(x)
     >> }
     >> let x = 10
@@ -1244,7 +1244,7 @@ the parentheses can be omitted.
 
     >> class Data {
     >>    let data = 10
-    >>    func someMethod(f: Int -> Bool) -> Bool {
+    >>    func someMethod(f: (Int) -> Bool) -> Bool {
     >>       return f(self.data)
     >>    }
     >> }
@@ -1310,8 +1310,8 @@ For example:
 .. testcode:: init-as-value
 
     // Type annotation is required because String has multiple initializers.
-    -> let initializer: Int -> String = String.init
-    << // initializer : Int -> String = (Function)
+    -> let initializer: (Int) -> String = String.init
+    << // initializer : (Int) -> String = (Function)
     -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
     << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
