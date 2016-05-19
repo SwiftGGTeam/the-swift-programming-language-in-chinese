@@ -991,10 +991,10 @@ For example:
 
 .. testcode:: implicitMemberEnum
 
-    >> enum MyEnumeration { case SomeValue, AnotherValue }
-    -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
-    -> x = .AnotherValue
+    >> enum MyEnumeration { case someValue, anotherValue }
+    -> var x = MyEnumeration.someValue
+    << // x : MyEnumeration = REPL.MyEnumeration.someValue
+    -> x = .anotherValue
 
 .. langref-grammar
 

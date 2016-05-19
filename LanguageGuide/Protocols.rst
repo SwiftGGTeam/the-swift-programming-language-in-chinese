@@ -289,27 +289,27 @@ that is also marked as ``mutating``.
 
 The example below defines an enumeration called ``OnOffSwitch``.
 This enumeration toggles between two states,
-indicated by the enumeration cases ``On`` and ``Off``.
+indicated by the enumeration cases ``on`` and ``off``.
 The enumeration's ``toggle`` implementation is marked as ``mutating``,
 to match the ``Togglable`` protocol's requirements:
 
 .. testcode:: mutatingRequirements
 
    -> enum OnOffSwitch: Togglable {
-         case Off, On
+         case off, on
          mutating func toggle() {
             switch self {
-               case Off:
-                  self = On
-               case On:
-                  self = Off
+               case off:
+                  self = on
+               case on:
+                  self = off
             }
          }
       }
-   -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.Off
+   -> var lightSwitch = OnOffSwitch.off
+   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.off
    -> lightSwitch.toggle()
-   // lightSwitch is now equal to .On
+   // lightSwitch is now equal to .on
 
 .. _Protocols_InitializerRequirements:
 

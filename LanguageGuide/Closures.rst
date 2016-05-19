@@ -135,9 +135,6 @@ but they can't have a default value.
 Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
-.. QUESTION: is "reversed" the right name to use here?
-   it's a backward sort, not a reversed version of the original array
-
 The example below shows a closure expression version of the ``backward(_:_:)`` function
 from earlier:
 

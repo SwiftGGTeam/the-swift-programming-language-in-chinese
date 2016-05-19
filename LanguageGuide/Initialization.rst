@@ -1479,22 +1479,22 @@ The initializer can then fail if the provided parameters
 do not match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
-with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
+with three possible states (``kelvin``, ``celsius``, and ``fahrenheit``).
 A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
 
    -> enum TemperatureUnit {
-         case Kelvin, Celsius, Fahrenheit
+         case kelvin, celsius, fahrenheit
          init?(symbol: Character) {
             switch symbol {
                case "K":
-                  self = .Kelvin
+                  self = .kelvin
                case "C":
-                  self = .Celsius
+                  self = .celsius
                case "F":
-                  self = .Fahrenheit
+                  self = .fahrenheit
                default:
                   return nil
             }
@@ -1509,7 +1509,7 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1540,11 +1540,11 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
 .. testcode:: failableInitializersForEnumerations
 
    -> enum TemperatureUnit: Character {
-         case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
+         case kelvin = "K", celsius = "C", fahrenheit = "F"
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }

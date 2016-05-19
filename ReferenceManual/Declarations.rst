@@ -639,9 +639,8 @@ The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
-   -> func f(x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
-   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
-   << // r0 : Int = 6
+   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 .. _Declarations_InOutParameters:
 
@@ -871,7 +870,7 @@ must have at least one throwing function parameter.
 
 .. testcode:: rethrows
 
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Int) rethrows {
           try callback()
       }
 
@@ -1027,16 +1026,16 @@ you can get a reference to an enumeration case and apply it later in your code.
 .. testcode:: enum-case-as-function
 
     -> enum Number {
-          case Integer(Int)
-          case Real(Double)
+          case integer(Int)
+          case real(Double)
        }
-    -> let f = Number.Integer
+    -> let f = Number.integer
     << // f : (Int) -> Number = (Function)
     -> // f is a function of type (Int) -> Number
     ---
     -> // Apply f to create an array of Number instances with integer values
     -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
+    << // evenInts : [Number] = [REPL.Number.integer(0), REPL.Number.integer(2), REPL.Number.integer(4), REPL.Number.integer(6)]
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
@@ -1065,15 +1064,15 @@ mark it with the ``indirect`` declaration modifier.
 .. testcode:: indirect-enum
 
    -> enum Tree<T> {
-         case Empty
-         indirect case Node(value: T, left: Tree, right: Tree)
+         case empty
+         indirect case node(value: T, left: Tree, right: Tree)
       }
-   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
-   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
-   >> let t = Tree.Node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+   >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
+   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
+   >> let t = Tree.node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(50, REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty), REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
@@ -1093,22 +1092,22 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
 
 .. assertion indirect-in-indirect
 
-   -> indirect enum E { indirect case C(E) }
+   -> indirect enum E { indirect case c(E) }
    !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
-   !! indirect enum E { indirect case C(E) }
+   !! indirect enum E { indirect case c(E) }
    !!                   ^
 
 .. assertion indirect-without-recursion
 
-   -> enum E { indirect case C }
-   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
-   !! enum E { indirect case C }
+   -> enum E { indirect case c }
+   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
+   !! enum E { indirect case c }
    !!          ^
    ---
-   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
-   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
    ---
-   -> indirect enum E3 { case X }
+   -> indirect enum E3 { case x }
 
 
 .. _Declarations_EnumerationsWithRawCaseValues:
@@ -1135,7 +1134,7 @@ integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
 and one of the following literal-convertible protocols:
 ``IntegerLiteralConvertible`` for integer literals,
-``FloatingPointLiteralConvertible`` for floating-point literals,
+``FloatLiteralConvertible`` for floating-point literals,
 ``StringLiteralConvertible`` for string literals that contain any number of characters, and
 ``ExtendedGraphemeClusterLiteralConvertible`` for string literals
 that contain only a single character.
@@ -1150,12 +1149,12 @@ that is automatically incremented from the raw value of the previous case.
 .. testcode:: raw-value-enum
 
     -> enum ExampleEnum: Int {
-          case A, B, C = 5, D
+          case a, b, c = 5, d
        }
 
-In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value of
-``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
-explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
+In the above example, the raw value of ``ExampleEnum.a`` is ``0`` and the value of
+``ExampleEnum.b`` is ``1``. And because the value of ``ExampleEnum.c`` is
+explicitly set to ``5``, the value of ``ExampleEnum.d`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
 If the raw-value type is specified as ``String``
@@ -1164,12 +1163,13 @@ each unassigned case is implicitly assigned a string with the same text as the n
 
 .. testcode:: raw-value-enum-implicit-string-values
 
-    -> enum WeekendDay: String {
-          case Saturday, Sunday
+    -> enum GamePlayMode: String {
+          case cooperative, individual, competitive
        }
 
-In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
-and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
+In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
+the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
+and the raw value of ``GamePlayMode.competitive`` is ``"competitive"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
@@ -1187,7 +1187,7 @@ Accessing Enumeration Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
+as in ``EnumerationType.enumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_ImplicitMemberExpression`.
@@ -1199,9 +1199,9 @@ in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
 .. FIXME: Or use if-case:
-   enum E { case C(Int) }
-   let e = E.C(100)
-   if case E.C(let i) = e { print(i) }
+   enum E { case c(Int) }
+   let e = E.c(100)
+   if case E.c(let i) = e { print(i) }
    // prints 100
 
 
@@ -1885,14 +1885,14 @@ failable initializer that produces an optional instance of a structure.
 .. testcode:: failable
 
     -> struct SomeStruct {
-           let string: String
+           let property: String
            // produces an optional instance of 'SomeStruct'
            init?(input: String) {
                if input.isEmpty {
                    // discard 'self' and return 'nil'
                    return nil
                }
-               string = input
+               property = input
            }
        }
 

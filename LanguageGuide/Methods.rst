@@ -242,28 +242,28 @@ a different case from the same enumeration:
 .. testcode:: selfEnumerations
 
    -> enum TriStateSwitch {
-         case Off, Low, High
+         case off, low, high
          mutating func next() {
             switch self {
-               case Off:
-                  self = Low
-               case Low:
-                  self = High
-               case High:
-                  self = Off
+               case off:
+                  self = low
+               case low:
+                  self = high
+               case high:
+                  self = off
             }
          }
       }
-   -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.Low
+   -> var ovenLight = TriStateSwitch.low
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.low
    -> ovenLight.next()
-   // ovenLight is now equal to .High
+   // ovenLight is now equal to .high
    -> ovenLight.next()
-   // ovenLight is now equal to .Off
+   // ovenLight is now equal to .off
 
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
-(``Off``, ``Low`` and ``High``)
+(``off``, ``low`` and ``high``)
 every time its ``next()`` method is called.
 
 .. _Methods_TypeMethods:

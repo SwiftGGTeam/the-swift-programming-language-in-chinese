@@ -304,17 +304,17 @@ The same behavior applies to enumerations:
 .. testcode:: ClassesAndStructures
 
    -> enum CompassPoint {
-         case North, South, East, West
+         case north, south, east, west
       }
-   -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = REPL.CompassPoint.West
+   -> var currentDirection = CompassPoint.west
+   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
-   -> currentDirection = .East
-   -> if rememberedDirection == .West {
-         print("The remembered direction is still .West")
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
+   -> currentDirection = .east
+   -> if rememberedDirection == .west {
+         print("The remembered direction is still .west")
       }
-   <- The remembered direction is still .West
+   <- The remembered direction is still .west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it is actually set to a copy of that value.
@@ -417,11 +417,11 @@ or passed to a function.)
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
-   -> enum E { case A, B }
+   -> enum E { case a, b }
    -> let e1 = E.A
-   << // e1 : E = REPL.E.A
+   << // e1 : E = REPL.E.a
    -> let e2 = E.B
-   << // e2 : E = REPL.E.B
+   << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
