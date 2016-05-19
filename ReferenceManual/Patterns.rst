@@ -379,8 +379,10 @@ is compared with the value of an input expression
 using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
-two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in a ``Range`` object, as the following example shows:
+two values of the same type using the ``==`` operator.
+It can also match a value with a range of values,
+by checking whether the value is contained within the range,
+as the following example shows.
 
 .. testcode:: expression-pattern
 

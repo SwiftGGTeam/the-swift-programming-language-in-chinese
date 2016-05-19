@@ -714,17 +714,6 @@ Because the value of ``approximateCount`` falls between 12 and 100,
 ``naturalCount`` is assigned the value ``"dozens of"``,
 and execution is transferred out of the ``switch`` statement.
 
-.. note::
-
-   Both the closed range operator (``...``)
-   and half-open range operator (``..<``)
-   functions are overloaded to return either an
-   interval (``IntervalType``) or a range (``Range``).
-   An interval can determine whether it contains a particular element,
-   such as when matching a ``switch`` statement ``case``.
-   A range is a collection of consecutive values,
-   which can be iterated on in a ``for-in`` statement.
-
 .. _ControlFlow_Tuples:
 
 Tuples
