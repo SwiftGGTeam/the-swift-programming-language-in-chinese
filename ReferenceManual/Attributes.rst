@@ -210,7 +210,8 @@ the ``noreturn`` attribute to a function or method *type*.
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
     as the concatenation of the enumeration name and the case name.
-    For example, a case named ``Venus`` in a Swift ``Planet`` enumeration
+    The first letter of the case name is capitalized.
+    For example, a case named ``venus`` in a Swift ``Planet`` enumeration
     is exposed to Objective-C code as a case named ``PlanetVenus``.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
