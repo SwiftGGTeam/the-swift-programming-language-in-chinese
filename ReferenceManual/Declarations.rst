@@ -2303,7 +2303,7 @@ that introduces the declaration.
     can't be subclassed. It's applied to a property, method, or subscript of a class
     to indicate that a class member can't be overridden in any subclass.
     For an example of how to use the ``final`` attribute,
-    see :ref:`_Inheritance_PreventingOverrides`.
+    see :ref:`Inheritance_PreventingOverrides`.
 
 ``lazy``
     Apply this modifier to a stored variable property of a class or structure
