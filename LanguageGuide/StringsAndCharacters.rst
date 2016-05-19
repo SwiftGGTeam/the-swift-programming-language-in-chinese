@@ -765,7 +765,7 @@ both of which take a single argument of type ``String`` and return a Boolean val
       } else {
          print("Does not have U+00E9 prefix, which is unexpected.")
       }
-   <- has U+00E9 prefix, as expected
+   <- Has U+00E9 prefix, as expected.
    -> if ecole.hasPrefix("\u{65}\u{301}") {
          print("Has U+0065 U+0301 prefix, as expected.")
       } else {
@@ -782,13 +782,13 @@ both of which take a single argument of type ``String`` and return a Boolean val
       } else {
          print("Does not have U+00E9 suffix, which is unexpected.")
       }
-   <- has U+00E9 suffix, as expected
+   <- Has U+00E9 suffix, as expected.
    -> if cafe.hasSuffix("\u{65}\u{301}") {
          print("Has U+0065 U+0301 suffix, as expected.")
       } else {
          print("Does not have U+0065 U+0301 suffix, which is unexpected.")
       }
-   <- has U+0065 U+0301 suffix, as expected
+   <- Has U+0065 U+0301 suffix, as expected.
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:

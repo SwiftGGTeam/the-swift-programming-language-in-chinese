@@ -453,6 +453,7 @@ the program executes only the code within the first matching case in source orde
 .. assertion:: switch-case-with-multiple-patterns
 
    >> let tuple = (1, 1)
+   << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x, 1): print(1)
    >>     default: print(2)
@@ -462,7 +463,7 @@ the program executes only the code within the first matching case in source orde
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:27: error: pattern variable bound to type 'Any' (aka 'protocol<>'), expected type 'Int'
+   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any' (aka 'protocol<>'), expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
