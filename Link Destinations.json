@@ -180,6 +180,7 @@
     "controlflow-break": "ID137", 
     "controlflow-breakinaloop": "ID138", 
     "controlflow-breakinaswitchstatement": "ID139", 
+    "controlflow-compoundcases": "ID548", 
     "controlflow-conditionalstatements": "ID127", 
     "controlflow-continue": "ID136", 
     "controlflow-controltransferstatements": "ID135", 
@@ -564,5 +565,5 @@
     "in-out-parameters", 
     "error-handling"
   ], 
-  "next_id": 548
+  "next_id": 549
 }
