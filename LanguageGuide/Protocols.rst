@@ -1485,7 +1485,7 @@ Providing Default Implementations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use protocol extensions to provide a default implementation
-to any method or property requirement of that protocol.
+to any method or computed property requirement of that protocol.
 If a conforming type provides its own implementation of a required method or property,
 that implementation will be used instead of the one provided by the extension.
 
