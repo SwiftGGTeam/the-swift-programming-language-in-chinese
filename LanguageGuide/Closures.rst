@@ -130,7 +130,7 @@ Closure expression syntax has the following general form:
    }
 
 The *parameters* in closure expression syntax
-can be ``inout`` parameters,
+can be in-out parameters,
 but they can't have a default value.
 Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
