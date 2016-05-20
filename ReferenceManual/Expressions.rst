@@ -1094,9 +1094,7 @@ For example:
            @objc(doSomethingWithInt:)
            func doSomething(_ x: Int) { }
       }
-   -> let x = SomeClass()
-   <~ // x : SomeClass = <REPL.SomeClass: 0x
-   -> let selector = #selector(x.doSomething(_:))
+   -> let selector = #selector(SomeClass.doSomething(_:))
    << // selector : Selector = doSomethingWithInt:
 
 The *method name* can contain parentheses for grouping,
@@ -1110,7 +1108,7 @@ For example:
           @objc(doSomethingWithString:)
           func doSomething(_ x: String) { }
       }
-   -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+   -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
 
 Because the selector is created at compile time, not at runtime,
