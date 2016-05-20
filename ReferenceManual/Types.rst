@@ -462,29 +462,45 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-the named type ``ImplicitlyUnwrappedOptional<Wrapped>``,
-which is defined in the Swift standard library.
+applying the ``@_autounwrapped`` attribute to a declaration.
 In other words, the following two declarations are equivalent:
 
 .. code-block:: swift
 
     var implicitlyUnwrappedString: String!
-    var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    @_autounwrapped var implicitlyUnwrappedString: String?
 
 .. assertion:: implictly-unwrapped-optional
 
     >> var implicitlyUnwrappedString1: String!
     << // implicitlyUnwrappedString1 : String! = nil
-    >> var implicitlyUnwrappedString2: ImplicitlyUnwrappedOptional<String>
-    << // implicitlyUnwrappedString2 : ImplicitlyUnwrappedOptional<String> = nil
+    >> @_autounwrapped var implicitlyUnwrappedString String
+
+.. FIXME: Add test expectation above.
 
 In both cases, the variable ``implicitlyUnwrappedString``
 is declared to have the type of an implicitly unwrapped optional string.
 Note that no whitespace may appear between the type and the ``!``.
 
-You can use implicitly unwrapped optionals in all the same places in your code
-that you can use optionals. For instance, you can assign values of implicitly unwrapped
+Because implicitly unwrapped optionals
+have the same ``Optional<T>`` type as optional values,
+you can use implicitly unwrapped optionals
+in all the same places in your code
+that you can use optionals.
+For instance, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
+
+Because the postfix ``!`` is syntactic sugar for an attribute,
+not syntactic sugar for a type,
+the ``!`` can't appear in a nested type.
+For example,
+the declaration ``let x: [Int!]`` is invalid
+because ``Int!`` appears as the array's element type.
+There is no declaration for the array's elements
+where the ``@_autounwrapped`` attribute could be applied.
+In contrast, ``let y: [Int]!`` is valid:
+``y`` is declared to be of type ``[Int]?``
+and is marked as implicitly unwrapped.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
@@ -502,8 +518,6 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types,
 see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
-
-.. TODO Add a link to the ImplicitlyUnwrappedOptional Enum Reference page.
 
 .. syntax-grammar::
 
