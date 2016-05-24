@@ -1318,13 +1318,13 @@ Throwing, catching, and propagating errors is covered in greater detail in
 
 .. _TheBasics_Assertions:
 
-Assertions
-----------
+Assertions and Preconditions
+----------------------------
 
 In some cases, it is simply not possible for your code to continue execution
 if a particular condition is not satisfied.
 In these situations,
-you can trigger an :newTerm:`assertion` in your code to end code execution
+you can use an assertion or a precondition in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.
 
 .. _TheBasics_DebuggingWithAssertions:
@@ -1346,7 +1346,7 @@ and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling
-the Swift standard library global ``assert(_:_:file:line:)`` function.
+the Swift standard library ``assert(_:_:file:line:)`` function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
@@ -1383,32 +1383,45 @@ The assertion message can be omitted if desired, as in the following example:
    Assertions are disabled when your code is compiled with optimizations,
    such as when building with an app target's default Release configuration in Xcode.
 
+   Assertions and are not a substitute
+   for designing your code in such a way
+   that invalid conditions are unlikely to arise.
+   However, assertions are an effective way to ensure that
+   such conditions are highlighted and noticed during development,
+   before your app is published.
+
 .. _TheBasics_WhenToUseAssertions:
 
-When to Use Assertions
-~~~~~~~~~~~~~~~~~~~~~~
+Enforcing Proconditions
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Use an assertion whenever a condition has the potential to be false,
+A precondition, like an assertion,
+is a runtime check that a Boolean condition definitely evaluates to ``true``.
+If the condition evaluates to ``true``, code execution continues as usual;
+if the condition evaluates to ``false``, code execution ends, and your app is terminated.
+Unlike an assertion, preconditions are checked in both debug builds
+and when your code is compiled with optimizations.
+
+Use precondition whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
-Suitable scenarios for an assertion check include:
+For example, use a precondition to check that a subscript is not out of bounds,
+or to check that a function has been passed a valid value.
 
-* An integer subscript index is passed to a custom subscript implementation,
-  but the subscript index value could be too low or too high.
-
-* A value is passed to a function,
-  but an invalid value means that the function cannot fulfill its task.
-
-* An optional value is currently ``nil``,
-  but a non-``nil`` value is essential for subsequent code to execute successfully.
+You write a precondition by calling
+the Swift standard library ``precondition(_:_:file:line:)`` function.
+.. TOOD: Confirm function name
+You pass this function an expression that evaluates to ``true`` or ``false``
+and a message that should be displayed if the result of the condition is ``false``:
 
 See also :doc:`Subscripts` and :doc:`Functions`.
 
 .. note::
 
-   Assertions cause your app to terminate
+   Precondition failures cause your app to terminate
    and are not a substitute for designing your code in such a way
    that invalid conditions are unlikely to arise.
-   Nonetheless, in situations where invalid conditions are possible,
-   an assertion is an effective way to ensure that
-   such conditions are highlighted and noticed during development,
-   before your app is published.
+   However,
+   using preconditions to enforce valid data and state
+   causes your app to terminate more predictably
+   if an invalid state occurs,
+   and helps makes the problem easier to debug.
