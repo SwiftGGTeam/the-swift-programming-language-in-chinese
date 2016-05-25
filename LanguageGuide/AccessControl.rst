@@ -402,7 +402,7 @@ therefore also have an access level of “public”:
 .. sourcefile:: enumerationCases_Module2
 
    -> import enumerationCases_Module1
-   -> let north = CompassPoint.North
+   -> let north = CompassPoint.north
 
 Raw Values and Associated Values
 ++++++++++++++++++++++++++++++++
