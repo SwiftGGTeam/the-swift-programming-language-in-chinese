@@ -9,6 +9,9 @@
 > 2.0
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
+> 2.2
+> 翻译：[175](https://github.com/Brian175)，2016-04-09 校对：[SketchK](https://github.com/SketchK)，2016-05-11
+
 本页内容包括：
 
 -   [简单值（Simple Values）](#simple_values)
@@ -17,6 +20,7 @@
 -   [对象和类（Objects and Classes）](#objects_and_classes)
 -   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
 -   [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
+-   [错误处理（Error Handling）](#error_handling)
 -   [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
@@ -30,8 +34,7 @@ print("Hello, world!")
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
 > 注意：
-> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
-> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip">下载Playground</a>
+> 在 Mac 上，下载 Playground 并双击文件在 Xcode 里打开：[https://developer.apple.com/go/?id=swift-tour](https://developer.apple.com/go/?id=swift-tour)
 
 <a name="simple_values"></a>
 ## 简单值
@@ -212,20 +215,14 @@ repeat {
 print(m)
 ```
 
-你可以在循环中使用`..<`来表示范围，也可以使用传统的写法，两者是等价的：
+你可以在循环中使用`..<`来表示范围。
 
 ```swift
-var firstForLoop = 0
+var total = 0
 for i in 0..<4 {
-    firstForLoop += i
+	total += i
 }
-print(firstForLoop)
-
-var secondForLoop = 0
-for var i = 0; i < 4; ++i {
-    secondForLoop += i
-}
-print(secondForLoop)
+print(total)
 ```
 
 使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
@@ -540,7 +537,7 @@ let aceRawValue = ace.rawValue
 > 练习：
 > 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
-在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`属性来访问一个枚举成员的原始值。
+默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在上面的例子中，`Ace`被显式赋值为 1，并且剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用`rawValue`属性来访问一个枚举成员的原始值。
 
 使用`init?(rawValue:)`初始化构造器在原始值和枚举值之间进行转换。
 
@@ -601,17 +598,17 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```swift
 enum ServerResponse {
     case Result(String, String)
-    case Error(String)
+    case Failure(String)
 }
  
 let success = ServerResponse.Result("6:00 am", "8:09 pm")
-let failure = ServerResponse.Error("Out of cheese.")
+let failure = ServerResponse.Failure("Out of cheese.")
  
 switch success {
 case let .Result(sunrise, sunset):
     let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-case let .Error(error):
-    let serverResponse = "Failure...  \(error)"
+case let .Failure(message):
+    print("Failure...  \(message)")
 }
 ```
 
@@ -688,6 +685,88 @@ print(protocolValue.simpleDescription)
 ```
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
+
+<a name="error_handling"></a>
+## 错误处理
+
+使用采用`ErrorType`协议的类型来表示错误。
+
+```swift
+enum PrinterError: ErrorType {
+	case OutOfPaper
+	case NoToner
+	case OnFire
+}
+```
+
+使用`throw`来抛出一个错误并使用`throws`来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函数会立刻返回并且调用该函数的代码会进行错误处理。
+
+```swift
+func sendToPrinter(printerName: String) throws -> String {
+	if printerName == "Never Has Toner" {
+		throw PrinterError.NoToner
+	}
+	return "Job sent"
+}
+```
+
+有多种方式可以用来进行错误处理。一种方式是使用`do-catch`。在`do`代码块中，使用`try`来标记可以抛出错误的代码。在`catch`代码块中，除非你另外命名，否则错误会自动命名为`error`。
+
+```swift
+do {
+	let printerResponse = try sendToPrinter("Bi Sheng")
+	print(printerResponse)
+} catch {
+	print(error)
+}
+```
+
+> 练习：
+> 将 printer name 改为`"Never Has Toner"`使`sendToPrinter(_:)`函数抛出错误。
+
+可以使用多个`catch`块来处理特定的错误。参照 switch 中的`case`风格来写`catch`。
+
+```swift
+do {
+	let printerResponse = try sendToPrinter("Gutenberg")
+	print(printerResponse)
+} catch PrinterError.OnFire {
+	print("I'll just put this over here, with the rest of the fire.")
+} catch let printerError as PrinterError {
+	print("Printer error: \(printerError).")
+} catch {
+	print(error)
+}
+```
+
+> 练习：
+> 在`do`代码块中添加抛出错误的代码。你需要抛出哪种错误来使第一个`catch`块进行接收？怎么使第二个和第三个`catch`进行接收呢？
+
+另一种处理错误的方式使用`try?`将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为`nil`。否则的话，结果会是一个包含函数返回值的可选值。
+
+```swift
+let printerSuccess = try? sendToPrinter("Mergenthaler")
+let printerFailure = try? sendToPrinter("Never Has Toner")
+```
+
+使用`defer`代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。使用`defer`，可以把函数调用之初就要执行的代码和函数调用结束时的扫尾代码写在一起，虽然这两者的执行时机截然不同。
+
+```swift
+var fridgeIsOpen = false
+let fridgeContent = ["milk", "eggs", "leftovers"]
+
+func fridgeContains(itemName: String) -> Bool {
+	fridgeIsOpen = true
+	defer {
+		fridgeIsOpen = false
+	}
+	
+	let result = fridgeContent.contains(itemName)
+	return result
+}
+fridgeContains("banana")
+print(fridgeIsOpen)
+```
 
 <a name="generics"></a>
 ## 泛型
