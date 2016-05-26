@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
+> 
+> 2.2 
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
 
 本页内容包括：
 
@@ -276,7 +279,7 @@ struct TrackedString {
     private(set) var numberOfEdits = 0
     var value: String = "" {
         didSet {
-            numberOfEdits++
+            numberOfEdits += 1
         }
     }
 }
@@ -306,7 +309,7 @@ public struct TrackedString {
     public private(set) var numberOfEdits = 0
     public var value: String = "" {
         didSet {
-            numberOfEdits++
+            numberOfEdits += 1
         }
     }
     public init() {}

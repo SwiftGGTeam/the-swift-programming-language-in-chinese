@@ -9,7 +9,11 @@
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)
+> 校对：[shanks](http://codebuild.me)  
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
+
 
 本页包含内容：
 
@@ -87,7 +91,7 @@ var threeDoubles = [Double](count: 3, repeatedValue:0.0)
 我们可以使用加法操作符（`+`）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：
 
 ```swift
-var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
 // anotherThreeDoubles 被推断为 [Double]，等价于 [2.5, 2.5, 2.5]
 
 var sixDoubles = threeDoubles + anotherThreeDoubles
@@ -223,7 +227,7 @@ firstItem = shoppingList[0]
 ```swift
 let apples = shoppingList.removeLast()
 // 数组的最后一项被移除了
-// shoppingList 现在只有5项，不包括 cheese
+// shoppingList 现在只有5项，不包括 Apples
 // apples 常量的值现在等于 "Apples" 字符串
 ```
 
@@ -460,7 +464,7 @@ oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
 * 使用`isSubsetOf(_:)`方法来判断一个集合中的值是否也被包含在另外一个集合中。
 * 使用`isSupersetOf(_:)`方法来判断一个集合中包含另一个集合中所有的值。
 * 使用`isStrictSubsetOf(_:)`或者`isStrictSupersetOf(_:)`方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
-* 使用`isDisjointWith(_:)`方法来判断两个集合是否不含有相同的值。
+* 使用`isDisjointWith(_:)`方法来判断两个集合是否不含有相同的值(是否没有交集)。
 
 ```swift
 let houseAnimals: Set = ["🐶", "🐱"]

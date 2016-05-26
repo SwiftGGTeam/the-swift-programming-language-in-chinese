@@ -17,7 +17,7 @@
    * [类和结构体](chapter2/09_Classes_and_Structures.md)
    * [属性](chapter2/10_Properties.md)
    * [方法](chapter2/11_Methods.md)
-   * [下标脚本](chapter2/12_Subscripts.md)
+   * [下标](chapter2/12_Subscripts.md)
    * [继承](chapter2/13_Inheritance.md)
    * [构造过程](chapter2/14_Initialization.md)
    * [析构过程](chapter2/15_Deinitialization.md)
