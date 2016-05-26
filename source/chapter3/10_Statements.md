@@ -9,10 +9,12 @@
 > 2.0
 > 翻译+校对：[littledogboy](https://github.com/littledogboy)
 
+> 2.2
+> 翻译：[chenmingbiao](https://github.com/chenmingbiao)
+
 本页包含内容：
 
 - [循环语句](#loop_statements)
-	- [For 语句](#for_statements)
 	- [For-In 语句](#for-in_statements) 
 	- [While 语句](#while_statements)
 	- [Repeat-While 语句](#repeat-while_statements)
@@ -26,15 +28,15 @@
 	- [Continue 语句](#continue_statement)
 	- [Fallthrough 语句](#fallthrough_statements)
 	- [Return 语句](#return_statements)
-	- [Available 语句](#availability_statements)
 	- [Throw 语句](#throw_statements)
 - [Defer 语句](#defer_statements)
 - [Do 语句](#do_statements)
 - [编译器控制语句](#compiler_control_statements)
 	- [编译配置语句](#build_config_statements) 
-	- [源代码控制语句](#line_control_statements)
+	- [行控制语句](#line_control_statements)
+- [可用性条件](#availability_condition)
 
-在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和线路控制语句。
+在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和行控制语句。
 
 控制流语句则用于控制程序执行的流程，Swift 中有多种类型的控制流语句：循环语句、分支语句和控制转移语句。循环语句用于重复执行代码块；分支语句用于执行满足特定条件的代码块；控制转移语句则用于改变代码的执行顺序。另外，Swift 提供了 `do` 语句，用于构建局部作用域，还用于错误的捕获和处理；还提供了 `defer` 语句，用于退出当前作用域之前执行清理操作。
 
@@ -57,53 +59,20 @@
 <a name="loop_statements"></a>
 ## 循环语句
 
-循环语句会根据特定的循环条件来重复执行代码块。Swift 提供四种类型的循环语句：`for` 语句、`for-in` 语句、`while` 语句和 `repeat-while` 语句。
+循环语句会根据特定的循环条件来重复执行代码块。Swift 提供三种类型的循环语句：`for-in` 语句、`while` 语句和 `repeat-while` 语句。
 
 通过 `break` 语句和 `continue` 语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement) 和 [Continue 语句](#continue_statement)。
 
 > 循环语句语法  
 <a name="loop-statement"></a>
-> *循环语句* → [*for 语句*](#for-statement)  
 > *循环语句* → [*for-in 语句*](#for-in-statement)  
 > *循环语句* → [*while 语句*](#while-statement)  
 > *循环语句* → [*repeat-while 语句*](#repeat-while-statement)  
 
-<a name="for_statements"></a>
-### For 语句
-
-`for` 语句只有在循环条件为真时重复执行代码块，同时计数器递增。
-
-`for` 语句的形式如下：
-
-```swift
-for 初始化; 条件; 增量 {  
-    语句  
-}
-```
-
-初始化、条件和增量语句之间必须以分号相隔，循环体中的语句必须以花括号包裹。
-
-`for` 语句的执行流程如下：
-
-1. 初始化只会被执行一次，通常用于声明和初始化在接下来的循环中需要使用的变量。
-2. 判断条件的值。如果为 `true`，循环体中的语句将会被执行，然后转到第 3 步；如果为 `false`，循环体中的语句以及增量语句都不会被执行，`for` 语句至此执行完毕。
-3. 执行增量语句，然后重复第 2 步。
-
-在初始化语句中定义的变量仅在 `for` 循环的作用域内有效。
-
-条件的结果必须符合 `BooleanType` 协议。
-
-> for 语句语法  
-<a name="for-statement"></a>
-> *for 语句* → **for** [*for初始条件*](#for-init)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)  
-> *for语句* → **for** **(** [*for初始条件*](#for-init)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **;** [*表达式*](04_Expressions.md#expression)<sub>可选</sub> **)** [*代码块*](05_Declarations.md#code-block)  
-<a name="for-init"></a>
-> *for 初始条件* → [*变量声明*](05_Declarations.md#variable-declaration) | [*表达式列表*](04_Expressions.md#expression-list)  
-
 <a name="for-in_statements"></a>
 ### For-In 语句
 
-`for-in` 语句会为集合（或符合 `Sequence` 协议的任意类型）中的每一项执行一次代码块。
+`for-in` 语句会为集合（或实现了 `SequenceType` 协议的任意类型）中的每一项执行一次代码块。
 
 `for-in` 语句的形式如下：
 
@@ -113,7 +82,7 @@ for 项 in 集合 {
 }  
 ```
 
-`for-in` 语句在循环开始前会调用集合表达式的 `generate()` 方法来获取一个符合 `Generator` 协议的类型的值。接下来循环开始，反复调用该值的 `next()` 方法。如果其返回值不是 `None`，它将会被赋给“项”，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
+`for-in` 语句在循环开始前会调用集合表达式的 `generate()` 方法来获取一个实现了 `GeneratorType` 协议的类型的值。接下来循环开始，反复调用该值的 `next()` 方法。如果其返回值不是 `None`，它将会被赋给“项”，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
 
 > for-in 语句语法  
 <a name="for-in-statement"></a>
@@ -304,9 +273,9 @@ default:
 
 `switch` 语句会先计算控制表达式的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 都不能为空，也就是说在每一个 `case` 中必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
 
-可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型，甚至是指定的 `Range` 或枚举类型中的成员值。关于如何在 `switch` 语句中使用这些类型，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章中的 [Switch](../chapter2/05_Control_Flow.html#switch)。
+可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章中的 [Switch](../chapter2/05_Control_Flow.html#switch)。
 
-每个 `case` 的模式后面可以有一个 `where` 子句。`where` 子句由 `where` 关键字紧跟一个提供额外测试条件的表达式组成。因此，当且仅当控制表达式匹配一个 `case` 的模式且 `where` 子句的表达式为真时，`case` 中的语句才会被执行。在下面的例子中，控制表达式只会匹配包含两个相等元素的元组，例如 `(1, 1)`：
+每个 `case` 的模式后面可以有一个 `where` 子句。`where` 子句由 `where` 关键字紧跟一个提供额外条件的表达式组成。因此，当且仅当控制表达式匹配一个 `case` 的模式且 `where` 子句的表达式为真时，`case` 中的语句才会被执行。在下面的例子中，控制表达式只会匹配包含两个相等元素的元组，例如 `(1, 1)`：
 
 ```swift
 case let (x, y) where x == y:
@@ -318,11 +287,11 @@ case let (x, y) where x == y:
 
 `switch` 语句中 `case` 的匹配顺序和源代码中的书写顺序保持一致。因此，当多个模式都能匹配控制表达式时，只有第一个匹配的 `case` 中的代码会被执行。
 
-#### Switch 语句必须是详尽的
+#### Switch 语句不能有遗漏
 
 在 Swift 中，`switch` 语句中控制表达式的每一个可能的值都必须至少有一个 `case` 与之对应。在某些无法面面俱到的情况下（例如，表达式的类型是 `Int`），你可以使用 `default` 分支满足该要求。
 
-#### 不存在隐式落空
+#### 不存在隐式落入
 
 当匹配到的 `case` 中的代码执行完毕后，`switch` 语句会直接退出，而不会继续执行下一个 `case` 。这就意味着，如果你想执行下一个 `case`，需要显式地在当前 `case` 中使用 `fallthrough` 语句。关于 `fallthrough` 语句的更多信息，请参阅 [Fallthrough 语句](#fallthrough_statements)。
 
@@ -352,7 +321,7 @@ case let (x, y) where x == y:
 
 你可以在循环语句或 `switch` 语句前面加上标签，它由标签名和紧随其后的冒号（`:`）组成。在 `break` 和 `continue` 后面跟上标签名可以显式地在循环语句或 `switch` 语句中改变相应的控制流。关于这两条语句用法，请参阅 [Break 语句](#break_statement) 和 [Continue 语句](#continue_statement)。
 
-标签的作用域在该标签所标记的语句内。你可以不使用带标签的语句，但只要使用它，在作用域内需保证标签名唯一。
+标签的作用域在该标签所标记的语句内。可以嵌套使用带标签的语句，但标签名必须唯一。
 
 关于使用带标签的语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章中的 [带标签的语句](../chapter2/05_Control_Flow.md#labeled_statements)。
 
@@ -380,16 +349,16 @@ case let (x, y) where x == y:
 <a name="break_statement"></a>
 ### Break 语句
 
-`break` 语句用于终止循环语句或 `switch` 语句的执行。使用 `break` 语句时，可以只写 `break` 这个关键词，也可以在 `break` 后面跟上标签名，像下面这样：
+`break` 语句用于终止循环语句、`if` 语句或 `switch` 语句的执行。使用 `break` 语句时，可以只写 `break` 这个关键词，也可以在 `break` 后面跟上标签名，像下面这样：
 
 > break  
 > break `标签名`
 
-当 `break` 语句后面带标签名时，可用于终止由这个标签标记的循环语句或 `switch` 语句的执行。
+当 `break` 语句后面带标签名时，可用于终止由这个标签标记的循环语句、`if` 语句或 `switch` 语句的执行。
 
-而只写 `break` 时，则会终止 `switch` 语句或包含 `break` 语句的最内层循环的执行。
+而只写 `break` 时，则会终止 `switch` 语句或 `break` 语句所属的最内层循环语句的执行。不能使用 `break` 语句来终止未使用标签的 `if` 语句。
 
-在这两种情况下，控制权都会被传递给循环语句或 `switch` 语句后面的第一行语句。
+无论哪种情况，控制权都会被转移给被终止的控制流语句后面的第一行语句。
 
 关于使用 `break` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章的 [Break](../chapter2/05_Control_Flow.md#break) 和 [带标签的语句](../chapter2/05_Control_Flow.md#labeled_statements)。
 
@@ -407,9 +376,9 @@ case let (x, y) where x == y:
 
 当 `continue` 语句后面带标签名时，可用于终止由这个标签标记的循环中当前迭代的执行。
 
-而当只写 `continue` 时，可用于终止上下文中包含 `continue` 语句的最内层循环中当前迭代的执行。
+而当只写 `continue` 时，可用于终止 `continue` 语句所属的最内层循环中当前迭代的执行。
 
-在这两种情况下，控制权都会被传递给循环外面的第一行语句。
+在这两种情况下，控制权都会被转移给循环语句的条件语句。
 
 在 `for` 语句中，`continue` 语句执行后，增量表达式还是会被计算，这是因为每次循环体执行完毕后，增量表达式都会被计算。
 
@@ -424,7 +393,7 @@ case let (x, y) where x == y:
 
 `fallthrough` 语句用于在 `switch` 语句中转移控制权。`fallthrough` 语句会把控制权从 `switch` 语句中的一个 `case` 转移到下一个 `case`。这种控制权转移是无条件的，即使下一个 `case` 的模式与 `switch` 语句的控制表达式的值不匹配。
 
-`fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了可选绑定的 `case`。
+`fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了值绑定的 `case`。
 
 关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章的 [控制转移语句](../chapter2/05_Control_Flow.md#control_transfer_statements)。
 
@@ -435,70 +404,30 @@ case let (x, y) where x == y:
 <a name="return_statements"></a>
 ### Return 语句
 
-`return` 语句用于在函数或方法的实现中将控制权转移给调用者，接着程序将会从调用者的位置继续向下执行。
+`return` 语句用于在函数或方法的实现中将控制权转移到调用函数或方法，接着程序将会从调用位置继续向下执行。
 
 使用 `return` 语句时，可以只写 `return` 这个关键词，也可以在 `return` 后面跟上表达式，像下面这样：
 
 > return  
 > return `表达式`  
 
-当 `return` 语句后面带表达式时，表达式的值将会返回给调用者。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
+当 `return` 语句后面带表达式时，表达式的值将会返回给调用函数或方法。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
 
 > 注意  
 > 正如 [可失败构造器](05_Declarations.md#failable_initializers) 中所描述的，`return nil` 在可失败构造器中用于表明构造失败。
 
-而只写 `return` 时，仅仅是将控制权从该函数或方法转移给调用者，而不返回一个值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
+而只写 `return` 时，仅仅是从该函数或方法中返回，而不返回任何值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
 
 > return 语句语法  
 <a name="return-statement"></a>
 > *return 语句* → **return** [*表达式*](04_Expressions.html#expression)<sub>可选</sub>
-
-<a name="availability_statements"></a>
-### Available 语句    
-
-可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。    
-
-可用性条件的形式如下：
-
-```swift
-if #available(平台名称 版本, ..., *) {    
-	如果 API 可用，则执行这部分语句    
-} else {    
-	如果 API 不可用，则执行这部分语句
-}    
-```
-
-使用可用性条件来执行一个代码块时，取决于使用的接口在运行时是否可用。编译器会根据可用性条件提供的信息以及运行时的平台来决定是否执行相应的代码块。
-
-可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`OSX`，以及 `watchOS` 等作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
-   
-与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 合并可用性条件。 
-
-> 可用性条件语法    
-
-<a name="availability-condition"></a>
-> *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**   
-<a name="availability-arguments"></a>
-> *可用性参数列表* → [*可用性参数*](#availability-argument) | [*可用性参数*](#availability-argument) **,** [*可用性参数列表*](#availability-arguments)  
-<a name="availability-argument"></a>
-> *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)    
-> *可用性条件* → __*__
-
-<a name="platform-name"></a>
-> *平台名称* → **iOS** | **iOSApplicationExtension**  
-> *平台名称* → **OSX** | **OSXApplicationExtension**   
-> *平台名称* → **watchOS**     
-<a name="platform-version"></a>
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
-> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
     
 <a name="throw_statements"></a>
 ### Throw 语句    
 
 `throw` 语句出现在抛出函数或者抛出方法体内，或者类型被 `throws` 关键字标记的闭包表达式体内。   
  
-`throw` 语句使程序在当前作用域结束执行，并向外围作用域传播错误。抛出的错误会一直传播，直到被 `do` 语句的 `catch` 子句处理掉。    
+`throw` 语句使程序在当前作用域结束执行，并向外围作用域传播错误。抛出的错误会一直传递，直到被 `do` 语句的 `catch` 子句处理掉。    
 
 `throw` 语句由 `throw` 关键字紧跟一个表达式组成，如下所示：
 
@@ -525,9 +454,9 @@ defer {
 }
 ```
 
-在 `defer` 语句中的语句无论程序控制如何转移都会执行。这意味着 `defer` 语句可以被使用在以下这些情况，例如关闭文件描述，或者即使抛出了错误也需要执行的一些动作。    
+在 `defer` 语句中的语句无论程序控制如何转移都会被执行。在某些情况下，例如，手动管理资源时，比如关闭文件描述符，或者即使抛出了错误也需要执行一些操作时，就可以使用 `defer` 语句。    
 
-如果多个 `defer` 语句出现在同一作用域内，那么它们执行的顺序与出现的顺序相反。给定作用域中的第一个 `defer` 语句，会在最后执行，这意味着最后执行的 `defer` 语句中涉及的资源可以被其他 `defer` 语句清理掉。    
+如果多个 `defer` 语句出现在同一作用域内，那么它们执行的顺序与出现的顺序相反。给定作用域中的第一个 `defer` 语句，会在最后执行，这意味着代码中最靠后的 `defer` 语句中引用的资源可以被其他 `defer` 语句清理掉。    
 
 ```swift
 func f() {
@@ -550,9 +479,9 @@ f()
 <a name="do_statements"></a>
 ## Do 语句    
 
-`do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量，只能在 `do` 语句作用域内使用。    
+`do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量只能在 `do` 语句作用域内使用。    
 
-Swift 中的 `do` 语句与 C 中限定代码块界限的大括号（`{}`）很相似，并且在程序运行的时候并不会造成系统开销。    
+Swift 中的 `do` 语句与 C 中限定代码块界限的大括号（`{}`）很相似，也并不会降低程序运行时的性能。    
 
 `do` 语句的形式如下：
 
@@ -567,11 +496,11 @@ do {
 }
 ```
 
-如同 `switch` 语句，编译器会判断 `catch` 子句是否有遗漏。如果 `catch` 子句没有遗漏，则认为错误被处理。否则，错误会自动传播到外围作用域，被一个 `catch` 语句处理掉或者继续向外抛出，抛出函数必须以 `throws` 关键字声明。    
+如同 `switch` 语句，编译器会判断 `catch` 子句是否有遗漏。如果 `catch` 子句没有遗漏，则认为错误已被处理。否则，错误会自动传递到外围作用域，被某个 `catch` 子句处理掉或者被用 `throws` 关键字声明的抛出函数继续向外抛出。    
 
-为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部变量。有关在 `catch` 子句中使用模式的更多信息，请参阅 [模式](07_Patterns.md)。
+为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，请参阅 [模式](07_Patterns.md)。
 
-关于如何在 `do` 语句中使用一些 `catch` 子句的例子，请参阅 [处理错误](../chapter2/18_Error_Handling.md#handling_errors)。       
+关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.md#handling_errors)。       
 
 > do 语句语法  
 <a name="do-statement"></a>
@@ -606,15 +535,18 @@ do {
 
 和 `if` 语句的条件不同，编译配置的条件是在编译时进行判断的。只有编译配置在编译时判断为 `true` 的情况下，相应的语句才会被编译和执行。
 
-编译配置可以是 `true` 和 `false` 的字面量，也可以是使用 `-D` 命令行标志的标识符，或者是下列表格中的任意一个平台测试函数。
+编译配置可以是 `true` 和 `false` 的字面量，也可以是使用 `-D` 命令行标志的标识符，或者是下列表格中的任意一个平台检测函数。
 
 | 函数 | 可用参数 |
 | --- | --- |
-| `os()` | `OSX`, `iOS`, `watchOS`, `tvOS` |
+| `os()` | `OSX`, `iOS`, `watchOS`, `tvOS`, `Linux` |
 | `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `swift()` | `>=` 后跟版本号 |
 
-> 注意
-> `arch(arm)` 编译配置在 ARM 64位设备上不会返回 `true`。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 编译配置返回 `true`。
+`swift()`（语言版本检测函数）的版本号参数主要由主版本号和次版本号组成并且使用点号（`.`）分隔开，`>=` 和版本号之间不能有空格。
+
+> 注意  
+> `arch(arm)` 平台检测函数在 ARM 64 位设备上不会返回 `true`。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 平台检测函数会返回 `true`。
 
 你可以使用逻辑操作符 `&&`、`||` 和 `!` 来组合多个编译配置，还可以使用圆括号来进行分组。
 
@@ -631,9 +563,9 @@ do {
 ```
 
 > 注意  
-> 即使没有被编译，编译配置中的语句仍然会被解析。
+> 即使没有被编译，编译配置中的语句仍然会被解析。然而，唯一的例外是编译配置语句中包含语言版本检测函数：仅当 `Swift` 编译器版本和语言版本检测函数中指定的版本号匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
-<a name=""></a>
+<a name="build-config-statement"></a>
 > 编译配置语句语法  
 
 <a name="build-configuration-statement"></a>
@@ -646,7 +578,8 @@ do {
 > *单个编译配置 else 子句* → **#else** [*语句*](#statements)<sub>可选</sub>
 
 <a name="build-configuration"></a>
-> *编译配置* → [*平台测试函数*](#platform-testing-function)  
+> *编译配置* → [*平台检测函数*](#platform-testing-function)  
+> *编译配置* → [*语言版本检测函数*](#language-version-testing-function)  
 > *编译配置* → [*标识符*](02_Lexical_Structure.md#identifier)  
 > *编译配置* → [*布尔值字面量*](02_Lexical_Structure.md#boolean-literal)  
 > *编译配置* → **(** [*编译配置*](#build-configuration) **)**  
@@ -655,33 +588,78 @@ do {
 > *编译配置* → [*编译配置*](#build-configuration) **||** [*编译配置*](#build-configuration)  
 
 <a name="platform-testing-function"></a>
-> *平台测试函数* → **os** **(** [*操作系统*](#operating-system) **)**  
-> *平台测试函数* → **arch** **(** [*架构*](#architecture) **)**  
+> *平台检测函数* → **os** **(** [*操作系统*](#operating-system) **)**  
+> *平台检测函数* → **arch** **(** [*架构*](#architecture) **)**  
+<a name="language-version-testing-function"></a>
+> *语言版本检测函数* → **swift** **(** **>=** [*swift版本*](#swift-version) **)**  
 <a name="operating-system"></a>
 > *操作系统* → **OSX** | **iOS** | **watchOS** | **tvOS**  
 <a name="architecture"></a>
-> *架构* → **i386** | **x86_64** | **arm** | **arm64**
+> *架构* → **i386** | **x86_64** | **arm** | **arm64**  
+<a name="swift-version"></a>
+> *swift 版本* → [*十进制数字*](02_Lexical_Structure.md#decimal-digit) ­**.** ­[*十进制数字*](02_Lexical_Structure.md#decimal-digit)
 
 <a name="line_control_statements"></a>
-### 线路控制语句
+### 行控制语句
 
-线路控制语句用来为被编译的源代码指定一个与原始行号和文件名不同的行号和文件名。使用线路控制语句可以改变源代码的位置，以便进行分析和调试。
+行控制语句可以为被编译的源代码指定行号和文件名，从而改变源代码的定位信息，以便进行分析和调试。
 
-线路控制语句形式如下：
+行控制语句形式如下：
 
 > \#line `行号` `文件名`
 
-线路控制语句会改变之后的字面量表达式 `__LINE__` 和 `__FILE__` 的值。`行号` 是一个大于 0 的整形字面量，会改变 `__LINE__` 的值。`文件名` 是一个字符串字面量，会改变 `__FILE__` 的值。
+行控制语句会改变该语句之后的代码中的字面量表达式 `#line` 和 `#file` 所表示的值。`行号` 是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。`文件名` 是一个字符串字面量，会改变 `#file` 表达式的值。
 
-你可以通过 `#line` 语句，即不指定行号和文件名，来将源代码的位置重置回默认的行号和文件名。
+你可以只写 `#line`，而不指定行号和文件名，从而将源代码的定位信息重置回默认的行号和文件名。
 
-线路控制语句必须独占一行，而且不能是源代码文件的最后一行。
+`#line` 标记具有两种含义，作为行控制语句使用时必须独占一行，而且不能是源代码文件的最后一行。否则，它将作为字面量表达式使用，详情请参阅 [字面量表达式](04_Expressions.md#literal_expression)。
 
-> 线路控制语句语法  
-<a name="line-control-statements"></a>
-> *线路控制语句* → **#line**  
-> *线路控制语句* → **#line** [*行号*](#line-number) [*文件名*](#file-name)  
+<a name="line-control-statement"></a>
+> 行控制语句语法  
+
+> *行控制语句* → **#line**  
+> *行控制语句* → **#line** [*行号*](#line-number) [*文件名*](#file-name)  
 <a name="line-number"></a>
 > *行号* → 大于 0 的十进制整数  
 <a name="file-name"></a>
 > *文件名* → [*静态字符串字面量*](02_Lexical_Structure.md#static-string-literal)
+
+<a name="availability_condition"></a>
+### 可用性条件    
+
+可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。    
+
+可用性条件的形式如下：
+
+```swift
+if #available(平台名称 版本, ..., *) {    
+	如果 API 可用，则执行这部分语句    
+} else {    
+	如果 API 不可用，则执行这部分语句
+}    
+```
+
+使用可用性条件来执行一个代码块时，取决于使用的 API 在运行时是否可用，编译器会根据可用性条件提供的信息来决定是否执行相应的代码块。
+
+可用性条件使用一系列逗号分隔的平台名称和版本。使用 `iOS`，`OSX`，以及 `watchOS` 等作为平台名称，并写上相应的版本号。`*` 参数是必须写的，用于处理未来的潜在平台。可用性条件确保了运行时的平台不低于条件中指定的平台版本时才执行代码块。
+   
+与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 组合可用性条件。 
+
+> 可用性条件语法    
+
+<a name="availability-condition"></a>
+> *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**   
+<a name="availability-arguments"></a>
+> *可用性参数列表* → [*可用性参数*](#availability-argument) | [*可用性参数*](#availability-argument) **,** [*可用性参数列表*](#availability-arguments)  
+<a name="availability-argument"></a>
+> *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)    
+> *可用性条件* → __*__
+
+<a name="platform-name"></a>
+> *平台名称* → **iOS** | **iOSApplicationExtension**  
+> *平台名称* → **OSX** | **OSXApplicationExtension**   
+> *平台名称* → **watchOS**     
+<a name="platform-version"></a>
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
+> *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
