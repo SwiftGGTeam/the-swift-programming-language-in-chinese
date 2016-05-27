@@ -462,32 +462,45 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-the named type ``Optional<Wrapped>``, which is defined in the Swift standard library.
-In other words, the following two declarations are equivalent:
+the named type ``Optional<Wrapped>``, which is defined in the Swift standard library,
+with the additional behavior that its
+is automatically unwrapped when it is accessed.
+If you try to use an implicitly unwrapped optional that has a value of ``nil``,
+you'll get a runtime error.
+With the exception of that additional behavior,
+the following two declarations are equivalent:
 
 .. code-block:: swift
 
     var implicitlyUnwrappedString: String!
-    var implicitlyUnwrappedString: Optional<String>
+    var explicitlyUnwrappedString: Optional<String>
 
 Note that no whitespace may appear between the type and the ``!``.
 
-Unlike the postfix ``?``,
-the postfix ``!`` also adds information to the declaration:
-It indicates that the value is implicitly unwrapped.
+Because the postfix ``!`` on a type
+changes the meaning of the declaration that contains that type,
+this postfix can't appear in a nested type.
+For example:
 
-Because the postfix ``!``
-changes the meaning of a declaration,
-it can't appear in a nested type.
-For example,
-the declaration ``let x: [Int!]`` is invalid
+.. code-block:: swift
+
+    let x: [Int]!   // OK
+    let y: [Int!]   // Error
+
+In the second line,
+``Int!`` is used as a nested type in the ``[Int!]`` array type,
+which is invalid because there is no declaration
+
+.. FIXME: It can also be used as a parameter
+   in function types like (Int!) -> Int
+   The error message is also wrong
+   error: implicitly unwrapped optionals are only allowed at top level and as function results
+
+
+There is no declaration
 because ``Int!`` appears as the array's element type.
-There is no declaration for the array's elements
-where the ``@_autounwrapped`` attribute could be applied.
-In contrast, ``let y: [Int]!`` is valid:
-``y`` is declared to be of type ``[Int]?``
-and is marked as implicitly unwrapped.
-
+    There is no declaration for the array's elements
+    where the ``@_autounwrapped`` attribute could be applied.
 
 Because implicitly unwrapped optionals
 have the same ``Optional<T>`` type as optional values,
@@ -500,11 +513,8 @@ optionals to variables, constants, and properties of optionals, and vice versa.
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
 its value automatically defaults to ``nil``.
-
 Because the value of an implicitly unwrapped optional is automatically unwrapped
-when you use it, there's no need to use the ``!`` operator to unwrap it. That said,
-if you try to use an implicitly unwrapped optional that has a value of ``nil``,
-you'll get a runtime error.
+when you use it, there's no need to use the ``!`` operator to unwrap it.
 
 Use optional chaining to conditionally perform an
 operation on an implicitly unwrapped optional expression.
