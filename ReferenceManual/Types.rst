@@ -462,37 +462,23 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-applying the ``@_autounwrapped`` attribute to a declaration.
+the named type ``Optional<Wrapped>``, which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
 .. code-block:: swift
 
     var implicitlyUnwrappedString: String!
-    @_autounwrapped var implicitlyUnwrappedString: String?
+    var implicitlyUnwrappedString: Optional<String>
 
-.. assertion:: implictly-unwrapped-optional
-
-    >> var implicitlyUnwrappedString1: String!
-    << // implicitlyUnwrappedString1 : String! = nil
-    >> @_autounwrapped var implicitlyUnwrappedString String
-
-.. FIXME: Add test expectation above.
-
-In both cases, the variable ``implicitlyUnwrappedString``
-is declared to have the type of an implicitly unwrapped optional string.
 Note that no whitespace may appear between the type and the ``!``.
 
-Because implicitly unwrapped optionals
-have the same ``Optional<T>`` type as optional values,
-you can use implicitly unwrapped optionals
-in all the same places in your code
-that you can use optionals.
-For instance, you can assign values of implicitly unwrapped
-optionals to variables, constants, and properties of optionals, and vice versa.
+Unlike the postfix ``?``,
+the postfix ``!`` also adds information to the declaration:
+It indicates that the value is implicitly unwrapped.
 
-Because the postfix ``!`` is syntactic sugar for an attribute,
-not syntactic sugar for a type,
-the ``!`` can't appear in a nested type.
+Because the postfix ``!``
+changes the meaning of a declaration,
+it can't appear in a nested type.
 For example,
 the declaration ``let x: [Int!]`` is invalid
 because ``Int!`` appears as the array's element type.
@@ -501,6 +487,15 @@ where the ``@_autounwrapped`` attribute could be applied.
 In contrast, ``let y: [Int]!`` is valid:
 ``y`` is declared to be of type ``[Int]?``
 and is marked as implicitly unwrapped.
+
+
+Because implicitly unwrapped optionals
+have the same ``Optional<T>`` type as optional values,
+you can use implicitly unwrapped optionals
+in all the same places in your code
+that you can use optionals.
+For instance, you can assign values of implicitly unwrapped
+optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
