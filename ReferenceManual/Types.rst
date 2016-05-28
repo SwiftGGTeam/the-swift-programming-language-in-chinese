@@ -507,8 +507,6 @@ optionals to variables, constants, and properties of optionals, and vice versa.
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
 its value automatically defaults to ``nil``.
-Because the value of an implicitly unwrapped optional is automatically unwrapped
-when you use it, there's no need to use the ``!`` operator to unwrap it.
 
 Use optional chaining to conditionally perform an
 operation on an implicitly unwrapped optional expression.
