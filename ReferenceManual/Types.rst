@@ -467,7 +467,7 @@ with the additional behavior that its
 is automatically unwrapped when it is accessed.
 If you try to use an implicitly unwrapped optional that has a value of ``nil``,
 you'll get a runtime error.
-With the exception of that additional behavior,
+With the exception of the implicit unwrapping behavior,
 the following two declarations are equivalent:
 
 .. code-block:: swift
@@ -479,28 +479,22 @@ Note that no whitespace may appear between the type and the ``!``.
 
 Because the postfix ``!`` on a type
 changes the meaning of the declaration that contains that type,
-this postfix can't appear in a nested type.
+this postfix can't appear in a nested type,
+except as the parameter type or return type of a function type.
+This restriction applies only to optional types
+that use the postfix ``!``,
+not to optional types that use the postfix ``?``.
 For example:
 
 .. code-block:: swift
 
-    let x: [Int]!   // OK
-    let y: [Int!]   // Error
+    func someFunction(x: Int!) -> Int! { ... }  // OK
 
-In the second line,
-``Int!`` is used as a nested type in the ``[Int!]`` array type,
-which is invalid because there is no declaration
+    let implictyUnwrappedArray: [Int]! // OK
+    let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
 
-.. FIXME: It can also be used as a parameter
-   in function types like (Int!) -> Int
-   The error message is also wrong
-   error: implicitly unwrapped optionals are only allowed at top level and as function results
-
-
-There is no declaration
-because ``Int!`` appears as the array's element type.
-    There is no declaration for the array's elements
-    where the ``@_autounwrapped`` attribute could be applied.
+    let optionalArray: [Int]? // OK
+    let arrayOfOptionalElements: [Int?] // OK
 
 Because implicitly unwrapped optionals
 have the same ``Optional<T>`` type as optional values,
