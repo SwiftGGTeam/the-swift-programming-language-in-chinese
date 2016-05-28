@@ -1236,6 +1236,14 @@ You can define :newTerm:`optional requirements` for protocols,
 These requirements do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
+Optional requirements are available so that you can write code
+that interoperates with Objective-C.
+Both the protocol and the optional requirement
+must be marked with the ``@objc`` attribute.
+Note that ``@objc`` protocols can be adopted only by classes
+that inherit from Objective-C classes or other ``@objc`` classes.
+They can't be adopted by structures or enumerations.
+
 When you use a method or property in an optional requirement,
 its type automatically becomes an optional.
 For example,
@@ -1251,22 +1259,6 @@ You check for an implementation of an optional method
 by writing a question mark after the name of the method when it is called,
 such as ``someOptionalMethod?(someArgument)``.
 For information on optional chaining, see :doc:`OptionalChaining`.
-
-.. note::
-
-   Optional protocol requirements can only be specified
-   if your protocol is marked with the ``@objc`` attribute.
-
-   This attribute indicates that
-   the protocol should be exposed to Objective-C code and is described in
-   `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-   Even if you are not interoperating with Objective-C,
-   you need to mark your protocols with the ``@objc`` attribute
-   if you want to specify optional requirements.
-
-   Note also that ``@objc`` protocols can be adopted only by classes
-   that inherit from Objective-C classes or other ``@objc`` classes.
-   They can't be adopted by structures or enumerations.
 
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
