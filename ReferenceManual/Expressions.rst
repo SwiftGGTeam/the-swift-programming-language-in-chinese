@@ -1156,9 +1156,15 @@ for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
 
-   #keyPath(<#key expression#>)
+   #keyPath(<#key path expression#>)
 
-The *key expression* 
+The *key path expression* must be a reference to a property
+that is available in the Objective-C runtime.
+The value of a key path expression is an instance of the ``String`` type.
+
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. note::
 
