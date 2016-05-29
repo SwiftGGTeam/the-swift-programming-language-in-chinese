@@ -1485,7 +1485,9 @@ By default, types that conform to a protocol must implement all
 properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` declaration modifier
 to specify that their implementation by a conforming type is optional.
-The ``optional`` modifier can be applied only to protocols that are marked
+The ``optional`` modifier can be applied
+only to members that are marked with the ``objc`` attribute,
+and only to members of protocols that are marked
 with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` declaration modifier
