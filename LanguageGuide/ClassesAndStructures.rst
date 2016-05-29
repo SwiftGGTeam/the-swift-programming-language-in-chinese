@@ -418,9 +418,9 @@ or passed to a function.)
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
    -> enum E { case a, b }
-   -> let e1 = E.A
+   -> let e1 = E.a
    << // e1 : E = REPL.E.a
-   -> let e2 = E.B
+   -> let e2 = E.b
    << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
