@@ -452,6 +452,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
+    primary-expression --> key-path-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -1142,6 +1143,33 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
+
+
+.. _Expression_KeyPathExpression:
+
+Key Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+A key path expression lets you access the string
+used to refer to a property in Objective-C
+for use in key-value coding and key-value observing APIs.
+
+.. syntax-outline::
+
+   #keyPath(<#key expression#>)
+
+The *key expression* 
+
+.. note::
+
+    Although the *key expression* is an expression, it is never evaluated.
+
+
+.. syntax-grammar::
+
+    Grammar of an Objective-C key path expression
+
+    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
