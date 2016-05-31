@@ -463,8 +463,8 @@ Implicitly Unwrapped Optional Type
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
 the named type ``Optional<Wrapped>``, which is defined in the Swift standard library,
-with the additional behavior that its
-is automatically unwrapped when it is accessed.
+with the additional behavior that
+it's automatically unwrapped when it's accessed.
 If you try to use an implicitly unwrapped optional that has a value of ``nil``,
 you'll get a runtime error.
 With the exception of the implicit unwrapping behavior,
