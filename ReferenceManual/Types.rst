@@ -487,10 +487,10 @@ For example:
 .. code-block:: swift
 
     let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // Error
-    let implicitlyUnwrappedtuple: (Int, Int)!             // OK
+    let implicitlyUnwrappedTuple: (Int, Int)!             // OK
 
     let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
-    let implictyUnwrappedArray: [Int]!                    // OK
+    let implicitlyUnwrappedArray: [Int]!                    // OK
 
 Because implicitly unwrapped optionals
 have the same ``Optional<Wrapped>`` type as optional values,
