@@ -1135,7 +1135,7 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. syntax-grammar::
 
-    Grammar of an Objective-C selector expression
+    Grammar of a selector expression
 
     selector-expression --> ``#selector`` ``(`` expression  ``)``
 
@@ -1147,21 +1147,44 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _Expression_KeyPathExpression:
 
-Key Path Expression
+Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key path expression lets you access the string
+A key-path expression lets you access the string
 used to refer to a property in Objective-C
 for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
 
-   #keyPath(<#key path expression#>)
+   #keyPath(<#key-path expression#>)
 
-The *key path expression* must be a reference to a property
+The *key-path expression* must be a reference to a property
 that is available in the Objective-C runtime.
-The value of a key path expression is an instance of the ``String`` type.
+The value of a key-path expression is an instance of the ``String`` type.
+For example:
 
+.. testcode:: keypath-expression
+
+   >> import Foundation
+   -> @objc struct SomeStruct {
+         var someProperty: Int
+      }
+      let s = SomeStruct(someProperty: 12)
+      let keyPath = #keyPath(s.someProperty)
+
+.. TODO: Add test expectations.  Currently segfaulting on
+   Xcode 8 (8R127c) (swiftlang-800.0.23.1
+   clang-800.0.23).  Downloading a new Xcode 8 which has a newer
+   version of the compiler.
+
+Because the key path is created at compile time, not at runtime,
+the compiler can check that the property exists
+and that the property is exposed to the Objective-C runtime.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
@@ -1173,7 +1196,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. syntax-grammar::
 
-    Grammar of an Objective-C key path expression
+    Grammar of a key-path expression
 
     key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
 
