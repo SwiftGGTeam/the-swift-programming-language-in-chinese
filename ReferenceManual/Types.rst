@@ -477,24 +477,20 @@ the following two declarations are equivalent:
 
 Note that no whitespace may appear between the type and the ``!``.
 
-Because the postfix ``!`` on a type
+Because implicit unwrapping
 changes the meaning of the declaration that contains that type,
-this postfix can't appear in a nested type,
-except as the parameter type or return type of a function type.
-This restriction applies only to optional types
-that use the postfix ``!``,
-not to optional types that use the postfix ``?``.
+optional types that are nested inside a tuple type or a generic type
+--- such as the element types of a dictionary or array ---
+can't be marked as implicitly unwrapped.
 For example:
 
 .. code-block:: swift
 
-    func someFunction(x: Int!) -> Int! { ... }  // OK
+    let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // Error
+    let implicitlyUnwrappedtuple: (Int, Int)!             // OK
 
-    let implictyUnwrappedArray: [Int]! // OK
-    let arrayOfImplicitlyUnwrappedElements: [Int!] // Error
-
-    let optionalArray: [Int]? // OK
-    let arrayOfOptionalElements: [Int?] // OK
+    let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
+    let implictyUnwrappedArray: [Int]!                    // OK
 
 Because implicitly unwrapped optionals
 have the same ``Optional<Wrapped>`` type as optional values,
