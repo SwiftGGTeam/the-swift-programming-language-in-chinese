@@ -1156,26 +1156,29 @@ for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
 
-   #keyPath(<#key-path expression#>)
+   #keyPath(<#property name#>)
 
-The *key-path expression* must be a reference to a property
+The *property name* must be a reference to a property
 that is available in the Objective-C runtime.
-The value of a key-path expression is an instance of the ``String`` type.
+At compile time, the key-path expression is replaced by a string literal.
 For example:
 
 .. testcode:: keypath-expression
 
    >> import Foundation
-   -> @objc struct SomeStruct {
+   -> @objc class SomeClass: NSObject {
          var someProperty: Int
+         init(someProperty: Int) {
+             self.someProperty = someProperty
+         }
       }
-      let s = SomeStruct(someProperty: 12)
-      let keyPath = #keyPath(s.someProperty)
-
-.. TODO: Add test expectations.  Currently segfaulting on
-   Xcode 8 (8R127c) (swiftlang-800.0.23.1
-   clang-800.0.23).  Downloading a new Xcode 8 which has a newer
-   version of the compiler.
+   ---
+   -> let c = SomeClass(someProperty: 12)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> let keyPath = #keyPath(SomeClass.someProperty)
+   << // keyPath : String = "someProperty"
+   -> print(c.value(forKey: keyPath))
+   <- Optional(12)
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
@@ -1191,7 +1194,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. note::
 
-    Although the *key expression* is an expression, it is never evaluated.
+    Although the *property name* is an expression, it is never evaluated.
 
 
 .. syntax-grammar::
