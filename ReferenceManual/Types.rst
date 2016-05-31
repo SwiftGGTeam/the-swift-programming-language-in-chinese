@@ -497,7 +497,7 @@ For example:
     let arrayOfOptionalElements: [Int?] // OK
 
 Because implicitly unwrapped optionals
-have the same ``Optional<T>`` type as optional values,
+have the same ``Optional<Wrapped>`` type as optional values,
 you can use implicitly unwrapped optionals
 in all the same places in your code
 that you can use optionals.
