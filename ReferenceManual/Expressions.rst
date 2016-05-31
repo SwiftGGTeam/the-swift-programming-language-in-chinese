@@ -1171,6 +1171,9 @@ For example:
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
+         func keyPathTest() -> String {
+            return #keyPath(someProperty)
+         }
       }
    ---
    -> let c = SomeClass(someProperty: 12)
@@ -1179,6 +1182,9 @@ For example:
    << // keyPath : String = "someProperty"
    -> print(c.value(forKey: keyPath))
    <- Optional(12)
+   ---
+   -> print(keyPath == c.keyPathTest())
+   <- true
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
