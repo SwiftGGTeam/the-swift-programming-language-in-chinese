@@ -452,6 +452,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
+    primary-expression --> key-path-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -1134,7 +1135,7 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. syntax-grammar::
 
-    Grammar of an Objective-C selector expression
+    Grammar of a selector expression
 
     selector-expression --> ``#selector`` ``(`` expression  ``)``
 
@@ -1142,6 +1143,71 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
+
+
+.. _Expression_KeyPathExpression:
+
+Key-Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+A key-path expression lets you access the string
+used to refer to a property in Objective-C
+for use in key-value coding and key-value observing APIs.
+
+.. syntax-outline::
+
+   #keyPath(<#property name#>)
+
+The *property name* must be a reference to a property
+that is available in the Objective-C runtime.
+At compile time, the key-path expression is replaced by a string literal.
+For example:
+
+.. testcode:: keypath-expression
+
+   >> import Foundation
+   -> @objc class SomeClass: NSObject {
+         var someProperty: Int
+         init(someProperty: Int) {
+             self.someProperty = someProperty
+         }
+         func keyPathTest() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 12)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> let keyPath = #keyPath(SomeClass.someProperty)
+   << // keyPath : String = "someProperty"
+   -> print(c.value(forKey: keyPath))
+   <- Optional(12)
+   ---
+   -> print(keyPath == c.keyPathTest())
+   <- true
+
+Because the key path is created at compile time, not at runtime,
+the compiler can check that the property exists
+and that the property is exposed to the Objective-C runtime.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
+
+.. note::
+
+    Although the *property name* is an expression, it is never evaluated.
+
+
+.. syntax-grammar::
+
+    Grammar of a key-path expression
+
+    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
