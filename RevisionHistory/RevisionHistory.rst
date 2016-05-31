@@ -3,11 +3,76 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-==========  ==========================================================================
+..  Merges since Xcode 7.3 FCS.
+    b4edfe3 Merge branch '25200234_example_rename' into develop
+    b46308b Merge branch '24778891_collections' into 'develop'
+    4b4863f Merge branch '25244216_os_arch' into develop
+    f989e7f Merge branch '24772689_api_rename' into 'develop'
+    524902d Merge branch 'bjl-closure-param-grammar' into 'develop'
+    ae995da Merge branch '24722135-inout-placement' into 'develop'
+    4858c33 Merge branch '24892454-attribute-colons' into 'develop'
+    812cc81 Merge branch '25193910_rethrow' into 'develop'
+    abfc7b6 Merge branch '24827229_param_terminology' into 'develop'
+    2b2a343 Merge branch '25122598_tvos' into 'develop'
+
+.. Updated terminology for conditional compilation blocks
+   in ReferenceManual/Statements.rst
+.. f508be2 Merge branch '24774070_rename_build_config' into 'develop'
+
+
+==========  ==============================================================================================
 Date        Notes
-==========  ==========================================================================
+==========  ==============================================================================================
 2016-06-13  * Updated for Swift 3.0.
-----------  --------------------------------------------------------------------------
+
+            * Added discussion about switch cases that have multiple patterns
+              in the :ref:`ControlFlow_Switch`
+              and :ref:`Statements_SwitchStatement` sections.
+
+              .. TODO: Not much in the reference, so maybe no link?
+              .. f4722b9 Merge branch '25339790_case_multiple' into 'develop'
+              .. f73b4c7 Merge branch '25687433_multipattern_case' into '25339790_case_multiple'
+
+            * Updated the discussion of line control statements
+              to use the ``#sourceLocation(file:line:)`` syntax
+              in the :ref:`Statements_LineControlStatement` section.
+
+              .. TODO: We don't really have precedent for how to name compile-time function-like constructs.
+              .. c0a13c6 Merge branch '24893628_pound_line' into 'develop'
+
+            * Updated the discussion of sets to use the Swift 3 method names
+              in the :ref:`CollectionTypes_FundamentalSetOperations` section.
+
+              .. 3c5c2bd Merge branch '25917785_sets' into 'develop'
+
+            * Updated examples to use ``@noescape`` and ``@autoclosure`` as type attributes
+              in :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
+              and the :doc:`../ReferenceManual/Attributes` chapter.
+
+              .. 80b30c9 Merge branch '25755487_noescape_autoclosure' into 'develop'
+
+            * Updated the discussion of optional protocol requirements
+              to clarify that they for code that interoperates with Objective-C
+              in the :ref:`Protocols_OptionalProtocolRequirements` section.
+
+              .. 2aa9906 Merge branch '24892136_optional_objc' into 'develop'
+
+            * Updated the discussion of function types
+              to note that parentheses around the parameter types are required
+              in the :ref:`Types_FunctionType` section.
+              .. a191886 Merge branch '26143123_function_type_parens' into 'develop'
+
+            * Updated functions to use argument labels on all parameters.
+
+              .. TODO: something about this being the new default
+              .. 0333af2 Merge branch '25194509_function_labels' into 'develop'
+
+            * Removed ``let`` from the grammar for function declarations
+              in the :ref:`Declarations_FunctionDeclaration` section.
+
+              .. 2a2058b Merge branch '25393888_let' into 'develop'
+
+----------  ----------------------------------------------------------------------------------------------
 2016-03-21  * Updated for Swift 2.2.
 
             * Added information about how to conditionally compile code
@@ -66,7 +131,7 @@ Date        Notes
 
             * Removed discussion of variable function arguments
               and the special syntax for curried functions.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
@@ -96,7 +161,7 @@ Date        Notes
 
             * Added an example that uses the ``??`` operator
               to the :doc:`../GuidedTour/GuidedTour` chapter.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-09-16  * Updated for Swift 2.0.
 
             * Added information about error handling
@@ -253,7 +318,7 @@ Date        Notes
               :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
               with a more precise definition of Unicode scalars.
 
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-04-08  * Updated for Swift 1.2.
 
             * Swift now has a native ``Set`` collection type.
@@ -329,7 +394,7 @@ Date        Notes
               now use the ``as?`` or ``as!`` operator,
               and type casts that are guaranteed not to fail use the ``as`` operator.
               For more information, see :ref:`Expressions_Type-CastingOperators`.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2014-10-16  * Updated for Swift 1.1.
 
             * Added a full guide to :ref:`Initialization_FailableInitializers`.
@@ -358,7 +423,7 @@ Date        Notes
               the revised rules.
               Removed a duplicate description of the valid set of operator characters
               from :ref:`AdvancedOperators_CustomOperators`.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2014-08-18  * New document that describes Swift 1.0,
               Apple’s new programming language for building iOS and OS X apps.
 
@@ -557,4 +622,4 @@ Date        Notes
               for the :ref:`BasicOperators_HalfClosedRangeOperator`.
 
             * Added an example of :ref:`Generics_ExtendingAGenericType`.
-==========  ==========================================================================
+==========  ==============================================================================================
