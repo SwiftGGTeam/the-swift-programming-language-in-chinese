@@ -175,16 +175,16 @@ The ``Matrix`` structure's subscript takes two integer parameters:
             self.columns = columns
             grid = Array(repeating: 0.0, count: rows * columns)
          }
-         func indexIsValidForRow(row: Int, column: Int) -> Bool {
+         func indexIsValid(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double {
             get {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                return grid[(row * columns) + column]
             }
             set {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                grid[(row * columns) + column] = newValue
             }
          }
@@ -238,7 +238,7 @@ and ``3.2`` in the bottom left position
 The ``Matrix`` subscript's getter and setter both contain an assertion
 to check that the subscript's  ``row`` and ``column`` values are valid.
 To assist with these assertions,
-``Matrix`` includes a convenience method called ``indexIsValidForRow(_:column:)``,
+``Matrix`` includes a convenience method called ``indexIsValid(row:column:)``,
 which checks whether the requested ``row`` and ``column``
 are inside the bounds of the matrix:
 
@@ -260,7 +260,3 @@ that is outside of the matrix bounds:
    -> let someValue = matrix[2, 2]
    xx assert
    // this triggers an assert, because [2, 2] is outside of the matrix bounds
-
-.. TODO: subscripts can provide external names for their parameters,
-   to enable subscript overloading (e.g. subscript(row: Int) and subscript(column: Int)
-   to get a slice of the matrix). This would make a great example!

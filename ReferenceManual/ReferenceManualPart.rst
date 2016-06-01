@@ -15,7 +15,3 @@ Language Reference
     GenericParametersAndArguments
     zzSummaryOfTheGrammar
 
-.. docnote:: To be included?
-
-    * Name Binding
-    * Standard Library

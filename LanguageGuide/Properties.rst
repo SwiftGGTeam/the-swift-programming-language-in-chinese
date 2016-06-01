@@ -9,9 +9,9 @@ Stored properties are provided only by classes and structures.
 
 .. assertion:: enumerationsCantProvideStoredProperties
 
-   -> enum E { case A, B; var x = 0 }
+   -> enum E { case a, b; var x = 0 }
    !! <REPL Input>:1:25: error: enums may not contain stored properties
-   !! enum E { case A, B; var x = 0 }
+   !! enum E { case a, b; var x = 0 }
    !! ^
 
 Stored and computed properties are usually associated with instances of a particular type.
@@ -195,6 +195,8 @@ neither of which is shown in full:
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property has not yet been created
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The ``DataManager`` class has a stored property called ``data``,
 which is initialized with a new, empty array of ``String`` values.
@@ -630,7 +632,7 @@ and the default name of ``oldValue`` is used instead.
       }
    << // a : Int = 0
    -> func f(b: inout Int) { print("in f") }
-   -> f(&a)
+   -> f(b: &a)
    << in f
    << willSet
    << didSet

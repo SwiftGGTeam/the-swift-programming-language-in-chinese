@@ -274,12 +274,12 @@ Optional Pattern
 ----------------
 
 An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
-of an ``Optional<Wrapped>`` or ``ImplicitlyUnwrappedOptional<Wrapped>`` enumeration.
+of an ``Optional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
-and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+enumeration case patterns,
 the following are equivalent:
 
 .. testcode:: optional-pattern
@@ -379,8 +379,10 @@ is compared with the value of an input expression
 using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
-two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in a ``Range`` object, as the following example shows:
+two values of the same type using the ``==`` operator.
+It can also match a value with a range of values,
+by checking whether the value is contained within the range,
+as the following example shows.
 
 .. testcode:: expression-pattern
 

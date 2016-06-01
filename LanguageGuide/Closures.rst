@@ -94,15 +94,15 @@ and to pass it in as an argument to the ``sorted(isOrderedBefore:)`` method:
 
 .. testcode:: closureSyntax
 
-   -> func backwards(s1: String, _ s2: String) -> Bool {
+   -> func backward(_ s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversedNames = names.sorted(isOrderedBefore: backwards)
+   -> var reversedNames = names.sorted(isOrderedBefore: backward)
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
-the ``backwards(_:_:)`` function will return ``true``,
+the ``backward(_:_:)`` function will return ``true``,
 indicating that ``s1`` should appear before ``s2`` in the sorted array.
 For characters in strings,
 “greater than” means “appears later in the alphabet than”.
@@ -130,15 +130,12 @@ Closure expression syntax has the following general form:
    }
 
 The *parameters* in closure expression syntax
-can be ``inout`` parameters,
+can be in-out parameters,
 but they can't have a default value.
 Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
-.. QUESTION: is "reversed" the right name to use here?
-   it's a backwards sort, not a reversed version of the original array
-
-The example below shows a closure expression version of the ``backwards(_:_:)`` function
+The example below shows a closure expression version of the ``backward(_:_:)`` function
 from earlier:
 
 .. testcode:: closureSyntax
@@ -150,7 +147,7 @@ from earlier:
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
-is identical to the declaration from the ``backwards(_:_:)`` function.
+is identical to the declaration from the ``backward(_:_:)`` function.
 In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
 However, for the inline closure expression,
 the parameters and return type are written *inside* the curly braces,
@@ -284,8 +281,11 @@ Trailing Closures
 If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
 it can be useful to write it as a :newTerm:`trailing closure` instead.
-A trailing closure is a closure expression
-that is written outside of (and *after*) the parentheses of the function call it supports:
+A trailing closure is written after the function call's parentheses,
+even though it is still an argument to the function.
+When you use the trailing closure syntax,
+you don't write the argument label for the closure
+as part of the function call.
 
 .. testcode:: closureSyntax
 
@@ -293,13 +293,13 @@ that is written outside of (and *after*) the parentheses of the function call it
          // function body goes here
       }
    ---
-   -> // here's how you call this function without using a trailing closure:
+   -> // Here's how you call this function without using a trailing closure:
    ---
-   -> someFunctionThatTakesAClosure({
+   -> someFunctionThatTakesAClosure(closure: {
          // closure's body goes here
       })
    ---
-   -> // here's how you call this function with a trailing closure instead:
+   -> // Here's how you call this function with a trailing closure instead:
    ---
    -> someFunctionThatTakesAClosure() {
          // trailing closure's body goes here
@@ -391,7 +391,7 @@ to indicate the type that will be stored in the mapped output array.
 The closure expression builds a string called ``output`` each time it is called.
 It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
 and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
-The closure can be used to create a string representation of any integer number greater than zero.
+The closure can be used to create a string representation of any integer greater than zero.
 
 .. note::
 
@@ -609,7 +609,7 @@ A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
 When you declare a function that takes a closure as one of its parameters,
-you can write ``@noescape`` before the parameter name
+you can write ``@noescape`` before the parameter's type
 to indicate that the closure is not allowed to escape.
 Marking a closure with ``@noescape``
 lets the compiler make more aggressive optimizations
@@ -617,7 +617,7 @@ because it knows more information about the closure's lifespan.
 
 .. testcode:: noescape-closure-as-argument
 
-    -> func someFunctionWithNonescapingClosure(@noescape closure: () -> Void) {
+    -> func someFunctionWithNonescapingClosure(closure: @noescape () -> Void) {
            closure()
        }
 
@@ -661,8 +661,8 @@ lets you refer to ``self`` implicitly within the closure.
     -> class SomeClass {
            var x = 10
            func doSomething() {
-               someFunctionWithEscapingClosure { self.x = 100 }
                someFunctionWithNonescapingClosure { x = 200 }
+               someFunctionWithEscapingClosure { self.x = 100 }
            }
        }
     ---
@@ -752,22 +752,22 @@ when you pass a closure as an argument to a function.
     << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
-    -> func serveCustomer(customerProvider: () -> String) {
+    -> func serve(customer customerProvider: () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer( { customersInLine.remove(at: 0) } )
+    -> serve(customer: { customersInLine.remove(at: 0) } )
     <- Now serving Alex!
 
-The ``serveCustomer(_:)`` function in the listing above
+The ``serve(customer:)`` function in the listing above
 takes an explicit closure that returns a customer's name.
-The version of ``serveCustomer(_:)`` below
+The version of ``serve(customer:)`` below
 performs the same operation but, instead of taking an explicit closure,
 it takes an autoclosure
-by marking its parameter with the ``@autoclosure`` attribute.
+by marking its parameter's type with the ``@autoclosure`` attribute.
 Now you can call the function
 as if it took a ``String`` argument instead of a closure.
 The argument is automatically converted to a closure,
-because the ``customerProvider`` parameter is marked
+because the ``customerProvider`` parameter's type is marked
 with the ``@autoclosure`` attribute.
 
 .. testcode:: autoclosures-function-with-autoclosure
@@ -776,10 +776,10 @@ with the ``@autoclosure`` attribute.
     << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
-    -> func serveCustomer(@autoclosure customerProvider: () -> String) {
+    -> func serve(customer customerProvider: @autoclosure () -> String) {
            print("Now serving \(customerProvider())!")
        }
-    -> serveCustomer(customersInLine.remove(at: 0))
+    -> serve(customer: customersInLine.remove(at: 0))
     <- Now serving Ewa!
 
 .. note::
@@ -801,7 +801,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(@autoclosure(escaping) customerProvider: () -> String) {
+    -> func collectCustomerProviders(_ customerProvider: @autoclosure(escaping) () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))

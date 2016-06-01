@@ -31,13 +31,6 @@ and to communicate to the user any errors it can't resolve.
    see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-.. NOTE:
-
-    If want to make a comparison to exception handling in other languages,
-    we'll need to take about performance and other subtle differences.
-    Leaving this discussion out for Xcode 7 beta 1.
-
-
 .. _ErrorHandling_Represent:
 
 Representing and Throwing Errors
@@ -58,9 +51,9 @@ of operating a vending machine inside a game:
 .. testcode:: throw-enum-error
 
    -> enum VendingMachineError: ErrorProtocol {
-          case InvalidSelection
-          case InsufficientFunds(coinsNeeded: Int)
-          case OutOfStock
+          case invalidSelection
+          case insufficientFunds(coinsNeeded: Int)
+          case outOfStock
       }
 
 Throwing an error lets you indicate that something unexpected happened
@@ -72,7 +65,7 @@ that five additional coins are needed by the vending machine:
 
 .. testcode:: throw-enum-error
 
-   -> throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+   -> throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
    xx fatal error
 
 .. _ErrorHandling_Catch:
@@ -180,9 +173,9 @@ or has a cost that exceeds the current deposited amount:
 .. testcode:: errorHandling
 
    >> enum VendingMachineError: ErrorProtocol {
-   >>     case InvalidSelection
-   >>     case InsufficientFunds(coinsNeeded: Int)
-   >>     case OutOfStock
+   >>     case invalidSelection
+   >>     case insufficientFunds(coinsNeeded: Int)
+   >>     case outOfStock
    >> }
    -> struct Item {
          var price: Int
@@ -196,21 +189,18 @@ or has a cost that exceeds the current deposited amount:
               "Pretzels": Item(price: 7, count: 11)
           ]
    ->     var coinsDeposited = 0
-   ->     func dispenseSnack(snack: String) {
-              print("Dispensing \(snack)")
-          }
    ---
    ->     func vend(itemNamed name: String) throws {
               guard let item = inventory[name] else {
-                  throw VendingMachineError.InvalidSelection
+                  throw VendingMachineError.invalidSelection
               }
 
               guard item.count > 0 else {
-                  throw VendingMachineError.OutOfStock
+                  throw VendingMachineError.outOfStock
               }
 
               guard item.price <= coinsDeposited else {
-                  throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
+                  throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
               }
 
               coinsDeposited -= item.price
@@ -219,7 +209,7 @@ or has a cost that exceeds the current deposited amount:
               newItem.count -= 1
               inventory[name] = newItem
 
-              dispenseSnack(name)
+              print("Dispensing \(name)")
           }
       }
 
@@ -234,10 +224,10 @@ any code that calls this method must either handle the errors ---
 using a ``do``-``catch`` statement, ``try?``, or ``try!``---
 or continue to propagate them.
 For example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` in the example below
+the ``buyFavoriteSnack(person:vendingMachine:)`` in the example below
 is also a throwing function,
 and any errors that the ``vend(itemNamed:)`` method throws will
-propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` function is called.
+propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)`` function is called.
 
 .. testcode:: errorHandling
 
@@ -254,11 +244,11 @@ propagate up to the point where the ``buyFavoriteSnack(_:vendingMachine:)`` func
    >> var v = VendingMachine()
    << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
-   >> try buyFavoriteSnack("Alice", vendingMachine: v)
+   >> try buyFavoriteSnack(person: "Alice", vendingMachine: v)
    << Dispensing Chips
 
 In this example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` function looks up a given person's favorite snack
+the ``buyFavoriteSnack(person: vendingMachine:)`` function looks up a given person's favorite snack
 and tries to buy it for them by calling the ``vend(itemNamed:)`` method.
 Because the ``vend(itemNamed:)`` method can throw an error,
 it's called with the ``try`` keyword in front of it.
@@ -346,18 +336,18 @@ but all other errors have to be handled by its surrounding scope:
    << // vendingMachine : VendingMachine = REPL.VendingMachine
    -> vendingMachine.coinsDeposited = 8
    -> do {
-          try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
-      } catch VendingMachineError.InvalidSelection {
+          try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
+      } catch VendingMachineError.invalidSelection {
           print("Invalid Selection.")
-      } catch VendingMachineError.OutOfStock {
+      } catch VendingMachineError.outOfStock {
           print("Out of Stock.")
-      } catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+      } catch VendingMachineError.insufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
       }
    <- Insufficient funds. Please insert an additional 2 coins.
 
 In the above example,
-the ``buyFavoriteSnack(_:vendingMachine:)`` function is called in a ``try`` expression,
+the ``buyFavoriteSnack(person:vendingMachine:)`` function is called in a ``try`` expression,
 because it can throw an error.
 If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
@@ -433,7 +423,7 @@ you can write ``try!`` before the expression to disable error propagation
 and wrap the call in a runtime assertion that no error will be thrown.
 If an error actually is thrown, you'll get a runtime error.
 
-For example, the following code uses a ``loadImage(_:)`` function,
+For example, the following code uses a ``loadImage(atPath:)`` function,
 which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
@@ -443,10 +433,10 @@ so it is appropriate to disable error propagation.
 .. testcode:: forceTryStatement
 
    >> struct Image {}
-   >> func loadImage(path: String) throws -> Image {
+   >> func loadImage(atPath path: String) throws -> Image {
    >>     return Image()
    >> }
-   -> let photo = try! loadImage("./Resources/John Appleseed.jpg")
+   -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
    << // photo : Image = REPL.Image()
 
 .. _ErrorHandling_Defer:
@@ -477,12 +467,12 @@ after code in the second, and so on.
 
 .. testcode:: defer
 
-   >> func exists(file: String) -> Bool { return true }
+   >> func exists(_ file: String) -> Bool { return true }
    >> struct File {
    >>    func readline() throws -> String? { return nil }
    >> }
-   >> func open(file: String) -> File { return File() }
-   >> func close(fileHandle: File) { }
+   >> func open(_ file: String) -> File { return File() }
+   >> func close(_ fileHandle: File) { }
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)

@@ -305,7 +305,7 @@ without being escaped with backticks.
 * Keywords that begin with a number sign (``#``):
   ``#available``,
   ``#column``,
-  ``#else``
+  ``#else``,
   ``#elseif``,
   ``#endif``,
   ``#file``,
@@ -405,7 +405,7 @@ When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
 That is, the type must conform to one of the following Swift standard library protocols:
 ``IntegerLiteralConvertible`` for integer literals,
-``FloatingPointLiteralConvertible`` for floating-point literals,
+``FloatLiteralConvertible`` for floating-point literals,
 ``StringLiteralConvertible`` for string literals, and
 ``BooleanLiteralConvertible`` for Boolean literals.
 For example, ``Int8`` conforms to the ``IntegerLiteralConvertible`` protocol,

@@ -788,7 +788,7 @@ As mentioned above,
 the memory for an object is only considered fully initialized
 once the initial state of all of its stored properties is known.
 In order for this rule to be satisfied, a designated initializer must make sure that
-all its own properties are initialized before it hands off up the chain.
+all of its own properties are initialized before it hands off up the chain.
 
 **Safety check 2**
   A designated initializer must delegate up to a superclass initializer
@@ -1479,22 +1479,22 @@ The initializer can then fail if the provided parameters
 do not match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
-with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
+with three possible states (``kelvin``, ``celsius``, and ``fahrenheit``).
 A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
 
    -> enum TemperatureUnit {
-         case Kelvin, Celsius, Fahrenheit
+         case kelvin, celsius, fahrenheit
          init?(symbol: Character) {
             switch symbol {
                case "K":
-                  self = .Kelvin
+                  self = .kelvin
                case "C":
-                  self = .Celsius
+                  self = .celsius
                case "F":
-                  self = .Fahrenheit
+                  self = .fahrenheit
                default:
                   return nil
             }
@@ -1509,7 +1509,7 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1540,11 +1540,11 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
 .. testcode:: failableInitializersForEnumerations
 
    -> enum TemperatureUnit: Character {
-         case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
+         case kelvin = "K", celsius = "C", fahrenheit = "F"
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -2129,7 +2129,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
+         func squareIsBlackAt(row: Int, column: Int) -> Bool {
             return boardColors[(row * 8) + column]
          }
       }
@@ -2148,7 +2148,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 
    -> let board = Chessboard()
    << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
-   -> print(board.squareIsBlackAtRow(0, column: 1))
+   -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(7, column: 7))
+   -> print(board.squareIsBlackAt(row: 7, column: 7))
    <- false

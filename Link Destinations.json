@@ -180,6 +180,7 @@
     "controlflow-break": "ID137", 
     "controlflow-breakinaloop": "ID138", 
     "controlflow-breakinaswitchstatement": "ID139", 
+    "controlflow-compoundcases": "ID548", 
     "controlflow-conditionalstatements": "ID127", 
     "controlflow-continue": "ID136", 
     "controlflow-controltransferstatements": "ID135", 
@@ -382,7 +383,6 @@
     "methods-assigningtoselfwithinamutatingmethod": "ID240", 
     "methods-instancemethods": "ID235", 
     "methods-localandexternalnamesformethods": "ID236", 
-    "methods-modifyingexternalparameternamebehaviorformethods": "ID237", 
     "methods-modifyingvaluetypesfromwithininstancemethods": "ID239", 
     "methods-theselfproperty": "ID238", 
     "methods-typemethods": "ID241", 
@@ -565,5 +565,5 @@
     "in-out-parameters", 
     "error-handling"
   ], 
-  "next_id": 548
+  "next_id": 549
 }

@@ -360,8 +360,8 @@ The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
 
-   -> func f(any: Any) { print("Function for Any") }
-   -> func f(int: Int) { print("Function for Int") }
+   -> func f(_ any: Any) { print("Function for Any") }
+   -> func f(_ int: Int) { print("Function for Int") }
    -> let x = 10
    << // x : Int = 10
    -> f(x)
@@ -452,6 +452,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
+    primary-expression --> key-path-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -507,12 +508,15 @@ when the default value expression is evaluated at the call site.
        }
     >> myFunction()
     << myFunction()
-    >> func noNamedArgs(i: Int, _ j: Int) { logFunctionName() }
+    >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
     << noNamedArgs
+    >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
+    >> oneNamedArg(1, withJay: 2)
+    << oneNamedArg(_:withJay:)
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    >> namedArgs(1, withJay: 2)
-    << namedArgs(_:withJay:)
+    >> namedArgs(i: 1, withJay: 2)
+    << namedArgs(i:withJay:)
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by #function
@@ -645,13 +649,13 @@ For example:
 
     -> struct Point {
           var x = 0.0, y = 0.0
-          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+          mutating func moveBy(x deltaX: Double, y deltaY: Double) {
              self = Point(x: x + deltaX, y: y + deltaY)
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
     << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-    >> somePoint.moveByX(2.0, y: 3.0)
+    >> somePoint.moveBy(x: 2.0, y: 3.0)
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
@@ -988,10 +992,10 @@ For example:
 
 .. testcode:: implicitMemberEnum
 
-    >> enum MyEnumeration { case SomeValue, AnotherValue }
-    -> var x = MyEnumeration.SomeValue
-    << // x : MyEnumeration = REPL.MyEnumeration.SomeValue
-    -> x = .AnotherValue
+    >> enum MyEnumeration { case someValue, anotherValue }
+    -> var x = MyEnumeration.someValue
+    << // x : MyEnumeration = REPL.MyEnumeration.someValue
+    -> x = .anotherValue
 
 .. langref-grammar
 
@@ -1089,11 +1093,9 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
            @objc(doSomethingWithInt:)
-           func doSomething(x: Int) { }
+           func doSomething(_ x: Int) { }
       }
-   -> let x = SomeClass()
-   <~ // x : SomeClass = <REPL.SomeClass: 0x
-   -> let selector = #selector(x.doSomething(_:))
+   -> let selector = #selector(SomeClass.doSomething(_:))
    << // selector : Selector = doSomethingWithInt:
 
 The *method name* can contain parentheses for grouping,
@@ -1105,9 +1107,9 @@ For example:
 
    -> extension SomeClass {
           @objc(doSomethingWithString:)
-          func doSomething(x: String) { }
+          func doSomething(_ x: String) { }
       }
-   -> let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+   -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
 
 Because the selector is created at compile time, not at runtime,
@@ -1133,7 +1135,7 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. syntax-grammar::
 
-    Grammar of an Objective-C selector expression
+    Grammar of a selector expression
 
     selector-expression --> ``#selector`` ``(`` expression  ``)``
 
@@ -1141,6 +1143,71 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
+
+
+.. _Expression_KeyPathExpression:
+
+Key-Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+A key-path expression lets you access the string
+used to refer to a property in Objective-C
+for use in key-value coding and key-value observing APIs.
+
+.. syntax-outline::
+
+   #keyPath(<#property name#>)
+
+The *property name* must be a reference to a property
+that is available in the Objective-C runtime.
+At compile time, the key-path expression is replaced by a string literal.
+For example:
+
+.. testcode:: keypath-expression
+
+   >> import Foundation
+   -> @objc class SomeClass: NSObject {
+         var someProperty: Int
+         init(someProperty: Int) {
+             self.someProperty = someProperty
+         }
+         func keyPathTest() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 12)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> let keyPath = #keyPath(SomeClass.someProperty)
+   << // keyPath : String = "someProperty"
+   -> print(c.value(forKey: keyPath))
+   <- Optional(12)
+   ---
+   -> print(keyPath == c.keyPathTest())
+   <- true
+
+Because the key path is created at compile time, not at runtime,
+the compiler can check that the property exists
+and that the property is exposed to the Objective-C runtime.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
+
+.. note::
+
+    Although the *property name* is an expression, it is never evaluated.
+
+
+.. syntax-grammar::
+
+    Grammar of a key-path expression
+
+    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
@@ -1223,15 +1290,15 @@ The following function calls are equivalent:
 
 .. testcode:: trailing-closure
 
-    >> func someFunction (x: Int, f: Int -> Bool) -> Bool {
+    >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
     >>    return f(x)
     >> }
     >> let x = 10
     << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x, f: {$0 == 13})
+    -> someFunction(x: x, f: {$0 == 13})
     << // r0 : Bool = false
-    -> someFunction(x) {$0 == 13}
+    -> someFunction(x: x) {$0 == 13}
     << // r1 : Bool = false
 
 If the trailing closure is the function's only argument,
@@ -1241,7 +1308,7 @@ the parentheses can be omitted.
 
     >> class Data {
     >>    let data = 10
-    >>    func someMethod(f: Int -> Bool) -> Bool {
+    >>    func someMethod(f: (Int) -> Bool) -> Bool {
     >>       return f(self.data)
     >>    }
     >> }
@@ -1307,8 +1374,8 @@ For example:
 .. testcode:: init-as-value
 
     // Type annotation is required because String has multiple initializers.
-    -> let initializer: Int -> String = String.init
-    << // initializer : Int -> String = (Function)
+    -> let initializer: (Int) -> String = String.init
+    << // initializer : (Int) -> String = (Function)
     -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
     << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
@@ -1330,9 +1397,9 @@ In all other cases, you must use an initializer expression.
     ---
     >> let someValue = s1
     << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s4 = someValue.dynamicType(data: 5)       // Error
-    << // s3 : SomeType = REPL.SomeType(data: 7)
     -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    << // s3 : SomeType = REPL.SomeType(data: 7)
+    -> let s4 = someValue.dynamicType(data: 5)       // Error
     !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
     !! let s4 = someValue.dynamicType(data: 5)       // Error
     !!                               ^
@@ -1415,7 +1482,7 @@ For example:
     ---
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(_:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(x:y:)'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
@@ -1424,11 +1491,11 @@ For example:
     !! <REPL Input>:3:12: note: found this candidate
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
-    -> let b = instance.someMethod(_:y:)        // Unambiguous
-    << // b : (Int, y: Int) -> () = (Function)
+    -> let b = instance.someMethod(x:y:)        // Unambiguous
+    << // b : (x: Int, y: Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
     !!         ^
     !! <REPL Input>:4:12: note: found this candidate
@@ -1437,9 +1504,9 @@ For example:
     !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
-    -> let d = instance.overloadedMethod(_:y:)  // Still ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(_:y:)'
-    !!     let d = instance.overloadedMethod(_:y:)  // Still ambiguous
+    -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
     !!             ^
     !! <REPL Input>:4:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
@@ -1447,7 +1514,7 @@ For example:
     !! <REPL Input>:5:12: note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
-    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // Unambiguous
+    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
     << // d : (Int, Bool) -> Void = (Function)
 
 If a period appears at the beginning of a line,

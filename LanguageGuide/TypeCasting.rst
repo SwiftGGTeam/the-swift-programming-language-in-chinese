@@ -326,7 +326,7 @@ The example creates an array called ``things``, which can store values of type `
    -> things.append(42)
    -> things.append(3.14159)
    -> things.append("hello")
-   -> things.append((3.0, 5.0) as Any)
+   -> things.append((3.0, 5.0))
    -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
    -> things.append({ (name: String) -> String in "Hello, \(name)" })
 
@@ -365,7 +365,7 @@ a constant of the specified type to enable its value to be printed:
                print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
                print("a movie called \(movie.name), dir. \(movie.director)")
-            case let stringConverter as String -> String:
+            case let stringConverter as (String) -> String:
                print(stringConverter("Michael"))
             default:
                print("something else")

@@ -218,7 +218,7 @@ to generate a new random number.
 Here's an implementation of a class that adopts and conforms to
 the ``RandomNumberGenerator`` protocol.
 This class implements a pseudorandom number generator algorithm known as
-a :newTerm:`linear congruential generator`:
+a *linear congruential generator*:
 
 .. testcode:: protocols
    :compile: true
@@ -289,27 +289,27 @@ that is also marked as ``mutating``.
 
 The example below defines an enumeration called ``OnOffSwitch``.
 This enumeration toggles between two states,
-indicated by the enumeration cases ``On`` and ``Off``.
+indicated by the enumeration cases ``on`` and ``off``.
 The enumeration's ``toggle`` implementation is marked as ``mutating``,
 to match the ``Togglable`` protocol's requirements:
 
 .. testcode:: mutatingRequirements
 
    -> enum OnOffSwitch: Togglable {
-         case Off, On
+         case off, on
          mutating func toggle() {
             switch self {
-               case Off:
-                  self = On
-               case On:
-                  self = Off
+               case off:
+                  self = on
+               case on:
+                  self = off
             }
          }
       }
-   -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.Off
+   -> var lightSwitch = OnOffSwitch.off
+   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.off
    -> lightSwitch.toggle()
-   // lightSwitch is now equal to .On
+   // lightSwitch is now equal to .on
 
 .. _Protocols_InitializerRequirements:
 
@@ -626,9 +626,9 @@ The example below defines two protocols for use with dice-based board games:
          func play()
       }
    -> protocol DiceGameDelegate {
-         func gameDidStart(game: DiceGame)
-         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-         func gameDidEnd(game: DiceGame)
+         func gameDidStart(_ game: DiceGame)
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+         func gameDidEnd(_ game: DiceGame)
       }
 
 The ``DiceGame`` protocol is a protocol that can be adopted
@@ -720,18 +720,18 @@ which adopts the ``DiceGameDelegate`` protocol:
 
    -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
-         func gameDidStart(game: DiceGame) {
+         func gameDidStart(_ game: DiceGame) {
             numberOfTurns = 0
             if game is SnakesAndLadders {
                print("Started a new game of Snakes and Ladders")
             }
             print("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             numberOfTurns += 1
             print("Rolled a \(diceRoll)")
          }
-         func gameDidEnd(game: DiceGame) {
+         func gameDidEnd(_ game: DiceGame) {
             print("The game lasted for \(numberOfTurns) turns")
          }
       }
@@ -742,10 +742,10 @@ It resets a ``numberOfTurns`` property to zero when the game starts,
 increments it each time a new turn begins,
 and prints out the total number of turns once the game has ended.
 
-The implementation of ``gameDidStart`` shown above uses the ``game`` parameter
+The implementation of ``gameDidStart(_:)`` shown above uses the ``game`` parameter
 to print some introductory information about the game that is about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
-and so ``gameDidStart`` can access and use only methods and properties that
+and so ``gameDidStart(_:)`` can access and use only methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
 However, the method is still able to use type casting to
 query the type of the underlying instance.
@@ -753,7 +753,7 @@ In this example, it checks whether ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
 and prints an appropriate message if so.
 
-``gameDidStart`` also accesses the ``dice`` property of the passed ``game`` parameter.
+The ``gameDidStart(_:)`` method also accesses the ``dice`` property of the passed ``game`` parameter.
 Because ``game`` is known to conform to the ``DiceGame`` protocol,
 it is guaranteed to have a ``dice`` property,
 and so the ``gameDidStart(_:)`` method is able to access and print the dice's ``sides`` property,
@@ -1070,13 +1070,13 @@ into a single protocol composition requirement on a function parameter:
          var name: String
          var age: Int
       }
-   -> func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-         print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+   -> func wishHappyBirthday(to celebrator: protocol<Named, Aged>) {
+         print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
    << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
-   -> wishHappyBirthday(birthdayPerson)
-   <- Happy birthday Malcolm - you're 21!
+   -> wishHappyBirthday(to: birthdayPerson)
+   <- Happy birthday, Malcolm, you're 21!
 
 This example defines a protocol called ``Named``,
 with a single requirement for a gettable ``String`` property called ``name``.
@@ -1084,17 +1084,16 @@ It also defines a protocol called ``Aged``,
 with a single requirement for a gettable ``Int`` property called ``age``.
 Both of these protocols are adopted by a structure called ``Person``.
 
-The example also defines a function called ``wishHappyBirthday``,
-which takes a single parameter called ``celebrator``.
-The type of this parameter is ``protocol<Named, Aged>``,
+The example also defines a ``wishHappyBirthday(to:)`` function,
+The type of the ``celebrator`` parameter is ``protocol<Named, Aged>``,
 which means “any type that conforms to both the ``Named`` and ``Aged`` protocols.”
 It doesn't matter what specific type is passed to the function,
 as long as it conforms to both of the required protocols.
 
 The example then creates a new ``Person`` instance called ``birthdayPerson``
-and passes this new instance to the ``wishHappyBirthday(_:)`` function.
+and passes this new instance to the ``wishHappyBirthday(to:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
-and the ``wishHappyBirthday(_:)`` function is able to print its birthday greeting.
+and the ``wishHappyBirthday(to:)`` function is able to print its birthday greeting.
 
 .. note::
 
@@ -1237,6 +1236,14 @@ You can define :newTerm:`optional requirements` for protocols,
 These requirements do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
+Optional requirements are available so that you can write code
+that interoperates with Objective-C.
+Both the protocol and the optional requirement
+must be marked with the ``@objc`` attribute.
+Note that ``@objc`` protocols can be adopted only by classes
+that inherit from Objective-C classes or other ``@objc`` classes.
+They can't be adopted by structures or enumerations.
+
 When you use a method or property in an optional requirement,
 its type automatically becomes an optional.
 For example,
@@ -1253,22 +1260,6 @@ by writing a question mark after the name of the method when it is called,
 such as ``someOptionalMethod?(someArgument)``.
 For information on optional chaining, see :doc:`OptionalChaining`.
 
-.. note::
-
-   Optional protocol requirements can only be specified
-   if your protocol is marked with the ``@objc`` attribute.
-
-   This attribute indicates that
-   the protocol should be exposed to Objective-C code and is described in
-   `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-   Even if you are not interoperating with Objective-C,
-   you need to mark your protocols with the ``@objc`` attribute
-   if you want to specify optional requirements.
-
-   Note also that ``@objc`` protocols can be adopted only by classes
-   that inherit from Objective-C classes or other ``@objc`` classes.
-   They can't be adopted by structures or enumerations.
-
 The following example defines an integer-counting class called ``Counter``,
 which uses an external data source to provide its increment amount.
 This data source is defined by the ``CounterDataSource`` protocol,
@@ -1278,12 +1269,12 @@ which has two optional requirements:
 
    >> import Foundation
    -> @objc protocol CounterDataSource {
-         optional func incrementForCount(count: Int) -> Int
-         optional var fixedIncrement: Int { get }
+         @objc optional func increment(forCount count: Int) -> Int
+         @objc optional var fixedIncrement: Int { get }
       }
 
 The ``CounterDataSource`` protocol defines
-an optional method requirement called ``incrementForCount(_:)``
+an optional method requirement called ``increment(forCount:)``
 and an optional property requirement called ``fixedIncrement``.
 These requirements define two different ways for data sources to provide
 an appropriate increment amount for a ``Counter`` instance.
@@ -1305,7 +1296,7 @@ has an optional ``dataSource`` property of type ``CounterDataSource?``:
          var count = 0
          var dataSource: CounterDataSource?
          func increment() {
-            if let amount = dataSource?.incrementForCount?(count) {
+            if let amount = dataSource?.increment?(forCount: count) {
                count += amount
             } else if let amount = dataSource?.fixedIncrement {
                count += amount
@@ -1318,27 +1309,27 @@ The ``Counter`` class also defines a method called ``increment``,
 which increments the ``count`` property every time the method is called.
 
 The ``increment()`` method first tries to retrieve an increment amount
-by looking for an implementation of the ``incrementForCount(_:)`` method on its data source.
-The ``increment()`` method uses optional chaining to try to call ``incrementForCount(_:)``,
+by looking for an implementation of the ``increment(forCount:)`` method on its data source.
+The ``increment()`` method uses optional chaining to try to call ``increment(forCount:)``,
 and passes the current ``count`` value as the method's single argument.
 
 Note that *two* levels of optional chaining are at play here.
 First, it is possible that ``dataSource`` may be ``nil``,
 and so ``dataSource`` has a question mark after its name to indicate that
-``incrementForCount(_:)`` should be called only if ``dataSource`` isn't ``nil``.
+``incrementForCount(forCount:)`` should be called only if ``dataSource`` isn't ``nil``.
 Second, even if ``dataSource`` *does* exist,
-there is no guarantee that it implements ``incrementForCount(_:)``,
+there is no guarantee that it implements ``incrementForCount(forCount:)``,
 because it is an optional requirement.
-Here, the possibility that ``incrementForCount(_:)`` might not be implemented
+Here, the possibility that ``incrementForCount(forCount:)`` might not be implemented
 is also handled by optional chaining.
-The call to ``incrementForCount(_:)`` happens
-only if ``incrementForCount(_:)`` exists ---
+The call to ``incrementForCount(forCount:)`` happens
+only if ``incrementForCount(forCount:)`` exists ---
 that is, if it isn't ``nil``.
-This is why ``incrementForCount(_:)`` is also written with a question mark after its name.
+This is why ``incrementForCount(forCount:)`` is also written with a question mark after its name.
 
-Because the call to ``incrementForCount(_:)`` can fail for either of these two reasons,
+Because the call to ``incrementForCount(forCount:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
-This is true even though ``incrementForCount(_:)`` is defined as returning
+This is true even though ``incrementForCount(forCount:)`` is defined as returning
 a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,
@@ -1346,7 +1337,7 @@ the result is still wrapped in a single optional.
 For more information about using multiple optional chaining operations,
 see :ref:`OptionalChaining_LinkingMultipleLevelsOfChaining`.
 
-After calling ``incrementForCount(_:)``, the optional ``Int`` that it returns
+After calling ``increment(forCount:)``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.
 If the optional ``Int`` does contain a value ---
 that is, if the delegate and method both exist,
@@ -1354,9 +1345,9 @@ and the method returned a value ---
 the unwrapped ``amount`` is added onto the stored ``count`` property,
 and incrementation is complete.
 
-If it is *not* possible to retrieve a value from the ``incrementForCount(_:)`` method ---
+If it is *not* possible to retrieve a value from the ``increment(forCount:)`` method ---
 either because ``dataSource`` is nil,
-or because the data source does not implement ``incrementForCount(_:)`` ---
+or because the data source does not implement ``increment(forCount:)`` ---
 then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
@@ -1403,7 +1394,7 @@ from its current ``count`` value:
 .. testcode:: protocolConformance
 
    -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
-         func incrementForCount(count: Int) -> Int {
+         func increment(forCount count: Int) -> Int {
             if count == 0 {
                return 0
             } else if count < 0 {
@@ -1415,7 +1406,7 @@ from its current ``count`` value:
       }
 
 The ``TowardsZeroSource`` class implements
-the optional ``incrementForCount(_:)`` method from the ``CounterDataSource`` protocol
+the optional ``increment(forCount:)`` method from the ``CounterDataSource`` protocol
 and uses the ``count`` argument value to work out which direction to count in.
 If ``count`` is already zero, the method returns ``0``
 to indicate that no further counting should take place.
@@ -1486,7 +1477,7 @@ Providing Default Implementations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use protocol extensions to provide a default implementation
-to any method or property requirement of that protocol.
+to any method or computed property requirement of that protocol.
 If a conforming type provides its own implementation of a required method or property,
 that implementation will be used instead of the one provided by the extension.
 

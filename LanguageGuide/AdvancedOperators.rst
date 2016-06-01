@@ -170,7 +170,7 @@ move all bits in a number to the left or the right by a certain number of places
 according to the rules defined below.
 
 Bitwise left and right shifts have the effect of
-multiplying or dividing an integer number by a factor of two.
+multiplying or dividing an integer by a factor of two.
 Shifting an integer's bits to the left by one position doubles its value,
 whereas shifting it to the right by one position halves its value.
 
@@ -322,11 +322,10 @@ shift the bits of negative numbers to the left and right like positive numbers,
 and still end up doubling them for every shift you make to the left,
 or halving them for every shift you make to the right.
 To achieve this, an extra rule is used when signed integers are shifted to the right:
-
-* When you shift signed integers to the right,
-  apply the same rules as for unsigned integers,
-  but fill any empty bits on the left with the *sign bit*,
-  rather than with a zero.
+When you shift signed integers to the right,
+apply the same rules as for unsigned integers,
+but fill any empty bits on the left with the *sign bit*,
+rather than with a zero.
 
 .. image:: ../images/bitshiftSigned_2x.png
    :align: center
@@ -350,7 +349,7 @@ by default Swift reports an error rather than allowing an invalid value to be cr
 This behavior gives extra safety when you work with numbers that are too large or too small.
 
 For example, the ``Int16`` integer type can hold
-any signed integer number between ``-32768`` and ``32767``.
+any signed integer between ``-32768`` and ``32767``.
 Trying to set an ``Int16`` constant or variable to a number outside of this range
 causes an error:
 
@@ -774,14 +773,7 @@ by adding the vector to itself with the addition assignment operator defined ear
          vector += vector
          return vector
       }
-
-This implementation of ``+++`` is very similar to
-the implementation of ``++`` for ``Vector2D``,
-except that this operator function adds the vector to itself,
-rather than adding ``Vector2D(1.0, 1.0)``:
-
-.. testcode:: customOperators
-
+   ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
    << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
@@ -874,7 +866,7 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. TODO: Self as the dynamic type of the current type that is implementing the protocols
    protocol Comparable {
-      func <(Self, Self) -> Bool
+      func < (Self, Self) -> Bool
    }
 
 .. TODO: generic operators

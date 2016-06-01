@@ -431,8 +431,10 @@ As the above example shows, patterns in a case can also bind constants
 using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
 These constants (or variables) can then be referenced in a corresponding where clause
 and throughout the rest of the code within the scope of the case.
-That said, if the case contains multiple patterns that match the control expression,
-none of those patterns can contain constant or variable bindings.
+If the case contains multiple patterns that match the control expression,
+all of the patterns must contain the same constant or variable bindings,
+and each bound variable or constant must have the same type
+in all of the case's patterns.
 
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
@@ -447,6 +449,23 @@ the order in which they appear in source code.
 As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
+
+.. assertion:: switch-case-with-multiple-patterns
+
+   >> let tuple = (1, 1)
+   << // tuple : (Int, Int) = (1, 1)
+   >> switch tuple {
+   >>     case (let x, 5), (let x, 1): print(1)
+   >>     default: print(2)
+   >> }
+   << 1
+   >> switch tuple {
+   >>     case (let x, 5), (let x as Any, 1): print(1)
+   >>     default: print(2)
+   >> }
+   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any' (aka 'protocol<>'), expected type 'Int'
+   !! case (let x, 5), (let x as Any, 1): print(1)
+   !!                       ^
 
 
 .. _Statements_SwitchStatementsMustBeExhaustive:

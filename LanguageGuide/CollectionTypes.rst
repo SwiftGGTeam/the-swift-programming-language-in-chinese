@@ -47,7 +47,8 @@ and its size and contents cannot be changed.
 
    It is good practice to create immutable collections
    in all cases where the collection does not need to change.
-   Doing so enables the Swift compiler to optimize the performance of
+   Doing so makes it easier for you to reason about your code
+   and enables the Swift compiler to optimize the performance of
    the collections you create.
 
 .. _CollectionTypes_Arrays:
@@ -146,7 +147,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
    << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
-   /> sixDoubles is inferred as [Double], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
+   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
    </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
 .. TODO: func find<T: Equatable>(array: [T], value: T) -> Int?
@@ -451,7 +452,7 @@ are also hashable by default.
    or in different programs.
 
    Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must also provide an implementation of the “is equal” operator (``==``).
+   conforming types must also provide an implementation of the equals operator (``==``).
    The ``Equatable`` protocol requires
    any conforming implementation of ``==`` to be an equivalence relation.
    That is, an implementation of ``==`` must satisfy the following three conditions,
@@ -501,6 +502,7 @@ you can create an empty set with an empty array literal:
 .. testcode:: setsEmpty
 
    -> letters.insert("a")
+   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (true, "a")
    /> letters now contains \(letters.count) value of type Character
    </ letters now contains 1 value of type Character
    -> letters = []
@@ -586,6 +588,7 @@ You can add a new item into a set by calling the set's ``insert(_:)`` method:
 .. testcode:: setUsage
 
    -> favoriteGenres.insert("[Tool J]")
+   << // r0 : (inserted: Bool, memberAfterInsert: String) = (true, "[Tool J]")
    /> favoriteGenres now contains \(favoriteGenres.count) items
    </ favoriteGenres now contains 4 items
 
@@ -672,10 +675,10 @@ with the results of various set operations represented by the shaded regions.
 .. image:: ../images/setVennDiagram_2x.png
    :align: center
 
-* Use the ``intersect(_:)`` method to create a new set with only the values common to both sets.
-* Use the ``exclusiveOr(_:)`` method to create a new set with values in either set, but not both.
+* Use the ``intersection(_:)`` method to create a new set with only the values common to both sets.
+* Use the ``symmetricDifference(_:)`` method to create a new set with values in either set, but not both.
 * Use the ``union(_:)`` method to create a new set with all of the values in both sets.
-* Use the ``subtract(_:)`` method to create a new set with values not in the specified set.
+* Use the ``subtracting(_:)`` method to create a new set with values not in the specified set.
 
 .. testcode:: setOperations
 
@@ -689,13 +692,13 @@ with the results of various set operations represented by the shaded regions.
    -> oddDigits.union(evenDigits).sorted()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   -> oddDigits.intersect(evenDigits).sorted()
+   -> oddDigits.intersection(evenDigits).sorted()
    << // r1 : [Int] = []
    // []
-   -> oddDigits.subtract(singleDigitPrimeNumbers).sorted()
+   -> oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
    << // r2 : [Int] = [1, 9]
    // [1, 9]
-   -> oddDigits.exclusiveOr(singleDigitPrimeNumbers).sorted()
+   -> oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
    << // r3 : [Int] = [1, 2, 9]
    // [1, 2, 9]
 
@@ -718,10 +721,10 @@ because they share no elements in common.
    :align: center
 
 * Use the “is equal” operator (``==``) to determine whether two sets contain all of the same values.
-* Use the ``isSubsetOf(_:)`` method to determine whether all of the values of a set are contained in the specified set.
-* Use the ``isSupersetOf(_:)`` method to determine whether a set contains all of the values in a specified set.
-* Use the ``isStrictSubsetOf(_:)`` or ``isStrictSupersetOf(_:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-* Use the ``isDisjointWith(_:)`` method to determine whether two sets have any values in common.
+* Use the ``isSubset(of:)`` method to determine whether all of the values of a set are contained in the specified set.
+* Use the ``isSuperset(of:)`` method to determine whether a set contains all of the values in a specified set.
+* Use the ``isStrictSubset(of:)`` or ``isStrictSuperset(of:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
+* Use the ``isDisjoint(with:)`` method to determine whether two sets have any values in common.
 
 .. testcode:: setOperations
 
@@ -732,13 +735,13 @@ because they share no elements in common.
    -> let cityAnimals: Set = ["🐦", "🐭"]
    << // cityAnimals : Set<String> = Set(["🐦", "🐭"])
    ---
-   -> houseAnimals.isSubsetOf(farmAnimals)
+   -> houseAnimals.isSubset(of: farmAnimals)
    << // r4 : Bool = true
    // true
-   -> farmAnimals.isSupersetOf(houseAnimals)
+   -> farmAnimals.isSuperset(of: houseAnimals)
    << // r5 : Bool = true
    // true
-   -> farmAnimals.isDisjointWith(cityAnimals)
+   -> farmAnimals.isDisjoint(with: cityAnimals)
    << // r6 : Bool = true
    // true
 

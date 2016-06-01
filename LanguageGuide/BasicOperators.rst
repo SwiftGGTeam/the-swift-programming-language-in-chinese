@@ -97,7 +97,7 @@ The following statement is not valid:
 .. testcode:: assignmentOperatorInvalid
 
    -> if x = y {
-         // this is not valid, because x = y does not return a value
+         // This is not valid, because x = y does not return a value.
       }
    !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
    !! if x = y {
@@ -222,25 +222,6 @@ giving a remainder value of ``-1``.
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` always give the same answer.
 
-.. _BasicOperators_FloatingPointRemainderCalculations:
-
-Floating-Point Remainder Calculations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Unlike the remainder operator in C and Objective-C,
-Swift's remainder operator can also operate on floating-point numbers:
-
-.. testcode:: arithmeticOperators
-
-   -> 8 % 2.5   // equals 0.5
-   << // r7 : Double = 0.5
-
-In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
-so the remainder operator returns a ``Double`` value of ``0.5``.
-
-.. image:: ../images/remainderFloat_2x.png
-   :align: center
-
 .. _BasicOperators_UnaryMinusOperator:
 
 Unary Minus Operator
@@ -357,7 +338,7 @@ such as the ``if`` statement:
          print("I'm sorry \(name), but I don't recognize you")
       }
    << hello, world
-   // prints "hello, world", because name is indeed equal to "world"
+   // Prints "hello, world", because name is indeed equal to "world".
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
@@ -375,7 +356,7 @@ which means tuples that contain a Boolean value can't be compared.
    !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
    !! true < false
    !! ~~~~ ^ ~~~~~
-   !! <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists: (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (T?, T?), (UnsafeMutablePointer<Pointee>, UnsafeMutablePointer<Pointee>), (UnsafePointer<Pointee>, UnsafePointer<Pointee>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F))
+   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
    !! true < false
    !!      ^
 
@@ -571,12 +552,13 @@ The value of ``a`` must not be greater than ``b``.
 .. assertion:: closedRangeStartCanBeLessThanEnd
 
    -> let range = 1...2
-   << // range : Range<Int> = Range(1..<3)
+   << // range : CountableClosedRange<Int> = CountableClosedRange(1...2)
+
 
 .. assertion:: closedRangeStartCanBeTheSameAsEnd
 
    -> let range = 1...1
-   << // range : Range<Int> = Range(1..<2)
+   << // range : CountableClosedRange<Int> = CountableClosedRange(1...1)
 
 .. assertion:: closedRangeStartCannotBeGreaterThanEnd
 
@@ -618,12 +600,12 @@ then the resulting range will be empty.
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
 
    -> let range = 1..<2
-   << // range : Range<Int> = Range(1..<2)
+   << // range : CountableRange<Int> = CountableRange(1..<2)
 
 .. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
 
    -> let range = 1..<1
-   << // range : Range<Int> = Range(1..<1)
+   << // range : CountableRange<Int> = CountableRange(1..<1)
 
 .. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
 

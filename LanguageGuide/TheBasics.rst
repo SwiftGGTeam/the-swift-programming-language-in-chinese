@@ -208,7 +208,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error - languageName cannot be changed
+   // This is a compile-time error: languageName cannot be changed.
    !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -287,7 +287,7 @@ Single-line comments begin with two forward-slashes (``//``):
 .. testcode:: comments
    :compile: true
 
-   -> // this is a comment
+   -> // This is a comment.
 
 Multiline comments start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
@@ -295,8 +295,10 @@ and end with an asterisk followed by a forward-slash (``*/``):
 .. testcode:: comments
    :compile: true
 
-   -> /* this is also a comment,
-      but written over multiple lines */
+   -> /* This is also a comment
+      but is written over multiple lines. */
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Unlike multiline comments in C,
 multiline comments in Swift can be nested inside other multiline comments.
@@ -307,9 +309,11 @@ The second block is then closed, followed by the first block:
 .. testcode:: comments
    :compile: true
 
-   -> /* this is the start of the first multiline comment
-         /* this is the second, nested multiline comment */
-      this is the end of the first multiline comment */
+   -> /* This is the start of the first multiline comment.
+         /* This is the second, nested multiline comment. */
+      This is the end of the first multiline comment. */
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Nested multiline comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multiline comments.
@@ -823,14 +827,6 @@ As with other examples of type safety in Swift,
 this approach avoids accidental errors
 and ensures that the intention of a particular section of code is always clear.
 
-.. TODO: add a note to this effect once we have some documentation
-   that actually describes how Boolean works:
-   Strictly speaking, an ``if`` statement's condition expression
-   can be of any type that conforms to the ``Boolean`` protocol.
-   ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as optionals, described below.
-   The ``Boolean`` protocol is described in <link>.
-
 .. _TheBasics_Tuples:
 
 Tuples
@@ -935,13 +931,9 @@ Optionals
 ---------
 
 You use :newTerm:`optionals` in situations where a value may be absent.
-An optional says:
-
-* There *is* a value, and it equals *x*
-
-*or*
-
-* There *isn't* a value at all
+An optional represents two possibilities:
+Either there *is* a value, and you can unwrap the optional to access that value,
+or there *isn't* a value at all.
 
 .. note::
 
@@ -1246,14 +1238,14 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 .. testcode:: errorHandling
 
    >> enum SimpleError: ErrorProtocol {
-   >>    case SomeError
+   >>    case someError
    >> }
    >> let condition = true
    << // condition : Bool = true
    -> func canThrowAnError() throws {
          // this function may or may not throw an error
    >>    if condition {
-   >>       throw SimpleError.SomeError
+   >>       throw SimpleError.someError
    >>    }
       }
 
@@ -1286,8 +1278,8 @@ to respond to different error conditions:
 .. testcode:: errorHandlingTwo
 
    >> enum SandwichError: ErrorProtocol {
-   >>     case OutOfCleanDishes
-   >>     case MissingIngredients([String])
+   >>     case outOfCleanDishes
+   >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
    >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
@@ -1299,9 +1291,9 @@ to respond to different error conditions:
    -> do {
           try makeASandwich()
           eatASandwich()
-      } catch SandwichError.OutOfCleanDishes {
+      } catch SandwichError.outOfCleanDishes {
           washDishes()
-      } catch SandwichError.MissingIngredients(let ingredients) {
+      } catch SandwichError.missingIngredients(let ingredients) {
           buyGroceries(ingredients)
       }
 
@@ -1315,9 +1307,9 @@ any errors that are thrown will be propagated
 to the provided ``catch`` clauses.
 
 If no error is thrown, the ``eatASandwich()`` function is called.
-If an error is thrown and it matches the ``SandwichError.OutOfCleanDishes`` case,
+If an error is thrown and it matches the ``SandwichError.outOfCleanDishes`` case,
 then the ``washDishes()`` function will be called.
-If an error is thrown and it matches the ``SandwichError.MissingIngredients`` case,
+If an error is thrown and it matches the ``SandwichError.missingIngredients`` case,
 then the ``buyGroceries(_:)`` function is called
 with the associated ``[String]`` value captured by the ``catch`` pattern.
 

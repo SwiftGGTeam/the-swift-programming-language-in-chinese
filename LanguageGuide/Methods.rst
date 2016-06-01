@@ -42,7 +42,7 @@ which can be used to count the number of times an action occurs:
          func increment() {
             count += 1
          }
-         func incrementBy(amount: Int) {
+         func increment(by amount: Int) {
             count += amount
          }
          func reset() {
@@ -52,9 +52,9 @@ which can be used to count the number of times an action occurs:
 
 The ``Counter`` class defines three instance methods:
 
-* ``increment`` increments the counter by ``1``.
-* ``incrementBy(amount: Int)`` increments the counter by a specified integer amount.
-* ``reset`` resets the counter to zero.
+* ``increment()`` increments the counter by ``1``.
+* ``increment(by: Int)`` increments the counter by a specified integer amount.
+* ``reset()`` resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
 to keep track of the current counter value.
@@ -70,7 +70,7 @@ You call instance methods with the same dot syntax as properties:
    -> counter.increment()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 1
-   -> counter.incrementBy(5)
+   -> counter.increment(by: 5)
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 6
    -> counter.reset()
@@ -82,22 +82,6 @@ and an argument label (for use when calling the function),
 as described in :ref:`Functions_FunctionParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-
-.. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
-
-Modifying Argument Label and Parameter Name Behavior for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sometimes it's useful to provide an argument label
-for a method's first parameter, even though this is not the default behavior.
-To do so, you can add an explicit external name yourself.
-
-Conversely, if you do not want to provide an argument label
-for the second or subsequent parameter of a method,
-override the default behavior by using an underscore character (``_``)
-as an explicit argument label for that parameter.
-
-.. TODO: provide (good, would-actually-be-appropriate) examples here.
 
 .. _Methods_TheSelfProperty:
 
@@ -143,13 +127,13 @@ a method parameter called ``x`` and an instance property that is also called ``x
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         func isToTheRightOfX(x: Double) -> Bool {
+         func isToTheRightOf(x: Double) -> Bool {
             return self.x > x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
    << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
-   -> if somePoint.isToTheRightOfX(1.0) {
+   -> if somePoint.isToTheRightOf(x: 1.0) {
          print("This point is to the right of the line where x == 1.0")
       }
    <- This point is to the right of the line where x == 1.0
@@ -184,18 +168,18 @@ before the ``func`` keyword for that method:
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             x += deltaX
             y += deltaY
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-   -> somePoint.moveByX(2.0, y: 3.0)
+   -> somePoint.moveBy(x: 2.0, y: 3.0)
    -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveByX(_:y:)`` method,
+The ``Point`` structure above defines a mutating ``moveBy(x:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -210,9 +194,9 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
    << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
-   -> fixedPoint.moveByX(2.0, y: 3.0)
+   -> fixedPoint.moveBy(x: 2.0, y: 3.0)
    !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
-   !! fixedPoint.moveByX(2.0, y: 3.0)
+   !! fixedPoint.moveBy(x: 2.0, y: 3.0)
    !!  ^~~~~~~~~~
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -237,17 +221,17 @@ The ``Point`` example shown above could have been written in the following way i
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             self = Point(x: x + deltaX, y: y + deltaY)
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-   >> somePoint.moveByX(2.0, y: 3.0)
+   >> somePoint.moveBy(x: 2.0, y: 3.0)
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveByX(_:y:)`` method creates a brand new structure
+This version of the mutating ``moveBy(x:y:)`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -258,28 +242,28 @@ a different case from the same enumeration:
 .. testcode:: selfEnumerations
 
    -> enum TriStateSwitch {
-         case Off, Low, High
+         case off, low, high
          mutating func next() {
             switch self {
-               case Off:
-                  self = Low
-               case Low:
-                  self = High
-               case High:
-                  self = Off
+               case off:
+                  self = low
+               case low:
+                  self = high
+               case high:
+                  self = off
             }
          }
       }
-   -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.Low
+   -> var ovenLight = TriStateSwitch.low
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.low
    -> ovenLight.next()
-   // ovenLight is now equal to .High
+   // ovenLight is now equal to .high
    -> ovenLight.next()
-   // ovenLight is now equal to .Off
+   // ovenLight is now equal to .off
 
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
-(``Off``, ``Low`` and ``High``)
+(``off``, ``low`` and ``high``)
 every time its ``next()`` method is called.
 
 .. _Methods_TypeMethods:
@@ -346,15 +330,15 @@ It also tracks the current level for an individual player.
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
-         static func unlockLevel(level: Int) {
+         static func unlock(_ level: Int) {
             if level > highestUnlockedLevel { highestUnlockedLevel = level }
          }
-         static func levelIsUnlocked(level: Int) -> Bool {
+         static func isUnlocked(_ level: Int) -> Bool {
             return level <= highestUnlockedLevel
          }
          var currentLevel = 1
-         mutating func advanceToLevel(level: Int) -> Bool {
-            if LevelTracker.levelIsUnlocked(level) {
+         mutating func advance(to level: Int) -> Bool {
+            if LevelTracker.isUnlocked(level) {
                currentLevel = level
                return true
             } else {
@@ -368,9 +352,9 @@ This value is stored in a type property called ``highestUnlockedLevel``.
 
 ``LevelTracker`` also defines two type functions to work with
 the ``highestUnlockedLevel`` property.
-The first is a type function called ``unlockLevel``,
+The first is a type function called ``unlock(_:)``,
 which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
-The second is a convenience type function called ``levelIsUnlocked``,
+The second is a convenience type function called ``isUnlocked(_:)``,
 which returns ``true`` if a particular level number is already unlocked.
 (Note that these type methods can access the ``highestUnlockedLevel`` type property
 without your needing to write it as ``LevelTracker.highestUnlockedLevel``.)
@@ -381,10 +365,10 @@ It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
-``LevelTracker`` defines an instance method called ``advanceToLevel``.
+``LevelTracker`` defines an instance method called ``advance(to:)``.
 Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
-The ``advanceToLevel(_:)`` method returns a Boolean value to indicate
+The ``advance(to:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
@@ -395,9 +379,9 @@ to track and update the progress of an individual player:
    -> class Player {
          var tracker = LevelTracker()
          let playerName: String
-         func completedLevel(level: Int) {
-            LevelTracker.unlockLevel(level + 1)
-            tracker.advanceToLevel(level + 1)
+         func complete(level: Int) {
+            LevelTracker.unlock(level + 1)
+            let _ = tracker.advance(to: level + 1)
          }
          init(name: String) {
             playerName = name
@@ -406,13 +390,13 @@ to track and update the progress of an individual player:
 
 The ``Player`` class creates a new instance of ``LevelTracker``
 to track that player's progress.
-It also provides a method called ``completedLevel``,
+It also provides a method called ``complete(level:)``,
 which is called whenever a player completes a particular level.
 This method unlocks the next level for all players
 and updates the player's progress to move them to the next level.
-(The Boolean return value of ``advanceToLevel`` is ignored,
+(The Boolean return value of ``advance(to:)`` is ignored,
 because the level is known to have been unlocked
-by the call to ``LevelTracker.unlockLevel`` on the previous line.)
+by the call to ``LevelTracker.unlock(_:)`` on the previous line.)
 
 You can create an instance of the ``Player`` class for a new player,
 and see what happens when the player completes level one:
@@ -421,7 +405,7 @@ and see what happens when the player completes level one:
 
    -> var player = Player(name: "Argyrios")
    << // player : Player = REPL.Player
-   -> player.completedLevel(1)
+   -> player.complete(level: 1)
    -> print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2
 
@@ -432,7 +416,7 @@ the attempt to set the player's current level fails:
 .. testcode:: typeMethods
 
    -> player = Player(name: "Beto")
-   -> if player.tracker.advanceToLevel(6) {
+   -> if player.tracker.advance(to: 6) {
          print("player is now on level 6")
       } else {
          print("level 6 has not yet been unlocked")
