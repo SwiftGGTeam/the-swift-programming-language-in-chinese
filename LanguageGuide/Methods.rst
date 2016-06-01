@@ -330,14 +330,18 @@ It also tracks the current level for an individual player.
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
-         static func unlock(_ level: Int) {
+         var currentLevel = 1
+   ---
+   ->    static func unlock(_ level: Int) {
             if level > highestUnlockedLevel { highestUnlockedLevel = level }
          }
-         static func isUnlocked(_ level: Int) -> Bool {
+   ---
+   ->    static func isUnlocked(_ level: Int) -> Bool {
             return level <= highestUnlockedLevel
          }
-         var currentLevel = 1
-         @discardableResult mutating func advance(to level: Int) -> Bool {
+   ---
+   ->    @discardableResult
+         mutating func advance(to level: Int) -> Bool {
             if LevelTracker.isUnlocked(level) {
                currentLevel = level
                return true
@@ -374,7 +378,7 @@ Because it's not necessarily a mistake for
 code that calls the ``advance(to:)`` method
 to ignore the return value,
 this function is marked with the ``@discardableResult`` attribute.
-For more information about that attribute,
+For more information about this attribute,
 see :doc:`../ReferenceManual/Attributes`.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
