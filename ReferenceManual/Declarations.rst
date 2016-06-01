@@ -526,6 +526,20 @@ The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
+A type alias declaration can use generic parameters
+to give a name to an existing type.
+For example:
+
+.. testcode:: typealias-with-generic
+
+   -> typealias StringDictionary<T> = Dictionary<String, T>
+   ---
+   // The following dictionaries have the same type.
+   -> var dictionary1: StringDictionary<Int> = [:]
+   -> var dictionary2: Dictionary<String, Int> = [:]
+   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary2 : Dictionary<String, Int> = [:]
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
@@ -537,7 +551,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name generic-parameter-clause-OPT typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
