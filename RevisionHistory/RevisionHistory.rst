@@ -28,51 +28,52 @@ This table describes the changes to *The Swift Programming Language*.
 .. Added tvOS to the #available condition list
    2b2a343 Merge branch '25122598_tvos' into 'develop'
 
+.. Updated the discussion of sets to use the Swift 3 method names
+   in the :ref:`CollectionTypes_FundamentalSetOperations` section.
+
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
 2016-06-13  * Updated for Swift 3.0.
 
+            * Updated discussion of functions to note that
+              all parameters get an argument label by default
+              in the :doc:`../LanguageGuide/Functions` chapter
+              and the :ref:`Declarations_FunctionDeclaration` section.
+
+            * Updated attribute arguments to use a colon
+              in the :doc:`../ReferenceManual/Attributes` chapter.
+
             * Added information about switch cases that have multiple patterns
-              to the :ref:`ControlFlow_Switch`
-              and :ref:`Statements_SwitchStatement` sections.
+              to the :ref:`ControlFlow_Switch` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_SwitchStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
 
             * Added information about throwing an error
               inside the catch block of a rethrowing function
-              in :ref:`Declarations_RethrowingFunctionsAndMethods`.
+              in the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
 
             * Updated the discussion of line control statements
               to use the ``#sourceLocation(file:line:)`` syntax
               in the :ref:`Statements_LineControlStatement` section.
 
-              .. TODO: We don't really have precedent for how to name compile-time function-like constructs.
-
-            * Updated the discussion of sets to use the Swift 3 method names
-              in the :ref:`CollectionTypes_FundamentalSetOperations` section.
+            * Updated the discussion of ``inout``
+              to note that it appears on a parameter type
+              in the :ref:`Declarations_FunctionDeclaration` section.
 
             * Updated the discussion of ``@noescape`` and ``@autoclosure``
               to be type attributes
               in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
               and the :doc:`../ReferenceManual/Attributes` chapter.
 
-            * Updated the discussion of optional protocol requirements
-              to clarify that they for code that interoperates with Objective-C
-              in the :ref:`Protocols_OptionalProtocolRequirements` section.
-
             * Updated the discussion of function types
               to note that parentheses around the parameter types are required
               in the :ref:`Types_FunctionType` section.
 
-            * Updated discussion of functions to use argument labels on all parameters.
-
-              .. TODO: something about this being the new default
-
-            * Updated the discussion of ``inout``
-              to note that it appears on a parameter type
-              in the :ref:`Declarations_FunctionDeclaration` section.
-
-            * Updated attribute arguments to use a colon
-              in the :doc:`../ReferenceManual/Attributes` chapter.
+            * Updated the discussion of optional protocol requirements
+              to clarify that they for code that interoperates with Objective-C
+              in the :ref:`Protocols_OptionalProtocolRequirements` section.
 
             * Removed ``let`` from the grammar for function parameters
               in the :ref:`Declarations_FunctionDeclaration` section.
