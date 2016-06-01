@@ -462,38 +462,47 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-the named type ``ImplicitlyUnwrappedOptional<Wrapped>``,
-which is defined in the Swift standard library.
-In other words, the following two declarations are equivalent:
+the named type ``Optional<Wrapped>``, which is defined in the Swift standard library,
+with the additional behavior that
+it's automatically unwrapped when it's accessed.
+If you try to use an implicitly unwrapped optional that has a value of ``nil``,
+you'll get a runtime error.
+With the exception of the implicit unwrapping behavior,
+the following two declarations are equivalent:
 
 .. code-block:: swift
 
     var implicitlyUnwrappedString: String!
-    var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    var explicitlyUnwrappedString: Optional<String>
 
-.. assertion:: implictly-unwrapped-optional
-
-    >> var implicitlyUnwrappedString1: String!
-    << // implicitlyUnwrappedString1 : String! = nil
-    >> var implicitlyUnwrappedString2: ImplicitlyUnwrappedOptional<String>
-    << // implicitlyUnwrappedString2 : ImplicitlyUnwrappedOptional<String> = nil
-
-In both cases, the variable ``implicitlyUnwrappedString``
-is declared to have the type of an implicitly unwrapped optional string.
 Note that no whitespace may appear between the type and the ``!``.
 
-You can use implicitly unwrapped optionals in all the same places in your code
-that you can use optionals. For instance, you can assign values of implicitly unwrapped
+Because implicit unwrapping
+changes the meaning of the declaration that contains that type,
+optional types that are nested inside a tuple type or a generic type
+--- such as the element types of a dictionary or array ---
+can't be marked as implicitly unwrapped.
+For example:
+
+.. code-block:: swift
+
+    let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // Error
+    let implicitlyUnwrappedTuple: (Int, Int)!             // OK
+
+    let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
+    let implicitlyUnwrappedArray: [Int]!                    // OK
+
+Because implicitly unwrapped optionals
+have the same ``Optional<Wrapped>`` type as optional values,
+you can use implicitly unwrapped optionals
+in all the same places in your code
+that you can use optionals.
+For instance, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
 its value automatically defaults to ``nil``.
-
-Because the value of an implicitly unwrapped optional is automatically unwrapped
-when you use it, there's no need to use the ``!`` operator to unwrap it. That said,
-if you try to use an implicitly unwrapped optional that has a value of ``nil``,
-you'll get a runtime error.
 
 Use optional chaining to conditionally perform an
 operation on an implicitly unwrapped optional expression.
@@ -502,8 +511,6 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types,
 see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
-
-.. TODO Add a link to the ImplicitlyUnwrappedOptional Enum Reference page.
 
 .. syntax-grammar::
 
