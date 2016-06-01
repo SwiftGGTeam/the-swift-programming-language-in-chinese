@@ -26,7 +26,7 @@ Date        Notes
 2016-06-13  * Updated for Swift 3.0.
 
             * Added discussion about switch cases that have multiple patterns
-              in the :ref:`ControlFlow_Switch`
+              to the :ref:`ControlFlow_Switch`
               and :ref:`Statements_SwitchStatement` sections.
 
               .. TODO: Not much in the reference, so maybe no link?
