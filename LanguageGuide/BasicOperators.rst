@@ -21,7 +21,6 @@ You can opt in to value overflow behavior
 by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
-Unlike C, Swift lets you perform remainder (``%``) calculations on floating-point numbers.
 Swift also provides two range operators (``a..<b`` and ``a...b``) not found in C,
 as a shortcut for expressing a range of values.
 
