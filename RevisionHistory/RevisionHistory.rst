@@ -36,10 +36,9 @@ Date        Notes
 ==========  ==============================================================================================
 2016-06-13  * Updated for Swift 3.0.
 
-            * Updated discussion of functions to note that
-              all parameters get an argument label by default
-              in the :doc:`../LanguageGuide/Functions` chapter
-              and the :ref:`Declarations_FunctionDeclaration` section.
+            * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
+              and the :ref:`Declarations_FunctionDeclaration` section to note that
+              all parameters get an argument label by default.
 
             * Updated attribute arguments to use a colon
               in the :doc:`../ReferenceManual/Attributes` chapter.
@@ -52,31 +51,29 @@ Date        Notes
 
             * Added information about throwing an error
               inside the catch block of a rethrowing function
-              in the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
 
             * Updated the discussion of line control statements
               to use the ``#sourceLocation(file:line:)`` syntax
               in the :ref:`Statements_LineControlStatement` section.
 
-            * Updated the discussion of ``inout``
-              to note that it appears on a parameter type
-              in the :ref:`Declarations_FunctionDeclaration` section.
+            * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
+              to note that it appears on a parameter type.
 
             * Updated the discussion of ``@noescape`` and ``@autoclosure``
-              to be type attributes
               in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
-              and the :doc:`../ReferenceManual/Attributes` chapter.
+              and the :doc:`../ReferenceManual/Attributes` chapter
+              now that they are type attributes, rather than declaration attributes.
 
-            * Updated the discussion of function types
-              to note that parentheses around the parameter types are required
-              in the :ref:`Types_FunctionType` section.
+            * Updated the discussion of function types in the :ref:`Types_FunctionType` section
+              to note that parentheses around the parameter types are required.
 
             * Updated the discussion of optional protocol requirements
-              to clarify that they for code that interoperates with Objective-C
-              in the :ref:`Protocols_OptionalProtocolRequirements` section.
+              in the :ref:`Protocols_OptionalProtocolRequirements` section
+              to clarify that they are used only in code that interoperates with Objective-C.
 
-            * Removed ``let`` from the grammar for function parameters
-              in the :ref:`Declarations_FunctionDeclaration` section.
+            * Removed the discussion of explicitly using ``let`` in function parameters
+              from the :ref:`Declarations_FunctionDeclaration` section.
 
 ----------  ----------------------------------------------------------------------------------------------
 2016-03-21  * Updated for Swift 2.2.
