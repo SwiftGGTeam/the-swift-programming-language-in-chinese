@@ -4,21 +4,29 @@ Document Revision History
 This table describes the changes to *The Swift Programming Language*.
 
 ..  Merges since Xcode 7.3 FCS.
-    b4edfe3 Merge branch '25200234_example_rename' into develop
-    b46308b Merge branch '24778891_collections' into 'develop'
-    4b4863f Merge branch '25244216_os_arch' into develop
-    f989e7f Merge branch '24772689_api_rename' into 'develop'
-    524902d Merge branch 'bjl-closure-param-grammar' into 'develop'
-    ae995da Merge branch '24722135-inout-placement' into 'develop'
-    4858c33 Merge branch '24892454-attribute-colons' into 'develop'
-    812cc81 Merge branch '25193910_rethrow' into 'develop'
-    abfc7b6 Merge branch '24827229_param_terminology' into 'develop'
-    2b2a343 Merge branch '25122598_tvos' into 'develop'
 
 .. Updated terminology for conditional compilation blocks
    in ReferenceManual/Statements.rst
 .. f508be2 Merge branch '24774070_rename_build_config' into 'develop'
 
+
+.. Updated examples to use Swift 3 naming conventions and APIs.
+   b4edfe3 Merge branch '25200234_example_rename' into develop
+   f989e7f Merge branch '24772689_api_rename' into 'develop'
+   b46308b Merge branch '24778891_collections' into 'develop'
+
+.. Observed that a table is duplicated between TSPL and USWCAOC.
+   4b4863f Merge branch '25244216_os_arch' into develop
+
+.. Updated/corrected (?) grammar for closures and parameter names
+   https://[Internal Git Server]/merge_requests/121/diffs
+   524902d Merge branch 'bjl-closure-param-grammar' into 'develop'
+
+.. Made terminology consistent for parameter names & argument labels
+   abfc7b6 Merge branch '24827229_param_terminology' into 'develop'
+
+.. Added tvOS to the #available condition list
+   2b2a343 Merge branch '25122598_tvos' into 'develop'
 
 ==========  ==============================================================================================
 Date        Notes
@@ -32,6 +40,12 @@ Date        Notes
               .. TODO: Not much in the reference, so maybe no link?
               .. f4722b9 Merge branch '25339790_case_multiple' into 'develop'
               .. f73b4c7 Merge branch '25687433_multipattern_case' into '25339790_case_multiple'
+
+            * Added information about throwing an error
+              inside the catch block of a rethrowing function
+              in :ref:`Declarations_RethrowingFunctionsAndMethods`.
+
+              .. 812cc81 Merge branch '25193910_rethrow' into 'develop'
 
             * Updated the discussion of line control statements
               to use the ``#sourceLocation(file:line:)`` syntax
@@ -60,12 +74,23 @@ Date        Notes
             * Updated the discussion of function types
               to note that parentheses around the parameter types are required
               in the :ref:`Types_FunctionType` section.
+
               .. a191886 Merge branch '26143123_function_type_parens' into 'develop'
 
             * Updated functions to use argument labels on all parameters.
 
               .. TODO: something about this being the new default
               .. 0333af2 Merge branch '25194509_function_labels' into 'develop'
+
+            * Updated examples and reference for ``inout``
+              to note that it appears on a parameter type.
+
+              .. ae995da Merge branch '24722135-inout-placement' into 'develop'
+
+            * Updated attribute arguments to use a colon
+              in :doc:`../ReferenceManual/Attributes`.
+
+              .. 4858c33 Merge branch '24892454-attribute-colons' into 'develop'
 
             * Removed ``let`` from the grammar for function declarations
               in the :ref:`Declarations_FunctionDeclaration` section.
