@@ -337,7 +337,7 @@ It also tracks the current level for an individual player.
             return level <= highestUnlockedLevel
          }
          var currentLevel = 1
-         mutating func advance(to level: Int) -> Bool {
+         @discardableResult mutating func advance(to level: Int) -> Bool {
             if LevelTracker.isUnlocked(level) {
                currentLevel = level
                return true
@@ -370,6 +370,12 @@ Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
 The ``advance(to:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
+Because it's not necessarily a mistake for
+code that calls the ``advance(to:)`` method
+to ignore the return value,
+this function is marked with the ``@discardableResult`` attribute.
+For more information about that attribute,
+see :doc:`../ReferenceManual/Attributes`.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
 to track and update the progress of an individual player:
@@ -381,7 +387,7 @@ to track and update the progress of an individual player:
          let playerName: String
          func complete(level: Int) {
             LevelTracker.unlock(level + 1)
-            let _ = tracker.advance(to: level + 1)
+            tracker.advance(to: level + 1)
          }
          init(name: String) {
             playerName = name
