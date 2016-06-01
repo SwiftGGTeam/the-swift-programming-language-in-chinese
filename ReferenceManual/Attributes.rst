@@ -177,6 +177,12 @@ the ``noreturn`` attribute to a function or method *type*.
         is implicitly applied to that protocol; there's no need to mark the protocol with
         the ``class_protocol`` attribute explicitly.
 
+``discardableResult``
+   Apply this attribute to a function or method declaration
+   to suppress the compiler warning
+   when the function or method that returns a value
+   is called without using its result.
+
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
@@ -329,12 +335,6 @@ the ``noreturn`` attribute to a function or method *type*.
 .. TODO: Replace the code voice above with the following:
    `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
    Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
-
-``discardableResult``
-   Apply this attribute to a function or method declaration
-   to suppress the compiler warning
-   when the function or method that returns a value
-   is called without using its result.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
