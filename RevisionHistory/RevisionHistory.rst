@@ -33,69 +33,49 @@ Date        Notes
 ==========  ==============================================================================================
 2016-06-13  * Updated for Swift 3.0.
 
-            * Added discussion about switch cases that have multiple patterns
+            * Added information about switch cases that have multiple patterns
               to the :ref:`ControlFlow_Switch`
               and :ref:`Statements_SwitchStatement` sections.
-
-              .. TODO: Not much in the reference, so maybe no link?
-              .. f4722b9 Merge branch '25339790_case_multiple' into 'develop'
-              .. f73b4c7 Merge branch '25687433_multipattern_case' into '25339790_case_multiple'
 
             * Added information about throwing an error
               inside the catch block of a rethrowing function
               in :ref:`Declarations_RethrowingFunctionsAndMethods`.
-
-              .. 812cc81 Merge branch '25193910_rethrow' into 'develop'
 
             * Updated the discussion of line control statements
               to use the ``#sourceLocation(file:line:)`` syntax
               in the :ref:`Statements_LineControlStatement` section.
 
               .. TODO: We don't really have precedent for how to name compile-time function-like constructs.
-              .. c0a13c6 Merge branch '24893628_pound_line' into 'develop'
 
             * Updated the discussion of sets to use the Swift 3 method names
               in the :ref:`CollectionTypes_FundamentalSetOperations` section.
 
-              .. 3c5c2bd Merge branch '25917785_sets' into 'develop'
-
-            * Updated examples to use ``@noescape`` and ``@autoclosure`` as type attributes
-              in :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
+            * Updated the discussion of ``@noescape`` and ``@autoclosure``
+              to be type attributes
+              in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
               and the :doc:`../ReferenceManual/Attributes` chapter.
-
-              .. 80b30c9 Merge branch '25755487_noescape_autoclosure' into 'develop'
 
             * Updated the discussion of optional protocol requirements
               to clarify that they for code that interoperates with Objective-C
               in the :ref:`Protocols_OptionalProtocolRequirements` section.
 
-              .. 2aa9906 Merge branch '24892136_optional_objc' into 'develop'
-
             * Updated the discussion of function types
               to note that parentheses around the parameter types are required
               in the :ref:`Types_FunctionType` section.
 
-              .. a191886 Merge branch '26143123_function_type_parens' into 'develop'
-
-            * Updated functions to use argument labels on all parameters.
+            * Updated discussion of functions to use argument labels on all parameters.
 
               .. TODO: something about this being the new default
-              .. 0333af2 Merge branch '25194509_function_labels' into 'develop'
 
-            * Updated examples and reference for ``inout``
-              to note that it appears on a parameter type.
-
-              .. ae995da Merge branch '24722135-inout-placement' into 'develop'
-
-            * Updated attribute arguments to use a colon
-              in :doc:`../ReferenceManual/Attributes`.
-
-              .. 4858c33 Merge branch '24892454-attribute-colons' into 'develop'
-
-            * Removed ``let`` from the grammar for function declarations
+            * Updated the discussion of ``inout``
+              to note that it appears on a parameter type
               in the :ref:`Declarations_FunctionDeclaration` section.
 
-              .. 2a2058b Merge branch '25393888_let' into 'develop'
+            * Updated attribute arguments to use a colon
+              in the :doc:`../ReferenceManual/Attributes` chapter.
+
+            * Removed ``let`` from the grammar for function parameters
+              in the :ref:`Declarations_FunctionDeclaration` section.
 
 ----------  ----------------------------------------------------------------------------------------------
 2016-03-21  * Updated for Swift 2.2.
