@@ -321,7 +321,7 @@ whether the right hand side of the ``=`` operator was evaluated.
           return someAddress
       }
    -> john.residence?.address = createAddress()
-   >> createAddress()
+   >> let _ = createAddress()
    << Function was called.
 
 You can tell that the ``createAddress()`` function isn't called,
