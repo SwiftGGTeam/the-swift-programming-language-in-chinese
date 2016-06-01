@@ -57,6 +57,13 @@ Date        Notes
               to use the ``#sourceLocation(file:line:)`` syntax
               in the :ref:`Statements_LineControlStatement` section.
 
+            * Added information about accessing the selector
+              of an Objective-C property's getter or setter
+              in the :ref:`Expression_SelectorExpression`.
+
+            * Added information about generic type aliases
+              to the :ref:`Declarations_TypeAliasDeclaration` section.
+
             * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
               to note that it appears on a parameter type.
 
