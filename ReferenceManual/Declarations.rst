@@ -870,7 +870,7 @@ must have at least one throwing function parameter.
 
 .. testcode:: rethrows
 
-   -> func someFunction(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
       }
 
@@ -893,7 +893,7 @@ the error thrown by ``alwaysThrows()``.
    -> func alwaysThrows() throws {
           throw SomeError.error
       }
-   -> func someFunction(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
          do {
             try callback()
             try alwaysThrows()
@@ -905,17 +905,18 @@ the error thrown by ``alwaysThrows()``.
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
+
 .. assertion:: throwing-in-rethrowing-function
 
    -> enum SomeError: ErrorProtocol { case C, D }
-   -> func f1(callback: () throws -> Int) rethrows {
+   -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
           } catch {
               throw SomeError.C  // OK
           }
       }
-   -> func f2(callback: () throws -> Int) rethrows {
+   -> func f2(callback: () throws -> Void) rethrows {
           throw SomeError.D  // ERROR
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does

@@ -381,7 +381,7 @@ to track and update the progress of an individual player:
          let playerName: String
          func complete(level: Int) {
             LevelTracker.unlock(level + 1)
-            tracker.advance(to: level + 1)
+            let _ = tracker.advance(to: level + 1)
          }
          init(name: String) {
             playerName = name
