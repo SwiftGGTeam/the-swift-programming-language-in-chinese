@@ -133,7 +133,7 @@ or initializer to invoke.
 
     Grammar of a generic parameter clause
 
-    generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
+    generic-parameter-clause --> ``<`` generic-parameter-list ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
     generic-parameter --> type-name
     generic-parameter --> type-name ``:`` type-identifier
