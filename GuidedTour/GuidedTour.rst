@@ -1205,7 +1205,7 @@ You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
    fire" error message, used when the kernel can't identify the specific error.
    The names of printers used in the examples in this section are names of
    people who were important in the development of printing.
-   
+
    Bi Sheng is credited with inventing the first movable type out of porcelain
    in China in the 1040s.  It was a mixed success, in large part because of the
    vast number of characters needed to write Chinese, and failed to replace
@@ -1383,7 +1383,7 @@ as well as classes, enumerations, and structures.
     << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
     -> possibleInteger = .some(100)
 
-Use ``where`` after the type name
+Use ``where`` right before the body
 to specify a list of requirements ---
 for example,
 to require the type to implement a protocol,
@@ -1392,7 +1392,8 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements<T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element>(_ lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element> {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1412,4 +1413,4 @@ or to require a class to have a particular superclass.
    of the elements that any two sequences have in common.
 
 Writing ``<T: Equatable>``
-is the same as writing ``<T where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable>``.
