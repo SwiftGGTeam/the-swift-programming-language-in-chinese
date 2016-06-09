@@ -59,7 +59,7 @@ Date        Notes
 
             * Added information about accessing the selector
               of an Objective-C property's getter or setter
-              in the :ref:`Expression_SelectorExpression`.
+              in the :ref:`Expression_SelectorExpression` section.
 
             * Added information about generic type aliases
               to the :ref:`Declarations_TypeAliasDeclaration` section.

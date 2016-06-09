@@ -179,6 +179,9 @@ Although both functions have names that begin with ``greet``,
 the ``greet(person:alreadyGreeted:)`` function takes two arguments
 but the ``greet(person:)`` function takes only one.
 
+.. FIXME: The have different arity, yes,
+   but they also have different argument labels.
+
 .. _Functions_FunctionsWithoutReturnValues:
 
 Functions Without Return Values
@@ -375,6 +378,12 @@ use their parameter name as their argument label.
       }
    -> someFunction(firstParameterName: 1, secondParameterName: 2)
 
+If a parameter has an argument label,
+the argument *must* be labeled when you call the function.
+
+.. FIXME: Or... move the above down to the section about omitting labels,
+   since that's the only exception.
+
 All parameters must have unique names.
 Although it's possible for multiple parameters
 to have the same argument label,
@@ -399,11 +408,6 @@ separated by a space:
          // In the function body, parameterName refers to the argument value
          // for that parameter.
       }
-
-.. note::
-
-   If you provide an argument label for a parameter,
-   the argument *must* be labeled when you call the function.
 
 Here's a variation of the ``greet(person:)`` function
 that takes a person's name and hometown

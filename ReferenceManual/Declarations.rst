@@ -910,7 +910,7 @@ the error thrown by ``alwaysThrows()``.
    -> func someFunction(callback: () throws -> Void) rethrows {
          do {
             try callback()
-            try alwaysThrows()
+            try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
          } catch {
             throw AnotherError.error
          }
