@@ -526,6 +526,20 @@ The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
+A type alias declaration can use generic parameters
+to give a name to an existing type.
+For example:
+
+.. testcode:: typealias-with-generic
+
+   -> typealias StringDictionary<T> = Dictionary<String, T>
+   ---
+   // The following dictionaries have the same type.
+   -> var dictionary1: StringDictionary<Int> = [:]
+   -> var dictionary2: Dictionary<String, Int> = [:]
+   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary2 : Dictionary<String, Int> = [:]
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
@@ -537,7 +551,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name generic-parameter-clause-OPT typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -870,7 +884,7 @@ must have at least one throwing function parameter.
 
 .. testcode:: rethrows
 
-   -> func someFunction(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
       }
 
@@ -893,7 +907,7 @@ the error thrown by ``alwaysThrows()``.
    -> func alwaysThrows() throws {
           throw SomeError.error
       }
-   -> func someFunction(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
          do {
             try callback()
             try alwaysThrows()
@@ -905,17 +919,18 @@ the error thrown by ``alwaysThrows()``.
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
+
 .. assertion:: throwing-in-rethrowing-function
 
    -> enum SomeError: ErrorProtocol { case C, D }
-   -> func f1(callback: () throws -> Int) rethrows {
+   -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
           } catch {
               throw SomeError.C  // OK
           }
       }
-   -> func f2(callback: () throws -> Int) rethrows {
+   -> func f2(callback: () throws -> Void) rethrows {
           throw SomeError.D  // ERROR
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does

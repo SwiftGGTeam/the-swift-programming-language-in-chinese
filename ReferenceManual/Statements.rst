@@ -1047,7 +1047,7 @@ have the following form:
     elseif-directive-clause --> elseif-directive compilation-condition statements-OPT
     else-directive-clause --> else-directive statements-OPT
     if-directive --> ``#if``
-    elseif--directive --> ``#elseif``
+    elseif-directive --> ``#elseif``
     else-directive --> ``#else``
     endif-directive --> ``#endif``
 

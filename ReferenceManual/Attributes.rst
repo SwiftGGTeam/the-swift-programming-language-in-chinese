@@ -177,6 +177,12 @@ the ``noreturn`` attribute to a function or method *type*.
         is implicitly applied to that protocol; there's no need to mark the protocol with
         the ``class_protocol`` attribute explicitly.
 
+``discardableResult``
+   Apply this attribute to a function or method declaration
+   to suppress the compiler warning
+   when the function or method that returns a value
+   is called without using its result.
+
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
@@ -329,45 +335,6 @@ the ``noreturn`` attribute to a function or method *type*.
 .. TODO: Replace the code voice above with the following:
    `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
    Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
-
-``warn_unused_result``
-   Apply this attribute to a function or method declaration
-   to have the compiler emit a warning
-   when the function or method is called without using its result.
-
-   You can use this attribute to provide a warning message about incorrect
-   usage of a nonmutating method that has a mutating counterpart.
-
-   The ``warn_unused_result`` attribute optionally accepts
-   one of the two attribute arguments below.
-
-   * The ``message`` argument is used to provide a textual warning message
-     that's displayed when the function or method is called, but its result isn't used.
-     It has the following form:
-
-     .. syntax-outline::
-
-         message: <#message#>
-
-     The *message* consists of a string literal.
-
-   * The ``mutable_variant`` argument is used to provide the name of the mutating version
-     of the method that should be used if the nonmutating method is called on a mutable
-     value and the result isn't used.
-     It has the following form, where the *method name* consists of a string literal:
-
-     .. syntax-outline::
-
-         mutable_variant: <#method name#>
-
-     For example, the Swift standard library provides both
-     the mutating method ``sort()``
-     and the nonmutating method ``sorted()`` to collections
-     whose iterator element conforms to the ``Comparable`` protocol.
-     If you call the ``sorted()`` method without using its result,
-     it's likely that you actually intended to use the mutating variant,
-     ``sort()`` instead.
-
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 

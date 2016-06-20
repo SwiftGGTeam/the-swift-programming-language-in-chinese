@@ -1077,13 +1077,16 @@ Selector Expression
 ~~~~~~~~~~~~~~~~~~~
 
 A selector expression lets you access the selector
-used to refer to a method in Objective-C.
+used to refer to a method or to a property's
+getter or setter in Objective-C.
 
 .. syntax-outline::
 
    #selector(<#method name#>)
+   #selector(getter: <#property name#>)
+   #selector(setter: <#property name#>)
 
-The *method name* must be a reference to a method
+The *method name* and *property name* must be a reference to a method or a property
 that is available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
@@ -1092,11 +1095,23 @@ For example:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-           @objc(doSomethingWithInt:)
-           func doSomething(_ x: Int) { }
+          let property: String
+          @objc(doSomethingWithInt:)
+          func doSomething(_ x: Int) { }
+   ---
+          init(property: String) {
+              self.property = property
+          }
       }
-   -> let selector = #selector(SomeClass.doSomething(_:))
-   << // selector : Selector = doSomethingWithInt:
+   -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
+   << // selectorForMethod : Selector = doSomethingWithInt:
+   -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
+   << // selectorForPropertyGetter : Selector = property
+
+When creating a selector for a property's getter,
+the *property name* can be a reference to a variable or constant property.
+In contrast, when creating a selector for a property's setter,
+the *property name* must be a reference to a variable property only.
 
 The *method name* can contain parentheses for grouping,
 as well the ``as`` operator to disambiguate between methods that share a name
@@ -1112,21 +1127,14 @@ For example:
    -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
 
-Because the selector is created at compile time, not at runtime,
-the compiler can check that the method exists
-and that the method is exposed to the Objective-C runtime.
-
-.. TODO: Is there any truth to this?
-   Brian and I looked at the proposal, and it doesn't discuss this,
-   but I remember reading something about information being
-   "exposed to the typechecker".
-        It also checks that,
-        when the method is called,
-        the arguments have the correct types.
+Because a selector is created at compile time, not at runtime,
+the compiler can check that a method or property exists
+and that they're exposed to the Objective-C runtime.
 
 .. note::
 
-    Although the *method name* is an expression, it is never evaluated.
+    Although the *method name* and the *property name* are expressions,
+    they're never evaluated.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
@@ -1138,11 +1146,14 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
     Grammar of a selector expression
 
     selector-expression --> ``#selector`` ``(`` expression  ``)``
+    selector-expression --> ``#selector`` ``(`` ``getter:`` expression  ``)``
+    selector-expression --> ``#selector`` ``(`` ``setter:`` expression  ``)``
 
 .. Note: The parser does allow an arbitrary expression inside #selector(), not
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
+
 
 
 .. _Expression_KeyPathExpression:
