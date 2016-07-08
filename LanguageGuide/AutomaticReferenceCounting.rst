@@ -53,7 +53,7 @@ as long as at least one active reference to that instance still exists.
 To make this possible,
 whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
-The reference is called a “strong“ reference because
+The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
 and does not allow it to be deallocated for as long as that strong reference remains.
 
