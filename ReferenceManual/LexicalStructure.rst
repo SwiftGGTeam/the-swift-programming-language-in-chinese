@@ -297,7 +297,7 @@ without being escaped with backticks.
   ``throw``,
   ``throws``,
   ``true``,
-  and ``try``
+  and ``try``.
 
 * Keywords used in patterns:
   ``_``.
@@ -313,7 +313,7 @@ without being escaped with backticks.
   ``#if``,
   ``#line``,
   ``#selector``.
-  and ``#sourceLocation``,
+  and ``#sourceLocation``.
 
 .. langref-grammar
 
