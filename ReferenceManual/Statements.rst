@@ -527,8 +527,8 @@ see :ref:`Statements_FallthroughStatement` below.
 Labeled Statement
 -----------------
 
-You can prefix a loop statement, an ``if`` statement, or a ``switch`` statement
-with a :newTerm:`statement label`,
+You can prefix a loop statement, an ``if`` statement, a ``switch`` statement,
+or a ``do`` statement with a :newTerm:`statement label`,
 which consists of the name of the label followed immediately by a colon (:).
 Use statement labels with ``break`` and ``continue`` statements to be explicit
 about how you want to change control flow in a loop statement or a ``switch`` statement,
@@ -560,7 +560,7 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
     Grammar of a labeled statement
 
-    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement
+    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement | statement-label do-statement
     statement-label --> label-name ``:``
     label-name --> identifier
 
@@ -1171,4 +1171,3 @@ logical operators such as ``&&`` and ``||``.
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
 .. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
-
