@@ -165,9 +165,10 @@ Keywords other than ``inout``, ``var``, and ``let``
 can be used as parameter names
 in a function declaration or function call
 without being escaped with backticks.
-Keywords other than ``self``, ``dynamicType``, ``Type``, and ``Protocol``
-can be used in an explicit member expression
-without being escaped with backticks.
+Keywords can be used in an explicit member expression
+without being escaped with backticks,
+except for ``self``, ``dynamicType``, ``Type``, and ``Protocol``,
+which have special meaning in an explicit member expression.
 
 .. assertion:: keywords-without-backticks
 
