@@ -1411,7 +1411,9 @@ The subclass's implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are not.
+the current class, designated initializers declared in the *superclass* are only
+inherited when the subclass meets the conditions described in
+:ref:`Initialization_AutomaticInitializerInheritance`.
 That said, if the current class overrides all of the superclass's
 designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
