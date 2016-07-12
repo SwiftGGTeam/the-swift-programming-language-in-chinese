@@ -448,19 +448,19 @@ If a default value is defined, you can omit that parameter when calling the func
 
 .. testcode:: omittedExternalParameterNames
 
-   -> func someFunction(parameterWithDefault: Int = 12) {
+   -> func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
          // In the function body, if no arguments are passed to the function
          // call, the value of parameterWithDefault is 12.
       }
-   -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
-   -> someFunction() // parameterWithDefault is 12
+   -> someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
+   -> someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 
-.. note::
-
-   Place parameters with default values at the end of a function's parameter list.
-   This ensures that all calls to the function
-   use the same order for their nondefault arguments,
-   and makes it clear that the same function is being called in each case.
+Place parameters that have don't default values at the beginning of a function's parameter list,
+before the parameters that have default values.
+These parameters are usually more important to the function's meaning ---
+writing them first makes it easier to recognize
+that the same function is being called,
+whether or not its default parameters are omitted.
 
 .. _Functions_VariadicParameters:
 
