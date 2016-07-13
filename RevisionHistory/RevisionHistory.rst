@@ -34,7 +34,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2016-07-18  * Updated for Swift 3.0.
+2016-07-19  * Updated for Swift 3.0.
 
             * Updated discussion about default parameters
               in the :ref:`Functions_DefaultParameterValues` section,
