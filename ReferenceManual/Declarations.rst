@@ -726,33 +726,12 @@ For example:
    !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
    !!      ^~
 
-There is no copy-out at the end of closures or nested functions.
-This means if a closure is called after the function returns,
-any changes that closure makes to the in-out parameters
-do not get copied back to the original.
-For example:
-
-.. testcode:: closure-doesnt-copy-out-inout
-
-    -> func outer(a: inout Int) -> () -> Void {
-           func inner() {
-               a += 1
-           }
-           return inner
-       }
-    ---
-    -> var x = 10
-    << // x : Int = 10
-    -> let f = outer(a: &x)
-    << // f : () -> Void = (Function)
-    -> f()
-    -> print(x)
-    <- 10
-
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer(a:)`` returns.
-To change the value of ``x``,
-``inner()`` would need to be called before ``outer(a:)`` returned.
+.. FIXME: rdar://24893514 work goes here
+   There is no copy-out at the end of closures or nested functions.
+   This means if you capture an inout in an escaping closure,
+   you would modify the "shadow copy"
+   which is very unlikely to be what you want.
+   Because of this, only nonescaping can capture inout.
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
