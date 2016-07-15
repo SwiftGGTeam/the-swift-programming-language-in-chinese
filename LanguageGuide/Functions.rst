@@ -227,7 +227,7 @@ The return value of a function can be ignored when it is called:
    << hello, world
    // prints "hello, world" but does not return a value
 
-The first function, ``printAndCount(_:)``,
+The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
 The second function, ``printWithoutCounting``,
 calls the first function, but ignores its return value.
