@@ -229,7 +229,7 @@ The return value of a function can be ignored when it is called:
 
 The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
-The second function, ``printWithoutCounting``,
+The second function, ``printWithoutCounting(string:)``,
 calls the first function, but ignores its return value.
 When the second function is called,
 the message is still printed by the first function,
