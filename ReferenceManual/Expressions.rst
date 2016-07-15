@@ -1627,7 +1627,7 @@ runtime type of the *expression*, as the following example shows:
     -> let someInstance: SomeBaseClass = SomeSubClass()
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamc type of SomeSubClass at runtime
+    -> // it has a dynamic type of SomeSubClass at runtime
     -> someInstance.dynamicType.printClassName()
     <- SomeSubClass
 
