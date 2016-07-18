@@ -1148,11 +1148,11 @@ The type of these values is specified in the *raw-value type* and must represent
 integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
 and one of the following protocols:
-``ExpressibleByInteger`` for integer literals,
-``ExpressibleByFloat`` for floating-point literals,
-``ExpressibleByBoolean`` for Boolean literals,
-``ExpressibleByString`` for string literals that contain any number of characters,
-and ``ExpressibleByExtendedGraphemeCluster`` for string literals
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByBooleanLiteral`` for Boolean literals,
+``ExpressibleByStringLiteral`` for string literals that contain any number of characters,
+and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 

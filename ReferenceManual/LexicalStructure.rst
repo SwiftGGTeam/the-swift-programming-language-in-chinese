@@ -404,13 +404,13 @@ literal ``"Hello, world"`` is ``String``.
 When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
 That is, the type must conform to one of the following Swift standard library protocols:
-``ExpressibleByInteger`` for integer literals,
-``ExpressibleByFloat`` for floating-point literals,
-``ExpressibleByString`` for string literals,
-``ExpressibleByBoolean`` for Boolean literals,
-and ``ExpressibleByExtendedGraphemeCluster`` for single literals
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals,
+``ExpressibleByBooleanLiteral`` for Boolean literals,
+and ``ExpressibleByExtendedGraphemeClusterLiteral`` for single literals
 that contain only a single extended grapheme cluster.
-For example, ``Int8`` conforms to the ``ExpressibleByInteger`` protocol,
+For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
 
