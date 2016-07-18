@@ -34,6 +34,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-07-18  * Updated discussion about default parameters
+              in the :ref:`Functions_DefaultParameterValues` section,
+              now that they can't be reordered in function calls.
+----------  ----------------------------------------------------------------------------------------------
 2016-06-13  * Updated for Swift 3.0.
 
             * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
@@ -81,7 +85,6 @@ Date        Notes
 
             * Removed the discussion of explicitly using ``let`` in function parameters
               from the :ref:`Declarations_FunctionDeclaration` section.
-
 ----------  ----------------------------------------------------------------------------------------------
 2016-03-21  * Updated for Swift 2.2.
 
