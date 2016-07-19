@@ -1127,6 +1127,16 @@ the whole optional binding is considered unsuccessful.
       }
    <- 4 < 42
 
+..  In expanded form
+   if let firstNumber = Int("4") {
+       if let secondNumber = Int("42") {
+           if firstNumber < secondNumber {
+               print("\(firstNumber) < \(secondNumber)")
+           }
+       }
+   }
+
+
 .. note::
 
    Constants and variables created with optional binding in an ``if`` statement.
