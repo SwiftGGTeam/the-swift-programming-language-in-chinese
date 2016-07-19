@@ -166,7 +166,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     condition-list --> condition | condition ``,`` condition-list
     condition -->  expression | availability-condition | case-condition | optional-binding-condition
 
-    case-condition --> ``case`` pattern initializer where-clause-OPT
+    case-condition --> ``case`` pattern initializer
     optional-binding-condition --> ``let`` pattern initializer | ``var`` pattern initializer
 
 
