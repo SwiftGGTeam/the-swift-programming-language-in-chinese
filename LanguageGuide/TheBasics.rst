@@ -1112,11 +1112,13 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-You can include multiple optional bindings in a single ``if`` statement
-as well as checks for a Boolean condition.
+You can include as many optional bindings and Boolean conditions
+in a single ``if`` statement as you need to,
+separated by commas.
 If any of the values in the optional bindings are ``nil``
 or any Boolean condition evaluates to ``false``,
 the whole optional binding is considered unsuccessful.
+The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
@@ -1126,20 +1128,19 @@ the whole optional binding is considered unsuccessful.
          print("\(firstNumber) < \(secondNumber)")
       }
    <- 4 < 42
-
-..  In expanded form
-   if let firstNumber = Int("4") {
-       if let secondNumber = Int("42") {
-           if firstNumber < secondNumber {
-               print("\(firstNumber) < \(secondNumber)")
-           }
-       }
-   }
-
+   ---
+   -> if let firstNumber = Int("4") {
+          if let secondNumber = Int("42") {
+              if firstNumber < secondNumber {
+                  print("\(firstNumber) < \(secondNumber)")
+              }
+          }
+      }
+   <- 4 < 42
 
 .. note::
 
-   Constants and variables created with optional binding in an ``if`` statement.
+   Constants and variables created with optional binding in an ``if`` statement
    are available only within the body of the ``if`` statement.
    In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
