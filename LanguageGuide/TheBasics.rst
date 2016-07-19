@@ -1113,14 +1113,16 @@ and the value contained within the optional
 would be made available as a variable rather than a constant.
 
 You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition.
+as well as checks for a Boolean condition.
 If any of the values in the optional bindings are ``nil``
-or the ``where`` clause evaluates to ``false``,
+or any Boolean condition evaluates to ``false``,
 the whole optional binding is considered unsuccessful.
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+   -> if let firstNumber = Int("4"),
+         let secondNumber = Int("42"),
+         firstNumber < secondNumber {
          print("\(firstNumber) < \(secondNumber)")
       }
    <- 4 < 42
