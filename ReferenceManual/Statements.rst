@@ -161,28 +161,13 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of a while statement
 
-    while-statement --> ``while`` condition-clause code-block
-
-    condition-clause --> expression
-    condition-clause --> expression ``,`` condition-list
-    condition-clause --> condition-list
-    condition-clause --> availability-condition ``,`` expression
+    while-statement --> ``while`` condition-list code-block
 
     condition-list --> condition | condition ``,`` condition-list
-    condition -->  availability-condition | case-condition | optional-binding-condition
+    condition -->  expression | availability-condition | case-condition | optional-binding-condition
+
     case-condition --> ``case`` pattern initializer where-clause-OPT
-
-    optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
-    optional-binding-head --> ``let`` pattern initializer | ``var`` pattern initializer
-    optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
-    optional-binding-continuation --> pattern initializer | optional-binding-head
-
-.. NOTE: We considered the following simpler grammar for optional-binding-list:
-
-    optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> pattern-initializer-list where-clause-OPT
-
-    We opted for the more complex grammar, because the simpler version overproduced.
+    optional-binding-condition --> ``let`` pattern initializer | ``var`` pattern initializer
 
 
 .. _Statements_Do-WhileStatement:
@@ -315,7 +300,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement --> ``if`` condition-clause code-block else-clause-OPT
+    if-statement --> ``if`` condition-list code-block else-clause-OPT
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 .. _Statements_GuardStatement:
@@ -365,7 +350,7 @@ Control transfer statements are discussed in :ref:`Statements_ControlTransferSta
 
     Grammar of a guard statement
 
-    guard-statement --> ``guard`` condition-clause ``else`` code-block
+    guard-statement --> ``guard`` condition-list ``else`` code-block
 
 .. _Statements_SwitchStatement:
 
