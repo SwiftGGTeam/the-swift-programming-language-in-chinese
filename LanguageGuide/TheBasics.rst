@@ -1122,9 +1122,7 @@ The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"),
-         let secondNumber = Int("42"),
-         firstNumber < secondNumber {
+   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber {
          print("\(firstNumber) < \(secondNumber)")
       }
    <- 4 < 42
