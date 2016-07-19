@@ -366,10 +366,10 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
             (number) -> String in
          var number = number
          var output = ""
-         while number > 0 {
+         repeat {
             output = digitNames[number % 10]! + output
             number /= 10
-         }
+         } while number > 0
          return output
       }
    << // strings : [String] = ["OneSix", "FiveEight", "FiveOneZero"]
