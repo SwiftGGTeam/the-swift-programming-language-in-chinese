@@ -734,6 +734,13 @@ There is no copy-out at the end of closures or nested functions.
 This means if a closure were called after the function returns,
 any changes the closure tried to make to the captured in-out parameter
 would not get copied back to the original.
+If you need to capture an in-out parameter
+without mutating it or to observe mutation from other code,
+use a capture list to explicitly capture the parameter immutably.
+If you need to capture and mutate an in-out parameter ---
+for example, in multithreaded code that ensures
+all mutation has finished before the function returns ---
+make a local mutable copy.
 
 .. assertion:: escaping-cant-capture-inout
 
@@ -752,6 +759,26 @@ would not get copied back to the original.
     !! <REPL Input>:2:16: error: closure cannot implicitly capture an inout parameter unless @noescape
     !!              return { a += 1 }
     !!                       ^
+
+.. testcode:: explicit-capture-for-inout
+
+    // Explicit immutable capture
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a+1 }
+       }
+    ---
+    // Explicit local copy
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) { }
+    -> func multithreadFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }  
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
