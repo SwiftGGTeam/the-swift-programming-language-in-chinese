@@ -728,12 +728,30 @@ For example:
    !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
    !!      ^~
 
-.. FIXME: rdar://24893514 work goes here
-   There is no copy-out at the end of closures or nested functions.
-   This means if you capture an inout in an escaping closure,
-   you would modify the "shadow copy"
-   which is very unlikely to be what you want.
-   Because of this, only nonescaping can capture inout.
+A closure or nested function
+that captures an in-out parameter must be nonescaping.
+There is no copy-out at the end of closures or nested functions.
+This means if a closure were called after the function returns,
+any changes the closure tried to make to the captured in-out parameter
+would not get copied back to the original.
+
+.. assertion:: escaping-cant-capture-inout
+
+    -> func outer(a: inout Int) -> () -> Void {
+           func inner() {
+               a += 1
+           }
+           return inner
+       }
+    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
+    !!            return inner
+    !!            ^
+    -> func closure(a: inout Int) -> () -> Void {
+           return { a += 1 }
+       }
+    !! <REPL Input>:2:16: error: closure cannot implicitly capture an inout parameter unless @noescape
+    !!              return { a += 1 }
+    !!                       ^
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
