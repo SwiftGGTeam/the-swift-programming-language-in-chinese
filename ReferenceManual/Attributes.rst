@@ -309,6 +309,7 @@ the ``noreturn`` attribute to a function or method *type*.
     based on the associated entity description.
     For a property marked with the ``NSManaged`` attribute,
     Core Data also provides the storage at runtime.
+    Applying this attribute also implies the ``objc`` attribute.
 
 ``testable``
     Apply this attribute to ``import`` declarations
@@ -354,6 +355,8 @@ You apply the ``IBOutlet`` and ``IBInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
+
+Both the ``IBAction`` and ``IBOutlet`` attributes imply the ``objc`` attribute.
 
 
 .. _Attributes_TypeAttributes:
