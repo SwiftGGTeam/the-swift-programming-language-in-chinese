@@ -258,7 +258,7 @@ the ``noreturn`` attribute to a function or method *type*.
     can override a method marked with the ``nonobjc`` attribute.
     Similarly, a method marked with the ``nonobjc`` attribute
     cannot satisfy a protocol requirement
-    for a method marked with the ``@objc`` attribute.
+    for a method marked with the ``objc`` attribute.
 
 ``noreturn``
     Apply this attribute to a function or method declaration
