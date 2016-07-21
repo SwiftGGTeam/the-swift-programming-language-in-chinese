@@ -532,13 +532,13 @@ Protocol composition types have the following form:
 
 .. syntax-outline::
 
-    protocol<<#Protocol 1#>, <#Protocol 2#>>
+    <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
 of multiple protocols without having to explicitly define a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``protocol<ProtocolA, ProtocolB, ProtocolC>`` is
+specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
@@ -557,8 +557,7 @@ which every type conforms to.
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> ``protocol`` ``<`` protocol-identifier-list-OPT ``>``
-    protocol-identifier-list --> protocol-identifier | protocol-identifier ``,`` protocol-identifier-list
+    protocol-composition-type --> protocol-identifier | protocol-identifier ``&`` protocol-composition-type
     protocol-identifier --> type-identifier
 
 .. _Types_MetatypeType:
