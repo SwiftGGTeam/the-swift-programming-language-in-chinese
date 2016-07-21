@@ -349,9 +349,13 @@ Swift provides the following Interface Builder attributes:
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
+Swift also provides the ``GKInspectable`` Interface Builder attribute,
+which is used to expose custom components and properties
+to the SpriteKit editor UI.
+
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
-You apply the ``IBOutlet`` and ``IBInspectable`` attributes
+You apply the ``IBOutlet``, ``IBInspectable``, and ``GKInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
