@@ -545,8 +545,6 @@ but without having to introduce a new name.
 
 Each item in a protocol composition list
 must be either the name of protocol or a type alias of a protocol composition type.
-If the list is empty, it specifies the empty protocol composition type,
-which every type conforms to.
 
 .. langref-grammar
 
