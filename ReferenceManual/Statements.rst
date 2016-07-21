@@ -149,8 +149,9 @@ A ``while`` statement is executed as follows:
 Because the value of the *condition* is evaluated before the *statements* are executed,
 the *statements* in a ``while`` statement can be executed zero or more times.
 
-The value of the *condition* must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of the *condition*
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -214,8 +215,9 @@ A ``repeat``-``while`` statement is executed as follows:
 Because the value of the *condition* is evaluated after the *statements* are executed,
 the *statements* in a ``repeat``-``while`` statement are executed at least once.
 
-The value of the *condition* must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of the *condition*
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -301,8 +303,9 @@ An ``if`` statement chained together in this way has the following form:
        <#statements to execute if both conditions are false#>
     }
 
-The value of any condition in an ``if`` statement must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of any condition in an ``if`` statement
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -335,7 +338,7 @@ A ``guard`` statement has the following form:
     }
 
 The value of any condition in a ``guard`` statement
-must have a type that conforms to the ``Boolean`` protocol.
+must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
@@ -1171,4 +1174,3 @@ logical operators such as ``&&`` and ``||``.
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
 .. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
-
