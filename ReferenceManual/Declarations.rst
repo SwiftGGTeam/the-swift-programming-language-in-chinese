@@ -730,10 +730,11 @@ For example:
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
-There is no copy-out at the end of closures or nested functions.
-This means if a closure were called after the function returns,
-any changes the closure tried to make to the captured in-out parameter
+Because there is no copy-out at the end of closures or nested functions,
+any changes changes made to an in-out parameter
+by an escaping closure or nested function
 would not get copied back to the original.
+
 If you need to capture an in-out parameter
 without mutating it or to observe mutation from other code,
 use a capture list to explicitly capture the parameter immutably.
