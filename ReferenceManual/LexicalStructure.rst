@@ -285,6 +285,7 @@ without being escaped with backticks.
 
 * Keywords used in expressions and types:
   ``as``,
+  ``Any``,
   ``catch``,
   ``dynamicType``,
   ``false``,
