@@ -1117,24 +1117,32 @@ in a single ``if`` statement as you need to,
 separated by commas.
 If any of the values in the optional bindings are ``nil``
 or any Boolean condition evaluates to ``false``,
-the whole optional binding is considered unsuccessful.
+the whole ``if`` statement's condition
+is considered to be ``false``.
 The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber {
+   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
          print("\(firstNumber) < \(secondNumber)")
       }
    <- 4 < 42
    ---
    -> if let firstNumber = Int("4") {
           if let secondNumber = Int("42") {
-              if firstNumber < secondNumber {
+              if firstNumber < secondNumber && secondNumber < 100 {
                   print("\(firstNumber) < \(secondNumber)")
               }
           }
       }
    <- 4 < 42
+
+.. The example above uses multiple optional bindings
+   to show that you can have more than one
+   and to show the short-circuiting behavior.
+   It has multiple Boolean conditions
+   to show that you should join logically related conditions
+   using the && operator instead of a comma.
 
 .. note::
 
