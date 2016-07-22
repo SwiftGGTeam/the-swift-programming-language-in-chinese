@@ -183,6 +183,13 @@ the ``noreturn`` attribute to a function or method *type*.
    when the function or method that returns a value
    is called without using its result.
 
+``GKInspectable``
+    Apply this attribute to expose a custom GameplayKit component property 
+    to the SpriteKit editor UI.
+
+.. See also <rdar://problem/27287369> Document @GKInspectable attribute
+   which we will want to link to, once it's written.
+
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
@@ -349,13 +356,9 @@ Swift provides the following Interface Builder attributes:
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
-Swift also provides the ``GKInspectable`` Interface Builder attribute,
-which is used to expose custom components and properties
-to the SpriteKit editor UI.
-
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
-You apply the ``IBOutlet``, ``IBInspectable``, and ``GKInspectable`` attributes
+You apply the ``IBOutlet`` and ``IBInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
