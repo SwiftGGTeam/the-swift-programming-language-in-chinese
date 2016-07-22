@@ -175,7 +175,7 @@ generic dictionary type.
 
 .. code-block:: swift
 
-    struct Dictionary<Key: Hashable, Value>: Collection, DictionaryLiteralConvertible {
+    struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
         /* ... */
     }
 
