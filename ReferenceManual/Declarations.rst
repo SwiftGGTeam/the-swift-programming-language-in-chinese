@@ -1150,13 +1150,14 @@ In particular, the *raw-value type* must conform to the ``Equatable`` protocol
 and one of the following protocols:
 ``ExpressibleByIntegerLiteral`` for integer literals,
 ``ExpressibleByFloatLiteral`` for floating-point literals,
-``ExpressibleByBooleanLiteral`` for Boolean literals,
 ``ExpressibleByStringLiteral`` for string literals that contain any number of characters,
-and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
+and ``ExpressibleByUnicodeScalarLiteral``
+or ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
 .. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
+.. This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,

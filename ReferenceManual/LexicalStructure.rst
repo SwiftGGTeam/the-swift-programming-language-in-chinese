@@ -408,6 +408,8 @@ That is, the type must conform to one of the following Swift standard library pr
 ``ExpressibleByFloatLiteral`` for floating-point literals,
 ``ExpressibleByStringLiteral`` for string literals,
 ``ExpressibleByBooleanLiteral`` for Boolean literals,
+``ExpressibleByUnicodeScalarLiteral`` for single literals
+that contain only a single Unicode scalar,
 and ``ExpressibleByExtendedGraphemeClusterLiteral`` for single literals
 that contain only a single extended grapheme cluster.
 For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
@@ -415,6 +417,7 @@ and therefore it can be used in the type annotation for the integer literal ``42
 in the declaration ``let x: Int8 = 42``.
 
 .. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
+.. ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
 
 .. syntax-grammar::
 
