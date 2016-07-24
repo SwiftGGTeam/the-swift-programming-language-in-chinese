@@ -858,21 +858,33 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-.. TODO: Protocol Operator Requirements
-   ------------------------------------
+Protocol Operator Requirements
+------------------------------
 
-.. TODO: Protocols can require the implementation of operators
-   (though assignment operators are broken)
+You can include operators in the requirements of a protocol.
+A type conforms to the protocol
+only if there is an implementation of the operator for that type.
+You use ``Self`` to refer to the type that will conform to the protocol,
+just like you do in other protocol requirements.
 
-.. TODO: Likewise for requiring custom operators
+.. testcode:: customOperators
+
+   -> protocol SomeProtocol {
+         static func +- (left: Self, right: Self) -> Self
+         static prefix func - (left: Self) -> Self
+      }
+   ---
+   -> extension Vector2D: SomeProtocol {
+         // Both operators are already implemented on Vector2D.
+      }
+
+For operators that take values of two different types,
+the operator's implementation doesn't have to be
+a member of the type that conforms to the protocol ---
+the implementation can also be a member of the other type.
 
 .. TODO: However, Doug thought that this might be better covered by Generics,
    where you know that two things are definitely of the same type.
    Perhaps mention it here, but don't actually show an example?
-
-.. TODO: Self as the dynamic type of the current type that is implementing the protocols
-   protocol Comparable {
-      static func < (Self, Self) -> Bool
-   }
 
 .. TODO: generic operators
