@@ -765,13 +765,17 @@ and so it is given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` is treated as a new “prefix doubling incrementer” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
-by adding the vector to itself with the addition assignment operator defined earlier:
+by adding the vector to itself with the addition assignment operator defined earlier.
+To implement the ``+++`` operator,
+you add a static function called ``+++`` to ``Vector2D`` as follows:
 
 .. testcode:: customOperators
 
-   -> prefix func +++ (vector: inout Vector2D) -> Vector2D {
-         vector += vector
-         return vector
+   -> extension Vector2D {
+         static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+            vector += vector
+            return vector
+         }
       }
    ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
@@ -810,8 +814,10 @@ with ``left`` associativity and a precedence of ``140``:
 .. testcode:: customOperators
 
    -> infix operator +- { associativity left precedence 140 }
-   -> func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-         return Vector2D(x: left.x + right.x, y: left.y - right.y)
+   -> extension Vector2D {
+         static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+            return Vector2D(x: left.x + right.x, y: left.y - right.y)
+         }
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
    << // firstVector : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
@@ -842,8 +848,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
    -> prefix operator +++ {}
    -> postfix operator --- {}
-   -> prefix func +++ (x: Int) -> Int { return x * 2 }
-   -> postfix func --- (x: Int) -> Int { return x - 1 }
+   -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
+   -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
    -> +++1---
    << // r0 : Int = 0
 
@@ -866,7 +872,7 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. TODO: Self as the dynamic type of the current type that is implementing the protocols
    protocol Comparable {
-      func < (Self, Self) -> Bool
+      static func < (Self, Self) -> Bool
    }
 
 .. TODO: generic operators
