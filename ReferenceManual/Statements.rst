@@ -947,7 +947,7 @@ conditions listed in the table below.
 ====================  ===================================================
 Platform condition    Valid arguments
 ====================  ===================================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``os()``              ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
@@ -1050,7 +1050,7 @@ have the following form:
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
 
@@ -1132,7 +1132,7 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 The availability condition takes a comma-separated list of platform names and versions.
-Use ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` for the platform names,
+Use ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` for the platform names,
 and include the corresponding version numbers.
 The ``*`` argument is required and specifies that on any other platform,
 the body of the code block guarded by the availability condition
@@ -1151,7 +1151,7 @@ logical operators such as ``&&`` and ``||``.
     availability-argument --> ``*``
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
-    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``macOS`` | ``macOSApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits

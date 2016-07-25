@@ -46,8 +46,8 @@ the ``noreturn`` attribute to a function or method *type*.
 
     * ``iOS``
     * ``iOSApplicationExtension``
-    * ``OSX``
-    * ``OSXApplicationExtension``
+    * ``macOS``
+    * ``macOSApplicationExtension``
     * ``watchOS``
     * ``watchOSApplicationExtension``
     * ``tvOS``
@@ -156,7 +156,7 @@ the ``noreturn`` attribute to a function or method *type*.
     .. testcode:: availableShorthand
        :compile: true
 
-       -> @available(iOS 8.0, OSX 10.10, *)
+       -> @available(iOS 10.0, macOS 10.12, *)
        -> class MyClass {
               // class definition
           }
@@ -184,7 +184,7 @@ the ``noreturn`` attribute to a function or method *type*.
    is called without using its result.
 
 ``GKInspectable``
-    Apply this attribute to expose a custom GameplayKit component property 
+    Apply this attribute to expose a custom GameplayKit component property
     to the SpriteKit editor UI.
 
 .. See also <rdar://problem/27287369> Document @GKInspectable attribute

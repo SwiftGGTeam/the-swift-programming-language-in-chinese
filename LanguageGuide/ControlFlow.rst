@@ -1405,26 +1405,35 @@ when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
 
-   -> if #available(iOS 9, OSX 10.10, *) {
-          // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
+   -> if #available(iOS 10, macOS 10.12, *) {
+          // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
       } else {
-          // Fall back to earlier iOS and OS X APIs
+          // Fall back to earlier iOS and macOS APIs
       }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The availability condition above specifies that on iOS,
-the body of the ``if`` executes only on iOS 9 and later;
-on OS X, only on OS X v10.10 and later.
+the body of the ``if`` executes only on iOS 10 and later;
+on macOS, only on macOS 10.12 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use platform names such as ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` ---
+You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
 for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8,
-you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
+you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
+
+.. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
+    even though the new editorial guidelines state to only use "macOS"
+    for versions of the OS that are 10.12 and later.
+    However, in the context in which this appears,
+    the more helpful thing to do is to use "macOS",
+    especially because that's what you're going to use in the language.
+    When we have an minor version of 10.12 to use as an example here,
+    we should use that instead.
 
 .. syntax-outline::
 
