@@ -1112,22 +1112,41 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition.
+You can include as many optional bindings and Boolean conditions
+in a single ``if`` statement as you need to,
+separated by commas.
 If any of the values in the optional bindings are ``nil``
-or the ``where`` clause evaluates to ``false``,
-the whole optional binding is considered unsuccessful.
+or any Boolean condition evaluates to ``false``,
+the whole ``if`` statement's condition
+is considered to be ``false``.
+The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
-         print("\(firstNumber) < \(secondNumber)")
+   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+         print("\(firstNumber) < \(secondNumber) < 100")
       }
-   <- 4 < 42
+   <- 4 < 42 < 100
+   ---
+   -> if let firstNumber = Int("4") {
+          if let secondNumber = Int("42") {
+              if firstNumber < secondNumber && secondNumber < 100 {
+                  print("\(firstNumber) < \(secondNumber) < 100")
+              }
+          }
+      }
+   <- 4 < 42 < 100
+
+.. The example above uses multiple optional bindings
+   to show that you can have more than one
+   and to show the short-circuiting behavior.
+   It has multiple Boolean conditions
+   to show that you should join logically related conditions
+   using the && operator instead of a comma.
 
 .. note::
 
-   Constants and variables created with optional binding in an ``if`` statement.
+   Constants and variables created with optional binding in an ``if`` statement
    are available only within the body of the ``if`` statement.
    In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
