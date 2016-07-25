@@ -878,19 +878,22 @@ just like you do in other protocol requirements.
          // Both operators are already implemented on Vector2D.
       }
 
-For operators that take values of two different types,
-the operator's implementation doesn't have to be
-a member of the type that conforms to the protocol ---
-the implementation can also be a member of the other type.
-For example,
-the code below defines the ``*`` operator
-to scale a vector by a given amount.
-The ``Vector2D`` structure conforms to this protocol
-because there is an implementation of the operator
-that takes a ``Vector2D`` as its second argument,
-even though that implementation is a member of ``Double``.
+.. FIXME: This doesn't work
+   <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
 
-.. testcode:: customOperators
+    For operators that take values of two different types,
+    the operator's implementation doesn't have to be
+    a member of the type that conforms to the protocol ---
+    the implementation can also be a member of the other type.
+    For example,
+    the code below defines the ``*`` operator
+    to scale a vector by a given amount.
+    The ``Vector2D`` structure conforms to this protocol
+    because there is an implementation of the operator
+    that takes a ``Vector2D`` as its second argument,
+    even though that implementation is a member of ``Double``.
+
+    .. testcode:: customOperators
 
    -> infix operator *** {}
    -> protocol AnotherProtocol {
