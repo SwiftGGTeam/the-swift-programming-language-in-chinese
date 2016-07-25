@@ -1124,18 +1124,18 @@ The following ``if`` statements are equivalent:
 .. testcode:: multipleOptionalBindings
 
    -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
-         print("\(firstNumber) < \(secondNumber)")
+         print("\(firstNumber) < \(secondNumber) < 100")
       }
-   <- 4 < 42
+   <- 4 < 42 < 100
    ---
    -> if let firstNumber = Int("4") {
           if let secondNumber = Int("42") {
               if firstNumber < secondNumber && secondNumber < 100 {
-                  print("\(firstNumber) < \(secondNumber)")
+                  print("\(firstNumber) < \(secondNumber) < 100")
               }
           }
       }
-   <- 4 < 42
+   <- 4 < 42 < 100
 
 .. The example above uses multiple optional bindings
    to show that you can have more than one
