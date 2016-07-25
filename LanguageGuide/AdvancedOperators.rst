@@ -882,6 +882,32 @@ For operators that take values of two different types,
 the operator's implementation doesn't have to be
 a member of the type that conforms to the protocol ---
 the implementation can also be a member of the other type.
+For example,
+the code below defines the ``*`` operator
+to scale a vector by a given amount.
+The ``Vector2D`` structure conforms to this protocol
+because there is an implementation of the operator
+that takes a ``Vector2D`` as its second argument,
+even though that implementation is a member of ``Double``.
+
+.. testcode:: customOperators
+
+   -> infix operator *** {}
+   -> protocol AnotherProtocol {
+          // static func * (scale: Double, vector: Self) -> Self
+          static func *** (scale: Double, vector: Vector2D) -> Vector2D
+      }
+   ---
+   -> extension Double {
+          static func *** (scale: Double, vector: Vector2D) -> Vector2D {
+              return Vector2D(x: scale * vector.x, y: scale * vector.y)
+          }
+      }
+   -> extension Vector2D: AnotherProtocol {}
+   -> let unitVector = Vector2D(x: 1.0, y: 1.0)
+   << // unitVector : Vector2D = REPL.Vector2D(x: 1.0, y: 1.0)
+   -> print(2.5 *** unitVector)
+   <- Vector2D(x: 2.5, y: 2.5)
 
 .. TODO: However, Doug thought that this might be better covered by Generics,
    where you know that two things are definitely of the same type.
