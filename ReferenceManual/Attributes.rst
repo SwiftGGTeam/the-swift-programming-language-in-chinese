@@ -288,13 +288,14 @@ the ``noreturn`` attribute to a function or method *type*.
     passing this class's name as the name of the delegate class.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main()`` function
-    that calls the ``NSApplicationMain(_:_:)`` function.
-    For example,
-    if your app uses a custom subclass of ``NSApplication``
-    as its principal class,
-    call the ``NSApplicationMain`` function
-    instead of using this attribute.
+    supply a ``main.swift`` file with code at the top level
+    that calls the ``NSApplicationMain(_:_:)`` function as follows:
+
+    .. testcode:: nsapplicationmain
+
+       -> import AppKit
+       -> NSApplicationMain(Process.argc, Process.unsafeArgv)
+       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
