@@ -333,7 +333,7 @@ the ``noreturn`` attribute to a function or method *type*.
     passing this class's name as the name of the delegate class.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main`` function
+    supply a ``main.swift`` file with code at the top level
     that calls the ``UIApplicationMain(_:_:_:)`` function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
