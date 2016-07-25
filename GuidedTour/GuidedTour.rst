@@ -1198,7 +1198,7 @@ in addition to its protocol conformance.
 Error Handling
 --------------
 
-You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
+You represent errors using any type that adopts the ``Error`` protocol.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
@@ -1219,7 +1219,7 @@ You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
 
 .. testcode:: guided-tour
 
-    -> enum PrinterError: ErrorProtocol {
+    -> enum PrinterError: Error {
            case outOfPaper
            case noToner
            case onFire

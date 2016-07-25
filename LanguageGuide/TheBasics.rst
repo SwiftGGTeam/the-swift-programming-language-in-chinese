@@ -1256,7 +1256,7 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 
 .. testcode:: errorHandling
 
-   >> enum SimpleError: ErrorProtocol {
+   >> enum SimpleError: Error {
    >>    case someError
    >> }
    >> let condition = true
@@ -1296,7 +1296,7 @@ to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
 
-   >> enum SandwichError: ErrorProtocol {
+   >> enum SandwichError: Error {
    >>     case outOfCleanDishes
    >>     case missingIngredients([String])
    >> }
