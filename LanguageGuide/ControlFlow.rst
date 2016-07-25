@@ -1426,14 +1426,14 @@ for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8,
 you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
 
-.. NOTE: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
+.. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
     even though the new editorial guidelines state to only use "macOS"
     for versions of the OS that are 10.12 and later.
     However, in the context in which this appears,
     the more helpful thing to do is to use "macOS",
     especially because that's what you're going to use in the language.
     When we have an minor version of 10.12 to use as an example here,
-    we should you that instead.
+    we should use that instead.
 
 .. syntax-outline::
 
