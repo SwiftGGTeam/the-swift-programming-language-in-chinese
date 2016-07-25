@@ -400,11 +400,6 @@ separated by a space:
          // for that parameter.
       }
 
-.. note::
-
-   If you provide an argument label for a parameter,
-   the argument *must* be labeled when you call the function.
-
 Here's a variation of the ``greet(person:)`` function
 that takes a person's name and hometown
 and returns a greeting:
@@ -436,6 +431,9 @@ write an underscore (``_``) instead of an explicit argument label for that param
          // refer to the argument values for the first and second parameters.
       }
    -> someFunction(1, secondParameterName: 2)
+
+If a parameter has an argument label,
+the argument *must* be labeled when you call the function.
 
 .. _Functions_DefaultParameterValues:
 

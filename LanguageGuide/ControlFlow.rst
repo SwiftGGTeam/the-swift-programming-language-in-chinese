@@ -636,7 +636,7 @@ It is not valid to write the following code, because the first case is empty:
    !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
-   // this will report a compile-time error
+   // This will report a compile-time error.
 
 Unlike a ``switch`` statement in C,
 this ``switch`` statement does not match both ``"a"`` and ``"A"``.
