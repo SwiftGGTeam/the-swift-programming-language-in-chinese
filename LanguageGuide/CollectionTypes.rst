@@ -155,7 +155,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
 
-.. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
+.. TODO: mutating func sort(by: (T, T) -> Bool)
    This is defined in Array.swift.
    Likewise I'm holding off writing about it until NewArray lands.
 

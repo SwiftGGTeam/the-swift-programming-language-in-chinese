@@ -53,7 +53,7 @@ as one or more of their arguments.
 Closure expressions provide several syntax optimizations
 for writing closures in a shortened form without loss of clarity or intent.
 The closure expression examples below illustrate these optimizations
-by refining a single example of the ``sorted(isOrderedBefore:)`` method over several iterations,
+by refining a single example of the ``sorted(by:)`` method over several iterations,
 each of which expresses the same functionality in a more succinct way.
 
 .. _Closures_TheSortedFunction:
@@ -61,15 +61,15 @@ each of which expresses the same functionality in a more succinct way.
 The Sorted Method
 ~~~~~~~~~~~~~~~~~
 
-Swift's standard library provides a method called ``sorted(isOrderedBefore:)``,
+Swift's standard library provides a method called ``sorted(by:)``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
-the ``sorted(isOrderedBefore:)`` method returns a new array of the same type and size as the old one,
+the ``sorted(by:)`` method returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted(isOrderedBefore:)`` method.
+The original array is not modified by the ``sorted(by:)`` method.
 
-The closure expression examples below use the ``sorted(isOrderedBefore:)`` method
+The closure expression examples below use the ``sorted(by:)`` method
 to sort an array of ``String`` values in reverse alphabetical order.
 Here's the initial array to be sorted:
 
@@ -78,7 +78,7 @@ Here's the initial array to be sorted:
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
    << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-The ``sorted(isOrderedBefore:)`` method accepts a closure that takes two arguments
+The ``sorted(by:)`` method accepts a closure that takes two arguments
 of the same type as the array's contents,
 and returns a ``Bool`` value to say whether the first value should appear
 before or after the second value once the values are sorted.
@@ -90,14 +90,14 @@ This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
 One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as an argument to the ``sorted(isOrderedBefore:)`` method:
+and to pass it in as an argument to the ``sorted(by:)`` method:
 
 .. testcode:: closureSyntax
 
    -> func backward(_ s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversedNames = names.sorted(isOrderedBefore: backward)
+   -> var reversedNames = names.sorted(by: backward)
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -140,7 +140,7 @@ from earlier:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in
+   -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversedNames
@@ -163,11 +163,11 @@ it can even be written on a single line:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-This illustrates that the overall call to the ``sorted(isOrderedBefore:)`` method has remained the same.
+This illustrates that the overall call to the ``sorted(by:)`` method has remained the same.
 A pair of parentheses still wrap the entire argument for the method.
 However, that argument is now an inline closure.
 
@@ -179,7 +179,7 @@ Inferring Type From Context
 Because the sorting closure is passed as an argument to a method,
 Swift can infer the types of its parameters
 and the type of the value it returns.
-The ``sorted(isOrderedBefore:)`` method is being called on an array of strings,
+The ``sorted(by:)`` method is being called on an array of strings,
 so its argument must be a function of type ``(String, String) -> Bool``.
 This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
@@ -189,7 +189,7 @@ can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { s1, s2 in return s1 > s2 } )
+   -> reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -200,7 +200,7 @@ when the closure is used as a function or method argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
-In the case of the ``sorted(isOrderedBefore:)`` method,
+In the case of the ``sorted(by:)`` method,
 the purpose of the closure is clear from the fact that sorting is taking place,
 and it is safe for a reader to assume that
 the closure is likely to be working with ``String`` values,
@@ -217,11 +217,11 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { s1, s2 in s1 > s2 } )
+   -> reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Here, the function type of the ``sorted(isOrderedBefore:)`` method's argument
+Here, the function type of the ``sorted(by:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
@@ -245,7 +245,7 @@ because the closure expression is made up entirely of its body:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { $0 > $1 } )
+   -> reversedNames = names.sorted(by: { $0 > $1 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -261,13 +261,13 @@ Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
 as a function that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed by the ``sorted(isOrderedBefore:)`` method.
+This exactly matches the function type needed by the ``sorted(by:)`` method.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: >)
+   -> reversedNames = names.sorted(by: >)
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -306,7 +306,7 @@ as part of the function call.
       }
 
 The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
-can be written outside of the ``sorted(isOrderedBefore:)`` method's parentheses as a trailing closure:
+can be written outside of the ``sorted(by:)`` method's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
@@ -622,7 +622,7 @@ because it knows more information about the closure's lifespan.
        }
 
 As an example,
-the ``sorted(isOrderedBefore:)`` method takes a closure as its parameter,
+the ``sorted(by:)`` method takes a closure as its parameter,
 which is used to compare elements.
 The parameter is marked ``@noescape``
 because it is guaranteed not to be needed after sorting is complete.
