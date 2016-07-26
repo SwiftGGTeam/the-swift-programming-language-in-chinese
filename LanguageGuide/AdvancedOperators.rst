@@ -879,20 +879,31 @@ A type conforms to the protocol
 only if there is an implementation of the operator for that type.
 You use ``Self`` to refer to the type that will conform to the protocol,
 just like you do in other protocol requirements.
+For example, the standard library defines the ``Equatable`` protocol
+which requires the ``==`` operator:
 
-.. testcode:: customOperators
+.. testcode:: protocolOperator
 
-   -> public protocol Equatable {
+   -> protocol Equatable {
           static func == (lhs: Self, rhs: Self) -> Bool
       }
-   ---
-   -> extension Vector2D: Equatable {
-          static func == (left: Vector2D, right: Vector2D) -> Bool {
-              return left.x == right.x && left.y == right.y
+
+To make a type conform to the protocol,
+you need to implement the ``==`` operator for that type.
+For example:
+
+.. testcode:: protocolOperator
+
+   -> struct Vector3D {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   -> extension Vector3D: Equatable {
+          static func == (left: Vector3D, right: Vector3D) -> Bool {
+              return (left.x == right.x) && (left.y == right.y) && (left.z == right.z)
           }
       }
-   >> Vector2(x: 1.1, y: 2.3) == Vector2D(x: 1.1, y:2.3)
-   << true
+   >> Vector3D(x: 1.1, y: 2.3, z: 12) == Vector3D(x: 1.1, y: 2.3, z: 12)
+   << // r0 : Bool = true
 
 .. FIXME: This doesn't work
    <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
