@@ -34,6 +34,8 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-08-01  
+----------  ----------------------------------------------------------------------------------------------
 2016-07-18  * Updated discussion about default parameters
               in the :ref:`Functions_DefaultParameterValues` section,
               now that they can't be reordered in function calls.
