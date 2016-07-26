@@ -710,16 +710,16 @@ and uses it to set the left value to be the left value plus the right value:
 
 .. _AdvancedOperators_EquivalenceOperators:
 
-Equivalence Operators
-~~~~~~~~~~~~~~~~~~~~~
+Equality Operators
+~~~~~~~~~~~~~~~~~~
 
 Custom classes and structures do not receive a default implementation of
-the :newTerm:`equivalence operators`,
+the :newTerm:`equality operators`,
 known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
-It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
-because the meaning of “equal” depends on the roles that those types play in your code.
+It is not possible for Swift to guess what defines equality or your own custom types,
+because the meaning of equality depends on the roles that those types play in your code.
 
-To use the equivalence operators to check for equivalence of your own custom type,
+To use the equality operators to check for equivalence of your own custom type,
 provide an implementation of the operators in the same way as for other infix operators:
 
 .. testcode:: customOperators
@@ -742,7 +742,7 @@ and so this is the logic used by the operator implementation.
 The example also implements the “not equal to” operator (``!=``),
 which simply returns the inverse of the result of the “equal to” operator.
 
-You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
+You can now use these operators to check whether two ``Vector2D`` instances are equal:
 
 .. testcode:: customOperators
 
@@ -751,9 +751,9 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
    << // anotherTwoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> if twoThree == anotherTwoThree {
-         print("These two vectors are equivalent.")
+         print("These two vectors are equal.")
       }
-   <- These two vectors are equivalent.
+   <- These two vectors are equal.
 
 .. _AdvancedOperators_CustomOperators:
 
