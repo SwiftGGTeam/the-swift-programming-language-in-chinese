@@ -737,19 +737,19 @@ use a capture list to explicitly capture the parameter immutably.
 .. testcode:: explicit-capture-for-inout
 
     -> func someFunction(a: inout Int) -> () -> Int {
-           return { [a] in return a+1 }
+           return { [a] in return a + 1 }
        }
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
-such as in  multithreaded code that ensures
+such as in multithreaded code that ensures
 all mutation has finished before the function returns.
 
 .. testcode:: cant-pass-inout-aliasing
 
     >> import Dispatch
     >> func someMutatingOperation(_ a: inout Int) { }
-    -> func multithreadFunction(queue: DispatchQueue, x: inout Int) {
+    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
           // Make a local copy and manually copy it back.
           var localX = x
           defer { x = localX }
