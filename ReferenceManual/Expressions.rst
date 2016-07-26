@@ -1387,7 +1387,7 @@ For example:
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
     << // initializer : (Int) -> String = (Function)
-    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
     << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
     <- 123
