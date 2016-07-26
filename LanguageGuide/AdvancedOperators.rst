@@ -562,7 +562,7 @@ and is said to be :newTerm:`infix` because it appears in between those two targe
 
 The example defines a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``,
-followed by a definition of an :newTerm:`operator function`
+followed by a definition of an :newTerm:`operator method`
 to add together instances of the ``Vector2D`` structure:
 
 .. testcode:: customOperators
@@ -570,12 +570,18 @@ to add together instances of the ``Vector2D`` structure:
    -> struct Vector2D {
          var x = 0.0, y = 0.0
       }
-   -> func + (left: Vector2D, right: Vector2D) -> Vector2D {
-         return Vector2D(x: left.x + right.x, y: left.y + right.y)
+   ---
+   -> extension Vector2D {
+          static func + (left: Vector2D, right: Vector2D) -> Vector2D {
+             return Vector2D(x: left.x + right.x, y: left.y + right.y)
+          }
       }
 
-The operator function is defined as a global function
+The operator function is defined as a type method on ``Vector2D``,
 with a function name that matches the operator to be overloaded (``+``).
+Because addition isn't part of the essential behavior for a vector,
+the type method is defined in an extension of ``Vector2D``
+rather than in the main structure declaration of ``Vector2D``.
 Because the arithmetic addition operator is a binary operator,
 this operator function takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
@@ -588,8 +594,8 @@ whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
 the two ``Vector2D`` instances that are added together.
 
-The function is defined globally, rather than as a method on the ``Vector2D`` structure,
-so that it can be used as an infix operator between existing ``Vector2D`` instances:
+The type method
+can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
@@ -626,8 +632,10 @@ before the ``func`` keyword when declaring the operator function:
 
 .. testcode:: customOperators
 
-   -> prefix func - (vector: Vector2D) -> Vector2D {
-         return Vector2D(x: -vector.x, y: -vector.y)
+   -> extension Vector2D {
+          static prefix func - (vector: Vector2D) -> Vector2D {
+              return Vector2D(x: -vector.x, y: -vector.y)
+          }
       }
 
 The example above implements the unary minus operator
@@ -669,8 +677,10 @@ an addition assignment operator function for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> func += (left: inout Vector2D, right: Vector2D) {
-         left = left + right
+   -> extension Vector2D {
+          static func += (left: inout Vector2D, right: Vector2D) {
+              left = left + right
+          }
       }
 
 Because an addition operator was defined earlier,
@@ -713,11 +723,13 @@ provide an implementation of the operators in the same way as for other infix op
 
 .. testcode:: customOperators
 
-   -> func == (left: Vector2D, right: Vector2D) -> Bool {
-         return (left.x == right.x) && (left.y == right.y)
-      }
-   -> func != (left: Vector2D, right: Vector2D) -> Bool {
-         return !(left == right)
+   -> extension Vector2D {
+          static func == (left: Vector2D, right: Vector2D) -> Bool {
+             return (left.x == right.x) && (left.y == right.y)
+          }
+          static func != (left: Vector2D, right: Vector2D) -> Bool {
+             return !(left == right)
+          }
       }
 
 The above example implements an “equal to” operator (``==``)
@@ -763,15 +775,19 @@ The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
 and so it is given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
-``+++`` is treated as a new “prefix doubling incrementer” operator.
+``+++`` is treated as a new “prefix doubling” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
-by adding the vector to itself with the addition assignment operator defined earlier:
+by adding the vector to itself with the addition assignment operator defined earlier.
+To implement the ``+++`` operator,
+you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. testcode:: customOperators
 
-   -> prefix func +++ (vector: inout Vector2D) -> Vector2D {
-         vector += vector
-         return vector
+   -> extension Vector2D {
+         static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+            vector += vector
+            return vector
+         }
       }
    ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
@@ -810,8 +826,10 @@ with ``left`` associativity and a precedence of ``140``:
 .. testcode:: customOperators
 
    -> infix operator +- { associativity left precedence 140 }
-   -> func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-         return Vector2D(x: left.x + right.x, y: left.y - right.y)
+   -> extension Vector2D {
+         static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+            return Vector2D(x: left.x + right.x, y: left.y - right.y)
+         }
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
    << // firstVector : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
@@ -842,8 +860,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
    -> prefix operator +++ {}
    -> postfix operator --- {}
-   -> prefix func +++ (x: Int) -> Int { return x * 2 }
-   -> postfix func --- (x: Int) -> Int { return x - 1 }
+   -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
+   -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
    -> +++1---
    << // r0 : Int = 0
 
@@ -852,21 +870,78 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-.. TODO: Protocol Operator Requirements
-   ------------------------------------
+.. The following needs more work...
 
-.. TODO: Protocols can require the implementation of operators
-   (though assignment operators are broken)
+    Protocol Operator Requirements
+    ------------------------------
 
-.. TODO: Likewise for requiring custom operators
+    You can include operators in the requirements of a protocol.
+    A type conforms to the protocol
+    only if there is an implementation of the operator for that type.
+    You use ``Self`` to refer to the type that will conform to the protocol,
+    just like you do in other protocol requirements.
+    For example, the standard library defines the ``Equatable`` protocol
+    which requires the ``==`` operator:
+
+    .. testcode:: protocolOperator
+
+       -> protocol Equatable {
+              static func == (lhs: Self, rhs: Self) -> Bool
+          }
+
+    To make a type conform to the protocol,
+    you need to implement the ``==`` operator for that type.
+    For example:
+
+    .. testcode:: protocolOperator
+
+   -> struct Vector3D {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   -> extension Vector3D: Equatable {
+          static func == (left: Vector3D, right: Vector3D) -> Bool {
+              return (left.x == right.x) && (left.y == right.y) && (left.z == right.z)
+          }
+      }
+   >> Vector3D(x: 1.1, y: 2.3, z: 12) == Vector3D(x: 1.1, y: 2.3, z: 12)
+   << // r0 : Bool = true
+
+.. FIXME: This doesn't work
+   <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
+
+    For operators that take values of two different types,
+    the operator's implementation doesn't have to be
+    a member of the type that conforms to the protocol ---
+    the implementation can also be a member of the other type.
+    For example,
+    the code below defines the ``*`` operator
+    to scale a vector by a given amount.
+    The ``Vector2D`` structure conforms to this protocol
+    because there is an implementation of the operator
+    that takes a ``Vector2D`` as its second argument,
+    even though that implementation is a member of ``Double``.
+
+    .. testcode:: customOperators
+
+   -> infix operator *** {}
+   -> protocol AnotherProtocol {
+          // static func * (scale: Double, vector: Self) -> Self
+          static func *** (scale: Double, vector: Vector2D) -> Vector2D
+      }
+   ---
+   -> extension Double {
+          static func *** (scale: Double, vector: Vector2D) -> Vector2D {
+              return Vector2D(x: scale * vector.x, y: scale * vector.y)
+          }
+      }
+   -> extension Vector2D: AnotherProtocol {}
+   -> let unitVector = Vector2D(x: 1.0, y: 1.0)
+   << // unitVector : Vector2D = REPL.Vector2D(x: 1.0, y: 1.0)
+   -> print(2.5 *** unitVector)
+   <- Vector2D(x: 2.5, y: 2.5)
 
 .. TODO: However, Doug thought that this might be better covered by Generics,
    where you know that two things are definitely of the same type.
    Perhaps mention it here, but don't actually show an example?
-
-.. TODO: Self as the dynamic type of the current type that is implementing the protocols
-   protocol Comparable {
-      func < (Self, Self) -> Bool
-   }
 
 .. TODO: generic operators
