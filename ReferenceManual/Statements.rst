@@ -775,7 +775,7 @@ followed by an expression, as shown below.
     throw <#expression#>
 
 The value of the *expression* must have a type that conforms to
-the ``ErrorProtocol`` protocol.
+the ``Error`` protocol.
 
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`

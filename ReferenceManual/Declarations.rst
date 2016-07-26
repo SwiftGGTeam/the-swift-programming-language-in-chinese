@@ -902,8 +902,8 @@ the error thrown by ``alwaysThrows()``.
 
 .. testcode:: double-negative-rethrows
 
-   >> enum SomeError: ErrorProtocol { case error }
-   >> enum AnotherError: ErrorProtocol { case error }
+   >> enum SomeError: Error { case error }
+   >> enum AnotherError: Error { case error }
    -> func alwaysThrows() throws {
           throw SomeError.error
       }
@@ -922,7 +922,7 @@ the error thrown by ``alwaysThrows()``.
 
 .. assertion:: throwing-in-rethrowing-function
 
-   -> enum SomeError: ErrorProtocol { case C, D }
+   -> enum SomeError: Error { case C, D }
    -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
