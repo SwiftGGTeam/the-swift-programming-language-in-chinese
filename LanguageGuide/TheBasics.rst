@@ -805,7 +805,7 @@ The following example reports a compile-time error:
    -> if i {
          // this example will not compile, and will report an error
       }
-   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'Boolean'
+   !! <REPL Input>:1:4: error: 'Int' is not convertible to 'Bool'
    !! if i {
    !!   ^
 
