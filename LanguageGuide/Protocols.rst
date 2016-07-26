@@ -1053,7 +1053,7 @@ You can combine multiple protocols into a single requirement
 with a :newTerm:`protocol composition`.
 Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
 You can list as many protocols as you need to,
-separated by the protocol composition operator (``&``).
+separating them by ampersands (``&``).
 
 Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
