@@ -731,7 +731,7 @@ For example:
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
 Because there is no copy-out at the end of closures or nested functions,
-any changes changes made to an in-out parameter
+any changes made to an in-out parameter
 by an escaping closure or nested function
 would not get copied back to the original.
 
