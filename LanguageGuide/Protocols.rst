@@ -299,10 +299,10 @@ to match the ``Togglable`` protocol's requirements:
          case off, on
          mutating func toggle() {
             switch self {
-               case off:
-                  self = on
-               case on:
-                  self = off
+               case .off:
+                  self = .on
+               case .on:
+                  self = .off
             }
          }
       }

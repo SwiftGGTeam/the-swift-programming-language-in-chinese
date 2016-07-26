@@ -245,12 +245,12 @@ a different case from the same enumeration:
          case off, low, high
          mutating func next() {
             switch self {
-               case off:
-                  self = low
-               case low:
-                  self = high
-               case high:
-                  self = off
+               case .off:
+                  self = .low
+               case .low:
+                  self = .high
+               case .high:
+                  self = .off
             }
          }
       }
