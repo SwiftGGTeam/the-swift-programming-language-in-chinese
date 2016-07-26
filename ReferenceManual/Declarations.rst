@@ -2268,11 +2268,11 @@ As with prefix operators, postfix operator declarations don't specify a preceden
 Postfix operators are nonassociative.
 
 After declaring a new operator,
-you implement it by declaring a static function that has the same name as the operator.
-The static function is a member of
+you implement it by declaring a static method that has the same name as the operator.
+The static method is a member of
 one of the types whose values the operator takes as an argument ---
 for example, an operator that multiplies a ``Double`` by an ``Int``
-is implemented as a static function on either the ``Double`` or ``Int`` structure.
+is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
 you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
