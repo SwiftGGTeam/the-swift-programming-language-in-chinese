@@ -869,14 +869,17 @@ just like you do in other protocol requirements.
 
 .. testcode:: customOperators
 
-   -> protocol SomeProtocol {
-         static func +- (left: Self, right: Self) -> Self
-         static prefix func - (left: Self) -> Self
+   -> public protocol Equatable {
+          static func == (lhs: Self, rhs: Self) -> Bool
       }
    ---
-   -> extension Vector2D: SomeProtocol {
-         // Both operators are already implemented on Vector2D.
+   -> extension Vector2D: Equatable {
+          static func == (left: Vector2D, right: Vector2D) -> Bool {
+              return left.x == right.x && left.y == right.y
+          }
       }
+   >> Vector2(x: 1.1, y: 2.3) == Vector2D(x: 1.1, y:2.3)
+   << true
 
 .. FIXME: This doesn't work
    <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
