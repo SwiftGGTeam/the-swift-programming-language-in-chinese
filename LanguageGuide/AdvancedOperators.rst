@@ -870,28 +870,30 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-Protocol Operator Requirements
-------------------------------
+.. The following needs more work...
 
-You can include operators in the requirements of a protocol.
-A type conforms to the protocol
-only if there is an implementation of the operator for that type.
-You use ``Self`` to refer to the type that will conform to the protocol,
-just like you do in other protocol requirements.
-For example, the standard library defines the ``Equatable`` protocol
-which requires the ``==`` operator:
+    Protocol Operator Requirements
+    ------------------------------
 
-.. testcode:: protocolOperator
+    You can include operators in the requirements of a protocol.
+    A type conforms to the protocol
+    only if there is an implementation of the operator for that type.
+    You use ``Self`` to refer to the type that will conform to the protocol,
+    just like you do in other protocol requirements.
+    For example, the standard library defines the ``Equatable`` protocol
+    which requires the ``==`` operator:
 
-   -> protocol Equatable {
-          static func == (lhs: Self, rhs: Self) -> Bool
-      }
+    .. testcode:: protocolOperator
 
-To make a type conform to the protocol,
-you need to implement the ``==`` operator for that type.
-For example:
+       -> protocol Equatable {
+              static func == (lhs: Self, rhs: Self) -> Bool
+          }
 
-.. testcode:: protocolOperator
+    To make a type conform to the protocol,
+    you need to implement the ``==`` operator for that type.
+    For example:
+
+    .. testcode:: protocolOperator
 
    -> struct Vector3D {
          var x = 0.0, y = 0.0, z = 0.0
