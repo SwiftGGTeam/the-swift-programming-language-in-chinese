@@ -562,7 +562,7 @@ and is said to be :newTerm:`infix` because it appears in between those two targe
 
 The example defines a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``,
-followed by a definition of an :newTerm:`operator function`
+followed by a definition of an :newTerm:`operator method`
 to add together instances of the ``Vector2D`` structure:
 
 .. testcode:: customOperators
@@ -577,12 +577,11 @@ to add together instances of the ``Vector2D`` structure:
           }
       }
 
-The operator function is defined as a static function
-inside the scope of ``Vector2D``,
+The operator function is defined as a type method on ``Vector2D``,
 with a function name that matches the operator to be overloaded (``+``).
 Because addition isn't part of the essential behavior for a vector,
-the static function is defined in an extension
-rather than in the structure declaration.
+the type method is defined in an extension of ``Vector2D``
+rather than in the main structure declaration of ``Vector2D``.
 Because the arithmetic addition operator is a binary operator,
 this operator function takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
@@ -595,7 +594,7 @@ whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
 the two ``Vector2D`` instances that are added together.
 
-The static function
+The type method
 can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
@@ -780,7 +779,7 @@ working with ``Vector2D`` instances. For the purposes of this example,
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
 by adding the vector to itself with the addition assignment operator defined earlier.
 To implement the ``+++`` operator,
-you add a static function called ``+++`` to ``Vector2D`` as follows:
+you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. testcode:: customOperators
 
