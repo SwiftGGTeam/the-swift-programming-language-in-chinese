@@ -555,8 +555,10 @@ must be either the name of protocol or a type alias of a protocol composition ty
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> protocol-identifier | protocol-identifier ``&`` protocol-composition-type
+    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> protocol-identifier | protocol-composition-type
     protocol-identifier --> type-identifier
+
 
 .. _Types_MetatypeType:
 
