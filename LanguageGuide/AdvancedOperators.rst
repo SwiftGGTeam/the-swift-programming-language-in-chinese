@@ -570,12 +570,19 @@ to add together instances of the ``Vector2D`` structure:
    -> struct Vector2D {
          var x = 0.0, y = 0.0
       }
-   -> func + (left: Vector2D, right: Vector2D) -> Vector2D {
-         return Vector2D(x: left.x + right.x, y: left.y + right.y)
+   ---
+   -> extension Vector2D {
+          static func + (left: Vector2D, right: Vector2D) -> Vector2D {
+             return Vector2D(x: left.x + right.x, y: left.y + right.y)
+          }
       }
 
-The operator function is defined as a global function
+The operator function is defined as a static function
+inside the scope of ``Vector2D``,
 with a function name that matches the operator to be overloaded (``+``).
+Because addition isn't part of the essential behavior for a vector,
+the static function is defined in an extension
+rather than in the structure declaration.
 Because the arithmetic addition operator is a binary operator,
 this operator function takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
@@ -588,8 +595,8 @@ whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
 the two ``Vector2D`` instances that are added together.
 
-The function is defined globally, rather than as a method on the ``Vector2D`` structure,
-so that it can be used as an infix operator between existing ``Vector2D`` instances:
+The static function
+can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
@@ -626,8 +633,10 @@ before the ``func`` keyword when declaring the operator function:
 
 .. testcode:: customOperators
 
-   -> prefix func - (vector: Vector2D) -> Vector2D {
-         return Vector2D(x: -vector.x, y: -vector.y)
+   -> extension Vector2D {
+          static prefix func - (vector: Vector2D) -> Vector2D {
+              return Vector2D(x: -vector.x, y: -vector.y)
+          }
       }
 
 The example above implements the unary minus operator
@@ -669,8 +678,10 @@ an addition assignment operator function for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> func += (left: inout Vector2D, right: Vector2D) {
-         left = left + right
+   -> extension Vector2D {
+          static func += (left: inout Vector2D, right: Vector2D) {
+              left = left + right
+          }
       }
 
 Because an addition operator was defined earlier,
@@ -713,11 +724,13 @@ provide an implementation of the operators in the same way as for other infix op
 
 .. testcode:: customOperators
 
-   -> func == (left: Vector2D, right: Vector2D) -> Bool {
-         return (left.x == right.x) && (left.y == right.y)
-      }
-   -> func != (left: Vector2D, right: Vector2D) -> Bool {
-         return !(left == right)
+   -> extension Vector2D {
+          static func == (left: Vector2D, right: Vector2D) -> Bool {
+             return (left.x == right.x) && (left.y == right.y)
+          }
+          static func != (left: Vector2D, right: Vector2D) -> Bool {
+             return !(left == right)
+          }
       }
 
 The above example implements an “equal to” operator (``==``)
