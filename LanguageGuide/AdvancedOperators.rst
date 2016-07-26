@@ -776,7 +776,7 @@ The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
 and so it is given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
-``+++`` is treated as a new “prefix doubling incrementer” operator.
+``+++`` is treated as a new “prefix doubling” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
 by adding the vector to itself with the addition assignment operator defined earlier.
 To implement the ``+++`` operator,
