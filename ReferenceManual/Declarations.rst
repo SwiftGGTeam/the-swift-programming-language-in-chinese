@@ -656,6 +656,8 @@ The corresponding argument must have no label in function or method calls.
    -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
    -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 .. _Declarations_InOutParameters:
 
 In-Out Parameters
@@ -726,13 +728,41 @@ For example:
    !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
    !!      ^~
 
-There is no copy-out at the end of closures or nested functions.
-This means if a closure is called after the function returns,
-any changes that closure makes to the in-out parameters
-do not get copied back to the original.
-For example:
+A closure or nested function
+that captures an in-out parameter must be nonescaping.
+If you need to capture an in-out parameter
+without mutating it or to observe changes made by other code,
+use a capture list to explicitly capture the parameter immutably.
 
-.. testcode:: closure-doesnt-copy-out-inout
+.. testcode:: explicit-capture-for-inout
+
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a + 1 }
+       }
+
+If you need to capture and mutate an in-out parameter,
+use an explicit local copy,
+such as in multithreaded code that ensures
+all mutation has finished before the function returns.
+
+.. testcode:: cant-pass-inout-aliasing
+
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) { }
+    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }  
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+.. assertion:: escaping-cant-capture-inout
 
     -> func outer(a: inout Int) -> () -> Void {
            func inner() {
@@ -740,22 +770,16 @@ For example:
            }
            return inner
        }
-    ---
-    -> var x = 10
-    << // x : Int = 10
-    -> let f = outer(a: &x)
-    << // f : () -> Void = (Function)
-    -> f()
-    -> print(x)
-    <- 10
+    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
+    !!            return inner
+    !!            ^
+    -> func closure(a: inout Int) -> () -> Void {
+           return { a += 1 }
+       }
+    !! <REPL Input>:2:16: error: closure cannot implicitly capture an inout parameter unless @noescape
+    !!              return { a += 1 }
+    !!                       ^
 
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer(a:)`` returns.
-To change the value of ``x``,
-``inner()`` would need to be called before ``outer(a:)`` returned.
-
-For more discussion and examples of in-out parameters,
-see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
