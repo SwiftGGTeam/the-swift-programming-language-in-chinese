@@ -730,18 +730,37 @@ For example:
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
-Because there is no copy-out at the end of closures or nested functions,
-any changes made to an in-out parameter
-by an escaping closure or nested function
-would not get copied back to the original.
-
 If you need to capture an in-out parameter
-without mutating it or to observe mutation from other code,
+without mutating it or to observe changes made by other code,
 use a capture list to explicitly capture the parameter immutably.
-If you need to capture and mutate an in-out parameter ---
-for example, in multithreaded code that ensures
-all mutation has finished before the function returns ---
-make a local mutable copy.
+
+.. testcode:: explicit-capture-for-inout
+
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a+1 }
+       }
+
+If you need to capture and mutate an in-out parameter,
+use an explicit local copy,
+such as in  multithreaded code that ensures
+all mutation has finished before the function returns.
+
+.. testcode:: cant-pass-inout-aliasing
+
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) { }
+    -> func multithreadFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }  
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
 
 .. assertion:: escaping-cant-capture-inout
 
@@ -761,28 +780,6 @@ make a local mutable copy.
     !!              return { a += 1 }
     !!                       ^
 
-.. testcode:: explicit-capture-for-inout
-
-    // Explicit immutable capture
-    -> func someFunction(a: inout Int) -> () -> Int {
-           return { [a] in return a+1 }
-       }
-    ---
-    // Explicit local copy
-    >> import Dispatch
-    >> func someMutatingOperation(_ a: inout Int) { }
-    -> func multithreadFunction(queue: DispatchQueue, x: inout Int) {
-          // Make a local copy and manually copy it back.
-          var localX = x
-          defer { x = localX }
-
-          // Operate on localX asynchronously, then wait before returning.
-          queue.async { someMutatingOperation(&localX) }
-          queue.sync {}
-       }  
-
-For more discussion and examples of in-out parameters,
-see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
