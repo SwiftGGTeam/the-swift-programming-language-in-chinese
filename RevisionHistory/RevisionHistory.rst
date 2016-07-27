@@ -3,34 +3,6 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-..  Merges since Xcode 7.3 FCS.
-
-.. Updated terminology for conditional compilation blocks
-   in ReferenceManual/Statements.rst
-.. f508be2 Merge branch '24774070_rename_build_config' into 'develop'
-
-
-.. Updated examples to use Swift 3 naming conventions and APIs.
-   b4edfe3 Merge branch '25200234_example_rename' into develop
-   f989e7f Merge branch '24772689_api_rename' into 'develop'
-   b46308b Merge branch '24778891_collections' into 'develop'
-
-.. Observed that a table is duplicated between TSPL and USWCAOC.
-   4b4863f Merge branch '25244216_os_arch' into develop
-
-.. Updated/corrected (?) grammar for closures and parameter names
-   https://[Internal Git Server]/merge_requests/121/diffs
-   524902d Merge branch 'bjl-closure-param-grammar' into 'develop'
-
-.. Made terminology consistent for parameter names & argument labels
-   abfc7b6 Merge branch '24827229_param_terminology' into 'develop'
-
-.. Added tvOS to the #available condition list
-   2b2a343 Merge branch '25122598_tvos' into 'develop'
-
-.. Updated the discussion of sets to use the Swift 3 method names
-   in the :ref:`CollectionTypes_FundamentalSetOperations` section.
-
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
