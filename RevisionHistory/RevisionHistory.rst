@@ -6,7 +6,47 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2016-08-01  
+2016-08-01  * Updated the discussion
+              in the :ref:`TheBasics_OptionalBinding` section
+              of the :doc:`../LanguageGuide/TheBasics` chapter
+              and the :ref:`Statements_WhileStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter,
+              now that ``if``, ``while``, and ``guard`` statements
+              use a comma separated list of conditions without ``where`` clauses.
+
+            * Updated the discussion of operators
+              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              now that you implement them as type methods instead of as global functions.
+
+            * Updated the discussion of protocol composition types
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter
+              to use the new ``Protocol1 & Protocol2`` syntax.
+
+            * Updated discussion throughout
+              to use macOS instead of OS X,
+              ``Error`` instead of ``ErrorProtocol``,
+              and protocol names such as ``ExpressibleByStringLiteral``
+              instead of ``StringLiteralConvertible``.
+
+            * Updated the :doc:`../ReferenceManual/Attributes` chapter
+              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
+              imply the ``@objc`` attribute.
+
+            * Added the ``@GKInspectable`` attribute
+              to the :ref:`Attributes_DeclarationAttributes` section.
+
+            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
+              to note that only nonescaping closures can capture in-out parameters.
+
+            * Removed the discussion of the ``Boolean`` protocol
+              from the :doc:`../ReferenceManual/Statements` chapter,
+              now that the protocol has been removed from the Swift standard library.
+
+            * Corrected the discussion of the ``@NSApplicationMain`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section.
 ----------  ----------------------------------------------------------------------------------------------
 2016-07-18  * Updated discussion about default parameters
               in the :ref:`Functions_DefaultParameterValues` section,
