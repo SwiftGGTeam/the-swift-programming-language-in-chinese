@@ -776,7 +776,7 @@ see :ref:`Functions_InOutParameters`.
     -> func closure(a: inout Int) -> () -> Void {
            return { a += 1 }
        }
-    !! <REPL Input>:2:16: error: closure cannot implicitly capture an inout parameter unless @noescape
+    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
     !!              return { a += 1 }
     !!                       ^
 
