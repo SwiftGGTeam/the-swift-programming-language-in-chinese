@@ -11,6 +11,8 @@ Language Guide
    ControlFlow
    Functions
    Closures
+   Structures
+   Classes
    Enumerations
    ClassesAndStructures
    Properties
