@@ -480,12 +480,18 @@ you must explicitly declare the nested type as public.
    !! /tmp/sourcefile_0.swift:9:17: note: 'PrivateEnumInsideInternalStruct' declared here
    !! private enum PrivateEnumInsideInternalStruct { case a, b }
    !! ^
-   !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
+   !! /tmp/sourcefile_1.swift:3:5: error: 'privateNestedInsidePrivate' used within its own type
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
-   !!                                  ^~~~~~~~~~~~~
+   !!     ^
+   !! /tmp/sourcefile_1.swift:3:5: error: could not infer type for 'privateNestedInsidePrivate'
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   !!     ^
    !! /tmp/sourcefile_1.swift:4:36: error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
+   !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   !!                                  ^~~~~~~~~~~~~
 
 .. sourcefile:: nestedTypes_Module2_Public
 
