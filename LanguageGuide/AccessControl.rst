@@ -287,6 +287,9 @@ the access level for that compound tuple type will be private.
    !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
    !! ^~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:4:13: note: did you mean 'returnPublicTuple'?
+   !! public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
+   !!             ^
 
 .. sourcefile:: tupleTypes_Module2_Public
 
@@ -306,6 +309,10 @@ the access level for that compound tuple type will be private.
    !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
    !! ^~~~~~~~~~~~~~~~~~
+   !! tupleTypes_Module1.returnPublicTuple:1:13: note: did you mean 'returnPublicTuple'?
+   !! public func returnPublicTuple() -> (tupleTypes_Module1.PublicStruct, tupleTypes_Module1.PublicStruct)
+   !!             ^
+
 
 .. note::
 
