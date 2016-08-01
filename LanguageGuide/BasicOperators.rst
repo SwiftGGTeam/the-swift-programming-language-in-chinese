@@ -381,7 +381,7 @@ For example:
 .. note::
 
    The Swift standard library includes tuple comparison operators
-   for tuples with less than seven elements.
+   for tuples with fewer than seven elements.
    To compare tuples with seven or more elements,
    you must implement the comparison operators yourself.
 
