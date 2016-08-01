@@ -3,37 +3,51 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-..  Merges since Xcode 7.3 FCS.
-
-.. Updated terminology for conditional compilation blocks
-   in ReferenceManual/Statements.rst
-.. f508be2 Merge branch '24774070_rename_build_config' into 'develop'
-
-
-.. Updated examples to use Swift 3 naming conventions and APIs.
-   b4edfe3 Merge branch '25200234_example_rename' into develop
-   f989e7f Merge branch '24772689_api_rename' into 'develop'
-   b46308b Merge branch '24778891_collections' into 'develop'
-
-.. Observed that a table is duplicated between TSPL and USWCAOC.
-   4b4863f Merge branch '25244216_os_arch' into develop
-
-.. Updated/corrected (?) grammar for closures and parameter names
-   https://[Internal Git Server]/merge_requests/121/diffs
-   524902d Merge branch 'bjl-closure-param-grammar' into 'develop'
-
-.. Made terminology consistent for parameter names & argument labels
-   abfc7b6 Merge branch '24827229_param_terminology' into 'develop'
-
-.. Added tvOS to the #available condition list
-   2b2a343 Merge branch '25122598_tvos' into 'develop'
-
-.. Updated the discussion of sets to use the Swift 3 method names
-   in the :ref:`CollectionTypes_FundamentalSetOperations` section.
-
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-08-01  * Updated the discussion
+              in the :ref:`TheBasics_OptionalBinding` section
+              of the :doc:`../LanguageGuide/TheBasics` chapter
+              and the :ref:`Statements_WhileStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter,
+              now that ``if``, ``while``, and ``guard`` statements
+              use a comma separated list of conditions without ``where`` clauses.
+
+            * Updated the discussion of operators
+              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              now that you implement them as type methods instead of as global functions.
+
+            * Updated the discussion of protocol composition types
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter
+              to use the new ``Protocol1 & Protocol2`` syntax.
+
+            * Updated discussion throughout
+              to use macOS instead of OS X,
+              ``Error`` instead of ``ErrorProtocol``,
+              and protocol names such as ``ExpressibleByStringLiteral``
+              instead of ``StringLiteralConvertible``.
+
+            * Updated the :doc:`../ReferenceManual/Attributes` chapter
+              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
+              imply the ``@objc`` attribute.
+
+            * Added the ``@GKInspectable`` attribute
+              to the :ref:`Attributes_DeclarationAttributes` section.
+
+            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
+              to note that only nonescaping closures can capture in-out parameters.
+
+            * Removed the discussion of the ``Boolean`` protocol
+              from the :doc:`../ReferenceManual/Statements` chapter,
+              now that the protocol has been removed from the Swift standard library.
+
+            * Corrected the discussion of the ``@NSApplicationMain`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section.
+----------  ----------------------------------------------------------------------------------------------
 2016-07-18  * Updated discussion about default parameters
               in the :ref:`Functions_DefaultParameterValues` section,
               now that they can't be reordered in function calls.
