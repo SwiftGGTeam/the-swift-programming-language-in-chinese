@@ -519,30 +519,6 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
     implicitly-unwrapped-optional-type --> type ``!``
 
 
-.. _Types_NeverType:
-
-Never Type
-----------
-
-The Swift language defines a type ``Never``
-that indicates that a function or method doesn't return to its caller.
-Functions or methods that return ``Never`` should either immediately throw a
-non-recoverable error or begin a sequence of work that is intended to continue indefinitely.
-Swift code that would otherwise run immediately after a call to
-a function or method with the ``Never`` return type will instead never be executed.
-Functions or methods marked with ``throws`` can return control flow
-to an appropriate ``catch`` block even when the return type is ``Never``.
-
-The ``Never`` type is an :newTerm:`uninhabited type`,
-meaning that no value can be returned from a function or method declared
-with a return type of ``Never``.
-As a result, no function or method declared with the ``Never`` return type
-should use the ``return`` statement.
-
-You can override a function or method that returns ``Never``,
-but the new function or method must keep the same return type and non-returning behavior.
-
-
 .. _Types_ProtocolCompositionType:
 
 Protocol Composition Type
