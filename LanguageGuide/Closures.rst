@@ -253,15 +253,15 @@ Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` argum
 
 .. _Closures_OperatorFunctions:
 
-Operator Functions
-~~~~~~~~~~~~~~~~~~
+Operator Methods
+~~~~~~~~~~~~~~~~
 
 There's actually an even *shorter* way to write the closure expression above.
 Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
-as a function that has two parameters of type ``String``,
+as a method that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed by the ``sorted(by:)`` method.
+This exactly matches the method type needed by the ``sorted(by:)`` method.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
@@ -271,7 +271,7 @@ and Swift will infer that you want to use its string-specific implementation:
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-For more about operator functions, see :ref:`AdvancedOperators_OperatorFunctions`.
+For more about operator method, see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. _Closures_TrailingClosures:
 

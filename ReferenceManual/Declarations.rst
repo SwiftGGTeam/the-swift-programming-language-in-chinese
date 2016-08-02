@@ -2298,10 +2298,10 @@ one of the types whose values the operator takes as an argument ---
 for example, an operator that multiplies a ``Double`` by an ``Int``
 is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
-you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
 If you're implementing an infix operator,
-you don't mark that function declaration with the ``infix`` declaration modifier.
+you don't mark that method declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
