@@ -560,7 +560,11 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
     Grammar of a labeled statement
 
-    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement | statement-label do-statement
+    labeled-statement --> statement-label loop-statement
+    labeled-statement --> statement-label if-statement
+    labeled-statement --> statement-label switch-statement
+    labeled-statement --> statement-label do-statement
+    
     statement-label --> label-name ``:``
     label-name --> identifier
 
