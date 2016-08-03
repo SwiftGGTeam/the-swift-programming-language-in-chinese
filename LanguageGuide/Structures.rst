@@ -116,7 +116,7 @@ to the memberwise initializer by name:
 
 Initializing ``waterBoilingPoint`` with the memberwise initializer
 creates an instance of ``Temperature`` with the ``celsius`` property
-set to the boiling point of water—``100.0`` degrees celsius.
+set to the boiling point of water --- ``100.0`` degrees celsius.
 
 Structure initialization is covered in more detail in :doc:`Initialization`.
 
@@ -125,7 +125,7 @@ Structure initialization is covered in more detail in :doc:`Initialization`.
 Accessing Properties
 --------------------
 
-You can access the the properties of a structure instance
+You can access the properties of a structure instance
 using :newTerm:`dot syntax`.
 
 In dot syntax, you write the instance name
@@ -176,10 +176,80 @@ to print their new values.
 Structures Are Value Types
 --------------------------
 
+A :newTerm:`value type` is a type whose value is copied
+when it is assigned to a variable or constant,
+or when it is passed to a function.
 
+You have been using value types extensively
+throughout the previous chapters.
 
-.. _Structures_WhenToUseStructures:
+In fact, all the basic types in Swift ---
+integers, floating point numbers, Booleans, strings, arrays and dictionaries ---
+are value types,
+and are implemented as structures behind the scenes.
 
-When to Use Structures
-----------------------
- 
+All structures are value types in Swift.
+This means that any structure instances you create ---
+and any value types you give them as properties ---
+are always copied when they are passed around in your code.
+
+Consider this example:
+
+.. testcode:: structures
+
+    -> let roomTemperature = Temperature(celsius: 21.0)
+    << // roomTemperature : Temperature = REPL.Temperature(celsius: 21.0)
+    -> var thermostat = roomTemperature
+    << // thermostat : Temperature = REPL.Temperature(celsius: 21.0)
+
+The example above declares a constant called ``roomTemperature`` and
+sets it to a ``Temperature`` instance initialized
+with a comfortable, ambient room temperature in degrees celsius (``21.0``).
+
+It then declares a variable called ``thermostat`` and sets it
+to the current value of ``roomTemperature``.
+Because ``Temperature`` is a structure, a :newTerm:`copy`
+of the existing instance is made,
+and this new copy is assigned to ``thermostat``.
+Even though ``roomTemperature`` and ``thermostat``
+have the same value for the ``celsius`` property,
+they are two completely different instances
+behind the scenes.
+
+You can change ``thermostat`` for someone
+who likes their room slightly warmer
+and ``roomTemperature`` will remain unchanged:
+
+.. testcode:: structures
+
+    -> thermostat.celsius = 23.0
+
+Checking the ``celsius`` property of ``thermostat``
+confirms that it has indeed changed to ``23.0``
+
+.. testcode:: structures
+
+    -> print("thermostat is now \(thermostat.celsius) degrees celsius")
+    <- thermostat is now 23.0 degrees celsius
+
+Checking the ``celsius`` property of ``roomTemperature``
+shows that its value remains ``21.0``:
+
+.. testcode:: structures
+    
+    -> print("roomTemperature is still \(roomTemperature.celsius) degrees celsius")
+    <- roomTemperature is still 21.0 degrees celsius
+
+When ``thermostat`` is given the current value of ``roomTemperature``,
+the values stored in ``roomTemperature``
+are copied into the new ``thermostat`` instance.
+The end result is two completely separate instances
+that contain the same numeric value.
+Because they are separate instances,
+setting ``thermostat.celsius`` to a new value
+does not affect the ``celsius`` property stored
+in ``roomTemperature``.
+
+For an in-depth discussion of value types
+and when to use them,
+see [chapter that has yet to be made].
