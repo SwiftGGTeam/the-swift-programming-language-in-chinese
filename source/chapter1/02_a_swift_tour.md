@@ -197,7 +197,7 @@ print(largest)
 ```
 
 > 练习：
-> 添加另一个变量来记录现在和之前最大数字的类型。
+> 添加另一个变量来记录最大数字的种类(kind)，同时仍然记录这个最大数字的值。
 
 使用`while`来重复运行一段代码直到不满足条件。循环条件也可以在结尾，保证能至少循环一次。
 
@@ -547,7 +547,7 @@ if let convertedRank = Rank(rawValue: 3) {
 }
 ```
 
-枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，以防原始值没有意义，你不需要设置。
+枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，如果没有比较有意义的原始值，你就不需要提供原始值。
 
 ```swift
 enum Suit {
@@ -615,7 +615,7 @@ case let .Failure(message):
 > 练习：
 > 给`ServerResponse`和`switch`添加第三种情况。
 
-注意如何从`ServerResponse`中提取日升和日落时间并用得到的值用来和`switch`的情况作比较。
+注意日升和日落时间是如何从`ServerResponse`中提取到并与`switch`的`case`相匹配的。
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
