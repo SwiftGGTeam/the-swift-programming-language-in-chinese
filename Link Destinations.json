@@ -564,7 +564,8 @@
     "string-literals", 
     "control-transfer-statements", 
     "in-out-parameters", 
-    "error-handling"
+    "error-handling", 
+    "operator-methods"
   ], 
   "next_id": 550
 }
