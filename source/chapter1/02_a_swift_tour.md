@@ -615,7 +615,7 @@ case let .Failure(message):
 > 练习：
 > 给`ServerResponse`和`switch`添加第三种情况。
 
-注意如何从`ServerResponse`中提取日升和日落时间并用得到的值用来和`switch`的情况作比较。
+注意日升和日落时间是如何从`ServerResponse`中提取到并与`switch`的`case`相匹配的。
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
