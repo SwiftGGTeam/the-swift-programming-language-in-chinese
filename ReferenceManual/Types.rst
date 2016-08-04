@@ -584,7 +584,7 @@ For example, ``SomeClass.self`` returns ``SomeClass`` itself,
 not an instance of ``SomeClass``.
 And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
 not an instance of a type that conforms to ``SomeProtocol`` at runtime.
-You can use a ``dynamicType`` expression with an instance of a type
+You can use a ``type(of:)`` expression with an instance of a type
 to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
@@ -604,7 +604,7 @@ as the following example shows:
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
     -> // and the runtime type of someInstance is SomeSubClass
-    -> someInstance.dynamicType.printClassName()
+    -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
 Use the identity operators (``===``  and ``!==``) to test
@@ -612,7 +612,7 @@ whether an instance's runtime type is the same as its compile-time type.
 
 .. testcode:: metatype-type
 
-    -> if someInstance.dynamicType === someInstance.self {
+    -> if type(of: someInstance) === someInstance.self {
           print("The dynamic and static type of someInstance are the same")
        } else {
           print("The dynamic and static type of someInstance are different")

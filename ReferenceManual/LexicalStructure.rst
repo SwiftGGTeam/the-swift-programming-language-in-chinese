@@ -287,7 +287,6 @@ without being escaped with backticks.
   ``as``,
   ``Any``,
   ``catch``,
-  ``dynamicType``,
   ``false``,
   ``is``,
   ``nil``,
