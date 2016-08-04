@@ -526,7 +526,7 @@ You access the indices before and after a given index
 using the ``index(before:)`` and ``index(after:)`` methods of ``String``.
 To access an index farther away from the given index,
 you can use the ``index(_:offsetBy:)`` method
-instead of calling one these methods multiple times.
+instead of calling one of these methods multiple times.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
