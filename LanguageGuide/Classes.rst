@@ -290,7 +290,7 @@ The process of defining your own implementations
 of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
-.. _Classes_WorkingWithPointers
+.. _Classes_WorkingWithPointers:
 
 Working With Pointers
 ~~~~~~~~~~~~~~~~~~~~~
@@ -306,6 +306,8 @@ and does not require you to write an asterisk (``*``)
 to indicate that you are creating a reference.
 Instead, these references are defined
 like any other Swift constant or variable.
+
+.. TODO: Add a brief comment on why this protection is a good thing
 
 While pointers are handled for you in Swift,
 there are facilities to work with pointers.

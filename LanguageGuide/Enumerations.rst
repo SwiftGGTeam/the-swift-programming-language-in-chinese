@@ -523,3 +523,35 @@ It evaluates an addition or multiplication
 by evaluating the expression on the left hand side,
 evaluating the expression on the right hand side,
 and then adding them or multiplying them.
+
+.. _Enumerations_EnumerationsAreValueTypes:
+
+Enumerations Are Value Types
+----------------------------
+
+Like structures, all enumerations are value types,
+which means that their values are copied
+when assigned to a variable or constant,
+or when passed to a function.
+
+Here is an example that uses
+the ``CompassPoint`` enumeration
+from above to show that
+its values are copied (rather than referenced) on assignment:
+
+.. testcode:: enums
+
+   -> var currentDirection = CompassPoint.west
+   << // currentDirection : CompassPoint = REPL.CompassPoint.west
+   -> let rememberedDirection = currentDirection
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
+   -> currentDirection = .east
+   -> print("The remembered direction is still \(rememberedDirection)")
+   <- The remembered direction is still west
+
+When ``rememberedDirection`` is assigned
+the value of ``currentDirection``,
+it is actually set to a copy of that value.
+Changing the value of ``currentDirection`` thereafter
+does not affect the copy of the original value
+that was stored in ``rememberedDirection``.
