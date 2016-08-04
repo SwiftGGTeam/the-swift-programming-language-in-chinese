@@ -79,15 +79,15 @@ The ``fahrenheit`` property is explicitly defined as a ``Double``.
 
 .. _Structures_InitializerSyntax:
 
-Initializer Syntax
-------------------
+Initialization Syntax
+---------------------
 
 The ``Temperature`` structure definition describes only
 what a ``Temperature`` instance will look like.
 It does not describe a specific ``Temperature`` instance.
 To do that, you create an instance of the structure.
 
-The simplest form of initializer syntax for structures
+The simplest form of initialization syntax for structures
 uses the type name of the structure
 followed by empty parentheses:
 
@@ -125,7 +125,8 @@ Structure initialization is covered in more detail in :doc:`Initialization`.
 Accessing Properties
 --------------------
 
-You can access the properties of a structure instance
+You can access the properties
+of a structure instance
 using :newTerm:`dot syntax`.
 
 In dot syntax, you write the instance name
@@ -142,7 +143,9 @@ In this example, ``waterBoilingPoint.celsius``
 refers to the ``celsius`` property of ``waterBoilingPoint``
 and returns its value of ``100.0``.
 
-You can also use dot syntax to assign a new value to a variable property:
+You can also use dot syntax
+to assign a new value
+to a variable property:
 
 .. testcode:: structures
 

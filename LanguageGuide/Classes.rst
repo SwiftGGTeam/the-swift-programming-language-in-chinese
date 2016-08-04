@@ -3,11 +3,11 @@ Classes
 
 :newTerm:`Classes` in Swift provide much 
 of the same functionality as structures,
-albeit often at the expense 
-of the improved safety, readability and performance 
-that structures provide. 
+albeit often at the expense
+of the improved safety, readability and performance
+that structures provide.
 
-Like structures, Classes can: 
+Like structures, classes can:
 
 * Define properties to store values
 * Define methods to provide functionality
@@ -16,7 +16,11 @@ Like structures, Classes can:
 * Be extended to expand their functionality beyond a default implementation
 * Conform to protocols to [fill in]
 
-Classes have additional functionality that structures do not: 
+For more information, see
+:doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
+:doc:`Extensions`, and :doc:`Protocols`.
+
+Classes have additional functionality that structures do not:
 
 * Inheritance enables one class to inherit the characteristics of another.
 * Type casting enables you to check and interpret the type of a class instance at runtime.
@@ -29,6 +33,15 @@ For more information, see
 :doc:`Deinitialization`,
 and :doc:`AutomaticReferenceCounting`.
 
+.. note::
+
+   While structures do not inherit from one another
+   in the way that classes do,
+   you can achieve similar inheritance behavior with structures
+   by using protocols and protocol extensions.
+   For information on protocols and protocol extensions,
+   see :doc:`Protocols`.
+
 For an in-depth discussion
 of classes and structures and
 when to use which,
@@ -40,35 +53,189 @@ Definition Syntax
 -----------------
 
 You introduce a class with the ``class`` keyword and place its definition
-within a pair of braces: 
+within a pair of braces:
 
-.. testcode:: Classes
+.. testcode:: classes
     
     -> class someClass {
            // class definition goes here
-       }   
-
-Here is an example of a class definition: 
-
-.. testcode:: Classes
-
-    -> class ________ {
-           // to be filled in
        }
 
-[Explanation of Example]
+Here is an example of a class definition:
 
-.. _Classes_InitializerSyntax:
+.. testcode:: classes
 
-Initializer Syntax
-------------------
+    -> class Window {
+           var width = 0
+           var height = 0
+       }
+
+The example above defines a new class called ``Window`` 
+to describe a graphical window.
+This class has two variable stored properties
+called ``width`` and ``height``.
+These two properties are inferred to be of type ``Int``
+by setting them to an initial integer value of ``0``.
+
+.. _Classes_InitializationSyntax:
+
+Initialization Syntax
+---------------------
+
+The ``Window`` class describes only
+what a ``Window`` instance will look like.
+It does not describe a specific ``Window`` instance.
+To do that, you create an instance of the class.
+
+The simplest form of initialization syntax for classes
+uses the type name of the class
+followed by empty parentheses:
+
+.. testcode:: classes
+
+    -> let someWindow = Window()
+    << // someWindow : Window = REPL.Window
+    
+This creates a new instance of the ``Window`` class
+and initializes its properties to their default values.
+
+Class initialization is covered in more detail in :doc:`Initialization`
 
 .. _Classes_AccessingProperties:
 
 Accessing Properties
 --------------------
 
+You can access the properties
+of a class instance
+using dot syntax:
+
+.. testcode:: classes
+
+    -> print("The width of the window is \(someWindow.width)")
+    <- The width of the window is 0
+    -> print("The height of the window is \(someWindow.height)")
+    <- The height of the window is 0
+
+In this example,
+``someWindow.width`` and ``someWindow.height``
+refer to the ``width`` and ``height`` properties 
+of ``someWindow``,
+and return their default initial value of ``0``.
+
+You can use dot syntax
+to assign a new value
+to a variable property:
+
+.. testcode:: classes
+
+    -> someWindow.width = 1024
+    -> print("The width of the window is now \(someWindow.width)")
+    <- The width of the window is now 1024
+
+To show how you can use dot syntax
+to access sub-properties,
+consider the following addition
+to the ``Window`` class:
+
+.. testcode:: classesExpanded
+
+    -> struct Point {
+           var x = 0
+           var y = 0
+       }
+    -> class Window {
+           var origin = Point()
+           
+           var width = 0
+           var height = 0
+       }
+
+In order to store the window's origin,
+a structure called ``Point`` is created
+with the stored variable properties ``x`` and ``y``.
+The ``Window`` class is now initialized
+with a new ``origin`` property
+initialized to a ``Point`` structure instance.
+
+You can access sub-properties,
+such as the ``x`` and ``y`` properties
+in the ``origin`` property of a ``Window``:
+
+.. testcode:: classesExpanded
+
+    -> let newWindow = Window()
+    << // newWindow : Window = REPL.Window
+    -> print("The origin of newWindow is (\(newWindow.origin.x), \(newWindow.origin.y))")
+    <- The origin of newWindow is (0, 0)
+
+.. note::
+
+   Unlike Objective-C,
+   Swift enables you to set sub-properties
+   of a structure property directly.
+   In the last example above,
+   the ``width`` property of the ``resolution`` property
+   of ``someVideoMode`` is set directly,
+   without your needing to set
+   the entire ``resolution`` property to a new value.
+
 .. _Classes_ClassesAreReferenceTypes:
 
 Classes Are Reference Types
 ---------------------------
+
+A :newTerm:`reference type` is a type
+whose instance is referenced rather than copied
+when it is assigned
+to a variable or constant,
+or when it is passed
+to a function.
+
+Here is an example,
+using the ``newWindow`` instance
+of the ``Window`` class defined above:
+
+.. testcode:: classesExpanded
+
+    -> newWindow.width = 1024
+
+This example sets the ``width`` property
+of ``newWindow`` to ``1024``.
+
+Next, a new constant called ``alsoNewWindow`` is assigned ``newWindow``:
+
+.. testcode:: classesExpanded
+
+    -> let alsoNewWindow = newWindow
+    -> alsoNewWindow.width = 800
+
+Because classes are reference types,
+``newWindow`` and ``alsoNewWindow``
+actually both refer to the *same* ``Window`` instance.
+As a result, changing the width of ``alsoNewWindow``
+changes the width of ``newWindow``.
+``newWindow`` and ``alsoNewWindow`` are effectively
+two different names for the same single instance.
+
+Checking the ``width`` property of ``newWindow``
+confirms that it changed to `800`:
+
+.. testcode:: classesExpanded
+
+    -> print("The width of newWindow is now \(newWindow.width)")
+    <- The width of newWindow is now 800
+    
+Note that ``newWindow`` and ``alsoNewWindow``
+are declared as *constants*,
+rather than variables.
+However, you can still change
+the properties of ``newWindow`` and ``alsoNewWindow``
+such as ``newWindow.width`` and ``alsoNewWindow.width``.
+This is because the values
+of the ``newWindow`` and ``alsoNewWindow`` constants themselves
+do not "store" the ``Window`` instance ---
+they both *refer* to a ``Window`` instance.
+It is the ``width`` property
+of the underlying ``Window`` that is changed ---
+not the values of the constant references to that ``Window``.
