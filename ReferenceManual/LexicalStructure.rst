@@ -738,7 +738,7 @@ combining Unicode characters are also allowed.
 
 You can also define custom operators
 that begin with a dot (``.``).
-These operators are can contain additional dots
+These operators can contain additional dots
 such as ``.+.``.
 If an operator doesn't begin with a dot,
 it can't contain a dot elsewhere.
