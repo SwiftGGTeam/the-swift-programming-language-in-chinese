@@ -1150,7 +1150,7 @@ The following ``if`` statements are equivalent:
    are available only within the body of the ``if`` statement.
    In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
-   as described in :ref:`ControlFlow_Guard`,
+   as described in :ref:`ControlFlow_Guard`.
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
