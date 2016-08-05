@@ -524,6 +524,20 @@ The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
+A type alias declaration can use generic parameters
+to give a name to an existing type.
+For example:
+
+.. testcode:: typealias-with-generic
+
+   -> typealias StringDictionary<T> = Dictionary<String, T>
+   ---
+   // The following dictionaries have the same type.
+   -> var dictionary1: StringDictionary<Int> = [:]
+   -> var dictionary2: Dictionary<String, Int> = [:]
+   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary2 : Dictionary<String, Int> = [:]
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
@@ -535,7 +549,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name generic-parameter-clause-OPT typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -573,9 +587,7 @@ the return type can be omitted as follows:
 
 The type of each parameter must be included ---
 it can't be inferred.
-Although the parameters to a function are constants by default,
-you can write ``let`` in front of a parameter's name to emphasize this behavior.
-If you write ``inout`` in front of a parameter's name,
+If you write ``inout`` in front of a parameter's type,
 the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
@@ -605,45 +617,44 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-A parameter has a local name,
+A parameter has a name,
 which is used within the function body,
-as well as an external name,
-which is used as a label for the argument when calling the method.
-By default, the external name of the first parameter is omitted,
-and the second and subsequent parameters
-use their local names as external names.
+as well as an argument label,
+which is used when calling the function or method.
+By default,
+parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(1, y: 2) // y is labeled, x is not
+   -> f(x: 1, y: 2) // both x and y are labeled
    << // r0 : Int = 3
 
-You can override the default behavior
-for how parameter names are used
+You can override the default behavior for argument labels
 with one of the following forms:
 
 .. syntax-outline::
 
-    <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    _ <#local parameter name#>: <#parameter type#>
+    <#argument label#> <#parameter name#>: <#parameter type#>
+    _ <#parameter name#>: <#parameter type#>
 
-A name before the local parameter name
-gives the parameter an external name,
-which can be different from the local parameter name.
-The external parameter name must be used when the function is called.
-The corresponding argument must have the external name in function or method calls.
+A name before the parameter name
+gives the parameter an explicit argument label,
+which can be different from the parameter name.
+The corresponding argument must use the given argument label
+in function or method calls.
 
-An underscore (``_``) before a local parameter name
-gives that parameter no name to be used in function calls.
-The corresponding argument must have no name in function or method calls.
+An underscore (``_``) before a parameter name
+suppresses the argument label.
+The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
-   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
-   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
-   << // r0 : Int = 6
+   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. _Declarations_InOutParameters:
 
@@ -703,48 +714,70 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(inout a: Int, inout _ b: Int) {
+   -> func f(a: inout Int, b: inout Int) {
           a += 1
           b += 10
       }
-   -> f(&x, &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!       ^~
-   !! <REPL Input>:1:3: note: previous aliasing argument
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!   ^~
+   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!             ^~
+   !! <REPL Input>:1:6: note: previous aliasing argument
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!      ^~
 
-There is no copy-out at the end of closures or nested functions.
-This means if a closure is called after the function returns,
-any changes that closure makes to the in-out parameters
-do not get copied back to the original.
-For example:
+A closure or nested function
+that captures an in-out parameter must be nonescaping.
+If you need to capture an in-out parameter
+without mutating it or to observe changes made by other code,
+use a capture list to explicitly capture the parameter immutably.
 
-.. testcode:: closure-doesnt-copy-out-inout
+.. testcode:: explicit-capture-for-inout
 
-    -> func outer(inout a: Int) -> () -> Void {
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a + 1 }
+       }
+
+If you need to capture and mutate an in-out parameter,
+use an explicit local copy,
+such as in multithreaded code that ensures
+all mutation has finished before the function returns.
+
+.. testcode:: cant-pass-inout-aliasing
+
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) { }
+    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }  
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+.. assertion:: escaping-cant-capture-inout
+
+    -> func outer(a: inout Int) -> () -> Void {
            func inner() {
                a += 1
            }
            return inner
        }
-    ---
-    -> var x = 10
-    << // x : Int = 10
-    -> let f = outer(&x)
-    << // f : () -> Void = (Function)
-    -> f()
-    -> print(x)
-    <- 10
+    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
+    !!            return inner
+    !!            ^
+    -> func closure(a: inout Int) -> () -> Void {
+           return { a += 1 }
+       }
+    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
+    !!              return { a += 1 }
+    !!                       ^
 
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer()`` returns.
-To change the value of ``x``,
-``inner()`` would need to be called before ``outer()`` returned.
-
-For more discussion and examples of in-out parameters,
-see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
@@ -782,15 +815,15 @@ the default value is used instead.
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()  // Valid, uses default value
-   -> f(7) // Valid, value provided without its name
-   -> f(x: 7) // Invalid, name and value provided
+   -> f()       // Valid, uses default value
+   -> f(x: 7)   // Valid, uses the value provided
+   -> f(7)      // Invalid, missing argument label
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
-   !! f(x: 7) // Invalid, name and value provided
-   !! ^~~~
-   !!-
+   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !! f(7)      // Invalid, missing argument label
+   !!   ^
+   !!   x:
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -799,7 +832,7 @@ the default value is used instead.
           return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(100)
+    -> foo(x: 100)
     << x is 100
     -> foo()
     << evaluated
@@ -857,7 +890,7 @@ you can overload a function based on whether a function *parameter* can throw an
 A throwing method can't override a nonthrowing method,
 and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
 That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing.
+and a nonthrowing method can satisfy a protocol requirement for a throwing method.
 
 .. _Declarations_RethrowingFunctionsAndMethods:
 
@@ -873,9 +906,58 @@ must have at least one throwing function parameter.
 
 .. testcode:: rethrows
 
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
       }
+
+A rethrowing function or method can contain a ``throw`` statement
+only inside a ``catch`` clause.
+This lets you call the throwing function inside a ``do``-``catch`` block
+and handle errors in the ``catch`` clause by throwing a different error.
+In addition,
+the ``catch`` clause must handle
+only errors thrown by one of the rethrowing function's
+throwing parameters.
+For example, the following is invalid
+because the ``catch`` clause would handle
+the error thrown by ``alwaysThrows()``.
+
+.. testcode:: double-negative-rethrows
+
+   >> enum SomeError: Error { case error }
+   >> enum AnotherError: Error { case error }
+   -> func alwaysThrows() throws {
+          throw SomeError.error
+      }
+   -> func someFunction(callback: () throws -> Void) rethrows {
+         do {
+            try callback()
+            try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+         } catch {
+            throw AnotherError.error
+         }
+      }
+
+   !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
+   !!               throw AnotherError.error
+   !!               ^
+
+.. assertion:: throwing-in-rethrowing-function
+
+   -> enum SomeError: Error { case C, D }
+   -> func f1(callback: () throws -> Void) rethrows {
+          do {
+              try callback()
+          } catch {
+              throw SomeError.C  // OK
+          }
+      }
+   -> func f2(callback: () throws -> Void) rethrows {
+          throw SomeError.D  // ERROR
+      }
+   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.D  // ERROR
+   !! ^
 
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
@@ -898,11 +980,11 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-    parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
-    external-parameter-name --> identifier | ``_``
-    local-parameter-name --> identifier | ``_``
+    external-parameter-name --> identifier
+    local-parameter-name --> identifier
     default-argument-clause --> ``=`` expression
 
 
@@ -981,16 +1063,16 @@ you can get a reference to an enumeration case and apply it later in your code.
 .. testcode:: enum-case-as-function
 
     -> enum Number {
-          case Integer(Int)
-          case Real(Double)
+          case integer(Int)
+          case real(Double)
        }
-    -> let f = Number.Integer
+    -> let f = Number.integer
     << // f : (Int) -> Number = (Function)
     -> // f is a function of type (Int) -> Number
     ---
     -> // Apply f to create an array of Number instances with integer values
     -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
+    << // evenInts : [Number] = [REPL.Number.integer(0), REPL.Number.integer(2), REPL.Number.integer(4), REPL.Number.integer(6)]
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
@@ -1019,15 +1101,15 @@ mark it with the ``indirect`` declaration modifier.
 .. testcode:: indirect-enum
 
    -> enum Tree<T> {
-         case Empty
-         indirect case Node(value: T, left: Tree, right: Tree)
+         case empty
+         indirect case node(value: T, left: Tree, right: Tree)
       }
-   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
-   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
-   >> let t = Tree.Node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+   >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
+   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
+   >> let t = Tree.node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(50, REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty), REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
@@ -1047,22 +1129,22 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
 
 .. assertion indirect-in-indirect
 
-   -> indirect enum E { indirect case C(E) }
+   -> indirect enum E { indirect case c(E) }
    !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
-   !! indirect enum E { indirect case C(E) }
+   !! indirect enum E { indirect case c(E) }
    !!                   ^
 
 .. assertion indirect-without-recursion
 
-   -> enum E { indirect case C }
-   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
-   !! enum E { indirect case C }
+   -> enum E { indirect case c }
+   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
+   !! enum E { indirect case c }
    !!          ^
    ---
-   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
-   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
    ---
-   -> indirect enum E3 { case X }
+   -> indirect enum E3 { case x }
 
 
 .. _Declarations_EnumerationsWithRawCaseValues:
@@ -1087,13 +1169,17 @@ value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw-value type* and must represent an
 integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
-and one of the following literal-convertible protocols:
-``IntegerLiteralConvertible`` for integer literals,
-``FloatingPointLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals that contain any number of characters, and
-``ExtendedGraphemeClusterLiteralConvertible`` for string literals
+and one of the following protocols:
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals that contain any number of characters,
+and ``ExpressibleByUnicodeScalarLiteral``
+or ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
+
+.. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
+.. This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
@@ -1104,12 +1190,12 @@ that is automatically incremented from the raw value of the previous case.
 .. testcode:: raw-value-enum
 
     -> enum ExampleEnum: Int {
-          case A, B, C = 5, D
+          case a, b, c = 5, d
        }
 
-In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value of
-``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
-explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
+In the above example, the raw value of ``ExampleEnum.a`` is ``0`` and the value of
+``ExampleEnum.b`` is ``1``. And because the value of ``ExampleEnum.c`` is
+explicitly set to ``5``, the value of ``ExampleEnum.d`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
 If the raw-value type is specified as ``String``
@@ -1118,12 +1204,13 @@ each unassigned case is implicitly assigned a string with the same text as the n
 
 .. testcode:: raw-value-enum-implicit-string-values
 
-    -> enum WeekendDay: String {
-          case Saturday, Sunday
+    -> enum GamePlayMode: String {
+          case cooperative, individual, competitive
        }
 
-In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
-and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
+In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
+the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
+and the raw value of ``GamePlayMode.competitive`` is ``"competitive"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
@@ -1141,7 +1228,7 @@ Accessing Enumeration Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
+as in ``EnumerationType.enumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_ImplicitMemberExpression`.
@@ -1153,9 +1240,9 @@ in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
 .. FIXME: Or use if-case:
-   enum E { case C(Int) }
-   let e = E.C(100)
-   if case E.C(let i) = e { print(i) }
+   enum E { case c(Int) }
+   let e = E.c(100)
+   if case E.c(let i) = e { print(i) }
    // prints 100
 
 
@@ -1440,7 +1527,9 @@ By default, types that conform to a protocol must implement all
 properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` declaration modifier
 to specify that their implementation by a conforming type is optional.
-The ``optional`` modifier can be applied only to protocols that are marked
+The ``optional`` modifier can be applied
+only to members that are marked with the ``objc`` attribute,
+and only to members of protocols that are marked
 with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` declaration modifier
@@ -1840,14 +1929,14 @@ failable initializer that produces an optional instance of a structure.
 .. testcode:: failable
 
     -> struct SomeStruct {
-           let string: String
+           let property: String
            // produces an optional instance of 'SomeStruct'
            init?(input: String) {
                if input.isEmpty {
                    // discard 'self' and return 'nil'
                    return nil
                }
-               string = input
+               property = input
            }
        }
 
@@ -2006,7 +2095,7 @@ to ensure members of that type are properly initialized.
    << // x : [Int] = [1, 2, 3]
    >> let y = [10, 20, 30]
    << // y : [Int] = [10, 20, 30]
-   >> x.f(y)
+   >> x.f(x: y)
    << // r0 : Int = 7
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance
@@ -2081,6 +2170,11 @@ You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
+
+By default, the parameters used in subscripting don't have argument labels,
+unlike functions, methods, and initializers.
+However, you can provide explicit argument labels
+using the same syntax that functions, methods, and initializers use.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
@@ -2184,8 +2278,6 @@ such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
 
-.. TR: Do all prefix operators default to the same precedence level? If so, what is it?
-
 The following form declares a new postfix operator:
 
 .. syntax-outline::
@@ -2199,12 +2291,16 @@ As with prefix operators, postfix operator declarations don't specify a preceden
 Postfix operators are nonassociative.
 
 After declaring a new operator,
-you implement it by declaring a function that has the same name as the operator.
+you implement it by declaring a static method that has the same name as the operator.
+The static method is a member of
+one of the types whose values the operator takes as an argument ---
+for example, an operator that multiplies a ``Double`` by an ``Int``
+is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
-you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
 If you're implementing an infix operator,
-you don't mark that function declaration with the ``infix`` declaration modifier.
+you don't mark that method declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -2254,11 +2350,8 @@ that introduces the declaration.
     or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
     to indicate that a class member can't be overridden in any subclass.
-
-.. TODO: Dave may or may not include an example of how to use the 'final' attribute
-    in the guide. If he does, include the following sentence:
     For an example of how to use the ``final`` attribute,
-    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+    see :ref:`Inheritance_PreventingOverrides`.
 
 ``lazy``
     Apply this modifier to a stored variable property of a class or structure

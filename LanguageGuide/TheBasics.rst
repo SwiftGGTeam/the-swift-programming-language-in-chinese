@@ -1,7 +1,7 @@
 The Basics
 ==========
 
-Swift is a new programming language for iOS, OS X, watchOS, and tvOS app development.
+Swift is a new programming language for iOS, macOS, watchOS, and tvOS app development.
 Nonetheless, many parts of Swift will be familiar
 from your experience of developing in C and Objective-C.
 
@@ -185,7 +185,7 @@ or a variable into a constant.
 .. note::
 
    If you need to give a constant or variable the same name as a reserved Swift keyword,
-   surround the keyword with back ticks (`````) when using it as a name.
+   surround the keyword with backticks (`````) when using it as a name.
    However, avoid using keywords as names unless you have absolutely no choice.
 
 You can change the value of an existing variable to another value of a compatible type.
@@ -208,7 +208,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error - languageName cannot be changed
+   // This is a compile-time error: languageName cannot be changed.
    !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -287,7 +287,7 @@ Single-line comments begin with two forward-slashes (``//``):
 .. testcode:: comments
    :compile: true
 
-   -> // this is a comment
+   -> // This is a comment.
 
 Multiline comments start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
@@ -295,8 +295,10 @@ and end with an asterisk followed by a forward-slash (``*/``):
 .. testcode:: comments
    :compile: true
 
-   -> /* this is also a comment,
-      but written over multiple lines */
+   -> /* This is also a comment
+      but is written over multiple lines. */
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Unlike multiline comments in C,
 multiline comments in Swift can be nested inside other multiline comments.
@@ -307,9 +309,11 @@ The second block is then closed, followed by the first block:
 .. testcode:: comments
    :compile: true
 
-   -> /* this is the start of the first multiline comment
-         /* this is the second, nested multiline comment */
-      this is the end of the first multiline comment */
+   -> /* This is the start of the first multiline comment.
+         /* This is the second, nested multiline comment. */
+      This is the end of the first multiline comment. */
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Nested multiline comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multiline comments.
@@ -707,11 +711,6 @@ An integer type can be initialized with a ``Double`` or ``Float`` value:
 Floating-point values are always truncated when used to initialize a new integer value in this way.
 This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
-.. FIXME: negative floating-point numbers cause an overflow when used
-   to initialize an unsigned integer type.
-   This has been filed as rdar://problem/16206455,
-   and this section may need updating based on the outcome of that Radar.
-
 .. note::
 
    The rules for combining numeric constants and variables are different from
@@ -799,20 +798,20 @@ Conditional statements such as the ``if`` statement are covered in more detail i
 Swift's type safety prevents non-Boolean values from being substituted for ``Bool``.
 The following example reports a compile-time error:
 
-.. testcode:: booleansNotBooleanType
+.. testcode:: booleansNotBoolean
 
    -> let i = 1
    << // i : Int = 1
    -> if i {
          // this example will not compile, and will report an error
       }
-   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'BooleanType'
+   !! <REPL Input>:1:4: error: 'Int' is not convertible to 'Bool'
    !! if i {
    !!   ^
 
 However, the alternative example below is valid:
 
-.. testcode:: booleansIsBooleanType
+.. testcode:: booleansIsBoolean
 
    -> let i = 1
    << // i : Int = 1
@@ -827,14 +826,6 @@ Comparisons like ``i == 1`` are discussed in :doc:`BasicOperators`.
 As with other examples of type safety in Swift,
 this approach avoids accidental errors
 and ensures that the intention of a particular section of code is always clear.
-
-.. TODO: add a note to this effect once we have some documentation
-   that actually describes how BooleanType works:
-   Strictly speaking, an ``if`` statement's condition expression
-   can be of any type that conforms to the ``BooleanType`` protocol.
-   ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as optionals, described below.
-   The ``BooleanType`` protocol is described in <link>.
 
 .. _TheBasics_Tuples:
 
@@ -940,13 +931,9 @@ Optionals
 ---------
 
 You use :newTerm:`optionals` in situations where a value may be absent.
-An optional says:
-
-* There *is* a value, and it equals *x*
-
-*or*
-
-* There *isn't* a value at all
+An optional represents two possibilities:
+Either there *is* a value, and you can unwrap the optional to access that value,
+or there *isn't* a value at all.
 
 .. note::
 
@@ -1078,10 +1065,10 @@ Optional Binding
 ~~~~~~~~~~~~~~~~
 
 You use :newTerm:`optional binding` to find out whether an optional contains a value,
-and if so, to make that value available as a temporary constant.
+and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with ``if`` and ``while`` statements
 to check for a value inside an optional,
-and to extract that value into a constant,
+and to extract that value into a constant or variable,
 as part of a single action.
 ``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -1118,26 +1105,52 @@ It has already been initialized with the value contained *within* the optional,
 and so there is no need to use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
-You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition.
+You can use both constants and variables with optional binding.
+If you wanted to manipulate the value of ``actualNumber``
+within the first branch of the ``if`` statement,
+you could write ``if var actualNumber`` instead,
+and the value contained within the optional
+would be made available as a variable rather than a constant.
+
+You can include as many optional bindings and Boolean conditions
+in a single ``if`` statement as you need to,
+separated by commas.
 If any of the values in the optional bindings are ``nil``
-or the ``where`` clause evaluates to ``false``,
-the whole optional binding is considered unsuccessful.
+or any Boolean condition evaluates to ``false``,
+the whole ``if`` statement's condition
+is considered to be ``false``.
+The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
-         print("\(firstNumber) < \(secondNumber)")
-      } 
-   <- 4 < 42
+   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+         print("\(firstNumber) < \(secondNumber) < 100")
+      }
+   <- 4 < 42 < 100
+   ---
+   -> if let firstNumber = Int("4") {
+          if let secondNumber = Int("42") {
+              if firstNumber < secondNumber && secondNumber < 100 {
+                  print("\(firstNumber) < \(secondNumber) < 100")
+              }
+          }
+      }
+   <- 4 < 42 < 100
+
+.. The example above uses multiple optional bindings
+   to show that you can have more than one
+   and to show the short-circuiting behavior.
+   It has multiple Boolean conditions
+   to show that you should join logically related conditions
+   using the && operator instead of a comma.
 
 .. note::
 
-   Constants created with optional binding in an ``if`` statement.
+   Constants and variables created with optional binding in an ``if`` statement
    are available only within the body of the ``if`` statement.
-   In contrast, the constants created with a ``guard`` statement
+   In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
-   as described in :ref:`ControlFlow_Guard`,
+   as described in :ref:`ControlFlow_Guard`.
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
@@ -1181,7 +1194,7 @@ when accessing their wrapped value as an explicit ``String``:
    << // forcedString : String = "An optional string."
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = An implicitly unwrapped optional string.
+   << // assumedString : String! = Optional("An implicitly unwrapped optional string.")
    -> let implicitString: String = assumedString // no need for an exclamation mark
    << // implicitString : String = "An implicitly unwrapped optional string."
 
@@ -1243,15 +1256,15 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 
 .. testcode:: errorHandling
 
-   >> enum Error: ErrorType {
-   >>    case SomeError
+   >> enum SimpleError: Error {
+   >>    case someError
    >> }
    >> let condition = true
    << // condition : Bool = true
    -> func canThrowAnError() throws {
          // this function may or may not throw an error
    >>    if condition {
-   >>       throw Error.SomeError
+   >>       throw SimpleError.someError
    >>    }
       }
 
@@ -1283,9 +1296,9 @@ to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
 
-   >> enum Error: ErrorType {
-   >>     case OutOfCleanDishes
-   >>     case MissingIngredients([String])
+   >> enum SandwichError: Error {
+   >>     case outOfCleanDishes
+   >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
    >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
@@ -1297,9 +1310,9 @@ to respond to different error conditions:
    -> do {
           try makeASandwich()
           eatASandwich()
-      } catch Error.OutOfCleanDishes {
+      } catch SandwichError.outOfCleanDishes {
           washDishes()
-      } catch Error.MissingIngredients(let ingredients) {
+      } catch SandwichError.missingIngredients(let ingredients) {
           buyGroceries(ingredients)
       }
 
@@ -1313,9 +1326,9 @@ any errors that are thrown will be propagated
 to the provided ``catch`` clauses.
 
 If no error is thrown, the ``eatASandwich()`` function is called.
-If an error is thrown and it matches the ``Error.OutOfCleanDishes`` case,
+If an error is thrown and it matches the ``SandwichError.outOfCleanDishes`` case,
 then the ``washDishes()`` function will be called.
-If an error is thrown and it matches the ``Error.MissingIngredients`` case,
+If an error is thrown and it matches the ``SandwichError.missingIngredients`` case,
 then the ``buyGroceries(_:)`` function is called
 with the associated ``[String]`` value captured by the ``catch`` pattern.
 

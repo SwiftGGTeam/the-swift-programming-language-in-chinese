@@ -522,14 +522,11 @@ As a result,
 the ``endIndex`` property isn't a valid argument to a string's subscript.
 If a ``String`` is empty, ``startIndex`` and ``endIndex`` are equal.
 
-A ``String.Index`` value can access
-its immediately preceding index by calling the ``predecessor()`` method,
-and its immediately succeeding index by calling the ``successor()`` method.
-Any index in a ``String`` can be accessed from any other index
-by chaining these methods together,
-or by using the ``advancedBy(_:)`` method.
-Attempting to access an index outside of a string's range
-will trigger a runtime error.
+You access the indices before and after a given index
+using the ``index(before:)`` and ``index(after:)`` methods of ``String``.
+To access an index farther away from the given index,
+you can use the ``index(_:offsetBy:)`` method
+instead of calling one of these methods multiple times.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
@@ -541,35 +538,36 @@ the ``Character`` at a particular ``String`` index.
    -> greeting[greeting.startIndex]
    <$ : Character = "G"
    // G
-   -> greeting[greeting.endIndex.predecessor()]
+   -> greeting[greeting.index(before: greeting.endIndex)]
    <$ : Character = "!"
    // !
-   -> greeting[greeting.startIndex.successor()]
+   -> greeting[greeting.index(after: greeting.startIndex)]
    <$ : Character = "u"
    // u
-   -> let index = greeting.startIndex.advancedBy(7)
-   << // index : Index = 7
+   -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
+   <~ // index : Index = Swift.String.CharacterView.Index
    -> greeting[index]
    <$ : Character = "a"
    // a
 
-Attempting to access a ``Character`` at an index outside of a string's range
+Attempting to access an index outside of a string's range
+or a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
 .. code-block:: swift
 
    greeting[greeting.endIndex] // error
-   greeting.endIndex.successor() // error
+   greeting.index(after: endIndex) // error
 
-.. assertion:: emptyStringIndexes
+.. assertion:: emptyStringIndices
 
    -> let emptyString = ""
    << // emptyString : String = ""
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property to create a ``Range`` of all of the
-indexes used to access individual characters in a string.
+Use the ``indices`` property of the ``characters`` property to access all of the
+indices of individual characters in a string.
 
 .. testcode:: stringIndex
 
@@ -578,63 +576,67 @@ indexes used to access individual characters in a string.
       }
    >> print("")
    << G u t e n   T a g ! 
-   // prints "G u t e n   T a g ! "
+   // Prints "G u t e n   T a g ! "
 
-.. Guten Tag! above has a space after it,
-   but the test harness is losing the whitespace
-   somewhere in [Tool J] Hands or Sphinx.
-   The test still passes, even though the space at the end of the line
-   is present in the REPL output but lost in the expectation,
-   but the manual comment line ensures that the space is present
-   in the [Tool S] XML output.
+.. Workaround for rdar://26016325
+
+.. note::
+
+   You can use the ``startIndex`` and ``endIndex`` properties
+   and the ``index(before:)``, ``index(after:)``, and ``index(_:offsetBy:)`` methods
+   on any type that conforms to the ``Indexable`` protocol.
+   This includes ``String``, as shown here,
+   as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
 .. _StringsAndCharacters_InsertingAndRemoving:
 
 Inserting and Removing
 ~~~~~~~~~~~~~~~~~~~~~~
 
-To insert a character into a string at a specified index,
-use the ``insert(_:atIndex:)`` method.
+To insert a single character into a string at a specified index,
+use the ``insert(_:at:)`` method,
+and to insert the contents of another string at a specified index,
+use the ``insert(contentsOf:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
 
    -> var welcome = "hello"
    << // welcome : String = "hello"
-   -> welcome.insert("!", atIndex: welcome.endIndex)
+   -> welcome.insert("!", at: welcome.endIndex)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
-
-To insert the contents of another string at a specified index,
-use the ``insertContentsOf(_:at:)`` method.
-
-.. testcode:: stringInsertionAndRemoval
-
-   -> welcome.insertContentsOf(" there".characters, at: welcome.endIndex.predecessor())
+   ---
+   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
-To remove a character from a string at a specified index,
-use the ``removeAtIndex(_:)`` method.
+To remove a single character from a string at a specified index,
+use the ``remove(at:)`` method,
+and to remove a substring at a specified range,
+use the ``removeSubrange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
 
-   -> welcome.removeAtIndex(welcome.endIndex.predecessor())
+   -> welcome.remove(at: welcome.index(before: welcome.endIndex))
    << // r0 : Character = "!"
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there"
-
-To remove a substring at a specified range,
-use the ``removeRange(_:)`` method:
-
-.. testcode:: stringInsertionAndRemoval
-
-   -> let range = welcome.endIndex.advancedBy(-6)..<welcome.endIndex
-   << // range : Range<Index> = Range(5..<11)
-   -> welcome.removeRange(range)
+   ---
+   -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
+   <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
+   -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
+
+.. note::
+
+   You can use the the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
+   ``remove(at:)``, and ``removeSubrange(_:)`` methods
+   on any type that conforms to the ``RangeReplaceableIndexable`` protocol.
+   This includes ``String``, as shown here,
+   as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -733,13 +735,17 @@ but do not have the same linguistic meaning:
    << // cyrillicCapitalLetterA : Character = "А"
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent")
+         print("These two characters are not equivalent.")
       }
-   <- These two characters are not equivalent
+   <- These two characters are not equivalent.
 
 .. note::
 
    String and character comparisons in Swift are not locale-sensitive.
+
+.. TODO: Add a cross reference to NSString.localizedCompare and
+   NSString.localizedCaseInsensitiveCompare.  See also
+   https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
 
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
@@ -755,34 +761,34 @@ both of which take a single argument of type ``String`` and return a Boolean val
    -> let ecole = "\u{E9}cole"
    << // ecole : String = "école"
    -> if ecole.hasPrefix("\u{E9}") {
-         print("has U+00E9 prefix, as expected")
+         print("Has U+00E9 prefix, as expected.")
       } else {
-         print("does not have U+00E9 prefix, which is unexpected")
+         print("Does not have U+00E9 prefix, which is unexpected.")
       }
-   <- has U+00E9 prefix, as expected
+   <- Has U+00E9 prefix, as expected.
    -> if ecole.hasPrefix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 prefix, as expected")
+         print("Has U+0065 U+0301 prefix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 prefix, which is unexpected")
+         print("Does not have U+0065 U+0301 prefix, which is unexpected.")
       }
-   <- has U+0065 U+0301 prefix, as expected
+   <- Has U+0065 U+0301 prefix, as expected.
 
 .. assertion:: suffixComparisonUsesCharactersNotScalars
 
    -> let cafe = "caf\u{E9}"
    << // cafe : String = "café"
    -> if cafe.hasSuffix("\u{E9}") {
-         print("has U+00E9 suffix, as expected")
+         print("Has U+00E9 suffix, as expected.")
       } else {
-         print("does not have U+00E9 suffix, which is unexpected")
+         print("Does not have U+00E9 suffix, which is unexpected.")
       }
-   <- has U+00E9 suffix, as expected
+   <- Has U+00E9 suffix, as expected.
    -> if cafe.hasSuffix("\u{65}\u{301}") {
-         print("has U+0065 U+0301 suffix, as expected")
+         print("Has U+0065 U+0301 suffix, as expected.")
       } else {
-         print("does not have U+0065 U+0301 suffix, which is unexpected")
+         print("Does not have U+0065 U+0301 suffix, which is unexpected.")
       }
-   <- has U+0065 U+0301 suffix, as expected
+   <- Has U+0065 U+0301 suffix, as expected.
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
@@ -939,7 +945,10 @@ one for each 16-bit code unit in the string's UTF-16 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 55357 56374
+   << 68 111 103 8252 55357 56374
+   // Prints "68 111 103 8252 55357 56374 "
+
+.. Workaround for rdar://26016325
 
 Again, the first three ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -980,7 +989,10 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
          print("\(scalar.value) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 8252 128054
+   << 68 111 103 8252 128054
+   // Prints "68 111 103 8252 128054 "
+
+.. Workaround for rdar://26016325
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
 (``68``, ``111``, ``103``)

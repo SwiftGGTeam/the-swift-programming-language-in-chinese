@@ -240,7 +240,7 @@ whenever a ``Song`` is found in the library.
 Type Casting for Any and AnyObject
 ----------------------------------
 
-Swift provides two special type aliases for working with non-specific types:
+Swift provides two special types for working with non-specific types:
 
 * ``AnyObject`` can represent an instance of any class type.
 * ``Any`` can represent an instance of any type at all, including function types.
@@ -365,7 +365,7 @@ a constant of the specified type to enable its value to be printed:
                print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
                print("a movie called \(movie.name), dir. \(movie.director)")
-            case let stringConverter as String -> String:
+            case let stringConverter as (String) -> String:
                print(stringConverter("Michael"))
             default:
                print("something else")

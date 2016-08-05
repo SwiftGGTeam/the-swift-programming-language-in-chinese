@@ -118,10 +118,13 @@ the identifier pattern is implicitly a subpattern of a value-binding pattern.
 Value-Binding Pattern
 ---------------------
 
-A :newTerm:`value-binding pattern` binds matched values to constant names.
+A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
+Value-binding patterns that bind a matched value to the name of a constant
+begin with the ``let`` keyword; those that bind to the name of variable
+begin with the ``var`` keyword.
 
 Identifiers patterns within a value-binding pattern
-bind new named constants to their matching values. For example,
+bind new named variables or constants to their matching values. For example,
 you can decompose the elements of a tuple and bind the value of each element to a
 corresponding identifier pattern.
 
@@ -149,11 +152,11 @@ tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
 
     Grammar of a value-binding pattern
 
-    value-binding-pattern --> ``let`` pattern
+    value-binding-pattern --> ``var`` pattern | ``let`` pattern
 
 .. NOTE: We chose to call this "value-binding pattern"
     instead of "variable pattern",
-    because it's a pattern that binds values to constants,
+    because it's a pattern that binds values to either variables or constants,
     not a pattern that varies.
     "Variable pattern" is ambiguous between those two meanings.
 
@@ -270,13 +273,13 @@ see :ref:`Enumerations_AssociatedValues`.
 Optional Pattern
 ----------------
 
-An :newTerm:`optional pattern` matches values wrapped in a ``Some(Wrapped)`` case
-of an ``Optional<Wrapped>`` or ``ImplicitlyUnwrappedOptional<Wrapped>`` enumeration.
+An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
+of an ``Optional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
-and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+enumeration case patterns,
 the following are equivalent:
 
 .. testcode:: optional-pattern
@@ -284,7 +287,7 @@ the following are equivalent:
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
    -> // Match using an enumeration case pattern
-   -> if case .Some(let x) = someOptional {
+   -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42
@@ -376,8 +379,10 @@ is compared with the value of an input expression
 using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
-two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in a ``Range`` object, as the following example shows:
+two values of the same type using the ``==`` operator.
+It can also match a value with a range of values,
+by checking whether the value is contained within the range,
+as the following example shows.
 
 .. testcode:: expression-pattern
 

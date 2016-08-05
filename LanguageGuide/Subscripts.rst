@@ -117,7 +117,7 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -149,8 +149,8 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
-Subscripts can use variable parameters and variadic parameters,
-but cannot use in-out parameters or provide default parameter values. 
+Subscripts can use variadic parameters,
+but they can't use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -173,18 +173,18 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            grid = Array(count: rows * columns, repeatedValue: 0.0)
+            grid = Array(repeating: 0.0, count: rows * columns)
          }
-         func indexIsValidForRow(row: Int, column: Int) -> Bool {
+         func indexIsValid(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double {
             get {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                return grid[(row * columns) + column]
             }
             set {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                grid[(row * columns) + column] = newValue
             }
          }
@@ -238,7 +238,7 @@ and ``3.2`` in the bottom left position
 The ``Matrix`` subscript's getter and setter both contain an assertion
 to check that the subscript's  ``row`` and ``column`` values are valid.
 To assist with these assertions,
-``Matrix`` includes a convenience method called ``indexIsValidForRow(_:column:)``,
+``Matrix`` includes a convenience method called ``indexIsValid(row:column:)``,
 which checks whether the requested ``row`` and ``column``
 are inside the bounds of the matrix:
 
@@ -260,7 +260,3 @@ that is outside of the matrix bounds:
    -> let someValue = matrix[2, 2]
    xx assert
    // this triggers an assert, because [2, 2] is outside of the matrix bounds
-
-.. TODO: subscripts can provide external names for their parameters,
-   to enable subscript overloading (e.g. subscript(row: Int) and subscript(column: Int)
-   to get a slice of the matrix). This would make a great example!

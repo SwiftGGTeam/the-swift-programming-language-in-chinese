@@ -52,11 +52,11 @@ for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
 .. testcode:: generic-params
 
-    -> func simpleMax<T: Comparable>(x: T, _ y: T) -> T {
+    -> func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
           if x < y {
              return y
           }
-             return x
+          return x
        }
 
 Because ``Int`` and ``Double``, for example, both conform to the ``Comparable`` protocol,
@@ -95,16 +95,16 @@ a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`
 
 As mentioned above,
 you can constrain the associated types of type parameters to conform to protocols.
-For example, the generic parameter clause ``<S: SequenceType where S.Generator.Element: Equatable>``
-specifies that ``S`` conforms to the ``SequenceType`` protocol
-and that the associated type ``S.Generator.Element``
+For example, the generic parameter clause ``<S: Sequence where S.Iterator.Element: Equatable>``
+specifies that ``S`` conforms to the ``Sequence`` protocol
+and that the associated type ``S.Iterator.Element``
 conforms to the ``Equatable`` protocol.
 This constraint ensures that each element of the sequence is equatable.
 
 You can also specify the requirement that two types be identical,
 using the ``==`` operator. For example, the generic parameter clause
-``<S1: SequenceType, S2: SequenceType where S1.Generator.Element == S2.Generator.Element>``
-expresses the constraints that ``S1`` and ``S2`` conform to the ``SequenceType`` protocol
+``<S1: Sequence, S2: Sequence where S1.Iterator.Element == S2.Iterator.Element>``
+expresses the constraints that ``S1`` and ``S2`` conform to the ``Sequence`` protocol
 and that the elements of both sequences must be of the same type.
 
 Any type argument substituted for a type parameter must
@@ -169,12 +169,13 @@ and has the following form:
 The *generic argument list* is a comma-separated list of type arguments.
 A :newTerm:`type argument` is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
-The result is a specialized version of that generic type. As an example,
-the Swift standard library defines a generic dictionary type as:
+The result is a specialized version of that generic type.
+The example below shows a simplified version of the Swift standard library's
+generic dictionary type.
 
 .. code-block:: swift
 
-    struct Dictionary<Key: Hashable, Value>: CollectionType, DictionaryLiteralConvertible {
+    struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
         /* ... */
     }
 

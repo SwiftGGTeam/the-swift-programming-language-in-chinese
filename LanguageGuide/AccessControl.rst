@@ -287,6 +287,9 @@ the access level for that compound tuple type will be private.
    !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
    !! ^~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:4:13: note: did you mean 'returnPublicTuple'?
+   !! public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
+   !!             ^
 
 .. sourcefile:: tupleTypes_Module2_Public
 
@@ -306,6 +309,10 @@ the access level for that compound tuple type will be private.
    !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnPrivateTuple'
    !! let privateTuple = returnPrivateTuple()
    !! ^~~~~~~~~~~~~~~~~~
+   !! tupleTypes_Module1.returnPublicTuple:1:13: note: did you mean 'returnPublicTuple'?
+   !! public func returnPublicTuple() -> (tupleTypes_Module1.PublicStruct, tupleTypes_Module1.PublicStruct)
+   !!             ^
+
 
 .. note::
 
@@ -324,11 +331,11 @@ the most restrictive access level of the function's parameter types and return t
 You must specify the access level explicitly as part of the function's definition
 if the function's calculated access level does not match the contextual default.
 
-The example below defines a global function called ``someFunction``,
+The example below defines a global function called ``someFunction()``,
 without providing a specific access level modifier for the function itself.
 You might expect this function to have the default access level of “internal”,
 but this is not the case.
-In fact, ``someFunction`` will not compile as written below:
+In fact, ``someFunction()`` will not compile as written below:
 
 .. testcode:: accessControlWrong
 
@@ -361,7 +368,7 @@ for the function declaration to be valid:
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
 
-It is not valid to mark the definition of ``someFunction``
+It is not valid to mark the definition of ``someFunction()``
 with the ``public`` or ``internal`` modifiers,
 or to use the default setting of internal,
 because public or internal users of the function might not have appropriate access
@@ -378,34 +385,34 @@ You cannot specify a different access level for individual enumeration cases.
 
 In the example below,
 the ``CompassPoint`` enumeration has an explicit access level of “public”.
-The enumeration cases ``North``, ``South``, ``East``, and ``West``
+the enumeration cases ``north``, ``south``, ``east``, and ``west``
 therefore also have an access level of “public”:
 
 .. testcode:: enumerationCases
 
    -> public enum CompassPoint {
-         case North
-         case South
-         case East
-         case West
+         case north
+         case south
+         case east
+         case west
       }
 
 .. sourcefile:: enumerationCases_Module1
 
    -> public enum CompassPoint {
-         case North
-         case South
-         case East
-         case West
+         case north
+         case south
+         case east
+         case west
       }
 
 .. sourcefile:: enumerationCases_Module2
 
    -> import enumerationCases_Module1
-   -> let north = CompassPoint.North
+   -> let north = CompassPoint.north
 
 Raw Values and Associated Values
-________________________________
+++++++++++++++++++++++++++++++++
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
@@ -426,98 +433,113 @@ you must explicitly declare the nested type as public.
 .. sourcefile:: nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private
 
    -> public struct PublicStruct {
-         public enum PublicEnumInsidePublicStruct { case A, B }
-         internal enum InternalEnumInsidePublicStruct { case A, B }
-         private enum PrivateEnumInsidePublicStruct { case A, B }
-         enum AutomaticEnumInsidePublicStruct { case A, B }
+         public enum PublicEnumInsidePublicStruct { case a, b }
+         internal enum InternalEnumInsidePublicStruct { case a, b }
+         private enum PrivateEnumInsidePublicStruct { case a, b }
+         enum AutomaticEnumInsidePublicStruct { case a, b }
       }
    -> internal struct InternalStruct {
-         internal enum InternalEnumInsideInternalStruct { case A, B }
-         private enum PrivateEnumInsideInternalStruct { case A, B }
-         enum AutomaticEnumInsideInternalStruct { case A, B }
+         internal enum InternalEnumInsideInternalStruct { case a, b }
+         private enum PrivateEnumInsideInternalStruct { case a, b }
+         enum AutomaticEnumInsideInternalStruct { case a, b }
       }
    -> private struct PrivateStruct {
-         enum AutomaticEnumInsidePrivateStruct { case A, B }
-         private enum PrivateEnumInsidePrivateStruct { case A, B }
+         enum AutomaticEnumInsidePrivateStruct { case a, b }
+         private enum PrivateEnumInsidePrivateStruct { case a, b }
       }
 
 .. sourcefile:: nestedTypes_Module1_PublicAndInternal
 
    // these are all expected to succeed within the same module
-   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.A
-   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.A
-   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.A
+   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
+   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
    ---
-   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
-   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.A
+   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
+   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
 
 .. sourcefile:: nestedTypes_Module1_Private
 
    // these are all expected to fail, because they are private to the other file
-   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
+   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    ---
-   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
+   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    ---
-   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
+   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    ---
-   !! /tmp/sourcefile_1.swift:1:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
-   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_1.swift:2:35: error: type 'InternalStruct' has no member 'PrivateEnumInsideInternalStruct'
-   !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
-   !!                                   ^~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
-   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   !!                                  ^~~~~~~~~~~~~
+   !! /tmp/sourcefile_1.swift:1:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+   !!                                 ^
+   !! /tmp/sourcefile_0.swift:4:17: note: 'PrivateEnumInsidePublicStruct' declared here
+   !! private enum PrivateEnumInsidePublicStruct { case a, b }
+   !! ^
+   !! /tmp/sourcefile_1.swift:2:50: error: 'PrivateEnumInsideInternalStruct' is inaccessible due to 'private' protection level
+   !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
+   !!                                   ^
+   !! /tmp/sourcefile_0.swift:9:17: note: 'PrivateEnumInsideInternalStruct' declared here
+   !! private enum PrivateEnumInsideInternalStruct { case a, b }
+   !! ^
+   !! /tmp/sourcefile_1.swift:3:5: error: 'privateNestedInsidePrivate' used within its own type
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   !!     ^
+   !! /tmp/sourcefile_1.swift:3:5: error: could not infer type for 'privateNestedInsidePrivate'
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   !!     ^
    !! /tmp/sourcefile_1.swift:4:36: error: use of unresolved identifier 'PrivateStruct'
-   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
+   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
+   !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   !!                                  ^~~~~~~~~~~~~
 
 .. sourcefile:: nestedTypes_Module2_Public
 
    // this is the only expected to succeed within the second module
    -> import nestedTypes_Module1
-   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.A
+   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
 
 .. sourcefile:: nestedTypes_Module2_InternalAndPrivate
 
    // these are all expected to fail, because they are private or internal to the other module
    -> import nestedTypes_Module1
-   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.A
-   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.A
-   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
+   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
+   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    ---
-   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
-   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.A
-   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
+   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
+   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
+   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    ---
-   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
-   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
+   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    ---
-   !! /tmp/sourcefile_0.swift:2:34: error: type 'PublicStruct' has no member 'InternalEnumInsidePublicStruct'
-   !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.A
-   !!                                  ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:35: error: type 'PublicStruct' has no member 'AutomaticEnumInsidePublicStruct'
-   !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.A
-   !!                                   ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:33: error: type 'PublicStruct' has no member 'PrivateEnumInsidePublicStruct'
-   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.A
-   !!                                 ^~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:2:47: error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+   !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+   !!                                  ^
+   !! <unknown>:0: note: 'InternalEnumInsidePublicStruct' declared here
+   !! /tmp/sourcefile_0.swift:3:48: error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+   !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
+   !!                                   ^
+   !! <unknown>:0: note: 'AutomaticEnumInsidePublicStruct' declared here
+   !! /tmp/sourcefile_0.swift:4:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+   !!                                 ^
+   !! <unknown>:0: note: 'PrivateEnumInsidePublicStruct' declared here
    !! /tmp/sourcefile_0.swift:5:36: error: use of unresolved identifier 'InternalStruct'
-   !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.A
+   !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
    !!                                    ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:6:37: error: use of unresolved identifier 'InternalStruct'
-   !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.A
+   !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
    !!                                     ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:7:35: error: use of unresolved identifier 'InternalStruct'
-   !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.A
+   !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    !!                                   ^~~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:8:34: error: use of unresolved identifier 'PrivateStruct'
-   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.A
+   !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    !!                                  ^~~~~~~~~~~~~
    !! /tmp/sourcefile_0.swift:9:36: error: use of unresolved identifier 'PrivateStruct'
-   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.A
+   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
 
 .. _AccessControl_Subclassing:
@@ -1031,9 +1053,13 @@ for individual type members.
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileC = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:2:22: error: value of type 'PublicStruct' has no member 'privateMethod'
+   !! /tmp/sourcefile_1.swift:2:50: error: 'privateMethod' is inaccessible due to 'private' protection level
    !! let differentFileC = publicStructInDifferentFile.privateMethod()
-   !!                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
+   !!                                                  ^
+   !! /tmp/sourcefile_0.swift:9:9: note: 'privateMethod' declared here
+   !! func privateMethod() -> Int { return 0 }
+   !! ^
+
 
 .. sourcefile:: extensions_Module2
 
@@ -1042,15 +1068,18 @@ for individual type members.
    -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    -> let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !! /tmp/sourcefile_0.swift:3:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromStruct'
+   !! /tmp/sourcefile_0.swift:3:54: error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:24: error: value of type 'PublicStruct' has no member 'implicitlyInternalMethodFromExtension'
+   !!                                                      ^
+   !! <unknown>:0: note: 'implicitlyInternalMethodFromStruct' declared here
+   !! /tmp/sourcefile_0.swift:4:54: error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:5:24: error: value of type 'PublicStruct' has no member 'privateMethod'
+   !!                                                      ^
+   !! <unknown>:0: note: 'implicitlyInternalMethodFromExtension' declared here
+   !! /tmp/sourcefile_0.swift:5:54: error: 'privateMethod' is inaccessible due to 'private' protection level
    !! let differentModuleC = publicStructInDifferentModule.privateMethod()
-   !!                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~
+   !!                                                      ^
+   !! <unknown>:0: note: 'privateMethod' declared here
 
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

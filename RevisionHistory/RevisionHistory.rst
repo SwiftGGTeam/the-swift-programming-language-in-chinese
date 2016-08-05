@@ -3,47 +3,162 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-==========  ==========================================================================
+==========  ==============================================================================================
 Date        Notes
-==========  ==========================================================================
-2016-02-08  * Added information about how to distinguish
+==========  ==============================================================================================
+2016-08-01  * Updated the discussion
+              in the :ref:`TheBasics_OptionalBinding` section
+              of the :doc:`../LanguageGuide/TheBasics` chapter
+              and the :ref:`Statements_WhileStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter,
+              now that ``if``, ``while``, and ``guard`` statements
+              use a comma separated list of conditions without ``where`` clauses.
+
+            * Updated the discussion of operators
+              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              now that you implement them as type methods instead of as global functions.
+
+            * Updated the discussion of protocol composition types
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter
+              to use the new ``Protocol1 & Protocol2`` syntax.
+
+            * Updated discussion throughout
+              to use macOS instead of OS X,
+              ``Error`` instead of ``ErrorProtocol``,
+              and protocol names such as ``ExpressibleByStringLiteral``
+              instead of ``StringLiteralConvertible``.
+
+            * Updated the :doc:`../ReferenceManual/Attributes` chapter
+              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
+              imply the ``@objc`` attribute.
+
+            * Added the ``@GKInspectable`` attribute
+              to the :ref:`Attributes_DeclarationAttributes` section.
+
+            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
+              to note that only nonescaping closures can capture in-out parameters.
+
+            * Removed the discussion of the ``Boolean`` protocol
+              from the :doc:`../ReferenceManual/Statements` chapter,
+              now that the protocol has been removed from the Swift standard library.
+
+            * Corrected the discussion of the ``@NSApplicationMain`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section.
+----------  ----------------------------------------------------------------------------------------------
+2016-07-18  * Updated discussion about default parameters
+              in the :ref:`Functions_DefaultParameterValues` section,
+              now that they can't be reordered in function calls.
+----------  ----------------------------------------------------------------------------------------------
+2016-06-13  * Updated for Swift 3.0.
+
+            * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
+              and the :ref:`Declarations_FunctionDeclaration` section to note that
+              all parameters get an argument label by default.
+
+            * Updated attribute arguments to use a colon
+              in the :doc:`../ReferenceManual/Attributes` chapter.
+
+            * Added information about switch cases that have multiple patterns
+              to the :ref:`ControlFlow_Switch` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_SwitchStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added information about throwing an error
+              inside the catch block of a rethrowing function
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+
+            * Updated the discussion of line control statements
+              to use the ``#sourceLocation(file:line:)`` syntax
+              in the :ref:`Statements_LineControlStatement` section.
+
+            * Added information about accessing the selector
+              of an Objective-C property's getter or setter
+              in the :ref:`Expression_SelectorExpression` section.
+
+            * Added information about generic type aliases
+              to the :ref:`Declarations_TypeAliasDeclaration` section.
+
+            * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
+              to note that it appears on a parameter type.
+
+            * Updated the discussion of ``@noescape`` and ``@autoclosure``
+              in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
+              and the :doc:`../ReferenceManual/Attributes` chapter
+              now that they are type attributes, rather than declaration attributes.
+
+            * Updated the discussion of function types in the :ref:`Types_FunctionType` section
+              to note that parentheses around the parameter types are required.
+
+            * Updated the discussion of optional protocol requirements
+              in the :ref:`Protocols_OptionalProtocolRequirements` section
+              to clarify that they are used only in code that interoperates with Objective-C.
+
+            * Removed the discussion of explicitly using ``let`` in function parameters
+              from the :ref:`Declarations_FunctionDeclaration` section.
+----------  ----------------------------------------------------------------------------------------------
+2016-03-21  * Updated for Swift 2.2.
+
+            * Added information about how to conditionally compile code
+              depending on the version of Swift being used
+              to the :ref:`Statements_BuildConfigurationStatement` section.
+
+            * Added information about how to distinguish
               between methods or initializers whose names differ
               only by the names of their arguments
               to the :ref:`Expressions_ExplicitMemberExpression` section.
 
-            * Updated the discussion of ``@objc``
-              in the :ref:`Attributes_DeclarationAttributes` section to note that
-              enumerations and enumeration cases can use this attribute.
+            * Added information about the ``#selector`` syntax
+              for Objective-C selectors
+              to the :ref:`Expression_SelectorExpression` section.
 
             * Updated the discussion of associated types
               to use the ``associatedtype`` keyword
               in the :ref:`Generics_AssociatedTypes`
               and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
 
-----------  --------------------------------------------------------------------------
-2016-01-25  * Updated for Swift 2.2.
-
-            * Added information about initializers that return ``nil``
+            * Updated information about initializers that return ``nil``
               before the instance is fully initialized
-              to the :ref:`Initialization_FailableInitializers` section.
+              in the :ref:`Initialization_FailableInitializers` section.
+
+            * Added information about comparing tuples
+              to the :ref:`BasicOperators_ComparisonOperators` section.
 
             * Added information about using keywords as external parameter names
               to the :ref:`LexicalStructure_Keywords` section.
 
+            * Updated the discussion of the ``@objc`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated the :ref:`LexicalStructure_Operators` section
+              with discussion of custom operators that contain a dot.
+
+            * Added a note
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
+              that rethrowing functions can't directly throw errors.
+
+            * Added a note to the :ref:`Properties_PropertyObservers` section
+              about property observers being called
+              when you pass a property as an in-out parameter.
+
             * Added a section about error handling
               to the :doc:`../GuidedTour/GuidedTour` chapter.
 
-            * Updated the discussion of custom operators that contain a dot
-              in the :ref:`LexicalStructure_Operators` section.
+            * Updated figures in the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section to show the deallocation process more clearly.
 
             * Removed discussion of C-style ``for`` loops,
               the ``++`` prefix and postfix operators,
               and the ``--`` prefix and postfix operators.
 
-            * Removed discussion of ``var`` patterns,
-              variable function arguments,
+            * Removed discussion of variable function arguments
               and the special syntax for curried functions.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-10-20  * Updated for Swift 2.1.
 
             * Updated the :ref:`StringsAndCharacters_StringInterpolation`
@@ -63,7 +178,7 @@ Date        Notes
             * Added information to the :ref:`Expressions_CaptureLists` section
               about how values specified in closure capture lists are captured.
 
-            * Updated the 
+            * Updated the
               :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining`
               section to clarify how assignment through optional chaining
               behaves.
@@ -73,7 +188,7 @@ Date        Notes
 
             * Added an example that uses the ``??`` operator
               to the :doc:`../GuidedTour/GuidedTour` chapter.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-09-16  * Updated for Swift 2.0.
 
             * Added information about error handling
@@ -88,7 +203,7 @@ Date        Notes
 
             * Added information about the new ``try?`` keyword
               to the :ref:`ErrorHandling_Optional` section.
-            
+
             * Added information about recursive enumerations
               to the :ref:`Enumerations_RecursiveEnumerations` section
               of the :doc:`../LanguageGuide/Enumerations` chapter
@@ -129,7 +244,7 @@ Date        Notes
             * Added information about the new Swift standard library
               ``print(_:separator:terminator)`` function
               to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
-              
+
             * Added information about the behavior
               of enumeration cases with ``String`` raw values
               to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
@@ -140,7 +255,7 @@ Date        Notes
             * Added information about the ``@autoclosure`` attribute ---
               including its ``@autoclosure(escaping)`` form ---
               to the :ref:`Closures_Autoclosures` section.
-              
+
             * Updated the :ref:`Attributes_DeclarationAttributes` section
               with information about the ``@available``
               and ``@warn_unused_result`` attributes.
@@ -151,22 +266,22 @@ Date        Notes
             * Added an example of using multiple optional bindings
               with a ``where`` clause
               to the :ref:`TheBasics_OptionalBinding` section.
-            
+
             * Added information to the :ref:`LexicalStructure_StringLiterals` section
               about how concatenating string literals using the ``+`` operator
               happens at compile time.
-              
+
             * Added information to the :ref:`Types_MetatypeType` section
               about comparing metatype values and using them
               to construct instances with initializer expressions.
-            
+
             * Added a note to the :ref:`TheBasics_DebuggingWithAssertions` section
               about when user-defined assertions are disabled.
 
             * Updated the discussion of the ``@NSManaged`` attribute
               in the :ref:`Attributes_DeclarationAttributes` section,
               now that the attribute can be applied to certain instance methods.
-              
+
             * Updated the :ref:`Functions_VariadicParameters` section,
               now that variadic parameters can be declared in any position
               in a function's parameter list.
@@ -230,7 +345,7 @@ Date        Notes
               :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
               with a more precise definition of Unicode scalars.
 
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2015-04-08  * Updated for Swift 1.2.
 
             * Swift now has a native ``Set`` collection type.
@@ -306,7 +421,7 @@ Date        Notes
               now use the ``as?`` or ``as!`` operator,
               and type casts that are guaranteed not to fail use the ``as`` operator.
               For more information, see :ref:`Expressions_Type-CastingOperators`.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2014-10-16  * Updated for Swift 1.1.
 
             * Added a full guide to :ref:`Initialization_FailableInitializers`.
@@ -335,7 +450,7 @@ Date        Notes
               the revised rules.
               Removed a duplicate description of the valid set of operator characters
               from :ref:`AdvancedOperators_CustomOperators`.
-----------  --------------------------------------------------------------------------
+----------  ----------------------------------------------------------------------------------------------
 2014-08-18  * New document that describes Swift 1.0,
               Apple’s new programming language for building iOS and OS X apps.
 
@@ -534,4 +649,4 @@ Date        Notes
               for the :ref:`BasicOperators_HalfClosedRangeOperator`.
 
             * Added an example of :ref:`Generics_ExtendingAGenericType`.
-==========  ==========================================================================
+==========  ==============================================================================================

@@ -13,6 +13,9 @@ about the relationships between parts of your code
 in order to manage memory for you.
 This chapter describes those situations
 and shows how you enable ARC to manage all of your app's memory.
+Using ARC in Swift is very similar to the approach described in
+`Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
+for using ARC with Objective-C.
 
 .. note::
 
@@ -50,7 +53,7 @@ as long as at least one active reference to that instance still exists.
 To make this possible,
 whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
-The reference is called a “strong“ reference because
+The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
 and does not allow it to be deallocated for as long as that strong reference remains.
 
@@ -312,36 +315,52 @@ before a property or variable declaration.
 
 Use a weak reference to avoid reference cycles
 whenever it is possible for that reference to have
-“no value” at some point in its life.
-If the reference will *always* have a value,
+a missing value at some point in its life.
+If the reference *always* has a value,
 use an unowned reference instead,
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
-“no tenant” at some point in its lifetime,
+no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
-
-.. note::
-
-   Weak references must be declared as variables,
-   to indicate that their value can change at runtime.
-   A weak reference cannot be declared as a constant.
-
-Because weak references are allowed to have “no value”,
-you must declare every weak reference as having an optional type.
-Optional types are the preferred way to represent the possibility for “no value” in Swift.
 
 Because a weak reference does not keep a strong hold on the instance it refers to,
 it is possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
+And, because weak references need to allow
+their value to be changed to ``nil`` at runtime,
+they are always declared as variables, rather than constants, of an optional type.
+
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
 
-.. TODO: I'm not actually demonstrating this fact. Should I?
+.. note::
+
+    Property observers aren't called
+    when ARC sets a weak reference to ``nil``.
+
+.. assertion:: weak-reference-doesnt-trigger-didset
+
+    -> class C {
+           weak var w: C? { didSet { print("did set") } }
+       }
+    -> var c1 = C()
+    << // c1 : C = REPL.C
+    -> do {
+    -> var c2 = C()  // Inside a do{} block, so no REPL result.
+    -> print(c1.w)
+    << nil
+    -> c1.w = c2
+    << did set
+    -> print(c1.w)
+    << Optional(REPL.C)
+    -> } // ARC deallocates c2; didSet doesn't fire.
+    -> print(c1.w)
+    << nil
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -388,14 +407,8 @@ Here's how the references look now that you've linked the two instances together
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
 but the ``Apartment`` instance now has a *weak* reference to the ``Person`` instance.
 This means that when you break the strong reference held by
-the ``john`` variables,
+the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
-
-.. image:: ../images/weakReference02_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Person`` instance,
-it is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -403,16 +416,17 @@ it is deallocated:
    -> john = nil
    <- John Appleseed is being deinitialized
 
+Because there are no more strong references to the ``Person`` instance,
+it is deallocated
+and the ``tenant`` property is set to ``nil``:
+
+.. image:: ../images/weakReference02_2x.png
+   :align: center
+
 The only remaining strong reference to the ``Apartment`` instance
 is from the ``unit4A`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
-
-.. image:: ../images/weakReference03_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Apartment`` instance,
-it too is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -420,11 +434,11 @@ it too is deallocated:
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
 
-The final two code snippets above show that
-the deinitializers for the ``Person`` instance and ``Apartment`` instance
-print their “deinitialized” messages
-after the ``john`` and ``unit4A`` variables are set to ``nil``.
-This proves that the reference cycle has been broken.
+Because there are no more strong references to the ``Apartment`` instance,
+it too is deallocated:
+
+.. image:: ../images/weakReference03_2x.png
+   :align: center
 
 .. note::
 
@@ -723,7 +737,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: Void -> String = {
+         lazy var asHTML: () -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -906,7 +920,7 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: Void -> String = {
+      lazy var someClosure: () -> String = {
             [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
@@ -945,7 +959,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: Void -> String = {
+         lazy var asHTML: () -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
@@ -994,9 +1008,6 @@ as can be seen from the printing of its deinitializer message in the example bel
 
    -> paragraph = nil
    <- p is being deinitialized
-
-.. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
-   Unowned capture of self in a closure capture list does not avoid a reference cycle
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
