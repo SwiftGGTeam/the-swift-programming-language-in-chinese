@@ -410,7 +410,7 @@ for genre in favoriteGenres {
 
 更多关于`for-in`循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
 
-Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sort()`方法，它将根据提供的序列返回一个有序集合.
+Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sort()`方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符'<'对元素进行比较的结果来确定.
 
 ```swift
 for genre in favoriteGenres.sort() {
