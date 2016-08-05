@@ -954,7 +954,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> parameter-clause function-result-OPT ``in``
     closure-signature --> identifier-list function-result-OPT ``in``
