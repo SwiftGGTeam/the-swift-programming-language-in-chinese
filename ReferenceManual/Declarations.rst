@@ -486,14 +486,16 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attributes-OPT ``get`` code-block
-    setter-clause --> attributes-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT mutation-attribute-OPT ``get`` code-block
+    setter-clause --> attributes-OPT mutation-attribute-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attributes-OPT ``get``
-    setter-keyword-clause --> attributes-OPT ``set``
+    getter-keyword-clause --> attributes-OPT mutation-attribute-OPT ``get``
+    setter-keyword-clause --> attributes-OPT mutation-attribute-OPT ``set``
+
+    mutation-attribute --> ``mutating`` | ``nonmutating``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
@@ -896,7 +898,7 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
+    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
     parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
     external-parameter-name --> identifier | ``_``
