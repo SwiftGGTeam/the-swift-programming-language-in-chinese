@@ -1040,6 +1040,7 @@ is ``Int``, not ``(Int)``.
     parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
+    expression-element --> operator | identifier ``:`` operator
 
 
 .. _Expressions_WildcardExpression:
