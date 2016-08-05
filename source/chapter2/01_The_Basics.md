@@ -747,7 +747,7 @@ do {
 
 在此例中，`makeASandwich()`（做一个三明治）函数会抛出一个错误消息如果没有干净的盘子或者某个原料缺失。因为`makeASandwich()`抛出错误，函数调用被包裹在`try`表达式中。将函数包裹在一个`do`语句中,任何被抛出的错误会被传播到提供的`catch`从句中。
 
-如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个匹配`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个匹配`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会随着被`catch`所捕捉到的关联值`[String]`被调用。
+如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个匹配`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个匹配`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会被调用，并且使用`catch`所捕捉到的关联值`[String]`作为参数。
 
 抛出，捕捉，以及传播错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
 
