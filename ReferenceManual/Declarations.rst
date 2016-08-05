@@ -2027,8 +2027,8 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
