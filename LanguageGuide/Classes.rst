@@ -260,7 +260,7 @@ refer to the exact same instance of a class:
 * Not identical to (``!==``)
 
 Here is an example
-that uses the ``newWindow`` and ``alsoNewWindow` instances from above
+that uses the ``newWindow`` and ``alsoNewWindow`` instances from above
 to show an identity operator in use:
 
 .. testcode:: classesExpanded
