@@ -610,7 +610,7 @@ let mysteryMeat = Food()
 // mysteryMeat 的名字是 [Unnamed]
 ```
 
-类层级中的第二个类是`Food`的子类`RecipeIngredient`。`RecipeIngredient`类构建了食谱中的一味调味剂。它引入了`Int`类型的属性`quantity`（以及从`Food`继承过来的`name`属性），并且定义了两个构造器来创建`RecipeIngredient`实例：
+类层级中的第二个类是`Food`的子类`RecipeIngredient`。`RecipeIngredient`类用来表示食谱中的一项原料。它引入了`Int`类型的属性`quantity`（以及从`Food`继承过来的`name`属性），并且定义了两个构造器来创建`RecipeIngredient`实例：
 
 ```swift
 class RecipeIngredient: Food {
@@ -647,7 +647,7 @@ let oneBacon = RecipeIngredient(name: "Bacon")
 let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 ```
 
-类层级中第三个也是最后一个类是`RecipeIngredient`的子类，叫做`ShoppingListItem`。这个类构建了购物单中出现的某一种调味料。
+类层级中第三个也是最后一个类是`RecipeIngredient`的子类，叫做`ShoppingListItem`。这个类构建了购物单中出现的某一种食谱原料。
 
 购物单中的每一项总是从未购买状态开始的。为了呈现这一事实，`ShoppingListItem`引入了一个布尔类型的属性`purchased`，它的默认值是`false`。`ShoppingListItem`还添加了一个计算型属性`description`，它提供了关于`ShoppingListItem`实例的一些文字描述：
 
