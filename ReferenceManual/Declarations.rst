@@ -1274,7 +1274,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
     union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-member --> declaration | union-style-enum-case-clause | compiler-control-statement
     union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
@@ -1283,7 +1283,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
     raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause | compiler-control-statement
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1379,7 +1379,10 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
-   struct-body --> ``{`` declarations-OPT ``}``
+   struct-body --> ``{`` type-body-members-OPT ``}``
+
+   type-body-members --> type-body-member type-body-member-OPT
+   type-body-member --> declaration | compiler-control-statement
 
 
 .. _Declarations_ClassDeclaration:
@@ -1474,7 +1477,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
     class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
-    class-body --> ``{`` declarations-OPT ``}``
+    class-body --> ``{`` type-body-members-OPT ``}``
 
 
 .. _Declarations_ProtocolDeclaration:
@@ -1588,7 +1591,10 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
+    protocol-body --> ``{`` protocol-body-members-OPT ``}``
+    
+    protocol-body-members --> protocol-body-member protocol-body-member-OPT
+    protocol-body-member --> protocol-member-declaration | compiler-control-statement
 
     protocol-member-declaration --> protocol-property-declaration
     protocol-member-declaration --> protocol-method-declaration
@@ -2118,7 +2124,7 @@ to ensure members of that type are properly initialized.
 
     extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
+    extension-body --> ``{`` type-body-members-OPT ``}``
 
 
 .. _Declarations_SubscriptDeclaration:
