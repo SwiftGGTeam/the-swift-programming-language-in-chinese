@@ -2311,16 +2311,29 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    prefix-operator-declaration --> ``prefix`` ``operator`` operator ``{`` ``}``
-    postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
-    infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator
+    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
 
-    infix-operator-attributes --> associativity-clause precedence-clause-OPT
-    infix-operator-attributes --> precedence-clause associativity-clause-OPT
-    precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> A decimal integer between 0 and 255, inclusive
-    associativity-clause --> ``associativity`` associativity
-    associativity --> ``left`` | ``right`` | ``none``
+    infix-operator-group --> ``:`` precedence-group-name
+    
+    precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
+    
+    precedence-group-attributes --> precedence-group-attribute precedence-group-attributes-OPT
+    precedence-group-attribute --> precedence-group-assignment
+    precedence-group-attribute --> precedence-group-associativity
+    precedence-group-attribute --> precedence-group-relations
+    
+    precedence-group-assignment --> ``assignment`` ``:`` boolean-literal
+    
+    precedence-group-associativity --> ``associativity`` ``:`` precedence-group-associativity-option
+    precedence-group-associativity-option --> ``left`` | ``right`` | ``none``
+    
+    precedence-group-relations --> precedence-group-relation precedence-group-relations-OPT
+    precedence-group-relation --> ``higherThan`` ``:`` precedence-group-name
+    precedence-group-relation --> ``lowerThan`` ``:`` precedence-group-name
+    
+    precedence-group-name --> identifier
 
 .. TR: I added this grammar from looking at ParseDecl.cpp and from trying
     to various permutations in the REPL. Is this a correct grammar?
