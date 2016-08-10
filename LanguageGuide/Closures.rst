@@ -602,30 +602,15 @@ both of those constants or variables will refer to the same closure:
 
 .. _Closures_Noescape:
 
-Nonescaping Closures
---------------------
+Escaping Closures
+-----------------
 
 A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
 When you declare a function that takes a closure as one of its parameters,
-you can write ``@noescape`` before the parameter's type
-to indicate that the closure is not allowed to escape.
-Marking a closure with ``@noescape``
-lets the compiler make more aggressive optimizations
-because it knows more information about the closure's lifespan.
-
-.. testcode:: noescape-closure-as-argument
-
-    -> func someFunctionWithNonescapingClosure(closure: @noescape () -> Void) {
-           closure()
-       }
-
-As an example,
-the ``sorted(by:)`` method takes a closure as its parameter,
-which is used to compare elements.
-The parameter is marked ``@noescape``
-because it is guaranteed not to be needed after sorting is complete.
+you can write ``@escaping`` before the parameter's type
+to indicate that the closure is allowed to escape.
 
 One way that a closure can escape
 is by being stored in a variable that is defined outside the function.
@@ -641,7 +626,7 @@ For example:
 
     -> var completionHandlers: [() -> Void] = []
     << // completionHandlers : [() -> Void] = []
-    -> func someFunctionWithEscapingClosure(completionHandler: () -> Void) {
+    -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
            completionHandlers.append(completionHandler)
        }
 
@@ -650,14 +635,18 @@ For example:
 
 The ``someFunctionWithEscapingClosure(_:)`` function takes a closure as its argument
 and adds it to an array that's declared outside the function.
-If you tried to mark the parameter of this function with ``@noescape``,
+If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compiler error.
 
-Marking a closure with ``@noescape``
-lets you refer to ``self`` implicitly within the closure.
+Marking a closure with ``@escape``
+means you have to refer to ``self`` explicitly within the closure.
 
 .. testcode:: noescape-closure-as-argument
 
+    -> func someFunctionWithNonescapingClosure(closure: () -> Void) {
+           closure()
+       }
+    ---
     -> class SomeClass {
            var x = 10
            func doSomething() {
