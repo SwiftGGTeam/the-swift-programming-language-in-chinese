@@ -381,8 +381,6 @@ to a function or method *declaration*.
     Apply this attribute to a parameter's type in a method or function declaration,
     for a parameter of a function type that takes no arguments
     and that returns a value of the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
 
