@@ -777,10 +777,9 @@ with the ``@autoclosure`` attribute.
    The context and function name should make it clear
    that evaluation is being deferred.
 
-The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
-which is described above in :ref:`Closures_Noescape`.
 If you want an autoclosure that is allowed to escape,
-use the ``@autoclosure(escaping)`` form of the attribute.
+use both the ``@autoclosure`` and ``@escaping`` attributes.
+The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
 
 .. testcode:: autoclosures-function-with-escape
 
@@ -790,7 +789,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(_ customerProvider: @autoclosure(escaping) () -> String) {
+    -> func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))
