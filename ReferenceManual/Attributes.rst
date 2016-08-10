@@ -409,13 +409,13 @@ to a function or method *declaration*.
    local functions or closures that don't capture any local variables,
    can be used as a function with C function calling conventions.
 
-``noescape``
+``escaping``
     Apply this attribute to a parameter's type in a method or function declaration
-    to indicate that the parameter's value will not be stored for later execution.
-    This means that the value is guaranteed not to outlive the lifetime of the call.
-    Function type parameters with the ``noescape`` declaration attribute
-    do not require explicit use of ``self.`` for properties or methods.
-    For an example of how to use the ``noescape`` attribute,
+    to indicate that the parameter's value can be stored for later execution.
+    This means that the value is allowed to outlive the lifetime of the call.
+    Function type parameters with the ``escaping`` declaration attribute
+    require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
 
 ``noreturn``
