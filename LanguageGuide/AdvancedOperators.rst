@@ -769,7 +769,7 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
 
-   -> prefix operator +++ {}
+   -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -804,9 +804,10 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 Precedence and Associativity for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a precedence and an associativity.
+Custom ``infix`` operators can also specify a precedence, associativity,
+and assignment behavior.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
-how these two characteristics affect an infix operator's interaction
+how these characteristics affect an infix operator's interaction
 with other infix operators.
 
 The possible values for ``associativity`` are ``left``, ``right``, and ``none``.
@@ -818,10 +819,10 @@ Non-associative operators cannot be written next to
 other operators with the same precedence.
 
 The ``associativity`` value defaults to ``none`` if it is not specified.
-The ``precedence`` value defaults to ``100`` if it is not specified.
+The ``precedence`` value defaults to ``DefaultPrecedence`` if it is not specified.
 
 The following example defines a new custom ``infix`` operator called ``+-``,
-with ``left`` associativity and a precedence of ``140``:
+with ``left`` associativity and a precedence of ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
