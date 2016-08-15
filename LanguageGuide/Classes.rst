@@ -251,13 +251,11 @@ it is possible for multiple constants and variables
 to refer to the same single instance of a class
 behind the scenes.
 
-Swift provides two identity operators
+As mentioned in :ref:`BasicOperators_ComparisonOperators`
+Swift provides two identity operators (=== and !===)
 that allow you to check
 if two constants or variables
-refer to the exact same instance of a class:
-
-* Identical to (``===``)
-* Not identical to (``!==``)
+refer to the exact same instance of a class.
 
 Here is an example
 that uses the ``newWindow`` and ``alsoNewWindow`` instances from above

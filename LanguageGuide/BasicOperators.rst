@@ -301,11 +301,28 @@ Swift supports all standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-.. note::
+Swift also provides the identity operators
+identical to (``a === b``) and
+not identical to (``a !== b``).
+Use these operators to test
+whether or not two object references
+both refer to the same object instance.
 
-   Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
-   which you use to test whether two object references both refer to the same object instance.
-   For more information, see :doc:`ClassesAndStructures`.
+For more information, see :ref:`Classes_ComparingIdentitiesOfReferenceTypes`
+
+.. note:: 
+
+   “Identical to” (represented by three equals signs, or ``===``)
+   does not mean the same thing
+   as “equal to” (represented by two equals signs, or ``==``).
+   “Identical to” means that
+   two constants or variables
+   of class type refer
+   to exactly the same class instance.
+   “Equal to” means that
+   two instances are considered “equal” or “equivalent” in value,
+   for some appropriate meaning of “equal”,
+   as defined by the type's designer.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
