@@ -34,7 +34,8 @@ and provides support for accessing those characters in various Unicode represent
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
 
    For more information about using ``String`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _StringsAndCharacters_Literals:
 
