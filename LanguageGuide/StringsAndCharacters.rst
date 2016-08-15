@@ -584,7 +584,7 @@ indices of individual characters in a string.
 
    You can use the ``startIndex`` and ``endIndex`` properties
    and the ``index(before:)``, ``index(after:)``, and ``index(_:offsetBy:)`` methods
-   on any type that conforms to the ``Indexable`` protocol.
+   on any type that conforms to the ``Collection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
@@ -634,7 +634,7 @@ use the ``removeSubrange(_:)`` method:
 
    You can use the the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
    ``remove(at:)``, and ``removeSubrange(_:)`` methods
-   on any type that conforms to the ``RangeReplaceableIndexable`` protocol.
+   on any type that conforms to the ``RangeReplaceableCollection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
