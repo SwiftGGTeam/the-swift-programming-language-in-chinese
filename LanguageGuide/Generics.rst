@@ -548,7 +548,7 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
+   !~ <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
    !! if value == valueToFind {
    !!          ^
 
