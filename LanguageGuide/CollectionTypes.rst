@@ -64,7 +64,8 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -155,7 +156,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
 
-.. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
+.. TODO: mutating func sort(by: (T, T) -> Bool)
    This is defined in Array.swift.
    Likewise I'm holding off writing about it until NewArray lands.
 
@@ -421,7 +422,8 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -766,7 +768,8 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 

@@ -44,7 +44,7 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type
+    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
 
 
 .. _Types_TypeAnnotation:
@@ -62,7 +62,7 @@ as the following examples show:
     << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
-.. x* Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 In the first example,
 the expression ``someTuple`` is specified to have the tuple type ``(Double, Double)``.
@@ -246,8 +246,8 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
     Grammar of a function type
 
-    function-type --> ``(`` type ``)`` ``throws``-OPT ``->`` type
-    function-type --> ``(`` type ``)`` ``rethrows`` ``->`` type
+    function-type --> attributes-OPT ``(`` type ``)`` ``throws``-OPT ``->`` type
+    function-type --> attributes-OPT ``(`` type ``)`` ``rethrows`` ``->`` type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
@@ -526,27 +526,28 @@ Protocol Composition Type
 
 A protocol composition type describes a type that conforms to each protocol
 in a list of specified protocols.
-Protocol composition types may be used in type annotations and in generic parameters.
+Protocol composition types may be used only in type annotations and in generic parameters.
+
+.. In places where a comma separated list of types is allowed,
+   the P&Q syntax isn't allowed.
 
 Protocol composition types have the following form:
 
 .. syntax-outline::
 
-    protocol<<#Protocol 1#>, <#Protocol 2#>>
+    <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
 of multiple protocols without having to explicitly define a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``protocol<ProtocolA, ProtocolB, ProtocolC>`` is
+specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
 
 Each item in a protocol composition list
 must be either the name of protocol or a type alias of a protocol composition type.
-If the list is empty, it specifies the empty protocol composition type,
-which every type conforms to.
 
 .. langref-grammar
 
@@ -557,9 +558,10 @@ which every type conforms to.
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> ``protocol`` ``<`` protocol-identifier-list-OPT ``>``
-    protocol-identifier-list --> protocol-identifier | protocol-identifier ``,`` protocol-identifier-list
+    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> protocol-identifier | protocol-composition-type
     protocol-identifier --> type-identifier
+
 
 .. _Types_MetatypeType:
 
@@ -582,7 +584,7 @@ For example, ``SomeClass.self`` returns ``SomeClass`` itself,
 not an instance of ``SomeClass``.
 And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
 not an instance of a type that conforms to ``SomeProtocol`` at runtime.
-You can use a ``dynamicType`` expression with an instance of a type
+You can use a ``type(of:)`` expression with an instance of a type
 to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
@@ -602,7 +604,7 @@ as the following example shows:
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
     -> // and the runtime type of someInstance is SomeSubClass
-    -> someInstance.dynamicType.printClassName()
+    -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
 Use the identity operators (``===``  and ``!==``) to test
@@ -610,7 +612,7 @@ whether an instance's runtime type is the same as its compile-time type.
 
 .. testcode:: metatype-type
 
-    -> if someInstance.dynamicType === someInstance.self {
+    -> if type(of: someInstance) === someInstance.self {
           print("The dynamic and static type of someInstance are the same")
        } else {
           print("The dynamic and static type of someInstance are different")

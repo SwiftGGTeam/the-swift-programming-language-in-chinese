@@ -285,8 +285,8 @@ without being escaped with backticks.
 
 * Keywords used in expressions and types:
   ``as``,
+  ``Any``,
   ``catch``,
-  ``dynamicType``,
   ``false``,
   ``is``,
   ``nil``,
@@ -297,7 +297,7 @@ without being escaped with backticks.
   ``throw``,
   ``throws``,
   ``true``,
-  and ``try``
+  and ``try``.
 
 * Keywords used in patterns:
   ``_``.
@@ -313,7 +313,7 @@ without being escaped with backticks.
   ``#if``,
   ``#line``,
   ``#selector``.
-  and ``#sourceLocation``,
+  and ``#sourceLocation``.
 
 .. langref-grammar
 
@@ -404,13 +404,20 @@ literal ``"Hello, world"`` is ``String``.
 When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
 That is, the type must conform to one of the following Swift standard library protocols:
-``IntegerLiteralConvertible`` for integer literals,
-``FloatLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals, and
-``BooleanLiteralConvertible`` for Boolean literals.
-For example, ``Int8`` conforms to the ``IntegerLiteralConvertible`` protocol,
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals,
+``ExpressibleByBooleanLiteral`` for Boolean literals,
+``ExpressibleByUnicodeScalarLiteral`` for string literals
+that contain only a single Unicode scalar,
+and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
+that contain only a single extended grapheme cluster.
+For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
+
+.. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
+.. ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
 
 .. syntax-grammar::
 
@@ -731,7 +738,7 @@ combining Unicode characters are also allowed.
 
 You can also define custom operators
 that begin with a dot (``.``).
-These operators are can contain additional dots
+These operators can contain additional dots
 such as ``.+.``.
 If an operator doesn't begin with a dot,
 it can't contain a dot elsewhere.

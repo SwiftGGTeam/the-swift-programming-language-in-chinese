@@ -285,7 +285,9 @@ that performs both tasks at the same time.
    The compound assignment operators do not return a value.
    For example, you cannot write ``let b = a += 2``.
 
-A complete list of compound assignment operators can be found in :doc:`../ReferenceManual/Expressions`.
+For a complete list of the compound assignment operators
+provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
 .. _BasicOperators_ComparisonOperators:
 
@@ -381,7 +383,7 @@ For example:
 .. note::
 
    The Swift standard library includes tuple comparison operators
-   for tuples with less than seven elements.
+   for tuples with fewer than seven elements.
    To compare tuples with seven or more elements,
    you must implement the comparison operators yourself.
 

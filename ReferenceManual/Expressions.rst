@@ -956,7 +956,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
@@ -1045,6 +1045,7 @@ is ``Int``, not ``(Int)``.
     parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
+    expression-element --> operator | identifier ``:`` operator
 
 
 .. _Expressions_WildcardExpression:
@@ -1387,7 +1388,7 @@ For example:
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
     << // initializer : (Int) -> String = (Function)
-    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
     << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
     <- 123
@@ -1408,11 +1409,11 @@ In all other cases, you must use an initializer expression.
     ---
     >> let someValue = s1
     << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    -> let s3 = type(of: someValue).init(data: 7)  // Valid
     << // s3 : SomeType = REPL.SomeType(data: 7)
-    -> let s4 = someValue.dynamicType(data: 5)       // Error
+    -> let s4 = type(of: someValue)(data: 5)       // Error
     !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
-    !! let s4 = someValue.dynamicType(data: 5)       // Error
+    !! let s4 = type(of: someValue)(data: 5)       // Error
     !!                               ^
     !!                               .init
 
@@ -1601,15 +1602,16 @@ you can pass it to a function or method that accepts a type-level argument.
 Dynamic Type Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A ``dynamicType`` expression consists of an expression,
-immediately followed by ``.dynamicType``. It has the following form:
+A :newTerm:`dynamic type expression` consists of an expression
+within special syntax that resembles a :ref:`Expressions_FunctionCallExpression`.
+It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>.dynamicType
+    type(of: <#expression#>)
 
 The *expression* can't be the name of a type.
-The entire ``dynamicType`` expression evaluates to the value of the
+The entire ``type(of:)`` expression evaluates to the value of the
 runtime type of the *expression*, as the following example shows:
 
 .. testcode:: dynamic-type
@@ -1627,15 +1629,15 @@ runtime type of the *expression*, as the following example shows:
     -> let someInstance: SomeBaseClass = SomeSubClass()
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamc type of SomeSubClass at runtime
-    -> someInstance.dynamicType.printClassName()
+    -> // it has a dynamic type of SomeSubClass at runtime
+    -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
 .. syntax-grammar::
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
+    dynamic-type-expression --> ``type`` ``(`` ``of`` ``:`` expression ``)``
 
 
 .. _Expressions_SubscriptExpression:

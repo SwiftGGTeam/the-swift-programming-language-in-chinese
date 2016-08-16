@@ -245,12 +245,12 @@ a different case from the same enumeration:
          case off, low, high
          mutating func next() {
             switch self {
-               case off:
-                  self = low
-               case low:
-                  self = high
-               case high:
-                  self = off
+               case .off:
+                  self = .low
+               case .low:
+                  self = .high
+               case .high:
+                  self = .off
             }
          }
       }
@@ -302,8 +302,7 @@ Here's how you call a type method on a class called ``SomeClass``:
 Within the body of a type method,
 the implicit ``self`` property refers to the type itself,
 rather than an instance of that type.
-For structures and enumerations,
-this means that you can use ``self`` to disambiguate between
+This means that you can use ``self`` to disambiguate between
 type properties and type method parameters,
 just as you do for instance properties and instance method parameters.
 
