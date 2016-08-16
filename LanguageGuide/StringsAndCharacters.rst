@@ -28,7 +28,7 @@ and provides support for accessing those characters in various Unicode represent
 .. note::
 
    Swift's ``String`` type is bridged with Foundation's ``NSString`` class.
-   Foundation also extends ``String`` to exposing methods defined by ``NSString``.
+   Foundation also extends ``String`` to expose methods defined by ``NSString``.
    This means, if you import Foundation,
    you can access those ``NSString`` methods on ``String`` without casting.
 
