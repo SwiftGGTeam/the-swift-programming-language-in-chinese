@@ -13,8 +13,8 @@ For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
 .. NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
     because they are declared with one or more type parameters.
 
-.. _GenericParametersAndArguments_GenericParameterClause:
 
+.. _GenericParametersAndArguments_GenericParameterClause:
 
 Generic Parameter Clause
 ------------------------
