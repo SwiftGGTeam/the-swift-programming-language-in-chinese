@@ -413,7 +413,7 @@ to a function or method *declaration*.
     Apply this attribute to a parameter's type in a method or function declaration
     to indicate that the parameter's value can be stored for later execution.
     This means that the value is allowed to outlive the lifetime of the call.
-    Function type parameters with the ``escaping`` declaration attribute
+    Function type parameters with the ``escaping`` type attribute
     require explicit use of ``self.`` for properties or methods.
     For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
