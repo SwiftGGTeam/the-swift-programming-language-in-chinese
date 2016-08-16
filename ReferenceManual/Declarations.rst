@@ -1377,10 +1377,10 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
-   struct-body --> ``{`` type-body-members-OPT ``}``
+   struct-body --> ``{`` struct-members-OPT ``}``
 
-   type-body-members --> type-body-member type-body-member-OPT
-   type-body-member --> declaration | compiler-control-statement
+   struct-members --> struct-member struct-members-OPT
+   struct-member --> declaration | compiler-control-statement
 
 
 .. _Declarations_ClassDeclaration:
@@ -1475,8 +1475,10 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
     class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
-    class-body --> ``{`` type-body-members-OPT ``}``
+    class-body --> ``{`` class-members-OPT ``}``
 
+    class-members --> class-member class-members-OPT
+    class-member --> declaration | compiler-control-statement
 
 .. _Declarations_ProtocolDeclaration:
 
@@ -1589,10 +1591,10 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-body-members-OPT ``}``
+    protocol-body --> ``{`` protocol-members-OPT ``}``
 
-    protocol-body-members --> protocol-body-member protocol-body-member-OPT
-    protocol-body-member --> protocol-member-declaration | compiler-control-statement
+    protocol-members --> protocol-member protocol-members-OPT
+    protocol-member --> protocol-member-declaration | compiler-control-statement
 
     protocol-member-declaration --> protocol-property-declaration
     protocol-member-declaration --> protocol-method-declaration
@@ -2122,8 +2124,10 @@ to ensure members of that type are properly initialized.
 
     extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
-    extension-body --> ``{`` type-body-members-OPT ``}``
+    extension-body --> ``{`` extension-members-OPT ``}``
 
+    extension-members --> extension-member extension-members-OPT
+    extension-member --> declaration | compiler-control-statement
 
 .. _Declarations_SubscriptDeclaration:
 
