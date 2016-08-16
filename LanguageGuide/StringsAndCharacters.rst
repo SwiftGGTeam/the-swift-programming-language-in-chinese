@@ -28,13 +28,13 @@ and provides support for accessing those characters in various Unicode represent
 .. note::
 
    Swift's ``String`` type is bridged with Foundation's ``NSString`` class.
-   If you are working with the Foundation framework in Cocoa,
-   the entire ``NSString`` API is available to call on any ``String`` value you create
-   when type cast to ``NSString``, as described in :ref:`TypeCasting_AnyObject`.
-   You can also use a ``String`` value with any API that requires an ``NSString`` instance.
+   Foundation also extends ``String`` to expose methods defined by ``NSString``.
+   This means, if you import Foundation,
+   you can access those ``NSString`` methods on ``String`` without casting.
 
    For more information about using ``String`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _StringsAndCharacters_Literals:
 
