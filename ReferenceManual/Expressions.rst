@@ -1397,7 +1397,7 @@ If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
-.. testcode:: explitic-implicit-init
+.. testcode:: explicit-implicit-init
 
     >> struct SomeType {
     >>     let data: Int
@@ -1412,10 +1412,10 @@ In all other cases, you must use an initializer expression.
     -> let s3 = type(of: someValue).init(data: 7)  // Valid
     << // s3 : SomeType = REPL.SomeType(data: 7)
     -> let s4 = type(of: someValue)(data: 5)       // Error
-    !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
+    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
     !! let s4 = type(of: someValue)(data: 5)       // Error
-    !!                               ^
-    !!                               .init
+    !!                              ^
+    !!                              .init
 
 .. langref-grammar
 
