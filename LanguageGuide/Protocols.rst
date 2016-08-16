@@ -1513,7 +1513,7 @@ When you define a protocol extension,
 you can specify constraints that conforming types
 must satisfy before the methods and properties of the extension are available.
 You write these constraints after the name of the protocol you're extending
-using a ``where`` clause,
+using a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 For instance,
