@@ -826,21 +826,20 @@ and a generic ``where`` clause:
             (_ someContainer: C1, _ anotherContainer: C2) -> Bool
             where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
    ---
-         // check that both containers contain the same number of items
+         // Check that both containers contain the same number of items.
          if someContainer.count != anotherContainer.count {
             return false
          }
    ---
-         // check each pair of items to see if they are equivalent
+         // Check each pair of items to see if they are equivalent.
          for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                return false
             }
          }
    ---
-         // all items match, so return true
+         // All items match, so return true.
          return true
-   ---
       }
 
 This function takes two arguments called
