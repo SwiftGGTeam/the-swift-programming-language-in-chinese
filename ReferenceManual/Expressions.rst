@@ -1504,7 +1504,7 @@ For example:
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (x: Int, y: Int) -> () = (Function)
+    << // b : (Int, Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
     !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
