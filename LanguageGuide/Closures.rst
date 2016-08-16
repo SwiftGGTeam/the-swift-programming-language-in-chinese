@@ -638,7 +638,7 @@ and adds it to an array that's declared outside the function.
 If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compiler error.
 
-Marking a closure with ``@escape``
+Marking a closure with ``@escaping``
 means you have to refer to ``self`` explicitly within the closure.
 
 .. testcode:: noescape-closure-as-argument
