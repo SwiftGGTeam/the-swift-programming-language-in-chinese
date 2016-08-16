@@ -548,7 +548,7 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !~ <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
+   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
    !! if value == valueToFind {
    !!          ^
 
@@ -790,22 +790,22 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_WhereClauses:
 
-Where Clauses
--------------
+Generic Where Clauses
+---------------------
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
 enable you to define requirements on the type parameters associated with
 a generic function or type.
 
 It can also be useful to define requirements for associated types.
-You do this by defining :newTerm:`where clauses`.
-A where clause enables you to require that
+You do this by defining :newTerm:`generic where clauses`.
+A generic ``where`` clause enables you to require that
 an associated type must conform to a certain protocol,
 or that certain type parameters and associated types must be the same.
-A where clause starts with the ``where`` keywords,
+A generic ``where`` clause starts with the ``where`` keyword,
 followed by constraints for associated types
 or equality relationships between types and associated types.
-You write a where clause right before the opening curly brace
+You write a generic ``where`` clause right before the opening curly brace
 of a type or function's body.
 
 The example below defines a generic function called ``allItemsMatch``,
@@ -817,7 +817,8 @@ and a value of ``false`` if they do not.
 The two containers to be checked do not have to be
 the same type of container (although they can be),
 but they do have to hold the same type of items.
-This requirement is expressed through a combination of type constraints and a where clause:
+This requirement is expressed through a combination of type constraints
+and a generic ``where`` clause:
 
 .. testcode:: associatedTypes
 
@@ -859,7 +860,7 @@ The following requirements are placed on the function's two type parameters:
   (written as ``C1.ItemType: Equatable``).
 
 The first and second requirements are defined in the function's type parameter list,
-and the third and fourth requirements are defined in the function's where clause.
+and the third and fourth requirements are defined in the function's generic ``where`` clause.
 
 These requirements mean:
 

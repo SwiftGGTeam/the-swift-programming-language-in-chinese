@@ -409,13 +409,13 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in :doc:`../LanguageGuide/ControlFlow`.
 
-A ``switch`` case can optionally contain a where clause after each pattern.
+A ``switch`` case can optionally contain a ``where`` clause after each pattern.
 A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
-If a where clause is present, the *statements* within the relevant case
+If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
-matches one of the patterns of the case and the expression of the where clause evaluates to ``true``.
+matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
@@ -429,7 +429,7 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
 
 As the above example shows, patterns in a case can also bind constants
 using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
-These constants (or variables) can then be referenced in a corresponding where clause
+These constants (or variables) can then be referenced in a corresponding ``where`` clause
 and throughout the rest of the code within the scope of the case.
 If the case contains multiple patterns that match the control expression,
 all of the patterns must contain the same constant or variable bindings,
