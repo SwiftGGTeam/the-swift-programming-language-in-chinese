@@ -17,16 +17,16 @@ In Swift, structures can:
 * Define subscripts to provide access to their values using subscript syntax
 * Define initializers to set up their initial state
 * Be extended to provide added functionality
-* Conform to protocols to [fill in]
+* Conform to protocols to implement a shared abstraction or cooperate with a default implementation
 
 For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
-.. _Structures_DefinitionSyntax:
+.. _Structures_StructureSyntax:
 
-Definition Syntax
------------------
+Structure Syntax
+----------------
 
 You introduce a structure with the ``struct`` keyword and place its
 definition within a pair of braces:
@@ -82,11 +82,6 @@ Swift infers that floating-point literals with no specified type
 are of type ``Double``.
 By contrast, the ``fahrenheit`` property is explicitly defined as a ``Double``.
 
-.. _Structures_InitializerSyntax:
-
-Initialization Syntax
----------------------
-
 The ``Temperature`` structure definition describes only
 what a ``Temperature`` instance will look like.
 It does not describe a specific ``Temperature`` instance.
@@ -125,10 +120,10 @@ set to the boiling point of water --- ``100.0`` degrees Celsius.
 
 Structure initialization is covered in more detail in :doc:`Initialization`.
 
-.. _Structures_AccessingProperties:
+.. _Structures_AccessingPropertiesOfStructures:
 
-Accessing Properties
---------------------
+Accessing Properties of Structures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can access a property
 of a structure instance

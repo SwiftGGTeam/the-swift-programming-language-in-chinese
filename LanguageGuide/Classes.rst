@@ -1,7 +1,7 @@
 Classes
 =======
 
-:newTerm:`Classes` provide the same functionality as structures.
+:newTerm:`Classes` in Swift can do all that structures can do and more.
 
 Like structures, classes can:
 
@@ -10,17 +10,18 @@ Like structures, classes can:
 * Define subscripts to provide access to their values using subscript syntax
 * Define initializers to set up their initial state
 * Be extended to provide added functionality
-* Conform to protocols to [fill in]
+* Conform to protocols to implement a shared abstraction or cooperate with a default implementation
 
 For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
-Classes have additional functionality that structures do not.
-Inheritance enables one class to inherit the characteristics of another.
-Type casting enables you to check and interpret the type of a class instance at runtime.
-Deinitializers enable an instance of a class to free up any resources it has assigned.
-Reference counting allows more than one reference to a class instance.
+Unlike structures, classes can:
+
+* Inherit the characteristics of another class
+* Have their instances type checked and interpreted at runtime through type casting
+* Free up assigned resources using a deinitializer
+* Have more than one reference to a class instance through reference counting
 
 For more information, see
 :doc:`Inheritance`,
@@ -28,24 +29,15 @@ For more information, see
 :doc:`Deinitialization`,
 and :doc:`AutomaticReferenceCounting`.
 
-.. note::
-
-   While structures do not inherit from one another
-   in the way that classes do,
-   you can achieve similar inheritance behavior with structures
-   by using protocols and protocol extensions.
-   For information on protocols and protocol extensions,
-   see :doc:`Protocols`.
-
 For an in-depth discussion of
 when to use classes and
 when to use structures,
 see :doc:`ChoosingBetweenClassesAndStructures`.
 
-.. _Classes_DefinitionSyntax:
+.. _Classes_ClassSyntax:
 
-Definition Syntax
------------------
+Class Syntax
+------------
 
 You introduce a class with the ``class`` keyword and place its definition
 within a pair of braces:
@@ -72,11 +64,6 @@ called ``width`` and ``height``.
 These two properties are inferred to be of type ``Int``
 by setting them to an initial integer value of ``0``.
 
-.. _Classes_InitializationSyntax:
-
-Initialization Syntax
----------------------
-
 The ``Window`` class describes only
 what a ``Window`` instance will look like.
 It does not describe a specific ``Window`` instance.
@@ -96,10 +83,10 @@ and initializes its properties to their default values.
 
 Class initialization is covered in more detail in :doc:`Initialization`.
 
-.. _Classes_AccessingProperties:
+.. _Classes_AccessingPropertiesOfClasses:
 
-Accessing Properties
---------------------
+Accessing Properties of Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can access the properties
 of a class instance
@@ -119,7 +106,7 @@ of ``someWindow``,
 and return their default initial value of ``0``.
 
 As with structures,
-you can use dot syntax
+you use dot syntax
 to assign a new value
 to a variable property:
 
@@ -145,50 +132,51 @@ to a function.
 Consider this example:
 
 .. testcode:: classes
+
     -> let rootWindow = Window()
-    -> var currentWindow = Window()
-    -> newWindow.width = 1024
+    << // rootWindow : Window = REPL.Window
+    -> rootWindow.width = 1024
 
 This example sets the ``width`` property
-of ``newWindow`` to ``1024``.
+of ``rootWindow`` to ``1024``.
 
-Next, a new constant called ``alsoNewWindow`` is assigned ``newWindow``:
+Next, a new variable called ``currentWindow`` is assigned ``rootWindow``:
 
 .. testcode:: classes
 
-    -> let alsoNewWindow = newWindow
-    << // alsoNewWindow : Window = REPL.Window
-    -> alsoNewWindow.width = 800
+    -> var currentWindow = rootWindow
+    << // currentWindow : Window = REPL.Window
+    -> currentWindow.width = 800
 
 Because classes are reference types,
-``newWindow`` and ``alsoNewWindow``
+``rootWindow`` and ``currentWindow``
 actually both refer to the *same* ``Window`` instance.
-As a result, changing the width of ``alsoNewWindow``
-changes the width of ``newWindow``.
-``newWindow`` and ``alsoNewWindow`` are effectively
+As a result, changing the width of ``currentWindow``
+changes the width of ``rootWindow``.
+``rootWindow`` and ``currentWindow`` are effectively
 two different names for the same single instance.
 
-Checking the ``width`` property of ``newWindow``
+Checking the ``width`` property of ``rootWindow``
 confirms that it changed to `800`:
 
 .. testcode:: classes
 
-    -> print("The width of newWindow is now \(newWindow.width)")
-    <- The width of newWindow is now 800
+    -> print("The width of rootWindow is now \(rootWindow.width)")
+    <- The width of rootWindow is now 800
 
-Note that ``newWindow`` and ``alsoNewWindow``
-are declared as *constants*,
-rather than variables.
-However, you can still change
-the properties of ``newWindow`` and ``alsoNewWindow``
-such as ``newWindow.width`` and ``alsoNewWindow.width``.
-This is because the values
-of the ``newWindow`` and ``alsoNewWindow`` constants themselves
-do not "store" the ``Window`` instance ---
-they both *refer* to a ``Window`` instance.
-It is the ``width`` property
-of the underlying ``Window`` that is changed ---
-not the values of the constant references to that ``Window``.
+.. note:: 
+   ``rootWindow`` is declared as a *constant*,
+   rather than a variable.
+   However, you can still change
+   the properties of ``rootWindow``
+   such as ``rootWindow.width``.
+   This is because the value
+   of the ``rootWindow`` constant itself
+   does not "store" the ``Window`` instance ---
+   it *refers* to a ``Window`` instance.
+   It is the ``width`` property
+   of the underlying ``Window`` that is changed ---
+   not the value of the constant reference to that ``Window``.
 
 .. _Classes_ComparingReferenceTypesForIdentity:
 
@@ -200,29 +188,22 @@ it is possible for multiple constants and variables
 to refer to the same single instance of a class
 behind the scenes.
 
-As mentioned in :ref:`BasicOperators_ComparisonOperators`
-Swift provides two identity operators (=== and !===)
+As mentioned in :ref:`BasicOperators_ComparisonOperators`,
+Swift provides two identity operators (``===`` and ``!==``)
 that allow you to check
 if two constants or variables
 refer to the exact same instance of a class.
 
 Here is an example
-that uses the ``newWindow`` and ``alsoNewWindow`` instances from above
+that uses the ``rootWindow`` and ``currentWindow`` instances from above
 to show an identity operator in use:
 
 .. testcode:: classes
 
-    -> if newWindow === alsoNewWindow {
-           print("newWindow and alsoNewWindow refer to the same Window instance")
+    -> if currentWindow === rootWindow {
+           print("rootWindow and currentWindow refer to the same Window instance")
        }
-    <- newWindow and alsoNewWindow refer to the same Window instance
-
-When you define your own custom classes and structures,
-it is your responsibility to decide
-what qualifies as two instances being “equal”.
-The process of defining your own implementations
-of the “equal to” and “not equal to” operators
-is described in :ref:`AdvancedOperators_EquivalenceOperators`.
+    <- rootWindow and currentWindow refer to the same Window instance
 
 .. _Classes_WorkingWithPointers:
 
