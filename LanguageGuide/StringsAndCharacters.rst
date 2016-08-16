@@ -28,7 +28,7 @@ and provides support for accessing those characters in various Unicode represent
 .. note::
 
    Swift's ``String`` type is bridged with Foundation's ``NSString`` class.
-   Foundation also extends ``String`` to exposing methods defined by ``NSString``.
+   Foundation also extends ``String`` to expose methods defined by ``NSString``.
    This means, if you import Foundation,
    you can access those ``NSString`` methods on ``String`` without casting.
 
@@ -391,9 +391,9 @@ in the second case, it is a cluster of two scalars:
    -> let eAcute: Character = "\u{E9}"                         // é
    << // eAcute : Character = "é"
    -> let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
-   << // combinedEAcute : Character = "é"
+   << // combinedEAcute : Character = "é"
    /> eAcute is \(eAcute), combinedEAcute is \(combinedEAcute)
-   </ eAcute is é, combinedEAcute is é
+   </ eAcute is é, combinedEAcute is é
 
 Extended grapheme clusters are a flexible way to represent
 many complex script characters as a single ``Character`` value.
@@ -406,9 +406,9 @@ Both of these representations qualify as a single ``Character`` value in Swift:
    -> let precomposed: Character = "\u{D55C}"                  // 한
    << // precomposed : Character = "한"
    -> let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
-   << // decomposed : Character = "한"
+   << // decomposed : Character = "한"
    /> precomposed is \(precomposed), decomposed is \(decomposed)
-   </ precomposed is 한, decomposed is 한
+   </ precomposed is 한, decomposed is 한
 
 Extended grapheme clusters enable
 scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD``)
@@ -455,7 +455,7 @@ a string's character count.
 For example, if you initialize a new string with the four-character word ``cafe``,
 and then append a ``COMBINING ACUTE ACCENT`` (``U+0301``) to the end of the string,
 the resulting string will still have a character count of ``4``,
-with a fourth character of ``é``, not ``e``:
+with a fourth character of ``é``, not ``e``:
 
 .. testcode:: characterCount
 
@@ -467,7 +467,7 @@ with a fourth character of ``é``, not ``e``:
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
    -> print("the number of characters in \(word) is \(word.characters.count)")
-   <- the number of characters in café is 4
+   <- the number of characters in café is 4
 
 .. note::
 
@@ -677,7 +677,7 @@ even if they are composed from different Unicode scalars behind the scenes.
    -> let eAcute: Character = "\u{E9}"
    << // eAcute : Character = "é"
    -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = "é"
+   << // combinedEAcute : Character = "é"
    -> if eAcute != combinedEAcute {
          print("not equivalent, which is not expected")
       } else {
@@ -690,7 +690,7 @@ even if they are composed from different Unicode scalars behind the scenes.
    -> let cafe1 = "caf\u{E9}"
    << // cafe1 : String = "café"
    -> let cafe2 = "caf\u{65}\u{301}"
-   << // cafe2 : String = "café"
+   << // cafe2 : String = "café"
    -> if cafe1 != cafe2 {
          print("not equivalent, which is not expected")
       } else {
@@ -710,9 +710,9 @@ and so they are considered to be canonically equivalent:
    -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
    << // eAcuteQuestion : String = "Voulez-vous un café?"
    ---
-   // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+   // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
    -> let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
-   << // combinedEAcuteQuestion : String = "Voulez-vous un café?"
+   << // combinedEAcuteQuestion : String = "Voulez-vous un café?"
    ---
    -> if eAcuteQuestion == combinedEAcuteQuestion {
          print("These two strings are considered equal")
