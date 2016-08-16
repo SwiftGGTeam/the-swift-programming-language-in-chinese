@@ -640,6 +640,11 @@ you would get a compiler error.
 
 Marking a closure with ``@escaping``
 means you have to refer to ``self`` explicitly within the closure.
+For example, in the code below,
+the closure passed to ``someFunctionWithEscapingClosure(_:)`` is an escaping closure,
+which means it needs to refer to ``self`` explicitly.
+In contrast, the closure passed to ``someFunctionWithNonescapingClosure(_:)``
+is a nonescaping closure, which means it can refer to ``self`` implicitly.
 
 .. testcode:: noescape-closure-as-argument
 
@@ -650,8 +655,8 @@ means you have to refer to ``self`` explicitly within the closure.
     -> class SomeClass {
            var x = 10
            func doSomething() {
-               someFunctionWithNonescapingClosure { x = 200 }
                someFunctionWithEscapingClosure { self.x = 100 }
+               someFunctionWithNonescapingClosure { x = 200 }
            }
        }
     ---
