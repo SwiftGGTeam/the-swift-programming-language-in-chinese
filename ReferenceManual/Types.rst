@@ -246,8 +246,8 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
     Grammar of a function type
 
-    function-type --> ``(`` type ``)`` ``throws``-OPT ``->`` type
-    function-type --> ``(`` type ``)`` ``rethrows`` ``->`` type
+    function-type --> attributes-OPT ``(`` type ``)`` ``throws``-OPT ``->`` type
+    function-type --> attributes-OPT ``(`` type ``)`` ``rethrows`` ``->`` type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.

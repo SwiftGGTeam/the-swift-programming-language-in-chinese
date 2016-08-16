@@ -956,7 +956,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
@@ -1045,6 +1045,7 @@ is ``Int``, not ``(Int)``.
     parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
+    expression-element --> operator | identifier ``:`` operator
 
 
 .. _Expressions_WildcardExpression:
