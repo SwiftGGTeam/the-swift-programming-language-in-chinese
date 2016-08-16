@@ -1,11 +1,7 @@
 Classes
 =======
 
-:newTerm:`Classes` in Swift provide much 
-of the same functionality as structures,
-albeit often at the expense
-of the improved safety, readability and performance
-that structures provide.
+:newTerm:`Classes` provide the same functionality as structures.
 
 Like structures, classes can:
 
@@ -13,19 +9,18 @@ Like structures, classes can:
 * Define methods to provide functionality
 * Define subscripts to provide access to their values using subscript syntax
 * Define initializers to set up their initial state
-* Be extended to expand their functionality beyond a default implementation
+* Be extended to provide added functionality
 * Conform to protocols to [fill in]
 
 For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
-Classes have additional functionality that structures do not:
-
-* Inheritance enables one class to inherit the characteristics of another.
-* Type casting enables you to check and interpret the type of a class instance at runtime.
-* Deinitializers enable an instance of a class to free up any resources it has assigned.
-* Reference counting allows more than one reference to a class instance.
+Classes have additional functionality that structures do not.
+Inheritance enables one class to inherit the characteristics of another.
+Type casting enables you to check and interpret the type of a class instance at runtime.
+Deinitializers enable an instance of a class to free up any resources it has assigned.
+Reference counting allows more than one reference to a class instance.
 
 For more information, see
 :doc:`Inheritance`,
@@ -42,10 +37,10 @@ and :doc:`AutomaticReferenceCounting`.
    For information on protocols and protocol extensions,
    see :doc:`Protocols`.
 
-For an in-depth discussion
-of classes and structures and
-when to use which,
-see [chapter that has yet to be written]
+For an in-depth discussion of
+when to use classes and
+when to use structures,
+see :doc:`ChoosingBetweenClassesAndStructures`.
 
 .. _Classes_DefinitionSyntax:
 
@@ -57,7 +52,7 @@ within a pair of braces:
 
 .. testcode:: classes
 
-    -> class someClass {
+    -> class SomeClass {
            // class definition goes here
        }
 
@@ -99,7 +94,7 @@ followed by empty parentheses:
 This creates a new instance of the ``Window`` class
 and initializes its properties to their default values.
 
-Class initialization is covered in more detail in :doc:`Initialization`
+Class initialization is covered in more detail in :doc:`Initialization`.
 
 .. _Classes_AccessingProperties:
 
@@ -123,7 +118,8 @@ refer to the ``width`` and ``height`` properties
 of ``someWindow``,
 and return their default initial value of ``0``.
 
-You can use dot syntax
+As with structures,
+you can use dot syntax
 to assign a new value
 to a variable property:
 
@@ -133,52 +129,6 @@ to a variable property:
     -> print("The width of the window is now \(someWindow.width)")
     <- The width of the window is now 1024
 
-To show how you can use dot syntax
-to access sub-properties,
-consider the following addition
-to the ``Window`` class:
-
-.. testcode:: classesExpanded
-
-    -> struct Point {
-           var x = 0
-           var y = 0
-       }
-    -> class Window {
-           var origin = Point()
-           
-           var width = 0
-           var height = 0
-       }
-
-In order to store the window's origin,
-a structure called ``Point`` is created
-with the stored variable properties ``x`` and ``y``.
-The ``Window`` class is now initialized
-with a new ``origin`` property
-initialized to a ``Point`` structure instance.
-
-You can access sub-properties,
-such as the ``x`` and ``y`` properties
-in the ``origin`` property of a ``Window``:
-
-.. testcode:: classesExpanded
-
-    -> let newWindow = Window()
-    << // newWindow : Window = REPL.Window
-    -> print("The origin of newWindow is (\(newWindow.origin.x), \(newWindow.origin.y))")
-    <- The origin of newWindow is (0, 0)
-
-.. note::
-
-   Unlike Objective-C,
-   Swift enables you to set sub-properties
-   of a structure property directly.
-   In the last example above,
-   the ``width`` property of the ``resolution`` property
-   of ``someVideoMode`` is set directly,
-   without your needing to set
-   the entire ``resolution`` property to a new value.
 
 .. _Classes_ClassesAreReferenceTypes:
 
@@ -192,12 +142,11 @@ to a variable or constant,
 or when it is passed
 to a function.
 
-Here is an example,
-using the ``newWindow`` instance
-of the ``Window`` class defined above:
+Consider this example:
 
-.. testcode:: classesExpanded
-
+.. testcode:: classes
+    -> let rootWindow = Window()
+    -> var currentWindow = Window()
     -> newWindow.width = 1024
 
 This example sets the ``width`` property
@@ -205,7 +154,7 @@ of ``newWindow`` to ``1024``.
 
 Next, a new constant called ``alsoNewWindow`` is assigned ``newWindow``:
 
-.. testcode:: classesExpanded
+.. testcode:: classes
 
     -> let alsoNewWindow = newWindow
     << // alsoNewWindow : Window = REPL.Window
@@ -222,7 +171,7 @@ two different names for the same single instance.
 Checking the ``width`` property of ``newWindow``
 confirms that it changed to `800`:
 
-.. testcode:: classesExpanded
+.. testcode:: classes
 
     -> print("The width of newWindow is now \(newWindow.width)")
     <- The width of newWindow is now 800
@@ -241,10 +190,10 @@ It is the ``width`` property
 of the underlying ``Window`` that is changed ---
 not the values of the constant references to that ``Window``.
 
-.. _Classes_ComparingIdentitiesOfReferenceTypes:
+.. _Classes_ComparingReferenceTypesForIdentity:
 
-Comparing Identities of Reference Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Comparing Reference Types For Identity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
 it is possible for multiple constants and variables
@@ -261,25 +210,12 @@ Here is an example
 that uses the ``newWindow`` and ``alsoNewWindow`` instances from above
 to show an identity operator in use:
 
-.. testcode:: classesExpanded
+.. testcode:: classes
 
     -> if newWindow === alsoNewWindow {
            print("newWindow and alsoNewWindow refer to the same Window instance")
        }
     <- newWindow and alsoNewWindow refer to the same Window instance
-
-Note that “identical to” (represented by three equals signs, or ``===``)
-does not mean the same thing
-as “equal to” (represented by two equals signs, or ``==``):
-
-* “Identical to” means that
-  two constants or variables
-  of class type refer
-  to exactly the same class instance.
-* “Equal to” means that
-  two instances are considered “equal” or “equivalent” in value,
-  for some appropriate meaning of “equal”,
-  as defined by the type's designer.
 
 When you define your own custom classes and structures,
 it is your responsibility to decide
@@ -307,13 +243,14 @@ like any other Swift constant or variable.
 
 .. TODO: Add a brief comment on why this protection is a good thing
 
-While pointers are handled for you in Swift,
-there are facilities to work with pointers.
-It is still possible to get access
-to places in memory,
-but you do so at your own risk
-as the compiler can no longer
-ensure safety for you.
+.. note:: 
 
-For information on unsafe pointers,
-see [https://developer.apple.com/reference/swift/unsafepointer].
+    Swift’s Standard Library provides utility types
+    that enable you to work with memory pointers
+    to Swift reference types for interoperability
+    with low-level C code.
+    For more information,
+    see [name of appropriate Swift type or types]
+    in the Swift Standard Library Reference. 
+
+.. url for unsafe pointer doc: https://developer.apple.com/library/watchos/documentation/Swift/Reference/Swift_UnsafePointer_Structure/index.html#//apple_ref/swift/struct/s:SP

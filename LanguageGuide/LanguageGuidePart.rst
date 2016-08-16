@@ -30,4 +30,5 @@ Language Guide
    Protocols
    Generics
    AccessControl
+   ChoosingBetweenClassesAndStructures
    AdvancedOperators

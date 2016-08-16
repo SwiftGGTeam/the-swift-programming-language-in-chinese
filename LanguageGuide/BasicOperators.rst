@@ -308,7 +308,7 @@ Use these operators to test
 whether or not two object references
 both refer to the same object instance.
 
-For more information, see :ref:`Classes_ComparingIdentitiesOfReferenceTypes`
+For more information, see :ref:`Classes_ComparingReferenceTypesForIdentity`
 
 .. note:: 
 
