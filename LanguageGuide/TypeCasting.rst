@@ -242,8 +242,8 @@ Type Casting for Any and AnyObject
 
 Swift provides two special types for working with non-specific types:
 
-* ``AnyObject`` can represent an instance of any class type.
 * ``Any`` can represent an instance of any type at all, including function types.
+* ``AnyObject`` can represent an instance of any class type.
 
 .. note::
 
@@ -251,61 +251,6 @@ Swift provides two special types for working with non-specific types:
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
 
-
-.. _TypeCasting_AnyObject:
-
-AnyObject
-~~~~~~~~~
-
-When working with Cocoa APIs, sometimes you receive
-an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
-Objective-C currently supports explicitly typed arrays,
-but older versions of the language did not have this feature.
-However, you can often be confident about the type of objects contained in such an array
-just from the information you know about the API that provided the array.
-
-In these situations, you can use the forced version of the type cast operator (``as!``)
-to downcast each item in the array to a more specific class type than ``AnyObject``,
-without the need for optional unwrapping.
-
-The example below defines an array of type ``[AnyObject]``
-and populates this array with three instances of the ``Movie`` class:
-
-.. testcode:: typeCasting
-
-   -> let someObjects: [AnyObject] = [
-         Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
-         Movie(name: "Moon", director: "Duncan Jones"),
-         Movie(name: "Alien", director: "Ridley Scott")
-      ]
-   << // someObjects : [AnyObject] = [REPL.Movie, REPL.Movie, REPL.Movie]
-
-Because this array is known to contain only ``Movie`` instances,
-you can downcast and unwrap directly to a nonoptional ``Movie``
-with the forced version of the type cast operator (``as!``):
-
-.. testcode:: typeCasting
-
-   -> for object in someObjects {
-         let movie = object as! Movie
-         print("Movie: \(movie.name), dir. \(movie.director)")
-      }
-   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
-   </ Movie: Moon, dir. Duncan Jones
-   </ Movie: Alien, dir. Ridley Scott
-
-For an even shorter form of this loop,
-downcast the ``someObjects`` array to a type of ``[Movie]``
-instead of downcasting each item:
-
-.. testcode:: typeCasting
-
-   -> for movie in someObjects as! [Movie] {
-         print("Movie: \(movie.name), dir. \(movie.director)")
-      }
-   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
-   </ Movie: Moon, dir. Duncan Jones
-   </ Movie: Alien, dir. Ridley Scott
 
 .. _TypeCasting_Any:
 
@@ -381,3 +326,58 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 
+
+.. _TypeCasting_AnyObject:
+
+AnyObject
+~~~~~~~~~
+
+When working with Cocoa APIs, sometimes you receive
+an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
+Objective-C currently supports explicitly typed arrays,
+but older versions of the language did not have this feature.
+However, you can often be confident about the type of objects contained in such an array
+just from the information you know about the API that provided the array.
+
+In these situations, you can use the forced version of the type cast operator (``as!``)
+to downcast each item in the array to a more specific class type than ``AnyObject``,
+without the need for optional unwrapping.
+
+The example below defines an array of type ``[AnyObject]``
+and populates this array with three instances of the ``Movie`` class:
+
+.. testcode:: typeCasting
+
+   -> let someObjects: [AnyObject] = [
+         Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
+         Movie(name: "Moon", director: "Duncan Jones"),
+         Movie(name: "Alien", director: "Ridley Scott")
+      ]
+   << // someObjects : [AnyObject] = [REPL.Movie, REPL.Movie, REPL.Movie]
+
+Because this array is known to contain only ``Movie`` instances,
+you can downcast and unwrap directly to a nonoptional ``Movie``
+with the forced version of the type cast operator (``as!``):
+
+.. testcode:: typeCasting
+
+   -> for object in someObjects {
+         let movie = object as! Movie
+         print("Movie: \(movie.name), dir. \(movie.director)")
+      }
+   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
+   </ Movie: Moon, dir. Duncan Jones
+   </ Movie: Alien, dir. Ridley Scott
+
+For an even shorter form of this loop,
+downcast the ``someObjects`` array to a type of ``[Movie]``
+instead of downcasting each item:
+
+.. testcode:: typeCasting
+
+   -> for movie in someObjects as! [Movie] {
+         print("Movie: \(movie.name), dir. \(movie.director)")
+      }
+   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
+   </ Movie: Moon, dir. Duncan Jones
+   </ Movie: Alien, dir. Ridley Scott
