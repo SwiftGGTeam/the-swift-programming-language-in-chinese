@@ -22,7 +22,7 @@ Generic Parameter Clause
 A :newTerm:`generic parameter clause` specifies the type parameters of a generic
 type or function, along with any associated constraints and requirements on those parameters.
 A generic parameter clause is enclosed in angle brackets (<>)
-and has one of the following forms:
+and has the following form:
 
 .. syntax-outline::
 
