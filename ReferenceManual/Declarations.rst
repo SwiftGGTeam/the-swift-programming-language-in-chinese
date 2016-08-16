@@ -486,16 +486,14 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attributes-OPT mutation-attribute-OPT ``get`` code-block
-    setter-clause --> attributes-OPT mutation-attribute-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT mutation-modifier-OPT ``get`` code-block
+    setter-clause --> attributes-OPT mutation-modifier-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attributes-OPT mutation-attribute-OPT ``get``
-    setter-keyword-clause --> attributes-OPT mutation-attribute-OPT ``set``
-
-    mutation-attribute --> ``mutating`` | ``nonmutating``
+    getter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``get``
+    setter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
@@ -755,7 +753,7 @@ all mutation has finished before the function returns.
           // Operate on localX asynchronously, then wait before returning.
           queue.async { someMutatingOperation(&localX) }
           queue.sync {}
-       }  
+       }
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
@@ -1592,7 +1590,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-body-members-OPT ``}``
-    
+
     protocol-body-members --> protocol-body-member protocol-body-member-OPT
     protocol-body-member --> protocol-member-declaration | compiler-control-statement
 
@@ -2438,10 +2436,13 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
+    declaration-modifier --> mutation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
     access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+
+    mutation-modifier --> ``mutating`` | ``nonmutating``
