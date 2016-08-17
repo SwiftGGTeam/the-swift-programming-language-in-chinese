@@ -747,19 +747,16 @@ the ``+`` operator followed by the ``.+`` operator.
 
 .. assertion:: dot-operator-must-start-with-dot
 
-   >> infix operator +.+ { }
-   !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
-   !! infix operator +.+ { }
+   >> infix operator +.+ ;
+   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: statement cannot begin with a closure expression
-   !! infix operator +.+ { }
-   !!                    ^
-   !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
-   !! infix operator +.+ { }
-   !!                    ^
-   !!                    _ =
-   !! <REPL Input>:1:20: error: braced block of statements is an unused closure
-   !! infix operator +.+ { }
+   !!                 ;
+   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !! infix operator +.+ ;
+   !!                 ^
+   !! <REPL Input>:1:20: error: expected expression
+   !! infix operator +.+ ;
    !!                    ^
    >> infix operator .+
    >> infix operator .+.
