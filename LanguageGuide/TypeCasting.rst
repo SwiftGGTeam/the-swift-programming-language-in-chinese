@@ -220,6 +220,26 @@ A similar principle is used to check for ``Song`` instances,
 and to print an appropriate description (including ``artist`` name)
 whenever a ``Song`` is found in the library.
 
+The example above iterated over every element in ``library``
+and handled each type differently.
+If you're interested in only some of the items in the array,
+you can also include the type check as part of the loop,
+using a ``where`` clause.
+The ``where`` clause has a condition such as ``movie is Movie`` ---
+elements that don't satisfy the ``where`` clause are skipped.
+
+.. testcode:: typeCasting
+
+   -> for movie in library where movie is Movie {
+          print("Movie: \(movie.name), dir. \(movie.director)")
+      }
+   ---
+   </ Movie: Casablanca, dir. Michael Curtiz
+   </ Movie: Citizen Kane, dir. Orson Welles
+
+This example iterates over only the instances of ``Movie`` in the library,
+skipping instances of any other type.
+
 .. note::
 
    Casting does not actually modify the instance or change its values.
