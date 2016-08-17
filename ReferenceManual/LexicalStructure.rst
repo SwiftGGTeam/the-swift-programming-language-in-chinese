@@ -747,22 +747,19 @@ the ``+`` operator followed by the ``.+`` operator.
 
 .. assertion:: dot-operator-must-start-with-dot
 
-   >> infix operator +.+ { }
-   !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
-   !! infix operator +.+ { }
+   >> infix operator +.+ ;
+   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: statement cannot begin with a closure expression
-   !! infix operator +.+ { }
+   !!                 ;
+   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !! infix operator +.+ ;
+   !!                 ^
+   !! <REPL Input>:1:20: error: expected expression
+   !! infix operator +.+ ;
    !!                    ^
-   !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
-   !! infix operator +.+ { }
-   !!                    ^
-   !!                    _ =
-   !! <REPL Input>:1:20: error: braced block of statements is an unused closure
-   !! infix operator +.+ { }
-   !!                    ^
-   >> infix operator .+ { }
-   >> infix operator .+. { }
+   >> infix operator .+
+   >> infix operator .+.
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
@@ -773,8 +770,8 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 
 
    >> struct Num { var value: Int }
-      postfix operator + {}
-      postfix operator +* {}
+      postfix operator +
+      postfix operator +*
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
@@ -786,7 +783,7 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 
 .. assertion:: postfix-operator-cant-start-with-question-mark
 
-   >> postfix operator ?+ {}
+   >> postfix operator ?+
       postfix func ?+ (x: Int) -> Int {
           if x > 10 {
               return x

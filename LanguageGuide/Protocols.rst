@@ -504,14 +504,14 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
    -> class C: P { required init(i: Int) {} }
    -> struct S: P { init(i: Int) {} }
 
-.. The following test fails due to a compiler segfault
-   <rdar://problem/27570549> Swift compiler segfaults on input: protocol P { init(i: Int) }
-
 .. assertion:: nonFailableRequirementCanBeSatisfiedByIUOInitializer
 
    -> protocol P { init(i: Int) }
    -> class C: P { required init!(i: Int) {} }
    -> struct S: P { init!(i: Int) {} }
+   xx Compiler segfaults due to <rdar://problem/27570549>
+
+.. When/if the above Radar is fixed, remove the "xx" expectation line.
 
 .. _Protocols_ProtocolsAsTypes:
 

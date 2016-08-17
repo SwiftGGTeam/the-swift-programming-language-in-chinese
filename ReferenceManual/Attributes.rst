@@ -293,7 +293,7 @@ the ``noreturn`` attribute to a function or method *type*.
     .. testcode:: nsapplicationmain
 
        -> import AppKit
-       -> NSApplicationMain(Process.argc, Process.unsafeArgv)
+       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
        !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
 ``NSCopying``

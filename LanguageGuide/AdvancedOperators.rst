@@ -858,8 +858,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
 
-   -> prefix operator +++ {}
-   -> postfix operator --- {}
+   -> prefix operator +++
+   -> postfix operator ---
    -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
    -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
    -> +++1---
