@@ -245,11 +245,9 @@ Swift provides two special types for working with non-specific types:
 * ``Any`` can represent an instance of any type at all, including function types.
 * ``AnyObject`` can represent an instance of any class type.
 
-.. note::
-
-   Use ``Any`` and ``AnyObject`` only when you explicitly need
-   the behavior and capabilities they provide.
-   It is always better to be specific about the types you expect to work with in your code.
+Use ``Any`` and ``AnyObject`` only when you explicitly need
+the behavior and capabilities they provide.
+It is always better to be specific about the types you expect to work with in your code.
 
 
 .. _TypeCasting_Any:
