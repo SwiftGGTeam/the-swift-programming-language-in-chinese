@@ -243,28 +243,6 @@ but the returned value is not used.
    cannot allow control to fall out of the bottom of the function
    without returning a value,
    and attempting to do so will result in a compile-time error.
-   
-Non-Returning Functions
-++++++++++++++++++++++
-
-Swift defines a type ``Never``
-that indicates that a function or method doesn't return to its caller.
-Functions or methods with the ``Never`` return type are called :newTerm:`non-returning`.
-Non-returning functions and methods should either throw an irrecoverable error 
-or begin a sequence of work that is intended to continue indefinitely.
-Code that would otherwise run immediately after a call to
-a function or method with the ``Never`` return type will instead never be executed.
-Functions or methods marked with ``throws`` can return control flow
-to an appropriate ``catch`` block even when the return type is ``Never``.
-
-The ``Never`` type is an :newTerm:`uninhabited type`,
-meaning that no value can be returned from a function or method declared
-with a return type of ``Never``.
-As a result, no function or method declared with the ``Never`` return type
-should use the ``return`` statement.
-
-You can override a function or method that returns ``Never``,
-but the new function or method must keep the same return type and non-returning behavior.
 
 .. _Functions_FunctionsWithMultipleReturnValues:
 
