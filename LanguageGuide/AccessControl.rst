@@ -68,22 +68,20 @@ and also relative to the module that source file belongs to.
   You typically use internal access when defining
   an app's or a framework's internal structure.
 
-* :newTerm:`Private access`
+* :newTerm:`File-private access`
   restricts the use of an entity to its own defining source file.
-  Use private access to hide the implementation details of
-  a specific piece of functionality.
+  Use file-private access to hide the implementation details of
+  a specific piece of functionality
+  when those details are used within an entire file.
+
+* :newTerm:`Private access`
+  restricts the use of an entity to the enclosing declaration.
+  Use file private access to hide the implementation details of
+  a specific piece of functionality
+  when those details are used only within a single declaration.
 
 Public access is the highest (least restrictive) access level
 and private access is the lowest (or most restrictive) access level.
-
-.. note::
-
-   Private access in Swift differs from private access in most other languages,
-   as it's scoped to the enclosing source file rather than to the enclosing declaration.
-   This means that a type can access any private entities
-   that are defined in the same source file as itself,
-   but an extension cannot access that type's private members
-   if it's defined in a separate source file.
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
@@ -96,7 +94,7 @@ a lower (more restrictive) access level.*
 
 For example:
 
-* A public variable cannot be defined as having an internal or private type,
+* A public variable cannot be defined as having an internal, file private, or private type,
   because the type might not be available everywhere that the public variable is used.
 * A function cannot have a higher access level than its parameter types and return type,
   because the function could be used in situations where
@@ -127,7 +125,7 @@ the code in your app is typically self-contained within the app
 and does not need to be made available outside of the app's module.
 The default access level of internal already matches this requirement.
 Therefore, you do not need to specify a custom access level.
-You may, however, want to mark some parts of your code as private
+You may, however, want to mark some parts of your code as file-private or private
 in order to hide their implementation details from other code within the app's module.
 
 .. _AccessControl_AccessLevelsForFrameworks:
@@ -146,7 +144,7 @@ This public-facing interface is the application programming interface
 
    Any internal implementation details of your framework can still use
    the default access level of internal,
-   or can be marked as private if you want to hide them from
+   or can be marked as file-private or private if you want to hide them from
    other parts of the framework's internal code.
    You need to mark an entity as public only if you want it to become
    part of your framework's API.
@@ -171,7 +169,7 @@ Access Control Syntax
 ---------------------
 
 Define the access level for an entity by placing
-one of the ``public``, ``internal``, or ``private`` modifiers
+one of the ``public``, ``internal``, ``fileprivate``, or ``private`` modifiers
 before the entity's introducer:
 
 .. testcode:: accessControlSyntax
@@ -206,10 +204,10 @@ Custom Types
 If you want to specify an explicit access level for a custom type,
 do so at the point that you define the type.
 The new type can then be used wherever its access level permits.
-For example, if you define a private class,
+For example, if you define a file private class,
 that class can only be used as the type of a property,
 or as a function parameter or return type,
-in the source file in which the private class is defined.
+in the source file in which the file private class is defined.
 
 The access control level of a type also affects
 the default access level of that type's :newTerm:`members`
