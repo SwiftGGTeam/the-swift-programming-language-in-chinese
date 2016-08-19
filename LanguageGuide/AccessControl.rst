@@ -244,7 +244,7 @@ the default access level of the type's members will be internal.
          private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
-   -> fileprivate class SomeFilePrivateClass {            // explicitly file-private class
+   -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
          func someFilePrivateMethod() {}              // implicitly file-private class member
          private func somePrivateMethod() {}          // explicitly private class member
       }
@@ -575,6 +575,9 @@ the original implementation of ``someMethod()``:
    -> internal class B: A {
          override internal func someMethod() {}
       }
+   !! <REPL Input>:2:29: error: method does not override any method from its superclass
+   !! override internal func someMethod() {}
+   !! ~~~~~~~~               ^
 
 It is even valid for a subclass member to call
 a superclass member that has lower access permissions than the subclass member,
@@ -594,6 +597,15 @@ or within the same module as the superclass for an internal member call):
             super.someMethod()
          }
       }
+   !! <REPL Input>:2:29: error: method does not override any method from its superclass
+   !! override internal func someMethod() {
+   !! ~~~~~~~~               ^
+   !! <REPL Input>:3:15: error: 'someMethod' is inaccessible due to 'private' protection level
+   !! super.someMethod()
+   !! ^
+   !! <REPL Input>:2:19: note: 'someMethod' declared here
+   !! private func someMethod() {}
+   !! ^
 
 Because superclass ``A`` and subclass ``B`` are defined in the same source file,
 it is valid for the ``B`` implementation of ``someMethod()`` to call
