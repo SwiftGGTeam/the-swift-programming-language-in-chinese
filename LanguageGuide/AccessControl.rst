@@ -184,7 +184,7 @@ before the entity's introducer:
    -> internal let someInternalConstant = 0
    << // someInternalConstant : Int = 0
    -> fileprivate func someFilePrivateFunction() {}
-   -> private typealias SomePrivateType = ()
+   -> private func somePrivateFunction() {}
 
 Unless otherwise specified, the default access level is internal,
 as described in :ref:`AccessControl_DefaultAccessLevels`.
