@@ -176,13 +176,15 @@ before the entity's introducer:
 
    -> public class SomePublicClass {}
    -> internal class SomeInternalClass {}
+   -> fileprivate class SomeFilePrivateClass {}
    -> private class SomePrivateClass {}
    ---
    -> public var somePublicVariable = 0
    << // somePublicVariable : Int = 0
    -> internal let someInternalConstant = 0
    << // someInternalConstant : Int = 0
-   -> private func somePrivateFunction() {}
+   -> fileprivate func someFilePrivateFunction() {}
+   -> private typealias SomePrivateType = ()
 
 Unless otherwise specified, the default access level is internal,
 as described in :ref:`AccessControl_DefaultAccessLevels`.
@@ -204,25 +206,24 @@ Custom Types
 If you want to specify an explicit access level for a custom type,
 do so at the point that you define the type.
 The new type can then be used wherever its access level permits.
-For example, if you define a file private class,
+For example, if you define a file-private class,
 that class can only be used as the type of a property,
 or as a function parameter or return type,
-in the source file in which the file private class is defined.
+in the source file in which the file-private class is defined.
 
 The access control level of a type also affects
 the default access level of that type's :newTerm:`members`
 (its properties, methods, initializers, and subscripts).
-If you define a type's access level as private,
-the default access level of its members will also be private.
+If you define a type's access level as file-private or private,
+the default access level of its members will also be file-private or private.
 If you define a type's access level as internal or public
 (or use the default access level of internal
 without specifying an access level explicitly),
 the default access level of the type's members will be internal.
 
-.. note::
+.. important::
 
-   As mentioned above,
-   a public type defaults to having internal members, not public members.
+   A public type defaults to having internal members, not public members.
    If you want a type member to be public, you must explicitly mark it as such.
    This requirement ensures that the public-facing API for a type is
    something you opt in to publishing,
@@ -230,20 +231,26 @@ the default access level of the type's members will be internal.
 
 .. testcode:: accessControl, accessControlWrong
 
-   -> public class SomePublicClass {          // explicitly public class
-         public var somePublicProperty = 0    // explicitly public class member
-         var someInternalProperty = 0         // implicitly internal class member
-         private func somePrivateMethod() {}  // explicitly private class member
+   -> public class SomePublicClass {                  // explicitly public class
+         public var somePublicProperty = 0            // explicitly public class member
+         var someInternalProperty = 0                 // implicitly internal class member
+         fileprivate func someFilePrivateMethod() {}  // explicitly private class member
+         private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
-   -> class SomeInternalClass {               // implicitly internal class
-         var someInternalProperty = 0         // implicitly internal class member
-         private func somePrivateMethod() {}  // explicitly private class member
+   -> class SomeInternalClass {                       // implicitly internal class
+         var someInternalProperty = 0                 // implicitly internal class member
+         fileprivate func someFilePrivateMethod() {}  // explicitly private class member
+         private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
-   -> private class SomePrivateClass {        // explicitly private class
-         var somePrivateProperty = 0          // implicitly private class member
-         func somePrivateMethod() {}          // implicitly private class member
+   -> fileprivate class SomeFilePrivateClass {            // explicitly file-private class
+         func someFilePrivateMethod() {}              // implicitly file-private class member
+         private func somePrivateMethod() {}          // explicitly private class member
+      }
+   ---
+   -> private class SomePrivateClass {                // explicitly private class
+         func somePrivateMethod() {}                  // implicitly private class member
       }
 
 .. _AccessControl_TupleTypes:
@@ -261,15 +268,15 @@ the access level for that compound tuple type will be private.
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}
-   -> private struct PrivateStruct {}
+   -> fileprivate struct FilePrivateStruct {}
    -> public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
          return (PublicStruct(), PublicStruct())
       }
    -> func returnInternalTuple() -> (PublicStruct, InternalStruct) {
          return (PublicStruct(), InternalStruct())
       }
-   -> private func returnPrivateTuple() -> (PublicStruct, PrivateStruct) {
-         return (PublicStruct(), PrivateStruct())
+   -> fileprivate func returnFilePrivateTuple() -> (PublicStruct, FilePrivateStruct) {
+         return (PublicStruct(), FilePrivateStruct())
       }
 
 .. sourcefile:: tupleTypes_Module1_PublicAndInternal
@@ -281,13 +288,10 @@ the access level for that compound tuple type will be private.
 .. sourcefile:: tupleTypes_Module1_Private
 
    // a tuple with one or more private members can't be accessed from outside of its source file
-   -> let privateTuple = returnPrivateTuple()
-   !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnPrivateTuple'
-   !! let privateTuple = returnPrivateTuple()
-   !! ^~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:13: note: did you mean 'returnPublicTuple'?
-   !! public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
-   !!             ^
+   -> let privateTuple = returnFilePrivateTuple()
+   !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnFilePrivateTuple'
+   !! let privateTuple = returnFilePrivateTuple()
+   !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
 .. sourcefile:: tupleTypes_Module2_Public
 
@@ -300,16 +304,13 @@ the access level for that compound tuple type will be private.
    // tuples with internal or private members can't be used outside of their own module
    -> import tupleTypes_Module1
    -> let internalTuple = returnInternalTuple()
-   -> let privateTuple = returnPrivateTuple()
+   -> let privateTuple = returnFilePrivateTuple()
    !! /tmp/sourcefile_0.swift:2:21: error: use of unresolved identifier 'returnInternalTuple'
    !! let internalTuple = returnInternalTuple()
-   !! ^~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnPrivateTuple'
-   !! let privateTuple = returnPrivateTuple()
-   !! ^~~~~~~~~~~~~~~~~~
-   !! tupleTypes_Module1.returnPublicTuple:1:13: note: did you mean 'returnPublicTuple'?
-   !! public func returnPublicTuple() -> (tupleTypes_Module1.PublicStruct, tupleTypes_Module1.PublicStruct)
-   !!             ^
+   !!                     ^~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnFilePrivateTuple'
+   !! let privateTuple = returnFilePrivateTuple()
+   !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
 
 .. note::
@@ -383,7 +384,7 @@ You cannot specify a different access level for individual enumeration cases.
 
 In the example below,
 the ``CompassPoint`` enumeration has an explicit access level of “public”.
-the enumeration cases ``north``, ``south``, ``east``, and ``west``
+The enumeration cases ``north``, ``south``, ``east``, and ``west``
 therefore also have an access level of “public”:
 
 .. testcode:: enumerationCases
@@ -423,6 +424,7 @@ Nested Types
 ~~~~~~~~~~~~
 
 Nested types defined within a private type have an automatic access level of private.
+Nested types defined within a file-private type have an automatic access level of file-private.
 Nested types defined within a public type or an internal type
 have an automatic access level of internal.
 If you want a nested type within a public type to be publicly available,
@@ -440,6 +442,10 @@ you must explicitly declare the nested type as public.
          internal enum InternalEnumInsideInternalStruct { case a, b }
          private enum PrivateEnumInsideInternalStruct { case a, b }
          enum AutomaticEnumInsideInternalStruct { case a, b }
+      }
+   -> private struct FilePrivateStruct {
+         enum AutomaticEnumInsideFilePrivateStruct { case a, b }
+         private enum PrivateEnumInsideFilePrivateStruct { case a, b }
       }
    -> private struct PrivateStruct {
          enum AutomaticEnumInsidePrivateStruct { case a, b }
@@ -764,7 +770,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
-   !! /tmp/sourcefile_1.swift:2:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !!  /tmp/sourcefile_0.swift:11:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
    !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
