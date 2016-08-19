@@ -45,14 +45,51 @@ to pass a class instance.
 Using Classes for Stable Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are times when
-it does not make sense
-to copy something and
-you really do want
+Class instances have :newTerm:`stable identity`.
+When you initialize a class instance,
+Swift picks out a region in memory
+to store that instance.
+That region in memory has an address.
+Constants or variables
+that are assigned
+to that instance
+store that address
+to refer to that instance indirectly.
+When you mutate that instance,
+Swift keeps that instance stored
+in the same region in memory
+with the same address.
+By contrast,
+when you mutate a structure instance,
+Swift moves that instance
+to a different region in memory
+with a new address.
+
+.. note::
+
+   Swift copies a structure instance in memory
+   only if the instance is changed.
+   This behavior is called :newTerm:`copy-on-write`.
+   While code functions as though structure instances are copied
+   when you assign them
+   to a new variable or constant,
+   Swift copies a structure instance in memory
+   only if you change it from the original.
+   This optimization saves Swift from doing unnecessary work
+   as Swift needs to copy a structure instance
+   only if you mutate it.
+   
+
+There are times
+when you want an instance
+to remain in the same region in memory
+with the same address ---
+when you really do want
 to refer to one instance
 of a type.
 
-Take the ``Window`` class from :doc:`Classes`,
+Take the ``Window`` class
+from :doc:`Classes`,
 which represents a graphical window: 
 
 .. testcode:: choosingbetweenclassesandstructures
@@ -102,27 +139,93 @@ that would make no sense.
 You are trying to close the actual current window ---
 not a copy of it.
 
-What would it even mean
-to copy a ``Window``
-in the first place?
-When you assign ``rootWindow`` to ``currentWindow``,
-you would have multiple graphical windows
-when there is really only one.
-If you need a custom data type
-to capture something that there is truly
-only one of and you need to access
-the exact same instance in multiple places,
+It is unclear
+what it would even mean
+to copy a ``Window`` in the first place.
+Assigning ``rootWindow`` to ``currentWindow``
+would give you multiple graphical windows
+when you want only one.
+When there really is just one of something
+and you need to access that one thing
+in multiple places,
 use a class.
 
-There are also times
-when you need an instance
-to connect to some external entity...
+There are other times
+when you want the stable identity
+of a class because 
+the lifetime of an instance
+is tied to some external entity
+such as a file
+that temporarily appears
+on a disk.
+Your custom data type instance
+to represent that file
+needs to exist
+in one constant region in memory
+so that you can free up that memory
+at the end of the file's lifetime.
+In other words,
+you need to manually handle deinitialization ---
+something you can only do with classes.
+If you are managing a resource
+that requires custom deinitialization,
+use a class.
 
+Another reason
+that graphical windows and files
+are good examples
+for when to use a class
+is that it is likely
+that many places in your code
+would need to access or modify
+the same window or file.
+For instance,
+you can imagine needing
+to read from
+and write to
+the same file
+in multiple places in your code.
+When you need
+the ability to change
+the same instance
+from multiple places,
+use a class.
 
 .. _ChoosingBetweenClassesAndStructures_WorkingWithExistingClasses:
 
 Working with Existing Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you are working with frameworks,
+it is common to be given a baseclass
+that you are expected to subclass
+or to be expected
+to pass around class instances.
+For example,
+if you are working with the AppKit framework
+and want to create a custom view,
+you are expected
+to subclass ``NSView``.
+In these scenarios,
+use a class.
+
+.. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
+
+When to Use a Structure
+-----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -140,12 +243,6 @@ Working with Existing Classes
 .. using value type you don't have to worry about where far away changes might be coming from
 
 .. these are some things you might make classes in other languages
-
-.. in Swift, you don't need a class as often as you'd expect
-
-.. when copying doesn't make sense 
-
-.. when there really is just one of something
 
 
 
