@@ -958,7 +958,11 @@ a nonreturning function or method will instead never be executed.
 Throwing and rethrowing functions can return control flow
 to an appropriate ``catch`` block even when they are nonreturning.
 
-You can override nonreturning method,
+A nonreturning function or method can be called to conclude the ``else`` clause
+of a guard statement,
+as discussed in :ref:`Statements_GuardStatement`.
+
+You can override a nonreturning method,
 but the new method must preserve its return type and nonreturning behavior.
 
 .. syntax-grammar::

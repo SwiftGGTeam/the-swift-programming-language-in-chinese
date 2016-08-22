@@ -341,12 +341,6 @@ using one of the following statements:
 * ``continue``
 * ``throw``
 
-.. The function has to be marked @noterurn -- it's not sufficient to just be nonreturning.
-   For example, the following is invalid:
-
-   func foo() { fatalError() }
-   guard false else { foo() }
-
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
 
 .. syntax-grammar::
