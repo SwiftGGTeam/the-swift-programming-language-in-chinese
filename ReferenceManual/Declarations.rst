@@ -2252,7 +2252,7 @@ You specify the precedence of an operator by declaring a precedence group:
 The ``higherThan`` and ``lowerThan`` precedence groups position
 the new precedence group between existing precedence groups.
 Swift defines numerous precedence groups to go along
-with the operators provided as part of the language.
+with the operators provided by the standard library.
 For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
 and the multiplication (``*``) and division (``/``) operators
@@ -2287,7 +2287,7 @@ when used in an optional chaining expression.
 When set to ``true``, an operator in the corresponding precedence group will
 use the same grouping behavior as the existing assignment operators.
 Otherwise, when set to ``false`` or omitted,
-operators in the precedence group will use the the same precedence in optional chains
+operators in the precedence group will use the same precedence in optional chains
 as all other operators.
 
 
