@@ -2251,7 +2251,7 @@ You specify the precedence of an operator by declaring a precedence group:
 
 The ``higherThan`` and ``lowerThan`` precedence groups position
 the new precedence group between existing precedence groups.
-The Swift language defines numerous precedence groups to go along
+Swift defines numerous precedence groups to go along
 with the operators provided as part of the language.
 For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
@@ -2263,12 +2263,14 @@ the operator with the higher relative precedence level
 binds more tightly to its operands.
 
 When both the ``higherThan`` and ``lowerThan`` groups are omitted,
-Swift provides a default precedence group named ``DefaultPrecedence``.
+Swift provides a default precedence
+through the precedence group ``DefaultPrecedence``,
+which specifies a ``higherThan`` value of ``TernaryPrecedence``.
 
 The :newTerm:`associativity` of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
 You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
-followed by the ``associativity``, which is one of the context-sensitive keywords ``left``, ``right``,
+followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
 or ``none``. Operators that are left-associative group left-to-right. For example,
 the subtraction operator (``-``) is left-associative,
 and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
@@ -2280,7 +2282,7 @@ For example, ``1 < 2 < 3`` is not a valid expression.
 Infix operators that are declared without specifying an associativity are
 initialized with an associativity of ``none``.
 
-The ```assignment`` of a precedence group specifies the precedence of an operator
+The *assignment* of a precedence group specifies the precedence of an operator
 when used in an optional chaining expression.
 When set to ``true``, an operator in the corresponding precedence group will
 use the same grouping behavior as the existing assignment operators.

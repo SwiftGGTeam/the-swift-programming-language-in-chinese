@@ -804,8 +804,8 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 Precedence and Associativity for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a precedence, associativity,
-and assignment behavior.
+Custom ``infix`` operators can also specify a precedence group,
+which provides a precedence, associativity, and assignment behavior.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
@@ -819,14 +819,16 @@ Non-associative operators cannot be written next to
 other operators with the same precedence.
 
 The ``associativity`` value defaults to ``none`` if it is not specified.
-The ``precedence`` value defaults to ``DefaultPrecedence`` if it is not specified.
+The precedence group defaults to ``DefaultPrecedence`` if it is not specified.
+``DefaultPrecedence`` is defined as having a higher precedence
+than the :ref:`BasicOperators_TernaryConditionalOperator`.
 
 The following example defines a new custom ``infix`` operator called ``+-``,
 with ``left`` associativity and a precedence of ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
-   -> infix operator +- { associativity left precedence 140 }
+   -> infix operator +-: AdditionPrecedence
    -> extension Vector2D {
          static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
             return Vector2D(x: left.x + right.x, y: left.y - right.y)
@@ -844,8 +846,7 @@ with ``left`` associativity and a precedence of ``AdditionPrecedence``:
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
-it has been given the same associativity and precedence values
-(``left`` and ``140``)
+it has been given the same precedence group
 as default additive infix operators such as ``+`` and ``-``.
 For a complete list of the operator precedence and associativity settings,
 for the operators provided by the Swift standard library,
@@ -859,8 +860,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
 
-   -> prefix operator +++ {}
-   -> postfix operator --- {}
+   -> prefix operator +++
+   -> postfix operator ---
    -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
    -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
    -> +++1---
