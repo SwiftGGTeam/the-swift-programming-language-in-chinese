@@ -580,7 +580,7 @@ A :newTerm:`playground literal`
 is used by Xcode to create an interactive representation
 of a color, file, or image within the program editor.
 Playground literals in plain text outside of Xcode
-are represented via a special literal syntax.
+are represented using a special literal syntax.
 
 ..  For more information, see Xcode Help.
     (Waiting on docs to land in Xcode Help before adding link.)
