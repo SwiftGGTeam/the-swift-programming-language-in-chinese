@@ -565,7 +565,8 @@
     "control-transfer-statements", 
     "in-out-parameters", 
     "error-handling", 
-    "operator-methods"
+    "operator-methods", 
+    "generic-where-clauses"
   ], 
   "next_id": 550
 }
