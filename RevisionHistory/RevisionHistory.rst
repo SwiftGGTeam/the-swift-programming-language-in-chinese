@@ -6,7 +6,6 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-
 2016-09-07  * Updated the discussion
               in the :ref:`Generics_WhereClauses` section
               of the :doc:`../LanguageGuide/Generics` chapter
