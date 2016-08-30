@@ -233,8 +233,8 @@ guard 条件 else {
     语句    
 }    
 ```
- 
-`guard` 语句中条件的结果必须符合 `BooleanType` 协议，而且条件语句可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+
+`guard` 语句中条件的结果必须符合 `BooleanType` 协议。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
  
 在 `guard` 语句中进行可选绑定的常量或者变量，其可用范围从声明开始直到作用域结束。
  
@@ -249,7 +249,7 @@ guard 条件 else {
 
 > guard 语句语法  
 <a name="guard-statement"></a>
-> *guard 语句* → **guard** [*条件子句*](#condition-clause) **else** [*代码块*](05_Declarations.md#code-block)
+> *guard 语句* → **guard** [*条件子句*](#condition-clause) **else** [*代码块*](05_Declarations.html#code-block)
 
 <a name="switch_statements"></a>
 ### Switch 语句
@@ -663,3 +663,5 @@ if #available(平台名称 版本, ..., *) {
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
+
+
