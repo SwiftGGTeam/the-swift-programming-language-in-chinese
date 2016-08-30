@@ -3,9 +3,28 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
+.. Merges since the last version:
+
+    f08df2e Merge branch '23137596_initializer_inheritance' into 'develop'
+    deb16e9 Merge branch 'enumerate_method' into 'develop'
+    04af097 Merge branch 'fix_tests' into 'develop'
+    15aff47 Merge branch '26607172_move_where_clauses' into 'develop'
+    c93c07b Merge branch '24773979_implicit_conversion' into 'develop'
+    c12dec0 Merge branch '27434116_escaping' into 'develop'
+    429a1d6 Merge branch '24094442_grammar' into 'develop'
+    4ad5918 Merge branch '26462363_compond_operator' into 'develop'
+    7d43c44 Merge branch '26757527_SE-0096_dynamicType_to_type' into 'develop'
+    c47b698 Merge branch '27135730_typo_fix' into 'develop'
+    709b0fb Merge branch '23659658_labeled_do_statements' into 'develop'
+    e5a5cdb Merge branch 'release/swift_3_beta_4' into develop.
+      
+
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+
+2016-09-07  * 
+
 2016-08-01  * Updated the discussion
               in the :ref:`TheBasics_OptionalBinding` section
               of the :doc:`../LanguageGuide/TheBasics` chapter
