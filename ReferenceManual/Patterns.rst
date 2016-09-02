@@ -286,13 +286,13 @@ the following are equivalent:
 
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
-   -> // Match using an enumeration case pattern
+   -> // Match using an enumeration case pattern.
    -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42
    ---
-   -> // Match using an optional pattern
+   -> // Match using an optional pattern.
    -> if case let x? = someOptional {
          print(x)
       }
@@ -306,7 +306,7 @@ executing the body of the loop only for non-``nil`` elements.
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
    << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
-   -> // Match only non-nil values
+   -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
       }
@@ -404,7 +404,7 @@ with a string representations of points.
 
 .. testcode:: expression-pattern
 
-    -> // Overload the ~= operator to match a string with an integer
+    -> // Overload the ~= operator to match a string with an integer.
     -> func ~=(pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }

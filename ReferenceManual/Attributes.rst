@@ -46,8 +46,8 @@ the ``noreturn`` attribute to a function or method *type*.
 
     * ``iOS``
     * ``iOSApplicationExtension``
-    * ``OSX``
-    * ``OSXApplicationExtension``
+    * ``macOS``
+    * ``macOSApplicationExtension``
     * ``watchOS``
     * ``watchOSApplicationExtension``
     * ``tvOS``
@@ -156,7 +156,7 @@ the ``noreturn`` attribute to a function or method *type*.
     .. testcode:: availableShorthand
        :compile: true
 
-       -> @available(iOS 8.0, OSX 10.10, *)
+       -> @available(iOS 10.0, macOS 10.12, *)
        -> class MyClass {
               // class definition
           }
@@ -182,6 +182,13 @@ the ``noreturn`` attribute to a function or method *type*.
    to suppress the compiler warning
    when the function or method that returns a value
    is called without using its result.
+
+``GKInspectable``
+    Apply this attribute to expose a custom GameplayKit component property
+    to the SpriteKit editor UI.
+
+.. See also <rdar://problem/27287369> Document @GKInspectable attribute
+   which we will want to link to, once it's written.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
@@ -258,7 +265,7 @@ the ``noreturn`` attribute to a function or method *type*.
     can override a method marked with the ``nonobjc`` attribute.
     Similarly, a method marked with the ``nonobjc`` attribute
     cannot satisfy a protocol requirement
-    for a method marked with the ``@objc`` attribute.
+    for a method marked with the ``objc`` attribute.
 
 ``noreturn``
     Apply this attribute to a function or method declaration
@@ -277,17 +284,17 @@ the ``noreturn`` attribute to a function or method *type*.
     Apply this attribute to a class
     to indicate that it is the application delegate.
     Using this attribute is equivalent to calling the
-    ``NSApplicationMain(_:_:)`` function and
-    passing this class's name as the name of the delegate class.
+    ``NSApplicationMain(_:_:)`` function.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main()`` function
-    that calls the ``NSApplicationMain(_:_:)`` function.
-    For example,
-    if your app uses a custom subclass of ``NSApplication``
-    as its principal class,
-    call the ``NSApplicationMain`` function
-    instead of using this attribute.
+    supply a ``main.swift`` file with code at the top level
+    that calls the ``NSApplicationMain(_:_:)`` function as follows:
+
+    .. testcode:: nsapplicationmain
+
+       -> import AppKit
+       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
@@ -309,6 +316,7 @@ the ``noreturn`` attribute to a function or method *type*.
     based on the associated entity description.
     For a property marked with the ``NSManaged`` attribute,
     Core Data also provides the storage at runtime.
+    Applying this attribute also implies the ``objc`` attribute.
 
 ``testable``
     Apply this attribute to ``import`` declarations
@@ -324,7 +332,7 @@ the ``noreturn`` attribute to a function or method *type*.
     passing this class's name as the name of the delegate class.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main`` function
+    supply a ``main.swift`` file with code at the top level
     that calls the ``UIApplicationMain(_:_:_:)`` function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
@@ -344,7 +352,7 @@ Declaration Attributes Used by Interface Builder
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
 Swift provides the following Interface Builder attributes:
-``IBAction``, ``IBDesignable``, ``IBInspectable``, and ``IBOutlet``.
+``IBAction``, ``IBOutlet``, ``IBDesignable``, and ``IBInspectable``.
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
@@ -354,6 +362,8 @@ You apply the ``IBOutlet`` and ``IBInspectable`` attributes
 to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
+
+Both the ``IBAction`` and ``IBOutlet`` attributes imply the ``objc`` attribute.
 
 
 .. _Attributes_TypeAttributes:
@@ -371,8 +381,6 @@ to a function or method *declaration*.
     Apply this attribute to a parameter's type in a method or function declaration,
     for a parameter of a function type that takes no arguments
     and that returns a value of the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
 
@@ -401,13 +409,13 @@ to a function or method *declaration*.
    local functions or closures that don't capture any local variables,
    can be used as a function with C function calling conventions.
 
-``noescape``
+``escaping``
     Apply this attribute to a parameter's type in a method or function declaration
-    to indicate that the parameter's value will not be stored for later execution.
-    This means that the value is guaranteed not to outlive the lifetime of the call.
-    Function type parameters with the ``noescape`` declaration attribute
-    do not require explicit use of ``self.`` for properties or methods.
-    For an example of how to use the ``noescape`` attribute,
+    to indicate that the parameter's value can be stored for later execution.
+    This means that the value is allowed to outlive the lifetime of the call.
+    Function type parameters with the ``escaping`` type attribute
+    require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
 
 ``noreturn``

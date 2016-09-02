@@ -149,8 +149,9 @@ A ``while`` statement is executed as follows:
 Because the value of the *condition* is evaluated before the *statements* are executed,
 the *statements* in a ``while`` statement can be executed zero or more times.
 
-The value of the *condition* must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of the *condition*
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -161,28 +162,13 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of a while statement
 
-    while-statement --> ``while`` condition-clause code-block
-
-    condition-clause --> expression
-    condition-clause --> expression ``,`` condition-list
-    condition-clause --> condition-list
-    condition-clause --> availability-condition ``,`` expression
+    while-statement --> ``while`` condition-list code-block
 
     condition-list --> condition | condition ``,`` condition-list
-    condition -->  availability-condition | case-condition | optional-binding-condition
-    case-condition --> ``case`` pattern initializer where-clause-OPT
+    condition -->  expression | availability-condition | case-condition | optional-binding-condition
 
-    optional-binding-condition --> optional-binding-head optional-binding-continuation-list-OPT where-clause-OPT
-    optional-binding-head --> ``let`` pattern initializer | ``var`` pattern initializer
-    optional-binding-continuation-list --> optional-binding-continuation | optional-binding-continuation ``,`` optional-binding-continuation-list
-    optional-binding-continuation --> pattern initializer | optional-binding-head
-
-.. NOTE: We considered the following simpler grammar for optional-binding-list:
-
-    optional-binding-list --> optional-binding-clause | optional-binding-clause ``,`` optional-binding-list
-    optional-binding-clause --> pattern-initializer-list where-clause-OPT
-
-    We opted for the more complex grammar, because the simpler version overproduced.
+    case-condition --> ``case`` pattern initializer
+    optional-binding-condition --> ``let`` pattern initializer | ``var`` pattern initializer
 
 
 .. _Statements_Do-WhileStatement:
@@ -214,8 +200,9 @@ A ``repeat``-``while`` statement is executed as follows:
 Because the value of the *condition* is evaluated after the *statements* are executed,
 the *statements* in a ``repeat``-``while`` statement are executed at least once.
 
-The value of the *condition* must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of the *condition*
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -301,8 +288,9 @@ An ``if`` statement chained together in this way has the following form:
        <#statements to execute if both conditions are false#>
     }
 
-The value of any condition in an ``if`` statement must have a type that conforms to
-the ``Boolean`` protocol. The condition can also be an optional binding declaration,
+The value of any condition in an ``if`` statement
+must be of type ``Bool`` or a type bridged to ``Bool``.
+The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
@@ -315,7 +303,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement --> ``if`` condition-clause code-block else-clause-OPT
+    if-statement --> ``if`` condition-list code-block else-clause-OPT
     else-clause --> ``else`` code-block | ``else`` if-statement
 
 .. _Statements_GuardStatement:
@@ -335,7 +323,7 @@ A ``guard`` statement has the following form:
     }
 
 The value of any condition in a ``guard`` statement
-must have a type that conforms to the ``Boolean`` protocol.
+must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
@@ -365,7 +353,7 @@ Control transfer statements are discussed in :ref:`Statements_ControlTransferSta
 
     Grammar of a guard statement
 
-    guard-statement --> ``guard`` condition-clause ``else`` code-block
+    guard-statement --> ``guard`` condition-list ``else`` code-block
 
 .. _Statements_SwitchStatement:
 
@@ -409,13 +397,13 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in :doc:`../LanguageGuide/ControlFlow`.
 
-A ``switch`` case can optionally contain a where clause after each pattern.
+A ``switch`` case can optionally contain a ``where`` clause after each pattern.
 A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
-If a where clause is present, the *statements* within the relevant case
+If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
-matches one of the patterns of the case and the expression of the where clause evaluates to ``true``.
+matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
@@ -429,7 +417,7 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
 
 As the above example shows, patterns in a case can also bind constants
 using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
-These constants (or variables) can then be referenced in a corresponding where clause
+These constants (or variables) can then be referenced in a corresponding ``where`` clause
 and throughout the rest of the code within the scope of the case.
 If the case contains multiple patterns that match the control expression,
 all of the patterns must contain the same constant or variable bindings,
@@ -463,7 +451,7 @@ the program executes only the code within the first matching case in source orde
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any' (aka 'protocol<>'), expected type 'Int'
+   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
@@ -527,8 +515,8 @@ see :ref:`Statements_FallthroughStatement` below.
 Labeled Statement
 -----------------
 
-You can prefix a loop statement, an ``if`` statement, or a ``switch`` statement
-with a :newTerm:`statement label`,
+You can prefix a loop statement, an ``if`` statement, a ``switch`` statement,
+or a ``do`` statement with a :newTerm:`statement label`,
 which consists of the name of the label followed immediately by a colon (:).
 Use statement labels with ``break`` and ``continue`` statements to be explicit
 about how you want to change control flow in a loop statement or a ``switch`` statement,
@@ -560,7 +548,11 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
     Grammar of a labeled statement
 
-    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement
+    labeled-statement --> statement-label loop-statement
+    labeled-statement --> statement-label if-statement
+    labeled-statement --> statement-label switch-statement
+    labeled-statement --> statement-label do-statement
+    
     statement-label --> label-name ``:``
     label-name --> identifier
 
@@ -787,7 +779,7 @@ followed by an expression, as shown below.
     throw <#expression#>
 
 The value of the *expression* must have a type that conforms to
-the ``ErrorProtocol`` protocol.
+the ``Error`` protocol.
 
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
@@ -959,7 +951,7 @@ conditions listed in the table below.
 ====================  ===================================================
 Platform condition    Valid arguments
 ====================  ===================================================
-``os()``              ``OSX``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``os()``              ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``           ``>=`` followed by a version number
 ====================  ===================================================
@@ -1062,7 +1054,7 @@ have the following form:
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    operating-system --> ``OSX`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
 
@@ -1144,7 +1136,7 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 The availability condition takes a comma-separated list of platform names and versions.
-Use ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` for the platform names,
+Use ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` for the platform names,
 and include the corresponding version numbers.
 The ``*`` argument is required and specifies that on any other platform,
 the body of the code block guarded by the availability condition
@@ -1163,7 +1155,7 @@ logical operators such as ``&&`` and ``||``.
     availability-argument --> ``*``
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
-    platform-name --> ``OSX`` | ``OSXApplicationExtension``
+    platform-name --> ``macOS`` | ``macOSApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits
@@ -1171,4 +1163,3 @@ logical operators such as ``&&`` and ``||``.
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
 .. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
-

@@ -411,7 +411,7 @@ or passed to a function.)
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
 
@@ -426,7 +426,7 @@ or passed to a function.)
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
 

@@ -53,7 +53,7 @@ as one or more of their arguments.
 Closure expressions provide several syntax optimizations
 for writing closures in a shortened form without loss of clarity or intent.
 The closure expression examples below illustrate these optimizations
-by refining a single example of the ``sorted(isOrderedBefore:)`` method over several iterations,
+by refining a single example of the ``sorted(by:)`` method over several iterations,
 each of which expresses the same functionality in a more succinct way.
 
 .. _Closures_TheSortedFunction:
@@ -61,15 +61,15 @@ each of which expresses the same functionality in a more succinct way.
 The Sorted Method
 ~~~~~~~~~~~~~~~~~
 
-Swift's standard library provides a method called ``sorted(isOrderedBefore:)``,
+Swift's standard library provides a method called ``sorted(by:)``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
-the ``sorted(isOrderedBefore:)`` method returns a new array of the same type and size as the old one,
+the ``sorted(by:)`` method returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted(isOrderedBefore:)`` method.
+The original array is not modified by the ``sorted(by:)`` method.
 
-The closure expression examples below use the ``sorted(isOrderedBefore:)`` method
+The closure expression examples below use the ``sorted(by:)`` method
 to sort an array of ``String`` values in reverse alphabetical order.
 Here's the initial array to be sorted:
 
@@ -78,7 +78,7 @@ Here's the initial array to be sorted:
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
    << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-The ``sorted(isOrderedBefore:)`` method accepts a closure that takes two arguments
+The ``sorted(by:)`` method accepts a closure that takes two arguments
 of the same type as the array's contents,
 and returns a ``Bool`` value to say whether the first value should appear
 before or after the second value once the values are sorted.
@@ -90,14 +90,14 @@ This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
 One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as an argument to the ``sorted(isOrderedBefore:)`` method:
+and to pass it in as an argument to the ``sorted(by:)`` method:
 
 .. testcode:: closureSyntax
 
    -> func backward(_ s1: String, _ s2: String) -> Bool {
          return s1 > s2
       }
-   -> var reversedNames = names.sorted(isOrderedBefore: backward)
+   -> var reversedNames = names.sorted(by: backward)
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -140,7 +140,7 @@ from earlier:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in
+   -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversedNames
@@ -163,11 +163,11 @@ it can even be written on a single line:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-This illustrates that the overall call to the ``sorted(isOrderedBefore:)`` method has remained the same.
+This illustrates that the overall call to the ``sorted(by:)`` method has remained the same.
 A pair of parentheses still wrap the entire argument for the method.
 However, that argument is now an inline closure.
 
@@ -179,7 +179,7 @@ Inferring Type From Context
 Because the sorting closure is passed as an argument to a method,
 Swift can infer the types of its parameters
 and the type of the value it returns.
-The ``sorted(isOrderedBefore:)`` method is being called on an array of strings,
+The ``sorted(by:)`` method is being called on an array of strings,
 so its argument must be a function of type ``(String, String) -> Bool``.
 This means that the ``(String, String)`` and ``Bool`` types do not need to be written
 as part of the closure expression's definition.
@@ -189,7 +189,7 @@ can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { s1, s2 in return s1 > s2 } )
+   -> reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -200,7 +200,7 @@ when the closure is used as a function or method argument.
 
 Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
-In the case of the ``sorted(isOrderedBefore:)`` method,
+In the case of the ``sorted(by:)`` method,
 the purpose of the closure is clear from the fact that sorting is taking place,
 and it is safe for a reader to assume that
 the closure is likely to be working with ``String`` values,
@@ -217,11 +217,11 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { s1, s2 in s1 > s2 } )
+   -> reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Here, the function type of the ``sorted(isOrderedBefore:)`` method's argument
+Here, the function type of the ``sorted(by:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
@@ -245,7 +245,7 @@ because the closure expression is made up entirely of its body:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: { $0 > $1 } )
+   -> reversedNames = names.sorted(by: { $0 > $1 } )
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -253,25 +253,25 @@ Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` argum
 
 .. _Closures_OperatorFunctions:
 
-Operator Functions
-~~~~~~~~~~~~~~~~~~
+Operator Methods
+~~~~~~~~~~~~~~~~
 
 There's actually an even *shorter* way to write the closure expression above.
 Swift's ``String`` type defines its string-specific implementation of
 the greater-than operator (``>``)
-as a function that has two parameters of type ``String``,
+as a method that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
-This exactly matches the function type needed by the ``sorted(isOrderedBefore:)`` method.
+This exactly matches the method type needed by the ``sorted(by:)`` method.
 Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversedNames = names.sorted(isOrderedBefore: >)
+   -> reversedNames = names.sorted(by: >)
    >> reversedNames
    << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-For more about operator functions, see :ref:`AdvancedOperators_OperatorFunctions`.
+For more about operator method, see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. _Closures_TrailingClosures:
 
@@ -306,7 +306,7 @@ as part of the function call.
       }
 
 The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
-can be written outside of the ``sorted(isOrderedBefore:)`` method's parentheses as a trailing closure:
+can be written outside of the ``sorted(by:)`` method's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
@@ -366,10 +366,10 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
             (number) -> String in
          var number = number
          var output = ""
-         while number > 0 {
+         repeat {
             output = digitNames[number % 10]! + output
             number /= 10
-         }
+         } while number > 0
          return output
       }
    << // strings : [String] = ["OneSix", "FiveEight", "FiveOneZero"]
@@ -602,30 +602,15 @@ both of those constants or variables will refer to the same closure:
 
 .. _Closures_Noescape:
 
-Nonescaping Closures
---------------------
+Escaping Closures
+-----------------
 
 A closure is said to :newTerm:`escape` a function
 when the closure is passed as an argument to the function,
 but is called after the function returns.
 When you declare a function that takes a closure as one of its parameters,
-you can write ``@noescape`` before the parameter's type
-to indicate that the closure is not allowed to escape.
-Marking a closure with ``@noescape``
-lets the compiler make more aggressive optimizations
-because it knows more information about the closure's lifespan.
-
-.. testcode:: noescape-closure-as-argument
-
-    -> func someFunctionWithNonescapingClosure(closure: @noescape () -> Void) {
-           closure()
-       }
-
-As an example,
-the ``sorted(isOrderedBefore:)`` method takes a closure as its parameter,
-which is used to compare elements.
-The parameter is marked ``@noescape``
-because it is guaranteed not to be needed after sorting is complete.
+you can write ``@escaping`` before the parameter's type
+to indicate that the closure is allowed to escape.
 
 One way that a closure can escape
 is by being stored in a variable that is defined outside the function.
@@ -641,7 +626,7 @@ For example:
 
     -> var completionHandlers: [() -> Void] = []
     << // completionHandlers : [() -> Void] = []
-    -> func someFunctionWithEscapingClosure(completionHandler: () -> Void) {
+    -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
            completionHandlers.append(completionHandler)
        }
 
@@ -650,19 +635,28 @@ For example:
 
 The ``someFunctionWithEscapingClosure(_:)`` function takes a closure as its argument
 and adds it to an array that's declared outside the function.
-If you tried to mark the parameter of this function with ``@noescape``,
+If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compiler error.
 
-Marking a closure with ``@noescape``
-lets you refer to ``self`` implicitly within the closure.
+Marking a closure with ``@escaping``
+means you have to refer to ``self`` explicitly within the closure.
+For example, in the code below,
+the closure passed to ``someFunctionWithEscapingClosure(_:)`` is an escaping closure,
+which means it needs to refer to ``self`` explicitly.
+In contrast, the closure passed to ``someFunctionWithNonescapingClosure(_:)``
+is a nonescaping closure, which means it can refer to ``self`` implicitly.
 
 .. testcode:: noescape-closure-as-argument
 
+    -> func someFunctionWithNonescapingClosure(closure: () -> Void) {
+           closure()
+       }
+    ---
     -> class SomeClass {
            var x = 10
            func doSomething() {
-               someFunctionWithNonescapingClosure { x = 200 }
                someFunctionWithEscapingClosure { self.x = 100 }
+               someFunctionWithNonescapingClosure { x = 200 }
            }
        }
     ---
@@ -788,10 +782,9 @@ with the ``@autoclosure`` attribute.
    The context and function name should make it clear
    that evaluation is being deferred.
 
-The ``@autoclosure`` attribute implies the ``@noescape`` attribute,
-which is described above in :ref:`Closures_Noescape`.
 If you want an autoclosure that is allowed to escape,
-use the ``@autoclosure(escaping)`` form of the attribute.
+use both the ``@autoclosure`` and ``@escaping`` attributes.
+The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
 
 .. testcode:: autoclosures-function-with-escape
 
@@ -801,7 +794,7 @@ use the ``@autoclosure(escaping)`` form of the attribute.
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
     << // customerProviders : [() -> String] = []
-    -> func collectCustomerProviders(_ customerProvider: @autoclosure(escaping) () -> String) {
+    -> func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
            customerProviders.append(customerProvider)
        }
     -> collectCustomerProviders(customersInLine.remove(at: 0))

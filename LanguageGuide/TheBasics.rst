@@ -1,7 +1,7 @@
 The Basics
 ==========
 
-Swift is a new programming language for iOS, OS X, watchOS, and tvOS app development.
+Swift is a new programming language for iOS, macOS, watchOS, and tvOS app development.
 Nonetheless, many parts of Swift will be familiar
 from your experience of developing in C and Objective-C.
 
@@ -805,7 +805,7 @@ The following example reports a compile-time error:
    -> if i {
          // this example will not compile, and will report an error
       }
-   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'Boolean'
+   !! <REPL Input>:1:4: error: 'Int' is not convertible to 'Bool'
    !! if i {
    !!   ^
 
@@ -1112,26 +1112,45 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-You can include multiple optional bindings in a single ``if`` statement
-and use a ``where`` clause to check for a Boolean condition.
+You can include as many optional bindings and Boolean conditions
+in a single ``if`` statement as you need to,
+separated by commas.
 If any of the values in the optional bindings are ``nil``
-or the ``where`` clause evaluates to ``false``,
-the whole optional binding is considered unsuccessful.
+or any Boolean condition evaluates to ``false``,
+the whole ``if`` statement's condition
+is considered to be ``false``.
+The following ``if`` statements are equivalent:
 
 .. testcode:: multipleOptionalBindings
 
-   -> if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
-         print("\(firstNumber) < \(secondNumber)")
+   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+         print("\(firstNumber) < \(secondNumber) < 100")
       }
-   <- 4 < 42
+   <- 4 < 42 < 100
+   ---
+   -> if let firstNumber = Int("4") {
+          if let secondNumber = Int("42") {
+              if firstNumber < secondNumber && secondNumber < 100 {
+                  print("\(firstNumber) < \(secondNumber) < 100")
+              }
+          }
+      }
+   <- 4 < 42 < 100
+
+.. The example above uses multiple optional bindings
+   to show that you can have more than one
+   and to show the short-circuiting behavior.
+   It has multiple Boolean conditions
+   to show that you should join logically related conditions
+   using the && operator instead of a comma.
 
 .. note::
 
-   Constants and variables created with optional binding in an ``if`` statement.
+   Constants and variables created with optional binding in an ``if`` statement
    are available only within the body of the ``if`` statement.
    In contrast, the constants and variables created with a ``guard`` statement
    are available in the lines of code that follow the ``guard`` statement,
-   as described in :ref:`ControlFlow_Guard`,
+   as described in :ref:`ControlFlow_Guard`.
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
@@ -1237,7 +1256,7 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
 
 .. testcode:: errorHandling
 
-   >> enum SimpleError: ErrorProtocol {
+   >> enum SimpleError: Error {
    >>    case someError
    >> }
    >> let condition = true
@@ -1277,7 +1296,7 @@ to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
 
-   >> enum SandwichError: ErrorProtocol {
+   >> enum SandwichError: Error {
    >>     case outOfCleanDishes
    >>     case missingIngredients([String])
    >> }

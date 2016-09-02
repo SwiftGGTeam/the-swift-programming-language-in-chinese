@@ -299,10 +299,10 @@ to match the ``Togglable`` protocol's requirements:
          case off, on
          mutating func toggle() {
             switch self {
-               case off:
-                  self = on
-               case on:
-                  self = off
+               case .off:
+                  self = .on
+               case .on:
+                  self = .off
             }
          }
       }
@@ -509,6 +509,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
    -> protocol P { init(i: Int) }
    -> class C: P { required init!(i: Int) {} }
    -> struct S: P { init!(i: Int) {} }
+   xx Compiler segfaults due to <rdar://problem/27570549>
+
+.. When/if the above Radar is fixed, remove the "xx" expectation line.
 
 .. _Protocols_ProtocolsAsTypes:
 
@@ -1051,9 +1054,9 @@ Protocol Composition
 It can be useful to require a type to conform to multiple protocols at once.
 You can combine multiple protocols into a single requirement
 with a :newTerm:`protocol composition`.
-Protocol compositions have the form ``protocol<SomeProtocol, AnotherProtocol>``.
-You can list as many protocols within the pair of angle brackets (``<>``) as you need,
-separated by commas.
+Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
+You can list as many protocols as you need to,
+separating them by ampersands (``&``).
 
 Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
@@ -1070,7 +1073,7 @@ into a single protocol composition requirement on a function parameter:
          var name: String
          var age: Int
       }
-   -> func wishHappyBirthday(to celebrator: protocol<Named, Aged>) {
+   -> func wishHappyBirthday(to celebrator: Named & Aged) {
          print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
@@ -1085,7 +1088,7 @@ with a single requirement for a gettable ``Int`` property called ``age``.
 Both of these protocols are adopted by a structure called ``Person``.
 
 The example also defines a ``wishHappyBirthday(to:)`` function,
-The type of the ``celebrator`` parameter is ``protocol<Named, Aged>``,
+The type of the ``celebrator`` parameter is ``Named & Aged``,
 which means “any type that conforms to both the ``Named`` and ``Aged`` protocols.”
 It doesn't matter what specific type is passed to the function,
 as long as it conforms to both of the required protocols.
@@ -1510,7 +1513,7 @@ When you define a protocol extension,
 you can specify constraints that conforming types
 must satisfy before the methods and properties of the extension are available.
 You write these constraints after the name of the protocol you're extending
-using a ``where`` clause,
+using a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 For instance,

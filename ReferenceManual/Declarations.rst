@@ -50,10 +50,6 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
-.. NOTE: Removed enum-member-declaration, because we don't need it anymore.
-
-.. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
-
 
 .. _LexicalStructure_ModuleScope:
 
@@ -490,14 +486,14 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attributes-OPT ``get`` code-block
-    setter-clause --> attributes-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT mutation-modifier-OPT ``get`` code-block
+    setter-clause --> attributes-OPT mutation-modifier-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attributes-OPT ``get``
-    setter-keyword-clause --> attributes-OPT ``set``
+    getter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``get``
+    setter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
@@ -656,6 +652,8 @@ The corresponding argument must have no label in function or method calls.
    -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
    -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 .. _Declarations_InOutParameters:
 
 In-Out Parameters
@@ -726,13 +724,41 @@ For example:
    !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
    !!      ^~
 
-There is no copy-out at the end of closures or nested functions.
-This means if a closure is called after the function returns,
-any changes that closure makes to the in-out parameters
-do not get copied back to the original.
-For example:
+A closure or nested function
+that captures an in-out parameter must be nonescaping.
+If you need to capture an in-out parameter
+without mutating it or to observe changes made by other code,
+use a capture list to explicitly capture the parameter immutably.
 
-.. testcode:: closure-doesnt-copy-out-inout
+.. testcode:: explicit-capture-for-inout
+
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a + 1 }
+       }
+
+If you need to capture and mutate an in-out parameter,
+use an explicit local copy,
+such as in multithreaded code that ensures
+all mutation has finished before the function returns.
+
+.. testcode:: cant-pass-inout-aliasing
+
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) { }
+    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+.. assertion:: escaping-cant-capture-inout
 
     -> func outer(a: inout Int) -> () -> Void {
            func inner() {
@@ -740,22 +766,16 @@ For example:
            }
            return inner
        }
-    ---
-    -> var x = 10
-    << // x : Int = 10
-    -> let f = outer(a: &x)
-    << // f : () -> Void = (Function)
-    -> f()
-    -> print(x)
-    <- 10
+    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
+    !!            return inner
+    !!            ^
+    -> func closure(a: inout Int) -> () -> Void {
+           return { a += 1 }
+       }
+    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
+    !!              return { a += 1 }
+    !!                       ^
 
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer(a:)`` returns.
-To change the value of ``x``,
-``inner()`` would need to be called before ``outer(a:)`` returned.
-
-For more discussion and examples of in-out parameters,
-see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
@@ -902,15 +922,15 @@ the error thrown by ``alwaysThrows()``.
 
 .. testcode:: double-negative-rethrows
 
-   >> enum SomeError: ErrorProtocol { case error }
-   >> enum AnotherError: ErrorProtocol { case error }
+   >> enum SomeError: Error { case error }
+   >> enum AnotherError: Error { case error }
    -> func alwaysThrows() throws {
           throw SomeError.error
       }
    -> func someFunction(callback: () throws -> Void) rethrows {
          do {
             try callback()
-            try alwaysThrows()
+            try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
          } catch {
             throw AnotherError.error
          }
@@ -922,7 +942,7 @@ the error thrown by ``alwaysThrows()``.
 
 .. assertion:: throwing-in-rethrowing-function
 
-   -> enum SomeError: ErrorProtocol { case C, D }
+   -> enum SomeError: Error { case C, D }
    -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
@@ -946,7 +966,7 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     Grammar of a function declaration
 
-    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body-OPT
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT function-body-OPT
 
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
@@ -1147,13 +1167,17 @@ value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw-value type* and must represent an
 integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
-and one of the following literal-convertible protocols:
-``IntegerLiteralConvertible`` for integer literals,
-``FloatLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals that contain any number of characters, and
-``ExtendedGraphemeClusterLiteralConvertible`` for string literals
+and one of the following protocols:
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals that contain any number of characters,
+and ``ExpressibleByUnicodeScalarLiteral``
+or ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
+
+.. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
+.. This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
@@ -1246,18 +1270,18 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-member --> declaration | union-style-enum-case-clause | compiler-control-statement
     union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
+    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause generic-where-clause-OPT ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause | compiler-control-statement
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1351,9 +1375,12 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT struct-body
    struct-name --> identifier
-   struct-body --> ``{`` declarations-OPT ``}``
+   struct-body --> ``{`` struct-members-OPT ``}``
+
+   struct-members --> struct-member struct-members-OPT
+   struct-member --> declaration | compiler-control-statement
 
 
 .. _Declarations_ClassDeclaration:
@@ -1411,9 +1438,9 @@ The subclass's implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are not.
-That said, if the current class overrides all of the superclass's
-designated initializers, it inherits the superclass's convenience initializers.
+the current class, designated initializers declared in the *superclass* are only
+inherited when the subclass meets the conditions described in
+:ref:`Initialization_AutomaticInitializerInheritance`.
 Swift classes do not inherit from a universal base class.
 
 There are two ways create an instance of a previously declared class:
@@ -1445,10 +1472,13 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
+    class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
     class-name --> identifier
-    class-body --> ``{`` declarations-OPT ``}``
+    class-body --> ``{`` class-members-OPT ``}``
 
+    class-members --> class-member class-members-OPT
+    class-member --> declaration | compiler-control-statement
 
 .. _Declarations_ProtocolDeclaration:
 
@@ -1561,7 +1591,10 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
+    protocol-body --> ``{`` protocol-members-OPT ``}``
+
+    protocol-members --> protocol-member protocol-members-OPT
+    protocol-member --> protocol-member-declaration | compiler-control-statement
 
     protocol-member-declaration --> protocol-property-declaration
     protocol-member-declaration --> protocol-method-declaration
@@ -1653,7 +1686,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1681,8 +1714,8 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows``
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolSubscriptDeclaration:
@@ -1960,8 +1993,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT initializer-body
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
@@ -2089,10 +2122,12 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-body --> ``{`` extension-members-OPT ``}``
 
+    extension-members --> extension-member extension-members-OPT
+    extension-member --> declaration | compiler-control-statement
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -2264,12 +2299,16 @@ As with prefix operators, postfix operator declarations don't specify a preceden
 Postfix operators are nonassociative.
 
 After declaring a new operator,
-you implement it by declaring a function that has the same name as the operator.
+you implement it by declaring a static method that has the same name as the operator.
+The static method is a member of
+one of the types whose values the operator takes as an argument ---
+for example, an operator that multiplies a ``Double`` by an ``Int``
+is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
-you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
 If you're implementing an infix operator,
-you don't mark that function declaration with the ``infix`` declaration modifier.
+you don't mark that method declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -2401,10 +2440,13 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
+    declaration-modifier --> mutation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
     access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+
+    mutation-modifier --> ``mutating`` | ``nonmutating``
