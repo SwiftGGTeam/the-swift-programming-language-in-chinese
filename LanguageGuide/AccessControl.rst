@@ -686,7 +686,7 @@ which keeps track of the number of times a string property is modified:
 .. testcode:: reducedSetterScope
 
    -> struct TrackedString {
-         fileprivate(set) var numberOfEdits = 0
+         private(set) var numberOfEdits = 0
          var value: String = "" {
             didSet {
                numberOfEdits += 1
@@ -707,13 +707,23 @@ do not provide an explicit access level modifier,
 and so they both receive the default access level of internal.
 However, the access level for the ``numberOfEdits`` property
 is marked with a ``private(set)`` modifier
-to indicate that the property should be settable only from within
-the same source file as the ``TrackedString`` structure's definition.
-The property's getter still has the default access level of internal,
-but its setter is now private to the source file in which ``TrackedString`` is defined.
+to indicate that
+the property's getter still has the default access level of internal,
+but the property is settable only from within
+code that's part of the ``TrackedString`` structure.
 This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
 but to present the property as a read-only property
-when it is used by other source files within the same module.
+when it is used outside the structure's definition ---
+including any extensions to ``TrackedString``.
+
+.. assertion:: reducedSetterScope
+
+   -> extension TrackedString {
+          mutating func f() { numberOfEdits += 1 }
+      }
+   !! <REPL Input>:2:41: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! mutating func f() { numberOfEdits += 1 }
+   !!                     ~~~~~~~~~~~~~ ^
 
 If you create a ``TrackedString`` instance and modify its string value a few times,
 you can see the ``numberOfEdits`` property value update to match the number of modifications:
