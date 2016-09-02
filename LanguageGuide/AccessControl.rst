@@ -666,7 +666,8 @@ the constant, variable, property, or subscript they belong to.
 
 You can give a setter a *lower* access level than its corresponding getter,
 to restrict the read-write scope of that variable, property, or subscript.
-You assign a lower access level by writing ``private(set)`` or ``internal(set)``
+You assign a lower access level by writing
+``fileprivate(set)``, ``private(set)``, or ``internal(set)``
 before the ``var`` or ``subscript`` introducer.
 
 .. note::
@@ -675,7 +676,7 @@ before the ``var`` or ``subscript`` introducer.
    Even though you do not write an explicit getter and setter for a stored property,
    Swift still synthesizes an implicit getter and setter for you
    to provide access to the stored property's backing storage.
-   Use ``private(set)`` and ``internal(set)`` to change the access level
+   Use ``fileprivate(set)``, ``private(set)``, and ``internal(set)`` to change the access level
    of this synthesized setter in exactly the same way as for an explicit setter
    in a computed property.
 
@@ -685,7 +686,7 @@ which keeps track of the number of times a string property is modified:
 .. testcode:: reducedSetterScope
 
    -> struct TrackedString {
-         private(set) var numberOfEdits = 0
+         fileprivate(set) var numberOfEdits = 0
          var value: String = "" {
             didSet {
                numberOfEdits += 1
