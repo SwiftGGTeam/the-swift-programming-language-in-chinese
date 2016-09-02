@@ -167,7 +167,7 @@ in a function declaration or function call
 without being escaped with backticks.
 Keywords can be used in an explicit member expression
 without being escaped with backticks,
-except for ``self``, ``dynamicType``, ``Type``, and ``Protocol``,
+except for ``self``, ``Type``, and ``Protocol``,
 which have special meaning in an explicit member expression.
 
 .. assertion:: keywords-without-backticks
