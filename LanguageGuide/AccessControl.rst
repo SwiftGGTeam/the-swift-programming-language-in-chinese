@@ -724,6 +724,14 @@ including any extensions to ``TrackedString``.
    !! <REPL Input>:2:41: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! mutating func f() { numberOfEdits += 1 }
    !!                     ~~~~~~~~~~~~~ ^
+   ---
+   // check that we can't set its value with from the same file
+   -> var s = TrackedString()
+   << // s : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
+   -> let resultA: Void = { s.numberOfEdits += 1 }()
+   !! <REPL Input>:1:39: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! let resultA: Void = { s.numberOfEdits += 1 }()
+   !!                       ~~~~~~~~~~~~~~~ ^
 
 If you create a ``TrackedString`` instance and modify its string value a few times,
 you can see the ``numberOfEdits`` property value update to match the number of modifications:
@@ -778,9 +786,6 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
          }
          public init() {}
       }
-   // check that we can set its value with the private setter from the same file
-   -> var stringToEdit_Module1A = TrackedString()
-   -> let resultA: Void = { stringToEdit_Module1A.numberOfEdits += 1 }()
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed
 
@@ -793,7 +798,7 @@ by combining the ``public`` and ``private(set)`` access level modifiers:
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
-   !!  /tmp/sourcefile_0.swift:11:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! /tmp/sourcefile_1.swift:2:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
    !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
