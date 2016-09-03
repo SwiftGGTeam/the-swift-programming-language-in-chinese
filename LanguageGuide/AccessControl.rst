@@ -886,6 +886,7 @@ on any type that adopts the protocol.
    -> public protocol PublicProtocol {
          public var publicProperty: Int { get }
          internal var internalProperty: Int { get }
+         fileprivate var filePrivateProperty: Int { get }
          private var privateProperty: Int { get }
       }
    !! <REPL Input>:2:6: error: 'public' modifier cannot be used in protocols
@@ -896,7 +897,11 @@ on any type that adopts the protocol.
    !! internal var internalProperty: Int { get }
    !! ^~~~~~~~~
    !!-
-   !! <REPL Input>:4:6: error: 'private' modifier cannot be used in protocols
+   !! <REPL Input>:4:6: error: 'fileprivate' modifier cannot be used in protocols
+   !! fileprivate var filePrivateProperty: Int { get }
+   !! ^~~~~~~~~~~~
+   !!-
+   !! <REPL Input>:5:6: error: 'private' modifier cannot be used in protocols
    !! private var privateProperty: Int { get }
    !! ^~~~~~~~
    !!-
@@ -919,6 +924,10 @@ on any type that adopts the protocol.
    -> internal protocol InternalProtocol {
          var internalProperty: Int { get }
          func internalMethod()
+      }
+   -> fileprivate protocol FilePrivateProtocol {
+         var filePrivateProperty: Int { get }
+         func filePrivateMethod()
       }
    -> private protocol PrivateProtocol {
          var privateProperty: Int { get }
@@ -956,12 +965,21 @@ on any type that adopts the protocol.
 
 .. sourcefile:: protocols_Module1_Private
 
+   // these will fail, because FilePrivateProtocol is not visible outside of its file
+   -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+         var filePrivateProperty = 0
+         func filePrivateMethod() {}
+      }
+   !! /tmp/sourcefile_1.swift:1:58: error: use of undeclared type 'FilePrivateProtocol'
+   !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+   !! ^~~~~~~~~~~~~~~~~~~
+   ---
    // these will fail, because PrivateProtocol is not visible outside of its file
    -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
          var privateProperty = 0
          func privateMethod() {}
       }
-   !! /tmp/sourcefile_1.swift:1:54: error: use of undeclared type 'PrivateProtocol'
+   !! /tmp/sourcefile_1.swift:5:54: error: use of undeclared type 'PrivateProtocol'
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 
@@ -984,12 +1002,16 @@ on any type that adopts the protocol.
 
 .. sourcefile:: protocols_Module2_InternalAndPrivate
 
-   // these will both fail, becauswe InternalProtocol and PrivateProtocol
+   // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
    // are not visible to other modules
    -> import protocols_Module1
    -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
          var internalProperty = 0
          func internalMethod() {}
+      }
+   -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+         var filePrivateProperty = 0
+         func filePrivateMethod() {}
       }
    -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
          var privateProperty = 0
@@ -998,7 +1020,10 @@ on any type that adopts the protocol.
    !! /tmp/sourcefile_0.swift:2:55: error: use of undeclared type 'InternalProtocol'
    !! public class PublicClassConformingToInternalProtocol: InternalProtocol {
    !! ^~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:6:54: error: use of undeclared type 'PrivateProtocol'
+   !! /tmp/sourcefile_0.swift:6:58: error: use of undeclared type 'FilePrivateProtocol'
+   !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+   !! ^~~~~~~~~~~~~~~~~~~
+   !! /tmp/sourcefile_0.swift:10:54: error: use of undeclared type 'PrivateProtocol'
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 
