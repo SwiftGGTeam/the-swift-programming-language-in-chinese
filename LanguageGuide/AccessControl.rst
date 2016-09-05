@@ -857,6 +857,8 @@ Default Memberwise Initializers for Structure Types
 
 The default memberwise initializer for a structure type is considered private
 if any of the structure's stored properties are private.
+Likewise, if any of the structure's stored properties are file-private,
+the initializer is file-private.
 Otherwise, the initializer has an access level of internal.
 
 As with the default initializer above,
@@ -1073,9 +1075,11 @@ in which the class, structure, or enumeration is available.
 Any type members added in an extension have the same default access level as
 type members declared in the original type being extended.
 If you extend a public or internal type, any new type members you add
-will have a default access level of internal.
+have a default access level of internal.
+If you extend a file-private type, any new type members you add
+have a default access level of file-private.
 If you extend a private type, any new type members you add
-will have a default access level of private.
+have a default access level of private.
 
 Alternatively, you can mark an extension with an explicit access level modifier
 (for example, ``private extension``)
@@ -1092,13 +1096,17 @@ for individual type members.
    -> extension PublicStruct {
          func implicitlyInternalMethodFromExtension() -> Int { return 0 }
       }
+   -> fileprivate extension PublicStruct {
+         func filePrivateMethod() -> Int { return 0 }
+      }
    -> private extension PublicStruct {
          func privateMethod() -> Int { return 0 }
       }
    -> var publicStructInSameFile = PublicStruct()
    -> let sameFileA = publicStructInSameFile.implicitlyInternalMethodFromStruct()
    -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
-   -> let sameFileC = publicStructInSameFile.privateMethod()
+   -> let sameFileC = publicStructInSameFile.filePrivateMethod()
+   -> let sameFileD = publicStructInSameFile.privateMethod()
 
 .. sourcefile:: extensions_Module1_PublicAndInternal
 
@@ -1109,33 +1117,44 @@ for individual type members.
 .. sourcefile:: extensions_Module1_Private
 
    -> var publicStructInDifferentFile = PublicStruct()
-   -> let differentFileC = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:2:50: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentFileC = publicStructInDifferentFile.privateMethod()
+   -> let differentFileC = publicStructInDifferentFile.filePrivateMethod()
+   !! /tmp/sourcefile_1.swift:2:50: error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+   !! let differentFileC = publicStructInDifferentFile.filePrivateMethod()
    !!                                                  ^
-   !! /tmp/sourcefile_0.swift:9:9: note: 'privateMethod' declared here
+   !! /tmp/sourcefile_0.swift:9:9: note: 'filePrivateMethod' declared here
+   !! func filePrivateMethod() -> Int { return 0 }
+   !! ^
+   -> let differentFileD = publicStructInDifferentFile.privateMethod()
+   !! /tmp/sourcefile_1.swift:3:50: error: 'privateMethod' is inaccessible due to 'private' protection level
+   !! let differentFileD = publicStructInDifferentFile.privateMethod()
+   !!                                                  ^
+   !! /tmp/sourcefile_0.swift:12:9: note: 'privateMethod' declared here
    !! func privateMethod() -> Int { return 0 }
    !! ^
-
 
 .. sourcefile:: extensions_Module2
 
    -> import extensions_Module1
    -> var publicStructInDifferentModule = PublicStruct()
    -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
-   -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
-   -> let differentModuleC = publicStructInDifferentModule.privateMethod()
    !! /tmp/sourcefile_0.swift:3:54: error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    !!                                                      ^
    !! <unknown>:0: note: 'implicitlyInternalMethodFromStruct' declared here
+   -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    !! /tmp/sourcefile_0.swift:4:54: error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    !!                                                      ^
    !! <unknown>:0: note: 'implicitlyInternalMethodFromExtension' declared here
-   !! /tmp/sourcefile_0.swift:5:54: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentModuleC = publicStructInDifferentModule.privateMethod()
+   -> let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
+   !! /tmp/sourcefile_0.swift:5:54: error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+   !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !!                                                      ^
+   !! <unknown>:0: note: 'filePrivateMethod' declared here
+   -> let differentModuleD = publicStructInDifferentModule.privateMethod()
+   !! /tmp/sourcefile_0.swift:6:54: error: 'privateMethod' is inaccessible due to 'private' protection level
+   !! let differentModuleD = publicStructInDifferentModule.privateMethod()
+   !! ^
    !! <unknown>:0: note: 'privateMethod' declared here
 
 Adding Protocol Conformance with an Extension
@@ -1162,7 +1181,7 @@ Type Aliases
 
 Any type aliases you define are treated as distinct types for the purposes of access control.
 A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, internal, or public type,
+For example, a private type alias can alias a private, internal, file-private, or public type,
 but a public type alias cannot alias an internal or private type.
 
 .. note::
