@@ -350,3 +350,26 @@ a constant of the specified type to enable its value to be printed:
 AnyObject
 ~~~~~~~~~
 
+.. Array of delegates which may conform to one or more of the class's delegate protocols.
+
+    protocol MovieDelegate {
+        func willPlay(movie: Movie)
+    }
+
+    class Library {
+        var delegates = [AnyObject]
+        ...
+    }
+
+    for delegate in delegates {
+        guard let delegate = delegate as MovieDelegate else { continue }
+        delegate.willPlay(movie: m)
+    }
+
+
+.. A userData object for associating some opaque piece of data or state with an API call.
+
+    class C {
+        // Not userInfo -- that's usually a Dictionary
+        let userData: AnyObject?  // In Cocoa APIs, userData is a void*
+    }
