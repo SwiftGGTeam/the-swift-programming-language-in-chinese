@@ -57,8 +57,8 @@ Swift provides three different :newTerm:`access levels` for entities within your
 These access levels are relative to the source file in which an entity is defined,
 and also relative to the module that source file belongs to.
 
-* :newTerm:`Public access`
-  enables entities to be used within any source file from their defining module,
+* :newTerm:`Open access` and :newTerm:`public access`
+  enable entities to be used within any source file from their defining module,
   and also in a source file from another module that imports the defining module.
   You typically use public access when specifying the public interface to a framework.
 
@@ -80,8 +80,26 @@ and also relative to the module that source file belongs to.
   a specific piece of functionality
   when those details are used only within a single declaration.
 
-Public access is the highest (least restrictive) access level
+Open access is the highest (least restrictive) access level
 and private access is the lowest (or most restrictive) access level.
+
+Classes with public access, or any more restrictive access level,
+can be subclassed only within the module where they are defined.
+Open classes can be subclassed within the module where they are defined,
+and by any module that imports the module where they are defined.
+Marking a class with ``open`` explicitly indicates
+that you have considered the impact of code from other modules
+using that class as a superclass,
+and that you have designed your class's code accordingly.
+
+.. note::
+
+   Private access in Swift differs from private access in most other languages,
+   as it's scoped to the enclosing source file rather than to the enclosing declaration.
+   This means that a type can access any private entities
+   that are defined in the same source file as itself,
+   but an extension cannot access that type's private members
+   if it's defined in a separate source file.
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
@@ -135,7 +153,7 @@ Access Levels for Frameworks
 
 When you develop a framework,
 mark the public-facing interface to that framework
-as public so that it can be viewed and accessed by other modules,
+as open or public so that it can be viewed and accessed by other modules,
 such as an app that imports the framework.
 This public-facing interface is the application programming interface
 (or API) for the framework.
@@ -146,7 +164,7 @@ This public-facing interface is the application programming interface
    the default access level of internal,
    or can be marked as file-private or private if you want to hide them from
    other parts of the framework's internal code.
-   You need to mark an entity as public only if you want it to become
+   You need to mark an entity as open or public only if you want it to become
    part of your framework's API.
 
 .. _AccessControl_AccessLevelsForTestTargets:
@@ -156,7 +174,7 @@ Access Levels for Unit Test Targets
 
 When you write an app with a unit test target,
 the code in your app needs to be made available to that module in order to be tested.
-By default, only entities marked as public
+By default, only entities marked as open or public
 are accessible to other modules.
 However, a unit test target can access any internal entity,
 if you mark the import declaration for a product module with the ``@testable`` attribute
@@ -169,7 +187,7 @@ Access Control Syntax
 ---------------------
 
 Define the access level for an entity by placing
-one of the ``public``, ``internal``, ``fileprivate``, or ``private`` modifiers
+one of the ``open``, ``public``, ``internal``, ``fileprivate``, or ``private`` modifiers
 before the entity's introducer:
 
 .. testcode:: accessControlSyntax
@@ -1181,7 +1199,7 @@ Type Aliases
 
 Any type aliases you define are treated as distinct types for the purposes of access control.
 A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, internal, file-private, or public type,
+For example, a private type alias can alias a private, internal, file-private, public, or open type,
 but a public type alias cannot alias an internal or private type.
 
 .. note::

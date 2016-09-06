@@ -389,7 +389,10 @@ If you need the integer index of each item as well as its value,
 use the ``enumerated()`` method to iterate over the array instead.
 For each item in the array,
 the ``enumerated()`` method returns a tuple
-composed of the index and the value for that item.
+composed of an integer and the item.
+The integers start at zero and count up by one for each item;
+if you enumerate over a whole array,
+these integers match the items' indices.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
