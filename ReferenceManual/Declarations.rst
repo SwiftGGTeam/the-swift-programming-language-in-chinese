@@ -558,6 +558,27 @@ the type alias can't introduce additional generic constraints.
     typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
     typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 
+Inside a protocol declaration,
+a type alias can give a shorter and more convenient name
+to a type that is used frequently.
+For example:
+
+.. testcode:: typealias-in-prototol
+
+    -> protocol Sequence {
+           associatedtype Iterator: IteratorProtocol
+           typealias Element = Iterator.Element
+       }
+    ---
+    -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+           // ...
+    >>     return 9000
+       }
+
+Without this type alias,
+the ``sum`` function would have to refer to the associated type
+as ``T.Iterator.Element`` instead of ``T.Element``.
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
@@ -1623,7 +1644,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
     protocol-member-declaration --> protocol-initializer-declaration
     protocol-member-declaration --> protocol-subscript-declaration
     protocol-member-declaration --> protocol-associated-type-declaration
-    protocol-member-declarations --> protocol-member-declaration protocol-member-declarations-OPT
+    protocol-member-declaration --> typealias-declaration
 
 
 .. _Declarations_ProtocolPropertyDeclaration:
