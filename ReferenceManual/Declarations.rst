@@ -536,6 +536,27 @@ For example:
    << // dictionary1 : Dictionary<String, Int> = [:]
    << // dictionary2 : Dictionary<String, Int> = [:]
 
+Inside a protocol declaration,
+a type alias can give a shorter and more convenient name
+to a type that is used frequently.
+For example:
+
+.. testcode:: typealias-in-prototol
+
+    -> protocol Sequence {
+           associatedtype Iterator : IteratorProtocol
+           typealias Element = Iterator.Element
+       }
+    ---
+    -> func sum<T: Sequence>(sequence: T) -> Int where T.Element == Int {
+           // ...
+    >>     return 9000
+       }
+
+Without this type alias,
+the ``sum`` function would have to refer to the associated type
+as ``T.Iterator.Element`` instead of ``T.Element``.
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
