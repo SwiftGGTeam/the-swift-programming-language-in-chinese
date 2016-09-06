@@ -472,6 +472,7 @@ Literal Expression
 A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
+a playground literal,
 or one of the following special literals:
 
 =============    ===========  ===============================================
@@ -575,6 +576,15 @@ of specified key and value types.
     -> var emptyDictionary: [String: Double] = [:]
     << // emptyDictionary : [String : Double] = [:]
 
+A :newTerm:`playground literal`
+is used by Xcode to create an interactive representation
+of a color, file, or image within the program editor.
+Playground literals in plain text outside of Xcode
+are represented using a special literal syntax.
+
+For information on using playground literals in Xcode,
+see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a literal.
+
 
 .. langref-grammar
 
@@ -591,7 +601,7 @@ of specified key and value types.
     Grammar of a literal expression
 
     literal-expression --> literal
-    literal-expression --> array-literal | dictionary-literal
+    literal-expression --> array-literal | dictionary-literal | playground-literal
     literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
@@ -601,6 +611,10 @@ of specified key and value types.
     dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
     dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
     dictionary-literal-item --> expression ``:`` expression
+
+    playground-literal --> ``#colorLiteral`` ``(`` ``red`` ``:`` expression ``,`` ``green`` ``:`` expression ``,`` ``blue`` ``:`` expression ``,`` ``alpha`` ``:`` expression ``)``
+    playground-literal --> ``#fileLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
+    playground-literal --> ``#imageLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
 
 
 .. _Expressions_SelfExpression:

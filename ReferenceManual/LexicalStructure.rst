@@ -306,13 +306,16 @@ without being escaped with backticks.
 
 * Keywords that begin with a number sign (``#``):
   ``#available``,
+  ``#colorLiteral``,
   ``#column``,
   ``#else``,
   ``#elseif``,
   ``#endif``,
   ``#file``,
+  ``#fileLiteral``,
   ``#function``,
   ``#if``,
+  ``#imageLiteral``,
   ``#line``,
   ``#selector``.
   and ``#sourceLocation``.
