@@ -539,19 +539,19 @@ For example:
    << // dictionary2 : Dictionary<String, Int> = [:]
 
 When a type alias is declared with generic parameters, the constraints on those
-parameters must match exactly the constraints on the existing type's generic parameters. 
+parameters must match exactly the constraints on the existing type's generic parameters.
 For example:
 
 .. testcode:: typealias-with-generic-constraint
 
    -> typealias DictionaryOfInts<T: Hashable> = Dictionary<T, Int>
 
-The type alias must not introduce additional generic constraints 
-because the type alias and the existing type may be used 
+The type alias must not introduce additional generic constraints
+because the type alias and the existing type may be used
 interchangeably.
 
 .. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
-.... typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int> 
+     typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 
 .. Things that shouldn't work:
     typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
