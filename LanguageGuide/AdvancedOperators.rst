@@ -799,7 +799,8 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
    </ afterDoubling also has values of (2.0, 8.0)
 
-.. _AdvancedOperators_PrecedenceForCustomOperators:
+.. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
+
 
 Precedence for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
