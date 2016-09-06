@@ -544,7 +544,7 @@ For example:
 .. testcode:: typealias-in-prototol
 
     -> protocol Sequence {
-           associatedtype Iterator : IteratorProtocol
+           associatedtype Iterator: IteratorProtocol
            typealias Element = Iterator.Element
        }
     ---
