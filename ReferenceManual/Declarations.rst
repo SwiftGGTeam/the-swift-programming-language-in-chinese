@@ -2408,15 +2408,21 @@ that introduces the declaration.
 Access Control Levels
 ~~~~~~~~~~~~~~~~~~~~~
 
-Swift provides three levels of access control: public, internal, and private.
+Swift provides five levels of access control: open, public, internal, file private, and private.
 You can mark a declaration with one of the access-level modifiers below
 to specify the declaration's access level.
 Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
-``public``
-    Apply this modifier to a declaration to indicate the declaration can be accessed
+``open``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
     by code in the same module as the declaration.
-    Declarations marked with the ``public`` access-level modifier can also be accessed
+    Declarations marked with the ``open`` access-level modifier can also be accessed and subclassed
+    by code in a module that imports the module that contains that declaration.
+
+``public``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
+    by code in the same module as the declaration.
+    Declarations marked with the ``public`` access-level modifier can also be accessed (but not subclassed)
     by code in a module that imports the module that contains that declaration.
 
 ``internal``
@@ -2425,9 +2431,13 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     By default,
     most declarations are implicitly marked with the ``internal`` access-level modifier.
 
-``private``
+``fileprivate``
     Apply this modifier to a declaration to indicate the declaration can be accessed
     only by code in the same source file as the declaration.
+
+``private``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code within the declaration's immediate enclosing scope.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
@@ -2445,8 +2455,10 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     declaration-modifier --> mutation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
-    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``fileprivate`` | ``fileprivate`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
 
     mutation-modifier --> ``mutating`` | ``nonmutating``
