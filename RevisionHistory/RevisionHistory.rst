@@ -6,6 +6,18 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-09-07  * Updated the discussion
+              in the :ref:`Generics_WhereClauses` section
+              of the :doc:`../LanguageGuide/Generics` chapter
+              and in the :doc:`../ReferenceManual/GenericParametersAndArguments` chapter,
+              now that generic ``where`` clauses are written at the end of a declaration.
+
+            * Updated the discussion in the :ref:`Closures_Noescape` section,
+              now that closures are nonescaping by default.
+
+            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+              to use the new ``type(of:)`` syntax for dynamic type expressions.
+----------  ----------------------------------------------------------------------------------------------
 2016-08-01  * Updated the discussion
               in the :ref:`TheBasics_OptionalBinding` section
               of the :doc:`../LanguageGuide/TheBasics` chapter
