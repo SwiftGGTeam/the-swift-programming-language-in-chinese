@@ -524,13 +524,13 @@ they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters
 to give a name to an existing generic type. The type alias
-may provide concrete types for some or all of the generic parameters
+can provide concrete types for some or all of the generic parameters
 of the existing type.
 For example:
 
 .. testcode:: typealias-with-generic
 
-   -> typealias StringDictionary<T> = Dictionary<String, T>
+   -> typealias StringDictionary<Value> = Dictionary<String, Value>
    ---
    // The following dictionaries have the same type.
    -> var dictionary1: StringDictionary<Int> = [:]
@@ -544,11 +544,10 @@ For example:
 
 .. testcode:: typealias-with-generic-constraint
 
-   -> typealias DictionaryOfInts<T: Hashable> = Dictionary<T, Int>
+   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 
-The type alias must not introduce additional generic constraints
-because the type alias and the existing type may be used
-interchangeably.
+Because the type alias and the existing type can be used interchangeably,
+the type alias can't introduce additional generic constraints.
 
 .. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
      typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
