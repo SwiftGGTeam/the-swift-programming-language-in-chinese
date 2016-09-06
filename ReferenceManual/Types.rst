@@ -185,10 +185,9 @@ or more elements.
 
     Grammar of a tuple type
 
-    tuple-type --> ``(`` tuple-type-body-OPT ``)``
-    tuple-type-body --> tuple-type-element-list ``...``-OPT
+    tuple-type --> ``(`` tuple-type-element-list-OPT ``)``
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attributes-OPT ``inout``-OPT type | element-name type-annotation
+    tuple-type-element --> element-name type-annotation | type
     element-name --> identifier
 
 
@@ -272,8 +271,14 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
     Grammar of a function type
 
-    function-type --> attributes-OPT ``(`` type ``)`` ``throws``-OPT ``->`` type
-    function-type --> attributes-OPT ``(`` type ``)`` ``rethrows`` ``->`` type
+    function-type --> attributes-OPT ``(`` function-type-argument-list ``...``-OPT ``)`` ``throws``-OPT ``->`` type
+    function-type --> attributes-OPT ``(`` function-type-argument-list ``...``-OPT ``)`` ``rethrows`` ``->`` type
+
+    function-type-argument-list --> function-type-argument | function-type-argument ``,`` function-type-argument-list
+    function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label type-annotation
+    argument-label --> identifier
+
+
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
