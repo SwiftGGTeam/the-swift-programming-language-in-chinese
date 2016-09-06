@@ -53,14 +53,15 @@ a single source file can contain definitions for multiple types, functions, and 
 Access Levels
 -------------
 
-Swift provides three different :newTerm:`access levels` for entities within your code.
+Swift provides five different :newTerm:`access levels` for entities within your code.
 These access levels are relative to the source file in which an entity is defined,
 and also relative to the module that source file belongs to.
 
 * :newTerm:`Open access` and :newTerm:`public access`
   enable entities to be used within any source file from their defining module,
   and also in a source file from another module that imports the defining module.
-  You typically use public access when specifying the public interface to a framework.
+  You typically use open or public access when specifying the public interface to a framework.
+  The difference between open and public access is described below.
 
 * :newTerm:`Internal access`
   enables entities to be used within any source file from their defining module,
@@ -76,21 +77,21 @@ and also relative to the module that source file belongs to.
 
 * :newTerm:`Private access`
   restricts the use of an entity to the enclosing declaration.
-  Use file private access to hide the implementation details of
+  Use private access to hide the implementation details of
   a specific piece of functionality
   when those details are used only within a single declaration.
 
 Open access is the highest (least restrictive) access level
-and private access is the lowest (or most restrictive) access level.
+and private access is the lowest (most restrictive) access level.
 
 Classes with public access, or any more restrictive access level,
-can be subclassed only within the module where they are defined.
-Open classes can be subclassed within the module where they are defined,
-and by any module that imports the module where they are defined.
-Marking a class with ``open`` explicitly indicates
-that you have considered the impact of code from other modules
+can be subclassed only within the module where they're defined.
+Open classes can be subclassed within the module where they're defined,
+and within any module that imports the module where they're defined.
+Marking a class as open explicitly indicates
+that you've considered the impact of code from other modules
 using that class as a superclass,
-and that you have designed your class's code accordingly.
+and that you've designed your class's code accordingly.
 
 .. note::
 
@@ -112,7 +113,7 @@ a lower (more restrictive) access level.*
 
 For example:
 
-* A public variable cannot be defined as having an internal, file private, or private type,
+* A public variable cannot be defined as having an internal, file-private, or private type,
   because the type might not be available everywhere that the public variable is used.
 * A function cannot have a higher access level than its parameter types and return type,
   because the function could be used in situations where
@@ -252,13 +253,13 @@ the default access level of the type's members will be internal.
    -> public class SomePublicClass {                  // explicitly public class
          public var somePublicProperty = 0            // explicitly public class member
          var someInternalProperty = 0                 // implicitly internal class member
-         fileprivate func someFilePrivateMethod() {}  // explicitly private class member
+         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
          private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
    -> class SomeInternalClass {                       // implicitly internal class
          var someInternalProperty = 0                 // implicitly internal class member
-         fileprivate func someFilePrivateMethod() {}  // explicitly private class member
+         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
          private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
