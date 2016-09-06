@@ -523,7 +523,9 @@ Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters
-to give a name to an existing type.
+to give a name to an existing generic type. The type alias
+may provide concrete types for some or all of the generic parameters
+of the existing type.
 For example:
 
 .. testcode:: typealias-with-generic
@@ -535,6 +537,27 @@ For example:
    -> var dictionary2: Dictionary<String, Int> = [:]
    << // dictionary1 : Dictionary<String, Int> = [:]
    << // dictionary2 : Dictionary<String, Int> = [:]
+
+When a type alias is declared with generic parameters, the constraints on those
+parameters must match exactly the constraints on the existing type's generic parameters. 
+For example:
+
+.. testcode:: typealias-with-generic-constraint
+
+   -> typealias DictionaryOfInts<T: Hashable> = Dictionary<T, Int>
+
+The type alias must not introduce additional generic constraints 
+because the type alias and the existing type may be used 
+interchangeably.
+
+.. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
+.... typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int> 
+
+.. Things that shouldn't work:
+    typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
+    typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
+    typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
+    typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
