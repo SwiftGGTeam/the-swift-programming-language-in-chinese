@@ -582,8 +582,8 @@ of a color, file, or image within the program editor.
 Playground literals in plain text outside of Xcode
 are represented using a special literal syntax.
 
-..  For more information, see Xcode Help.
-    (Waiting on docs to land in Xcode Help before adding link.)
+For information on using playground literals in Xcode,
+see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a literal.
 
 
 .. langref-grammar
