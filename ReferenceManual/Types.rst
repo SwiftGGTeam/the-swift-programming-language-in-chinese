@@ -142,10 +142,7 @@ followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 When an element of a tuple type has a name,
-that name is part of the type ---
-however, argument names in function types
-are not part of the function type.
-For example:
+that name is part of the type.
 
 .. testcode:: tuple-type-names
 
@@ -158,14 +155,6 @@ For example:
    !! someTuple = (left: 5, right: 5)  // Error
    !!             ^~~~~~~~~~~~~~~~~~~
    !!                         as! (top: Int, bottom: Int)
-   ---
-   -> func someFunction(left: Int, right: Int) { }
-   -> func anotherFunction(left: Int, right: Int) { }
-   -> func functionWithDifferentLabels(top: Int, bottom: Int) { }
-   -> var f = someFunction             // f is of type (Int, Int) -> Void
-   << // f : (Int, Int) -> () = (Function)
-   -> f = anotherFunction              // OK
-   -> f = functionWithDifferentLabels  // Also OK
 
 ``Void`` is a type alias for the empty tuple type, ``()``.
 If there is only one element inside the parentheses,
@@ -229,6 +218,35 @@ see :ref:`Functions_VariadicParameters`.
 To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
+
+Argument names in functions and methods
+are not part of the corresponding function type.
+The function type consists of only the number of arguments
+and the type of each argument.
+For example:
+
+.. testcode::
+
+   -> func someFunction(left: Int, right: Int) { }
+   -> func anotherFunction(left: Int, right: Int) { }
+   -> func functionWithDifferentLabels(top: Int, bottom: Int) { }
+   ---
+   -> var f = someFunction             // f is of type (Int, Int) -> Void
+   << // f : (Int, Int) -> () = (Function)
+   -> f = anotherFunction              // OK
+   -> f = functionWithDifferentLabels  // Also OK
+   ---
+   -> func functionWithDifferentArgumentTypes(left: Int, right: String) { }
+   -> func functionWithDifferentNumberOfArgument(left: Int, right: Int, top: Int) { }
+   ---
+   -> f = functionWithDifferentArgumentTypes    // Error
+   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
+   !! f = functionWithDifferentArgumentTypes    // Error
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -> f = functionWithDifferentNumberOfArgument // Error
+   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
+   !! f = functionWithDifferentNumberOfArgument // Error
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
