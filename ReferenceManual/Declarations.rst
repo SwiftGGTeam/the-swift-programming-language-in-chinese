@@ -2249,8 +2249,10 @@ You specify the precedence of an operator by declaring a precedence group:
         assignment: <#assignment#>
     }
 
-The ``higherThan`` and ``lowerThan`` precedence groups position
+The ``higherThan`` and ``lowerThan`` precedence group lists position
 the new precedence group between existing precedence groups.
+The ``lowerThan`` attribute may only be used to refer to precedence groups
+declared outside of the current module.
 Swift defines numerous precedence groups to go along
 with the operators provided by the standard library.
 For example, the addition (``+``) and subtraction (``-``) operators
@@ -2259,10 +2261,13 @@ and the multiplication (``*``) and division (``/``) operators
 belong to the ``MultiplicationPrecedence`` group.
 When two operators compete with each other for their operands,
 such as in the expression ``2 + 3 * 5``,
-the operator with the higher relative precedence level
+the operator with the higher relative precedence
 binds more tightly to its operands.
+For a complete list of operators and precedence groups
+provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
 
-When both the ``higherThan`` and ``lowerThan`` groups are omitted,
+When both the ``higherThan`` and ``lowerThan`` group lists are omitted,
 Swift provides a default precedence
 through the precedence group ``DefaultPrecedence``,
 which specifies a ``higherThan`` value of ``TernaryPrecedence``.
@@ -2283,12 +2288,12 @@ Infix operators that are declared without specifying an associativity are
 initialized with an associativity of ``none``.
 
 The *assignment* of a precedence group specifies the precedence of an operator
-when used in an optional chaining expression.
+when used in an optional chaining assignment.
 When set to ``true``, an operator in the corresponding precedence group will
-use the same grouping behavior as the existing assignment operators.
+use the same grouping rules during optional chaining as the existing assignment operators.
 Otherwise, when set to ``false`` or omitted,
-operators in the precedence group will use the same precedence in optional chains
-as all other operators.
+operators in the precedence group will follow the same optional chaining rules 
+as operators that don't perform assignment.
 
 
 The following form declares a new prefix operator:

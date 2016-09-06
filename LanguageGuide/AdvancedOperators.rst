@@ -799,32 +799,25 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
    </ afterDoubling also has values of (2.0, 8.0)
 
-.. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
+.. _AdvancedOperators_PrecedenceForCustomOperators:
 
-Precedence and Associativity for Custom Infix Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Precedence for Custom Infix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a precedence group,
-which provides a precedence, associativity, and assignment behavior.
+Custom ``infix`` operators each belong to a precedence group.
+A precedence group specifies an operator's precedence relative
+to other infix operators, as well as the operator's associativity
+and behavior during optional chaining assignments.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-The possible values for ``associativity`` are ``left``, ``right``, and ``none``.
-Left-associative operators associate to the left if written next
-to other left-associative operators of the same precedence.
-Similarly, right-associative operators associate to the right if written
-next to other right-associative operators of the same precedence.
-Non-associative operators cannot be written next to
-other operators with the same precedence.
-
-The ``associativity`` value defaults to ``none`` if it is not specified.
-The precedence group defaults to ``DefaultPrecedence`` if it is not specified.
-``DefaultPrecedence`` is defined as having a higher precedence
-than the :ref:`BasicOperators_TernaryConditionalOperator`.
+A custom infix operator not explicitly placed into a precedence group is 
+given a default precedence group with a precedence immediately higher
+than the precedence of the ternary conditional operator.
 
 The following example defines a new custom ``infix`` operator called ``+-``,
-with ``left`` associativity and a precedence of ``AdditionPrecedence``:
+belonging to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
@@ -847,10 +840,13 @@ This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
 it has been given the same precedence group
-as default additive infix operators such as ``+`` and ``-``.
-For a complete list of the operator precedence and associativity settings,
+as additive infix operators such as ``+`` and ``-``.
+For a complete list of the operator precedence groups and associativity settings,
 for the operators provided by the Swift standard library,
 see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For more information about precedence groups and to see the syntax for
+defining your own operators and precedence groups,
+see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
