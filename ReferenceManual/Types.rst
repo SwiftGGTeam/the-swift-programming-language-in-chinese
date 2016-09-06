@@ -141,6 +141,32 @@ the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
+When an element of a tuple type has a name,
+that name is part of the type ---
+however, argument names in function types
+are not part of the function type.
+For example:
+
+.. testcode:: tuple-type-names
+
+   -> var someTuple = (top: 10, bottom: 12)  // a is of type (top: Int, bottom: Int)
+   << // someTuple : (top: Int, bottom: Int) = (10, 12)
+   -> someTuple = (top: 4, bottom: 42) // OK - names match
+   -> someTuple = (9, 99)              // OK - names are inferred
+   -> someTuple = (left: 5, right: 5)  // Error
+   !! <REPL Input>:1:13: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
+   !! someTuple = (left: 5, right: 5)  // Error
+   !!             ^~~~~~~~~~~~~~~~~~~
+   !!                         as! (top: Int, bottom: Int)
+   ---
+   -> func someFunction(left: Int, right: Int) { }
+   -> func anotherFunction(left: Int, right: Int) { }
+   -> func functionWithDifferentLabels(top: Int, bottom: Int) { }
+   -> var f = someFunction             // f is of type (Int, Int) -> Void
+   << // f : (Int, Int) -> () = (Function)
+   -> f = anotherFunction              // OK
+   -> f = functionWithDifferentLabels  // Also OK
+
 ``Void`` is a type alias for the empty tuple type, ``()``.
 If there is only one element inside the parentheses,
 the type is simply the type of that element.
