@@ -93,14 +93,6 @@ that you've considered the impact of code from other modules
 using that class as a superclass,
 and that you've designed your class's code accordingly.
 
-.. note::
-
-   Private access in Swift differs from private access in most other languages,
-   as it's scoped to the enclosing source file rather than to the enclosing declaration.
-   This means that a type can access any private entities
-   that are defined in the same source file as itself,
-   but an extension cannot access that type's private members
-   if it's defined in a separate source file.
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
