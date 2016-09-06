@@ -146,7 +146,7 @@ Access Levels for Frameworks
 
 When you develop a framework,
 mark the public-facing interface to that framework
-as public so that it can be viewed and accessed by other modules,
+as open or public so that it can be viewed and accessed by other modules,
 such as an app that imports the framework.
 This public-facing interface is the application programming interface
 (or API) for the framework.
@@ -157,7 +157,7 @@ This public-facing interface is the application programming interface
    the default access level of internal,
    or can be marked as private if you want to hide them from
    other parts of the framework's internal code.
-   You need to mark an entity as public only if you want it to become
+   You need to mark an entity as open or public only if you want it to become
    part of your framework's API.
 
 .. _AccessControl_AccessLevelsForTestTargets:
@@ -167,7 +167,7 @@ Access Levels for Unit Test Targets
 
 When you write an app with a unit test target,
 the code in your app needs to be made available to that module in order to be tested.
-By default, only entities marked as public
+By default, only entities marked as open or public
 are accessible to other modules.
 However, a unit test target can access any internal entity,
 if you mark the import declaration for a product module with the ``@testable`` attribute
@@ -180,7 +180,7 @@ Access Control Syntax
 ---------------------
 
 Define the access level for an entity by placing
-one of the ``public``, ``internal``, or ``private`` modifiers
+one of the ``open``, ``public``, ``internal``, or ``private`` modifiers
 before the entity's introducer:
 
 .. testcode:: accessControlSyntax
@@ -1114,7 +1114,7 @@ Type Aliases
 
 Any type aliases you define are treated as distinct types for the purposes of access control.
 A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, internal, or public type,
+For example, a private type alias can alias a private, internal, public, or open type,
 but a public type alias cannot alias an internal or private type.
 
 .. note::
