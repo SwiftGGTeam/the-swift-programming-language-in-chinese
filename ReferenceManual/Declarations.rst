@@ -548,7 +548,7 @@ For example:
            typealias Element = Iterator.Element
        }
     ---
-    -> func sum<T: Sequence>(sequence: T) -> Int where T.Element == Int {
+    -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
            // ...
     >>     return 9000
        }
