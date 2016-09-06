@@ -1601,6 +1601,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
     protocol-member-declaration --> protocol-initializer-declaration
     protocol-member-declaration --> protocol-subscript-declaration
     protocol-member-declaration --> protocol-associated-type-declaration
+    protocol-member-declaration --> typealias-declaration
 
 
 .. _Declarations_ProtocolPropertyDeclaration:
