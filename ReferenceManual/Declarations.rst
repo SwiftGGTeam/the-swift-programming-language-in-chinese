@@ -2251,8 +2251,8 @@ You specify the precedence of an operator by declaring a precedence group:
 
 The ``higherThan`` and ``lowerThan`` precedence group lists position
 the new precedence group between existing precedence groups.
-The ``lowerThan`` attribute may only be used to refer to precedence groups
-declared outside of the current module.
+The ``lowerThan`` precedence group attribute may only be used
+to refer to precedence groups declared outside of the current module.
 Swift defines numerous precedence groups to go along
 with the operators provided by the standard library.
 For example, the addition (``+``) and subtraction (``-``) operators
@@ -2288,7 +2288,7 @@ Infix operators that are declared without specifying an associativity are
 initialized with an associativity of ``none``.
 
 The *assignment* of a precedence group specifies the precedence of an operator
-when used in an optional chaining assignment.
+when used in an assignment operation that includes optional chaining.
 When set to ``true``, an operator in the corresponding precedence group will
 use the same grouping rules during optional chaining as the existing assignment operators.
 Otherwise, when set to ``false`` or omitted,

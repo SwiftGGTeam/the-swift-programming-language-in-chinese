@@ -806,8 +806,7 @@ Precedence for Custom Infix Operators
 
 Custom ``infix`` operators each belong to a precedence group.
 A precedence group specifies an operator's precedence relative
-to other infix operators, as well as the operator's associativity
-and behavior during optional chaining assignments.
+to other infix operators, as well as the operator's associativity.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
