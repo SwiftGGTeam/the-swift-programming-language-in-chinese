@@ -1192,8 +1192,8 @@ Type Aliases
 
 Any type aliases you define are treated as distinct types for the purposes of access control.
 A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, internal, file-private, public, or open type,
-but a public type alias cannot alias an internal or private type.
+For example, a private type alias can alias a private, file-private, internal, public, or open type,
+but a public type alias cannot alias an internal, file-private, or private type.
 
 .. note::
 
