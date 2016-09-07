@@ -192,9 +192,10 @@ and consists of a parameter and return type separated by an arrow (``->``):
 
     (<#parameter type#>) -> <#return type#>
 
-Because the *parameter type* and the *return type* can be a tuple type,
-function types support functions and methods that take multiple parameters
-and return multiple values.
+The *parameter type* is comma-separated list of types.
+Because the *return type* can be a tuple type,
+function types support functions and methods
+that return multiple values.
 
 A parameter of the function type ``() -> T``
 (where ``T`` is any type)
