@@ -309,10 +309,9 @@ You can apply a declaration attribute to declarations only.
     for modules compiled with testing enabled
     to access any entities marked with the ``internal`` access level modifier
     as if they were declared with the ``public`` access level modifier.
-    Tests can subclass nonfinal classes
-    that are marked with the ``internal`` or ``public`` access level modifier,
-    and can override class members
-    that are marked with the ``internal`` or ``public`` access level modifier.
+    Tests can also access classes and class members
+    that are marked with the ``internal`` or ``public`` access level modifier
+    as if they were declared with the ``open`` access level modifier.
 
 ``UIApplicationMain``
     Apply this attribute to a class
