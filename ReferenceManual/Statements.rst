@@ -342,6 +342,8 @@ using one of the following statements:
 * ``throw``
 
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
+For more information on functions with the return type ``Never``,
+see :ref:`Declarations_FunctionsThatNeverReturn`.
 
 .. syntax-grammar::
 
