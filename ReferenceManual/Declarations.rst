@@ -1006,6 +1006,29 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+
+.. _Declarations_FunctionsThatNeverReturn:
+
+Functions that Never Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift defines a ``Never`` type,
+which indicates that a function or method doesn't return to its caller.
+Functions and methods with the ``Never`` return type are called :newTerm:`nonreturning`.
+Nonreturning functions and methods either cause an irrecoverable error 
+or begin a sequence of work that continues indefinitely.
+This means that
+code that would otherwise run immediately after the call is never executed.
+Throwing and rethrowing functions can transfer program control
+to an appropriate ``catch`` block, even when they are nonreturning.
+
+A nonreturning function or method can be called to conclude the ``else`` clause
+of a guard statement,
+as discussed in :ref:`Statements_GuardStatement`.
+
+You can override a nonreturning method,
+but the new method must preserve its return type and nonreturning behavior.
+
 .. syntax-grammar::
 
     Grammar of a function declaration

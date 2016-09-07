@@ -33,8 +33,7 @@ in parentheses, and their format is defined by the attribute they belong to.
 Declaration Attributes
 ----------------------
 
-You can apply a declaration attribute to declarations only. However, you can also apply
-the ``noreturn`` attribute to a function or method *type*.
+You can apply a declaration attribute to declarations only.
 
 ``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
@@ -267,19 +266,6 @@ the ``noreturn`` attribute to a function or method *type*.
     cannot satisfy a protocol requirement
     for a method marked with the ``objc`` attribute.
 
-``noreturn``
-    Apply this attribute to a function or method declaration
-    to indicate that the corresponding type of that function or method,
-    ``T``, is ``@noreturn T``.
-    You can mark a function or method type with this attribute to indicate that
-    the function or method doesn't return to its caller.
-
-    You can override a function or method that is not marked with the ``noreturn``
-    attribute with a function or method that is. That said, you can't override
-    a function or method that is marked with the ``noreturn`` attribute with a function
-    or method that is not. Similar rules apply when you implement a protocol
-    method in a conforming type.
-
 ``NSApplicationMain``
     Apply this attribute to a class
     to indicate that it is the application delegate.
@@ -372,8 +358,6 @@ Type Attributes
 ---------------
 
 You can apply type attributes to types only.
-However, you can also apply the ``noreturn`` attribute
-to a function or method *declaration*.
 
 ``autoclosure``
     This attribute is used to delay the evaluation of an expression
@@ -418,11 +402,6 @@ to a function or method *declaration*.
     For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
 
-``noreturn``
-    Apply this attribute to the type of a function or method
-    to indicate that the function or method doesn't return to its caller.
-    You can also mark a function or method declaration with this attribute to indicate that
-    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
 
 .. langref-grammar
 
@@ -434,7 +413,6 @@ to a function or method *declaration*.
     attribute      ::= attribute-resilience
     attribute      ::= attribute-inout
     attribute      ::= attribute-autoclosure
-    attribute      ::= attribute-noreturn
 
 .. NOTE: LangRef grammar is way out of date.
 

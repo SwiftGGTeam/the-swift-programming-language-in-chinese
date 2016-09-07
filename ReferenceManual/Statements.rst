@@ -332,7 +332,7 @@ from an optional binding declaration in a ``guard`` statement condition
 can be used for the rest of the guard statement's enclosing scope.
 
 The ``else`` clause of a ``guard`` statement is required,
-and must either call a function marked with the ``noreturn`` attribute
+and must either call a function with the ``Never`` return type
 or transfer program control outside the guard statement's enclosing scope
 using one of the following statements:
 
@@ -341,13 +341,9 @@ using one of the following statements:
 * ``continue``
 * ``throw``
 
-.. The function has to be marked @noterurn -- it's not sufficient to just be nonreturning.
-   For example, the following is invalid:
-
-   func foo() { fatalError() }
-   guard false else { foo() }
-
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
+For more information on functions with the ``Never`` return type,
+see :ref:`Declarations_FunctionsThatNeverReturn`.
 
 .. syntax-grammar::
 
