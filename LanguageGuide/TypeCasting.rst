@@ -269,12 +269,6 @@ Use ``Any`` and ``AnyObject`` only when you explicitly need
 the behavior and capabilities they provide.
 It is always better to be specific about the types you expect to work with in your code.
 
-
-.. _TypeCasting_Any:
-
-Any
-~~~
-
 Here's an example of using ``Any`` to work with a mix of different types,
 including function types and non-class types.
 The example creates an array called ``things``, which can store values of type ``Any``:
@@ -344,11 +338,7 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 
-
-.. _TypeCasting_AnyObject:
-
-AnyObject
-~~~~~~~~~
+.. Rejected examples to illustrate AnyObject:
 
 .. Array of delegates which may conform to one or more of the class's delegate protocols.
 

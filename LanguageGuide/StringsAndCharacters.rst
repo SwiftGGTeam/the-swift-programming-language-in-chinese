@@ -30,7 +30,7 @@ and provides support for accessing those characters in various Unicode represent
    Swift's ``String`` type is bridged with Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa,
    the entire ``NSString`` API is available to call on any ``String`` value you create
-   when type cast to ``NSString``, as described in :ref:`TypeCasting_AnyObject`.
+   when type cast to ``NSString``, as described in :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
 
    For more information about using ``String`` with Foundation and Cocoa,

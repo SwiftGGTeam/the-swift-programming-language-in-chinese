@@ -430,7 +430,7 @@ Date        Notes
               for protocols.
 
             * Constants and variables of type ``Any`` can now contain
-              function instances. Updated the example for :ref:`TypeCasting_Any`
+              function instances. Updated the example in :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`
               to show how to check for and cast to a function type
               within a ``switch`` statement.
 
