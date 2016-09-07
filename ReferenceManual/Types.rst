@@ -298,7 +298,6 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
     function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label type-annotation
     argument-label --> identifier
 
-
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
     This means that monomorphic functions can be assigned to variables
