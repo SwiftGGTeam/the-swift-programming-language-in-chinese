@@ -6,6 +6,21 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-09-13  * Added discussion of ``open`` and ``fileprivate``
+              to the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Added discussion of operator precedence groups
+              to :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
+              of the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              and to the :ref:`Declarations_PrecedenceGroupDeclaration` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added discussion of playground literals
+              to the :ref:`Expressions_LiteralExpression` section.
+
+            * Updated the discussion in :ref:`Declarations_FunctionsThatNeverReturn`
+              to use the new ``Never`` type.
+----------  ----------------------------------------------------------------------------------------------
 2016-09-07  * Updated the discussion
               in the :ref:`Generics_WhereClauses` section
               of the :doc:`../LanguageGuide/Generics` chapter
