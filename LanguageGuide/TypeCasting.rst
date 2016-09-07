@@ -220,7 +220,7 @@ A similar principle is used to check for ``Song`` instances,
 and to print an appropriate description (including ``artist`` name)
 whenever a ``Song`` is found in the library.
 
-The example above iterated over every element in ``library``
+The example above iterated over every item in ``library``
 and handled each type differently.
 If you're interested in only some of the items in the array,
 you can also include the type check as part of the loop,
@@ -260,7 +260,7 @@ skipping instances of any other type.
 Type Casting for Any and AnyObject
 ----------------------------------
 
-Swift provides two special types for working with non-specific types:
+Swift provides two special types for working with nonspecific types:
 
 * ``Any`` can represent an instance of any type at all, including function types.
 * ``AnyObject`` can represent an instance of any class type.
