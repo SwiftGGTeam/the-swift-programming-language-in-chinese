@@ -948,15 +948,15 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 Functions that Never Return
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift defines a type ``Never``
-that indicates that a function or method doesn't return to its caller.
+Swift defines a ``Never`` type,
+which indicates that a function or method doesn't return to its caller.
 Functions and methods with the ``Never`` return type are called :newTerm:`nonreturning`.
 Nonreturning functions and methods either cause an irrecoverable error 
 or begin a sequence of work that continues indefinitely.
-Code that would otherwise run immediately after a call to
-a nonreturning function or method will instead never be executed.
-Throwing and rethrowing functions can return control flow
-to an appropriate ``catch`` block even when they are nonreturning.
+This means that
+code that would otherwise run immediately after the call is never executed.
+Throwing and rethrowing functions can transfer program control
+to an appropriate ``catch`` block, even when they are nonreturning.
 
 A nonreturning function or method can be called to conclude the ``else`` clause
 of a guard statement,
