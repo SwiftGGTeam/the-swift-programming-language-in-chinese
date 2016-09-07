@@ -2297,7 +2297,7 @@ Precedence Group Declaration
 ----------------------------
 
 A :newTerm:`precedence group declaration` introduces
-a new grouping for operator precedence into your program.
+a new grouping for infix operator precedence into your program.
 The precedence of an operator specifies how tightly the operator
 binds to its operands, in the absence of grouping parentheses.
 
@@ -2322,12 +2322,13 @@ binds more tightly to its operands.
 
 .. note::
 
-   All of the precedence groups
+   Precedence groups related to each other
+   using *lower group names* and *higher group names*
    must fit into a single relational hierarchy,
    but they *don't* have to form a linear hierarchy.
-   This means it is possible to create precedence levels
+   This means it is possible to have precedence groups
    with undefined relative precedence.
-   Operators at those precedence levels
+   Operators from those precedence groups
    can't be used next to each other without grouping parentheses.
 
 Swift defines numerous precedence groups to go along
