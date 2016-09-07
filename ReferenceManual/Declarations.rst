@@ -48,6 +48,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declaration --> operator-declaration
+    declaration --> precedence-group-declaration
     declarations --> declaration declarations-OPT
 
 
@@ -2280,48 +2281,22 @@ The following form declares a new infix operator:
 
 .. syntax-outline::
 
-    infix operator <#operator name#> {
-       precedence <#precedence level#>
-       associativity <#associativity#>
-    }
+    infix operator <#operator name#>: <#precedence group#>
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
 such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
-Infix operators can optionally specify a precedence, associativity, or both.
-
-The :newTerm:`precedence` of an operator specifies how tightly an operator
-binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the context-sensitive ``precedence`` keyword
-followed by the *precedence level*.
-The *precedence level* can be any whole number (decimal integer) from 0 to 255;
-unlike decimal integer literals, it can't contain any underscore characters.
-Although the precedence level is a specific number,
-it is significant only relative to another operator.
-That is, when two operators compete with each other for their operands,
-such as in the expression ``2 + 3 * 5``, the operator with the higher precedence level
-binds more tightly to its operands.
-
-The :newTerm:`associativity` of an operator specifies how a sequence of operators
-with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
-followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
-or ``none``. Operators that are left-associative group left-to-right. For example,
-the subtraction operator (``-``) is left-associative,
-and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
-and evaluates to ``-7``. Operators that are right-associative group right-to-left,
-and operators that are specified with an associativity of ``none`` don't associate at all.
-Nonassociative operators of the same precedence level can't appear adjacent to each to other.
-For example, ``1 < 2 < 3`` is not a valid expression.
-
-Infix operators that are declared without specifying a precedence or associativity are
-initialized with a precedence level of 100 and an associativity of ``none``.
+Infix operators can optionally specify a precedence group.
+If you omit the precedence group for an operator,
+Swift uses the default precedence group, ``DefaultPrecedence``,
+which specifies a precedence just higher than ``TernaryPrecedence``.
+For more information, see :ref:`Declarations_PrecedenceGroupDeclaration`.
 
 The following form declares a new prefix operator:
 
 .. syntax-outline::
 
-    prefix operator <#operator name#> {}
+    prefix operator <#operator name#>
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
 such as the prefix logical NOT operator (``!``) in the expression ``!a``.
@@ -2333,7 +2308,7 @@ The following form declares a new postfix operator:
 
 .. syntax-outline::
 
-    postfix operator <#operator name#> {}
+    postfix operator <#operator name#>
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
 such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
@@ -2350,8 +2325,6 @@ is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
 you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
-If you're implementing an infix operator,
-you don't mark that method declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -2361,19 +2334,113 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    prefix-operator-declaration --> ``prefix`` ``operator`` operator ``{`` ``}``
-    postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
-    infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator
+    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
 
-    infix-operator-attributes --> associativity-clause precedence-clause-OPT
-    infix-operator-attributes --> precedence-clause associativity-clause-OPT
-    precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> A decimal integer between 0 and 255, inclusive
-    associativity-clause --> ``associativity`` associativity
-    associativity --> ``left`` | ``right`` | ``none``
+    infix-operator-group --> ``:`` precedence-group-name
 
-.. TR: I added this grammar from looking at ParseDecl.cpp and from trying
-    to various permutations in the REPL. Is this a correct grammar?
+
+.. _Declarations_PrecedenceGroupDeclaration:
+
+Precedence Group Declaration
+----------------------------
+
+A :newTerm:`precedence group declaration` introduces
+a new grouping for infix operator precedence into your program.
+The precedence of an operator specifies how tightly the operator
+binds to its operands, in the absence of grouping parentheses.
+
+A precedence group declaration has the following form:
+
+.. syntax-outline::
+    precedencegroup <#precedence group name#> {
+        higherThan: <#lower group names#>
+        lowerThan: <#higher group names#>
+        associativity: <#associativity#>
+        assignment: <#assignment#>
+    }
+
+The *lower group names* and *higher group names* lists specify
+the new precedence group's relation to existing precedence groups.
+The ``lowerThan`` precedence group attribute may only be used
+to refer to precedence groups declared outside of the current module.
+When two operators compete with each other for their operands,
+such as in the expression ``2 + 3 * 5``,
+the operator with the higher relative precedence
+binds more tightly to its operands.
+
+.. note::
+
+   Precedence groups related to each other
+   using *lower group names* and *higher group names*
+   must fit into a single relational hierarchy,
+   but they *don't* have to form a linear hierarchy.
+   This means it is possible to have precedence groups
+   with undefined relative precedence.
+   Operators from those precedence groups
+   can't be used next to each other without grouping parentheses.
+
+Swift defines numerous precedence groups to go along
+with the operators provided by the standard library.
+For example, the addition (``+``) and subtraction (``-``) operators
+belong to the ``AdditionPrecedence`` group,
+and the multiplication (``*``) and division (``/``) operators
+belong to the ``MultiplicationPrecedence`` group.
+For a complete list of operators and precedence groups
+provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+The *associativity* of an operator specifies how a sequence of operators
+with the same precedence level are grouped together in the absence of grouping parentheses.
+You specify the associativity of an operator by writing
+one of the context-sensitive keywords ``left``, ``right``, or ``none`` ---
+if your omit the associativity, the default is ``none``.
+Operators that are left-associative group left-to-right.
+For example,
+the subtraction operator (``-``) is left-associative,
+so the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
+and evaluates to ``-7``.
+Operators that are right-associative group right-to-left,
+and operators that are specified with an associativity of ``none``
+don't associate at all.
+Nonassociative operators of the same precedence level
+can't appear adjacent to each to other.
+For example,
+the ``<`` operator has an associativity of ``none``,
+which means ``1 < 2 < 3`` is not a valid expression.
+
+The *assignment* of a precedence group specifies the precedence of an operator
+when used in an operation that includes optional chaining.
+When set to ``true``, an operator in the corresponding precedence group
+uses the same grouping rules during optional chaining
+as the assignment operators from the standard library.
+Otherwise, when set to ``false`` or omitted,
+operators in the precedence group follows the same optional chaining rules 
+as operators that don't perform assignment.
+
+.. syntax-grammar::
+
+    Grammar of a precedence group declaration
+    
+    precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
+    
+    precedence-group-attributes --> precedence-group-attribute precedence-group-attributes-OPT
+    precedence-group-attribute --> precedence-group-relation
+    precedence-group-attribute --> precedence-group-assignment
+    precedence-group-attribute --> precedence-group-associativity
+
+    precedence-group-relation --> ``higherThan`` ``:`` precedence-group-names
+    precedence-group-relation --> ``lowerThan`` ``:`` precedence-group-names
+    
+    precedence-group-assignment --> ``assignment`` ``:`` boolean-literal
+    
+    precedence-group-associativity --> ``associativity`` ``:`` ``left``
+    precedence-group-associativity --> ``associativity`` ``:`` ``right``
+    precedence-group-associativity --> ``associativity`` ``:`` ``none``
+
+    precedence-group-names --> precedence-group-name | precedence-group-name ``,`` precedence-group-names
+    precedence-group-name --> identifier
 
 
 .. _Declarations_DeclarationModifiers:

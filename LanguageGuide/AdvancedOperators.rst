@@ -769,7 +769,7 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
 
-   -> prefix operator +++ {}
+   -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -801,31 +801,27 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
 
-Precedence and Associativity for Custom Infix Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a precedence and an associativity.
+Precedence for Custom Infix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Custom infix operators each belong to a precedence group.
+A precedence group specifies an operator's precedence relative
+to other infix operators, as well as the operator's associativity.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
-how these two characteristics affect an infix operator's interaction
+how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-The possible values for ``associativity`` are ``left``, ``right``, and ``none``.
-Left-associative operators associate to the left if written next
-to other left-associative operators of the same precedence.
-Similarly, right-associative operators associate to the right if written
-next to other right-associative operators of the same precedence.
-Non-associative operators cannot be written next to
-other operators with the same precedence.
+A custom infix operator that is not explicitly placed into a precedence group is 
+given a default precedence group with a precedence immediately higher
+than the precedence of the ternary conditional operator.
 
-The ``associativity`` value defaults to ``none`` if it is not specified.
-The ``precedence`` value defaults to ``100`` if it is not specified.
-
-The following example defines a new custom ``infix`` operator called ``+-``,
-with ``left`` associativity and a precedence of ``140``:
+The following example defines a new custom infix operator called ``+-``,
+which belongs to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
-   -> infix operator +- { associativity left precedence 140 }
+   -> infix operator +-: AdditionPrecedence
    -> extension Vector2D {
          static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
             return Vector2D(x: left.x + right.x, y: left.y - right.y)
@@ -843,12 +839,14 @@ with ``left`` associativity and a precedence of ``140``:
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
-it has been given the same associativity and precedence values
-(``left`` and ``140``)
-as default additive infix operators such as ``+`` and ``-``.
-For a complete list of the operator precedence and associativity settings,
+it has been given the same precedence group
+as additive infix operators such as ``+`` and ``-``.
+For a complete list of the operator precedence groups and associativity settings,
 for the operators provided by the Swift standard library,
 see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For more information about precedence groups and to see the syntax for
+defining your own operators and precedence groups,
+see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
