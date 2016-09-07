@@ -146,8 +146,8 @@ you write the ``throws`` keyword before the return arrow (``->``).
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
-   -> func f(callback: () -> Int) { }
-   -> func f(callback: () throws -> Int) { } // Allowed
+   -> func f(callback: () -> Int) {}
+   -> func f(callback: () throws -> Int) {} // Allowed
 
 .. TODO: Add more assertions to test these behaviors
 
@@ -472,7 +472,7 @@ after code in the second, and so on.
    >>    func readline() throws -> String? { return nil }
    >> }
    >> func open(_ file: String) -> File { return File() }
-   >> func close(_ fileHandle: File) { }
+   >> func close(_ fileHandle: File) {}
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)
