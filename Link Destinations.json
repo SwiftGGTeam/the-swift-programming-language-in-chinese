@@ -217,6 +217,7 @@
     "declarations-initializerdeclaration": "ID375", 
     "declarations-inoutparameters": "ID545", 
     "declarations-operatordeclaration": "ID380", 
+    "declarations-precedencegroupdeclaration": "ID550", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
     "declarations-protocolinitializerdeclaration": "ID372", 
@@ -568,5 +569,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 550
+  "next_id": 551
 }
