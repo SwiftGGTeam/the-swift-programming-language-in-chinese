@@ -48,6 +48,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declaration --> operator-declaration
+    declaration --> precedence-group-declaration
     declarations --> declaration declarations-OPT
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
@@ -2239,6 +2240,61 @@ such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 Infix operators can optionally specify a :newTerm:`precedence group`.
 The :newTerm:`precedence` of an operator specifies how tightly an operator
 binds to its operands in the absence of grouping parentheses.
+
+The following form declares a new prefix operator:
+
+.. syntax-outline::
+
+    prefix operator <#operator name#>
+
+A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
+such as the prefix logical NOT operator (``!``) in the expression ``!a``.
+
+Prefix operators declarations don't specify a precedence level.
+Prefix operators are nonassociative.
+
+The following form declares a new postfix operator:
+
+.. syntax-outline::
+
+    postfix operator <#operator name#>
+
+A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
+such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
+
+As with prefix operators, postfix operator declarations don't specify a precedence level.
+Postfix operators are nonassociative.
+
+After declaring a new operator,
+you implement it by declaring a static method that has the same name as the operator.
+The static method is a member of
+one of the types whose values the operator takes as an argument ---
+for example, an operator that multiplies a ``Double`` by an ``Int``
+is implemented as a static method on either the ``Double`` or ``Int`` structure.
+If you're implementing a prefix or postfix operator,
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
+declaration modifier.
+To see an example of how to create and implement a new operator,
+see :ref:`AdvancedOperators_CustomOperators`.
+
+.. syntax-grammar::
+
+    Grammar of an operator declaration
+
+    operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
+
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator
+    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
+
+    infix-operator-group --> ``:`` precedence-group-name
+
+
+.. _Declarations_PrecedenceGroupDeclaration:
+
+Precedence Group Declaration
+----------------------------
+
 You specify the precedence of an operator by declaring a precedence group:
 
 .. syntax-outline::
@@ -2295,54 +2351,9 @@ Otherwise, when set to ``false`` or omitted,
 operators in the precedence group will follow the same optional chaining rules 
 as operators that don't perform assignment.
 
-
-The following form declares a new prefix operator:
-
-.. syntax-outline::
-
-    prefix operator <#operator name#>
-
-A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
-such as the prefix logical NOT operator (``!``) in the expression ``!a``.
-
-Prefix operators declarations don't specify a precedence level.
-Prefix operators are nonassociative.
-
-The following form declares a new postfix operator:
-
-.. syntax-outline::
-
-    postfix operator <#operator name#>
-
-A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
-such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
-
-As with prefix operators, postfix operator declarations don't specify a precedence level.
-Postfix operators are nonassociative.
-
-After declaring a new operator,
-you implement it by declaring a static method that has the same name as the operator.
-The static method is a member of
-one of the types whose values the operator takes as an argument ---
-for example, an operator that multiplies a ``Double`` by an ``Int``
-is implemented as a static method on either the ``Double`` or ``Int`` structure.
-If you're implementing a prefix or postfix operator,
-you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
-declaration modifier.
-To see an example of how to create and implement a new operator,
-see :ref:`AdvancedOperators_CustomOperators`.
-
 .. syntax-grammar::
 
-    Grammar of an operator declaration
-
-    operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
-
-    prefix-operator-declaration --> ``prefix`` ``operator`` operator
-    postfix-operator-declaration --> ``postfix`` ``operator`` operator
-    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
-
-    infix-operator-group --> ``:`` precedence-group-name
+    Grammar of a precedence group declaration
     
     precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
     
