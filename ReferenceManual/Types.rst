@@ -226,17 +226,17 @@ For example:
 
 .. testcode::
 
-   -> func someFunction(left: Int, right: Int) { }
-   -> func anotherFunction(left: Int, right: Int) { }
-   -> func functionWithDifferentLabels(top: Int, bottom: Int) { }
+   -> func someFunction(left: Int, right: Int) {}
+   -> func anotherFunction(left: Int, right: Int) {}
+   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
    ---
    -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
    << // f : (Int, Int) -> () = (Function)
    -> f = anotherFunction              // OK
    -> f = functionWithDifferentLabels  // OK
    ---
-   -> func functionWithDifferentArgumentTypes(left: Int, right: String) { }
-   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) { }
+   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    ---
    -> f = functionWithDifferentArgumentTypes     // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'

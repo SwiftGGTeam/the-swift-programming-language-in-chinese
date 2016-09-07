@@ -744,7 +744,7 @@ all mutation has finished before the function returns.
 .. testcode:: cant-pass-inout-aliasing
 
     >> import Dispatch
-    >> func someMutatingOperation(_ a: inout Int) { }
+    >> func someMutatingOperation(_ a: inout Int) {}
     -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
           // Make a local copy and manually copy it back.
           var localX = x
