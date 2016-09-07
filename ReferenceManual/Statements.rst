@@ -332,7 +332,7 @@ from an optional binding declaration in a ``guard`` statement condition
 can be used for the rest of the guard statement's enclosing scope.
 
 The ``else`` clause of a ``guard`` statement is required,
-and must either call a function with the return type ``Never``
+and must either call a function with the ``Never`` return type
 or transfer program control outside the guard statement's enclosing scope
 using one of the following statements:
 
@@ -342,7 +342,7 @@ using one of the following statements:
 * ``throw``
 
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
-For more information on functions with the return type ``Never``,
+For more information on functions with the ``Never`` return type,
 see :ref:`Declarations_FunctionsThatNeverReturn`.
 
 .. syntax-grammar::
