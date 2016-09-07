@@ -16,19 +16,20 @@ Date        Notes
               in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
               now that you implement them as type methods instead of as global functions.
 
-            * Added discussion of the ``open`` and ``fileprivate`` access-level modifiers
+            * Added information about the ``open`` and ``fileprivate`` access-level modifiers
               to the :doc:`../LanguageGuide/AccessControl` chapter.
 
             * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
-              to note that it appears on a parameter type.
+              to note that it appears in front of a parameter's type
+              instead of in front of a parameter's name.
 
-            * Updated the discussion of ``@noescape`` and ``@autoclosure``
+            * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
               in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
               and the :doc:`../ReferenceManual/Attributes` chapter
               now that they are type attributes, rather than declaration attributes.
 
-            * Added discussion of operator precedence groups
-              to :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
+            * Added information about operator precedence groups
+              to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
               of the :doc:`../LanguageGuide/AdvancedOperators` chapter,
               and to the :ref:`Declarations_PrecedenceGroupDeclaration` section
               of the :doc:`../ReferenceManual/Declarations` chapter.
@@ -54,13 +55,17 @@ Date        Notes
               and the :ref:`Statements_WhileStatement` section
               of the :doc:`../ReferenceManual/Statements` chapter,
               now that ``if``, ``while``, and ``guard`` statements
-              use a comma separated list of conditions without ``where`` clauses.
+              use a comma-separated list of conditions without ``where`` clauses.
 
             * Added information about switch cases that have multiple patterns
               to the :ref:`ControlFlow_Switch` section
               of the :doc:`../LanguageGuide/ControlFlow` chapter
               and the :ref:`Statements_SwitchStatement` section
               of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Updated the discussion of function types
+              in the :ref:`Types_FunctionType` section
+              now that function argument labels are no longer part of a function's type.
 
             * Updated the discussion of protocol composition types
               in the :ref:`Protocols_ProtocolComposition` section
@@ -79,13 +84,13 @@ Date        Notes
             * Updated the discussion in :ref:`Declarations_FunctionsThatNeverReturn`
               to use the new ``Never`` type.
 
-            * Added discussion of playground literals
+            * Added information about playground literals
               to the :ref:`Expressions_LiteralExpression` section.
 
             * Updated the discussion in the :ref:`Declarations_InOutParameters` section
               to note that only nonescaping closures can capture in-out parameters.
 
-            * Updated discussion about default parameters
+            * Updated the discussion about default parameters
               in the :ref:`Functions_DefaultParameterValues` section,
               now that they can't be reordered in function calls.
 
@@ -98,10 +103,10 @@ Date        Notes
 
             * Added information about accessing the selector
               of an Objective-C property's getter or setter
-              in the :ref:`Expression_SelectorExpression` section.
+              to the :ref:`Expression_SelectorExpression` section.
 
-            * Added information about generic type aliases
-              to the :ref:`Declarations_TypeAliasDeclaration` section.
+            * Added information to the :ref:`Declarations_TypeAliasDeclaration` section
+              about generic type aliases and using type aliases inside of protocols.
 
             * Updated the discussion of function types in the :ref:`Types_FunctionType` section
               to note that parentheses around the parameter types are required.
@@ -110,7 +115,7 @@ Date        Notes
               to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
               imply the ``@objc`` attribute.
 
-            * Added the ``@GKInspectable`` attribute
+            * Added information about the ``@GKInspectable`` attribute
               to the :ref:`Attributes_DeclarationAttributes` section.
 
             * Updated the discussion of optional protocol requirements
