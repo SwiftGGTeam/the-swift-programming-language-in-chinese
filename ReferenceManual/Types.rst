@@ -245,7 +245,7 @@ For example:
    -> f = functionWithDifferentNumberOfArguments // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentNumberOfArguments // Error
-   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
