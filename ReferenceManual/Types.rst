@@ -146,13 +146,13 @@ that name is part of the type.
 
 .. testcode:: tuple-type-names
 
-   -> var someTuple = (top: 10, bottom: 12)  // a is of type (top: Int, bottom: Int)
+   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
    << // someTuple : (top: Int, bottom: Int) = (10, 12)
-   -> someTuple = (top: 4, bottom: 42) // OK - names match
-   -> someTuple = (9, 99)              // OK - names are inferred
-   -> someTuple = (left: 5, right: 5)  // Error
+   -> someTuple = (top: 4, bottom: 42) // OK: names match
+   -> someTuple = (9, 99)              // OK: names are inferred
+   -> someTuple = (left: 5, right: 5)  // Error: names don't match
    !! <REPL Input>:1:13: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
-   !! someTuple = (left: 5, right: 5)  // Error
+   !! someTuple = (left: 5, right: 5)  // Error: names don't match
    !!             ^~~~~~~~~~~~~~~~~~~
    !!                         as! (top: Int, bottom: Int)
 
