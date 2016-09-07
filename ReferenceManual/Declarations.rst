@@ -63,7 +63,7 @@ By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
 You can override this default behavior
-by marking the declaration with an access level modifier,
+by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC

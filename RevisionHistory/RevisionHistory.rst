@@ -16,7 +16,7 @@ Date        Notes
               in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
               now that you implement them as type methods instead of as global functions.
 
-            * Added discussion of ``open`` and ``fileprivate``
+            * Added discussion of the ``open`` and ``fileprivate`` access-level modifiers
               to the :doc:`../LanguageGuide/AccessControl` chapter.
 
             * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
