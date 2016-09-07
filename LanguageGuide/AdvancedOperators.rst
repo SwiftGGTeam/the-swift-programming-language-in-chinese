@@ -805,19 +805,19 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 Precedence for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators each belong to a precedence group.
+Custom infix operators each belong to a precedence group.
 A precedence group specifies an operator's precedence relative
 to other infix operators, as well as the operator's associativity.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-A custom infix operator not explicitly placed into a precedence group is 
+A custom infix operator that is not explicitly placed into a precedence group is 
 given a default precedence group with a precedence immediately higher
 than the precedence of the ternary conditional operator.
 
-The following example defines a new custom ``infix`` operator called ``+-``,
-belonging to the precedence group ``AdditionPrecedence``:
+The following example defines a new custom infix operator called ``+-``,
+which belongs to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
