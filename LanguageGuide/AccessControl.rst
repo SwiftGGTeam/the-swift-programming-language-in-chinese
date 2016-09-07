@@ -84,15 +84,25 @@ and also relative to the module that source file belongs to.
 Open access is the highest (least restrictive) access level
 and private access is the lowest (most restrictive) access level.
 
-Classes with public access, or any more restrictive access level,
-can be subclassed only within the module where they're defined.
-Open classes can be subclassed within the module where they're defined,
-and within any module that imports the module where they're defined.
+Open access applies only to classes and class members,
+and it differs from public access as follows:
+
+* Classes with public access, or any more restrictive access level,
+  can be subclassed only within the module where they're defined.
+
+* Class members with public access, or any more restrictive access level,
+  can be overridden by subclasses only within the module where they're defined.
+
+* Open classes can be subclassed within the module where they're defined,
+  and within any module that imports the module where they're defined.
+
+* Open class members can be overridden by subclasses within the module where they're defined,
+  and within any module that imports the module where they're defined.
+
 Marking a class as open explicitly indicates
 that you've considered the impact of code from other modules
 using that class as a superclass,
 and that you've designed your class's code accordingly.
-
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
