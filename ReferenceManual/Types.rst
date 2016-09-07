@@ -222,8 +222,6 @@ In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
-The function type consists of only the number of arguments
-and the type of each argument.
 For example:
 
 .. testcode::
@@ -232,21 +230,21 @@ For example:
    -> func anotherFunction(left: Int, right: Int) { }
    -> func functionWithDifferentLabels(top: Int, bottom: Int) { }
    ---
-   -> var f = someFunction             // f is of type (Int, Int) -> Void
+   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
    << // f : (Int, Int) -> () = (Function)
    -> f = anotherFunction              // OK
-   -> f = functionWithDifferentLabels  // Also OK
+   -> f = functionWithDifferentLabels  // OK
    ---
    -> func functionWithDifferentArgumentTypes(left: Int, right: String) { }
-   -> func functionWithDifferentNumberOfArgument(left: Int, right: Int, top: Int) { }
+   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) { }
    ---
-   -> f = functionWithDifferentArgumentTypes    // Error
+   -> f = functionWithDifferentArgumentTypes     // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
-   !! f = functionWithDifferentArgumentTypes    // Error
+   !! f = functionWithDifferentArgumentTypes     // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   -> f = functionWithDifferentNumberOfArgument // Error
+   -> f = functionWithDifferentNumberOfArguments // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
-   !! f = functionWithDifferentNumberOfArgument // Error
+   !! f = functionWithDifferentNumberOfArguments // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a function type includes more than a single arrow (``->``),
@@ -540,7 +538,7 @@ For example:
     let implicitlyUnwrappedTuple: (Int, Int)!             // OK
 
     let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
-    let implicitlyUnwrappedArray: [Int]!                    // OK
+    let implicitlyUnwrappedArray: [Int]!                  // OK
 
 Because implicitly unwrapped optionals
 have the same ``Optional<Wrapped>`` type as optional values,
