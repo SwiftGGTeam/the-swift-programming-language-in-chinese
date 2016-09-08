@@ -292,7 +292,7 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
     function-type --> attributes-OPT function-type-argument-clause ``rethrows`` ``->`` type
 
     function-type-argument-clause --> ``(`` ``)``
-    function-type-argument-clause --> ``(`` function-type-argument-list ``...`-OPT ``)``
+    function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
 
     function-type-argument-list --> function-type-argument | function-type-argument ``,`` function-type-argument-list
     function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label type-annotation
