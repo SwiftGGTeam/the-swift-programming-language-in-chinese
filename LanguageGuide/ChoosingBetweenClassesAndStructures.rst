@@ -198,7 +198,7 @@ Working with Existing Classes
 
 When you are working with frameworks,
 it is common to be given a baseclass
-that you are expected to subclass
+that you are expected to subclass,
 or to be expected
 to pass around class instances.
 For example,
@@ -246,8 +246,8 @@ to reason about your code.
 
 Because structures are value types,
 they help you avoid
-the unintended sharing
-that often happens
+unintended sharing ---
+a problem that often arises
 when using classes.
 
 Recall the ``Temperature`` structure
@@ -273,8 +273,16 @@ Imagine ``Temperature`` was a class instead:
            }
        }
        
-You can create ``roomTemperature`` and ``ovenTemperature`` variables
-like before, but now they are class instances: 
+You can create
+``roomTemperature`` and ``ovenTemperature`` variables
+like before
+to model the ambient temperature of a room
+and the temperature of an oven in that room.
+Initially,
+you set ``ovenTemperature`` to ``roomTemperature``
+because the oven is off
+and at the same temperature
+as the room: 
 
  .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -284,8 +292,9 @@ like before, but now they are class instances:
     -> var ovenTemperature = roomTemperature
     << // ovenTemperature : Temperature = REPL.Temperature
 
-When you go to turn on the oven like before,
-you change the temperature of the room as well: 
+When you go to turn on the oven,
+you accidentally change the temperature
+of the room as well: 
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -304,14 +313,14 @@ also changes ``roomTemperature``,
 which is clearly unintended. 
 
 This example of unintended sharing
-is a simple example of a problem
+is a simple illustration
+of a problem
 that often comes up
 when using classes.
 It is clear to see where
 things went wrong in this example,
 but when you write more complicated code
-and have to worry
-about changes coming from many different places,
+and changes come from many different places,
 it is much more difficult
 to reason about your code.
 
@@ -326,16 +335,20 @@ manually copying
 class instances as needed
 is hard to justify
 when structures
-do that for you.
+do that for you
+with their copy-on-write behavior.
 
-In much the same way
-that constants
-make it easier
-to reason about your code,
+Much like constants,
 structures make it
-so you don't have to worry
+easier to reason about your code
+because you don't have to worry
 about where far-away changes
 might be coming from.
+Structures provide a simpler abstraction,
+saving you from having
+to think about shared mutability
+in those cases when you really
+do not need reference semantics.
 
 .. _ChoosingBetweenClassesAndStructures_OnInheritance:
 
@@ -439,13 +452,9 @@ inheritance in itself
 is not a compelling reason
 to use a class --- 
 with the exception
-of those cases
+of those times
 when you need
 to subclass an existing class.
-
-
-
-
 
 
 
