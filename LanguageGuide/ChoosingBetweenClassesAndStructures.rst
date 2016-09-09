@@ -214,36 +214,234 @@ use a class.
 When to Use a Structure
 -----------------------
 
+In Swift, structures can and should be
+used for more than you might think ---
+especially if you are used to working
+in object-oriented languages
+like C and Objective-C.
+As discussed in :doc:`Structures`,
+structures in Swift
+can do so much more
+than store a few simple data values.
+
+If you don't need your custom data construct
+to have reference semantics
+for any of the reasons discussed above,
+use a structure.
+
+In general,
+this means you should
+use structures by default,
+and use classes
+in those special cases
+discussed above.
+
+.. _ChoosingBetweenClassesAndStructures_WhyToUseAStructure:
+
+Why to Use a Structure
+----------------------
+
+Structures make it easier
+to reason about your code.
+
+Because structures are value types,
+they help you avoid
+the unintended sharing
+that often happens
+when using classes.
+
+Recall the ``Temperature`` structure
+from :doc:`Structures`: 
+
+.. testcode:: choosingbetweenclassesandstructures
+
+    -> struct Temperature {
+           var celsius = 0.0
+           var fahrenheit: Double {
+               return celsius * 9/5 + 32
+           }
+       }
+
+Imagine ``Temperature`` was a class instead:
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> class Temperature {
+           var celsius = 0.0
+           var fahrenheit: Double {
+               return celsius * 9/5 + 32
+           }
+       }
+       
+You can create ``roomTemperature`` and ``ovenTemperature`` variables
+like before, but now they are class instances: 
+
+ .. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> var roomTemperature = Temperature()
+    << // roomTemperature : Temperature = REPL.Temperature
+    -> roomTemperature.celsius = 21.0
+    -> var ovenTemperature = roomTemperature
+    << // ovenTemperature : Temperature = REPL.Temperature
+
+When you go to turn on the oven like before,
+you change the temperature of the room as well: 
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> ovenTemperature.celsius = 180.0
+    -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
+    <- ovenTemperature is now 180.0 degrees Celsius
+    -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
+    <- roomTemperature is also now 180.0 degrees Celsius
+
+Because ``Temperature`` is now a class,
+setting ``ovenTemperature`` to ``roomTemperature``
+means that both variables refer
+to the same ``Temperature`` instance.
+Therefore, changing ``ovenTemperature``
+also changes ``roomTemperature``,
+which is clearly unintended. 
+
+This example of unintended sharing
+is a simple example of a problem
+that often comes up
+when using classes.
+It is clear to see where
+things went wrong in this example,
+but when you write more complicated code
+and have to worry
+about changes coming from many different places,
+it is much more difficult
+to reason about your code.
+
+One solution
+to unintended sharing
+when using classes
+is to manually copy
+your class instances
+as needed.
+However,
+manually copying
+class instances as needed
+is hard to justify
+when structures
+do that for you.
+
+In much the same way
+that constants
+make it easier
+to reason about your code,
+structures make it
+so you don't have to worry
+about where far-away changes
+might be coming from.
+
+.. _ChoosingBetweenClassesAndStructures_OnInheritance:
+
+On Inheritance
+--------------
+
+You might think
+you should use a class
+because you need inheritance.
+In Swift,
+protocols and protocol extensions
+make it so that
+you can use structures
+and still have inheritance.
+
+Consider the ``Vehicle`` base class
+from :doc:`Inheritance`: 
+
+.. testcode:: choosingbetweenclassesandstructures
+
+    -> class Vehicle {
+           var currentSpeed = 0.0
+           var description: String {
+               return "traveling at \(currentSpeed) miles per hour"
+           }
+           
+           func makeNoise() {
+               // do nothing - an arbitrary vehicle doesn't necessarily make a noise
+           }
+       }
+
+As discussed in :doc:`Inheritance`,
+you can create subclasses of ``Vehicle``
+that inherit its properties,
+such as ``Train`` and ``Car``:
+
+.. testcode:: choosingbetweenclassesandstructures
+
+    -> class Train: Vehicle {
+           override func makeNoise() {
+               print("Choo Choo")
+           }
+       }
+    -> class Car: Vehicle {
+           var gear = 1
+           override var description: String {
+               return super.description + " in gear \(gear)"
+           }
+       } 
+
+Instead of using a ``Vehicle`` base class,
+you can make ``Vehicle`` a protocol
+and provide a default implementation
+in a protocol extension: 
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> protocol Vehicle {
+           var currentSpeed: Double { get set }
+       }
+    -> extension Vehicle { 
+           var description: String { 
+               return "traveling at \(currentSpeed) miles per hour"
+           }
+           
+           func makeNoise() {
+               // do nothing - an arbitrary vehicle doesn't necessarily make a noise
+           }
+       }
 
 
+Instead of using subclasses,
+you can use ``Car`` and ``Train`` structures
+that conform to the ``Vehicle`` protocol: 
 
+.. testcode:: choosingbetweenclassesandstructureshypothetical
 
+    -> struct Train: Vehicle {
+           var currentSpeed = 0.0
+           func makeNoise() {
+               print("Choo Choo")
+           }
+       }
+    -> struct Car: Vehicle {
+           var currentSpeed = 0.0
+           var gear = 1
+           var description: String {
+               return "traveling at \(currentSpeed) miles per house in gear \(gear)"
+           }
+       }
 
+Much like their class counterparts,
+the ``Train`` and ``Car`` structures
+inherit implementations
+of ``description`` and ``makeNoise()``
+that they can override.
 
-
-
-
-
-
-
-
-
-
-.. when framework gives you a class and you are expected to subclass it... don't fight the frameworks (Cocoa programmers)
-
-.. things with identity... connection to some external system (e.g. sinks, file handlers, network sockets, etc.)
-
-.. delegate object (has identity and will be passed around but different things need to refer to same instance of object)
-
-.. "a thing that has identity" a thing where you want the same instance of a type
-
-.. ToDo: why value types make it easier to reason about code (mutation at a distance & local reasoning)
-
-.. in much the same way that constants make it easier to reason about your code because it can't change,
-.. using value type you don't have to worry about where far away changes might be coming from
-
-.. these are some things you might make classes in other languages
-
+With protocols and protocol extensions
+at your disposal,
+inheritance in itself
+is not a compelling reason
+to use a class --- 
+with the exception
+of those cases
+when you need
+to subclass an existing class.
 
 
 
