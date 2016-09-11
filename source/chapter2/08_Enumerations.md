@@ -10,7 +10,10 @@
 
 > 2.1
 > 翻译：[Channe](https://github.com/Channe)
-> 校对：[shanks](http://codebuild.me)
+> 校对：[shanks](http://codebuild.me)，
+
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-13
 
 本页内容包含：
 
@@ -293,11 +296,8 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 <a name="recursive_enumerations"></a>
 ## 递归枚举（Recursive Enumerations）
 
-当各种可能的情况可以被穷举时，非常适合使用枚举进行数据建模，例如可以用枚举来表示用于简单整数运算的操作符。这些操作符让你可以将简单的算术表达式，例如整数`5`，结合为更为复杂的表达式，例如`5 + 4`。
 
-算术表达式的一个重要特性是，表达式可以嵌套使用。例如，表达式`(5 + 4) * 2`，乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也需要支持这种嵌套——这意味着枚举类型需要支持递归。
-
-*递归枚举（recursive enumeration）*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上`indirect`来表示该成员可递归。
+*递归枚举（recursive enumeration）*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上`indirect`来表示该成员可递归。  
 
 例如，下面的例子中，枚举类型存储了简单的算术表达式：
 
@@ -319,7 +319,14 @@ indirect enum ArithmeticExpression {
 }
 ```
 
-上面定义的枚举类型可以存储三种算术表达式：纯数字、两个表达式相加、两个表达式相乘。枚举成员`Addition`和`Multiplication`的关联值也是算术表达式——这些关联值使得嵌套表达式成为可能。
+上面定义的枚举类型可以存储三种算术表达式：纯数字、两个表达式相加、两个表达式相乘。枚举成员`Addition`和`Multiplication`的关联值也是算术表达式——这些关联值使得嵌套表达式成为可能。例如，表达式`(5 + 4) * 2`，乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也需要支持这种嵌套——这意味着枚举类型需要支持递归。下面的代码展示了使用`ArithmeticExpression `这个递归枚举创建表达式`(5 + 4) * 2`
+
+```swift
+let five = ArithmeticExpression.Number(5)
+let four = ArithmeticExpression.Number(4)
+let sum = ArithmeticExpression.Addition(five, four)
+let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+```
 
 要操作具有递归性质的数据结构，使用递归函数是一种直截了当的方式。例如，下面是一个对算术表达式求值的函数：
 
@@ -334,12 +341,7 @@ func evaluate(expression: ArithmeticExpression) -> Int {
         return evaluate(left) * evaluate(right)
     }
 }
- 
-// 计算 (5 + 4) * 2
-let five = ArithmeticExpression.Number(5)
-let four = ArithmeticExpression.Number(4)
-let sum = ArithmeticExpression.Addition(five, four)
-let product = ArithmeticExpression.Multiplication(sum, ArithmeticExpression.Number(2))
+
 print(evaluate(product))
 // 输出 "18"
 ```

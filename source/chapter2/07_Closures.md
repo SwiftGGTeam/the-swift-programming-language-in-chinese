@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
 > 校对：[shanks](http://codebuild.me)
+>
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
 
 本页包含内容：
 
@@ -76,7 +79,7 @@ var reversed = names.sort(backwards)
 
 如果第一个字符串（`s1`）大于第二个字符串（`s2`），`backwards(_:_:)`函数返回`true`，表示在新的数组中`s1`应该出现在`s2`前。对于字符串中的字符来说，“大于”表示“按照字母顺序较晚出现”。这意味着字母`"B"`大于字母`"A"`，字符串`"Tom"`大于字符串`"Tim"`。该闭包将进行字母逆序排序，`"Barry"`将会排在`"Alex"`之前。
 
-然而，这是一个相当冗长的方式，本质上只是写了一个单表达式函数 (`a > b`)。在下面的例子中，利用闭合表达式语法可以更好地构造一个内联排序闭包。
+然而，这是一个相当冗长的方式，本质上只是写了一个单表达式函数 (`a > b`)。在下面的例子中，利用闭包表达式语法可以更好地构造一个内联排序闭包。
 
 <a name="closure_expression_syntax"></a>
 ### 闭包表达式语法（Closure Expression Syntax）
@@ -134,7 +137,7 @@ reversed = names.sort( { s1, s2 in return s1 > s2 } )
 reversed = names.sort( { s1, s2 in s1 > s2 } )
 ```
 
-在这个例子中，`sort(_:)`方法的第二个参数函数类型明确了闭包必须返回一个`Bool`类型值。因为闭包函数体只包含了一个单一表达式（`s1 > s2`），该表达式返回`Bool`类型值，因此这里没有歧义，`return`关键字可以省略。
+在这个例子中，`sort(_:)`方法的参数类型明确了闭包必须返回一个`Bool`类型值。因为闭包函数体只包含了一个单一表达式（`s1 > s2`），该表达式返回`Bool`类型值，因此这里没有歧义，`return`关键字可以省略。
 
 <a name="shorthand_argument_names"></a>
 ### 参数名称缩写（Shorthand Argument Names）
@@ -152,7 +155,7 @@ reversed = names.sort( { $0 > $1 } )
 <a name="operator_functions"></a>
 ### 运算符函数（Operator Functions）
 
-实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。Swift 的`String`类型定义了关于大于号（`>`）的字符串实现，其作为一个函数接受两个`String`类型的参数并返回`Bool`类型的值。而这正好与`sort(_:)`方法的第二个参数需要的函数类型相符合。因此，您可以简单地传递一个大于号，Swift 可以自动推断出您想使用大于号的字符串函数实现：
+实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。Swift 的`String`类型定义了关于大于号（`>`）的字符串实现，其作为一个函数接受两个`String`类型的参数并返回`Bool`类型的值。而这正好与`sort(_:)`方法的参数需要的函数类型相符合。因此，您可以简单地传递一个大于号，Swift 可以自动推断出您想使用大于号的字符串函数实现：
 
 ```swift
 reversed = names.sort(>)
@@ -213,7 +216,8 @@ let numbers = [16, 58, 510]
 
 ```swift
 let strings = numbers.map {
-    (var number) -> String in
+    (number) -> String in
+    var number = number
     var output = ""
     while number > 0 {
         output = digitNames[number % 10]! + output
@@ -227,7 +231,7 @@ let strings = numbers.map {
 
 `map(_:)`为数组中每一个元素调用了闭包表达式。您不需要指定闭包的输入参数`number`的类型，因为可以通过要映射的数组类型进行推断。
 
-在该例中，闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](./06_Functions.html#constant_and_variable_parameters)），因此可以在闭包函数体内对其进行修改，而不用再定义一个新的局部变量并将`number`的值赋值给它。闭包表达式指定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
+在该例中，局部变量`number`的值由闭包中的`number`参数获得,因此可以在闭包函数体内对其进行修改，(闭包或者函数的参数总是常量),闭包表达式指定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
 
 闭包表达式在每次被调用的时候创建了一个叫做`output`的字符串并返回。其使用求余运算符（`number % 10`）计算最后一位数字并利用`digitNames`字典获取所映射的字符串。
 

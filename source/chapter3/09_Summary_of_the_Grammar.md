@@ -239,7 +239,7 @@
 > *声明* → [*构造器声明*](../chapter3/05_Declarations.html#initializer_declaration)  
 > *声明* → [*析构器声明*](../chapter3/05_Declarations.html#deinitializer_declaration)  
 > *声明* → [*扩展声明*](../chapter3/05_Declarations.html#extension_declaration)  
-> *声明* → [*下标脚本声明*](../chapter3/05_Declarations.html#subscript_declaration)  
+> *声明* → [*下标声明*](../chapter3/05_Declarations.html#subscript_declaration)  
 > *声明* → [*运算符声明*](../chapter3/05_Declarations.html#operator_declaration)  
 > *声明(Declarations)集* → [*声明*](../chapter3/05_Declarations.html#declaration) [*声明(Declarations)集*](../chapter3/05_Declarations.html#declarations) _可选_  
  
@@ -373,7 +373,7 @@
 > *协议成员声明* → [*协议属性声明*](../chapter3/05_Declarations.html#protocol_property_declaration)  
 > *协议成员声明* → [*协议方法声明*](../chapter3/05_Declarations.html#protocol_method_declaration)  
 > *协议成员声明* → [*协议构造器声明*](../chapter3/05_Declarations.html#protocol_initializer_declaration)  
-> *协议成员声明* → [*协议下标脚本声明*](../chapter3/05_Declarations.html#protocol_subscript_declaration)  
+> *协议成员声明* → [*协议下标声明*](../chapter3/05_Declarations.html#protocol_subscript_declaration)  
 > *协议成员声明* → [*协议关联类型声明*](../chapter3/05_Declarations.html#protocol_associated_type_declaration)  
 > *协议成员声明(Declarations)集* → [*协议成员声明*](../chapter3/05_Declarations.html#protocol_member_declaration) [*协议成员声明(Declarations)集*](../chapter3/05_Declarations.html#protocol_member_declarations) _可选_  
 
@@ -394,8 +394,8 @@
 
 <!-- -->
 
-> 协议下标脚本声明语法  
-> *协议下标脚本声明* → [*下标脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
+> 协议下标声明语法  
+> *协议下标声明* → [*下标头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
 
 <!-- -->
 
@@ -426,12 +426,12 @@
 
 <!-- -->
 
-> 下标脚本声明语法  
-> *下标脚本声明* → [*下标脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*代码块*](../chapter3/05_Declarations.html#code_block)  
-> *下标脚本声明* → [*下标脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter块*](../chapter3/05_Declarations.html#getter_setter_block)  
-> *下标脚本声明* → [*下标脚本头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标脚本结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
-> *下标脚本头(Head)* → [*属性(Attributes)集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器(declaration-modifiers)*](TODO) _可选_ **subscript** [*参数从句*](../chapter3/05_Declarations.html#parameter_clause)  
-> *下标脚本结果(Result)* → **->** [*属性(Attributes)集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)  
+> 下标声明语法  
+> *下标声明* → [*下标头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*代码块*](../chapter3/05_Declarations.html#code_block)  
+> *下标声明* → [*下标头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter块*](../chapter3/05_Declarations.html#getter_setter_block)  
+> *下标声明* → [*下标头(Head)*](../chapter3/05_Declarations.html#subscript_head) [*下标结果(Result)*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter关键字(Keyword)块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)  
+> *下标头(Head)* → [*属性(Attributes)集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器(declaration-modifiers)*](TODO) _可选_ **subscript** [*参数从句*](../chapter3/05_Declarations.html#parameter_clause)  
+> *下标结果(Result)* → **->** [*属性(Attributes)集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)  
 
 <!-- -->
 

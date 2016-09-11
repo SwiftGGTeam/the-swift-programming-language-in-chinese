@@ -10,6 +10,9 @@
 
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-11-01
+> 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
 
 本页包含内容：
 
@@ -89,9 +92,9 @@ var songCount = 0
 
 for item in library {
     if item is Movie {
-        ++movieCount
+        movieCount += 1
     } else if item is Song {
-        ++songCount
+        songCount += 1
     }
 }
 
@@ -164,12 +167,10 @@ Swift 为不确定类型提供了两种特殊的类型别名：
 <a name="anyobject"></a>
 ### `AnyObject` 类型
 
-当在工作中使用 Cocoa APIs 时，我们经常会接收到一个 `[AnyObject]` 类型的数组，或者说“一个任意类型对象的数组”。这是因为 Objective-C 没有明确的类型化数组。但是，你常常可以从 API 提供的信息来确定数组中对象的类型。
+当我们使用 Cocoa APIs 时，我们会接收到一个 `[AnyObject]` 类型的数组，或者说“一个任意类型对象的数组”。Objective-C现在支持明确的数组类型，但早期版本的Objective-C并没有这个功能。不管怎样，你都可以确信API提供的信息能够正确的表明数组中的元素类型。
 
-> 译者注  
-> 这段文档似乎没有及时更新，从 Xcode 7 和 Swift 2.0 开始，由于 Objective-C 引入了轻量泛型，集合类型已经可以类型化了，在 Swift 中使用 Cocoa API 也越来越少遇到 `AnyObject` 类型了。详情请参阅 [Lightweight Generics](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID173) 和 [Collection Classes](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6-ID69)。
 
-在这些情况下，你可以使用强制形式的类型转换（`as`）来下转数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解包（optional unwrapping）。
+在这些情况下，你可以使用强制形式的类型转换（`as!`）来下转数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解包（optional unwrapping）。
 
 下面的示例定义了一个 `[AnyObject]` 类型的数组并填入三个 `Movie` 类型的实例：
 

@@ -233,7 +233,7 @@ case ("0", "0"):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-// 打印 “(1, 2) is near the origin.”
+// 打印 “The point is at (1, 2).”
 ```
 
 > 表达式模式语法  
