@@ -470,19 +470,19 @@ func allItemsMatch<C1: Container, C2: Container>
     (_ someContainer: C1, _ anotherContainer: C2) -> Bool
     where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
         
-        // Check that both containers contain the same number of items.
+        // 检查两个容器含有相同数量的元素
         if someContainer.count != anotherContainer.count {
             return false
         }
         
-        // Check each pair of items to see if they are equivalent.
+        // 检查每一对元素是否相等
         for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                 return false
             }
         }
         
-        // All items match, so return true.
+        // 所有元素都匹配，返回 true
         return true
 }
 ```
