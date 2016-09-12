@@ -14,6 +14,9 @@
 > 2.2 
 > 校对：[175](https://github.com/Brian175)
 
+> 3.0 
+> 翻译+校对：[chenmingjia](https://github.com/chenmingjia)
+
 本页包含内容：
 
 - [前缀表达式](#prefix_expressions)
@@ -530,41 +533,52 @@ x = .AnotherValue
 <a name="selector_expression"></a>
 ### 选择器表达式
 
-可通过选择器表达式来获取引用 Objective-C 方法的选择器。
+选择器表达式可以让你通过选择器来引用在Objective-C中方法(method)和属性(property)的setter和getter方法。
 
 > \#selector(方法名)
+\#selector(getter: 属性名)
+\#selector(setter: 属性名)
 
-方法名必须是存在于 Objective-C 运行时中的方法的引用。选择器表达式的返回值是一个 `Selector` 类型的实例。例如：
+方法名和属性名必须是存在于 Objective-C 运行时中的方法和属性的引用。选择器表达式的返回值是一个 Selector 类型的实例。例如：
 
 ```swift
 class SomeClass: NSObject {
+    let property: String
     @objc(doSomethingWithInt:)
-    func doSomething(x: Int) { }
+    func doSomething(_ x: Int) { }
+    
+    init(property: String) {
+        self.property = property
+    }
 }
-let x = SomeClass()
-let selector = #selector(x.doSomething(_:))
+let selectorForMethod = #selector(SomeClass.doSomething(_:))
+let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
+当为属性的getter创建选择器时,属性名可以是变量属性或者常量属性的引用。但是当为属性的setter创建选择器时,属性名只可以是对变量属性的引用。
 
-具有相同方法名但类型不同的方法可以使用 `as` 操作符来区分：
+方法名称可以包含圆括号来进行分组,并使用as 操作符来区分具有相同方法名但类型不同的方法, 例如:
 
 ```swift
 extension SomeClass {
     @objc(doSomethingWithString:)
-    func doSomething(x: String) { }
+    func doSomething(_ x: String) { }
 }
-let anotherSelector = #selector(x.doSomething(_:) as (String) -> Void)
+let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
 ```
 
-由于选择器是在编译时创建的，因此编译器可以检查方法是否存在，以及方法是否在运行时暴露给了 Objective-C 。
+由于选择器是在编译时创建的，因此编译器可以检查方法或者属性是否存在，以及是否在运行时暴露给了 Objective-C 。
 
 > 注意  
-> 虽然方法名是个表达式，但是它不会被求值。
+> 虽然方法名或者属性名是个表达式，但是它不会被求值。
 
-更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [*Objective-C Selectors*](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID59) 部分。
+更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [Using Swift with Cocoa and Objective-C (Swift 3)](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[Objective-C Selectors](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID59)部分。
 
 > 选择器表达式语法  
 <a name="selector-expression"></a>
-> *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**
+> *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**  
+> *选择器表达式* → __#selector__ **(** [*getter:表达式*](#expression) **)**  
+> *选择器表达式* → __#selector__ **(** [*setter:表达式*](#expression) **)**
+
 
 <a name="postfix_expressions"></a>
 ## 后缀表达式
@@ -752,11 +766,11 @@ let x = [10, 3, 20, 15, 4]
 <a name="dynamic_type_expression"></a>
 ### dynamicType 表达式
 
-`dynamicType` 表达式由某个表达式紧跟 `.dynamicType` 组成，其形式如下：
+dynamicType 表达式由类似[函数调用表达式(Function Call Expression)](#function-call-expression)的特殊语法表达式组成,形式如下:
 
-> `表达式`.dynamicType
+> type(of:`表达式`)
 
-上述形式中的表达式不能是类型名。`dynamicType` 表达式会返回某个实例在运行时的类型，具体请看下面的例子：
+上述形式中的表达式不能是类型名。type(of:) 表达式会返回某个实例在运行时的类型，具体请看下面的例子：
 
 ```swift
 class SomeBaseClass {
@@ -772,13 +786,13 @@ class SomeSubClass: SomeBaseClass {
 let someInstance: SomeBaseClass = SomeSubClass()
 // someInstance 在编译时的静态类型为 SomeBaseClass，
 // 在运行时的动态类型为 SomeSubClass
-someInstance.dynamicType.printClassName()
+type(of: someInstance).printClassName()
 // 打印 “SomeSubClass”
 ```
 
 > 动态类型表达式语法  
 <a name="dynamic-type-expression"></a>
-> *动态类型表达式* → [*后缀表达式*](#postfix-expression) **.** **dynamicType**  
+> *动态类型表达式* → type(of:表达式) **.** **dynamicType**  
 
 <a name="subscript_expression"></a>
 ### 下标表达式
