@@ -14,6 +14,8 @@
 
 > 2.2：翻译+校对：[Lanford](https://github.com/LanfordCai)，2016-04-08 [SketchK](https://github.com/SketchK) 2016-05-16
 
+> 3.0：翻译+校对：[chenmingjia](https://github.com/chenmingjia)，2016-09-12
+
 本页包含内容：
 
 - [泛型所解决的问题](#the_problem_that_generics_solve)
@@ -457,31 +459,30 @@ extension Array: Container {}
 
 [类型约束](#type_constraints)让你能够为泛型函数或泛型类型的类型参数定义一些强制要求。
 
-为关联类型定义约束也是非常有用的。你可以在参数列表中通过 `where` 子句为关联类型定义约束。你能通过 `where` 子句要求一个关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。
+为关联类型定义约束也是非常有用的。你可以在参数列表中通过 `where` 子句为关联类型定义约束。你能通过 `where` 子句要求一个关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 where 子句。
 
 下面的例子定义了一个名为 `allItemsMatch` 的泛型函数，用来检查两个 `Container` 实例是否包含相同顺序的相同元素。如果所有的元素能够匹配，那么返回 `true`，否则返回 `false`。
 
 被检查的两个 `Container` 可以不是相同类型的容器（虽然它们可以相同），但它们必须拥有相同类型的元素。这个要求通过一个类型约束以及一个 `where` 子句来表示：
 
 ```swift
-func allItemsMatch<
-    C1: Container, C2: Container
-    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-    (someContainer: C1, _ anotherContainer: C2) -> Bool {
-
-        // 检查两个容器含有相同数量的元素
+func allItemsMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+        
+        // Check that both containers contain the same number of items.
         if someContainer.count != anotherContainer.count {
             return false
         }
-
-        // 检查每一对元素是否相等
+        
+        // Check each pair of items to see if they are equivalent.
         for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                 return false
             }
         }
-
-        // 所有元素都匹配，返回 true
+        
+        // All items match, so return true.
         return true
 }
 ```
