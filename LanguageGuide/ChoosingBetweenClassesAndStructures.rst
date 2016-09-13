@@ -1,12 +1,14 @@
 Choosing Between Classes and Structures
 =======================================
 
-Everything a structure can do, a class can do and more,
-which raises the question of
-when to use a structure and
-when to use a class
-for your custom data types
-in Swift.
+Classes and structures in Swift have many similarities.
+Both have properties, methods, subscripts, initializers, and so on.
+As a result,
+it can be hard to know
+when to use classes and
+when to use structures
+for the building blocks
+of your program.
 
 The fundamental difference
 between structures and classes
@@ -24,7 +26,7 @@ When to Use a Class
 
 If you're used to working
 in object-oriented languages
-like C or Objective-C,
+like Objective-C,
 you may be in the habit
 of writing a lot of classes.
 In Swift,
@@ -115,21 +117,23 @@ the ``currentWindow`` variable:
 
 .. testcode:: choosingbetweenclassesandstructures
 
-    -> let rootWindow = Window(width: 500, height: 300)
-    << // rootWindow : Window = REPL.Window
-    -> var currentWindow = rootWindow
+    -> let windowOne = Window(width: 500, height: 300)
+    << // windowOne : Window = REPL.Window
+    -> let windowTwo = Window(width: 400, height: 400)
+    << // windowTwo : Window = REPL.Window
+    -> var currentWindow = windowOne
     << // currentWindow : Window = REPL.Window
 
 Imagine you wanted
 to perform a check
 to see if the current window
-is the root window,
+is ``windowOne``,
 and if not,
 close the current window:
 
 .. testcode:: choosingbetweenclassesandstructures
 
-    -> if currentWindow !== rootWindow {
+    -> if currentWindow !== windowOne {
            // close currentWindow
        }
 
@@ -142,7 +146,7 @@ not a copy of it.
 It is unclear
 what it would even mean
 to copy a ``Window`` in the first place.
-Assigning ``rootWindow`` to ``currentWindow``
+Assigning ``windowOne`` to ``currentWindow``
 would give you multiple graphical windows
 when you want only one.
 When there really is just one of something

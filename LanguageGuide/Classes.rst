@@ -7,12 +7,12 @@ and more.
 They can have
 properties, methods, subscripts, initializers, and so on.
 
-Unlike structures, classes can also:
+Classes have additional capabilities that structures do not:
 
-* Inherit the characteristics of another class
-* Have their instance type checked and interpreted at runtime through type casting
-* Free up assigned resources using a deinitializer
-* Have more than one reference to a class instance through reference counting
+* Inheritance enables one class to inherit the characteristics of another.
+* Type casting enables you to check and interpret the type of a class instance at runtime.
+* Deinitializers enable an instance of a class to free up any resources it has assigned.
+* Reference counting allows more than one reference to a class instance.
 
 For more information, see
 :doc:`Inheritance`,
@@ -57,14 +57,11 @@ The example above defines a new class called ``Window``
 to describe a graphical window.
 This class has two variable stored properties
 called ``width`` and ``height``.
-These two properties are explicitly defined
+Because there is no natural default
+to a window's width and height,
+these two properties are explicitly defined
 to be of type ``Int`` and are set
 to the integer values passed in to the initializer.
-
-A class definition describes only
-what an instance will look like.
-It does not describe a specific instance.
-To do that, you create an instance of the class.
 
 To initialize a class,
 as with a structure,
@@ -78,11 +75,14 @@ followed by empty parentheses:
     << // someInstance : SomeClass = REPL.SomeClass
 
 However, you can use this initializer syntax
-only if
-all stored properties are set to initial values
+only if all stored properties are set to initial values
 in the class definition and
 no custom initializers are defined.
 
+Unlike structures, classes do not have
+a default memberwise initializer.
+Instead, you define custom initializers
+that provide the initialization logic you need.
 Because the two stored properties belonging to ``Window``
 are not set to initial values by default,
 ``Window`` needs a custom initializer
@@ -136,49 +136,53 @@ to a variable or constant,
 or when it is passed
 to a function.
 
-Consider this example:
+Imagine an application that can have multiple windows open and
+needs to keep track of the currently selected window.
+
+Suppose there are two windows to keep track of:
 
 .. testcode:: classes
 
-    -> let rootWindow = Window(width: 500, height: 300)
-    << // rootWindow : Window = REPL.Window
+    -> let windowOne = Window(width: 500, height: 300)
+    << // windowOne : Window = REPL.Window
+    -> let windowTwo = Window(width: 400, height: 400)
+    << // windowTwo : Window = REPL.Window
 
-This example declares a constant called ``rootWindow`` and
-sets it to a new ``Window`` instance
-with width ``500`` and height ``300``.
+This example declares two constants called ``windowOne`` and
+``windowTwo`` and sets their ``width`` and ``height`` properties.
 
-Next, a new variable called ``currentWindow`` is assigned ``rootWindow``:
+Next, a new variable called ``currentWindow`` is assigned ``windowOne``:
 
 .. testcode:: classes
 
-    -> var currentWindow = rootWindow
+    -> var currentWindow = windowOne
     << // currentWindow : Window = REPL.Window
     -> currentWindow.width = 800
 
 Because classes are reference types,
-``rootWindow`` and ``currentWindow``
+``windowOne`` and ``currentWindow``
 both refer to the *same* ``Window`` instance.
-``rootWindow`` and ``currentWindow`` are effectively
+``windowOne`` and ``currentWindow`` are effectively
 two different names for the same instance.
 As a result, changing the width of ``currentWindow``
-changes the width of ``rootWindow``.
+changes the width of ``windowOne``.
 
-Checking the ``width`` property of ``rootWindow``
+Checking the ``width`` property of ``windowOne``
 confirms that it changed to ``800``:
 
 .. testcode:: classes
 
-    -> print("The width of rootWindow is now \(rootWindow.width)")
-    <- The width of rootWindow is now 800
+    -> print("The width of windowOne is now \(windowOne.width)")
+    <- The width of windowOne is now 800
 
 .. note:: 
-   ``rootWindow`` is declared as a *constant*,
+   ``windowOne`` is declared as a *constant*,
    rather than a variable.
    However, you can still change
-   the properties of ``rootWindow``
-   such as ``rootWindow.width``.
+   the properties of ``windowOne``
+   such as ``windowOne.width``.
    This is because the value
-   of the ``rootWindow`` constant itself
+   of the ``windowOne`` constant itself
    does not "store" the ``Window`` instance ---
    it *refers* to a ``Window`` instance.
    It is the ``width`` property
@@ -202,15 +206,15 @@ if two constants or variables
 refer to the same instance of a class.
 
 Here is an example
-that uses the ``rootWindow`` and ``currentWindow`` instances from above
+that uses the ``windowOne`` and ``currentWindow`` instances from above
 to show an identity operator in use:
 
 .. testcode:: classes
 
-    -> if currentWindow === rootWindow {
-           print("rootWindow and currentWindow refer to the same Window instance")
+    -> if currentWindow === windowOne {
+           print("windowOne and currentWindow refer to the same Window instance")
        }
-    <- rootWindow and currentWindow refer to the same Window instance
+    <- windowOne and currentWindow refer to the same Window instance
 
 .. _Classes_WorkingWithPointers:
 

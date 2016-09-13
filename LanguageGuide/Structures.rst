@@ -1,12 +1,12 @@
 Structures
 ==========
 
-:newTerm:`Structures` in Swift are general-purpose, flexible constructs
-that become the building blocks of your program.
-They are more than the simple structures
+:newTerm:`Structures` in Swift are general-purpose, flexible
+building blocks for your program.
+They are far more powerful
+than the simple structures
 you may be familiar with
-coming from other languages like C and Objective-C.
-They are far more powerful,
+from other languages such as C and Objective-C,
 providing new ways to architect your code
 for optimal safety and performance.
 
@@ -59,8 +59,7 @@ Here is an example of a structure definition:
            }
        }
 
-The example above defines a new structure called ``Temperature``,
-to describe temperature in degrees Celsius and Fahrenheit.
+The example above defines a new structure called ``Temperature``.
 The structure has  a stored property called ``celsius`` and
 a computed property called ``fahrenheit``.
 Stored properties are constants or variables
@@ -68,11 +67,7 @@ that are bundled up and stored as part of the structure.
 Computed properties calculate a value rather than storing it.
 The degrees in Fahrenheit of a ``Temperature``
 can always be determined from its stored ``celsius`` property,
-so you do not need to store ``fahrenheit``.
-For this implementation,
-Celsius has been chosen as the
-unit for storage and
-Fahrenheit is always derived.
+so there is no need to store a second value for ``fahrenheit``.
 For more on stored and computed properties, see :doc:`Properties`.
 
 The ``celsius`` property is inferred to be of type ``Double``
@@ -80,7 +75,9 @@ by setting it to an initial floating-point value of ``0.0``.
 As discussed in :ref:`TheBasics_TypeSafetyAndTypeInference`,
 Swift infers that floating-point literals with no specified type
 are of type ``Double``.
-By contrast, the ``fahrenheit`` property is explicitly defined as a ``Double``.
+Because ``fahrenheit`` is a computed property,
+it is explicitly defined as a ``Double``.
+For more information, see :ref:`Properties_ComputedProperties`
 
 The ``Temperature`` structure definition describes only
 what a ``Temperature`` instance will look like.
@@ -104,8 +101,12 @@ and initializes its properties to their default values.
 Memberwise Initializer
 ~~~~~~~~~~~~~~~~~~~~~~
 
-All structures have an automatically generated :newTerm:`memberwise initializer`,
-which allows you to initialize stored properties of new structure instances.
+All structures
+have an automatically generated :newTerm:`memberwise initializer`,
+which allows you
+to set values
+for stored properties
+of new structure instances.
 You pass the initial values of properties
 to the memberwise initializer by name:
 
@@ -150,10 +151,10 @@ to a variable property:
     -> var bodyTemperature = Temperature()
     << // bodyTemperature : Temperature = REPL.Temperature(celsius: 0.0)
     -> bodyTemperature.celsius = 37.0
-    -> print("Her body temperature is \(bodyTemperature.celsius) degrees Celsius")
-    <- Her body temperature is 37.0 degrees Celsius
-    -> print("Her body temperature is \(bodyTemperature.fahrenheit) degrees Fahrenheit")
-    <- Her body temperature is 98.6 degrees Fahrenheit
+    -> print("Body temperature is \(bodyTemperature.celsius) degrees Celsius")
+    <- Body temperature is 37.0 degrees Celsius
+    -> print("Body temperature is \(bodyTemperature.fahrenheit) degrees Fahrenheit")
+    <- Body temperature is 98.6 degrees Fahrenheit
 
 The example above declares a variable called ``bodyTemperature``
 and sets it to a ``Temperature`` instance
@@ -198,7 +199,8 @@ to keep track of the current temperature of a room.
 ``roomTemperature`` is set to a ``Temperature`` instance initialized
 with a typical ambient room temperature of ``21.0`` degrees Celsius.
 
-There is an oven in this room.
+Suppose this room is a kitchen
+and contains an oven.
 To keep track of the oven's temperature,
 a variable called ``ovenTemperature``
 is declared and 
@@ -211,7 +213,7 @@ Because ``Temperature`` is a structure, a :newTerm:`copy`
 of the existing ``roomTemperature`` instance is made,
 and this new copy is assigned to ``ovenTemperature``.
 Even though ``roomTemperature`` and ``ovenTemperature``
-have the same value for the ``celsius`` property,
+have the same value for their ``celsius`` properties,
 they are two completely different instances
 behind the scenes.
 
@@ -224,7 +226,7 @@ and ``roomTemperature`` will remain unchanged:
     -> ovenTemperature.celsius = 180.0
 
 Checking the ``celsius`` property of ``ovenTemperature``
-confirms that it has indeed changed to ``180.0``
+confirms that it has indeed changed to ``180.0``:
 
 .. testcode:: structures
 
