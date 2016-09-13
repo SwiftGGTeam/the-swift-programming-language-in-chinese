@@ -213,6 +213,7 @@
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
     "declarations-functiondeclaration": "ID362", 
+    "declarations-functionsthatneverreturn": "ID551", 
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
     "declarations-inoutparameters": "ID545", 
@@ -569,5 +570,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 551
+  "next_id": 552
 }

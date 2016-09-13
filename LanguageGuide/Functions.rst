@@ -382,7 +382,7 @@ unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
 
-   -> func foo(external a: Int, external b: Int) { }
+   -> func foo(external a: Int, external b: Int) {}
    -> foo(external: 7, external: 12)
 
 .. _Functions_ExternalParameterNames:

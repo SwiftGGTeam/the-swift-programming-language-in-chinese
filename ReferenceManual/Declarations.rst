@@ -63,7 +63,7 @@ By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
 You can override this default behavior
-by marking the declaration with an access level modifier,
+by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
@@ -788,7 +788,7 @@ all mutation has finished before the function returns.
 .. testcode:: cant-pass-inout-aliasing
 
     >> import Dispatch
-    >> func someMutatingOperation(_ a: inout Int) { }
+    >> func someMutatingOperation(_ a: inout Int) {}
     -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
           // Make a local copy and manually copy it back.
           var localX = x
@@ -1005,6 +1005,29 @@ A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
+
+
+.. _Declarations_FunctionsThatNeverReturn:
+
+Functions that Never Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift defines a ``Never`` type,
+which indicates that a function or method doesn't return to its caller.
+Functions and methods with the ``Never`` return type are called :newTerm:`nonreturning`.
+Nonreturning functions and methods either cause an irrecoverable error 
+or begin a sequence of work that continues indefinitely.
+This means that
+code that would otherwise run immediately after the call is never executed.
+Throwing and rethrowing functions can transfer program control
+to an appropriate ``catch`` block, even when they are nonreturning.
+
+A nonreturning function or method can be called to conclude the ``else`` clause
+of a guard statement,
+as discussed in :ref:`Statements_GuardStatement`.
+
+You can override a nonreturning method,
+but the new method must preserve its return type and nonreturning behavior.
 
 .. syntax-grammar::
 

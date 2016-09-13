@@ -84,15 +84,25 @@ and also relative to the module that source file belongs to.
 Open access is the highest (least restrictive) access level
 and private access is the lowest (most restrictive) access level.
 
-Classes with public access, or any more restrictive access level,
-can be subclassed only within the module where they're defined.
-Open classes can be subclassed within the module where they're defined,
-and within any module that imports the module where they're defined.
+Open access applies only to classes and class members,
+and it differs from public access as follows:
+
+* Classes with public access, or any more restrictive access level,
+  can be subclassed only within the module where they're defined.
+
+* Class members with public access, or any more restrictive access level,
+  can be overridden by subclasses only within the module where they're defined.
+
+* Open classes can be subclassed within the module where they're defined,
+  and within any module that imports the module where they're defined.
+
+* Open class members can be overridden by subclasses within the module where they're defined,
+  and within any module that imports the module where they're defined.
+
 Marking a class as open explicitly indicates
 that you've considered the impact of code from other modules
 using that class as a superclass,
 and that you've designed your class's code accordingly.
-
 
 .. _AccessControl_GuidingPrincipleOfAccessLevels:
 
@@ -200,7 +210,7 @@ before the entity's introducer:
 Unless otherwise specified, the default access level is internal,
 as described in :ref:`AccessControl_DefaultAccessLevels`.
 This means that ``SomeInternalClass`` and ``someInternalConstant`` can be written
-without an explicit access level modifier,
+without an explicit access-level modifier,
 and will still have an access level of internal:
 
 .. testcode:: accessControlDefaulted
@@ -342,7 +352,7 @@ You must specify the access level explicitly as part of the function's definitio
 if the function's calculated access level does not match the contextual default.
 
 The example below defines a global function called ``someFunction()``,
-without providing a specific access level modifier for the function itself.
+without providing a specific access-level modifier for the function itself.
 You might expect this function to have the default access level of “internal”,
 but this is not the case.
 In fact, ``someFunction()`` will not compile as written below:
@@ -714,7 +724,7 @@ a ``didSet`` property observer on the ``value`` property,
 which increments ``numberOfEdits`` every time the ``value`` property is set to a new value.
 
 The ``TrackedString`` structure and the ``value`` property
-do not provide an explicit access level modifier,
+do not provide an explicit access-level modifier,
 and so they both receive the default access level of internal.
 However, the access level for the ``numberOfEdits`` property
 is marked with a ``private(set)`` modifier
@@ -772,7 +782,7 @@ The structure's members (including the ``numberOfEdits`` property)
 therefore have an internal access level by default.
 You can make the structure's ``numberOfEdits`` property getter public,
 and its property setter private,
-by combining the ``public`` and ``private(set)`` access level modifiers:
+by combining the ``public`` and ``private(set)`` access-level modifiers:
 
 .. testcode:: reducedSetterScopePublic
 
@@ -1092,7 +1102,7 @@ have a default access level of file private.
 If you extend a private type, any new type members you add
 have a default access level of private.
 
-Alternatively, you can mark an extension with an explicit access level modifier
+Alternatively, you can mark an extension with an explicit access-level modifier
 (for example, ``private extension``)
 to set a new default access level for all members defined within the extension.
 This new default can still be overridden within the extension
@@ -1171,7 +1181,7 @@ for individual type members.
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You cannot provide an explicit access level modifier for an extension
+You cannot provide an explicit access-level modifier for an extension
 if you are using that extension to add protocol conformance.
 Instead, the protocol's own access level is used to provide
 the default access level for each protocol requirement implementation within the extension.

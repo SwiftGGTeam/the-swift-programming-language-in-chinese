@@ -1112,7 +1112,7 @@ For example:
    -> class SomeClass: NSObject {
           let property: String
           @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) { }
+          func doSomething(_ x: Int) {}
    ---
           init(property: String) {
               self.property = property

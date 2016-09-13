@@ -545,7 +545,7 @@ the ``Character`` at a particular ``String`` index.
    <$ : Character = "u"
    // u
    -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
-   <~ // index : Index = Swift.String.CharacterView.Index
+   <~ // index : String.Index = Swift.String.CharacterView.Index(
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -575,7 +575,7 @@ indices of individual characters in a string.
          print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
-   << G u t e n   T a g ! 
+   << G u t e n   T a g !
    // Prints "G u t e n   T a g ! "
 
 .. Workaround for rdar://26016325
@@ -623,7 +623,7 @@ use the ``removeSubrange(_:)`` method:
    </ welcome now equals "hello there"
    ---
    -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
-   <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
+   <~ // range : Range<String.Index> = Range(Swift.String.CharacterView.Index(
    -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"

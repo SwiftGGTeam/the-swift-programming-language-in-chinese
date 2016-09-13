@@ -6,7 +6,41 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2016-09-07  * Updated the discussion
+2016-09-13  * Updated for Swift 3.0.
+
+            * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
+              and the :ref:`Declarations_FunctionDeclaration` section to note that
+              all parameters get an argument label by default.
+
+            * Updated the discussion of operators
+              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              now that you implement them as type methods instead of as global functions.
+
+            * Added information about the ``open`` and ``fileprivate`` access-level modifiers
+              to the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
+              to note that it appears in front of a parameter's type
+              instead of in front of a parameter's name.
+
+            * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
+              in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
+              and the :doc:`../ReferenceManual/Attributes` chapter
+              now that they are type attributes, rather than declaration attributes.
+
+            * Added information about operator precedence groups
+              to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
+              of the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              and to the :ref:`Declarations_PrecedenceGroupDeclaration` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Updated discussion throughout
+              to use macOS instead of OS X,
+              ``Error`` instead of ``ErrorProtocol``,
+              and protocol names such as ``ExpressibleByStringLiteral``
+              instead of ``StringLiteralConvertible``.
+
+            * Updated the discussion
               in the :ref:`Generics_WhereClauses` section
               of the :doc:`../LanguageGuide/Generics` chapter
               and in the :doc:`../ReferenceManual/GenericParametersAndArguments` chapter,
@@ -15,20 +49,23 @@ Date        Notes
             * Updated the discussion in the :ref:`Closures_Noescape` section,
               now that closures are nonescaping by default.
 
-            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
-              to use the new ``type(of:)`` syntax for dynamic type expressions.
-----------  ----------------------------------------------------------------------------------------------
-2016-08-01  * Updated the discussion
+            * Updated the discussion
               in the :ref:`TheBasics_OptionalBinding` section
               of the :doc:`../LanguageGuide/TheBasics` chapter
               and the :ref:`Statements_WhileStatement` section
               of the :doc:`../ReferenceManual/Statements` chapter,
               now that ``if``, ``while``, and ``guard`` statements
-              use a comma separated list of conditions without ``where`` clauses.
+              use a comma-separated list of conditions without ``where`` clauses.
 
-            * Updated the discussion of operators
-              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
-              now that you implement them as type methods instead of as global functions.
+            * Added information about switch cases that have multiple patterns
+              to the :ref:`ControlFlow_Switch` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_SwitchStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Updated the discussion of function types
+              in the :ref:`Types_FunctionType` section
+              now that function argument labels are no longer part of a function's type.
 
             * Updated the discussion of protocol composition types
               in the :ref:`Protocols_ProtocolComposition` section
@@ -37,73 +74,49 @@ Date        Notes
               of the :doc:`../ReferenceManual/Types` chapter
               to use the new ``Protocol1 & Protocol2`` syntax.
 
-            * Updated discussion throughout
-              to use macOS instead of OS X,
-              ``Error`` instead of ``ErrorProtocol``,
-              and protocol names such as ``ExpressibleByStringLiteral``
-              instead of ``StringLiteralConvertible``.
-
-            * Updated the :doc:`../ReferenceManual/Attributes` chapter
-              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
-              imply the ``@objc`` attribute.
-
-            * Added the ``@GKInspectable`` attribute
-              to the :ref:`Attributes_DeclarationAttributes` section.
-
-            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
-              to note that only nonescaping closures can capture in-out parameters.
-
-            * Removed the discussion of the ``Boolean`` protocol
-              from the :doc:`../ReferenceManual/Statements` chapter,
-              now that the protocol has been removed from the Swift standard library.
-
-            * Corrected the discussion of the ``@NSApplicationMain`` attribute
-              in the :ref:`Attributes_DeclarationAttributes` section.
-----------  ----------------------------------------------------------------------------------------------
-2016-07-18  * Updated discussion about default parameters
-              in the :ref:`Functions_DefaultParameterValues` section,
-              now that they can't be reordered in function calls.
-----------  ----------------------------------------------------------------------------------------------
-2016-06-13  * Updated for Swift 3.0.
-
-            * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
-              and the :ref:`Declarations_FunctionDeclaration` section to note that
-              all parameters get an argument label by default.
-
-            * Updated attribute arguments to use a colon
-              in the :doc:`../ReferenceManual/Attributes` chapter.
-
-            * Added information about switch cases that have multiple patterns
-              to the :ref:`ControlFlow_Switch` section
-              of the :doc:`../LanguageGuide/ControlFlow` chapter
-              and the :ref:`Statements_SwitchStatement` section
-              of the :doc:`../ReferenceManual/Statements` chapter.
-
-            * Added information about throwing an error
-              inside the catch block of a rethrowing function
-              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+              to use the new ``type(of:)`` syntax for dynamic type expressions.
 
             * Updated the discussion of line control statements
               to use the ``#sourceLocation(file:line:)`` syntax
               in the :ref:`Statements_LineControlStatement` section.
 
+            * Updated the discussion in :ref:`Declarations_FunctionsThatNeverReturn`
+              to use the new ``Never`` type.
+
+            * Added information about playground literals
+              to the :ref:`Expressions_LiteralExpression` section.
+
+            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
+              to note that only nonescaping closures can capture in-out parameters.
+
+            * Updated the discussion about default parameters
+              in the :ref:`Functions_DefaultParameterValues` section,
+              now that they can't be reordered in function calls.
+
+            * Updated attribute arguments to use a colon
+              in the :doc:`../ReferenceManual/Attributes` chapter.
+
+            * Added information about throwing an error
+              inside the catch block of a rethrowing function
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+
             * Added information about accessing the selector
               of an Objective-C property's getter or setter
-              in the :ref:`Expression_SelectorExpression` section.
+              to the :ref:`Expression_SelectorExpression` section.
 
-            * Added information about generic type aliases
-              to the :ref:`Declarations_TypeAliasDeclaration` section.
-
-            * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
-              to note that it appears on a parameter type.
-
-            * Updated the discussion of ``@noescape`` and ``@autoclosure``
-              in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
-              and the :doc:`../ReferenceManual/Attributes` chapter
-              now that they are type attributes, rather than declaration attributes.
+            * Added information to the :ref:`Declarations_TypeAliasDeclaration` section
+              about generic type aliases and using type aliases inside of protocols.
 
             * Updated the discussion of function types in the :ref:`Types_FunctionType` section
               to note that parentheses around the parameter types are required.
+
+            * Updated the :doc:`../ReferenceManual/Attributes` chapter
+              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
+              imply the ``@objc`` attribute.
+
+            * Added information about the ``@GKInspectable`` attribute
+              to the :ref:`Attributes_DeclarationAttributes` section.
 
             * Updated the discussion of optional protocol requirements
               in the :ref:`Protocols_OptionalProtocolRequirements` section
@@ -111,6 +124,13 @@ Date        Notes
 
             * Removed the discussion of explicitly using ``let`` in function parameters
               from the :ref:`Declarations_FunctionDeclaration` section.
+
+            * Removed the discussion of the ``Boolean`` protocol
+              from the :doc:`../ReferenceManual/Statements` chapter,
+              now that the protocol has been removed from the Swift standard library.
+
+            * Corrected the discussion of the ``@NSApplicationMain`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section.
 ----------  ----------------------------------------------------------------------------------------------
 2016-03-21  * Updated for Swift 2.2.
 
@@ -442,7 +462,7 @@ Date        Notes
               for protocols.
 
             * Constants and variables of type ``Any`` can now contain
-              function instances. Updated the example for :ref:`TypeCasting_Any`
+              function instances. Updated the example in :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`
               to show how to check for and cast to a function type
               within a ``switch`` statement.
 

@@ -165,6 +165,13 @@ Keywords other than ``inout``, ``var``, and ``let``
 can be used as parameter names
 in a function declaration or function call
 without being escaped with backticks.
+When a member has the same name as a keyword,
+references to that member don't need to be escaped with backticks,
+except when there is ambiguity between referring to the member
+and using the keyword ---
+for example, ``self``, ``Type``, and ``Protocol``
+have special meaning in an explicit member expression,
+so they must be escaped with backticks in that context.
 
 .. assertion:: keywords-without-backticks
 
@@ -174,28 +181,28 @@ without being escaped with backticks.
 
 .. assertion:: var-requires-backticks
 
-   -> func f(`var` x: Int) { }
-   -> func f(var x: Int) { }
+   -> func f(`var` x: Int) {}
+   -> func f(var x: Int) {}
    !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
-   !! func f(var x: Int) { }
+   !! func f(var x: Int) {}
    !!        ^~~
    !! var x = x
 
 .. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) { }
-   -> func f(let x: Int) { }
+   -> func f(`let` x: Int) {}
+   -> func f(let x: Int) {}
    !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
-   !! func f(let x: Int) { }
+   !! func f(let x: Int) {}
    !!        ^~~
    !!-
 
 .. assertion:: inout-requires-backticks
 
-   -> func f(`inout` x: Int) { }
-   -> func f(inout x: Int) { }
+   -> func f(`inout` x: Int) {}
+   -> func f(inout x: Int) {}
    !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
-   !! func f(inout x: Int) { }
+   !! func f(inout x: Int) {}
    !!        ~~~~~    ^
    !!                 inout
 
