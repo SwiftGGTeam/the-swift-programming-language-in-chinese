@@ -10,6 +10,9 @@
 
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-11-01
+> 
+> 2.2 
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
 
 本页内容包括：
 
@@ -181,7 +184,7 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 其次，使用二进制补码可以使负数的按位左移和右移运算得到跟正数同样的效果，即每向左移一位就将自身的数值乘以 2，每向右一位就将自身的数值除以 2。要达到此目的，对有符号整数的右移有一个额外的规则：
 
-* 当对正整数进行按位右移运算时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用符号位进行填充，而不是用 `0`。
+* 当对整数进行按位右移运算时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用符号位进行填充，而不是用 `0`。
 
 ![Art/bitshiftSigned_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftSigned_2x.png "Art/bitshiftSigned_2x.png")
 
@@ -342,7 +345,7 @@ let combinedVector = vector + anotherVector
 <a name="prefix_and_postfix_operators"></a>
 ### 前缀和后缀运算符
 
-上个例子演示了一个双目中缀运算符的自定义实现。类与结构体也能提供标准单目运算符的实现。单目运算符只运算一个值。当运算符出现在值之前时，它就是前缀的（例如 `-a`），而当它出现在值之后时，它就是后缀的（例如 `i++`）。
+上个例子演示了一个双目中缀运算符的自定义实现。类与结构体也能提供标准单目运算符的实现。单目运算符只运算一个值。当运算符出现在值之前时，它就是前缀的（例如 `-a`），而当它出现在值之后时，它就是后缀的（例如 `b!`）。
 
 要实现前缀或者后缀运算符，需要在声明运算符函数的时候在 `func` 关键字之前指定 `prefix` 或者 `postfix` 修饰符：
 
@@ -383,23 +386,6 @@ original += vectorToAdd
 // original 的值现在为 (4.0, 6.0)
 ```
 
-还可以将赋值与 `prefix` 或 `postfix` 修饰符结合起来，下面的代码为 `Vector2D` 实例实现了前缀自增运算符：
-
-```swift
-prefix func ++ (inout vector: Vector2D) -> Vector2D {
-    vector += Vector2D(x: 1.0, y: 1.0)
-    return vector
-}
-```
-
-这个前缀自增运算符使用了前面定义的加法赋值运算。它对 `Vector2D` 的 `x` 和 `y` 属性都进行了加 `1` 运算，再将结果返回：
-
-```swift
-var toIncrement = Vector2D(x: 3.0, y: 4.0)
-let afterIncrement = ++toIncrement
-// toIncrement 的值现在为 (4.0, 5.0)
-// afterIncrement 的值同样为 (4.0, 5.0)
-```
 
 > 注意  
 > 不能对默认的赋值运算符（`=`）进行重载。只有组合赋值运算符可以被重载。同样地，也无法对三目条件运算符 （`a ? b : c`） 进行重载。

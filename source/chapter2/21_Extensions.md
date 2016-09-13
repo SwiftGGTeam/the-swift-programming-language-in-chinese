@@ -10,6 +10,9 @@
 
 > 2.1
 > 校对：[shanks](http://codebuild.me)
+> 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
 
 本页包含内容：
 
@@ -106,7 +109,7 @@ print("A marathon is \(aMarathon) meters long")
 扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。
 
 > 注意  
-如果你使用扩展为一个值类型添加构造器，且该值类型的原始实现中未定义任何定制的构造器时，你可以在扩展中的构造器里调用逐一成员构造器。如果该值类型为所有存储型属性提供了默认值，你还可以在扩展中的构造器里调用默认构造器。  
+如果你使用扩展为一个值类型添加构造器，同时该值类型的原始实现中未定义任何定制的构造器且所有存储属性提供了默认值，那么我们就可以在扩展中的构造器里调用默认构造器和逐一成员构造器。  
 正如在[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)中描述的，如果你把定制的构造器写在值类型的原始实现中，上述规则将不再适用。
 
 下面的例子定义了一个用于描述几何矩形的结构体 `Rect`。这个例子同时定义了两个辅助结构体 `Size` 和 `Point`，它们都把 `0.0` 作为所有属性的默认值：
@@ -223,11 +226,10 @@ someInt.square()
 
 ```swift
 extension Int {
-    subscript(var digitIndex: Int) -> Int {
+    subscript(digitIndex: Int) -> Int {
         var decimalBase = 1
-        while digitIndex > 0 {
+        for _ in 0..<digitIndex {
             decimalBase *= 10
-            --digitIndex
         }
         return (self / decimalBase) % 10
     }
@@ -295,7 +297,7 @@ func printIntegerKinds(numbers: [Int]) {
     print("")
 }
 printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-// 打印 “+ + - 0 - 0 +”
+// 打印 “+ + - 0 - 0 + ”
 ```
 
 函数 `printIntegerKinds(_:)` 接受一个 `Int` 数组，然后对该数组进行迭代。在每次迭代过程中，对当前整数的计算型属性 `kind` 的值进行评估，并打印出适当的描述。

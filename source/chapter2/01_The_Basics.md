@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，[overtrue](https://github.com/overtrue)
+> 
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
 
 本页包含内容：
 
@@ -744,7 +747,7 @@ do {
 
 在此例中，`makeASandwich()`（做一个三明治）函数会抛出一个错误消息如果没有干净的盘子或者某个原料缺失。因为`makeASandwich()`抛出错误，函数调用被包裹在`try`表达式中。将函数包裹在一个`do`语句中,任何被抛出的错误会被传播到提供的`catch`从句中。
 
-如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个匹配`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个匹配`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会随着被`catch`所捕捉到的关联值`[String]`被调用。
+如果没有错误被抛出, `eatASandwich()`函数会被调用。如果一个匹配`Error.OutOfCleanDishes`的错误被抛出,`washDishes`函数会被调用。如果一个匹配`Error.MissingIngredients`的错误被抛出，`buyGroceries(_:)`函数会被调用，并且使用`catch`所捕捉到的关联值`[String]`作为参数。
 
 抛出，捕捉，以及传播错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
 
@@ -759,7 +762,7 @@ do {
 
 如果你的代码在调试环境下触发了一个断言，比如你在 Xcode 中构建并运行一个应用，你可以清楚地看到不合法的状态发生在哪里并检查断言被触发时你的应用的状态。此外，断言允许你附加一条调试信息。
 
-你可以使用全局`assert(_:_file:line:)`函数来写一个断言。向这个函数传入一个结果为`true`或者`false`的表达式以及一条信息，当表达式的结果为`false`的时候这条信息会被显示：
+你可以使用全局`assert(_:_:file:line:)`函数来写一个断言。向这个函数传入一个结果为`true`或者`false`的表达式以及一条信息，当表达式的结果为`false`的时候这条信息会被显示：
 
 ```swift
 let age = -3

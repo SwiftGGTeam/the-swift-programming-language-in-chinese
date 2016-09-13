@@ -10,7 +10,10 @@
 > 翻译+校对：[lyojo](https://github.com/lyojo)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-31
+> 校对：[shanks](http://codebuild.me)，2015-10-31  
+>  
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
 
 本页包含内容：
 
@@ -50,9 +53,9 @@ class Residence {
 }
 ```
 
-`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。
+`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。  
 
-如果创建一个新的`Person`实例，因为它的`residence`属性是可选的，`john`属性将初始化为`nil`：
+假如你创建了一个新的`Person`实例,它的`residence`属性由于是是可选型而将初始化为`nil`,在下面的代码中,`john`有一个值为`nil`的`residence`属性：
 
 ```swift
 let john = Person()
@@ -314,7 +317,7 @@ if let firstRoomName = john.residence?[0].name {
 ```swift
 var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
 testScores["Dave"]?[0] = 91
-testScores["Bev"]?[0]++
+testScores["Bev"]?[0] += 1
 testScores["Brian"]?[0] = 72
 // "Dave" 数组现在是 [91, 82, 84]，"Bev" 数组现在是 [80, 94, 81]
 ```

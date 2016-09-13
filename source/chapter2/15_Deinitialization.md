@@ -10,6 +10,9 @@
 
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-10-31
+> 
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
 
 本页包含内容：
 
@@ -38,13 +41,13 @@ deinit {
 <a name="deinitializers_in_action"></a>
 ##析构器实践
 
-这是一个析构器实践的例子。这个例子描述了一个简单的游戏，这里定义了两种新类型，分别是`Bank`和`Player`。`Bank`类管理一种虚拟硬币，确保流通的硬币数量永远不可能超过 10,000。在游戏中有且只能有一个`Bank`存在，因此`Bank`用类来实现，并使用静态属性和静态方法来存储和管理其当前状态。
+这是一个析构器实践的例子。这个例子描述了一个简单的游戏，这里定义了两种新类型，分别是`Bank`和`Player`。`Bank`类管理一种虚拟硬币，确保流通的硬币数量永远不可能超过 10,000。在游戏中有且只能有一个`Bank`存在，因此`Bank`用类来实现，并使用类型属性和类型方法来存储和管理其当前状态。
 
 ```swift
 class Bank {
     static var coinsInBank = 10_000
-    static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
-        numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+    static func vendCoins(numberOfCoinsRequested: Int) -> Int {
+        let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
         coinsInBank -= numberOfCoinsToVend
         return numberOfCoinsToVend
     }
@@ -56,7 +59,7 @@ class Bank {
 
 `Bank`使用`coinsInBank`属性来跟踪它当前拥有的硬币数量。`Bank`还提供了两个方法，`vendCoins(_:)`和`receiveCoins(_:)`，分别用来处理硬币的分发和收集。
 
-`vendCoins(_:)`方法在`Bank`对象分发硬币之前检查是否有足够的硬币。如果硬币不足，`Bank`对象会返回一个比请求时小的数字（如果`Bank`对象中没有硬币了就返回`0`）。`vendCoins`方法声明`numberOfCoinsToVend`为一个变量参数，这样就可以在方法体内部修改分发的硬币数量，而不需要定义一个新的变量。`vendCoins`方法返回一个整型值，表示提供的硬币的实际数量。
+`vendCoins(_:)`方法在`Bank`对象分发硬币之前检查是否有足够的硬币。如果硬币不足，`Bank`对象会返回一个比请求时小的数字（如果`Bank`对象中没有硬币了就返回`0`）。`vendCoins`方法返回一个整型值，表示提供的硬币的实际数量。
 
 `receiveCoins(_:)`方法只是将`Bank`对象接收到的硬币数目加回硬币存储中。
 

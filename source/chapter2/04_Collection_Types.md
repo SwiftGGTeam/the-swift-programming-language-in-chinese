@@ -9,7 +9,11 @@
 > 翻译+校对：[JackAlan](https://github.com/AlanMelody)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)
+> 校对：[shanks](http://codebuild.me)  
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-11
+
 
 本页包含内容：
 
@@ -87,7 +91,7 @@ var threeDoubles = [Double](count: 3, repeatedValue:0.0)
 我们可以使用加法操作符（`+`）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：
 
 ```swift
-var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
 // anotherThreeDoubles 被推断为 [Double]，等价于 [2.5, 2.5, 2.5]
 
 var sixDoubles = threeDoubles + anotherThreeDoubles
@@ -406,7 +410,7 @@ for genre in favoriteGenres {
 
 更多关于`for-in`循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
 
-Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sort()`方法，它将根据提供的序列返回一个有序集合.
+Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sort()`方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符'<'对元素进行比较的结果来确定.
 
 ```swift
 for genre in favoriteGenres.sort() {

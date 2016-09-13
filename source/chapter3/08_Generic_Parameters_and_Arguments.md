@@ -8,6 +8,9 @@
 > 2.0
 > 翻译+校对：[wardenNScaiyi](https:github.com/wardenNScaiyi)
 
+> 3.0
+> 翻译+校对：[chenmingjia](https:github.com/chenmingjia)
+
 本页包含内容：
 
 - [泛型形参子句](#generic_parameter)
@@ -21,10 +24,9 @@
 <a name="generic_parameter"></a>
 ## 泛型形参子句
 
-泛型形参子句指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，并且有以下两种形式：
+泛型形参子句指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型形参列表`>  
-> <`泛型形参列表` where `类型要求`>
 
 泛型形参列表中泛型形参用逗号分开，其中每一个采用以下形式：
 
@@ -36,7 +38,7 @@
 
 
 ```swift
-func simpleMax<T: Comparable>(x: T, _ y: T) -> T {
+func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
     if x < y {
         return y
     }
@@ -54,18 +56,19 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 <a name="where_clauses"></a>
 ### Where 子句
 
-要想对类型形参及其关联类型指定额外要求，可以在泛型形参列表之后添加 `where` 子句。`where` 子句由关键字 `where` 及其后的用逗号分隔的一个或多个要求组成。
+要想对类型形参及其关联类型指定额外要求，可以在函数体或者类型的大括号之前添加 `where` 子句。`where` 子句由关键字 `where` 及其后的用逗号分隔的一个或多个要求组成。
 
-`where` 子句中的要求用于指明该类型形参继承自某个类或符合某个协议或协议组合。尽管 `where` 子句提供了语法糖使其有助于表达类型形参上的简单约束（如 `T: Comparable` 等同于 `T where T: Comparable`，等等），但是依然可以用来对类型形参及其关联类型提供更复杂的约束。如，`<T where T: C, T: P>` 表示泛型类型 `T` 继承自类 `C` 且符合协议 `P`。
+> `where` : `类型要求`
 
-如上所述，可以强制约束类型形参的关联类型符合某个协议。例如 `<S: SequenceType where S.Generator.Element: Equatable>` 表示 `S` 符合 `SequenceType` 协议，而且 `S` 的关联类型 `S.Generator.Element` 符合 `Eauatable` 协议。这种约束确保了序列中的每个元素都是符合 `Equatable` 协议的。
+`where` 子句中的要求用于指明该类型形参继承自某个类或符合某个协议或协议组合。尽管 `where` 子句提供了语法糖使其有助于表达类型形参上的简单约束（如 `<T: Comparable>` 等同于 `<T> where T: Comparable`，等等），但是依然可以用来对类型形参及其关联类型提供更复杂的约束,例如你可以强制形参的关联类型遵守协议,如，` <S: Sequence> where S.Iterator.Element: Equatable` 表示泛型类型 `S` 遵守`Sequence`协议并且关联类型`S.Iterator.Element`遵守`Equatable`协议,这个约束确保队列的每一个元素都是符合 `Equatable` 协议的。
 
-也可以用操作符 `==` 来指定两个类型必须相同。例如，泛型形参子句 `<S1: SequenceType, S2: SequenceType where S1.Generator.Element == S2.Generator.Element>` 表示 `S1` 和 `S2` 必须都符合 `SequenceType` 协议，而且两个序列中的元素类型必须相同。
+也可以用操作符 `==` 来指定两个类型必须相同。例如，泛型形参子句 ` <S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element` 表示 `S1` 和 `S2` 必须都符合 `SequenceType` 协议，而且两个序列中的元素类型必须相同。
 
 当然，替代类型形参的类型实参必须满足所有的约束和要求。
 
 泛型函数或构造器可以重载，但在泛型形参子句中的类型形参必须有不同的约束或要求，抑或二者皆不同。当调用重载的泛型函数或构造器时，编译器会根据这些约束来决定调用哪个重载函数或构造器。
 
+更多关于泛型where从句的信息和关于泛型函数声明的例子,可以看一看 [泛型where子句](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/23_Generics.md#where_clauses)
 
 > 泛型形参子句语法  
 
@@ -99,7 +102,7 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 > <`泛型实参列表`>
 
-泛型实参列表中类型实参用逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参子句中的相应的类型形参。从而得到泛型类型的一个特化版本。例如，Swift 标准库中的泛型字典类型定义如下：
+泛型实参列表中类型实参用逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参子句中的相应的类型形参。从而得到泛型类型的一个特化版本。例如，Swift 标准库中的泛型字典类型的的简化定义如下：
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: CollectionType, DictionaryLiteralConvertible {
