@@ -652,17 +652,17 @@ print(description)
 <a name="labeled_statements"></a>
 ### 带标签的语句
 
-在 Swift 中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显式地指明`break`语句想要终止的是哪个循环体或者`switch`代码块，会很有用。类似地，如果你有许多嵌套的循环体，显式指明`continue`语句想要影响哪一个循环体也会非常有用。
+在 Swift 中，你可以在循环体和条件语句中嵌套循环体和条件语句来创造复杂的控制流结构。并且，循环体和条件语句都可以使用`break`语句来提前结束整个代码块。因此，显式地指明`break`语句想要终止的是哪个循环体或者条件语句，会很有用。类似地，如果你有许多嵌套的循环体，显式指明`continue`语句想要影响哪一个循环体也会非常有用。
 
-为了实现这个目的，你可以使用标签来标记一个循环体或者`switch`代码块，当使用`break`或者`continue`时，带上这个标签，可以控制该标签代表对象的中断或者执行。
+为了实现这个目的，你可以使用标签（*statement label*）来标记一个循环体或者条件语句，对于一个条件语句，你可以使用`break`加标签的方式，来结束这个被标记的语句。对于一个循环语句，你可以使用`break`或者`continue`加标签，来结束或者继续这条被标记语句的执行。
 
-产生一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，并且该标签后面还需带着一个冒号。下面是一个`while`循环体的语法，同样的规则适用于所有的循环体和`switch`代码块。
+声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字(introducor keyword)，并且该标签后面跟随一个冒号。下面是一个针对`while`循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
 
 > `label name`: while `condition` {
 >     `statements`
 > }
 
-下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是前面章节中*蛇和梯子*的改编版本。这次，游戏增加了一条额外的规则：
+下面的例子是前面章节中*蛇和梯子*的适配版本，在此版本中，我们将使用一个带有标签的`while`循环体中调用`break`和`continue`语句。这次，游戏增加了一条额外的规则：
 
 - 为了获胜，你必须*刚好*落在第 25 个方块中。
 
@@ -676,29 +676,30 @@ print(description)
 
 ```swift
 let finalSquare = 25
-var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+var board = [Int](repeating: 0, count: finalSquare + 1)
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 var square = 0
 var diceRoll = 0
 ```
 
-这个版本的游戏使用`while`循环体和`switch`方法块来实现游戏的逻辑。`while`循环体有一个标签名`gameLoop`，来表明它是蛇与梯子的主循环。
+这个版本的游戏使用`while`循环和`switch`语句来实现游戏的逻辑。`while`循环有一个标签名`gameLoop`，来表明它是游戏的主循环。
 
 该`while`循环体的条件判断语句是`while square !=finalSquare`，这表明你必须刚好落在方格25中。
 
 ```swift
 gameLoop: while square != finalSquare {
-    if ++diceRoll == 7 { diceRoll = 1 }
+    diceRoll += 1
+    if diceRoll == 7 { diceRoll = 1 }
     switch square + diceRoll {
     case finalSquare:
-        // 到达最后一个方块，游戏结束
+        // diceRoll will move us to the final square, so the game is over
         break gameLoop
     case let newSquare where newSquare > finalSquare:
-        // 超出最后一个方块，再掷一次骰子
+        // diceRoll will move us beyond the final square, so roll again
         continue gameLoop
     default:
-        // 本次移动有效
+        // this is a valid move, so find out its effect
         square += diceRoll
         square += board[square]
     }
@@ -706,20 +707,21 @@ gameLoop: while square != finalSquare {
 print("Game over!")
 ```
 
-每次循环迭代开始时掷骰子。与之前玩家掷完骰子就立即移动不同，这里使用了`switch`来考虑每次移动可能产生的结果，从而决定玩家本次是否能够移动。
+每次循环迭代开始时掷骰子。与之前玩家掷完骰子就立即移动不同，这里使用了`switch`语句来考虑每次移动可能产生的结果，从而决定玩家本次是否能够移动。
 
-- 如果骰子数刚好使玩家移动到最终的方格里，游戏结束。`break gameLoop`语句跳转控制去执行`while`循环体后的第一行代码，游戏结束。
-- 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环的迭代，开始下一次循环迭代。
-- 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到`while`循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。
+- 如果骰子数刚好使玩家移动到最终的方格里，游戏结束。`break gameLoop`语句跳转控制去执行`while`循环体后的第一行代码，意味着游戏结束。
+- 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环，开始下一次循环。
+- 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动 `diceRoll` 个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。接着本次循环结束，控制跳转到`while`循环体的条件判断语句处，再决定是否需要继续执行下次循环。
 
 >注意：
-如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`代码块而不是`while`循环体。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
+如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
 <a name="early_exit"></a>
 ## 提前退出
 
-像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`分句，如果条件不为真则执行`else`分句中的代码。
+像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`从句，如果条件不为真则执行`else`从句中的代码。
+
 
 ```swift
 func greet(person: [String: String]) {
@@ -727,7 +729,6 @@ func greet(person: [String: String]) {
 		return
 	}
 	print("Hello \(name)")
-
 	guard let location = person["location"] else {
 		print("I hope the weather is nice near you.")
 		return
@@ -742,37 +743,30 @@ greet(["name": "Jane", "location": "Cupertino"])
 // 输出 "I hope the weather is nice in Cupertino."
 ```
 
-如果`guard`语句的条件被满足，则在保护语句的封闭大括号结束后继续执行代码。任何使用了可选绑定作为条件的一部分并被分配了值的变量或常量对于剩下的保护语句出现的代码段是可用的。
+如果`guard`语句的条件被满足，则继续执行`guard`语句大括号后的代码。将变量或者常量的可选绑定作为`guard`语句的条件，都可以保护`guard`语句后面的代码。
 
 如果条件不被满足，在`else`分支上的代码就会被执行。这个分支必须转移控制以退出`guard`语句出现的代码段。它可以用控制转移语句如`return`,`break`,`continue`或者`throw`做这件事，或者调用一个不返回的方法或函数，例如`fatalError()`。
 
-相比于可以实现同样功能的`if`语句，按需使用`guard`语句会提升我们代码的可靠性。它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你用于处理违反某个条件的代码紧邻于对该条件进行判断的地方。
+相比于可以实现同样功能的`if`语句，按需使用`guard`语句会提升我们代码的可读性。它可以使你的代码连贯的被执行而不需要将它包在`else`块中，它可以使你在紧邻条件判断的地方，处理违规的情况。
 
 <a name="checking_api_availability"></a>
 ## 检测 API 可用性
 
-Swift 有检查 API 可用性的内置支持，这可以确保我们不会不小心地使用对于当前部署目标不可用的 API。
+Swift内置支持检查 API 可用性，这可以确保我们不会在当前部署机器上，不小心地使用了不可用的API。
 
 编译器使用 SDK 中的可用信息来验证我们的代码中使用的所有 API 在项目指定的部署目标上是否可用。如果我们尝试使用一个不可用的 API，Swift 会在编译时报错。
 
-我们使用一个可用性条件在一个`if`或`guard`语句中去有条件的执行一段代码，这取决于我们想要使用的 API 是否在运行时是可用的。编译器使用从可用性条件语句中获取的信息去验证在代码块中调用的 API 是否都可用。
+我们在`if`或`guard`语句中使用`可用性条件（availability condition)`去有条件的执行一段代码，来在运行时判断调用的API是否可用。编译器使用从可用性条件语句中获取的信息去验证，在这个代码块中调用的 API 是否可用。
 
 ```swift
-if #available(iOS 9, OSX 10.10, *) {
-    // 在 iOS 使用 iOS 9 的 API, 在 OS X 使用 OS X v10.10 的 API
+if #available(iOS 10, macOS 10.12, *) {
+    // 在 iOS 使用 iOS 10 的 API, 在 macOS 使用 macOS 10.12 的 API
 } else {
-    // 使用先前版本的 iOS 和 OS X 的 API
+    // 使用先前版本的 iOS 和 macOS 的 API
 }
 ```
 
-以上可用性条件指定在 iOS，`if`段的代码仅仅在 iOS 9 及更高可运行；在 OS X，仅在 OS X v10.10 及更高可运行。最后一个参数，`*`，是必须的并且指定在任何其他平台上，`if`段的代码在最小可用部署目标指定项目中执行。
+以上可用性条件指定，在iOS中，`if`语句的代码块仅仅在 iOS 10 及更高的系统下运行；在 macOS中，仅在 macOS 10.12 及更高才会运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
 
-在它普遍的形式中，可用性条件获取了平台名字和版本的清单。平台名字可以是`iOS`，`OSX`或`watchOS`。除了特定的主板本号像 iOS 8，我们可以指定较小的版本号像iOS 8.3 以及 OS X v10.10.3。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8的主板本号，我们可以指定像iOS 8.3 以及 macOS 10.10.3的子版本号。
 
-```swift
-if #available(`platform name` `version`, `...`, *) {
-    `statements to execute if the APIs are available`
-} else {
-    `fallback statements to execute if the APIs are unavailable`
-}
-```
