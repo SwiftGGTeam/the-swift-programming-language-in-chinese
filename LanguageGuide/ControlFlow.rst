@@ -963,12 +963,13 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
+   -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
+   << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
    -> for character in puzzleInput.characters {
-         switch character {
-            case "a", "e", "i", "o", "u", " ":
-               continue
-            default:
-               puzzleOutput.append(character)
+         if charactersToRemove.contains(character) {
+            continue
+         } else {
+            puzzleOutput.append(character)
          }
       }
    -> print(puzzleOutput)
@@ -977,9 +978,9 @@ to create a cryptic puzzle phrase:
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
-This behavior enables the switch block to match (and ignore) only
+This behavior makes it possible to match (and ignore) only
 the vowel and space characters,
-rather than requiring the block to match every character that should get printed.
+rather than requiring the if block to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
