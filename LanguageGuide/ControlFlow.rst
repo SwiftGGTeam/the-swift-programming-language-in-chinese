@@ -978,9 +978,6 @@ to create a cryptic puzzle phrase:
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
-This behavior makes it possible to match (and ignore) only
-the vowel and space characters,
-rather than requiring the if block to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
