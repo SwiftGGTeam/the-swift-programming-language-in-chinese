@@ -576,7 +576,7 @@ print(puzzleOutput)
 <a name="break_in_a_loop_statement"></a>
 #### 循环语句中的 break
 
-当在一个循环体中使用`break`时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号(`}`)后的第一行代码。不会再有本次循环迭代的代码被执行，也不会再有下次的循环迭代产生。
+当在一个循环体中使用`break`时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号(`}`)后的第一行代码。不会再有本次循环的代码被执行，也不会再有下次的循环产生。
 
 <a name="break_in_a_switch_statement"></a>
 #### Switch 语句中的 break
@@ -586,7 +586,7 @@ print(puzzleOutput)
 这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
 
 >注意：
-当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你总是可以使用`break`来忽略某个分支。
+当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你应该使用`break`来忽略某个分支。
 
 下面的例子通过`switch`来判断一个`Character`值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。
 
@@ -615,14 +615,14 @@ if let integerValue = possibleIntegerValue {
 
 这个例子检查`numberSymbol`是否是拉丁，阿拉伯，中文或者泰语中的`1`到`4`之一。如果被匹配到，该`switch`分支语句给`Int?`类型变量`possibleIntegerValue`设置一个整数值。
 
-当`switch`代码块执行完后，接下来的代码通过使用可选绑定来判断`possibleIntegerValue`是否曾经被设置过值。因为是可选类型的缘故，`possibleIntegerValue`有一个隐式的初始值`nil`，所以仅仅当`possibleIntegerValue`曾被`switch`代码块的前四个分支中的某个设置过一个值时，可选的绑定将会被判定为成功。
+当`switch`代码块执行完后，接下来的代码通过使用可选绑定来判断`possibleIntegerValue`是否曾经被设置过值。因为是可选类型的缘故，`possibleIntegerValue`有一个隐式的初始值`nil`，所以仅仅当`possibleIntegerValue`曾被`switch`代码块的前四个分支中的某个设置过一个值时，可选的绑定才会被判定为成功。
 
 在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下，开始执行`if let`语句。
 
 <a name="fallthrough"></a>
 ### 贯穿（Fallthrough）
 
-Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
+Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
 如果你确实需要 C 风格的贯穿的特性，你可以在每个需要该特性的 case 分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
 
@@ -640,14 +640,14 @@ print(description)
 // 输出 "The number 5 is a prime number, and also an integer."
 ```
 
-这个例子定义了一个`String`类型的变量`description`并且给它设置了一个初始值。函数使用`switch`逻辑来判断`integerToDescribe`变量的值。当`integerToDescribe`的值属于列表中的质数之一时，该函数添加一段文字在`description`后，来表明这个是数字是一个质数。然后它使用`fallthrough`关键字来“贯穿”到`default`分支中。`default`分支添加一段额外的文字在`description`的最后，至此`switch`代码块执行完了。
+这个例子定义了一个`String`类型的变量`description`并且给它设置了一个初始值。函数使用`switch`逻辑来判断`integerToDescribe`变量的值。当`integerToDescribe`的值属于列表中的质数之一时，该函数在`description`后添加一段文字，来表明这个数字是一个质数。然后它使用`fallthrough`关键字来“贯穿”到`default`分支中。`default`分支在`description`的最后添加一段额外的文字，至此`switch`代码块执行完了。
 
-如果`integerToDescribe`的值不属于列表中的任何质数，那么它不会匹配到第一个`switch`分支。而这里没有其他特别的分支情况，所以`integerToDescribe`匹配到包含所有的`default`分支中。
+如果`integerToDescribe`的值不属于列表中的任何质数，那么它不会匹配到第一个`switch`分支。而这里没有其他特别的分支情况，所以`integerToDescribe`匹配到`default`分支中。
 
 当`switch`代码块执行完后，使用`print(_:separator:terminator:)`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
 
 > 注意：
-> `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码执行继续连接到下一个 case 中的执行代码，这和 C 语言标准中的`switch`语句特性是一样的。
+> `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码继续连接到下一个 case 中的代码，这和 C 语言标准中的`switch`语句特性是一样的。
 
 <a name="labeled_statements"></a>
 ### 带标签的语句
