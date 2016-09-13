@@ -273,26 +273,26 @@ see :ref:`Enumerations_AssociatedValues`.
 Optional Pattern
 ----------------
 
-An :newTerm:`optional pattern` matches values wrapped in a ``Some(Wrapped)`` case
-of an ``Optional<Wrapped>`` or ``ImplicitlyUnwrappedOptional<Wrapped>`` enumeration.
+An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
+of an ``Optional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
-and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+enumeration case patterns,
 the following are equivalent:
 
 .. testcode:: optional-pattern
 
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
-   -> // Match using an enumeration case pattern
-   -> if case .Some(let x) = someOptional {
+   -> // Match using an enumeration case pattern.
+   -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42
    ---
-   -> // Match using an optional pattern
+   -> // Match using an optional pattern.
    -> if case let x? = someOptional {
          print(x)
       }
@@ -306,7 +306,7 @@ executing the body of the loop only for non-``nil`` elements.
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
    << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
-   -> // Match only non-nil values
+   -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
       }
@@ -379,8 +379,10 @@ is compared with the value of an input expression
 using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
-two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in a ``Range`` object, as the following example shows:
+two values of the same type using the ``==`` operator.
+It can also match a value with a range of values,
+by checking whether the value is contained within the range,
+as the following example shows.
 
 .. testcode:: expression-pattern
 
@@ -402,7 +404,7 @@ with a string representations of points.
 
 .. testcode:: expression-pattern
 
-    -> // Overload the ~= operator to match a string with an integer
+    -> // Overload the ~= operator to match a string with an integer.
     -> func ~=(pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }

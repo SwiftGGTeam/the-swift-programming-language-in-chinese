@@ -48,11 +48,8 @@ the term *declaration* covers both declarations and definitions.
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declaration --> operator-declaration
+    declaration --> precedence-group-declaration
     declarations --> declaration declarations-OPT
-
-.. NOTE: Removed enum-member-declaration, because we don't need it anymore.
-
-.. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
 
 
 .. _LexicalStructure_ModuleScope:
@@ -66,7 +63,7 @@ By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
 You can override this default behavior
-by marking the declaration with an access level modifier,
+by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
@@ -490,14 +487,14 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attributes-OPT ``get`` code-block
-    setter-clause --> attributes-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT mutation-modifier-OPT ``get`` code-block
+    setter-clause --> attributes-OPT mutation-modifier-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attributes-OPT ``get``
-    setter-keyword-clause --> attributes-OPT ``set``
+    getter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``get``
+    setter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
@@ -526,6 +523,63 @@ The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
+A type alias declaration can use generic parameters
+to give a name to an existing generic type. The type alias
+can provide concrete types for some or all of the generic parameters
+of the existing type.
+For example:
+
+.. testcode:: typealias-with-generic
+
+   -> typealias StringDictionary<Value> = Dictionary<String, Value>
+   ---
+   // The following dictionaries have the same type.
+   -> var dictionary1: StringDictionary<Int> = [:]
+   -> var dictionary2: Dictionary<String, Int> = [:]
+   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary2 : Dictionary<String, Int> = [:]
+
+When a type alias is declared with generic parameters, the constraints on those
+parameters must match exactly the constraints on the existing type's generic parameters.
+For example:
+
+.. testcode:: typealias-with-generic-constraint
+
+   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+
+Because the type alias and the existing type can be used interchangeably,
+the type alias can't introduce additional generic constraints.
+
+.. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
+     typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+
+.. Things that shouldn't work:
+    typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
+    typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
+    typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
+    typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+
+Inside a protocol declaration,
+a type alias can give a shorter and more convenient name
+to a type that is used frequently.
+For example:
+
+.. testcode:: typealias-in-prototol
+
+    -> protocol Sequence {
+           associatedtype Iterator: IteratorProtocol
+           typealias Element = Iterator.Element
+       }
+    ---
+    -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+           // ...
+    >>     return 9000
+       }
+
+Without this type alias,
+the ``sum`` function would have to refer to the associated type
+as ``T.Iterator.Element`` instead of ``T.Element``.
+
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
@@ -537,7 +591,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
     Grammar of a type alias declaration
 
-    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name typealias-assignment
+    typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name generic-parameter-clause-OPT typealias-assignment
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
@@ -575,9 +629,7 @@ the return type can be omitted as follows:
 
 The type of each parameter must be included ---
 it can't be inferred.
-Although the parameters to a function are constants by default,
-you can write ``let`` in front of a parameter's name to emphasize this behavior.
-If you write ``inout`` in front of a parameter's name,
+If you write ``inout`` in front of a parameter's type,
 the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
@@ -607,45 +659,44 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-A parameter has a local name,
+A parameter has a name,
 which is used within the function body,
-as well as an external name,
-which is used as a label for the argument when calling the method.
-By default, the external name of the first parameter is omitted,
-and the second and subsequent parameters
-use their local names as external names.
+as well as an argument label,
+which is used when calling the function or method.
+By default,
+parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(1, y: 2) // y is labeled, x is not
+   -> f(x: 1, y: 2) // both x and y are labeled
    << // r0 : Int = 3
 
-You can override the default behavior
-for how parameter names are used
+You can override the default behavior for argument labels
 with one of the following forms:
 
 .. syntax-outline::
 
-    <#external parameter name#> <#local parameter name#>: <#parameter type#>
-    _ <#local parameter name#>: <#parameter type#>
+    <#argument label#> <#parameter name#>: <#parameter type#>
+    _ <#parameter name#>: <#parameter type#>
 
-A name before the local parameter name
-gives the parameter an external name,
-which can be different from the local parameter name.
-The external parameter name must be used when the function is called.
-The corresponding argument must have the external name in function or method calls.
+A name before the parameter name
+gives the parameter an explicit argument label,
+which can be different from the parameter name.
+The corresponding argument must use the given argument label
+in function or method calls.
 
-An underscore (``_``) before a local parameter name
-gives that parameter no name to be used in function calls.
-The corresponding argument must have no name in function or method calls.
+An underscore (``_``) before a parameter name
+suppresses the argument label.
+The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
 
-   -> func f(x x: Int, withY y: Int, _ z: Int) -> Int { return x + y + z }
-   -> f(x: 1, withY: 2, 3) // x and y are labeled, z is not
-   << // r0 : Int = 6
+   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. _Declarations_InOutParameters:
 
@@ -705,48 +756,70 @@ For example:
 
    -> var x = 10
    << // x : Int = 10
-   -> func f(inout a: Int, inout _ b: Int) {
+   -> func f(a: inout Int, b: inout Int) {
           a += 1
           b += 10
       }
-   -> f(&x, &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:7: error: inout arguments are not allowed to alias each other
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!       ^~
-   !! <REPL Input>:1:3: note: previous aliasing argument
-   !! f(&x, &x) // Invalid, in-out arguments alias each other
-   !!   ^~
+   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!             ^~
+   !! <REPL Input>:1:6: note: previous aliasing argument
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!      ^~
 
-There is no copy-out at the end of closures or nested functions.
-This means if a closure is called after the function returns,
-any changes that closure makes to the in-out parameters
-do not get copied back to the original.
-For example:
+A closure or nested function
+that captures an in-out parameter must be nonescaping.
+If you need to capture an in-out parameter
+without mutating it or to observe changes made by other code,
+use a capture list to explicitly capture the parameter immutably.
 
-.. testcode:: closure-doesnt-copy-out-inout
+.. testcode:: explicit-capture-for-inout
 
-    -> func outer(inout a: Int) -> () -> Void {
+    -> func someFunction(a: inout Int) -> () -> Int {
+           return { [a] in return a + 1 }
+       }
+
+If you need to capture and mutate an in-out parameter,
+use an explicit local copy,
+such as in multithreaded code that ensures
+all mutation has finished before the function returns.
+
+.. testcode:: cant-pass-inout-aliasing
+
+    >> import Dispatch
+    >> func someMutatingOperation(_ a: inout Int) {}
+    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+          // Make a local copy and manually copy it back.
+          var localX = x
+          defer { x = localX }
+
+          // Operate on localX asynchronously, then wait before returning.
+          queue.async { someMutatingOperation(&localX) }
+          queue.sync {}
+       }
+
+For more discussion and examples of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+.. assertion:: escaping-cant-capture-inout
+
+    -> func outer(a: inout Int) -> () -> Void {
            func inner() {
                a += 1
            }
            return inner
        }
-    ---
-    -> var x = 10
-    << // x : Int = 10
-    -> let f = outer(&x)
-    << // f : () -> Void = (Function)
-    -> f()
-    -> print(x)
-    <- 10
+    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
+    !!            return inner
+    !!            ^
+    -> func closure(a: inout Int) -> () -> Void {
+           return { a += 1 }
+       }
+    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
+    !!              return { a += 1 }
+    !!                       ^
 
-The value of ``x`` is not changed by ``inner()`` incrementing ``a``,
-because ``inner()`` is called after ``outer()`` returns.
-To change the value of ``x``,
-``inner()`` would need to be called before ``outer()`` returned.
-
-For more discussion and examples of in-out parameters,
-see :ref:`Functions_InOutParameters`.
 
 .. _Declarations_SpecialKindsOfParameters:
 
@@ -784,15 +857,15 @@ the default value is used instead.
 .. testcode:: default-args-and-labels
 
    -> func f(x: Int = 42) -> Int { return x }
-   -> f()  // Valid, uses default value
-   -> f(7) // Valid, value provided without its name
-   -> f(x: 7) // Invalid, name and value provided
+   -> f()       // Valid, uses default value
+   -> f(x: 7)   // Valid, uses the value provided
+   -> f(7)      // Invalid, missing argument label
    <$ : Int = 42
    <$ : Int = 7
-   !! <REPL Input>:1:2: error: extraneous argument label 'x:' in call
-   !! f(x: 7) // Invalid, name and value provided
-   !! ^~~~
-   !!-
+   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !! f(7)      // Invalid, missing argument label
+   !!   ^
+   !!   x:
 
 .. assertion:: default-args-evaluated-at-call-site
 
@@ -801,7 +874,7 @@ the default value is used instead.
           return 10
        }
     -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(100)
+    -> foo(x: 100)
     << x is 100
     -> foo()
     << evaluated
@@ -859,7 +932,7 @@ you can overload a function based on whether a function *parameter* can throw an
 A throwing method can't override a nonthrowing method,
 and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
 That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing.
+and a nonthrowing method can satisfy a protocol requirement for a throwing method.
 
 .. _Declarations_RethrowingFunctionsAndMethods:
 
@@ -875,30 +948,57 @@ must have at least one throwing function parameter.
 
 .. testcode:: rethrows
 
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
       }
 
-A rethrowing function or method can't directly throw any errors of its own,
-which means it can't contain a ``throw`` statement.
-It can only propagate errors thrown
-by the throwing function it takes as a parameter.
-For example, it is not possible
-to call the throwing function inside a ``do``-``catch`` block
+A rethrowing function or method can contain a ``throw`` statement
+only inside a ``catch`` clause.
+This lets you call the throwing function inside a ``do``-``catch`` block
 and handle errors in the ``catch`` clause by throwing a different error.
+In addition,
+the ``catch`` clause must handle
+only errors thrown by one of the rethrowing function's
+throwing parameters.
+For example, the following is invalid
+because the ``catch`` clause would handle
+the error thrown by ``alwaysThrows()``.
 
-.. assertion:: rethrows-cant-throw
+.. testcode:: double-negative-rethrows
 
-   -> enum SomeError: ErrorType { case C }
-   -> func functionWithCallback(callback: () throws -> Int) rethrows {
+   >> enum SomeError: Error { case error }
+   >> enum AnotherError: Error { case error }
+   -> func alwaysThrows() throws {
+          throw SomeError.error
+      }
+   -> func someFunction(callback: () throws -> Void) rethrows {
+         do {
+            try callback()
+            try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+         } catch {
+            throw AnotherError.error
+         }
+      }
+
+   !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
+   !!               throw AnotherError.error
+   !!               ^
+
+.. assertion:: throwing-in-rethrowing-function
+
+   -> enum SomeError: Error { case C, D }
+   -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
           } catch {
-              throw SomeError.C
+              throw SomeError.C  // OK
           }
       }
-   !! <REPL Input>:5:11: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.C
+   -> func f2(callback: () throws -> Void) rethrows {
+          throw SomeError.D  // ERROR
+      }
+   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
+   !! throw SomeError.D  // ERROR
    !! ^
 
 A throwing method can't override a rethrowing method,
@@ -906,11 +1006,34 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+
+.. _Declarations_FunctionsThatNeverReturn:
+
+Functions that Never Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift defines a ``Never`` type,
+which indicates that a function or method doesn't return to its caller.
+Functions and methods with the ``Never`` return type are called :newTerm:`nonreturning`.
+Nonreturning functions and methods either cause an irrecoverable error 
+or begin a sequence of work that continues indefinitely.
+This means that
+code that would otherwise run immediately after the call is never executed.
+Throwing and rethrowing functions can transfer program control
+to an appropriate ``catch`` block, even when they are nonreturning.
+
+A nonreturning function or method can be called to conclude the ``else`` clause
+of a guard statement,
+as discussed in :ref:`Statements_GuardStatement`.
+
+You can override a nonreturning method,
+but the new method must preserve its return type and nonreturning behavior.
+
 .. syntax-grammar::
 
     Grammar of a function declaration
 
-    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body-OPT
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT function-body-OPT
 
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
@@ -922,11 +1045,11 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``let``-OPT external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT    
-    parameter --> ``inout`` external-parameter-name-OPT local-parameter-name type-annotation
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
+    parameter --> external-parameter-name-OPT local-parameter-name type-annotation
     parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
-    external-parameter-name --> identifier | ``_``
-    local-parameter-name --> identifier | ``_``
+    external-parameter-name --> identifier
+    local-parameter-name --> identifier
     default-argument-clause --> ``=`` expression
 
 
@@ -1005,16 +1128,16 @@ you can get a reference to an enumeration case and apply it later in your code.
 .. testcode:: enum-case-as-function
 
     -> enum Number {
-          case Integer(Int)
-          case Real(Double)
+          case integer(Int)
+          case real(Double)
        }
-    -> let f = Number.Integer
+    -> let f = Number.integer
     << // f : (Int) -> Number = (Function)
     -> // f is a function of type (Int) -> Number
     ---
     -> // Apply f to create an array of Number instances with integer values
     -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number.Integer(0), REPL.Number.Integer(2), REPL.Number.Integer(4), REPL.Number.Integer(6)]
+    << // evenInts : [Number] = [REPL.Number.integer(0), REPL.Number.integer(2), REPL.Number.integer(4), REPL.Number.integer(6)]
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
@@ -1043,15 +1166,15 @@ mark it with the ``indirect`` declaration modifier.
 .. testcode:: indirect-enum
 
    -> enum Tree<T> {
-         case Empty
-         indirect case Node(value: T, left: Tree, right: Tree)
+         case empty
+         indirect case node(value: T, left: Tree, right: Tree)
       }
-   >> let l1 = Tree.Node(value: 10, left: Tree.Empty, right: Tree.Empty)
-   >> let l2 = Tree.Node(value: 100, left: Tree.Empty, right: Tree.Empty)
-   >> let t = Tree.Node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.Node(50, REPL.Tree<Swift.Int>.Node(10, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty), REPL.Tree<Swift.Int>.Node(100, REPL.Tree<Swift.Int>.Empty, REPL.Tree<Swift.Int>.Empty))
+   >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
+   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
+   >> let t = Tree.node(value: 50, left: l1, right: l2)
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(50, REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty), REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
@@ -1071,22 +1194,22 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
 
 .. assertion indirect-in-indirect
 
-   -> indirect enum E { indirect case C(E) }
+   -> indirect enum E { indirect case c(E) }
    !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
-   !! indirect enum E { indirect case C(E) }
+   !! indirect enum E { indirect case c(E) }
    !!                   ^
 
 .. assertion indirect-without-recursion
 
-   -> enum E { indirect case C }
-   !! <REPL Input>:1:10: error: enum case 'C' without associated value cannot be 'indirect'
-   !! enum E { indirect case C }
+   -> enum E { indirect case c }
+   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
+   !! enum E { indirect case c }
    !!          ^
    ---
-   -> enum E1 { indirect case C() }     // This is fine, but probably shouldn't be
-   -> enum E2 { indirect case C(Int) }  // This is fine, but probably shouldn't be
+   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
+   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
    ---
-   -> indirect enum E3 { case X }
+   -> indirect enum E3 { case x }
 
 
 .. _Declarations_EnumerationsWithRawCaseValues:
@@ -1111,13 +1234,17 @@ value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw-value type* and must represent an
 integer, floating-point number, string, or single character.
 In particular, the *raw-value type* must conform to the ``Equatable`` protocol
-and one of the following literal-convertible protocols:
-``IntegerLiteralConvertible`` for integer literals,
-``FloatingPointLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals that contain any number of characters, and
-``ExtendedGraphemeClusterLiteralConvertible`` for string literals
+and one of the following protocols:
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals that contain any number of characters,
+and ``ExpressibleByUnicodeScalarLiteral``
+or ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
+
+.. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
+.. This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
@@ -1128,12 +1255,12 @@ that is automatically incremented from the raw value of the previous case.
 .. testcode:: raw-value-enum
 
     -> enum ExampleEnum: Int {
-          case A, B, C = 5, D
+          case a, b, c = 5, d
        }
 
-In the above example, the raw value of ``ExampleEnum.A`` is ``0`` and the value of
-``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
-explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
+In the above example, the raw value of ``ExampleEnum.a`` is ``0`` and the value of
+``ExampleEnum.b`` is ``1``. And because the value of ``ExampleEnum.c`` is
+explicitly set to ``5``, the value of ``ExampleEnum.d`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
 If the raw-value type is specified as ``String``
@@ -1142,12 +1269,13 @@ each unassigned case is implicitly assigned a string with the same text as the n
 
 .. testcode:: raw-value-enum-implicit-string-values
 
-    -> enum WeekendDay: String {
-          case Saturday, Sunday
+    -> enum GamePlayMode: String {
+          case cooperative, individual, competitive
        }
 
-In the above example, the raw value of ``WeekendDay.Saturday`` is ``"Saturday"``,
-and the raw value of ``WeekendDay.Sunday`` is ``"Sunday"``.
+In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
+the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
+and the raw value of ``GamePlayMode.competitive`` is ``"competitive"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
 ``RawRepresentable`` protocol, defined in the Swift standard library.
@@ -1165,7 +1293,7 @@ Accessing Enumeration Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
+as in ``EnumerationType.enumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_ImplicitMemberExpression`.
@@ -1177,9 +1305,9 @@ in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
 .. FIXME: Or use if-case:
-   enum E { case C(Int) }
-   let e = E.C(100)
-   if case E.C(let i) = e { print(i) }
+   enum E { case c(Int) }
+   let e = E.c(100)
+   if case E.c(let i) = e { print(i) }
    // prints 100
 
 
@@ -1209,18 +1337,18 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-member --> declaration | union-style-enum-case-clause | compiler-control-statement
     union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
+    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause generic-where-clause-OPT ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause | compiler-control-statement
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1314,9 +1442,12 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT struct-body
    struct-name --> identifier
-   struct-body --> ``{`` declarations-OPT ``}``
+   struct-body --> ``{`` struct-members-OPT ``}``
+
+   struct-members --> struct-member struct-members-OPT
+   struct-member --> declaration | compiler-control-statement
 
 
 .. _Declarations_ClassDeclaration:
@@ -1374,9 +1505,9 @@ The subclass's implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are not.
-That said, if the current class overrides all of the superclass's
-designated initializers, it inherits the superclass's convenience initializers.
+the current class, designated initializers declared in the *superclass* are only
+inherited when the subclass meets the conditions described in
+:ref:`Initialization_AutomaticInitializerInheritance`.
 Swift classes do not inherit from a universal base class.
 
 There are two ways create an instance of a previously declared class:
@@ -1408,10 +1539,13 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
+    class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
     class-name --> identifier
-    class-body --> ``{`` declarations-OPT ``}``
+    class-body --> ``{`` class-members-OPT ``}``
 
+    class-members --> class-member class-members-OPT
+    class-member --> declaration | compiler-control-statement
 
 .. _Declarations_ProtocolDeclaration:
 
@@ -1463,7 +1597,9 @@ By default, types that conform to a protocol must implement all
 properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` declaration modifier
 to specify that their implementation by a conforming type is optional.
-The ``optional`` modifier can be applied only to protocols that are marked
+The ``optional`` modifier can be applied
+only to members that are marked with the ``objc`` attribute,
+and only to members of protocols that are marked
 with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` declaration modifier
@@ -1522,14 +1658,17 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
+    protocol-body --> ``{`` protocol-members-OPT ``}``
+
+    protocol-members --> protocol-member protocol-members-OPT
+    protocol-member --> protocol-member-declaration | compiler-control-statement
 
     protocol-member-declaration --> protocol-property-declaration
     protocol-member-declaration --> protocol-method-declaration
     protocol-member-declaration --> protocol-initializer-declaration
     protocol-member-declaration --> protocol-subscript-declaration
     protocol-member-declaration --> protocol-associated-type-declaration
-    protocol-member-declarations --> protocol-member-declaration protocol-member-declarations-OPT
+    protocol-member-declaration --> typealias-declaration
 
 
 .. _Declarations_ProtocolPropertyDeclaration:
@@ -1614,7 +1753,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1642,8 +1781,8 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows``
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolSubscriptDeclaration:
@@ -1863,14 +2002,14 @@ failable initializer that produces an optional instance of a structure.
 .. testcode:: failable
 
     -> struct SomeStruct {
-           let string: String
+           let property: String
            // produces an optional instance of 'SomeStruct'
            init?(input: String) {
                if input.isEmpty {
                    // discard 'self' and return 'nil'
                    return nil
                }
-               string = input
+               property = input
            }
        }
 
@@ -1921,8 +2060,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT initializer-body
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
@@ -2029,7 +2168,7 @@ to ensure members of that type are properly initialized.
    << // x : [Int] = [1, 2, 3]
    >> let y = [10, 20, 30]
    << // y : [Int] = [10, 20, 30]
-   >> x.f(y)
+   >> x.f(x: y)
    << // r0 : Int = 7
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance
@@ -2050,10 +2189,12 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-body --> ``{`` extension-members-OPT ``}``
 
+    extension-members --> extension-member extension-members-OPT
+    extension-member --> declaration | compiler-control-statement
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -2104,6 +2245,11 @@ You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
+
+By default, the parameters used in subscripting don't have argument labels,
+unlike functions, methods, and initializers.
+However, you can provide explicit argument labels
+using the same syntax that functions, methods, and initializers use.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
@@ -2158,48 +2304,22 @@ The following form declares a new infix operator:
 
 .. syntax-outline::
 
-    infix operator <#operator name#> {
-       precedence <#precedence level#>
-       associativity <#associativity#>
-    }
+    infix operator <#operator name#>: <#precedence group#>
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
 such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
-Infix operators can optionally specify a precedence, associativity, or both.
-
-The :newTerm:`precedence` of an operator specifies how tightly an operator
-binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the context-sensitive ``precedence`` keyword
-followed by the *precedence level*.
-The *precedence level* can be any whole number (decimal integer) from 0 to 255;
-unlike decimal integer literals, it can't contain any underscore characters.
-Although the precedence level is a specific number,
-it is significant only relative to another operator.
-That is, when two operators compete with each other for their operands,
-such as in the expression ``2 + 3 * 5``, the operator with the higher precedence level
-binds more tightly to its operands.
-
-The :newTerm:`associativity` of an operator specifies how a sequence of operators
-with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
-followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
-or ``none``. Operators that are left-associative group left-to-right. For example,
-the subtraction operator (``-``) is left-associative,
-and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
-and evaluates to ``-7``. Operators that are right-associative group right-to-left,
-and operators that are specified with an associativity of ``none`` don't associate at all.
-Nonassociative operators of the same precedence level can't appear adjacent to each to other.
-For example, ``1 < 2 < 3`` is not a valid expression.
-
-Infix operators that are declared without specifying a precedence or associativity are
-initialized with a precedence level of 100 and an associativity of ``none``.
+Infix operators can optionally specify a precedence group.
+If you omit the precedence group for an operator,
+Swift uses the default precedence group, ``DefaultPrecedence``,
+which specifies a precedence just higher than ``TernaryPrecedence``.
+For more information, see :ref:`Declarations_PrecedenceGroupDeclaration`.
 
 The following form declares a new prefix operator:
 
 .. syntax-outline::
 
-    prefix operator <#operator name#> {}
+    prefix operator <#operator name#>
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
 such as the prefix logical NOT operator (``!``) in the expression ``!a``.
@@ -2207,13 +2327,11 @@ such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 Prefix operators declarations don't specify a precedence level.
 Prefix operators are nonassociative.
 
-.. TR: Do all prefix operators default to the same precedence level? If so, what is it?
-
 The following form declares a new postfix operator:
 
 .. syntax-outline::
 
-    postfix operator <#operator name#> {}
+    postfix operator <#operator name#>
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
 such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
@@ -2222,12 +2340,14 @@ As with prefix operators, postfix operator declarations don't specify a preceden
 Postfix operators are nonassociative.
 
 After declaring a new operator,
-you implement it by declaring a function that has the same name as the operator.
+you implement it by declaring a static method that has the same name as the operator.
+The static method is a member of
+one of the types whose values the operator takes as an argument ---
+for example, an operator that multiplies a ``Double`` by an ``Int``
+is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
-you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
-If you're implementing an infix operator,
-you don't mark that function declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -2237,19 +2357,113 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    prefix-operator-declaration --> ``prefix`` ``operator`` operator ``{`` ``}``
-    postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
-    infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator
+    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
 
-    infix-operator-attributes --> associativity-clause precedence-clause-OPT
-    infix-operator-attributes --> precedence-clause associativity-clause-OPT
-    precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> A decimal integer between 0 and 255, inclusive
-    associativity-clause --> ``associativity`` associativity
-    associativity --> ``left`` | ``right`` | ``none``
+    infix-operator-group --> ``:`` precedence-group-name
 
-.. TR: I added this grammar from looking at ParseDecl.cpp and from trying
-    to various permutations in the REPL. Is this a correct grammar?
+
+.. _Declarations_PrecedenceGroupDeclaration:
+
+Precedence Group Declaration
+----------------------------
+
+A :newTerm:`precedence group declaration` introduces
+a new grouping for infix operator precedence into your program.
+The precedence of an operator specifies how tightly the operator
+binds to its operands, in the absence of grouping parentheses.
+
+A precedence group declaration has the following form:
+
+.. syntax-outline::
+    precedencegroup <#precedence group name#> {
+        higherThan: <#lower group names#>
+        lowerThan: <#higher group names#>
+        associativity: <#associativity#>
+        assignment: <#assignment#>
+    }
+
+The *lower group names* and *higher group names* lists specify
+the new precedence group's relation to existing precedence groups.
+The ``lowerThan`` precedence group attribute may only be used
+to refer to precedence groups declared outside of the current module.
+When two operators compete with each other for their operands,
+such as in the expression ``2 + 3 * 5``,
+the operator with the higher relative precedence
+binds more tightly to its operands.
+
+.. note::
+
+   Precedence groups related to each other
+   using *lower group names* and *higher group names*
+   must fit into a single relational hierarchy,
+   but they *don't* have to form a linear hierarchy.
+   This means it is possible to have precedence groups
+   with undefined relative precedence.
+   Operators from those precedence groups
+   can't be used next to each other without grouping parentheses.
+
+Swift defines numerous precedence groups to go along
+with the operators provided by the standard library.
+For example, the addition (``+``) and subtraction (``-``) operators
+belong to the ``AdditionPrecedence`` group,
+and the multiplication (``*``) and division (``/``) operators
+belong to the ``MultiplicationPrecedence`` group.
+For a complete list of operators and precedence groups
+provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+The *associativity* of an operator specifies how a sequence of operators
+with the same precedence level are grouped together in the absence of grouping parentheses.
+You specify the associativity of an operator by writing
+one of the context-sensitive keywords ``left``, ``right``, or ``none`` ---
+if your omit the associativity, the default is ``none``.
+Operators that are left-associative group left-to-right.
+For example,
+the subtraction operator (``-``) is left-associative,
+so the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
+and evaluates to ``-7``.
+Operators that are right-associative group right-to-left,
+and operators that are specified with an associativity of ``none``
+don't associate at all.
+Nonassociative operators of the same precedence level
+can't appear adjacent to each to other.
+For example,
+the ``<`` operator has an associativity of ``none``,
+which means ``1 < 2 < 3`` is not a valid expression.
+
+The *assignment* of a precedence group specifies the precedence of an operator
+when used in an operation that includes optional chaining.
+When set to ``true``, an operator in the corresponding precedence group
+uses the same grouping rules during optional chaining
+as the assignment operators from the standard library.
+Otherwise, when set to ``false`` or omitted,
+operators in the precedence group follows the same optional chaining rules 
+as operators that don't perform assignment.
+
+.. syntax-grammar::
+
+    Grammar of a precedence group declaration
+    
+    precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
+    
+    precedence-group-attributes --> precedence-group-attribute precedence-group-attributes-OPT
+    precedence-group-attribute --> precedence-group-relation
+    precedence-group-attribute --> precedence-group-assignment
+    precedence-group-attribute --> precedence-group-associativity
+
+    precedence-group-relation --> ``higherThan`` ``:`` precedence-group-names
+    precedence-group-relation --> ``lowerThan`` ``:`` precedence-group-names
+    
+    precedence-group-assignment --> ``assignment`` ``:`` boolean-literal
+    
+    precedence-group-associativity --> ``associativity`` ``:`` ``left``
+    precedence-group-associativity --> ``associativity`` ``:`` ``right``
+    precedence-group-associativity --> ``associativity`` ``:`` ``none``
+
+    precedence-group-names --> precedence-group-name | precedence-group-name ``,`` precedence-group-names
+    precedence-group-name --> identifier
 
 
 .. _Declarations_DeclarationModifiers:
@@ -2277,11 +2491,8 @@ that introduces the declaration.
     or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
     to indicate that a class member can't be overridden in any subclass.
-
-.. TODO: Dave may or may not include an example of how to use the 'final' attribute
-    in the guide. If he does, include the following sentence:
     For an example of how to use the ``final`` attribute,
-    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+    see :ref:`Inheritance_PreventingOverrides`.
 
 ``lazy``
     Apply this modifier to a stored variable property of a class or structure
@@ -2330,15 +2541,21 @@ that introduces the declaration.
 Access Control Levels
 ~~~~~~~~~~~~~~~~~~~~~
 
-Swift provides three levels of access control: public, internal, and private.
+Swift provides five levels of access control: open, public, internal, file private, and private.
 You can mark a declaration with one of the access-level modifiers below
 to specify the declaration's access level.
 Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
-``public``
-    Apply this modifier to a declaration to indicate the declaration can be accessed
+``open``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
     by code in the same module as the declaration.
-    Declarations marked with the ``public`` access-level modifier can also be accessed
+    Declarations marked with the ``open`` access-level modifier can also be accessed and subclassed
+    by code in a module that imports the module that contains that declaration.
+
+``public``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
+    by code in the same module as the declaration.
+    Declarations marked with the ``public`` access-level modifier can also be accessed (but not subclassed)
     by code in a module that imports the module that contains that declaration.
 
 ``internal``
@@ -2347,9 +2564,13 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     By default,
     most declarations are implicitly marked with the ``internal`` access-level modifier.
 
-``private``
+``fileprivate``
     Apply this modifier to a declaration to indicate the declaration can be accessed
     only by code in the same source file as the declaration.
+
+``private``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code within the declaration's immediate enclosing scope.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
@@ -2362,10 +2583,15 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
+    declaration-modifier --> mutation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
-    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``fileprivate`` | ``fileprivate`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
+
+    mutation-modifier --> ``mutating`` | ``nonmutating``

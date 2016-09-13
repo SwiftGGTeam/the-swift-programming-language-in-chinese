@@ -28,7 +28,7 @@ which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoInts(inout a: Int, inout _ b: Int) {
+   -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -59,13 +59,13 @@ such as the ``swapTwoStrings(_:_:)`` and ``swapTwoDoubles(_:_:)`` functions show
 
 .. testcode:: whyGenerics
 
-   -> func swapTwoStrings(inout a: String, inout _ b: String) {
+   -> func swapTwoStrings(_ a: inout String, _ b: inout String) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
    ---
-   -> func swapTwoDoubles(inout a: Double, inout _ b: Double) {
+   -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
          let temporaryA = a
          a = b
          b = temporaryA
@@ -104,11 +104,16 @@ called ``swapTwoValues(_:_:)``:
 
 .. testcode:: genericFunctions
 
-   -> func swapTwoValues<T>(inout a: T, inout _ b: T) {
+   -> func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
          let temporaryA = a
          a = b
          b = temporaryA
       }
+
+.. This could be done in one line using a tuple pattern: (a, b) = (b, a)
+   That's probably not as approachable here, and the novel syntax to avoid an
+   explicit placeholder variable might distract from the discussion of
+   generics.
 
 The body of the ``swapTwoValues(_:_:)`` function
 is identical to the body of the ``swapTwoInts(_:_:)`` function.
@@ -118,13 +123,13 @@ Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
 
-   -> func swapTwoInts(inout a: Int, inout _ b: Int)
+   -> func swapTwoInts(_ a: inout Int, _ b: inout Int)
    >> {
    >>    let temporaryA = a
    >>    a = b
    >>    b = temporaryA
    >> }
-   -> func swapTwoValues<T>(inout a: T, inout _ b: T)
+   -> func swapTwoValues<T>(_ a: inout T, _ b: inout T)
    >> {
    >>    let temporaryA = a
    >>    a = b
@@ -275,7 +280,7 @@ in this case for a stack of ``Int`` values:
 
    -> struct IntStack {
          var items = [Int]()
-         mutating func push(item: Int) {
+         mutating func push(_ item: Int) {
             items.append(item)
          }
          mutating func pop() -> Int {
@@ -307,7 +312,7 @@ Here's a generic version of the same code:
 
    -> struct Stack<Element> {
          var items = [Element]()
-         mutating func push(item: Element) {
+         mutating func push(_ item: Element) {
             items.append(item)
          }
          mutating func pop() -> Element {
@@ -360,7 +365,7 @@ Here's how ``stackOfStrings`` looks after pushing these four values on to the st
 .. image:: ../images/stackPushedFourStrings_2x.png
    :align: center
 
-Popping a value from the stack returns and removes the top value, ``"cuatro"``:
+Popping a value from the stack removes and returns the top value, ``"cuatro"``:
 
 .. testcode:: genericStack
 
@@ -489,17 +494,17 @@ that requires ``U`` to conform to the protocol ``SomeProtocol``.
 Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here's a non-generic function called ``findStringIndex``,
+Here's a non-generic function called ``findIndex(ofString:in:)``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
-The ``findStringIndex(_:_:)`` function returns an optional ``Int`` value,
+The ``findIndex(ofString:in:)`` function returns an optional ``Int`` value,
 which will be the index of the first matching string in the array if it is found,
 or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
-   -> func findStringIndex(array: [String], _ valueToFind: String) -> Int? {
-         for (index, value) in array.enumerate() {
+   -> func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }
@@ -507,23 +512,23 @@ or ``nil`` if the string cannot be found:
          return nil
       }
 
-The ``findStringIndex(_:_:)`` function can be used to find a string value in an array of strings:
+The ``findIndex(ofString:in:)`` function can be used to find a string value in an array of strings:
 
 .. testcode:: typeConstraints
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   -> if let foundIndex = findStringIndex(strings, "llama") {
+   -> if let foundIndex = findIndex(ofString: "llama", in: strings) {
          print("The index of llama is \(foundIndex)")
       }
    <- The index of llama is 2
 
 The principle of finding the index of a value in an array isn't useful only for strings, however.
-You can write the same functionality as a generic function called ``findIndex``,
+You can write the same functionality as a generic function
 by replacing any mention of strings with values of some type ``T`` instead.
 
-Here's how you might expect a generic version of ``findStringIndex``,
-called ``findIndex``, to be written.
+Here's how you might expect a generic version of ``findIndex(ofString:in:)``,
+called ``findIndex(of:in:)``, to be written.
 Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
 not an optional value from the array.
@@ -532,8 +537,8 @@ for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
-   -> func findIndex<T>(array: [T], _ valueToFind: T) -> Int? {
-         for (index, value) in array.enumerate() {
+   -> func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }
@@ -543,7 +548,7 @@ for reasons explained after the example:
    !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !! <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (_MirrorDisposition, _MirrorDisposition), (Mirror.DisplayStyle, Mirror.DisplayStyle), (Bool, Bool), (Any.Type?, Any.Type?), (COpaquePointer, COpaquePointer), (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Memory>, AutoreleasingUnsafeMutablePointer<Memory>), (T, T), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !~ <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
    !! if value == valueToFind {
    !!          ^
 
@@ -570,15 +575,15 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findIndex(_:_:)`` function,
+Any type that is ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
 because it is guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
-         for (index, value) in array.enumerate() {
+   -> func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
+         for (index, value) in array.enumerated() {
             if value == valueToFind {
                return index
             }
@@ -586,19 +591,19 @@ as part of the type parameter's definition when you define the function:
          return nil
       }
 
-The single type parameter for ``findIndex`` is written as ``T: Equatable``,
+The single type parameter for ``findIndex(of:in:)`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
-The ``findIndex(_:_:)`` function now compiles successfully
+The ``findIndex(of:in:)`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
+   -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
    << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
+   -> let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
    << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
@@ -633,7 +638,7 @@ which declares an associated type called ``ItemType``:
 
    -> protocol Container {
          associatedtype ItemType
-         mutating func append(item: ItemType)
+         mutating func append(_ item: ItemType)
          var count: Int { get }
          subscript(i: Int) -> ItemType { get }
       }
@@ -688,7 +693,7 @@ adapted to conform to the ``Container`` protocol:
    -> struct IntStack: Container {
          // original IntStack implementation
          var items = [Int]()
-         mutating func push(item: Int) {
+         mutating func push(_ item: Int) {
             items.append(item)
          }
          mutating func pop() -> Int {
@@ -696,7 +701,7 @@ adapted to conform to the ``Container`` protocol:
          }
          // conformance to the Container protocol
          typealias ItemType = Int
-         mutating func append(item: Int) {
+         mutating func append(_ item: Int) {
             self.push(item)
          }
          var count: Int {
@@ -733,14 +738,14 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
          var items = [Element]()
-         mutating func push(item: Element) {
+         mutating func push(_ item: Element) {
             items.append(item)
          }
          mutating func pop() -> Element {
             return items.removeLast()
          }
          // conformance to the Container protocol
-         mutating func append(item: Element) {
+         mutating func append(_ item: Element) {
             self.push(item)
          }
          var count: Int {
@@ -785,22 +790,23 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_WhereClauses:
 
-Where Clauses
--------------
+Generic Where Clauses
+---------------------
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
 enable you to define requirements on the type parameters associated with
 a generic function or type.
 
 It can also be useful to define requirements for associated types.
-You do this by defining :newTerm:`where clauses` as part of a type parameter list.
-A where clause enables you to require that
+You do this by defining a :newTerm:`generic where clause`.
+A generic ``where`` clause enables you to require that
 an associated type must conform to a certain protocol,
 or that certain type parameters and associated types must be the same.
-You write a where clause by placing the ``where`` keyword
-immediately after the list of type parameters,
+A generic ``where`` clause starts with the ``where`` keyword,
 followed by constraints for associated types
 or equality relationships between types and associated types.
+You write a generic ``where`` clause right before the opening curly brace
+of a type or function's body.
 
 The example below defines a generic function called ``allItemsMatch``,
 which checks to see if two ``Container`` instances contain
@@ -811,30 +817,29 @@ and a value of ``false`` if they do not.
 The two containers to be checked do not have to be
 the same type of container (although they can be),
 but they do have to hold the same type of items.
-This requirement is expressed through a combination of type constraints and where clauses:
+This requirement is expressed through a combination of type constraints
+and a generic ``where`` clause:
 
 .. testcode:: associatedTypes
 
-   -> func allItemsMatch<
-            C1: Container, C2: Container
-            where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-            (someContainer: C1, _ anotherContainer: C2) -> Bool {
+   -> func allItemsMatch<C1: Container, C2: Container>
+            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+            where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
    ---
-         // check that both containers contain the same number of items
+         // Check that both containers contain the same number of items.
          if someContainer.count != anotherContainer.count {
             return false
          }
    ---
-         // check each pair of items to see if they are equivalent
+         // Check each pair of items to see if they are equivalent.
          for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                return false
             }
          }
    ---
-         // all items match, so return true
+         // All items match, so return true.
          return true
-   ---
       }
 
 This function takes two arguments called
@@ -844,8 +849,7 @@ and the ``anotherContainer`` argument is of type ``C2``.
 Both ``C1`` and ``C2`` are type parameters
 for two container types to be determined when the function is called.
 
-The function's type parameter list places
-the following requirements on the two type parameters:
+The following requirements are placed on the function's two type parameters:
 
 * ``C1`` must conform to the ``Container`` protocol (written as ``C1: Container``).
 * ``C2`` must also conform to the ``Container`` protocol (written as ``C2: Container``).
@@ -854,8 +858,8 @@ the following requirements on the two type parameters:
 * The ``ItemType`` for ``C1`` must conform to the ``Equatable`` protocol
   (written as ``C1.ItemType: Equatable``).
 
-The third and fourth requirements are defined as part of a where clause,
-and are written after the ``where`` keyword as part of the function's type parameter list.
+The first and second requirements are defined in the function's type parameter list,
+and the third and fourth requirements are defined in the function's generic ``where`` clause.
 
 These requirements mean:
 

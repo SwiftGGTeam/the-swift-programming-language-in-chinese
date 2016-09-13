@@ -223,10 +223,6 @@ Initializers are described in more detail in :doc:`Initialization`.
    !! let c = C(x: 1, y: 1)
    !!         ~~~~^~~~~~~~
 
-.. FIXME: The current plan is to introduce a memberwise initializer for classes too,
-   as described in rdar://16704095.
-   We hope to have this by WWDC, and this section will need updating if this lands.
-
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
 Structures and Enumerations Are Value Types
@@ -308,17 +304,17 @@ The same behavior applies to enumerations:
 .. testcode:: ClassesAndStructures
 
    -> enum CompassPoint {
-         case North, South, East, West
+         case north, south, east, west
       }
-   -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = REPL.CompassPoint.West
+   -> var currentDirection = CompassPoint.west
+   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
-   -> currentDirection = .East
-   -> if rememberedDirection == .West {
-         print("The remembered direction is still .West")
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
+   -> currentDirection = .east
+   -> if rememberedDirection == .west {
+         print("The remembered direction is still .west")
       }
-   <- The remembered direction is still .West
+   <- The remembered direction is still .west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it is actually set to a copy of that value.
@@ -415,22 +411,22 @@ or passed to a function.)
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
-   -> enum E { case A, B }
-   -> let e1 = E.A
-   << // e1 : E = REPL.E.A
-   -> let e2 = E.B
-   << // e2 : E = REPL.E.B
+   -> enum E { case a, b }
+   -> let e1 = E.a
+   << // e1 : E = REPL.E.a
+   -> let e2 = E.b
+   << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: overloads for '===' exist with these partially matching parameter lists: (AnyObject?, AnyObject?), (L, R)
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
 
@@ -475,7 +471,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
-   !! <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (_MirrorDisposition, _MirrorDisposition), (Mirror.DisplayStyle, Mirror.DisplayStyle), (Bool, Bool), (Any.Type?, Any.Type?), (COpaquePointer, COpaquePointer), (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Memory>, AutoreleasingUnsafeMutablePointer<Memory>), (T, T), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!       ^
 
@@ -490,7 +486,7 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
-   !! <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists: (FloatingPointClassification, FloatingPointClassification), (_MirrorDisposition, _MirrorDisposition), (Mirror.DisplayStyle, Mirror.DisplayStyle), (Bool, Bool), (Any.Type?, Any.Type?), (COpaquePointer, COpaquePointer), (Character, Character), (UInt8, UInt8), (Int8, Int8), (UInt16, UInt16), (Int16, Int16), (UInt32, UInt32), (Int32, Int32), (UInt64, UInt64), (Int64, Int64), (UInt, UInt), (Int, Int), (Float, Float), (Double, Double), (Float80, Float80), (ObjectIdentifier, ObjectIdentifier), (String, String), (Index, Index), (String.UnicodeScalarView.Index, String.UnicodeScalarView.Index), (String.UTF16View.Index, String.UTF16View.Index), (String.UTF8View.Index, String.UTF8View.Index), (UnicodeScalar, UnicodeScalar), (_SwiftNSOperatingSystemVersion, _SwiftNSOperatingSystemVersion), (Bit, Bit), (AnyForwardIndex, AnyForwardIndex), (AnyBidirectionalIndex, AnyBidirectionalIndex), (AnyRandomAccessIndex, AnyRandomAccessIndex), (ContiguousArray<Element>, ContiguousArray<Element>), (ArraySlice<Element>, ArraySlice<Element>), (Array<Element>, Array<Element>), (AutoreleasingUnsafeMutablePointer<Memory>, AutoreleasingUnsafeMutablePointer<Memory>), (T, T), (LazyFilterIndex<Base>, LazyFilterIndex<Base>), (FlattenCollectionIndex<BaseElements>, FlattenCollectionIndex<BaseElements>), (FlattenBidirectionalCollectionIndex<BaseElements>, FlattenBidirectionalCollectionIndex<BaseElements>), (Set<Element>, Set<Element>), ([Key : Value], [Key : Value]), (SetIndex<Element>, SetIndex<Element>), (DictionaryIndex<Key, Value>, DictionaryIndex<Key, Value>), (_HeapBuffer<Value, Element>, _HeapBuffer<Value, Element>), (HalfOpenInterval<Bound>, HalfOpenInterval<Bound>), (ClosedInterval<Bound>, ClosedInterval<Bound>), (ManagedBufferPointer<Value, Element>, ManagedBufferPointer<Value, Element>), (T?, T?), (T?, _OptionalNilComparisonType), (_OptionalNilComparisonType, T?), (Range<Element>, Range<Element>), (ReverseIndex<Base>, ReverseIndex<Base>), (UnsafeMutablePointer<Memory>, UnsafeMutablePointer<Memory>), (UnsafePointer<Memory>, UnsafePointer<Memory>), ((A, B), (A, B)), ((A, B, C), (A, B, C)), ((A, B, C, D), (A, B, C, D)), ((A, B, C, D, E), (A, B, C, D, E)), ((A, B, C, D, E, F), (A, B, C, D, E, F)), (Self, Self)
+   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!       ^
 

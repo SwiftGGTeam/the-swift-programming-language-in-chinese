@@ -77,6 +77,8 @@ you can ignore the values by using an underscore in place of a variable name.
    -> print("\(base) to the power of \(power) is \(answer)")
    <- 3 to the power of 10 is 59049
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
@@ -115,13 +117,13 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
    -> for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
       }
    </ ants have 6 legs
-   </ cats have 4 legs
    </ spiders have 8 legs
+   </ cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -197,7 +199,7 @@ The board is initialized with 26 zero ``Int`` values, not 25
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
@@ -346,7 +348,7 @@ are initialized in exactly the same way as with a ``while`` loop.
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -574,32 +576,31 @@ a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
 
-   -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
+   -> let someCharacter: Character = "z"
+   << // someCharacter : Character = "z"
    -> switch someCharacter {
-         case "a", "e", "i", "o", "u":
-            print("\(someCharacter) is a vowel")
-         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-            print("\(someCharacter) is a consonant")
+         case "a":
+            print("The first letter of the alphabet")
+         case "z":
+            print("The last letter of the alphabet")
          default:
-            print("\(someCharacter) is not a vowel or a consonant")
+            print("Some other character")
       }
-   <- e is a vowel
+   <- The last letter of the alphabet
 
 The ``switch`` statement's first case matches
-all five lowercase vowels in the English language.
-Similarly, its second case matches all lowercase English consonants.
-
-Because it's not practical to write all other possible characters as part of a ``switch`` case,
-this ``switch`` statement provides a ``default`` case
-to match all other characters that are not vowels or consonants.
+the first letter of the English alphabet, ``a``,
+and its second case matches the last letter, ``z``.
+Because the ``switch`` must have a case for every possible character,
+not just every alphabetic character,
+this ``switch`` statement uses a ``default`` case
+to match all characters other than ``a`` and ``z``.
 This provision ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
 
 No Implicit Fallthrough
-_______________________
++++++++++++++++++++++++
 
 In contrast with ``switch`` statements in C and Objective-C,
 ``switch`` statements in Swift do not
@@ -625,17 +626,17 @@ It is not valid to write the following code, because the first case is empty:
    -> let anotherCharacter: Character = "a"
    << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
-         case "a":
+         case "a": // Invalid, the case has an empty body
          case "A":
             print("The letter A")
          default:
             print("Not the letter A")
       }
    !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
-   !!      case "a":
+   !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
-   // this will report a compile-time error
+   // This will report a compile-time error.
 
 Unlike a ``switch`` statement in C,
 this ``switch`` statement does not match both ``"a"`` and ``"A"``.
@@ -644,27 +645,38 @@ does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
-Multiple matches for a single ``switch`` case can be separated by commas
-and can be written over multiple lines if the list is long.
+To make a ``switch`` with a single case that
+matches both ``"a"`` and ``"A"``,
+combine the two values into a compound case,
+separating the values with commas.
 
-.. syntax-outline::
+.. testcode:: compoundCaseInsteadOfFallthrough
 
-   switch <#some value to consider#> {
-      case <#value 1#>,
-          <#value 2#>:
-         <#statements#>
-   }
+   -> let anotherCharacter: Character = "a"
+   << // anotherCharacter : Character = "a"
+   -> switch anotherCharacter {
+         case "a", "A":
+            print("The letter A")
+         default:
+            print("Not the letter A")
+      }
+   <- The letter A
+
+For readability,
+a compound case can also be written over multiple lines.
+For more information about compound cases,
+see :ref:`ControlFlow_CompoundCases`.
 
 .. note::
 
-   To opt in to fallthrough behavior for a particular ``switch`` case,
+   To explicitly fall through at the end of a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
 
 .. _ControlFlow_RangeMatching:
 
 Interval Matching
-_________________
++++++++++++++++++
 
 Values in ``switch`` cases can be checked for their inclusion in an interval.
 This example uses number intervals
@@ -702,21 +714,10 @@ Because the value of ``approximateCount`` falls between 12 and 100,
 ``naturalCount`` is assigned the value ``"dozens of"``,
 and execution is transferred out of the ``switch`` statement.
 
-.. note::
-
-   Both the closed range operator (``...``)
-   and half-open range operator (``..<``)
-   functions are overloaded to return either an
-   interval (``IntervalType``) or a range (``Range``).
-   An interval can determine whether it contains a particular element,
-   such as when matching a ``switch`` statement ``case``.
-   A range is a collection of consecutive values,
-   which can be iterated on in a ``for-in`` statement.
-
 .. _ControlFlow_Tuples:
 
 Tuples
-______
+++++++
 
 You can use tuples to test multiple values in the same ``switch`` statement.
 Each element of the tuple can be tested against a different value or interval of values.
@@ -766,12 +767,12 @@ and so all other matching cases would be ignored.
 .. _ControlFlow_ValueBindings:
 
 Value Bindings
-______________
+++++++++++++++
 
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
-because the values are “bound” to temporary constants or variables within the case's body.
+because the values are bound to temporary constants or variables within the case's body.
 
 The example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
@@ -810,18 +811,19 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 After the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used as shorthand for printing the values with the ``print(_:separator:terminator:)`` function.
+Here, they are used to print the categorization of the point.
 
 This ``switch`` statement does not have a ``default`` case.
 The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
-As a result, this case matches all possible remaining values,
+Because ``anotherPoint`` is always a tuple of two values,
+this case matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_Where:
 
 Where
-_____
++++++
 
 A ``switch`` case can use a ``where`` clause to check for additional conditions.
 
@@ -859,6 +861,70 @@ only if the ``where`` clause's condition evaluates to ``true`` for that value.
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
+.. _ControlFlow_CompoundCases:
+
+Compound Cases
+++++++++++++++
+
+Multiple switch cases that share the same body
+can be combined by writing several patterns after ``case``,
+with a comma between each of the patterns.
+If any of the patterns match, then the case is considered to match.
+The patterns can be written over multiple lines if the list is long.
+For example:
+
+.. testcode:: compound-switch-case
+
+   -> let someCharacter: Character = "e"
+   << // someCharacter : Character = "e"
+   -> switch someCharacter {
+          case "a", "e", "i", "o", "u":
+              print("\(someCharacter) is a vowel")
+          case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+              "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+              print("\(someCharacter) is a consonant")
+          default:
+              print("\(someCharacter) is not a vowel or a consonant")
+      }
+   <- e is a vowel
+
+The ``switch`` statement's first case matches
+all five lowercase vowels in the English language.
+Similarly, its second case matches all lowercase English consonants.
+Finally, the ``default`` case matches any other character.
+
+Compound cases can also include value bindings.
+All of the patterns of a compound case
+have to include the same set of value bindings,
+and each binding has to get a value of the same type
+from all of the patterns in the compound case.
+This ensures that,
+no matter which part of the compound case matched,
+the code in the body of the case
+can always access a value for the bindings
+and that the value always has the same type.
+
+.. testcode:: compound-switch-case
+
+    -> let stillAnotherPoint = (9, 0)
+    << // stillAnotherPoint : (Int, Int) = (9, 0)
+    -> switch stillAnotherPoint {
+           case (let distance, 0), (0, let distance):
+               print("On an axis, \(distance) from the origin")
+           default:
+               print("Not on an axis")
+       }
+    <- On an axis, 9 from the origin
+
+
+The ``case`` above has two patterns:
+``(let distance, 0)`` matches points on the x-axis
+and ``(0, let distance)`` matches points on the y-axis.
+Both patterns include a binding for ``distance``
+and ``distance`` is an integer in both patterns ---
+which means that the code in the body of the ``case``
+can always access a value for ``distance``.
+
 .. _ControlFlow_ControlTransferStatements:
 
 Control Transfer Statements
@@ -887,13 +953,6 @@ The ``continue`` statement tells a loop to stop what it is doing
 and start again at the beginning of the next iteration through the loop.
 It says “I am done with the current loop iteration”
 without leaving the loop altogether.
-
-.. note::
-
-   In a ``for`` loop with a condition and incrementer,
-   the loop's incrementer is still evaluated after calling the ``continue`` statement.
-   The loop itself continues to work as usual;
-   only the code within the loop's body is skipped.
 
 The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
@@ -935,7 +994,7 @@ earlier than would otherwise be the case.
 .. _ControlFlow_BreakInALoop:
 
 Break in a Loop Statement
-_________________________
++++++++++++++++++++++++++
 
 When used inside a loop statement,
 ``break`` ends the loop's execution immediately
@@ -948,7 +1007,7 @@ and no further iterations of the loop are started.
 .. _ControlFlow_BreakInASwitchStatement:
 
 Break in a Switch Statement
-___________________________
++++++++++++++++++++++++++++
 
 When used inside a ``switch`` statement,
 ``break`` causes the ``switch`` statement to end its execution immediately
@@ -976,7 +1035,7 @@ For brevity, multiple values are covered in a single ``switch`` case.
 
 .. testcode:: breakInASwitchStatement
 
-   -> let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
+   -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
    << // numberSymbol : Character = "三"
    -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = nil
@@ -1142,7 +1201,7 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+   -> var board = [Int](repeating: 0, count: finalSquare + 1)
    << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -1292,10 +1351,10 @@ the code inside the ``else`` clause is executed if the condition is not true.
            print("I hope the weather is nice in \(location).")
        }
     ---
-    -> greet(["name": "John"])
+    -> greet(person: ["name": "John"])
     <- Hello John!
     <- I hope the weather is nice near you.
-    -> greet(["name": "Jane", "location": "Cupertino"])
+    -> greet(person: ["name": "Jane", "location": "Cupertino"])
     <- Hello Jane!
     <- I hope the weather is nice in Cupertino.
 
@@ -1313,7 +1372,7 @@ in which the ``guard`` statement appears.
 It can do this with a control transfer statement
 such as ``return``, ``break``, ``continue``, or ``throw``,
 or it can call a function or method
-that doesn't return, such as ``fatalError()``.
+that doesn't return, such as ``fatalError(_:file:line:)``.
 
 Using a ``guard`` statement for requirements
 improves the readability of your code,
@@ -1346,24 +1405,35 @@ when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
 
-   -> if #available(iOS 9, OSX 10.10, *) {
-          // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
+   -> if #available(iOS 10, macOS 10.12, *) {
+          // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
       } else {
-          // Fall back to earlier iOS and OS X APIs
+          // Fall back to earlier iOS and macOS APIs
       }
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The availability condition above specifies that on iOS,
-the body of the ``if`` executes only on iOS 9 and later;
-on OS X, only on OS X v10.10 and later.
+the body of the ``if`` executes only on iOS 10 and later;
+on macOS, only on macOS 10.12 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use ``iOS``, ``OSX``, and ``watchOS`` for the platform names.
+You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
+for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8,
-you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
+you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
+
+.. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
+    even though the new editorial guidelines state to only use "macOS"
+    for versions of the OS that are 10.12 and later.
+    However, in the context in which this appears,
+    the more helpful thing to do is to use "macOS",
+    especially because that's what you're going to use in the language.
+    When we have an minor version of 10.12 to use as an example here,
+    we should use that instead.
 
 .. syntax-outline::
 
@@ -1372,6 +1442,8 @@ you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
    } else {
        <#fallback statements to execute if the APIs are unavailable#>
    }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. FIXME
     Not a general purpose condition; can't combine with &&, etc.

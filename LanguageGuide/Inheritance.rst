@@ -77,7 +77,7 @@ a human-readable description of the vehicle's current speed:
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
 but is not much use in itself.
 To make it more useful,
-you need to refine it to describe more specific kinds of vehicle.
+you need to refine it to describe more specific kinds of vehicles.
 
 .. _Inheritance_Subclassing:
 
@@ -251,7 +251,7 @@ to observe when the underlying property value changes.
 .. _Inheritance_OverridingPropertyGettersAndSetters:
 
 Overriding Property Getters and Setters
-_______________________________________
++++++++++++++++++++++++++++++++++++++++
 
 You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
@@ -314,7 +314,7 @@ the tailored description defined within the ``Car`` class:
 .. _Inheritance_OverridingPropertyObservers:
 
 Overriding Property Observers
-_____________________________
++++++++++++++++++++++++++++++
 
 You can use property overriding to add property observers to an inherited property.
 This enables you to be notified when the value of an inherited property changes,

@@ -280,32 +280,21 @@ The following example adds a new instance method called ``repetitions`` to the `
          }
       }
 
-The ``repetitions(_:)`` method takes a single argument of type ``() -> Void``,
+The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``repetitions(_:)`` method on any integer number
+you can call the ``repetitions(task:)`` method on any integer
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.repetitions({
-         print("Hello!")
-      })
-   </ Hello!
-   </ Hello!
-   </ Hello!
-
-Use trailing closure syntax to make the call more succinct:
-
-.. testcode:: extensionsInstanceMethods
-
    -> 3.repetitions {
-         print("Goodbye!")
+         print("Hello!")
       }
-   </ Goodbye!
-   </ Goodbye!
-   </ Goodbye!
+   </ Hello!
+   </ Hello!
+   </ Hello!
 
 .. _Extensions_MutatingInstanceMethods:
 
@@ -376,6 +365,8 @@ from the right of the number:
    /> returns \(r3)
    </ returns 7
 
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 .. TODO: Replace the for loop above with an exponent,
    if/when integer exponents land in the stdlib.
    Darwin's pow() function is only for floating point.
@@ -400,22 +391,22 @@ as if the number had been padded with zeros to the left:
 Nested Types
 ------------
 
-Extensions can add new nested types to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures, and enumerations:
 
 .. testcode:: extensionsNestedTypes
 
    -> extension Int {
          enum Kind {
-            case Negative, Zero, Positive
+            case negative, zero, positive
          }
          var kind: Kind {
             switch self {
                case 0:
-                  return .Zero
+                  return .zero
                case let x where x > 0:
-                  return .Positive
+                  return .positive
                default:
-                  return .Negative
+                  return .negative
             }
          }
       }
@@ -434,23 +425,26 @@ The nested enumeration can now be used with any ``Int`` value:
 
 .. testcode:: extensionsNestedTypes
 
-   -> func printIntegerKinds(numbers: [Int]) {
+   -> func printIntegerKinds(_ numbers: [Int]) {
          for number in numbers {
             switch number.kind {
-               case .Negative:
+               case .negative:
                   print("- ", terminator: "")
-               case .Zero:
+               case .zero:
                   print("0 ", terminator: "")
-               case .Positive:
+               case .positive:
                   print("+ ", terminator: "")
             }
          }
          print("")
       }
    -> printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-   <- + + - 0 - 0 +
+   << + + - 0 - 0 +
+   // Prints "+ + - 0 - 0 + "
 
-This function, ``printIntegerKinds``,
+.. Workaround for rdar://26016325
+
+This function, ``printIntegerKinds(_:)``,
 takes an input array of ``Int`` values and iterates over those values in turn.
 For each integer in the array,
 the function considers the ``kind`` computed property for that integer,
@@ -461,4 +455,4 @@ and prints an appropriate description.
    ``number.kind`` is already known to be of type ``Int.Kind``.
    Because of this, all of the ``Int.Kind`` case values
    can be written in shorthand form inside the ``switch`` statement,
-   such as ``.Negative`` rather than ``Int.Kind.Negative``.
+   such as ``.negative`` rather than ``Int.Kind.negative``.

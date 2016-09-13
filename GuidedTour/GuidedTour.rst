@@ -355,7 +355,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25]]
+   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -434,16 +434,30 @@ from the function's return type.
 
 .. testcode:: guided-tour
 
-    -> func greet(name: String, day: String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(person: String, day: String) -> String {
+           return "Hello \(person), today is \(day)."
        }
-    -> greet("Bob", day: "Tuesday")
+    -> greet(person: "Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
 
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
+
+By default,
+functions use their parameter names
+as labels for their arguments.
+Write a custom argument label before the parameter name,
+or write ``_`` to use no argument label.
+
+.. testcode:: guided-tour
+
+    -> func greet(_ person: String, on day: String) -> String {
+           return "Hello \(person), today is \(day)."
+       }
+    -> greet("John", on: "Wednesday")
+    <$ : String = "Hello John, today is Wednesday."
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
@@ -474,7 +488,7 @@ either by name or by number.
 
            return (min, max, sum)
        }
-    -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
+    -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
     -> print(statistics.sum)
     << 120
@@ -495,7 +509,7 @@ collecting them into an array.
       }
    -> sumOf()
    <$ : Int = 0
-   -> sumOf(42, 597, 12)
+   -> sumOf(numbers: 42, 597, 12)
    <$ : Int = 651
 
 .. admonition:: Experiment
@@ -555,7 +569,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, condition: lessThanTen)
+    -> hasAnyMatches(list: numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
@@ -605,7 +619,7 @@ you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = numbers.sort { $0 > $1 }
+    -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
@@ -877,26 +891,26 @@ enumerations can have methods associated with them.
 .. testcode:: guided-tour
 
     -> enum Rank: Int {
-           case Ace = 1
-           case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-           case Jack, Queen, King
+           case ace = 1
+           case two, three, four, five, six, seven, eight, nine, ten
+           case jack, queen, king
            func simpleDescription() -> String {
                switch self {
-                   case .Ace:
+                   case .ace:
                        return "ace"
-                   case .Jack:
+                   case .jack:
                        return "jack"
-                   case .Queen:
+                   case .queen:
                        return "queen"
-                   case .King:
+                   case .king:
                        return "king"
                    default:
                        return String(self.rawValue)
                }
            }
        }
-    -> let ace = Rank.Ace
-    << // ace : Rank = REPL.Rank.Ace
+    -> let ace = Rank.ace
+    << // ace : Rank = REPL.Rank.ace
     -> let aceRawValue = ace.rawValue
     <$ : Int = 1
 
@@ -934,22 +948,22 @@ you don't have to provide one.
 .. testcode:: guided-tour
 
     -> enum Suit {
-           case Spades, Hearts, Diamonds, Clubs
+           case spades, hearts, diamonds, clubs
            func simpleDescription() -> String {
                switch self {
-                   case .Spades:
+                   case .spades:
                        return "spades"
-                   case .Hearts:
+                   case .hearts:
                        return "hearts"
-                   case .Diamonds:
+                   case .diamonds:
                        return "diamonds"
-                   case .Clubs:
+                   case .clubs:
                        return "clubs"
                }
            }
        }
-    -> let hearts = Suit.Hearts
-    << // hearts : Suit = REPL.Suit.Hearts
+    -> let hearts = Suit.hearts
+    << // hearts : Suit = REPL.Suit.hearts
     -> let heartsDescription = hearts.simpleDescription()
     << // heartsDescription : String = "hearts"
 
@@ -962,13 +976,13 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-Notice the two ways that the ``Hearts`` case of the enumeration
+Notice the two ways that the ``hearts`` case of the enumeration
 is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration case ``Suit.Hearts`` is referred to by its full name
+the enumeration case ``Suit.hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
 Inside the switch,
-the enumeration case is referred to by the abbreviated form ``.Hearts``
+the enumeration case is referred to by the abbreviated form ``.hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -990,8 +1004,8 @@ but classes are passed by reference.
                return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
            }
        }
-    -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.Three, suit: REPL.Suit.Spades)
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
@@ -1052,19 +1066,19 @@ or it responds with some error information.
 .. testcode:: guided-tour
 
     -> enum ServerResponse {
-           case Result(String, String)
-           case Failure(String)
+           case result(String, String)
+           case failure(String)
        }
     ---
-    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse.Result("6:00 am", "8:09 pm")
-    -> let failure = ServerResponse.Failure("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.Failure("Out of cheese.")
+    -> let success = ServerResponse.result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
+    -> let failure = ServerResponse.failure("Out of cheese.")
+    << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
     ---
     -> switch success {
-           case let .Result(sunrise, sunset):
+           case let .result(sunrise, sunset):
                print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .Failure(message):
+           case let .failure(message):
                print("Failure...  \(message)")
        }
     << Sunrise is at 6:00 am and sunset is at 8:09 pm.
@@ -1184,14 +1198,14 @@ in addition to its protocol conformance.
 Error Handling
 --------------
 
-You represent errors using any type that adopts the ``ErrorType`` protocol.
+You represent errors using any type that adopts the ``Error`` protocol.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
    fire" error message, used when the kernel can't identify the specific error.
    The names of printers used in the examples in this section are names of
    people who were important in the development of printing.
-   
+
    Bi Sheng is credited with inventing the first movable type out of porcelain
    in China in the 1040s.  It was a mixed success, in large part because of the
    vast number of characters needed to write Chinese, and failed to replace
@@ -1205,10 +1219,10 @@ You represent errors using any type that adopts the ``ErrorType`` protocol.
 
 .. testcode:: guided-tour
 
-    -> enum PrinterError: ErrorType {
-           case OutOfPaper
-           case NoToner
-           case OnFire
+    -> enum PrinterError: Error {
+           case outOfPaper
+           case noToner
+           case onFire
        }
 
 Use ``throw`` to throw an error
@@ -1219,9 +1233,9 @@ handles the error.
 
 .. testcode:: guided-tour
 
-    -> func sendToPrinter(printerName: String) throws -> String {
+    -> func send(job: Int, toPrinter printerName: String) throws -> String {
            if printerName == "Never Has Toner" {
-               throw PrinterError.NoToner
+               throw PrinterError.noToner
            }
            return "Job sent"
        }
@@ -1232,12 +1246,12 @@ Inside the ``do`` block,
 you mark code that can throw an error by writing ``try`` in front of it.
 Inside the ``catch`` block,
 the error is automatically given the name ``error``
-unless you can give it a different name.
+unless you give it a different name.
 
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Bi Sheng")
+           let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
            print(printerResponse)
        } catch {
            print(error)
@@ -1247,19 +1261,19 @@ unless you can give it a different name.
 .. admonition:: Experiment
 
    Change the printer name to ``"Never Has Toner"``,
-   so that the ``sendToPrinter(_:)`` function throws an error.
+   so that the ``send(job:toPrinter:)`` function throws an error.
 
 .. Assertion tests the change that the Experiment box instructs you to make.
 
 .. assertion:: guided-tour
 
     >> do {
-           let printerResponse = try sendToPrinter("Never Has Toner")
+           let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
            print(printerResponse)
        } catch {
            print(error)
        }
-    << NoToner
+    << noToner
 
 You can provide multiple ``catch`` blocks
 that handle specific errors.
@@ -1272,9 +1286,9 @@ after ``case`` in a switch.
 .. testcode:: guided-tour
 
     -> do {
-           let printerResponse = try sendToPrinter("Gutenberg")
+           let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
            print(printerResponse)
-       } catch PrinterError.OnFire {
+       } catch PrinterError.onFire {
            print("I'll just put this over here, with the rest of the fire.")
        } catch let printerError as PrinterError {
            print("Printer error: \(printerError).")
@@ -1299,9 +1313,9 @@ the value that the function returned.
 
 .. testcode:: guided-tour
 
-    -> let printerSuccess = try? sendToPrinter("Mergenthaler")
+    -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
     << // printerSuccess : String? = Optional("Job sent")
-    -> let printerFailure = try? sendToPrinter("Never Has Toner")
+    -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
     << // printerFailure : String? = nil
 
 Use ``defer`` to write a block of code
@@ -1318,13 +1332,13 @@ even though they need to be executed at different times.
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
     << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
-    -> func fridgeContains(itemName: String) -> Bool {
+    -> func fridgeContains(_ food: String) -> Bool {
            fridgeIsOpen = true
            defer {
                fridgeIsOpen = false
            }
     ---
-           let result = fridgeContent.contains(itemName)
+           let result = fridgeContent.contains(food)
            return result
        }
     -> fridgeContains("banana")
@@ -1345,14 +1359,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> repeatItem("knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes:4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
@@ -1362,14 +1376,14 @@ as well as classes, enumerations, and structures.
 
     // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<Wrapped> {
-           case None
-           case Some(Wrapped)
+           case none
+           case some(Wrapped)
        }
-    -> var possibleInteger: OptionalValue<Int> = .None
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
-    -> possibleInteger = .Some(100)
+    -> var possibleInteger: OptionalValue<Int> = .none
+    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
+    -> possibleInteger = .some(100)
 
-Use ``where`` after the type name
+Use ``where`` right before the body
 to specify a list of requirements ---
 for example,
 to require the type to implement a protocol,
@@ -1378,7 +1392,8 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1398,4 +1413,4 @@ or to require a class to have a particular superclass.
    of the elements that any two sequences have in common.
 
 Writing ``<T: Equatable>``
-is the same as writing ``<T where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable>``.

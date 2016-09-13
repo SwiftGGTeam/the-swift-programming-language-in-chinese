@@ -160,9 +160,9 @@ with a value from a different temperature scale:
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
 The first initializer has a single initialization parameter
-with an external name of ``fromFahrenheit`` and a local name of ``fahrenheit``.
+with an argument label of ``fromFahrenheit`` and a parameter name of ``fahrenheit``.
 The second initializer has a single initialization parameter
-with an external name of ``fromKelvin`` and a local name of ``kelvin``.
+with an argument label of ``fromKelvin`` and a parameter name of ``kelvin``.
 Both initializers convert their single argument into
 the corresponding Celsius value
 and store this value in a property called ``temperatureInCelsius``.
@@ -172,20 +172,20 @@ and store this value in a property called ``temperatureInCelsius``.
 
 .. _Initialization_LocalAndExternalNames:
 
-Local and External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parameter Names and Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As with function and method parameters,
-initialization parameters can have both a local name
+initialization parameters can have both a parameter name
 for use within the initializer's body
-and an external name for use when calling the initializer.
+and an argument label for use when calling the initializer.
 
 However, initializers do not have an identifying function name before their parentheses
 in the way that functions and methods do.
 Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
-Because of this, Swift provides an automatic external name
-for *every* parameter in an initializer if you don't provide an external name yourself.
+Because of this, Swift provides an automatic argument label
+for *every* parameter in an initializer if you don't provide one.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
@@ -225,14 +225,14 @@ by providing named values for each initializer parameter:
    << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
-without using external parameter names.
-External names must always be used in an initializer if they are defined,
+without using argument labels.
+Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
 .. testcode:: externalParameterNames
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
-   // this reports a compile-time error - external names are required
+   // this reports a compile-time error - argument labels are required
    !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
@@ -240,11 +240,11 @@ and omitting them is a compile-time error:
 
 .. _Initialization_InitializerParametersWithoutExternalNames:
 
-Initializer Parameters Without External Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializer Parameters Without Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an external name for an initializer parameter,
-write an underscore (``_``) instead of an explicit external name for that parameter
+If you do not want to use an argument label for an initializer parameter,
+write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
 Here's an expanded version of the ``Celsius`` example from earlier,
@@ -271,7 +271,7 @@ from a ``Double`` value that is already in the Celsius scale:
    </ bodyTemperature.temperatureInCelsius is 37.0
 
 The initializer call ``Celsius(37.0)`` is clear in its intent
-without the need for an external parameter name.
+without the need for an argument label.
 It is therefore appropriate to write this initializer as ``init(_ celsius: Double)``
 so that it can be called by providing an unnamed ``Double`` value.
 
@@ -788,7 +788,7 @@ As mentioned above,
 the memory for an object is only considered fully initialized
 once the initial state of all of its stored properties is known.
 In order for this rule to be satisfied, a designated initializer must make sure that
-all its own properties are initialized before it hands off up the chain.
+all of its own properties are initialized before it hands off up the chain.
 
 **Safety check 2**
   A designated initializer must delegate up to a superclass initializer
@@ -1479,22 +1479,22 @@ The initializer can then fail if the provided parameters
 do not match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
-with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
+with three possible states (``kelvin``, ``celsius``, and ``fahrenheit``).
 A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
 
    -> enum TemperatureUnit {
-         case Kelvin, Celsius, Fahrenheit
+         case kelvin, celsius, fahrenheit
          init?(symbol: Character) {
             switch symbol {
                case "K":
-                  self = .Kelvin
+                  self = .kelvin
                case "C":
-                  self = .Celsius
+                  self = .celsius
                case "F":
-                  self = .Fahrenheit
+                  self = .fahrenheit
                default:
                   return nil
             }
@@ -1509,7 +1509,7 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1540,11 +1540,11 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
 .. testcode:: failableInitializersForEnumerations
 
    -> enum TemperatureUnit: Character {
-         case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
+         case kelvin = "K", celsius = "C", fahrenheit = "F"
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -2129,7 +2129,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
+         func squareIsBlackAt(row: Int, column: Int) -> Bool {
             return boardColors[(row * 8) + column]
          }
       }
@@ -2148,7 +2148,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 
    -> let board = Chessboard()
    << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
-   -> print(board.squareIsBlackAtRow(0, column: 1))
+   -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(7, column: 7))
+   -> print(board.squareIsBlackAt(row: 7, column: 7))
    <- false

@@ -180,6 +180,7 @@
     "controlflow-break": "ID137", 
     "controlflow-breakinaloop": "ID138", 
     "controlflow-breakinaswitchstatement": "ID139", 
+    "controlflow-compoundcases": "ID548", 
     "controlflow-conditionalstatements": "ID127", 
     "controlflow-continue": "ID136", 
     "controlflow-controltransferstatements": "ID135", 
@@ -212,10 +213,12 @@
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
     "declarations-functiondeclaration": "ID362", 
+    "declarations-functionsthatneverreturn": "ID551", 
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
     "declarations-inoutparameters": "ID545", 
     "declarations-operatordeclaration": "ID380", 
+    "declarations-precedencegroupdeclaration": "ID550", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
     "declarations-protocolinitializerdeclaration": "ID372", 
@@ -250,6 +253,7 @@
     "errorhandling-represent": "ID509", 
     "errorhandling-rethrow": "ID511", 
     "errorhandling-throw": "ID510", 
+    "expression-keypathexpression": "ID549", 
     "expression-optionalchainingoperator": "ID405", 
     "expression-selectorexpression": "ID547", 
     "expressions-assignmentoperator": "ID386", 
@@ -382,7 +386,6 @@
     "methods-assigningtoselfwithinamutatingmethod": "ID240", 
     "methods-instancemethods": "ID235", 
     "methods-localandexternalnamesformethods": "ID236", 
-    "methods-modifyingexternalparameternamebehaviorformethods": "ID237", 
     "methods-modifyingvaluetypesfromwithininstancemethods": "ID239", 
     "methods-theselfproperty": "ID238", 
     "methods-typemethods": "ID241", 
@@ -563,7 +566,9 @@
     "string-literals", 
     "control-transfer-statements", 
     "in-out-parameters", 
-    "error-handling"
+    "error-handling", 
+    "operator-methods", 
+    "generic-where-clauses"
   ], 
-  "next_id": 548
+  "next_id": 552
 }

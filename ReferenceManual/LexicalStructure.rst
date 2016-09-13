@@ -162,15 +162,49 @@ The following keywords are reserved and can't be used as identifiers,
 unless they're escaped with backticks,
 as described above in :ref:`LexicalStructure_Identifiers`.
 Keywords other than ``inout``, ``var``, and ``let``
-can be used as external parameter names
+can be used as parameter names
 in a function declaration or function call
 without being escaped with backticks.
+When a member has the same name as a keyword,
+references to that member don't need to be escaped with backticks,
+except when there is ambiguity between referring to the member
+and using the keyword ---
+for example, ``self``, ``Type``, and ``Protocol``
+have special meaning in an explicit member expression,
+so they must be escaped with backticks in that context.
 
 .. assertion:: keywords-without-backticks
 
    -> func f(x: Int, in y: Int) {
          print(x+y)
       }
+
+.. assertion:: var-requires-backticks
+
+   -> func f(`var` x: Int) {}
+   -> func f(var x: Int) {}
+   !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
+   !! func f(var x: Int) {}
+   !!        ^~~
+   !! var x = x
+
+.. assertion:: let-requires-backticks
+
+   -> func f(`let` x: Int) {}
+   -> func f(let x: Int) {}
+   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !! func f(let x: Int) {}
+   !!        ^~~
+   !!-
+
+.. assertion:: inout-requires-backticks
+
+   -> func f(`inout` x: Int) {}
+   -> func f(inout x: Int) {}
+   !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !! func f(inout x: Int) {}
+   !!        ~~~~~    ^
+   !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
@@ -221,12 +255,14 @@ without being escaped with backticks.
   ``deinit``,
   ``enum``,
   ``extension``,
+  ``fileprivate`,
   ``func``,
   ``import``,
   ``init``,
   ``inout``,
   ``internal``,
   ``let``,
+  ``open``,
   ``operator``,
   ``private``,
   ``protocol``,
@@ -258,8 +294,8 @@ without being escaped with backticks.
 
 * Keywords used in expressions and types:
   ``as``,
+  ``Any``,
   ``catch``,
-  ``dynamicType``,
   ``false``,
   ``is``,
   ``nil``,
@@ -270,27 +306,26 @@ without being escaped with backticks.
   ``throw``,
   ``throws``,
   ``true``,
-  ``try``,
-  ``#column``,
-  ``#file``,
-  ``#function``,
-  and ``#line``.
+  and ``try``.
 
 * Keywords used in patterns:
   ``_``.
 
 * Keywords that begin with a number sign (``#``):
-
   ``#available``,
+  ``#colorLiteral``,
   ``#column``,
-  ``#else``
+  ``#else``,
   ``#elseif``,
   ``#endif``,
   ``#file``,
+  ``#fileLiteral``,
   ``#function``,
   ``#if``,
+  ``#imageLiteral``,
   ``#line``,
-  and ``#selector``.
+  ``#selector``.
+  and ``#sourceLocation``.
 
 .. langref-grammar
 
@@ -381,13 +416,20 @@ literal ``"Hello, world"`` is ``String``.
 When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
 That is, the type must conform to one of the following Swift standard library protocols:
-``IntegerLiteralConvertible`` for integer literals,
-``FloatingPointLiteralConvertible`` for floating-point literals,
-``StringLiteralConvertible`` for string literals, and
-``BooleanLiteralConvertible`` for Boolean literals.
-For example, ``Int8`` conforms to the ``IntegerLiteralConvertible`` protocol,
+``ExpressibleByIntegerLiteral`` for integer literals,
+``ExpressibleByFloatLiteral`` for floating-point literals,
+``ExpressibleByStringLiteral`` for string literals,
+``ExpressibleByBooleanLiteral`` for Boolean literals,
+``ExpressibleByUnicodeScalarLiteral`` for string literals
+that contain only a single Unicode scalar,
+and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
+that contain only a single extended grapheme cluster.
+For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
+
+.. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
+.. ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
 
 .. syntax-grammar::
 
@@ -708,7 +750,7 @@ combining Unicode characters are also allowed.
 
 You can also define custom operators
 that begin with a dot (``.``).
-These operators are can contain additional dots
+These operators can contain additional dots
 such as ``.+.``.
 If an operator doesn't begin with a dot,
 it can't contain a dot elsewhere.
@@ -717,22 +759,19 @@ the ``+`` operator followed by the ``.+`` operator.
 
 .. assertion:: dot-operator-must-start-with-dot
 
-   >> infix operator +.+ { }
-   !! <REPL Input>:1:17: error: expected '{' after operator name in 'operator' declaration
-   !! infix operator +.+ { }
+   >> infix operator +.+ ;
+   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: statement cannot begin with a closure expression
-   !! infix operator +.+ { }
+   !!                 ;
+   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !! infix operator +.+ ;
+   !!                 ^
+   !! <REPL Input>:1:20: error: expected expression
+   !! infix operator +.+ ;
    !!                    ^
-   !! <REPL Input>:1:20: note: explicitly discard the result of the closure by assigning to '_'
-   !! infix operator +.+ { }
-   !!                    ^
-   !!                    _ = 
-   !! <REPL Input>:1:20: error: braced block of statements is an unused closure
-   !! infix operator +.+ { }
-   !!                    ^
-   >> infix operator .+ { }
-   >> infix operator .+. { }
+   >> infix operator .+
+   >> infix operator .+.
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
@@ -743,8 +782,8 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 
 
    >> struct Num { var value: Int }
-      postfix operator + {}
-      postfix operator +* {}
+      postfix operator +
+      postfix operator +*
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
@@ -756,7 +795,7 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 
 .. assertion:: postfix-operator-cant-start-with-question-mark
 
-   >> postfix operator ?+ {}
+   >> postfix operator ?+
       postfix func ?+ (x: Int) -> Int {
           if x > 10 {
               return x

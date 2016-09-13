@@ -32,21 +32,21 @@ which is nested within the ``Rank`` enumeration:
    ---
          // nested Suit enumeration
          enum Suit: Character {
-            case Spades = "♠", Hearts = "♡", Diamonds = "♢", Clubs = "♣"
+            case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
          }
    ---
          // nested Rank enumeration
          enum Rank: Int {
-            case Two = 2, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-            case Jack, Queen, King, Ace
+            case two = 2, three, four, five, six, seven, eight, nine, ten
+            case jack, queen, king, ace
             struct Values {
                let first: Int, second: Int?
             }
             var values: Values {
                switch self {
-                  case .Ace:
+                  case .ace:
                      return Values(first: 1, second: 11)
-                  case .Jack, .Queen, .King:
+                  case .jack, .queen, .king:
                      return Values(first: 10, second: nil)
                   default:
                      return Values(first: self.rawValue, second: nil)
@@ -86,7 +86,7 @@ The ``Values`` structure defines two properties to represent this:
 which returns an instance of the ``Values`` structure.
 This computed property considers the rank of the card
 and initializes a new ``Values`` instance with appropriate values based on its rank.
-It uses special values for ``Jack``, ``Queen``, ``King``, and ``Ace``.
+It uses special values for ``jack``, ``queen``, ``king``, and ``ace``.
 For the numeric cards, it uses the rank's raw ``Int`` value.
 
 The ``BlackjackCard`` structure itself has two properties --- ``rank`` and ``suit``.
@@ -104,15 +104,15 @@ You can use this initializer to initialize a new constant called ``theAceOfSpade
 
 .. testcode:: nestedTypes
 
-   -> let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
-   << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard(rank: REPL.BlackjackCard.Rank.Ace, suit: REPL.BlackjackCard.Suit.Spades)
+   -> let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
+   << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard(rank: REPL.BlackjackCard.Rank.ace, suit: REPL.BlackjackCard.Suit.spades)
    -> print("theAceOfSpades: \(theAceOfSpades.description)")
    <- theAceOfSpades: suit is ♠, value is 1 or 11
 
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can be inferred from context,
 and so the initialization of this instance is able to refer to the enumeration cases
-by their case names (``.Ace`` and ``.Spades``) alone.
+by their case names (``.ace`` and ``.spades``) alone.
 In the example above, the ``description`` property correctly reports that
 the Ace of Spades has a value of ``1`` or ``11``.
 
@@ -126,7 +126,7 @@ prefix its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
-   -> let heartsSymbol = BlackjackCard.Suit.Hearts.rawValue
+   -> let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
    << // heartsSymbol : Character = "♡"
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"

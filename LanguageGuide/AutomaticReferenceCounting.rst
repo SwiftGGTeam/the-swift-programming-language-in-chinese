@@ -13,6 +13,9 @@ about the relationships between parts of your code
 in order to manage memory for you.
 This chapter describes those situations
 and shows how you enable ARC to manage all of your app's memory.
+Using ARC in Swift is very similar to the approach described in
+`Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
+for using ARC with Objective-C.
 
 .. note::
 
@@ -50,7 +53,7 @@ as long as at least one active reference to that instance still exists.
 To make this possible,
 whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
-The reference is called a “strong“ reference because
+The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
 and does not allow it to be deallocated for as long as that strong reference remains.
 
@@ -321,23 +324,43 @@ it is appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
 
-.. note::
-
-   Weak references must be declared as variables,
-   to indicate that their value can change at runtime.
-   A weak reference cannot be declared as a constant.
-
 Because a weak reference does not keep a strong hold on the instance it refers to,
 it is possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
-Because weak references need to allow ``nil`` as their value,
-they always have an optional type.
+And, because weak references need to allow
+their value to be changed to ``nil`` at runtime,
+they are always declared as variables, rather than constants, of an optional type.
+
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
+
+.. note::
+
+    Property observers aren't called
+    when ARC sets a weak reference to ``nil``.
+
+.. assertion:: weak-reference-doesnt-trigger-didset
+
+    -> class C {
+           weak var w: C? { didSet { print("did set") } }
+       }
+    -> var c1 = C()
+    << // c1 : C = REPL.C
+    -> do {
+    -> var c2 = C()  // Inside a do{} block, so no REPL result.
+    -> print(c1.w)
+    << nil
+    -> c1.w = c2
+    << did set
+    -> print(c1.w)
+    << Optional(REPL.C)
+    -> } // ARC deallocates c2; didSet doesn't fire.
+    -> print(c1.w)
+    << nil
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -985,9 +1008,6 @@ as can be seen from the printing of its deinitializer message in the example bel
 
    -> paragraph = nil
    <- p is being deinitialized
-
-.. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
-   Unowned capture of self in a closure capture list does not avoid a reference cycle
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
