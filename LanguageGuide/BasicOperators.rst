@@ -451,10 +451,8 @@ The preceding example is shorthand for the code below:
    </ rowHeight is equal to 90
 
 The first example's use of the ternary conditional operator means that
-``rowHeight`` can be set to the correct value on a single line of code.
-This is more concise than the second example,
-and removes the need for ``rowHeight`` to be a variable,
-because its value does not need to be modified within an ``if`` statement.
+``rowHeight`` can be set to the correct value on a single line of code ---
+this is more concise than the second example.
 
 The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
