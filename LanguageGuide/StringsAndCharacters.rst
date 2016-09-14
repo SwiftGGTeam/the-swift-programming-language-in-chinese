@@ -556,8 +556,11 @@ will trigger a runtime error.
 
 .. code-block:: swift
 
-   greeting[greeting.endIndex] // error
-   greeting.index(after: endIndex) // error
+   greeting[greeting.endIndex] // Error
+   greeting.index(after: greeting.endIndex) // Error
+
+.. The code above triggers an assertion failure in the stdlib, causing a stack
+   trace, which makes it a poor candidate for being tested.
 
 .. assertion:: emptyStringIndices
 
