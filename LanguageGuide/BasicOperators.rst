@@ -361,8 +361,6 @@ which means tuples that contain a Boolean value can't be compared.
    !! true < false
    !!      ^
 
-
-
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -373,12 +371,24 @@ For example:
 
 .. testcode:: tuple-comparison-operators
 
-   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
    << // r0 : Bool = true
    << // r1 : Bool = true
    << // r2 : Bool = true
+
+In the example above,
+you can see the left-to-right comparison behavior on the first line.
+Because ``1`` is less than ``2``,
+the first tuple is considered less than the second tuple,
+regardless of any other values in the tuples.
+It doesn't matter that ``"zebra"`` isn't less than ``"apple"``
+because the comparison is already determined by the tuples' first elements.
+However,
+when the tuples' first elements are the same,
+their second elements *are* compared ---
+this is what happens on the second and third line.
 
 .. note::
 
