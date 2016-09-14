@@ -770,3 +770,11 @@ if #available(iOS 10, macOS 10.12, *) {
 
 在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8的主板本号，我们可以指定像iOS 8.3 以及 macOS 10.10.3的子版本号。
 
+```swift
+if #available(platform name version, ..., *) {
+    statements to execute if the APIs are available
+} else {
+    fallback statements to execute if the APIs are unavailable
+}
+```
+
