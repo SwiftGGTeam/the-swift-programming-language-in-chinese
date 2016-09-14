@@ -343,7 +343,7 @@ but discard the returned type.
 The ``as`` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the ``as`` pattern---or a subclass of that type.
 If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the left-hand side
+the type of the matched value is cast to the *pattern* specified in the right-hand side
 of the ``as`` pattern.
 
 For an example that uses a ``switch`` statement
