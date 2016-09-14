@@ -39,12 +39,12 @@ definition within a pair of braces:
     
 .. note::
 
-   Whenever you define a new structure, you effectively define a
+   Whenever you define a new structure, you define a
    brand new Swift type.
    Give types ``UpperCamelCase`` names (such as ``SomeStructure`` here)
    to match the capitalization
    of standard Swift types (such as ``String``, ``Int``, and ``Bool``).
-   Conversely, always give properties and methods ``lowerCamelCase`` names
+   Conversely, give properties and methods ``lowerCamelCase`` names
    (such as ``someProperty`` and ``someMethod``)
    to differentiate them from type names.
 
@@ -71,16 +71,15 @@ so there is no need to store a second value for ``fahrenheit``.
 For more on stored and computed properties, see :doc:`Properties`.
 
 The ``celsius`` property is inferred to be of type ``Double``
-by setting it to an initial floating-point value of ``0.0``.
+because of its initial floating-point value of ``0.0``.
 As discussed in :ref:`TheBasics_TypeSafetyAndTypeInference`,
 Swift infers that floating-point literals with no specified type
 are of type ``Double``.
 Because ``fahrenheit`` is a computed property,
 it is explicitly defined as a ``Double``.
-For more information, see :ref:`Properties_ComputedProperties`
 
 The ``Temperature`` structure definition describes only
-what a ``Temperature`` instance will look like.
+what a ``Temperature`` instance looks like.
 It does not describe a specific ``Temperature`` instance.
 To do that, you create an instance of the structure.
 
@@ -102,7 +101,7 @@ Memberwise Initializer
 ~~~~~~~~~~~~~~~~~~~~~~
 
 All structures
-have an automatically generated :newTerm:`memberwise initializer`,
+have an automatically generated memberwise initializer,
 which allows you
 to set values
 for stored properties
@@ -119,7 +118,7 @@ Initializing ``waterBoilingPoint`` with the memberwise initializer
 creates an instance of ``Temperature`` with the ``celsius`` property
 set to the boiling point of water --- ``100.0`` degrees Celsius.
 
-Structure initialization is covered in more detail in :doc:`Initialization`.
+For information on structure initialization, see :doc:`Initialization`.
 
 .. _Structures_AccessingPropertiesOfStructures:
 
@@ -128,7 +127,7 @@ Accessing Properties of Structures
 
 You can access a property
 of a structure instance
-using :newTerm:`dot syntax`
+using dot syntax
 by writing the name of the instance
 followed by a period (``.``)
 and the name of the property:
@@ -159,8 +158,7 @@ to a variable property:
 The example above declares a variable called ``bodyTemperature``
 and sets it to a ``Temperature`` instance
 with all properties initialized to their default values.
-The ``bodyTemperature`` variable's ``celsius`` property is
-set using dot syntax,
+The ``bodyTemperature`` variable's ``celsius`` property is set,
 and then its ``celsius`` and ``fahrenheit`` properties are accessed
 to print their values.
 
