@@ -616,7 +616,7 @@ do {
 > 行控制语句语法  
 
 > *行控制语句* → **#sourceLocation(file:[*文件名*](#file-name),line:[*行号*](#line-number))**  
-> *行控制语句* → **#sourceLocation()**
+> *行控制语句* → **#sourceLocation()**  
 <a name="line-number"></a>
 > *行号* → 大于 0 的十进制整数  
 <a name="file-name"></a>
