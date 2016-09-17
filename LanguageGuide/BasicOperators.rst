@@ -305,24 +305,9 @@ Swift also provides the identity operators
 identical to (``a === b``) and
 not identical to (``a !== b``).
 Use these operators to test
-whether or not two object references
-both refer to the same object instance.
-
-For more information, see :ref:`Classes_ComparingReferenceTypesForIdentity`
-
-.. note:: 
-
-   “Identical to” (represented by three equals signs, or ``===``)
-   does not mean the same thing
-   as “equal to” (represented by two equals signs, or ``==``).
-   “Identical to” means that
-   two constants or variables
-   of class type refer
-   to exactly the same class instance.
-   “Equal to” means that
-   two instances are considered “equal” or “equivalent” in value,
-   for some appropriate meaning of “equal”,
-   as defined by the type's designer.
+whether or not two class instances refer
+to the same instance.
+Identity operators are discussed in :ref:`Classes_ComparingReferenceTypesForIdentity`
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 

@@ -9,16 +9,10 @@ properties, methods, subscripts, initializers, and so on.
 
 Classes have additional capabilities that structures do not:
 
-* Inheritance enables one class to inherit the characteristics of another.
-* Type casting enables you to check and interpret the type of a class instance at runtime.
-* Deinitializers enable an instance of a class to free up any resources it has assigned.
-* Reference counting allows more than one reference to a class instance.
-
-For more information, see
-:doc:`Inheritance`,
-:doc:`TypeCasting`,
-:doc:`Deinitialization`,
-and :doc:`AutomaticReferenceCounting`.
+* Inheritance enables one class to inherit the characteristics of another, as described in :doc:`Inheritance`.
+* Type casting enables you to check and interpret the type of a class instance at runtime, as described in :doc:`TypeCasting`.
+* Deinitializers enable an instance of a class to free up any resources it has assigned, as described in :doc:`Deinitialization`.
+* Reference counting allows more than one reference to a class instance, as described in :doc:`AutomaticReferenceCounting`.
 
 For an in-depth discussion of
 when to use classes and
@@ -58,14 +52,13 @@ to describe a graphical window.
 This class has two variable stored properties
 called ``width`` and ``height``.
 Because there is no natural default
-to a window's width and height,
+for a window's width and height,
 these two properties are explicitly defined
 to be of type ``Int`` and are set
 to the integer values passed in to the initializer.
 
-To initialize a class,
-as with a structure,
-the simplest form of initializer syntax
+As with structures,
+the simplest form of initializer syntax for classes
 uses the type name of the class
 followed by empty parentheses:
 
@@ -85,8 +78,7 @@ Instead, you define custom initializers
 that provide the initialization logic you need.
 Because the two stored properties belonging to ``Window``
 are not set to initial values by default,
-``Window`` needs a custom initializer
-to be defined.
+``Window`` needs a custom initializer.
 
 To initialize a class like ``Window``
 with a custom initializer,
@@ -109,7 +101,7 @@ Class initialization is covered in more detail in :doc:`Initialization`.
 Accessing Properties of Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As with structures, you can access and set the properties
+As with structures, you access and set the properties
 of a class instance
 using dot syntax:
 
@@ -138,7 +130,6 @@ to a function.
 
 Imagine an application that can have multiple windows open and
 needs to keep track of the currently selected window.
-
 Suppose there are two windows to keep track of:
 
 .. testcode:: classes
@@ -162,7 +153,7 @@ Next, a new variable called ``currentWindow`` is assigned ``windowOne``:
 Because classes are reference types,
 ``windowOne`` and ``currentWindow``
 both refer to the *same* ``Window`` instance.
-``windowOne`` and ``currentWindow`` are effectively
+``windowOne`` and ``currentWindow`` are
 two different names for the same instance.
 As a result, changing the width of ``currentWindow``
 changes the width of ``windowOne``.
@@ -174,20 +165,40 @@ confirms that it changed to ``800``:
 
     -> print("The width of windowOne is now \(windowOne.width)")
     <- The width of windowOne is now 800
+   
+.. _Classes_ConstantsAndReferenceTypes:
 
-.. note:: 
-   ``windowOne`` is declared as a *constant*,
-   rather than a variable.
-   However, you can still change
-   the properties of ``windowOne``
-   such as ``windowOne.width``.
-   This is because the value
-   of the ``windowOne`` constant itself
-   does not "store" the ``Window`` instance ---
-   it *refers* to a ``Window`` instance.
-   It is the ``width`` property
-   of the underlying ``Window`` that is changed ---
-   not the value of the constant reference to that ``Window``.
+Constants and Reference Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the example above,
+``windowOne`` is declared as a *constant*,
+rather than a variable.
+However, you can still change
+the properties of ``windowOne``
+such as ``windowOne.width``.
+This is because the value
+of the ``windowOne`` constant itself
+does not "store" the ``Window`` instance ---
+it *refers* to a ``Window`` instance.
+It is the ``width`` property
+of the underlying ``Window`` that is changed ---
+not the value of the constant reference to that ``Window``.
+
+Consider the following example: 
+
+.. testcode:: classes
+
+    -> class ExampleClass {
+           let constant = 5
+           let variable = 8
+       }
+    
+    -> let classInstance = ExampleClass()
+    << // classInstance : ExampleClass = REPL.ExampleClass
+    -> classInstance.constant = 10
+    -> classInstance.variable = 16
+   
 
 .. _Classes_ComparingReferenceTypesForIdentity:
 
@@ -216,13 +227,27 @@ to show an identity operator in use:
        }
     <- windowOne and currentWindow refer to the same Window instance
 
+.. note:: 
+
+   “Identical to” (represented by three equals signs, or ``===``)
+   does not mean the same thing
+   as “equal to” (represented by two equals signs, or ``==``).
+   “Identical to” means that
+   two constants or variables
+   of class type refer
+   to exactly the same class instance.
+   “Equal to” means that
+   two instances are considered “equal” or “equivalent” in value,
+   for some appropriate meaning of “equal”,
+   as defined by the type's designer.
+
 .. _Classes_WorkingWithPointers:
 
 Working With Pointers
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have experience with C, C++, or Objective-C,
-you may know that these languages use :newTerm:`pointers`
+you may know that these languages use pointers
 to refer to addresses in memory.
 A Swift constant or variable
 that refers to an instance of some reference type

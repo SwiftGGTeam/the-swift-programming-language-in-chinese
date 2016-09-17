@@ -12,16 +12,12 @@ for optimal safety and performance.
 
 In Swift, structures can:
 
-* Define properties to store values
-* Define methods to provide functionality
-* Define subscripts to provide access to their values using subscript syntax
-* Define initializers to set up their initial state
-* Be extended to provide added functionality
-* Conform to protocols to implement a shared abstraction or cooperate with a default implementation
-
-For more information, see
-:doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
-:doc:`Extensions`, and :doc:`Protocols`.
+* Define properties to store values, as described in :doc:`Properties`.
+* Define methods to provide functionality, as described in :doc:`Methods`.
+* Define subscripts to provide access to their values using subscript syntax, as described in :doc:`Subscripts`.
+* Define initializers to set up their initial state, as described in :doc:`Initialization`.
+* Be extended to provide added functionality, as described in :doc:`Extensions`.
+* Conform to protocols to implement a shared abstraction or cooperate with a default implementation, as described in :doc:`Protocols``.
 
 .. _Structures_StructureSyntax:
 
@@ -183,6 +179,20 @@ This means that any structure instances you create ---
 and any value types you give them as properties ---
 are always copied when they are passed around in your code.
 
+.. note::
+
+   Swift copies a structure instance in memory
+   only if the instance is changed.
+   This behavior is called :newTerm:`copy-on-write`.
+   While code functions as though structure instances are copied
+   when you assign them
+   to a new variable or constant,
+   Swift copies a structure instance in memory
+   only if you change it from the original.
+   This optimization saves Swift from doing unnecessary work
+   as Swift needs to copy a structure instance
+   only if you mutate it.
+
 Consider this example:
 
 .. testcode:: structures
@@ -200,14 +210,13 @@ with a typical ambient room temperature of ``21.0`` degrees Celsius.
 Suppose this room is a kitchen
 and contains an oven.
 To keep track of the oven's temperature,
-a variable called ``ovenTemperature``
-is declared and 
-set to the current value of ``roomTemperature``.
-``ovenTemperature`` is initially set to ``roomTemperature``
-to model the oven temperature when
+declare the ``ovenTemperature``variable and
+set it to the current value of ``roomTemperature``.
+Initially setting ``ovenTemperature`` to ``roomTemperature``
+models the oven temperature when
 the oven is turned off
 and at the same temperature as the room.
-Because ``Temperature`` is a structure, a :newTerm:`copy`
+Because ``Temperature`` is a structure, a *copy*
 of the existing ``roomTemperature`` instance is made,
 and this new copy is assigned to ``ovenTemperature``.
 Even though ``roomTemperature`` and ``ovenTemperature``
@@ -217,25 +226,13 @@ behind the scenes.
 
 You can change ``ovenTemperature`` to
 get the oven ready for cooking
-and ``roomTemperature`` will remain unchanged:
+and ``roomTemperature`` remains unchanged:
 
 .. testcode:: structures
 
     -> ovenTemperature.celsius = 180.0
-
-Checking the ``celsius`` property of ``ovenTemperature``
-confirms that it has indeed changed to ``180.0``:
-
-.. testcode:: structures
-
     -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
     <- ovenTemperature is now 180.0 degrees Celsius
-
-Checking the ``celsius`` property of ``roomTemperature``
-shows that its value remains ``21.0``:
-
-.. testcode:: structures
-    
     -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is still 21.0 degrees Celsius
 

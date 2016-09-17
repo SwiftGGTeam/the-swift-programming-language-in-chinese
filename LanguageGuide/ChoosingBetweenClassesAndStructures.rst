@@ -67,21 +67,6 @@ Swift moves that instance
 to a different region in memory
 with a new address.
 
-.. note::
-
-   Swift copies a structure instance in memory
-   only if the instance is changed.
-   This behavior is called :newTerm:`copy-on-write`.
-   While code functions as though structure instances are copied
-   when you assign them
-   to a new variable or constant,
-   Swift copies a structure instance in memory
-   only if you change it from the original.
-   This optimization saves Swift from doing unnecessary work
-   as Swift needs to copy a structure instance
-   only if you mutate it.
-   
-
 There are times
 when you want an instance
 to remain in the same region in memory
