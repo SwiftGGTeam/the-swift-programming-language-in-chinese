@@ -17,6 +17,9 @@
 > 2.2
 > 翻译：[星夜暮晨](https://github.com/SemperIdem)
 
+> 3.0
+> 翻译：[chenmingjia](https://github.com/chenmingjia)
+
 本页包含内容：
 
 - [顶级代码](#top-level_code)
@@ -326,6 +329,31 @@ typealias 类型别名 = 现存类型
 ```
 
 当声明一个类型的别名后，可以在程序的任何地方使用“别名”来代替现有类型。现有类型可以是具有命名的类型或者混合类型。类型别名不产生新的类型，它只是使用别名来引用现有类型。
+类型别名声明可以通过泛型参数来给一个现有泛型类型提供名称。类型别名为现有类型的一部分或者全部泛型参数提供具体类型。例如:
+```swift
+typealias StringDictionary<Value> = Dictionary<String, Value>
+ 
+// 下列两个字典拥有同样的类型
+var dictionary1: StringDictionary<Int> = [:]
+var dictionary2: Dictionary<String, Int> = [:]
+```
+当一个类型别名带着泛型参数一起被声明时,这些参数的约束必须与现有参数的约束完全匹配。例如:
+```swift
+typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+```
+因为类型别名可以和现有类型相互交换使用,类型别名不可以引入额外的类型约束。
+在协议声明中,类型别名可以为那些经常使用的类型提供一个更短更方便的名称,例如:
+```swift
+protocol Sequence {
+    associatedtype Iterator: IteratorProtocol
+    typealias Element = Iterator.Element
+}
+ 
+func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+    // ...
+}
+```
+假如没有类型别名,sum函数将必须引用关联类型通过T.Iterator.Element的形式来替代 T.Element。
 
 另请参阅 [协议关联类型声明](#protocol_associated_type_declaration)。
 
@@ -359,7 +387,7 @@ func 函数名称(参数列表) {
 }
 ```
 
-每个参数的类型都要标明，因为它们不能被推断出来。虽然函数的参数默认是常量，也可以在参数名前添加 `let` 来强调这一行为。如果您在某个参数名前面加上了 `inout`，那么这个参数就可以在这个函数作用域当中被修改。更多关于 `inout` 参数的讨论，请参阅 [输入输出参数](#in-out_parameters)。
+每个参数的类型都要标明，因为它们不能被推断出来。如果您在某个参数类型前面加上了 `inout`，那么这个参数就可以在这个函数作用域当中被修改。更多关于 `inout` 参数的讨论，请参阅 [输入输出参数](#in-out_parameters)。
 
 函数可以使用元组类型作为返回类型来返回多个值。
 
@@ -498,7 +526,7 @@ func 函数名称(参数列表) throws -> 返回类型 {
 函数或方法可以使用 `rethrows` 关键字来声明，从而表明仅当该函数或方法的一个函数类型的参数抛出错误时，该函数或方法才抛出错误。这类函数和方法被称为重抛函数和重抛方法。重新抛出错误的函数或方法必须至少有一个参数的类型为抛出函数。
 
 ```swift
-func functionWithCallback(callback: () throws -> Int) rethrows {
+func someFunction(callback: () throws -> Void) rethrows {
     try callback()
 }
 ```
