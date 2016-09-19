@@ -306,7 +306,7 @@ to retrieve and set other properties and values indirectly.
 
 This example defines three structures for working with geometric shapes:
 
-* ``Point`` encapsulates an ``(x, y)`` coordinate.
+* ``Point`` encapsulates the x- and y-coordinate of a point.
 * ``Size`` encapsulates a ``width`` and a ``height``.
 * ``Rect`` defines a rectangle by an origin point and a size.
 
