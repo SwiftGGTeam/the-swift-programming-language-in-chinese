@@ -381,9 +381,9 @@ For example:
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
 Because ``1`` is less than ``2``,
-the first tuple is considered less than the second tuple,
+``(1, "zebra")`` is considered less than ``(2, "apple")``,
 regardless of any other values in the tuples.
-It doesn't matter that ``"zebra"`` isn't less than ``"apple"``
+It doesn't matter that ``"zebra"`` isn't less than ``"apple"``,
 because the comparison is already determined by the tuples' first elements.
 However,
 when the tuples' first elements are the same,
@@ -461,8 +461,8 @@ The preceding example is shorthand for the code below:
    </ rowHeight is equal to 90
 
 The first example's use of the ternary conditional operator means that
-``rowHeight`` can be set to the correct value on a single line of code ---
-this is more concise than the second example.
+``rowHeight`` can be set to the correct value on a single line of code,
+which is more concise than the code used in the second example.
 
 The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
