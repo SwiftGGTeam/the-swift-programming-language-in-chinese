@@ -361,8 +361,6 @@ which means tuples that contain a Boolean value can't be compared.
    !! true < false
    !!      ^
 
-
-
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -373,12 +371,24 @@ For example:
 
 .. testcode:: tuple-comparison-operators
 
-   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
    << // r0 : Bool = true
    << // r1 : Bool = true
    << // r2 : Bool = true
+
+In the example above,
+you can see the left-to-right comparison behavior on the first line.
+Because ``1`` is less than ``2``,
+``(1, "zebra")`` is considered less than ``(2, "apple")``,
+regardless of any other values in the tuples.
+It doesn't matter that ``"zebra"`` isn't less than ``"apple"``,
+because the comparison is already determined by the tuples' first elements.
+However,
+when the tuples' first elements are the same,
+their second elements *are* compared ---
+this is what happens on the second and third line.
 
 .. note::
 
@@ -451,10 +461,8 @@ The preceding example is shorthand for the code below:
    </ rowHeight is equal to 90
 
 The first example's use of the ternary conditional operator means that
-``rowHeight`` can be set to the correct value on a single line of code.
-This is more concise than the second example,
-and removes the need for ``rowHeight`` to be a variable,
-because its value does not need to be modified within an ``if`` statement.
+``rowHeight`` can be set to the correct value on a single line of code,
+which is more concise than the code used in the second example.
 
 The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.

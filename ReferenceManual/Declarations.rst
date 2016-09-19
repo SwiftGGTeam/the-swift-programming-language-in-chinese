@@ -995,10 +995,10 @@ the error thrown by ``alwaysThrows()``.
           }
       }
    -> func f2(callback: () throws -> Void) rethrows {
-          throw SomeError.D  // ERROR
+          throw SomeError.D  // Error
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.D  // ERROR
+   !! throw SomeError.D  // Error
    !! ^
 
 A throwing method can't override a rethrowing method,
