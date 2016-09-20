@@ -243,7 +243,7 @@ guard 条件 else {
  *  `continue`
  *  `throw`    
  
-关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于`Never`返回类型的函数，请参阅 [永不返回的函数](05_Declarations#functions_that_never_return)。
+关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于`Never`返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
 
 > guard 语句语法  
 <a name="guard-statement"></a>
