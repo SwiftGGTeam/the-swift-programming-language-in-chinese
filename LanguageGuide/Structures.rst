@@ -210,7 +210,7 @@ with a typical ambient room temperature of ``21.0`` degrees Celsius.
 Suppose this room is a kitchen
 and contains an oven.
 To keep track of the oven's temperature,
-declare the ``ovenTemperature``variable and
+declare the ``ovenTemperature`` variable and
 set it to the current value of ``roomTemperature``.
 Initially setting ``ovenTemperature`` to ``roomTemperature``
 models the oven temperature when

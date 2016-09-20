@@ -6,8 +6,12 @@ the same functionality as structures
 and more.
 They can have
 properties, methods, subscripts, initializers, and so on.
+Just like with structures,
+you use dot syntax to access and set
+properties of class instances.
 
-Classes have additional capabilities that structures do not:
+While classes are similar to structures in these ways,
+classes have additional capabilities that structures do not:
 
 * Inheritance enables one class to inherit the characteristics of another, as described in :doc:`Inheritance`.
 * Type casting enables you to check and interpret the type of a class instance at runtime, as described in :doc:`TypeCasting`.
@@ -68,9 +72,8 @@ followed by empty parentheses:
     << // someInstance : SomeClass = REPL.SomeClass
 
 However, you can use this initializer syntax
-only if all stored properties are set to initial values
-in the class definition and
-no custom initializers are defined.
+only if you set all of the stored properties in your class
+to initial values in the class definition.
 
 Unlike structures, classes do not have
 a default memberwise initializer.
@@ -94,32 +97,20 @@ for initialization in parentheses:
 This creates a new instance of the ``Window`` class
 and initializes its ``width`` to ``500`` and ``height`` to 300.
 
-Class initialization is covered in more detail in :doc:`Initialization`.
-
-.. _Classes_AccessingPropertiesOfClasses:
-
-Accessing Properties of Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-As with structures, you access and set the properties
-of a class instance
-using dot syntax:
-
-.. testcode:: classes
-
-    -> print("The width of the window is \(someWindow.width)")
-    <- The width of the window is 500
-    -> print("The height of the window is \(someWindow.height)")
-    <- The height of the window is 300
-    -> someWindow.width = 550
-    -> print("The width of the window is now \(someWindow.width)")
-    <- The width of the window is now 550
-
+For more information on class initialization, see :doc:`Initialization`.
 
 .. _Classes_ClassesAreReferenceTypes:
 
 Classes Are Reference Types
 ---------------------------
+
+Classes have different behavior from structures
+because they are reference types ---
+not value types.
+For information on
+when to use classes and
+when to use structures,
+see :doc:`ChoosingBetweenClassesAndStructures`.
 
 A :newTerm:`reference type` is a type
 whose instance is referenced rather than copied
@@ -142,7 +133,8 @@ Suppose there are two windows to keep track of:
 This example declares two constants called ``windowOne`` and
 ``windowTwo`` and sets their ``width`` and ``height`` properties.
 
-Next, a new variable called ``currentWindow`` is assigned ``windowOne``:
+Next, declare a new variable called ``currentWindow``
+and set it equal to ``windowOne``:
 
 .. testcode:: classes
 
@@ -153,6 +145,7 @@ Next, a new variable called ``currentWindow`` is assigned ``windowOne``:
 Because classes are reference types,
 ``windowOne`` and ``currentWindow``
 both refer to the *same* ``Window`` instance.
+Another way of thinking about it is that
 ``windowOne`` and ``currentWindow`` are
 two different names for the same instance.
 As a result, changing the width of ``currentWindow``
@@ -166,48 +159,14 @@ confirms that it changed to ``800``:
     -> print("The width of windowOne is now \(windowOne.width)")
     <- The width of windowOne is now 800
    
-.. _Classes_ConstantsAndReferenceTypes:
-
-Constants and Reference Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In the example above,
-``windowOne`` is declared as a *constant*,
-rather than a variable.
-However, you can still change
-the properties of ``windowOne``
-such as ``windowOne.width``.
-This is because the value
-of the ``windowOne`` constant itself
-does not "store" the ``Window`` instance ---
-it *refers* to a ``Window`` instance.
-It is the ``width`` property
-of the underlying ``Window`` that is changed ---
-not the value of the constant reference to that ``Window``.
-
-Consider the following example: 
-
-.. testcode:: classes
-
-    -> class ExampleClass {
-           let constant = 5
-           let variable = 8
-       }
-    
-    -> let classInstance = ExampleClass()
-    << // classInstance : ExampleClass = REPL.ExampleClass
-    -> classInstance.constant = 10
-    -> classInstance.variable = 16
-   
-
 .. _Classes_ComparingReferenceTypesForIdentity:
 
-Comparing Reference Types For Identity
+Comparing Reference Types for Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
 it is possible for multiple constants and variables
-to refer to the same single instance of a class
+to refer to the same instance of a class
 behind the scenes.
 
 As mentioned in :ref:`BasicOperators_ComparisonOperators`,
@@ -241,6 +200,79 @@ to show an identity operator in use:
    for some appropriate meaning of “equal”,
    as defined by the type's designer.
 
+.. _Classes_ConstantsAndReferenceTypes:
+
+Constants and Reference Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One of the fundamental characteristics
+of reference semantics is that
+it gives you more flexibility.
+In the example above,
+you may have noticed that
+``windowOne`` is declared as a *constant*,
+rather than a variable.
+However, you can still change
+the variable properties of ``windowOne``
+such as ``windowOne.width``.
+This is because the value
+of the ``windowOne`` constant itself
+does not store the ``Window`` instance ---
+it *refers* to a ``Window`` instance.
+It is the ``width`` property
+of the underlying ``Window`` that is changed ---
+not the value of the constant reference to that ``Window``.
+
+Consider the following example: 
+
+.. testcode:: classes
+
+    -> class ExampleClass {
+           let constant = 5
+           var variable = 8
+       }
+    
+    -> let classInstance = ExampleClass()
+    << // classInstance : ExampleClass = REPL.ExampleClass
+    -> classInstance.constant = 10 // Invalid, cannot mutate a constant
+    !! <REPL Input>:1:24: error: cannot assign to property: 'constant' is a 'let' constant
+    !! classInstance.constant = 10 // Invalid, cannot mutate a constant
+    !! ~~~~~~~~~~~~~~~~~~~~~~ ^
+    !! <REPL Input>:2:7: note: change 'let' to 'var' to make it mutable
+    !! let constant = 5
+    !! ^~~
+    !! var
+    -> classInstance.variable = 16
+    -> classInstance = Window() // Invalid, classInstance is a constant 
+    !! <REPL Input>:1:15: error: cannot assign to value: 'classInstance' is a 'let' constant
+    !! classInstance = Window() // Invalid, classInstance is a constant
+    !! ~~~~~~~~~~~~~ ^
+    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+    !! let classInstance = ExampleClass()
+    !! ^~~
+    !! var
+
+Because ``classInstance`` is a class instance,
+it refers to an ``ExampleClass`` instance
+rather than storing it.
+As a result,
+it is valid to mutate the ``variable`` property
+and invalid to mutate the ``constant`` property
+of ``classInstance``.
+Additionally,
+you cannot reassign ``classInstance``
+to a different class instance
+because it is a constant reference.
+This feature of being able to
+change the underlying variable properties
+of the same instance
+is something unique you get
+when working with classes.
+By contrast,
+changing the variable properties of a structure instance
+gives you a whole new structure instance
+instead of the same instance modified in place.
+
 .. _Classes_WorkingWithPointers:
 
 Working With Pointers
@@ -267,7 +299,7 @@ like any other Swift constant or variable.
     to reference types for interoperability
     with low-level C code.
     For more information,
-    see [name of appropriate Swift type or types]
-    in the Swift Standard Library Reference.
+    see `Interacting with Objective-C APIs  <//apple_ref/doc/uid/TP40014216-CH6>`_
+    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
-.. url for unsafe pointer doc: https://developer.apple.com/library/watchos/documentation/Swift/Reference/Swift_UnsafePointer_Structure/index.html#//apple_ref/swift/struct/s:SP
+.. url for unsafe pointer doc: https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID35

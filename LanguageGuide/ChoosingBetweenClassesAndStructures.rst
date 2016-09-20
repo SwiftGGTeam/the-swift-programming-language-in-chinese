@@ -2,7 +2,8 @@ Choosing Between Classes and Structures
 =======================================
 
 Classes and structures in Swift have many similarities.
-Both have properties, methods, subscripts, initializers, and so on.
+Both have properties, methods, subscripts, initializers, use dot syntax,
+and so on.
 As a result,
 it can be hard to know
 when to use classes and
@@ -13,10 +14,8 @@ of your program.
 The fundamental difference
 between structures and classes
 is that structures are value types
-whereas classes are reference types.
-
-For more information,
-see :ref:`Structures_StructuresAreValueTypes`
+whereas classes are reference types,
+as introduced in :ref:`Structures_StructuresAreValueTypes`
 and :ref:`Classes_ClassesAreReferenceTypes`.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
@@ -34,20 +33,45 @@ you don't need classes
 as often as you might expect,
 but they still have their place.
 
-Use a class when you want
-to refer to the same instance of a type
-in multiple places,
-when you need
-to subclass an existing class,
-or when you are expected
-to pass a class instance.
+Use a class
+when you're working with a framework whose API uses classes and
+when you want to refer to the same instance of a type in multiple places.
+
+.. _ChoosingBetweenClassesAndStructures_WorkingWithFrameworksThatUseClasses:
+
+Working With Frameworks That Use Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you are working with resources that you
+don't control such as frameworks,
+it is common to be given a base class
+that you are expected to subclass.
+For example,
+if you are working with the UIKit framework
+and want to create a custom view,
+you are expected
+to subclass ``UIView``.
+
+It is also common when working with frameworks
+to be expected to work with and pass around
+class instances.
+Many framework APIs have method calls that
+expect certain things to be classes.
+For example,
+a framework might expect you
+to pass around a delegate
+that must be a class.
+
+In these scenarios
+when you are using a framework based in classes,
+use classes.
 
 .. _ChoosingBetweenClassesAndStructures_UsingClassesForStableIdentity:
 
-Using Classes for Stable Identity
+Using Classes For Stable Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Class instances have :newTerm:`stable identity`.
+Class instances have stable identity.
 When you initialize a class instance,
 Swift picks out a region in memory
 to store that instance.
@@ -61,11 +85,6 @@ When you mutate that instance,
 Swift keeps that instance stored
 in the same region in memory
 with the same address.
-By contrast,
-when you mutate a structure instance,
-Swift moves that instance
-to a different region in memory
-with a new address.
 
 There are times
 when you want an instance
@@ -94,6 +113,7 @@ which represents a graphical window:
 It makes sense for ``Window`` to be a class
 because you want to be able to
 refer to one instance of a ``Window``
+from several places in code,
 and it makes no sense to copy it.
 
 Recall
@@ -122,6 +142,8 @@ close the current window:
            // close currentWindow
        }
 
+This example makes sense only if ``currentWindow``
+is a class instance rather than a structure instance.
 If ``currentWindow`` were a copy of the current window
 rather than a reference to the actual current window,
 that would make no sense.
@@ -136,23 +158,23 @@ would give you multiple graphical windows
 when you want only one.
 When there really is just one of something
 and you need to access that one thing
-in multiple places,
+in multiple places in your code,
 use a class.
 
 There are other times
 when you want the stable identity
 of a class because 
 the lifetime of an instance
-is tied to some external entity
+is tied to some external entity,
 such as a file
 that temporarily appears
 on a disk.
 Your custom data type instance
-to represent that file
+that represents that file
 needs to exist
 in one constant region in memory
 so that you can free up that memory
-at the end of the file's lifetime.
+when you are ready to delete the file.
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
@@ -180,44 +202,15 @@ the same instance
 from multiple places,
 use a class.
 
-.. _ChoosingBetweenClassesAndStructures_WorkingWithExistingClasses:
-
-Working with Existing Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When you are working with frameworks,
-it is common to be given a baseclass
-that you are expected to subclass,
-or to be expected
-to pass around class instances.
-For example,
-if you are working with the AppKit framework
-and want to create a custom view,
-you are expected
-to subclass ``NSView``.
-In these scenarios,
-use a class.
-
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
 
-When to Use a Structure
+When To Use a Structure
 -----------------------
-
-In Swift, structures can and should be
-used for more than you might think ---
-especially if you are used to working
-in object-oriented languages
-like C and Objective-C.
-As discussed in :doc:`Structures`,
-structures in Swift
-can do so much more
-than store a few simple data values.
 
 If you don't need your custom data construct
 to have reference semantics
 for any of the reasons discussed above,
 use a structure.
-
 In general,
 this means you should
 use structures by default,
@@ -232,26 +225,14 @@ Why to Use a Structure
 
 Structures make it easier
 to reason about your code.
-
 Because structures are value types,
-they help you avoid
-unintended sharing ---
-a problem that often arises
-when using classes.
-
-Recall the ``Temperature`` structure
-from :doc:`Structures`: 
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> struct Temperature {
-           var celsius = 0.0
-           var fahrenheit: Double {
-               return celsius * 9/5 + 32
-           }
-       }
-
-Imagine ``Temperature`` was a class instead:
+they help you avoid accidental changes
+due to confusion about the logic
+of your code. 
+In order to explore an example
+of this kind of unintended mutation,
+imagine that the ``Temperature``structure from :doc:`Structures`
+was a class instead:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -293,7 +274,7 @@ of the room as well:
     -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is also now 180.0 degrees Celsius
 
-Because ``Temperature`` is now a class,
+Because ``Temperature`` is a class,
 setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer
 to the same ``Temperature`` instance.
@@ -335,76 +316,38 @@ about where far-away changes
 might be coming from.
 Structures provide a simpler abstraction,
 saving you from having
-to think about shared mutability
+to think about unintended sharing
 in those cases when you really
 do not need reference semantics.
 
-.. _ChoosingBetweenClassesAndStructures_OnInheritance:
+.. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 
-On Inheritance
---------------
+When You Need Inheritance
+-------------------------
 
 You might think
 you should use a class
-because you need inheritance.
-In Swift,
-protocols and protocol extensions
+when you need inheritance.
+In many cases,
+Swift's protocols and protocol extensions
 make it so that
 you can use structures
 and still have inheritance.
 
-Consider the ``Vehicle`` base class
-from :doc:`Inheritance`: 
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> class Vehicle {
-           var currentSpeed = 0.0
-           var description: String {
-               return "traveling at \(currentSpeed) miles per hour"
-           }
-           
-           func makeNoise() {
-               // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-           }
-       }
-
-As discussed in :doc:`Inheritance`,
-you can create subclasses of ``Vehicle``
-that inherit its properties,
-such as ``Train`` and ``Car``:
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> class Train: Vehicle {
-           override func makeNoise() {
-               print("Choo Choo")
-           }
-       }
-    -> class Car: Vehicle {
-           var gear = 1
-           override var description: String {
-               return super.description + " in gear \(gear)"
-           }
-       } 
-
-Instead of using a ``Vehicle`` base class,
-you can make ``Vehicle`` a protocol
-and provide a default implementation
-in a protocol extension: 
+To show how you can use structures and still have inheritance,
+imagine that the ``Vehicle`` base class from :doc:`Inheritance`
+was a ``Vehicle`` a protocol instead
+with a default implementation provided in a protocol extension: 
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
     -> protocol Vehicle {
            var currentSpeed: Double { get set }
+           func makeNoise()
        }
     -> extension Vehicle { 
            var description: String { 
                return "traveling at \(currentSpeed) miles per hour"
-           }
-           
-           func makeNoise() {
-               // do nothing - an arbitrary vehicle doesn't necessarily make a noise
            }
        }
 
@@ -424,6 +367,9 @@ that conform to the ``Vehicle`` protocol:
     -> struct Car: Vehicle {
            var currentSpeed = 0.0
            var gear = 1
+           func makeNoise() {
+               print("Vroom Vroom")
+           }
            var description: String {
                return "traveling at \(currentSpeed) miles per house in gear \(gear)"
            }
@@ -431,8 +377,8 @@ that conform to the ``Vehicle`` protocol:
 
 Much like their class counterparts,
 the ``Train`` and ``Car`` structures
-inherit implementations
-of ``description`` and ``makeNoise()``
+get a default implementation
+of ``description``
 that they can override.
 
 With protocols and protocol extensions
@@ -443,13 +389,5 @@ to use a class ---
 with the exception
 of those times
 when you need
-to subclass an existing class.
-
-
-
-
-
-
-
-
-
+to subclass an existing class
+from a resource you don't control.
