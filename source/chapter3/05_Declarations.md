@@ -540,7 +540,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 
 Swift定义了`Never`类型，它表示函数或者方法不会返回给它的调用者。`Never`返回类型的函数或方法可以称为不归,不归函数、方法要么引发不可恢复的错误,要么永远不停地运作,这会使调用后本应执行得代码就不再执行了。但即使是不归函数、方法,抛错函数和重抛出函数也可以将程序控制转移到合适的`catch`代码块。
 
-不归函数、方法可以在guard语句的else字句中调用,具体讨论在[*Guard语句*](10_Statement.md#guard_statements)。  
+不归函数、方法可以在guard语句的else字句中调用,具体讨论在[*Guard语句*](10_Statements.md#guard_statements)。  
 你可以重载一个不归方法,但是新的方法必须保持原有的返回类型和没有返回的行为。
 
 <a name="grammer_of_a_function_declaration"></a>
