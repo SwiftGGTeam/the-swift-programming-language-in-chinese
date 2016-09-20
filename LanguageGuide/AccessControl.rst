@@ -265,7 +265,7 @@ the default access level of the type's members will be internal.
          private func somePrivateMethod() {}          // explicitly private class member
       }
    ---
-   -> fileprivate class SomeFilePrivateClass {            // explicitly file-private class
+   -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
          func someFilePrivateMethod() {}              // implicitly file-private class member
          private func somePrivateMethod() {}          // explicitly private class member
       }
