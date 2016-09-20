@@ -26,7 +26,7 @@
 - [类型继承子句](#type_inheritance_clause)
 - [类型推断](#type_inference)
 
-Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 MyClass 的实例拥有类型 MyClass。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
+Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
 那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.html) 和 [扩展声明](05_Declarations.html#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
@@ -36,7 +36,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。命名型�
 
 > 类型语法  
 <a name="type"></a>
-> *类型* → [*数组类型*](#array-type) | [*字典类型*](#dictionary-type) | [*函数类型*](#function-type) | [*类型标识*](#type-identifier) | [*元组类型*](#tuple-type) | [*可选类型*](#optional-type) | [*隐式解析可选类型*](#implicitly-unwrapped-optional-type) | [*协议合成类型*](#protocol-composition-type) | [*元型类型*](#metatype-type)  
+> *类型* → [*数组类型*](#array-type) | [*字典类型*](#dictionary-type) | [*函数类型*](#function-type) | [*类型标识*](#type-identifier) | [*元组类型*](#tuple-type) | [*可选类型*](#optional-type) | [*隐式解析可选类型*](#implicitly-unwrapped-optional-type) | [*协议合成类型*](#protocol-composition-type) | [*元型类型*](#metatype-type) | **任意类型** | **自身类型**
 
 <a name="type_annotation"></a>
 ## 类型注解
@@ -53,7 +53,7 @@ func someFunction(a: Int) { /* ... */ }
 
 > 类型注解语法  
 <a name="type-annotation"></a>
-> *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*类型*](#type)  
+> *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 
 <a name="type_identifier"></a>
 ## 类型标识符
@@ -87,6 +87,9 @@ var someValue: ExampleModule.MyType
 元组类型是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
 你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.html#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
+
+
+
 
 `Void` 是空元组类型 `()` 的别名。如果括号内只有一个元素，那么该类型就是括号内元素的类型。比如，`(Int)` 的类型是 `Int` 而不是 `(Int)`。所以，只有当元组类型包含的元素个数在两个及以上时才可以命名元组元素。
 
@@ -354,3 +357,5 @@ let eFloat: Float = 2.71828 // eFloat 的类型为 Float
 ```
 
 Swift 中的类型推断在单独的表达式或语句上进行。这意味着所有用于类型推断的信息必须可以从表达式或其某个子表达式的类型检查中获取到。
+
+
