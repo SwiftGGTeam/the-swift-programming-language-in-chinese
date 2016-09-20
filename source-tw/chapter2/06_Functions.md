@@ -76,7 +76,7 @@ println(sayHelloAgain("Anna"))
 func halfOpenRangeLength(start: Int, end: Int) -> Int {
     return end - start
 }
-println(halfOpenRangeLength(1, 10))
+println(halfOpenRangeLength(1, end:10))
 // prints "9"
 ```
 
