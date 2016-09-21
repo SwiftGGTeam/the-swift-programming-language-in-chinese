@@ -987,34 +987,6 @@ because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Use ``struct`` to create a structure.
-Structures support many of the same behaviors as classes,
-including methods and initializers.
-One of the most important differences
-between structures and classes is that
-structures are always copied when they are passed around in your code,
-but classes are passed by reference.
-
-.. testcode:: guided-tour
-
-    -> struct Card {
-           var rank: Rank
-           var suit: Suit
-           func simpleDescription() -> String {
-               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-           }
-       }
-    -> let threeOfSpades = Card(rank: .three, suit: .spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
-    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
-
-.. admonition:: Experiment
-
-   Add a method to ``Card`` that creates
-   a full deck of cards,
-   with one card of each combination of rank and suit.
-
 An instance of an enumeration case
 can have values associated with the instance.
 Instances of the same enumeration case
@@ -1090,6 +1062,34 @@ or it responds with some error information.
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of matching the value against the switch cases.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code,
+but classes are passed by reference.
+
+.. testcode:: guided-tour
+
+    -> struct Card {
+           var rank: Rank
+           var suit: Suit
+           func simpleDescription() -> String {
+               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+           }
+       }
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
+    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
 
 Protocols and Extensions
 ------------------------
