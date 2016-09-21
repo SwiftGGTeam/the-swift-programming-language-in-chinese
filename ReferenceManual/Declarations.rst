@@ -194,10 +194,10 @@ but the binding between the constant name and the object it refers to can't.
 
 When a constant is declared at global scope,
 it must be initialized with a value.
-When a constant is declared in the local scope of a function,
+When a constant declaration occurs in the context of a function or method,
 it can be initialized later,
-as long as it is set to a definite value before being used.
-
+as long as it is guaranteed to have a value set
+before the first time its value is read.
 When a constant declaration occurs in the context of a class or structure
 declaration, it is considered a :newTerm:`constant property`.
 Constant declarations are not computed properties and therefore do not have getters
