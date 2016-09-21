@@ -987,16 +987,15 @@ because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-An instance of an enumeration case
-can have values associated with the instance.
-Instances of the same enumeration case
-can have different values associated with them.
-You provide the associated values when you create the instance.
-Associated values and raw values are different:
-The raw value of an enumeration case
-is the same for all of its instances,
-and you provide the raw value when you define the enumeration.
-
+If enumeration has raw values,
+those values are determined as part of the declaration,
+which means every instance of the enumeration case has the same raw value.
+Another choice for enumeration cases
+is to have values associated with the case
+that are chosen when you make the instance,
+and that can be different for each instance of the enumeration case.
+You can think of the associated values
+as behaving like a stored property of the enumeration case.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
