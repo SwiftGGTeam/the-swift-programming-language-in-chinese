@@ -13,6 +13,9 @@
 > 
 > 2.2 
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
+> 
+> 3.0
+> 翻译+校对：[mmoaay](https://github.com/mmoaay) 2016-09-20
 
 本页内容包括：
 
@@ -320,12 +323,15 @@ signedOverflow = signedOverflow &- 1
 struct Vector2D {
     var x = 0.0, y = 0.0
 }
-func + (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y + right.y)
+ 
+extension Vector2D {
+    static func + (left: Vector2D, right: Vector2D) -> Vector2D {
+        return Vector2D(x: left.x + right.x, y: left.y + right.y)
+    }
 }
 ```
 
-该运算符函数被定义为一个全局函数，并且函数的名字与它要进行重载的 `+` 名字一致。因为算术加法运算符是双目运算符，所以这个运算符函数接收两个类型为 `Vector2D` 的参数，同时有一个 `Vector2D` 类型的返回值。
+该运算符函数被定义为 `Vector2D` 上的一个类方法，并且函数的名字与它要进行重载的 `+` 名字一致。因为加法运算并不是一个向量必需的功能，所以这个类方法被定义在 `Vector2D` 的一个扩展中，而不是 `Vector2D` 结构体声明内。而算术加法运算符是双目运算符，所以这个运算符函数接收两个类型为 `Vector2D` 的参数，同时有一个 `Vector2D` 类型的返回值。
 
 在这个实现中，输入参数分别被命名为 `left` 和 `right`，代表在 `+` 运算符左边和右边的两个 `Vector2D` 实例。函数返回了一个新的 `Vector2D` 实例，这个实例的 `x` 和 `y` 分别等于作为参数的两个实例的 `x` 和 `y` 的值之和。
 
@@ -350,8 +356,10 @@ let combinedVector = vector + anotherVector
 要实现前缀或者后缀运算符，需要在声明运算符函数的时候在 `func` 关键字之前指定 `prefix` 或者 `postfix` 修饰符：
 
 ```swift
-prefix func - (vector: Vector2D) -> Vector2D {
-    return Vector2D(x: -vector.x, y: -vector.y)
+extension Vector2D {
+    static prefix func - (vector: Vector2D) -> Vector2D {
+        return Vector2D(x: -vector.x, y: -vector.y)
+    }
 }
 ```
 
@@ -372,8 +380,10 @@ let alsoPositive = -negative
 复合赋值运算符将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。
 
 ```swift
-func += (inout left: Vector2D, right: Vector2D) {
-    left = left + right
+extension Vector2D {
+    static func += (left: inout Vector2D, right: Vector2D) {
+        left = left + right
+    }
 }
 ```
 
@@ -398,11 +408,13 @@ original += vectorToAdd
 为了使用等价运算符能对自定义的类型进行判等运算，需要为其提供自定义实现，实现的方法与其它中缀运算符一样：
 
 ```swift
-func == (left: Vector2D, right: Vector2D) -> Bool {
-    return (left.x == right.x) && (left.y == right.y)
-}
-func != (left: Vector2D, right: Vector2D) -> Bool {
-    return !(left == right)
+extension Vector2D {
+    static func == (left: Vector2D, right: Vector2D) -> Bool {
+        return (left.x == right.x) && (left.y == right.y)
+    }
+    static func != (left: Vector2D, right: Vector2D) -> Bool {
+        return !(left == right)
+    }
 }
 ```
 
@@ -430,18 +442,17 @@ if twoThree == anotherTwoThree {
 prefix operator +++ {}
 ```
 
-上面的代码定义了一个新的名为 `+++` 的前缀运算符。对于这个运算符，在 Swift 中并没有意义，因此我们针对 `Vector2D` 的实例来定义它的意义。对这个示例来讲，`+++` 被实现为“前缀双自增”运算符。它使用了前面定义的复合加法运算符来让矩阵对自身进行相加，从而让 `Vector2D` 实例的 `x` 属性和 `y` 属性的值翻倍：
+上面的代码定义了一个新的名为 `+++` 的前缀运算符。对于这个运算符，在 Swift 中并没有意义，因此我们针对 `Vector2D` 的实例来定义它的意义。对这个示例来讲，`+++` 被实现为“前缀双自增”运算符。它使用了前面定义的复合加法运算符来让矩阵对自身进行相加，从而让 `Vector2D` 实例的 `x` 属性和 `y` 属性的值翻倍。实现 `+++` 运算符的方式如下：
 
 ```swift
-prefix func +++ (inout vector: Vector2D) -> Vector2D {
-    vector += vector
-    return vector
+extension Vector2D {
+    static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+        vector += vector
+        return vector
+    }
 }
-```
 
-`Vector2D` 的 `+++` 的实现和 `++` 的实现很相似，唯一不同的是前者对自身进行相加，而后者是与另一个值为 `(1.0, 1.0)` 的向量相加。
 
-```swift
 var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
 let afterDoubling = +++toBeDoubled
 // toBeDoubled 现在的值为 (2.0, 8.0)
@@ -449,20 +460,20 @@ let afterDoubling = +++toBeDoubled
 ```
 
 <a name="precedence_and_associativity_for_custom_infix_operators"></a>
-### 自定义中缀运算符的优先级和结合性
+### 自定义中缀运算符的优先级
 
-自定义的中缀运算符也可以指定优先级和结合性。[优先级和结合性](#precedence_and_associativity)中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
+每个自定义中缀运算符都属于某个优先级组。这个优先级组指定了这个运算符和其他中缀运算符的优先级和结合性。[优先级和结合性](#precedence_and_associativity)中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
 
-结合性可取的值有` left`，`right` 和 `none`。当左结合运算符跟其他相同优先级的左结合运算符写在一起时，会跟左边的值进行结合。同理，当右结合运算符跟其他相同优先级的右结合运算符写在一起时，会跟右边的值进行结合。而非结合运算符不能跟其他相同优先级的运算符写在一起。
+而没有明确放入优先级组的自定义中缀运算符会放到一个默认的优先级组内，其优先级高于三元运算符。
 
-结合性的默认值是 `none`，优先级的默认值 `100`。
-
-以下例子定义了一个新的中缀运算符 `+-`，此运算符的结合性为 `left`，并且它的优先级为 `140`：
+以下例子定义了一个新的自定义中缀运算符 `+-`，此运算符属于 `AdditionPrecedence` 优先组：
 
 ```swift
-infix operator +- { associativity left precedence 140 }
-func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-    return Vector2D(x: left.x + right.x, y: left.y - right.y)
+infix operator +-: AdditionPrecedence
+extension Vector2D {
+    static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+        return Vector2D(x: left.x + right.x, y: left.y - right.y)
+    }
 }
 let firstVector = Vector2D(x: 1.0, y: 2.0)
 let secondVector = Vector2D(x: 3.0, y: 4.0)
@@ -470,7 +481,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“相加型”运算符，所以将它的结合性和优先级被分别设置为 `left` 和 `140`，这与 `+` 和 `-` 等默认的中缀“相加型”运算符是相同的。关于 Swift 标准库提供的运算符的结合性与优先级，请参考 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
+这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“相加型”运算符，所以将它放置 `+` 和 `-` 等默认的中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](#operator_declaration)
 
 > 注意  
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。
