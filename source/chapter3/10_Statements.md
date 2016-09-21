@@ -236,14 +236,14 @@ guard 条件 else {
  
 在 `guard` 语句中进行可选绑定的常量或者变量，其可用范围从声明开始直到作用域结束。
  
-`guard` 语句必须有 `else` 子句，而且必须在该子句中调用标记 `noreturn` 特性的函数，或者使用下面的语句退出当前作用域：   
+`guard` 语句必须有 `else` 子句，而且必须在该子句中调用 `Never` 返回类型的函数，或者使用下面的语句退出当前作用域：   
  
  *  `return`
  *  `break`
  *  `continue`
  *  `throw`    
  
-关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。
+关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于`Never`返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
 
 > guard 语句语法  
 <a name="guard-statement"></a>

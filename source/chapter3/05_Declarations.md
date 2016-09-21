@@ -17,6 +17,9 @@
 > 2.2
 > 翻译：[星夜暮晨](https://github.com/SemperIdem)
 
+> 3.0
+> 翻译：[chenmingjia](https://github.com/chenmingjia)
+
 本页包含内容：
 
 - [顶级代码](#top-level_code)
@@ -326,6 +329,31 @@ typealias 类型别名 = 现存类型
 ```
 
 当声明一个类型的别名后，可以在程序的任何地方使用“别名”来代替现有类型。现有类型可以是具有命名的类型或者混合类型。类型别名不产生新的类型，它只是使用别名来引用现有类型。
+类型别名声明可以通过泛型参数来给一个现有泛型类型提供名称。类型别名为现有类型的一部分或者全部泛型参数提供具体类型。例如:
+```swift
+typealias StringDictionary<Value> = Dictionary<String, Value>
+ 
+// 下列两个字典拥有同样的类型
+var dictionary1: StringDictionary<Int> = [:]
+var dictionary2: Dictionary<String, Int> = [:]
+```
+当一个类型别名带着泛型参数一起被声明时,这些参数的约束必须与现有参数的约束完全匹配。例如:
+```swift
+typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+```
+因为类型别名可以和现有类型相互交换使用,类型别名不可以引入额外的类型约束。
+在协议声明中,类型别名可以为那些经常使用的类型提供一个更短更方便的名称,例如:
+```swift
+protocol Sequence {
+    associatedtype Iterator: IteratorProtocol
+    typealias Element = Iterator.Element
+}
+ 
+func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+    // ...
+}
+```
+假如没有类型别名,sum函数将必须引用关联类型通过T.Iterator.Element的形式来替代 T.Element。
 
 另请参阅 [协议关联类型声明](#protocol_associated_type_declaration)。
 
@@ -359,7 +387,7 @@ func 函数名称(参数列表) {
 }
 ```
 
-每个参数的类型都要标明，因为它们不能被推断出来。虽然函数的参数默认是常量，也可以在参数名前添加 `let` 来强调这一行为。如果您在某个参数名前面加上了 `inout`，那么这个参数就可以在这个函数作用域当中被修改。更多关于 `inout` 参数的讨论，请参阅 [输入输出参数](#in-out_parameters)。
+每个参数的类型都要标明，因为它们不能被推断出来。如果您在某个参数类型前面加上了 `inout`，那么这个参数就可以在这个函数作用域当中被修改。更多关于 `inout` 参数的讨论，请参阅 [输入输出参数](#in-out_parameters)。
 
 函数可以使用元组类型作为返回类型来返回多个值。
 
@@ -498,7 +526,7 @@ func 函数名称(参数列表) throws -> 返回类型 {
 函数或方法可以使用 `rethrows` 关键字来声明，从而表明仅当该函数或方法的一个函数类型的参数抛出错误时，该函数或方法才抛出错误。这类函数和方法被称为重抛函数和重抛方法。重新抛出错误的函数或方法必须至少有一个参数的类型为抛出函数。
 
 ```swift
-func functionWithCallback(callback: () throws -> Int) rethrows {
+func someFunction(callback: () throws -> Void) rethrows {
     try callback()
 }
 ```
@@ -506,6 +534,14 @@ func functionWithCallback(callback: () throws -> Int) rethrows {
 重抛函数或者方法不能够从自身直接抛出任何错误，这意味着它不能够包含 `throw` 语句。它只能够传递作为参数的抛出函数所抛出的错误。例如，在 `do-catch` 代码块中调用抛出函数，并在 `catch` 子句中抛出其它错误都是不允许的。
 
 抛出方法不能重写重抛方法，而且抛出方法不能满足协议对于重抛方法的要求。也就是说，重抛方法可以重写抛出方法，而且重抛方法可以满足协议对于抛出方法的要求。
+
+<a name="functions_that_never_return"></a>
+### 永不返回的函数
+
+Swift定义了`Never`类型，它表示函数或者方法不会返回给它的调用者。`Never`返回类型的函数或方法可以称为不归,不归函数、方法要么引发不可恢复的错误,要么永远不停地运作,这会使调用后本应执行得代码就不再执行了。但即使是不归函数、方法,抛错函数和重抛出函数也可以将程序控制转移到合适的`catch`代码块。
+
+不归函数、方法可以在guard语句的else字句中调用,具体讨论在[*Guard语句*](10_Statements.md#guard_statements)。  
+你可以重载一个不归方法,但是新的方法必须保持原有的返回类型和没有返回的行为。
 
 <a name="grammer_of_a_function_declaration"></a>
 > 函数声明语法  
@@ -542,6 +578,9 @@ func functionWithCallback(callback: () throws -> Int) rethrows {
 > *内部参数名* → [*标识符*](02_Lexical_Structure.md#identifier) | **_**  
 > <a name="default-argument-clause"></a>
 > *默认参数子句* → **=** [*表达式*](04_Expressions.md#expression)  
+
+
+
 
 <a name="enumeration_declaration"></a>
 ## 枚举声明
@@ -1118,21 +1157,12 @@ subscript (参数列表) -> 返回类型 {
 下面的形式声明了一个新的中缀运算符：
 
 ```swift
-infix operator 运算符名称 {
-	precedence 优先级
-	associativity 结合性
-}
+infix operator 运算符名称: 优先级组
 ```
 
 中缀运算符是二元运算符，置于两个运算对象之间，例如加法运算符（`+`）位于表达式 `1 + 2` 的中间。
 
-中缀运算符可以选择指定优先级或结合性，或者两者同时指定。
-
-运算符的优先级可以指定在没有括号包围的情况下，运算符与其运算对象如何结合。可以使用上下文相关的关键字 `precedence` 以及紧随其后的优先级数字来指定一个运算符的优先级。优先级可以是 `0` 到 `255` 之间的任何十进制整数。与十进制整数字面量不同的是，它不可以包含任何下划线字符。尽管优先级是一个特定的数字，但它仅用作与另一个运算符的优先级比较大小。也就是说，当两个运算符为同一个运算对象竞争时，例如 `2 + 3 * 5`，优先级更高的运算符将优先参与运算。
-
-运算符的结合性可以指定在没有括号包围的情况下，多个优先级相同的运算符将如何组合。可以使用上下文相关的关键字 `associativity` 以及紧随其后的结合性关键字来指定运算符的结合性，结合性关键字也是上下文相关的，包括 `left`、`right` 和 `none`。左结合运算符以从左到右的顺序进行组合。例如，减法运算符（`-`）具有左结合性，因此 `4 - 5 - 6` 以 `(4 - 5) - 6` 的形式组合，其结果为 `-7`。右结合运算符以从右到左的顺序组合，而设置为 `none` 的运算符不进行组合。具有相同优先级的非结合运算符，不可以互相邻接。例如，表达式 `1 < 2 < 3` 是非法的。
-
-声明时不指定任何优先级或结合性的中缀运算符，优先级为 `100`，结合性为 `none`。
+中缀运算符可以选择指定优先级组。如果没有为运算符设置优先级组,Swift会设置默认优先级组`DefaultPrecedence`,它的优先级比三目优先级`TernaryPrecedence`要高,更多内容参考[*优先级组声明*](#precedence_group_declaration_modifiers)  
 
 下面的形式声明了一个新的前缀运算符：
 
@@ -1169,18 +1199,62 @@ postfix operator 运算符名称 {}
 > <a name="infix-operator-declaration"></a>
 > *中缀运算符声明* → **infix** **运算符** [*运算符*](02_Lexical_Structure.md#operator) **{** [*中缀运算符属性*](#infix-operator-attributes)<sub>可选</sub> **}**  
 
-<a name="infix-operator-attributes"></a>
-> *中缀运算符属性* → [*优先级子句*](#precedence-clause)<sub>可选</sub> [*结和性子句*](#associativity-clause)<sub>可选</sub>  
-> <a name="precedence-clause"></a>
-> *优先级子句* → **precedence** [*优先级水平*](#precedence-level)  
-> <a name="precedence-level"></a>
-> *优先级水平* → 十进制整数 0 到 255，包含 0 和 255  
-> <a name="associativity-clause"></a>
-> *结和性子句* → **associativity** [*结和性*](#associativity)  
-> <a name="associativity"></a>
-> *结和性* → **left** | **right** | **none**  
+<a name="infix-operator-group"></a>
+> *中缀运算符组* → [*优先级组名称*](#precedence-group-name)
 
-<a name="declaration_modifiers"></a>
+
+<a name="precedence_group_declaration_modifiers"></a>
+
+## 优先级组声明
+
+*优先级组声明 (A precedence group declaration)* 会向程序的中缀运算符引入一个全新的优先级组。当没有用圆括号分组时,运算符优先级反应了运算符与它的操作数的关系的紧密程度。  
+优先级组的声明如下所示:
+
+```swift
+precedencegroup 优先级组名称{
+    higherThan: 较低优先级组的名称
+    lowerThan: 较高优先级组的名称
+    associativity: 结合性
+    assignment: 赋值性
+}
+```  
+较低优先级组和较高优先级组的名称说明了新建的优先级组是依赖于现存的优先级组的。 `lowerThan`优先级组的属性只可以引用当前模块外的优先级组。当两个运算符为同一个操作数竞争时,比如表达式`2 + 3 * 5`,优先级更高的运算符将优先参与运算。 
+
+> 注意  
+> 使用较低和较高优先级组相互联系的优先级组必须保持单一层次关系,但它们不必是线性关系。这意味着优先级组也许会有未定义的相关优先级。这些优先级组的运算符在没有用圆括号分组的情况下是不能紧邻着使用的。  
+
+Swift定义了大量的优先级组来与标准库的运算符配合使用,例如相加(`+`)和相减(`-`)属于`AdditionPrecedence`组,相乘(`*`)和相除(`/`)属于` MultiplicationPrecedence`组,详细关于Swift标准库中一系列运算符和优先级组内容,参阅[Swift标准库操作符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)。  
+
+运算符的结合性表示在没有圆括号分组的情况下,同样优先级的一系列运算符是如何被分组的。你可以指定运算符的结合性通过上下文关键字`left`、`right`或者`none`,如果没有指定结合性,默认是`none`关键字。左关联性的运算符是从左至右分组的,例如,相减操作符(-)是左关联性的,所以表达式`4 - 5 - 6`被分组为`(4 - 5) - 6`,得出结果-7。右关联性的运算符是从右往左分组的,指定为`none`结合性的运算符就没有结合性。同样优先级没有结合性的运算符不能相邻出现,例如`<`运算符是`none`结合性,那表示`1 < 2 < 3`就不是一个有效表达式。  
+
+优先级组的赋值性表示在包含可选链操作时的运算符优先级。当设为true时,与优先级组对应的运算符在可选链操作中使用和标准库中赋值运算符同样的分组规则,当设为false或者不设置,该优先级组的运算符与不赋值的运算符遵循同样的可选链规则。
+
+<a name="grammer_of_a_precedence_group_declaration"></a>
+> 优先级组声明语法  
+
+<a name="precedence-group-declaration"></a>
+> *优先级组声明* → **precedence**[*优先级组名称*](#precedence-group-name){[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> }   
+<a name="precedence-group-attributes"></a>
+> *优先级组属性* → [*优先级组属性*](#precedence-group-attribute)[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> **{** **}**  
+<a name="precedence-group-attribute"></a>
+> *优先级组属性* → [*优先级组关系*](#precedence-group-relation)  
+> *优先级组属性* → [*优先级组赋值性*](#precedence-group-assignment)  
+> *优先级组属性* → [*优先级组相关性*](#precedence-group-associativity)  
+> <a name="precedence-group-relation"></a>
+> *优先级组关系* → **higherThan:**[*多优先级组名称*](#precedence-group-names)   
+> *优先级组关系* → **lowerThan:**[*多优先级组名称*](#precedence-group-names)   
+> <a name="precedence-group-assignment"></a>
+> *优先级组赋值* → **assignment:**[*布尔字面值*](02_Lexical_Structure.md#boolean-literal)      
+<a name="precedence-group-associativity"></a>
+> *优先级组结合性* → **associativity:left**    
+> *优先级组结合性* → **associativity:right**   
+> *优先级组结合性* → **associativity:none**  
+<a name="precedence-group-names"></a>
+> *多优先级组名称* → [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name)
+<a name="precedence-group-name"></a>
+> *优先级组名称* →[*标识符*](02_Lexical_Structure.md#identifier) 
+
+
 ## 声明修饰符
 
 声明修饰符都是关键字或上下文相关的关键字，可以修改一个声明的行为或者含义。可以在声明的特性（如果存在）和引入该声明的关键字之间，利用声明修饰符的关键字或上下文相关的关键字指定一个声明修饰符。
