@@ -140,7 +140,7 @@ followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 All tuple types contain two or more types,
-except for ``Void`` which is a typealias for the empty tuple type, ``()``.
+except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 A single parenthesized type is the same as that type without parentheses.
 For example, ``(Int)`` is equivalent to ``Int``.
 
