@@ -1,5 +1,5 @@
-Choosing Between Classes and Structures
-=======================================
+Choosing Between Reference and Value Types
+==========================================
 
 Classes and structures in Swift have many similarities.
 Both have properties, methods, subscripts, initializers, use dot syntax,
@@ -10,7 +10,6 @@ when to use classes and
 when to use structures
 for the building blocks
 of your program.
-
 The fundamental difference
 between structures and classes
 is that structures are value types
@@ -25,14 +24,13 @@ When to Use a Class
 
 If you're used to working
 in object-oriented languages
-like Objective-C,
+like Objective-C or C++,
 you may be in the habit
 of writing a lot of classes.
 In Swift,
 you don't need classes
 as often as you might expect,
 but they still have their place.
-
 Use a class
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
@@ -262,7 +260,7 @@ as the room:
     -> var ovenTemperature = roomTemperature
     << // ovenTemperature : Temperature = REPL.Temperature
 
-When you go to turn on the oven,
+When you turn on the oven,
 you accidentally change the temperature
 of the room as well: 
 
@@ -318,7 +316,7 @@ Structures provide a simpler abstraction,
 saving you from having
 to think about unintended sharing
 in those cases when you really
-do not need reference semantics.
+don't need reference semantics.
 
 .. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 

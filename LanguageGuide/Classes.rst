@@ -1,22 +1,19 @@
 Classes
 =======
 
-:newTerm:`Classes` in Swift provide
-the same functionality as structures
-and more.
-They can have
-properties, methods, subscripts, initializers, and so on.
+:newTerm:`Classes` in Swift are composed
+of many of the same pieces as structures.
+They can have properties, methods, subscripts, initializers, and so on.
 Just like with structures,
-you use dot syntax to access and set
-properties of class instances.
+you use dot syntax to access properties and methods
+of class instances.
 
-While classes are similar to structures in these ways,
-classes have additional capabilities that structures do not:
+While classes are similar to structures in composition,
+classes have different underlying behavior:
 
 * Inheritance enables one class to inherit the characteristics of another, as described in :doc:`Inheritance`.
-* Type casting enables you to check and interpret the type of a class instance at runtime, as described in :doc:`TypeCasting`.
-* Deinitializers enable an instance of a class to free up any resources it has assigned, as described in :doc:`Deinitialization`.
-* Reference counting allows more than one reference to a class instance, as described in :doc:`AutomaticReferenceCounting`.
+* Deinitializers enable an instance of a class to free up any resources it has allocated, as described in :doc:`Deinitialization`.
+* You can have more than one reference to a class instance, as described in :doc:`AutomaticReferenceCounting`.
 
 For an in-depth discussion of
 when to use classes and
@@ -82,7 +79,6 @@ that provide the initialization logic you need.
 Because the two stored properties belonging to ``Window``
 are not set to initial values by default,
 ``Window`` needs a custom initializer.
-
 To initialize a class like ``Window``
 with a custom initializer,
 use the type name of the class
@@ -130,11 +126,8 @@ Suppose there are two windows to keep track of:
     -> let windowTwo = Window(width: 400, height: 400)
     << // windowTwo : Window = REPL.Window
 
-This example declares two constants called ``windowOne`` and
-``windowTwo`` and sets their ``width`` and ``height`` properties.
-
-Next, declare a new variable called ``currentWindow``
-and set it equal to ``windowOne``:
+Next, new variable called ``currentWindow``
+is declared and set equal to ``windowOne``:
 
 .. testcode:: classes
 
@@ -166,8 +159,7 @@ Comparing Reference Types for Identity
 
 Because classes are reference types,
 it is possible for multiple constants and variables
-to refer to the same instance of a class
-behind the scenes.
+to refer to the same instance of a class.
 
 As mentioned in :ref:`BasicOperators_ComparisonOperators`,
 Swift provides two identity operators (``===`` and ``!==``)
@@ -207,7 +199,7 @@ Constants and Reference Types
 
 One of the fundamental characteristics
 of reference semantics is that
-it gives you more flexibility.
+a single instance can be referred to in multiple places.
 In the example above,
 you may have noticed that
 ``windowOne`` is declared as a *constant*,
@@ -234,18 +226,18 @@ Consider the following example:
     
     -> let classInstance = ExampleClass()
     << // classInstance : ExampleClass = REPL.ExampleClass
-    -> classInstance.constant = 10 // Invalid, cannot mutate a constant
+    -> classInstance.constant = 10 // Invalid, can't mutate a constant
     !! <REPL Input>:1:24: error: cannot assign to property: 'constant' is a 'let' constant
-    !! classInstance.constant = 10 // Invalid, cannot mutate a constant
+    !! classInstance.constant = 10 // Invalid, can't mutate a constant
     !! ~~~~~~~~~~~~~~~~~~~~~~ ^
     !! <REPL Input>:2:7: note: change 'let' to 'var' to make it mutable
     !! let constant = 5
     !! ^~~
     !! var
     -> classInstance.variable = 16
-    -> classInstance = Window() // Invalid, classInstance is a constant 
+    -> classInstance = Window() // Invalid, can't assign to a constant 
     !! <REPL Input>:1:15: error: cannot assign to value: 'classInstance' is a 'let' constant
-    !! classInstance = Window() // Invalid, classInstance is a constant
+    !! classInstance = Window() // Invalid, can't assign to a constant
     !! ~~~~~~~~~~~~~ ^
     !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
     !! let classInstance = ExampleClass()
@@ -273,33 +265,16 @@ changing the variable properties of a structure instance
 gives you a whole new structure instance
 instead of the same instance modified in place.
 
-.. _Classes_WorkingWithPointers:
-
-Working With Pointers
-~~~~~~~~~~~~~~~~~~~~~
-
-If you have experience with C, C++, or Objective-C,
-you may know that these languages use pointers
-to refer to addresses in memory.
-A Swift constant or variable
-that refers to an instance of some reference type
-is similar to a pointer in C,
-but is not a direct pointer to an address in memory,
-and does not require you to write an asterisk (``*``)
-to indicate that you are creating a reference.
-Instead, these references are defined
-like any other Swift constant or variable.
-
-.. TODO: Add a brief comment on why this protection is a good thing
-
 .. note:: 
 
-    The Swift standard library provides utility types
-    that enable you to work with memory pointers
-    to reference types for interoperability
-    with low-level C code.
-    For more information,
-    see `Interacting with Objective-C APIs  <//apple_ref/doc/uid/TP40014216-CH6>`_
-    in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-
-.. url for unsafe pointer doc: https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID35
+   If you have experience with C, C++, or Objective-C,
+   you may know that these languages use pointers
+   to refer to addresses in memory.
+   A Swift constant or variable
+   that refers to an instance of some reference type
+   is similar to a pointer in C,
+   but is not a direct pointer to an address in memory,
+   and does not require you to write an asterisk (``*``)
+   to indicate that you are creating a reference.
+   Instead, these references are defined
+   like any other Swift constant or variable.

@@ -17,7 +17,7 @@ In Swift, structures can:
 * Define subscripts to provide access to their values using subscript syntax, as described in :doc:`Subscripts`.
 * Define initializers to set up their initial state, as described in :doc:`Initialization`.
 * Be extended to provide added functionality, as described in :doc:`Extensions`.
-* Conform to protocols to implement a shared abstraction or cooperate with a default implementation, as described in :doc:`Protocols``.
+* Conform to protocols to implement a shared abstraction or cooperate with a default implementation, as described in :doc:`Protocols`.
 
 .. _Structures_StructureSyntax:
 
@@ -78,7 +78,6 @@ The ``Temperature`` structure definition describes only
 what a ``Temperature`` instance looks like.
 It does not describe a specific ``Temperature`` instance.
 To do that, you create an instance of the structure.
-
 The simplest form of initialization syntax for structures
 uses the type name of the structure
 followed by empty parentheses:
@@ -97,10 +96,10 @@ Memberwise Initializer
 ~~~~~~~~~~~~~~~~~~~~~~
 
 All structures
-have an automatically generated memberwise initializer,
-which allows you
-to set values
-for stored properties
+have an automatically generated memberwise initializer.
+A memberwise initializer is a form of
+initialization syntax that allows you
+to set values for the stored properties
 of new structure instances.
 You pass the initial values of properties
 to the memberwise initializer by name:
@@ -112,7 +111,7 @@ to the memberwise initializer by name:
 
 Initializing ``waterBoilingPoint`` with the memberwise initializer
 creates an instance of ``Temperature`` with the ``celsius`` property
-set to the boiling point of water --- ``100.0`` degrees Celsius.
+set to ``100.0`` degrees Celsius.
 
 For information on structure initialization, see :doc:`Initialization`.
 
@@ -179,20 +178,6 @@ This means that any structure instances you create ---
 and any value types you give them as properties ---
 are always copied when they are passed around in your code.
 
-.. note::
-
-   Swift copies a structure instance in memory
-   only if the instance is changed.
-   This behavior is called :newTerm:`copy-on-write`.
-   While code functions as though structure instances are copied
-   when you assign them
-   to a new variable or constant,
-   Swift copies a structure instance in memory
-   only if you change it from the original.
-   This optimization saves Swift from doing unnecessary work
-   as Swift needs to copy a structure instance
-   only if you mutate it.
-
 Consider this example:
 
 .. testcode:: structures
@@ -221,8 +206,8 @@ of the existing ``roomTemperature`` instance is made,
 and this new copy is assigned to ``ovenTemperature``.
 Even though ``roomTemperature`` and ``ovenTemperature``
 have the same value for their ``celsius`` properties,
-they are two completely different instances
-behind the scenes.
+they are two different instances.
+You can change one without affecting the other.
 
 You can change ``ovenTemperature`` to
 get the oven ready for cooking
@@ -249,3 +234,17 @@ in ``roomTemperature``.
 For an in-depth discussion of value types
 and when to use them,
 see :doc:`ChoosingBetweenClassesAndStructures`.
+
+.. note::
+
+   Swift copies a structure instance in memory
+   only if the instance is changed.
+   This behavior is called :newTerm:`copy-on-write`.
+   While code functions as though structure instances are copied
+   when you assign them
+   to a new variable or constant,
+   Swift copies a structure instance in memory
+   only if you change it from the original.
+   This optimization saves Swift from doing unnecessary work
+   as Swift needs to copy a structure instance
+   only if you mutate it.
