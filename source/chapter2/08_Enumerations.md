@@ -16,7 +16,7 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-13
 
 
-> 2.2
+> 3.0
 > 翻译+校对：[shanks](https://codebuild.me) 2016-09-24
 
 本页内容包含：
