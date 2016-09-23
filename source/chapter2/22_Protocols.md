@@ -17,6 +17,8 @@
 > 
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)
+> 
+> 版本日期：2016-09-13
 
 本页包含内容：
 
