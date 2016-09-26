@@ -16,7 +16,8 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
 
 > 3.0
-> 翻译： [crayygy](https://github.com/crayygy) 2016-09-12
+> 翻译: [crayygy](https://github.com/crayygy) 2016-09-12
+> 校对: [shanks](http://codebuild.me) 2016-09-27
 
 本页包含内容：
 - [函数定义与调用（Defining and Calling Functions）](#Defining_and_Calling_Functions)
@@ -40,7 +41,7 @@ Swift 统一的函数语法非常的灵活，可以用来表示任何函数，�
 每个函数有个函数名，用来描述函数执行的任务。要使用一个函数时，用函数名来“调用”这个函数，并传给它匹配的输入值（称作 *实参* ，*arguments*）。函数的实参必须与函数参数表里参数的顺序一致。
 
 
-下面例子中的函数的名字是`sayHello(_:)`，之所以叫这个名字,是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `personName` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
+下面例子中的函数的名字是`greet(_:)`，之所以叫这个名字,是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `personName` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
 
 
 ```swift
@@ -61,15 +62,15 @@ print(greet(person: "Brian"))
 // 打印 "Hello, Brian!"
 ```
 
-调用 `sayHello(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `sayHello("Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以`sayHello` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
+调用 `greet(_:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet("Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以`greet ` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
 
 >注意
 `print(_:separator:terminator:)` 函数的第一个参数并没有设置一个标签，而其他的参数因为已经有了默认值，因此是可选的。关于这些函数语法上的变化详见下方关于 函数参数标签和参数名 以及 默认参数值。
 
 
-在 `sayHello(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时，把对 `personName` 的问候消息赋值给了 `greeting` 。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
+在 `greet(_:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时，把对 `personName` 的问候消息赋值给了 `greeting` 。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
-你可以用不同的输入值多次调用 `sayHello(_:)`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
+你可以用不同的输入值多次调用 `greet(_:)`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
 
 为了简化这个函数的定义，可以将问候消息的创建和返回写成一句：
 
@@ -120,12 +121,12 @@ print(greet(person: "Tim", alreadyGreeted: true))
 // 打印 "Hello again, Tim!"
 ```
 
-你可以通过在括号内使用逗号分隔来传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值，来调用`sayHello(_:alreadyGreeted:)`函数。注意这个函数和上面`greet(person:)`是不同的。虽然它们都有着同样的名字`greet`，但是`greet(person:alreadyGreeted:)`函数需要两个参数，而`greet(person:)`只需要一个参数。
+你可以通过在括号内使用逗号分隔来传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值，来调用`greet(person:alreadyGreeted:)`函数。注意这个函数和上面`greet(person:)`是不同的。虽然它们都有着同样的名字`greet`，但是`greet(person:alreadyGreeted:)`函数需要两个参数，而`greet(person:)`只需要一个参数。
 
 <a name="functions_without_return_values"></a>
 ### 无返回值函数 (Functions Without Return Values)
 
-函数可以没有返回值。下面是 `sayHello(_:)` 函数的另一个版本，叫 `sayGoodbye(_:)`，这个函数直接打印一个`String`值，而不是返回它：
+函数可以没有返回值。下面是 `greet(person:)` 函数的另一个版本，这个函数直接打印一个`String`值，而不是返回它：
 
 ```swift
 func greet(person: String) {
@@ -138,7 +139,7 @@ greet(person: "Dave")
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
 >注意
-严格上来说，虽然没有返回值被定义，`sayGoodbye(_:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组（tuple），没有任何元素，可以写成()。
+严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组（tuple），没有任何元素，可以写成()。
 
 
 被调用时，一个函数的返回值可以被忽略：
@@ -157,7 +158,7 @@ printWithoutCounting(string: "hello, world")
 // 打印 "hello, world" 但是没有返回任何值
 ```
 
-第一个函数 `printAndCount(_:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
+第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
 >注意
 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误（compile-time error）。
@@ -168,7 +169,7 @@ printWithoutCounting(string: "hello, world")
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
-下例中定义了一个名为 `minMax(_:)` 的函数，作用是在一个 `Int` 类型的数组中找出最小值与最大值。
+下例中定义了一个名为 `minMax(array:)` 的函数，作用是在一个 `Int` 类型的数组中找出最小值与最大值。
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
@@ -185,9 +186,9 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 }
 ```
 
- `minMax(_:)` 函数返回一个包含两个 `Int` 值的元组，这些值被标记为 `min` 和 `max` ，以便查询函数的返回值时可以通过名字访问它们。
+ `minMax(array:)` 函数返回一个包含两个 `Int` 值的元组，这些值被标记为 `min` 和 `max` ，以便查询函数的返回值时可以通过名字访问它们。
 
-在 `minMax(_:)` 的函数体中，在开始的时候设置两个工作变量 `currentMin` 和 `currentMax` 的值为数组中的第一个数。然后函数会遍历数组中剩余的值并检查该值是否比 `currentMin` 和 `currentMax` 更小或更大。最后数组中的最小值与最大值作为一个包含两个 `Int` 值的元组返回。
+在 `minMax(array:)` 的函数体中，在开始的时候设置两个工作变量 `currentMin` 和 `currentMax` 的值为数组中的第一个数。然后函数会遍历数组中剩余的值并检查该值是否比 `currentMin` 和 `currentMax` 更小或更大。最后数组中的最小值与最大值作为一个包含两个 `Int` 值的元组返回。
 
 因为元组的成员值已被命名，因此可以通过 `.` 语法来检索找到的最小值与最大值：
 
@@ -208,9 +209,9 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的.可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
 
 
-前面的 `minMax(_:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(_:)` 在试图访问 `array[0]` 时会触发一个运行时错误(runtime error)。
+前面的 `minMax(array:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(array:)` 在试图访问 `array[0]` 时会触发一个运行时错误(runtime error)。
 
-为了安全地处理这个“空数组”问题，将 `minMax(_:)` 函数改写为使用可选元组返回类型，并且当数组为空时返回 `nil`：
+为了安全地处理这个“空数组”问题，将 `minMax(array:)` 函数改写为使用可选元组返回类型，并且当数组为空时返回 `nil`：
 
 
 ```swift
@@ -229,7 +230,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 }
 ```
 
-你可以使用可选绑定来检查 `minMax(_:)` 函数返回的是一个存在的元组值还是 `nil`：
+你可以使用可选绑定来检查 `minMax(array:)` 函数返回的是一个存在的元组值还是 `nil`：
 
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
@@ -296,7 +297,7 @@ someFunction(1, secondParameterName: 2)
 <a name="default_parameter_values"></a>
 ### 默认参数值 (Default Parameter Values)
 
-你可以在函数体中通过给参数赋值来为任意一个参数定义默认值（Deafult Values）。当默认值被定义后，调用这个函数时可以忽略这个参数。
+你可以在函数体中通过给参数赋值来为任意一个参数定义*默认值（Deafult Value）*。当默认值被定义后，调用这个函数时可以忽略这个参数。
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
@@ -312,7 +313,7 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 <a name="variadic_parameters"></a>
 ### 可变参数 (Variadic Parameters)
 
-一个可变参数（variadic parameter）可以接受零个或多个值。函数调用时，你可以用可变参数来指定函数参数可以被传入不确定数量的输入值。通过在变量类型名后面加入（`...`）的方式来定义可变参数。
+一个*可变参数（variadic parameter）*可以接受零个或多个值。函数调用时，你可以用可变参数来指定函数参数可以被传入不确定数量的输入值。通过在变量类型名后面加入（`...`）的方式来定义可变参数。
 
 可变参数的传入值在函数体中变为此类型的一个数组。例如，一个叫做 `numbers` 的 `Double...` 型可变参数，在函数体内可以当做一个叫 `numbers` 的 `[Double]` 型的数组常量。
 
@@ -338,7 +339,7 @@ arithmeticMean(3, 8.25, 18.75)
 <a name="in_out_parameters"></a>
 ### 输入输出参数（In-Out Parameters）
 
-函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误(compile-time error)。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。
+函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误(compile-time error)。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为*输入输出参数（In-Out Parameters）*。
 
 定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个`输入输出参数`有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看`输入输出参数`一节。
 
@@ -470,7 +471,7 @@ printMathResult(addTwoInts, 3, 5)
 
 你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（->）后写一个完整的函数类型。
 
-下面的这个例子中定义了两个简单函数，分别是 `stepForward` 和 `stepBackward`。`stepForward`函数返回一个比输入值大 `1` 的值。`stepBackward` 函数返回一个比输入值小 `1` 的值。这两个函数的类型都是 `(Int) -> Int`：
+下面的这个例子中定义了两个简单函数，分别是 `stepForward(_:)` 和 `stepBackward(_:)`。`stepForward(_:)`函数返回一个比输入值大 `1` 的值。`stepBackward(_:)` 函数返回一个比输入值小 `1` 的值。这两个函数的类型都是 `(Int) -> Int`：
 
 ```swift
 func stepForward(_ input: Int) -> Int {
@@ -481,7 +482,7 @@ func stepBackward(_ input: Int) -> Int {
 }
 ```
 
-如下名为 `chooseStepFunction(_:)` 的函数，它的返回类型是 `(Int) -> Int` 类型的函数。`chooseStepFunction(_:)` 根据布尔值 `backwards` 来返回 `stepForward(_:)` 函数或 `stepBackward(_:)` 函数：
+如下名为 `chooseStepFunction(backward:)` 的函数，它的返回类型是 `(Int) -> Int` 类型的函数。`chooseStepFunction(backward:)` 根据布尔值 `backwards` 来返回 `stepForward(_:)` 函数或 `stepBackward(_:)` 函数：
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
@@ -489,7 +490,7 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
 }
 ```
 
-你现在可以用 `chooseStepFunction(_:)` 来获得两个函数其中的一个：
+你现在可以用 `chooseStepFunction(backward:)` 来获得两个函数其中的一个：
 
 ```swift
 var currentValue = 3
@@ -519,11 +520,11 @@ print("zero!")
 <a name="Nested_Functions"></a>
 ## 嵌套函数 (Nested Functions)
 
-到目前为止本章中你所见到的所有函数都叫`全局`函数（global functions），它们定义在`全局域`中。你也可以把函数定义在别的函数体中，称作 `嵌套函数`（nested functions）。
+到目前为止本章中你所见到的所有函数都叫*全局函数（global functions）*，它们定义在全局域中。你也可以把函数定义在别的函数体中，称作 *嵌套函数（nested functions）*。
 
 默认情况下，嵌套函数是对外界不可见的，但是可以被它们的外围函数（enclosing function）调用。一个外围函数也可以返回它的某一个嵌套函数，使得这个函数可以在其他域中被使用。
 
-你可以用返回嵌套函数的方式重写 `chooseStepFunction(_:)` 函数：
+你可以用返回嵌套函数的方式重写 `chooseStepFunction(backward:)` 函数：
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
