@@ -318,6 +318,26 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 
+.. note::
+
+   The ``Any`` type matches any type, including optional types.
+   Assigning an optional value without unwrapping it is often a mistake ---
+   to help you notice that mistake,
+   this sort of assignment causes a warning.
+   To supress the warning,
+   use the ``as`` operator to make an explicit upcast.
+
+    .. testcode:: any-and-optional
+
+       -> let optionalNumber: Int? = 3
+       << // optionalNumber : Int? = Optional(3)
+       -> let anyValue: Any = optionalNumber          // Warning
+       << // anyValue : Any = Optional(3)
+       -> let anyValue2: Any = optionalNumber as Any  // No warning
+       << // anyValue2 : Any = Optional(3)
+
+    .. TODO: The above should have a warning, as of swiftlang-800.0.55
+
 .. Rejected examples to illustrate AnyObject:
 
 .. Array of delegates which may conform to one or more of the class's delegate protocols.
