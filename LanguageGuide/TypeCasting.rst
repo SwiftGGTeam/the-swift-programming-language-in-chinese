@@ -320,12 +320,12 @@ a constant of the specified type to enable its value to be printed:
 
 .. note::
 
-   The ``Any`` type matches any type, including optional types.
-   Assigning an optional value without unwrapping it is often a mistake ---
-   to help you notice that mistake,
-   this sort of assignment causes a warning.
-   To supress the warning,
-   use the ``as`` operator to make an explicit upcast.
+    The ``Any`` type matches any type, including optional types.
+    Assigning an optional value without unwrapping it is often a mistake ---
+    to help you notice that mistake,
+    this sort of assignment causes a warning.
+    To suppress the warning,
+    use the ``as`` operator to make an explicit upcast.
 
     .. testcode:: any-and-optional
 
