@@ -10,6 +10,7 @@
 > 
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me) 2016-09-24
+
 本页包含内容：
 
 - [表示并抛出错误](#representing_and_throwing_errors)
