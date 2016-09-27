@@ -461,8 +461,11 @@ a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is assumed to *always* have a value.
 Because of this, an unowned reference is always defined as a nonoptional type.
-You indicate an unowned reference by placing the ``unowned`` keyword
+You indicate an unowned reference by placing the
+``unowned``, ``unowned(safe)``, or ``unowned(unsafe)`` keyword
 before a property or variable declaration.
+
+.. FIXME: Explain the difference between the three flavors of unowned.
 
 Because an unowned reference is nonoptional,
 you don't need to unwrap the unowned reference each time it is used.
