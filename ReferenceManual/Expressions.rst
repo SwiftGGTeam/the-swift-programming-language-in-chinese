@@ -1206,7 +1206,7 @@ For example:
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(c.value(forKey: keyPath))
+   -> print(c.value(forKey: keyPath) as Any)
    <- Optional(12)
    ---
    -> print(keyPath == c.keyPathTest())

@@ -375,7 +375,7 @@ in the following code ``x`` and ``y`` have the same value and behavior:
     -> }
     ---
     -> let x = try? someThrowingFunction()
-    >> print(x)
+    >> print(x as Any)
     << Optional(40)
     ---
     -> let y: Int?
@@ -384,7 +384,7 @@ in the following code ``x`` and ``y`` have the same value and behavior:
        } catch {
            y = nil
        }
-    >> print(y)
+    >> print(y as Any)
     << Optional(40)
 
 If ``someThrowingFunction()`` throws an error,
