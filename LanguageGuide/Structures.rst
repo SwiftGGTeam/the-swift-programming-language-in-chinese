@@ -19,6 +19,9 @@ In Swift, structures can:
 * Be extended to provide added functionality, as described in :doc:`Extensions`.
 * Conform to protocols to implement a shared abstraction or cooperate with a default implementation, as described in :doc:`Protocols`.
 
+.. XXX this chapter does X, you'll see Y in following chapters.
+.. XXX (migi) polymorphism is possible with structs
+
 .. _Structures_StructureSyntax:
 
 Structure Syntax
@@ -123,7 +126,7 @@ Accessing Properties of Structures
 You can access a property
 of a structure instance
 using dot syntax
-by writing the name of the instance
+by writing the name of the instance,
 followed by a period (``.``)
 and the name of the property:
 
@@ -157,10 +160,16 @@ The ``bodyTemperature`` variable's ``celsius`` property is set,
 and then its ``celsius`` and ``fahrenheit`` properties are accessed
 to print their values.
 
+.. XXX same syntax for method access --
+   should we add a brief mention of methods like we have for properties?
+
 .. _Structures_StructuresAreValueTypes:
 
 Structures Are Value Types
 --------------------------
+
+.. XXX caveat "usually" value types - or "usually" has value semantics --
+   if you put a class inside a struct, you don't have value semantics anymore.
 
 A :newTerm:`value type` is a type whose value is copied
 when it is assigned to a variable or constant,
@@ -171,7 +180,7 @@ throughout the previous chapters.
 In fact, all the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays, and dictionaries ---
 are value types,
-and are implemented as structures behind the scenes.
+and are implemented as structures.
 
 All structures are value types in Swift.
 This means that any structure instances you create ---
@@ -179,6 +188,8 @@ and any value types you give them as properties ---
 are always copied when they are passed around in your code.
 
 Consider this example:
+
+.. XXX set up context before the listing.
 
 .. testcode:: structures
 
@@ -191,6 +202,8 @@ The example above declares a variable called ``roomTemperature``
 to keep track of the current temperature of a room.
 ``roomTemperature`` is set to a ``Temperature`` instance initialized
 with a typical ambient room temperature of ``21.0`` degrees Celsius.
+
+.. XXX rewrite imperitive -> indicative
 
 Suppose this room is a kitchen
 and contains an oven.
@@ -231,6 +244,8 @@ setting ``ovenTemperature.celsius`` to a new value
 does not affect the ``celsius`` property stored
 in ``roomTemperature``.
 
+.. XXX diagram showing (lack of) shared mutable state
+
 For an in-depth discussion of value types
 and when to use them,
 see :doc:`ChoosingBetweenClassesAndStructures`.
@@ -248,3 +263,8 @@ see :doc:`ChoosingBetweenClassesAndStructures`.
    This optimization saves Swift from doing unnecessary work
    as Swift needs to copy a structure instance
    only if you mutate it.
+
+.. XXX Not always true -- "big" variable sized things like strings and array do this
+
+.. XXX Add discussion about how you get COW on your own types by making them out of stdlib types;
+   you can build it from scratch if needed too.

@@ -1,8 +1,14 @@
 Classes
 =======
 
+.. XXX As in structs chapter, scrub for imperative -> indicative
+
+.. XXX Should we re-order chapters to be Struct, Class, Enum?
+   (like we did for the WWDC 2016 talk)
+
 :newTerm:`Classes` in Swift are composed
 of many of the same pieces as structures.
+.. XXX adjust wording -- same pieces...?  same functionality...?
 They can have properties, methods, subscripts, initializers, and so on.
 Just like with structures,
 you use dot syntax to access properties and methods
@@ -14,6 +20,8 @@ classes have different underlying behavior:
 * Inheritance enables one class to inherit the characteristics of another, as described in :doc:`Inheritance`.
 * Deinitializers enable an instance of a class to free up any resources it has allocated, as described in :doc:`Deinitialization`.
 * You can have more than one reference to a class instance, as described in :doc:`AutomaticReferenceCounting`.
+
+.. XXX ARC is more about sharing and identity
 
 For an in-depth discussion of
 when to use classes and
@@ -126,7 +134,7 @@ Suppose there are two windows to keep track of:
     -> let windowTwo = Window(width: 400, height: 400)
     << // windowTwo : Window = REPL.Window
 
-Next, new variable called ``currentWindow``
+Next, a new variable called ``currentWindow``
 is declared and set equal to ``windowOne``:
 
 .. testcode:: classes
@@ -200,6 +208,7 @@ Constants and Reference Types
 One of the fundamental characteristics
 of reference semantics is that
 a single instance can be referred to in multiple places.
+.. XXX maybe put more emphasis on shared mutable state
 In the example above,
 you may have noticed that
 ``windowOne`` is declared as a *constant*,
@@ -226,18 +235,18 @@ Consider the following example:
     
     -> let classInstance = ExampleClass()
     << // classInstance : ExampleClass = REPL.ExampleClass
-    -> classInstance.constant = 10 // Invalid, can't mutate a constant
+    -> classInstance.constant = 10 // Error
     !! <REPL Input>:1:24: error: cannot assign to property: 'constant' is a 'let' constant
-    !! classInstance.constant = 10 // Invalid, can't mutate a constant
+    !! classInstance.constant = 10 // Error
     !! ~~~~~~~~~~~~~~~~~~~~~~ ^
     !! <REPL Input>:2:7: note: change 'let' to 'var' to make it mutable
     !! let constant = 5
     !! ^~~
     !! var
     -> classInstance.variable = 16
-    -> classInstance = Window() // Invalid, can't assign to a constant 
+    -> classInstance = Window()    // Error
     !! <REPL Input>:1:15: error: cannot assign to value: 'classInstance' is a 'let' constant
-    !! classInstance = Window() // Invalid, can't assign to a constant
+    !! classInstance = Window()    // Error
     !! ~~~~~~~~~~~~~ ^
     !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
     !! let classInstance = ExampleClass()
@@ -254,16 +263,19 @@ of ``classInstance``.
 Additionally,
 you cannot reassign ``classInstance``
 to a different class instance
-because it is a constant reference.
+because it's a constant reference.
+.. XXX the "because" comes pretty late in this sentence - reword?
 This feature of being able to
 change the underlying variable properties
 of the same instance
 is something unique you get
 when working with classes.
-By contrast,
+In contrast,
 changing the variable properties of a structure instance
 gives you a whole new structure instance
 instead of the same instance modified in place.
+
+.. XXX Above fact about getting a whole new structure is probably wrong.
 
 .. note:: 
 
@@ -278,3 +290,5 @@ instead of the same instance modified in place.
    to indicate that you are creating a reference.
    Instead, these references are defined
    like any other Swift constant or variable.
+
+.. XXX maybe bring back the xref to stdlib pointer stuff
