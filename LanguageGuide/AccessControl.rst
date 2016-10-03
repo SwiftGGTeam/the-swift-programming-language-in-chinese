@@ -581,7 +581,7 @@ In addition, you can override any class member
 that is visible in a certain access context.
 
 An override can make an inherited class member more accessible than its superclass version.
-In the example below, class ``A`` is a public class with a private method called ``someMethod()``.
+In the example below, class ``A`` is a public class with a file-private method called ``someMethod()``.
 Class ``B`` is a subclass of ``A``, with a reduced access level of “internal”.
 Nonetheless, class ``B`` provides an override of ``someMethod()``
 with an access level of “internal”, which is *higher* than
@@ -590,27 +590,24 @@ the original implementation of ``someMethod()``:
 .. testcode:: subclassingNoCall
 
    -> public class A {
-         private func someMethod() {}
+         fileprivate func someMethod() {}
       }
    ---
    -> internal class B: A {
          override internal func someMethod() {}
       }
-   !! <REPL Input>:2:29: error: method does not override any method from its superclass
-   !! override internal func someMethod() {}
-   !! ~~~~~~~~               ^
 
 It is even valid for a subclass member to call
 a superclass member that has lower access permissions than the subclass member,
 as long as the call to the superclass's member takes place within
 an allowed access level context
-(that is, within the same source file as the superclass for a private member call,
+(that is, within the same source file as the superclass for a file-private member call,
 or within the same module as the superclass for an internal member call):
 
 .. testcode:: subclassingWithCall
 
    -> public class A {
-         private func someMethod() {}
+         fileprivate func someMethod() {}
       }
    ---
    -> internal class B: A {
@@ -618,15 +615,6 @@ or within the same module as the superclass for an internal member call):
             super.someMethod()
          }
       }
-   !! <REPL Input>:2:29: error: method does not override any method from its superclass
-   !! override internal func someMethod() {
-   !! ~~~~~~~~               ^
-   !! <REPL Input>:3:15: error: 'someMethod' is inaccessible due to 'private' protection level
-   !! super.someMethod()
-   !! ^
-   !! <REPL Input>:2:19: note: 'someMethod' declared here
-   !! private func someMethod() {}
-   !! ^
 
 Because superclass ``A`` and subclass ``B`` are defined in the same source file,
 it is valid for the ``B`` implementation of ``someMethod()`` to call
