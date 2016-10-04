@@ -229,7 +229,7 @@ due to confusion about the logic
 of your code. 
 In order to explore an example
 of this kind of unintended mutation,
-imagine that the ``Temperature``structure from :doc:`Structures`
+imagine that the ``Temperature`` structure from :doc:`Structures`
 was a class instead:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
