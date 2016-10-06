@@ -25,17 +25,24 @@
 > 
 > 2.2
 > 翻译+校对：[changkun](http://changkun.us/about/)
+> 
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
-
+-   [Swift 3.0 更新](#swift_3_0)
 -   [Swift 2.2 更新](#swift_2_2)
 -   [Swift 2.1 更新](#swift_2_1)
 -   [Swift 2.0 更新](#swift_2_0)
 -   [Swift 1.2 更新](#swift_1_2)
 -   [Swift 1.1 更新](#swift_1_1)
 -   [Swift 1.0 更新](#swift_1_0)
+
+
+<a name="swift_3_0"></a>
+### Swift 3.0 更新
 
 <a name="swift_2_2"></a>
 ### Swift 2.2 更新
@@ -48,6 +55,18 @@
     </tr>
 </thead>
 <tbody>
+	 <tr>
+    <td scope="row">2016-09-13</td>
+    <td><ul class="list-bullet">
+        <li>
+            更新至 Swift 3.0。
+        </li>
+        <li>
+           更新[函数]()章节中关于函数的讨论，在函数定义一节中，标明所有函数参数默认都有函数标签
+        </li>
+		</ul>
+	</td>
+	</tr>
     <tr>
     <td scope="row">2016-03-21</td>
     <td><ul class="list-bullet">
