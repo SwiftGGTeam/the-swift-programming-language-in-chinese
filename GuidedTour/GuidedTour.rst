@@ -53,9 +53,6 @@ that you determine once but use in many places.
    -> let myConstant = 42
    << // myConstant : Int = 42
 
-.. TR: Is the requirement that constants need an initial value
-   a current REPL limitation, or an expected language feature?
-
 A constant or variable must have the same type
 as the value you want to assign to it.
 However, you don't always have to write the type explicitly.
