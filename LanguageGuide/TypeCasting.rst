@@ -321,9 +321,10 @@ a constant of the specified type to enable its value to be printed:
 .. note::
 
     The ``Any`` type matches any type, including optional types.
-    Assigning an optional value without unwrapping it is often a mistake ---
-    to help you notice that mistake,
-    this sort of assignment causes a warning.
+    Because using an optional value without unwrapping it is usually a mistake,
+    Swift gives you a warning if you use an optional value
+    where a value of ``Any`` type is expected ---
+    for example, in a function call or in an assignment.
     To suppress the warning,
     use the ``as`` operator to make an explicit upcast.
 
