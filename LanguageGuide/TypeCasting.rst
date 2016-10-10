@@ -274,6 +274,24 @@ the movie “Ghostbusters”,
 and a closure expression that takes a ``String`` value
 and returns another ``String`` value.
 
+The ``Any`` type represents a value of any type, including optional types.
+Because using an optional value without unwrapping it is usually a mistake,
+Swift gives you a warning if you use an optional value
+where a value of ``Any`` type is expected ---
+for example, in a function call or in an assignment.
+If this is intentional,
+.. FIXME polish above
+use the ``as`` operator to make an explicit upcast.
+
+.. FIXME: email the core team -- how can I extract/match an optional value from [Any] in a switch?
+
+.. testcode:: any-and-optional
+
+   -> let optionalNumber: Int? = 3
+   << // optionalNumber : Int? = Optional(3)
+   -> things.append(optionalNumber)        // Warning
+   -> things.append(optionalNumber as Any) // No warning
+
 You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
 to discover the specific type of a constant or variable
 that is known only to be of type ``Any`` or ``AnyObject``.
@@ -317,40 +335,6 @@ a constant of the specified type to enable its value to be printed:
    </ an (x, y) point at 3.0, 5.0
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
-
-.. note::
-
-    The ``Any`` type matches any type, including optional types.
-    Because using an optional value without unwrapping it is usually a mistake,
-    Swift gives you a warning if you use an optional value
-    where a value of ``Any`` type is expected ---
-    for example, in a function call or in an assignment.
-    To suppress the warning,
-    use the ``as`` operator to make an explicit upcast.
-
-    .. testcode:: any-and-optional
-
-       -> let optionalNumber: Int? = 3
-       << // optionalNumber : Int? = Optional(3)
-       -> let anyValue: Any = optionalNumber          // Warning
-       << // anyValue : Any = Optional(3)
-       !! <REPL Input>:1:21: warning: expression implicitly coerced from 'Int?' to Any
-       !! let anyValue: Any = optionalNumber          // Warning
-       !!                     ^~~~~~~~~~~~~~
-       !! <REPL Input>:1:21: note: provide a default value to avoid this warning
-       !! let anyValue: Any = optionalNumber          // Warning
-       !!                     ^~~~~~~~~~~~~~
-       !!                                    ?? <#default value#>
-       !! <REPL Input>:1:21: note: force-unwrap the value to avoid this warning
-       !! let anyValue: Any = optionalNumber          // Warning
-       !!                     ^~~~~~~~~~~~~~
-       !!                                   !
-       !! <REPL Input>:1:21: note: explicitly cast to Any with 'as Any' to silence this warning
-       !! let anyValue: Any = optionalNumber          // Warning
-       !!                     ^~~~~~~~~~~~~~
-       !!                                    as Any
-       -> let anyValue2: Any = optionalNumber as Any  // No warning
-       << // anyValue2 : Any = Optional(3)
 
 .. Rejected examples to illustrate AnyObject:
 
