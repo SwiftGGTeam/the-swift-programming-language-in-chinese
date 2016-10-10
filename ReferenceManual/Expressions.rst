@@ -939,7 +939,7 @@ A single expression inside parentheses is a parenthesized expression.
 
     Grammar of a parenthesized expression
 
-    parenthesized-expression --> ``(`` ``)`` | ``(`` expression-element-list ``)``
+    tuple-expression --> ``(`` ``)`` | ``(`` expression-element-list ``)``
     expression-element-list --> expression-element ``,`` expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
