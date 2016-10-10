@@ -937,7 +937,7 @@ A single expression inside parentheses is a parenthesized expression.
 
 .. syntax-grammar::
 
-    Grammar of a parenthesized expression
+    Grammar of a tuple expression
 
     tuple-expression --> ``(`` ``)`` | ``(`` expression-element-list ``)``
     expression-element-list --> expression-element ``,`` expression-element | expression-element ``,`` expression-element-list
