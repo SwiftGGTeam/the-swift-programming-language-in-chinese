@@ -1206,11 +1206,13 @@ For example:
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(c.value(forKey: keyPath) as Any)
-   <- Optional(12)
-   ---
    -> print(keyPath == c.keyPathTest())
    <- true
+   ---
+   -> if let value = c.value(forKey: keyPath) {
+   ->     print(value)
+   -> }
+   <- 12
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
