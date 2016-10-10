@@ -333,10 +333,23 @@ a constant of the specified type to enable its value to be printed:
        << // optionalNumber : Int? = Optional(3)
        -> let anyValue: Any = optionalNumber          // Warning
        << // anyValue : Any = Optional(3)
+       !! <REPL Input>:1:21: warning: expression implicitly coerced from 'Int?' to Any
+       !! let anyValue: Any = optionalNumber          // Warning
+       !!                     ^~~~~~~~~~~~~~
+       !! <REPL Input>:1:21: note: provide a default value to avoid this warning
+       !! let anyValue: Any = optionalNumber          // Warning
+       !!                     ^~~~~~~~~~~~~~
+       !!                                    ?? <#default value#>
+       !! <REPL Input>:1:21: note: force-unwrap the value to avoid this warning
+       !! let anyValue: Any = optionalNumber          // Warning
+       !!                     ^~~~~~~~~~~~~~
+       !!                                   !
+       !! <REPL Input>:1:21: note: explicitly cast to Any with 'as Any' to silence this warning
+       !! let anyValue: Any = optionalNumber          // Warning
+       !!                     ^~~~~~~~~~~~~~
+       !!                                    as Any
        -> let anyValue2: Any = optionalNumber as Any  // No warning
        << // anyValue2 : Any = Optional(3)
-
-    .. TODO: The above should have a warning, as of swiftlang-800.0.55
 
 .. Rejected examples to illustrate AnyObject:
 
