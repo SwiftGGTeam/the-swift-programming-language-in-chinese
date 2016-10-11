@@ -350,7 +350,8 @@ a constant of the specified type to enable its value to be printed:
    </ an integer value of 3
    </ an integer value of 3
 
-.. FIXME: Do we want the Int? value of 3 to appear twice, or just once?
+.. The 3 appears twice -- once from when it was appended with a warning
+   and once from when it was appended without a warning.
 
 .. Rejected examples to illustrate AnyObject:
 
