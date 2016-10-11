@@ -283,13 +283,26 @@ If this is intentional,
 .. FIXME polish above
 use the ``as`` operator to make an explicit upcast.
 
-.. FIXME: email the core team -- how can I extract/match an optional value from [Any] in a switch?
-
-.. testcode:: any-and-optional
+.. testcode:: typeCasting
 
    -> let optionalNumber: Int? = 3
    << // optionalNumber : Int? = Optional(3)
    -> things.append(optionalNumber)        // Warning
+   !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to Any
+   !! things.append(optionalNumber)        // Warning
+   !!               ^~~~~~~~~~~~~~
+   !! <REPL Input>:1:15: note: provide a default value to avoid this warning
+   !! things.append(optionalNumber)        // Warning
+   !!               ^~~~~~~~~~~~~~
+   !!                              ?? <#default value#>
+   !! <REPL Input>:1:15: note: force-unwrap the value to avoid this warning
+   !! things.append(optionalNumber)        // Warning
+   !!               ^~~~~~~~~~~~~~
+   !!                              !
+   !! <REPL Input>:1:15: note: explicitly cast to Any with 'as Any' to silence this warning
+   !! things.append(optionalNumber)        // Warning
+   !!               ^~~~~~~~~~~~~~
+   !!                              as Any
    -> things.append(optionalNumber as Any) // No warning
 
 .. FIXME: add a transition here from is/as expression to is/as pattern
@@ -337,6 +350,10 @@ a constant of the specified type to enable its value to be printed:
    </ an (x, y) point at 3.0, 5.0
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
+   </ an integer value of 3
+   </ an integer value of 3
+
+.. FIXME: Do we want the Int? value of 3 to appear twice, or just once?
 
 .. Rejected examples to illustrate AnyObject:
 
