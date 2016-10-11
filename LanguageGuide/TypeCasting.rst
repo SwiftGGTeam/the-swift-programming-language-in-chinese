@@ -279,9 +279,8 @@ Because using an optional value without unwrapping it is usually a mistake,
 Swift gives you a warning if you use an optional value
 where a value of ``Any`` type is expected ---
 for example, in a function call or in an assignment.
-If this is intentional,
-.. FIXME polish above
-use the ``as`` operator to make an explicit upcast.
+If you need to use an optional value as an ``Any`` value,
+use the ``as`` operator.
 
 .. testcode:: typeCasting
 
@@ -305,11 +304,9 @@ use the ``as`` operator to make an explicit upcast.
    !!                              as Any
    -> things.append(optionalNumber as Any) // No warning
 
-.. FIXME: add a transition here from is/as expression to is/as pattern
-
-You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
-to discover the specific type of a constant or variable
-that is known only to be of type ``Any`` or ``AnyObject``.
+To discover the specific type of a constant or variable
+that is known only to be of type ``Any`` or ``AnyObject``,
+you can use an ``is`` or ``as`` pattern in a ``switch`` statement's cases.
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.
 Several of the ``switch`` statement's cases bind their matched value to
