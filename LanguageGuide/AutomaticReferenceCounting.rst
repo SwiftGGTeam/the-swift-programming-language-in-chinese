@@ -468,11 +468,27 @@ Unlike a weak reference, however,
 an unowned reference is used when both instances have the same lifetime.
 Because an unowned reference is assumed to *always* have a value,
 it is always defined as a nonoptional type.
-You indicate an unowned reference by placing the
-``unowned``, ``unowned(safe)``, or ``unowned(unsafe)`` keyword
-before a property or variable declaration.
 
-.. FIXME: Explain the difference between the three flavors of unowned.
+You indicate an unowned reference by placing one of the following keywords
+before a property or variable declaration:
+
+``unowned(safe)``
+   If you try to access a *safe* unowned reference
+   after the instance that it references is deallocated,
+   you will trigger a runtime error.
+
+``unowned(unsafe)``
+   If you try to access an *unsafe* unowned reference
+   after the instance that it references is deallocated,
+   your program will read from an arbitrary memory location.
+   It might crash, or it might read arbitarry data;
+   the specific behavior is undefined.
+
+``unowned``
+  In debug builds, this is a safe unowned reference;
+  otherwise, it's an unsafe unowned reference.
+
+.. TODO: Confirm that bare 'unowned' switches based on DEBUG -- it might actually come from the -O setting
 
 Because an unowned reference is nonoptional,
 you don't need to unwrap the unowned reference each time it is used.
@@ -480,20 +496,13 @@ An unowned reference can always be accessed directly.
 However, ARC cannot set the reference to ``nil`` when the instance it refers to is deallocated,
 because variables of a nonoptional type cannot be set to ``nil``.
 
-.. note::
+.. important::
 
-   If you try to access an unowned reference
-   after the instance that it references is deallocated,
-   you will trigger a runtime error.
    Use unowned references only when you are sure that
-   the reference will *always* refer to an instance.
-
-   Note also that Swift guarantees your app will crash
-   if you try to access an unowned reference
-   after the instance it references is deallocated.
-   You will never encounter unexpected behavior in this situation.
-   Your app will always crash reliably,
-   although you should, of course, prevent it from doing so.
+   the reference *always* refers to an instance that has not been deallocated.
+   If the instance lifetimes are not the same,
+   your program will either crash or have undefined behavior,
+   as described above.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
