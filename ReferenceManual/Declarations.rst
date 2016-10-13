@@ -2527,11 +2527,7 @@ that introduces the declaration.
     must also be marked with the ``required`` modifier.
 
 ``unowned``
-    Apply this modifier to a variable or a stored variable property
-    to indicate that the variable or property has unowned reference
-    to the object stored as its value.
-    Depending on the optimization settings,
-    this is equivalent to either ``unowned(safe)`` or ``unowned(unsafe)``.
+    A shorter spelling of ``unowned(safe)``.
 
 ``unowned(safe)``
     Apply this modifier to a variable or a stored variable property

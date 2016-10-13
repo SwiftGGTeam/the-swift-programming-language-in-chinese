@@ -472,6 +472,9 @@ it is always defined as a nonoptional type.
 You indicate an unowned reference by placing one of the following keywords
 before a property or variable declaration:
 
+``unowned``
+   A shorter spelling of ``unowned(safe)``.
+
 ``unowned(safe)``
    If you try to access a *safe* unowned reference
    after the instance that it references is deallocated,
@@ -481,14 +484,14 @@ before a property or variable declaration:
    If you try to access an *unsafe* unowned reference
    after the instance that it references is deallocated,
    your program will read from an arbitrary memory location.
-   It might crash, or it might read arbitarry data;
+   It might crash, or it might read arbitrary data;
    the specific behavior is undefined.
 
-``unowned``
-  In debug builds, this is a safe unowned reference;
-  otherwise, it's an unsafe unowned reference.
-
-.. TODO: Confirm that bare 'unowned' switches based on DEBUG -- it might actually come from the -O setting
+.. Historically, we had intended "unowned" to mean "unowned(safe)" under -O and -Onone
+   and to mean "unowned(unsafe)" under -Ounchecked.
+   Joe Groff confirmed as of 2016-10-13 that this never got implemented,
+   and implementing it now would cause problems ---
+   for example, there would be ABI mismatch issues if we did that for fields in fragile structs.
 
 Because an unowned reference is nonoptional,
 you don't need to unwrap the unowned reference each time it is used.
