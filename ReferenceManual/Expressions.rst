@@ -923,8 +923,6 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-.. FIXME Explicitly call out that the type of a tuple expression is a tuple type?
-
 A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
