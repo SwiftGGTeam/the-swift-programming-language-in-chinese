@@ -299,6 +299,32 @@ Unowned references are never ``nil``
 because they are should never refer to an instance
 after it has been deallocated.
 
+To chose between
+weak references, unowned references, and unsafe unowned references,
+consider how much work you want Swift to do at runtime
+about the safety of accessing the other instance.
+.. XXX
+
+* A weak reference asks Swift to do the most runtime work
+  out of these three approaches:
+  It's always valid for your code to access a weak reference.
+  Swift does work at runtime to set the weak reference to ``nil``,
+  which ensures that accessing the weak reference never raises a runtime error.
+
+* A safe unowned reference asks Swift to do some runtime work to ensure safety,
+  but also shifts some of the burden to your code.
+  Your code is responsible for ensuring that both instances have the same lifetime.
+  Swift does work at runtime to raise a runtime error
+  if your code tries to access a safe unowned reference
+  after the instance has been deallocated.
+
+* An unsafe unowned reference doesn't ask Swift to do any runtime work.
+  If your code tries to access an unsafe unowned reference
+  after the instance has been deallocated,
+  
+
+
+
 .. QUESTION: how do I answer the question
    "which of the two properties in the reference cycle
    should be marked as weak or unowned?"
@@ -483,7 +509,8 @@ before a property or variable declaration:
 ``unowned(unsafe)``
     If you try to access an *unsafe* unowned reference
     after the instance that it references is deallocated,
-    your program will read from an arbitrary memory location.
+    your program will read from the memory location
+    where the instance used to be.
     It might crash, or it might read arbitrary data;
     the specific behavior is undefined.
 
