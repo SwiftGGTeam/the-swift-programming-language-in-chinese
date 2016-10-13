@@ -989,19 +989,19 @@ anytime the value's type is already known.
 
 If enumeration has raw values,
 those values are determined as part of the declaration,
-which means every instance of the enumeration case has the same raw value.
+which means every instance of a particular enumeration case
+always has the same raw value.
 Another choice for enumeration cases
-is to have values associated with the case
-that are chosen when you make the instance,
-and that can be different for each instance of the enumeration case.
+is to have values associated with the case ---
+these values are determined when you make the instance,
+and they can be different for each instance of an enumeration case.
 You can think of the associated values
-as behaving like a stored property of the enumeration case.
+as behaving like stored properties of the enumeration case instance.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
 The server either responds with the information
 or it responds with some error information.
-
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
    while sidestepping the fact that I'm doing so.
