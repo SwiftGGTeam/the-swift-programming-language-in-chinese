@@ -892,8 +892,9 @@ Parenthesized Expression
 
 A :newTerm:`parenthesized expression` consists of
 an expression surrounded by parentheses.
-It is used to explicitly specify the precedence of operations.
-The type of the parenthesized expression is the type of that value.
+It's used to explicitly specify the precedence of operations.
+The type of a parenthesized expression
+is the same as the type of its inner expression.
 For example,
 the type of the parenthesized expression ``(1)``
 is ``Int``, not ``(Int)``.
