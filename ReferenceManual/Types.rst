@@ -130,7 +130,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of zero or more types, enclosed in parentheses.
+A tuple type is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
