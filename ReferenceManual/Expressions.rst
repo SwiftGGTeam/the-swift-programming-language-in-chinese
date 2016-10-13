@@ -938,9 +938,9 @@ A single expression inside parentheses is a parenthesized expression.
 
     Grammar of a tuple expression
 
-    tuple-expression --> ``(`` ``)`` | ``(`` expression-element-list ``)``
-    expression-element-list --> expression-element ``,`` expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
+    tuple-expression --> ``(`` ``)`` | ``(`` tuple-element-list ``)``
+    tuple-element-list --> tuple-element ``,`` tuple-element | tuple-element ``,`` tuple-element-list
+    tuple-element --> expression | identifier ``:`` expression
 
 
 .. _Expressions_WildcardExpression:
