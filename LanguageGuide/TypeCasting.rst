@@ -2,7 +2,7 @@ Type Casting
 ============
 
 :newTerm:`Type casting` is a way to check the type of an instance,
-and/or to treat that instance as if it is a different
+or to treat that instance as a different
 superclass or subclass from somewhere else in its own class hierarchy.
 
 Type casting in Swift is implemented with the ``is`` and ``as`` operators.
@@ -116,13 +116,13 @@ which count the number of ``Movie`` and ``Song`` instances in the ``library`` ar
    ---
    -> for item in library {
          if item is Movie {
-            ++movieCount
+            movieCount += 1
          } else if item is Song {
-            ++songCount
+            songCount += 1
          }
       }
    ---
-   -> println("Media library contains \(movieCount) movies and \(songCount) songs")
+   -> print("Media library contains \(movieCount) movies and \(songCount) songs")
    <- Media library contains 2 movies and 3 songs
 
 This example iterates through all items in the ``library`` array.
@@ -181,17 +181,17 @@ to check the downcast each time through the loop:
 
    -> for item in library {
          if let movie = item as? Movie {
-            println("Movie: '\(movie.name)', dir. \(movie.director)")
+            print("Movie: \(movie.name), dir. \(movie.director)")
          } else if let song = item as? Song {
-            println("Song: '\(song.name)', by \(song.artist)")
+            print("Song: \(song.name), by \(song.artist)")
          }
       }
    ---
-   </ Movie: 'Casablanca', dir. Michael Curtiz
-   </ Song: 'Blue Suede Shoes', by Elvis Presley
-   </ Movie: 'Citizen Kane', dir. Orson Welles
-   </ Song: 'The One And Only', by Chesney Hawkes
-   </ Song: 'Never Gonna Give You Up', by Rick Astley
+   </ Movie: Casablanca, dir. Michael Curtiz
+   </ Song: Blue Suede Shoes, by Elvis Presley
+   </ Movie: Citizen Kane, dir. Orson Welles
+   </ Song: The One And Only, by Chesney Hawkes
+   </ Song: Never Gonna Give You Up, by Rick Astley
 
 The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
@@ -230,84 +230,24 @@ whenever a ``Song`` is found in the library.
    to introduce type casting in a pattern matching context
    and to set up the crazy Any example at the end of the chapter.
 
-.. No section on upcasting because nobody can come up with
+.. TODO: No section on upcasting because nobody can come up with
    an example that isn't excessively contrived.
    The reference shows the behavior in a contrived example.
+
 
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject
 ----------------------------------
 
-Swift provides two special type aliases for working with non-specific types:
+Swift provides two special types for working with nonspecific types:
 
-* ``AnyObject`` can represent an instance of any class type.
 * ``Any`` can represent an instance of any type at all, including function types.
+* ``AnyObject`` can represent an instance of any class type.
 
-.. note::
-
-   Use ``Any`` and ``AnyObject`` only when you explicitly need
-   the behavior and capabilities they provide.
-   It is always better to be specific about the types you expect to work with in your code.
-
-.. _TypeCasting_AnyObject:
-
-AnyObject
-~~~~~~~~~
-
-When working with Cocoa APIs, it is common to receive
-an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
-This is because Objective-C does not have explicitly typed arrays.
-However, you can often be confident about the type of objects contained in such an array
-just from the information you know about the API that provided the array.
-
-In these situations, you can use the forced version of the type cast operator (``as``)
-to downcast each item in the array to a more specific class type than ``AnyObject``,
-without the need for optional unwrapping.
-
-The example below defines an array of type ``[AnyObject]``
-and populates this array with three instances of the ``Movie`` class:
-
-.. testcode:: typeCasting
-
-   -> let someObjects: [AnyObject] = [
-         Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
-         Movie(name: "Moon", director: "Duncan Jones"),
-         Movie(name: "Alien", director: "Ridley Scott")
-      ]
-   << // someObjects : [AnyObject] = [REPL.Movie, REPL.Movie, REPL.Movie]
-
-Because this array is known to contain only ``Movie`` instances,
-you can downcast and unwrap directly to a non-optional ``Movie``
-with the forced version of the type cast operator (``as!``):
-
-.. testcode:: typeCasting
-
-   -> for object in someObjects {
-         let movie = object as! Movie
-         println("Movie: '\(movie.name)', dir. \(movie.director)")
-      }
-   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-   </ Movie: 'Moon', dir. Duncan Jones
-   </ Movie: 'Alien', dir. Ridley Scott
-
-For an even shorter form of this loop,
-downcast the ``someObjects`` array to a type of ``[Movie]``
-instead of downcasting each item:
-
-.. testcode:: typeCasting
-
-   -> for movie in someObjects as! [Movie] {
-         println("Movie: '\(movie.name)', dir. \(movie.director)")
-      }
-   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-   </ Movie: 'Moon', dir. Duncan Jones
-   </ Movie: 'Alien', dir. Ridley Scott
-
-.. _TypeCasting_Any:
-
-Any
-~~~
+Use ``Any`` and ``AnyObject`` only when you explicitly need
+the behavior and capabilities they provide.
+It is always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
 including function types and non-class types.
@@ -316,7 +256,7 @@ The example creates an array called ``things``, which can store values of type `
 .. testcode:: typeCasting
 
    -> var things = [Any]()
-   << // things : [(Any)] = []
+   << // things : [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)
@@ -347,25 +287,25 @@ a constant of the specified type to enable its value to be printed:
    -> for thing in things {
          switch thing {
             case 0 as Int:
-               println("zero as an Int")
+               print("zero as an Int")
             case 0 as Double:
-               println("zero as a Double")
+               print("zero as a Double")
             case let someInt as Int:
-               println("an integer value of \(someInt)")
+               print("an integer value of \(someInt)")
             case let someDouble as Double where someDouble > 0:
-               println("a positive double value of \(someDouble)")
+               print("a positive double value of \(someDouble)")
             case is Double:
-               println("some other double value that I don't want to print")
+               print("some other double value that I don't want to print")
             case let someString as String:
-               println("a string value of \"\(someString)\"")
+               print("a string value of \"\(someString)\"")
             case let (x, y) as (Double, Double):
-               println("an (x, y) point at \(x), \(y)")
+               print("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
-               println("a movie called '\(movie.name)', dir. \(movie.director)")
-            case let stringConverter as String -> String:
-               println(stringConverter("Michael"))
+               print("a movie called \(movie.name), dir. \(movie.director)")
+            case let stringConverter as (String) -> String:
+               print(stringConverter("Michael"))
             default:
-               println("something else")
+               print("something else")
          }
       }
    ---
@@ -375,23 +315,31 @@ a constant of the specified type to enable its value to be printed:
    </ a positive double value of 3.14159
    </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
-   </ a movie called 'Ghostbusters', dir. Ivan Reitman
+   </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 
-.. note::
+.. Rejected examples to illustrate AnyObject:
 
-   The cases of a ``switch`` statement use
-   the forced version of the type cast operator (``as``, not ``as?``)
-   to check and cast to a specific type.
-   This check is always safe within the context of a ``switch`` case statement.
+.. Array of delegates which may conform to one or more of the class's delegate protocols.
 
-.. TODO: Where should I mention “AnyClass”?
+    protocol MovieDelegate {
+        func willPlay(movie: Movie)
+    }
 
-.. TODO: this section needs to address the question of "a constant or variable having a type"
-   as distinct from "a class instance having a type".
-   This is also relevant in a protocol context.
+    class Library {
+        var delegates = [AnyObject]
+        ...
+    }
 
-.. QUESTION: should I mention upcasting here?
-   I can't think of an example where it's useful.
-   However, it does display different behavior from downcasting,
-   in that upcasting always works, and so it doesn't return an optional.
+    for delegate in delegates {
+        guard let delegate = delegate as MovieDelegate else { continue }
+        delegate.willPlay(movie: m)
+    }
+
+
+.. A userData object for associating some opaque piece of data or state with an API call.
+
+    class C {
+        // Not userInfo -- that's usually a Dictionary
+        let userData: AnyObject?  // In Cocoa APIs, userData is a void*
+    }

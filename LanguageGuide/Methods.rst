@@ -25,7 +25,7 @@ They support the functionality of those instances,
 either by providing ways to access and modify instance properties,
 or by providing functionality related to the instance's purpose.
 Instance methods have exactly the same syntax as functions,
-as described in :doc:`Functions`. 
+as described in :doc:`Functions`.
 
 You write an instance method within the opening and closing braces of the type it belongs to.
 An instance method has implicit access to all other instance methods and properties of that type.
@@ -40,9 +40,9 @@ which can be used to count the number of times an action occurs:
    -> class Counter {
          var count = 0
          func increment() {
-            count++
+            count += 1
          }
-         func incrementBy(amount: Int) {
+         func increment(by amount: Int) {
             count += amount
          }
          func reset() {
@@ -52,9 +52,9 @@ which can be used to count the number of times an action occurs:
 
 The ``Counter`` class defines three instance methods:
 
-* ``increment`` increments the counter by ``1``.
-* ``incrementBy(amount: Int)`` increments the counter by a specified integer amount.
-* ``reset`` resets the counter to zero.
+* ``increment()`` increments the counter by ``1``.
+* ``increment(by: Int)`` increments the counter by a specified integer amount.
+* ``reset()`` resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
 to keep track of the current counter value.
@@ -70,118 +70,18 @@ You call instance methods with the same dot syntax as properties:
    -> counter.increment()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 1
-   -> counter.incrementBy(5)
+   -> counter.increment(by: 5)
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 6
    -> counter.reset()
    /> the counter's value is now \(counter.count)
    </ the counter's value is now 0
 
-.. QUESTION: I've used count++ rather than ++count here.
-   Is this consistent with my advice and usage elsewhere?
-
-.. _Methods_LocalAndExternalNamesForMethods:
-
-Local and External Parameter Names for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Function parameters can have both a local name (for use within the function's body)
-and an external name (for use when calling the function),
-as described in :ref:`Functions_ExternalParameterNames`.
+Function parameters can have both a name (for use within the function's body)
+and an argument label (for use when calling the function),
+as described in :ref:`Functions_FunctionParameterNames`.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
-However, the default behavior of local names and external names
-is different for functions and methods.
-
-Methods in Swift are very similar to their counterparts in Objective-C.
-As in Objective-C, the name of a method in Swift typically refers to
-the method's first parameter using a preposition such as
-``with``, ``for``, or ``by``,
-as seen in the ``incrementBy`` method from the preceding ``Counter`` class example.
-The use of a preposition enables the method to be read as a sentence when it is called.
-Swift makes this established method naming convention easy to write
-by using a different default approach for method parameters
-than it uses for function parameters.
-
-Specifically, Swift gives the *first* parameter name in a method
-a local parameter name by default,
-and gives the second and subsequent parameter names
-both local *and* external parameter names by default.
-This convention matches the typical naming and calling convention
-you will be familiar with from writing Objective-C methods,
-and makes for expressive method calls without the need to qualify your parameter names.
-
-Consider this alternative version of the ``Counter`` class,
-which defines a more complex form of the ``incrementBy`` method:
-
-.. testcode:: externalParameterNames
-
-   -> class Counter {
-         var count: Int = 0
-         func incrementBy(amount: Int, numberOfTimes: Int) {
-            count += amount * numberOfTimes
-         }
-      }
-
-This ``incrementBy`` method has two parameters ---
-``amount`` and ``numberOfTimes``.
-By default, Swift treats ``amount`` as a local name only,
-but treats ``numberOfTimes`` as both a local *and* an external name.
-You call the method as follows:
-
-.. testcode:: externalParameterNames
-
-   -> let counter = Counter()
-   << // counter : Counter = REPL.Counter
-   -> counter.incrementBy(5, numberOfTimes: 3)
-   /> counter value is now \(counter.count)
-   </ counter value is now 15
-
-You don't need to define an external parameter name for the first argument value,
-because its purpose is clear from the function name ``incrementBy``.
-The second argument, however, is qualified by an external parameter name
-to make its purpose clear when the method is called.
-
-This default behavior effectively treats the method as if you had written
-a hash symbol (``#``) before the ``numberOfTimes`` parameter:
-
-.. testcode:: externalParameterNamesComparison
-
-   >> class Counter {
-   >>    var count: Int = 0
-   >>    func incrementBy(amount: Int) {
-   >>       count += amount
-   >>    }
-   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
-         count += amount * numberOfTimes
-      }
-   >> }
-   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
-   !! ^
-   !!-
-
-The default behavior described above means that method definitions in Swift
-are written with the same grammatical style as Objective-C,
-and are called in a natural, expressive way.
-
-.. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
-
-Modifying External Parameter Name Behavior for Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sometimes it's useful to provide an external parameter name
-for a method's first parameter, even though this is not the default behavior.
-You can either add an explicit external name yourself,
-or you can prefix the first parameter's name with a hash symbol
-to use the local name as an external name too.
-
-Conversely, if you do not want to provide an external name
-for the second or subsequent parameter of a method,
-override the default behavior by using an underscore character (``_``)
-as an explicit external parameter name for that parameter.
-
-.. TODO: provide (good, would-actually-be-appropriate) examples here.
 
 .. _Methods_TheSelfProperty:
 
@@ -193,14 +93,14 @@ which is exactly equivalent to the instance itself.
 You use the ``self`` property to refer to the current instance
 within its own instance methods.
 
-The ``increment`` method in the example above could have been written like this:
+The ``increment()`` method in the example above could have been written like this:
 
 .. testcode:: instanceMethodsIncrement
 
    >> class Counter {
    >> var count: Int = 0
       func increment() {
-         self.count++
+         self.count += 1
       }
    >> }
 
@@ -227,14 +127,14 @@ a method parameter called ``x`` and an instance property that is also called ``x
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         func isToTheRightOfX(x: Double) -> Bool {
+         func isToTheRightOf(x: Double) -> Bool {
             return self.x > x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = REPL.Point
-   -> if somePoint.isToTheRightOfX(1.0) {
-         println("This point is to the right of the line where x == 1.0")
+   << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
+   -> if somePoint.isToTheRightOf(x: 1.0) {
+         print("This point is to the right of the line where x == 1.0")
       }
    <- This point is to the right of the line where x == 1.0
 
@@ -250,7 +150,7 @@ Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
 .. TODO: find out why.
-.. TODO: once I actually know why, explain it. 
+.. TODO: once I actually know why, explain it.
 
 However, if you need to modify the properties of your structure or enumeration
 within a particular method,
@@ -268,18 +168,18 @@ before the ``func`` keyword for that method:
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             x += deltaX
             y += deltaY
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
-   -> somePoint.moveByX(2.0, y: 3.0)
-   -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
+   -> somePoint.moveBy(x: 2.0, y: 3.0)
+   -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveByX`` method,
+The ``Point`` structure above defines a mutating ``moveBy(x:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -293,11 +193,15 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point
-   -> fixedPoint.moveByX(2.0, y: 3.0)
-   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
-   !! fixedPoint.moveByX(2.0, y: 3.0)
-   !! ^          ~~~~~~~
+   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
+   -> fixedPoint.moveBy(x: 2.0, y: 3.0)
+   !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
+   !! fixedPoint.moveBy(x: 2.0, y: 3.0)
+   !!  ^~~~~~~~~~
+   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! let fixedPoint = Point(x: 3.0, y: 3.0)
+   !! ^~~
+   !! var
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
@@ -317,50 +221,50 @@ The ``Point`` example shown above could have been written in the following way i
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveByX(deltaX: Double, y deltaY: Double) {
+         mutating func moveBy(x deltaX: Double, y deltaY: Double) {
             self = Point(x: x + deltaX, y: y + deltaY)
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point
-   >> somePoint.moveByX(2.0, y: 3.0)
-   >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
+   >> somePoint.moveBy(x: 2.0, y: 3.0)
+   >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveByX`` method creates a brand new structure
+This version of the mutating ``moveBy(x:y:)`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
 
 Mutating methods for enumerations can set the implicit ``self`` parameter to be
-a different member from the same enumeration:
+a different case from the same enumeration:
 
 .. testcode:: selfEnumerations
 
    -> enum TriStateSwitch {
-         case Off, Low, High
+         case off, low, high
          mutating func next() {
             switch self {
-               case Off:
-                  self = Low
-               case Low:
-                  self = High
-               case High:
-                  self = Off
+               case .off:
+                  self = .low
+               case .low:
+                  self = .high
+               case .high:
+                  self = .off
             }
          }
       }
-   -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = (Enum Value)
+   -> var ovenLight = TriStateSwitch.low
+   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.low
    -> ovenLight.next()
-   // ovenLight is now equal to .High
+   // ovenLight is now equal to .high
    -> ovenLight.next()
-   // ovenLight is now equal to .Off
+   // ovenLight is now equal to .off
 
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
-(``Off``, ``Low`` and ``High``)
-every time its ``next`` method is called.
+(``off``, ``low`` and ``high``)
+every time its ``next()`` method is called.
 
 .. _Methods_TypeMethods:
 
@@ -371,10 +275,10 @@ Instance methods, as described above,
 are methods that are called on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
-You indicate type methods for classes by writing
-the keyword ``class`` before the method's ``func`` keyword,
-and type methods for structures and enumerations by writing
-the keyword ``static`` before the method's ``func`` keyword.
+You indicate type methods by writing
+the ``static`` keyword before the method's ``func`` keyword.
+Classes may also use the ``class`` keyword
+to allow subclasses to override the superclass’s implementation of that method.
 
 .. note::
 
@@ -398,17 +302,16 @@ Here's how you call a type method on a class called ``SomeClass``:
 Within the body of a type method,
 the implicit ``self`` property refers to the type itself,
 rather than an instance of that type.
-For structures and enumerations,
-this means that you can use ``self`` to disambiguate between
-static properties and static method parameters,
+This means that you can use ``self`` to disambiguate between
+type properties and type method parameters,
 just as you do for instance properties and instance method parameters.
 
 More generally, any unqualified method and property names that you use
 within the body of a type method will refer to other type-level methods and properties.
 A type method can call another type method with the other method's name,
 without needing to prefix it with the type name.
-Similarly, type methods on structures and enumerations can access static properties
-by using the static property's name without a type name prefix.
+Similarly, type methods on structures and enumerations can access type properties
+by using the type property's name without a type name prefix.
 
 The example below defines a structure called ``LevelTracker``,
 which tracks a player's progress through the different levels or stages of a game.
@@ -418,7 +321,7 @@ but can store information for multiple players on a single device.
 All of the game's levels (apart from level one) are locked when the game is first played.
 Every time a player finishes a level,
 that level is unlocked for all players on the device.
-The ``LevelTracker`` structure uses static properties and methods
+The ``LevelTracker`` structure uses type properties and methods
 to keep track of which levels of the game have been unlocked.
 It also tracks the current level for an individual player.
 
@@ -426,15 +329,19 @@ It also tracks the current level for an individual player.
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
-         static func unlockLevel(level: Int) {
+         var currentLevel = 1
+   ---
+   ->    static func unlock(_ level: Int) {
             if level > highestUnlockedLevel { highestUnlockedLevel = level }
          }
-         static func levelIsUnlocked(level: Int) -> Bool {
+   ---
+   ->    static func isUnlocked(_ level: Int) -> Bool {
             return level <= highestUnlockedLevel
          }
-         var currentLevel = 1
-         mutating func advanceToLevel(level: Int) -> Bool {
-            if LevelTracker.levelIsUnlocked(level) {
+   ---
+   ->    @discardableResult
+         mutating func advance(to level: Int) -> Bool {
+            if LevelTracker.isUnlocked(level) {
                currentLevel = level
                return true
             } else {
@@ -444,28 +351,34 @@ It also tracks the current level for an individual player.
       }
 
 The ``LevelTracker`` structure keeps track of the highest level that any player has unlocked.
-This value is stored in a static property called ``highestUnlockedLevel``.
+This value is stored in a type property called ``highestUnlockedLevel``.
 
 ``LevelTracker`` also defines two type functions to work with
 the ``highestUnlockedLevel`` property.
-The first is a type function called ``unlockLevel``,
+The first is a type function called ``unlock(_:)``,
 which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
-The second is a convenience type function called ``levelIsUnlocked``,
+The second is a convenience type function called ``isUnlocked(_:)``,
 which returns ``true`` if a particular level number is already unlocked.
-(Note that these type methods can access the ``highestUnlockedLevel`` static property
+(Note that these type methods can access the ``highestUnlockedLevel`` type property
 without your needing to write it as ``LevelTracker.highestUnlockedLevel``.)
 
-In addition to its static property and type methods,
+In addition to its type property and type methods,
 ``LevelTracker`` tracks an individual player's progress through the game.
 It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
-``LevelTracker`` defines an instance method called ``advanceToLevel``.
+``LevelTracker`` defines an instance method called ``advance(to:)``.
 Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
-The ``advanceToLevel`` method returns a Boolean value to indicate
+The ``advance(to:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
+Because it's not necessarily a mistake for
+code that calls the ``advance(to:)`` method
+to ignore the return value,
+this function is marked with the ``@discardableResult`` attribute.
+For more information about this attribute,
+see :doc:`../ReferenceManual/Attributes`.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
 to track and update the progress of an individual player:
@@ -475,9 +388,9 @@ to track and update the progress of an individual player:
    -> class Player {
          var tracker = LevelTracker()
          let playerName: String
-         func completedLevel(level: Int) {
-            LevelTracker.unlockLevel(level + 1)
-            tracker.advanceToLevel(level + 1)
+         func complete(level: Int) {
+            LevelTracker.unlock(level + 1)
+            tracker.advance(to: level + 1)
          }
          init(name: String) {
             playerName = name
@@ -486,13 +399,13 @@ to track and update the progress of an individual player:
 
 The ``Player`` class creates a new instance of ``LevelTracker``
 to track that player's progress.
-It also provides a method called ``completedLevel``,
+It also provides a method called ``complete(level:)``,
 which is called whenever a player completes a particular level.
 This method unlocks the next level for all players
 and updates the player's progress to move them to the next level.
-(The Boolean return value of ``advanceToLevel`` is ignored,
+(The Boolean return value of ``advance(to:)`` is ignored,
 because the level is known to have been unlocked
-by the call to ``LevelTracker.unlockLevel`` on the previous line.)
+by the call to ``LevelTracker.unlock(_:)`` on the previous line.)
 
 You can create an instance of the ``Player`` class for a new player,
 and see what happens when the player completes level one:
@@ -501,8 +414,8 @@ and see what happens when the player completes level one:
 
    -> var player = Player(name: "Argyrios")
    << // player : Player = REPL.Player
-   -> player.completedLevel(1)
-   -> println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+   -> player.complete(level: 1)
+   -> print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2
 
 If you create a second player, whom you try to move to a level
@@ -512,10 +425,10 @@ the attempt to set the player's current level fails:
 .. testcode:: typeMethods
 
    -> player = Player(name: "Beto")
-   -> if player.tracker.advanceToLevel(6) {
-         println("player is now on level 6")
+   -> if player.tracker.advance(to: 6) {
+         print("player is now on level 6")
       } else {
-         println("level 6 has not yet been unlocked")
+         print("level 6 has not yet been unlocked")
       }
    <- level 6 has not yet been unlocked
 

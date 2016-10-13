@@ -29,7 +29,7 @@ whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
 
 To reflect the fact that optional chaining can be called on a ``nil`` value,
 the result of an optional chaining call is always an optional value,
-even if the property, method, or subscript you are querying returns a non-optional value.
+even if the property, method, or subscript you are querying returns a nonoptional value.
 You can use this optional return value to check whether
 the optional chaining call was successful
 (the returned optional contains a value),
@@ -96,9 +96,9 @@ To use optional chaining, use a question mark in place of the exclamation mark:
    :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- Unable to retrieve the number of rooms.
 
@@ -110,8 +110,11 @@ the optional chaining attempt returns a value of type ``Int?``, or “optional `
 When ``residence`` is ``nil``, as in the example above,
 this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
+The optional ``Int`` is accessed through optional binding
+to unwrap the integer and assign the nonoptional value
+to the ``roomCount`` variable.
 
-Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
+Note that this is true even though ``numberOfRooms`` is a nonoptional ``Int``.
 The fact that it is queried through an optional chain
 means that the call to ``numberOfRooms``
 will always return an ``Int?`` instead of an ``Int``.
@@ -133,9 +136,9 @@ the default ``numberOfRooms`` value of ``1``:
    :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- John's residence has 1 room(s).
 
@@ -188,7 +191,7 @@ which is initialized with an empty array of type ``[Room]``:
             }
          }
          func printNumberOfRooms() {
-            println("The number of rooms is \(numberOfRooms)")
+            print("The number of rooms is \(numberOfRooms)")
          }
          var address: Address?
       }
@@ -236,28 +239,22 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingName != nil {
-               return buildingName
-            } else if buildingNumber != nil {
-               return buildingNumber
+            if buildingNumber != nil && street != nil {
+                return "\(buildingNumber) \(street)"
+            } else if buildingName != nil {
+                return buildingName
             } else {
-               return nil
+                return nil
             }
          }
       }
 
-The ``Address`` class also provides a method called ``buildingIdentifier``,
+The ``Address`` class also provides a method called ``buildingIdentifier()``,
 which has a return type of ``String?``.
-This method checks the ``buildingName`` and ``buildingNumber`` properties
+This method checks the properties of the address
 and returns ``buildingName`` if it has a value,
-or ``buildingNumber`` if it has a value,
-or ``nil`` if neither property has a value.
-
-.. QUESTION: you could write this in a shorter form by just returning buildingNumber
-   if buildingName is nil. However, I think the code above is clearer in intent.
-   What do others think?
-   I could always call this out, of course,
-   but this preamble section is already pretty long.
+or ``buildingNumber`` concatenated with ``street`` if both have values,
+or ``nil`` otherwise.
 
 .. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
 
@@ -276,9 +273,9 @@ and try to access its ``numberOfRooms`` property as before:
 
    -> let john = Person()
    -> if let roomCount = john.residence?.numberOfRooms {
-         println("John's residence has \(roomCount) room(s).")
+         print("John's residence has \(roomCount) room(s).")
       } else {
-         println("Unable to retrieve the number of rooms.")
+         print("Unable to retrieve the number of rooms.")
       }
    <- Unable to retrieve the number of rooms.
 
@@ -299,6 +296,37 @@ In this example,
 the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
 
+The assignment is part of the optional chaining,
+which means none of the code on the right hand side of the ``=`` operator
+is evaluated.
+In the previous example,
+it's not easy to see that ``someAddress`` is never evaluated,
+because accessing a constant doesn't have any side effects.
+The listing below does the same assignment,
+but it uses a function to create the address.
+The function prints "Function was called" before returning a value,
+which lets you see
+whether the right hand side of the ``=`` operator was evaluated.
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> func createAddress() -> Address {
+          print("Function was called.")
+   ---
+          let someAddress = Address()
+          someAddress.buildingNumber = "29"
+          someAddress.street = "Acacia Road"
+   ---
+          return someAddress
+      }
+   -> john.residence?.address = createAddress()
+   >> let _ = createAddress()
+   << Function was called.
+
+You can tell that the ``createAddress()`` function isn't called,
+because nothing is printed.
+
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
 Calling Methods Through Optional Chaining
@@ -308,7 +336,7 @@ You can use optional chaining to call a method on an optional value,
 and to check whether that method call is successful.
 You can do this even if that method does not define a return value.
 
-The ``printNumberOfRooms`` method on the ``Residence`` class
+The ``printNumberOfRooms()`` method on the ``Residence`` class
 prints the current value of ``numberOfRooms``.
 Here's how the method looks:
 
@@ -316,7 +344,7 @@ Here's how the method looks:
 
    -> func printNumberOfRooms() {
    >>    let numberOfRooms = 3
-         println("The number of rooms is \(numberOfRooms)")
+         print("The number of rooms is \(numberOfRooms)")
       }
 
 This method does not specify a return type.
@@ -328,7 +356,7 @@ If you call this method on an optional value with optional chaining,
 the method's return type will be ``Void?``, not ``Void``,
 because return values are always of an optional type when called through optional chaining.
 This enables you to use an ``if`` statement
-to check whether it was possible to call the ``printNumberOfRooms`` method,
+to check whether it was possible to call the ``printNumberOfRooms()`` method,
 even though the method does not itself define a return value.
 Compare the return value from the ``printNumberOfRooms`` call against ``nil``
 to see if the method call was successful:
@@ -337,9 +365,9 @@ to see if the method call was successful:
    :compile: true
 
    -> if john.residence?.printNumberOfRooms() != nil {
-         println("It was possible to print the number of rooms.")
+         print("It was possible to print the number of rooms.")
       } else {
-         println("It was not possible to print the number of rooms.")
+         print("It was not possible to print the number of rooms.")
       }
    <- It was not possible to print the number of rooms.
 
@@ -354,9 +382,9 @@ which enables you to compare against ``nil`` to see if the property was set succ
    :compile: true
 
    -> if (john.residence?.address = someAddress) != nil {
-         println("It was possible to set the address.")
+         print("It was possible to set the address.")
       } else {
-         println("It was not possible to set the address.")
+         print("It was not possible to set the address.")
       }
    <- It was not possible to set the address.
 
@@ -372,7 +400,7 @@ and to check whether that subscript call is successful.
 .. note::
 
    When you access a subscript on an optional value through optional chaining,
-   you place the question mark *before* the subscript's braces, not after.
+   you place the question mark *before* the subscript's brackets, not after.
    The optional chaining question mark always follows immediately after
    the part of the expression that is optional.
 
@@ -386,9 +414,9 @@ the subscript call fails:
    :compile: true
 
    -> if let firstRoomName = john.residence?[0].name {
-         println("The first room name is \(firstRoomName).")
+         print("The first room name is \(firstRoomName).")
       } else {
-         println("Unable to retrieve the first room name.")
+         print("Unable to retrieve the first room name.")
       }
    <- Unable to retrieve the first room name.
 
@@ -420,9 +448,9 @@ the actual items in the ``rooms`` array through optional chaining:
    -> john.residence = johnsHouse
    ---
    -> if let firstRoomName = john.residence?[0].name {
-         println("The first room name is \(firstRoomName).")
+         print("The first room name is \(firstRoomName).")
       } else {
-         println("Unable to retrieve the first room name.")
+         print("Unable to retrieve the first room name.")
       }
    <- The first room name is Living Room.
 
@@ -441,7 +469,7 @@ to chain on its optional return value:
 
    -> var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
    -> testScores["Dave"]?[0] = 91
-   -> testScores["Bev"]?[0]++
+   -> testScores["Bev"]?[0] += 1
    -> testScores["Brian"]?[0] = 72
    >> let dave = "Dave"
    >> let bev = "Bev"
@@ -495,9 +523,9 @@ both of which are of optional type:
    :compile: true
 
    -> if let johnsStreet = john.residence?.address?.street {
-         println("John's street name is \(johnsStreet).")
+         print("John's street name is \(johnsStreet).")
       } else {
-         println("Unable to retrieve the address.")
+         print("Unable to retrieve the address.")
       }
    <- Unable to retrieve the address.
 
@@ -522,20 +550,19 @@ you can access the value of the ``street`` property through multilevel optional 
    -> let johnsAddress = Address()
    -> johnsAddress.buildingName = "The Larches"
    -> johnsAddress.street = "Laurel Street"
-   -> john.residence!.address = johnsAddress
+   -> john.residence?.address = johnsAddress
    ---
    -> if let johnsStreet = john.residence?.address?.street {
-         println("John's street name is \(johnsStreet).")
+         print("John's street name is \(johnsStreet).")
       } else {
-         println("Unable to retrieve the address.")
+         print("Unable to retrieve the address.")
       }
    <- John's street name is Laurel Street.
 
-Note the use of an exclamation mark during the assignment of
-an address instance to ``john.residence.address``.
-The ``john.residence`` property has an optional type,
-and so you need to unwrap its actual value with an exclamation mark
-before accessing the residence's ``address`` property.
+In this example,
+the attempt to set the ``address`` property of ``john.residence`` will succeed,
+because the value of ``john.residence``
+currently contains a valid ``Residence`` instance.
 
 .. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
 
@@ -547,7 +574,7 @@ a property of optional type through optional chaining.
 You can also use optional chaining to call a method that returns a value of optional type,
 and to chain on that method's return value if needed.
 
-The example below calls the ``Address`` class's ``buildingIdentifier`` method
+The example below calls the ``Address`` class's ``buildingIdentifier()`` method
 through optional chaining. This method returns a value of type ``String?``.
 As described above, the ultimate return type of this method call after optional chaining
 is also ``String?``:
@@ -556,7 +583,7 @@ is also ``String?``:
    :compile: true
 
    -> if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-         println("John's building identifier is \(buildingIdentifier).")
+         print("John's building identifier is \(buildingIdentifier).")
       }
    <- John's building identifier is The Larches.
 
@@ -569,9 +596,9 @@ place the optional chaining question mark *after* the method's parentheses:
    -> if let beginsWithThe =
          john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
          if beginsWithThe {
-            println("John's building identifier begins with \"The\".")
+            print("John's building identifier begins with \"The\".")
          } else {
-            println("John's building identifier does not begin with \"The\".")
+            print("John's building identifier does not begin with \"The\".")
          }
       }
    <- John's building identifier begins with "The".
@@ -581,8 +608,8 @@ place the optional chaining question mark *after* the method's parentheses:
    In the example above,
    you place the optional chaining question mark *after* the parentheses,
    because the optional value you are chaining on is
-   the ``buildingIdentifier`` method's return value,
-   and not the ``buildingIdentifier`` method itself.
+   the ``buildingIdentifier()`` method's return value,
+   and not the ``buildingIdentifier()`` method itself.
 
 .. TODO: add an example of chaining on a property of optional function type.
    This can then be tied in to a revised description of how

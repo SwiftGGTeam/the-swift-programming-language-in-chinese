@@ -71,13 +71,13 @@ a human-readable description of the vehicle's current speed:
 
 .. testcode:: inheritance
 
-   -> println("Vehicle: \(someVehicle.description)")
+   -> print("Vehicle: \(someVehicle.description)")
    </ Vehicle: traveling at 0.0 miles per hour
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
 but is not much use in itself.
 To make it more useful,
-you need to refine it to describe more specific kinds of vehicle.
+you need to refine it to describe more specific kinds of vehicles.
 
 .. _Inheritance_Subclassing:
 
@@ -109,7 +109,7 @@ with a superclass of ``Vehicle``:
       }
 
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
-such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise`` method.
+such as its ``currentSpeed`` and ``description`` properties and its ``makeNoise()`` method.
 
 In addition to the characteristics it inherits,
 the ``Bicycle`` class defines a new stored property,
@@ -132,7 +132,7 @@ and query the instance's inherited ``description`` property:
 .. testcode:: inheritance
 
    -> bicycle.currentSpeed = 15.0
-   -> println("Bicycle: \(bicycle.description)")
+   -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: traveling at 15.0 miles per hour
 
 Subclasses can themselves be subclassed.
@@ -161,7 +161,7 @@ and query the read-only ``description`` property it inherits from ``Vehicle``:
    -> tandem.hasBasket = true
    -> tandem.currentNumberOfPassengers = 2
    -> tandem.currentSpeed = 22.0
-   -> println("Tandem: \(tandem.description)")
+   -> print("Tandem: \(tandem.description)")
    </ Tandem: traveling at 22.0 miles per hour
 
 .. _Inheritance_Overriding:
@@ -170,7 +170,7 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method, instance property, class property, or subscript
+an instance method, type method, instance property, type property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
@@ -202,7 +202,7 @@ Where this is appropriate,
 you access the superclass version of a method, property, or subscript
 by using the ``super`` prefix:
 
-* An overridden method named ``someMethod`` can call the superclass version of ``someMethod``
+* An overridden method named ``someMethod()`` can call the superclass version of ``someMethod()``
   by calling ``super.someMethod()`` within the overriding method implementation.
 * An overridden property called ``someProperty`` can access the superclass version of ``someProperty``
   as ``super.someProperty`` within the overriding getter or setter implementation.
@@ -214,21 +214,21 @@ by using the ``super`` prefix:
 Overriding Methods
 ~~~~~~~~~~~~~~~~~~
 
-You can override an inherited instance or class method
+You can override an inherited instance or type method
 to provide a tailored or alternative implementation of the method within your subclass.
 
 The following example defines a new subclass of ``Vehicle`` called ``Train``,
-which overrides the ``makeNoise`` method that ``Train`` inherits from ``Vehicle``:
+which overrides the ``makeNoise()`` method that ``Train`` inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
    -> class Train: Vehicle {
          override func makeNoise() {
-            println("Choo Choo")
+            print("Choo Choo")
          }
       }
 
-If you create a new instance of ``Train`` and call its ``makeNoise`` method,
+If you create a new instance of ``Train`` and call its ``makeNoise()`` method,
 you can see that the ``Train`` subclass version of the method is called:
 
 .. testcode:: inheritance
@@ -243,7 +243,7 @@ you can see that the ``Train`` subclass version of the method is called:
 Overriding Properties
 ~~~~~~~~~~~~~~~~~~~~~
 
-You can override an inherited instance or class property
+You can override an inherited instance or type property
 to provide your own custom getter and setter for that property,
 or to add property observers to enable the overriding property
 to observe when the underlying property value changes.
@@ -251,7 +251,7 @@ to observe when the underlying property value changes.
 .. _Inheritance_OverridingPropertyGettersAndSetters:
 
 Overriding Property Getters and Setters
-_______________________________________
++++++++++++++++++++++++++++++++++++++++
 
 You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
@@ -280,7 +280,7 @@ The following example defines a new class called ``Car``,
 which is a subclass of ``Vehicle``.
 The ``Car`` class introduces a new stored property called ``gear``,
 with a default integer value of ``1``.
-The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,  
+The ``Car`` class also overrides the ``description`` property it inherits from ``Vehicle``,
 to provide a custom description that includes the current gear:
 
 .. testcode:: inheritance
@@ -308,13 +308,13 @@ the tailored description defined within the ``Car`` class:
    << // car : Car = REPL.Car
    -> car.currentSpeed = 25.0
    -> car.gear = 3
-   -> println("Car: \(car.description)")
+   -> print("Car: \(car.description)")
    </ Car: traveling at 25.0 miles per hour in gear 3
 
 .. _Inheritance_OverridingPropertyObservers:
 
 Overriding Property Observers
-_____________________________
++++++++++++++++++++++++++++++
 
 You can use property overriding to add property observers to an inherited property.
 This enables you to be notified when the value of an inherited property changes,
@@ -363,7 +363,7 @@ A speed of ``35.0`` produces a gear of ``4``:
    -> let automatic = AutomaticCar()
    << // automatic : AutomaticCar = REPL.AutomaticCar
    -> automatic.currentSpeed = 35.0
-   -> println("AutomaticCar: \(automatic.description)")
+   -> print("AutomaticCar: \(automatic.description)")
    </ AutomaticCar: traveling at 35.0 miles per hour in gear 4
 
 .. _Inheritance_PreventingOverrides:
@@ -387,7 +387,7 @@ can also be marked as final within the extension's definition.
    -> class C {
          final var someVar = 0
          final func someFunction() {
-            println("In someFunction")
+            print("In someFunction")
          }
       }
    -> class D : C {
@@ -396,7 +396,7 @@ can also be marked as final within the extension's definition.
             set {}
          }
          override func someFunction() {
-            println("In overridden someFunction")
+            print("In overridden someFunction")
          }
       }
    !! <REPL Input>:2:19: error: var overrides a 'final' var
@@ -421,7 +421,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
    -> final class C {
          var someVar = 0
          func someFunction() {
-            println("In someFunction")
+            print("In someFunction")
          }
       }
    -> class D : C {
@@ -430,7 +430,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
             set {}
          }
          override func someFunction() {
-            println("In overridden someFunction")
+            print("In overridden someFunction")
          }
       }
    !! <REPL Input>:2:19: error: var overrides a 'final' var

@@ -33,19 +33,30 @@ in parentheses, and their format is defined by the attribute they belong to.
 Declaration Attributes
 ----------------------
 
-You can apply a declaration attribute to declarations only. However, you can also apply
-the ``noreturn`` attribute to a function or method *type*.
+You can apply a declaration attribute to declarations only.
 
-``availability``
+``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
     relative to certain platforms and operating system versions.
 
-    The ``availability`` attribute always appears
+    The ``available`` attribute always appears
     with a list of two or more comma-separated attribute arguments.
     These arguments begin with one of the following platform names:
-    ``iOS``, ``iOSApplicationExtension``, ``OSX``, or
-    ``OSXApplicationExtension``. You can also use an asterisk (``*``) to indicate the
+
+    * ``iOS``
+    * ``iOSApplicationExtension``
+    * ``macOS``
+    * ``macOSApplicationExtension``
+    * ``watchOS``
+    * ``watchOSApplicationExtension``
+    * ``tvOS``
+    * ``tvOSApplicationExtension``
+
+    .. For the list in source, see include/swift/AST/PlatformKinds.def
+
+    You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
+
     The remaining arguments can appear in any order
     and specify additional information about the declaration's lifecycle,
     including important milestones.
@@ -54,37 +65,38 @@ the ``noreturn`` attribute to a function or method *type*.
     * The ``introduced`` argument indicates the first version of the specified platform in which the declaration was introduced.
       It has the following form:
 
-      The ``introduced`` argument has the following form:
-
       .. syntax-outline::
 
-          introduced=<#version number#>
+          introduced: <#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The *version number* consists of one or more positive integers, separated by periods.
     * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
       It has the following form:
 
       .. syntax-outline::
 
-          deprecated=<#version number#>
+          deprecated: <#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The optional *version number* consists of one or more positive integers, separated by periods.
+      Omitting the version number indicates that the declaration is currently deprecated,
+      without giving any information about when the deprecation occurred.
+      If you omit the version number, omit the colon (``:``) as well.
     * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
       When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
-      The ``obsoleted`` argument has the following form:
+      It has the following form:
 
       .. syntax-outline::
 
-          obsoleted=<#version number#>
+          obsoleted: <#version number#>
 
-      The *version number* consists of a positive integer or floating-point decimal number.
+      The *version number* consists of one or more positive integers, separated by periods.
     * The ``message`` argument is used to provide a textual message that's displayed by the compiler
       when emitting a warning or error about the use of a deprecated or obsoleted declaration.
       It has the following form:
 
       .. syntax-outline::
 
-          message=<#message#>
+          message: <#message#>
 
       The *message* consists of a string literal.
     * The ``renamed`` argument is used to provide a textual message
@@ -94,7 +106,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
       .. syntax-outline::
 
-          renamed=<#new name#>
+          renamed: <#new name#>
 
       The *new name* consists of a string literal.
 
@@ -119,46 +131,37 @@ the ``noreturn`` attribute to a function or method *type*.
                 // protocol definition
             }
          ---
-         -> @availability(*, unavailable, renamed="MyRenamedProtocol")
+         -> @available(*, unavailable, renamed: "MyRenamedProtocol")
             typealias MyProtocol = MyRenamedProtocol
 
-    You can apply multiple ``availability`` attributes on a single declaration
+    You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms.
-    The compiler uses an ``availability`` attribute only when the attribute specifies
+    The compiler uses an ``available`` attribute only when the attribute specifies
     a platform that matches the current target platform.
+
+    If an ``available`` attribute only specifies an ``introduced`` argument
+    in addition to a platform name argument,
+    the following shorthand syntax can be used instead:
+
+    .. syntax-outline::
+
+        @available(<#platform name#> <#version number#>, *)
+
+    The shorthand syntax for ``available`` attributes allows for
+    availability for multiple platforms to be expressed concisely.
+    Although the two forms are functionally equivalent,
+    the shorthand form is preferred whenever possible.
+
+    .. testcode:: availableShorthand
+       :compile: true
+
+       -> @available(iOS 10.0, macOS 10.12, *)
+       -> class MyClass {
+              // class definition
+          }
 
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
-
-.. NOTE: As of Beta 5, 'assignment' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-
-    ``assignment``
-        Apply this attribute to functions that overload
-        a compound assignment operator.
-        Functions that overload a compound assignment operator must mark
-        their initial input parameter as ``inout``.
-        For an example of how to use the ``assignment`` attribute,
-        see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
-
-.. NOTE: ``assignment doesn't seem to be required as of r16459.
-    Emailed swift-dev on 4/17/14 with the following example:
-
-    (swift) struct Vector2D {
-             var x = 0.0, y = 0.0
-        }
-    (swift) func += (inout lhs: Vector2D, rhs: Vector2D) {
-              lhs = Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
-            }
-    (swift) var original = Vector2D(1.0, 2.0)
-    // original : Vector2D = Vector2D(1.0, 2.0)
-    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
-    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
-    (swift) original += vectorToAdd
-    (swift) original
-    // original : Vector2D = Vector2D(4.0, 6.0)
-
-    Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
 
 .. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
     I'm keeping the prose here in case it comes back for some reason.
@@ -173,86 +176,53 @@ the ``noreturn`` attribute to a function or method *type*.
         is implicitly applied to that protocol; there's no need to mark the protocol with
         the ``class_protocol`` attribute explicitly.
 
-.. Note: At the design meeting on June 17th,
-    it was decided that we don't want people to be using "exported" at the moment.
-    It's really only intended for framework development (it's used in the Obj-C overlay).
-    Commenting this out until this attribute is ready for prime time,
-    to fix <rdar://problem/17346713> Remove the "exported" attribute from the Reference
+``discardableResult``
+   Apply this attribute to a function or method declaration
+   to suppress the compiler warning
+   when the function or method that returns a value
+   is called without using its result.
 
-    ``exported``
-        Apply this attribute to an import declaration to export
-        the imported module, submodule, or declaration from the current module.
-        If another module imports the current module, that other module can access
-        the items exported by the current module.
+``GKInspectable``
+    Apply this attribute to expose a custom GameplayKit component property
+    to the SpriteKit editor UI.
 
-``noreturn``
-    Apply this attribute to a function or method declaration
-    to indicate that the corresponding type of that function or method,
-    ``T``, is ``@noreturn T``.
-    You can mark a function or method type with this attribute to indicate that
-    the function or method doesn't return to its caller.
-
-    You can override a function or method that is not marked with the ``noreturn``
-    attribute with a function or method that is. That said, you can't override
-    a function or method that is marked with the ``noreturn`` attribute with a function
-    or method that is not. Similar rules apply when you implement a protocol
-    method in a conforming type.
-
-``NSApplicationMain``
-    Apply this attribute to a class
-    to indicate that it is the application delegate.
-    Using this attribute is equivalent to calling the
-    ``NSApplicationMain`` function and
-    passing this class's name as the name of the delegate class.
-
-    If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main`` function
-    that calls the ``NSApplicationMain`` function.
-    For example,
-    if your app uses a custom subclass of ``NSApplication``
-    as its principal class,
-    call the ``NSApplicationMain`` function
-    instead of using this attribute.
-
-``NSCopying``
-    Apply this attribute to a stored variable property of a class.
-    This attribute causes the property's setter to be synthesized with a *copy*
-    of the property's value---returned by the ``copyWithZone`` method---instead of the
-    value of the property itself.
-    The type of the property must conform to the ``NSCopying`` protocol.
-
-    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
-    property attribute.
-
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-
-``NSManaged``
-    Apply this attribute to a stored variable property of a class that inherits from
-    ``NSManagedObject`` to indicate that the storage and implementation of the
-    property are provided dynamically by Core Data at runtime
-    based on the associated entity description.
+.. See also <rdar://problem/27287369> Document @GKInspectable attribute
+   which we will want to link to, once it's written.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols, properties and methods
-    (including getters and setters) of classes and protocols, initializers,
-    deinitializers, and subscripts. The ``objc`` attribute tells the compiler
+    for example, non-nested classes, protocols,
+    nongeneric enumerations (constrained to integer raw-value types),
+    properties and methods (including getters and setters) of classes and protocols,
+    initializers, deinitializers, and subscripts.
+    The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
+    Classes marked with the ``objc`` attribute
+    must inherit from a class defined in Objective-C.
     If you apply the ``objc`` attribute to a class or protocol, it's
-    implicitly applied to the members of that class or protocol.
+    implicitly applied to the Objective-C compatible members of that class or protocol.
     The compiler also implicitly adds the ``objc`` attribute to a class
-    that inherits from another class marked with the ``objc`` attribute.
+    that inherits from another class marked with the ``objc`` attribute
+    or a class defined in Objective-C.
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't.
+
+    If you apply the ``objc`` attribute to an enumeration,
+    each enumeration case is exposed to Objective-C code
+    as the concatenation of the enumeration name and the case name.
+    The first letter of the case name is capitalized.
+    For example, a case named ``venus`` in a Swift ``Planet`` enumeration
+    is exposed to Objective-C code as a case named ``PlanetVenus``.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
     which consists of an identifier.
     Use this attribute when you want to expose a different
     name to Objective-C for the entity the ``objc`` attribute applies to.
-    You can use this argument to name classes, protocols, methods,
-    getters, setters, and initializers. The example below exposes
+    You can use this argument to name
+    classes, enumerations, enumeration cases, protocols,
+    methods, getters, setters, and initializers.
+    The example below exposes
     the getter for the ``enabled`` property of the ``ExampleClass``
     to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
@@ -262,7 +232,7 @@ the ``noreturn`` attribute to a function or method *type*.
 
        >> import Foundation
        -> @objc
-          class ExampleClass {
+          class ExampleClass: NSObject {
              var enabled: Bool {
                 @objc(isEnabled) get {
                    // Return the appropriate value
@@ -275,6 +245,74 @@ the ``noreturn`` attribute to a function or method *type*.
     provide a link to the relevant section.
     Possibly link to Anna and Jack's guide too.
 
+``nonobjc``
+    Apply this attribute to a
+    method, property, subscript, or initializer declaration
+    to suppress an implicit ``objc`` attribute.
+    The ``nonobjc`` attribute tells the compiler
+    to make the declaration unavailable in Objective-C code,
+    even though it is possible to represent it in Objective-C.
+
+    You use the ``nonobjc`` attribute to resolve circularity
+    for bridging methods in a class marked with the ``objc`` attribute,
+    and to allow overloading of methods and initializers
+    in a class marked with the ``objc`` attribute.
+
+    A method marked with the ``nonobjc`` attribute
+    cannot override a method marked with the ``objc`` attribute.
+    However, a method marked with the ``objc`` attribute
+    can override a method marked with the ``nonobjc`` attribute.
+    Similarly, a method marked with the ``nonobjc`` attribute
+    cannot satisfy a protocol requirement
+    for a method marked with the ``objc`` attribute.
+
+``NSApplicationMain``
+    Apply this attribute to a class
+    to indicate that it is the application delegate.
+    Using this attribute is equivalent to calling the
+    ``NSApplicationMain(_:_:)`` function.
+
+    If you do not use this attribute,
+    supply a ``main.swift`` file with code at the top level
+    that calls the ``NSApplicationMain(_:_:)`` function as follows:
+
+    .. testcode:: nsapplicationmain
+
+       -> import AppKit
+       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+
+``NSCopying``
+    Apply this attribute to a stored variable property of a class.
+    This attribute causes the property's setter to be synthesized with a *copy*
+    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
+    value of the property itself.
+    The type of the property must conform to the ``NSCopying`` protocol.
+
+    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
+    property attribute.
+
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section.
+
+``NSManaged``
+    Apply this attribute to an instance method or stored variable property
+    of a class that inherits from ``NSManagedObject``
+    to indicate that Core Data dynamically provides its implementation at runtime,
+    based on the associated entity description.
+    For a property marked with the ``NSManaged`` attribute,
+    Core Data also provides the storage at runtime.
+    Applying this attribute also implies the ``objc`` attribute.
+
+``testable``
+    Apply this attribute to ``import`` declarations
+    for modules compiled with testing enabled
+    to access any entities marked with the ``internal`` access-level modifier
+    as if they were declared with the ``public`` access-level modifier.
+    Tests can also access classes and class members
+    that are marked with the ``internal`` or ``public`` access-level modifier
+    as if they were declared with the ``open`` access-level modifier.
+
 ``UIApplicationMain``
     Apply this attribute to a class
     to indicate that it is the application delegate.
@@ -283,12 +321,12 @@ the ``noreturn`` attribute to a function or method *type*.
     passing this class's name as the name of the delegate class.
 
     If you do not use this attribute,
-    supply a ``main.swift`` file with a ``main`` function
-    that calls the ``UIApplicationMain`` function.
+    supply a ``main.swift`` file with code at the top level
+    that calls the ``UIApplicationMain(_:_:_:)`` function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
     as its principal class,
-    call the ``UIApplicationMain`` function
+    call the ``UIApplicationMain(_:_:_:)`` function
     instead of using this attribute.
 
 .. TODO: Replace the code voice above with the following:
@@ -303,7 +341,7 @@ Declaration Attributes Used by Interface Builder
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
 Swift provides the following Interface Builder attributes:
-``IBAction``, ``IBDesignable``, ``IBInspectable``, and ``IBOutlet``.
+``IBAction``, ``IBOutlet``, ``IBDesignable``, and ``IBInspectable``.
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
@@ -314,38 +352,59 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
+Both the ``IBAction`` and ``IBOutlet`` attributes imply the ``objc`` attribute.
+
 
 .. _Attributes_TypeAttributes:
 
 Type Attributes
 ---------------
 
-You can apply type attributes to types only. However, you can also apply the ``noreturn``
-attribute to a function or method *declaration*.
-
-..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
-              type system at some point (for power users that need to tweak calling conventions).
-    ``objc_block`` // Not documenting.
-    ``thin`` // Mainly used for SIL at the moment. Not documenting for 1.0.
-    ``thick`` // Mainly used for SIL at the moment. Not documenting for 1.0.
-
-    // @thin and @cc are only accepted in SIL. (from attributes.swift test)
-    var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}
-    var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
+You can apply type attributes to types only.
 
 ``autoclosure``
     This attribute is used to delay the evaluation of an expression
     by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribute to a function or method type that takes no arguments
-    and that returns the type of the expression.
+    Apply this attribute to a parameter's type in a method or function declaration,
+    for a parameter of a function type that takes no arguments
+    and that returns a value of the type of the expression.
     For an example of how to use the ``autoclosure`` attribute,
-    see :ref:`Types_FunctionType`.
+    see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
 
-``noreturn``
-    Apply this attribute to the type of a function or method
-    to indicate that the function or method doesn't return to its caller.
-    You can also mark a function or method declaration with this attribute to indicate that
-    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
+``convention``
+   Apply this attribute to the type of a function
+   to indicate its calling conventions.
+
+   The ``convention`` attribute always appears with
+   one of the attribute arguments below.
+
+   * The ``swift`` argument is used to indicate a Swift function reference.
+     This is the standard calling convention for function values in Swift.
+   * The ``block`` argument is used to indicate an Objective-C compatible block reference.
+     The function value is represented as a reference to the block object,
+     which is an ``id``-compatible Objective-C object that embeds its invocation
+     function within the object.
+     The invocation function uses the C calling convention.
+   * The ``c`` argument is used to indicate a C function reference.
+     The function value carries no context and uses the C calling convention.
+
+   A function with C function calling conventions can be used as
+   a function with Objective-C block calling conventions,
+   and a function with Objective-C block calling conventions can be used as
+   a function with Swift function calling conventions.
+   However, only nongeneric global functions, and
+   local functions or closures that don't capture any local variables,
+   can be used as a function with C function calling conventions.
+
+``escaping``
+    Apply this attribute to a parameter's type in a method or function declaration
+    to indicate that the parameter's value can be stored for later execution.
+    This means that the value is allowed to outlive the lifetime of the call.
+    Function type parameters with the ``escaping`` type attribute
+    require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``escaping`` attribute,
+    see :ref:`Closures_Noescape`.
+
 
 .. langref-grammar
 
@@ -357,7 +416,6 @@ attribute to a function or method *declaration*.
     attribute      ::= attribute-resilience
     attribute      ::= attribute-inout
     attribute      ::= attribute-autoclosure
-    attribute      ::= attribute-noreturn
 
 .. NOTE: LangRef grammar is way out of date.
 
@@ -376,11 +434,3 @@ attribute to a function or method *declaration*.
     balanced-token --> ``{`` balanced-tokens-OPT ``}``
     balanced-token --> Any identifier, keyword, literal, or operator
     balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-
-
-.. TODO:
-    Find out if there's a solution to the "!" inverted attributes problem.
-    It'd be nice if we didn't have to use ! for this meaning too.
-    If we decide to keep it, I'll need to update the grammar accordingly.
-    UPDATE: According to [Contributor 7746], we'll leave it in for now, so that we can
-    eventually use it for @!objc. We probably won't have @!objc before WWDC.

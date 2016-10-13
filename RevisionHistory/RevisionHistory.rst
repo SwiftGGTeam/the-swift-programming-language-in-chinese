@@ -3,27 +3,477 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-==========  ==========================================================================
+==========  ==============================================================================================
 Date        Notes
-==========  ==========================================================================
-2014-10-16  * Added a full guide to :ref:`Initialization_FailableInitializers`.
+==========  ==============================================================================================
+2016-09-13  * Updated for Swift 3.0.
+
+            * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
+              and the :ref:`Declarations_FunctionDeclaration` section to note that
+              all parameters get an argument label by default.
+
+            * Updated the discussion of operators
+              in the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              now that you implement them as type methods instead of as global functions.
+
+            * Added information about the ``open`` and ``fileprivate`` access-level modifiers
+              to the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Updated the discussion of ``inout`` in the :ref:`Declarations_FunctionDeclaration` section
+              to note that it appears in front of a parameter's type
+              instead of in front of a parameter's name.
+
+            * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
+              in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
+              and the :doc:`../ReferenceManual/Attributes` chapter
+              now that they are type attributes, rather than declaration attributes.
+
+            * Added information about operator precedence groups
+              to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
+              of the :doc:`../LanguageGuide/AdvancedOperators` chapter,
+              and to the :ref:`Declarations_PrecedenceGroupDeclaration` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Updated discussion throughout
+              to use macOS instead of OS X,
+              ``Error`` instead of ``ErrorProtocol``,
+              and protocol names such as ``ExpressibleByStringLiteral``
+              instead of ``StringLiteralConvertible``.
+
+            * Updated the discussion
+              in the :ref:`Generics_WhereClauses` section
+              of the :doc:`../LanguageGuide/Generics` chapter
+              and in the :doc:`../ReferenceManual/GenericParametersAndArguments` chapter,
+              now that generic ``where`` clauses are written at the end of a declaration.
+
+            * Updated the discussion in the :ref:`Closures_Noescape` section,
+              now that closures are nonescaping by default.
+
+            * Updated the discussion
+              in the :ref:`TheBasics_OptionalBinding` section
+              of the :doc:`../LanguageGuide/TheBasics` chapter
+              and the :ref:`Statements_WhileStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter,
+              now that ``if``, ``while``, and ``guard`` statements
+              use a comma-separated list of conditions without ``where`` clauses.
+
+            * Added information about switch cases that have multiple patterns
+              to the :ref:`ControlFlow_Switch` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_SwitchStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Updated the discussion of function types
+              in the :ref:`Types_FunctionType` section
+              now that function argument labels are no longer part of a function's type.
+
+            * Updated the discussion of protocol composition types
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter
+              to use the new ``Protocol1 & Protocol2`` syntax.
+
+            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+              to use the new ``type(of:)`` syntax for dynamic type expressions.
+
+            * Updated the discussion of line control statements
+              to use the ``#sourceLocation(file:line:)`` syntax
+              in the :ref:`Statements_LineControlStatement` section.
+
+            * Updated the discussion in :ref:`Declarations_FunctionsThatNeverReturn`
+              to use the new ``Never`` type.
+
+            * Added information about playground literals
+              to the :ref:`Expressions_LiteralExpression` section.
+
+            * Updated the discussion in the :ref:`Declarations_InOutParameters` section
+              to note that only nonescaping closures can capture in-out parameters.
+
+            * Updated the discussion about default parameters
+              in the :ref:`Functions_DefaultParameterValues` section,
+              now that they can't be reordered in function calls.
+
+            * Updated attribute arguments to use a colon
+              in the :doc:`../ReferenceManual/Attributes` chapter.
+
+            * Added information about throwing an error
+              inside the catch block of a rethrowing function
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section.
+
+            * Added information about accessing the selector
+              of an Objective-C property's getter or setter
+              to the :ref:`Expression_SelectorExpression` section.
+
+            * Added information to the :ref:`Declarations_TypeAliasDeclaration` section
+              about generic type aliases and using type aliases inside of protocols.
+
+            * Updated the discussion of function types in the :ref:`Types_FunctionType` section
+              to note that parentheses around the parameter types are required.
+
+            * Updated the :doc:`../ReferenceManual/Attributes` chapter
+              to note that the ``@IBAction``, ``@IBOutlet``, and ``@NSManaged`` attributes
+              imply the ``@objc`` attribute.
+
+            * Added information about the ``@GKInspectable`` attribute
+              to the :ref:`Attributes_DeclarationAttributes` section.
+
+            * Updated the discussion of optional protocol requirements
+              in the :ref:`Protocols_OptionalProtocolRequirements` section
+              to clarify that they are used only in code that interoperates with Objective-C.
+
+            * Removed the discussion of explicitly using ``let`` in function parameters
+              from the :ref:`Declarations_FunctionDeclaration` section.
+
+            * Removed the discussion of the ``Boolean`` protocol
+              from the :doc:`../ReferenceManual/Statements` chapter,
+              now that the protocol has been removed from the Swift standard library.
+
+            * Corrected the discussion of the ``@NSApplicationMain`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section.
+----------  ----------------------------------------------------------------------------------------------
+2016-03-21  * Updated for Swift 2.2.
+
+            * Added information about how to conditionally compile code
+              depending on the version of Swift being used
+              to the :ref:`Statements_BuildConfigurationStatement` section.
+
+            * Added information about how to distinguish
+              between methods or initializers whose names differ
+              only by the names of their arguments
+              to the :ref:`Expressions_ExplicitMemberExpression` section.
+
+            * Added information about the ``#selector`` syntax
+              for Objective-C selectors
+              to the :ref:`Expression_SelectorExpression` section.
+
+            * Updated the discussion of associated types
+              to use the ``associatedtype`` keyword
+              in the :ref:`Generics_AssociatedTypes`
+              and :ref:`Declarations_ProtocolAssociatedTypeDeclaration` sections.
+
+            * Updated information about initializers that return ``nil``
+              before the instance is fully initialized
+              in the :ref:`Initialization_FailableInitializers` section.
+
+            * Added information about comparing tuples
+              to the :ref:`BasicOperators_ComparisonOperators` section.
+
+            * Added information about using keywords as external parameter names
+              to the :ref:`LexicalStructure_Keywords` section.
+
+            * Updated the discussion of the ``@objc`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section to note that
+              enumerations and enumeration cases can use this attribute.
+
+            * Updated the :ref:`LexicalStructure_Operators` section
+              with discussion of custom operators that contain a dot.
+
+            * Added a note
+              to the :ref:`Declarations_RethrowingFunctionsAndMethods` section
+              that rethrowing functions can't directly throw errors.
+
+            * Added a note to the :ref:`Properties_PropertyObservers` section
+              about property observers being called
+              when you pass a property as an in-out parameter.
+
+            * Added a section about error handling
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
+
+            * Updated figures in the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section to show the deallocation process more clearly.
+
+            * Removed discussion of C-style ``for`` loops,
+              the ``++`` prefix and postfix operators,
+              and the ``--`` prefix and postfix operators.
+
+            * Removed discussion of variable function arguments
+              and the special syntax for curried functions.
+----------  ----------------------------------------------------------------------------------------------
+2015-10-20  * Updated for Swift 2.1.
+
+            * Updated the :ref:`StringsAndCharacters_StringInterpolation`
+              and :ref:`LexicalStructure_StringLiterals` sections
+              now that string interpolations can contain string literals.
+
+            * Added the :ref:`Closures_Noescape` section
+              with information about the ``@noescape`` attribute.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes`
+              and :ref:`Statements_BuildConfigurationStatement` sections
+              with information about tvOS.
+
+            * Added information about the behavior of in-out parameters
+              to the :ref:`Declarations_InOutParameters` section.
+
+            * Added information to the :ref:`Expressions_CaptureLists` section
+              about how values specified in closure capture lists are captured.
+
+            * Updated the
+              :ref:`OptionalChaining_CallingPropertiesThroughOptionalChaining`
+              section to clarify how assignment through optional chaining
+              behaves.
+
+            * Improved the discussion of autoclosures
+              in the :ref:`Closures_Autoclosures` section.
+
+            * Added an example that uses the ``??`` operator
+              to the :doc:`../GuidedTour/GuidedTour` chapter.
+----------  ----------------------------------------------------------------------------------------------
+2015-09-16  * Updated for Swift 2.0.
+
+            * Added information about error handling
+              to the :doc:`../LanguageGuide/ErrorHandling` chapter,
+              the :ref:`Statements_DoStatement` section,
+              the :ref:`Statements_ThrowStatement` section,
+              the :ref:`Statements_DeferStatement` section,
+              and the :ref:`Expressions_TryExpression` section.
+
+            * Updated the :ref:`ErrorHandling_Represent` section,
+              now that all types can conform to the ``ErrorType`` protocol.
+
+            * Added information about the new ``try?`` keyword
+              to the :ref:`ErrorHandling_Optional` section.
+
+            * Added information about recursive enumerations
+              to the :ref:`Enumerations_RecursiveEnumerations` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added information about API availability checking
+              to the :ref:`ControlFlow_Available` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_AvailabilityCondition` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added information about the new ``guard`` statement
+              to the :ref:`ControlFlow_Guard` section
+              of the :doc:`../LanguageGuide/ControlFlow` chapter
+              and the :ref:`Statements_GuardStatement` section
+              of the :doc:`../ReferenceManual/Statements` chapter.
+
+            * Added information about protocol extensions
+              to the :ref:`Protocols_Extensions` section
+              of the :doc:`../LanguageGuide/Protocols` chapter.
+
+            * Added information about access control for unit testing
+              to the :ref:`AccessControl_AccessLevelsForTestTargets` section
+              of the :doc:`../LanguageGuide/AccessControl` chapter.
+
+            * Added information about the new optional pattern
+              to the :ref:`Patterns_OptionalPattern` section
+              of the :doc:`../ReferenceManual/Patterns` chapter.
+
+            * Updated the :ref:`ControlFlow_DoWhile` section
+              with information about the ``repeat``-``while`` loop.
+
+            * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
+              now that ``String`` no longer conforms
+              to the ``CollectionType`` protocol from the Swift standard library.
+
+            * Added information about the new Swift standard library
+              ``print(_:separator:terminator)`` function
+              to the :ref:`TheBasics_PrintingConstantsAndVariables` section.
+
+            * Added information about the behavior
+              of enumeration cases with ``String`` raw values
+              to the :ref:`Enumerations_ImplicitlyAssignedRawValues` section
+              of the :doc:`../LanguageGuide/Enumerations` chapter
+              and the :ref:`Declarations_EnumerationsWithRawCaseValues` section
+              of the :doc:`../ReferenceManual/Declarations` chapter.
+
+            * Added information about the ``@autoclosure`` attribute ---
+              including its ``@autoclosure(escaping)`` form ---
+              to the :ref:`Closures_Autoclosures` section.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              with information about the ``@available``
+              and ``@warn_unused_result`` attributes.
+
+            * Updated the :ref:`Attributes_TypeAttributes` section
+              with information about the ``@convention`` attribute.
+
+            * Added an example of using multiple optional bindings
+              with a ``where`` clause
+              to the :ref:`TheBasics_OptionalBinding` section.
+
+            * Added information to the :ref:`LexicalStructure_StringLiterals` section
+              about how concatenating string literals using the ``+`` operator
+              happens at compile time.
+
+            * Added information to the :ref:`Types_MetatypeType` section
+              about comparing metatype values and using them
+              to construct instances with initializer expressions.
+
+            * Added a note to the :ref:`TheBasics_DebuggingWithAssertions` section
+              about when user-defined assertions are disabled.
+
+            * Updated the discussion of the ``@NSManaged`` attribute
+              in the :ref:`Attributes_DeclarationAttributes` section,
+              now that the attribute can be applied to certain instance methods.
+
+            * Updated the :ref:`Functions_VariadicParameters` section,
+              now that variadic parameters can be declared in any position
+              in a function's parameter list.
+
+            * Added information
+              to the :ref:`Initialization_OverridingAFailableInitializer` section
+              about how a nonfailable initializer can delegate
+              up to a failable initializer
+              by force-unwrapping the result of the superclass's initializer.
+
+            * Added information about using enumeration cases as functions
+              to the :ref:`Declarations_EnumerationsWithCasesOfAnyType` section.
+
+            * Added information about explicitly referencing an initializer
+              to the :ref:`Expressions_InitializerExpression` section.
+
+            * Added information about build configuration
+              and line control statements
+              to the :ref:`Statements_CompilerControlStatements` section.
+
+            * Added a note to the :ref:`Types_MetatypeType` section
+              about constructing class instances from metatype values.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about weak references being unsuitable for caching.
+
+            * Updated a note in the :ref:`Properties_TypeProperties` section
+              to mention that stored type properties are lazily initialized.
+
+            * Updated the :ref:`Closures_CapturingValues` section
+              to clarify how variables and constants are captured in closures.
+
+            * Updated the :ref:`Attributes_DeclarationAttributes` section
+              to describe when you can apply the ``@objc`` attribute to classes.
+
+            * Added a note to the :ref:`ErrorHandling_Catch` section
+              about the performance of executing a ``throw`` statement.
+              Added similar information about the ``do`` statement
+              in the :ref:`Statements_DoStatement` section.
+
+            * Updated the :ref:`Properties_TypeProperties` section
+              with information about stored and computed type properties
+              for classes, structures, and enumerations.
+
+            * Updated the :ref:`Statements_BreakStatement` section
+              with information about labeled break statements.
+
+            * Updated a note in the :ref:`Properties_PropertyObservers` section
+              to clarify the behavior of ``willSet`` and ``didSet`` observers.
+
+            * Added a note to the :ref:`AccessControl_AccessLevels` section
+              with information about the scope of ``private`` access.
+
+            * Added a note to the
+              :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`
+              section about the differences in weak references
+              between garbage collected systems and ARC.
+
+            * Updated the
+              :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals` section
+              with a more precise definition of Unicode scalars.
+
+----------  ----------------------------------------------------------------------------------------------
+2015-04-08  * Updated for Swift 1.2.
+
+            * Swift now has a native ``Set`` collection type.
+              For more information, see :ref:`CollectionTypes_Sets`.
+
+            * ``@autoclosure`` is now an attribute of the parameter declaration,
+              not its type.
+              There is also a new ``@noescape`` parameter declaration attribute.
+              For more information, see :ref:`Attributes_DeclarationAttributes`.
+
+            * Type methods and properties now use the ``static`` keyword
+              as a declaration modifier.
+              For more information see :ref:`Declarations_TypeVariableProperties`.
+
+            * Swift now includes the ``as?`` and ``as!`` failable downcast operators.
+              For more information,
+              see :ref:`Protocols_CheckingForProtocolConformance`.
+
+            * Added a new guide section about
+              :ref:`StringsAndCharacters_StringIndices`.
+
+            * Removed the overflow division (``&/``) and
+              overflow remainder (``&%``) operators
+              from :ref:`AdvancedOperators_OverflowOperators`.
+
+            * Updated the rules for constant and
+              constant property declaration and initialization.
+              For more information, see :ref:`Declarations_ConstantDeclaration`.
+
+            * Updated the definition of Unicode scalars in string literals.
+              See :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+
+            * Updated :ref:`BasicOperators_RangeOperators` to note that
+              a half-open range with the same start and end index will be empty.
+
+            * Updated :ref:`Closures_ClosuresAreReferenceTypes` to clarify
+              the capturing rules for variables.
+
+            * Updated :ref:`AdvancedOperators_ValueOverflow` to clarify
+              the overflow behavior of signed and unsigned integers
+
+            * Updated :ref:`Declarations_ProtocolDeclaration` to clarify
+              protocol declaration scope and members.
+
+            * Updated :ref:`AutomaticReferenceCounting_DefiningACaptureList`
+              to clarify the syntax for
+              weak and unowned references in closure capture lists.
+
+            * Updated :ref:`LexicalStructure_Operators` to explicitly mention
+              examples of supported characters for custom operators,
+              such as those in the Mathematical Operators, Miscellaneous Symbols,
+              and Dingbats Unicode blocks.
+
+            * Constants can now be declared without being initialized
+              in local function scope.
+              They must have a set value before first use.
+              For more information, see :ref:`Declarations_ConstantDeclaration`.
+
+            * In an initializer, constant properties can now only assign a value once.
+              For more information,
+              see :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
+
+            * Multiple optional bindings can now appear in a single ``if`` statement
+              as a comma-separated list of assignment expressions.
+              For more information, see :ref:`TheBasics_OptionalBinding`.
+
+            * An :ref:`Expression_OptionalChainingOperator`
+              must appear within a postfix expression.
+
+            * Protocol casts are no longer limited to ``@objc`` protocols.
+
+            * Type casts that can fail at runtime
+              now use the ``as?`` or ``as!`` operator,
+              and type casts that are guaranteed not to fail use the ``as`` operator.
+              For more information, see :ref:`Expressions_Type-CastingOperators`.
+----------  ----------------------------------------------------------------------------------------------
+2014-10-16  * Updated for Swift 1.1.
+
+            * Added a full guide to :ref:`Initialization_FailableInitializers`.
 
             * Added a description of :ref:`Protocols_FailableInitializerRequirements`
               for protocols.
 
             * Constants and variables of type ``Any`` can now contain
-              function instances. Updated the example for :ref:`TypeCasting_Any`
+              function instances. Updated the example in :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`
               to show how to check for and cast to a function type
               within a ``switch`` statement.
-----------  --------------------------------------------------------------------------
-2014-09-15  * Enumerations with raw values
+
+            * Enumerations with raw values
               now have a ``rawValue`` property rather than a ``toRaw()`` method
               and a failable initializer with a ``rawValue`` parameter
               rather than a ``fromRaw()`` method.
               For more information, see :ref:`Enumerations_RawValues`
               and :ref:`Declarations_EnumerationsWithRawCaseValues`.
-----------  --------------------------------------------------------------------------
-2014-09-09  * Added a new reference section about
+
+            * Added a new reference section about
               :ref:`Declarations_FailableInitializers`,
               which can trigger initialization failure.
 
@@ -32,8 +482,11 @@ Date        Notes
               the revised rules.
               Removed a duplicate description of the valid set of operator characters
               from :ref:`AdvancedOperators_CustomOperators`.
-----------  --------------------------------------------------------------------------
-2014-08-18  * Added a new section about
+----------  ----------------------------------------------------------------------------------------------
+2014-08-18  * New document that describes Swift 1.0,
+              Apple’s new programming language for building iOS and OS X apps.
+
+            * Added a new section about
               :ref:`Protocols_InitializerRequirements` in protocols.
 
             * Added a new section about :ref:`Protocols_ClassOnlyProtocols`.
@@ -47,13 +500,13 @@ Date        Notes
               can no longer be combined with the addition operator (``+``)
               or addition assignment operator (``+=``).
               These operators are now used only with ``String`` values.
-              Use the ``String`` type's ``append`` method
+              Use the ``String`` type's ``append(_:)`` method
               to append a single ``Character`` value onto the end of a string.
 
             * Added information about the ``availability`` attribute to
               the :ref:`Attributes_DeclarationAttributes` section.
-----------  --------------------------------------------------------------------------
-2014-08-04  * :ref:`TheBasics_Optionals` no longer implicitly evaluate to
+
+            * :ref:`TheBasics_Optionals` no longer implicitly evaluate to
               ``true`` when they have a value and ``false`` when they do not,
               to avoid confusion when working with optional ``Bool`` values.
               Instead, make an explicit check against ``nil``
@@ -87,7 +540,7 @@ Date        Notes
             * Updated the :ref:`CollectionTypes_AccessingAndModifyingAnArray` section
               to note that you can no longer append a single item to an array
               with the ``+=`` operator.
-              Instead, use the ``append`` method,
+              Instead, use the ``append(_:)`` method,
               or append a single-item array with the ``+=`` operator.
 
             * Added a note that the start value ``a``
@@ -144,9 +597,9 @@ Date        Notes
             * Added information about how type inference works
               with :ref:`LexicalStructure_Literals`.
 
-            * Added more information about :ref:`Declarations_CurriedFunctions`.
-----------  --------------------------------------------------------------------------
-2014-07-21  * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
+            * Added more information about curried functions.
+
+            * Added a new chapter about :doc:`../LanguageGuide/AccessControl`.
 
             * Updated the :doc:`../LanguageGuide/StringsAndCharacters` chapter
               to reflect the fact that Swift's ``Character`` type now represents
@@ -160,7 +613,8 @@ Date        Notes
             * Updated the :ref:`StringsAndCharacters_Literals` section
               to note that Unicode scalars inside string literals
               are now written as ``\u{n}``,
-              where ``n`` is between one and eight hexadecimal digits.
+              where ``n`` is a hexadecimal number between 0 and 10FFFF,
+              the range of Unicode's codespace.
 
             * The ``NSString`` ``length`` property is now mapped onto
               Swift's native ``String`` type as ``utf16Count``, not ``utf16count``.
@@ -199,8 +653,8 @@ Date        Notes
               when defining :ref:`AdvancedOperators_CustomOperators`.
 
             * ``nil`` and the Booleans ``true`` and ``false`` are now :ref:`LexicalStructure_Literals`.
-----------  --------------------------------------------------------------------------
-2014-07-07  * Swift's ``Array`` type now has full value semantics.
+
+            * Swift's ``Array`` type now has full value semantics.
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`
               and :ref:`CollectionTypes_Arrays` to reflect the new approach.
               Also clarified the
@@ -212,10 +666,11 @@ Date        Notes
             * Added a new section about :ref:`CollectionTypes_DictionaryTypeShorthandSyntax`,
               which is written as ``[KeyType: ValueType]``.
 
-            * Added a new section about :ref:`CollectionTypes_HashValuesForDictionaryKeyTypes`.
+            * Added a new section about :ref:`CollectionTypes_HashValuesForSetTypes`.
 
             * Examples of :ref:`Closures_ClosureExpressions` now use
-              the global ``sorted`` function rather than the global ``sort`` function,
+              the global ``sorted(_:_:)`` function
+              rather than the global ``sort(_:_:)`` function,
               to reflect the new array value semantics.
 
             * Updated the information about :ref:`Initialization_MemberwiseInitializersForStructureTypes`
@@ -226,7 +681,4 @@ Date        Notes
               for the :ref:`BasicOperators_HalfClosedRangeOperator`.
 
             * Added an example of :ref:`Generics_ExtendingAGenericType`.
-----------  --------------------------------------------------------------------------
-2014-06-02  * New document that describes Swift,
-              Apple’s new programming language for building iOS and OS X apps.
-==========  ==========================================================================
+==========  ==============================================================================================
