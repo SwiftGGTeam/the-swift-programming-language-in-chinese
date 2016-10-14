@@ -1030,12 +1030,10 @@ Parenthesized Expression
 
 A :newTerm:`parenthesized expression` consists of
 an expression surrounded by parentheses.
-It's used to explicitly specify the precedence of operations.
-The type of a parenthesized expression
-is the same as the type of its inner expression.
-For example,
-the type of the parenthesized expression ``(1)``
-is ``Int``, not ``(Int)``.
+You can use parentheses to specify the precedence of operations
+by explicitly grouping expressions.
+Grouping parentheses don't change an expression's type ---
+for example, the type of ``(1)`` is simply ``Int``.
 
 .. See "Tuple Expression" below for langref grammar.
 
