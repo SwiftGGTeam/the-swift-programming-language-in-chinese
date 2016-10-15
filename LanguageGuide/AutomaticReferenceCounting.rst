@@ -493,15 +493,9 @@ before a property or variable declaration:
    and implementing it now would cause problems ---
    for example, there would be ABI mismatch issues if we did that for fields in fragile structs.
 
-Because an unowned reference is nonoptional,
-you don't need to unwrap the unowned reference each time it is used.
-An unowned reference can always be accessed directly.
-However, ARC cannot set the reference to ``nil`` when the instance it refers to is deallocated,
-because variables of a nonoptional type cannot be set to ``nil``.
-
 .. important::
 
-   Use unowned references only when you are sure that
+   Use an unowned reference only when you are sure that
    the reference *always* refers to an instance that has not been deallocated.
    If the instance lifetimes are not the same,
    your program will either crash or have undefined behavior,
