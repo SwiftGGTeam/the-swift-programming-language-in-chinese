@@ -996,7 +996,7 @@ Break in a Loop Statement
 
 When used inside a loop statement,
 ``break`` ends the loop's execution immediately
-and transfers control to the first line of code after the loop's closing brace (``}``).
+and transfers control to the code after the loop's closing brace (``}``).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
@@ -1009,7 +1009,7 @@ Break in a Switch Statement
 
 When used inside a ``switch`` statement,
 ``break`` causes the ``switch`` statement to end its execution immediately
-and to transfer control to the first line of code after
+and to transfer control to the code after
 the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
