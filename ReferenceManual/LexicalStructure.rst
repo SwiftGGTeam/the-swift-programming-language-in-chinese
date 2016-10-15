@@ -255,7 +255,7 @@ so they must be escaped with backticks in that context.
   ``deinit``,
   ``enum``,
   ``extension``,
-  ``fileprivate`,
+  ``fileprivate``,
   ``func``,
   ``import``,
   ``init``,
