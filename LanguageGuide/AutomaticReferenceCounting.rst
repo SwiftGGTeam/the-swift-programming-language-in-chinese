@@ -299,39 +299,9 @@ Unowned references are never ``nil``
 because they are should never refer to an instance
 after it has been deallocated.
 
-To chose between
-weak references, unowned references, and unsafe unowned references,
-consider how much work you want Swift to do at runtime
-about the safety of accessing the other instance.
-.. XXX
-
-* A weak reference asks Swift to do the most runtime work
-  out of these three approaches:
-  It's always valid for your code to access a weak reference.
-  Swift does work at runtime to set the weak reference to ``nil``,
-  which ensures that accessing the weak reference never raises a runtime error.
-
-* A safe unowned reference asks Swift to do some runtime work to ensure safety,
-  but also shifts some of the burden to your code.
-  Your code is responsible for ensuring that both instances have the same lifetime.
-  Swift does work at runtime to raise a runtime error
-  if your code tries to access a safe unowned reference
-  after the instance has been deallocated.
-
-* An unsafe unowned reference doesn't ask Swift to do any runtime work.
-  If your code tries to access an unsafe unowned reference
-  after the instance has been deallocated,
-  
-
-
-
 .. QUESTION: how do I answer the question
    "which of the two properties in the reference cycle
    should be marked as weak or unowned?"
-
-.. TODO: mention the fact that unowned references don't have to perform checks.
-   Don't describe it in terms of speed;
-   rather, note that the extra checks don't need to be performed.
 
 .. _AutomaticReferenceCounting_WeakReferencesBetweenClassInstances:
 
@@ -527,6 +497,24 @@ before a property or variable declaration:
    If the instance lifetimes are not the same,
    your program will either crash or have undefined behavior,
    as described above.
+
+
+To chose between weak and unowned references,
+it is helpful to think of what guarantees
+you want the compiler to make for you.
+For weak reference,
+Swift guarantees that accessing the value
+never violates memory safety and never causes a runtime error.
+At runtime,
+Swift keeps track of whether the referenced object has been deallocated,
+so it can set the value to ``nil``.
+A safe unowned reference makes a smaller guarantee:
+accessing it never violates memory safety.
+Because the value is never set to ``nil``,
+Swift doesn't need to do as much runtime work.
+An unsafe unowned reference removes even the guarantee of memory safety,
+which means Swift doesn't need to do any runtime work
+to keep track of whether the object has been deallocated.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
