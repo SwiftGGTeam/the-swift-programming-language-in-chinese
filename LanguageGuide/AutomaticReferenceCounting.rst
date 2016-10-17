@@ -540,7 +540,7 @@ In this data model, a customer may or may not have a credit card,
 but a credit card will *always* be associated with a customer.
 A ``CreditCard`` instance never outlives the ``Customer`` that it refers to.
 To represent this, the ``Customer`` class has an optional ``card`` property,
-but the ``CreditCard`` class has a unsafe (and nonoptional) ``customer`` property.
+but the ``CreditCard`` class has an unowned (and nonoptional) ``customer`` property.
 
 Furthermore, a new ``CreditCard`` instance can *only* be created
 by passing a ``number`` value and a ``customer`` instance
