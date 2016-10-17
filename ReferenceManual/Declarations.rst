@@ -2546,7 +2546,7 @@ that introduces the declaration.
     to the object stored as its value.
     If you try to access the variable or property
     after the object has been deallocated,
-    you will access the memory at the location where the object used to be ---
+    you'll access the memory at the location where the object used to be ---
     this is a memory-unsafe operation.
     Like a weak reference,
     the type of the property or value must be a class type;

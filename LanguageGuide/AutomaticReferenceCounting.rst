@@ -289,12 +289,14 @@ to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
 Use a weak reference when the other instance
-has a different lifetime that this instance has.
+has a different lifetime than this instance has.
 When the other instance is deallocated,
 the weak reference is set to ``nil``.
 In contrast, use an unowned reference when both instances
 have the same lifetime ---
-that is, both instances will be deallocated at the same time.
+that is, both instances will be deallocated at the same time ---
+or when the other instance always has a shorter lifetime
+than this instance.
 Unowned references are never ``nil``
 because they should never refer to an instance
 after it has been deallocated.
@@ -495,7 +497,7 @@ before a property or variable declaration:
    Use an unowned reference only when you are sure that
    the reference *always* refers to an instance that has not been deallocated.
    If the instance lifetimes are not the same,
-   your program will either crash or have undefined behavior,
+   your program will have undefined behavior,
    as described above.
 
 To chose between weak and unowned references,
