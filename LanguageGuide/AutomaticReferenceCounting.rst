@@ -289,14 +289,14 @@ to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
 Use a weak reference when the other instance has a different lifetime ---
-that is, both instances are deallocated at different times.
-When that other instance is deallocated,
-the weak reference is set to ``nil``.
+that is, when both instances are deallocated at different times.
+In the ``Apartment`` example above,
+it is appropriate for an apartment to be able to have
+no tenant at some point in its lifetime,
+and so a weak reference is an appropriate way to break the reference cycle in this case.
+
 In contrast, use an unowned reference when both instances
 have the same lifetime.
-Unowned references are never ``nil``
-because they should never refer to an instance
-after it has been deallocated.
 
 .. QUESTION: how do I answer the question
    "which of the two properties in the reference cycle
@@ -314,17 +314,6 @@ This behavior prevents the reference from becoming part of a strong reference cy
 You indicate a weak reference by placing the ``weak`` keyword
 before a property or variable declaration.
 
-Use a weak reference to avoid reference cycles
-whenever it is possible for that reference to have
-a missing value at some point in its life.
-If the reference *always* has a value,
-use an unowned reference instead,
-as described in :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
-In the ``Apartment`` example above,
-it is appropriate for an apartment to be able to have
-no tenant at some point in its lifetime,
-and so a weak reference is an appropriate way to break the reference cycle in this case.
-
 Because a weak reference does not keep a strong hold on the instance it refers to,
 it is possible for that instance to be deallocated
 while the weak reference is still referring to it.
@@ -338,6 +327,8 @@ You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
+Swift guarantees that accessing the value of a weak reference
+never violates memory safety and never causes a runtime error.
 
 .. note::
 
@@ -456,63 +447,32 @@ it too is deallocated:
 Unowned References
 ~~~~~~~~~~~~~~~~~~
 
-Like weak references,
+Like a weak reference,
 an :newTerm:`unowned reference` does not keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is used when both instances have the same lifetime.
-Because an unowned reference is expected to *always* have a value,
-it's always defined as a nonoptional type.
+You indicate an unowned reference by placing the ``unowned`` keyword
+before a property or variable declaration.
 
-You indicate an unowned reference by writing one of the following
-before a property or variable declaration:
+An unowned reference is expected to always have a value.
+As a result,
+ARC never sets an unowned reference's value to ``nil``,
+which means that unowned references are defined using nonoptional types.
 
-``unowned(safe)``
-    If you try to access a *safe* unowned reference
-    after the instance that it references is deallocated,
-    you will trigger a runtime error.
-
-``unowned(unsafe)``
-    If you try to access an *unsafe* unowned reference
-    after the instance that it references is deallocated,
-    your program will read from the memory location
-    where the instance used to be.
-    It might crash, or it might read arbitrary data;
-    the specific behavior is undefined.
-
-``unowned``
-    A shorter spelling of ``unowned(safe)``.
-
-.. Historically, we had intended "unowned" to mean "unowned(safe)" under -O and -Onone
-   and to mean "unowned(unsafe)" under -Ounchecked.
-   Joe Groff confirmed as of 2016-10-13 that this never got implemented,
-   and implementing it now would cause problems ---
-   for example, there would be ABI mismatch issues if we did that for fields in fragile structs.
+..  Everything that unowned can do, weak can do slower and more awkwardly
+   (but still correctly).
+   Unowned is interesting because it's faster and easier (no optionals) ---
+   in the cases where it's actually correct for your data.
 
 .. important::
 
    Use an unowned reference only when you are sure that
    the reference *always* refers to an instance that has not been deallocated.
-   If the instance lifetimes are not the same,
-   your program will have undefined behavior,
-   as described above.
 
-To chose between weak and unowned references,
-it is helpful to think of what guarantees
-you want the compiler to make for you.
-For a weak reference,
-Swift guarantees that accessing its value
-never violates memory safety and never causes a runtime error.
-At runtime,
-Swift keeps track of whether the referenced object has been deallocated,
-so it can set the value of the weak reference to ``nil``.
-A safe unowned reference makes a smaller guarantee:
-accessing it never violates memory safety.
-Because the value of an unowned reference is never set to ``nil``,
-Swift doesn't need to do as much runtime work.
-An unsafe unowned reference removes even the guarantee of memory safety,
-which means Swift doesn't need to do any runtime work
-to keep track of whether the object has been deallocated.
+   If your program tries to access the value of unowned reference
+   after that instance has been deallocated,
+   you'll get a runtime error.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
@@ -619,8 +579,25 @@ the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
 both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
 
+.. note::
+   
+    The examples above show how to use *safe* unowned references.
+    Swift also provides *unsafe* unowned references for cases where
+    you need to disable runtime safety checks ---
+    for example, for performance reasons.
+    As with all unsafe operations,
+    you take on the responsiblity for checking that code for safety.
+
+    You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
+    If you try to access an unsafe unowned reference
+    after the instance that it refers to is deallocated,
+    your program will try to access the memory location
+    where the instance used to be,
+    which is an unsafe operation.
+
 .. <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
    Try expanding the example above so each customer has an array of credit cards.
+
 
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
@@ -974,6 +951,8 @@ may become ``nil`` at some point in the future.
 Weak references are always of an optional type,
 and automatically become ``nil`` when the instance they reference is deallocated.
 This enables you to check for their existence within the closure's body.
+
+.. FIXME: The above needs to not frame in terms of nullability.
 
 .. note::
 
