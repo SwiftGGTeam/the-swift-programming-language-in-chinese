@@ -296,7 +296,7 @@ In contrast, use an unowned reference when both instances
 have the same lifetime ---
 that is, both instances will be deallocated at the same time.
 Unowned references are never ``nil``
-because they are should never refer to an instance
+because they should never refer to an instance
 after it has been deallocated.
 
 .. QUESTION: how do I answer the question
@@ -465,7 +465,7 @@ an unowned reference is used when both instances have the same lifetime.
 Because an unowned reference is assumed to *always* have a value,
 it is always defined as a nonoptional type.
 
-You indicate an unowned reference by placing one of the following keywords
+You indicate an unowned reference by writing one of the following
 before a property or variable declaration:
 
 ``unowned(safe)``
