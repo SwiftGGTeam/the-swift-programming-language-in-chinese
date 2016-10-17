@@ -288,15 +288,12 @@ Weak and unowned references enable one instance in a reference cycle
 to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
-Use a weak reference when the other instance
-has a different lifetime than this instance has.
-When the other instance is deallocated,
+Use a weak reference when the other instance has a different lifetime ---
+that is, both instances are deallocated at different times.
+When that other instance is deallocated,
 the weak reference is set to ``nil``.
 In contrast, use an unowned reference when both instances
-have the same lifetime ---
-that is, both instances will be deallocated at the same time ---
-or when the other instance always has a shorter lifetime
-than this instance.
+have the same lifetime.
 Unowned references are never ``nil``
 because they should never refer to an instance
 after it has been deallocated.
@@ -464,8 +461,8 @@ an :newTerm:`unowned reference` does not keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is used when both instances have the same lifetime.
-Because an unowned reference is assumed to *always* have a value,
-it is always defined as a nonoptional type.
+Because an unowned reference is expected to *always* have a value,
+it's always defined as a nonoptional type.
 
 You indicate an unowned reference by writing one of the following
 before a property or variable declaration:
@@ -503,15 +500,15 @@ before a property or variable declaration:
 To chose between weak and unowned references,
 it is helpful to think of what guarantees
 you want the compiler to make for you.
-For weak reference,
-Swift guarantees that accessing the value
+For a weak reference,
+Swift guarantees that accessing its value
 never violates memory safety and never causes a runtime error.
 At runtime,
 Swift keeps track of whether the referenced object has been deallocated,
-so it can set the value to ``nil``.
+so it can set the value of the weak reference to ``nil``.
 A safe unowned reference makes a smaller guarantee:
 accessing it never violates memory safety.
-Because the value is never set to ``nil``,
+Because the value of an unowned reference is never set to ``nil``,
 Swift doesn't need to do as much runtime work.
 An unsafe unowned reference removes even the guarantee of memory safety,
 which means Swift doesn't need to do any runtime work
@@ -621,6 +618,11 @@ The final code snippet above shows that
 the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
 both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
+
+.. FIXME: Add a note about using an unowned reference to a long-lived object
+   from a short-lived object.
+   That's not "same lifetime" but it's totally valid.
+   Try expanding the example above so each customer has an array of credit cards.
 
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
