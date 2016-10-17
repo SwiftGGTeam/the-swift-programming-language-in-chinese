@@ -498,7 +498,6 @@ before a property or variable declaration:
    your program will either crash or have undefined behavior,
    as described above.
 
-
 To chose between weak and unowned references,
 it is helpful to think of what guarantees
 you want the compiler to make for you.
