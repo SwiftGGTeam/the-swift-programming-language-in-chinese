@@ -2528,7 +2528,7 @@ that introduces the declaration.
 
 ``unowned(safe)``
     Apply this modifier to a variable or a stored variable property
-    to indicate that the variable or property has unowned reference
+    to indicate that the variable or property has an unowned reference
     to the object stored as its value.
     If you try to access the variable or property
     after the object has been deallocated,
@@ -2536,15 +2536,14 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type can be nonoptional.
+    the type is nonoptional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
 ``unowned(unsafe)``
     Apply this modifier to a variable or a stored variable property
-    to indicate that the variable or property has unowned reference
+    to indicate that the variable or property has an unowned reference
     to the object stored as its value.
-    This modifier can be abbreviated as ``unowned``.
     If you try to access the variable or property
     after the object has been deallocated,
     you will access the memory at the location where the object used to be ---
@@ -2552,7 +2551,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type can be nonoptional.
+    the type is nonoptional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
