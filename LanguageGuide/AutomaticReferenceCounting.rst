@@ -950,7 +950,7 @@ Weak references are always of an optional type,
 and automatically become ``nil`` when the instance they reference is deallocated.
 This enables you to check for their existence within the closure's body.
 
-.. FIXME: The above needs to not frame in terms of nullability.
+.. <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
 
 .. note::
 
