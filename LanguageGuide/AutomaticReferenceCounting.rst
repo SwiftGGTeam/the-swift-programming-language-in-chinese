@@ -327,8 +327,6 @@ You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
-Swift guarantees that accessing the value of a weak reference
-never violates memory safety and never causes a runtime error.
 
 .. note::
 
