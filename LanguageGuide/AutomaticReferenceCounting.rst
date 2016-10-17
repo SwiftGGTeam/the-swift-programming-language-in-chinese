@@ -619,9 +619,7 @@ the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
 both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
 
-.. FIXME: Add a note about using an unowned reference to a long-lived object
-   from a short-lived object.
-   That's not "same lifetime" but it's totally valid.
+.. <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
    Try expanding the example above so each customer has an array of credit cards.
 
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
