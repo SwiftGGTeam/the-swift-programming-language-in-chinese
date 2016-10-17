@@ -2526,7 +2526,7 @@ that introduces the declaration.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
 
-``unowned(safe)``
+``unowned``
     Apply this modifier to a variable or a stored variable property
     to indicate that the variable or property has an unowned reference
     to the object stored as its value.
@@ -2539,6 +2539,9 @@ that introduces the declaration.
     the type is nonoptional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
+
+``unowned(safe)``
+    An explicit spelling of ``unowned``.
 
 ``unowned(unsafe)``
     Apply this modifier to a variable or a stored variable property
@@ -2554,9 +2557,6 @@ that introduces the declaration.
     the type is nonoptional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
-
-``unowned``
-    A shorter spelling of ``unowned(safe)``.
 
 ``weak``
     The ``weak`` modifier is applied to a variable or a stored variable property
