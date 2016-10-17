@@ -468,9 +468,6 @@ it is always defined as a nonoptional type.
 You indicate an unowned reference by placing one of the following keywords
 before a property or variable declaration:
 
-``unowned``
-    A shorter spelling of ``unowned(safe)``.
-
 ``unowned(safe)``
     If you try to access a *safe* unowned reference
     after the instance that it references is deallocated,
@@ -483,6 +480,9 @@ before a property or variable declaration:
     where the instance used to be.
     It might crash, or it might read arbitrary data;
     the specific behavior is undefined.
+
+``unowned``
+    A shorter spelling of ``unowned(safe)``.
 
 .. Historically, we had intended "unowned" to mean "unowned(safe)" under -O and -Onone
    and to mean "unowned(unsafe)" under -Ounchecked.
