@@ -6,6 +6,8 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-10-27  * Updated for Swift 3.0.1.
+----------  ----------------------------------------------------------------------------------------------
 2016-09-13  * Updated for Swift 3.0.
 
             * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter
