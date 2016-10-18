@@ -365,8 +365,9 @@ Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
 that aren't equal.
-The result of comparing those two values
-is used as the result of comparing the tuples.
+Those two values are compared,
+and the result of that comparison
+determines the overall result of the tuple comparison.
 If all the elements are equal,
 then the tuples themselves are equal.
 For example:
