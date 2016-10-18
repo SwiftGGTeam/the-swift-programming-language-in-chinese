@@ -352,14 +352,14 @@ a reference to an invalid instance that no longer exists.
     << // c1 : C = REPL.C
     -> do {
     -> var c2 = C()  // Inside a do{} block, so no REPL result.
-    -> print(c1.w)
+    -> print(c1.w as Any)
     << nil
     -> c1.w = c2
     << did set
-    -> print(c1.w)
+    -> print(c1.w as Any)
     << Optional(REPL.C)
     -> } // ARC deallocates c2; didSet doesn't fire.
-    -> print(c1.w)
+    -> print(c1.w as Any)
     << nil
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
