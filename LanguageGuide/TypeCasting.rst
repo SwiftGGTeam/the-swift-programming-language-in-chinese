@@ -320,11 +320,12 @@ a constant of the specified type to enable its value to be printed:
 
 .. note::
 
-    The ``Any`` type represents a value of any type, including optional types.
+    The ``Any`` type represents values of any type, including optional types.
     Swift gives you a warning if you use an optional value
-    where a value of ``Any`` type is expected.
-    If you need to use an optional value as an ``Any`` value,
-    use the ``as`` operator.
+    where a value of type ``Any`` is expected.
+    If you really do need to use an optional value as an ``Any`` value,
+    you can use the ``as`` operator to explicitly cast the optional to ``Any``,
+    as shown below.
 
     .. testcode:: typeCasting
 
