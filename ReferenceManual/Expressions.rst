@@ -1510,7 +1510,7 @@ For example:
     ---
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(x:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
