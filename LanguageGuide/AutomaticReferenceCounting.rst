@@ -578,7 +578,7 @@ both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
 
 .. note::
-   
+
     The examples above show how to use *safe* unowned references.
     Swift also provides *unsafe* unowned references for cases where
     you need to disable runtime safety checks ---
