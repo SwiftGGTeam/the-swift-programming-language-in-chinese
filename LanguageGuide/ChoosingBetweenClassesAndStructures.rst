@@ -4,6 +4,7 @@ Choosing Between Reference and Value Types
 Classes and structures in Swift have many similarities.
 Both have properties, methods, subscripts, initializers, use dot syntax,
 and so on.
+.. XXX Also, both can do abstraction via protocols
 As a result,
 it can be hard to know
 when to use classes and
@@ -13,14 +14,22 @@ of your program.
 The fundamental difference
 between structures and classes
 is that structures are value types
+.. XXX what about enums? they're value types too
 whereas classes are reference types,
 as introduced in :ref:`Structures_StructuresAreValueTypes`
 and :ref:`Classes_ClassesAreReferenceTypes`.
 
+.. XXX Reword "it can be hard"
+
+.. XXX General question: what happens when I put a class instance inside a struct?
+   In particular, call out the fact that this breaks value semantics,
+   because copies of the struct all refer to the same classs instance.
+   In contrast, composing value semantics preserves value semantics.
+
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
 
-When to Use a Class
--------------------
+When to Use a Reference Type
+----------------------------
 
 If you're used to working
 in object-oriented languages
@@ -31,6 +40,7 @@ In Swift,
 you don't need classes
 as often as you might expect,
 but they still have their place.
+.. XXX Reword line above -- too negative about classes
 Use a class
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
@@ -44,11 +54,11 @@ When you are working with resources that you
 don't control such as frameworks,
 it is common to be given a base class
 that you are expected to subclass.
+.. XXX Maybe "you typically subclass"?
 For example,
 if you are working with the UIKit framework
 and want to create a custom view,
-you are expected
-to subclass ``UIView``.
+you subclass ``UIView``.
 
 It is also common when working with frameworks
 to be expected to work with and pass around
@@ -59,6 +69,7 @@ For example,
 a framework might expect you
 to pass around a delegate
 that must be a class.
+.. XXX needs a bit of meat -- "pass around" is too colloquial
 
 In these scenarios
 when you are using a framework based in classes,
@@ -83,6 +94,11 @@ When you mutate that instance,
 Swift keeps that instance stored
 in the same region in memory
 with the same address.
+
+.. XXX Talk about one thing at a time.
+
+.. XXX can we have this discussion without talking about raw memory?
+   many readers won't know what that is either
 
 There are times
 when you want an instance
@@ -113,6 +129,16 @@ because you want to be able to
 refer to one instance of a ``Window``
 from several places in code,
 and it makes no sense to copy it.
+
+.. XXX it's representing a resource
+
+.. XXX fix the wording so it's not about "making sense";
+   give a real reason instead
+
+.. XXX being something that he user interacts with
+   is a good indication that it should be a reference type
+   (a physical object or a simulation of one,
+   like a window on the screen)
 
 Recall
 the ``rootWindow`` constant and
@@ -148,6 +174,8 @@ that would make no sense.
 You are trying to close the actual current window ---
 not a copy of it.
 
+.. XXX the window object above is representing a resource
+
 It is unclear
 what it would even mean
 to copy a ``Window`` in the first place.
@@ -158,6 +186,8 @@ When there really is just one of something
 and you need to access that one thing
 in multiple places in your code,
 use a class.
+
+.. XXX polish prose in para above & below for clarity
 
 There are other times
 when you want the stable identity
@@ -173,6 +203,8 @@ needs to exist
 in one constant region in memory
 so that you can free up that memory
 when you are ready to delete the file.
+.. XXX No - so the temp file gets deleted after you deallocate the file object,
+   or so all assecc to the file sees the same state
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
@@ -202,8 +234,10 @@ use a class.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
 
-When To Use a Structure
------------------------
+When To Use a Value Type
+------------------------
+
+.. XXX Re-title to be about value types.
 
 If you don't need your custom data construct
 to have reference semantics
@@ -220,6 +254,9 @@ discussed above.
 
 Why to Use a Structure
 ----------------------
+
+.. XXX the first part of this is all about unintended sharing
+   due to using reference semantics when they're the wrong thing
 
 Structures make it easier
 to reason about your code.
@@ -306,6 +343,9 @@ when structures
 do that for you
 with their copy-on-write behavior.
 
+.. XXX weak argument -- better framed as structs give you (via reference semantics)
+   what you were trying to build via defensive copying of class instances
+
 Much like constants,
 structures make it
 easier to reason about your code
@@ -322,6 +362,11 @@ don't need reference semantics.
 
 When You Need Inheritance
 -------------------------
+
+.. XXX is this the right place for this?
+   Maybe it should have gone in the Protocols chapter,
+   with an xref from the Inheritance chapter
+   and from this chapter.
 
 You might think
 you should use a class
