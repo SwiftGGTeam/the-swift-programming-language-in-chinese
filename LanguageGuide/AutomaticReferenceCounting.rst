@@ -294,7 +294,6 @@ In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
-
 In contrast, use an unowned reference when both instances
 have the same lifetime.
 
@@ -468,7 +467,7 @@ which means that unowned references are defined using nonoptional types.
    Use an unowned reference only when you are sure that
    the reference *always* refers to an instance that has not been deallocated.
 
-   If your program tries to access the value of unowned reference
+   If you try to access the value of unowned reference
    after that instance has been deallocated,
    you'll get a runtime error.
 
