@@ -1002,6 +1002,7 @@ consider the case of requesting
 the sunrise and sunset time from a server.
 The server either responds with the information
 or it responds with some error information.
+
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
    while sidestepping the fact that I'm doing so.
