@@ -2531,7 +2531,7 @@ that introduces the declaration.
     must also be marked with the ``required`` modifier.
 
 ``unowned``
-    Apply this modifier to a variable or a stored variable property
+    Apply this modifier to a stored variable, constant, or stored property
     to indicate that the variable or property has an unowned reference
     to the object stored as its value.
     If you try to access the variable or property
@@ -2548,7 +2548,7 @@ that introduces the declaration.
     An explicit spelling of ``unowned``.
 
 ``unowned(unsafe)``
-    Apply this modifier to a variable or a stored variable property
+    Apply this modifier to a stored variable, constant, or stored property
     to indicate that the variable or property has an unowned reference
     to the object stored as its value.
     If you try to access the variable or property
@@ -2563,15 +2563,13 @@ that introduces the declaration.
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
 ``weak``
-    The ``weak`` modifier is applied to a variable or a stored variable property
+    Apply this modifier to a stored variable or stored variable property
     to indicate that the variable or property has a weak reference to the
     object stored as its value. The type of the variable or property
     must be an optional class type.
     If you access the variable or property is accessed
     after the object has been deallocated,
     its value is ``nil``.
-    Use the ``weak`` modifier to avoid strong
-    reference cycles.
     For an example and more information about the ``weak`` modifier,
     see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
 
