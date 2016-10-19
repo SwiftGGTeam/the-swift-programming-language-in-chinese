@@ -2530,11 +2530,47 @@ that introduces the declaration.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
 
+``unowned``
+    Apply this modifier to a variable or a stored variable property
+    to indicate that the variable or property has an unowned reference
+    to the object stored as its value.
+    If you try to access the variable or property
+    after the object has been deallocated,
+    a runtime error is raised.
+    Like a weak reference,
+    the type of the property or value must be a class type;
+    unlike a weak reference,
+    the type is nonoptional.
+    For an example and more information about the ``unowned`` modifier,
+    see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
+
+``unowned(safe)``
+    An explicit spelling of ``unowned``.
+
+``unowned(unsafe)``
+    Apply this modifier to a variable or a stored variable property
+    to indicate that the variable or property has an unowned reference
+    to the object stored as its value.
+    If you try to access the variable or property
+    after the object has been deallocated,
+    you'll access the memory at the location where the object used to be,
+    which is a memory-unsafe operation.
+    Like a weak reference,
+    the type of the property or value must be a class type;
+    unlike a weak reference,
+    the type is nonoptional.
+    For an example and more information about the ``unowned`` modifier,
+    see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
+
 ``weak``
     The ``weak`` modifier is applied to a variable or a stored variable property
     to indicate that the variable or property has a weak reference to the
     object stored as its value. The type of the variable or property
-    must be an optional class type. Use the ``weak`` modifier to avoid strong
+    must be an optional class type.
+    If you access the variable or property is accessed
+    after the object has been deallocated,
+    its value is ``nil``.
+    Use the ``weak`` modifier to avoid strong
     reference cycles.
     For an example and more information about the ``weak`` modifier,
     see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
