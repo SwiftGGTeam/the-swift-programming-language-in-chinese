@@ -987,7 +987,7 @@ because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-If enumeration has raw values,
+If an enumeration has raw values,
 those values are determined as part of the declaration,
 which means every instance of a particular enumeration case
 always has the same raw value.
@@ -999,9 +999,9 @@ You can think of the associated values
 as behaving like stored properties of the enumeration case instance.
 For example,
 consider the case of requesting
-the sunrise and sunset time from a server.
-The server either responds with the information
-or it responds with some error information.
+the sunrise and sunset times from a server.
+The server either responds with the requested information,
+or it responds with a description of what went wrong.
 
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
