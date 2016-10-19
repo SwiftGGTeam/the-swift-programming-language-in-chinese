@@ -289,7 +289,7 @@ to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
 Use a weak reference when the other instance has a shorter lifetime ---
-that it, when the other instance can be deallocated first.
+that is, when the other instance can be deallocated first.
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
