@@ -7,6 +7,22 @@ This table describes the changes to *The Swift Programming Language*.
 Date        Notes
 ==========  ==============================================================================================
 2016-10-27  * Updated for Swift 3.0.1.
+
+            * Added a note about using an optional value
+              when a value of type ``Any`` is expected
+              in the :ref:`TypeCasting_TypeCastingForAnyAndAnyObject` section.
+
+            * Corrected the discussion of weak and unowned references
+              in the :doc:`LanguageGuide/AutomaticReferenceCounting` chapter.
+
+              .. FIXME: let's avoid negative framing
+
+            * Separated the discussion of parenthesized expressions,
+              tuple expressions, and function call expressions.
+              Added a new :ref:`Expressions_TupleExpression` section,
+              and revised the :ref:`Expressions_ParenthesizedExpression`
+              and ref:`Expressions_FunctionCallExpression` sections.
+
 ----------  ----------------------------------------------------------------------------------------------
 2016-09-13  * Updated for Swift 3.0.
 
