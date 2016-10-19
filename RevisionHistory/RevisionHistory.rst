@@ -8,21 +8,18 @@ Date        Notes
 ==========  ==============================================================================================
 2016-10-27  * Updated for Swift 3.0.1.
 
-            * Added a note to the :ref:`TypeCasting_TypeCastingForAnyAndAnyObject` section
-              about using an optional value when a value of type ``Any`` is expected.
-
             * Updated the discussion of weak and unowned references
-              in the :doc:`../LanguageGuide/AutomaticReferenceCounting` chapter
-              .. TODO: Maybe add a "to do X" bit at the end
+              in the :doc:`../LanguageGuide/AutomaticReferenceCounting` chapter.
 
             * Added information about the ``unowned``, ``unowned(safe)``, and ``unowned(unsafe)``
               declaration modifiers
               in the :ref:`Declarations_DeclarationModifiers` section.
 
-            * Updated the :doc:`../ReferenceManual/Expressions` chapter
-              to separate the discussion of parenthesized expressions,
-              tuple expressions, and function call expressions.
+            * Added a note to the :ref:`TypeCasting_TypeCastingForAnyAndAnyObject` section
+              about using an optional value when a value of type ``Any`` is expected.
 
+            * Updated the :doc:`../ReferenceManual/Expressions` chapter
+              to separate the discussion of parenthesized expressions and tuple expressions.
 ----------  ----------------------------------------------------------------------------------------------
 2016-09-13  * Updated for Swift 3.0.
 
