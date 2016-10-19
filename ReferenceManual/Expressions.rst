@@ -449,6 +449,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> parenthesized-expression
+    primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
@@ -1028,6 +1029,27 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
+an expression surrounded by parentheses.
+You can use parentheses to specify the precedence of operations
+by explicitly grouping expressions.
+Grouping parentheses don't change an expression's type ---
+for example, the type of ``(1)`` is simply ``Int``.
+
+.. See "Tuple Expression" below for langref grammar.
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression ``)``
+
+
+.. _Expressions_TupleExpression:
+
+Tuple Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`tuple expression` consists of
 a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
@@ -1037,13 +1059,9 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Use parenthesized expressions to create tuples
-and to pass arguments to a function call.
-If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value.
-For example,
-the type of the parenthesized expression ``(1)``
-is ``Int``, not ``(Int)``.
+A tuple expression can contain zero expressions,
+or it can contain two or more expressions.
+A single expression inside parentheses is a parenthesized expression.
 
 .. langref-grammar
 
@@ -1054,13 +1072,11 @@ is ``Int``, not ``(Int)``.
 
 .. syntax-grammar::
 
-    Grammar of a parenthesized expression
+    Grammar of a tuple expression
 
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
-    expression-element --> operator | identifier ``:`` operator
-
+    tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
+    tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
+    tuple-element --> expression | identifier ``:`` expression
 
 .. _Expressions_WildcardExpression:
 
@@ -1357,8 +1373,14 @@ the parentheses can be omitted.
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression
-    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-argument-clause
+    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closure
+
+    function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
+    function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
+    function-call-argument --> expression | identifier ``:`` expression
+    function-call-argument --> operator | identifier ``:`` operator
+
     trailing-closure --> closure-expression
 
 .. Multiple trailing closures in LangRef is an error,
