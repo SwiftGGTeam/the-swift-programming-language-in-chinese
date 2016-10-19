@@ -288,14 +288,14 @@ Weak and unowned references enable one instance in a reference cycle
 to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
-Use a weak reference when the other instance has a different lifetime ---
-that is, when both instances are deallocated at different times.
+Use a weak reference when the other instance has a shorter lifetime ---
+that it, when the other instance can be deallocated first.
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
-In contrast, use an unowned reference when both instances
-have the same lifetime.
+In contrast, use an unowned reference when the other instance
+has the same lifetime or a longer lifetime.
 
 .. QUESTION: how do I answer the question
    "which of the two properties in the reference cycle
@@ -448,7 +448,8 @@ Like a weak reference,
 an :newTerm:`unowned reference` does not keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
-an unowned reference is used when both instances have the same lifetime.
+an unowned reference is used when the other instance
+has the same lifetime or a longer lifetime.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
@@ -467,7 +468,7 @@ which means that unowned references are defined using nonoptional types.
    Use an unowned reference only when you are sure that
    the reference *always* refers to an instance that has not been deallocated.
 
-   If you try to access the value of unowned reference
+   If you try to access the value of an unowned reference
    after that instance has been deallocated,
    you'll get a runtime error.
 
