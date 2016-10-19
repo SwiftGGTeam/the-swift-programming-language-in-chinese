@@ -984,49 +984,21 @@ because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Use ``struct`` to create a structure.
-Structures support many of the same behaviors as classes,
-including methods and initializers.
-One of the most important differences
-between structures and classes is that
-structures are always copied when they are passed around in your code,
-but classes are passed by reference.
-
-.. testcode:: guided-tour
-
-    -> struct Card {
-           var rank: Rank
-           var suit: Suit
-           func simpleDescription() -> String {
-               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-           }
-       }
-    -> let threeOfSpades = Card(rank: .three, suit: .spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
-    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
-
-.. admonition:: Experiment
-
-   Add a method to ``Card`` that creates
-   a full deck of cards,
-   with one card of each combination of rank and suit.
-
-An instance of an enumeration case
-can have values associated with the instance.
-Instances of the same enumeration case
-can have different values associated with them.
-You provide the associated values when you create the instance.
-Associated values and raw values are different:
-The raw value of an enumeration case
-is the same for all of its instances,
-and you provide the raw value when you define the enumeration.
-
+If an enumeration has raw values,
+those values are determined as part of the declaration,
+which means every instance of a particular enumeration case
+always has the same raw value.
+Another choice for enumeration cases
+is to have values associated with the case ---
+these values are determined when you make the instance,
+and they can be different for each instance of an enumeration case.
+You can think of the associated values
+as behaving like stored properties of the enumeration case instance.
 For example,
 consider the case of requesting
-the sunrise and sunset time from a server.
-The server either responds with the information
-or it responds with some error information.
+the sunrise and sunset times from a server.
+The server either responds with the requested information,
+or it responds with a description of what went wrong.
 
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
@@ -1087,6 +1059,34 @@ or it responds with some error information.
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of matching the value against the switch cases.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code,
+but classes are passed by reference.
+
+.. testcode:: guided-tour
+
+    -> struct Card {
+           var rank: Rank
+           var suit: Suit
+           func simpleDescription() -> String {
+               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+           }
+       }
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
+    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
 
 Protocols and Extensions
 ------------------------
