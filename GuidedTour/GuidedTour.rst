@@ -10,10 +10,11 @@ In Swift, this can be done in a single line:
 .. K&R uses “hello, world”.
    It seems worth breaking with tradition to use proper casing.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - intro
+   :prints: Hello, world
 
-   -> print("Hello, world!")
-   << Hello, world!
+   print("Hello, world!")
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -43,15 +44,12 @@ but you must assign it a value exactly once.
 This means you can use constants to name a value
 that you determine once but use in many places.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
 
-   -> var myVariable = 42
-   << // myVariable : Int = 42
-   -> myVariable = 50
-   >> myVariable
-   << // myVariable : Int = 50
-   -> let myConstant = 42
-   << // myConstant : Int = 42
+   var myVariable = 42
+   myVariable = 50
+   let myConstant = 42
 
 A constant or variable must have the same type
 as the value you want to assign to it.
@@ -67,14 +65,19 @@ If the initial value doesn't provide enough information
 specify the type by writing it after the variable,
 separated by a colon.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
+   :compiler-warnings: 'is' test is always true
+                       'is' test is always true
 
-   -> let implicitInteger = 70
-   << // implicitInteger : Int = 70
-   -> let implicitDouble = 70.0
-   << // implicitDouble : Double = 70.0
-   -> let explicitDouble: Double = 70
-   << // explicitDouble : Double = 70.0
+   let implicitInteger = 70
+   let implicitDouble = 70.0
+   let explicitDouble: Double = 70
+   // -HIDE-
+   assert(implicitInteger is Int)
+   assert(implicitDouble is Double)
+   // -SHOW-
 
 .. admonition:: Experiment
 
@@ -85,14 +88,16 @@ Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 explicitly make an instance of the desired type.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
 
-   -> let label = "The width is "
-   << // label : String = "The width is "
-   -> let width = 94
-   << // width : Int = 94
-   -> let widthLabel = label + String(width)
-   << // widthLabel : String = "The width is 94"
+   let label = "The width is "
+   let width = 94
+   let widthLabel = label + String(width)
+   // -HIDE-
+   assert(widthLabel == "The width is 94")
+   // -SHOW-
 
 .. admonition:: Experiment
 
@@ -108,16 +113,17 @@ Write the value in parentheses,
 and write a backslash (``\``) before the parentheses.
 For example:
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
 
-   -> let apples = 3
-   << // apples : Int = 3
-   -> let oranges = 5
-   << // oranges : Int = 5
-   -> let appleSummary = "I have \(apples) apples."
-   << // appleSummary : String = "I have 3 apples."
-   -> let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-   << // fruitSummary : String = "I have 8 pieces of fruit."
+   let apples = 3
+   let oranges = 5
+   let appleSummary = "I have \(apples) apples."
+   let fruitSummary = "I have \(apples + oranges) pieces of fruit."
+   //-HIDE-
+   assert(appleSummary == "I have 3 apples.")
+   assert(fruitSummary == "I have 8 pieces of fruit.")
 
 .. admonition:: Experiment
 
@@ -154,18 +160,20 @@ A comma is allowed after the last element.
    Simon: I was just wondering what his job is - on the ship.
    Mal: Public relations.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
 
-    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
-    -> shoppingList[1] = "bottle of water"
-    ---
-    -> var occupations = [
-           "Malcolm": "Captain",
-           "Kaylee": "Mechanic",
-        ]
-    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
-    -> occupations["Jayne"] = "Public Relations"
+    var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+    shoppingList[1] = "bottle of water"
+    assert(shoppingList == ["catfish", "bottle of water", "tulips", "blue paint"]) //-HIDE-
+
+    var occupations = [
+        "Malcolm": "Captain",
+        "Kaylee": "Mechanic",
+     ]
+    occupations["Jayne"] = "Public Relations"
+    assert(occupations == ["Kaylee": "Mechanic", "Malcolm": "Captain", "Jayne": "Public Relations"]) //-HIDE-
 
 To create an empty array or dictionary,
 use the initializer syntax.
