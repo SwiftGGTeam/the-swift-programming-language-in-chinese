@@ -240,7 +240,7 @@ print(total)
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
-greet("Bob", day: "Tuesday")
+greet(name:"Bob", day: "Tuesday")
 ```
 
 > 练习：
@@ -274,7 +274,7 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
 
     return (min, max, sum)
 }
-let statistics = calculateStatistics([5, 3, 100, 3, 9])
+let statistics = calculateStatistics(scores:[5, 3, 100, 3, 9])
 print(statistics.sum)
 print(statistics.2)
 ```
@@ -313,7 +313,7 @@ returnFifteen()
 函数是第一等类型，这意味着函数可以作为另一个函数的返回值。
 
 ```swift
-func makeIncrementer() -> (Int -> Int) {
+func makeIncrementer() -> ((Int) -> Int) {
     func addOne(number: Int) -> Int {
         return 1 + number
     }
@@ -326,7 +326,7 @@ increment(7)
 函数也可以当做参数传入另一个函数。
 
 ```swift
-func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
     for item in list {
         if condition(item) {
             return true
