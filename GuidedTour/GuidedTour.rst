@@ -211,16 +211,16 @@ Braces around the body are required.
    :name: tour - control flow
    :prints: 11
 
-    let individualScores = [75, 43, 103, 87, 12]
-    var teamScore = 0
-    for score in individualScores {
-        if score > 50 {
-            teamScore += 3
-        } else {
-            teamScore += 1
-        }
-    }
-    print(teamScore)
+   let individualScores = [75, 43, 103, 87, 12]
+   var teamScore = 0
+   for score in individualScores {
+       if score > 50 {
+           teamScore += 3
+       } else {
+           teamScore += 1
+       }
+   }
+   print(teamScore)
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
@@ -439,13 +439,15 @@ from the function's return type.
    Tuesday is used on the assumption that lots of folks would be reading
    on the Tuesday after the WWDC keynote.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - functions
 
-    -> func greet(person: String, day: String) -> String {
-           return "Hello \(person), today is \(day)."
-       }
-    -> greet(person: "Bob", day: "Tuesday")
-    <$ : String = "Hello Bob, today is Tuesday."
+   func greet(person: String, day: String) -> String {
+       return "Hello \(person), today is \(day)."
+   }
+   let result_greet_1 = // -HIDE-
+   greet(person: "Bob", day: "Tuesday")
+   assert(result_greet_1 == "Hello Bob, today is Tuesday.") // -HIDE-
 
 .. admonition:: Experiment
 
@@ -458,13 +460,16 @@ as labels for their arguments.
 Write a custom argument label before the parameter name,
 or write ``_`` to use no argument label.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - functions
+   :cont:
 
-    -> func greet(_ person: String, on day: String) -> String {
-           return "Hello \(person), today is \(day)."
-       }
-    -> greet("John", on: "Wednesday")
-    <$ : String = "Hello John, today is Wednesday."
+   func greet(_ person: String, on day: String) -> String {
+       return "Hello \(person), today is \(day)."
+   }
+   let result_greet_2 = // -HIDE-
+   greet("John", on: "Wednesday")
+   assert(result_greet_2 == "Hello John, today is Wednesday.") // -HIDE-
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
@@ -477,47 +482,53 @@ either by name or by number.
    that are performed on the same kind of data.
    This gives the function a reason to return a tuple.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - functions
+   :cont:
+   :prints: 120
+            120
 
-    -> func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
-           var min = scores[0]
-           var max = scores[0]
-           var sum = 0
+   func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+       var min = scores[0]
+       var max = scores[0]
+       var sum = 0
 
-           for score in scores {
-               if score > max {
-                   max = score
-               } else if score < min {
-                   min = score
-               }
-               sum += score
+       for score in scores {
+           if score > max {
+               max = score
+           } else if score < min {
+               min = score
            }
-
-           return (min, max, sum)
+           sum += score
        }
-    -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
-    -> print(statistics.sum)
-    << 120
-    -> print(statistics.2)
-    << 120
+
+       return (min, max, sum)
+   }
+
+   let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
+   print(statistics.sum)
+   print(statistics.2)
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - functions
+   :cont:
 
-   -> func sumOf(numbers: Int...) -> Int {
-          var sum = 0
-          for number in numbers {
-              sum += number
-          }
-          return sum
-      }
-   -> sumOf()
-   <$ : Int = 0
-   -> sumOf(numbers: 42, 597, 12)
-   <$ : Int = 651
+   func sumOf(numbers: Int...) -> Int {
+       var sum = 0
+       for number in numbers {
+           sum += number
+       }
+       return sum
+   }
+   let result_sumOf_1 = // -HIDE-
+   sumOf()
+   assert(result_sumOf_1 == 0) // -HIDE-
+   let result_sumOf_2 = // -HIDE-
+   sumOf(numbers: 42, 597, 12)
+   assert(result_sumOf_2 == 651) // -HIDE-
 
 .. admonition:: Experiment
 
