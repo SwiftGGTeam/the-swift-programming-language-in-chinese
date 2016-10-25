@@ -164,16 +164,16 @@ A comma is allowed after the last element.
    :name: tour - simple values
    :cont:
 
-    var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    shoppingList[1] = "bottle of water"
-    assert(shoppingList == ["catfish", "bottle of water", "tulips", "blue paint"]) // -HIDE-
+   var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+   shoppingList[1] = "bottle of water"
+   assert(shoppingList == ["catfish", "bottle of water", "tulips", "blue paint"]) // -HIDE-
 
-    var occupations = [
-        "Malcolm": "Captain",
-        "Kaylee": "Mechanic",
-     ]
-    occupations["Jayne"] = "Public Relations"
-    assert(occupations == ["Kaylee": "Mechanic", "Malcolm": "Captain", "Jayne": "Public Relations"]) // -HIDE-
+   var occupations = [
+       "Malcolm": "Captain",
+       "Kaylee": "Mechanic",
+    ]
+   occupations["Jayne"] = "Public Relations"
+   assert(occupations == ["Kaylee": "Mechanic", "Malcolm": "Captain", "Jayne": "Public Relations"]) // -HIDE-
 
 To create an empty array or dictionary,
 use the initializer syntax.
