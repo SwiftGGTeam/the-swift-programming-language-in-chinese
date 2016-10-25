@@ -178,12 +178,12 @@ A comma is allowed after the last element.
 To create an empty array or dictionary,
 use the initializer syntax.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
 
-   -> let emptyArray = [String]()
-   << // emptyArray : [String] = []
-   -> let emptyDictionary = [String: Float]()
-   << // emptyDictionary : [String : Float] = [:]
+   let emptyArray = [String]()
+   let emptyDictionary = [String: Float]()
 
 If type information can be inferred,
 you can write an empty array as ``[]``
@@ -191,10 +191,12 @@ and an empty dictionary as ``[:]`` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - simple values
+   :cont:
 
-   -> shoppingList = []
-   -> occupations = [:]
+   shoppingList = []
+   occupations = [:]
 
 Control Flow
 ------------
@@ -205,21 +207,20 @@ to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :prints: 11
 
-    -> let individualScores = [75, 43, 103, 87, 12]
-    << // individualScores : [Int] = [75, 43, 103, 87, 12]
-    -> var teamScore = 0
-    << // teamScore : Int = 0
-    -> for score in individualScores {
-           if score > 50 {
-               teamScore += 3
-           } else {
-               teamScore += 1
-           }
-       }
-    -> print(teamScore)
-    << 11
+    let individualScores = [75, 43, 103, 87, 12]
+    var teamScore = 0
+    for score in individualScores {
+        if score > 50 {
+            teamScore += 3
+        } else {
+            teamScore += 1
+        }
+    }
+    print(teamScore)
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
@@ -250,22 +251,21 @@ to mark the value as optional.
    going back at least to the contacts database
    that ships with the SDK in the simulator.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
+   :prints: false
+            Hello, John Appleseed
 
-   -> var optionalString: String? = "Hello"
-   << // optionalString : String? = Optional("Hello")
-   -> print(optionalString == nil)
-   << false
-   ---
-   -> var optionalName: String? = "John Appleseed"
-   << // optionalName : String? = Optional("John Appleseed")
-   -> var greeting = "Hello!"
-   << // greeting : String = "Hello!"
-   -> if let name = optionalName {
-          greeting = "Hello, \(name)"
-      }
-   >> greeting
-   << // greeting : String = "Hello, John Appleseed"
+   var optionalString: String? = "Hello"
+   print(optionalString == nil)
+
+   var optionalName: String? = "John Appleseed"
+   var greeting = "Hello!"
+   if let name = optionalName {
+       greeting = "Hello, \(name)"
+   }
+   print(greeting)
 
 .. admonition:: Experiment
 
