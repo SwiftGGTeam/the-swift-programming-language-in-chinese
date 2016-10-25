@@ -286,14 +286,14 @@ is to provide a default value using the ``??`` operator.
 If the optional value is missing,
 the default value is used instead.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
 
-    -> let nickName: String? = nil
-    << // nickName : String? = nil
-    -> let fullName: String = "John Appleseed"
-    << // fullName : String = "John Appleseed"
-    -> let informalGreeting = "Hi \(nickName ?? fullName)"
-    << // informalGreeting : String = "Hi John Appleseed"
+   let nickName: String? = nil
+   let fullName: String = "John Appleseed"
+   let informalGreeting = "Hi \(nickName ?? fullName)"
+   assert(informalGreeting == "Hi John Appleseed") // -HIDE-
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
@@ -306,21 +306,22 @@ and tests for equality.
    They have various properties
    and fit with the apples & oranges used in an earlier example.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
+   :prints: Is it a spicy red pepper?
 
-   -> let vegetable = "red pepper"
-   << // vegetable : String = "red pepper"
-   -> switch vegetable {
-          case "celery":
-              print("Add some raisins and make ants on a log.")
-          case "cucumber", "watercress":
-              print("That would make a good tea sandwich.")
-          case let x where x.hasSuffix("pepper"):
-              print("Is it a spicy \(x)?")
-          default:
-              print("Everything tastes good in soup.")
-      }
-   << Is it a spicy red pepper?
+   let vegetable = "red pepper"
+   switch vegetable {
+       case "celery":
+           print("Add some raisins and make ants on a log.")
+       case "cucumber", "watercress":
+           print("That would make a good tea sandwich.")
+       case let x where x.hasSuffix("pepper"):
+           print("Is it a spicy \(x)?")
+       default:
+           print("Everything tastes good in soup.")
+   }
 
 .. admonition:: Experiment
 
@@ -353,25 +354,25 @@ in an arbitrary order.
    that many developers are already familiar with
    that we can use for some simple math.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
+   :prints: 25
 
-   -> let interestingNumbers = [
-          "Prime": [2, 3, 5, 7, 11, 13],
-          "Fibonacci": [1, 1, 2, 3, 5, 8],
-          "Square": [1, 4, 9, 16, 25],
-      ]
-   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
-   -> var largest = 0
-   << // largest : Int = 0
-   -> for (kind, numbers) in interestingNumbers {
-          for number in numbers {
-              if number > largest {
-                  largest = number
-              }
-          }
-      }
-   -> print(largest)
-   << 25
+   let interestingNumbers = [
+       "Prime": [2, 3, 5, 7, 11, 13],
+       "Fibonacci": [1, 1, 2, 3, 5, 8],
+       "Square": [1, 4, 9, 16, 25],
+   ]
+   var largest = 0
+   for (kind, numbers) in interestingNumbers {
+       for number in numbers {
+           if number > largest {
+               largest = number
+           }
+       }
+   }
+   print(largest)
 
 .. admonition:: Experiment
 
@@ -388,36 +389,37 @@ ensuring that the loop is run at least once.
    I couldn't come up with anything suitably interesting at the time though,
    so I just went ahead and used this.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
+   :prints: 128
+            128
 
-   -> var n = 2
-   << // n : Int = 2
-   -> while n < 100 {
-          n = n * 2
-      }
-   -> print(n)
-   << 128
-   ---
-   -> var m = 2
-   << // m : Int = 2
-   -> repeat {
-          m = m * 2
-      } while m < 100
-   -> print(m)
-   << 128
+   var n = 2
+   while n < 100 {
+       n = n * 2
+   }
+   print(n)
+
+   var m = 2
+   repeat {
+       m = m * 2
+   } while m < 100
+   print(m)
 
 You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
 
-.. testcode:: guided-tour
+.. test::
+   :name: tour - control flow
+   :cont:
+   :prints: 6
 
-   -> var total = 0
-   << // total : Int = 0
-   -> for i in 0..<4 {
-          total += i
-      }
-   -> print(total)
-   << 6
+   var total = 0
+   for i in 0..<4 {
+       total += i
+   }
+   print(total)
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
