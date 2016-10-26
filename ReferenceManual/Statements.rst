@@ -1055,6 +1055,7 @@ have the following form:
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits ``.`` decimal-digits
+    swift-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
 .. Testing notes:
 
