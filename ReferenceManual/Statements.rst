@@ -90,6 +90,8 @@ A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the ``Sequence`` protocol.
 
+.. TODO: Add a link to the reference after we fix <rdar://problem/17682758> RST: Add support for uAPI links
+
 A ``for``-``in`` statement has the following form:
 
 .. syntax-outline::

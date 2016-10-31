@@ -963,12 +963,13 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
+   -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
+   << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
    -> for character in puzzleInput.characters {
-         switch character {
-            case "a", "e", "i", "o", "u", " ":
-               continue
-            default:
-               puzzleOutput.append(character)
+         if charactersToRemove.contains(character) {
+            continue
+         } else {
+            puzzleOutput.append(character)
          }
       }
    -> print(puzzleOutput)
@@ -977,9 +978,6 @@ to create a cryptic puzzle phrase:
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
-This behavior enables the switch block to match (and ignore) only
-the vowel and space characters,
-rather than requiring the block to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
@@ -998,7 +996,7 @@ Break in a Loop Statement
 
 When used inside a loop statement,
 ``break`` ends the loop's execution immediately
-and transfers control to the first line of code after the loop's closing brace (``}``).
+and transfers control to the code after the loop's closing brace (``}``).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
@@ -1011,7 +1009,7 @@ Break in a Switch Statement
 
 When used inside a ``switch`` statement,
 ``break`` causes the ``switch`` statement to end its execution immediately
-and to transfer control to the first line of code after
+and to transfer control to the code after
 the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.

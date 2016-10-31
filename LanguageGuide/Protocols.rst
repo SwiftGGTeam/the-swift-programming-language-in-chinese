@@ -1319,20 +1319,20 @@ and passes the current ``count`` value as the method's single argument.
 Note that *two* levels of optional chaining are at play here.
 First, it is possible that ``dataSource`` may be ``nil``,
 and so ``dataSource`` has a question mark after its name to indicate that
-``incrementForCount(forCount:)`` should be called only if ``dataSource`` isn't ``nil``.
+``increment(forCount:)`` should be called only if ``dataSource`` isn't ``nil``.
 Second, even if ``dataSource`` *does* exist,
-there is no guarantee that it implements ``incrementForCount(forCount:)``,
+there is no guarantee that it implements ``increment(forCount:)``,
 because it is an optional requirement.
-Here, the possibility that ``incrementForCount(forCount:)`` might not be implemented
+Here, the possibility that ``increment(forCount:)`` might not be implemented
 is also handled by optional chaining.
-The call to ``incrementForCount(forCount:)`` happens
-only if ``incrementForCount(forCount:)`` exists ---
+The call to ``increment(forCount:)`` happens
+only if ``increment(forCount:)`` exists ---
 that is, if it isn't ``nil``.
-This is why ``incrementForCount(forCount:)`` is also written with a question mark after its name.
+This is why ``increment(forCount:)`` is also written with a question mark after its name.
 
-Because the call to ``incrementForCount(forCount:)`` can fail for either of these two reasons,
+Because the call to ``increment(forCount:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
-This is true even though ``incrementForCount(forCount:)`` is defined as returning
+This is true even though ``increment(forCount:)`` is defined as returning
 a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,

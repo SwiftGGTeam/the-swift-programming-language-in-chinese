@@ -453,7 +453,7 @@ If a default value is defined, you can omit that parameter when calling the func
    -> someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 
-Place parameters that have don't default values
+Place parameters that don't have default values
 at the beginning of a function's parameter list,
 before the parameters that have default values.
 Parameters that don't have default values

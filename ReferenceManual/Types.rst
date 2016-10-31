@@ -132,7 +132,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of zero or more types, enclosed in parentheses.
+A tuple type is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
@@ -156,12 +156,10 @@ that name is part of the type.
    !!             ^~~~~~~~~~~~~~~~~~~
    !!                         as! (top: Int, bottom: Int)
 
-``Void`` is a type alias for the empty tuple type, ``()``.
-If there is only one element inside the parentheses,
-the type is simply the type of that element.
-For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
-As a result, you can name a tuple element only when the tuple type has two
-or more elements.
+All tuple types contain two or more types,
+except for ``Void`` which is a type alias for the empty tuple type, ``()``.
+A single parenthesized type is the same as that type without parentheses.
+For example, ``(Int)`` is equivalent to ``Int``.
 
 .. langref-grammar
 

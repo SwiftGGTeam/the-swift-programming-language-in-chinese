@@ -274,9 +274,9 @@ the movie “Ghostbusters”,
 and a closure expression that takes a ``String`` value
 and returns another ``String`` value.
 
-You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
-to discover the specific type of a constant or variable
-that is known only to be of type ``Any`` or ``AnyObject``.
+To discover the specific type of a constant or variable
+that is known only to be of type ``Any`` or ``AnyObject``,
+you can use an ``is`` or ``as`` pattern in a ``switch`` statement's cases.
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.
 Several of the ``switch`` statement's cases bind their matched value to
@@ -317,6 +317,37 @@ a constant of the specified type to enable its value to be printed:
    </ an (x, y) point at 3.0, 5.0
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
+
+.. note::
+
+    The ``Any`` type represents values of any type, including optional types.
+    Swift gives you a warning if you use an optional value
+    where a value of type ``Any`` is expected.
+    If you really do need to use an optional value as an ``Any`` value,
+    you can use the ``as`` operator to explicitly cast the optional to ``Any``,
+    as shown below.
+
+    .. testcode:: typeCasting
+
+       -> let optionalNumber: Int? = 3
+       << // optionalNumber : Int? = Optional(3)
+       -> things.append(optionalNumber)        // Warning
+       !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to Any
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !! <REPL Input>:1:15: note: provide a default value to avoid this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              ?? <#default value#>
+       !! <REPL Input>:1:15: note: force-unwrap the value to avoid this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              !
+       !! <REPL Input>:1:15: note: explicitly cast to Any with 'as Any' to silence this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              as Any
+       -> things.append(optionalNumber as Any) // No warning
 
 .. Rejected examples to illustrate AnyObject:
 
