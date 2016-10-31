@@ -6,6 +6,21 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2016-10-27  * Updated for Swift 3.0.1.
+
+            * Updated the discussion of weak and unowned references
+              in the :doc:`../LanguageGuide/AutomaticReferenceCounting` chapter.
+
+            * Added information about the ``unowned``, ``unowned(safe)``, and ``unowned(unsafe)``
+              declaration modifiers
+              in the :ref:`Declarations_DeclarationModifiers` section.
+
+            * Added a note to the :ref:`TypeCasting_TypeCastingForAnyAndAnyObject` section
+              about using an optional value when a value of type ``Any`` is expected.
+
+            * Updated the :doc:`../ReferenceManual/Expressions` chapter
+              to separate the discussion of parenthesized expressions and tuple expressions.
+----------  ----------------------------------------------------------------------------------------------
 2016-09-13  * Updated for Swift 3.0.
 
             * Updated the discussion of functions in the :doc:`../LanguageGuide/Functions` chapter

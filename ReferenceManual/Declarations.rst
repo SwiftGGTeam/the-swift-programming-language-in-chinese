@@ -2567,7 +2567,7 @@ that introduces the declaration.
     to indicate that the variable or property has a weak reference to the
     object stored as its value. The type of the variable or property
     must be an optional class type.
-    If you access the variable or property is accessed
+    If you access the variable or property
     after the object has been deallocated,
     its value is ``nil``.
     For an example and more information about the ``weak`` modifier,
