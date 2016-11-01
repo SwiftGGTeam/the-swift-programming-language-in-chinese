@@ -1054,8 +1054,8 @@ have the following form:
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
-    swift-version --> decimal-digits ``.`` decimal-digits
-    swift-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
+    swift-version --> decimal-digits swift-version-continuation-OPT
+    swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
 
 .. Testing notes:
 
