@@ -961,7 +961,7 @@ Platform condition    Valid arguments
    in the file lib/Basic/LangOptions.cpp.
 
 The version number for the ``swift()`` platform condition
-consists of a major number, minor number, patch number, and so on,
+consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
 
