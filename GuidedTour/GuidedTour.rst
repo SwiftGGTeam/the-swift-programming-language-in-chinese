@@ -11,7 +11,7 @@ In Swift, this can be done in a single line:
    It seems worth breaking with tradition to use proper casing.
 
 .. test::
-   :name: tour - intro
+   :name: intro
    :prints: Hello, world
 
    print("Hello, world!")
@@ -45,7 +45,7 @@ This means you can use constants to name a value
 that you determine once but use in many places.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
 
    var myVariable = 42
    myVariable = 50
@@ -66,7 +66,7 @@ specify the type by writing it after the variable,
 separated by a colon.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
    :compiler-warnings: 'is' test is always true
                        'is' test is always true
@@ -89,7 +89,7 @@ If you need to convert a value to a different type,
 explicitly make an instance of the desired type.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
 
    let label = "The width is "
@@ -114,7 +114,7 @@ and write a backslash (``\``) before the parentheses.
 For example:
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
 
    let apples = 3
@@ -161,7 +161,7 @@ A comma is allowed after the last element.
    Mal: Public relations.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
 
    var shoppingList = ["catfish", "water", "tulips", "blue paint"]
@@ -179,7 +179,7 @@ To create an empty array or dictionary,
 use the initializer syntax.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
 
    let emptyArray = [String]()
@@ -192,7 +192,7 @@ for example, when you set a new value for a variable
 or pass an argument to a function.
 
 .. test::
-   :name: tour - simple values
+   :name: simple values
    :cont:
 
    shoppingList = []
@@ -208,7 +208,7 @@ Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :prints: 11
 
    let individualScores = [75, 43, 103, 87, 12]
@@ -252,7 +252,7 @@ to mark the value as optional.
    that ships with the SDK in the simulator.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
    :prints: false
             Hello, John Appleseed
@@ -287,7 +287,7 @@ If the optional value is missing,
 the default value is used instead.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
 
    let nickName: String? = nil
@@ -307,7 +307,7 @@ and tests for equality.
    and fit with the apples & oranges used in an earlier example.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
    :prints: Is it a spicy red pepper?
 
@@ -355,7 +355,7 @@ in an arbitrary order.
    that we can use for some simple math.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
    :prints: 25
 
@@ -390,7 +390,7 @@ ensuring that the loop is run at least once.
    so I just went ahead and used this.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
    :prints: 128
             128
@@ -411,7 +411,7 @@ You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
 
 .. test::
-   :name: tour - control flow
+   :name: control flow
    :cont:
    :prints: 6
 
@@ -440,7 +440,7 @@ from the function's return type.
    on the Tuesday after the WWDC keynote.
 
 .. test::
-   :name: tour - functions
+   :name: functions
 
    func greet(person: String, day: String) -> String {
        return "Hello \(person), today is \(day)."
@@ -461,7 +461,7 @@ Write a custom argument label before the parameter name,
 or write ``_`` to use no argument label.
 
 .. test::
-   :name: tour - functions
+   :name: functions
    :cont:
 
    func greet(_ person: String, on day: String) -> String {
@@ -483,7 +483,7 @@ either by name or by number.
    This gives the function a reason to return a tuple.
 
 .. test::
-   :name: tour - functions
+   :name: functions
    :cont:
    :prints: 120
             120
@@ -513,7 +513,7 @@ Functions can also take a variable number of arguments,
 collecting them into an array.
 
 .. test::
-   :name: tour - functions
+   :name: functions
    :cont:
 
    func sumOf(numbers: Int...) -> Int {
