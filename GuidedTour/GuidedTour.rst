@@ -541,54 +541,63 @@ You can use nested functions
 to organize the code in a function
 that is long or complex.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
 
-    -> func returnFifteen() -> Int {
-           var y = 10
-           func add() {
-               y += 5
-           }
-           add()
-           return y
+   func returnFifteen() -> Int {
+       var y = 10
+       func add() {
+           y += 5
        }
-    -> returnFifteen()
-    <$ : Int = 15
+       add()
+       return y
+   }
+   let result_returnFifteen =  // -HIDE-
+   returnFifteen()
+   assert(result_returnFifteen == 15) // -HIDE-
 
 Functions are a first-class type.
 This means that a function can return another function as its value.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
 
-    -> func makeIncrementer() -> ((Int) -> Int) {
-           func addOne(number: Int) -> Int {
-               return 1 + number
-           }
-           return addOne
+   func makeIncrementer() -> ((Int) -> Int) {
+       func addOne(number: Int) -> Int {
+           return 1 + number
        }
-    -> var increment = makeIncrementer()
-    << // increment : (Int) -> Int = (Function)
-    -> increment(7)
-    <$ : Int = 8
+       return addOne
+   }
+   var increment = makeIncrementer()
+   let result_increment = // -HIDE-
+   increment(7)
+   assert(result_increment == 8) // -HIDE-
 
 A function can take another function as one of its arguments.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
 
-    -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
-           for item in list {
-               if condition(item) {
-                   return true
-               }
+   func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
+       for item in list {
+           if condition(item) {
+               return true
            }
-           return false
        }
-    -> func lessThanTen(number: Int) -> Bool {
-           return number < 10
-       }
-    -> var numbers = [20, 19, 7, 12]
-    << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(list: numbers, condition: lessThanTen)
-    <$ : Bool = true
+       return false
+   }
+
+   func lessThanTen(number: Int) -> Bool {
+       return number < 10
+   }
+
+   var numbers = [20, 19, 7, 12]
+   let result_hasAnyMatches = // -HIDE-
+   hasAnyMatches(list: numbers, condition: lessThanTen)
+   assert(result_hasAnyMatches == true) // -HIDE-
 
 Functions are actually a special case of closures:
 blocks of code that can be called later.
@@ -600,14 +609,17 @@ You can write a closure without a name
 by surrounding code with braces (``{}``).
 Use ``in`` to separate the arguments and return type from the body.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
 
-    -> numbers.map({
-           (number: Int) -> Int in
-           let result = 3 * number
-           return result
-       })
-    <$ : [Int] = [60, 57, 21, 36]
+   let result_numbersMap = // -HIDE-
+   numbers.map({
+       (number: Int) -> Int in
+       let result = 3 * number
+       return result
+   })
+   assert(result_numbersMap == [60, 57, 21, 36]) // -HIDE-
 
 .. admonition:: Experiment
 
@@ -621,12 +633,13 @@ its return type, or both.
 Single statement closures implicitly return the value
 of their only statement.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
+   :prints: [60, 57, 21, 36]
 
-    -> let mappedNumbers = numbers.map({ number in 3 * number })
-    -> print(mappedNumbers)
-    <$ : [Int] = [60, 57, 21, 36]
-    << [60, 57, 21, 36]
+   let mappedNumbers = numbers.map({ number in 3 * number })
+   print(mappedNumbers)
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -635,12 +648,13 @@ can appear immediately after the parentheses.
 When a closure is the only argument to a function,
 you can omit the parentheses entirely.
 
-.. testcode:: guided-tour
+.. test::
+   :name: functions
+   :cont:
+   :prints: [20, 19, 12, 7]
 
-    -> let sortedNumbers = numbers.sorted { $0 > $1 }
-    -> print(sortedNumbers)
-    <$ : [Int] = [20, 19, 12, 7]
-    << [20, 19, 12, 7]
+   let sortedNumbers = numbers.sorted { $0 > $1 }
+   print(sortedNumbers)
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
@@ -665,16 +679,15 @@ Likewise, method and function declarations are written the same way.
    they might be better off modeled as structures --
    but that wouldn't let them inherit behavior.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
 
-    -> class Shape {
-           var numberOfSides = 0
-           func simpleDescription() -> String {
-               return "A shape with \(numberOfSides) sides."
-           }
+   class Shape {
+       var numberOfSides = 0
+       func simpleDescription() -> String {
+           return "A shape with \(numberOfSides) sides."
        }
-    >> Shape().simpleDescription()
-    <$ : String = "A shape with 0 sides."
+   }
 
 .. admonition:: Experiment
 
@@ -686,36 +699,38 @@ by putting parentheses after the class name.
 Use dot syntax to access
 the properties and methods of the instance.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
 
-    -> var shape = Shape()
-    << // shape : Shape = REPL.Shape
-    -> shape.numberOfSides = 7
-    -> var shapeDescription = shape.simpleDescription()
-    << // shapeDescription : String = "A shape with 7 sides."
+   var shape = Shape()
+   shape.numberOfSides = 7
+   var shapeDescription = shape.simpleDescription()
+   assert(shapeDescription == "A shape with 7 sides.") // -HIDE-
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
 Use ``init`` to create one.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
 
-    -> class NamedShape {
-           var numberOfSides: Int = 0
-           var name: String
-    ---
-           init(name: String) {
-              self.name = name
-           }
-    ---
-           func simpleDescription() -> String {
-              return "A shape with \(numberOfSides) sides."
-           }
+   class NamedShape {
+       var numberOfSides: Int = 0
+       var name: String
+   
+       init(name: String) {
+          self.name = name
        }
-    >> NamedShape(name: "test name").name
-    <$ : String = "test name"
-    >> NamedShape(name: "test name").simpleDescription()
-    <$ : String = "A shape with 0 sides."
+   
+       func simpleDescription() -> String {
+          return "A shape with \(numberOfSides) sides."
+       }
+   }
+   let result_namedShape = // -HIDE-
+   NamedShape(name: "test name").simpleDescription()
+   assert(result_namedShape == "A shape with 0 sides.") // -HIDE-
 
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
