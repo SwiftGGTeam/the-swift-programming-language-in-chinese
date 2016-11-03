@@ -961,36 +961,9 @@ Platform condition    Valid arguments
    in the file lib/Basic/LangOptions.cpp.
 
 The version number for the ``swift()`` platform condition
-consists of version numbers ---
-a major version number,
-followed by an optional minor version,
-followed by an optional patch version,
-and so on ---
-with a dot (``.``) separating the numbers.
+consists of a major number, minor number, patch number, and so on,
+with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
-
-    The version number for the ``swift()`` platform condition
-    consists of version numbers
-    with a dot (``.``) separating the numbers.
-    The numbers consist of a major version number,
-    followed by an optional minor version,
-    followed by an optional patch version,
-    and so on.
-    There must not be whitespace between ``>=`` and the version number.
-
-    The version number for the ``swift()`` platform condition
-    consists of one or more numbers
-    with a dot (``.``) separating the numbers.
-    The numbers are understood as
-    a major version, minor version, optional patch version, and so on.
-    There must not be whitespace between ``>=`` and the version number.
-
-    The version number for the ``swift()`` platform condition
-    consists of
-    a major version, minor version, optional patch version,
-    and so on,
-    with a dot (``.``) separating each part of the version number.
-    There must not be whitespace between ``>=`` and the version number.
 
 .. note::
 
