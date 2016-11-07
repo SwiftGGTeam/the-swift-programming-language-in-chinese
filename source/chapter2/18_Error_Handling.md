@@ -7,6 +7,9 @@
 >  
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
+> 
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me) 2016-09-24
 
 本页包含内容：
 
@@ -14,38 +17,38 @@
 - [处理错误](#handling_errors)
 - [指定清理操作](#specifying_cleanup_actions)
 
-*错误处理（Error handling）*是响应错误以及从错误中恢复的过程。Swift 提供了在运行时对可恢复错误的抛出、捕获、传递和操作的一流支持。
+*错误处理（Error handling）*是响应错误以及从错误中恢复的过程。Swift 提供了在运行时对可恢复错误的抛出、捕获、传递和操作的一等公民支持。
 
 某些操作无法保证总是执行完所有代码或总是生成有用的结果。可选类型可用来表示值缺失，但是当某个操作失败时，最好能得知失败的原因，从而可以作出相应的应对。
 
 举个例子，假如有个从磁盘上的某个文件读取数据并进行处理的任务，该任务会有多种可能失败的情况，包括指定路径下文件并不存在，文件不具有可读权限，或者文件编码格式不兼容。区分这些不同的失败情况可以让程序解决并处理某些错误，然后把它解决不了的错误报告给用户。
 
 > 注意  
-Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 2.2)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
+Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 3)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
 
 <a name="representing_and_throwing_errors"></a>
-##表示并抛出错误
+## 表示并抛出错误
 
-在 Swift 中，错误用符合`ErrorType`协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
+在 Swift 中，错误用符合`Error`协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
 
 Swift 的枚举类型尤为适合构建一组相关的错误状态，枚举的关联值还可以提供错误状态的额外信息。例如，你可以这样表示在一个游戏中操作自动贩卖机时可能会出现的错误状态：
 
 ```swift
-enum VendingMachineError: ErrorType {
-	case InvalidSelection				     //选择无效
-	case InsufficientFunds(coinsNeeded: Int) //金额不足
-	case OutOfStock			                 //缺货
+enum VendingMachineError: Error {
+	case invalidSelection				     //选择无效
+	case insufficientFunds(coinsNeeded: Int) //金额不足
+	case outOfStock			                 //缺货
 }
 ```
 
 抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throw`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
 
 ```swift
-throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+throw VendingMachineError. insufficientFunds(coinsNeeded: 5)
 ```
 
 <a name="handling_errors"></a>
-##处理错误
+## 处理错误
 
 某个错误被抛出时，附近的某部分代码必须负责处理这个错误，例如纠正这个问题、尝试另外一种方式、或是向用户报告错误。
 
@@ -109,7 +112,7 @@ class VendingMachine {
         newItem.count -= 1
         inventory[name] = newItem
 
-        dispenseSnack(name)
+        print("Dispensing \(name)")
     }
 }
 ```
@@ -145,7 +148,7 @@ struct PurchasedSnack {
 ```
 
 
-###用 Do-Catch 处理错误
+### 用 Do-Catch 处理错误
 
 可以使用一个`do-catch`语句运行一段闭包代码来处理错误。如果在`do`子句中的代码抛出了一个错误，这个错误会与`catch`子句做匹配，从而决定哪条子句能处理它。
 
@@ -183,7 +186,7 @@ do {
 
 上面的例子中，`buyFavoriteSnack(_:vendingMachine:)`函数在一个`try`表达式中调用，因为它能抛出错误。如果错误被抛出，相应的执行会马上转移到`catch`子句中，并判断这个错误是否要被继续传递下去。如果没有错误抛出，`do`子句中余下的语句就会被执行。
 
-###将错误转换成可选值
+### 将错误转换成可选值
 
 可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如,在下面的代码中,`x`和`y`有着相同的数值和等价的含义：
 
@@ -225,7 +228,7 @@ let photo = try! loadImage("./Resources/John Appleseed.jpg")
 ```
 
 <a name="specifying_cleanup_actions"></a>
-##指定清理操作
+## 指定清理操作
 
 可以使用`defer`语句在即将离开当前代码块时执行一系列语句。该语句让你能执行一些必要的清理工作，不管是以何种方式离开当前代码块的——无论是由于抛出错误而离开，还是由于诸如`return`或者`break`的语句。例如，你可以用`defer`语句来确保文件描述符得以关闭，以及手动分配的内存得以释放。
 

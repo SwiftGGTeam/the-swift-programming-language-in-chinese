@@ -25,17 +25,24 @@
 > 
 > 2.2
 > 翻译+校对：[changkun](http://changkun.us/about/)
+> 
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
-
+-   [Swift 3.0 更新](#swift_3_0)
 -   [Swift 2.2 更新](#swift_2_2)
 -   [Swift 2.1 更新](#swift_2_1)
 -   [Swift 2.0 更新](#swift_2_0)
 -   [Swift 1.2 更新](#swift_1_2)
 -   [Swift 1.1 更新](#swift_1_1)
 -   [Swift 1.0 更新](#swift_1_0)
+
+
+<a name="swift_3_0"></a>
+### Swift 3.0 更新
 
 <a name="swift_2_2"></a>
 ### Swift 2.2 更新
@@ -48,6 +55,109 @@
     </tr>
 </thead>
 <tbody>
+	 <tr>
+    <td scope="row">2016-09-13</td>
+    <td><ul class="list-bullet">
+        <li>
+            更新至 Swift 3.0。
+        </li>
+        <li>
+           更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-ID158">函数</a>章节中关于函数的讨论，在<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">函数定义</a>一节中，标明所有函数参数默认都有函数标签。
+        </li>
+        <li>
+           更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID28">高级操作符</a>章节中关于操作符的讨论，现在你可以作为类型函数来实现，替代之前的全局函数实现方式。
+        </li>
+        <li>
+           增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41-ID3">访问控制</a>章节中关于对新的访问级别描述符<code>open</code>和<code>fileprivate</code>的信息
+        </li>
+        <li>
+           更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">函数定义</a>一节中关于<code>inout</code>的讨论，标明它放在参数类型的前面，替代之前放在参数名称前面的方式。
+        </li>
+         <li>
+           更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">逃逸闭包</a>和<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">自动闭包</a>还有<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">属性</a>章节中关于<code>@noescape</code>和<code>@autoclosure</code>的讨论，现在他们是类型属性，而不是定义属性。
+        </li>
+         <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID28">高级操作符</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-ID47">自定义中缀操作符的优先级</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID351">定义</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID550">优先级组声明</a>一节中关于操作符优先级组的信息。
+
+        </li>
+         <li>
+            更新一些讨论：使用 macOS 替换掉 OS X， Error 替换掉 ErrorProtocol，和更新一些协议名称，比如使用 ExpressibleByStringLiteral 替换掉 StringLiteralConvertible。
+
+        </li>
+ 		  <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID179">泛型</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID192">泛型 Where 语句</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/doc/uid/TP40014097-CH37-ID406">泛型形参和实参</a>章节，现在泛型的 where 语句写在一个声明的最后。
+
+
+        </li>
+        <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID546">逃逸闭包</a>一节，现在闭包默认为非逃逸的(noescaping)。
+        </li>
+        <li>
+             更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID309">基础部分</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID333">可选绑定</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID428">语句</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID432">While 语句</a>一节，现在 if，while 和 guard 语句使用逗号分隔条件列表，不需要使用 where 语句。        
+         </li>
+         <li>
+             增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID120">控制流</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID129">Switch</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID428">语句</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID436">Switch 语句</a>一节关于 switch cases 可以使用多模式的信息。        
+         </li>
+ 		<li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449">函数类型</a>一节，现在函数参数标签不包含在函数类型中。
+        </li>
+         <li>
+             更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID267">协议</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID282">协议组合</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID445">类型</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID454">协议组合类型</a>一节关于使用新的 Protocol1 & Protocol2 语法的信息。        
+         </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID402">动态类型表达式</a>一节使用新的 type(of:) 表达式的信息。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID540">行控制表达式</a>一节使用 #sourceLocation(file:line:) 表达式的信息。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID551">永不返回函数</a>一节使用 新的 Never 类型的信息。
+        </li>
+        <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID390">字面量表达式</a>一节关于 playground 字面量的信息。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545">In-Out 参数</a>一节，标明只有非逃逸闭包能捕获 in-out 参数。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-ID169">默认参数值</a>一节，现在默认参数不能在调用时候重新排序。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID347">属性</a>章节中关于属性参数使用分号的说明。
+        </li>
+         <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID531">重新抛出函数和方法</a>一节中关于在 catch 代码块中抛出错误的重新抛出函数的信息。
+        </li>
+ 			<li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID547">Selector 表达式</a>一节中关于访问 Objective-C 中 Selector 的 getter 和 setter 的信息。
+        </li>
+        <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID361">类型别名声明</a>一节，标明函数类型作为参数类型必须使用括号包裹。
+        </li>
+         <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449">函数类型</a>一节中关于泛型类型别名和在协议内使用类型别名的信息。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID347">属性</a>章节，标明 @IBAction，@IBOutlet 和 @NSManaged 隐式含有 @objc 属性。
+        </li>
+         <li>
+            增加<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明属性</a>一节中关于 @GKInspectable 的信息。
+        </li>
+         <li>
+            更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID284">可选协议要求</a>一节中关于只能在与 Objective-C 交互的代码中才能使用可选协议要求的信息。
+        </li>
+<li>
+            删除<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID362">函数声明</a>一节中关于显式使用 let 关键字作为函数参数的信息。
+        </li>
+        <li>
+            删除<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID428">语句</a>一节中关于 Boolean 协议的信息， 现在这个协议已经被 Swift 标准库删除。
+        </li>
+        <li>
+            更正<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348">声明</a>一节中关于 @NSApplicationMain 协议的信息。
+        </li>
+		</ul>
+	</td>
+	</tr>
     <tr>
     <td scope="row">2016-03-21</td>
     <td><ul class="list-bullet">

@@ -10,10 +10,15 @@
 
 > 2.1
 > 翻译：[小铁匠Linus](https://github.com/kevin833752)
-> 校对：[shanks](http://codebuild.me)，2015-11-01
+> 校对：[shanks](http://codebuild.me)
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
+> 翻译+校对：[SketchK](https://github.com/SketchK) 
+> 
+> 3.0
+> 校对：[CMB](https://github.com/chenmingbiao)
+> 
+> 版本日期：2016-09-13
 
 本页包含内容：
 
@@ -614,7 +619,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 <a name="protocol_composition"></a>
 ## 协议合成
 
-有时候需要同时采纳多个协议，你可以将多个协议采用 `protocol<SomeProtocol, AnotherProtocol>` 这样的格式进行组合，称为 *协议合成（protocol composition）*。你可以在 `<>` 中罗列任意多个你想要采纳的协议，以逗号分隔。
+有时候需要同时采纳多个协议，你可以将多个协议采用 `SomeProtocol & AnotherProtocol` 这样的格式进行组合，称为 *协议合成（protocol composition）*。你可以罗列任意多个你想要采纳的协议，以与符号(`&`)分隔。
 
 下面的例子中，将 `Named` 和 `Aged` 两个协议按照上述语法组合成一个协议，作为函数参数的类型：
 
@@ -629,17 +634,17 @@ struct Person: Named, Aged {
     var name: String
     var age: Int
 }
-func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
-    print("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+func wishHappyBirthday(to celebrator: Named & Aged) {
+    print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
-wishHappyBirthday(birthdayPerson)
+wishHappyBirthday(to: birthdayPerson)
 // 打印 “Happy birthday Malcolm - you're 21!”
 ```
 
 `Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体采纳了这两个协议。
 
-`wishHappyBirthday(_:)` 函数的参数 `celebrator` 的类型为 `protocol<Named，Aged>`。这意味着它不关心参数的具体类型，只要参数符合这两个协议即可。
+`wishHappyBirthday(_:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`。这意味着它不关心参数的具体类型，只要参数符合这两个协议即可。
 
 上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(_:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
 

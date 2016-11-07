@@ -12,6 +12,9 @@
 > 2.2
 > 翻译：[chenmingbiao](https://github.com/chenmingbiao)
 
+> 3.0
+> 翻译：[chenmingjia](https://github.com/chenmingjia)
+
 本页包含内容：
 
 - [循环语句](#loop_statements)
@@ -108,7 +111,7 @@ while 条件 {
 
 由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
 
-条件的结果必须符合 `BooleanType` 协议。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > while 语句语法  
 
@@ -124,18 +127,13 @@ while 条件 {
 <a name="condition-list"></a>
 > *条件列表* → [*条件*](#condition) | [*条件*](#condition) **,** [*条件列表*](#condition-list)      
 <a name="condition"></a>
-> *条件* → [*可用性条件*](#availability-condition) | [*case条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)    
+> *条件* → [*表达式*](04_Expressions.md#expression) |[*可用性条件*](#availability-condition) | [*case条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)    
 <a name="case-condition"></a>
-> *case 条件* → **case** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer) [where子句](#where-clause)<sub>可选</sub>    
+> *case 条件* → **case** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)     
 
 <a name="optional-binding-condition"></a>
-> *可选绑定条件* → [*可选绑定头*](#optional-binding-head) [*可选绑定附加列表*](#optional-binding-continuation-list)<sub>可选</sub> [*where子句*](#where-clause)<sub>可选</sub>    
-<a name="optional-binding-head"></a>
-> *可选绑定头* → **let** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer) | **var**  [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)    
-<a name="optional-binding-continuation-list"></a>
-> *可选绑定附加部分列表* → [*可选绑定附加部分*](#optional-binding-continuation) | [*可选绑定附加部分*](#optional-binding-continuation) **,** [*可选绑定附加部分列表*](#optional-binding-continuation-list)  
-<a name="optional-binding-continuation"></a>
->  *可选绑定附加部分* → [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer) | [*可选绑定头*](#optional-binding-head)
+> *可选绑定条件* →  **let** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer) | **var**  [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)    
+
 
 <a name="repeat-while_statements"></a>
 ### Repeat-While 语句
@@ -157,7 +155,7 @@ repeat {
 
 由于条件的值是在循环体中的语句执行后才进行判断，因此循环体中的语句至少会被执行一次。
 
-条件的结果必须符合 `BooleanType` 协议。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > repeat-while 语句语法  
 <a name="repeat-while-statement"></a>
@@ -213,7 +211,7 @@ if 条件1 {
 } 
 ```
 
-`if` 语句中条件的结果必须符合 `BooleanType` 协议。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+`if` 语句中条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > if 语句语法  
 <a name="if-statement"></a>
@@ -234,18 +232,18 @@ guard 条件 else {
 }    
 ```
 
-`guard` 语句中条件的结果必须符合 `BooleanType` 协议。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+`guard` 语句中条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
  
 在 `guard` 语句中进行可选绑定的常量或者变量，其可用范围从声明开始直到作用域结束。
  
-`guard` 语句必须有 `else` 子句，而且必须在该子句中调用标记 `noreturn` 特性的函数，或者使用下面的语句退出当前作用域：   
+`guard` 语句必须有 `else` 子句，而且必须在该子句中调用 `Never` 返回类型的函数，或者使用下面的语句退出当前作用域：   
  
  *  `return`
  *  `break`
  *  `continue`
  *  `throw`    
  
-关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。
+关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于`Never`返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
 
 > guard 语句语法  
 <a name="guard-statement"></a>
@@ -281,7 +279,7 @@ default:
 case let (x, y) where x == y:
 ```
 
-正如上面这个例子，也可以在模式中使用 `let`（或 `var`）语句来绑定常量（或变量）。这些常量（或变量）可以在对应的 `where` 子句以及 `case` 中的代码中使用。但是，如果一个 `case` 中含有多个模式，那么这些模式都不能绑定常量（或变量）。
+正如上面这个例子，也可以在模式中使用 `let`（或 `var`）语句来绑定常量（或变量）。这些常量（或变量）可以在对应的 `where` 子句以及 `case` 中的代码中使用。但是，如果一个 `case` 中含有多个模式，所有的模式必须包含相同的常量（或变量）绑定，并且每一个绑定的常量（或变量）必须在所有的条件模式中都有相同的类型。
 
 `switch` 语句也可以包含默认分支，使用 `default` 关键字表示。只有所有 `case` 都无法匹配控制表达式时，默认分支中的代码才会被执行。一个 `switch` 语句只能有一个默认分支，而且必须在 `switch` 语句的最后面。
 
@@ -606,19 +604,19 @@ do {
 
 行控制语句形式如下：
 
-> \#line `行号` `文件名`
+> \#sourceLocation(file: `文件名` , line:`行号`)
 
-行控制语句会改变该语句之后的代码中的字面量表达式 `#line` 和 `#file` 所表示的值。`行号` 是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。`文件名` 是一个字符串字面量，会改变 `#file` 表达式的值。
+> \#sourceLocation()
 
-你可以只写 `#line`，而不指定行号和文件名，从而将源代码的定位信息重置回默认的行号和文件名。
+第一种的行控制语句会改变该语句之后的代码中的字面量表达式 `#line` 和 `#file` 所表示的值。`行号` 是一个大于 0 的整形字面量，会改变 `#line` 表达式的值。`文件名` 是一个字符串字面量，会改变 `#file` 表达式的值。
 
-`#line` 标记具有两种含义，作为行控制语句使用时必须独占一行，而且不能是源代码文件的最后一行。否则，它将作为字面量表达式使用，详情请参阅 [字面量表达式](04_Expressions.md#literal_expression)。
+第二种的行控制语句, `#sourceLocation()`，会将源代码的定位信息重置回默认的行号和文件名。
 
 <a name="line-control-statement"></a>
 > 行控制语句语法  
 
-> *行控制语句* → **#line**  
-> *行控制语句* → **#line** [*行号*](#line-number) [*文件名*](#file-name)  
+> *行控制语句* → **#sourceLocation(file:[*文件名*](#file-name),line:[*行号*](#line-number))**  
+> *行控制语句* → **#sourceLocation()**  
 <a name="line-number"></a>
 > *行号* → 大于 0 的十进制整数  
 <a name="file-name"></a>

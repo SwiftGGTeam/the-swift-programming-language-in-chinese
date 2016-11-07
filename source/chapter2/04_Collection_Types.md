@@ -13,6 +13,9 @@
 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-11
+> 
+> 3.0
+> 校对：[shanks](http://codebuild.me) ，2016-10-09
 
 
 本页包含内容：
@@ -46,7 +49,7 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。�
 
 > 注意:
  Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
+ 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -81,7 +84,7 @@ someInts = []
 Swift 中的`Array`类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。我们可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeatedValue`）传入数组构造函数：
 
 ```swift
-var threeDoubles = [Double](count: 3, repeatedValue:0.0)
+var threeDoubles = Array(repeating: 0.0, count: 3)
 // threeDoubles 是一种 [Double] 数组，等价于 [0.0, 0.0, 0.0]
 ```
 
@@ -91,7 +94,7 @@ var threeDoubles = [Double](count: 3, repeatedValue:0.0)
 我们可以使用加法操作符（`+`）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：
 
 ```swift
-var anotherThreeDoubles = [Double](count: 3, repeatedValue: 2.5)
+var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
 // anotherThreeDoubles 被推断为 [Double]，等价于 [2.5, 2.5, 2.5]
 
 var sixDoubles = threeDoubles + anotherThreeDoubles
@@ -194,20 +197,20 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 不可以用下标访问的形式去在数组尾部添加新项。
 
 
-调用数组的`insert(_:atIndex:)`方法来在某个具体索引值之前添加数据项：
+调用数组的`insert(_:at:)`方法来在某个具体索引值之前添加数据项：
 
 ```swift
-shoppingList.insert("Maple Syrup", atIndex: 0)
+shoppingList.insert("Maple Syrup", at: 0)
 // shoppingList 现在有7项
 // "Maple Syrup" 现在是这个列表中的第一项
 ```
 
-这次`insert(_:atIndex:)`方法调用把值为`"Maple Syrup"`的新数据项插入列表的最开始位置，并且使用`0`作为索引值。
+这次`insert(_:at:)`方法调用把值为`"Maple Syrup"`的新数据项插入列表的最开始位置，并且使用`0`作为索引值。
 
-类似的我们可以使用`removeAtIndex(_:)`方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（我们不需要的时候就可以无视它）：
+类似的我们可以使用`remove(at:)`方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（我们不需要的时候就可以无视它）：
 
 ```swift
-let mapleSyrup = shoppingList.removeAtIndex(0)
+let mapleSyrup = remove(at: 0)
 // 索引值为0的数据项被移除
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
 // mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
@@ -222,7 +225,7 @@ firstItem = shoppingList[0]
 // firstItem 现在等于 "Six eggs"
 ```
 
-如果我们只想把数组中的最后一项移除，可以使用`removeLast()`方法而不是`removeAtIndex(_:)`方法来避免我们需要获取数组的`count`属性。就像后者一样，前者也会返回被移除的数据项：
+如果我们只想把数组中的最后一项移除，可以使用`removeLast()`方法而不是`remove(at:)`方法来避免我们需要获取数组的`count`属性。就像后者一样，前者也会返回被移除的数据项：
 
 ```swift
 let apples = shoppingList.removeLast()
@@ -269,7 +272,7 @@ for (index, value) in shoppingList.enumerate() {
 
 > 注意：  
 > Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。  
-> 关于使用`Foundation`和`Cocoa`中`Set`的知识，请看 [*Using Swift with Cocoa and Objective-C*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
@@ -410,10 +413,10 @@ for genre in favoriteGenres {
 
 更多关于`for-in`循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
 
-Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sort()`方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符'<'对元素进行比较的结果来确定.
+Swift 的`Set`类型没有确定的顺序，为了按照特定顺序来遍历一个`Set`中的值可以使用`sorted()`方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符'<'对元素进行比较的结果来确定.
 
 ```swift
-for genre in favoriteGenres.sort() {
+for genre in favoriteGenres.sorted() {
     print("\(genre)")
 }
 // prints "Classical"
@@ -433,10 +436,10 @@ for genre in favoriteGenres.sort() {
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setVennDiagram_2x.png)
 
-* 使用`intersect(_:)`方法根据两个集合中都包含的值创建的一个新的集合。
-* 使用`exclusiveOr(_:)`方法根据在一个集合中但不在两个集合中的值创建一个新的集合。
+* 使用`intersection(_:)`方法根据两个集合中都包含的值创建的一个新的集合。
+* 使用`symmetricDifference(_:)`方法根据在一个集合中但不在两个集合中的值创建一个新的集合。
 * 使用`union(_:)`方法根据两个集合的值创建一个新的集合。
-* 使用`subtract(_:)`方法根据不在该集合中的值创建一个新的集合。
+* 使用`subtracting(_:)`方法根据不在该集合中的值创建一个新的集合。
 
 ```swift
 let oddDigits: Set = [1, 3, 5, 7, 9]
@@ -445,11 +448,11 @@ let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
 
 oddDigits.union(evenDigits).sort()
 // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-oddDigits.intersect(evenDigits).sort()
+oddDigits. intersection(evenDigits).sorted()
 // []
-oddDigits.subtract(singleDigitPrimeNumbers).sort()
+oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
 // [1, 9]
-oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
+oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
 // [1, 2, 9]
 ```
 
@@ -461,21 +464,21 @@ oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
 
 * 使用“是否相等”运算符(`==`)来判断两个集合是否包含全部相同的值。
-* 使用`isSubsetOf(_:)`方法来判断一个集合中的值是否也被包含在另外一个集合中。
-* 使用`isSupersetOf(_:)`方法来判断一个集合中包含另一个集合中所有的值。
-* 使用`isStrictSubsetOf(_:)`或者`isStrictSupersetOf(_:)`方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
-* 使用`isDisjointWith(_:)`方法来判断两个集合是否不含有相同的值(是否没有交集)。
+* 使用`isSubset(of:)`方法来判断一个集合中的值是否也被包含在另外一个集合中。
+* 使用`isSuperset(of:)`方法来判断一个集合中包含另一个集合中所有的值。
+* 使用`isStrictSubset(of:)`或者`isStrictSuperset(of:)`方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
+* 使用`isDisjoint(with:)`方法来判断两个集合是否不含有相同的值(是否没有交集)。
 
 ```swift
 let houseAnimals: Set = ["🐶", "🐱"]
 let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
 let cityAnimals: Set = ["🐦", "🐭"]
 
-houseAnimals.isSubsetOf(farmAnimals)
+houseAnimals.isSubset(of: farmAnimals)
 // true
-farmAnimals.isSupersetOf(houseAnimals)
+farmAnimals.isSuperset(of: houseAnimals)
 // true
-farmAnimals.isDisjointWith(cityAnimals)
+farmAnimals.isDisjoint(with: cityAnimals)
 // true
 ```
 
@@ -486,7 +489,7 @@ farmAnimals.isDisjointWith(cityAnimals)
 
 > 注意：  
 > Swift 的`Dictionary`类型被桥接到`Foundation`的`NSDictionary`类。  
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Objective-C (Swift 2.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 一书。
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="dictionary_type_shorthand_syntax"></a>
 ## 字典类型快捷语法
@@ -624,10 +627,10 @@ airports["APL"] = nil
 // APL 现在被移除了
 ```
 
-此外，`removeValueForKey(_:)`方法也可以用来在字典中移除键值对。这个方法在键值对存在的情况下会移除该键值对并且返回被移除的值或者在没有值的情况下返回`nil`：
+此外，`removeValue(forKey:)`方法也可以用来在字典中移除键值对。这个方法在键值对存在的情况下会移除该键值对并且返回被移除的值或者在没有值的情况下返回`nil`：
 
 ```swift
-if let removedValue = airports.removeValueForKey("DUB") {
+if let removedValue = airports. removeValue(forKey: "DUB") {
     print("The removed airport's name is \(removedValue).")
 } else {
     print("The airports dictionary does not contain a value for DUB.")
@@ -676,4 +679,4 @@ let airportNames = [String](airports.values)
 // airportNames 是 ["Toronto Pearson", "London Heathrow"]
 ```
 
-Swift 的字典类型是无序集合类型。为了以特定的顺序遍历字典的键或值，可以对字典的`keys`或`values`属性使用`sort()`方法。
+Swift 的字典类型是无序集合类型。为了以特定的顺序遍历字典的键或值，可以对字典的`keys`或`values`属性使用`sorted()`方法。

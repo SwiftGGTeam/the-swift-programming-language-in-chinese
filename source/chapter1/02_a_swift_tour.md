@@ -11,6 +11,9 @@
 
 > 2.2
 > 翻译：[175](https://github.com/Brian175)，2016-04-09 校对：[SketchK](https://github.com/SketchK)，2016-05-11
+> 
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
 本页内容包括：
 
@@ -34,7 +37,7 @@ print("Hello, world!")
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
 > 注意：
-> 在 Mac 上，下载 Playground 并双击文件在 Xcode 里打开：[https://developer.apple.com/go/?id=swift-tour](https://developer.apple.com/go/?id=swift-tour)
+> 最佳实践是，在 Xcode 作为 playground 打开本章，Playgrounds允许你编辑你的代码并且立即得到结果，[下载 Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
 ## 简单值
@@ -143,10 +146,11 @@ if let name = optionalName {
 ```
 
 > 练习：
-> 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给greeting赋一个不同的值。
+> 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给 greeting 赋一个不同的值。
 
 如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。  
-另一种处理可选值的方法是通过使用 ?? 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
+另一种处理可选值的方法是通过使用 `??` 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
+
 ```swift
 let nickName: String? = nil
 let fullName: String = "John Appleseed"
@@ -236,11 +240,20 @@ print(total)
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
-greet("Bob", day: "Tuesday")
+greet(name:"Bob", day: "Tuesday")
 ```
 
 > 练习：
 > 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
+
+默认情况下，函数使用它们的参数名称作为它们参数的标签，在参数名称前可以自定义参数标签，或者使用 `_` 表示不使用参数标签。
+
+```
+func greet(_ person: String, on day: String) -> String {
+    return "Hello \(person), today is \(day)."
+}
+greet("John", on: "Wednesday")
+```
 
 使用元组来让一个函数返回多个值。该元组的元素可以用名称或数字来表示。
 
@@ -261,7 +274,7 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
 
     return (min, max, sum)
 }
-let statistics = calculateStatistics([5, 3, 100, 3, 9])
+let statistics = calculateStatistics(scores:[5, 3, 100, 3, 9])
 print(statistics.sum)
 print(statistics.2)
 ```
@@ -277,7 +290,7 @@ func sumOf(numbers: Int...) -> Int {
     return sum
 }
 sumOf()
-sumOf(42, 597, 12)
+sumOf(numbers: 42, 597, 12)
 ```
 
 > 练习：
@@ -300,7 +313,7 @@ returnFifteen()
 函数是第一等类型，这意味着函数可以作为另一个函数的返回值。
 
 ```swift
-func makeIncrementer() -> (Int -> Int) {
+func makeIncrementer() -> ((Int) -> Int) {
     func addOne(number: Int) -> Int {
         return 1 + number
     }
@@ -313,7 +326,7 @@ increment(7)
 函数也可以当做参数传入另一个函数。
 
 ```swift
-func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
     for item in list {
         if condition(item) {
             return true
@@ -325,7 +338,7 @@ func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(numbers, condition: lessThanTen)
+hasAnyMatches(list: numbers, condition: lessThanTen)
 ```
 
 函数实际上是一种特殊的闭包:它是一段能之后被调取的代码。闭包中的代码能访问闭包所建作用域中能得到的变量和函数，即使闭包是在一个不同的作用域被执行的 - 你已经在嵌套函数例子中所看到。你可以使用`{}`来创建一个匿名闭包。使用`in`将参数和返回值类型声明与闭包函数体进行分离。
@@ -339,7 +352,7 @@ numbers.map({
 ```
 
 > 练习：
-> 重写闭包，对所有奇数返回0。
+> 重写闭包，对所有奇数返回 0。
 
 有很多种创建更简洁的闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
@@ -468,7 +481,7 @@ print(triangle.sideLength)
 
 1. 设置子类声明的属性值
 2. 调用父类的构造器
-3. 改变父类定义的属性值。其他的工作比如调用方法、getters和setters也可以在这个阶段完成。
+3. 改变父类定义的属性值。其他的工作比如调用方法、getters 和 setters 也可以在这个阶段完成。
 
 如果你不需要计算属性，但是仍然需要在设置一个新值之前或者之后运行代码，使用`willSet`和`didSet`。
 
@@ -689,10 +702,10 @@ print(protocolValue.simpleDescription)
 <a name="error_handling"></a>
 ## 错误处理
 
-使用采用`ErrorType`协议的类型来表示错误。
+使用采用`Error`协议的类型来表示错误。
 
 ```swift
-enum PrinterError: ErrorType {
+enum PrinterError: Error {
 	case OutOfPaper
 	case NoToner
 	case OnFire
@@ -755,13 +768,13 @@ let printerFailure = try? sendToPrinter("Never Has Toner")
 var fridgeIsOpen = false
 let fridgeContent = ["milk", "eggs", "leftovers"]
 
-func fridgeContains(itemName: String) -> Bool {
+func fridgeContains(_ food: String) -> Bool {
 	fridgeIsOpen = true
 	defer {
 		fridgeIsOpen = false
 	}
 	
-	let result = fridgeContent.contains(itemName)
+	let result = fridgeContent.contains(food)
 	return result
 }
 fridgeContains("banana")
@@ -774,20 +787,20 @@ print(fridgeIsOpen)
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+func repeatItem<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
     var result = [Item]()
     for _ in 0..<numberOfTimes {
         result.append(item)
     }
     return result
 }
-repeatItem("knock", numberOfTimes:4)
+repeatItem(repeating: "knock", numberOfTimes:4)
 ```
 
 你也可以创建泛型函数、方法、类、枚举和结构体。
 
 ```swift
-// Reimplement the Swift standard library's optional type
+// 重新实现 Swift 标准库中的可选类型
 enum OptionalValue<Wrapped> {
     case None
     case Some(Wrapped)
