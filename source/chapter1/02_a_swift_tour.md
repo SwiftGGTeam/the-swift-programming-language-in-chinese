@@ -15,6 +15,8 @@
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
+> 3.0.1 review: 2016-11-09
+
 本页内容包括：
 
 -   [简单值（Simple Values）](#simple_values)
@@ -34,10 +36,12 @@ print("Hello, world!")
 
 如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main()`函数。你同样不需要在每个语句结尾写上分号。
 
-这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
+这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解到。
 
 > 注意：
-> 最佳实践是，在 Xcode 作为 playground 打开本章，Playgrounds允许你编辑你的代码并且立即得到结果，[下载 Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
+> 最佳实践是，在 Xcode 作为 playground 打开本章，Playgrounds允许你编辑你的代码并且立即得到结果。 
+>
+> [下载 Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
 ## 简单值
@@ -61,7 +65,7 @@ let explicitDouble: Double = 70
 ```
 
 > 练习：
-> 创建一个常量，显式指定类型为`Float`并指定初始值为4。
+> 创建一个常量，显式指定类型为`Float`并指定初始值为 4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
 
@@ -148,7 +152,7 @@ if let name = optionalName {
 > 练习：
 > 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给 greeting 赋一个不同的值。
 
-如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。  
+如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值解包并赋给`let`后面的常量，这样代码块中就可以使用这个值了。  
 另一种处理可选值的方法是通过使用 `??` 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
 
 ```swift
@@ -237,10 +241,10 @@ print(total)
 使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值的类型。
 
 ```swift
-func greet(name: String, day: String) -> String {
-    return "Hello \(name), today is \(day)."
+func greet(person: String, day: String) -> String {
+    return "Hello \(person), today is \(day)."
 }
-greet(name:"Bob", day: "Tuesday")
+greet(person:"Bob", day: "Tuesday")
 ```
 
 > 练习：
@@ -587,22 +591,6 @@ let heartsDescription = hearts.simpleDescription()
 
 注意，有两种方式可以引用`Hearts`成员：给`hearts`常量赋值时，枚举成员`Suit.Hearts`需要用全名来引用，因为常量没有显式指定类型。在`switch`里，枚举成员使用缩写`.Hearts`来引用，因为`self`的值已经知道是一个`suit`。已知变量类型的情况下你可以使用缩写。
 
-使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
-
-```swift
-struct Card {
-    var rank: Rank
-    var suit: Suit
-    func simpleDescription() -> String {
-        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-    }
-}
-let threeOfSpades = Card(rank: .Three, suit: .Spades)
-let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-```
-
-> 练习：
-> 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
 
@@ -629,6 +617,24 @@ case let .Failure(message):
 > 给`ServerResponse`和`switch`添加第三种情况。
 
 注意日升和日落时间是如何从`ServerResponse`中提取到并与`switch`的`case`相匹配的。
+
+使用`struct`来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
+
+```swift
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+```
+
+> 练习：
+> 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
+
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
@@ -694,7 +700,7 @@ print(7.simpleDescription)
 ```swift
 let protocolValue: ExampleProtocol = a
 print(protocolValue.simpleDescription)
-// print(protocolValue.anotherProperty)  // Uncomment to see the error
+// print(protocolValue.anotherProperty)  // 去掉注释可以看到错误
 ```
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
@@ -715,11 +721,11 @@ enum PrinterError: Error {
 使用`throw`来抛出一个错误并使用`throws`来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函数会立刻返回并且调用该函数的代码会进行错误处理。
 
 ```swift
-func sendToPrinter(printerName: String) throws -> String {
-	if printerName == "Never Has Toner" {
-		throw PrinterError.NoToner
-	}
-	return "Job sent"
+func send(job: Int, toPrinter printerName: String) throws -> String {
+    if printerName == "Never Has Toner" {
+        throw PrinterError.noToner
+    }
+    return "Job sent"
 }
 ```
 
@@ -727,28 +733,28 @@ func sendToPrinter(printerName: String) throws -> String {
 
 ```swift
 do {
-	let printerResponse = try sendToPrinter("Bi Sheng")
-	print(printerResponse)
+    let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
+    print(printerResponse)
 } catch {
-	print(error)
+    print(error)
 }
 ```
 
 > 练习：
-> 将 printer name 改为`"Never Has Toner"`使`sendToPrinter(_:)`函数抛出错误。
+> 将 printer name 改为`"Never Has Toner"`使`send(job:toPrinter:)`函数抛出错误。
 
 可以使用多个`catch`块来处理特定的错误。参照 switch 中的`case`风格来写`catch`。
 
 ```swift
 do {
-	let printerResponse = try sendToPrinter("Gutenberg")
-	print(printerResponse)
-} catch PrinterError.OnFire {
-	print("I'll just put this over here, with the rest of the fire.")
+    let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+    print(printerResponse)
+} catch PrinterError.onFire {
+    print("I'll just put this over here, with the rest of the fire.")
 } catch let printerError as PrinterError {
-	print("Printer error: \(printerError).")
+    print("Printer error: \(printerError).")
 } catch {
-	print(error)
+    print(error)
 }
 ```
 
@@ -758,8 +764,8 @@ do {
 另一种处理错误的方式使用`try?`将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为`nil`。否则的话，结果会是一个包含函数返回值的可选值。
 
 ```swift
-let printerSuccess = try? sendToPrinter("Mergenthaler")
-let printerFailure = try? sendToPrinter("Never Has Toner")
+let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 ```
 
 使用`defer`代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。使用`defer`，可以把函数调用之初就要执行的代码和函数调用结束时的扫尾代码写在一起，虽然这两者的执行时机截然不同。
@@ -812,15 +818,16 @@ possibleInteger = .Some(100)
 在类型名后面使用`where`来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
 
 ```swift
-func anyCommonElements <T: SequenceType, U: SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
-    for lhsItem in lhs {
-        for rhsItem in rhs {
-            if lhsItem == rhsItem {
-                return true
+func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+    where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    return true
+                }
             }
         }
-    }
-    return false
+        return false
 }
 anyCommonElements([1, 2, 3], [3])
 ```
@@ -828,4 +835,4 @@ anyCommonElements([1, 2, 3], [3])
 > 练习：
 > 修改`anyCommonElements(_:_:)`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-`<T: Equatable>`和`<T where T: Equatable>`是等价的。
+`<T: Equatable>`和` <T> ... where T: Equatable>`是等价的。
