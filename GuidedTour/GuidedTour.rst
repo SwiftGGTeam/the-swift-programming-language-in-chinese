@@ -931,31 +931,31 @@ enumerations can have methods associated with them.
    at least through most of Europe and the Americas,
    but there are many other regional variations.
 
-.. testcode:: guided-tour
+.. test::
+   :name: enum and struct
 
-    -> enum Rank: Int {
-           case ace = 1
-           case two, three, four, five, six, seven, eight, nine, ten
-           case jack, queen, king
-           func simpleDescription() -> String {
-               switch self {
-                   case .ace:
-                       return "ace"
-                   case .jack:
-                       return "jack"
-                   case .queen:
-                       return "queen"
-                   case .king:
-                       return "king"
-                   default:
-                       return String(self.rawValue)
-               }
+   enum Rank: Int {
+       case ace = 1
+       case two, three, four, five, six, seven, eight, nine, ten
+       case jack, queen, king
+       func simpleDescription() -> String {
+           switch self {
+               case .ace:
+                   return "ace"
+               case .jack:
+                   return "jack"
+               case .queen:
+                   return "queen"
+               case .king:
+                   return "king"
+               default:
+                   return String(self.rawValue)
            }
        }
-    -> let ace = Rank.ace
-    << // ace : Rank = REPL.Rank.ace
-    -> let aceRawValue = ace.rawValue
-    <$ : Int = 1
+   }
+   let ace = Rank.ace
+   let aceRawValue = ace.rawValue
+   assert(aceRawValue == 1) // -HIDE-
 
 .. admonition:: Experiment
 
@@ -974,13 +974,14 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
 
-.. testcode:: guided-tour
+.. test::
+   :name: enum and struct
+   :cont:
 
-    -> if let convertedRank = Rank(rawValue: 3) {
-           let threeDescription = convertedRank.simpleDescription()
-    >> print(threeDescription)
-    << 3
-    -> }
+   if let convertedRank = Rank(rawValue: 3) {
+       let threeDescription = convertedRank.simpleDescription()
+       assert(threeDescription == "3") // -HIDE-
+   }
 
 The case values of an enumeration are actual values,
 not just another way of writing their raw values.
@@ -988,27 +989,29 @@ In fact,
 in cases where there isn't a meaningful raw value,
 you don't have to provide one.
 
-.. testcode:: guided-tour
+.. test::
+   :name: enum and struct
+   :cont:
 
-    -> enum Suit {
-           case spades, hearts, diamonds, clubs
-           func simpleDescription() -> String {
-               switch self {
-                   case .spades:
-                       return "spades"
-                   case .hearts:
-                       return "hearts"
-                   case .diamonds:
-                       return "diamonds"
-                   case .clubs:
-                       return "clubs"
-               }
+   enum Suit {
+       case spades, hearts, diamonds, clubs
+       func simpleDescription() -> String {
+           switch self {
+               case .spades:
+                   return "spades"
+               case .hearts:
+                   return "hearts"
+               case .diamonds:
+                   return "diamonds"
+               case .clubs:
+                   return "clubs"
            }
        }
-    -> let hearts = Suit.hearts
-    << // hearts : Suit = REPL.Suit.hearts
-    -> let heartsDescription = hearts.simpleDescription()
-    << // heartsDescription : String = "hearts"
+   }
+
+   let hearts = Suit.hearts
+   let heartsDescription = hearts.simpleDescription()
+   assert(heartsDescription == "hearts") // -HIDE-
 
 .. admonition:: Experiment
 
@@ -1078,25 +1081,25 @@ or it responds with a description of what went wrong.
    the officer in charge said that he didn't want
    an "out of cheese error" interrupting the calculation.
 
-.. testcode:: guided-tour
+.. test::
+   :name: enum and struct
+   :cont:
+   :prints: Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
-    -> enum ServerResponse {
-           case result(String, String)
-           case failure(String)
-       }
-    ---
-    -> let success = ServerResponse.result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
-    -> let failure = ServerResponse.failure("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
-    ---
-    -> switch success {
-           case let .result(sunrise, sunset):
-               print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-           case let .failure(message):
-               print("Failure...  \(message)")
-       }
-    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
+   enum ServerResponse {
+       case result(String, String)
+       case failure(String)
+   }
+
+   let success = ServerResponse.result("6:00 am", "8:09 pm")
+   let failure = ServerResponse.failure("Out of cheese.")
+
+   switch success {
+       case let .result(sunrise, sunset):
+           print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+       case let .failure(message):
+           print("Failure...  \(message)")
+   }
 
 .. admonition:: Experiment
 
@@ -1114,19 +1117,21 @@ between structures and classes is that
 structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
-.. testcode:: guided-tour
+.. test::
+   :name: enum and struct
+   :cont:
 
-    -> struct Card {
-           var rank: Rank
-           var suit: Suit
-           func simpleDescription() -> String {
-               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-           }
+   struct Card {
+       var rank: Rank
+       var suit: Suit
+       func simpleDescription() -> String {
+           return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
        }
-    -> let threeOfSpades = Card(rank: .three, suit: .spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
-    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
+   }
+
+   let threeOfSpades = Card(rank: .three, suit: .spades)
+   let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+   assert(threeOfSpadesDescription == "The 3 of spades") // -HIDE-
 
 .. admonition:: Experiment
 
