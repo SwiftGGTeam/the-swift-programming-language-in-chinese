@@ -28,10 +28,14 @@
 > 
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
+> 
+> 3.0.1
+> 翻译+校对：[shanks](http://codebuild.me)，2016-11-10
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
+-   [Swift 3.1 更新](#swift_3_1)
 -   [Swift 3.0 更新](#swift_3_0)
 -   [Swift 2.2 更新](#swift_2_2)
 -   [Swift 2.1 更新](#swift_2_1)
@@ -40,12 +44,45 @@
 -   [Swift 1.1 更新](#swift_1_1)
 -   [Swift 1.0 更新](#swift_1_0)
 
+<a name="swift_3_1"></a>
+### Swift 3.1 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	 <tr>
+    	<td scope="row">2016-10-27</td>
+		<td>
+			<ul class="list-bullet">
+			 	<li>
+	            更新至 Swift 3.0.1。
+	        	</li>
+	        	<li>
+	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48">自动引用计数</a>章节中关于 weak 和 unowned 引用的讨论。
+	        	</li>
+	        	<li>
+	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID381">声明标识符</a>章节中关于新的标识符`unowned`，`unowend(safe)`和`unowned(unsafe)`的描述。
+	        	</li>
+	        	<li>
+	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID342">Any 和 AnyObject 的类型转换</a>一节中关于使用类型`Any`作为可选值的描述。
+	        	</li>
+	        	<li>
+	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383">表达式</a>章节，把括号表达式和元组表达式的描述分开。
+	        	</li>
+	    	</ul>
+	    </td>
+    </tr>
+</tbody>
+</table>
+
 
 <a name="swift_3_0"></a>
 ### Swift 3.0 更新
-
-<a name="swift_2_2"></a>
-### Swift 2.2 更新
 
 <table class="graybox" border="0" cellspacing="0" cellpadding="5">
 <thead>
@@ -158,6 +195,22 @@
 		</ul>
 	</td>
 	</tr>
+</tbody>
+</table>
+
+<a name="swift_2_2"></a>
+### Swift 2.2 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+	 <tr>
+    	</tr>
     <tr>
     <td scope="row">2016-03-21</td>
     <td><ul class="list-bullet">
