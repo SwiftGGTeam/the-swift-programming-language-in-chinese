@@ -757,31 +757,35 @@ is detected by the compiler as an error.
 The compiler also detects methods with ``override``
 that don't actually override any method in the superclass.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
 
-    -> class Square: NamedShape {
-           var sideLength: Double
-    ---
-           init(sideLength: Double, name: String) {
-               self.sideLength = sideLength
-               super.init(name: name)
-               numberOfSides = 4
-           }
-    ---
-           func area() ->  Double {
-               return sideLength * sideLength
-           }
-    ---
-           override func simpleDescription() -> String {
-               return "A square with sides of length \(sideLength)."
-           }
+   class Square: NamedShape {
+       var sideLength: Double
+
+       init(sideLength: Double, name: String) {
+           self.sideLength = sideLength
+           super.init(name: name)
+           numberOfSides = 4
        }
-    -> let test = Square(sideLength: 5.2, name: "my test square")
-    << // test : Square = REPL.Square
-    -> test.area()
-    <$ : Double = 27.040000000000003
-    -> test.simpleDescription()
-    <$ : String = "A square with sides of length 5.2."
+
+       func area() ->  Double {
+           return sideLength * sideLength
+       }
+
+       override func simpleDescription() -> String {
+           return "A square with sides of length \(sideLength)."
+       }
+   }
+
+   let test = Square(sideLength: 5.2, name: "my test square")
+   let result_testArea = // -HIDE-
+   test.area()
+   let result_testDescription = // -HIDE-
+   test.simpleDescription()
+   assert(result_testArea == 27.040000000000003) // -HIDE-
+   assert(result_testDescription == "A square with sides of length 5.2.") // -HIDE-
 
 .. admonition:: Experiment
 
@@ -795,38 +799,40 @@ that don't actually override any method in the superclass.
 In addition to simple properties that are stored,
 properties can have a getter and a setter.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
+   :prints: 9.3
+            3.3
 
+   class EquilateralTriangle: NamedShape {
+       var sideLength: Double = 0.0
 
-    -> class EquilateralTriangle: NamedShape {
-           var sideLength: Double = 0.0
-    ---
-           init(sideLength: Double, name: String) {
-               self.sideLength = sideLength
-               super.init(name: name)
-               numberOfSides = 3
+       init(sideLength: Double, name: String) {
+           self.sideLength = sideLength
+           super.init(name: name)
+           numberOfSides = 3
+       }
+
+       var perimeter: Double {
+           get {
+                return 3.0 * sideLength
            }
-    ---
-           var perimeter: Double {
-               get {
-                    return 3.0 * sideLength
-               }
-               set {
-                   sideLength = newValue / 3.0
-               }
-           }
-    ---
-           override func simpleDescription() -> String {
-               return "An equilateral triangle with sides of length \(sideLength)."
+           set {
+               sideLength = newValue / 3.0
            }
        }
-    -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-    << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
-    -> print(triangle.perimeter)
-    << 9.3
-    -> triangle.perimeter = 9.9
-    -> print(triangle.sideLength)
-    << 3.3
+
+       override func simpleDescription() -> String {
+           return "An equilateral triangle with sides of length \(sideLength)."
+       }
+   }
+
+   var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+   print(triangle.perimeter)
+
+   triangle.perimeter = 9.9
+   print(triangle.sideLength)
 
 In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.
@@ -856,33 +862,36 @@ is always the same as the side length of its square.
    but it was constrained by the fact that
    we're working in the context of geometric shapes.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
+   :prints: 10.0
+            10.0
+            50.0
 
-   -> class TriangleAndSquare {
-          var triangle: EquilateralTriangle {
-              willSet {
-                  square.sideLength = newValue.sideLength
-              }
-          }
-          var square: Square {
-              willSet {
-                  triangle.sideLength = newValue.sideLength
-              }
-          }
-          init(size: Double, name: String) {
-              square = Square(sideLength: size, name: name)
-              triangle = EquilateralTriangle(sideLength: size, name: name)
-          }
-      }
-   -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-   << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
-   -> print(triangleAndSquare.square.sideLength)
-   << 10.0
-   -> print(triangleAndSquare.triangle.sideLength)
-   << 10.0
-   -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> print(triangleAndSquare.triangle.sideLength)
-   << 50.0
+   class TriangleAndSquare {
+       var triangle: EquilateralTriangle {
+           willSet {
+               square.sideLength = newValue.sideLength
+           }
+       }
+       var square: Square {
+           willSet {
+               triangle.sideLength = newValue.sideLength
+           }
+       }
+       init(size: Double, name: String) {
+           square = Square(sideLength: size, name: name)
+           triangle = EquilateralTriangle(sideLength: size, name: name)
+       }
+   }
+
+   var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+   print(triangleAndSquare.square.sideLength)
+   print(triangleAndSquare.triangle.sideLength)
+
+   triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+   print(triangleAndSquare.triangle.sideLength)
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
@@ -899,12 +908,13 @@ and everything after the ``?`` acts on the unwrapped value.
 In both cases,
 the value of the whole expression is an optional value.
 
-.. testcode:: guided-tour
+.. test::
+   :name: classes
+   :cont:
 
-    -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
-    << // optionalSquare : Square? = Optional(REPL.Square)
-    -> let sideLength = optionalSquare?.sideLength
-    << // sideLength : Double? = Optional(2.5)
+   let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+   let sideLength = optionalSquare?.sideLength
+   assert(sideLength == Optional(2.5)) // -HIDE-
 
 Enumerations and Structures
 ---------------------------
