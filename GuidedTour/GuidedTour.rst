@@ -1144,12 +1144,13 @@ Protocols and Extensions
 
 Use ``protocol`` to declare a protocol.
 
-.. testcode:: guided-tour
+.. test::
+   :name: protocols and extensions
 
-    -> protocol ExampleProtocol {
-            var simpleDescription: String { get }
-            mutating func adjust()
-       }
+   protocol ExampleProtocol {
+        var simpleDescription: String { get }
+        mutating func adjust()
+   }
 
 Classes, enumerations, and structs can all adopt protocols.
 
@@ -1159,32 +1160,32 @@ Classes, enumerations, and structs can all adopt protocols.
    Likewise for the struct and classes -- placeholders
    for some more interesting data structure.
 
-.. testcode:: guided-tour
+.. test::
+   :name: protocols and extensions
+   :cont:
 
-    -> class SimpleClass: ExampleProtocol {
-            var simpleDescription: String = "A very simple class."
-            var anotherProperty: Int = 69105
-            func adjust() {
-                 simpleDescription += "  Now 100% adjusted."
-            }
-       }
-    -> var a = SimpleClass()
-    << // a : SimpleClass = REPL.SimpleClass
-    -> a.adjust()
-    -> let aDescription = a.simpleDescription
-    << // aDescription : String = "A very simple class.  Now 100% adjusted."
-    ---
-    -> struct SimpleStructure: ExampleProtocol {
-            var simpleDescription: String = "A simple structure"
-            mutating func adjust() {
-                 simpleDescription += " (adjusted)"
-            }
-       }
-    -> var b = SimpleStructure()
-    << // b : SimpleStructure = REPL.SimpleStructure(simpleDescription: "A simple structure")
-    -> b.adjust()
-    -> let bDescription = b.simpleDescription
-    << // bDescription : String = "A simple structure (adjusted)"
+   class SimpleClass: ExampleProtocol {
+        var simpleDescription: String = "A very simple class."
+        var anotherProperty: Int = 69105
+        func adjust() {
+             simpleDescription += "  Now 100% adjusted."
+        }
+   }
+   var a = SimpleClass()
+   a.adjust()
+   let aDescription = a.simpleDescription
+   assert(aDescription == "A very simple class.  Now 100% adjusted.") // -HIDE-
+
+   struct SimpleStructure: ExampleProtocol {
+        var simpleDescription: String = "A simple structure"
+        mutating func adjust() {
+             simpleDescription += " (adjusted)"
+        }
+   }
+   var b = SimpleStructure()
+   b.adjust()
+   let bDescription = b.simpleDescription
+   assert(bDescription == "A simple structure (adjusted)") // -HIDE-
 
 .. admonition:: Experiment
 
@@ -1203,18 +1204,20 @@ You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
 or even to a type that you imported from a library or framework.
 
-.. testcode:: guided-tour
+.. test::
+   :name: protocols and extensions
+   :cont:
+   :prints: The number 7
 
-    -> extension Int: ExampleProtocol {
-           var simpleDescription: String {
-               return "The number \(self)"
-           }
-           mutating func adjust() {
-               self += 42
-           }
-        }
-    -> print(7.simpleDescription)
-    << The number 7
+   extension Int: ExampleProtocol {
+       var simpleDescription: String {
+           return "The number \(self)"
+       }
+       mutating func adjust() {
+           self += 42
+       }
+   }
+   print(7.simpleDescription)
 
 .. admonition:: Experiment
 
@@ -1228,13 +1231,14 @@ but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
-.. testcode:: guided-tour
+.. test::
+   :name: protocols and extensions
+   :cont:
+   :prints: A very simple class.  Now 100% adjusted.
 
-    -> let protocolValue: ExampleProtocol = a
-    << // protocolValue : ExampleProtocol = REPL.SimpleClass
-    -> print(protocolValue.simpleDescription)
-    << A very simple class.  Now 100% adjusted.
-    // print(protocolValue.anotherProperty)  // Uncomment to see the error
+   let protocolValue: ExampleProtocol = a
+   print(protocolValue.simpleDescription)
+   // print(protocolValue.anotherProperty)  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
 has a runtime type of ``SimpleClass``,
