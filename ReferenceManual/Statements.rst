@@ -90,6 +90,8 @@ A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the ``Sequence`` protocol.
 
+.. TODO: Add a link to the reference after we fix <rdar://problem/17682758> RST: Add support for uAPI links
+
 A ``for``-``in`` statement has the following form:
 
 .. syntax-outline::
@@ -332,7 +334,7 @@ from an optional binding declaration in a ``guard`` statement condition
 can be used for the rest of the guard statement's enclosing scope.
 
 The ``else`` clause of a ``guard`` statement is required,
-and must either call a function marked with the ``noreturn`` attribute
+and must either call a function with the ``Never`` return type
 or transfer program control outside the guard statement's enclosing scope
 using one of the following statements:
 
@@ -341,13 +343,9 @@ using one of the following statements:
 * ``continue``
 * ``throw``
 
-.. The function has to be marked @noterurn -- it's not sufficient to just be nonreturning.
-   For example, the following is invalid:
-
-   func foo() { fatalError() }
-   guard false else { foo() }
-
 Control transfer statements are discussed in :ref:`Statements_ControlTransferStatements` below.
+For more information on functions with the ``Never`` return type,
+see :ref:`Declarations_FunctionsThatNeverReturn`.
 
 .. syntax-grammar::
 
@@ -397,13 +395,13 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in :doc:`../LanguageGuide/ControlFlow`.
 
-A ``switch`` case can optionally contain a where clause after each pattern.
+A ``switch`` case can optionally contain a ``where`` clause after each pattern.
 A :newTerm:`where clause` is introduced by the ``where`` keyword followed by an expression,
 and is used to provide an additional condition
 before a pattern in a case is considered matched to the *control expression*.
-If a where clause is present, the *statements* within the relevant case
+If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
-matches one of the patterns of the case and the expression of the where clause evaluates to ``true``.
+matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
@@ -417,7 +415,7 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
 
 As the above example shows, patterns in a case can also bind constants
 using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
-These constants (or variables) can then be referenced in a corresponding where clause
+These constants (or variables) can then be referenced in a corresponding ``where`` clause
 and throughout the rest of the code within the scope of the case.
 If the case contains multiple patterns that match the control expression,
 all of the patterns must contain the same constant or variable bindings,
@@ -515,8 +513,8 @@ see :ref:`Statements_FallthroughStatement` below.
 Labeled Statement
 -----------------
 
-You can prefix a loop statement, an ``if`` statement, or a ``switch`` statement
-with a :newTerm:`statement label`,
+You can prefix a loop statement, an ``if`` statement, a ``switch`` statement,
+or a ``do`` statement with a :newTerm:`statement label`,
 which consists of the name of the label followed immediately by a colon (:).
 Use statement labels with ``break`` and ``continue`` statements to be explicit
 about how you want to change control flow in a loop statement or a ``switch`` statement,
@@ -548,7 +546,11 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
     Grammar of a labeled statement
 
-    labeled-statement --> statement-label loop-statement | statement-label if-statement | statement-label switch-statement
+    labeled-statement --> statement-label loop-statement
+    labeled-statement --> statement-label if-statement
+    labeled-statement --> statement-label switch-statement
+    labeled-statement --> statement-label do-statement
+    
     statement-label --> label-name ``:``
     label-name --> identifier
 

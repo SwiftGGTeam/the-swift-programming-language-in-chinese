@@ -449,6 +449,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> parenthesized-expression
+    primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
@@ -472,6 +473,7 @@ Literal Expression
 A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
+a playground literal,
 or one of the following special literals:
 
 =============    ===========  ===============================================
@@ -575,6 +577,15 @@ of specified key and value types.
     -> var emptyDictionary: [String: Double] = [:]
     << // emptyDictionary : [String : Double] = [:]
 
+A :newTerm:`playground literal`
+is used by Xcode to create an interactive representation
+of a color, file, or image within the program editor.
+Playground literals in plain text outside of Xcode
+are represented using a special literal syntax.
+
+For information on using playground literals in Xcode,
+see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a literal.
+
 
 .. langref-grammar
 
@@ -591,7 +602,7 @@ of specified key and value types.
     Grammar of a literal expression
 
     literal-expression --> literal
-    literal-expression --> array-literal | dictionary-literal
+    literal-expression --> array-literal | dictionary-literal | playground-literal
     literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
@@ -601,6 +612,10 @@ of specified key and value types.
     dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
     dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
     dictionary-literal-item --> expression ``:`` expression
+
+    playground-literal --> ``#colorLiteral`` ``(`` ``red`` ``:`` expression ``,`` ``green`` ``:`` expression ``,`` ``blue`` ``:`` expression ``,`` ``alpha`` ``:`` expression ``)``
+    playground-literal --> ``#fileLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
+    playground-literal --> ``#imageLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
 
 
 .. _Expressions_SelfExpression:
@@ -956,7 +971,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
@@ -1014,6 +1029,27 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
+an expression surrounded by parentheses.
+You can use parentheses to specify the precedence of operations
+by explicitly grouping expressions.
+Grouping parentheses don't change an expression's type ---
+for example, the type of ``(1)`` is simply ``Int``.
+
+.. See "Tuple Expression" below for langref grammar.
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression ``)``
+
+
+.. _Expressions_TupleExpression:
+
+Tuple Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`tuple expression` consists of
 a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
@@ -1023,13 +1059,9 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Use parenthesized expressions to create tuples
-and to pass arguments to a function call.
-If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value.
-For example,
-the type of the parenthesized expression ``(1)``
-is ``Int``, not ``(Int)``.
+A tuple expression can contain zero expressions,
+or it can contain two or more expressions.
+A single expression inside parentheses is a parenthesized expression.
 
 .. langref-grammar
 
@@ -1040,12 +1072,11 @@ is ``Int``, not ``(Int)``.
 
 .. syntax-grammar::
 
-    Grammar of a parenthesized expression
+    Grammar of a tuple expression
 
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
-
+    tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
+    tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
+    tuple-element --> expression | identifier ``:`` expression
 
 .. _Expressions_WildcardExpression:
 
@@ -1097,7 +1128,7 @@ For example:
    -> class SomeClass: NSObject {
           let property: String
           @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) { }
+          func doSomething(_ x: Int) {}
    ---
           init(property: String) {
               self.property = property
@@ -1191,11 +1222,13 @@ For example:
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(c.value(forKey: keyPath))
-   <- Optional(12)
-   ---
    -> print(keyPath == c.keyPathTest())
    <- true
+   ---
+   -> if let value = c.value(forKey: keyPath) {
+   ->     print(value)
+   -> }
+   <- 12
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
@@ -1340,8 +1373,14 @@ the parentheses can be omitted.
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression
-    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-argument-clause
+    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closure
+
+    function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
+    function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
+    function-call-argument --> expression | identifier ``:`` expression
+    function-call-argument --> operator | identifier ``:`` operator
+
     trailing-closure --> closure-expression
 
 .. Multiple trailing closures in LangRef is an error,
@@ -1396,7 +1435,7 @@ If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
-.. testcode:: explitic-implicit-init
+.. testcode:: explicit-implicit-init
 
     >> struct SomeType {
     >>     let data: Int
@@ -1408,13 +1447,13 @@ In all other cases, you must use an initializer expression.
     ---
     >> let someValue = s1
     << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    -> let s3 = type(of: someValue).init(data: 7)  // Valid
     << // s3 : SomeType = REPL.SomeType(data: 7)
-    -> let s4 = someValue.dynamicType(data: 5)       // Error
-    !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
-    !! let s4 = someValue.dynamicType(data: 5)       // Error
-    !!                               ^
-    !!                               .init
+    -> let s4 = type(of: someValue)(data: 5)       // Error
+    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
+    !! let s4 = type(of: someValue)(data: 5)       // Error
+    !!                              ^
+    !!                              .init
 
 .. langref-grammar
 
@@ -1493,7 +1532,7 @@ For example:
     ---
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(x:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
@@ -1503,7 +1542,7 @@ For example:
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (x: Int, y: Int) -> () = (Function)
+    << // b : (Int, Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
     !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
@@ -1601,15 +1640,16 @@ you can pass it to a function or method that accepts a type-level argument.
 Dynamic Type Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A ``dynamicType`` expression consists of an expression,
-immediately followed by ``.dynamicType``. It has the following form:
+A :newTerm:`dynamic type expression` consists of an expression
+within special syntax that resembles a :ref:`Expressions_FunctionCallExpression`.
+It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>.dynamicType
+    type(of: <#expression#>)
 
 The *expression* can't be the name of a type.
-The entire ``dynamicType`` expression evaluates to the value of the
+The entire ``type(of:)`` expression evaluates to the value of the
 runtime type of the *expression*, as the following example shows:
 
 .. testcode:: dynamic-type
@@ -1628,14 +1668,14 @@ runtime type of the *expression*, as the following example shows:
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // someInstance has a static type of SomeBaseClass at compile time, and
     -> // it has a dynamic type of SomeSubClass at runtime
-    -> someInstance.dynamicType.printClassName()
+    -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
 .. syntax-grammar::
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
+    dynamic-type-expression --> ``type`` ``(`` ``of`` ``:`` expression ``)``
 
 
 .. _Expressions_SubscriptExpression:

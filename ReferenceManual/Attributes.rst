@@ -33,8 +33,7 @@ in parentheses, and their format is defined by the attribute they belong to.
 Declaration Attributes
 ----------------------
 
-You can apply a declaration attribute to declarations only. However, you can also apply
-the ``noreturn`` attribute to a function or method *type*.
+You can apply a declaration attribute to declarations only.
 
 ``available``
     Apply this attribute to any declaration to indicate the declaration's lifecycle
@@ -267,19 +266,6 @@ the ``noreturn`` attribute to a function or method *type*.
     cannot satisfy a protocol requirement
     for a method marked with the ``objc`` attribute.
 
-``noreturn``
-    Apply this attribute to a function or method declaration
-    to indicate that the corresponding type of that function or method,
-    ``T``, is ``@noreturn T``.
-    You can mark a function or method type with this attribute to indicate that
-    the function or method doesn't return to its caller.
-
-    You can override a function or method that is not marked with the ``noreturn``
-    attribute with a function or method that is. That said, you can't override
-    a function or method that is marked with the ``noreturn`` attribute with a function
-    or method that is not. Similar rules apply when you implement a protocol
-    method in a conforming type.
-
 ``NSApplicationMain``
     Apply this attribute to a class
     to indicate that it is the application delegate.
@@ -293,7 +279,7 @@ the ``noreturn`` attribute to a function or method *type*.
     .. testcode:: nsapplicationmain
 
        -> import AppKit
-       -> NSApplicationMain(Process.argc, Process.unsafeArgv)
+       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
        !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
 ``NSCopying``
@@ -321,8 +307,11 @@ the ``noreturn`` attribute to a function or method *type*.
 ``testable``
     Apply this attribute to ``import`` declarations
     for modules compiled with testing enabled
-    to access any entities marked with the ``internal`` access level modifier
-    as if they were declared with the ``public`` access level modifier.
+    to access any entities marked with the ``internal`` access-level modifier
+    as if they were declared with the ``public`` access-level modifier.
+    Tests can also access classes and class members
+    that are marked with the ``internal`` or ``public`` access-level modifier
+    as if they were declared with the ``open`` access-level modifier.
 
 ``UIApplicationMain``
     Apply this attribute to a class
@@ -372,8 +361,6 @@ Type Attributes
 ---------------
 
 You can apply type attributes to types only.
-However, you can also apply the ``noreturn`` attribute
-to a function or method *declaration*.
 
 ``autoclosure``
     This attribute is used to delay the evaluation of an expression
@@ -381,8 +368,6 @@ to a function or method *declaration*.
     Apply this attribute to a parameter's type in a method or function declaration,
     for a parameter of a function type that takes no arguments
     and that returns a value of the type of the expression.
-    Declarations with the ``autoclosure`` attribute imply ``noescape`` as well,
-    except when passed the optional attribute argument ``escaping``.
     For an example of how to use the ``autoclosure`` attribute,
     see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
 
@@ -411,20 +396,15 @@ to a function or method *declaration*.
    local functions or closures that don't capture any local variables,
    can be used as a function with C function calling conventions.
 
-``noescape``
+``escaping``
     Apply this attribute to a parameter's type in a method or function declaration
-    to indicate that the parameter's value will not be stored for later execution.
-    This means that the value is guaranteed not to outlive the lifetime of the call.
-    Function type parameters with the ``noescape`` declaration attribute
-    do not require explicit use of ``self.`` for properties or methods.
-    For an example of how to use the ``noescape`` attribute,
+    to indicate that the parameter's value can be stored for later execution.
+    This means that the value is allowed to outlive the lifetime of the call.
+    Function type parameters with the ``escaping`` type attribute
+    require explicit use of ``self.`` for properties or methods.
+    For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
 
-``noreturn``
-    Apply this attribute to the type of a function or method
-    to indicate that the function or method doesn't return to its caller.
-    You can also mark a function or method declaration with this attribute to indicate that
-    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
 
 .. langref-grammar
 
@@ -436,7 +416,6 @@ to a function or method *declaration*.
     attribute      ::= attribute-resilience
     attribute      ::= attribute-inout
     attribute      ::= attribute-autoclosure
-    attribute      ::= attribute-noreturn
 
 .. NOTE: LangRef grammar is way out of date.
 

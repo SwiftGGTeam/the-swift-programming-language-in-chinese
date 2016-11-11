@@ -48,11 +48,8 @@ the term *declaration* covers both declarations and definitions.
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declaration --> operator-declaration
+    declaration --> precedence-group-declaration
     declarations --> declaration declarations-OPT
-
-.. NOTE: Removed enum-member-declaration, because we don't need it anymore.
-
-.. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
 
 
 .. _LexicalStructure_ModuleScope:
@@ -66,7 +63,7 @@ By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
 in every source file that is part of the same module.
 You can override this default behavior
-by marking the declaration with an access level modifier,
+by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
@@ -194,6 +191,10 @@ but the binding between the constant name and the object it refers to can't.
 
 When a constant is declared at global scope,
 it must be initialized with a value.
+When a constant declaration occurs in the context of a function or method,
+it can be initialized later,
+as long as it is guaranteed to have a value set
+before the first time its value is read.
 When a constant declaration occurs in the context of a class or structure
 declaration, it is considered a :newTerm:`constant property`.
 Constant declarations are not computed properties and therefore do not have getters
@@ -490,14 +491,14 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     getter-setter-block --> code-block
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attributes-OPT ``get`` code-block
-    setter-clause --> attributes-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT mutation-modifier-OPT ``get`` code-block
+    setter-clause --> attributes-OPT mutation-modifier-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attributes-OPT ``get``
-    setter-keyword-clause --> attributes-OPT ``set``
+    getter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``get``
+    setter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
@@ -527,18 +528,61 @@ Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters
-to give a name to an existing type.
+to give a name to an existing generic type. The type alias
+can provide concrete types for some or all of the generic parameters
+of the existing type.
 For example:
 
 .. testcode:: typealias-with-generic
 
-   -> typealias StringDictionary<T> = Dictionary<String, T>
+   -> typealias StringDictionary<Value> = Dictionary<String, Value>
    ---
    // The following dictionaries have the same type.
    -> var dictionary1: StringDictionary<Int> = [:]
    -> var dictionary2: Dictionary<String, Int> = [:]
    << // dictionary1 : Dictionary<String, Int> = [:]
    << // dictionary2 : Dictionary<String, Int> = [:]
+
+When a type alias is declared with generic parameters, the constraints on those
+parameters must match exactly the constraints on the existing type's generic parameters.
+For example:
+
+.. testcode:: typealias-with-generic-constraint
+
+   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+
+Because the type alias and the existing type can be used interchangeably,
+the type alias can't introduce additional generic constraints.
+
+.. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
+     typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+
+.. Things that shouldn't work:
+    typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
+    typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
+    typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
+    typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+
+Inside a protocol declaration,
+a type alias can give a shorter and more convenient name
+to a type that is used frequently.
+For example:
+
+.. testcode:: typealias-in-prototol
+
+    -> protocol Sequence {
+           associatedtype Iterator: IteratorProtocol
+           typealias Element = Iterator.Element
+       }
+    ---
+    -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+           // ...
+    >>     return 9000
+       }
+
+Without this type alias,
+the ``sum`` function would have to refer to the associated type
+as ``T.Iterator.Element`` instead of ``T.Element``.
 
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
@@ -748,7 +792,7 @@ all mutation has finished before the function returns.
 .. testcode:: cant-pass-inout-aliasing
 
     >> import Dispatch
-    >> func someMutatingOperation(_ a: inout Int) { }
+    >> func someMutatingOperation(_ a: inout Int) {}
     -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
           // Make a local copy and manually copy it back.
           var localX = x
@@ -757,7 +801,7 @@ all mutation has finished before the function returns.
           // Operate on localX asynchronously, then wait before returning.
           queue.async { someMutatingOperation(&localX) }
           queue.sync {}
-       }  
+       }
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
@@ -955,10 +999,10 @@ the error thrown by ``alwaysThrows()``.
           }
       }
    -> func f2(callback: () throws -> Void) rethrows {
-          throw SomeError.D  // ERROR
+          throw SomeError.D  // Error
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.D  // ERROR
+   !! throw SomeError.D  // Error
    !! ^
 
 A throwing method can't override a rethrowing method,
@@ -966,11 +1010,34 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+
+.. _Declarations_FunctionsThatNeverReturn:
+
+Functions that Never Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift defines a ``Never`` type,
+which indicates that a function or method doesn't return to its caller.
+Functions and methods with the ``Never`` return type are called :newTerm:`nonreturning`.
+Nonreturning functions and methods either cause an irrecoverable error 
+or begin a sequence of work that continues indefinitely.
+This means that
+code that would otherwise run immediately after the call is never executed.
+Throwing and rethrowing functions can transfer program control
+to an appropriate ``catch`` block, even when they are nonreturning.
+
+A nonreturning function or method can be called to conclude the ``else`` clause
+of a guard statement,
+as discussed in :ref:`Statements_GuardStatement`.
+
+You can override a nonreturning method,
+but the new method must preserve its return type and nonreturning behavior.
+
 .. syntax-grammar::
 
     Grammar of a function declaration
 
-    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body-OPT
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT function-body-OPT
 
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
@@ -1274,18 +1341,18 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
     enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
 
-    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT ``{`` union-style-enum-members-OPT ``}``
+    union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-member --> declaration | union-style-enum-case-clause | compiler-control-statement
     union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause ``{`` raw-value-style-enum-members ``}``
+    raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause generic-where-clause-OPT ``{`` raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause | compiler-control-statement
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1379,9 +1446,12 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT struct-body
    struct-name --> identifier
-   struct-body --> ``{`` declarations-OPT ``}``
+   struct-body --> ``{`` struct-members-OPT ``}``
+
+   struct-members --> struct-member struct-members-OPT
+   struct-member --> declaration | compiler-control-statement
 
 
 .. _Declarations_ClassDeclaration:
@@ -1439,9 +1509,9 @@ The subclass's implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are not.
-That said, if the current class overrides all of the superclass's
-designated initializers, it inherits the superclass's convenience initializers.
+the current class, designated initializers declared in the *superclass* are only
+inherited when the subclass meets the conditions described in
+:ref:`Initialization_AutomaticInitializerInheritance`.
 Swift classes do not inherit from a universal base class.
 
 There are two ways create an instance of a previously declared class:
@@ -1473,10 +1543,13 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
+    class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
     class-name --> identifier
-    class-body --> ``{`` declarations-OPT ``}``
+    class-body --> ``{`` class-members-OPT ``}``
 
+    class-members --> class-member class-members-OPT
+    class-member --> declaration | compiler-control-statement
 
 .. _Declarations_ProtocolDeclaration:
 
@@ -1589,14 +1662,17 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
+    protocol-body --> ``{`` protocol-members-OPT ``}``
+
+    protocol-members --> protocol-member protocol-members-OPT
+    protocol-member --> protocol-member-declaration | compiler-control-statement
 
     protocol-member-declaration --> protocol-property-declaration
     protocol-member-declaration --> protocol-method-declaration
     protocol-member-declaration --> protocol-initializer-declaration
     protocol-member-declaration --> protocol-subscript-declaration
     protocol-member-declaration --> protocol-associated-type-declaration
-    protocol-member-declarations --> protocol-member-declaration protocol-member-declarations-OPT
+    protocol-member-declaration --> typealias-declaration
 
 
 .. _Declarations_ProtocolPropertyDeclaration:
@@ -1681,7 +1757,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1709,8 +1785,8 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows``
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT
 
 
 .. _Declarations_ProtocolSubscriptDeclaration:
@@ -1988,8 +2064,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT initializer-body
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
@@ -2117,10 +2193,12 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> access-level-modifier-OPT ``extension`` type-identifier requirement-clause extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-body --> ``{`` extension-members-OPT ``}``
 
+    extension-members --> extension-member extension-members-OPT
+    extension-member --> declaration | compiler-control-statement
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -2230,48 +2308,22 @@ The following form declares a new infix operator:
 
 .. syntax-outline::
 
-    infix operator <#operator name#> {
-       precedence <#precedence level#>
-       associativity <#associativity#>
-    }
+    infix operator <#operator name#>: <#precedence group#>
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
 such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
-Infix operators can optionally specify a precedence, associativity, or both.
-
-The :newTerm:`precedence` of an operator specifies how tightly an operator
-binds to its operands in the absence of grouping parentheses.
-You specify the precedence of an operator by writing the context-sensitive ``precedence`` keyword
-followed by the *precedence level*.
-The *precedence level* can be any whole number (decimal integer) from 0 to 255;
-unlike decimal integer literals, it can't contain any underscore characters.
-Although the precedence level is a specific number,
-it is significant only relative to another operator.
-That is, when two operators compete with each other for their operands,
-such as in the expression ``2 + 3 * 5``, the operator with the higher precedence level
-binds more tightly to its operands.
-
-The :newTerm:`associativity` of an operator specifies how a sequence of operators
-with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing the context-sensitive ``associativity`` keyword
-followed by the *associativity*, which is one of the context-sensitive keywords ``left``, ``right``,
-or ``none``. Operators that are left-associative group left-to-right. For example,
-the subtraction operator (``-``) is left-associative,
-and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
-and evaluates to ``-7``. Operators that are right-associative group right-to-left,
-and operators that are specified with an associativity of ``none`` don't associate at all.
-Nonassociative operators of the same precedence level can't appear adjacent to each to other.
-For example, ``1 < 2 < 3`` is not a valid expression.
-
-Infix operators that are declared without specifying a precedence or associativity are
-initialized with a precedence level of 100 and an associativity of ``none``.
+Infix operators can optionally specify a precedence group.
+If you omit the precedence group for an operator,
+Swift uses the default precedence group, ``DefaultPrecedence``,
+which specifies a precedence just higher than ``TernaryPrecedence``.
+For more information, see :ref:`Declarations_PrecedenceGroupDeclaration`.
 
 The following form declares a new prefix operator:
 
 .. syntax-outline::
 
-    prefix operator <#operator name#> {}
+    prefix operator <#operator name#>
 
 A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
 such as the prefix logical NOT operator (``!``) in the expression ``!a``.
@@ -2283,7 +2335,7 @@ The following form declares a new postfix operator:
 
 .. syntax-outline::
 
-    postfix operator <#operator name#> {}
+    postfix operator <#operator name#>
 
 A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
 such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
@@ -2298,10 +2350,8 @@ one of the types whose values the operator takes as an argument ---
 for example, an operator that multiplies a ``Double`` by an ``Int``
 is implemented as a static method on either the ``Double`` or ``Int`` structure.
 If you're implementing a prefix or postfix operator,
-you must also mark that function declaration with the corresponding ``prefix`` or ``postfix``
+you must also mark that method declaration with the corresponding ``prefix`` or ``postfix``
 declaration modifier.
-If you're implementing an infix operator,
-you don't mark that function declaration with the ``infix`` declaration modifier.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 
@@ -2311,19 +2361,113 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    prefix-operator-declaration --> ``prefix`` ``operator`` operator ``{`` ``}``
-    postfix-operator-declaration --> ``postfix`` ``operator`` operator ``{`` ``}``
-    infix-operator-declaration --> ``infix`` ``operator`` operator ``{`` infix-operator-attributes-OPT ``}``
+    prefix-operator-declaration --> ``prefix`` ``operator`` operator
+    postfix-operator-declaration --> ``postfix`` ``operator`` operator
+    infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
 
-    infix-operator-attributes --> associativity-clause precedence-clause-OPT
-    infix-operator-attributes --> precedence-clause associativity-clause-OPT
-    precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> A decimal integer between 0 and 255, inclusive
-    associativity-clause --> ``associativity`` associativity
-    associativity --> ``left`` | ``right`` | ``none``
+    infix-operator-group --> ``:`` precedence-group-name
 
-.. TR: I added this grammar from looking at ParseDecl.cpp and from trying
-    to various permutations in the REPL. Is this a correct grammar?
+
+.. _Declarations_PrecedenceGroupDeclaration:
+
+Precedence Group Declaration
+----------------------------
+
+A :newTerm:`precedence group declaration` introduces
+a new grouping for infix operator precedence into your program.
+The precedence of an operator specifies how tightly the operator
+binds to its operands, in the absence of grouping parentheses.
+
+A precedence group declaration has the following form:
+
+.. syntax-outline::
+    precedencegroup <#precedence group name#> {
+        higherThan: <#lower group names#>
+        lowerThan: <#higher group names#>
+        associativity: <#associativity#>
+        assignment: <#assignment#>
+    }
+
+The *lower group names* and *higher group names* lists specify
+the new precedence group's relation to existing precedence groups.
+The ``lowerThan`` precedence group attribute may only be used
+to refer to precedence groups declared outside of the current module.
+When two operators compete with each other for their operands,
+such as in the expression ``2 + 3 * 5``,
+the operator with the higher relative precedence
+binds more tightly to its operands.
+
+.. note::
+
+   Precedence groups related to each other
+   using *lower group names* and *higher group names*
+   must fit into a single relational hierarchy,
+   but they *don't* have to form a linear hierarchy.
+   This means it is possible to have precedence groups
+   with undefined relative precedence.
+   Operators from those precedence groups
+   can't be used next to each other without grouping parentheses.
+
+Swift defines numerous precedence groups to go along
+with the operators provided by the standard library.
+For example, the addition (``+``) and subtraction (``-``) operators
+belong to the ``AdditionPrecedence`` group,
+and the multiplication (``*``) and division (``/``) operators
+belong to the ``MultiplicationPrecedence`` group.
+For a complete list of operators and precedence groups
+provided by the Swift standard library,
+see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+
+The *associativity* of an operator specifies how a sequence of operators
+with the same precedence level are grouped together in the absence of grouping parentheses.
+You specify the associativity of an operator by writing
+one of the context-sensitive keywords ``left``, ``right``, or ``none`` ---
+if your omit the associativity, the default is ``none``.
+Operators that are left-associative group left-to-right.
+For example,
+the subtraction operator (``-``) is left-associative,
+so the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
+and evaluates to ``-7``.
+Operators that are right-associative group right-to-left,
+and operators that are specified with an associativity of ``none``
+don't associate at all.
+Nonassociative operators of the same precedence level
+can't appear adjacent to each to other.
+For example,
+the ``<`` operator has an associativity of ``none``,
+which means ``1 < 2 < 3`` is not a valid expression.
+
+The *assignment* of a precedence group specifies the precedence of an operator
+when used in an operation that includes optional chaining.
+When set to ``true``, an operator in the corresponding precedence group
+uses the same grouping rules during optional chaining
+as the assignment operators from the standard library.
+Otherwise, when set to ``false`` or omitted,
+operators in the precedence group follows the same optional chaining rules 
+as operators that don't perform assignment.
+
+.. syntax-grammar::
+
+    Grammar of a precedence group declaration
+    
+    precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
+    
+    precedence-group-attributes --> precedence-group-attribute precedence-group-attributes-OPT
+    precedence-group-attribute --> precedence-group-relation
+    precedence-group-attribute --> precedence-group-assignment
+    precedence-group-attribute --> precedence-group-associativity
+
+    precedence-group-relation --> ``higherThan`` ``:`` precedence-group-names
+    precedence-group-relation --> ``lowerThan`` ``:`` precedence-group-names
+    
+    precedence-group-assignment --> ``assignment`` ``:`` boolean-literal
+    
+    precedence-group-associativity --> ``associativity`` ``:`` ``left``
+    precedence-group-associativity --> ``associativity`` ``:`` ``right``
+    precedence-group-associativity --> ``associativity`` ``:`` ``none``
+
+    precedence-group-names --> precedence-group-name | precedence-group-name ``,`` precedence-group-names
+    precedence-group-name --> identifier
 
 
 .. _Declarations_DeclarationModifiers:
@@ -2386,12 +2530,46 @@ that introduces the declaration.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
 
+``unowned``
+    Apply this modifier to a stored variable, constant, or stored property
+    to indicate that the variable or property has an unowned reference
+    to the object stored as its value.
+    If you try to access the variable or property
+    after the object has been deallocated,
+    a runtime error is raised.
+    Like a weak reference,
+    the type of the property or value must be a class type;
+    unlike a weak reference,
+    the type is nonoptional.
+    For an example and more information about the ``unowned`` modifier,
+    see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
+
+``unowned(safe)``
+    An explicit spelling of ``unowned``.
+
+``unowned(unsafe)``
+    Apply this modifier to a stored variable, constant, or stored property
+    to indicate that the variable or property has an unowned reference
+    to the object stored as its value.
+    If you try to access the variable or property
+    after the object has been deallocated,
+    you'll access the memory at the location where the object used to be,
+    which is a memory-unsafe operation.
+    Like a weak reference,
+    the type of the property or value must be a class type;
+    unlike a weak reference,
+    the type is nonoptional.
+    For an example and more information about the ``unowned`` modifier,
+    see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
+
 ``weak``
-    The ``weak`` modifier is applied to a variable or a stored variable property
+    Apply this modifier to a stored variable or stored variable property
     to indicate that the variable or property has a weak reference to the
     object stored as its value. The type of the variable or property
-    must be an optional class type. Use the ``weak`` modifier to avoid strong
-    reference cycles.
+    must be an optional class type.
+    If you access the variable or property
+    after the object has been deallocated,
+    its value is ``nil``.
     For an example and more information about the ``weak`` modifier,
     see :ref:`AutomaticReferenceCounting_WeakReferencesBetweenClassInstances`.
 
@@ -2401,15 +2579,21 @@ that introduces the declaration.
 Access Control Levels
 ~~~~~~~~~~~~~~~~~~~~~
 
-Swift provides three levels of access control: public, internal, and private.
+Swift provides five levels of access control: open, public, internal, file private, and private.
 You can mark a declaration with one of the access-level modifiers below
 to specify the declaration's access level.
 Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
-``public``
-    Apply this modifier to a declaration to indicate the declaration can be accessed
+``open``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
     by code in the same module as the declaration.
-    Declarations marked with the ``public`` access-level modifier can also be accessed
+    Declarations marked with the ``open`` access-level modifier can also be accessed and subclassed
+    by code in a module that imports the module that contains that declaration.
+
+``public``
+    Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
+    by code in the same module as the declaration.
+    Declarations marked with the ``public`` access-level modifier can also be accessed (but not subclassed)
     by code in a module that imports the module that contains that declaration.
 
 ``internal``
@@ -2418,9 +2602,13 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     By default,
     most declarations are implicitly marked with the ``internal`` access-level modifier.
 
-``private``
+``fileprivate``
     Apply this modifier to a declaration to indicate the declaration can be accessed
     only by code in the same source file as the declaration.
+
+``private``
+    Apply this modifier to a declaration to indicate the declaration can be accessed
+    only by code within the declaration's immediate enclosing scope.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
@@ -2433,10 +2621,15 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
 
     Grammar of a declaration modifier
 
-    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``mutating`` | ``nonmutating`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
+    declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
+    declaration-modifier --> mutation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
-    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``fileprivate`` | ``fileprivate`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
     access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
+    access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
+
+    mutation-modifier --> ``mutating`` | ``nonmutating``

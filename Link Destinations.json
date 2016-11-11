@@ -213,10 +213,12 @@
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
     "declarations-functiondeclaration": "ID362", 
+    "declarations-functionsthatneverreturn": "ID551", 
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
     "declarations-inoutparameters": "ID545", 
     "declarations-operatordeclaration": "ID380", 
+    "declarations-precedencegroupdeclaration": "ID550", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
     "declarations-protocolinitializerdeclaration": "ID372", 
@@ -276,6 +278,7 @@
     "expressions-superclassexpression": "ID392", 
     "expressions-ternaryconditionaloperator": "ID387", 
     "expressions-tryexpression": "ID516", 
+    "expressions-tupleexpression": "ID552", 
     "expressions-type-castingoperators": "ID388", 
     "expressions-wildcardexpression": "ID396", 
     "extension-syntax": "ID470", 
@@ -565,7 +568,8 @@
     "control-transfer-statements", 
     "in-out-parameters", 
     "error-handling", 
-    "operator-methods"
+    "operator-methods", 
+    "generic-where-clauses"
   ], 
-  "next_id": 550
+  "next_id": 553
 }

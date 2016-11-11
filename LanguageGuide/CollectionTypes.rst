@@ -64,7 +64,8 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -388,7 +389,10 @@ If you need the integer index of each item as well as its value,
 use the ``enumerated()`` method to iterate over the array instead.
 For each item in the array,
 the ``enumerated()`` method returns a tuple
-composed of the index and the value for that item.
+composed of an integer and the item.
+The integers start at zero and count up by one for each item;
+if you enumerate over a whole array,
+these integers match the items' indices.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
@@ -421,7 +425,8 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -766,7 +771,8 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 

@@ -382,7 +382,7 @@ unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
 
-   -> func foo(external a: Int, external b: Int) { }
+   -> func foo(external a: Int, external b: Int) {}
    -> foo(external: 7, external: 12)
 
 .. _Functions_ExternalParameterNames:
@@ -447,13 +447,13 @@ If a default value is defined, you can omit that parameter when calling the func
 .. testcode:: omittedExternalParameterNames
 
    -> func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
-         // In the function body, if no arguments are passed to the function
-         // call, the value of parameterWithDefault is 12.
+         // If you omit the second argument when calling this function, then
+         // the value of parameterWithDefault is 12 inside the function body.
       }
    -> someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
    -> someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 
-Place parameters that have don't default values
+Place parameters that don't have default values
 at the beginning of a function's parameter list,
 before the parameters that have default values.
 Parameters that don't have default values

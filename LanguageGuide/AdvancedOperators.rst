@@ -548,8 +548,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. _AdvancedOperators_OperatorFunctions:
 
-Operator Functions
-------------------
+Operator Methods
+----------------
 
 Classes and structures can provide their own implementations of existing operators.
 This is known as :newTerm:`overloading` the existing operators.
@@ -577,19 +577,19 @@ to add together instances of the ``Vector2D`` structure:
           }
       }
 
-The operator function is defined as a type method on ``Vector2D``,
-with a function name that matches the operator to be overloaded (``+``).
+The operator method is defined as a type method on ``Vector2D``,
+with a method name that matches the operator to be overloaded (``+``).
 Because addition isn't part of the essential behavior for a vector,
 the type method is defined in an extension of ``Vector2D``
 rather than in the main structure declaration of ``Vector2D``.
 Because the arithmetic addition operator is a binary operator,
-this operator function takes two input parameters of type ``Vector2D``
+this operator method takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
 
 In this implementation, the input parameters are named ``left`` and ``right``
 to represent the ``Vector2D`` instances that will be on
 the left side and right side of the ``+`` operator.
-The function returns a new ``Vector2D`` instance,
+The method returns a new ``Vector2D`` instance,
 whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
 the two ``Vector2D`` instances that are added together.
@@ -628,7 +628,7 @@ and :newTerm:`postfix` operators if they follow their target (such as ``b!``).
 
 You implement a prefix or postfix unary operator by writing
 the ``prefix`` or ``postfix`` modifier
-before the ``func`` keyword when declaring the operator function:
+before the ``func`` keyword when declaring the operator method:
 
 .. testcode:: customOperators
 
@@ -641,7 +641,7 @@ before the ``func`` keyword when declaring the operator function:
 The example above implements the unary minus operator
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
-and so this function has to be qualified with the ``prefix`` modifier.
+and so this method has to be qualified with the ``prefix`` modifier.
 
 For simple numeric values, the unary minus operator converts
 positive numbers into their negative equivalent and vice versa.
@@ -670,10 +670,10 @@ Compound Assignment Operators
 For example, the addition assignment operator (``+=``)
 combines addition and assignment into a single operation.
 You mark a compound assignment operator's left input parameter type as ``inout``,
-because the parameter's value will be modified directly from within the operator function.
+because the parameter's value will be modified directly from within the operator method.
 
 The example below implements
-an addition assignment operator function for ``Vector2D`` instances:
+an addition assignment operator method for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
@@ -685,8 +685,8 @@ an addition assignment operator function for ``Vector2D`` instances:
 
 Because an addition operator was defined earlier,
 you don't need to reimplement the addition process here.
-Instead, the addition assignment operator function
-takes advantage of the existing addition operator function,
+Instead, the addition assignment operator method
+takes advantage of the existing addition operator method,
 and uses it to set the left value to be the left value plus the right value:
 
 .. testcode:: customOperators
@@ -769,7 +769,7 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
 
-   -> prefix operator +++ {}
+   -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -801,31 +801,27 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
 
-Precedence and Associativity for Custom Infix Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom ``infix`` operators can also specify a precedence and an associativity.
+Precedence for Custom Infix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Custom infix operators each belong to a precedence group.
+A precedence group specifies an operator's precedence relative
+to other infix operators, as well as the operator's associativity.
 See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
-how these two characteristics affect an infix operator's interaction
+how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-The possible values for ``associativity`` are ``left``, ``right``, and ``none``.
-Left-associative operators associate to the left if written next
-to other left-associative operators of the same precedence.
-Similarly, right-associative operators associate to the right if written
-next to other right-associative operators of the same precedence.
-Non-associative operators cannot be written next to
-other operators with the same precedence.
+A custom infix operator that is not explicitly placed into a precedence group is 
+given a default precedence group with a precedence immediately higher
+than the precedence of the ternary conditional operator.
 
-The ``associativity`` value defaults to ``none`` if it is not specified.
-The ``precedence`` value defaults to ``100`` if it is not specified.
-
-The following example defines a new custom ``infix`` operator called ``+-``,
-with ``left`` associativity and a precedence of ``140``:
+The following example defines a new custom infix operator called ``+-``,
+which belongs to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
 
-   -> infix operator +- { associativity left precedence 140 }
+   -> infix operator +-: AdditionPrecedence
    -> extension Vector2D {
          static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
             return Vector2D(x: left.x + right.x, y: left.y - right.y)
@@ -843,12 +839,14 @@ with ``left`` associativity and a precedence of ``140``:
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
-it has been given the same associativity and precedence values
-(``left`` and ``140``)
-as default additive infix operators such as ``+`` and ``-``.
-For a complete list of the operator precedence and associativity settings,
+it has been given the same precedence group
+as additive infix operators such as ``+`` and ``-``.
+For a complete list of the operator precedence groups and associativity settings,
 for the operators provided by the Swift standard library,
 see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For more information about precedence groups and to see the syntax for
+defining your own operators and precedence groups,
+see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
@@ -858,8 +856,8 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
 
-   -> prefix operator +++ {}
-   -> postfix operator --- {}
+   -> prefix operator +++
+   -> postfix operator ---
    -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
    -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
    -> +++1---
