@@ -16,9 +16,9 @@
 > 校对：[SketchK](https://github.com/SketchK) 
 > 
 > 3.0
-> 校对：[CMB](https://github.com/chenmingbiao)
+> 校对：[CMB](https://github.com/chenmingbiao)，版本时间2016-09-13
 > 
-> 版本日期：2016-09-13
+> 3.0.1, 2016-11-11，shanks
 
 本页包含内容：
 
@@ -58,14 +58,14 @@ Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整�
 
 除了我们熟悉的类型，Swift 还增加了 Objective-C 中没有的高阶数据类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。
 
-Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示 “那儿有一个值，并且它等于 x ” 或者 “那儿没有值” 。可选有点像在 Objective-C 中使用 `nil` ，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的 `nil` 指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。
+Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示 “那儿有一个值，并且它等于 *x* ” 或者 “那儿没有值” 。可选有点像在 Objective-C 中使用 `nil` ，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的 `nil` 指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。
 
-Swift 是一门类型安全的语言，可选类型就是一个很好的例子。Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个 `String` ，类型安全会阻止你不小心传入一个 `Int` 。同样的，如果你的代码期望得到一个 `String`，类型安全会阻止你意外传入一个可选的 `String` 。你可以在开发阶段尽早发现并修正错误。
+Swift 是一门*类型安全*的语言，这意味着 Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个 `String` ，类型安全会阻止你不小心传入一个 `Int` 。同样的，如果你的代码期望得到一个 `String`，类型安全会阻止你意外传入一个可选的 `String` 。类型安全可以帮助你在开发阶段尽早发现并修正错误。
 
 <a name="constants_and_variables"></a>
 ## 常量和变量
 
-常量和变量把一个名字（比如 `maximumNumberOfLoginAttempts` 或者 `welcomeMessage` ）和一个指定类型的值（比如数字 `10` 或者字符串 `"Hello"` ）关联起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。
+常量和变量把一个名字（比如 `maximumNumberOfLoginAttempts` 或者 `welcomeMessage` ）和一个指定类型的值（比如数字 `10` 或者字符串 `"Hello"` ）关联起来。*常量*的值一旦设定就不能改变，而*变量*的值可以随意更改。
 
 <a name="declaring"></a>
 ### 声明常量和变量
@@ -95,7 +95,7 @@ var x = 0.0, y = 0.0, z = 0.0
 <a name="type_annotations"></a>
 ### 类型标注
 
-当你声明常量或者变量的时候可以加上类型标注（type annotation），说明常量或者变量中要存储的值的类型。如果要添加类型标注，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。
+当你声明常量或者变量的时候可以加上*类型标注（type annotation）*，说明常量或者变量中要存储的值的类型。如果要添加类型标注，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。
 
 这个例子给 `welcomeMessage` 变量添加了类型标注，表示这个变量可以存储 `String` 类型的值：
 
@@ -103,7 +103,7 @@ var x = 0.0, y = 0.0, z = 0.0
 var welcomeMessage: String
 ```
 
-声明中的冒号代表着“是...类型”，所以这行代码可以被理解为：
+声明中的冒号代表着*“是...类型”*，所以这行代码可以被理解为：
 
 “声明一个类型为 `String` ，名字为 `welcomeMessage` 的变量。”
 
@@ -170,7 +170,7 @@ print(friendlyWelcome)
 
 `print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.html#default_parameter_values)。
 
-Swift 用字符串插值（string interpolation）的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
+Swift 用*字符串插值（string interpolation）*的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
@@ -410,13 +410,13 @@ let integerPi = Int(pi)
 
 当用这种方式来初始化一个新的整数值时，浮点值会被截断。也就是说 `4.75` 会变成 `4`，`-3.9` 会变成 `-3`。
 
-> 注意：  
+> 注意：   
 结合数字类常量和变量不同于结合数字类字面量。字面量`3`可以直接和字面量`0.14159`相加，因为数字字面量本身没有明确的类型。它们的类型只在编译器需要求值的时候被推测。
 
 <a name="type_aliases"></a>
 ## 类型别名
 
-类型别名（type aliases）就是给现有类型定义另一个名字。你可以使用`typealias`关键字来定义类型别名。
+*类型别名（type aliases）*就是给现有类型定义另一个名字。你可以使用`typealias`关键字来定义类型别名。
 
 当你想要给现有类型起一个更有意义的名字时，类型别名非常有用。假设你正在处理特定长度的外部资源的数据：
 
@@ -436,7 +436,7 @@ var maxAmplitudeFound = AudioSample.min
 <a name="booleans"></a>
 ## 布尔值
 
-Swift 有一个基本的布尔（Boolean）类型，叫做`Bool`。布尔值指逻辑上的值，因为它们只能是真或者假。Swift 有两个布尔常量，`true` 和 `false`：
+Swift 有一个基本的*布尔（Boolean）类型*，叫做`Bool`。布尔值指*逻辑*上的值，因为它们只能是真或者假。Swift 有两个布尔常量，`true` 和 `false`：
 
 ```swift
 let orangesAreOrange = true
@@ -660,7 +660,7 @@ if let actualNumber = Int(possibleNumber) {
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// Prints "4 < 42 < 100"
+// 输出 "4 < 42 < 100"
  
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -669,11 +669,11 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// Prints "4 < 42 < 100"
+// 输出 "4 < 42 < 100"
 ```
 
 > 注意：
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[控制流](./05_Control_Flow#early_exit.html)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow#early_exit.html)。
 
 <a name="implicityly_unwrapped_optionals"></a>
 ### 隐式解析可选类型
@@ -690,7 +690,7 @@ if let firstNumber = Int("4") {
 
 ```swift
 let possibleString: String? = "An optional string."
-let forcedString: String = possibleString! // 需要惊叹号来获取值
+let forcedString: String = possibleString! // 需要感叹号来获取值
 
 let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString  // 不需要感叹号
