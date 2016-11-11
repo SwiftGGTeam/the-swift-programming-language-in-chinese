@@ -1423,31 +1423,32 @@ to make a generic function or type.
    in which knocking four times is a running aspect
    of the season's plot.
 
-.. testcode:: guided-tour
+.. test::
+   :name: generics
 
-    -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
-           var result = [Item]()
-           for _ in 0..<numberOfTimes {
-                result.append(item)
-           }
-           return result
+   func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
+       var result = [Item]()
+       for _ in 0..<numberOfTimes {
+            result.append(item)
        }
-    -> makeArray(repeating: "knock", numberOfTimes:4)
-    <$ : [String] = ["knock", "knock", "knock", "knock"]
+       return result
+   }
+   makeArray(repeating: "knock", numberOfTimes:4)
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. testcode:: guided-tour
+.. test::
+   :name: generics
+   :cont:
 
-    // Reimplement the Swift standard library's optional type
-    -> enum OptionalValue<Wrapped> {
-           case none
-           case some(Wrapped)
-       }
-    -> var possibleInteger: OptionalValue<Int> = .none
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
-    -> possibleInteger = .some(100)
+   // Reimplement the Swift standard library's optional type
+   enum OptionalValue<Wrapped> {
+       case none
+       case some(Wrapped)
+   }
+   var possibleInteger: OptionalValue<Int> = .none
+   possibleInteger = .some(100)
 
 Use ``where`` right before the body
 to specify a list of requirements ---
@@ -1456,21 +1457,24 @@ to require the type to implement a protocol,
 to require two types to be the same,
 or to require a class to have a particular superclass.
 
-.. testcode:: guided-tour
+.. test::
+   :name: generics
+   :cont:
 
-   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
-          for lhsItem in lhs {
-              for rhsItem in rhs {
-                  if lhsItem == rhsItem {
-                      return true
-                  }
-              }
-          }
-         return false
-      }
-   -> anyCommonElements([1, 2, 3], [3])
-   <$ : Bool = true
+   func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+       where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+       for lhsItem in lhs {
+           for rhsItem in rhs {
+               if lhsItem == rhsItem {
+                   return true
+               }
+           }
+       }
+      return false
+   }
+   let result_anyCommonElements = // -HIDE-
+   anyCommonElements([1, 2, 3], [3])
+   assert(result_anyCommonElements == true) // -HIDE-
 
 .. admonition:: Experiment
 
