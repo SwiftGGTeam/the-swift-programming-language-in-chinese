@@ -1269,13 +1269,14 @@ You represent errors using any type that adopts the ``Error`` protocol.
    the name) at a time, and was controlled by a keyboard.  The Monotype
    machine, invented in 1885 by Tolbert Lanston, performed similar work.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
 
-    -> enum PrinterError: Error {
-           case outOfPaper
-           case noToner
-           case onFire
-       }
+   enum PrinterError: Error {
+       case outOfPaper
+       case noToner
+       case onFire
+   }
 
 Use ``throw`` to throw an error
 and ``throws`` to mark a function that can throw an error.
@@ -1283,14 +1284,16 @@ If you throw an error in a function,
 the function returns immediately and the code that called the function
 handles the error.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
+   :cont:
 
-    -> func send(job: Int, toPrinter printerName: String) throws -> String {
-           if printerName == "Never Has Toner" {
-               throw PrinterError.noToner
-           }
-           return "Job sent"
+   func send(job: Int, toPrinter printerName: String) throws -> String {
+       if printerName == "Never Has Toner" {
+           throw PrinterError.noToner
        }
+       return "Job sent"
+   }
 
 There are several ways to handle errors.
 One way is to use ``do``-``catch``.
@@ -1300,15 +1303,17 @@ Inside the ``catch`` block,
 the error is automatically given the name ``error``
 unless you give it a different name.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
+   :cont:
+   :prints: Job sent
 
-    -> do {
-           let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
-           print(printerResponse)
-       } catch {
-           print(error)
-       }
-    << Job sent
+   do {
+       let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
+       print(printerResponse)
+   } catch {
+       print(error)
+   }
 
 .. admonition:: Experiment
 
@@ -1317,15 +1322,18 @@ unless you give it a different name.
 
 .. Assertion tests the change that the Experiment box instructs you to make.
 
-.. assertion:: guided-tour
+.. test::
+   :name: errors
+   :cont:
+   :hidden:
+   :prints: noToner
 
-    >> do {
-           let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
-           print(printerResponse)
-       } catch {
-           print(error)
-       }
-    << noToner
+   do {
+       let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
+       print(printerResponse)
+   } catch {
+       print(error)
+   }
 
 You can provide multiple ``catch`` blocks
 that handle specific errors.
@@ -1335,19 +1343,21 @@ after ``case`` in a switch.
 .. REFERENCE
    The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
+   :cont:
+   :prints: Job sent
 
-    -> do {
-           let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
-           print(printerResponse)
-       } catch PrinterError.onFire {
-           print("I'll just put this over here, with the rest of the fire.")
-       } catch let printerError as PrinterError {
-           print("Printer error: \(printerError).")
-       } catch {
-           print(error)
-       }
-    << Job sent
+   do {
+       let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+       print(printerResponse)
+   } catch PrinterError.onFire {
+       print("I'll just put this over here, with the rest of the fire.")
+   } catch let printerError as PrinterError {
+       print("Printer error: \(printerError).")
+   } catch {
+       print(error)
+   }
 
 .. admonition:: Experiment
 
@@ -1363,12 +1373,14 @@ the specific error is discarded and the result is ``nil``.
 Otherwise, the result is an optional containing
 the value that the function returned.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
+   :cont:
 
-    -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
-    << // printerSuccess : String? = Optional("Job sent")
-    -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
-    << // printerFailure : String? = nil
+   let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+   let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
+   assert(printerSuccess == Optional("Job sent")) // -HIDE-
+   assert(printerFailure == nil) // -HIDE-
 
 Use ``defer`` to write a block of code
 that is executed after all other code in the function,
@@ -1377,26 +1389,28 @@ The code is executed regardless of whether the function throws an error.
 You can use ``defer`` to write setup and cleanup code next to each other,
 even though they need to be executed at different times.
 
-.. testcode:: guided-tour
+.. test::
+   :name: errors
+   :cont:
+   :prints: false
 
-    -> var fridgeIsOpen = false
-    << // fridgeIsOpen : Bool = false
-    -> let fridgeContent = ["milk", "eggs", "leftovers"]
-    << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
-    ---
-    -> func fridgeContains(_ food: String) -> Bool {
-           fridgeIsOpen = true
-           defer {
-               fridgeIsOpen = false
-           }
-    ---
-           let result = fridgeContent.contains(food)
-           return result
+   var fridgeIsOpen = false
+   let fridgeContent = ["milk", "eggs", "leftovers"]
+
+   func fridgeContains(_ food: String) -> Bool {
+       fridgeIsOpen = true
+       defer {
+           fridgeIsOpen = false
        }
-    -> fridgeContains("banana")
-    <$ : Bool = false
-    -> print(fridgeIsOpen)
-    << false
+
+       let result = fridgeContent.contains(food)
+       return result
+   }
+
+   let result_fridgeContains = // -HIDE-
+   fridgeContains("banana")
+   assert (result_fridgeContains == false) // -HIDE-
+   print(fridgeIsOpen)
 
 Generics
 --------
