@@ -1,4 +1,4 @@
-# 类和结构体（Classes and Structures）
+# 类和结构体
 
 > 1.0
 > 翻译：[JaySurplus](https://github.com/JaySurplus)
@@ -12,6 +12,8 @@
 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-13
+> 
+> 3.0.1， shanks， 2016-11-12
 
 本页包含内容：
 
@@ -19,7 +21,7 @@
 - [结构体和枚举是值类型](#structures_and_enumerations_are_value_types)
 - [类是引用类型](#classes_are_reference_types)
 - [类和结构体的选择](#choosing_between_classes_and_structures)
-- [字符串(String)、数组(Array)、和字典(Dictionary)类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
+- [字符串、数组、和字典类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
 
 
 *类*和*结构体*是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
@@ -27,10 +29,10 @@
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
 
 > 注意  
-> 通常一个`类`的实例被称为`对象`。然而在 Swift 中，类和结构体的关系要比在其他语言中更加的密切，本章中所讨论的大部分功能都可以用在类和结构体上。因此，我们会主要使用`实例`而不是`对象`。
+> 通常一个*类*的实例被称为*对象*。然而在 Swift 中，类和结构体的关系要比在其他语言中更加的密切，本章中所讨论的大部分功能都可以用在类和结构体上。因此，我们会主要使用*实例*。
 
 <a name="comparing_classes_and_structures"></a>
-###类和结构体对比
+## 类和结构体对比
 
 Swift 中类和结构体有很多共同点。共同处在于：
 
@@ -62,10 +64,10 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 ```swift
 class SomeClass {
-	// class definition goes here
+	// 在这里定义类
 }
 struct SomeStructure {
-	// structure definition goes here
+	// 在这里定义结构体
 }
 ```
 
@@ -108,11 +110,11 @@ let someVideoMode = VideoMode()
 <a name="accessing_properties"></a>
 ### 属性访问
 
-通过使用*点语法*（*dot syntax*），你可以访问实例的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(`.`)连接：
+通过使用*点语法*，你可以访问实例的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(`.`)连接：
 
 ```swift
 print("The width of someResolution is \(someResolution.width)")
-// 输出 "The width of someResolution is 0"
+// 打印 "The width of someResolution is 0"
 ```
 
 在上面的例子中，`someResolution.width`引用`someResolution`的`width`属性，返回`width`的初始值`0`。
@@ -121,7 +123,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 ```swift
 print("The width of someVideoMode is \(someVideoMode.resolution.width)")
-// 输出 "The width of someVideoMode is 0"
+// 打印 "The width of someVideoMode is 0"
 ```
 
 你也可以使用点语法为变量属性赋值：
@@ -129,15 +131,14 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 ```swift
 someVideoMode.resolution.width = 1280
 print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-// 输出 "The width of someVideoMode is now 1280"
+// 打印 "The width of someVideoMode is now 1280"
 ```
 
 > 注意  
 > 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新为整个`resolution`属性设置新值。
 
 <a name="memberwise_initializers_for_structure_types"></a>
-### 结构体类型的成员逐一构造器（Memberwise Initializers for Structure Types）
-
+### 结构体类型的成员逐一构造器
 所有结构体都有一个自动生成的*成员逐一构造器*，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
 ```swift
@@ -176,14 +177,14 @@ cinema.width = 2048
 
 ```swift
 print("cinema is now  \(cinema.width) pixels wide")
-// 输出 "cinema is now 2048 pixels wide"
+// 打印 "cinema is now 2048 pixels wide"
 ```
 
 然而，初始的`hd`实例中`width`属性还是`1920`：
 
 ```swift
 print("hd is still \(hd.width) pixels wide")
-// 输出 "hd is still 1920 pixels wide"
+// 打印 "hd is still 1920 pixels wide"
 ```
 
 在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所存储的值进行拷贝，然后将拷贝的数据存储到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的`width`的值。
@@ -200,7 +201,7 @@ currentDirection = .East
 if rememberedDirection == .West {
 	print("The remembered direction is still .West")
 }
-// 输出 "The remembered direction is still .West"
+// 打印 "The remembered direction is still .West"
 ```
 
 上例中`rememberedDirection`被赋予了`currentDirection`的值，实际上它被赋予的是值的一个拷贝。赋值过程结束后再修改`currentDirection`的值并不影响`rememberedDirection`所储存的原始值的拷贝。
@@ -208,7 +209,7 @@ if rememberedDirection == .West {
 <a name="classes_are_reference_types"></a>
 ## 类是引用类型
 
-与值类型不同，引用类型在被赋予到一个变量、常量或者被传递到一个函数时，其值不会被拷贝。因此，引用的是已存在的实例本身而不是其拷贝。
+与值类型不同，*引用类型*在被赋予到一个变量、常量或者被传递到一个函数时，其值不会被拷贝。因此，引用的是已存在的实例本身而不是其拷贝。
 
 请看下面这个示例，其使用了之前定义的`VideoMode`类：
 
@@ -235,7 +236,7 @@ alsoTenEighty.frameRate = 30.0
 
 ```swift
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-// 输出 "The frameRate property of theEighty is now 30.0"
+// 打印 "The frameRate property of theEighty is now 30.0"
 ```
 
 需要注意的是`tenEighty`和`alsoTenEighty`被声明为常量而不是变量。然而你依然可以改变`tenEighty.frameRate`和`alsoTenEighty.frameRate`，因为`tenEighty`和`alsoTenEighty`这两个常量的值并未改变。它们并不“存储”这个`VideoMode`实例，而仅仅是对`VideoMode`实例的引用。所以，改变的是被引用的`VideoMode`的`frameRate`属性，而不是引用`VideoMode`的常量的值。
@@ -256,7 +257,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 if tenEighty === alsoTenEighty {
 	print("tenEighty and alsoTenEighty refer to the same Resolution instance.")
 }
-//输出 "tenEighty and alsoTenEighty refer to the same Resolution instance."
+//打印 "tenEighty and alsoTenEighty refer to the same Resolution instance."
 ```
 
 请注意，“等价于”（用三个等号表示，`===`）与“等于”（用两个等号表示，`==`）的不同：
@@ -294,7 +295,7 @@ if tenEighty === alsoTenEighty {
 在所有其它案例中，定义一个类，生成一个它的实例，并通过引用来管理和传递。实际中，这意味着绝大部分的自定义数据构造都应该是类，而非结构体。
 
 <a name="assignment_and_copy_behavior_for_strings_arrays_and_dictionaries"></a>
-## 字符串(String)、数组(Array)、和字典(Dictionary)类型的赋值与复制行为
+## 字符串、数组、和字典类型的赋值与复制行为
 
 Swift 中，许多基本类型，诸如`String`，`Array`和`Dictionary`类型均以结构体的形式实现。这意味着被赋值给新的常量或变量，或者被传入函数或方法中时，它们的值会被拷贝。
 
