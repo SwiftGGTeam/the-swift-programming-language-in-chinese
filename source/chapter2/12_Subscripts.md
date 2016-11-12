@@ -1,4 +1,4 @@
-# 下标（Subscripts）
+# 下标
 -----------------
 
 > 1.0
@@ -12,7 +12,8 @@
 > 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)  
 
 > 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13  
+> 3.0.1，shanks，2016-11-13
 
 
 本页包含内容：
@@ -21,7 +22,7 @@
 - [下标用法](#subscript_usage)
 - [下标选项](#subscript_options)
 
-*下标* （subscripts）可以定义在类（class）、结构体（structure）和枚举（enumeration）中，是访问集合（collection），列表（list）或序列（sequence）中元素的快捷方式。可以使用下标的索引，设置和获取值，而不需要再调用对应的存取方法。举例来说，用下标访问一个`Array`实例中的元素可以写作`someArray[index]`，访问`Dictionary`实例中的元素可以写作`someDictionary[key]`。
+*下标*可以定义在类、结构体和枚举中，是访问集合，列表或序列中元素的快捷方式。可以使用下标的索引，设置和获取值，而不需要再调用对应的存取方法。举例来说，用下标访问一个`Array`实例中的元素可以写作`someArray[index]`，访问`Dictionary`实例中的元素可以写作`someDictionary[key]`。
 
 一个类型可以定义多个下标，通过不同索引类型进行重载。下标不限于一维，你可以定义具有多个入参的下标满足自定义类型的需求。
 
@@ -63,7 +64,7 @@ struct TimesTable {
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
-// 输出 "six times three is 18"
+// 打印 "six times three is 18"
 ```
 
 在上例中，创建了一个`TimesTable`实例，用来表示整数`3`的乘法表。数值`3`被传递给结构体的构造函数，作为实例成员`multiplier`的值。
@@ -76,7 +77,7 @@ print("six times three is \(threeTimesTable[6])")
 <a name="subscript_usage"></a>
 ## 下标用法
 
-下标的确切含义取决于使用场景。下标通常作为访问集合（collection），列表（list）或序列（sequence）中元素的快捷方式。你可以针对自己特定的类或结构体的功能来自由地以最恰当的方式实现下标。
+下标的确切含义取决于使用场景。下标通常作为访问集合，列表或序列中元素的快捷方式。你可以针对自己特定的类或结构体的功能来自由地以最恰当的方式实现下标。
 
 例如，Swift 的`Dictionary`类型实现下标用于对其实例中储存的值进行存取操作。为字典设值时，在下标中使用和字典的键类型相同的键，并把一个和字典的值类型相同的值赋给这个下标：
 
