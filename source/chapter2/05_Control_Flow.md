@@ -17,7 +17,8 @@
 > 校对：[SketchK](https://github.com/SketchK)
 
 > 3.0
-> 翻译：[Realank](https://github.com/realank) 2016-09-13
+> 翻译：[Realank](https://github.com/realank) 2016-09-13  
+> 3.0.1，shanks，2016-11-12
 
 
 本页包含内容：
@@ -108,7 +109,7 @@ for (animalName, legCount) in numberOfLegs {
 * `repeat-while`循环，每次在循环结束时计算条件是否符合。
 
 <a name="while"></a>
-###While
+### While
 
 `while`循环从计算一个条件开始。如果条件为`true`，会重复运行一段语句，直到条件变为`false`。
 
@@ -120,7 +121,7 @@ while condition {
 }
 ```
 
-下面的例子来玩一个叫做蛇和梯子的小游戏，也叫做滑道和梯子：
+下面的例子来玩一个叫做*蛇和梯子*（也叫做*滑道和梯子*）的小游戏：
 
 ![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
 
@@ -170,7 +171,7 @@ print("Game over!")
 
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏将会结束，为了应对这种情况，代码会首先判断`square`的值是否小于`board`的`count`属性，只有小于才会在`board[square]`上增加`square`，来向前或向后移动（遇到了梯子或者蛇）。
 
-> 注意：
+> 注意：   
 > 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。如果`square`等于`26`， 代码会去尝试访问`board[26]`，超过数组的长度。
 
 当本轮`while`循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为`false`，此时游戏结束。
@@ -179,11 +180,11 @@ print("Game over!")
 
 
 <a name="repeat_while"></a>
-###Repeat-While
+### Repeat-While
 
 `while`循环的另外一种形式是`repeat-while`，它和`while`的区别是在判断循环条件之前，先执行一次循环的代码块。然后重复循环直到条件为`false`。
 
-> 注意：
+> 注意：   
 > Swift语言的`repeat-while`循环和其他语言中的`do-while`循环是类似的。
 
 下面是 `repeat-while`循环的一般格式：
@@ -194,7 +195,7 @@ repeat {
 } while condition
 ```
 
-还是蛇和梯子的游戏，使用`repeat-while`循环来替代`while`循环。`finalSquare`、`board`、`square`和`diceRoll`的值初始化同`while`循环时一样：
+还是*蛇和梯子*的游戏，使用`repeat-while`循环来替代`while`循环。`finalSquare`、`board`、`square`和`diceRoll`的值初始化同`while`循环时一样：
 
 ``` swift
 let finalSquare = 25
@@ -205,7 +206,7 @@ var square = 0
 var diceRoll = 0
 ```
 
-`repeat-while`的循环版本，循环中_第一步_就需要去检测是否在梯子或者蛇的方块上。没有梯子会让玩家直接上到第 25 个方格，所以玩家不会通过梯子直接赢得游戏。这样在循环开始时先检测是否踩在梯子或者蛇上是安全的。
+`repeat-while`的循环版本，循环中*第一步*就需要去检测是否在梯子或者蛇的方块上。没有梯子会让玩家直接上到第 25 个方格，所以玩家不会通过梯子直接赢得游戏。这样在循环开始时先检测是否踩在梯子或者蛇上是安全的。
 
 游戏开始时，玩家在第 0 个方格上，`board[0]`一直等于 0， 不会有什么影响：
 
@@ -330,7 +331,7 @@ case "z":
 default:
     print("Some other character")
 }
-// Prints "The last letter of the alphabet"
+// 输出 "The last letter of the alphabet"
 ```
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母`a`，第二个 case 分支用于匹配最后一个字母`z`。
@@ -338,7 +339,7 @@ default:
 
 
 <a name="no_implicit_fallthrough"></a>
-#### 不存在隐式的贯穿（No Implicit Fallthrough）
+#### 不存在隐式的贯穿
 
 与 C 和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
@@ -350,13 +351,13 @@ default:
 ```swift
 let anotherCharacter: Character = "a"
 switch anotherCharacter {
-case "a": // Invalid, the case has an empty body
+case "a": // 无效，这个分支下面没有语句
 case "A":
     print("The letter A")
 default:
     print("Not the letter A")
 }
-// This will report a compile-time error.
+// 这段代码会报编译错误
 ```
 
 不像 C 语言里的`switch`语句，在 Swift 中，`switch`语句不会一起匹配`"a"`和`"A"`。相反的，上面的代码会引起编译期错误：`case "a": 不包含任何可执行语句`——这就避免了意外地从一个 case 分支贯穿到另外一个，使得代码更安全、也更直观。
@@ -370,12 +371,12 @@ case "a", "A":
 default:
     print("Not the letter A")
 }
-// Prints "The letter A
+// 输出 "The letter A
 ```
-为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配（Compound Cases）](#compound_cases)
+为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
 
 > 注意：
-如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)。
+如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿](#fallthrough)。
 
 <a name="interval_matching"></a>
 #### 区间匹配
@@ -409,7 +410,7 @@ print("There are \(naturalCount) \(countedThings).")
 
 
 <a name="tuples"></a>
-#### 元组（Tuple）
+#### 元组
 
 我们可以使用元组在同一个`switch`语句中测试多个值。元组中的元素可以是值，也可以是区间。另外，使用下划线（`_`）来匹配所有可能的值。
 
@@ -498,9 +499,9 @@ case let (x, y):
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认分支。
 
 <a name="compound_cases"></a>
-#### 复合匹配（Compound Cases）
+#### 复合匹配
 
-当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个case后面，并且用逗号隔开。当case后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
+当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个`case`后面，并且用逗号隔开。当case后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
 
 ```swift
 let someCharacter: Character = "e"
@@ -513,9 +514,10 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
 default:
     print("\(someCharacter) is not a vowel or a consonant")
 }
+// 输出 "e is a vowel"
 ```
 
-这个switch语句中的第一个case，匹配了英语中的五个小写元音字母。相似的，第二个case匹配了英语中所有的小写辅音字母。最终，default分支匹配了其它所有字符。
+这个`switch`语句中的第一个case，匹配了英语中的五个小写元音字母。相似的，第二个case匹配了英语中所有的小写辅音字母。最终，`default`分支匹配了其它所有字符。
 复合匹配同样可以包含值绑定。复合匹配里所有的匹配模式，都必须包含相同的值绑定。并且每一个绑定都必须获取到相同类型的值。这保证了，无论复合匹配中的哪个模式发生了匹配，分支体内的代码，都能获取到绑定的值，并且绑定的值都有一样的类型。
 
 ```swift
@@ -526,13 +528,16 @@ case (let distance, 0), (0, let distance):
 default:
     print("Not on an axis")
 }
+
+// 输出 "On an axis, 9 from the origin"
+
 ```
 
 上面的case有两个模式：`(let distance, 0)`匹配了在x轴上的值，`(0, let distance)`匹配了在y轴上的值。两个模式都绑定了`distance`，并且`distance`在两种模式下，都是整型——这意味着分支体内的代码，只要case匹配，都可以获取到`distance`值
 
 
 <a name="control_transfer_statements"></a>
-## 控制转移语句（Control Transfer Statements）
+## 控制转移语句
 
 控制转移语句改变你代码的执行顺序，通过它可以实现代码的跳转。Swift 有五种控制转移语句：
 
@@ -620,7 +625,7 @@ if let integerValue = possibleIntegerValue {
 在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下，开始执行`if let`语句。
 
 <a name="fallthrough"></a>
-### 贯穿（Fallthrough）
+### 贯穿
 
 Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
@@ -693,13 +698,13 @@ gameLoop: while square != finalSquare {
     if diceRoll == 7 { diceRoll = 1 }
     switch square + diceRoll {
     case finalSquare:
-        // diceRoll will move us to the final square, so the game is over
+        // 骰子数刚好使玩家移动到最终的方格里，游戏结束。
         break gameLoop
     case let newSquare where newSquare > finalSquare:
-        // diceRoll will move us beyond the final square, so roll again
+        // 骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子
         continue gameLoop
     default:
-        // this is a valid move, so find out its effect
+        // 合法移动，做正常的处理
         square += diceRoll
         square += board[square]
     }
@@ -713,7 +718,7 @@ print("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环，开始下一次循环。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动 `diceRoll` 个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。接着本次循环结束，控制跳转到`while`循环体的条件判断语句处，再决定是否需要继续执行下次循环。
 
->注意：
+>注意：   
 如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
@@ -772,9 +777,9 @@ if #available(iOS 10, macOS 10.12, *) {
 
 ```swift
 if #available(platform name version, ..., *) {
-    statements to execute if the APIs are available
+    APIs 可用，语句将执行
 } else {
-    fallback statements to execute if the APIs are unavailable
+    APIs 不可用，语句将不执行
 }
 ```
 
