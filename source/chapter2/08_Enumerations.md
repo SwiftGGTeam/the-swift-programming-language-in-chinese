@@ -17,15 +17,16 @@
 
 
 > 3.0
-> 翻译+校对：[shanks](https://codebuild.me) 2016-09-24
+> 翻译+校对：[shanks](https://codebuild.me) 2016-09-24   
+> 3.0.1，shanks，2016-11-12
 
 本页内容包含：
 
-- [枚举语法（Enumeration Syntax）](#enumeration_syntax)
-- [使用 Switch 语句匹配枚举值（Matching Enumeration Values with a Switch Statement）](#matching_enumeration_values_with_a_switch_statement)
-- [关联值（Associated Values）](#associated_values)
-- [原始值（Raw Values）](#raw_values)
-- [递归枚举（Recursive Enumerations）](#recursive_enumerations)
+- [枚举语法](#enumeration_syntax)
+- [使用 Switch 语句匹配枚举值](#matching_enumeration_values_with_a_switch_statement)
+- [关联值](#associated_values)
+- [原始值](#raw_values)
+- [递归枚举](#recursive_enumerations)
 
 *枚举*为一组相关的值定义了一个共同的类型，使你可以在你的代码中以类型安全的方式来使用这些值。
 
@@ -35,7 +36,7 @@
 
 在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类（class）所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
-想了解更多相关信息，请参见[属性（Properties）](./10_Properties.html)，[方法（Methods）](./11_Methods.html)，[构造过程（Initialization）](./14_Initialization.html)，[扩展（Extensions）](./21_Extensions.html)和[协议（Protocols）](./22_Protocols.html)。
+想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)和[协议](./22_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -61,7 +62,7 @@ enum CompassPoint {
 
 枚举中定义的值（如 `north `，`south`，`east`和`west`）是这个枚举的*成员值*（或*成员*）。你可以使用`case`关键字来定义一个新的枚举成员值。
 
-> 注意  
+> 注意   
 > 与 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoint`例子中，`north`，`south`，`east`和`west`不会被隐式地赋值为`0`，`1`，`2`和`3`。相反，这些枚举成员本身就是完备的值，这些值的类型是已经明确定义好的`CompassPoint`类型。
 
 多个成员值可以出现在同一行上，用逗号隔开：
@@ -103,7 +104,7 @@ switch directionToHead {
 	case .west:
 	    print("Where the skies are blue")
 }
-// 输出 "Watch out for penguins”
+// 打印 "Watch out for penguins”
 ```
 
 你可以这样理解这段代码：
@@ -112,7 +113,7 @@ switch directionToHead {
 
 ……以此类推。
 
-正如在[控制流（Control Flow）](./05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.west`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制穷举确保了枚举成员不会被意外遗漏。
+正如在[控制流](./05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch`语句必须穷举所有情况。如果忽略了`.west`这种情况，上面那段代码将无法通过编译，因为它没有考虑到`CompassPoint`的全部成员。强制穷举确保了枚举成员不会被意外遗漏。
 
 当不需要匹配每个枚举成员的时候，你可以提供一个`default`分支来涵盖所有未明确处理的枚举成员：
 
@@ -124,17 +125,17 @@ case .earth:
 default:
     print("Not a safe place for humans")
 }
-// 输出 "Mostly harmless”
+// 打印 "Mostly harmless”
 ```
 
 <a name="associated_values"></a>
-## 关联值（Associated Values）
+## 关联值
 
 上一小节的例子演示了如何定义和分类枚举的成员。你可以为`Planet.earth`设置一个常量或者变量，并在赋值之后查看这个值。然而，有时候能够把其他类型的*关联值*和成员值一起存储起来会很有用。这能让你连同成员值一起存储额外的自定义信息，并且你每次在代码中使用该枚举成员时，还可以修改这个关联值。
 
 你可以定义 Swift 枚举来存储任意类型的关联值，如果需要的话，每个枚举成员的关联值类型可以各不相同。枚举的这种特性跟其他语言中的可识别联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。
 
-例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有使用`0`到`9`的数字的 UPC-A 格式的一维条形码。每一个条形码都有一个代表“数字系统”的数字，该数字后接五位代表“厂商代码”的数字，接下来是五位代表“产品代码”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
+例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有使用`0`到`9`的数字的 UPC 格式的一维条形码。每一个条形码都有一个代表“数字系统”的数字，该数字后接五位代表“厂商代码”的数字，接下来是五位代表“产品代码”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
 
 <img width="252" height="120" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png">
 
@@ -184,7 +185,7 @@ case .upc(let numberSystem, let manufacturer, let product, let check):
 case .qrCode(let productCode):
     print("QR code: \(productCode).")
 }
-// 输出 "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 如果一个枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，你可以只在成员名称前标注一个`let`或者`var`：
@@ -200,7 +201,7 @@ case let .qrCode(productCode):
 ```
 
 <a name="raw_values"></a>
-## 原始值（Raw Values）
+## 原始值
 
 在[关联值](#associated_values)小节的条形码例子中，演示了如何声明存储不同类型关联值的枚举成员。作为关联值的替代选择，枚举成员可以被默认值（称为*原始值*）预填充，这些原始值的类型必须相同。
 
@@ -219,11 +220,11 @@ enum ASCIIControlCharacter: Character {
 
 原始值可以是字符串，字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
-> 注意  
+> 注意    
 > 原始值和关联值是不同的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
 
 <a name="implicitly_assigned_raw_values"></a>
-### 原始值的隐式赋值（Implicitly Assigned Raw Values）
+### 原始值的隐式赋值
 
 在使用原始值为整数或者字符串类型的枚举时，不需要显式地为每一个枚举成员设置原始值，Swift 将会自动为你赋值。
 
@@ -262,8 +263,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 ```
 
 <a name="initializing_from_a_raw_value"></a>
-### 使用原始值初始化枚举实例（Initializing from a Raw Value）
-
+### 使用原始值初始化枚举实例
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法接收一个叫做`rawValue`的参数，参数类型即为原始值类型，返回值则是枚举成员或`nil`。你可以使用这个初始化方法来创建一个新的枚举实例。
 
 这个例子利用原始值`7`创建了枚举成员`uranus`：
@@ -298,10 +298,10 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 这个例子使用了可选绑定（optional binding），试图通过原始值`11`来访问一个行星。`if let somePlanet = Planet(rawValue: 11)`语句创建了一个可选`Planet`，如果可选`Planet`的值存在，就会赋值给`somePlanet`。在这个例子中，无法检索到位置为`11`的行星，所以`else`分支被执行。
 
 <a name="recursive_enumerations"></a>
-## 递归枚举（Recursive Enumerations）
+## 递归枚举
 
 
-*递归枚举（recursive enumeration）*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上`indirect`来表示该成员可递归。  
+*递归枚举*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上`indirect`来表示该成员可递归。  
 
 例如，下面的例子中，枚举类型存储了简单的算术表达式：
 
@@ -347,7 +347,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-// 输出 "18"
+// 打印 "18"
 ```
 
 该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
