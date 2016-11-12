@@ -15,17 +15,19 @@
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-11
 > 
 > 3.0
-> 校对：[shanks](http://codebuild.me) ，2016-10-09
+> 校对：[shanks](http://codebuild.me) ，2016-10-09   
+> 3.0.1，shanks，2016-11-12
 
 
 本页包含内容：
 
-- [集合的可变性（Mutability of Collections）](#mutability_of_collections)
-- [数组（Arrays）](#arrays)
-- [集合（Sets）](#sets)
-- [字典（Dictionaries）](#dictionaries)
+- [集合的可变性](#mutability_of_collections)
+- [数组](#arrays)
+- [集合](#sets)
+- [集合操作](#performing_set_operations)
+- [字典](#dictionaries)
 
-Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的集合类型用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
+Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的*集合类型*用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
 
@@ -45,11 +47,11 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。�
 <a name="arrays"></a>
 ## 数组(Arrays)
 
-数组使用有序列表存储同一类型的多个值。相同的值可以多次出现在一个数组的不同位置中。
+*数组*使用有序列表存储同一类型的多个值。相同的值可以多次出现在一个数组的不同位置中。
 
 > 注意:
  Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+ 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -81,7 +83,7 @@ someInts = []
 <a name="creating_an_array_with_a_default_value"></a>
 ### 创建一个带有默认值的数组
 
-Swift 中的`Array`类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。我们可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeatedValue`）传入数组构造函数：
+Swift 中的`Array`类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。我们可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeating`）传入数组构造函数：
 
 ```swift
 var threeDoubles = Array(repeating: 0.0, count: 3)
@@ -102,9 +104,9 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 ```
 
 <a name="creating_an_array_with_an_array_literals"></a>
-### 用字面量构造数组
+### 用数组字面量构造数组
 
-我们可以使用字面量来进行数组构造，这是一种用一个或者多个数值构造数组的简单方法。字面量是一系列由逗号分割并由方括号包含的数值：
+我们可以使用*数组字面量*来进行数组构造，这是一种用一个或者多个数值构造数组的简单方法。数组字面量是一系列由逗号分割并由方括号包含的数值：
 
 `[value 1, value 2, value 3]`。
 
@@ -115,20 +117,20 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 // shoppingList 已经被构造并且拥有两个初始项。
 ```
 
-`shoppingList`变量被声明为“字符串值类型的数组“，记作`[String]`。 因为这个数组被规定只有`String`一种数据结构，所以只有`String`类型可以在其中被存取。 在这里，`shoppinglist`数组由两个`String`值（`"Eggs"` 和`"Milk"`）构造，并且由字面量定义。
+`shoppingList`变量被声明为“字符串值类型的数组“，记作`[String]`。 因为这个数组被规定只有`String`一种数据结构，所以只有`String`类型可以在其中被存取。 在这里，`shoppingList`数组由两个`String`值（`"Eggs"` 和`"Milk"`）构造，并且由数组字面量定义。
 
 > 注意：  
-`Shoppinglist`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
+`shoppingList`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
 
-在这个例子中，字面量仅仅包含两个`String`值。匹配了该数组的变量声明（只能包含`String`的数组），所以这个字面量的分配过程可以作为用两个初始项来构造`shoppinglist`的一种方式。
+在这个例子中，字面量仅仅包含两个`String`值。匹配了该数组的变量声明（只能包含`String`的数组），所以这个字面量的分配过程可以作为用两个初始项来构造`shoppingList`的一种方式。
 
-由于 Swift 的类型推断机制，当我们用字面量构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 `shoppinglist`的构造也可以这样写：
+由于 Swift 的类型推断机制，当我们用字面量构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 `shoppingList`的构造也可以这样写：
 
 ```swift
 var shoppingList = ["Eggs", "Milk"]
 ```
 
-因为所有字面量中的值都是相同的类型，Swift 可以推断出`[String]`是`shoppinglist`中变量的正确类型。
+因为所有数组字面量中的值都是相同的类型，Swift 可以推断出`[String]`是`shoppingList`中变量的正确类型。
 
 <a name="accessing_and_modifying_an_array"></a>
 ### 访问和修改数组
@@ -142,7 +144,7 @@ print("The shopping list contains \(shoppingList.count) items.")
 // 输出 "The shopping list contains 2 items."（这个数组有2个项）
 ```
 
-使用布尔值属性`isEmpty`作为检查`count`属性的值是否为 0 的捷径：
+使用布尔属性`isEmpty`作为一个缩写形式去检查`count`属性是否为`0`：
 
 ```swift
 if shoppingList.isEmpty {
@@ -250,10 +252,10 @@ for item in shoppingList {
 // Bananas
 ```
 
-如果我们同时需要每个数据项的值和索引值，可以使用`enumerate()`方法来进行数组遍历。`enumerate()`返回一个由每一个数据项索引值和数据值组成的元组。我们可以把这个元组分解成临时常量或者变量来进行遍历：
+如果我们同时需要每个数据项的值和索引值，可以使用`enumerated()`方法来进行数组遍历。`enumerated()`返回一个由每一个数据项索引值和数据值组成的元组。我们可以把这个元组分解成临时常量或者变量来进行遍历：
 
 ```swift
-for (index, value) in shoppingList.enumerate() {
+for (index, value) in shoppingList. enumerated() {
     print("Item \(String(index + 1)): \(value)")
 }
 // Item 1: Six eggs
@@ -272,25 +274,25 @@ for (index, value) in shoppingList.enumerate() {
 
 > 注意：  
 > Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。  
-> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
 
-一个类型为了存储在集合中，该类型必须是可哈希化的--也就是说，该类型必须提供一个方法来计算它的哈希值。一个哈希值是`Int`类型的，相等的对象哈希值必须相同，比如`a==b`,因此必须`a.hashValue == b.hashValue`。
+一个类型为了存储在集合中，该类型必须是*可哈希化*的--也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是`Int`类型的，相等的对象哈希值必须相同，比如`a==b`,因此必须`a.hashValue == b.hashValue`。
 
 Swift 的所有基本类型(比如`String`,`Int`,`Double`和`Bool`)默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值(在[枚举](./08_Enumerations.html)有讲述)默认也是可哈希化的。
 
 > 注意：  
 > 你可以使用你自定义的类型作为集合的值的类型或者是字典的键的类型，但你需要使你的自定义类型符合 Swift 标准库中的`Hashable`协议。符合`Hashable`协议的类型需要提供一个类型为`Int`的可读属性`hashValue`。由类型的`hashValue`属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。  
 
-> 因为`Hashable`协议符合`Equatable`协议，所以符合该协议的类型也必须提供一个"是否相等"运算符(`==`)的实现。这个`Equatable`协议要求任何符合`==`实现的实例间都是一种相等的关系。也就是说，对于`a,b,c`三个值来说，`==`的实现必须满足下面三种情况：
+> 因为`Hashable`协议符合`Equatable`协议，所以遵循该协议的类型也必须提供一个"是否相等"运算符(`==`)的实现。这个`Equatable`协议要求任何符合`==`实现的实例间都是一种相等的关系。也就是说，对于`a,b,c`三个值来说，`==`的实现必须满足下面三种情况：
 
 > * `a == a`(自反性)
 > * `a == b`意味着`b == a`(对称性)
 > * `a == b && b == c`意味着`a == c`(传递性)
 
-关于符合协议的更多信息，请看[协议](./22_Protocols.html)。
+关于遵循协议的更多信息，请看[协议](./22_Protocols.html)。
 
 <a name="set_type_syntax"></a>
 ### 集合类型语法
@@ -425,12 +427,12 @@ for genre in favoriteGenres.sorted() {
 ```
 
 <a name="performing_set_operations"></a>
-### 集合操作
+## 集合操作
 
 你可以高效地完成`Set`的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
 
 <a name="fundamental_set_operations"></a>
-#### 基本集合操作
+### 基本集合操作
 
 下面的插图描述了两个集合-`a`和`b`-以及通过阴影部分的区域显示集合各种操作的结果。
 
@@ -457,7 +459,7 @@ oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
 ```
 
 <a name="set_membership_and_equality"></a>
-#### 集合成员关系和相等
+### 集合成员关系和相等
 
 下面的插图描述了三个集合-`a`,`b`和`c`,以及通过重叠区域表述集合间共享的元素。集合`a`是集合`b`的父集合，因为`a`包含了`b`中所有的元素，相反的，集合`b`是集合`a`的子集合，因为属于`b`的元素也被`a`包含。集合`b`和集合`c`彼此不关联，因为它们之间没有共同的元素。
 
@@ -489,17 +491,17 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 > 注意：  
 > Swift 的`Dictionary`类型被桥接到`Foundation`的`NSDictionary`类。  
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="dictionary_type_shorthand_syntax"></a>
-## 字典类型快捷语法
+### 字典类型简化语法
 
 Swift 的字典使用`Dictionary<Key, Value>`定义，其中`Key`是字典中键的数据类型，`Value`是字典中对应于这些键所存储值的数据类型。
 
 > 注意：  
 > 一个字典的`Key`类型必须遵循`Hashable`协议，就像`Set`的值类型。
 
-我们也可以用`[Key: Value]`这样快捷的形式去创建一个字典类型。虽然这两种形式功能上相同，但是后者是首选，并且这本指导书涉及到字典类型时通篇采用后者。
+我们也可以用`[Key: Value]`这样简化的形式去创建一个字典类型。虽然这两种形式功能上相同，但是后者是首选，并且这本指导书涉及到字典类型时通篇采用后者。
 
 <a name="creating_an_empty_dictionary"></a>
 ### 创建一个空字典
@@ -525,7 +527,7 @@ namesOfIntegers = [:]
 <a name="creating_a_dictionary_with_a_dictionary_literal"></a>
 ## 用字典字面量创建字典
 
-我们可以使用字典字面量来构造字典，这和我们刚才介绍过的数组字面量拥有相似语法。字典字面量是一种将一个或多个键值对写作`Dictionary`集合的快捷途径。
+我们可以使用*字典字面量*来构造字典，这和我们刚才介绍过的数组字面量拥有相似语法。字典字面量是一种将一个或多个键值对写作`Dictionary`集合的快捷途径。
 
 一个键值对是一个`key`和一个`value`的结合体。在字典字面量中，每一个键值对的键和值都由冒号分割。这些键值对构成一个列表，其中这些键值对由方括号包含、由逗号分割：
 
@@ -569,7 +571,7 @@ print("The dictionary of airports contains \(airports.count) items.")
 // 打印 "The dictionary of airports contains 2 items."（这个字典有两个数据项）
 ```
 
-使用布尔属性`isEmpty`来快捷地检查字典的`count`属性是否等于0：
+使用布尔属性`isEmpty`作为一个缩写形式去检查`count`属性是否为`0`：
 
 ```swift
 if airports.isEmpty {
