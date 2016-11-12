@@ -17,15 +17,17 @@ of class instances.
 While classes are similar to structures in composition,
 classes have different underlying behavior:
 
-* Inheritance enables one class to inherit the characteristics of another, as described in :doc:`Inheritance`.
-* Deinitializers enable an instance of a class to free up any resources it has allocated, as described in :doc:`Deinitialization`.
-* You can have more than one reference to a class instance, as described in :doc:`AutomaticReferenceCounting`.
+* Inheritance enables one class to inherit the characteristics of another,
+  as described in :doc:`Inheritance`.
+* Deinitializers enable an instance of a class
+  to free up any resources it has allocated,
+  as described in :doc:`Deinitialization`.
+* You can have more than one reference to a class instance,
+  as described in :doc:`AutomaticReferenceCounting`.
 
 .. XXX ARC is more about sharing and identity
 
-For an in-depth discussion of
-when to use classes and
-when to use structures,
+For an in-depth discussion of when to use classes and when to use structures,
 see :doc:`ReferenceAndValueTypes`.
 
 .. _Classes_ClassSyntax:
@@ -58,13 +60,10 @@ Here is an example of a class definition:
 
 The example above defines a new class called ``Window`` 
 to describe a graphical window.
-This class has two variable stored properties
-called ``width`` and ``height``.
-Because there is no natural default
-for a window's width and height,
-these two properties are explicitly defined
-to be of type ``Int`` and are set
-to the integer values passed in to the initializer.
+This class has two variable stored properties called ``width`` and ``height``.
+Because there is no natural default for a window's width and height,
+these two properties are explicitly defined to be of type ``Int``
+and are set to the integer values passed in to the initializer.
 
 As with structures,
 the simplest form of initializer syntax for classes
@@ -80,15 +79,14 @@ However, you can use this initializer syntax
 only if you set all of the stored properties in your class
 to initial values in the class definition.
 
-Unlike structures, classes do not have
-a default memberwise initializer.
+Unlike structures,
+classes do not have a default memberwise initializer.
 Instead, you define custom initializers
 that provide the initialization logic you need.
 Because the two stored properties belonging to ``Window``
 are not set to initial values by default,
 ``Window`` needs a custom initializer.
-To initialize a class like ``Window``
-with a custom initializer,
+To initialize a class like ``Window`` with a custom initializer,
 use the type name of the class
 followed by any parameters needed
 for initialization in parentheses:
@@ -111,17 +109,13 @@ Classes Are Reference Types
 Classes have different behavior from structures
 because they are reference types ---
 not value types.
-For information on
-when to use classes and
-when to use structures,
+For information on when to use classes and when to use structures,
 see :doc:`ReferenceAndValueTypes`.
 
 A :newTerm:`reference type` is a type
 whose instance is referenced rather than copied
-when it is assigned
-to a variable or constant,
-or when it is passed
-to a function.
+when it is assigned to a variable or constant,
+or when it is passed to a function.
 
 Imagine an application that can have multiple windows open and
 needs to keep track of the currently selected window.
@@ -191,12 +185,10 @@ to show an identity operator in use:
    “Identical to” (represented by three equals signs, or ``===``)
    does not mean the same thing
    as “equal to” (represented by two equals signs, or ``==``).
-   “Identical to” means that
-   two constants or variables
-   of class type refer
-   to exactly the same class instance.
-   “Equal to” means that
-   two instances are considered “equal” or “equivalent” in value,
+   “Identical to” means that two constants or variables of class type
+   refer to exactly the same class instance.
+   “Equal to” means that two instances
+   are considered “equal” or “equivalent” in value,
    for some appropriate meaning of “equal”,
    as defined by the type's designer.
 
@@ -205,23 +197,18 @@ to show an identity operator in use:
 Constants and Reference Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the fundamental characteristics
-of reference semantics is that
-a single instance can be referred to in multiple places.
+One of the fundamental characteristics of reference semantics
+is that a single instance can be referred to in multiple places.
 .. XXX maybe put more emphasis on shared mutable state
 In the example above,
-you may have noticed that
-``windowOne`` is declared as a *constant*,
+you may have noticed that ``windowOne`` is declared as a *constant*,
 rather than a variable.
-However, you can still change
-the variable properties of ``windowOne``
+However, you can still change the variable properties of ``windowOne``
 such as ``windowOne.width``.
-This is because the value
-of the ``windowOne`` constant itself
+This is because the value of the ``windowOne`` constant itself
 does not store the ``Window`` instance ---
 it *refers* to a ``Window`` instance.
-It is the ``width`` property
-of the underlying ``Window`` that is changed ---
+It is the ``width`` property of the underlying ``Window`` that is changed ---
 not the value of the constant reference to that ``Window``.
 
 Consider the following example: 
@@ -261,15 +248,12 @@ it is valid to mutate the ``variable`` property
 and invalid to mutate the ``constant`` property
 of ``classInstance``.
 Additionally,
-you cannot reassign ``classInstance``
-to a different class instance
+you cannot reassign ``classInstance`` to a different class instance
 because it's a constant reference.
 .. XXX the "because" comes pretty late in this sentence - reword?
-This feature of being able to
-change the underlying variable properties
-of the same instance
-is something unique you get
-when working with classes.
+This feature of being able to change
+the underlying variable properties of the same instance
+is something unique you get when working with classes.
 In contrast,
 changing the variable properties of a structure instance
 gives you a whole new structure instance

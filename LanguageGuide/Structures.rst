@@ -1,23 +1,24 @@
 Structures
 ==========
 
-:newTerm:`Structures` in Swift are general-purpose, flexible
-building blocks for your program.
-They are far more powerful
-than the simple structures
-you may be familiar with
+:newTerm:`Structures` in Swift are
+general-purpose, flexible building blocks for your program.
+They are far more powerful than the simple structures you may be familiar with
 from other languages such as C and Objective-C,
-providing new ways to architect your code
-for optimal safety and performance.
+providing new ways to architect your code for optimal safety and performance.
 
 In Swift, structures can:
 
 * Define properties to store values, as described in :doc:`Properties`.
 * Define methods to provide functionality, as described in :doc:`Methods`.
-* Define subscripts to provide access to their values using subscript syntax, as described in :doc:`Subscripts`.
-* Define initializers to set up their initial state, as described in :doc:`Initialization`.
-* Be extended to provide added functionality, as described in :doc:`Extensions`.
-* Conform to protocols to implement a shared abstraction or cooperate with a default implementation, as described in :doc:`Protocols`.
+* Define subscripts to provide access to their values using subscript syntax,
+  as described in :doc:`Subscripts`.
+* Define initializers to set up their initial state,
+  as described in :doc:`Initialization`.
+* Be extended to provide added functionality,
+  as described in :doc:`Extensions`.
+* Conform to protocols to implement a shared abstraction or cooperate
+  with a default implementation, as described in :doc:`Protocols`.
 
 .. XXX this chapter does X, you'll see Y in following chapters.
 .. XXX (migi) polymorphism is possible with structs
@@ -38,11 +39,12 @@ definition within a pair of braces:
     
 .. note::
 
-   Whenever you define a new structure, you define a
-   brand new Swift type.
-   Give types ``UpperCamelCase`` names (such as ``SomeStructure`` here)
-   to match the capitalization
-   of standard Swift types (such as ``String``, ``Int``, and ``Bool``).
+   Whenever you define a new structure,
+   you define a brand new Swift type.
+   Give types ``UpperCamelCase`` names
+   (such as ``SomeStructure`` here)
+   to match the capitalization of standard Swift types
+   (such as ``String``, ``Int``, and ``Bool``).
    Conversely, give properties and methods ``lowerCamelCase`` names
    (such as ``someProperty`` and ``someMethod``)
    to differentiate them from type names.
@@ -98,12 +100,10 @@ and initializes its properties to their default values.
 Memberwise Initializer
 ~~~~~~~~~~~~~~~~~~~~~~
 
-All structures
-have an automatically generated memberwise initializer.
-A memberwise initializer is a form of
-initialization syntax that allows you
-to set values for the stored properties
-of new structure instances.
+All structures have an automatically generated memberwise initializer.
+A memberwise initializer is a form of initialization syntax
+that allows you to set values
+for the stored properties of new structure instances.
 You pass the initial values of properties
 to the memberwise initializer by name:
 
@@ -123,12 +123,9 @@ For information on structure initialization, see :doc:`Initialization`.
 Accessing Properties of Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can access a property
-of a structure instance
-using dot syntax
+You can access a property of a structure instance using dot syntax
 by writing the name of the instance,
-followed by a period (``.``)
-and the name of the property:
+followed by a period (``.``) and the name of the property:
 
 .. testcode:: structures
 
@@ -140,8 +137,7 @@ refers to the ``celsius`` property of ``waterBoilingPoint``
 and returns its value of ``100.0``.
 
 You can also use dot syntax
-to assign a new value
-to a variable property:
+to assign a new value to a variable property:
 
 .. testcode:: structures
 
@@ -222,8 +218,7 @@ have the same value for their ``celsius`` properties,
 they are two different instances.
 You can change one without affecting the other.
 
-You can change ``ovenTemperature`` to
-get the oven ready for cooking
+You can change ``ovenTemperature`` to get the oven ready for cooking
 and ``roomTemperature`` remains unchanged:
 
 .. testcode:: structures

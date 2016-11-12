@@ -6,13 +6,9 @@ Both have properties, methods, subscripts, initializers, use dot syntax,
 and so on.
 .. XXX Also, both can do abstraction via protocols
 As a result,
-it can be hard to know
-when to use classes and
-when to use structures
-for the building blocks
-of your program.
-The fundamental difference
-between structures and classes
+it can be hard to know when to use classes and when to use structures
+for the building blocks of your program.
+The fundamental difference between structures and classes
 is that structures are value types
 .. XXX what about enums? they're value types too
 whereas classes are reference types,
@@ -31,14 +27,11 @@ and :ref:`Classes_ClassesAreReferenceTypes`.
 When to Use a Reference Type
 ----------------------------
 
-If you're used to working
-in object-oriented languages
+If you're used to working in object-oriented languages
 like Objective-C or C++,
-you may be in the habit
-of writing a lot of classes.
+you may be in the habit of writing a lot of classes.
 In Swift,
-you don't need classes
-as often as you might expect,
+you don't need classes as often as you might expect,
 but they still have their place.
 .. XXX Reword line above -- too negative about classes
 Use a class
@@ -61,18 +54,15 @@ and want to create a custom view,
 you subclass ``UIView``.
 
 It is also common when working with frameworks
-to be expected to work with and pass around
-class instances.
-Many framework APIs have method calls that
-expect certain things to be classes.
+to be expected to work with and pass around class instances.
+Many framework APIs have method calls
+that expect certain things to be classes.
 For example,
-a framework might expect you
-to pass around a delegate
+a framework might expect you to pass around a delegate
 that must be a class.
 .. XXX needs a bit of meat -- "pass around" is too colloquial
 
-In these scenarios
-when you are using a framework based in classes,
+In these scenarios when you are using a framework based in classes,
 use classes.
 
 .. _ChoosingBetweenClassesAndStructures_UsingClassesForStableIdentity:
@@ -82,17 +72,12 @@ Using Classes For Stable Identity
 
 Class instances have stable identity.
 When you initialize a class instance,
-Swift picks out a region in memory
-to store that instance.
+Swift picks out a region in memory to store that instance.
 That region in memory has an address.
-Constants or variables
-that are assigned
-to that instance
-store that address
-to refer to that instance indirectly.
+Constants or variables that are assigned to that instance
+store that address to refer to that instance indirectly.
 When you mutate that instance,
-Swift keeps that instance stored
-in the same region in memory
+Swift keeps that instance stored in the same region in memory
 with the same address.
 
 .. XXX Talk about one thing at a time.
@@ -100,16 +85,11 @@ with the same address.
 .. XXX can we have this discussion without talking about raw memory?
    many readers won't know what that is either
 
-There are times
-when you want an instance
-to remain in the same region in memory
-with the same address ---
-when you really do want
-to refer to one instance
-of a type.
+There are times when you want an instance
+to remain in the same region in memory with the same address ---
+when you really do want to refer to one instance of a type.
 
-Take the ``Window`` class
-from :doc:`Classes`,
+Take the ``Window`` class from :doc:`Classes`,
 which represents a graphical window: 
 
 .. testcode:: choosingbetweenclassesandstructures
@@ -125,8 +105,7 @@ which represents a graphical window:
        }
 
 It makes sense for ``Window`` to be a class
-because you want to be able to
-refer to one instance of a ``Window``
+because you want to be able to refer to one instance of a ``Window``
 from several places in code,
 and it makes no sense to copy it.
 
@@ -140,9 +119,7 @@ and it makes no sense to copy it.
    (a physical object or a simulation of one,
    like a window on the screen)
 
-Recall
-the ``rootWindow`` constant and
-the ``currentWindow`` variable:
+Recall the ``rootWindow`` constant and the ``currentWindow`` variable:
 
 .. testcode:: choosingbetweenclassesandstructures
 
@@ -153,10 +130,8 @@ the ``currentWindow`` variable:
     -> var currentWindow = windowOne
     << // currentWindow : Window = REPL.Window
 
-Imagine you wanted
-to perform a check
-to see if the current window
-is ``windowOne``,
+Imagine you wanted to perform a check
+to see if the current window is ``windowOne``,
 and if not,
 close the current window:
 
@@ -176,8 +151,7 @@ not a copy of it.
 
 .. XXX the window object above is representing a resource
 
-It is unclear
-what it would even mean
+It is unclear what it would even mean
 to copy a ``Window`` in the first place.
 Assigning ``windowOne`` to ``currentWindow``
 would give you multiple graphical windows
@@ -190,46 +164,30 @@ use a class.
 .. XXX polish prose in para above & below for clarity
 
 There are other times
-when you want the stable identity
-of a class because 
-the lifetime of an instance
-is tied to some external entity,
-such as a file
-that temporarily appears
-on a disk.
-Your custom data type instance
-that represents that file
-needs to exist
-in one constant region in memory
+when you want the stable identity of a class because 
+the lifetime of an instance is tied to some external entity,
+such as a file that temporarily appears on a disk.
+Your custom data type instance that represents that file
+needs to exist in one constant region in memory
 so that you can free up that memory
 when you are ready to delete the file.
 .. XXX No - so the temp file gets deleted after you deallocate the file object,
-   or so all assecc to the file sees the same state
+.. XXX or so all assecc to the file sees the same state
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
-If you are managing a resource
-that requires custom deinitialization,
+If you are managing a resource that requires custom deinitialization,
 use a class.
 
-Another reason
-that graphical windows and files
-are good examples
-for when to use a class
-is that it is likely
-that many places in your code
-would need to access or modify
-the same window or file.
+Another reason that graphical windows and files
+are good examples for when to use a class
+is that it is likely that many places in your code
+would need to access or modify the same window or file.
 For instance,
-you can imagine needing
-to read from
-and write to
-the same file
+you can imagine needing to read from and write to the same file
 in multiple places in your code.
-When you need
-the ability to change
-the same instance
-from multiple places,
+When you need the ability
+to change the same instance from multiple places,
 use a class.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
@@ -244,11 +202,8 @@ to have reference semantics
 for any of the reasons discussed above,
 use a structure.
 In general,
-this means you should
-use structures by default,
-and use classes
-in those special cases
-discussed above.
+this means you should use structures by default,
+and use classes in those special cases discussed above.
 
 .. _ChoosingBetweenClassesAndStructures_WhyToUseAStructure:
 
@@ -258,12 +213,10 @@ Why to Use a Structure
 .. XXX the first part of this is all about unintended sharing
    due to using reference semantics when they're the wrong thing
 
-Structures make it easier
-to reason about your code.
+Structures make it easier to reason about your code.
 Because structures are value types,
 they help you avoid accidental changes
-due to confusion about the logic
-of your code. 
+due to confusion about the logic of your code. 
 In order to explore an example
 of this kind of unintended mutation,
 imagine that the ``Temperature`` structure from :doc:`Structures`
@@ -278,16 +231,12 @@ was a class instead:
            }
        }
        
-You can create
-``roomTemperature`` and ``ovenTemperature`` variables
-like before
-to model the ambient temperature of a room
+You can create ``roomTemperature`` and ``ovenTemperature`` variables
+like before to model the ambient temperature of a room
 and the temperature of an oven in that room.
 Initially,
 you set ``ovenTemperature`` to ``roomTemperature``
-because the oven is off
-and at the same temperature
-as the room: 
+because the oven is off and at the same temperature as the room: 
 
  .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -298,8 +247,7 @@ as the room:
     << // ovenTemperature : Temperature = REPL.Temperature
 
 When you turn on the oven,
-you accidentally change the temperature
-of the room as well: 
+you accidentally change the temperature of the room as well: 
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -311,52 +259,35 @@ of the room as well:
 
 Because ``Temperature`` is a class,
 setting ``ovenTemperature`` to ``roomTemperature``
-means that both variables refer
-to the same ``Temperature`` instance.
+means that both variables refer to the same ``Temperature`` instance.
 Therefore, changing ``ovenTemperature``
 also changes ``roomTemperature``,
 which is clearly unintended. 
 
 This example of unintended sharing
-is a simple illustration
-of a problem
-that often comes up
+is a simple illustration of a problem that often comes up
 when using classes.
-It is clear to see where
-things went wrong in this example,
+It is clear to see where things went wrong in this example,
 but when you write more complicated code
 and changes come from many different places,
-it is much more difficult
-to reason about your code.
+it is much more difficult to reason about your code.
 
-One solution
-to unintended sharing
-when using classes
-is to manually copy
-your class instances
-as needed.
+One solution to unintended sharing when using classes
+is to manually copy your class instances as needed.
 However,
-manually copying
-class instances as needed
-is hard to justify
-when structures
-do that for you
-with their copy-on-write behavior.
+manually copying class instances as needed is hard to justify
+when structures do that for you with their copy-on-write behavior.
 
 .. XXX weak argument -- better framed as structs give you (via reference semantics)
    what you were trying to build via defensive copying of class instances
 
 Much like constants,
-structures make it
-easier to reason about your code
-because you don't have to worry
-about where far-away changes
-might be coming from.
+structures make it easier to reason about your code
+because you don't have to worry about
+where far-away changes might be coming from.
 Structures provide a simpler abstraction,
-saving you from having
-to think about unintended sharing
-in those cases when you really
-don't need reference semantics.
+saving you from having to think about unintended sharing
+in those cases when you really don't need reference semantics.
 
 .. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 
@@ -368,14 +299,10 @@ When You Need Inheritance
    with an xref from the Inheritance chapter
    and from this chapter.
 
-You might think
-you should use a class
-when you need inheritance.
+You might think you should use a class when you need inheritance.
 In many cases,
-Swift's protocols and protocol extensions
-make it so that
-you can use structures
-and still have inheritance.
+Swift's protocols and protocol extensions make it so that
+you can use structures and still have inheritance.
 
 To show how you can use structures and still have inheritance,
 imagine that the ``Vehicle`` base class from :doc:`Inheritance`
@@ -420,17 +347,11 @@ that conform to the ``Vehicle`` protocol:
 
 Much like their class counterparts,
 the ``Train`` and ``Car`` structures
-get a default implementation
-of ``description``
+get a default implementation of ``description``
 that they can override.
 
-With protocols and protocol extensions
-at your disposal,
-inheritance in itself
-is not a compelling reason
-to use a class --- 
-with the exception
-of those times
-when you need
+With protocols and protocol extensions at your disposal,
+inheritance in itself is not a compelling reason to use a class --- 
+with the exception of those times when you need
 to subclass an existing class
 from a resource you don't control.
