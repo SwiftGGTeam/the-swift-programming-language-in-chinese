@@ -26,7 +26,7 @@ classes have different underlying behavior:
 For an in-depth discussion of
 when to use classes and
 when to use structures,
-see :doc:`ChoosingBetweenClassesAndStructures`.
+see :doc:`ReferenceAndValueTypes`.
 
 .. _Classes_ClassSyntax:
 
@@ -114,7 +114,7 @@ not value types.
 For information on
 when to use classes and
 when to use structures,
-see :doc:`ChoosingBetweenClassesAndStructures`.
+see :doc:`ReferenceAndValueTypes`.
 
 A :newTerm:`reference type` is a type
 whose instance is referenced rather than copied

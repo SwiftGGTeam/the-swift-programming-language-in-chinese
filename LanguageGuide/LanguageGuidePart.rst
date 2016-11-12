@@ -14,7 +14,6 @@ Language Guide
    Structures
    Classes
    Enumerations
-   ClassesAndStructures
    Properties
    Methods
    Subscripts

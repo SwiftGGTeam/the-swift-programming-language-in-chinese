@@ -248,7 +248,7 @@ in ``roomTemperature``.
 
 For an in-depth discussion of value types
 and when to use them,
-see :doc:`ChoosingBetweenClassesAndStructures`.
+see :doc:`ReferenceAndValueTypes`.
 
 .. note::
 
