@@ -1,4 +1,4 @@
-# 继承（Inheritance）
+# 继承
 -------------------
 
 > 1.0
@@ -9,25 +9,26 @@
 > 翻译+校对：[shanks](http://codebuild.me)
 > 
 > 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13  
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
-- [定义一个基类（Defining a Base Class）](#defining_a_base_class)
-- [子类生成（Subclassing）](#subclassing)
-- [重写（Overriding）](#overriding)
-- [防止重写（Preventing Overrides）](#preventing_overrides)
+- [定义一个基类](#defining_a_base_class)
+- [子类生成](#subclassing)
+- [重写](#overriding)
+- [防止重写](#preventing_overrides)
 
-一个类可以*继承（inherit）*另一个类的方法（methods），属性（properties）和其它特性。当一个类继承其它类时，继承类叫*子类（subclass）*，被继承类叫*超类（或父类，superclass）*。在 Swift 中，继承是区分「类」与其它类型的一个基本特征。
+一个类可以*继承*另一个类的方法，属性和其它特性。当一个类继承其它类时，继承类叫*子类*，被继承类叫*超类（或父类）*。在 Swift 中，继承是区分「类」与其它类型的一个基本特征。
 
-在 Swift 中，类可以调用和访问超类的方法，属性和下标（subscripts），并且可以重写（override）这些方法，属性和下标来优化或修改它们的行为。Swift 会检查你的重写定义在超类中是否有匹配的定义，以此确保你的重写行为是正确的。
+在 Swift 中，类可以调用和访问超类的方法，属性和下标，并且可以重写这些方法，属性和下标来优化或修改它们的行为。Swift 会检查你的重写定义在超类中是否有匹配的定义，以此确保你的重写行为是正确的。
 
-可以为类中继承来的属性添加属性观察器（property observers），这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性（stored property）还是计算型属性（computed property）。
+可以为类中继承来的属性添加属性观察器，这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性还是计算型属性。
 
 <a name="defining_a_base_class"></a>
-## 定义一个基类（Defining a Base Class）
+## 定义一个基类
 
-不继承于其它类的类，称之为*基类（base class）*。
+不继承于其它类的类，称之为*基类*。
 
 > 注意  
 Swift 中的类并不是从一个通用的基类继承而来。如果你不为你定义的类指定一个超类的话，这个类就自动成为基类。
@@ -58,15 +59,15 @@ let someVehicle = Vehicle()
 
 ```swift
 print("Vehicle: \(someVehicle.description)")
-// Vehicle: traveling at 0.0 miles per hour
+// 打印 "Vehicle: traveling at 0.0 miles per hour"
 ```
 
 `Vehicle`类定义了一个通用特性的车辆类，实际上没什么用处。为了让它变得更加有用，需要完善它从而能够描述一个更加具体类型的车辆。
 
 <a name="subclassing"></a>
-## 子类生成（Subclassing）
+## 子类生成
 
-*子类生成（Subclassing）*指的是在一个已有类的基础上创建一个新的类。子类继承超类的特性，并且可以进一步完善。你还可以为子类添加新的特性。
+*子类生成*指的是在一个已有类的基础上创建一个新的类。子类继承超类的特性，并且可以进一步完善。你还可以为子类添加新的特性。
 
 为了指明某个类的超类，将超类名写在子类名的后面，用冒号分隔：
 
@@ -100,7 +101,7 @@ bicycle.hasBasket = true
 ```swift
 bicycle.currentSpeed = 15.0
 print("Bicycle: \(bicycle.description)")
-// Bicycle: traveling at 15.0 miles per hour
+// 打印 "Bicycle: traveling at 15.0 miles per hour"
 ```
 
 子类还可以继续被其它类继承，下面的示例为`Bicycle`创建了一个名为`Tandem`（双人自行车）的子类：
@@ -121,13 +122,13 @@ tandem.hasBasket = true
 tandem.currentNumberOfPassengers = 2
 tandem.currentSpeed = 22.0
 print("Tandem: \(tandem.description)")
-// Tandem: traveling at 22.0 miles per hour
+// 打印："Tandem: traveling at 22.0 miles per hour"
 ```
 
 <a name="overriding"></a>
-## 重写（Overriding）
+## 重写
 
-子类可以为继承来的实例方法（instance method），类方法（class method），实例属性（instance property），或下标（subscript）提供自己定制的实现（implementation）。我们把这种行为叫*重写（overriding）*。
+子类可以为继承来的实例方法，类方法，实例属性，或下标提供自己定制的实现。我们把这种行为叫*重写*。
 
 如果要重写某个特性，你需要在重写定义的前面加上`override`关键字。这么做，你就表明了你是想提供一个重写版本，而非错误地提供了一个相同的定义。意外的重写行为可能会导致不可预知的错误，任何缺少`override`关键字的重写都会在编译时被诊断为错误。
 
@@ -198,11 +199,11 @@ let car = Car()
 car.currentSpeed = 25.0
 car.gear = 3
 print("Car: \(car.description)")
-// Car: traveling at 25.0 miles per hour in gear 3
+// 打印 "Car: traveling at 25.0 miles per hour in gear 3"
 ```
 
 <a name="overriding_property_observers"></a>
-#### 重写属性观察器（Property Observer）
+#### 重写属性观察器
 
 你可以通过重写属性为一个继承来的属性添加属性观察器。这样一来，当继承来的属性值发生改变时，你就会被通知到，无论那个属性原本是如何实现的。关于属性观察器的更多内容，请看[属性观察器](../chapter2/10_Properties.html#property_observers)。
 
@@ -228,7 +229,7 @@ class AutomaticCar: Car {
 let automatic = AutomaticCar()
 automatic.currentSpeed = 35.0
 print("AutomaticCar: \(automatic.description)")
-// AutomaticCar: traveling at 35.0 miles per hour in gear 4
+// 打印 "AutomaticCar: traveling at 35.0 miles per hour in gear 4"
 ```
 
 <a name="preventing_overrides"></a>
