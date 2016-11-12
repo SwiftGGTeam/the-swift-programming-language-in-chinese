@@ -17,16 +17,18 @@
 
 >   2.2
 >   翻译：[saitjr](https://github.com/saitjr)，2016-04-11，[SketchK](https://github.com/SketchK) 2016-05-13
+> 
+> 3.0.1，shanks，2016-11-12
 
 
 
 本页包含内容：
 
-- [存储属性（Stored Properties）](#stored_properties)
-- [计算属性（Computed Properties）](#computed_properties)
-- [属性观察器（Property Observers）](#property_observers)
-- [全局变量和局部变量（Global and Local Variables）](#global_and_local_variables)
-- [类型属性（Type Properties）](#type_properties)
+- [存储属性](#stored_properties)
+- [计算属性](#computed_properties)
+- [属性观察器](#property_observers)
+- [全局变量和局部变量](#global_and_local_variables)
+- [类型属性](#type_properties)
 
 *属性*将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，而计算属性计算（不是存储）一个值。计算属性可以用于类、结构体和枚举，存储属性只能用于类和结构体。
 
@@ -77,7 +79,7 @@ rangeOfFourItems.firstValue = 6
 <a name="lazy_stored_properties"></a>
 ### 延迟存储属性
 
-延迟存储属性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延迟存储属性。
+*延迟存储属*性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延迟存储属性。
 
 > 注意  
 > 必须将延迟存储属性声明成变量（使用 `var` 关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。  
@@ -164,7 +166,7 @@ var square = Rect(origin: Point(x: 0.0, y: 0.0),
 let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// 输出 "square.origin is now at (10.0, 10.0)”
+// 打印 "square.origin is now at (10.0, 10.0)”
 ```
 
 这个例子定义了 3 个结构体来描述几何形状：
@@ -184,9 +186,9 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
 <a name="shorthand_setter_declaration"></a>
-### 便捷 setter 声明
+### 简化 setter 声明
 
-如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称 `newValue`。下面是使用了便捷 setter 声明的 `Rect` 结构体代码：
+如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称 `newValue`。下面是使用了简化 setter 声明的 `Rect` 结构体代码：
 
 ```swift
 struct AlternativeRect {
@@ -225,7 +227,7 @@ struct Cuboid {
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// 输出 "the volume of fourByFiveByTwo is 40.0"
+// 打印 "the volume of fourByFiveByTwo is 40.0"
 ```
 
 这个例子定义了一个名为 `Cuboid` 的结构体，表示三维空间的立方体，包含 `width`、`height` 和 `depth` 属性。结构体还有一个名为 `volume` 的只读计算属性用来返回立方体的体积。为 `volume` 提供 setter 毫无意义，因为无法确定如何修改 `width`、`height` 和 `depth` 三者的值来匹配新的 `volume`。然而，`Cuboid` 提供一个只读计算属性来让外部用户直接获取体积是很有用的。
@@ -291,7 +293,7 @@ stepCounter.totalSteps = 896
 >如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
 
 <a name="global_and_local_variables"></a>
-##全局变量和局部变量
+## 全局变量和局部变量
 
 计算属性和属性观察器所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
@@ -304,7 +306,7 @@ stepCounter.totalSteps = 896
 > 局部范围的常量或变量从不延迟计算。  
 
 <a name="type_properties"></a>
-##类型属性
+## 类型属性
 
 实例属性属于一个特定类型的实例，每创建一个实例，实例都拥有属于自己的一套属性值，实例之间的属性相互独立。
 
@@ -319,7 +321,7 @@ stepCounter.totalSteps = 896
 > 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用 `lazy` 修饰符。
 
 <a name="type_property_syntax"></a>
-###类型属性语法
+### 类型属性语法
 
 在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为全局（*global*）静态变量定义的。但是在 Swift 中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
 
@@ -353,20 +355,20 @@ class SomeClass {
 > 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟计算型实例属性的语法相同。  
 
 <a name="querying_and_setting_type_properties"></a>
-###获取和设置类型属性的值
+### 获取和设置类型属性的值
 
 跟实例属性一样，类型属性也是通过点运算符来访问。但是，类型属性是通过类型本身来访问，而不是通过实例。比如：
 
 ```swift
 print(SomeStructure.storedTypeProperty)
-// 输出 "Some value."
+// 打印 "Some value."
 SomeStructure.storedTypeProperty = "Another value."
 print(SomeStructure.storedTypeProperty)
-// 输出 "Another value.”
+// 打印 "Another value.”
 print(SomeEnumeration.computedTypeProperty)
-// 输出 "6"
+// 打印 "6"
 print(SomeClass.computedTypeProperty)
-// 输出 "27"
+// 打印 "27"
 ```
 
 下面的例子定义了一个结构体，使用两个存储型类型属性来表示两个声道的音量，每个声道具有 `0` 到 `10` 之间的整数音量。
