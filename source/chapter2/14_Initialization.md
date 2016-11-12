@@ -1,4 +1,4 @@
-# 构造过程（Initialization）
+# 构造过程
 -----------------
 
 > 1.0
@@ -14,7 +14,8 @@
 
 > 2.2
 > 翻译：[pmst](https://github.com/colourful987)
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14   
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
@@ -28,11 +29,11 @@
 - [通过闭包或函数设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
 
 
-构造过程是使用类、结构体或枚举类型的实例之前的准备过程。在新实例可用前必须执行这个过程，具体操作包括设置实例中每个存储型属性的初始值和执行其他必须的设置或初始化工作。
+*构造过程*是使用类、结构体或枚举类型的实例之前的准备过程。在新实例可用前必须执行这个过程，具体操作包括设置实例中每个存储型属性的初始值和执行其他必须的设置或初始化工作。
 
-通过定义构造器（`Initializers`）来实现构造过程，这些构造器可以看做是用来创建特定类型新实例的特殊方法。与 Objective-C 中的构造器不同，Swift 的构造器无需返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化。
+通过定义*构造器*来实现构造过程，这些构造器可以看做是用来创建特定类型新实例的特殊方法。与 Objective-C 中的构造器不同，Swift 的构造器无需返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化。
 
-类的实例也可以通过定义析构器（`deinitializer`）在实例释放之前执行特定的清除工作。想了解更多关于析构器的内容，请参考[析构过程](./15_Deinitialization.html)。
+类的实例也可以通过定义*析构器*在实例释放之前执行特定的清除工作。想了解更多关于析构器的内容，请参考[析构过程](./15_Deinitialization.html)。
 
 <a name="setting_initial_values_for_stored_properties"></a>
 ## 存储属性的初始赋值
@@ -42,7 +43,7 @@
 你可以在构造器中为存储型属性赋初值，也可以在定义属性时为其设置默认值。以下小节将详细介绍这两种方法。
 
 > 注意  
-当你为存储型属性设置默认值或者在构造器中为其赋值时，它们的值是被直接设置的，不会触发任何属性观察者（`property observers`）。
+当你为存储型属性设置默认值或者在构造器中为其赋值时，它们的值是被直接设置的，不会触发任何属性观察者。
 
 <a name="initializers"></a>
 ### 构造器
@@ -66,7 +67,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// 输出 "The default temperature is 32.0° Fahrenheit”
+// 打印 "The default temperature is 32.0° Fahrenheit”
 ```
 
 这个结构体定义了一个不带参数的构造器`init`，并在里面将存储型属性`temperature`的值初始化为`32.0`（华氏温度下水的冰点）。
@@ -77,7 +78,7 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
 如前所述，你可以在构造器中为存储型属性设置初始值。同样，你也可以在属性声明时为其设置默认值。
 
 > 注意  
-如果一个属性总是使用相同的初始值，那么为其设置一个默认值比每次都在构造器中赋值要好。两种方法的效果是一样的，只不过使用默认值让属性的初始化和声明结合得更紧密。使用默认值能让你的构造器更简洁、更清晰，且能通过默认值自动推导出属性的类型；同时，它也能让你充分利用默认构造器、构造器继承等特性（后续章节将讲到）。
+如果一个属性总是使用相同的初始值，那么为其设置一个默认值比每次都在构造器中赋值要好。两种方法的效果是一样的，只不过使用默认值让属性的初始化和声明结合得更紧密。使用默认值能让你的构造器更简洁、更清晰，且能通过默认值自动推导出属性的类型；同时，它也能让你充分利用默认构造器、构造器继承等特性，后续章节将讲到。
 
 你可以使用更简单的方式在定义结构体`Fahrenheit`时为属性`temperature`设置默认值：
 
@@ -112,7 +113,7 @@ struct Celsius {
 let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
 // boilingPointOfWater.temperatureInCelsius 是 100.0
 let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-// freezingPointOfWater.temperatureInCelsius 是 0.0”
+// freezingPointOfWater.temperatureInCelsius 是 0.0
 ```
 
 第一个构造器拥有一个构造参数，其外部名字为`fromFahrenheit`，内部名字为`fahrenheit`；第二个构造器也拥有一个构造参数，其外部名字为`fromKelvin`，内部名字为`kelvin`。这两个构造器都将唯一的参数值转换成摄氏温度值，并保存在属性`temperatureInCelsius`中。
@@ -187,7 +188,7 @@ let bodyTemperature = Celsius(37.0)
 <a name="optional_property_types"></a>
 ### 可选属性类型
 
-如果你定制的类型包含一个逻辑上允许取值为空的存储型属性——无论是因为它无法在初始化时赋值，还是因为它在之后某个时间点可以赋值为空——你都需要将它定义为`可选类型`（optional type）。可选类型的属性将自动初始化为`nil`，表示这个属性是有意在初始化时设置为空的。
+如果你定制的类型包含一个逻辑上允许取值为空的存储型属性——无论是因为它无法在初始化时赋值，还是因为它在之后某个时间点可以赋值为空——你都需要将它定义为`可选类型`。可选类型的属性将自动初始化为`nil`，表示这个属性是有意在初始化时设置为空的。
 
 下面例子中定义了类`SurveyQuestion`，它包含一个可选字符串属性`response`：
 
@@ -204,11 +205,11 @@ class SurveyQuestion {
 }
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
-// 输出 "Do you like cheese?"
+// 打印 "Do you like cheese?"
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
-调查问题的答案在回答前是无法确定的，因此我们将属性`response`声明为`String?`类型，或者说是`可选字符串类型`（optional String）。当`SurveyQuestion`实例化时，它将自动赋值为`nil`，表明此字符串暂时还没有值。
+调查问题的答案在回答前是无法确定的，因此我们将属性`response`声明为`String?`类型，或者说是`可选字符串类型`。当`SurveyQuestion`实例化时，它将自动赋值为`nil`，表明此字符串暂时还没有值。
 
 <a name="assigning_constant_properties_during_initialization"></a>
 ### 构造过程中常量属性的修改
@@ -233,7 +234,7 @@ class SurveyQuestion {
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
-// 输出 "How about beets?"
+// 打印 "How about beets?"
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
@@ -356,11 +357,11 @@ Swift 为类类型提供了两种构造器来确保实例中所有存储型属�
 <a name="designated_initializers_and_convenience_initializers"></a>
 ### 指定构造器和便利构造器
 
-*指定构造器*（designated initializers）是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类的构造器来实现父类的初始化。
+*指定构造器*是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类的构造器来实现父类的初始化。
 
 每一个类都必须拥有至少一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。具体内容请参考后续章节[构造器的自动继承](#automatic_initializer_inheritance)。
 
-*便利构造器*（convenience initializers）是类中比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。
+*便利构造器*是类中比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。
 
 你应当只在必要的时候为类提供便利构造器，比方说某种情况下通过使用便利构造器来快捷调用某个指定构造器，能够节省更多开发时间并让类的构造过程更清晰明了。
 
@@ -392,15 +393,15 @@ convenience init(parameters) {
 指定构造器必须调用其直接父类的的指定构造器。
 
 ##### 规则 2
-便利构造器必须调用同一类中定义的其它构造器。
+便利构造器必须调用*同*类中定义的其它构造器。
 
 ##### 规则 3
 便利构造器必须最终导致一个指定构造器被调用。
 
 一个更方便记忆的方法是：
 
-- 指定构造器必须总是向上代理
-- 便利构造器必须总是横向代理
+- 指定构造器必须总是*向上*代理
+- 便利构造器必须总是*横向*代理
 
 这些规则可以通过下面图例来说明：
 
@@ -545,7 +546,7 @@ class Bicycle: Vehicle {
 ```swift
 let bicycle = Bicycle()
 print("Bicycle: \(bicycle.description)")
-// Bicycle: 2 wheel(s)
+// 打印 "Bicycle: 2 wheel(s)"
 ```
 
 > 注意  
