@@ -1,4 +1,4 @@
-# 自动引用计数（Automatic Reference Counting）
+# 自动引用计数
 -----------------
 
 > 1.0
@@ -13,7 +13,8 @@
 > 校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank) ，2016-01-23  
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14   
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
@@ -24,9 +25,9 @@
 - [闭包引起的循环强引用](#strong_reference_cycles_for_closures)
 - [解决闭包引起的循环强引用](#resolving_strong_reference_cycles_for_closures)
 
-Swift 使用自动引用计数（ARC）机制来跟踪和管理你的应用程序的内存。通常情况下，Swift 内存管理机制会一直起作用，你无须自己来考虑内存的管理。ARC 会在类的实例不再被使用时，自动释放其占用的内存。
+Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程序的内存。通常情况下，Swift 内存管理机制会一直起作用，你无须自己来考虑内存的管理。ARC 会在类的实例不再被使用时，自动释放其占用的内存。
 
-然而在少数情况下，为了能帮助你管理内存，ARC 需要更多的，代码之间关系的信息。本章描述了这些情况，并且为你示范怎样才能使 ARC 来管理你的应用程序的所有内存。
+然而在少数情况下，为了能帮助你管理内存，ARC 需要更多的，代码之间关系的信息。本章描述了这些情况，并且为你示范怎样才能使 ARC 来管理你的应用程序的所有内存。在 Swift 使用 ARC 与在 Obejctive-C 中使用 ARC 非常类似，具体请参考[过渡到 ARC 的发布说明](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226)
 
 > 注意  
 引用计数仅仅应用于类的实例。结构体和枚举类型是值类型，不是引用类型，也不是通过引用的方式存储和传递。
@@ -76,7 +77,7 @@ var reference3: Person?
 
 ```swift
 reference1 = Person(name: "John Appleseed")
-// prints "John Appleseed is being initialized”
+// 打印 "John Appleseed is being initialized”
 ```
 
 应当注意到当你调用`Person`类的构造函数的时候，`“John Appleseed is being initialized”`会被打印出来。由此可以确定构造函数被执行。
@@ -111,7 +112,7 @@ reference3 = nil
 
 在上面的例子中，ARC 会跟踪你所新创建的`Person`实例的引用数量，并且会在`Person`实例不再被需要时销毁它。
 
-然而，我们可能会写出一个类实例的强引用数永远不能变成`0`的代码。如果两个类实例互相持有对方的强引用，因而每个实例都让对方一直存在，就是这种情况。这就是所谓的循环强引用。
+然而，我们可能会写出一个类实例的强引用数*永远不能*变成`0`的代码。如果两个类实例互相持有对方的强引用，因而每个实例都让对方一直存在，就是这种情况。这就是所谓的*循环强引用*。
 
 你可以通过定义类之间的关系为弱引用或无主引用，以替代强引用，从而解决循环强引用的问题。具体的过程在[解决类实例之间的循环强引用](#resolving_strong_reference_cycles_between_class_instances)中有描述。不管怎样，在你学习怎样解决循环强引用之前，很有必要了解一下它是怎样产生的。
 
@@ -124,9 +125,7 @@ class Person {
     var apartment: Apartment?
     deinit { print("\(name) is being deinitialized") }
 }
-```
 
-```swift
 class Apartment {
     let unit: String
     init(unit: String) { self.unit = unit }
@@ -141,7 +140,7 @@ class Apartment {
 
 这两个类都定义了析构函数，用以在类实例被析构的时候输出信息。这让你能够知晓`Person`和`Apartment`的实例是否像预期的那样被销毁。
 
-接下来的代码片段定义了两个可选类型的变量`john`和`unit4A`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选的优点：
+接下来的代码片段定义了两个可选类型的变量`john`和`unit4A`，并分别被设定为下面的`Apartment`和`Person`的实例。这两个变量都被初始化为`nil`，这正是可选类型的优点：
 
 ```swift
 var john: Person?
@@ -190,23 +189,25 @@ unit4A = nil
 
 Swift 提供了两种办法用来解决你在使用类的属性时所遇到的循环强引用问题：弱引用（weak reference）和无主引用（unowned reference）。
 
-弱引用和无主引用允许循环引用中的一个实例引用另外一个实例而不保持强引用。这样实例能够互相引用而不产生循环强引用。
+弱引用和无主引用允许循环引用中的一个实例引用而另外一个实例*不*保持强引用。这样实例能够互相引用而不产生循环强引用。
 
-对于生命周期中会变为`nil`的实例使用弱引用。相反地，对于初始化赋值后再也不会被赋值为`nil`的实例，使用无主引用。
+当其他的实例有更短的生命周期时，使用弱引用，也就是说，当其他实例析构在先时。在上面公寓的例子中，很显然一个公寓在它的生命周期内会在某个时间段没有它的主人，所以一个弱引用就加在公寓类里面，避免循环引用。相比之下，当其他实例有相同的或者更长生命周期时，请使用无主引用。
 
 <a name="weak_references"></a>
 ### 弱引用
 
-弱引用不会对其引用的实例保持强引用，因而不会阻止 ARC 销毁被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上`weak`关键字表明这是一个弱引用。
+*弱引用*不会对其引用的实例保持强引用，因而不会阻止 ARC 销毁被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上`weak`关键字表明这是一个弱引用。
 
-在实例的生命周期中，如果某些时候引用没有值，那么弱引用可以避免循环强引用。如果引用总是有值，则可以使用无主引用，在[无主引用](#unowned_references)中有描述。在上面`Apartment`的例子中，一个公寓的生命周期中，有时是没有“居民”的，因此适合使用弱引用来解决循环强引用。
+因为弱引用不会保持所引用的实例，即使引用存在，实例也有可能被销毁。因此，ARC 会在引用的实例被销毁后自动将其赋值为`nil`。并且因为弱引用可以允许它们的值在运行时被赋值为`nil`，所以它们会被定义为可选类型变量，而不是常量。
+
+你可以像其他可选值一样，检查弱引用的值是否存在，你将永远不会访问已销毁的实例的引用。
 
 > 注意  
-> 弱引用必须被声明为变量，表明其值能在运行时被修改。弱引用不能被声明为常量。  
+> 当 ARC 设置弱引用为`nil`时，属性观察不会被触发。 
 
-因为弱引用可以没有值，你必须将每一个弱引用声明为可选类型。在 Swift 中，推荐使用可选类型描述可能没有值的类型。
 
-因为弱引用不会保持所引用的实例，即使引用存在，实例也有可能被销毁。因此，ARC 会在引用的实例被销毁后自动将其赋值为`nil`。你可以像其他可选值一样，检查弱引用的值是否存在，你将永远不会访问已销毁的实例的引用。
+
+
 
 下面的例子跟上面`Person`和`Apartment`的例子一致，但是有一个重要的区别。这一次，`Apartment`的`tenant`属性被声明为弱引用：
 
@@ -217,9 +218,7 @@ class Person {
     var apartment: Apartment?
     deinit { print("\(name) is being deinitialized") }
 }
-```
 
-```swift
 class Apartment {
     let unit: String
     init(unit: String) { self.unit = unit }
@@ -275,13 +274,13 @@ unit4A = nil
 <a name="unowned_references"></a>
 ### 无主引用
 
-和弱引用类似，无主引用不会牢牢保持住引用的实例。和弱引用不同的是，无主引用是永远有值的。因此，无主引用总是被定义为非可选类型（non-optional type）。你可以在声明属性或者变量时，在前面加上关键字`unowned`表示这是一个无主引用。
+和弱引用类似，*无主引用*不会牢牢保持住引用的实例。和弱引用不同的是，无主引用在其他实例有相同或者更长的生命周期时使用。你可以在声明属性或者变量时，在前面加上关键字`unowned`表示这是一个无主引用。
 
-由于无主引用是非可选类型，你不需要在使用它的时候将它展开。无主引用总是可以被直接访问。不过 ARC 无法在实例被销毁后将无主引用设为`nil`，因为非可选类型的变量不允许被赋值为`nil`。
+无主引用通常都被期望拥有值。不过 ARC 无法在实例被销毁后将无主引用设为`nil`，因为非可选类型的变量不允许被赋值为`nil`。
 
-> 注意  
-> 如果你试图在实例被销毁后，访问该实例的无主引用，会触发运行时错误。使用无主引用，你必须确保引用始终指向一个未销毁的实例。  
-> 还需要注意的是如果你试图访问实例已经被销毁的无主引用，Swift 确保程序会直接崩溃，而不会发生无法预期的行为。所以你应当避免这样的事情发生。  
+> 重要   
+> 使用无主引用，你*必须*确保引用始终指向一个未销毁的实例。  
+> 如果你试图在实例被销毁后，访问该实例的无主引用，会触发运行时错误。
 
 下面的例子定义了两个类，`Customer`和`CreditCard`，模拟了银行客户和客户的信用卡。这两个类中，每一个都将另外一个类的实例作为自身的属性。这种关系可能会造成循环强引用。
 
@@ -350,8 +349,15 @@ john = nil
 
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
 
+> 注意  
+> The examples above show how to use safe unowned references. Swift also provides unsafe unowned references for cases where you need to disable runtime safety checks—for example, for performance reasons. As with all unsafe operations, you take on the responsiblity for checking that code for safety.
+以上例子展示如何使用一个安全的无主引用，Swift 也提供了*不安全*的无主引用，当你需要禁用运行时的安全检查时-举个例子
+You indicate an unsafe unowned reference by writing unowned(unsafe). If you try to access an unsafe unowned reference after the instance that it refers to is deallocated, your program will try to access the memory location where the instance used to be, which is an unsafe operation.
+
+
+
 <a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
-###无主引用以及隐式解析可选属性
+### 无主引用以及隐式解析可选属性
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
 
@@ -374,9 +380,7 @@ class Country {
         self.capitalCity = City(name: capitalName, country: self)
     }
 }
-```
 
-```swift
 class City {
     let name: String
     unowned let country: Country
@@ -389,9 +393,9 @@ class City {
 
 为了建立两个类的依赖关系，`City`的构造函数接受一个`Country`实例作为参数，并且将实例保存到`country`属性。
 
-`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化后，`Country`的构造函数才能把`self`传给`City`的构造函数。（在[两段式构造过程](./14_Initialization.html#two_phase_initialization)中有具体描述）
+`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化后，`Country`的构造函数才能把`self`传给`City`的构造函数。在[两段式构造过程](./14_Initialization.html#two_phase_initialization)中有具体描述。
 
-为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这意味着像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。（在[隐式解析可选类型](./01_The_Basics.html#implicityly_unwrapped_optionals)中有描述）
+为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这意味着像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开它的值就能访问它。在[隐式解析可选类型](./01_The_Basics.html#implicityly_unwrapped_optionals)中有描述。
 
 由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这意味着一旦`name`属性被赋值后，`Country`的构造函数就能引用并传递隐式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
 
@@ -406,7 +410,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 在上面的例子中，使用隐式解析可选值意味着满足了类的构造函数的两个构造阶段的要求。`capitalCity`属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
 
 <a name="strong_reference_cycles_for_closures"></a>
-##闭包引起的循环强引用
+## 闭包引起的循环强引用
 
 前面我们看到了循环强引用是在两个类实例属性互相保持对方的强引用时产生的，还知道了如何用弱引用和无主引用来打破这些循环强引用。
 
@@ -444,7 +448,7 @@ class HTMLElement {
 }
 ```
 
-`HTMLElement`类定义了一个`name`属性来表示这个元素的名称，例如代表段落的`“p”`，或者代表换行的`“br”`。`HTMLElement`还定义了一个可选属性`text`，用来设置 HTML 元素呈现的文本。
+`HTMLElement`类定义了一个`name`属性来表示这个元素的名称，例如代表头部元素的`"h1"`，代表段落的`“p”`，或者代表换行的`“br”`。`HTMLElement`还定义了一个可选属性`text`，用来设置 HTML 元素呈现的文本。
 
 除了上面的两个属性，`HTMLElement`还定义了一个`lazy`属性`asHTML`。这个属性引用了一个将`name`和`text`组合成 HTML 字符串片段的闭包。该属性是`Void -> String`类型，或者可以理解为“一个没有参数，返回`String`的函数”。
 
@@ -498,7 +502,7 @@ paragraph = nil
 注意，`HTMLElement`的析构函数中的消息并没有被打印，证明了`HTMLElement`实例并没有被销毁。
 
 <a name="resolving_strong_reference_cycles_for_closures"></a>
-##解决闭包引起的循环强引用
+## 解决闭包引起的循环强引用
 
 在定义闭包时同时定义捕获列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。捕获列表定义了闭包体内捕获一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个捕获的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
 
@@ -506,7 +510,7 @@ paragraph = nil
 Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod()`（而不只是`someProperty`或`someMethod()`）。这提醒你可能会一不小心就捕获了`self`。
 
 <a name="defining_a_capture_list"></a>
-###定义捕获列表
+### 定义捕获列表
 
 捕获列表中的每一项都由一对元素组成，一个元素是`weak`或`unowned`关键字，另一个元素是类实例的引用（例如`self`）或初始化过的变量（如`delegate = self.delegate!`）。这些项在方括号中用逗号分开。
 
@@ -529,7 +533,7 @@ lazy var someClosure: Void -> String = {
 ```
 
 <a name="weak_and_unowned_references"></a>
-###弱引用和无主引用
+### 弱引用和无主引用
 
 在闭包和捕获的实例总是互相引用并且总是同时销毁时，将闭包内的捕获定义为`无主引用`。
 
