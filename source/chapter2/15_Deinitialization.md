@@ -1,4 +1,4 @@
-# 析构过程（Deinitialization）
+# 析构过程
 ---------------------------
 
 > 1.0
@@ -12,7 +12,8 @@
 > 校对：[shanks](http://codebuild.me)，2015-10-31
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14   
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
@@ -22,7 +23,7 @@
 *析构器*只适用于类类型，当一个类的实例被释放之前，析构器会被立即调用。析构器用关键字`deinit`来标示，类似于构造器要用`init`来标示。
 
 <a name="how_deinitialization_works"></a>
-##析构过程原理
+## 析构过程原理
 
 Swift 会自动释放不再需要的实例以释放资源。如[自动引用计数](./16_Automatic_Reference_Counting.html)章节中所讲述，Swift 通过`自动引用计数（ARC）`处理实例的内存管理。通常当你的实例被释放时不需要手动地去清理。但是，当使用自己的资源时，你可能需要进行一些额外的清理。例如，如果创建了一个自定义的类来打开一个文件，并写入一些数据，你可能需要在类实例被释放之前手动去关闭该文件。
 
@@ -39,29 +40,29 @@ deinit {
 因为直到实例的析构器被调用后，实例才会被释放，所以析构器可以访问实例的所有属性，并且可以根据那些属性可以修改它的行为（比如查找一个需要被关闭的文件）。
 
 <a name="deinitializers_in_action"></a>
-##析构器实践
+## 析构器实践
 
 这是一个析构器实践的例子。这个例子描述了一个简单的游戏，这里定义了两种新类型，分别是`Bank`和`Player`。`Bank`类管理一种虚拟硬币，确保流通的硬币数量永远不可能超过 10,000。在游戏中有且只能有一个`Bank`存在，因此`Bank`用类来实现，并使用类型属性和类型方法来存储和管理其当前状态。
 
 ```swift
 class Bank {
     static var coinsInBank = 10_000
-    static func vendCoins(numberOfCoinsRequested: Int) -> Int {
+    static func distribute(coins numberOfCoinsRequested: Int) -> Int {
         let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
         coinsInBank -= numberOfCoinsToVend
         return numberOfCoinsToVend
     }
-    static func receiveCoins(coins: Int) {
+    static func receive(coins: Int) {
         coinsInBank += coins
     }
 }
 ```
 
-`Bank`使用`coinsInBank`属性来跟踪它当前拥有的硬币数量。`Bank`还提供了两个方法，`vendCoins(_:)`和`receiveCoins(_:)`，分别用来处理硬币的分发和收集。
+`Bank`使用`coinsInBank`属性来跟踪它当前拥有的硬币数量。`Bank`还提供了两个方法，`distribute(coins:)`和`receive(coins:)`，分别用来处理硬币的分发和收集。
 
-`vendCoins(_:)`方法在`Bank`对象分发硬币之前检查是否有足够的硬币。如果硬币不足，`Bank`对象会返回一个比请求时小的数字（如果`Bank`对象中没有硬币了就返回`0`）。`vendCoins`方法返回一个整型值，表示提供的硬币的实际数量。
+`distribute(coins:)`方法在`Bank`对象分发硬币之前检查是否有足够的硬币。如果硬币不足，`Bank`对象会返回一个比请求时小的数字（如果`Bank`对象中没有硬币了就返回`0`）。此方法返回一个整型值，表示提供的硬币的实际数量。
 
-`receiveCoins(_:)`方法只是将`Bank`对象接收到的硬币数目加回硬币存储中。
+`receive(coins:)`方法只是将`Bank`实例接收到的硬币数目加回硬币存储中。
 
 `Player`类描述了游戏中的一个玩家。每一个玩家在任意时间都有一定数量的硬币存储在他们的钱包中。这通过玩家的`coinsInPurse`属性来表示：
 
@@ -69,20 +70,20 @@ class Bank {
 class Player {
     var coinsInPurse: Int
     init(coins: Int) {
-        coinsInPurse = Bank.vendCoins(coins)
+        coinsInPurse = Bank.distribute(coins: coins)
     }
-    func winCoins(coins: Int) {
-        coinsInPurse += Bank.vendCoins(coins)
+    func win(coins: Int) {
+        coinsInPurse += Bank.distribute(coins: coins)
     }
     deinit {
-        Bank.receiveCoins(coinsInPurse)
+        Bank.receive(coins: coinsInPurse)
     }
 }
 ```
 
 每个`Player`实例在初始化的过程中，都从`Bank`对象获取指定数量的硬币。如果没有足够的硬币可用，`Player`实例可能会收到比指定数量少的硬币.
 
-`Player`类定义了一个`winCoins(_:)`方法，该方法从`Bank`对象获取一定数量的硬币，并把它们添加到玩家的钱包。`Player`类还实现了一个析构器，这个析构器在`Player`实例释放前被调用。在这里，析构器的作用只是将玩家的所有硬币都返还给`Bank`对象：
+`Player`类定义了一个`win(coins:)`方法，该方法从`Bank`对象获取一定数量的硬币，并把它们添加到玩家的钱包。`Player`类还实现了一个析构器，这个析构器在`Player`实例释放前被调用。在这里，析构器的作用只是将玩家的所有硬币都返还给`Bank`对象：
 
 ```swift
 var playerOne: Player? = Player(coins: 100)
@@ -97,7 +98,7 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 因为`playerOne`是可选的，所以访问其`coinsInPurse`属性来打印钱包中的硬币数量时，使用感叹号（`!`）来解包：
 
 ```swift
-playerOne!.winCoins(2_000)
+playerOne!.win(coins: 2_000)
 print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
 // 输出 "PlayerOne won 2000 coins & now has 2100 coins"
 print("The bank now only has \(Bank.coinsInBank) coins left")
