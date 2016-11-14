@@ -992,9 +992,9 @@ There must not be whitespace between ``>=`` and the version number.
    !!           ^ ~
    !!-
    -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
-          print(4)
+          print(5)
       #endif
-   << 4
+   << 5
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
