@@ -205,10 +205,6 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 > 注意  
 > 当 ARC 设置弱引用为`nil`时，属性观察不会被触发。 
 
-
-
-
-
 下面的例子跟上面`Person`和`Apartment`的例子一致，但是有一个重要的区别。这一次，`Apartment`的`tenant`属性被声明为弱引用：
 
 ```swift
@@ -350,11 +346,8 @@ john = nil
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
 
 > 注意  
-> The examples above show how to use safe unowned references. Swift also provides unsafe unowned references for cases where you need to disable runtime safety checks—for example, for performance reasons. As with all unsafe operations, you take on the responsiblity for checking that code for safety.
-以上例子展示如何使用一个安全的无主引用，Swift 也提供了*不安全*的无主引用，当你需要禁用运行时的安全检查时-举个例子
-You indicate an unsafe unowned reference by writing unowned(unsafe). If you try to access an unsafe unowned reference after the instance that it refers to is deallocated, your program will try to access the memory location where the instance used to be, which is an unsafe operation.
-
-
+>上面的例子展示了如何使用安全的无主引用。对于需要禁用运行时的安全检查的情况（例如，出于性能方面的原因），Swift还提供了不安全的无主引用。与所有不安全的操作一样，你需要负责检查代码以确保其安全性。
+>你可以通过`unowned(unsafe)`来声明不安全无主引用。如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例之前所在的内存地址，这是一个不安全的操作。
 
 <a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
 ### 无主引用以及隐式解析可选属性
