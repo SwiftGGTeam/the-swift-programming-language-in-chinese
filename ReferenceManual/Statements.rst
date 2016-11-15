@@ -961,7 +961,8 @@ Platform condition    Valid arguments
    in the file lib/Basic/LangOptions.cpp.
 
 The version number for the ``swift()`` platform condition
-consists of a major and minor number, separated by a dot (``.``).
+consists of a major number, optional minor number, optional patch number, and so on,
+with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
 
 .. note::
@@ -984,12 +985,16 @@ There must not be whitespace between ``>=`` and the version number.
           print(3)
       #endif
    -> #if swift(>= 2.1)
-          print(1)
+          print(4)
       #endif
    !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
    !! #if swift(>= 2.1)
    !!           ^ ~
    !!-
+   -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
+          print(5)
+      #endif
+   << 5
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
@@ -1054,7 +1059,8 @@ have the following form:
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
-    swift-version --> decimal-digits ``.`` decimal-digits
+    swift-version --> decimal-digits swift-version-continuation-OPT
+    swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
 
 .. Testing notes:
 
