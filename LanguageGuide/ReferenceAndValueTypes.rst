@@ -195,8 +195,6 @@ use a class.
 When To Use a Value Type
 ------------------------
 
-.. XXX Re-title to be about value types.
-
 If you don't need your custom data construct
 to have reference semantics
 for any of the reasons discussed above,
@@ -204,6 +202,8 @@ use a structure.
 In general,
 this means you should use structures by default,
 and use classes in those special cases discussed above.
+
+.. XXX Lumpy outline...  This paragraph should probably fold into the next section.
 
 .. _ChoosingBetweenClassesAndStructures_WhyToUseAStructure:
 

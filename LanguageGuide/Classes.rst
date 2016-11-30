@@ -3,9 +3,6 @@ Classes
 
 .. XXX As in structs chapter, scrub for imperative -> indicative
 
-.. XXX Should we re-order chapters to be Struct, Class, Enum?
-   (like we did for the WWDC 2016 talk)
-
 :newTerm:`Classes` in Swift are composed
 of many of the same pieces as structures.
 .. XXX adjust wording -- same pieces...?  same functionality...?
