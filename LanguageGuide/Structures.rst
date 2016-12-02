@@ -183,9 +183,10 @@ This means that any structure instances you create ---
 and any value types you give them as properties ---
 are always copied when they are passed around in your code.
 
-Consider this example:
-
-.. XXX set up context before the listing.
+For example, consider the following code
+which keeps track of the temperature of a room,
+such as a kitchen,
+and the temperature of the oven in that room.
 
 .. testcode:: structures
 
@@ -194,32 +195,20 @@ Consider this example:
     -> var ovenTemperature = roomTemperature
     << // ovenTemperature : Temperature = REPL.Temperature(celsius: 21.0)
 
-The example above declares a variable called ``roomTemperature``
-to keep track of the current temperature of a room.
-``roomTemperature`` is set to a ``Temperature`` instance initialized
+The example above declares a variable called ``roomTemperature``,
+which is set to a ``Temperature`` instance initialized
 with a typical ambient room temperature of ``21.0`` degrees Celsius.
-
-.. XXX rewrite imperitive -> indicative
-
-Suppose this room is a kitchen
-and contains an oven.
-To keep track of the oven's temperature,
-declare the ``ovenTemperature`` variable and
-set it to the current value of ``roomTemperature``.
-Initially setting ``ovenTemperature`` to ``roomTemperature``
-models the oven temperature when
-the oven is turned off
-and at the same temperature as the room.
+It also declares a variable called ``ovenTemperature`` ---
+because the oven is turned off,
+its temperature is the same as the room's temperature.
 Because ``Temperature`` is a structure, a *copy*
 of the existing ``roomTemperature`` instance is made,
 and this new copy is assigned to ``ovenTemperature``.
 Even though ``roomTemperature`` and ``ovenTemperature``
 have the same value for their ``celsius`` properties,
 they are two different instances.
-You can change one without affecting the other.
-
-You can change ``ovenTemperature`` to get the oven ready for cooking
-and ``roomTemperature`` remains unchanged:
+You can change ``ovenTemperature`` to get the oven ready for cooking,
+but ``roomTemperature`` remains unchanged:
 
 .. testcode:: structures
 
@@ -229,21 +218,7 @@ and ``roomTemperature`` remains unchanged:
     -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is still 21.0 degrees Celsius
 
-When ``ovenTemperature`` is given the current value of ``roomTemperature``,
-the value stored in ``roomTemperature``
-is copied into the new ``ovenTemperature`` instance.
-The end result is two completely separate instances
-that contain the same numeric value.
-Because they are separate instances,
-setting ``ovenTemperature.celsius`` to a new value
-does not affect the ``celsius`` property stored
-in ``roomTemperature``.
-
 .. XXX diagram showing (lack of) shared mutable state
-
-For an in-depth discussion of value types
-and when to use them,
-see :doc:`ReferenceAndValueTypes`.
 
 .. note::
 
@@ -263,3 +238,7 @@ see :doc:`ReferenceAndValueTypes`.
 
 .. XXX Add discussion about how you get COW on your own types by making them out of stdlib types;
    you can build it from scratch if needed too.
+
+For an in-depth discussion of value types
+and when to use them,
+see :doc:`ReferenceAndValueTypes`.
