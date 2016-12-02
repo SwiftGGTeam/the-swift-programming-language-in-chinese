@@ -120,12 +120,12 @@ For information on structure initialization, see :doc:`Initialization`.
 
 .. _Structures_AccessingPropertiesOfStructures:
 
-Accessing Properties of Structures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Accessing Properties and Methods of Structures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can access a property of a structure instance using dot syntax
+You can access a property or a method of a structure instance using dot syntax
 by writing the name of the instance,
-followed by a period (``.``) and the name of the property:
+followed by a period (``.``) and the name of the property or method:
 
 .. testcode:: structures
 
@@ -155,9 +155,6 @@ with all properties initialized to their default values.
 The ``bodyTemperature`` variable's ``celsius`` property is set,
 and then its ``celsius`` and ``fahrenheit`` properties are accessed
 to print their values.
-
-.. XXX same syntax for method access --
-   should we add a brief mention of methods like we have for properties?
 
 .. _Structures_StructuresAreValueTypes:
 
