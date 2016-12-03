@@ -175,14 +175,14 @@ integers, floating-point numbers, Booleans, strings, arrays, and dictionaries --
 are value types,
 and are implemented as structures.
 
-All structures are value types in Swift.
+Custom structures
+that you build on top of existing standard library value types
+are also value types.
 This means that any structure instances you create ---
 and any value types you give them as properties ---
-are always copied when they are passed around in your code.
-
+are copied when they are passed around in your code.
 For example, consider the following code
-which keeps track of the temperature of a room,
-such as a kitchen,
+which keeps track of the temperature of a room
 and the temperature of the oven in that room.
 
 .. testcode:: structures
@@ -231,10 +231,25 @@ but ``roomTemperature`` remains unchanged:
    as Swift needs to copy a structure instance
    only if you mutate it.
 
-.. XXX Not always true -- "big" variable sized things like strings and array do this
+   .. XXX Not always true -- "big" variable sized things like strings and array do this
 
-.. XXX Add discussion about how you get COW on your own types by making them out of stdlib types;
-   you can build it from scratch if needed too.
+   Structures whose properties are structures from the standard library
+   get copy-on-write behavior implemented for them.
+   However, if you declare structures
+   that have a property whose type is a class,
+   you need to do some additional work to copy the instance of the class
+   when the instance of the structure is changed.
+   For more information, see the
+   `isKnownUniquelyReferenced(_:) <https://developer.apple.com/reference/swift/2430721-isknownuniquelyreferenced>`_ function.
+
+   .. FIXME: It would be much better to have the function name
+      actually in code voice.
+      I haven't found any way to make that work with RST's link markup.
+
+   .. No full example here because it's too complicated.
+      You need a willSet at every point where the struct can be mutated,
+      and then inside it you have to copy the class property
+      if it isn't uniquely referenced.
 
 For an in-depth discussion of value types
 and when to use them,
