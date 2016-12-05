@@ -67,7 +67,8 @@ Computed properties calculate a value rather than storing it.
 The degrees in Fahrenheit of a ``Temperature``
 can always be determined from its stored ``celsius`` property,
 so there is no need to store a second value for ``fahrenheit``.
-For more on stored and computed properties, see :doc:`Properties`.
+For more information about stored and computed properties,
+see :doc:`Properties`.
 
 The ``celsius`` property is inferred to be of type ``Double``
 because of its initial floating-point value of ``0.0``.
@@ -121,8 +122,8 @@ For information on structure initialization, see :doc:`Initialization`.
 Accessing Properties and Methods of Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can access a property or a method of a structure instance using dot syntax
-by writing the name of the instance,
+You access a property or a method of a structure instance using dot syntax.
+You write the name of the instance,
 followed by a period (``.``) and the name of the property or method:
 
 .. testcode:: structures
