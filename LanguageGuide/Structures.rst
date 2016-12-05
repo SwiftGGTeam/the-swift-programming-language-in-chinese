@@ -37,17 +37,15 @@ definition within a pair of braces:
            // structure definition goes here
        }
     
-.. note::
-
-   Whenever you define a new structure,
-   you define a brand new Swift type.
-   Give types ``UpperCamelCase`` names
-   (such as ``SomeStructure`` here)
-   to match the capitalization of standard Swift types
-   (such as ``String``, ``Int``, and ``Bool``).
-   Conversely, give properties and methods ``lowerCamelCase`` names
-   (such as ``someProperty`` and ``someMethod``)
-   to differentiate them from type names.
+When you define a structure,
+you create a brand new Swift type.
+Give types ``UpperCamelCase`` names,
+such as ``SomeStructure`` here,
+to match the capitalization of standard Swift types
+such as ``String``, ``Int``, and ``Bool``.
+Conversely, give properties and methods ``lowerCamelCase`` names,
+such as ``someProperty`` and ``someMethod``,
+to differentiate them from type names.
 
 Here is an example of a structure definition:
 
