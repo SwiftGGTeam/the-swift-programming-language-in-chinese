@@ -886,7 +886,7 @@ use a ``catch`` clause with a pattern that matches all errors,
 such as a wildcard pattern (``_``).
 If a ``catch`` clause does not specify a pattern,
 the ``catch`` clause matches and binds any error to a local constant named ``error``.
-For more information about the pattens you can use in a ``catch`` clause,
+For more information about the patterns you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
 
 To see an example of how to use a ``do`` statement with several ``catch`` clauses,
