@@ -255,7 +255,7 @@ let strings = numbers.map {
 
 Swift 中，可以捕获值的闭包的最简单形式是嵌套函数，也就是定义在其他函数的函数体内的函数。嵌套函数可以捕获其外部函数所有的参数以及定义的常量和变量。
 
-举个例子，这有一个叫做 `makeIncrementor` 的函数，其包含了一个叫做 `incrementor` 的嵌套函数。嵌套函数 `incrementor()` 从上下文中捕获了两个值，`runningTotal` 和 `amount`。捕获这些值之后，`makeIncrementor` 将 `incrementor` 作为闭包返回。每次调用 `incrementor` 时，其会以 `amount` 作为增量增加 `runningTotal` 的值。
+举个例子，这有一个叫做 `makeIncrementer` 的函数，其包含了一个叫做 `incrementer` 的嵌套函数。嵌套函数 `incrementer()` 从上下文中捕获了两个值，`runningTotal` 和 `amount`。捕获这些值之后，`makeIncrementer` 将 `incrementer` 作为闭包返回。每次调用 `incrementer` 时，其会以 `amount` 作为增量增加 `runningTotal` 的值。
 
 ```swift
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
@@ -268,11 +268,11 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-`makeIncrementor` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看[函数类型作为返回类型](./06_Functions.html#function_types_as_return_types)。
+`makeIncrementer` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看[函数类型作为返回类型](./06_Functions.html#function_types_as_return_types)。
 
-`makeIncrementer(forIncrement:)` 函数定义了一个初始值为 `0` 的整型变量 `runningTotal`，用来存储当前总计数值。该值为 `incrementor` 的返回值。
+`makeIncrementer(forIncrement:)` 函数定义了一个初始值为 `0` 的整型变量 `runningTotal`，用来存储当前总计数值。该值为 `incrementer` 的返回值。
 
-`makeIncrementer(forIncrement:)` 有一个 `Int` 类型的参数，其外部参数名为 `forIncrement`，内部参数名为 `amount`，该参数表示每次 `incrementor` 被调用时 `runningTotal` 将要增加的量。`makeIncrementer` 函数还定义了一个嵌套函数 `incrementor`，用来执行实际的增加操作。该函数简单地使 `runningTotal` 增加 `amount`，并将其返回。
+`makeIncrementer(forIncrement:)` 有一个 `Int` 类型的参数，其外部参数名为 `forIncrement`，内部参数名为 `amount`，该参数表示每次 `incrementer` 被调用时 `runningTotal` 将要增加的量。`makeIncrementer` 函数还定义了一个嵌套函数 `incrementer`，用来执行实际的增加操作。该函数简单地使 `runningTotal` 增加 `amount`，并将其返回。
 
 如果我们单独考虑嵌套函数 `incrementer()`，会发现它有些不同寻常：
 
@@ -289,13 +289,13 @@ func incrementer() -> Int {
 > 为了优化，如果一个值不会被闭包改变，或者在闭包创建后不会改变，Swift 可能会改为捕获并保存一份对值的拷贝。
 > Swift 也会负责被捕获变量的所有内存管理工作，包括释放不再需要的变量。
 
-下面是一个使用 `makeIncrementor` 的例子：
+下面是一个使用 `makeIncrementer` 的例子：
 
 ```swift
-let incrementByTen = makeIncrementor(forIncrement: 10)
+let incrementByTen = makeIncrementer(forIncrement: 10)
 ```
 
-该例子定义了一个叫做 `incrementByTen` 的常量，该常量指向一个每次调用会将其 `runningTotal` 变量增加 `10` 的 `incrementor` 函数。调用这个函数多次可以得到以下结果：
+该例子定义了一个叫做 `incrementByTen` 的常量，该常量指向一个每次调用会将其 `runningTotal` 变量增加 `10` 的 `incrementer` 函数。调用这个函数多次可以得到以下结果：
 
 ```swift
 incrementByTen()
@@ -306,10 +306,10 @@ incrementByTen()
 // 返回的值为30
 ```
 
-如果你创建了另一个 `incrementor`，它会有属于自己的引用，指向一个全新、独立的 `runningTotal` 变量：
+如果你创建了另一个 `incrementer`，它会有属于自己的引用，指向一个全新、独立的 `runningTotal` 变量：
 
 ```swift
-let incrementBySeven = makeIncrementor(forIncrement: 7)
+let incrementBySeven = makeIncrementer(forIncrement: 7)
 incrementBySeven()
 // 返回的值为7
 ```
