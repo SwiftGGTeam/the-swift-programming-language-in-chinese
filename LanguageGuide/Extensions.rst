@@ -97,6 +97,9 @@ Adding protocol conformance in this way is described in
    the new functionality will be available on all existing instances of that type,
    even if they were created before the extension was defined.
 
+An extension can also extend an existing type only when certain conditions are satisfied.
+This syntax is described in :ref:`Generics_ConcreteConstrainedExtensions`.
+
 .. _Extensions_ComputedProperties:
 
 Computed Properties
