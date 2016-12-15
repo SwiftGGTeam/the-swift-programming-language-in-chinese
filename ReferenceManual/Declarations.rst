@@ -2175,7 +2175,7 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can-have-where-clause-and-inheritance
+.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
 
    >> protocol P { func foo() }
    >> extension Array: P where Element: Equatable {
@@ -2184,6 +2184,16 @@ to ensure members of that type are properly initialized.
    !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
    !!    extension Array: P where Element: Equatable {
    !!    ^                ~
+
+
+.. assertion:: extend-concrete-type-conditionally
+
+   >> extension Array where Element: Equatable {
+   >>    func foo() {}
+   >> }
+   >> extension Array where Element == Int {
+   >>    func foo() {}
+   >> }
 
 .. langref-grammar
 
