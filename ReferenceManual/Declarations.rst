@@ -2163,6 +2163,17 @@ to ensure members of that type are properly initialized.
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
 
+Extensions that include a generic where clause have the following form:
+
+.. syntax-outline::
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
+
+In this form,
+the extension applies only to types that satisfy the *requirements*.
+
 .. assertion:: extension-can-have-where-clause
 
    >> extension Array where Element: Equatable {
@@ -2193,6 +2204,7 @@ to ensure members of that type are properly initialized.
 
 .. testcode:: extend-concrete-type-conditionally
 
+   // TODO: You can also extend a protocol, like Collection, instead of Array.
    -> extension Array where Element: Equatable {
          func allElementsEqual() {
              return self.reduce(true) { $0 == $1 }
