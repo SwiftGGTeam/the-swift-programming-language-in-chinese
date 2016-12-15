@@ -2185,15 +2185,24 @@ to ensure members of that type are properly initialized.
    !!    extension Array: P where Element: Equatable {
    !!    ^                ~
 
+.. You can extend a concrete generic type, specifying conditions
 
-.. assertion:: extend-concrete-type-conditionally
+.. FIXME: the all-equal example causes a segfault -- its logic is wrong;
+   you can't compare a Boolean partial result to an Integer
+   to see whether all the ints are equual.
 
-   >> extension Array where Element: Equatable {
-   >>    func foo() {}
-   >> }
-   >> extension Array where Element == Int {
-   >>    func foo() {}
-   >> }
+.. testcode:: extend-concrete-type-conditionally
+
+   -> extension Array where Element: Equatable {
+         func allElementsEqual() {
+             return self.reduce(true) { $0 == $1 }
+         }
+      }
+   -> extension Array where Element == Int {
+         func max() {
+            return self.reduce(self[0]) { max($0, $1) }
+         }
+      }
 
 .. langref-grammar
 
