@@ -2195,24 +2195,6 @@ to ensure members of that type are properly initialized.
    !!    extension Array: P where Element: Equatable {
    !!    ^                ~
 
-.. FIXME: the all-equal example causes a segfault -- its logic is wrong;
-   you can't compare a Boolean partial result to an Integer
-   to see whether all the ints are equual.
-
-.. testcode:: extend-concrete-type-conditionally
-
-   // TODO: You can also extend a protocol, like Collection, instead of Array.
-   -> extension Array where Element: Equatable {
-         func allElementsEqual() {
-             return self.reduce(true) { $0 == $1 }
-         }
-      }
-   -> extension Array where Element == Int {
-         func max() {
-            return self.reduce(self[0]) { max($0, $1) }
-         }
-      }
-
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'

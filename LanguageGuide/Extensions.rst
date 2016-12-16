@@ -98,7 +98,52 @@ Adding protocol conformance in this way is described in
    even if they were created before the extension was defined.
 
 An extension can also extend an existing type only when certain conditions are satisfied.
-This syntax is described in :ref:`Generics_ConcreteConstrainedExtensions`.
+The example below adds a method to arrays of strings:
+
+.. testcode:: extensionSyntax
+
+   -> extensions Array where Element == String {
+          func longestString() -> String? {
+              var result: String? = nil
+              for element in self {
+                  guard let oldResult = result else {
+                    result = element
+                    continue
+                  }
+                  if element.characters.count > oldResult.characters.count {
+                    result = element
+                  }
+              }
+              return result
+          }
+      }
+
+.. FIXME: the all-equal example causes a segfault -- also its logic is wrong;
+   you can't compare a Boolean partial result to an Integer
+   to see whether all the ints are equual.
+
+   TODO: You can also extend a protocol, like Collection, instead of Array.
+
+   -> extension Array where Element: Equatable {
+         func allElements(equal search: Element) -> Bool {
+             for element in self {
+                if element != search {
+                    return false
+                }
+             }
+             return true
+         }
+      }
+   -> extension Array where Element == Int {
+         func max() {
+            return self.reduce(self[0]) { max($0, $1) }
+         }
+      }
+
+
+The details of how you write a requirement
+in an extension's ``where`` clause
+are described in :ref:`Generics_WhereClauses`.
 
 .. _Extensions_ComputedProperties:
 
