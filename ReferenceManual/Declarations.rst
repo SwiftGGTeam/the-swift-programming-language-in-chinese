@@ -2122,13 +2122,20 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend the behavior of existing
 class, structure, and enumeration types.
-Extension declarations are declared using the ``extension`` keyword and have the following form:
+Extension declarations are declared using the ``extension`` keyword and have the following forms:
 
 .. syntax-outline::
 
     extension <#type name#>: <#adopted protocols#> {
        <#declarations#>
     }
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
+
+.. FIXME: If the *type name* is a protocol type,
+   the extension extends all types that conform to that protocol.
 
 The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed type properties,
@@ -2143,6 +2150,9 @@ Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+Extensions that include a generic where clause
+apply only to types that satisfy the *requirements*.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
@@ -2162,17 +2172,6 @@ to ensure members of that type are properly initialized.
     delegate to another initializer or call a superclass initializer
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
-
-Extensions that include a generic where clause have the following form:
-
-.. syntax-outline::
-
-    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
-       <#declarations#>
-    }
-
-In this form,
-the extension applies only to types that satisfy the *requirements*.
 
 .. assertion:: extension-can-have-where-clause
 
@@ -2195,8 +2194,6 @@ the extension applies only to types that satisfy the *requirements*.
    !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
    !!    extension Array: P where Element: Equatable {
    !!    ^                ~
-
-.. You can extend a concrete generic type, specifying conditions
 
 .. FIXME: the all-equal example causes a segfault -- its logic is wrong;
    you can't compare a Boolean partial result to an Integer
