@@ -76,6 +76,21 @@ Declare extensions with the ``extension`` keyword:
          // new functionality to add to SomeType goes here
       }
 
+An extension can extend an existing type
+when certain requirements are satisfied.
+You write ``where``, followed by the extension's requirements:
+
+.. testcode:: extensionSyntax
+
+   >> struct SomeType {}
+   -> extension SomeType where Element == String {
+         // new functionality to add to SomeType when its elements are strings
+         // goes here
+      }
+
+The details of how you write the requirements
+are described in :ref:`Generics_WhereClauses`.
+
 An extension can extend an existing type to make it adopt one or more protocols.
 Where this is the case,
 the protocol names are written in exactly the same way as for a class or structure:
@@ -97,10 +112,13 @@ Adding protocol conformance in this way is described in
    the new functionality will be available on all existing instances of that type,
    even if they were created before the extension was defined.
 
-An extension can also extend an existing type only when certain conditions are satisfied.
-The example below adds a method to arrays of strings:
-
 .. testcode:: extensionSyntax
+
+.. FIXME: the all-equal example causes a segfault -- also its logic is wrong;
+   you can't compare a Boolean partial result to an Integer
+   to see whether all the ints are equual.
+
+   TODO: You can also extend a protocol, like Collection, instead of Array.
 
    -> extensions Array where Element == String {
           func longestString() -> String? {
@@ -117,13 +135,6 @@ The example below adds a method to arrays of strings:
               return result
           }
       }
-
-.. FIXME: the all-equal example causes a segfault -- also its logic is wrong;
-   you can't compare a Boolean partial result to an Integer
-   to see whether all the ints are equual.
-
-   TODO: You can also extend a protocol, like Collection, instead of Array.
-
    -> extension Array where Element: Equatable {
          func allElements(equal search: Element) -> Bool {
              for element in self {
@@ -140,10 +151,6 @@ The example below adds a method to arrays of strings:
          }
       }
 
-
-The details of how you write a requirement
-in an extension's ``where`` clause
-are described in :ref:`Generics_WhereClauses`.
 
 .. _Extensions_ComputedProperties:
 
