@@ -634,6 +634,8 @@ Associated Types in Action
 Here's an example of a protocol called ``Container``,
 which declares an associated type called ``ItemType``:
 
+.. FIXME: ItemType should probably be Item, matching Swift 3 naming conventions.
+
 .. testcode:: associatedTypes
 
    -> protocol Container {
@@ -928,19 +930,30 @@ all of the items in the two containers match.
 Extensions with a Generic Where Clause
 --------------------------------------
 
-.. testcode:: extensionSyntax
+You can also use a ``where`` clause as part of an extension.
+The example below extends the ``Container`` protocol from the previous examples
+to add an ``allItemsEqual()`` method.
+If you tried to do this without a ``where`` clause,
+you would have a problem:
+The ``Container`` protocol doesn't have any requirements
+about whether its items are equatable.
+Using a ``where`` clause lets you add this requirement to the extension,
+so that the extension adds the ``allItemsEqual()`` method
+only when the items in the container are equatable.
+
+.. testcode:: associatedTypes
 
    -> extension Container where ItemType: Equatable {
-         func allElements(equal search: ItemType) -> Bool {
+         func allItemsEqual() -> Bool {
              if count < 1 {
                 return true
              }
 
-             var previousElement = self[0]
+             var previousItem = self[0]
              var index = 1
 
              while index < count {
-                 if self[count] != previousElement {
+                 if self[count] != previousItem {
                     return false
                  }
                  index += 1
@@ -950,12 +963,37 @@ Extensions with a Generic Where Clause
          }
       }
 
+.. Using Container rather than Sequence/Collection
+   to continue running with the same example through the chapter.
+   This does, however, mean I can't just use a for-in loop.
+
+This new ``allItemsEqual()`` method
+can be used with any type that conforms to the ``Container`` protocol,
+including the stacks and arrays used above,
+as long as its items are equatable.
+
+.. testcode:: associatedTypes
+
+   -> if stackOfStrings.allItemsEqual()
+         print("All items match.")
+      } else {
+         print("Some items don't match.")
+      }
+   <- Some items don't match.
+   ---
+   -> if [9, 9, 9].allItemsEqual()
+         print("All items match.")
+      } else {
+         print("Some items don't match.")
+      }
+   <- All items match.
+
+
+
 .. SCRATCH -- rough examples
    the reduce() version of the all-equal example causes a segfault -- also its logic is wrong;
    you can't compare a Boolean partial result to an Integer
    to see whether all the ints are equual.
-
-   TODO: You can also extend a protocol, like Collection, instead of Array.
 
    -> extensions Array where Element == String {
           func longestString() -> String? {
@@ -973,7 +1011,7 @@ Extensions with a Generic Where Clause
           }
       }
    -> extension Array where Element: Equatable {
-         func allElements(equal search: Element) -> Bool {
+         func allItems(equal search: Element) -> Bool {
              for element in self {
                 if element != search {
                     return false
@@ -990,7 +1028,7 @@ Extensions with a Generic Where Clause
 
    // This version is a little too tricky...
    -> extension Container where ItemType: Equatable {
-         func allElements(equal search: ItemType) -> Bool {
+         func allItems(equal search: ItemType) -> Bool {
              var index = 0
              var previousElement: ItemType?
 
