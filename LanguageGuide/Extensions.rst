@@ -84,8 +84,7 @@ You write ``where``, followed by the extension's requirements:
 
    >> struct SomeType {}
    -> extension SomeType where Element == String {
-         // new functionality to add to SomeType when its elements are strings
-         // goes here
+         // new functionality to add to SomeType when its elements are strings goes here
       }
 
 The details of how you write the requirements
