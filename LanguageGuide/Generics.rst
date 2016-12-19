@@ -923,6 +923,92 @@ with these two containers as its arguments.
 In the example above, the ``allItemsMatch(_:_:)`` function correctly reports that
 all of the items in the two containers match.
 
+.. _Generics_ExtensionWithWhereClause:
+
+Extensions with a Generic Where Clause
+--------------------------------------
+
+.. testcode:: extensionSyntax
+
+   -> extension Container where ItemType: Equatable {
+         func allElements(equal search: ItemType) -> Bool {
+             if count < 1 {
+                return true
+             }
+
+             var previousElement = self[0]
+             var index = 1
+
+             while index < count {
+                 if self[count] != previousElement {
+                    return false
+                 }
+                 index += 1
+             }
+
+             return true
+         }
+      }
+
+.. SCRATCH -- rough examples
+   the reduce() version of the all-equal example causes a segfault -- also its logic is wrong;
+   you can't compare a Boolean partial result to an Integer
+   to see whether all the ints are equual.
+
+   TODO: You can also extend a protocol, like Collection, instead of Array.
+
+   -> extensions Array where Element == String {
+          func longestString() -> String? {
+              var result: String? = nil
+              for element in self {
+                  guard let oldResult = result else {
+                    result = element
+                    continue
+                  }
+                  if element.characters.count > oldResult.characters.count {
+                    result = element
+                  }
+              }
+              return result
+          }
+      }
+   -> extension Array where Element: Equatable {
+         func allElements(equal search: Element) -> Bool {
+             for element in self {
+                if element != search {
+                    return false
+                }
+             }
+             return true
+         }
+      }
+   -> extension Array where Element == Int {
+         func max() {
+            return self.reduce(self[0]) { max($0, $1) }
+         }
+      }
+
+   // This version is a little too tricky...
+   -> extension Container where ItemType: Equatable {
+         func allElements(equal search: ItemType) -> Bool {
+             var index = 0
+             var previousElement: ItemType?
+
+             while index < count {
+                 guard let previousElement = previousElement else {
+                    previousElement = self[index]
+                    continue
+                 }
+                 if self[count] != previousElement {
+                    return false
+                 }
+                 index += 1
+             }
+
+             return true
+         }
+      }
+
 .. TODO: Subscripts
    ----------------
 

@@ -111,46 +111,6 @@ Adding protocol conformance in this way is described in
    the new functionality will be available on all existing instances of that type,
    even if they were created before the extension was defined.
 
-.. testcode:: extensionSyntax
-
-.. FIXME: the all-equal example causes a segfault -- also its logic is wrong;
-   you can't compare a Boolean partial result to an Integer
-   to see whether all the ints are equual.
-
-   TODO: You can also extend a protocol, like Collection, instead of Array.
-
-   -> extensions Array where Element == String {
-          func longestString() -> String? {
-              var result: String? = nil
-              for element in self {
-                  guard let oldResult = result else {
-                    result = element
-                    continue
-                  }
-                  if element.characters.count > oldResult.characters.count {
-                    result = element
-                  }
-              }
-              return result
-          }
-      }
-   -> extension Array where Element: Equatable {
-         func allElements(equal search: Element) -> Bool {
-             for element in self {
-                if element != search {
-                    return false
-                }
-             }
-             return true
-         }
-      }
-   -> extension Array where Element == Int {
-         func max() {
-            return self.reduce(self[0]) { max($0, $1) }
-         }
-      }
-
-
 .. _Extensions_ComputedProperties:
 
 Computed Properties
