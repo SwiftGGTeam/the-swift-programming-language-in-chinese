@@ -967,10 +967,17 @@ only when the items in the container are equatable.
    to continue running with the same example through the chapter.
    This does, however, mean I can't just use a for-in loop.
 
+The example above compares each item in a container against the previous item
+to check whether those two items are equal.
+As soon as it finds two unequal items,
+it stops the loop and returns ``false``.
+If it doesn't find any unequal items, it returns ``true``.
+
 This new ``allItemsEqual()`` method
 can be used with any type that conforms to the ``Container`` protocol,
 including the stacks and arrays used above,
-as long as its items are equatable.
+as long as the container's items are equatable.
+Here's how it looks in action:
 
 .. testcode:: associatedTypes
 
@@ -988,6 +995,22 @@ as long as its items are equatable.
       }
    <- All items match.
 
+If you try to call the ``allItemsEqual()`` method
+on a container whose items aren't equatable,
+you'll get a compile-time error.
+
+.. note::
+
+    This example uses a ``while`` loop with an explicit index
+    rather than a ``for``-``in`` loop.
+    This is because the ``Container`` protocol includes a subscript and a count,
+    which the example uses to iterate over the container's elements,
+    but it doesn't require support ``for``-``in`` loops.
+    Specifically, types can conform to ``Container``
+    without conforming to the ``Sequence`` protocol.
+
+.. TODO: Add a link to the Sequence reference
+   after we fix <rdar://problem/17682758> RST: Add support for uAPI links
 
 
 .. SCRATCH -- rough examples
