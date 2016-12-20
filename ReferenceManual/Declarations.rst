@@ -2120,8 +2120,8 @@ see :doc:`../LanguageGuide/Deinitialization`.
 Extension Declaration
 ---------------------
 
-An :newTerm:`extension declaration` allows you to extend the behavior of existing
-class, structure, and enumeration types.
+An :newTerm:`extension declaration` allows you to extend
+the behavior of existing types.
 Extension declarations are declared using the ``extension`` keyword and have the following forms:
 
 .. syntax-outline::
@@ -2134,9 +2134,6 @@ Extension declarations are declared using the ``extension`` keyword and have the
        <#declarations#>
     }
 
-.. FIXME: If the *type name* is a protocol type,
-   the extension extends all types that conform to that protocol.
-
 The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed type properties,
 instance methods, type methods, initializers, subscript declarations,
@@ -2145,6 +2142,11 @@ Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
+
+If the *type name* is a class, structure, or enumeration type,
+the extension extends that type.
+If the *type name* is a protocol type,
+the extension extends all types that conform to that protocol.
 
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
