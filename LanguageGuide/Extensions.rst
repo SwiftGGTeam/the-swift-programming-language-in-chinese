@@ -75,9 +75,9 @@ Declare extensions with the ``extension`` keyword:
    -> extension SomeType {
          // new functionality to add to SomeType goes here
       }
-
-An extension can extend an existing type
-when certain requirements are satisfied.
+An extension can include requirements,
+which the extended type must satisfy
+in order to gain the new functionality.
 You write ``where``, followed by the extension's requirements:
 
 .. testcode:: extensionSyntax
