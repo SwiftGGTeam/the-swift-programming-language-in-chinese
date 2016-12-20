@@ -636,7 +636,7 @@ For example:
 The ``someFunctionWithEscapingClosure(_:)`` function takes a closure as its argument
 and adds it to an array that's declared outside the function.
 If you didn't mark the parameter of this function with ``@escaping``,
-you would get a compiler error.
+you would get a compile-time error.
 
 Marking a closure with ``@escaping``
 means you have to refer to ``self`` explicitly within the closure.
