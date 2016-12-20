@@ -2130,7 +2130,7 @@ Extension declarations are declared using the ``extension`` keyword and have the
        <#declarations#>
     }
 
-    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+    extension <#type name#> where <#requirements#> {
        <#declarations#>
     }
 
