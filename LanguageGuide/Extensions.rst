@@ -87,8 +87,8 @@ You write ``where``, followed by the extension's requirements:
          // new functionality to add to SomeType when its elements are strings goes here
       }
 
-The details of how you write the requirements
-are described in :ref:`Generics_WhereClauses`.
+Writing an extension in this way is described in
+:ref:`Generics_ExtensionWithWhereClause`.
 
 An extension can extend an existing type to make it adopt one or more protocols.
 Where this is the case,
