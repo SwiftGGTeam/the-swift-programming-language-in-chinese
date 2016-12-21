@@ -796,21 +796,19 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 .. assertion:: postfix-operator-cant-start-with-question-mark
 
    >> postfix operator ?+
-      postfix func ?+ (x: Int) -> Int {
+   >> postfix func ?+ (x: Int) -> Int {
           if x > 10 {
               return x
           }
           return x + 1
       }
-   print(1?+)
+   >> print(1?+)
+   !! <REPL Input>:1:18: error: expected operator name in operator declaration
+   !! postfix operator ?+
+   !!                  ^
    !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
    !! print(1?+)
    !!         ^
-   >> print(99?+)
-   !! <REPL Input>:1:10: error: '+' is not a postfix unary operator
-   !! print(99?+)
-   !!         ^
-
 
 .. note::
 
