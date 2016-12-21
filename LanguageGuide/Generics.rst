@@ -932,48 +932,33 @@ Extensions with a Generic Where Clause
 
 You can also use a ``where`` clause as part of an extension.
 The example below extends the ``Container`` protocol from the previous examples
-to add an ``allItemsEqual()`` method.
+to add a ``startsWith(_:)`` method.
 If you tried to do this without a ``where`` clause,
 you would have a problem:
 The ``Container`` protocol doesn't have any requirements
 about whether its items are equatable.
 Using a ``where`` clause lets you add this requirement to the extension,
-so that the extension adds the ``allItemsEqual()`` method
+so that the extension adds the ``startsWith(_:)`` method
 only when the items in the container are equatable.
 
 .. testcode:: associatedTypes
 
    -> extension Container where ItemType: Equatable {
-         func allItemsEqual() -> Bool {
-             if count < 1 {
-                return true
-             }
-
-             var previousItem = self[0]
-             var index = 1
-
-             while index < count {
-                 if self[count] != previousItem {
-                    return false
-                 }
-                 index += 1
-             }
-
-             return true
+         func startsWith(_ item: ItemType) {
+            return count >= 1 && self[0] == item
          }
       }
 
 .. Using Container rather than Sequence/Collection
    to continue running with the same example through the chapter.
-   This does, however, mean I can't just use a for-in loop.
+   This does, however, mean I can't use a for-in loop.
 
-The example above compares each item in a container against the previous item
-to check whether those two items are equal.
-As soon as it finds two unequal items,
-it stops the loop and returns ``false``.
-If it doesn't find any unequal items, it returns ``true``.
+The example above
+first makes sure that the container has at least one item,
+and then it checks
+whether the first item in a container matches the given item.
 
-This new ``allItemsEqual()`` method
+This new ``startsWith(_:)`` method
 can be used with any type that conforms to the ``Container`` protocol,
 including the stacks and arrays used above,
 as long as the container's items are equatable.
@@ -981,21 +966,21 @@ Here's how it looks in action:
 
 .. testcode:: associatedTypes
 
-   -> if stackOfStrings.allItemsEqual()
-         print("All items match.")
+   -> if stackOfStrings.startsWith("uno")
+         print("Starts with uno.")
       } else {
-         print("Some items don't match.")
+         print("Starts with something else.")
+      }
+   <- Starts with uno.
+   ---
+   -> if [9, 9, 9].startsWith(42)
+         print("Starts with 42.")
+      } else {
+         print("Starts with something else.")
       }
    <- Some items don't match.
-   ---
-   -> if [9, 9, 9].allItemsEqual()
-         print("All items match.")
-      } else {
-         print("Some items don't match.")
-      }
-   <- All items match.
 
-If you try to call the ``allItemsEqual()`` method
+If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,
 you'll get a compile-time error.
 
