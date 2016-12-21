@@ -218,6 +218,19 @@ To specify an in-out parameter, prefix the parameter type with the ``inout`` key
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
+If a function type has only one parameter
+and that parameter's type is a tuple type,
+then the tuple type must be parenthesized when writing the function's type.
+For example,
+``((Int, Int)) -> Void``
+is the type of a function that takes a single parameter
+of the tuple type ``(Int, Int)``
+and doesn't return any value.
+In contrast, without parentheses,
+``(Int, Int) -> Void`` is the type
+of a function that takes two ``Int`` parameters
+and doesn't return any value.
+
 Argument names in functions and methods
 are not part of the corresponding function type.
 For example:
