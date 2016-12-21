@@ -984,20 +984,6 @@ If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,
 you'll get a compile-time error.
 
-.. note::
-
-    This example uses a ``while`` loop with an explicit index
-    rather than a ``for``-``in`` loop.
-    This is because the ``Container`` protocol includes a subscript and a count,
-    which the example uses to iterate over the container's elements,
-    but it doesn't require support ``for``-``in`` loops.
-    Specifically, types can conform to ``Container``
-    without conforming to the ``Sequence`` protocol.
-
-.. TODO: Add a link to the Sequence reference
-   after we fix <rdar://problem/17682758> RST: Add support for uAPI links
-
-
 .. SCRATCH -- rough examples
    the reduce() version of the all-equal example causes a segfault -- also its logic is wrong;
    you can't compare a Boolean partial result to an Integer
