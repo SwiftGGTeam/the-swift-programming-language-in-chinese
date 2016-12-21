@@ -226,7 +226,7 @@ For example,
 is the type of a function that takes a single parameter
 of the tuple type ``(Int, Int)``
 and doesn't return any value.
-Written without parentheses,
+In contrast, without parentheses,
 ``(Int, Int) -> Void`` is the type
 of a function that takes two ``Int`` parameters
 and doesn't return any value.
