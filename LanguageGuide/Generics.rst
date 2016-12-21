@@ -944,7 +944,7 @@ only when the items in the container are equatable.
 .. testcode:: associatedTypes
 
    -> extension Container where ItemType: Equatable {
-         func startsWith(_ item: ItemType) {
+         func startsWith(_ item: ItemType) -> Bool {
             return count >= 1 && self[0] == item
          }
       }
@@ -966,19 +966,19 @@ Here's how it looks in action:
 
 .. testcode:: associatedTypes
 
-   -> if stackOfStrings.startsWith("uno")
+   -> if stackOfStrings.startsWith("uno") {
          print("Starts with uno.")
       } else {
          print("Starts with something else.")
       }
    <- Starts with uno.
    ---
-   -> if [9, 9, 9].startsWith(42)
+   -> if [9, 9, 9].startsWith(42) {
          print("Starts with 42.")
       } else {
          print("Starts with something else.")
       }
-   <- Some items don't match.
+   <- Starts with something else.
 
 If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,

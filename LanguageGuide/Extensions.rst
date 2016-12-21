@@ -71,7 +71,7 @@ Declare extensions with the ``extension`` keyword:
 
 .. testcode:: extensionSyntax
 
-   >> struct SomeType {}
+   >> struct SomeType<Element> {}
    -> extension SomeType {
          // new functionality to add to SomeType goes here
       }
@@ -83,7 +83,6 @@ You write ``where``, followed by the extension's requirements:
 
 .. testcode:: extensionSyntax
 
-   >> struct SomeType {}
    -> extension SomeType where Element == String {
          // new functionality to add to SomeType when its elements are strings goes here
       }
