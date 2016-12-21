@@ -75,6 +75,7 @@ Declare extensions with the ``extension`` keyword:
    -> extension SomeType {
          // new functionality to add to SomeType goes here
       }
+
 An extension can include requirements,
 which the extended type must satisfy
 in order to gain the new functionality.
