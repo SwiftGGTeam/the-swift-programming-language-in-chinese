@@ -227,7 +227,7 @@ is the type of a function that takes a single parameter
 of the tuple type ``(Int, Int)``
 and doesn't return any value.
 Written without parentheses,
-``(Int, Int) -> Int`` is the type
+``(Int, Int) -> Void`` is the type
 of a function that takes two ``Int`` parameters
 and doesn't return any value.
 
