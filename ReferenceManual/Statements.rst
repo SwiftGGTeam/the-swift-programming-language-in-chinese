@@ -970,7 +970,7 @@ There must not be whitespace between ``>=`` and the version number.
 
 The module name for the ``canImport()`` platform condition
 should be the name of a module that may not be available on all platforms.
-This condition does not cause the module to imported.
+This condition doesn't cause the module to imported.
 Rather, it simply tests for the availability of the named module
 in the context of the current compilation.
 If the module named within the ``canImport()`` platform condition is available,
@@ -1069,11 +1069,13 @@ have the following form:
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    platform-condition --> ``canImport`` ``(`` identifier ``)``
+    platform-condition --> ``canImport`` ``(`` module-name ``)``
+    
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
+    module-name --> identifier
 
 .. Testing notes:
 
