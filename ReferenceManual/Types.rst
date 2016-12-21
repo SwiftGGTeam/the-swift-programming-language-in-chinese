@@ -147,7 +147,7 @@ that name is part of the type.
 .. testcode:: tuple-type-names
 
    -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-   << // someTuple : (top: Int, bottom: Int) = (10, 12)
+   << // someTuple : (top: Int, bottom: Int) = (top: 10, bottom: 12)
    -> someTuple = (top: 4, bottom: 42) // OK: names match
    -> someTuple = (9, 99)              // OK: names are inferred
    -> someTuple = (left: 5, right: 5)  // Error: names don't match

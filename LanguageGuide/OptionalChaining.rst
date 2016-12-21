@@ -239,7 +239,7 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingNumber != nil && street != nil {
+            if let buildingNumber = buildingNumber, let street = street {
                 return "\(buildingNumber) \(street)"
             } else if buildingName != nil {
                 return buildingName

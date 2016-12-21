@@ -1176,9 +1176,9 @@ mark it with the ``indirect`` declaration modifier.
    >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
    >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
    >> let t = Tree.node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(50, REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty), REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty))
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
