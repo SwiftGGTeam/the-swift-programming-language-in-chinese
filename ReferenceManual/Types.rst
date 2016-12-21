@@ -223,12 +223,12 @@ and that parameter's type is a tuple type,
 then the tuple type must be parenthesized when writing the function's type.
 For example,
 ``((Int, Int)) -> Void``
-is the type of a function that takes a single argument
+is the type of a function that takes a single parameter
 of the tuple type ``(Int, Int``)
 and doesn't return any value.
 Written without parentheses,
 ``(Int, Int) -> Int`` is the type
-of a function that takes two ``Int`` arguments
+of a function that takes two ``Int`` parameters
 and doesn't return any value.
 
 Argument names in functions and methods
