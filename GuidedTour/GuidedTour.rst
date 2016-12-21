@@ -486,7 +486,7 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
+    << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
     << 120
     -> print(statistics.2)
