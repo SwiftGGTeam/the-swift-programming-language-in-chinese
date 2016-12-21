@@ -224,7 +224,7 @@ then the tuple type must be parenthesized when writing the function's type.
 For example,
 ``((Int, Int)) -> Void``
 is the type of a function that takes a single parameter
-of the tuple type ``(Int, Int``)
+of the tuple type ``(Int, Int)``
 and doesn't return any value.
 Written without parentheses,
 ``(Int, Int) -> Int`` is the type
