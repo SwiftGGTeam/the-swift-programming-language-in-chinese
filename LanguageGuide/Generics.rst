@@ -984,6 +984,18 @@ If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,
 you'll get a compile-time error.
 
+.. testcode:: associatedTypes
+
+   extension Container where ItemType == Double {
+       func average() -> Double {
+           var sum = 0.0
+           for index in 0..<count {
+               sum += self[index]
+           }
+           return sum/count
+       }
+   }
+
 .. TODO: Subscripts
    ----------------
 
