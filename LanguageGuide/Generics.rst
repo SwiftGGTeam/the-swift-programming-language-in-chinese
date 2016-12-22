@@ -1009,9 +1009,14 @@ and divides by the container's count to compute the average.
 It explicitly converts the count from ``Int`` to ``Double``
 to be able to do floating-point division.
 
-The ``where`` clause in an extension
-can be made up of a comma-separated list of constraints,
-like a generic ``where`` clause when written elsewhere.
+You can include multiple requirements in a generic ``where`` clause
+that is part of an extension,
+just like you can for a generic ``where`` clause that you write elsewhere.
+Separate each requirement in the list with a comma.
+
+.. No example of a compound where clause
+   because Container only has one generic part ---
+   there isn't anything to write a second constraint for.
 
 .. TODO: Subscripts
    ----------------
