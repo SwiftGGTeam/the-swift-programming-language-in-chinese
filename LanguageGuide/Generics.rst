@@ -632,17 +632,15 @@ Associated Types in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's an example of a protocol called ``Container``,
-which declares an associated type called ``ItemType``:
-
-.. FIXME: ItemType should probably be Item, matching Swift 3 naming conventions.
+which declares an associated type called ``Item``:
 
 .. testcode:: associatedTypes
 
    -> protocol Container {
-         associatedtype ItemType
-         mutating func append(_ item: ItemType)
+         associatedtype Item
+         mutating func append(_ item: Item)
          var count: Int { get }
-         subscript(i: Int) -> ItemType { get }
+         subscript(i: Int) -> Item { get }
       }
 
 The ``Container`` protocol defines three required capabilities
@@ -678,11 +676,11 @@ and that the value returned by the container's subscript
 will be of the same type as the container's element type.
 
 To achieve this,
-the ``Container`` protocol declares an associated type called ``ItemType``,
-written as  ``associatedtype ItemType``.
-The protocol does not define what ``ItemType`` is ---
+the ``Container`` protocol declares an associated type called ``Item``,
+written as  ``associatedtype Item``.
+The protocol does not define what ``Item`` is ---
 that information is left for any conforming type to provide.
-Nonetheless, the ``ItemType`` alias provides a way to refer to
+Nonetheless, the ``Item`` alias provides a way to refer to
 the type of the items in a ``Container``,
 and to define a type for use with the ``append(_:)`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
@@ -702,7 +700,7 @@ adapted to conform to the ``Container`` protocol:
             return items.removeLast()
          }
          // conformance to the Container protocol
-         typealias ItemType = Int
+         typealias Item = Int
          mutating func append(_ item: Int) {
             self.push(item)
          }
@@ -719,19 +717,19 @@ and in each case wraps part of the ``IntStack`` type's existing functionality
 to satisfy these requirements.
 
 Moreover, ``IntStack`` specifies that for this implementation of ``Container``,
-the appropriate ``ItemType`` to use is a type of ``Int``.
-The definition of ``typealias ItemType = Int`` turns the abstract type of ``ItemType``
+the appropriate ``Item`` to use is a type of ``Int``.
+The definition of ``typealias Item = Int`` turns the abstract type of ``Item``
 into a concrete type of ``Int`` for this implementation of the ``Container`` protocol.
 
 Thanks to Swift's type inference,
-you don't actually need to declare a concrete ``ItemType`` of ``Int``
+you don't actually need to declare a concrete ``Item`` of ``Int``
 as part of the definition of ``IntStack``.
 Because ``IntStack`` conforms to all of the requirements of the ``Container`` protocol,
-Swift can infer the appropriate ``ItemType`` to use,
+Swift can infer the appropriate ``Item`` to use,
 simply by looking at the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
-Indeed, if you delete the ``typealias ItemType = Int`` line from the code above,
-everything still works, because it is clear what type should be used for ``ItemType``.
+Indeed, if you delete the ``typealias Item = Int`` line from the code above,
+everything still works, because it is clear what type should be used for ``Item``.
 
 You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
 
@@ -762,7 +760,7 @@ This time, the type parameter ``Element`` is used as
 the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
 Swift can therefore infer that ``Element`` is the appropriate type to use
-as the ``ItemType`` for this particular container.
+as the ``Item`` for this particular container.
 
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
 
@@ -786,7 +784,7 @@ as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
    -> extension Array: Container {}
 
 Array's existing ``append(_:)`` method and subscript enable Swift to infer
-the appropriate type to use for ``ItemType``,
+the appropriate type to use for ``Item``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.
 
@@ -826,7 +824,7 @@ and a generic ``where`` clause:
 
    -> func allItemsMatch<C1: Container, C2: Container>
             (_ someContainer: C1, _ anotherContainer: C2) -> Bool
-            where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+            where C1.Item == C2.Item, C1.Item: Equatable {
    ---
          // Check that both containers contain the same number of items.
          if someContainer.count != anotherContainer.count {
@@ -855,10 +853,10 @@ The following requirements are placed on the function's two type parameters:
 
 * ``C1`` must conform to the ``Container`` protocol (written as ``C1: Container``).
 * ``C2`` must also conform to the ``Container`` protocol (written as ``C2: Container``).
-* The ``ItemType`` for ``C1`` must be the same as the ``ItemType`` for ``C2``
-  (written as ``C1.ItemType == C2.ItemType``).
-* The ``ItemType`` for ``C1`` must conform to the ``Equatable`` protocol
-  (written as ``C1.ItemType: Equatable``).
+* The ``Item`` for ``C1`` must be the same as the ``Item`` for ``C2``
+  (written as ``C1.Item == C2.Item``).
+* The ``Item`` for ``C1`` must conform to the ``Equatable`` protocol
+  (written as ``C1.Item: Equatable``).
 
 The first and second requirements are defined in the function's type parameter list,
 and the third and fourth requirements are defined in the function's generic ``where`` clause.
@@ -943,8 +941,8 @@ only when the items in the container are equatable.
 
 .. testcode:: associatedTypes
 
-   -> extension Container where ItemType: Equatable {
-         func startsWith(_ item: ItemType) -> Bool {
+   -> extension Container where Item: Equatable {
+         func startsWith(_ item: Item) -> Bool {
             return count >= 1 && self[0] == item
          }
       }
@@ -986,7 +984,7 @@ you'll get a compile-time error.
 
 .. testcode:: associatedTypes
 
-   extension Container where ItemType == Double {
+   extension Container where Item == Double {
        func average() -> Double {
            var sum = 0.0
            for index in 0..<count {
