@@ -6,6 +6,17 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-01-09  * Updated for Swift 3.1.
+
+            .. 9f55b9e Merge branch '28969826_subminor' into 'develop'
+
+            .. a324122 Merge branch '29334578_constrained_extensions' into tmp
+
+            .. e388857 Merge branch '29546556_type_example' into tmp
+
+            .. f0fa35e Merge branch '27728474_tuple_func_arg' into 'develop'
+
+----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
             * Updated the discussion of weak and unowned references
