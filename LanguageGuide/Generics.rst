@@ -928,14 +928,14 @@ all of the items in the two containers match.
 Extensions with a Generic Where Clause
 --------------------------------------
 
-You can also use a ``where`` clause as part of an extension.
+You can also use a generic ``where`` clause as part of an extension.
 The example below extends the ``Container`` protocol from the previous examples
 to add a ``startsWith(_:)`` method.
-If you tried to do this without a ``where`` clause,
+If you tried to do this without a generic ``where`` clause,
 you would have a problem:
 The ``Container`` protocol doesn't have any requirements
 about whether its items are equatable.
-Using a ``where`` clause lets you add this requirement to the extension,
+Using a generic ``where`` clause lets you add this requirement to the extension,
 so that the extension adds the ``startsWith(_:)`` method
 only when the items in the container are equatable.
 
@@ -982,9 +982,9 @@ If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,
 you'll get a compile-time error.
 
-The ``where`` clause in the example above
+The generic ``where`` clause in the example above
 requires ``Item`` to conform to a protocol,
-but you can also write ``where`` clauses that require ``Item``
+but you can also write a generic ``where`` clauses that require ``Item``
 to be a specific type.
 For example:
 
