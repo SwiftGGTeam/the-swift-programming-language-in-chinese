@@ -982,17 +982,36 @@ If you try to call the ``startsWith(_:)`` method
 on a container whose items aren't equatable,
 you'll get a compile-time error.
 
+The ``where`` clause in the example above
+requires ``Item`` to conform to a protocol,
+but you can also write ``where`` clauses that require ``Item``
+to be a specific type.
+For example:
+
 .. testcode:: associatedTypes
 
-   extension Container where Item == Double {
-       func average() -> Double {
-           var sum = 0.0
-           for index in 0..<count {
-               sum += self[index]
-           }
-           return sum/count
-       }
-   }
+   -> extension Container where Item == Double {
+          func average() -> Double {
+              var sum = 0.0
+              for index in 0..<count {
+                  sum += self[index]
+              }
+              return sum / Double(count)
+          }
+      }
+   -> print([1260.0, 1200.0, 98.6, 37.0].average())
+   <- 648.9
+
+This example adds an ``average()`` method
+to containers whose ``Item`` type is ``Double``.
+It iterates over the items in the container to add them up,
+and divides by the container's count to compute the average.
+It explicitly converts the count from ``Int`` to ``Double``
+to be able to do floating-point division.
+
+The ``where`` clause in an extension
+can be made up of a comma-separated list of constraints,
+like a generic ``where`` clause when written elsewhere.
 
 .. TODO: Subscripts
    ----------------
