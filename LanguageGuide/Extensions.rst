@@ -76,23 +76,10 @@ Declare extensions with the ``extension`` keyword:
          // new functionality to add to SomeType goes here
       }
 
-An extension can include requirements,
-which the extended type must satisfy
-in order to gain the new functionality.
-You write ``where``, followed by the extension's requirements:
-
-.. testcode:: extensionSyntax
-
-   -> extension SomeType where Element == String {
-         // new functionality to add to SomeType when its elements are strings goes here
-      }
-
-Writing an extension in this way is described in
-:ref:`Generics_ExtensionWithWhereClause`.
-
 An extension can extend an existing type to make it adopt one or more protocols.
-Where this is the case,
-the protocol names are written in exactly the same way as for a class or structure:
+To add protocol conformance,
+you write the protocol names
+the same way as you write them for a class or structure:
 
 .. testcode:: extensionSyntax
 
@@ -104,6 +91,21 @@ the protocol names are written in exactly the same way as for a class or structu
 
 Adding protocol conformance in this way is described in
 :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+
+An extension can include requirements,
+which instances of the extended type must satisfy
+in order to gain the new functionality.
+To include requirements on an extension,
+you write ``where``, followed by the extension's requirements:
+
+.. testcode:: extensionSyntax
+
+   -> extension SomeType where Element == String {
+         // new functionality to add to SomeType when its elements are strings goes here
+      }
+
+Adding requirements to an extension in this way is described in
+:ref:`Generics_ExtensionWithWhereClause`.
 
 .. note::
 
