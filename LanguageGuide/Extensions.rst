@@ -107,6 +107,11 @@ you write ``where``, followed by the extension's requirements:
 Adding requirements to an extension in this way is described in
 :ref:`Generics_ExtensionWithWhereClause`.
 
+.. FIXME: Doug writes...
+
+   I don’t feel like this example fits here, because SomeType is implied to be
+   non-generic in the prior example, and we’ve studiously avoided generics.
+
 .. note::
 
    If you define an extension to add new functionality to an existing type,

@@ -422,6 +422,11 @@ to access and query its top item without removing it:
       }
    <- The top item on the stack is tres.
 
+Extensions of a generic type can also include requirements
+which instances of the extended type must satisfy
+in order to gain the new functionality.
+This is discussed in :ref:`Generics_ExtensionWithWhereClause` below.
+
 .. _Generics_TypeConstraints:
 
 Type Constraints
@@ -929,6 +934,64 @@ Extensions with a Generic Where Clause
 --------------------------------------
 
 You can also use a generic ``where`` clause as part of an extension.
+The example below
+extends the generic ``Stack`` structure from the previous examples
+to add an ``isTop(_:)`` method.
+
+.. testcode:: associatedTypes
+
+   -> extension Stack where Element: Equatable {
+	      func isTop(_ item: Element) -> Bool {
+              guard let topItem = items.last else {
+                  return true
+              }
+              return topItem == item
+          }
+	  }
+
+This new ``isTop(_:)`` method
+first checks that the stack isn't empty,
+and then compares the given item
+against the stack's topmost item.
+If you tried to do this without a generic ``where`` clause,
+you would have a problem:
+The implementation of ``isTop(_:)`` uses the ``==`` operator
+but the definition of ``Stack`` doesn't require
+its items to be equatable,
+so using the ``==`` operator would cause a compile-time error.
+Using a generic ``where`` clause lets you add a new requirement to the extension,
+so that the extension adds the ``isTop(_:)`` method
+only when the items in the stack are equatable.
+
+Here's how it looks in action:
+
+.. testcode:: associatedTypes
+
+   -> if stackOfStrings.isTop("tres") {
+         print("Top element is tres.")
+      } else {
+         print("Top element is something else.")
+      }
+   <- Top element is tres.
+
+If you try to call the ``isTop(_:)`` method
+on a stack whose elements aren't equatable,
+you'll get a compile-time error.
+
+.. testcode:: associatedTypes
+
+   -> struct NotEquatable { }
+   -> var notEquatableStack = Stack<NotEquatable>()
+   -> let notEquatableValue = NotEquatable()
+   << // notEquatableStack : Stack<NotEquatable> = REPL.Stack<REPL.NotEquatable>(items: [])
+   << // notEquatableValue : NotEquatable = REPL.NotEquatable()
+   -> notEquatableStack.push(notEquatableValue)
+   -> notEquatableStack.isTop(notEquatableValue)  // Error
+   !! <REPL Input>:1:19: error: type 'NotEquatable' does not conform to protocol 'Equatable'
+   !! notEquatableStack.isTop(notEquatableValue)  // Error
+   !! ^
+
+You can use a generic ``where`` clause with extensions to a protocol.
 The example below extends the ``Container`` protocol from the previous examples
 to add a ``startsWith(_:)`` method.
 
@@ -948,41 +1011,19 @@ The ``startsWith(_:)`` method
 first makes sure that the container has at least one item,
 and then it checks
 whether the first item in a container matches the given item.
-If you tried to do this without a generic ``where`` clause,
-you would have a problem:
-The implementation of ``startsWith(_:)`` uses the ``==`` operator
-to compare the first item against the given value,
-but the ``Container`` protocol doesn't require
-its items to be equatable.
-Using a generic ``where`` clause lets you add a new requirement to the extension,
-so that the extension adds the ``startsWith(_:)`` method
-only when the items in the container are equatable.
-
 This new ``startsWith(_:)`` method
 can be used with any type that conforms to the ``Container`` protocol,
 including the stacks and arrays used above,
 as long as the container's items are equatable.
-Here's how it looks in action:
 
 .. testcode:: associatedTypes
 
-   -> if stackOfStrings.startsWith("uno") {
-         print("Starts with uno.")
-      } else {
-         print("Starts with something else.")
-      }
-   <- Starts with uno.
-   ---
    -> if [9, 9, 9].startsWith(42) {
          print("Starts with 42.")
       } else {
          print("Starts with something else.")
       }
    <- Starts with something else.
-
-If you try to call the ``startsWith(_:)`` method
-on a container whose items aren't equatable,
-you'll get a compile-time error.
 
 The generic ``where`` clause in the example above
 requires ``Item`` to conform to a protocol,
