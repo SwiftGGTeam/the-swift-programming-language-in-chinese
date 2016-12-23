@@ -71,7 +71,7 @@ Declare extensions with the ``extension`` keyword:
 
 .. testcode:: extensionSyntax
 
-   >> struct SomeType<Element> {}
+   >> struct SomeType {}
    -> extension SomeType {
          // new functionality to add to SomeType goes here
       }
@@ -92,25 +92,10 @@ the same way as you write them for a class or structure:
 Adding protocol conformance in this way is described in
 :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 
-An extension can include requirements,
-which instances of the extended type must satisfy
-in order to gain the new functionality.
-To include requirements on an extension,
-you write ``where``, followed by the extension's requirements:
-
-.. testcode:: extensionSyntax
-
-   -> extension SomeType where Element == String {
-         // new functionality to add to SomeType when its elements are strings goes here
-      }
-
-Adding requirements to an extension in this way is described in
-:ref:`Generics_ExtensionWithWhereClause`.
-
-.. FIXME: Doug writes...
-
-   I don’t feel like this example fits here, because SomeType is implied to be
-   non-generic in the prior example, and we’ve studiously avoided generics.
+An extension can be used to extend an existing generic type,
+as described in :ref:`Generics_ExtendingAGenericType`.
+You can also extend a generic type to conditionally add functionality,
+as described in :ref:`Generics_ExtensionWithWhereClause`.
 
 .. note::
 
