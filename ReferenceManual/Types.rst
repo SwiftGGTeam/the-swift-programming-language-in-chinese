@@ -667,23 +667,6 @@ as the following example shows:
     -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
-Use the equality operators (``==``  and ``!=``) to test
-whether an instance's runtime type is the same as a particular type.
-
-.. testcode:: metatype-type
-
-    -> if type(of: someInstance) == SomeSubClass.self {
-          print("The dynamic of someInstance is SomeSubClass.")
-       } else {
-          print("The dynamic of someInstance is not SomeSubClass.")
-       }
-    <- The dynamic of someInstance is SomeSubClass.
-    >> let someBaseClassInstance = SomeBaseClass()
-    << // someBaseClassInstance : SomeBaseClass = REPL.SomeBaseClass
-    >> // Test the opposite behavior too.
-    >> if type(of: someBaseClassInstance) == SomeSubClass.self { print(1) } else { print(2) }
-    << 2
-
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
 For class instances,
