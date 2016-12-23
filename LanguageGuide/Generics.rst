@@ -941,13 +941,13 @@ to add an ``isTop(_:)`` method.
 .. testcode:: associatedTypes
 
    -> extension Stack where Element: Equatable {
-	      func isTop(_ item: Element) -> Bool {
+          func isTop(_ item: Element) -> Bool {
               guard let topItem = items.last else {
                   return true
               }
               return topItem == item
           }
-	  }
+      }
 
 This new ``isTop(_:)`` method
 first checks that the stack isn't empty,
