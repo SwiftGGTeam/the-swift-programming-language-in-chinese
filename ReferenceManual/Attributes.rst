@@ -59,6 +59,8 @@ You can apply a declaration attribute to declarations only.
 
     You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
+    An ``available`` attribute specifying a Swift version availability can't
+    use the asterisk.
 
     The remaining arguments can appear in any order
     and specify additional information about the declaration's lifecycle,
@@ -140,9 +142,15 @@ You can apply a declaration attribute to declarations only.
 
     You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms
-    and in different language versions.
-    The compiler uses the declaration specified after an ``available`` attribute
-    only when the attribute specifies a platform that matches the current target platform.
+    and different versions of Swift.
+    The compiler uses an ``available`` attribute only when the attribute specifies
+    a platform that matches the current target.
+    When you use multiple ``available`` attributes
+    and one is a Swift version availability,
+    the effective availability is the combination of
+    the platform and Swift availabilities.
+    
+    .. FIXME: Wordsmith the "compiler uses an" sentence above. 
 
     If an ``available`` attribute only specifies an ``introduced`` argument
     in addition to a platform or language name argument,
