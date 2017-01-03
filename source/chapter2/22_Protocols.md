@@ -171,7 +171,7 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 	let a = 3877.0
 	let c = 29573.0
 	func random() -> Double {
-		lastRandom = ((lastRandom * a + c) % m)
+		lastRandom = ((lastRandom * a + c).truncatingRemainder(dividingBy:m))
 		return lastRandom / m
 	}
 }
