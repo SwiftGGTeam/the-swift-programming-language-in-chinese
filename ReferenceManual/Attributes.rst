@@ -36,10 +36,9 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only.
 
 ``available``
-    Apply this attribute to any declaration to indicate the declaration's lifecycle
-    relative to certain platforms and operating system versions.
-    This attribute can also be used to indicate the declaration's lifecycle
-    relative to certain versions of Swift.
+    Apply this attribute to indicate a declaration's lifecycle
+    relative to certain Swift language versions
+    or certain platforms and operating system versions.
 
     The ``available`` attribute always appears
     with a list of two or more comma-separated attribute arguments.
