@@ -2153,9 +2153,9 @@ class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
 
-Extensions that include a generic ``where`` clause
-apply only to instances of types that satisfy the *requirements*.
-.. FIXME: Better, but ambiguous whether the type/instance satisfies.
+Extension declarations that extend a generic type can include *requirements*.
+If an instance of the extended type satisfies the *requirements*,
+the instance gains the behavior specified in the declaration.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
