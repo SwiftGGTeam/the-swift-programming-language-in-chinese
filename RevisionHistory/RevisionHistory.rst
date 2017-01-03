@@ -8,14 +8,20 @@ Date        Notes
 ==========  ==============================================================================================
 2017-01-09  * Updated for Swift 3.1.
 
-            .. 9f55b9e Merge branch '28969826_subminor' into 'develop'
+            * Added the :ref:`Generics_ExtensionWithWhereClause` section
+              with information about extensions that include requirements.
 
-            .. a324122 Merge branch '29334578_constrained_extensions' into tmp
+            * Added information to the :ref:`Attributes_DeclarationAttributes` section
+              about using the ``available`` attribute with a Swift language version.
 
-            .. e388857 Merge branch '29546556_type_example' into tmp
+            * Updated the discussion of Swift language version numbers
+              in the :ref:`Statements_BuildConfigurationStatement` section,
+              now that an optional patch number is allowed.
 
-            .. f0fa35e Merge branch '27728474_tuple_func_arg' into 'develop'
-
+            * Updated the discussion
+              in the :ref:`Types_FunctionType` section,
+              now that Swift distinguishes between functions that take multiple parameters
+              and functions that take a single parameter of a tuple type.
 ----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
