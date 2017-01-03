@@ -667,18 +667,6 @@ as the following example shows:
     -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
-Use the identity operators (``===``  and ``!==``) to test
-whether an instance's runtime type is the same as its compile-time type.
-
-.. testcode:: metatype-type
-
-    -> if type(of: someInstance) === someInstance.self {
-          print("The dynamic and static type of someInstance are the same")
-       } else {
-          print("The dynamic and static type of someInstance are different")
-       }
-    <- The dynamic and static type of someInstance are different
-
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
 For class instances,
