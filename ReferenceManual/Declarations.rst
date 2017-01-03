@@ -2120,13 +2120,17 @@ see :doc:`../LanguageGuide/Deinitialization`.
 Extension Declaration
 ---------------------
 
-An :newTerm:`extension declaration` allows you to extend the behavior of existing
-class, structure, and enumeration types.
-Extension declarations are declared using the ``extension`` keyword and have the following form:
+An :newTerm:`extension declaration` allows you to extend
+the behavior of existing types.
+Extension declarations are declared using the ``extension`` keyword and have the following forms:
 
 .. syntax-outline::
 
     extension <#type name#>: <#adopted protocols#> {
+       <#declarations#>
+    }
+
+    extension <#type name#> where <#requirements#> {
        <#declarations#>
     }
 
@@ -2139,10 +2143,19 @@ stored properties, property observers, or other extension declarations.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
+If the *type name* is a class, structure, or enumeration type,
+the extension extends that type.
+If the *type name* is a protocol type,
+the extension extends all types that conform to that protocol.
+
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+Extension declarations that extend a generic type can include *requirements*.
+If an instance of the extended type satisfies the *requirements*,
+the instance gains the behavior specified in the declaration.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
@@ -2175,7 +2188,7 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can-have-where-clause-and-inheritance
+.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
 
    >> protocol P { func foo() }
    >> extension Array: P where Element: Equatable {
