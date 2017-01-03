@@ -144,7 +144,7 @@ You can apply a declaration attribute to declarations only.
     and different versions of Swift.
     The declaration that the ``available`` attribute applies to
     is ignored if the attribute specifies
-    a platform or language version that matches the current target.
+    a platform or language version that doesn't match the current target.
     If you use multiple ``available`` attributes
     the effective availability is the combination of
     the platform and Swift availabilities.
