@@ -142,14 +142,18 @@ You can apply a declaration attribute to declarations only.
     You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms
     and different versions of Swift.
-    The compiler uses an ``available`` attribute only when the attribute specifies
-    a platform that matches the current target.
-    When you use multiple ``available`` attributes
-    and one is a Swift version availability,
+    The declaration that the ``available`` attribute applies to
+    is ignored if the attribute specifies
+    a platform or language version that matches the current target.
+    If you use multiple ``available`` attributes
     the effective availability is the combination of
     the platform and Swift availabilities.
-    
-    .. FIXME: Wordsmith the "compiler uses an" sentence above. 
+
+    .. assertion:: multipleAvalableAttributes
+
+       // REPL needs all the attributes on the same line as the  declaration.
+       -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+       -> foo()
 
     If an ``available`` attribute only specifies an ``introduced`` argument
     in addition to a platform or language name argument,
