@@ -588,7 +588,7 @@ A protocol composition type describes a type that conforms to each protocol
 in a list of specified protocols.
 Protocol composition types may be used only in type annotations and in generic parameters.
 
-.. In places where a comma separated list of types is allowed,
+.. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
 
 Protocol composition types have the following form:

@@ -653,7 +653,7 @@ see :ref:`Functions_NestedFunctions`.
 Parameter Names
 ~~~~~~~~~~~~~~~
 
-Function parameters are a comma separated list
+Function parameters are a comma-separated list
 where each parameter has one of several forms.
 The order of arguments in a function call
 must match the order of parameters in the function's declaration.
