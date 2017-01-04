@@ -185,7 +185,7 @@ struct IntStack {
 ```swift
 struct Stack<Element> {
     var items = [Element]()
-    mutating func push(item: Element) {
+    mutating func push(_ item: Element) {
         items.append(item)
     }
     mutating func pop() -> Element {
@@ -330,8 +330,8 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
 任何 `Equatable` 类型都可以安全地使用在 `findIndex(of:in:)` 函数中，因为其保证支持等式操作符。为了说明这个事实，当你定义一个函数时，你可以定义一个 `Equatable` 类型约束作为类型参数定义的一部分：
 
 ```swift
-func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
-    for (index, value) in array.enumerate() {
+func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
+    for (index, value) in array.enumerated() {
         if value == valueToFind {
             return index
         }
@@ -364,7 +364,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 ```swift
 protocol Container {
     associatedtype ItemType
-    mutating func append(item: ItemType)
+    mutating func append(_ item: ItemType)
     var count: Int { get }
     subscript(i: Int) -> ItemType { get }
 }
@@ -390,7 +390,7 @@ protocol Container {
 struct IntStack: Container {
     // IntStack 的原始实现部分
     var items = [Int]()
-    mutating func push(item: Int) {
+    mutating func push(_ item: Int) {
         items.append(item)
     }
     mutating func pop() -> Int {
@@ -398,7 +398,7 @@ struct IntStack: Container {
     }
     // Container 协议的实现部分
     typealias ItemType = Int
-    mutating func append(item: Int) {
+    mutating func append(_ item: Int) {
         self.push(item)
     }
     var count: Int {
@@ -422,14 +422,14 @@ struct IntStack: Container {
 struct Stack<Element>: Container {
     // Stack<Element> 的原始实现部分
     var items = [Element]()
-    mutating func push(item: Element) {
+    mutating func push(_ item: Element) {
         items.append(item)
     }
     mutating func pop() -> Element {
         return items.removeLast()
     }
     // Container 协议的实现部分
-    mutating func append(item: Element) {
+    mutating func append(_ item: Element) {
         self.push(item)
     }
     var count: Int {
