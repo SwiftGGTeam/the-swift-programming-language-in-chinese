@@ -990,19 +990,19 @@ the error thrown by ``alwaysThrows()``.
 
 .. assertion:: throwing-in-rethrowing-function
 
-   -> enum SomeError: Error { case C, D }
+   -> enum SomeError: Error { case c, d }
    -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
           } catch {
-              throw SomeError.C  // OK
+              throw SomeError.c  // OK
           }
       }
    -> func f2(callback: () throws -> Void) rethrows {
-          throw SomeError.D  // Error
+          throw SomeError.d  // Error
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.D  // Error
+   !! throw SomeError.d  // Error
    !! ^
 
 A throwing method can't override a rethrowing method,
