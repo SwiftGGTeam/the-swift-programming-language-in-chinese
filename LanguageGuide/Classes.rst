@@ -27,6 +27,17 @@ classes have different underlying behavior:
 For an in-depth discussion of when to use classes and when to use structures,
 see :doc:`ReferenceAndValueTypes`.
 
+.. XXX Restore and reword the terminology note about "object" versus "instance".
+
+   .. note::
+
+   An instance of a class is traditionally known as an object.
+   However, Swift classes and structures
+   are much closer in functionality than in other languages,
+   and much of this chapter describes functionality
+   that can apply to instances of either a class or a structure type.
+   Because of this, the more general term instance is used.
+
 .. _Classes_ClassSyntax:
 
 Class Syntax
