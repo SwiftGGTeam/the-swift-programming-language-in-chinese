@@ -20,7 +20,6 @@ In Swift, structures can:
 * Conform to protocols to implement a shared abstraction or cooperate
   with a default implementation, as described in :doc:`Protocols`.
 
-.. XXX this chapter does X, you'll see Y in following chapters.
 .. XXX (migi) polymorphism is possible with structs
 
 .. _Structures_StructureSyntax:
@@ -71,10 +70,9 @@ For more information about stored and computed properties,
 see :doc:`Properties`.
 
 The ``celsius`` property is inferred to be of type ``Double``
-because of its initial floating-point value of ``0.0``.
-As discussed in :ref:`TheBasics_TypeSafetyAndTypeInference`,
-Swift infers that floating-point literals with no specified type
-are of type ``Double``.
+because of its initial floating-point value of ``0.0``,
+so it is inferred to be of type ``Double``.
+as discussed in :ref:`TheBasics_TypeSafetyAndTypeInference`.
 Because ``fahrenheit`` is a computed property,
 it is explicitly defined as a ``Double``.
 
@@ -99,12 +97,10 @@ and initializes its properties to their default values.
 Memberwise Initializer
 ~~~~~~~~~~~~~~~~~~~~~~
 
-All structures have an automatically generated memberwise initializer.
-A memberwise initializer is a form of initialization syntax
-that allows you to set values
-for the stored properties of new structure instances.
-You pass the initial values of properties
-to the memberwise initializer by name:
+All structures have an initializer that's implemented for you by the compiler,
+known as a :newterm:`memberwise initializer`.
+This initializer lets you create an instance of the structure
+by providing a value for each of the structure's stored properties.
 
 .. testcode:: structures
 
@@ -123,7 +119,7 @@ Accessing Properties and Methods of Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You access a property or a method of a structure instance using dot syntax.
-You write the name of the instance,
+Write the name of the instance,
 followed by a period (``.``) and the name of the property or method:
 
 .. testcode:: structures
@@ -160,19 +156,15 @@ to print their values.
 Structures Are Value Types
 --------------------------
 
-.. XXX caveat "usually" value types - or "usually" has value semantics --
-   if you put a class inside a struct, you don't have value semantics anymore.
-
 A :newTerm:`value type` is a type whose value is copied
 when it is assigned to a variable or constant,
 or when it is passed to a function.
-
-You've actually been using value types extensively
+You've already been using value types extensively
 throughout the previous chapters.
-In fact, all the basic types in Swift ---
+All the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays, and dictionaries ---
 are value types,
-and are implemented as structures.
+and are implemented as structures in the standard library.
 
 Custom structures
 that you build on top of existing standard library value types
@@ -218,37 +210,48 @@ but ``roomTemperature`` remains unchanged:
 
 .. note::
 
-   Swift copies a structure instance in memory
-   only if the instance is changed.
-   This behavior is called :newTerm:`copy-on-write`.
-   While code functions as though structure instances are copied
-   when you assign them
-   to a new variable or constant,
-   Swift copies a structure instance in memory
-   only if you change it from the original.
-   This optimization saves Swift from doing unnecessary work
-   as Swift needs to copy a structure instance
-   only if you mutate it.
+   Swift uses an optimization called :newTerm:`copy-on-write`,
+   sometimes abbreviated "COW",
+   to reduce the number of copies it makes of a given value.
+   Your code behaves as though structure instances are copied
+   when you assign them to a new variable or constant,
+   but Swift doesn't actually make a copy immediately.
+   Instead, Swift uses the existing instance in both places.
+   This works because,
+   if Swift had made a copy of the instance,
+   the original instance would be identical to the copy.
+   If one place mutates the instance,
+   then the original instance and the copy are no longer identical,
+   and they can't be shared any more ---
+   this means Swift has to make a copy and mutate the copy.
 
-   .. XXX Not always true -- "big" variable sized things like strings and array do this
-
-   Structures whose properties are structures from the standard library
-   get copy-on-write behavior implemented for them.
+   In the standard library,
+   types like ``Array`` and ``Dictionary`` and ``String``
+   that take up larger amounts of memory
+   implement copy-on-write,
+   but some small types like ``Int`` don't implement this optimization.
+   Your custom structures whose properties are structures from the standard library
+   get copy-on-write behavior automatically.
    However, if you declare structures
    that have a property whose type is a class,
    you need to do some additional work to copy the instance of the class
-   when the instance of the structure is changed.
+   when a shared instance of the structure is mutated.
    For more information, see the
    `isKnownUniquelyReferenced(_:) <https://developer.apple.com/reference/swift/2430721-isknownuniquelyreferenced>`_ function.
 
    .. FIXME: It would be much better to have the function name
       actually in code voice.
       I haven't found any way to make that work with RST's link markup.
+      This is a workaround for <rdar://problem/17682758> RST: Add support for uAPI links
 
-   .. No full example here because it's too complicated.
+   .. No example of implementing COW for a struct that contains a class,
+      because it's too complicated.
       You need a willSet at every point where the struct can be mutated,
       and then inside it you have to copy the class property
       if it isn't uniquely referenced.
+
+.. XXX caveat "usually" value types - or "usually" has value semantics --
+   if you put a class inside a struct, you don't have value semantics anymore.
 
 For an in-depth discussion of value types
 and when to use them,
