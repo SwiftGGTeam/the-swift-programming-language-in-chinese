@@ -149,8 +149,7 @@ Modifying Value Types from Within Instance Methods
 Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
-.. TODO: find out why.
-.. TODO: once I actually know why, explain it.
+.. TODO: find out why.  once I actually know why, explain it.
 
 However, if you need to modify the properties of your structure or enumeration
 within a particular method,
@@ -442,5 +441,6 @@ the attempt to set the player's current level fails:
    var c = C()
    var boundFunc = c.foo   // a function with type (Int) -> Float
    var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+
 .. TODO: selector-style methods can be referenced as foo.bar:bas:
    (see Doug's comments from the 2014-03-12 release notes)

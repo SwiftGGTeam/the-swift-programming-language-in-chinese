@@ -1248,7 +1248,7 @@ that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
 .. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
-.. This list is shorter because these five protocols are explicitly supported in the compiler.
+   This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
