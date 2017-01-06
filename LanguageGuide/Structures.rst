@@ -169,6 +169,11 @@ and are implemented as structures in the standard library.
 Custom structures
 that you build on top of existing standard library value types
 are also value types.
+(However, a structure with a property of some class type
+might not be a value type,
+because the class isn't a value type.)
+.. XXX caveat "usually" value types - or "usually" has value semantics --
+   if you put a class inside a struct, you don't have value semantics anymore.
 This means that any structure instances you create ---
 and any value types you give them as properties ---
 are copied when they are passed around in your code.
@@ -249,9 +254,6 @@ but ``roomTemperature`` remains unchanged:
       You need a willSet at every point where the struct can be mutated,
       and then inside it you have to copy the class property
       if it isn't uniquely referenced.
-
-.. XXX caveat "usually" value types - or "usually" has value semantics --
-   if you put a class inside a struct, you don't have value semantics anymore.
 
 For an in-depth discussion of value types
 and when to use them,
