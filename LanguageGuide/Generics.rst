@@ -1011,7 +1011,7 @@ to add a ``startsWith(_:)`` method.
 The ``startsWith(_:)`` method
 first makes sure that the container has at least one item,
 and then it checks
-whether the first item in a container matches the given item.
+whether the first item in the container matches the given item.
 This new ``startsWith(_:)`` method
 can be used with any type that conforms to the ``Container`` protocol,
 including the stacks and arrays used above,
