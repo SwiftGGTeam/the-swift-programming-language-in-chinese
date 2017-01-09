@@ -943,7 +943,7 @@ to add an ``isTop(_:)`` method.
    -> extension Stack where Element: Equatable {
           func isTop(_ item: Element) -> Bool {
               guard let topItem = items.last else {
-                  return true
+                  return false
               }
               return topItem == item
           }
