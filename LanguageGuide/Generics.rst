@@ -959,7 +959,8 @@ The implementation of ``isTop(_:)`` uses the ``==`` operator
 but the definition of ``Stack`` doesn't require
 its items to be equatable,
 so using the ``==`` operator would cause a compile-time error.
-Using a generic ``where`` clause lets you add a new requirement to the extension,
+Using a generic ``where`` clause
+lets you add a new requirement to the extension,
 so that the extension adds the ``isTop(_:)`` method
 only when the items in the stack are equatable.
 
