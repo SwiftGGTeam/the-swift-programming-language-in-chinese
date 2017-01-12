@@ -173,38 +173,46 @@ for example, ``self``, ``Type``, and ``Protocol``
 have special meaning in an explicit member expression,
 so they must be escaped with backticks in that context.
 
-.. assertion:: keywords-without-backticks
+.. test::
+   :name: keywords without backticks
+   :hidden:
 
-   -> func f(x: Int, in y: Int) {
-         print(x+y)
-      }
+   func f(x: Int, in y: Int) {
+      print(x+y)
+   }
 
-.. assertion:: var-requires-backticks
+.. test::
+   :name: var requires backticks
+   :hidden:
+   :compiler-errors: error: parameters may not have the 'var' specifier
+                     func f(var x: Int) {}
+                            ^~~
+                     var x = x
 
-   -> func f(`var` x: Int) {}
-   -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
-   !! func f(var x: Int) {}
-   !!        ^~~
-   !! var x = x
+   func f(`var` x: Int) {}
+   func f(var x: Int) {}
 
-.. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) {}
-   -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
-   !! func f(let x: Int) {}
-   !!        ^~~
-   !!-
+.. test::
+   :name: let requires backticks
+   :hidden:
+   :compiler-errors: error: 'let' as a parameter attribute is not allowed
+                     func f(let x: Int) {}
+                            ^~~
 
-.. assertion:: inout-requires-backticks
+   func f(`let` x: Int) {}
+   func f(let x: Int) {}
 
-   -> func f(`inout` x: Int) {}
-   -> func f(inout x: Int) {}
-   !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
-   !! func f(inout x: Int) {}
-   !!        ~~~~~    ^
-   !!                 inout
+.. test::
+   :name: inout requires backticks
+   :hidden:
+   :compiler-errors: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+                     func f(inout x: Int) {}
+                            ~~~~~    ^
+                                     inout
+
+   func f(`inout` x: Int) {}
+   func f(inout x: Int) {}
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
@@ -387,16 +395,13 @@ such as a number or string.
 
 The following are examples of literals:
 
-.. testcode:: basic-literals
+.. test::
+   :name: basic literals
 
-    -> 42               // Integer literal
-    -> 3.14159          // Floating-point literal
-    -> "Hello, world!"  // String literal
-    -> true             // Boolean literal
-    <$ : Int = 42
-    <$ : Double = 3.1415899999999999
-    <$ : String = "Hello, world!"
-    <$ : Bool = true
+    42               // Integer literal
+    3.14159          // Floating-point literal
+    "Hello, world!"  // String literal
+    true             // Boolean literal
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -649,19 +654,14 @@ a carriage return, or a line feed.
 
 For example, all the following string literals have the same value:
 
-.. testcode:: string-literals
+.. test::
+   :name: string literals
 
-   -> "1 2 3"
-   <$ : String = "1 2 3"
-   -> "1 2 \("3")"
-   <$ : String = "1 2 3"
-   -> "1 2 \(3)"
-   <$ : String = "1 2 3"
-   -> "1 2 \(1 + 2)"
-   <$ : String = "1 2 3"
-   -> let x = 3; "1 2 \(x)"
-   << // x : Int = 3
-   <$ : String = "1 2 3"
+   "1 2 3"
+   "1 2 \("3")"
+   "1 2 \(3)"
+   "1 2 \(1 + 2)"
+   let x = 3; "1 2 \(x)"
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
@@ -674,12 +674,12 @@ For example, the values of ``textA`` and ``textB``
 in the example below are identical ---
 no runtime concatenation is performed.
 
-.. testcode:: concatenated-strings
+.. test::
+   :name: concatenated strings
 
-  -> let textA = "Hello " + "world"
-  -> let textB = "Hello world"
-  << // textA : String = "Hello world"
-  << // textB : String = "Hello world"
+   let textA = "Hello " + "world"
+   let textB = "Hello world"
+   assert(textA == textB) // -HIDE-
 
 .. langref-grammar
 
@@ -757,60 +757,59 @@ it can't contain a dot elsewhere.
 For example, ``+.+`` is treated as
 the ``+`` operator followed by the ``.+`` operator.
 
-.. assertion:: dot-operator-must-start-with-dot
+.. test::
+   :name: dot operator must start with dot
+   :hidden:
+   :compiler-errors: error: consecutive statements on a line must be separated by ';'
+                     infix operator +.+ ;  // ERROR
+                                     ^
+                                     ;
+                     error: operator with postfix spacing cannot start a subexpression
+                     infix operator +.+ ;  // ERROR
+                                     ^
+                     error: expected expression
+                     infix operator +.+ ;  // ERROR
+                                        ^
 
-   >> infix operator +.+ ;
-   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
-   !! infix operator +.+ ;
-   !!                 ^
-   !!                 ;
-   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
-   !! infix operator +.+ ;
-   !!                 ^
-   !! <REPL Input>:1:20: error: expected expression
-   !! infix operator +.+ ;
-   !!                    ^
-   >> infix operator .+
-   >> infix operator .+.
+   infix operator .+     // OK
+   infix operator .+.    // OK
+   infix operator +.+ ;  // ERROR
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
 Additionally, although operators can contain an exclamation mark (``!``),
 postfix operators cannot begin with either a question mark or an exclamation mark.
 
-.. assertion:: postfix-operators-dont-need-unique-prefix
+.. test::
+   :name: postfix operators don't need unique prefix
+   :hidden:
+   :prints: 6
+            500
 
+   struct Num { var value: Int }
+   postfix operator +
+   postfix operator +*
+   postfix func + (x: Num) -> Int { return x.value + 1 }
+   postfix func +* (x: Num) -> Int { return x.value * 100 }
+   let n = Num(value: 5)
+   print(n+)
+   print(n+*)
 
-   >> struct Num { var value: Int }
-      postfix operator +
-      postfix operator +*
-      postfix func + (x: Num) -> Int { return x.value + 1 }
-      postfix func +* (x: Num) -> Int { return x.value * 100 }
-   >> let n = Num(value: 5)
-   << // n : Num = REPL.Num(value: 5)
-   >> print(n+)
-   << 6
-   >> print(n+*)
-   << 500
+.. test::
+   :name: postfix operator can't start with question mark
+   :hidden:
+   :compiler-errors: error: '+' is not a postfix unary operator
+                     print(1?+)
+                             ^
 
-.. assertion:: postfix-operator-cant-start-with-question-mark
-
-   >> postfix operator ?+
-      postfix func ?+ (x: Int) -> Int {
-          if x > 10 {
-              return x
-          }
-          return x + 1
-      }
+   postfix operator ?+
+   postfix func ?+ (x: Int) -> Int {
+       if x > 10 {
+           return x
+       }
+       return x + 1
+   }
    print(1?+)
-   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
-   !! print(1?+)
-   !!         ^
-   >> print(99?+)
-   !! <REPL Input>:1:10: error: '+' is not a postfix unary operator
-   !! print(99?+)
-   !!         ^
-
 
 .. note::
 
