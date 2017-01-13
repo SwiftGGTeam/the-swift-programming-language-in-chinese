@@ -1,27 +1,35 @@
-# 下标脚本（Subscripts）
+# 下标
 -----------------
 
 > 1.0
 > 翻译：[siemenliu](https://github.com/siemenliu)
 > 校对：[zq54zquan](https://github.com/zq54zquan)
 
-> 2.0,2.1
-> 翻译+校对：[shanks](http://codebuild.me)，2015-10-29
+> 2.0
+> 翻译+校对：[shanks](http://codebuild.me)
+
+> 2.1
+> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)  
+
+> 2.2
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13  
+> 3.0.1，shanks，2016-11-13
+
 
 本页包含内容：
 
-- [下标脚本语法](#subscript_syntax)
-- [下标脚本用法](#subscript_usage)
-- [下标脚本选项](#subscript_options)
+- [下标语法](#subscript_syntax)
+- [下标用法](#subscript_usage)
+- [下标选项](#subscript_options)
 
-*下标脚本* 可以定义在类（Class）、结构体（structure）和枚举（enumeration）中，是访问集合（collection），列表（list）或序列（sequence）中元素的快捷方式。可以使用下标脚本的索引设置和获取值，不需要再调用对应的存取方法。举例来说，用下标脚本访问一个`Array`实例中的元素可以写作`someArray[index]`，访问`Dictionary`实例中的元素可以写作`someDictionary[key]`。
+*下标*可以定义在类、结构体和枚举中，是访问集合，列表或序列中元素的快捷方式。可以使用下标的索引，设置和获取值，而不需要再调用对应的存取方法。举例来说，用下标访问一个`Array`实例中的元素可以写作`someArray[index]`，访问`Dictionary`实例中的元素可以写作`someDictionary[key]`。
 
-一个类型可以定义多个下标脚本，通过不同索引类型进行重载。下标脚本不限于一维，你可以定义具有多个入参的下标脚本满足自定义类型的需求。
+一个类型可以定义多个下标，通过不同索引类型进行重载。下标不限于一维，你可以定义具有多个入参的下标满足自定义类型的需求。
 
 <a name="subscript_syntax"></a>
-## 下标脚本语法
+## 下标语法
 
-下标脚本允许你通过在实例名称后面的方括号中传入一个或者多个索引值来对实例进行存取。语法类似于实例方法语法和计算型属性语法的混合。与定义实例方法类似，定义下标脚本使用`subscript`关键字，指定一个或多个入参和返回类型。与实例方法不同的是，下标脚本可以设定为读写或只读。这种行为由 getter 和 setter 实现，有点类似计算型属性：
+下标允许你通过在实例名称后面的方括号中传入一个或者多个索引值来对实例进行存取。语法类似于实例方法语法和计算型属性语法的混合。与定义实例方法类似，定义下标使用`subscript`关键字，指定一个或多个输入参数和返回类型；与实例方法不同的是，下标可以设定为读写或只读。这种行为由 getter 和 setter 实现，有点类似计算型属性：
 
 ```swift
 subscript(index: Int) -> Int {
@@ -35,9 +43,9 @@ subscript(index: Int) -> Int {
 }
 ```
 
-`newValue`的类型和下标脚本的返回类型相同。如同计算型属性，可以不指定 setter 的参数（`newValue`）。如果不指定参数，setter 会提供一个名为`newValue`的默认参数。
+`newValue`的类型和下标的返回类型相同。如同计算型属性，可以不指定 setter 的参数（`newValue`）。如果不指定参数，setter 会提供一个名为`newValue`的默认参数。
 
-如同只读计算型属性，可以省略只读下标脚本的`get`关键字：
+如同只读计算型属性，可以省略只读下标的`get`关键字：
 
 ```swift
 subscript(index: Int) -> Int {
@@ -45,7 +53,7 @@ subscript(index: Int) -> Int {
 }
 ```
 
-下面代码演示了只读下标脚本的实现，这里定义了一个`TimesTable`结构体，用来表示传入整数的乘法表：
+下面代码演示了只读下标的实现，这里定义了一个`TimesTable`结构体，用来表示传入整数的乘法表：
 
 ```swift
 struct TimesTable {
@@ -56,43 +64,43 @@ struct TimesTable {
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
-// 输出 "six times three is 18"
+// 打印 "six times three is 18"
 ```
 
 在上例中，创建了一个`TimesTable`实例，用来表示整数`3`的乘法表。数值`3`被传递给结构体的构造函数，作为实例成员`multiplier`的值。
 
-你可以通过下标脚本访问`threeTimesTable`实例，例如上面演示的`threeTimesTable[6]`。这条语句查询了`3`的乘法表中的第六个元素，返回`3`的`6`倍即`18`。
+你可以通过下标访问`threeTimesTable`实例，例如上面演示的`threeTimesTable[6]`。这条语句查询了`3`的乘法表中的第六个元素，返回`3`的`6`倍即`18`。
 
 > 注意  
-> `TimesTable`例子基于一个固定的数学公式，对`threeTimesTable[someIndex]`进行赋值操作并不合适，因此下标脚本定义为只读的。  
+> `TimesTable`例子基于一个固定的数学公式，对`threeTimesTable[someIndex]`进行赋值操作并不合适，因此下标定义为只读的。  
 
 <a name="subscript_usage"></a>
-## 下标脚本用法
+## 下标用法
 
-下标脚本的确切含义取决于使用场景。下标脚本通常作为访问集合（collection），列表（list）或序列（sequence）中元素的快捷方式。你可以针对自己特定的类或结构体的功能来自由地以最恰当的方式实现下标脚本。
+下标的确切含义取决于使用场景。下标通常作为访问集合，列表或序列中元素的快捷方式。你可以针对自己特定的类或结构体的功能来自由地以最恰当的方式实现下标。
 
-例如，Swift 的`Dictionary`类型实现下标脚本用于对其实例中储存的值进行存取操作。为字典设值时，在下标脚本中使用和字典的键类型相同的键，并把一个和字典的值类型相同的值赋给这个下标脚本：
+例如，Swift 的`Dictionary`类型实现下标用于对其实例中储存的值进行存取操作。为字典设值时，在下标中使用和字典的键类型相同的键，并把一个和字典的值类型相同的值赋给这个下标：
 
 ```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
 
-上例定义一个名为`numberOfLegs`的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs`字典的类型被推断为`[String: Int]`。字典创建完成后，该例子通过下标脚本将`String`类型的键`bird`和`Int`类型的值`2`添加到字典中。
+上例定义一个名为`numberOfLegs`的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs`字典的类型被推断为`[String: Int]`。字典创建完成后，该例子通过下标将`String`类型的键`bird`和`Int`类型的值`2`添加到字典中。
 
-更多关于`Dictionary`下标脚本的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
+更多关于`Dictionary`下标的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
 
 > 注意  
-> Swift 的`Dictionary`类型的下标脚本接受并返回可选类型的值。上例中的`numberOfLegs`字典通过下标脚本返回的是一个`Int?`或者说“可选的int”。`Dictionary`类型之所以如此实现下标脚本，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为`nil`即可。  
+> Swift 的`Dictionary`类型的下标接受并返回可选类型的值。上例中的`numberOfLegs`字典通过下标返回的是一个`Int?`或者说“可选的int”。`Dictionary`类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为`nil`即可。  
 
 <a name="subscript_options"></a>
-## 下标脚本选项
+## 下标选项
 
-下标脚本可以接受任意数量的入参，并且这些入参可以是任意类型。下标脚本的返回值也可以是任意类型。下标脚本可以使用变量参数和可变参数，但不能使用输入输出参数，也不能给参数设置默认值。
+下标可以接受任意数量的入参，并且这些入参可以是任意类型。下标的返回值也可以是任意类型。下标可以使用变量参数和可变参数，但不能使用输入输出参数，也不能给参数设置默认值。
 
-一个类或结构体可以根据自身需要提供多个下标脚本实现，使用下标脚本时将通过入参的数量和类型进行区分，自动匹配合适的下标脚本，这就是*下标脚本的重载*。
+一个类或结构体可以根据自身需要提供多个下标实现，使用下标时将通过入参的数量和类型进行区分，自动匹配合适的下标，这就是*下标的重载*。
 
-虽然接受单一入参的下标脚本是最常见的，但也可以根据情况定义接受多个入参的下标脚本。例如下例定义了一个`Matrix`结构体，用于表示一个`Double`类型的二维矩阵。`Matrix`结构体的下标脚本接受两个整型参数：
+虽然接受单一入参的下标是最常见的，但也可以根据情况定义接受多个入参的下标。例如下例定义了一个`Matrix`结构体，用于表示一个`Double`类型的二维矩阵。`Matrix`结构体的下标接受两个整型参数：
 
 ```swift
 struct Matrix {
@@ -131,18 +139,18 @@ var matrix = Matrix(rows: 2, columns: 2)
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix01_2x.png)
 
-将`row`和`column`的值传入下标脚本来为矩阵设值，下标脚本的入参使用逗号分隔：
+将`row`和`column`的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
 
 ```swift
 matrix[0, 1] = 1.5
 matrix[1, 0] = 3.2
 ```
 
-上面两条语句分别调用下标脚本的 setter 将矩阵右上角位置（即`row`为`0`、`column`为`1`的位置）的值设置为`1.5`，将矩阵左下角位置（即`row`为`1`、`column`为`0`的位置）的值设置为`3.2`：
+上面两条语句分别调用下标的 setter 将矩阵右上角位置（即`row`为`0`、`column`为`1`的位置）的值设置为`1.5`，将矩阵左下角位置（即`row`为`1`、`column`为`0`的位置）的值设置为`3.2`：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix02_2x.png)
 
-`Matrix`下标脚本的 getter 和 setter 中都含有断言，用来检查下标脚本入参`row`和`column`的值是否有效。为了方便进行断言，`Matrix`包含了一个名为`indexIsValidForRow(_:column:)`的便利方法，用来检查入参`row`和`column`的值是否在矩阵范围内：
+`Matrix`下标的 getter 和 setter 中都含有断言，用来检查下标入参`row`和`column`的值是否有效。为了方便进行断言，`Matrix`包含了一个名为`indexIsValidForRow(_:column:)`的便利方法，用来检查入参`row`和`column`的值是否在矩阵范围内：
 
 ```swift
 func indexIsValidForRow(row: Int, column: Int) -> Bool {
@@ -150,7 +158,7 @@ func indexIsValidForRow(row: Int, column: Int) -> Bool {
 }
 ```
 
-断言在下标脚本越界时触发：
+断言在下标越界时触发：
 
 ```swift
 let someValue = matrix[2, 2]

@@ -1,9 +1,16 @@
-# 错误处理（Error Handling）
+# 错误处理
 -----------------
 
 > 2.1
 > 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
-> 校对：[shanks](http://codebuild.me) 2015-10-24
+> 校对：[shanks](http://codebuild.me) 2015-10-24  
+>  
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
+> 
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me) 2016-09-24   
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
@@ -11,38 +18,38 @@
 - [处理错误](#handling_errors)
 - [指定清理操作](#specifying_cleanup_actions)
 
-*错误处理（Error handling）*是响应错误以及从错误中恢复的过程。Swift 提供了在运行时对可恢复错误的抛出、捕获、传递和操作的一流支持。
+*错误处理（Error handling）*是响应错误以及从错误中恢复的过程。Swift 提供了在运行时对可恢复错误的抛出、捕获、传递和操作的一等公民支持。
 
 某些操作无法保证总是执行完所有代码或总是生成有用的结果。可选类型可用来表示值缺失，但是当某个操作失败时，最好能得知失败的原因，从而可以作出相应的应对。
 
 举个例子，假如有个从磁盘上的某个文件读取数据并进行处理的任务，该任务会有多种可能失败的情况，包括指定路径下文件并不存在，文件不具有可读权限，或者文件编码格式不兼容。区分这些不同的失败情况可以让程序解决并处理某些错误，然后把它解决不了的错误报告给用户。
 
 > 注意  
-Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 2.1)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
+Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 3.0.1)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
 
 <a name="representing_and_throwing_errors"></a>
-##表示并抛出错误
+## 表示并抛出错误
 
-在 Swift 中，错误用符合`ErrorType`协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
+在 Swift 中，错误用符合`Error`协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
 
 Swift 的枚举类型尤为适合构建一组相关的错误状态，枚举的关联值还可以提供错误状态的额外信息。例如，你可以这样表示在一个游戏中操作自动贩卖机时可能会出现的错误状态：
 
 ```swift
-enum VendingMachineError: ErrorType {
-	case InvalidSelection				     //选择无效
-	case InsufficientFunds(coinsNeeded: Int) //金额不足
-	case OutOfStock			                 //缺货
+enum VendingMachineError: Error {
+	case invalidSelection				     //选择无效
+	case insufficientFunds(coinsNeeded: Int) //金额不足
+	case outOfStock			                 //缺货
 }
 ```
 
-抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throws`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
+抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throw`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
 
 ```swift
-throw VendingMachineError.InsufficientFunds(coinsNeeded: 5)
+throw VendingMachineError. insufficientFunds(coinsNeeded: 5)
 ```
 
 <a name="handling_errors"></a>
-##处理错误
+## 处理错误
 
 某个错误被抛出时，附近的某部分代码必须负责处理这个错误，例如纠正这个问题、尝试另外一种方式、或是向用户报告错误。
 
@@ -68,7 +75,7 @@ func cannotThrowErrors() -> String
 > 注意  
 只有 throwing 函数可以传递错误。任何在某个非 throwing 函数内部抛出的错误只能在函数内部处理。
 
-下面的例子中，`VendingMechine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者花费超过了投入金额，该方法就会抛出一个相应的`VendingMachineError`：
+下面的例子中，`VendingMechine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者投入金额小于物品价格，该方法就会抛出一个相应的`VendingMachineError`：
 
 ```swift
 struct Item {
@@ -88,7 +95,7 @@ class VendingMachine {
     }
     
     func vend(itemNamed name: String) throws {
-        guard var item = inventory[name] else {
+        guard let item = inventory[name] else {
             throw VendingMachineError.InvalidSelection
         }
         
@@ -101,16 +108,19 @@ class VendingMachine {
         }
         
         coinsDeposited -= item.price
-        --item.count
-        inventory[name] = item
-        dispenseSnack(name)
+        
+        var newItem = item
+        newItem.count -= 1
+        inventory[name] = newItem
+
+        print("Dispensing \(name)")
     }
 }
 ```
 
 在`vend(itemNamed:)`方法的实现中使用了`guard`语句来提前退出方法，确保在购买某个物品所需的条件中，有任一条件不满足时，能提前退出方法并抛出相应的错误。由于`throw`语句会立即退出方法，所以物品只有在所有条件都满足时才会被售出。
 
-因为`vend(itemNamed:)`方法会传递出它抛出的任何错误，在你的代码中调用此方法的地方，必须要么直接处理这些错误——使用`do-catch`语句，`try?`或`try!`；要么继续将这些错误传递下去。例如下面例子中，`buyFavoriteSnack(_:vendingMachine:)`同样是一个 throwing 函数，任何由`vend(itemNamed:)`方法抛出的错误会一直被传递到`buyFavoriteSnack(_:vendingMachine:)`函数被调用的地方。
+因为`vend(itemNamed:)`方法会传递出它抛出的任何错误，在你的代码中调用此方法的地方，必须要么直接处理这些错误——使用`do-catch`语句，`try?`或`try!`；要么继续将这些错误传递下去。例如下面例子中，`buyFavoriteSnack(_:vendingMachine:)`同样是一个 throwing 函数，任何由`vend(itemNamed:)`方法抛出的错误会一直被传递到`buyFavoriteSnack(person:vendingMachine:) `函数被调用的地方。
 
 ```swift
 let favoriteSnacks = [
@@ -124,9 +134,22 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 }
 ```
 
-上例中，`buyFavoriteSnack(_:vendingMachine:)`函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们购买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。
+上例中，`buyFavoriteSnack(person:vendingMachine:) `函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们购买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。  
 
-###用 Do-Catch 处理错误
+`throwing`构造器能像`throwing`函数一样传递错误.例如下面代码中的`PurchasedSnack`构造器在构造过程中调用了throwing函数,并且通过传递到它的调用者来处理这些错误。  
+
+```swift
+struct PurchasedSnack {
+    let name: String
+    init(name: String, vendingMachine: VendingMachine) throws {
+        try vendingMachine.vend(itemNamed: name)
+        self.name = name
+    }
+}
+```
+
+
+### 用 Do-Catch 处理错误
 
 可以使用一个`do-catch`语句运行一段闭包代码来处理错误。如果在`do`子句中的代码抛出了一个错误，这个错误会与`catch`子句做匹配，从而决定哪条子句能处理它。
 
@@ -162,11 +185,11 @@ do {
 // 打印 “Insufficient funds. Please insert an additional 2 coins.”
 ```
 
-上面的例子中，`buyFavoriteSnack(_:vendingMachine:)`函数在一个`try`表达式中调用，因为它能抛出错误。如果错误被抛出，相应的执行会马上转移到`catch`子句中，并判断这个错误是否要被继续传递下去。如果没有错误抛出，`do`子句中余下的语句就会被执行。
+上面的例子中，`buyFavoriteSnack(person:vendingMachine:) `函数在一个`try`表达式中调用，因为它能抛出错误。如果错误被抛出，相应的执行会马上转移到`catch`子句中，并判断这个错误是否要被继续传递下去。如果没有错误抛出，`do`子句中余下的语句就会被执行。
 
-###将错误转换成可选值
+### 将错误转换成可选值
 
-可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如下面代码中的`x`和`y`具有相同的值：
+可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如,在下面的代码中,`x`和`y`有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -197,16 +220,16 @@ func fetchData() -> Data? {
 
 ### 禁用错误传递
 
-有时你知道某个 throwing 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写`try!`来禁用错误传递，这会把调用包装在一个断言不会有错误抛出的运行时断言中。如果实际上抛出了错误，你会得到一个运行时错误。
+有时你知道某个`throwing`函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写`try!`来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误。
 
-例如，下面的代码使用了`loadImage(_:)`函数，该函数从给定的路径加载图片资源，如果图片无法载入则抛出一个错误。在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递：
+例如，下面的代码使用了`loadImage(atPath:)`函数，该函数从给定的路径加载图片资源，如果图片无法载入则抛出一个错误。在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递：
 
 ```swift
-let photo = try! loadImage("./Resources/John Appleseed.jpg")
+let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
 
 <a name="specifying_cleanup_actions"></a>
-##指定清理操作
+## 指定清理操作
 
 可以使用`defer`语句在即将离开当前代码块时执行一系列语句。该语句让你能执行一些必要的清理工作，不管是以何种方式离开当前代码块的——无论是由于抛出错误而离开，还是由于诸如`return`或者`break`的语句。例如，你可以用`defer`语句来确保文件描述符得以关闭，以及手动分配的内存得以释放。
 

@@ -1,4 +1,4 @@
-# 可选链式调用（Optional Chaining）
+# 可选链式调用
 
 -----------------
 
@@ -10,7 +10,11 @@
 > 翻译+校对：[lyojo](https://github.com/lyojo)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-31
+> 校对：[shanks](http://codebuild.me)，2015-10-31  
+>  
+> 2.2
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15   
+> 3.0.1，shanks，2016-11-13
 
 本页包含内容：
 
@@ -22,7 +26,7 @@
 - [连接多层可选链式调用](#linking_multiple_levels_of_chaining)
 - [在方法的可选返回值上进行可选链式调用](#chaining_on_methods_with_optional_return_values)
 
-可选链式调用（Optional Chaining）是一种可以在当前值可能为`nil`的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是`nil`，那么调用将返回`nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为`nil`，整个调用链都会失败，即返回`nil`。
+*可选链式调用*是一种可以在当前值可能为`nil`的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是`nil`，那么调用将返回`nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为`nil`，整个调用链都会失败，即返回`nil`。
 
 > 注意  
 Swift 的可选链式调用和 Objective-C 中向`nil`发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
@@ -30,7 +34,7 @@ Swift 的可选链式调用和 Objective-C 中向`nil`发送消息有些相像�
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
 ## 使用可选链式调用代替强制展开
 
-通过在想调用的属性、方法、或下标的可选值（optional value）后面放一个问号（`?`），可以定义一个可选链。这一点很像在可选值后面放一个叹号（`!`）来强制展开它的值。它们的主要区别在于当可选值为空时可选链式调用只会调用失败，然而强制展开将会触发运行时错误。
+通过在想调用的属性、方法、或下标的可选值后面放一个问号（`?`），可以定义一个可选链。这一点很像在可选值后面放一个叹号（`!`）来强制展开它的值。它们的主要区别在于当可选值为空时可选链式调用只会调用失败，然而强制展开将会触发运行时错误。
 
 为了反映可选链式调用可以在空值（`nil`）上调用的事实，不论这个调用的属性、方法及下标返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来判断你的可选链式调用是否调用成功，如果调用有返回值则说明调用成功，返回`nil`则说明调用失败。
 
@@ -50,9 +54,9 @@ class Residence {
 }
 ```
 
-`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。
+`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。  
 
-如果创建一个新的`Person`实例，因为它的`residence`属性是可选的，`john`属性将初始化为`nil`：
+假如你创建了一个新的`Person`实例,它的`residence`属性由于是是可选型而将初始化为`nil`,在下面的代码中,`john`有一个值为`nil`的`residence`属性：
 
 ```swift
 let john = Person()
@@ -143,7 +147,7 @@ class Residence {
 
 `Residence`还提供了访问`rooms`数组的快捷方式，即提供可读写的下标来访问`rooms`数组中指定位置的元素。
 
-此外，`Residence`还提供了`printNumberOfRooms()`方法，这个方法的作用是打印`numberOfRooms`的值。
+此外，`Residence`还提供了`printNumberOfRooms`方法，这个方法的作用是打印`numberOfRooms`的值。
 
 最后，`Residence`还定义了一个可选属性`address`，其类型为`Address?`。`Address`类的定义在下面会说明。
 
@@ -314,7 +318,7 @@ if let firstRoomName = john.residence?[0].name {
 ```swift
 var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
 testScores["Dave"]?[0] = 91
-testScores["Bev"]?[0]++
+testScores["Bev"]?[0] += 1
 testScores["Brian"]?[0] = 72
 // "Dave" 数组现在是 [91, 82, 84]，"Bev" 数组现在是 [80, 94, 81]
 ```

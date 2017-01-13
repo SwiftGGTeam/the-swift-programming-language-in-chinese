@@ -1,7 +1,7 @@
 《The Swift Programming Language》in Chinese
 =============================================
 
-中文版Apple官方Swift教程《The Swift Programming Language》
+中文版 Apple 官方 Swift 教程《The Swift Programming Language》
 
 [英文原版](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
 
@@ -9,17 +9,36 @@
 
 # 在线阅读
 
-使用Gitbook制作，可以直接[在线阅读](http://swiftguide.cn/)。
+使用 Gitbook 制作，可以直接[在线阅读](http://swiftguide.cn/)。
 
 # 当前阶段
 
-已经更新到Swift 2.1。
 
-# 2.1译者记录
+
+已经更新到 Swift 3.0。 2016-09-23
+
+# 3.0 译者记录
+相关[issue](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/issues/628)
+- Functions: [crayygy](https://github.com/crayygy)
+- Control Flow: [Realank](https://github.com/Realank)
+- Closures: [LanfordCai](https://github.com/LanfordCai)
+- Protocols: [chenmingbiao](https://github.com/chenmingbiao)
+- The Basics:[chenmingbiao](https://github.com/chenmingbiao)
+- Advanced Operators: [mmoaay](https://github.com/mmoaay)
+
+Language Reference:
+- Attributes: [WhoJave](https://github.com/WhoJave)
+- Statements: [chenmingjia](https://github.com/chenmingjia)
+- Declarations: [chenmingjia](https://github.com/chenmingjia)
+- Expressions: [chenmingjia](https://github.com/chenmingjia)
+- Types: [lettleprince](https://github.com/lettleprince)
+- Generic Parameters and Arguments: [chenmingjia](https://github.com/chenmingjia)
+
+# 2.1 & 2.2 译者记录
 
 详见各章节开头位置。
 
-# 2.0译者记录
+# 2.0 译者记录
 
 - About Swift （[xtymichael](https://github.com/xtymichael)）
 - A Swift Tour（[xtymichael](https://github.com/xtymichael)）
@@ -59,7 +78,7 @@
 - Generic Parameters and Arguments（[wardenNScaiyi](https://github.com/wardenNScaiyi)）
 - Summary of the Grammar（[miaosiqi](https://github.com/miaosiqi)）
 
-# 1.0译者记录
+# 1.0 译者记录
 
 * 欢迎使用 Swift
    * 关于 Swift ([numbbbbb])
