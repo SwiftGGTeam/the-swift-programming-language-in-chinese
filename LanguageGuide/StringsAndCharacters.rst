@@ -471,7 +471,7 @@ with a fourth character of ``é``, not ``e``:
 
 .. note::
 
-   Extended grapheme clusters can be composed of one or more Unicode scalars.
+   Extended grapheme clusters can be composed of multiple Unicode scalars.
    This means that different characters—
    and different representations of the same character—
    can require different amounts of memory to store.

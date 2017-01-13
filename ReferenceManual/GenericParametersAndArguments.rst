@@ -153,7 +153,7 @@ see :ref:`Generics_WhereClauses`.
 
 .. NOTE: A conformance requirement can only have one type after the colon,
     otherwise, you'd have a syntactic ambiguity
-    (a comma separated list types inside of a comma separated list of requirements).
+    (a comma-separated list types inside of a comma-separated list of requirements).
 
 
 .. _GenericParametersAndArguments_GenericArgumentClause:

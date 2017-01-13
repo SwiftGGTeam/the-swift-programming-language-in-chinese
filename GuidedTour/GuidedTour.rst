@@ -1483,4 +1483,4 @@ or to require a class to have a particular superclass.
    of the elements that any two sequences have in common.
 
 Writing ``<T: Equatable>``
-is the same as writing ``<T> ... where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable``.

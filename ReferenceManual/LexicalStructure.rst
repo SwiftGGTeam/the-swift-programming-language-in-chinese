@@ -798,7 +798,10 @@ postfix operators cannot begin with either a question mark or an exclamation mar
 .. test::
    :name: postfix operator can't start with question mark
    :hidden:
-   :compiler-errors: error: '+' is not a postfix unary operator
+   :compiler-errors: error: expected operator name in operator declaration
+                     postfix operator ?+
+                                      ^
+                     error: '+' is not a postfix unary operator
                      print(1?+)
                              ^
 

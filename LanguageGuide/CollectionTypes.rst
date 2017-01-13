@@ -507,7 +507,7 @@ you can create an empty set with an empty array literal:
 .. testcode:: setsEmpty
 
    -> letters.insert("a")
-   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (true, "a")
+   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (inserted: true, memberAfterInsert: "a")
    /> letters now contains \(letters.count) value of type Character
    </ letters now contains 1 value of type Character
    -> letters = []
@@ -593,7 +593,7 @@ You can add a new item into a set by calling the set's ``insert(_:)`` method:
 .. testcode:: setUsage
 
    -> favoriteGenres.insert("[Tool J]")
-   << // r0 : (inserted: Bool, memberAfterInsert: String) = (true, "[Tool J]")
+   << // r0 : (inserted: Bool, memberAfterInsert: String) = (inserted: true, memberAfterInsert: "[Tool J]")
    /> favoriteGenres now contains \(favoriteGenres.count) items
    </ favoriteGenres now contains 4 items
 
