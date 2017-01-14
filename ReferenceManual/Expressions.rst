@@ -114,33 +114,36 @@ is marked with ``try``, ``try?``, or ``try!``,
 that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
 
-.. testcode:: placement-of-try
+.. test::
+   :name: placement of try
+   :compiler-errors: error: call can throw but is not marked with 'try'
+                     sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+                                                          ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-    >> func someThrowingFunction() throws -> Int { return 10 }
-    >> func anotherThrowingFunction() throws -> Int { return 5 }
-    >> var sum = 0
-    << // sum : Int = 0
-    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
-    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
-    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
-    !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+   // -HIDE-
+   func someThrowingFunction() throws -> Int { return 10 }
+   func anotherThrowingFunction() throws -> Int { return 5 }
+   var sum = 0
+   // -SHOW-
+   sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
+   sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
+   sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
 
 A ``try`` expression can't appear on the right hand side of a binary operator,
 unless the binary operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
-.. assertion:: try-on-right
+.. test::
+   :name: try on the right
+   :hidden:
+   :compiler-errors: error: 'try' cannot appear to the right of a non-assignment operator
+                     sum = 7 + try someThrowingFunction() // Error
+                               ^
 
-    >> func someThrowingFunction() throws -> Int { return 10 }
-    >> var sum = 0
-    << // sum : Int = 0
-    -> sum = 7 + try someThrowingFunction() // Error
-    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
-    !! sum = 7 + try someThrowingFunction() // Error
-    !!           ^
-    -> sum = 7 + (try someThrowingFunction()) // OK
+   func someThrowingFunction() throws -> Int { return 10 }
+   var sum = 0
+   sum = 7 + (try someThrowingFunction()) // OK
+   sum = 7 + try someThrowingFunction() // Error
 
 For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
@@ -242,13 +245,24 @@ Assignment is performed from each part of the *value*
 to the corresponding part of the *expression*.
 For example:
 
-.. testcode:: assignmentOperator
+.. test::
+   :name: assignment operator
 
-    >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.4499999999999993, (12, 3))
-    -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
-    </ a is "test", b is 12, c is 3, and 9.45 is ignored
+   var (a, _, (b, c)) = ("test", 9.45, (12, 3))  // -HIDE-
+   (a, _, (b, c)) = ("test", 9.45, (12, 3))
+   // a is "test", b is 12, c is 3, and 9.45 is ignored
+   // -HIDE-
+   assert(a == "test")
+   assert(b == 12)
+   assert(c == 3)
+
+.. test  FIXME - drafting a different test harness approach
+   :name: assignment operator
+   :status-comment: \(a) is "test", \(b) is 12, \(c) is 3, and 9.45 is ignored
+                    a is "test", b is 12, c is 3, and 9.45 is ignored
+
+   var (a, _, (b, c)) = ("test", 9.45, (12, 3))  // -HIDE-
+   (a, _, (b, c)) = ("test", 9.45, (12, 3))
 
 The assignment operator does not return any value.
 
