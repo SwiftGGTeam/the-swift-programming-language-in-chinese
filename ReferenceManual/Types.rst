@@ -56,11 +56,11 @@ A :newTerm:`type annotation` explicitly specifies the type of a variable or expr
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show:
 
-.. testcode:: type-annotation
+.. test::
+   :name: type annotation
 
-    -> let someTuple: (Double, Double) = (3.14159, 2.71828)
-    << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
-    -> func someFunction(a: Int) { /* ... */ }
+   let someTuple: (Double, Double) = (3.14159, 2.71828)
+   func someFunction(a: Int) { /* ... */ }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -97,23 +97,24 @@ In the first case, a type identifier refers to a type alias of a named or compou
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
-.. testcode:: type-identifier
+.. test::
+   :name: type identifier
 
-    -> typealias Point = (Int, Int)
-    -> let origin: Point = (0, 0)
-    << // origin : Point = (0, 0)
+   typealias Point = (Int, Int)
+   let origin: Point = (0, 0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
 that is declared in the ``ExampleModule`` module.
 
-.. testcode:: type-identifier-dot
+.. test::
+   :name: type identifier dot
+   :compiler-errors: error: use of undeclared type 'ExampleModule'
+                     var someValue: ExampleModule.MyType
+                                    ^~~~~~~~~~~~~
 
-    -> var someValue: ExampleModule.MyType
-    !! <REPL Input>:1:16: error: use of undeclared type 'ExampleModule'
-    !! var someValue: ExampleModule.MyType
-    !!                ^~~~~~~~~~~~~
+   var someValue: ExampleModule.MyType
 
 .. langref-grammar
 
@@ -126,6 +127,7 @@ that is declared in the ``ExampleModule`` module.
 
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
+
 
 .. _Types_TupleType:
 
@@ -144,17 +146,17 @@ these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 When an element of a tuple type has a name,
 that name is part of the type.
 
-.. testcode:: tuple-type-names
+.. test::
+   :name: tuple type names
+   :compiler-errors: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
+                     someTuple = (left: 5, right: 5)  // Error: names don't match
+                                 ^~~~~~~~~~~~~~~~~~~
+                                             as! (top: Int, bottom: Int)
 
-   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-   << // someTuple : (top: Int, bottom: Int) = (top: 10, bottom: 12)
-   -> someTuple = (top: 4, bottom: 42) // OK: names match
-   -> someTuple = (9, 99)              // OK: names are inferred
-   -> someTuple = (left: 5, right: 5)  // Error: names don't match
-   !! <REPL Input>:1:13: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
-   !! someTuple = (left: 5, right: 5)  // Error: names don't match
-   !!             ^~~~~~~~~~~~~~~~~~~
-   !!                         as! (top: Int, bottom: Int)
+   var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
+   someTuple = (top: 4, bottom: 42) // OK: names match
+   someTuple = (9, 99)              // OK: names are inferred
+   someTuple = (left: 5, right: 5)  // Error: names don't match
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
@@ -235,28 +237,28 @@ Argument names in functions and methods
 are not part of the corresponding function type.
 For example:
 
-.. testcode::
+.. test::
+   :name: arguments are not part of function types
+   :compiler-errors: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
+                     f = functionWithDifferentArgumentTypes     // Error
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
+                     f = functionWithDifferentNumberOfArguments // Error
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   -> func someFunction(left: Int, right: Int) {}
-   -> func anotherFunction(left: Int, right: Int) {}
-   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-   ---
-   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
-   << // f : (Int, Int) -> () = (Function)
-   -> f = anotherFunction              // OK
-   -> f = functionWithDifferentLabels  // OK
-   ---
-   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
-   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
-   ---
-   -> f = functionWithDifferentArgumentTypes     // Error
-   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
-   !! f = functionWithDifferentArgumentTypes     // Error
-   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   -> f = functionWithDifferentNumberOfArguments // Error
-   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
-   !! f = functionWithDifferentNumberOfArguments // Error
-   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   func someFunction(left: Int, right: Int) {}
+   func anotherFunction(left: Int, right: Int) {}
+   func functionWithDifferentLabels(top: Int, bottom: Int) {}
+
+   var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
+   f = anotherFunction              // OK
+   f = functionWithDifferentLabels  // OK
+
+   func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+   func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
+
+   f = functionWithDifferentArgumentTypes     // Error
+   f = functionWithDifferentNumberOfArguments // Error
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
@@ -274,22 +276,19 @@ Throwing and rethrowing functions are described in
 :ref:`Declarations_ThrowingFunctionsAndMethods`
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
-.. assertion:: function-arrow-is-right-associative
+.. test::
+   :name: function arrow is right associative
+   :hidden:
 
-   >> func f(i: Int) -> (Int) -> Int {
-   >>     func g(j: Int) -> Int {
-   >>         return i + j
-   >>     }
-   >>     return g
-   >> }
-   >> let a: (Int) -> (Int) -> Int = f
-   << // a : (Int) -> (Int) -> Int = (Function)
-   >> a(3)(5)
-   << // r0 : Int = 8
-   >> let b: (Int) -> ((Int) -> Int) = f
-   << // b : (Int) -> ((Int) -> Int) = (Function)
-   >> b(3)(5)
-   << // r1 : Int = 8
+   func f(i: Int) -> (Int) -> Int {
+       func g(j: Int) -> Int {
+           return i + j
+       }
+       return g
+   }
+   let a: (Int) -> (Int) -> Int = f
+   let b: (Int) -> ((Int) -> Int) = f
+   assert(a(3)(5) == b(3)(5))
 
 .. langref-grammar
 
@@ -343,13 +342,13 @@ In other words, the following two declarations are equivalent:
     let someArray: Array<String> = ["Alex", "Brian", "Dave"]
     let someArray: [String] = ["Alex", "Brian", "Dave"]
 
-.. assertion:: array-literal
-    >> let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
-    << // someArray1 : Array<String> = ["Alex", "Brian", "Dave"]
-    >> let someArray2: [String] = ["Alex", "Brian", "Dave"]
-    << // someArray2 : Array<String> = ["Alex", "Brian", "Dave"]
-    >> someArray1 == someArray2
-    <$ : Bool = true
+.. test::
+   :name: array literal
+   :hidden:
+
+   let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
+   let someArray2: [String] = ["Alex", "Brian", "Dave"]
+   assert(someArray1 == someArray2)
 
 In both cases, the constant ``someArray``
 is declared as an array of strings. The elements of an array can be accessed
@@ -362,10 +361,16 @@ pair of square brackets.
 For example, you can create
 a three-dimensional array of integers using three sets of square brackets:
 
-.. testcode:: array-3d
+.. test::
+   :name: 3D array
 
-    -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    << // array3D : [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+   var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+   // -HIDE-
+   // Assert the statements made in the paragraph below.
+   // Commented out until Array gets conditional conformance to Equatable. <rdar://problem/17144340>
+   //assert(array3D[0]       == [[1, 2], [3, 4]])
+   //assert(array3D[0][1]    == [3,4])
+   assert(array3D[0][1][1] == 4)
 
 When accessing the elements in a multidimensional array,
 the left-most subscript index refers to the element at that index in the outermost
@@ -405,19 +410,23 @@ The Swift language provides the following syntactic sugar for the Swift standard
 
 In other words, the following two declarations are equivalent:
 
-.. code-block:: swift
+.. test::
+   :name: dictionary literal
 
-    let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
-    let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-
-.. assertion:: dictionary-literal
-
-    >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary1 : [String : Int] = ["Alex": 31, "Paul": 39]
-    >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    << // someDictionary2 : Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    >> someDictionary1 == someDictionary2
-    <$ : Bool = true
+   // -HIDE-
+   func a() -> [String: Int] {
+   // -SHOW-
+   let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+   // -HIDE-
+   return someDictionary
+   }
+   func b() -> Dictionary<String, Int> {
+   // -SHOW-
+   let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+   // -HIDE-
+   return someDictionary
+   }
+   assert(a() == b())
 
 In both cases, the constant ``someDictionary``
 is declared as a dictionary with strings as keys and integers as values.
@@ -459,14 +468,14 @@ In other words, the following two declarations are equivalent:
     var optionalInteger: Int?
     var optionalInteger: Optional<Int>
 
-.. assertion:: optional-literal
+.. test::
+   :name: optional literal
+   :hidden:
 
-    >> var optionalInteger1: Int?
-    << // optionalInteger1 : Int? = nil
-    >> var optionalInteger2: Optional<Int>
-    << // optionalInteger2 : Optional<Int> = nil
-    >> optionalInteger1 == optionalInteger2
-    <$ : Bool = true
+   var optionalInteger1: Int?
+   var optionalInteger2: Optional<Int>
+   assert(optionalInteger1 == nil)
+   assert(optionalInteger1 == optionalInteger2)
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -484,13 +493,14 @@ optional variable or property, its value automatically defaults to ``nil``.
 If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
-.. testcode:: optional-type
+.. test::
+   :name: optional type
 
-    >> var optionalInteger: Int?
-    << // optionalInteger : Int? = nil
-    -> optionalInteger = 42
-    -> optionalInteger! // 42
-    <$ : Int = 42
+   var optionalInteger: Int?
+   optionalInteger = 42
+   assert( // -HIDE-
+   optionalInteger! // 42
+   == 42) // -HIDE-
 
 Using the ``!`` operator to unwrap an optional
 that has a value of ``nil`` results in a runtime error.
@@ -648,24 +658,24 @@ You can use a ``type(of:)`` expression with an instance of a type
 to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
-.. testcode:: metatype-type
+.. test::
+   :name: metatype type
+   :prints: SomeSubClass
 
-    -> class SomeBaseClass {
-           class func printClassName() {
-               print("SomeBaseClass")
-           }
+   class SomeBaseClass {
+       class func printClassName() {
+           print("SomeBaseClass")
        }
-    -> class SomeSubClass: SomeBaseClass {
-           override class func printClassName() {
-               print("SomeSubClass")
-           }
+   }
+   class SomeSubClass: SomeBaseClass {
+       override class func printClassName() {
+           print("SomeSubClass")
        }
-    -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // The compile-time type of someInstance is SomeBaseClass,
-    -> // and the runtime type of someInstance is SomeSubClass
-    -> type(of: someInstance).printClassName()
-    <- SomeSubClass
+   }
+   let someInstance: SomeBaseClass = SomeSubClass()
+   // The compile-time type of someInstance is SomeBaseClass,
+   // and the runtime type of someInstance is SomeSubClass
+   type(of: someInstance).printClassName()
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
@@ -673,22 +683,22 @@ For class instances,
 the initializer that's called must be marked with the ``required`` keyword
 or the entire class marked with the ``final`` keyword.
 
-.. testcode:: metatype-type
+.. test::
+   :name: metatype type
+   :cont:
 
-    -> class AnotherSubClass: SomeBaseClass {
-          let string: String
-          required init(string: String) {
-             self.string = string
-          }
-          override class func printClassName() {
-             print("AnotherSubClass")
-          }
-       }
-    -> let metatype: AnotherSubClass.Type = AnotherSubClass.self
-    << // metatype : AnotherSubClass.Type = REPL.AnotherSubClass
-    -> let anotherInstance = metatype.init(string: "some string")
-    << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
-
+   class AnotherSubClass: SomeBaseClass {
+      let string: String
+      required init(string: String) {
+         self.string = string
+      }
+      override class func printClassName() {
+         print("AnotherSubClass")
+      }
+   }
+   let metatype: AnotherSubClass.Type = AnotherSubClass.self
+   let anotherInstance = metatype.init(string: "some string")
+   assert(anotherInstance is AnotherSubClass) // -HIDE-
 
 .. langref-grammar
 
@@ -775,12 +785,14 @@ In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` instead of ``Double``.
 
-.. testcode:: type-inference
+.. test::
+   :name: type inference
 
-    -> let e = 2.71828 // The type of e is inferred to be Double.
-    << // e : Double = 2.71828
-    -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828008
+   let e = 2.71828 // The type of e is inferred to be Double.
+   let eFloat: Float = 2.71828 // The type of eFloat is Float.
+   // -HIDE-
+   assert(e is Double)
+   assert(eFloat is Float)
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
