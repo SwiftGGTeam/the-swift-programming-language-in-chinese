@@ -64,12 +64,11 @@ and variables with the ``var`` keyword.
 Here's an example of how constants and variables can be used
 to track the number of login attempts a user has made:
 
-.. testcode:: constantsAndVariables
+.. test::
+    :name: constants and variables
 
-   -> let maximumNumberOfLoginAttempts = 10
-   << // maximumNumberOfLoginAttempts : Int = 10
-   -> var currentLoginAttempt = 0
-   << // currentLoginAttempt : Int = 0
+    let maximumNumberOfLoginAttempts = 10
+    var currentLoginAttempt = 0
 
 This code can be read as:
 
@@ -87,12 +86,10 @@ because this value must be incremented after each failed login attempt.
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
 
-.. testcode:: multipleDeclarations
-
-   -> var x = 0.0, y = 0.0, z = 0.0
-   << // x : Double = 0.0
-   << // y : Double = 0.0
-   << // z : Double = 0.0
+.. test::
+    :name: multiple declarations
+    
+    var x = 0.0, y = 0.0, z = 0.0
 
 .. note::
 
@@ -113,10 +110,10 @@ followed by a space, followed by the name of the type to use.
 This example provides a type annotation for a variable called ``welcomeMessage``,
 to indicate that the variable can store ``String`` values:
 
-.. testcode:: typeAnnotations
-   :compile: true
+.. test::
+    :name: type annotations
 
-   -> var welcomeMessage: String
+    var welcomeMessage: String
 
 The colon in the declaration means *“…of type…,”*
 so the code above can be read as:
@@ -128,20 +125,25 @@ Think of it as meaning “the type of thing” (or “the kind of thing”) that
 
 The ``welcomeMessage`` variable can now be set to any string value without error:
 
-.. testcode:: typeAnnotations
-   :compile: true
+.. test::
+    :name: type annotations
+    :cont:
+    :prints: Hello
 
-   -> welcomeMessage = "Hello"
-   >> print(welcomeMessage)
-   << Hello
+    welcomeMessage = "Hello"
+    // -HIDE-
+    print(welcomeMessage)
+    // -HIDE-
+   
 
 You can define multiple related variables of the same type on a single line,
 separated by commas, with a single type annotation after the final variable name:
 
-.. testcode:: typeAnnotations
-   :compile: true
+.. test::
+    :name: type annotations
+    :cont:
 
-   -> var red, green, blue: Double
+    var red, green, blue: Double
 
 .. note::
 
@@ -161,14 +163,14 @@ Naming Constants and Variables
 Constant and variable names can contain almost any character,
 including Unicode characters:
 
-.. testcode:: constantsAndVariables
+.. test::
+    :name: constants and variables
+    :cont:
+    
+    let π = 3.14159
+    let 你好 = "你好世界"
+    let 🐶🐮 = "dogcow"
 
-   -> let π = 3.14159
-   << // π : Double = 3.1415899999999999
-   -> let 你好 = "你好世界"
-   << // 你好 : String = "你好世界"
-   -> let 🐶🐮 = "dogcow"
-   << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names cannot contain
 whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
@@ -192,30 +194,25 @@ You can change the value of an existing variable to another value of a compatibl
 In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
 
-.. testcode:: constantsAndVariables
-
-   -> var friendlyWelcome = "Hello!"
-   << // friendlyWelcome : String = "Hello!"
-   -> friendlyWelcome = "Bonjour!"
-   /> friendlyWelcome is now \"\(friendlyWelcome)\"
-   </ friendlyWelcome is now "Bonjour!"
+.. test::
+    :name: constants and variables
+    :cont:
+    
+    var friendlyWelcome = "Hello!"
+    friendlyWelcome = "Bonjour!"
+    // friendlyWelcome is now "Bonjour!"
 
 Unlike a variable, the value of a constant cannot be changed once it is set.
 Attempting to do so is reported as an error when your code is compiled:
 
-.. testcode:: constantsAndVariables
+.. test::
+    :name: constants and variables
+    :cont:
+    :compiler-errors: error: cannot assign to value: 'languageName' is a 'let' constant
 
-   -> let languageName = "Swift"
-   << // languageName : String = "Swift"
-   -> languageName = "Swift++"
-   // This is a compile-time error: languageName cannot be changed.
-   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
-   !! languageName = "Swift++"
-   !! ~~~~~~~~~~~~ ^
-   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
-   !! let languageName = "Swift"
-   !! ^~~
-   !! var
+    let languageName = "Swift"
+    languageName = "Swift++"
+    // This is a compile-time error: languageName cannot be changed.
 
 .. _TheBasics_PrintingConstantsAndVariables:
 
@@ -224,10 +221,12 @@ Printing Constants and Variables
 
 You can print the current value of a constant or variable with the ``print(_:separator:terminator:)`` function:
 
-.. testcode:: constantsAndVariables
-
-   -> print(friendlyWelcome)
-   <- Bonjour!
+.. test::
+    :name: constants and variables
+    :cont:
+    :prints-comment: Bonjour!
+    
+    print(friendlyWelcome)
 
 The ``print(_:separator:terminator:)`` function
 is a global function that prints one or more values
