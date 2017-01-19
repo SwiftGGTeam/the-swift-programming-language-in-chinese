@@ -398,10 +398,10 @@ The following are examples of literals:
 .. test::
    :name: basic literals
 
-    42               // Integer literal
-    3.14159          // Floating-point literal
-    "Hello, world!"  // String literal
-    true             // Boolean literal
+   42               // Integer literal
+   3.14159          // Floating-point literal
+   "Hello, world!"  // String literal
+   true             // Boolean literal
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference

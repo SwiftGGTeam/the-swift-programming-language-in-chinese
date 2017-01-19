@@ -265,6 +265,7 @@ to mark the value as optional.
    if let name = optionalName {
        greeting = "Hello, \(name)"
    }
+   // -HIDE-
    print(greeting)
 
 .. admonition:: Experiment
@@ -504,7 +505,6 @@ either by name or by number.
 
        return (min, max, sum)
    }
-
    let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
    print(statistics.sum)
    print(statistics.2)
@@ -589,11 +589,9 @@ A function can take another function as one of its arguments.
        }
        return false
    }
-
    func lessThanTen(number: Int) -> Bool {
        return number < 10
    }
-
    var numbers = [20, 19, 7, 12]
    let result_hasAnyMatches = // -HIDE-
    hasAnyMatches(list: numbers, condition: lessThanTen)
@@ -729,8 +727,9 @@ Use ``init`` to create one.
        }
    }
    let result_namedShape = // -HIDE-
+   // -HIDE-
    NamedShape(name: "test name").simpleDescription()
-   assert(result_namedShape == "A shape with 0 sides.") // -HIDE-
+   assert(result_namedShape == "A shape with 0 sides.")
 
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
@@ -778,7 +777,6 @@ that don't actually override any method in the superclass.
            return "A square with sides of length \(sideLength)."
        }
    }
-
    let test = Square(sideLength: 5.2, name: "my test square")
    let result_testArea = // -HIDE-
    test.area()
@@ -827,10 +825,8 @@ properties can have a getter and a setter.
            return "An equilateral triangle with sides of length \(sideLength)."
        }
    }
-
    var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
    print(triangle.perimeter)
-
    triangle.perimeter = 9.9
    print(triangle.sideLength)
 
@@ -885,11 +881,9 @@ is always the same as the side length of its square.
            triangle = EquilateralTriangle(sideLength: size, name: name)
        }
    }
-
    var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    print(triangleAndSquare.square.sideLength)
    print(triangleAndSquare.triangle.sideLength)
-
    triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
    print(triangleAndSquare.triangle.sideLength)
 
@@ -1008,7 +1002,6 @@ you don't have to provide one.
            }
        }
    }
-
    let hearts = Suit.hearts
    let heartsDescription = hearts.simpleDescription()
    assert(heartsDescription == "hearts") // -HIDE-
@@ -1128,7 +1121,6 @@ but classes are passed by reference.
            return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
        }
    }
-
    let threeOfSpades = Card(rank: .three, suit: .spades)
    let threeOfSpadesDescription = threeOfSpades.simpleDescription()
    assert(threeOfSpadesDescription == "The 3 of spades") // -HIDE-
@@ -1216,7 +1208,7 @@ or even to a type that you imported from a library or framework.
        mutating func adjust() {
            self += 42
        }
-   }
+    }
    print(7.simpleDescription)
 
 .. admonition:: Experiment
@@ -1406,7 +1398,6 @@ even though they need to be executed at different times.
        let result = fridgeContent.contains(food)
        return result
    }
-
    let result_fridgeContains = // -HIDE-
    fridgeContains("banana")
    assert (result_fridgeContains == false) // -HIDE-
