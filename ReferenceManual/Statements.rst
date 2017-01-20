@@ -407,13 +407,17 @@ matches one of the patterns of the case and the expression of the ``where`` clau
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
-.. testcode:: switch-case-statement
+.. test::
+   :name: switch case statement
 
-    >> switch (1, 1) {
-    -> case let (x, y) where x == y:
-    >> break
-    >> default: break
-    >> }
+   // -HIDE-
+   switch (1, 1) {
+   // -SHOW-
+   case let (x, y) where x == y:
+   // -HIDE-
+   break
+   default: break
+   }
 
 As the above example shows, patterns in a case can also bind constants
 using the ``let`` keyword (they can also bind variables using the ``var`` keyword).
@@ -438,22 +442,29 @@ As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
-.. assertion:: switch-case-with-multiple-patterns
+.. test::
+   :name: switch case with multiple patterns - same type
+   :hidden:
 
-   >> let tuple = (1, 1)
-   << // tuple : (Int, Int) = (1, 1)
-   >> switch tuple {
-   >>     case (let x, 5), (let x, 1): print(1)
-   >>     default: print(2)
-   >> }
-   << 1
-   >> switch tuple {
-   >>     case (let x, 5), (let x as Any, 1): print(1)
-   >>     default: print(2)
-   >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
-   !! case (let x, 5), (let x as Any, 1): print(1)
-   !!                       ^
+   let tuple = (1, 1)
+   switch tuple {
+       case (let x, 5), (let x, 1): print(1)
+       default: print(2)
+   }
+   // -PRINTS- 1
+
+.. test::
+   :name: switch case with multiple patterns - different types
+   :hidden:
+   :compiler-errors: error: pattern variable bound to type 'Any', expected type 'Int'
+                     case (let x, 5), (let x as Any, 1): print(1)
+                                           ^
+
+   let tuple = (1, 1)
+   switch tuple {
+       case (let x, 5), (let x as Any, 1): print(1)
+       default: print(2)
+   }
 
 
 .. _Statements_SwitchStatementsMustBeExhaustive:
@@ -530,18 +541,19 @@ For more information and to see examples
 of how to use statement labels,
 see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
-.. assertion:: backtick-identifier-is-legal-label
+.. test::
+   :name: backticked identifier is a legal label
+   :hidden:
 
-   -> var i = 0
-   << // i : Int = 0
-   -> `return`: while i < 100 {
-          i += 1
-          if i == 10 {
-              break `return`
-          }
-      }
-   -> print(i)
-   << 10
+   var i = 0
+   `return`: while i < 100 {
+       i += 1
+       if i == 10 {
+           break `return`
+       }
+   }
+   print(i)
+   // -PRINTS- 10
 
 
 .. syntax-grammar::
@@ -825,17 +837,18 @@ Executing the last ``defer`` statement in a given scope first
 means that statements inside that last ``defer`` statement
 can refer to resources that will be cleaned up by other ``defer`` statements.
 
-.. testcode::
+.. test::
+   :name: multiple 'defer' statements
 
-   -> func f() {
-          defer { print("First") }
-          defer { print("Second") }
-          defer { print("Third") }
-      }
-   -> f()
-   <- Third
-   <- Second
-   <- First
+   func f() {
+       defer { print("First") }
+       defer { print("Second") }
+       defer { print("Third") }
+   }
+   f()
+   // -PRINTS- Third
+   // -PRINTS- Second
+   // -PRINTS- First
 
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
@@ -973,30 +986,40 @@ There must not be whitespace between ``>=`` and the version number.
    The ``arch(i386)`` platform condition returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 
-.. assertion:: pound-if-swift-version
+.. test::
+   :name: pound if swift version
+   :hidden:
 
-   -> #if swift(>=2.1)
-          print(1)
-      #endif
-   << 1
-   -> #if swift(>=2.1) && true
-          print(2)
-      #endif
-   << 2
-   -> #if swift(>=2.1) && false
-          print(3)
-      #endif
-   -> #if swift(>= 2.1)
-          print(4)
-      #endif
-   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
-   !! #if swift(>= 2.1)
-   !!           ^ ~
-   !!-
-   -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
-          print(5)
-      #endif
-   << 5
+   #if swift(>=2.1)
+       print(1)
+   #endif
+   // -PRINTS- 1
+
+   #if swift(>=2.1) && true
+       print(2)
+   #endif
+   // -PRINTS- 2
+
+   #if swift(>=2.1) && false
+       print(3)
+   #endif
+   // Doesn't print anything.
+
+   #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
+       print(4)
+   #endif
+   // -PRINTS- 4
+
+.. test::
+   :name: pound if swift version (errors)
+   :hidden:
+   :compiler-errors: error: unary operator cannot be separated from its operand
+                     #if swift(>= 2.1)
+                               ^ ~
+
+   #if swift(>= 2.1)
+       print(5)
+   #endif
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
