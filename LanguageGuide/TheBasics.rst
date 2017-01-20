@@ -133,7 +133,6 @@ The ``welcomeMessage`` variable can now be set to any string value without error
     welcomeMessage = "Hello"
     // -HIDE-
     print(welcomeMessage)
-    // -HIDE-
    
 
 You can define multiple related variables of the same type on a single line,
@@ -164,8 +163,7 @@ Constant and variable names can contain almost any character,
 including Unicode characters:
 
 .. test::
-    :name: constants and variables
-    :cont:
+    :name: naming constants and variables
     
     let π = 3.14159
     let 你好 = "你好世界"
@@ -195,19 +193,19 @@ In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
 
 .. test::
-    :name: constants and variables
+    :name: naming constants and variables
     :cont:
     
     var friendlyWelcome = "Hello!"
     friendlyWelcome = "Bonjour!"
-    // friendlyWelcome is now "Bonjour!"
+    // -COMMENT- friendlyWelcome is now \"\(friendlyWelcome)\"
+    // -RESULT- friendlyWelcome is now "Bonjour!"
 
 Unlike a variable, the value of a constant cannot be changed once it is set.
 Attempting to do so is reported as an error when your code is compiled:
 
 .. test::
-    :name: constants and variables
-    :cont:
+    :name: erroneously reassigning constants
     :compiler-errors: error: cannot assign to value: 'languageName' is a 'let' constant
 
     let languageName = "Swift"
@@ -222,10 +220,10 @@ Printing Constants and Variables
 You can print the current value of a constant or variable with the ``print(_:separator:terminator:)`` function:
 
 .. test::
-    :name: constants and variables
-    :cont:
+    :name: printing constants and variables
     :prints-comment: Bonjour!
     
+    var friendlyWelcome = "Bonjour!" // -HIDE-
     print(friendlyWelcome)
 
 The ``print(_:separator:terminator:)`` function
@@ -242,13 +240,14 @@ pass an empty string as the terminator --- for example,
 For information about parameters with default values,
 see :ref:`Functions_DefaultParameterValues`.
 
-.. assertion:: printingWithoutNewline
+.. test::
+    :name: printing without newline
+    :hidden:
 
-    >> let someValue = 10
-    << // someValue : Int = 10
-    -> print(someValue, terminator: "")
-    -> print(someValue)
-    << 1010
+    let someValue = 10
+    print(someValue, terminator: "")
+    print(someValue)
+    // -PRINTS- 1010
 
 .. QUESTION: have I referred to Xcode's console correctly here?
    Should I mention other output streams, such as the REPL / playgrounds?
@@ -261,10 +260,12 @@ as a placeholder in a longer string,
 and to prompt Swift to replace it with the current value of that constant or variable.
 Wrap the name in parentheses and escape it with a backslash before the opening parenthesis:
 
-.. testcode:: constantsAndVariables
+.. test::
+    :name: printing constants and variables
+    :cont:
 
-   -> print("The current value of friendlyWelcome is \(friendlyWelcome)")
-   <- The current value of friendlyWelcome is Bonjour!
+    print("The current value of friendlyWelcome is \(friendlyWelcome)")
+    // -PRINTS-COMMENT- The current value of friendlyWelcome is Bonjour!
 
 .. note::
 
@@ -283,19 +284,20 @@ Comments are ignored by the Swift compiler when your code is compiled.
 Comments in Swift are very similar to comments in C.
 Single-line comments begin with two forward-slashes (``//``):
 
-.. testcode:: comments
-   :compile: true
+.. test::
+    :name: comments
 
-   -> // This is a comment.
+    // This is a comment.
 
 Multiline comments start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
 
-.. testcode:: comments
-   :compile: true
+.. test::
+    :name: comments
+    :cont:
 
-   -> /* This is also a comment
-      but is written over multiple lines. */
+    /* This is also a comment
+    but is written over multiple lines. */
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -305,12 +307,13 @@ You write nested comments by starting a multiline comment block
 and then starting a second multiline comment within the first block.
 The second block is then closed, followed by the first block:
 
-.. testcode:: comments
-   :compile: true
+.. test::
+    :name: comments
+    :cont:
 
-   -> /* This is the start of the first multiline comment.
-         /* This is the second, nested multiline comment. */
-      This is the end of the first multiline comment. */
+    /* This is the start of the first multiline comment.
+       /* This is the second, nested multiline comment. */
+    This is the end of the first multiline comment. */
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -328,11 +331,11 @@ although you can do so if you wish.
 However, semicolons *are* required
 if you want to write multiple separate statements on a single line:
 
-.. testcode:: semiColons
+.. test::
+    :name: semicolons
 
-   -> let cat = "🐱"; print(cat)
-   << // cat : String = "🐱"
-   <- 🐱
+    let cat = "🐱"; print(cat)
+    // -PRINTS-COMMENT- 🐱
 
 .. _TheBasics_Integers:
 
@@ -358,12 +361,16 @@ Integer Bounds
 You can access the minimum and maximum values of each integer type
 with its ``min`` and ``max`` properties:
 
-.. testcode:: integerBounds
+.. test::
+    :name: integer bounds
 
-   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-   << // minValue : UInt8 = 0
-   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-   << // maxValue : UInt8 = 255
+    let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
+    let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+    // -HIDE-
+    assert(minValue == 0)
+    assert(maxValue == 255)
+    assert(type(of: minValue) == UInt8.self)
+    assert(type(of: maxValue) == UInt8.self)
 
 The values of these properties are of the appropriate-sized number type
 (such as ``UInt8`` in the example above)
@@ -477,20 +484,23 @@ without saying what type it is,
 Swift infers that you want the constant to be an ``Int``,
 because you have initialized it with a number that looks like an integer:
 
-.. testcode:: typeInference
+.. test::
+    :name: type inference
 
-   -> let meaningOfLife = 42
-   << // meaningOfLife : Int = 42
-   // meaningOfLife is inferred to be of type Int
+    let meaningOfLife = 42
+    // meaningOfLife is inferred to be of type Int
+    assert(meaningOfLife is Int) // -HIDE-
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift infers that you want to create a ``Double``:
 
-.. testcode:: typeInference
+.. test::
+    :name: type inference
+    :cont:
 
-   -> let pi = 3.14159
-   << // pi : Double = 3.1415899999999999
-   // pi is inferred to be of type Double
+    let pi = 3.14159
+    // pi is inferred to be of type Double
+    assert(pi is Double) // -HIDE-
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -498,11 +508,13 @@ when inferring the type of floating-point numbers.
 If you combine integer and floating-point literals in an expression,
 a type of ``Double`` will be inferred from the context:
 
-.. testcode:: typeInference
+.. test::
+    :name: type inference
+    :cont:
 
-   -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.1415899999999999
-   // anotherPi is also inferred to be of type Double
+    let anotherPi = 3 + 0.14159
+    // anotherPi is also inferred to be of type Double
+    assert(anotherPi is Double) // -HIDE-
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -522,16 +534,18 @@ Integer literals can be written as:
 
 All of these integer literals have a decimal value of ``17``:
 
-.. testcode:: numberLiterals
+.. test::
+    :name: number literals
 
-   -> let decimalInteger = 17
-   << // decimalInteger : Int = 17
-   -> let binaryInteger = 0b10001       // 17 in binary notation
-   << // binaryInteger : Int = 17
-   -> let octalInteger = 0o21           // 17 in octal notation
-   << // octalInteger : Int = 17
-   -> let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
-   << // hexadecimalInteger : Int = 17
+    let decimalInteger = 17
+    let binaryInteger = 0b10001       // 17 in binary notation
+    let octalInteger = 0o21           // 17 in octal notation
+    let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
+    // -HIDE-
+    assert(decimalInteger == 17)
+    assert(binaryInteger == 17)
+    assert(octalInteger == 17)
+    assert(hexadecimalInteger == 17)
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
@@ -541,18 +555,22 @@ indicated by an uppercase or lowercase ``e``;
 hexadecimal floats must have an exponent,
 indicated by an uppercase or lowercase ``p``.
 
-.. assertion:: float-required-vs-optional-exponent
+.. test::
+    :name: float required vs optional exponent
+    :compiler-errors: error: hexadecimal floating point literal must end with an exponent
+    :hidden:
 
-   -> let hexWithout = 0x1.5
-   !! <REPL Input>:1:23: error: hexadecimal floating point literal must end with an exponent
-   !! let hexWithout = 0x1.5
-   !!                       ^
-   -> let hexWith = 0x1.5p7
-   << // hexWith : Double = 168.0
-   -> let decimalWithout = 0.5
-   << // decimalWithout : Double = 0.5
-   -> let decimalWith = 0.5e7
-   << // decimalWith : Double = 5000000.0
+    let hexWithout = 0x1.5
+
+.. test::
+    :name: float required vs optional exponent part 2
+    :hidden:
+    
+    let hexWith = 0x1.5p7
+    let decimalWithout = 0.5
+    let decimalWith = 0.5e7
+    assert(hexWith == 168.0)
+    assert(decimalWith == 5000000.0)
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
@@ -568,28 +586,34 @@ the base number is multiplied by 2\ :superscript:`exp`:
 
 All of these floating-point literals have a decimal value of ``12.1875``:
 
-.. testcode:: numberLiterals
+.. test::
+    :name: number literals
+    :cont:
 
-   -> let decimalDouble = 12.1875
-   << // decimalDouble : Double = 12.1875
-   -> let exponentDouble = 1.21875e1
-   << // exponentDouble : Double = 12.1875
-   -> let hexadecimalDouble = 0xC.3p0
-   << // hexadecimalDouble : Double = 12.1875
+    let decimalDouble = 12.1875
+    let exponentDouble = 1.21875e1
+    let hexadecimalDouble = 0xC.3p0
+    // -HIDE-
+    assert(decimalDouble == 12.1875)
+    assert(exponentDouble == 12.1875)
+    assert(hexadecimalDouble == 12.1875)
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeros
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
-.. testcode:: numberLiterals
+.. test::
+    :name: number literals
+    :cont:
 
-   -> let paddedDouble = 000123.456
-   << // paddedDouble : Double = 123.456
-   -> let oneMillion = 1_000_000
-   << // oneMillion : Int = 1000000
-   -> let justOverOneMillion = 1_000_000.000_000_1
-   << // justOverOneMillion : Double = 1000000.0000001
+    let paddedDouble = 000123.456
+    let oneMillion = 1_000_000
+    let justOverOneMillion = 1_000_000.000_000_1
+    // -HIDE-
+    assert(paddedDouble == 123.456)
+    assert(oneMillion == 1000000)
+    assert(justOverOneMillion == 1000000.0000001)
 
 .. _TheBasics_NumericTypeConversion:
 
@@ -621,19 +645,20 @@ whereas a ``UInt8`` constant or variable can store numbers between ``0`` and ``2
 A number that will not fit into a constant or variable of a sized integer type
 is reported as an error when your code is compiled:
 
-.. testcode:: constantsAndVariablesOverflowError
+.. test::
+    :name: constants and variables overflow error
+    :compiler-errors: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
+                      let cannotBeNegative: UInt8 = -1
+                                             ^
+                      error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+                      let tooBig: Int8 = Int8.max + 1
+                                         ~~~~~~~~ ^ ~
 
-   -> let cannotBeNegative: UInt8 = -1
-   !!  <REPL Input>:1:31: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
-   !! let cannotBeNegative: UInt8 = -1
-   !!                        ^
-   // UInt8 cannot store negative numbers, and so this will report an error
-   -> let tooBig: Int8 = Int8.max + 1
-   !! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
-   !! let tooBig: Int8 = Int8.max + 1
-   !!                    ~~~~~~~~ ^ ~
-   // Int8 cannot store a number larger than its maximum value,
-   // and so this will also report an error
+    let cannotBeNegative: UInt8 = -1
+    // UInt8 cannot store negative numbers, and so this will report an error
+    let tooBig: Int8 = Int8.max + 1
+    // Int8 cannot store a number larger than its maximum value,
+    // and so this will also report an error
 
 Because each numeric type can store a different range of values,
 you must opt in to numeric type conversion on a case-by-case basis.
@@ -651,14 +676,14 @@ Instead, this example calls ``UInt16(one)`` to create
 a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original:
 
-.. testcode:: typeConversion
+.. test::
+    :name: type conversion
 
-   -> let twoThousand: UInt16 = 2_000
-   << // twoThousand : UInt16 = 2000
-   -> let one: UInt8 = 1
-   << // one : UInt8 = 1
-   -> let twoThousandAndOne = twoThousand + UInt16(one)
-   << // twoThousandAndOne : UInt16 = 2001
+    let twoThousand: UInt16 = 2_000
+    let one: UInt8 = 1
+    let twoThousandAndOne = twoThousand + UInt16(one)
+    // -HIDE-
+    assert(twoThousandAndOne is UInt16)
 
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
@@ -682,16 +707,17 @@ Integer and Floating-Point Conversion
 
 Conversions between integer and floating-point numeric types must be made explicit:
 
-.. testcode:: typeConversion
+.. test::
+    :name: type conversion
+    :cont:
 
-   -> let three = 3
-   << // three : Int = 3
-   -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
-   -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.1415899999999999
-   /> pi equals \(pi), and is inferred to be of type Double
-   </ pi equals 3.14159, and is inferred to be of type Double
+    let three = 3
+    let pointOneFourOneFiveNine = 0.14159
+    let pi = Double(three) + pointOneFourOneFiveNine
+    // -COMMENT- pi equals \(pi), and is inferred to be of type Double
+    // -RESULT- pi equals 3.14159, and is inferred to be of type Double
+    // -HIDE-
+    assert(pi is Double)
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -700,12 +726,13 @@ Without this conversion in place, the addition would not be allowed.
 Floating-point to integer conversion must also be made explicit.
 An integer type can be initialized with a ``Double`` or ``Float`` value:
 
-.. testcode:: typeConversion
+.. test::
+    :name: type conversion
+    :cont:
 
-   -> let integerPi = Int(pi)
-   << // integerPi : Int = 3
-   /> integerPi equals \(integerPi), and is inferred to be of type Int
-   </ integerPi equals 3, and is inferred to be of type Int
+    let integerPi = Int(pi)
+    // -COMMENT- integerPi equals \(integerPi), and is inferred to be of type Int
+    // -RESULT- integerPi equals 3, and is inferred to be of type Int
 
 Floating-point values are always truncated when used to initialize a new integer value in this way.
 This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
@@ -734,19 +761,23 @@ Type aliases are useful when you want to refer to an existing type
 by a name that is contextually more appropriate,
 such as when working with data of a specific size from an external source:
 
-.. testcode:: typeAliases
+.. test::
+    :name: type aliases
 
-   -> typealias AudioSample = UInt16
+    typealias AudioSample = UInt16
 
 Once you define a type alias,
 you can use the alias anywhere you might use the original name:
 
-.. testcode:: typeAliases
+.. test::
+    :name: type aliases
+    :cont:
 
-   -> var maxAmplitudeFound = AudioSample.min
-   << // maxAmplitudeFound : UInt16 = 0
-   /> maxAmplitudeFound is now \(maxAmplitudeFound)
-   </ maxAmplitudeFound is now 0
+    var maxAmplitudeFound = AudioSample.min
+    // -COMMENT- maxAmplitudeFound is now \(maxAmplitudeFound)
+    // -RESULT- maxAmplitudeFound is now 0
+    // -HIDE-
+    assert(maxAmplitudeFound == 0)
 
 Here, ``AudioSample`` is defined as an alias for ``UInt16``.
 Because it is an alias,
@@ -764,12 +795,14 @@ because they can only ever be true or false.
 Swift provides two Boolean constant values,
 ``true`` and ``false``:
 
-.. testcode:: booleans
+.. test::
+    :name: booleans
 
-   -> let orangesAreOrange = true
-   << // orangesAreOrange : Bool = true
-   -> let turnipsAreDelicious = false
-   << // turnipsAreDelicious : Bool = false
+    let orangesAreOrange = true
+    let turnipsAreDelicious = false
+    // -HIDE-
+    assert(orangesAreOrange is Bool)
+    assert(turnipsAreDelicious is Bool)
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -783,40 +816,42 @@ when it initializes constants or variables with other values whose type is alrea
 Boolean values are particularly useful when you work with conditional statements
 such as the ``if`` statement:
 
-.. testcode:: booleans
+.. test::
+    :name: booleans
+    :cont:
 
-   -> if turnipsAreDelicious {
-         print("Mmm, tasty turnips!")
-      } else {
-         print("Eww, turnips are horrible.")
-      }
-   <- Eww, turnips are horrible.
+    if turnipsAreDelicious {
+        print("Mmm, tasty turnips!")
+     } else {
+        print("Eww, turnips are horrible.")
+     }
+    // -PRINTS-COMMENT- Eww, turnips are horrible.
 
 Conditional statements such as the ``if`` statement are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety prevents non-Boolean values from being substituted for ``Bool``.
 The following example reports a compile-time error:
 
-.. testcode:: booleansNotBoolean
+.. test::
+    :name: booleans not boolean
+    :compiler-errors: error: 'Int' is not convertible to 'Bool'
+                      if i {
+                        ^
 
-   -> let i = 1
-   << // i : Int = 1
-   -> if i {
-         // this example will not compile, and will report an error
-      }
-   !! <REPL Input>:1:4: error: 'Int' is not convertible to 'Bool'
-   !! if i {
-   !!   ^
+    let i = 1
+    if i {
+        // this example will not compile, and will report an error
+    }
 
 However, the alternative example below is valid:
 
-.. testcode:: booleansIsBoolean
+.. test::
+    :name: booleans is boolean
 
-   -> let i = 1
-   << // i : Int = 1
-   -> if i == 1 {
-         // this example will compile successfully
-      }
+    let i = 1
+    if i == 1 {
+        // this example will compile successfully
+    }
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
