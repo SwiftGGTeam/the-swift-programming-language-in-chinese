@@ -250,19 +250,8 @@ For example:
 
    var (a, _, (b, c)) = ("test", 9.45, (12, 3))  // -HIDE-
    (a, _, (b, c)) = ("test", 9.45, (12, 3))
-   // a is "test", b is 12, c is 3, and 9.45 is ignored
-   // -HIDE-
-   assert(a == "test")
-   assert(b == 12)
-   assert(c == 3)
-
-.. test  FIXME - drafting a different test harness approach
-   :name: assignment operator
-   :status-comment: \(a) is "test", \(b) is 12, \(c) is 3, and 9.45 is ignored
-                    a is "test", b is 12, c is 3, and 9.45 is ignored
-
-   var (a, _, (b, c)) = ("test", 9.45, (12, 3))  // -HIDE-
-   (a, _, (b, c)) = ("test", 9.45, (12, 3))
+   // -COMMENT- a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
+   // -RESULT- a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 
@@ -336,33 +325,31 @@ can be cast to the specified *type*.
 It returns ``true`` if the *expression* can be cast to the specified *type*;
 otherwise, it returns ``false``.
 
-.. assertion:: triviallyTrueIsAndAs
+.. test::
+   :name: trivially true 'is' and 'as'
+   :hidden:
+   :compiler-errors: warning: 'is' test is always true
+                     "hello" is String
+                     ^
+                     warning: cast from 'String' to unrelated type 'Int' always fails
+                     "hello" is Int
+                     ~~~~~~~ ^  ~~~
 
-    -> "hello" is String
-    -> "hello" is Int
-    <$ : Bool = true
-    <$ : Bool = false
-    !! <REPL Input>:1:9: warning: 'is' test is always true
-    !! "hello" is String
-    !! ^
-    !! <REPL Input>:1:9: warning: cast from 'String' to unrelated type 'Int' always fails
-    !! "hello" is Int
-    !! ~~~~~~~ ^  ~~~
+   assert("hello" is String)
+   assert("hello" is Int)
 
-.. assertion:: is-operator-tautology
+.. test::
+   :name: 'is' operator tautology
+   :hidden:
+   :compiler-errors: warning: 'is' test is always true
+                     s is Base
+                       ^
 
-   -> class Base {}
-   -> class Subclass: Base {}
-   -> var s = Subclass()
-   << // s : Subclass = REPL.Subclass
-   -> var b = Base()
-   << // b : Base = REPL.Base
-   ---
-   -> s is Base
-   !! <REPL Input>:1:3: warning: 'is' test is always true
-   !! s is Base
-   !!   ^
-   << // r0 : Bool = true
+   class Base {}
+   class Subclass: Base {}
+   var s = Subclass()
+   var b = Base()
+   assert(s is Base)
 
 The ``as`` operator performs a cast
 when it is known at compile time
@@ -372,22 +359,21 @@ Upcasting lets you use an expression as an instance of its type's supertype,
 without using an intermediate variable.
 The following approaches are equivalent:
 
-.. testcode:: explicit-type-with-as-operator
+.. test::
+   :name: explicit type with 'as' operator
 
-   -> func f(_ any: Any) { print("Function for Any") }
-   -> func f(_ int: Int) { print("Function for Int") }
-   -> let x = 10
-   << // x : Int = 10
-   -> f(x)
-   <- Function for Int
-   ---
-   -> let y: Any = x
-   << // y : Any = 10
-   -> f(y)
-   <- Function for Any
-   ---
-   -> f(x as Any)
-   <- Function for Any
+   func f(_ any: Any) { print("Function for Any") }
+   func f(_ int: Int) { print("Function for Int") }
+   let x = 10
+   f(x)
+   // -PRINTS-COMMENT- Function for Int
+
+   let y: Any = x
+   f(y)
+   // -PRINTS-COMMENT- Function for Any
+
+   f(x as Any)
+   // -PRINTS-COMMENT- Function for Any
 
 Bridging lets you use an expression of
 a Swift standard library type such as ``String``
@@ -514,25 +500,30 @@ when the default value expression is evaluated at the call site.
 .. See also "Special Kinds of Parameters" in "Declarations"
    where the general rule is defined.
 
-.. testcode:: special-literal-evaluated-at-call-site
+.. test::
+   :name: special literal evaluated at call site
 
-    -> func logFunctionName(string: String = #function) {
-           print(string)
-       }
-    -> func myFunction() {
-          logFunctionName() // Prints "myFunction()".
-       }
-    >> myFunction()
-    << myFunction()
-    >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
-    >> noNamedArgs(1, 2)
-    << noNamedArgs
-    >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
-    >> oneNamedArg(1, withJay: 2)
-    << oneNamedArg(_:withJay:)
-    >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-    >> namedArgs(i: 1, withJay: 2)
-    << namedArgs(i:withJay:)
+   func logFunctionName(string: String = #function) {
+       print(string)
+   }
+   func myFunction() {
+      logFunctionName() // Prints "myFunction()".
+   }
+   // -HIDE-
+   myFunction()
+   // -PRINTS- myFunction()
+
+   func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
+   noNamedArgs(1, 2)
+   // -PRINTS- noNamedArgs
+
+   func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
+   oneNamedArg(1, withJay: 2)
+   // -PRINTS- oneNamedArg(_:withJay:)
+
+   func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
+   namedArgs(i: 1, withJay: 2)
+   // -PRINTS- namedArgs(i:withJay:)
 
 .. Additional hidden tests above illustrate
    the somewhat irregular rules used by #function
@@ -556,10 +547,10 @@ If there are expressions of multiple types,
 Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
-.. testcode:: array-literal-brackets
+.. test::
+   :name: array literal brackets
 
-    -> var emptyArray: [Double] = []
-    << // emptyArray : [Double] = []
+   var emptyArray: [Double] = []
 
 .. Note: The normal style for the above would be
        var emptyArray = [Double]()
@@ -586,10 +577,10 @@ to distinguish it from an empty array literal.
 You can use an empty dictionary literal to create an empty dictionary literal
 of specified key and value types.
 
-.. testcode:: dictionary-literal-brackets
+.. test::
+   :name: dictionary literal brackets
 
-    -> var emptyDictionary: [String: Double] = [:]
-    << // emptyDictionary : [String : Double] = [:]
+   var emptyDictionary: [String: Double] = [:]
 
 A :newTerm:`playground literal`
 is used by Xcode to create an interactive representation
@@ -661,32 +652,35 @@ another variable of the same name in scope,
 such as a function parameter.
 For example:
 
-.. testcode:: self-expression
+.. test::
+   :name: self expression
 
-    -> class SomeClass {
-           var greeting: String
-           init(greeting: String) {
-               self.greeting = greeting
-           }
+   class SomeClass {
+       var greeting: String
+       init(greeting: String) {
+           self.greeting = greeting
        }
+   }
 
 In a mutating method of a value type,
 you can assign a new instance of that value type to ``self``.
 For example:
 
-.. testcode:: self-expression
+.. test::
+   :name: self expression
+   :cont:
 
-    -> struct Point {
-          var x = 0.0, y = 0.0
-          mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-             self = Point(x: x + deltaX, y: y + deltaY)
-          }
-       }
-    >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
-    >> somePoint.moveBy(x: 2.0, y: 3.0)
-    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
-    << The point is now at (3.0, 4.0)
+   struct Point {
+      var x = 0.0, y = 0.0
+      mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+         self = Point(x: x + deltaX, y: y + deltaY)
+      }
+   }
+   // -HIDE-
+   var somePoint = Point(x: 1.0, y: 1.0)
+   somePoint.moveBy(x: 2.0, y: 3.0)
+   print("The point is now at (\(somePoint.x), \(somePoint.y))")
+   // -PRINTS- The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
 
@@ -787,22 +781,23 @@ that allow closures to be written more concisely:
 
 The following closure expressions are equivalent:
 
-.. testcode:: closure-expression-forms
+.. test::
+   :name: closure expression forms
 
-    >> func myFunction(f: (Int, Int) -> Int) {}
-    -> myFunction {
-           (x: Int, y: Int) -> Int in
-           return x + y
-       }
-    ---
-    -> myFunction {
-           (x, y) in
-           return x + y
-       }
-    ---
-    -> myFunction { return $0 + $1 }
-    ---
-    -> myFunction { $0 + $1 }
+   func myFunction(f: (Int, Int) -> Int) {} // -HIDE-
+   myFunction {
+       (x: Int, y: Int) -> Int in
+       return x + y
+   }
+
+   myFunction {
+       (x, y) in
+       return x + y
+   }
+
+   myFunction { return $0 + $1 }
+
+   myFunction { $0 + $1 }
 
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
@@ -834,21 +829,19 @@ For example in the code below,
 ``a`` is included in the capture list but ``b`` is not,
 which gives them different behavior.
 
-.. testcode:: capture-list-value-semantics
+.. test::
+   :name: capture list value semantics
 
-    -> var a = 0
-    << // a : Int = 0
-    -> var b = 0
-    << // b : Int = 0
-    -> let closure = { [a] in
-        print(a, b)
-    }
-    << // closure : () -> () = (Function)
-    ---
-    -> a = 10
-    -> b = 10
-    -> closure()
-    <- 0 10
+   var a = 0
+   var b = 0
+   let closure = { [a] in
+    print(a, b)
+   }
+
+   a = 10
+   b = 10
+   closure()
+   // -PRINTS-COMMENT- 0 10
 
 There are two different things named ``a``,
 the variable in the surrounding scope
@@ -881,74 +874,70 @@ a variable in the outer scope and a constant in the inner scope,
 but they both refer to the same object
 because of reference semantics.
 
-.. testcode:: capture-list-reference-semantics
+.. test::
+   :name: capture list reference semantics
 
-    -> class SimpleClass {
-           var value: Int = 0
-       }
-    -> var x = SimpleClass()
-    << // x : SimpleClass = REPL.SimpleClass
-    -> var y = SimpleClass()
-    << // y : SimpleClass = REPL.SimpleClass
-    -> let closure = { [x] in
-           print(x.value, y.value)
-       }
-    << // closure : () -> () = (Function)
-    ---
-    -> x.value = 10
-    -> y.value = 10
-    -> closure()
-    <- 10 10
+   class SimpleClass {
+       var value: Int = 0
+   }
+   var x = SimpleClass()
+   var y = SimpleClass()
+   let closure = { [x] in
+       print(x.value, y.value)
+   }
 
-.. assertion:: capture-list-with-commas
+   x.value = 10
+   y.value = 10
+   closure()
+   // -PRINTS-COMMENT- 10 10
 
-    -> var x = 100
-    << // x : Int = 100
-    -> var y = 7
-    << // y : Int = 7
-    -> var f: ()->Int = { [x, y] in x+y }
-    << // f : () -> Int = (Function)
-    >> f()
-    << // r0 : Int = 107
+.. test::
+   :name: capture list with commas
+   :hidden:
+
+   var x = 100
+   var y = 7
+   var f: ()->Int = { [x, y] in x+y }
+   assert(f() == 107)
 
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
 
-.. assertion:: capture-list-is-not-exhaustive
+.. test::
+   :name: capture list is not exhaustive
+   :hidden:
 
-    -> var x = 100
-       var y = 7
-       var f: ()->Int = { [x] in x }
-       var g: ()->Int = { [x] in x+y }
-    << // x : Int = 100
-    << // y : Int = 7
-    << // f : () -> Int = (Function)
-    << // g : () -> Int = (Function)
-    ---
-    -> f()
-    << // r0 : Int = 100
-    -> g()
-    << // r1 : Int = 107
+   var x = 100
+   var y = 7
+   var f: ()->Int = { [x] in x }
+   var g: ()->Int = { [x] in x+y }
+
+   assert(f() == 100)
+   assert(g() == 107)
 
 If the type of the expression's value is a class,
 you can mark the expression in a capture list
 with ``weak`` or ``unowned`` to capture a weak or unowned reference
 to the expression's value.
 
-.. testcode:: closure-expression-weak
+.. test::
+   :name: closure expression weak
 
-    >> func myFunction(f: () -> Void) { f() }
-    >> class C {
-    >> let title = "Title"
-    >> func method() {
-    -> myFunction { print(self.title) }                    // strong capture
-    -> myFunction { [weak self] in print(self!.title) }    // weak capture
-    -> myFunction { [unowned self] in print(self.title) }  // unowned capture
-    >> } }
-    >> C().method()
-    << Title
-    << Title
-    << Title
+   // -HIDE-
+   func myFunction(f: () -> Void) { f() }
+   class C {
+   let title = "Title"
+   func method() {
+   // -SHOW-
+   myFunction { print(self.title) }                    // strong capture
+   myFunction { [weak self] in print(self!.title) }    // weak capture
+   myFunction { [unowned self] in print(self.title) }  // unowned capture
+   // -HIDE-
+   } }
+   C().method()
+   // -PRINTS- Title
+   // -PRINTS- Title
+   // -PRINTS- Title
 
 You can also bind an arbitrary expression
 to a named value in a capture list.
@@ -956,18 +945,22 @@ The expression is evaluated when the closure is created,
 and the value is captured with the specified strength.
 For example:
 
-.. testcode:: closure-expression-capture
+.. test::
+   :name: closure expression capture
 
-    >> func myFunction(f: () -> Void) { f() }
-    >> class P { let title = "Title" }
-    >> class C {
-    >> let parent = P()
-    >> func method() {
-    // Weak capture of "self.parent" as "parent"
-    -> myFunction { [weak parent = self.parent] in print(parent!.title) }
-    >> } }
-    >> C().method()
-    << Title
+   // -HIDE-
+   func myFunction(f: () -> Void) { f() }
+   class P { let title = "Title" }
+   class C {
+   let parent = P()
+   func method() {
+   // -SHOW-
+   // Weak capture of "self.parent" as "parent"
+   myFunction { [weak parent = self.parent] in print(parent!.title) }
+   // -HIDE-
+   } }
+   C().method()
+   // -PRINTS- Title
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
@@ -1019,12 +1012,12 @@ It has the following form:
 
 For example:
 
-.. testcode:: implicitMemberEnum
+.. test::
+   :name: implicit member enum
 
-    >> enum MyEnumeration { case someValue, anotherValue }
-    -> var x = MyEnumeration.someValue
-    << // x : MyEnumeration = REPL.MyEnumeration.someValue
-    -> x = .anotherValue
+   enum MyEnumeration { case someValue, anotherValue }  // -HIDE-
+   var x = MyEnumeration.someValue
+   x = .anotherValue
 
 .. langref-grammar
 
@@ -1102,12 +1095,13 @@ is used to explicitly ignore a value during an assignment.
 For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
-.. testcode:: wildcardTuple
+.. test::
+   :name: wildcard tuple
 
-    >> var (x, _) = (10, 20)
-    << // (x, _) : (Int, Int) = (10, 20)
-    -> (x, _) = (10, 20)
-    -> // x is 10, and 20 is ignored
+   var (x, _) = (10, 20)  // -HIDE-
+   (x, _) = (10, 20)
+   // -COMMENT- x is \(x), and 20 is ignored
+   // -RESULT- x is 10, and 20 is ignored
 
 .. syntax-grammar::
 
@@ -1136,22 +1130,25 @@ that is available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
-.. testcode:: selector-expression
+.. test::
+   :name: selector expression
 
-   >> import Foundation
-   -> class SomeClass: NSObject {
-          let property: String
-          @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) {}
-   ---
-          init(property: String) {
-              self.property = property
-          }
-      }
-   -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
-   << // selectorForMethod : Selector = doSomethingWithInt:
-   -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
-   << // selectorForPropertyGetter : Selector = property
+   import Foundation  // -HIDE-
+   class SomeClass: NSObject {
+       let property: String
+       @objc(doSomethingWithInt:)
+       func doSomething(_ x: Int) {}
+
+       init(property: String) {
+           self.property = property
+       }
+   }
+   let selectorForMethod = #selector(SomeClass.doSomething(_:))
+   let selectorForPropertyGetter = #selector(getter: SomeClass.property)
+   // -HIDE-
+   assert("\(selectorForMethod)" == "doSomethingWithInt:")
+   assert("\(selectorForPropertyGetter)" == "property")
+
 
 When creating a selector for a property's getter,
 the *property name* can be a reference to a variable or constant property.
@@ -1163,14 +1160,17 @@ as well the ``as`` operator to disambiguate between methods that share a name
 but have different type signatures.
 For example:
 
-.. testcode:: selector-expression
+.. test::
+   :name: selector expression
+   :cont:
 
-   -> extension SomeClass {
-          @objc(doSomethingWithString:)
-          func doSomething(_ x: String) { }
-      }
-   -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
-   << // anotherSelector : Selector = doSomethingWithString:
+   extension SomeClass {
+       @objc(doSomethingWithString:)
+       func doSomething(_ x: String) { }
+   }
+   let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
+   // -HIDE-
+   assert("\(anotherSelector)" == "doSomethingWithString:")
 
 Because a selector is created at compile time, not at runtime,
 the compiler can check that a method or property exists
@@ -1219,30 +1219,30 @@ that is available in the Objective-C runtime.
 At compile time, the key-path expression is replaced by a string literal.
 For example:
 
-.. testcode:: keypath-expression
+.. test::
+   :name: keypath expression
 
-   >> import Foundation
-   -> @objc class SomeClass: NSObject {
-         var someProperty: Int
-         init(someProperty: Int) {
-             self.someProperty = someProperty
-         }
-         func keyPathTest() -> String {
-            return #keyPath(someProperty)
-         }
+   import Foundation  // -HIDE-
+   @objc class SomeClass: NSObject {
+      var someProperty: Int
+      init(someProperty: Int) {
+          self.someProperty = someProperty
       }
-   ---
-   -> let c = SomeClass(someProperty: 12)
-   <~ // c : SomeClass = <REPL.SomeClass:
-   -> let keyPath = #keyPath(SomeClass.someProperty)
-   << // keyPath : String = "someProperty"
-   -> print(keyPath == c.keyPathTest())
-   <- true
-   ---
-   -> if let value = c.value(forKey: keyPath) {
-   ->     print(value)
-   -> }
-   <- 12
+      func keyPathTest() -> String {
+         return #keyPath(someProperty)
+      }
+   }
+
+   let c = SomeClass(someProperty: 12)
+   let keyPath = #keyPath(SomeClass.someProperty)
+   assert(keyPath == "someProperty")  // -HIDE-
+   print(keyPath == c.keyPathTest())
+   // -PRINTS-COMMENT- true
+
+   if let value = c.value(forKey: keyPath) {
+       print(value)
+   }
+   // -PRINTS-COMMENT- 12
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
@@ -1346,37 +1346,45 @@ The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
 The following function calls are equivalent:
 
-.. testcode:: trailing-closure
+.. test::
+   :name: trailing closure
 
-    >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
-    >>    return f(x)
-    >> }
-    >> let x = 10
-    << // x : Int = 10
-    // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x: x, f: {$0 == 13})
-    << // r0 : Bool = false
-    -> someFunction(x: x) {$0 == 13}
-    << // r1 : Bool = false
+   // -HIDE-
+   func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
+      return f(x)
+   }
+   let x = 10
+   // -SHOW-
+   // someFunction takes an integer and a closure as its arguments
+   let a = // -HIDE-
+   someFunction(x: x, f: {$0 == 13})
+   let b = // -HIDE-
+   someFunction(x: x) {$0 == 13}
+   // -HIDE-
+   assert(!a && !b)
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted.
 
-.. testcode:: no-paren-trailing-closure
+.. test::
+   :name: no-paren trailing closure
 
-    >> class Data {
-    >>    let data = 10
-    >>    func someMethod(f: (Int) -> Bool) -> Bool {
-    >>       return f(self.data)
-    >>    }
-    >> }
-    >> let myData = Data()
-    << // myData : Data = REPL.Data
-    // someFunction takes a closure as its only argument
-    -> myData.someMethod() {$0 == 13}
-    << // r0 : Bool = false
-    -> myData.someMethod {$0 == 13}
-    << // r1 : Bool = false
+   // -HIDE-
+   class Data {
+      let data = 10
+      func someMethod(f: (Int) -> Bool) -> Bool {
+         return f(self.data)
+      }
+   }
+   let myData = Data()
+   // -SHOW-
+   // someFunction takes a closure as its only argument
+   let a = // -HIDE-
+   myData.someMethod() {$0 == 13}
+   let b = // -HIDE-
+   myData.someMethod {$0 == 13}
+   // -HIDE-
+   assert(!a && !b)
 
 .. langref-grammar
 
@@ -1422,52 +1430,51 @@ to initialize a new instance of a type.
 You also use an initializer expression
 to delegate to the initializer of a superclass.
 
-.. testcode:: init-call-superclass
+.. test::
+   :name: init call superclass
 
-    >> class SomeSuperClass { }
-    -> class SomeSubClass: SomeSuperClass {
-    ->     override init() {
-    ->         // subclass initialization goes here
-    ->         super.init()
-    ->     }
-    -> }
+   class SomeSuperClass { }  // -HIDE-
+   class SomeSubClass: SomeSuperClass {
+       override init() {
+           // subclass initialization goes here
+           super.init()
+       }
+   }
 
 Like a function, an initializer can be used as a value.
 For example:
 
-.. testcode:: init-as-value
+.. test::
+   :name: init as value
 
-    // Type annotation is required because String has multiple initializers.
-    -> let initializer: (Int) -> String = String.init
-    << // initializer : (Int) -> String = (Function)
-    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
-    << // oneTwoThree : String = "123"
-    -> print(oneTwoThree)
-    <- 123
+   // Type annotation is required because String has multiple initializers.
+   let initializer: (Int) -> String = String.init
+   let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
+   print(oneTwoThree)
+   // -PRINTS-COMMENT- 123
 
 If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
-.. testcode:: explicit-implicit-init
+.. test::
+   :name: explicit implicit init
+   :compiler-errors: error: initializing from a metatype value must reference 'init' explicitly
+                    let s4 = type(of: someValue)(data: 5)       // Error
+                                                ^
+                                                .init
 
-    >> struct SomeType {
-    >>     let data: Int
-    >> }
-    -> let s1 = SomeType.init(data: 3)  // Valid
-    << // s1 : SomeType = REPL.SomeType(data: 3)
-    -> let s2 = SomeType(data: 1)       // Also valid
-    << // s2 : SomeType = REPL.SomeType(data: 1)
-    ---
-    >> let someValue = s1
-    << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s3 = type(of: someValue).init(data: 7)  // Valid
-    << // s3 : SomeType = REPL.SomeType(data: 7)
-    -> let s4 = type(of: someValue)(data: 5)       // Error
-    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
-    !! let s4 = type(of: someValue)(data: 5)       // Error
-    !!                              ^
-    !!                              .init
+   // -HIDE-
+   struct SomeType {
+       let data: Int
+   }
+   // -SHOW-
+   let s1 = SomeType.init(data: 3)  // Valid
+   let s2 = SomeType(data: 1)       // Also valid
+
+   let someValue = s1  // -HIDE-
+   let s3 = type(of: someValue).init(data: 7)  // Valid
+   let s4 = type(of: someValue)(data: 5)       // Error
 
 .. langref-grammar
 
@@ -1498,27 +1505,30 @@ The members of a named type are named
 as part of the type's declaration or extension.
 For example:
 
-.. testcode:: explicitMemberExpression
+.. test::
+   :name: explicit member expression
 
-    -> class SomeClass {
-           var someProperty = 42
-       }
-    -> let c = SomeClass()
-    << // c : SomeClass = REPL.SomeClass
-    -> let y = c.someProperty  // Member access
-    << // y : Int = 42
+   class SomeClass {
+       var someProperty = 42
+   }
+   let c = SomeClass()
+   let y = c.someProperty  // Member access
+   // -HIDE-
+   assert(y == 42)
 
 The members of a tuple
 are implicitly named using integers in the order they appear,
 starting from zero.
 For example:
 
-.. testcode:: explicit-member-expression
+.. test::
+   :name: explicit member expression
+   :cont:
 
-    -> var t = (10, 20, 30)
-    << // t : (Int, Int, Int) = (10, 20, 30)
-    -> t.0 = t.1
-    -> // Now t is (20, 20, 30)
+   var t = (10, 20, 30)
+   t.0 = t.1
+   // -COMMENT- Now t is \(t)
+   // -RESULT- Now t is (20, 20, 30)
 
 The members of a module access
 the top-level declarations of that module.
@@ -1534,52 +1544,50 @@ To distinguish between overloaded methods,
 use a type annotation.
 For example:
 
-.. testcode:: function-with-argument-names
+.. test::
+   :name: function with argument names
+   :compiler-errors: error: ambiguous use of 'someMethod'
+                     let a = instance.someMethod              // Ambiguous
+                             ^
+                     note: found this candidate
+                         func someMethod(x: Int, y: Int) {}
+                             ^
+                     note: found this candidate
+                         func someMethod(x: Int, z: Int) {}
+                             ^
+                     error: ambiguous use of 'overloadedMethod(x:y:)'
+                     let d = instance.overloadedMethod        // Ambiguous
+                             ^
+                     note: found this candidate
+                         func overloadedMethod(x: Int, y: Int) {}
+                             ^
+                     note: found this candidate
+                         func overloadedMethod(x: Int, y: Bool) {}
+                             ^
+                     error: ambiguous use of 'overloadedMethod(x:y:)'
+                     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+                             ^
+                     note: found this candidate
+                         func overloadedMethod(x: Int, y: Int) {}
+                             ^
+                     note: found this candidate
+                         func overloadedMethod(x: Int, y: Bool) {}
+                             ^
 
-    -> class SomeClass {
-           func someMethod(x: Int, y: Int) {}
-           func someMethod(x: Int, z: Int) {}
-           func overloadedMethod(x: Int, y: Int) {}
-           func overloadedMethod(x: Int, y: Bool) {}
-       }
-    -> let instance = SomeClass()
-    ---
-    << // instance : SomeClass = REPL.SomeClass
-    -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
-    !! let a = instance.someMethod              // Ambiguous
-    !!         ^
-    !! <REPL Input>:2:12: note: found this candidate
-    !!              func someMethod(x: Int, y: Int) {}
-    !!                   ^
-    !! <REPL Input>:3:12: note: found this candidate
-    !!              func someMethod(x: Int, z: Int) {}
-    !!                   ^
-    -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (Int, Int) -> () = (Function)
-    ---
-    -> let d = instance.overloadedMethod        // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
-    !! let d = instance.overloadedMethod        // Ambiguous
-    !!         ^
-    !! <REPL Input>:4:12: note: found this candidate
-    !!              func overloadedMethod(x: Int, y: Int) {}
-    !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
-    !!              func overloadedMethod(x: Int, y: Bool) {}
-    !!                   ^
-    -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
-    !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-    !!             ^
-    !! <REPL Input>:4:12: note: found this candidate
-    !!              func overloadedMethod(x: Int, y: Int) {}
-    !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
-    !!              func overloadedMethod(x: Int, y: Bool) {}
-    !!                   ^
-    -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
-    << // d : (Int, Bool) -> Void = (Function)
+   class SomeClass {
+       func someMethod(x: Int, y: Int) {}
+       func someMethod(x: Int, z: Int) {}
+       func overloadedMethod(x: Int, y: Int) {}
+       func overloadedMethod(x: Int, y: Bool) {}
+   }
+   let instance = SomeClass()
+
+   let a = instance.someMethod              // Ambiguous
+   let b = instance.someMethod(x:y:)        // Unambiguous
+
+   let d = instance.overloadedMethod        // Ambiguous
+   let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+   let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
@@ -1587,15 +1595,15 @@ not as an implicit member expression.
 For example, the following listing shows chained method calls
 split over several lines:
 
-.. testcode:: period-at-start-of-line
-   :compile: true
+.. test::
+   :name: period at start of line
 
-   -> let x = [10, 3, 20, 15, 4]
-   ->     .sorted()
-   ->     .filter { $0 > 5 }
-   ->     .map { $0 * 100 }
-   >> print(x)
-   << [1000, 1500, 2000]
+   let x = [10, 3, 20, 15, 4]
+       .sorted()
+       .filter { $0 > 5 }
+       .map { $0 * 100 }
+   // -HIDE-
+   assert(x == [1000, 1500, 2000])
 
 .. langref-grammar
 
@@ -1666,24 +1674,24 @@ The *expression* can't be the name of a type.
 The entire ``type(of:)`` expression evaluates to the value of the
 runtime type of the *expression*, as the following example shows:
 
-.. testcode:: dynamic-type
+.. test::
+   :name: dynamic type
 
-    -> class SomeBaseClass {
-           class func printClassName() {
-               print("SomeBaseClass")
-           }
+   class SomeBaseClass {
+       class func printClassName() {
+           print("SomeBaseClass")
        }
-    -> class SomeSubClass: SomeBaseClass {
-           override class func printClassName() {
-               print("SomeSubClass")
-           }
+   }
+   class SomeSubClass: SomeBaseClass {
+       override class func printClassName() {
+           print("SomeSubClass")
        }
-    -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamic type of SomeSubClass at runtime
-    -> type(of: someInstance).printClassName()
-    <- SomeSubClass
+   }
+   let someInstance: SomeBaseClass = SomeSubClass()
+   // someInstance has a static type of SomeBaseClass at compile time, and
+   // it has a dynamic type of SomeSubClass at runtime
+   type(of: someInstance).printClassName()
+   // -PRINTS-COMMENT- SomeSubClass
 
 .. syntax-grammar::
 
@@ -1761,19 +1769,18 @@ either by mutating the value itself,
 or by assigning to one of the value's members.
 For example:
 
-.. testcode:: optional-as-lvalue
+.. test::
+   :name: optional as lvalue
 
-   -> var x: Int? = 0
-   << // x : Int? = Optional(0)
-   -> x! += 1
-   /> x is now \(x!)
-   </ x is now 1
-   ---
-   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
-   -> someDictionary["a"]![0] = 100
-   /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
+   var x: Int? = 0
+   x! += 1
+   // -COMMENT- x is now \(x!)
+   // -RESULT- x is now 1
+
+   var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+   someDictionary["a"]![0] = 100
+   // -COMMENT- someDictionary is now \(someDictionary)
+   // -RESULT- someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
 
 .. langref-grammar
 
@@ -1823,30 +1830,38 @@ the value of which is used to evaluate ``.performAction()``.
 The entire expression ``c?.property.performAction()``
 has a value of an optional type.
 
-.. testcode:: optional-chaining
+.. test::
+   :name: optional chaining
 
-   >> class OtherClass { func performAction() -> Bool {return true} }
-   >> class SomeClass { var property: OtherClass = OtherClass() }
-   -> var c: SomeClass?
-   << // c : SomeClass? = nil
-   -> var result: Bool? = c?.property.performAction()
-   << // result : Bool? = nil
+   // -HIDE-
+   class OtherClass { func performAction() -> Bool {return true} }
+   class SomeClass { var property: OtherClass = OtherClass() }
+   // -SHOW-
+   var c: SomeClass?
+   var result: Bool? = c?.property.performAction()
+   // -HIDE-
+   assert(c == nil)
+   assert(result == nil)
 
 The following example shows the behavior
 of the example above
 without using optional chaining.
 
-.. testcode:: optional-chaining-alt
+.. test::
+   :name: optional chaining alt
 
-   >> class OtherClass { func performAction() -> Bool {return true} }
-   >> class SomeClass { var property: OtherClass = OtherClass() }
-   >> var c: SomeClass?
-   << // c : SomeClass? = nil
-   -> var result: Bool? = nil
-   << // result : Bool? = nil
-   -> if let unwrappedC = c {
-         result = unwrappedC.property.performAction()
-      }
+   // -HIDE-
+   class OtherClass { func performAction() -> Bool {return true} }
+   class SomeClass { var property: OtherClass = OtherClass() }
+   var c: SomeClass?
+   // -SHOW-
+   var result: Bool? = nil
+   if let unwrappedC = c {
+      result = unwrappedC.property.performAction()
+   }
+   // -HIDE-
+   assert(c == nil)
+   assert(result == nil)
 
 The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself,
@@ -1856,26 +1871,24 @@ the expression on the right hand side of the assignment operator
 is not evaluated.
 For example:
 
-.. testcode:: optional-chaining-as-lvalue
+.. test::
+   :name: optional chaining as lvalue
 
-   -> func someFunctionWithSideEffects() -> Int {
-         return 42  // No actual side effects.
-      }
-   -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
-   ---
-   -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = nil
+   func someFunctionWithSideEffects() -> Int {
+      return 42  // No actual side effects.
+   }
+   var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+
+   someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    // someFunctionWithSideEffects is not evaluated
-   /> someDictionary is still \(someDictionary)
-   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
-   ---
-   -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = Optional(())
-   /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
-   </ someFunctionWithSideEffects is evaluated and returns 42
-   /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
+   // -COMMENT- someDictionary is still \(someDictionary)
+   // -RESULT- someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
+
+   someDictionary["a"]?[0] = someFunctionWithSideEffects()
+   // -COMMENT- someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
+   // -RESULT- someFunctionWithSideEffects is evaluated and returns 42
+   // -COMMENT- someDictionary is now \(someDictionary)
+   // -RESULT- someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
 
 .. langref-grammar
 
