@@ -410,23 +410,18 @@ The Swift language provides the following syntactic sugar for the Swift standard
 
 In other words, the following two declarations are equivalent:
 
+.. code-block:: swift
+
+   let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
+   let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+
 .. test::
    :name: dictionary literal
+   :hidden:
 
-   // -HIDE-
-   func a() -> [String: Int] {
-   // -SHOW-
-   let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
-   // -HIDE-
-   return someDictionary
-   }
-   func b() -> Dictionary<String, Int> {
-   // -SHOW-
-   let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-   // -HIDE-
-   return someDictionary
-   }
-   assert(a() == b())
+   let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
+   let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+   assert(someDictionary1 == someDictionary2)
 
 In both cases, the constant ``someDictionary``
 is declared as a dictionary with strings as keys and integers as values.
