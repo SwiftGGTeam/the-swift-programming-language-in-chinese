@@ -491,7 +491,7 @@ you can access that value using the postfix operator ``!``, as shown below:
 .. test::
    :name: optional type
 
-   var optionalInteger: Int?
+   var optionalInteger: Int?  // -HIDE-
    optionalInteger = 42
    assert( // -HIDE-
    optionalInteger! // 42
@@ -671,6 +671,7 @@ as the following example shows:
    // The compile-time type of someInstance is SomeBaseClass,
    // and the runtime type of someInstance is SomeSubClass
    type(of: someInstance).printClassName()
+   // -PRINTS-COMMENT- SomeSubClass
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.
