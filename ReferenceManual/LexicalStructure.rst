@@ -208,7 +208,7 @@ so they must be escaped with backticks in that context.
    :hidden:
    :compiler-errors: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
                      func f(inout x: Int) {}
-                            ~~~~~    ^
+                            ^~~~~
                                      inout
 
    func f(`inout` x: Int) {}
