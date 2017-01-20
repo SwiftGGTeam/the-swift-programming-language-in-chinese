@@ -386,7 +386,7 @@ struct AudioChannel {
     var currentLevel: Int = 0 {
         didSet {
             if currentLevel > AudioChannel.thresholdLevel {
-                // 将当前音量限制在阀值之内
+                // 将当前音量限制在阈值之内
                 currentLevel = AudioChannel.thresholdLevel
             }
             if currentLevel > AudioChannel.maxInputLevelForAllChannels {
