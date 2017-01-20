@@ -77,7 +77,6 @@ separated by a colon.
    // -HIDE-
    assert(implicitInteger is Int)
    assert(implicitDouble is Double)
-   // -SHOW-
 
 .. admonition:: Experiment
 
@@ -97,7 +96,6 @@ explicitly make an instance of the desired type.
    let widthLabel = label + String(width)
    // -HIDE-
    assert(widthLabel == "The width is 94")
-   // -SHOW-
 
 .. admonition:: Experiment
 
