@@ -846,9 +846,9 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
        defer { print("Third") }
    }
    f()
-   // -PRINTS- Third
-   // -PRINTS- Second
-   // -PRINTS- First
+   // -PRINTS-COMMENT- Third
+   // -PRINTS-COMMENT- Second
+   // -PRINTS-COMMENT- First
 
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.

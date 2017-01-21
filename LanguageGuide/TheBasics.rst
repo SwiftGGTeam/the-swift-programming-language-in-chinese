@@ -821,10 +821,10 @@ such as the ``if`` statement:
     :cont:
 
     if turnipsAreDelicious {
-        print("Mmm, tasty turnips!")
-     } else {
-        print("Eww, turnips are horrible.")
-     }
+       print("Mmm, tasty turnips!")
+    } else {
+       print("Eww, turnips are horrible.")
+    }
     // -PRINTS-COMMENT- Eww, turnips are horrible.
 
 Conditional statements such as the ``if`` statement are covered in more detail in :doc:`ControlFlow`.
@@ -840,7 +840,7 @@ The following example reports a compile-time error:
 
     let i = 1
     if i {
-        // this example will not compile, and will report an error
+       // this example will not compile, and will report an error
     }
 
 However, the alternative example below is valid:
@@ -850,7 +850,7 @@ However, the alternative example below is valid:
 
     let i = 1
     if i == 1 {
-        // this example will compile successfully
+       // this example will compile successfully
     }
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
