@@ -1834,7 +1834,7 @@ In that context, ``Self`` refers to the eventual type that conforms to the proto
 For more information and examples,
 see :ref:`Generics_AssociatedTypes`.
 
-.. TODO: Finish writing this section after WWDC.
+.. TODO: <rdar://problem/30128056> TSPL: Declarations - finish writing the "protocol associated type" section
 
 .. NOTE:
     What are associated types? What are they "associated" with? Is "Self"
