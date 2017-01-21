@@ -204,22 +204,24 @@ If the *constant name* of a constant declaration is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
-.. testcode:: constant-decl
+.. test::
+   :name: constant decl
 
-    -> let (firstNumber, secondNumber) = (10, 42)
-    << // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
+   let (firstNumber, secondNumber) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
 and ``secondNumber`` is a named constant for the value ``42``.
 Both constants can now be used independently:
 
-.. testcode:: constant-decl
+.. test::
+   :name: constant decl
+   :cont:
 
-    -> print("The first number is \(firstNumber).")
-    <- The first number is 10.
-    -> print("The second number is \(secondNumber).")
-    <- The second number is 42.
+   print("The first number is \(firstNumber).")
+   // -PRINTS-COMMENT- The first number is 10.
+   print("The second number is \(secondNumber).")
+   // -PRINTS-COMMENT- The second number is 42.
 
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -533,23 +535,25 @@ can provide concrete types for some or all of the generic parameters
 of the existing type.
 For example:
 
-.. testcode:: typealias-with-generic
+.. test::
+   :name: typealias with generic
 
-   -> typealias StringDictionary<Value> = Dictionary<String, Value>
-   ---
+   typealias StringDictionary<Value> = Dictionary<String, Value>
+
    // The following dictionaries have the same type.
-   -> var dictionary1: StringDictionary<Int> = [:]
-   -> var dictionary2: Dictionary<String, Int> = [:]
-   << // dictionary1 : Dictionary<String, Int> = [:]
-   << // dictionary2 : Dictionary<String, Int> = [:]
+   var dictionary1: StringDictionary<Int> = [:]
+   var dictionary2: Dictionary<String, Int> = [:]
+   // -HIDE-
+   assert(type(of: dictionary1) == type(of: dictionary2))
 
 When a type alias is declared with generic parameters, the constraints on those
 parameters must match exactly the constraints on the existing type's generic parameters.
 For example:
 
-.. testcode:: typealias-with-generic-constraint
+.. test::
+   :name: typealias with generic constraint
 
-   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+   typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
@@ -568,17 +572,18 @@ a type alias can give a shorter and more convenient name
 to a type that is used frequently.
 For example:
 
-.. testcode:: typealias-in-prototol
+.. test::
+   :name: typealias in prototol
 
-    -> protocol Sequence {
-           associatedtype Iterator: IteratorProtocol
-           typealias Element = Iterator.Element
-       }
-    ---
-    -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
-           // ...
-    >>     return 9000
-       }
+   protocol Sequence {
+       associatedtype Iterator: IteratorProtocol
+       typealias Element = Iterator.Element
+   }
+
+   func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+       // ...
+       return 9000  // -HIDE-
+   }
 
 Without this type alias,
 the ``sum`` function would have to refer to the associated type
@@ -671,11 +676,14 @@ By default,
 parameter names are also used as argument labels.
 For example:
 
-.. testcode:: default-parameter-names
+.. test::
+   :name: default parameter names
 
-   -> func f(x: Int, y: Int) -> Int { return x + y }
-   -> f(x: 1, y: 2) // both x and y are labeled
-   << // r0 : Int = 3
+   func f(x: Int, y: Int) -> Int { return x + y }
+   let result =  // -HIDE-
+   f(x: 1, y: 2) // both x and y are labeled
+   // -HIDE-
+   assert(result == 3)
 
 You can override the default behavior for argument labels
 with one of the following forms:
@@ -695,10 +703,11 @@ An underscore (``_``) before a parameter name
 suppresses the argument label.
 The corresponding argument must have no label in function or method calls.
 
-.. testcode:: overridden-parameter-names
+.. test::
+   :name: overridden parameter names
 
-   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
-   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
+   func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+   repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -756,21 +765,21 @@ which means the final value of the original
 would also not be well defined.
 For example:
 
-.. testcode:: cant-pass-inout-aliasing
+.. test::
+   :name: can't pass inout aliasing
+   :compiler-errors: error: inout arguments are not allowed to alias each other
+                     f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+                                 ^~
+                     note: previous aliasing argument
+                     f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+                          ^~
 
-   -> var x = 10
-   << // x : Int = 10
-   -> func f(a: inout Int, b: inout Int) {
-          a += 1
-          b += 10
-      }
-   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!             ^~
-   !! <REPL Input>:1:6: note: previous aliasing argument
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!      ^~
+   var x = 10
+   func f(a: inout Int, b: inout Int) {
+       a += 1
+       b += 10
+   }
+   f(a: &x, b: &x) // Invalid, in-out arguments alias each other
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -778,51 +787,62 @@ If you need to capture an in-out parameter
 without mutating it or to observe changes made by other code,
 use a capture list to explicitly capture the parameter immutably.
 
-.. testcode:: explicit-capture-for-inout
+.. test::
+   :name: explicit capture for inout
 
-    -> func someFunction(a: inout Int) -> () -> Int {
-           return { [a] in return a + 1 }
-       }
+   func someFunction(a: inout Int) -> () -> Int {
+       return { [a] in return a + 1 }
+   }
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
 such as in multithreaded code that ensures
 all mutation has finished before the function returns.
 
-.. testcode:: cant-pass-inout-aliasing
+.. test::
+   :name: can't pass inout aliasing - use explicit copy
 
-    >> import Dispatch
-    >> func someMutatingOperation(_ a: inout Int) {}
-    -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-          // Make a local copy and manually copy it back.
-          var localX = x
-          defer { x = localX }
+   // -HIDE-
+   import Dispatch
+   func someMutatingOperation(_ a: inout Int) {a = 99}
+   // -SHOW-
+   func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+      // Make a local copy and manually copy it back.
+      var localX = x
+      defer { x = localX }
 
-          // Operate on localX asynchronously, then wait before returning.
-          queue.async { someMutatingOperation(&localX) }
-          queue.sync {}
-       }
+      // Operate on localX asynchronously, then wait before returning.
+      queue.async { someMutatingOperation(&localX) }
+      queue.sync {}
+   }
+   // -HIDE-
+   var someValue = 10
+   let q = DispatchQueue(label: "some queue")
+   multithreadedFunction(queue: q, x: &someValue)
+   assert(someValue == 99)
 
 For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
 
-.. assertion:: escaping-cant-capture-inout
+.. test::
+   :name: escaping can't capture inout
+   :hidden:
+   :compiler-errors: error: nested function cannot capture inout parameter and escape
+                         return inner
+                         ^
+                     error: escaping closures can only capture inout parameters explicitly by value
+                         return { a += 1 }
+                                  ^
 
-    -> func outer(a: inout Int) -> () -> Void {
-           func inner() {
-               a += 1
-           }
-           return inner
+   func outer(a: inout Int) -> () -> Void {
+       func inner() {
+           a += 1
        }
-    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
-    !!            return inner
-    !!            ^
-    -> func closure(a: inout Int) -> () -> Void {
-           return { a += 1 }
-       }
-    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
-    !!              return { a += 1 }
-    !!                       ^
+       return inner
+   }
+   func closure(a: inout Int) -> () -> Void {
+       return { a += 1 }
+   }
 
 
 .. _Declarations_SpecialKindsOfParameters:
@@ -858,34 +878,46 @@ The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
 the default value is used instead.
 
-.. testcode:: default-args-and-labels
+.. test::
+   :name: default args and labels
+   :compiler-errors: error: missing argument label 'x:' in call
+                     f(7)      // Invalid, missing argument label
+                       ^
+                       x:
 
-   -> func f(x: Int = 42) -> Int { return x }
-   -> f()       // Valid, uses default value
-   -> f(x: 7)   // Valid, uses the value provided
-   -> f(7)      // Invalid, missing argument label
-   <$ : Int = 42
-   <$ : Int = 7
-   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
-   !! f(7)      // Invalid, missing argument label
-   !!   ^
-   !!   x:
+   func f(x: Int = 42) -> Int { return x }
+   f()       // Valid, uses default value
+   f(x: 7)   // Valid, uses the value provided
+   f(7)      // Invalid, missing argument label
 
-.. assertion:: default-args-evaluated-at-call-site
+.. test::
+   :name: default args and labels - without error
+   :hidden:
 
-    -> func shout() -> Int {
-          print("evaluated")
-          return 10
-       }
-    -> func foo(x: Int = shout()) { print("x is \(x)") }
-    -> foo(x: 100)
-    << x is 100
-    -> foo()
-    << evaluated
-    << x is 10
-    -> foo()
-    << evaluated
-    << x is 10
+   func f(x: Int = 42) -> Int { return x }
+   assert(f() == 42)
+   assert(f(x: 7) == 7)
+
+.. test::
+   :name: default args evaluated at call site
+   :hidden:
+
+   func shout() -> Int {
+      print("evaluated")
+      return 10
+   }
+   func foo(x: Int = shout()) { print("x is \(x)") }
+
+   foo(x: 100)
+   // -PRINTS- x is 100
+
+   foo()
+   // -PRINTS- evaluated
+   // -PRINTS- x is 10
+
+   foo()
+   // -PRINTS- evaluated
+   // -PRINTS- x is 10
 
 .. _Declarations_SpecialKindsOfMethods:
 
@@ -950,11 +982,12 @@ and :newTerm:`rethrowing methods`.
 Rethrowing functions and methods
 must have at least one throwing function parameter.
 
-.. testcode:: rethrows
+.. test::
+   :name: rethrows
 
-   -> func someFunction(callback: () throws -> Void) rethrows {
-          try callback()
-      }
+   func someFunction(callback: () throws -> Void) rethrows {
+       try callback()
+   }
 
 A rethrowing function or method can contain a ``throw`` statement
 only inside a ``catch`` clause.
@@ -968,42 +1001,46 @@ For example, the following is invalid
 because the ``catch`` clause would handle
 the error thrown by ``alwaysThrows()``.
 
-.. testcode:: double-negative-rethrows
+.. test::
+   :name: double negative rethrows
+   :compiler-errors: error: a function declared 'rethrows' may only throw if its parameter does
+                                   throw AnotherError.error
+                                   ^
 
-   >> enum SomeError: Error { case error }
-   >> enum AnotherError: Error { case error }
-   -> func alwaysThrows() throws {
-          throw SomeError.error
+   // -HIDE-
+   enum SomeError: Error { case error }
+   enum AnotherError: Error { case error }
+   // -SHOW-
+   func alwaysThrows() throws {
+       throw SomeError.error
+   }
+   func someFunction(callback: () throws -> Void) rethrows {
+      do {
+         try callback()
+         try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+      } catch {
+         throw AnotherError.error
       }
-   -> func someFunction(callback: () throws -> Void) rethrows {
-         do {
-            try callback()
-            try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
-         } catch {
-            throw AnotherError.error
-         }
-      }
+   }
 
-   !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
-   !!               throw AnotherError.error
-   !!               ^
+.. test::
+   :name: throwing in rethrowing function
+   :hidden:
+   :compiler-errors: error: a function declared 'rethrows' may only throw if its parameter does
+                     throw SomeError.d  // Error
+                     ^
 
-.. assertion:: throwing-in-rethrowing-function
-
-   -> enum SomeError: Error { case c, d }
-   -> func f1(callback: () throws -> Void) rethrows {
-          do {
-              try callback()
-          } catch {
-              throw SomeError.c  // OK
-          }
-      }
-   -> func f2(callback: () throws -> Void) rethrows {
-          throw SomeError.d  // Error
-      }
-   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.d  // Error
-   !! ^
+   enum SomeError: Error { case c, d }
+   func f1(callback: () throws -> Void) rethrows {
+       do {
+           try callback()
+       } catch {
+           throw SomeError.c  // OK
+       }
+   }
+   func f2(callback: () throws -> Void) rethrows {
+       throw SomeError.d  // Error
+   }
 
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
@@ -1129,19 +1166,21 @@ that create instances of the enumeration with the specified associated values.
 And just like functions,
 you can get a reference to an enumeration case and apply it later in your code.
 
-.. testcode:: enum-case-as-function
+.. test::
+   :name: enum case as function
 
-    -> enum Number {
-          case integer(Int)
-          case real(Double)
-       }
-    -> let f = Number.integer
-    << // f : (Int) -> Number = (Function)
-    -> // f is a function of type (Int) -> Number
-    ---
-    -> // Apply f to create an array of Number instances with integer values
-    -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number.integer(0), REPL.Number.integer(2), REPL.Number.integer(4), REPL.Number.integer(6)]
+   enum Number {
+      case integer(Int)
+      case real(Double)
+   }
+   let f = Number.integer
+   // f is a function of type (Int) -> Number
+
+   // Apply f to create an array of Number instances with integer values
+   let evenInts: [Number] = [0, 2, 4, 6].map(f)
+   // -HIDE-
+   print(evenInts)
+   // -PRINTS- [main.Number.integer(0), main.Number.integer(2), main.Number.integer(4), main.Number.integer(6)]
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
@@ -1167,18 +1206,19 @@ mark it with the ``indirect`` declaration modifier.
    it is and isn't used.
    For example, does "indirect enum { X(Int) } mark X as indirect?
 
-.. testcode:: indirect-enum
+.. test::
+   :name: indirect enum
 
-   -> enum Tree<T> {
-         case empty
-         indirect case node(value: T, left: Tree, right: Tree)
-      }
-   >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
-   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
-   >> let t = Tree.node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
+   enum Tree<T> {
+      case empty
+      indirect case node(value: T, left: Tree, right: Tree)
+   }
+   // -HIDE-
+   let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
+   let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
+   let t = Tree.node(value: 50, left: l1, right: l2)
+   print(t)
+   // -PRINTS- node(value: 50, left: main.Tree<Swift.Int>.node(value: 10, left: main.Tree<Swift.Int>.empty, right: main.Tree<Swift.Int>.empty), right: main.Tree<Swift.Int>.node(value: 100, left: main.Tree<Swift.Int>.empty, right: main.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
@@ -1196,23 +1236,27 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
    but right now the compiler is satisfied with any associated value.
    Alex emailed Joe Groff 2015-07-08 about this.
 
-.. assertion indirect-in-indirect
+.. test::
+   :name: indirect in indirect
+   :hidden:
+   :compiler-errors: error: enum case in 'indirect' enum cannot also be 'indirect'
+                     indirect enum E { indirect case c(E) }
+                                       ^
 
-   -> indirect enum E { indirect case c(E) }
-   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
-   !! indirect enum E { indirect case c(E) }
-   !!                   ^
+   indirect enum E { indirect case c(E) }
 
-.. assertion indirect-without-recursion
+.. test::
+   :name: indirect without recursion
+   :hidden:
+   :compiler-errors: error: enum case 'c' without associated value cannot be 'indirect'
+                     enum E { indirect case c }
+                              ^
 
    -> enum E { indirect case c }
-   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
-   !! enum E { indirect case c }
-   !!          ^
-   ---
+
    -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
    -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
-   ---
+
    -> indirect enum E3 { case x }
 
 
@@ -1256,11 +1300,12 @@ they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
-.. testcode:: raw-value-enum
+.. test::
+   :name: raw value enum
 
-    -> enum ExampleEnum: Int {
-          case a, b, c = 5, d
-       }
+    enum ExampleEnum: Int {
+       case a, b, c = 5, d
+    }
 
 In the above example, the raw value of ``ExampleEnum.a`` is ``0`` and the value of
 ``ExampleEnum.b`` is ``1``. And because the value of ``ExampleEnum.c`` is
@@ -1271,11 +1316,12 @@ If the raw-value type is specified as ``String``
 and you don't assign values to the cases explicitly,
 each unassigned case is implicitly assigned a string with the same text as the name of that case.
 
-.. testcode:: raw-value-enum-implicit-string-values
+.. test::
+   :name: raw value enum implicit string values
 
-    -> enum GamePlayMode: String {
-          case cooperative, individual, competitive
-       }
+    enum GamePlayMode: String {
+       case cooperative, individual, competitive
+    }
 
 In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
 the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
@@ -1498,10 +1544,12 @@ A class can override properties, methods, subscripts, and initializers of its su
 Overridden properties, methods, subscripts,
 and designated initializers must be marked with the ``override`` declaration modifier.
 
-.. assertion:: designatedInitializersRequireOverride
+.. test::
+   :name: designated initializers require override
+   :hidden:
 
-    -> class C { init() {} }
-    -> class D: C { override init() { super.init() } }
+   class C { init() {} }
+   class D: C { override init() { super.init() } }
 
 To require that subclasses implement a superclass's initializer,
 mark the superclass's initializer with the ``required`` declaration modifier.
@@ -1623,11 +1671,14 @@ by writing the ``class`` keyword as the first item in the *inherited protocols*
 list after the colon.
 For example, the following protocol can be adopted only by class types:
 
-.. testcode:: protocol-declaration
+.. test::
+   :name: protocol declaration
 
-    -> protocol SomeProtocol: class {
-           /* Protocol members go here */
-       }
+   protocol SomeProtocol: class {
+       /* Protocol members go here */
+   }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Any protocol that inherits from a protocol that's marked with the ``class`` requirement
 can likewise be adopted only by class types.
@@ -2003,30 +2054,33 @@ To declare a failable initializer that produces an implicitly unwrapped optional
 append an exclamation mark instead (``init!``). The example below shows an ``init?``
 failable initializer that produces an optional instance of a structure.
 
-.. testcode:: failable
+.. test::
+   :name: failable
 
-    -> struct SomeStruct {
-           let property: String
-           // produces an optional instance of 'SomeStruct'
-           init?(input: String) {
-               if input.isEmpty {
-                   // discard 'self' and return 'nil'
-                   return nil
-               }
-               property = input
+   struct SomeStruct {
+       let property: String
+       // produces an optional instance of 'SomeStruct'
+       init?(input: String) {
+           if input.isEmpty {
+               // discard 'self' and return 'nil'
+               return nil
            }
+           property = input
        }
+   }
 
 You call an ``init?`` failable initializer in the same way that you call a nonfailable initializer,
 except that you must deal with the optionality of the result.
 
-.. testcode:: failable
+.. test::
+   :name: failable
+   :cont:
 
-    -> if let actualInstance = SomeStruct(input: "Hello") {
-           // do something with the instance of 'SomeStruct'
-       } else {
-           // initialization of 'SomeStruct' failed and the initializer returned 'nil'
-       }
+   if let actualInstance = SomeStruct(input: "Hello") {
+       // do something with the instance of 'SomeStruct'
+   } else {
+       // initialization of 'SomeStruct' failed and the initializer returned 'nil'
+   }
 
 A failable initializer can return ``nil``
 at any point in the implementation of the initializer's body.
@@ -2176,27 +2230,28 @@ to ensure members of that type are properly initialized.
     at the end of your own initializer,
     to ensure that all instance properties are fully initialized."
 
-.. assertion:: extension-can-have-where-clause
+.. test::
+   :name: extension can have where clause
+   :hidden:
 
-   >> extension Array where Element: Equatable {
-          func f(x: Array) -> Int { return 7 }
-      }
-   >> let x = [1, 2, 3]
-   << // x : [Int] = [1, 2, 3]
-   >> let y = [10, 20, 30]
-   << // y : [Int] = [10, 20, 30]
-   >> x.f(x: y)
-   << // r0 : Int = 7
+   extension Array where Element: Equatable {
+       func f(x: Array) -> Int { return 7 }
+   }
+   let x = [1, 2, 3]
+   let y = [10, 20, 30]
+   assert(x.f(x: y) == 7)
 
-.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
+.. test::
+   :name: extensions can't have where clause and inheritance together
+   :hidden:
+   :compiler-errors: error: extension of type 'Array' with constraints cannot have an inheritance clause
+                        extension Array: P where Element: Equatable {
+                        ^                ~
 
-   >> protocol P { func foo() }
-   >> extension Array: P where Element: Equatable {
-   >>    func foo() {}
-   >> }
-   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
-   !!    extension Array: P where Element: Equatable {
-   !!    ^                ~
+   protocol P { func foo() }
+   extension Array: P where Element: Equatable {
+      func foo() {}
+   }
 
 .. langref-grammar
 
