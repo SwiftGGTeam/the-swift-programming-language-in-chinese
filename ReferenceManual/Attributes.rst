@@ -120,24 +120,24 @@ You can apply a declaration attribute to declarations only.
       that a declaration has been renamed. For example, this is useful when the name
       of a declaration is changed between releases of a framework or library.
 
-      .. testcode:: renamed1
-         :compile: true
+      .. test::
+         :name: renamed 1
 
-         -> // First release
-         -> protocol MyProtocol {
-                // protocol definition
-            }
+         // First release
+         protocol MyProtocol {
+             // protocol definition
+         }
 
-      .. testcode:: renamed2
-         :compile: true
+      .. test::
+         :name: renamed 2
 
-         -> // Subsequent release renames MyProtocol
-         -> protocol MyRenamedProtocol {
-                // protocol definition
-            }
-         ---
-         -> @available(*, unavailable, renamed: "MyRenamedProtocol")
-            typealias MyProtocol = MyRenamedProtocol
+         // Subsequent release renames MyProtocol
+         protocol MyRenamedProtocol {
+             // protocol definition
+         }
+         
+         @available(*, unavailable, renamed: "MyRenamedProtocol")
+         typealias MyProtocol = MyRenamedProtocol
 
     You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms
@@ -149,11 +149,13 @@ You can apply a declaration attribute to declarations only.
     the effective availability is the combination of
     the platform and Swift availabilities.
 
-    .. assertion:: multipleAvalableAttributes
+    .. test::
+       :name: multiple available attributes
+       :hidden:
 
        // REPL needs all the attributes on the same line as the  declaration.
-       -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
-       -> foo()
+       @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+       foo()
 
     If an ``available`` attribute only specifies an ``introduced`` argument
     in addition to a platform or language name argument,
@@ -169,27 +171,27 @@ You can apply a declaration attribute to declarations only.
     Although the two forms are functionally equivalent,
     the shorthand form is preferred whenever possible.
 
-    .. testcode:: availableShorthand
-       :compile: true
+    .. test::
+       :name: available shorthand
 
-       -> @available(iOS 10.0, macOS 10.12, *)
-       -> class MyClass {
-              // class definition
-          }
+       @available(iOS 10.0, macOS 10.12, *)
+       class MyClass {
+           // class definition
+       }
     
     An ``available`` attribute specifying a Swift version availability can't
     additionally specify a declaration's platform availability.
     Instead, use separate ``available`` attributes to specify a Swift
     version availability and one or more platform availabilities. 
     
-    .. testcode:: availableMultipleAvailabilities
-       :compile: true
+    .. test::
+       :name: available multiple availabilities
        
-       -> @available(swift 3.0.2)
-       -> @available(macOS 10.12, *)
-       -> struct MyStruct {
-              // struct definition
-          }
+       @available(swift 3.0.2)
+       @available(macOS 10.12, *)
+       struct MyStruct {
+           // struct definition
+       }
 
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
@@ -258,19 +260,19 @@ You can apply a declaration attribute to declarations only.
     to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
 
-    .. testcode:: objc-attribute
-       :compile: true
+    .. test::
+       :name: objc attribute
 
-       >> import Foundation
-       -> @objc
-          class ExampleClass: NSObject {
-             var enabled: Bool {
-                @objc(isEnabled) get {
-                   // Return the appropriate value
-       >>          return true
-                }
+       import Foundation   // -HIDE-
+       @objc
+       class ExampleClass: NSObject {
+          var enabled: Bool {
+             @objc(isEnabled) get {
+                // Return the appropriate value
+                return true  // -HIDE-
              }
           }
+       }
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
@@ -307,11 +309,12 @@ You can apply a declaration attribute to declarations only.
     supply a ``main.swift`` file with code at the top level
     that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
-    .. testcode:: nsapplicationmain
+    .. test::
+       :name: nsapplicationmain
+       :asserts: No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
-       -> import AppKit
-       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+       import AppKit
+       NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ``NSCopying``
     Apply this attribute to a stored variable property of a class.
