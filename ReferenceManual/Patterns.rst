@@ -66,11 +66,12 @@ A :newTerm:`wildcard pattern` matches and ignores any value and consists of an u
 matched against. For example, the following code iterates through the closed range ``1...3``,
 ignoring the current value of the range on each iteration of the loop:
 
-.. testcode:: wildcard-pattern
+.. test::
+   :name: wildcard pattern
 
-    -> for _ in 1...3 {
-          // Do something three times.
-       }
+   for _ in 1...3 {
+      // Do something three times.
+   }
 
 .. langref-grammar
 
@@ -93,10 +94,10 @@ variable or constant name.
 For example, in the following constant declaration, ``someValue`` is an identifier pattern
 that matches the value ``42`` of type ``Int``:
 
-.. testcode:: identifier-pattern
+.. test::
+   :name: identifier pattern
 
-    -> let someValue = 42
-    << // someValue : Int = 42
+   let someValue = 42
 
 When the match succeeds, the value ``42`` is bound (assigned)
 to the constant name ``someValue``.
@@ -128,16 +129,16 @@ bind new named variables or constants to their matching values. For example,
 you can decompose the elements of a tuple and bind the value of each element to a
 corresponding identifier pattern.
 
-.. testcode:: value-binding-pattern
+.. test::
+   :name: value-binding pattern
 
-    -> let point = (3, 2)
-    << // point : (Int, Int) = (3, 2)
-    -> switch point {
-          // Bind x and y to the elements of point.
-          case let (x, y):
-             print("The point is at (\(x), \(y)).")
-       }
-    <- The point is at (3, 2).
+   let point = (3, 2)
+   switch point {
+      // Bind x and y to the elements of point.
+      case let (x, y):
+         print("The point is at (\(x), \(y)).")
+   }
+   // -PRINTS- The point is at (3, 2).
 
 In the example above, ``let`` distributes to each identifier pattern in the
 tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
@@ -182,44 +183,42 @@ For example,
 the following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
 an expression pattern:
 
-.. testcode:: tuple-pattern
+.. test::
+   :name: tuple pattern
+   :compiler-errors: error: expected pattern
+                     for (x, 0) in points {
+                     ^
 
-    -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    -> // This code isn't valid.
-    -> for (x, 0) in points {
-          /* ... */
-       }
-    !! <REPL Input>:1:9: error: expected pattern
-    !! for (x, 0) in points {
-    !! ^
+    let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    // This code isn't valid.
+    for (x, 0) in points {
+       /* ... */
+    }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
-.. This test needs to be compiled.
-   The error message in the REPL is unpredictable as of
-   Swift version 1.1 (swift-600.0.54.20)
+.. test::
+   :name: single element tuple pattern
+   :compiler-errors: error: invalid redeclaration of 'a'
+                     let (a) = 2      // a: Int = 2
+                     ^
+                     note: 'a' previously declared here
+                     let a = 2        // a: Int = 2
+                     ^
+                     error: invalid redeclaration of 'a'
+                     let (a): Int = 2 // a: Int = 2
+                     ^
+                     note: 'a' previously declared here
+                     let a = 2        // a: Int = 2
+                     ^
 
-.. testcode:: single-element-tuple-pattern
-   :compile: true
-
-   -> let a = 2        // a: Int = 2
-   -> let (a) = 2      // a: Int = 2
-   -> let (a): Int = 2 // a: Int = 2
-   !! /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'a'
-   !! let (a) = 2      // a: Int = 2
-   !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
-   !! let a = 2        // a: Int = 2
-   !! ^
-   !! /tmp/swifttest.swift:3:6: error: invalid redeclaration of 'a'
-   !! let (a): Int = 2 // a: Int = 2
-   !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
-   !! let a = 2        // a: Int = 2
-   !! ^
+   let a = 2        // a: Int = 2
+   let (a) = 2      // a: Int = 2
+   let (a): Int = 2 // a: Int = 2
 
 .. langref-grammar
 
@@ -278,37 +277,40 @@ Because optional patterns are syntactic sugar for ``Optional``
 enumeration case patterns,
 the following are equivalent:
 
-.. testcode:: optional-pattern
+.. test::
+   :name: optional pattern
 
-   -> let someOptional: Int? = 42
-   << // someOptional : Int? = Optional(42)
-   -> // Match using an enumeration case pattern.
-   -> if case .some(let x) = someOptional {
-         print(x)
-      }
-   << 42
-   ---
-   -> // Match using an optional pattern.
-   -> if case let x? = someOptional {
-         print(x)
-      }
-   << 42
+   let someOptional: Int? = 42
+   // Match using an enumeration case pattern.
+   if case .some(let x) = someOptional {
+      print(x)
+   }
+   // -PRINTS- 42
+
+   // Match using an optional pattern.
+   if case let x? = someOptional {
+      print(x)
+   }
+   // -PRINTS- 42
 
 The optional pattern provides a convenient way to
 iterate over an array of optional values in a ``for``-``in`` statement,
 executing the body of the loop only for non-``nil`` elements.
 
-.. testcode:: optional-pattern-for-in
+.. test::
+   :name: optional pattern for-in
 
-   -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-   << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
-   -> // Match only non-nil values.
-   -> for case let number? in arrayOfOptionalInts {
-         print("Found a \(number)")
-      }
-   </ Found a 2
-   </ Found a 3
-   </ Found a 5
+   let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+   // Match only non-nil values.
+   for case let number? in arrayOfOptionalInts {
+      print("Found a \(number)")
+   }
+   // -RESULT- Found a 2
+   // -RESULT- Found a 3
+   // -RESULT- Found a 5
+
+.. FIXME: The listing above uses the wrong syntax for its output.
+   Should be // -PRINTS- lines.
 
 .. syntax-grammar::
 
@@ -380,37 +382,39 @@ It can also match a value with a range of values,
 by checking whether the value is contained within the range,
 as the following example shows.
 
-.. testcode:: expression-pattern
+.. test::
+   :name: expression pattern
 
-    -> let point = (1, 2)
-    << // point : (Int, Int) = (1, 2)
-    -> switch point {
-          case (0, 0):
-             print("(0, 0) is at the origin.")
-          case (-2...2, -2...2):
-             print("(\(point.0), \(point.1)) is near the origin.")
-          default:
-             print("The point is at (\(point.0), \(point.1)).")
-       }
-    <- (1, 2) is near the origin.
+   let point = (1, 2)
+   switch point {
+      case (0, 0):
+         print("(0, 0) is at the origin.")
+      case (-2...2, -2...2):
+         print("(\(point.0), \(point.1)) is near the origin.")
+      default:
+         print("The point is at (\(point.0), \(point.1)).")
+   }
+   // -PRINTS- (1, 2) is near the origin.
 
 You can overload the ``~=`` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
 with a string representations of points.
 
-.. testcode:: expression-pattern
+.. test::
+   :name: expression pattern
+   :cont:
 
-    -> // Overload the ~= operator to match a string with an integer.
-    -> func ~=(pattern: String, value: Int) -> Bool {
-          return pattern == "\(value)"
-       }
-    -> switch point {
-          case ("0", "0"):
-             print("(0, 0) is at the origin.")
-          default:
-             print("The point is at (\(point.0), \(point.1)).")
-       }
-    <- The point is at (1, 2).
+   // Overload the ~= operator to match a string with an integer.
+   func ~=(pattern: String, value: Int) -> Bool {
+      return pattern == "\(value)"
+   }
+   switch point {
+      case ("0", "0"):
+         print("(0, 0) is at the origin.")
+      default:
+         print("The point is at (\(point.0), \(point.1)).")
+   }
+   // -PRINTS- The point is at (1, 2).
 
 
 .. syntax-grammar::
