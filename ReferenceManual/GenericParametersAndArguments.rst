@@ -49,14 +49,15 @@ For instance, in the generic function below, the generic parameter ``T: Comparab
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
-.. testcode:: generic-params
+.. test::
+   :name: generic params
 
-    -> func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
-          if x < y {
-             return y
-          }
-          return x
-       }
+   func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
+      if x < y {
+         return y
+      }
+      return x
+   }
 
 Because ``Int`` and ``Double``, for example, both conform to the ``Comparable`` protocol,
 this function accepts arguments of either type. In contrast with generic types, you don't
@@ -64,12 +65,17 @@ specify a generic argument clause when you use a generic function or initializer
 The type arguments are instead inferred from the type of the arguments passed
 to the function or initializer.
 
-.. testcode:: generic-params
+.. test::
+   :name: generic params
+   :cont:
 
-    -> simpleMax(17, 42) // T is inferred to be Int
-    << // r0 : Int = 42
-    -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-    << // r1 : Double = 3.1415899999999999
+   let r1 =  // -HIDE
+   simpleMax(17, 42) // T is inferred to be Int
+   let r2 =  // -HIDE
+   simpleMax(3.14159, 2.71828) // T is inferred to be Double
+   // -HIDE-
+   assert(r1 == 42)
+   assert(r2 == 3.14159)
 
 
 .. _GenericParametersAndArguments_WhereClauses:
@@ -199,10 +205,10 @@ constraints and requirements). For example, you can replace the type parameter
 ``Element`` in ``Array<Element>`` with a specialized version of an array, ``Array<Int>``,
 to form an array whose elements are themselves arrays of integers.
 
-.. testcode:: array-of-arrays
+.. test::
+   :name: array of arrays
 
-    -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    << // arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+   let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
