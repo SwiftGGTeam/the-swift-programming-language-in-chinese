@@ -874,12 +874,12 @@ In this example, ``(404, "Not Found")`` is a tuple that describes an *HTTP statu
 An HTTP status code is a special value returned by a web server whenever you request a web page.
 A status code of ``404 Not Found`` is returned if you request a webpage that doesn't exist.
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
 
-   -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, "Not Found")
-   /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
-   </ http404Error is of type (Int, String), and equals (404, "Not Found")
+    let http404Error = (404, "Not Found")
+    // -COMMENT- http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
+    // -RESULT- http404Error is of type (Int, String), and equals (404, "Not Found")
 
 The ``(404, "Not Found")`` tuple groups together an ``Int`` and a ``String``
 to give the HTTP status code two separate values:
@@ -895,52 +895,59 @@ or indeed any other permutation you require.
 You can :newTerm:`decompose` a tuple's contents into separate constants or variables,
 which you then access as usual:
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
+    :cont:
 
-   -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
-   -> print("The status code is \(statusCode)")
-   <- The status code is 404
-   -> print("The status message is \(statusMessage)")
-   <- The status message is Not Found
+    let (statusCode, statusMessage) = http404Error
+    print("The status code is \(statusCode)")
+    // -PRINTS-COMMENT- The status code is 404
+    print("The status message is \(statusMessage)")
+    // -PRINTS-COMMENT- The status message is Not Found
 
 If you only need some of the tuple's values,
 ignore parts of the tuple with an underscore (``_``)
 when you decompose the tuple:
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
+    :cont:
+    :prints: The status code is 404
 
-   -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
-   -> print("The status code is \(justTheStatusCode)")
-   <- The status code is 404
+    let (justTheStatusCode, _) = http404Error
+    print("The status code is \(justTheStatusCode)")
 
 Alternatively,
 access the individual element values in a tuple using index numbers starting at zero:
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
+    :cont:
 
-   -> print("The status code is \(http404Error.0)")
-   <- The status code is 404
-   -> print("The status message is \(http404Error.1)")
-   <- The status message is Not Found
+    print("The status code is \(http404Error.0)")
+    // -PRINTS-COMMENT- The status code is 404
+    print("The status message is \(http404Error.1)")
+    // -PRINTS-COMMENT- The status message is Not Found
 
 You can name the individual elements in a tuple when the tuple is defined:
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
+    :cont:
 
-   -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (statusCode: 200, description: "OK")
+    let http200Status = (statusCode: 200, description: "OK")
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
 
-.. testcode:: tuples
+.. test::
+    :name: tuples
+    :cont:
 
-   -> print("The status code is \(http200Status.statusCode)")
-   <- The status code is 200
-   -> print("The status message is \(http200Status.description)")
-   <- The status message is OK
+    print("The status code is \(http200Status.statusCode)")
+    // -PRINTS-COMMENT- The status code is 200
+    print("The status message is \(http200Status.description)")
+    // -PRINTS-COMMENT- The status message is OK
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return the ``(Int, String)`` tuple type
@@ -994,13 +1001,14 @@ but the string ``"hello, world"`` does not have an obvious numeric value to conv
 
 The example below uses the initializer to try to convert a ``String`` into an ``Int``:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
 
-   -> let possibleNumber = "123"
-   << // possibleNumber : String = "123"
-   -> let convertedNumber = Int(possibleNumber)
-   << // convertedNumber : Int? = Optional(123)
-   // convertedNumber is inferred to be of type "Int?", or "optional Int"
+    let possibleNumber = "123"
+    let convertedNumber = Int(possibleNumber)
+    // convertedNumber is inferred to be of type "Int?", or "optional Int"
+    // -HIDE-
+    assert(convertedNumber is Int?)
 
 Because the initializer might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
@@ -1019,14 +1027,18 @@ nil
 You set an optional variable to a valueless state
 by assigning it the special value ``nil``:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
+    :cont:
 
-   -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = Optional(404)
-   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
-   </ serverResponseCode contains an actual Int value of 404
-   -> serverResponseCode = nil
-   // serverResponseCode now contains no value
+    var serverResponseCode: Int? = 404
+    assert(serverResponseCode == 404)// -HIDE-
+    // -COMMENT- serverResponseCode contains an actual Int value of \(serverResponseCode!)
+    // -RESULT- serverResponseCode contains an actual Int value of 404
+    serverResponseCode = nil
+    // serverResponseCode now contains no value
+    // -HIDE-
+    assert(serverResponseCode == nil)
 
 .. note::
 
@@ -1038,11 +1050,14 @@ by assigning it the special value ``nil``:
 If you define an optional variable without providing a default value,
 the variable is automatically set to ``nil`` for you:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
+    :cont:
 
-   -> var surveyAnswer: String?
-   << // surveyAnswer : String? = nil
-   // surveyAnswer is automatically set to nil
+    var surveyAnswer: String?
+    // surveyAnswer is automatically set to nil
+    // -HIDE-
+    assert(surveyAnswer == nil)
 
 .. note::
 
@@ -1063,12 +1078,14 @@ or the “not equal to” operator (``!=``).
 
 If an optional has a value, it is considered to be “not equal to” ``nil``:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
+    :cont:
+    :prints-comment: convertedNumber contains some integer value.
 
-   -> if convertedNumber != nil {
-         print("convertedNumber contains some integer value.")
-      }
-   <- convertedNumber contains some integer value.
+    if convertedNumber != nil {
+        print("convertedNumber contains some integer value.")
+    }
 
 Once you're sure that the optional *does* contain a value,
 you can access its underlying value
@@ -1077,12 +1094,14 @@ The exclamation mark effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as :newTerm:`forced unwrapping` of the optional's value:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
+    :cont:
+    :prints-comment: convertedNumber has an integer value of 123.
 
-   -> if convertedNumber != nil {
-         print("convertedNumber has an integer value of \(convertedNumber!).")
-      }
-   <- convertedNumber has an integer value of 123.
+    if convertedNumber != nil {
+        print("convertedNumber has an integer value of \(convertedNumber!).")
+    }
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
@@ -1118,14 +1137,17 @@ You can rewrite the ``possibleNumber`` example from
 the :ref:`TheBasics_Optionals` section
 to use optional binding rather than forced unwrapping:
 
-.. testcode:: optionals
+.. test::
+    :name: optionals
+    :cont:
+    :prints-comment: "123" has an integer value of 123
 
-   -> if let actualNumber = Int(possibleNumber) {
-         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
-      } else {
-         print("\"\(possibleNumber)\" could not be converted to an integer")
-      }
-   <- "123" has an integer value of 123
+    if let actualNumber = Int(possibleNumber) {
+        print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
+        assert(actualNumber == 123) // -HIDE-
+    } else {
+        print("\"\(possibleNumber)\" could not be converted to an integer")
+    }
 
 This code can be read as:
 
@@ -1155,21 +1177,22 @@ the whole ``if`` statement's condition
 is considered to be ``false``.
 The following ``if`` statements are equivalent:
 
-.. testcode:: multipleOptionalBindings
+.. test::
+    :name: multiple optional bindings
 
-   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
-         print("\(firstNumber) < \(secondNumber) < 100")
-      }
-   <- 4 < 42 < 100
-   ---
-   -> if let firstNumber = Int("4") {
-          if let secondNumber = Int("42") {
-              if firstNumber < secondNumber && secondNumber < 100 {
-                  print("\(firstNumber) < \(secondNumber) < 100")
-              }
-          }
-      }
-   <- 4 < 42 < 100
+    if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+        print("\(firstNumber) < \(secondNumber) < 100")
+    }
+    // -PRINTS-COMMENT- 4 < 42 < 100
+
+    if let firstNumber = Int("4") {
+        if let secondNumber = Int("42") {
+            if firstNumber < secondNumber && secondNumber < 100 {
+                print("\(firstNumber) < \(secondNumber) < 100")
+            }
+        }
+    }
+    // -PRINTS-COMMENT- 4 < 42 < 100
 
 .. The example above uses multiple optional bindings
    to show that you can have more than one
@@ -1220,17 +1243,16 @@ The following example shows the difference in behavior between
 an optional string and an implicitly unwrapped optional string
 when accessing their wrapped value as an explicit ``String``:
 
-.. testcode:: implicitlyUnwrappedOptionals
+.. test::
+    :name: implicitly unwrapped optionals
 
-   -> let possibleString: String? = "An optional string."
-   << // possibleString : String? = Optional("An optional string.")
-   -> let forcedString: String = possibleString! // requires an exclamation mark
-   << // forcedString : String = "An optional string."
-   ---
-   -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = Optional("An implicitly unwrapped optional string.")
-   -> let implicitString: String = assumedString // no need for an exclamation mark
-   << // implicitString : String = "An implicitly unwrapped optional string."
+    let possibleString: String? = "An optional string."
+    assert(possibleString is String?) // -HIDE-
+    let forcedString: String = possibleString! // requires an exclamation mark
+    assert(forcedString is String) // -HIDE-
+
+    let assumedString: String! = "An implicitly unwrapped optional string."
+    let implicitString: String = assumedString // no need for an exclamation mark
 
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be unwrapped automatically whenever it is used.
@@ -1247,22 +1269,26 @@ you place an exclamation mark after the optional's type when you declare it.
 You can still treat an implicitly unwrapped optional like a normal optional,
 to check if it contains a value:
 
-.. testcode:: implicitlyUnwrappedOptionals
+.. test::
+    :name: implicitly unwrapped optionals
+    :cont:
+    :prints-comment: An implicitly unwrapped optional string.
 
-   -> if assumedString != nil {
-         print(assumedString)
-      }
-   <- An implicitly unwrapped optional string.
+    if assumedString != nil {
+        print(assumedString)
+    }
 
 You can also use an implicitly unwrapped optional with optional binding,
 to check and unwrap its value in a single statement:
 
-.. testcode:: implicitlyUnwrappedOptionals
+.. test::
+    :name: implicitly unwrapped optionals
+    :cont:
+    :prints-comment: An implicitly unwrapped optional string.
 
-   -> if let definiteString = assumedString {
-         print(definiteString)
-      }
-   <- An implicitly unwrapped optional string.
+    if let definiteString = assumedString {
+        print(definiteString)
+    }
 
 .. note::
 
@@ -1288,19 +1314,23 @@ and, if necessary, propagate the error to another part of your program.
 When a function encounters an error condition, it :newTerm:`throws` an error.
 That function's caller can then :newTerm:`catch` the error and respond appropriately.
 
-.. testcode:: errorHandling
+.. test::
+    :name: error handling
 
-   >> enum SimpleError: Error {
-   >>    case someError
-   >> }
-   >> let condition = true
-   << // condition : Bool = true
-   -> func canThrowAnError() throws {
-         // this function may or may not throw an error
-   >>    if condition {
-   >>       throw SimpleError.someError
-   >>    }
-      }
+    // -HIDE-
+    enum SimpleError: Error {
+        case someError
+    }
+    let condition = true
+    // -SHOW-
+    func canThrowAnError() throws {
+        // this function may or may not throw an error
+        // -HIDE-
+        if condition {
+            throw SimpleError.someError
+        }
+        // -SHOW-
+    }
 
 A function indicates that it can throw an error
 by including the ``throws`` keyword in its declaration.
@@ -1310,17 +1340,19 @@ you prepend the ``try`` keyword to the expression.
 Swift automatically propagates errors out of their current scope
 until they are handled by a ``catch`` clause.
 
-.. testcode:: errorHandling
+.. test::
+    :name: error handling
+    :cont:
 
-   -> do {
-   ->    try canThrowAnError()
-   >>    print("No Error")
-   ->    // no error was thrown
-   -> } catch {
-   >>    print("Error")
-   ->    // an error was thrown
-   -> }
-   << Error
+    do {
+        try canThrowAnError()
+        print("No Error") // -HIDE-
+        // no error was thrown
+    } catch {
+        print("Error") // -HIDE-
+        // an error was thrown
+    }
+    // -PRINTS- Error
 
 A ``do`` statement creates a new containing scope,
 which allows errors to be propagated to one or more ``catch`` clauses.
@@ -1328,27 +1360,30 @@ which allows errors to be propagated to one or more ``catch`` clauses.
 Here's an example of how error handling can be used
 to respond to different error conditions:
 
-.. testcode:: errorHandlingTwo
+.. test::
+    :name: error handling two
 
-   >> enum SandwichError: Error {
-   >>     case outOfCleanDishes
-   >>     case missingIngredients([String])
-   >> }
-   >> func washDishes() { print("Wash dishes") }
-   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
-   -> func makeASandwich() throws {
-          // ...
-      }
-   >> func eatASandwich() {}
-   ---
-   -> do {
-          try makeASandwich()
-          eatASandwich()
-      } catch SandwichError.outOfCleanDishes {
-          washDishes()
-      } catch SandwichError.missingIngredients(let ingredients) {
-          buyGroceries(ingredients)
-      }
+    // -HIDE-
+    enum SandwichError: Error {
+        case outOfCleanDishes
+        case missingIngredients([String])
+    }
+    func washDishes() { print("Wash dishes") }
+    func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList)") }
+    // -SHOW-
+    func makeASandwich() throws {
+        // ...
+    }
+    func eatASandwich() {} // -HIDE-
+
+    do {
+        try makeASandwich()
+        eatASandwich()
+    } catch SandwichError.outOfCleanDishes {
+        washDishes()
+    } catch SandwichError.missingIngredients(let ingredients) {
+        buyGroceries(ingredients)
+    }
 
 In this example, the ``makeASandwich()`` function will throw an error
 if no clean dishes are available
@@ -1403,13 +1438,13 @@ the Swift standard library global ``assert(_:_:file:line:)`` function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
-.. testcode:: assertions
+.. test::
+    :name: assertions
+    :asserts: A person's age cannot be less than zero
 
-   -> let age = -3
-   << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero")
-   xx assert
-   // this causes the assertion to trigger, because age is not >= 0
+    let age = -3
+    assert(age >= 0, "A person's age cannot be less than zero")
+    // this causes the assertion to trigger, because age is not >= 0
 
 In this example, code execution will continue only if ``age >= 0`` evaluates to ``true``,
 that is, if the value of ``age`` is non-negative.
@@ -1419,17 +1454,21 @@ and the assertion is triggered, terminating the application.
 
 The assertion message can be omitted if desired, as in the following example:
 
-.. testcode:: assertions
+.. test::
+    :name: assertions two
+    :asserts: 
+    :xfail: Test harness doesn't (?) support empty assertion messages.
 
-   -> assert(age >= 0)
-   xx assert
+    let age = -3 // -HIDE-
+    assert(age >= 0)
 
-.. assertion:: assertionsCanUseStringInterpolation
+.. test::
+    :name: assertions can use string interpolation
+    :hidden:
+    :asserts: A person's age cannot be less than zero, but value is -3
 
-   -> let age = -3
-   << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
-   xx assert
+    let age = -3
+    assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
 
 .. note::
 
