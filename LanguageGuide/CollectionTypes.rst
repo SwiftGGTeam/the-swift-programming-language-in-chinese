@@ -339,9 +339,10 @@ This method removes the item at the specified index and returns the removed item
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
-   Except when ``count`` is ``0`` (meaning the array is empty),
-   the largest valid index in an array will always be ``count - 1``,
-   because arrays are indexed from zero.
+   The largest valid index in an array is ``count - 1``
+   because arrays are indexed from zero ---
+   however, when ``count`` is ``0`` (meaning the array is empty),
+   there are no valid indexes.
 
 Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
