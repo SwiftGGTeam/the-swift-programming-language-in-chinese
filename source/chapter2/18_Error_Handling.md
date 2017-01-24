@@ -75,7 +75,7 @@ func cannotThrowErrors() -> String
 > 注意  
 只有 throwing 函数可以传递错误。任何在某个非 throwing 函数内部抛出的错误只能在函数内部处理。
 
-下面的例子中，`VendingMechine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者投入金额小于物品价格，该方法就会抛出一个相应的`VendingMachineError`：
+下面的例子中，`VendingMachine`类有一个`vend(itemNamed:)`方法，如果请求的物品不存在、缺货或者投入金额小于物品价格，该方法就会抛出一个相应的`VendingMachineError`：
 
 ```swift
 struct Item {
