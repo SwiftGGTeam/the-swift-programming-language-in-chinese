@@ -233,6 +233,7 @@ and doesn't return any value.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
+Argument labels are not allowed when writing a function type.
 For example:
 
 .. testcode::
@@ -257,6 +258,27 @@ For example:
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !! <REPL Input>:1:17: error: function types cannot have argument labels; use '_' before 'lhs'
+   !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!                    ^
+   !!                    _
+   !! <REPL Input>:1:27: error: function types cannot have argument labels; use '_' before 'rhs'
+   !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!                              ^
+   !!                              _
+   -> var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
+   !!    var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+   !!    ^
+   -> var operation: (Int, Int) -> Int               // OK
+   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
+   !!    var operation: (Int, Int) -> Int               // OK
+   !!    ^
+
+.. The last two lines of the test above shouldn't really fail,
+   but this is a limitation of the REPL.
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
