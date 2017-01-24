@@ -1566,16 +1566,13 @@ to get a textual representation of its contents:
        works with some examples.
 
 .. TODO: Other things to be included
-.. ---------------------------------
-
-.. TODO: Class-only protocols
-.. TODO: @obj-c protocols
-.. TODO: Standard-library protocols such as Sequence, Equatable etc.?
-.. TODO: Show how to make a custom type conform to Boolean or some other protocol
-.. TODO: Show a protocol being used by an enumeration
-.. TODO: accessing protocol methods, properties etc.
-   through a constant or variable that is *just* of protocol type
-.. TODO: Protocols can't be nested, but nested types can implement protocols
-.. TODO: Protocol requirements can be marked as @unavailable,
-   but this currently only works if they are also marked as @objc.
-.. TODO: Checking for (and calling) optional implementations via optional binding and closures
+   ---------------------------------
+   Class-only protocols
+   @obj-c protocols
+   Standard-library protocols such as Sequence, Equatable etc.?
+   Show how to make a custom type conform to Boolean or some other protocol
+   Show a protocol being used by an enumeration
+   accessing protocol methods, properties etc.  through a constant or variable that is *just* of protocol type
+   Protocols can't be nested, but nested types can implement protocols
+   Protocol requirements can be marked as @unavailable, but this currently only works if they are also marked as @objc.
+   Checking for (and calling) optional implementations via optional binding and closures
