@@ -57,30 +57,31 @@ Assignment Operator
 The :newTerm:`assignment operator` (``a = b``)
 initializes or updates the value of ``a`` with the value of ``b``:
 
-.. testcode:: assignmentOperator
+.. test::
+    :name: assignment operator
 
-   -> let b = 10
-   << // b : Int = 10
-   -> var a = 5
-   << // a : Int = 5
-   -> a = b
-   /> a is now equal to \(a)
-   </ a is now equal to 10
+    let b = 10
+    var a = 5
+    a = b
+    // -COMMENT- a is now equal to \(a)
+    // -RESULT- a is now equal to 10
 
 If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple constants or variables at once:
 
-.. testcode:: assignmentOperator
+.. test::
+    :name: assignment operator
+    :cont:
 
-   -> let (x, y) = (1, 2)
-   << // (x, y) : (Int, Int) = (1, 2)
-   /> x is equal to \(x), and y is equal to \(y)
-   </ x is equal to 1, and y is equal to 2
+    let (x, y) = (1, 2)
+    // -COMMENT- x is equal to \(x), and y is equal to \(y)
+    // -RESULT- x is equal to 1, and y is equal to 2
 
-.. assertion:: tuple-unwrapping-with-var
+.. test::
+    :name: tuple unwrapping with var
+    :hidden:
 
-   >> var (x, y) = (1, 2)
-   << // (x, y) : (Int, Int) = (1, 2)
+    var (x, y) = (1, 2)
 
 .. This still allows assignment to variables,
    even though var patterns have been removed,
@@ -93,17 +94,18 @@ Unlike the assignment operator in C and Objective-C,
 the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
-.. testcode:: assignmentOperatorInvalid
+.. test::
+    :name: assignment operator invalid
+    :compiler-errors: error: use of unresolved identifier 'x'
+                      if x = y {
+                         ^
+                      error: use of unresolved identifier 'y'
+                      if x = y {
+                             ^
 
-   -> if x = y {
-         // This is not valid, because x = y does not return a value.
-      }
-   !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
-   !! if x = y {
-   !!    ^
-   !! <REPL Input>:1:8: error: use of unresolved identifier 'y'
-   !! if x = y {
-   !!        ^
+    if x = y {
+        // This is not valid, because x = y does not return a value.
+    }
 
 This feature prevents the assignment operator (``=``) from being used by accident
 when the equal to operator (``==``) is actually intended.
@@ -125,16 +127,19 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 * Multiplication (``*``)
 * Division (``/``)
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
 
-   -> 1 + 2       // equals 3
-   << // r0 : Int = 3
-   -> 5 - 3       // equals 2
-   << // r1 : Int = 2
-   -> 2 * 3       // equals 6
-   << // r2 : Int = 6
-   -> 10.0 / 2.5  // equals 4.0
-   << // r3 : Double = 4.0
+    1 + 2       // equals 3
+    5 - 3       // equals 2
+    2 * 3       // equals 6
+    10.0 / 2.5  // equals 4.0
+    // -HIDE-
+    assert(1 + 2 == 3)
+    assert(5 - 3 == 2)
+    assert(2 * 3 == 6)
+    assert(10.0 / 2.5 == 4.0)
+
 
 Unlike the arithmetic operators in C and Objective-C,
 the Swift arithmetic operators do not allow values to overflow by default.
@@ -143,10 +148,13 @@ You can opt in to value overflow behavior by using Swift's overflow operators
 
 The addition operator is also supported for ``String`` concatenation:
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
+    :cont:
 
-   -> "hello, " + "world"  // equals "hello, world"
-   << // r4 : String = "hello, world"
+    "hello, " + "world"  // equals "hello, world"
+    // -HIDE-
+    assert(("hello, " + "world") == "hello, world")
 
 .. _BasicOperators_RemainderOperator:
 
@@ -165,17 +173,19 @@ and returns the value that is left over
    However, its behavior in Swift for negative numbers means that it is,
    strictly speaking, a remainder rather than a modulo operation.
 
-.. assertion:: percentOperatorIsRemainderNotModulo
+.. test::
+    :name: percent operator is remainder not modulo
+    :hidden:
+    :prints: -1
+             0
+             -3
+             -2
+             -1
+             0
 
-   -> for i in -5...0 {
-         print(i % 4)
-      }
-   << -1
-   << 0
-   << -3
-   << -2
-   << -1
-   << 0
+    for i in -5...0 {
+        print(i % 4)
+    }
 
 Here's how the remainder operator works.
 To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9``:
@@ -187,10 +197,13 @@ You can fit two ``4``\ s inside ``9``, and the remainder is ``1`` (shown in oran
 
 In Swift, this would be written as:
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
+    :cont:
 
-   -> 9 % 4    // equals 1
-   << // r5 : Int = 1
+    9 % 4    // equals 1
+    // -HIDE-
+    assert(9 % 4 == 1)
 
 To determine the answer for ``a % b``,
 the ``%`` operator calculates the following equation
@@ -207,10 +220,13 @@ Inserting ``9`` and ``4`` into this equation yields:
 
 The same method is applied when calculating the remainder for a negative value of ``a``:
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
+    :cont:
 
-   -> -9 % 4   // equals -1
-   << // r6 : Int = -1
+    -9 % 4   // equals -1
+    // -HIDE-
+    assert(-9 % 4 == -1)
 
 Inserting ``-9`` and ``4`` into the equation yields:
 
@@ -229,14 +245,13 @@ Unary Minus Operator
 The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
+    :cont:
 
-   -> let three = 3
-   << // three : Int = 3
-   -> let minusThree = -three       // minusThree equals -3
-   << // minusThree : Int = -3
-   -> let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
-   << // plusThree : Int = 3
+    let three = 3
+    let minusThree = -three       // minusThree equals -3
+    let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
 
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any white space.
@@ -249,12 +264,14 @@ Unary Plus Operator
 The :newTerm:`unary plus operator` (``+``) simply returns
 the value it operates on, without any change:
 
-.. testcode:: arithmeticOperators
+.. test::
+    :name: arithmetic operators
+    :cont:
 
-   -> let minusSix = -6
-   << // minusSix : Int = -6
-   -> let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
-   << // alsoMinusSix : Int = -6
+    let minusSix = -6
+    let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
+    // -HIDE-
+    assert(-minusSix == -alsoMinusSix)
 
 Although the unary plus operator doesn't actually do anything,
 you can use it to provide symmetry in your code for positive numbers
@@ -268,13 +285,13 @@ Compound Assignment Operators
 Like C, Swift provides :newTerm:`compound assignment operators` that combine assignment (``=``) with another operation.
 One example is the :newTerm:`addition assignment operator` (``+=``):
 
-.. testcode:: compoundAssignment
+.. test::
+    :name: compound assignment
 
-   -> var a = 1
-   << // a : Int = 1
-   -> a += 2
-   /> a is now equal to \(a)
-   </ a is now equal to 3
+    var a = 1
+    a += 2
+    // -COMMENT- a is now equal to \(a)
+    // -RESULT- a is now equal to 3
 
 The expression ``a += 2`` is shorthand for ``a = a + 2``.
 Effectively, the addition and the assignment are combined into one operator
@@ -311,35 +328,37 @@ Swift supports all standard C :newTerm:`comparison operators`:
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
-.. testcode:: comparisonOperators
+.. test::
+    :name: comparison operators
 
-   -> 1 == 1   // true because 1 is equal to 1
-   << // r0 : Bool = true
-   -> 2 != 1   // true because 2 is not equal to 1
-   << // r1 : Bool = true
-   -> 2 > 1    // true because 2 is greater than 1
-   << // r2 : Bool = true
-   -> 1 < 2    // true because 1 is less than 2
-   << // r3 : Bool = true
-   -> 1 >= 1   // true because 1 is greater than or equal to 1
-   << // r4 : Bool = true
-   -> 2 <= 1   // false because 2 is not less than or equal to 1
-   << // r5 : Bool = false
+    1 == 1   // true because 1 is equal to 1
+    assert(1 == 1) // -HIDE-
+    2 != 1   // true because 2 is not equal to 1
+    assert(2 != 1) // -HIDE-
+    2 > 1    // true because 2 is greater than 1
+    assert(2 > 1) // -HIDE-
+    1 < 2    // true because 1 is less than 2
+    assert(1 < 2) // -HIDE-
+    1 >= 1   // true because 1 is greater than or equal to 1
+    assert(1 >= 1) // -HIDE-
+    2 <= 1   // false because 2 is not less than or equal to 1
+    assert(!(2 <= 1)) // -HIDE-
 
 Comparison operators are often used in conditional statements,
 such as the ``if`` statement:
 
-.. testcode:: comparisonOperators
+.. test::
+    :name: comparison operators
+    :cont:
+    :prints: hello, world
 
-   -> let name = "world"
-   << // name : String = "world"
-   -> if name == "world" {
-         print("hello, world")
-      } else {
-         print("I'm sorry \(name), but I don't recognize you")
-      }
-   << hello, world
-   // Prints "hello, world", because name is indeed equal to "world".
+    let name = "world"
+    if name == "world" {
+        print("hello, world")
+    } else {
+        print("I'm sorry \(name), but I don't recognize you")
+    }
+    // Prints "hello, world", because name is indeed equal to "world".
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
@@ -361,6 +380,18 @@ which means tuples that contain a Boolean value can't be compared.
    !! true < false
    !!      ^
 
+.. test::
+    :name: boolean is not comparable
+    :hidden:
+    :compiler-errors: error: binary operator '<' cannot be applied to two 'Bool' operands
+                      true < false
+                      ~~~~ ^ ~~~~~
+                      note: overloads for '<' exist with these partially matching parameter lists:
+                      true < false
+                           ^
+
+    true < false
+
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -372,14 +403,16 @@ If all the elements are equal,
 then the tuples themselves are equal.
 For example:
 
-.. testcode:: tuple-comparison-operators
+.. test::
+    :name: tuple comparison operators
 
-   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
-   -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
-   -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-   << // r0 : Bool = true
-   << // r1 : Bool = true
-   << // r2 : Bool = true
+    (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
+    (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
+    (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
+    // -HIDE-
+    assert((1, "zebra") < (2, "apple"))
+    assert((3, "apple") < (3, "bird"))
+    assert((4, "dog") == (4, "dog"))
 
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
@@ -418,50 +451,48 @@ otherwise, it evaluates ``answer2`` and returns its value.
 
 The ternary conditional operator is shorthand for the code below:
 
-.. testcode:: ternaryConditionalOperatorOutline
+.. test::
+    :name: ternary conditional operator outline
 
-   >> let question = true
-   << // question : Bool = true
-   >> let answer1 = true
-   << // answer1 : Bool = true
-   >> let answer2 = true
-   << // answer2 : Bool = true
-   -> if question {
-         answer1
-      } else {
-         answer2
-      }
+    // -HIDE-
+    let question = true
+    let answer1 = true
+    let answer2 = true
+    // -SHOW-
+    if question {
+        answer1
+    } else {
+        answer2
+    }
 
 Here's an example, which calculates the height for a table row.
 The row height should be 50 points taller than the content height
 if the row has a header, and 20 points taller if the row doesn't have a header:
 
-.. testcode:: ternaryConditionalOperatorPart1
+.. test::
+    :name: ternary conditional operator part 1
 
-   -> let contentHeight = 40
-   << // contentHeight : Int = 40
-   -> let hasHeader = true
-   << // hasHeader : Bool = true
-   -> let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-   << // rowHeight : Int = 90
-   /> rowHeight is equal to \(rowHeight)
-   </ rowHeight is equal to 90
+    let contentHeight = 40
+    let hasHeader = true
+    let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    // -COMMENT- rowHeight is equal to \(rowHeight)
+    // -RESULT- rowHeight is equal to 90
 
 The preceding example is shorthand for the code below:
 
-.. testcode:: ternaryConditionalOperatorPart2
-   :compile: true
+.. test::
+   :name: ternary conditional operator part 2
 
-   -> let contentHeight = 40
-   -> let hasHeader = true
-   -> let rowHeight: Int
-   -> if hasHeader {
-         rowHeight = contentHeight + 50
-      } else {
-         rowHeight = contentHeight + 20
-      }
-   /> rowHeight is equal to \(rowHeight)
-   </ rowHeight is equal to 90
+    let contentHeight = 40
+    let hasHeader = true
+    let rowHeight: Int
+    if hasHeader {
+        rowHeight = contentHeight + 50
+    } else {
+        rowHeight = contentHeight + 20
+    }
+    // -COMMENT- rowHeight is equal to \(rowHeight)
+    // -RESULT- rowHeight is equal to 90
 
 The first example's use of the ternary conditional operator means that
 ``rowHeight`` can be set to the correct value on a single line of code,
@@ -486,14 +517,16 @@ The expression ``b`` must match the type that is stored inside ``a``.
 
 The nil-coalescing operator is shorthand for the code below:
 
-.. testcode:: nilCoalescingOperatorOutline
+.. test::
+    :name: nil coalescing operator outline
 
-   >> var a: Int?
-   << // a : Int? = nil
-   >> let b = 42
-   << // b : Int = 42
-   -> a != nil ? a! : b
-   << // r0 : Int = 42
+    // -HIDE-
+    var a: Int?
+    let b = 42
+    // -SHOW-
+    a != nil ? a! : b
+    // -HIDE-
+    assert((a != nil ? a! : b) == b)
 
 The code above uses the ternary conditional operator and forced unwrapping (``a!``)
 to access the value wrapped inside ``a`` when ``a`` is not ``nil``,
@@ -510,17 +543,15 @@ this conditional checking and unwrapping in a concise and readable form.
 The example below uses the nil-coalescing operator to choose between
 a default color name and an optional user-defined color name:
 
-.. testcode:: nilCoalescingOperator
+.. test::
+    :name: nil coalescing operator
 
-   -> let defaultColorName = "red"
-   << // defaultColorName : String = "red"
-   -> var userDefinedColorName: String?   // defaults to nil
-   << // userDefinedColorName : String? = nil
-   ---
-   -> var colorNameToUse = userDefinedColorName ?? defaultColorName
-   << // colorNameToUse : String = "red"
-   /> userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
-   </ userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
+    let defaultColorName = "red"
+    var userDefinedColorName: String?   // defaults to nil
+
+    var colorNameToUse = userDefinedColorName ?? defaultColorName
+    // -COMMENT- userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
+    // -RESULT- userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
 
 The ``userDefinedColorName`` variable is defined as an optional ``String``,
 with a default value of ``nil``.
@@ -536,12 +567,14 @@ If you assign a non-``nil`` value to ``userDefinedColorName``
 and perform the nil-coalescing operator check again,
 the value wrapped inside ``userDefinedColorName`` is used instead of the default:
 
-.. testcode:: nilCoalescingOperator
+.. test::
+    :name: nil coalescing operator
+    :cont:
 
-   -> userDefinedColorName = "green"
-   -> colorNameToUse = userDefinedColorName ?? defaultColorName
-   /> userDefinedColorName is not nil, so colorNameToUse is set to \"\(colorNameToUse)\"
-   </ userDefinedColorName is not nil, so colorNameToUse is set to "green"
+    userDefinedColorName = "green"
+    colorNameToUse = userDefinedColorName ?? defaultColorName
+    // -COMMENT- userDefinedColorName is not nil, so colorNameToUse is set to \"\(colorNameToUse)\"
+    // -RESULT- userDefinedColorName is not nil, so colorNameToUse is set to "green"
 
 .. _BasicOperators_RangeOperators:
 
@@ -561,36 +594,41 @@ defines a range that runs from ``a`` to ``b``,
 and includes the values ``a`` and ``b``.
 The value of ``a`` must not be greater than ``b``.
 
-.. assertion:: closedRangeStartCanBeLessThanEnd
+.. test::
+    :name: closed range start can be less than end
+    :hidden:
 
-   -> let range = 1...2
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...2)
+    let range = 1...2
 
+.. test::
+    :name: closed range start can be the same as end
+    :hidden:
 
-.. assertion:: closedRangeStartCanBeTheSameAsEnd
+    let range = 1...1
 
-   -> let range = 1...1
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...1)
+.. test::
+    :name: closedRangeStartCannotBeGreaterThanEnd
+    :hidden:
+    :asserts: 
+    :xfail: Test harness doesn't (?) support empty assertion messages.
 
-.. assertion:: closedRangeStartCannotBeGreaterThanEnd
-
-   -> let range = 1...0
-   xx assertion
+    let range = 1...0
 
 The closed range operator is useful when iterating over a range
 in which you want all of the values to be used,
 such as with a ``for``-``in`` loop:
 
-.. testcode:: rangeOperators
+.. test::
+    :name: range operators
 
-   -> for index in 1...5 {
-         print("\(index) times 5 is \(index * 5)")
-      }
-   </ 1 times 5 is 5
-   </ 2 times 5 is 10
-   </ 3 times 5 is 15
-   </ 4 times 5 is 20
-   </ 5 times 5 is 25
+    for index in 1...5 {
+        print("\(index) times 5 is \(index * 5)")
+    }
+    // -RESULT- 1 times 5 is 5
+    // -RESULT- 2 times 5 is 10
+    // -RESULT- 3 times 5 is 15
+    // -RESULT- 4 times 5 is 20
+    // -RESULT- 5 times 5 is 25
 
 For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
 
@@ -609,38 +647,43 @@ the value of ``a`` must not be greater than ``b``.
 If the value of ``a`` is equal to ``b``,
 then the resulting range will be empty.
 
-.. assertion:: halfOpenRangeStartCanBeLessThanEnd
+.. test::
+    :name: half open range start can be less than end
+    :hidden:
 
-   -> let range = 1..<2
-   << // range : CountableRange<Int> = CountableRange(1..<2)
+    let range = 1..<2
 
-.. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
+.. test::
+    :name: half open range start can be the same as end
+    :hidden:
 
-   -> let range = 1..<1
-   << // range : CountableRange<Int> = CountableRange(1..<1)
+    let range = 1..<1
 
-.. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
-
-   -> let range = 1..<0
-   xx assertion
+.. test::
+    :name: half open range start cannot be greater than end
+    :hidden:
+    :asserts:
+    :xfail: Test harness doesn't (?) support empty assertion messages.
+    
+    let range = 1..<0
 
 Half-open ranges are particularly useful when you work with
 zero-based lists such as arrays,
 where it is useful to count up to (but not including) the length of the list:
 
-.. testcode:: rangeOperators
+.. test::
+    :name: range operators
+    :cont:
 
-   -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
-   -> let count = names.count
-   << // count : Int = 4
-   -> for i in 0..<count {
-         print("Person \(i + 1) is called \(names[i])")
-      }
-   </ Person 1 is called Anna
-   </ Person 2 is called Alex
-   </ Person 3 is called Brian
-   </ Person 4 is called Jack
+    let names = ["Anna", "Alex", "Brian", "Jack"]
+    let count = names.count
+    for i in 0..<count {
+        print("Person \(i + 1) is called \(names[i])")
+    }
+    // -RESULT- Person 1 is called Anna
+    // -RESULT- Person 2 is called Alex
+    // -RESULT- Person 3 is called Brian
+    // -RESULT- Person 4 is called Jack
 
 Note that the array contains four items,
 but ``0..<count`` only counts as far as ``3``
@@ -674,14 +717,14 @@ and appears immediately before the value it operates on,
 without any white space.
 It can be read as “not ``a``”, as seen in the following example:
 
-.. testcode:: logicalOperators
+.. test::
+    :name: logical operators
+    :prints-comment: ACCESS DENIED
 
-   -> let allowedEntry = false
-   << // allowedEntry : Bool = false
-   -> if !allowedEntry {
-         print("ACCESS DENIED")
-      }
-   <- ACCESS DENIED
+    let allowedEntry = false
+    if !allowedEntry {
+        print("ACCESS DENIED")
+    }
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry.”
 The subsequent line is only executed if “not allowed entry” is true;
@@ -710,18 +753,19 @@ This is known as :newTerm:`short-circuit evaluation`.
 This example considers two ``Bool`` values
 and only allows access if both values are ``true``:
 
-.. testcode:: logicalOperators
+.. test::
+    :name: logical operators
+    :cont:
+    :prints-comment: ACCESS DENIED
 
-   -> let enteredDoorCode = true
-   << // enteredDoorCode : Bool = true
-   -> let passedRetinaScan = false
-   << // passedRetinaScan : Bool = false
-   -> if enteredDoorCode && passedRetinaScan {
-         print("Welcome!")
-      } else {
-         print("ACCESS DENIED")
-      }
-   <- ACCESS DENIED
+    let enteredDoorCode = true
+    let passedRetinaScan = false
+    if enteredDoorCode && passedRetinaScan {
+        print("Welcome!")
+    } else {
+        print("ACCESS DENIED")
+    }
+
 
 .. _BasicOperators_LogicalOROperator:
 
@@ -747,18 +791,18 @@ Because one value is ``true``,
 the overall expression also evaluates to ``true``,
 and access is allowed:
 
-.. testcode:: logicalOperators
+.. test::
+    :name: logical operators
+    :cont:
+    :prints-comment: Welcome!
 
-   -> let hasDoorKey = false
-   << // hasDoorKey : Bool = false
-   -> let knowsOverridePassword = true
-   << // knowsOverridePassword : Bool = true
-   -> if hasDoorKey || knowsOverridePassword {
-         print("Welcome!")
-      } else {
-         print("ACCESS DENIED")
-      }
-   <- Welcome!
+    let hasDoorKey = false
+    let knowsOverridePassword = true
+    if hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+    } else {
+        print("ACCESS DENIED")
+    }
 
 .. _BasicOperators_CombiningLogicalOperators:
 
@@ -767,14 +811,16 @@ Combining Logical Operators
 
 You can combine multiple logical operators to create longer compound expressions:
 
-.. testcode:: logicalOperators
+.. test::
+    :name: logical operators
+    :cont:
+    :prints-comment: Welcome!
 
-   -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-         print("Welcome!")
-      } else {
-         print("ACCESS DENIED")
-      }
-   <- Welcome!
+    if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+    } else {
+        print("ACCESS DENIED")
+    }
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still operate on only two values,
@@ -808,14 +854,16 @@ In the door access example above,
 it is useful to add parentheses around the first part of the compound expression
 to make its intent explicit:
 
-.. testcode:: logicalOperators
+.. test::
+    :name: logical operators
+    :cont:
+    :prints-comment: Welcome!
 
-   -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-         print("Welcome!")
-      } else {
-         print("ACCESS DENIED")
-      }
-   <- Welcome!
+    if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+    } else {
+        print("ACCESS DENIED")
+    }
 
 The parentheses make it clear that the first two values
 are considered as part of a separate possible state in the overall logic.
