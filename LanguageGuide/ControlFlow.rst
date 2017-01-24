@@ -100,10 +100,15 @@ need to draw ``60`` of them, starting with the ``0`` minute.
 
    -> let minutes = 60
    << // minutes : Int = 60
+   >> var result = [Int]()
+   << // result : [Int] = []
    -> for index in 0..<minutes {
          // render the mark each minute (60 times)
+   >>    result.append(index)
       }
-
+   >> print(result.first!, result.last!, result.count)
+   << 0 59 60
+   
 Some users might want fewer ticks in their UI. They might like
 one mark every ``5`` minutes instead. Here, you would use
 the ``stride(from:to:by:)`` function to skip the unwanted marks.
@@ -112,10 +117,14 @@ the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
    -> let hashInterval = 5
    << // hashInterval : Int = 5
+   >> result = [Int]()
    -> for index in stride(from: 0, to: minutes, by: hashInterval) {
          // render the 5 minute mark (0, 5, 10, 15 ... 45, 50, 55)
+   >>      result.append(index)
       }
-
+   >> print(result.first!, result.last!, result.count)
+   << 0 55 12
+   
 If you want closed ranges with ``stride``, use ``through`` instead.
 
 .. testcode:: forLoops
@@ -126,7 +135,12 @@ If you want closed ranges with ``stride``, use ``through`` instead.
    << // hourInterval : Int = 3
    -> for index in stride(from: 3, through: hours, by: hourInterval) {
          // render the hourly mark for 3, 6, 9 and 12.
+   >>    print(index)
       }
+   << 3
+   << 6
+   << 9
+   << 12
 
 Use a ``for``-``in`` loop with an array to iterate over its items.
 
