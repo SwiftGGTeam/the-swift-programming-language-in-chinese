@@ -92,6 +92,42 @@ used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
+In some situations, you might not want to use closed ranges, which include both
+endpoints. Consider drawing the tick marks for every minute on a watch face. You
+need to draw ``60`` of them, starting with the ``0`` minute.
+
+.. testcode:: forLoops
+
+   -> let minutes = 60
+   << // minutes : Int = 60
+   -> for index in 0..<minutes {
+         // render the mark each minute (60 times)
+      }
+
+Some users might want fewer ticks in their UI. They might like
+one mark every ``5`` minutes instead. Here, you would use
+the ``stride(from:to:by:)`` function to skip the unwanted marks.
+
+.. testcode:: forLoops
+
+   -> let hashInterval = 5
+   << // hashInterval : Int = 5
+   -> for index in stride(from: 0, to: minutes, by: hashInterval) {
+         // render the 5 minute mark (0, 5, 10, 15 ... 45, 50, 55)
+      }
+
+If you want closed ranges with ``stride``, use ``through`` instead.
+
+.. testcode:: forLoops
+
+   -> let hours = 12
+   << // hours : Int = 12
+   -> let hourInterval = 3
+   << // hourInterval : Int = 3
+   -> for index in stride(from: 3, through: hours, by: hourInterval) {
+         // render the hourly mark for 3, 6, 9 and 12.
+      }
+
 Use a ``for``-``in`` loop with an array to iterate over its items.
 
 .. testcode:: forLoops
