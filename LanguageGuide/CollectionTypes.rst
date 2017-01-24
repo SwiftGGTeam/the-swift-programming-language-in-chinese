@@ -730,7 +730,7 @@ because they share no elements in common.
 * Use the ``isSubset(of:)`` method to determine whether all of the values of a set are contained in the specified set.
 * Use the ``isSuperset(of:)`` method to determine whether a set contains all of the values in a specified set.
 * Use the ``isStrictSubset(of:)`` or ``isStrictSuperset(of:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-* Use the ``isDisjoint(with:)`` method to determine whether two sets have any values in common.
+* Use the ``isDisjoint(with:)`` method to determine whether two sets have no values in common.
 
 .. testcode:: setOperations
 
