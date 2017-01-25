@@ -1213,22 +1213,31 @@ For example:
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
-         func keyPathTest() -> String {
-            return #keyPath(someProperty)
-         }
       }
    ---
    -> let c = SomeClass(someProperty: 12)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(keyPath == c.keyPathTest())
-   <- true
    ---
    -> if let value = c.value(forKey: keyPath) {
    ->     print(value)
    -> }
    <- 12
+
+Within a structure or class,
+you can omit the type name when referring to a property,
+just like you can when you use the property as an expression.
+
+.. testcode:: keypath-expression
+
+   -> extension SomeClass {
+         func getSomeKeyPath() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   -> print(keyPath == c.getSomeKeyPath())
+   <- true
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
