@@ -1225,9 +1225,9 @@ For example:
    -> }
    <- 12
 
-Within a structure or class,
-you can omit the type name when referring to a property,
-just like you can when you use the property as an expression.
+When you use a key-path expression within a class,
+you can refer to a property of that class
+by writing just the property name, without the class name.
 
 .. testcode:: keypath-expression
 
