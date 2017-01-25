@@ -107,7 +107,7 @@ Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中�
 <a name="access_control_syntax"></a>
 ## 访问控制语法
 
-通过修饰符 `open`，`public`，`internal`，`filepart`，`private` 来声明实体的访问级别：
+通过修饰符 `open`，`public`，`internal`，`fileprivate`，`private` 来声明实体的访问级别：
 
 ```swift
 public class SomePublicClass {}
