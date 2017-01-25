@@ -434,7 +434,7 @@ and therefore it can be used in the type annotation for the integer literal ``42
 in the declaration ``let x: Int8 = 42``.
 
 .. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
-.. ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
+   ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
 
 .. syntax-grammar::
 
