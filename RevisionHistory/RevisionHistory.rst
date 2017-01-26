@@ -6,6 +6,23 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-01-24  * Updated for Swift 3.1.
+
+            * Added the :ref:`Generics_ExtensionWithWhereClause` section
+              with information about extensions that include requirements.
+
+            * Added information to the :ref:`Attributes_DeclarationAttributes` section
+              about using the ``available`` attribute with a Swift language version.
+
+            * Updated the discussion of Swift language version numbers
+              in the :ref:`Statements_BuildConfigurationStatement` section,
+              now that an optional patch number is allowed.
+
+            * Updated the discussion
+              in the :ref:`Types_FunctionType` section,
+              now that Swift distinguishes between functions that take multiple parameters
+              and functions that take a single parameter of a tuple type.
+----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
             * Updated the discussion of weak and unowned references

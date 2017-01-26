@@ -112,6 +112,9 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
+.. TODO: Add a link to the reference after we fix <rdar://problem/17682758> RST: Add support for uAPI links
+   http://developer.apple.com/reference/swift/iteratorprotocol
+
 .. langref-grammar
 
     stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
@@ -886,7 +889,7 @@ use a ``catch`` clause with a pattern that matches all errors,
 such as a wildcard pattern (``_``).
 If a ``catch`` clause does not specify a pattern,
 the ``catch`` clause matches and binds any error to a local constant named ``error``.
-For more information about the pattens you can use in a ``catch`` clause,
+For more information about the patterns you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
 
 To see an example of how to use a ``do`` statement with several ``catch`` clauses,
@@ -961,7 +964,8 @@ Platform condition    Valid arguments
    in the file lib/Basic/LangOptions.cpp.
 
 The version number for the ``swift()`` platform condition
-consists of a major and minor number, separated by a dot (``.``).
+consists of a major number, optional minor number, optional patch number, and so on,
+with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
 
 .. note::
@@ -984,12 +988,16 @@ There must not be whitespace between ``>=`` and the version number.
           print(3)
       #endif
    -> #if swift(>= 2.1)
-          print(1)
+          print(4)
       #endif
    !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
    !! #if swift(>= 2.1)
    !!           ^ ~
    !!-
+   -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
+          print(5)
+      #endif
+   << 5
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
@@ -1054,7 +1062,8 @@ have the following form:
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
-    swift-version --> decimal-digits ``.`` decimal-digits
+    swift-version --> decimal-digits swift-version-continuation-OPT
+    swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
 
 .. Testing notes:
 

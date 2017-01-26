@@ -147,7 +147,7 @@ that name is part of the type.
 .. testcode:: tuple-type-names
 
    -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-   << // someTuple : (top: Int, bottom: Int) = (10, 12)
+   << // someTuple : (top: Int, bottom: Int) = (top: 10, bottom: 12)
    -> someTuple = (top: 4, bottom: 42) // OK: names match
    -> someTuple = (9, 99)              // OK: names are inferred
    -> someTuple = (left: 5, right: 5)  // Error: names don't match
@@ -217,6 +217,19 @@ see :ref:`Functions_VariadicParameters`.
 To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
+
+If a function type has only one parameter
+and that parameter's type is a tuple type,
+then the tuple type must be parenthesized when writing the function's type.
+For example,
+``((Int, Int)) -> Void``
+is the type of a function that takes a single parameter
+of the tuple type ``(Int, Int)``
+and doesn't return any value.
+In contrast, without parentheses,
+``(Int, Int) -> Void`` is the type
+of a function that takes two ``Int`` parameters
+and doesn't return any value.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
@@ -575,7 +588,7 @@ A protocol composition type describes a type that conforms to each protocol
 in a list of specified protocols.
 Protocol composition types may be used only in type annotations and in generic parameters.
 
-.. In places where a comma separated list of types is allowed,
+.. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
 
 Protocol composition types have the following form:
@@ -653,18 +666,6 @@ as the following example shows:
     -> // and the runtime type of someInstance is SomeSubClass
     -> type(of: someInstance).printClassName()
     <- SomeSubClass
-
-Use the identity operators (``===``  and ``!==``) to test
-whether an instance's runtime type is the same as its compile-time type.
-
-.. testcode:: metatype-type
-
-    -> if type(of: someInstance) === someInstance.self {
-          print("The dynamic and static type of someInstance are the same")
-       } else {
-          print("The dynamic and static type of someInstance are different")
-       }
-    <- The dynamic and static type of someInstance are different
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.

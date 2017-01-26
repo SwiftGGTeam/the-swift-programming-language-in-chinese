@@ -804,7 +804,7 @@ with strong references to those values.
 You can use a :newTerm:`capture list` to explicitly control
 how values are captured in a closure.
 
-A capture list is written as a comma separated list of expressions
+A capture list is written as a comma-separated list of expressions
 surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
