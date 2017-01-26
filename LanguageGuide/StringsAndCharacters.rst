@@ -911,7 +911,10 @@ one for each byte in the string's UTF-8 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 226 128 188 240 159 144 182
+   << 68 111 103 226 128 188 240 159 144 182
+   // Prints "68 111 103 226 128 188 240 159 144 182 "
+
+.. Workaround for rdar://26016325
 
 In the example above, the first three decimal ``codeUnit`` values
 (``68``, ``111``, ``103``)
