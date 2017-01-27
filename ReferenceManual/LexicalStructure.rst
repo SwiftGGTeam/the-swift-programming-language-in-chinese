@@ -203,7 +203,7 @@ so they must be escaped with backticks in that context.
    -> func f(inout x: Int) {}
    !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
-   !!        ~~~~~    ^
+   !!        ^~~~~
    !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
