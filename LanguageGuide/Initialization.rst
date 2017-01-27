@@ -1426,18 +1426,18 @@ the initializer fails.
    <~ // pi : Double = 3.1415
    ---
    -> if let valueMaintained = Int(exactly: wholeNumber) {
-          print("\(wholeNumber) type conversion to int maintains value")
+          print("\(wholeNumber) conversion to int maintains value")
       }
-   <- 12345.0 type conversion to int maintains value
+   <- 12345.0 conversion to int maintains value
    ---
    -> let valueChanged = Int(exactly: pi)
    << // valueChanged : Int? = nil
    // valueChanged is of type Int?, not Int
    ---
    -> if valueChanged == nil {
-          print("\(pi) type conversion to int does not maintain value")
+          print("\(pi) conversion to int does not maintain value")
       }
-   <- 3.14159 type conversion to int does not maintain value
+   <- 3.14159 conversion to int does not maintain value
 
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
