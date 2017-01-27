@@ -259,7 +259,7 @@ For example:
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because argument labels are not part of a function's type,
-you must omit them when writing a function type.
+you omit them when writing a function type.
 
 .. testcode::
 
