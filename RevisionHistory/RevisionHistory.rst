@@ -3,9 +3,21 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
+..
+    <rdar://problem/29870258> TSPL swift tour typo on T: Equatable
+    <rdar://problem/27081085> TSPL: SE-0045 Add prefix(while:) and drop(while:) to the stdlib
+    <rdar://problem/29586720> TSPL: SE-0080 Failable Numeric Conversion Initializers
+    <rdar://problem/22860883> TSPL: Whitespace issues in Unicode codepoint examples
+
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-02-06  * Added an example of failable numeric conversion initializers
+              to the :ref:`Initialization_FailableInitializers` section.
+
+            * Updated discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
+----------  ----------------------------------------------------------------------------------------------
 2017-01-24  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
