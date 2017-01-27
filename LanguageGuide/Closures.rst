@@ -362,8 +362,7 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
 
 .. testcode:: arrayMap
 
-   -> let strings = numbers.map {
-            (number) -> String in
+   -> let strings = numbers.map { (number) -> String in
          var number = number
          var output = ""
          repeat {

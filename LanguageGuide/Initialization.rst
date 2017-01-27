@@ -2142,7 +2142,7 @@ in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
 The returned array value is stored in ``boardColors``
-and can be queried with the ``squareIsBlackAtRow`` utility function:
+and can be queried with the ``squareIsBlackAt(row:column:)`` utility function:
 
 .. testcode:: chessboard
 

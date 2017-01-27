@@ -339,9 +339,10 @@ This method removes the item at the specified index and returns the removed item
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
-   Except when ``count`` is ``0`` (meaning the array is empty),
-   the largest valid index in an array will always be ``count - 1``,
-   because arrays are indexed from zero.
+   The largest valid index in an array is ``count - 1``
+   because arrays are indexed from zero ---
+   however, when ``count`` is ``0`` (meaning the array is empty),
+   there are no valid indexes.
 
 Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
@@ -729,7 +730,7 @@ because they share no elements in common.
 * Use the ``isSubset(of:)`` method to determine whether all of the values of a set are contained in the specified set.
 * Use the ``isSuperset(of:)`` method to determine whether a set contains all of the values in a specified set.
 * Use the ``isStrictSubset(of:)`` or ``isStrictSuperset(of:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-* Use the ``isDisjoint(with:)`` method to determine whether two sets have any values in common.
+* Use the ``isDisjoint(with:)`` method to determine whether two sets have no values in common.
 
 .. testcode:: setOperations
 

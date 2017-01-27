@@ -1213,22 +1213,31 @@ For example:
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
-         func keyPathTest() -> String {
-            return #keyPath(someProperty)
-         }
       }
    ---
    -> let c = SomeClass(someProperty: 12)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(keyPath == c.keyPathTest())
-   <- true
    ---
    -> if let value = c.value(forKey: keyPath) {
    ->     print(value)
    -> }
    <- 12
+
+When you use a key-path expression within a class,
+you can refer to a property of that class
+by writing just the property name, without the class name.
+
+.. testcode:: keypath-expression
+
+   -> extension SomeClass {
+         func getSomeKeyPath() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   -> print(keyPath == c.getSomeKeyPath())
+   <- true
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
