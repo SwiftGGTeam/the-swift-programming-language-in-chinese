@@ -233,7 +233,6 @@ and doesn't return any value.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
-Argument labels are not allowed when writing a function type.
 For example:
 
 .. testcode::
@@ -258,7 +257,12 @@ For example:
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   ---
+
+Because argument labels are not part of a function's type,
+you must omit them when writing a function type.
+
+.. testcode::
+
    -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
    !! <REPL Input>:1:17: error: function types cannot have argument labels; use '_' before 'lhs'
    !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
