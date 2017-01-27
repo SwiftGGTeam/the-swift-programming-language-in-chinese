@@ -248,12 +248,12 @@ For example:
    -> f = functionWithDifferentLabels  // OK
    ---
    -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
-   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
-   ---
    -> f = functionWithDifferentArgumentTypes     // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentArgumentTypes     // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    -> f = functionWithDifferentNumberOfArguments // Error
    !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentNumberOfArguments // Error
