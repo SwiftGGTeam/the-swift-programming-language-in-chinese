@@ -1412,6 +1412,33 @@ to indicate a point at which initialization failure can be triggered.
    Although you write ``return nil`` to trigger an initialization failure,
    you do not use the ``return`` keyword to indicate initialization success.
 
+For instance, failable initializers are implemented for numeric type conversions.
+If you need to be sure that a conversion between numeric types
+does not change the value, you would use ``exactly`` in the initializer.
+If the type conversion changes the value,
+the initializer will fail, and ``nil`` will be returned.
+
+.. testcode:: failableInitializers
+
+   -> let wholeNumber:Double = 12345.0
+   << // wholeNumber : Double = 12345.0
+   -> let pi = 3.14159
+   <~ // pi : Double = 3.1415
+   ---
+   -> if let valueMaintained = Int(exactly: wholeNumber) {
+        print("\(wholeNumber) maintains its value during type conversion")
+      }
+   <- 12345.0 maintains its value during type conversion
+   ---
+   -> let valueChanged = Int(exactly: pi)
+   << // valueChanged : Int? = nil
+   // valueChanged is of type Int?, not Int
+   ---
+   -> if valueChanged == nil {
+        print("\(pi) changes value during type conversion")
+      }
+   <- 3.14159 changes value during type conversion
+
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
 The ``Animal`` structure also defines a failable initializer
