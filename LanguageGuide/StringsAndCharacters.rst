@@ -47,10 +47,12 @@ surrounded by a pair of double quotes (``""``).
 
 Use a string literal as an initial value for a constant or variable:
 
-.. testcode:: stringLiterals
+.. test::
+    :name: string literals
 
-   -> let someString = "Some string literal value"
-   << // someString : String = "Some string literal value"
+    let someString = "Some string literal value"
+    // -HIDE-
+    assert(someString is String)
 
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
@@ -70,23 +72,28 @@ for building a longer string,
 either assign an empty string literal to a variable,
 or initialize a new ``String`` instance with initializer syntax:
 
-.. testcode:: emptyStrings
+.. test::
+    :name: empty strings
 
-   -> var emptyString = ""               // empty string literal
-   << // emptyString : String = ""
-   -> var anotherEmptyString = String()  // initializer syntax
-   << // anotherEmptyString : String = ""
-   // these two strings are both empty, and are equivalent to each other
+    var emptyString = ""               // empty string literal
+    var anotherEmptyString = String()  // initializer syntax
+    // these two strings are both empty, and are equivalent to each other
+    // -HIDE-
+    assert(emptyString.characters.count == 0)
+    assert(anotherEmptyString.characters.count == 0)
+    assert(emptyString == anotherEmptyString)
 
 Find out whether a ``String`` value is empty
 by checking its Boolean ``isEmpty`` property:
 
-.. testcode:: emptyStrings
+.. test::
+    :name: empty strings
+    :cont:
+    :prints-comment: Nothing to see here
 
-   -> if emptyString.isEmpty {
-         print("Nothing to see here")
-      }
-   <- Nothing to see here
+    if emptyString.isEmpty {
+        print("Nothing to see here")
+    }
 
 .. TODO: init(size, character)
 
@@ -99,25 +106,24 @@ You indicate whether a particular ``String`` can be modified (or *mutated*)
 by assigning it to a variable (in which case it can be modified),
 or to a constant (in which case it cannot be modified):
 
-.. testcode:: stringMutability
+.. test::
+    :name: string mutability
+    :compiler-errors: error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
+                      constantString += " and another Highlander"
+                      ~~~~~~~~~~~~~~ ^
+                      note: change 'let' to 'var' to make it mutable
+                      let constantString = "Highlander"
+                      ^~~
+                      var
 
-   -> var variableString = "Horse"
-   << // variableString : String = "Horse"
-   -> variableString += " and carriage"
-   /> variableString is now \"\(variableString)\"
-   </ variableString is now "Horse and carriage"
-   ---
-   -> let constantString = "Highlander"
-   << // constantString : String = "Highlander"
-   -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
-   !! constantString += " and another Highlander"
-   !! ~~~~~~~~~~~~~~ ^
-   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
-   !! let constantString = "Highlander"
-   !! ^~~
-   !! var
-   // this reports a compile-time error - a constant string cannot be modified
+    var variableString = "Horse"
+    variableString += " and carriage"
+    // -COMMENT- variableString is now \"\(variableString)\"
+    // -RESULT- variableString is now "Horse and carriage"
+
+    let constantString = "Highlander"
+    constantString += " and another Highlander"
+    // this reports a compile-time error - a constant string cannot be modified
 
 .. note::
 
@@ -158,38 +164,40 @@ Working with Characters
 You can access the individual ``Character`` values for a ``String``
 by iterating over its ``characters`` property with a ``for``-``in`` loop:
 
-.. testcode:: characters
+.. test::
+    :name: characters
 
-   -> for character in "Dog!🐶".characters {
-         print(character)
-      }
-   </ D
-   </ o
-   </ g
-   </ !
-   </ 🐶
+    for character in "Dog!🐶".characters {
+        print(character)
+    }
+    // -RESULT- D
+    // -RESULT- o
+    // -RESULT- g
+    // -RESULT- !
+    // -RESULT- 🐶
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
 Alternatively, you can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
-.. testcode:: characters
+.. test::
+    :name: characters
+    :cont:
 
-   -> let exclamationMark: Character = "!"
-   << // exclamationMark : Character = "!"
+    let exclamationMark: Character = "!"
 
 ``String`` values can be constructed by passing an array of ``Character`` values
 as an argument to its initializer:
 
-.. testcode:: characters
+.. test::
+    :name: characters
+    :cont:
+    :prints-comment: Cat!🐱
 
-   -> let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
-   << // catCharacters : [Character] = ["C", "a", "t", "!", "🐱"]
-   -> let catString = String(catCharacters)
-   << // catString : String = "Cat!🐱"
-   -> print(catString)
-   <- Cat!🐱
+    let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+    let catString = String(catCharacters)
+    print(catString)
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
@@ -199,38 +207,38 @@ Concatenating Strings and Characters
 ``String`` values can be added together (or *concatenated*)
 with the addition operator (``+``) to create a new ``String`` value:
 
-.. testcode:: concatenation
+.. test::
+    :name: concatenation
 
-   -> let string1 = "hello"
-   << // string1 : String = "hello"
-   -> let string2 = " there"
-   << // string2 : String = " there"
-   -> var welcome = string1 + string2
-   << // welcome : String = "hello there"
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello there"
+    let string1 = "hello"
+    let string2 = " there"
+    var welcome = string1 + string2
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello there"
 
 You can also append a ``String`` value to an existing ``String`` variable
 with the addition assignment operator (``+=``):
 
-.. testcode:: concatenation
+.. test::
+    :name: concatenation
+    :cont:
 
-   -> var instruction = "look over"
-   << // instruction : String = "look over"
-   -> instruction += string2
-   /> instruction now equals \"\(instruction)\"
-   </ instruction now equals "look over there"
+    var instruction = "look over"
+    instruction += string2
+    // -COMMENT- instruction now equals \"\(instruction)\"
+    // -RESULT- instruction now equals "look over there"
 
 You can append a ``Character`` value to a ``String`` variable
 with the ``String`` type's ``append()`` method:
 
-.. testcode:: concatenation
+.. test::
+    :name: concatenation
+    :cont:
 
-   -> let exclamationMark: Character = "!"
-   << // exclamationMark : Character = "!"
-   -> welcome.append(exclamationMark)
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello there!"
+    let exclamationMark: Character = "!"
+    welcome.append(exclamationMark)
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello there!"
 
 .. note::
 
@@ -248,14 +256,13 @@ by including their values inside a string literal.
 Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash:
 
-.. testcode:: stringInterpolation
+.. test::
+    :name: string interpolation
 
-   -> let multiplier = 3
-   << // multiplier : Int = 3
-   -> let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
-   << // message : String = "3 times 2.5 is 7.5"
-   /> message is \"\(message)\"
-   </ message is "3 times 2.5 is 7.5"
+    let multiplier = 3
+    let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+    // -COMMENT- message is \"\(message)\"
+    // -RESULT- message is "3 times 2.5 is 7.5"
 
 In the example above,
 the value of ``multiplier`` is inserted into a string literal as ``\(multiplier)``.
@@ -326,40 +333,36 @@ String literals can include the following special characters:
   where *n* is a 1--8 digit hexadecimal number
   with a value equal to a valid Unicode code point
 
-.. assertion:: stringLiteralUnicodeScalar
+.. test::
+    :name: string literal UnicodeScalar
+    :hidden:
+    :compiler-errors: error: \u{...} escape sequence expects between 1 and 8 hex digits
+                      "\u{000000000}"
+                      ^
+                      error: invalid unicode scalar
+                      "\u{110000}"
+                      ^
 
-   -> "\u{0}"
-   << // r0 : String = "\0"
-   -> "\u{00000000}"
-   << // r1 : String = "\0"
-   -> "\u{000000000}"
-   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
-   !! "\u{000000000}"
-   !! ^
-   -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
-   -> "\u{110000}"
-   !! <REPL Input>:1:2: error: invalid unicode scalar
-   !! "\u{110000}"
-   !! ^
+    _ = "\u{0}"
+    _ = "\u{00000000}"
+    _ = "\u{000000000}"
+    _ = "\u{10FFFF}"
+    _ = "\u{110000}"
 
 The code below shows four examples of these special characters.
 The ``wiseWords`` constant contains two escaped double quote characters.
 The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the Unicode scalar format:
 
-.. testcode:: specialCharacters
+.. test::
+    :name: special characters
 
-   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> print(wiseWords)
-   </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
-   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
+    let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+    print(wiseWords) // -HIDE-
+    // -RESULT- "Imagination is more important than knowledge" - Einstein
+    let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+    let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+    let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
@@ -386,14 +389,13 @@ that represents an extended grapheme cluster.
 In the first case, the cluster contains a single scalar;
 in the second case, it is a cluster of two scalars:
 
-.. testcode:: graphemeClusters1
+.. test::
+    :name: grapheme clusters
 
-   -> let eAcute: Character = "\u{E9}"                         // é
-   << // eAcute : Character = "é"
-   -> let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
-   << // combinedEAcute : Character = "é"
-   /> eAcute is \(eAcute), combinedEAcute is \(combinedEAcute)
-   </ eAcute is é, combinedEAcute is é
+    let eAcute: Character = "\u{E9}"                         // é
+    let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
+    // -COMMENT- eAcute is \(eAcute), combinedEAcute is \(combinedEAcute)
+    // -RESULT- eAcute is é, combinedEAcute is é
 
 Extended grapheme clusters are a flexible way to represent
 many complex script characters as a single ``Character`` value.
@@ -401,37 +403,39 @@ For example, Hangul syllables from the Korean alphabet
 can be represented as either a precomposed or decomposed sequence.
 Both of these representations qualify as a single ``Character`` value in Swift:
 
-.. testcode:: graphemeClusters2
+.. test::
+    :name: grapheme clusters
+    :cont:
 
-   -> let precomposed: Character = "\u{D55C}"                  // 한
-   << // precomposed : Character = "한"
-   -> let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
-   << // decomposed : Character = "한"
-   /> precomposed is \(precomposed), decomposed is \(decomposed)
-   </ precomposed is 한, decomposed is 한
+    let precomposed: Character = "\u{D55C}"                  // 한
+    let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
+    // -COMMENT- precomposed is \(precomposed), decomposed is \(decomposed)
+    // -RESULT- precomposed is 한, decomposed is 한
 
 Extended grapheme clusters enable
 scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD``)
 to enclose other Unicode scalars as part of a single ``Character`` value:
 
-.. testcode:: graphemeClusters3
+.. test::
+    :name: grapheme clusters
+    :cont:
 
-   -> let enclosedEAcute: Character = "\u{E9}\u{20DD}"
-   << // enclosedEAcute : Character = "é⃝"
-   /> enclosedEAcute is \(enclosedEAcute)
-   </ enclosedEAcute is é⃝
+    let enclosedEAcute: Character = "\u{E9}\u{20DD}"
+    // -COMMENT- enclosedEAcute is \(enclosedEAcute)
+    // -RESULT- enclosedEAcute is é⃝
 
 Unicode scalars for regional indicator symbols
 can be combined in pairs to make a single ``Character`` value,
 such as this combination of ``REGIONAL INDICATOR SYMBOL LETTER U`` (``U+1F1FA``)
 and ``REGIONAL INDICATOR SYMBOL LETTER S`` (``U+1F1F8``):
 
-.. testcode:: graphemeClusters4
+.. test::
+    :name: grapheme clusters
+    :cont:
 
-   -> let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
-   << // regionalIndicatorForUS : Character = "🇺🇸"
-   /> regionalIndicatorForUS is \(regionalIndicatorForUS)
-   </ regionalIndicatorForUS is 🇺🇸
+    let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
+    // -COMMENT- regionalIndicatorForUS is \(regionalIndicatorForUS)
+    // -RESULT- regionalIndicatorForUS is 🇺🇸
 
 .. _StringsAndCharacters_CountingCharacters:
 
@@ -441,12 +445,12 @@ Counting Characters
 To retrieve a count of the ``Character`` values in a string,
 use the ``count`` property of the string's ``characters`` property:
 
-.. testcode:: characterCount
+.. test::
+    :name: character count
+    :prints-comment: unusualMenagerie has 40 characters
 
-   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
-   <- unusualMenagerie has 40 characters
+    let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+    print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
 means that string concatenation and modification may not always affect
@@ -457,17 +461,17 @@ and then append a ``COMBINING ACUTE ACCENT`` (``U+0301``) to the end of the stri
 the resulting string will still have a character count of ``4``,
 with a fourth character of ``é``, not ``e``:
 
-.. testcode:: characterCount
+.. test::
+    :name: character count
+    :cont:
 
-   -> var word = "cafe"
-   << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(word.characters.count)")
-   <- the number of characters in cafe is 4
-   ---
-   -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
-   ---
-   -> print("the number of characters in \(word) is \(word.characters.count)")
-   <- the number of characters in café is 4
+    var word = "cafe"
+    print("the number of characters in \(word) is \(word.characters.count)")
+    // -PRINTS-COMMENT- the number of characters in cafe is 4
+    word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
+
+    print("the number of characters in \(word) is \(word.characters.count)")
+    // -PRINTS-COMMENT- the number of characters in café is 4
 
 .. note::
 
@@ -531,55 +535,58 @@ instead of calling one of these methods multiple times.
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
 
-.. testcode:: stringIndex
+.. test::
+    :name: string index
 
-   -> let greeting = "Guten Tag!"
-   << // greeting : String = "Guten Tag!"
-   -> greeting[greeting.startIndex]
-   <$ : Character = "G"
-   // G
-   -> greeting[greeting.index(before: greeting.endIndex)]
-   <$ : Character = "!"
-   // !
-   -> greeting[greeting.index(after: greeting.startIndex)]
-   <$ : Character = "u"
-   // u
-   -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
-   <~ // index : String.Index = Swift.String.CharacterView.Index(
-   -> greeting[index]
-   <$ : Character = "a"
-   // a
+    let greeting = "Guten Tag!"
+    greeting[greeting.startIndex]
+    assert(greeting[greeting.startIndex] == "G") // -HIDE-
+    // G
+    greeting[greeting.index(before: greeting.endIndex)]
+    assert(greeting[greeting.index(before: greeting.endIndex)] == "!") // -HIDE-
+    // !
+    greeting[greeting.index(after: greeting.startIndex)]
+    assert(greeting[greeting.index(after: greeting.startIndex)] == "u") // -HIDE-
+    // u
+    let index = greeting.index(greeting.startIndex, offsetBy: 7)
+    assert(index is String.CharacterView.Index) // -HIDE-
+    greeting[index]
+    assert(greeting[index] == "a") // -HIDE-
+    // a 
 
 Attempting to access an index outside of a string's range
 or a ``Character`` at an index outside of a string's range
 will trigger a runtime error.
 
-.. code-block:: swift
+.. test::
+    :name: string invalid index
+    :xfail: stdlib assertion failure expected here
 
-   greeting[greeting.endIndex] // Error
-   greeting.index(after: greeting.endIndex) // Error
+    let greeting = "Guten Tag!" // -HIDE-
+    greeting[greeting.endIndex] // Error
+    greeting.index(after: greeting.endIndex) // Error
 
-.. The code above triggers an assertion failure in the stdlib, causing a stack
-   trace, which makes it a poor candidate for being tested.
+.. test::
+    :name: empty string indices
+    :hidden:
 
-.. assertion:: emptyStringIndices
-
-   -> let emptyString = ""
-   << // emptyString : String = ""
-   -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
-   << // r0 : Bool = true
+    let emptyString = ""
+    assert(emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex)
 
 Use the ``indices`` property of the ``characters`` property to access all of the
 indices of individual characters in a string.
 
-.. testcode:: stringIndex
+.. test::
+    :name: string index
+    :cont:
+    :prints: G u t e n   T a g ! 
 
-   -> for index in greeting.characters.indices {
-         print("\(greeting[index]) ", terminator: "")
-      }
-   >> print("")
-   << G u t e n   T a g !
-   // Prints "G u t e n   T a g ! "
+    for index in greeting.characters.indices {
+        print("\(greeting[index]) ", terminator: "")
+    }
+    // Prints "G u t e n   T a g ! "
+    // -HIDE-
+    print("")
 
 .. Workaround for rdar://26016325
 
@@ -601,35 +608,35 @@ use the ``insert(_:at:)`` method,
 and to insert the contents of another string at a specified index,
 use the ``insert(contentsOf:at:)`` method.
 
-.. testcode:: stringInsertionAndRemoval
+.. test::
+    :name: string insertion and removal
 
-   -> var welcome = "hello"
-   << // welcome : String = "hello"
-   -> welcome.insert("!", at: welcome.endIndex)
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello!"
-   ---
-   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello there!"
+    var welcome = "hello"
+    welcome.insert("!", at: welcome.endIndex)
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello!"
+
+    welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello there!"
 
 To remove a single character from a string at a specified index,
 use the ``remove(at:)`` method,
 and to remove a substring at a specified range,
 use the ``removeSubrange(_:)`` method:
 
-.. testcode:: stringInsertionAndRemoval
+.. test::
+    :name: string insertion and removal
+    :cont:
 
-   -> welcome.remove(at: welcome.index(before: welcome.endIndex))
-   << // r0 : Character = "!"
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello there"
-   ---
-   -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
-   <~ // range : Range<String.Index> = Range(Swift.String.CharacterView.Index(
-   -> welcome.removeSubrange(range)
-   /> welcome now equals \"\(welcome)\"
-   </ welcome now equals "hello"
+    welcome.remove(at: welcome.index(before: welcome.endIndex))
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello there"
+
+    let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
+    welcome.removeSubrange(range)
+    // -COMMENT- welcome now equals \"\(welcome)\"
+    // -RESULT- welcome now equals "hello"
 
 .. TODO: Find and Replace section, once the standard library supports finding substrings
 
@@ -658,16 +665,15 @@ String and character equality is checked with the “equal to” operator (``==`
 and the “not equal to” operator (``!=``),
 as described in :ref:`BasicOperators_ComparisonOperators`:
 
-.. testcode:: stringEquality
+.. test::
+    :name: string equality
+    :prints-comment: These two strings are considered equal
 
-   -> let quotation = "We're a lot alike, you and I."
-   << // quotation : String = "We\'re a lot alike, you and I."
-   -> let sameQuotation = "We're a lot alike, you and I."
-   << // sameQuotation : String = "We\'re a lot alike, you and I."
-   -> if quotation == sameQuotation {
-         print("These two strings are considered equal")
-      }
-   <- These two strings are considered equal
+    let quotation = "We're a lot alike, you and I."
+    let sameQuotation = "We're a lot alike, you and I."
+    if quotation == sameQuotation {
+        print("These two strings are considered equal")
+    }
 
 Two ``String`` values (or two ``Character`` values) are considered equal if
 their extended grapheme clusters are :newTerm:`canonically equivalent`.
@@ -675,31 +681,31 @@ Extended grapheme clusters are canonically equivalent if they have
 the same linguistic meaning and appearance,
 even if they are composed from different Unicode scalars behind the scenes.
 
-.. assertion:: characterComparisonUsesCanonicalEquivalence
+.. test::
+    :name: character comparison uses canonical equivalence
+    :hidden:
+    :prints-comment: equivalent, as expected
 
-   -> let eAcute: Character = "\u{E9}"
-   << // eAcute : Character = "é"
-   -> let combinedEAcute: Character = "\u{65}\u{301}"
-   << // combinedEAcute : Character = "é"
-   -> if eAcute != combinedEAcute {
-         print("not equivalent, which is not expected")
-      } else {
-         print("equivalent, as expected")
-      }
-   <- equivalent, as expected
+    let eAcute: Character = "\u{E9}"
+    let combinedEAcute: Character = "\u{65}\u{301}"
+    if eAcute != combinedEAcute {
+        print("not equivalent, which is not expected")
+    } else {
+        print("equivalent, as expected")
+    }
 
-.. assertion:: stringComparisonUsesCanonicalEquivalence
+.. test::
+    :name: string comparison uses canonical equivalence
+    :hidden:
+    :prints-comment: equivalent, as expected
 
-   -> let cafe1 = "caf\u{E9}"
-   << // cafe1 : String = "café"
-   -> let cafe2 = "caf\u{65}\u{301}"
-   << // cafe2 : String = "café"
-   -> if cafe1 != cafe2 {
-         print("not equivalent, which is not expected")
-      } else {
-         print("equivalent, as expected")
-      }
-   <- equivalent, as expected
+    let cafe1 = "caf\u{E9}"
+    let cafe2 = "caf\u{65}\u{301}"
+    if cafe1 != cafe2 {
+        print("not equivalent, which is not expected")
+    } else {
+        print("equivalent, as expected")
+    }
 
 For example, ``LATIN SMALL LETTER E WITH ACUTE`` (``U+00E9``)
 is canonically equivalent to ``LATIN SMALL LETTER E`` (``U+0065``)
@@ -707,20 +713,20 @@ followed by ``COMBINING ACUTE ACCENT`` (``U+0301``).
 Both of these extended grapheme clusters are valid ways to represent the character ``é``,
 and so they are considered to be canonically equivalent:
 
-.. testcode:: stringEquality
+.. test::
+    :name: string equality
+    :cont:
+    :prints-comment: These two strings are considered equal
 
-   // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
-   -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
-   << // eAcuteQuestion : String = "Voulez-vous un café?"
-   ---
-   // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
-   -> let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
-   << // combinedEAcuteQuestion : String = "Voulez-vous un café?"
-   ---
-   -> if eAcuteQuestion == combinedEAcuteQuestion {
-         print("These two strings are considered equal")
-      }
-   <- These two strings are considered equal
+    // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
+    let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
+
+    // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+    let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+
+    if eAcuteQuestion == combinedEAcuteQuestion {
+        print("These two strings are considered equal")
+    }
 
 Conversely, ``LATIN CAPITAL LETTER A`` (``U+0041``, or ``"A"``),
 as used in English, is *not* equivalent to
@@ -729,18 +735,18 @@ as used in Russian.
 The characters are visually similar,
 but do not have the same linguistic meaning:
 
-.. testcode:: stringEquality
+.. test::
+    :name: string equality
+    :cont:
+    :prints-comment: These two characters are not equivalent.
 
-   -> let latinCapitalLetterA: Character = "\u{41}"
-   << // latinCapitalLetterA : Character = "A"
-   ---
-   -> let cyrillicCapitalLetterA: Character = "\u{0410}"
-   << // cyrillicCapitalLetterA : Character = "А"
-   ---
-   -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent.")
-      }
-   <- These two characters are not equivalent.
+    let latinCapitalLetterA: Character = "\u{41}"
+
+    let cyrillicCapitalLetterA: Character = "\u{0410}"
+
+    if latinCapitalLetterA != cyrillicCapitalLetterA {
+        print("These two characters are not equivalent.")
+    }
 
 .. note::
 
@@ -759,93 +765,96 @@ To check whether a string has a particular string prefix or suffix,
 call the string's ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 
-.. assertion:: prefixComparisonUsesCharactersNotScalars
+.. test::
+    :name: prefix comparison uses characters not scalars
+    :hidden:
 
-   -> let ecole = "\u{E9}cole"
-   << // ecole : String = "école"
-   -> if ecole.hasPrefix("\u{E9}") {
-         print("Has U+00E9 prefix, as expected.")
-      } else {
-         print("Does not have U+00E9 prefix, which is unexpected.")
-      }
-   <- Has U+00E9 prefix, as expected.
-   -> if ecole.hasPrefix("\u{65}\u{301}") {
-         print("Has U+0065 U+0301 prefix, as expected.")
-      } else {
-         print("Does not have U+0065 U+0301 prefix, which is unexpected.")
-      }
-   <- Has U+0065 U+0301 prefix, as expected.
+    let ecole = "\u{E9}cole"
+    if ecole.hasPrefix("\u{E9}") {
+        print("Has U+00E9 prefix, as expected.")
+    } else {
+        print("Does not have U+00E9 prefix, which is unexpected.")
+    }
+    // -PRINTS-COMMENT- Has U+00E9 prefix, as expected.
+    if ecole.hasPrefix("\u{65}\u{301}") {
+        print("Has U+0065 U+0301 prefix, as expected.")
+    } else {
+        print("Does not have U+0065 U+0301 prefix, which is unexpected.")
+    }
+    // -PRINTS-COMMENT- Has U+0065 U+0301 prefix, as expected.
 
-.. assertion:: suffixComparisonUsesCharactersNotScalars
+.. test::
+    :name: suffix comparison uses characters not scalars
+    :hidden:
 
-   -> let cafe = "caf\u{E9}"
-   << // cafe : String = "café"
-   -> if cafe.hasSuffix("\u{E9}") {
-         print("Has U+00E9 suffix, as expected.")
-      } else {
-         print("Does not have U+00E9 suffix, which is unexpected.")
-      }
-   <- Has U+00E9 suffix, as expected.
-   -> if cafe.hasSuffix("\u{65}\u{301}") {
-         print("Has U+0065 U+0301 suffix, as expected.")
-      } else {
-         print("Does not have U+0065 U+0301 suffix, which is unexpected.")
-      }
-   <- Has U+0065 U+0301 suffix, as expected.
+    let cafe = "caf\u{E9}"
+    if cafe.hasSuffix("\u{E9}") {
+        print("Has U+00E9 suffix, as expected.")
+    } else {
+        print("Does not have U+00E9 suffix, which is unexpected.")
+    }
+    // -PRINTS-COMMENT- Has U+00E9 suffix, as expected.
+    if cafe.hasSuffix("\u{65}\u{301}") {
+        print("Has U+0065 U+0301 suffix, as expected.")
+    } else {
+        print("Does not have U+0065 U+0301 suffix, which is unexpected.")
+    }
+    // -PRINTS-COMMENT- Has U+0065 U+0301 suffix, as expected.
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
 
-.. testcode:: prefixesAndSuffixes
+.. test::
+    :name: prefixes and suffixes
 
-   -> let romeoAndJuliet = [
-         "Act 1 Scene 1: Verona, A public place",
-         "Act 1 Scene 2: Capulet's mansion",
-         "Act 1 Scene 3: A room in Capulet's mansion",
-         "Act 1 Scene 4: A street outside Capulet's mansion",
-         "Act 1 Scene 5: The Great Hall in Capulet's mansion",
-         "Act 2 Scene 1: Outside Capulet's mansion",
-         "Act 2 Scene 2: Capulet's orchard",
-         "Act 2 Scene 3: Outside Friar Lawrence's cell",
-         "Act 2 Scene 4: A street in Verona",
-         "Act 2 Scene 5: Capulet's mansion",
-         "Act 2 Scene 6: Friar Lawrence's cell"
-      ]
-   << // romeoAndJuliet : [String] = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
+    let romeoAndJuliet = [
+        "Act 1 Scene 1: Verona, A public place",
+        "Act 1 Scene 2: Capulet's mansion",
+        "Act 1 Scene 3: A room in Capulet's mansion",
+        "Act 1 Scene 4: A street outside Capulet's mansion",
+        "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+        "Act 2 Scene 1: Outside Capulet's mansion",
+        "Act 2 Scene 2: Capulet's orchard",
+        "Act 2 Scene 3: Outside Friar Lawrence's cell",
+        "Act 2 Scene 4: A street in Verona",
+        "Act 2 Scene 5: Capulet's mansion",
+        "Act 2 Scene 6: Friar Lawrence's cell"
+    ]
 
 You can use the ``hasPrefix(_:)`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
 
-.. testcode:: prefixesAndSuffixes
+.. test::
+    :name: prefixes and suffixes
+    :cont:
+    :prints-comment: There are 5 scenes in Act 1
 
-   -> var act1SceneCount = 0
-   << // act1SceneCount : Int = 0
-   -> for scene in romeoAndJuliet {
-         if scene.hasPrefix("Act 1 ") {
+    var act1SceneCount = 0
+    for scene in romeoAndJuliet {
+        if scene.hasPrefix("Act 1 ") {
             act1SceneCount += 1
-         }
-      }
-   -> print("There are \(act1SceneCount) scenes in Act 1")
-   <- There are 5 scenes in Act 1
+        }
+    }
+    print("There are \(act1SceneCount) scenes in Act 1")
 
 Similarly, use the ``hasSuffix(_:)`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
-.. testcode:: prefixesAndSuffixes
+.. test::
+    :name: prefixes and suffixes
+    :cont:
+    :prints-comment: 6 mansion scenes; 2 cell scenes
 
-   -> var mansionCount = 0
-   << // mansionCount : Int = 0
-   -> var cellCount = 0
-   << // cellCount : Int = 0
-   -> for scene in romeoAndJuliet {
-         if scene.hasSuffix("Capulet's mansion") {
+    var mansionCount = 0
+    var cellCount = 0
+    for scene in romeoAndJuliet {
+        if scene.hasSuffix("Capulet's mansion") {
             mansionCount += 1
-         } else if scene.hasSuffix("Friar Lawrence's cell") {
+        } else if scene.hasSuffix("Friar Lawrence's cell") {
             cellCount += 1
-         }
-      }
-   -> print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-   <- 6 mansion scenes; 2 cell scenes
+        }
+    }
+    print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 .. note::
 
@@ -886,10 +895,10 @@ which is made up of the characters ``D``, ``o``, ``g``,
 ``‼`` (``DOUBLE EXCLAMATION MARK``, or Unicode scalar ``U+203C``),
 and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
 
-.. testcode:: unicodeRepresentations
+.. test::
+    :name: unicode representations
 
-   -> let dogString = "Dog‼🐶"
-   << // dogString : String = "Dog‼🐶"
+    let dogString = "Dog‼🐶"
 
 .. _StringsAndCharacters_UTF8:
 
@@ -905,13 +914,18 @@ one for each byte in the string's UTF-8 representation:
 .. image:: ../images/UTF8_2x.png
    :align: center
 
-.. testcode:: unicodeRepresentations
+.. test::
+    :name: unicode representations
+    :cont:
+    :prints: 68 111 103 226 128 188 240 159 144 182
 
-   -> for codeUnit in dogString.utf8 {
-         print("\(codeUnit) ", terminator: "")
-      }
-   -> print("")
-   </ 68 111 103 226 128 188 240 159 144 182
+    for codeUnit in dogString.utf8 {
+        print("\(codeUnit) ", terminator: "")
+    }
+    print("")
+    // Prints "68 111 103 226 128 188 240 159 144 182 "
+
+.. Workaround for rdar://26016325
 
 In the example above, the first three decimal ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -942,14 +956,16 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 .. image:: ../images/UTF16_2x.png
    :align: center
 
-.. testcode:: unicodeRepresentations
+.. test::
+    :name: unicode representations
+    :cont:
+    :prints: 68 111 103 8252 55357 56374 
 
-   -> for codeUnit in dogString.utf16 {
-         print("\(codeUnit) ", terminator: "")
-      }
-   -> print("")
-   << 68 111 103 8252 55357 56374
-   // Prints "68 111 103 8252 55357 56374 "
+    for codeUnit in dogString.utf16 {
+        print("\(codeUnit) ", terminator: "")
+    }
+    print("")
+    // Prints "68 111 103 8252 55357 56374 "
 
 .. Workaround for rdar://26016325
 
@@ -986,14 +1002,16 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
 .. image:: ../images/UnicodeScalar_2x.png
    :align: center
 
-.. testcode:: unicodeRepresentations
+.. test::
+    :name: unicode representations
+    :cont:
+    :prints: 68 111 103 8252 128054 
 
-   -> for scalar in dogString.unicodeScalars {
-         print("\(scalar.value) ", terminator: "")
-      }
-   -> print("")
-   << 68 111 103 8252 128054
-   // Prints "68 111 103 8252 128054 "
+    for scalar in dogString.unicodeScalars {
+        print("\(scalar.value) ", terminator: "")
+    }
+    print("")
+    // Prints "68 111 103 8252 128054 "
 
 .. Workaround for rdar://26016325
 
@@ -1014,13 +1032,15 @@ As an alternative to querying their ``value`` properties,
 each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
 such as with string interpolation:
 
-.. testcode:: unicodeRepresentations
+.. test::
+    :name: unicode representations
+    :cont:
 
-   -> for scalar in dogString.unicodeScalars {
-         print("\(scalar) ")
-      }
-   </ D
-   </ o
-   </ g
-   </ ‼
-   </ 🐶
+    for scalar in dogString.unicodeScalars {
+        print("\(scalar) ")
+    }
+    // -RESULT- D
+    // -RESULT- o
+    // -RESULT- g
+    // -RESULT- ‼
+    // -RESULT- 🐶
