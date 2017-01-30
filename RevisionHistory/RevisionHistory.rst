@@ -3,12 +3,6 @@ Document Revision History
 
 This table describes the changes to *The Swift Programming Language*.
 
-..
-    <rdar://problem/29870258> TSPL swift tour typo on T: Equatable
-    <rdar://problem/27081085> TSPL: SE-0045 Add prefix(while:) and drop(while:) to the stdlib
-    <rdar://problem/29586720> TSPL: SE-0080 Failable Numeric Conversion Initializers
-    <rdar://problem/22860883> TSPL: Whitespace issues in Unicode codepoint examples
-
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
