@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-02-06  * Added an example of failable numeric conversion initializers
+2017-02-06  * Added an example of failable numeric conversions
               to the :ref:`Initialization_FailableInitializers` section.
 
             * Updated discussion in the :ref:`Types_FunctionType` section
