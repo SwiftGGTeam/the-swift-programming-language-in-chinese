@@ -92,9 +92,10 @@ used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
-In some situations, you might not want to use closed ranges, which include both
-endpoints. Consider drawing the tick marks for every minute on a watch face. You
-need to draw ``60`` of them, starting with the ``0`` minute.
+In some situations, you might not want to use closed ranges,
+which include both endpoints.
+Consider drawing the tick marks for every minute on a watch face.
+You want to draw ``60`` tick marks, starting with the ``0`` minute.
 
 .. testcode:: forLoops
 
@@ -109,9 +110,9 @@ need to draw ``60`` of them, starting with the ``0`` minute.
    >> print(result.first!, result.last!, result.count)
    << 0 59 60
    
-Some users might want fewer ticks in their UI. They might like
-one mark every ``5`` minutes instead. Here, you would use
-the ``stride(from:to:by:)`` function to skip the unwanted marks.
+Some users might want fewer tick marks in their UI.
+They could prefer one mark every ``5`` minutes instead.
+Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
 .. testcode:: forLoops
 
@@ -125,7 +126,7 @@ the ``stride(from:to:by:)`` function to skip the unwanted marks.
    >> print(result.first!, result.last!, result.count)
    << 0 55 12
    
-If you want closed ranges with ``stride``, use ``through`` instead.
+If you want closed ranges, use ``stride(from:through:by:)`` instead.
 
 .. testcode:: forLoops
 
