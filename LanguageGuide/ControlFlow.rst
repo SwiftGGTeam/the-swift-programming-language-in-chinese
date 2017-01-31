@@ -183,6 +183,8 @@ This example plays a simple game of *Snakes and Ladders*
 The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25.
+* The player's starting square is “square zero”,
+  which is just off the bottom-left corner of the board.
 * Each turn, you roll a six-sided dice and move by that number of squares,
   following the horizontal path indicated by the dotted arrow above.
 * If your turn ends at the bottom of a ladder, you move up that ladder.
@@ -192,7 +194,8 @@ The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
-The board is initialized with 26 zero ``Int`` values, not 25
+Because the players start off the board, on "square zero",
+the board is initialized with 26 zero ``Int`` values, not 25
 (one each at indexes ``0`` through ``25``).
 
 .. testcode:: snakesAndLadders1
@@ -222,9 +225,6 @@ so that all board definitions align.
 (Neither stylistic tweak is strictly necessary,
 but they lead to neater code.)
 
-The player's starting square is “square zero”,
-which is just off the bottom-left corner of the board.
-The first dice roll always moves the player onto the board.
 
 .. testcode:: snakesAndLadders1
 
