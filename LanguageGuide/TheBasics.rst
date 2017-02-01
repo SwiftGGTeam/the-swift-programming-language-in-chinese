@@ -1378,17 +1378,15 @@ The assertion message can be omitted if desired, as in the following example:
    -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
    xx assert
 
-.. note::
+Assertions are disabled when your code is compiled with optimizations,
+such as when building with an app target's default Release configuration in Xcode.
 
-   Assertions are disabled when your code is compiled with optimizations,
-   such as when building with an app target's default Release configuration in Xcode.
-
-   Assertions and are not a substitute
-   for designing your code in such a way
-   that invalid conditions are unlikely to arise.
-   However, assertions are an effective way to ensure that
-   such conditions are highlighted and noticed during development,
-   before your app is published.
+Assertions and are not a substitute
+for designing your code in such a way
+that invalid conditions are unlikely to arise.
+However, assertions are an effective way to ensure that
+such conditions are highlighted and noticed during development,
+before your app is published.
 
 .. _TheBasics_WhenToUseAssertions:
 
@@ -1409,19 +1407,23 @@ or to check that a function has been passed a valid value.
 
 You write a precondition by calling
 the Swift standard library ``precondition(_:_:file:line:)`` function.
-.. TOOD: Confirm function name
 You pass this function an expression that evaluates to ``true`` or ``false``
-and a message that should be displayed if the result of the condition is ``false``:
+and a message that should be displayed if the result of the condition is ``false``.
+You can also call the ``preconditionFailure(_:file:line:)`` function
+to indicate that a failure has occurred ---
+for example, because the default case of a switch was taken,
+but that should never happen.
 
-See also :doc:`Subscripts` and :doc:`Functions`.
+.. https://developer.apple.com/reference/swift/1540960-precondition
+.. https://developer.apple.com/reference/swift/1539374-preconditionfailure
 
-.. note::
+.. TODO: example
 
-   Precondition failures cause your app to terminate
-   and are not a substitute for designing your code in such a way
-   that invalid conditions are unlikely to arise.
-   However,
-   using preconditions to enforce valid data and state
-   causes your app to terminate more predictably
-   if an invalid state occurs,
-   and helps makes the problem easier to debug.
+Precondition failures
+are not a substitute for designing your code in such a way
+that invalid conditions are unlikely to arise.
+However,
+using preconditions to enforce valid data and state
+causes your app to terminate more predictably
+if an invalid state occurs,
+and helps makes the problem easier to debug.
