@@ -1300,7 +1300,7 @@ to respond to different error conditions:
 In this example, the ``makeASandwich()`` function will throw an error
 if no clean dishes are available
 or if any ingredients are missing.
-Because ``makeASandwich()`` can throw an error,
+because ``makeASandwich()`` can throw an error,
 the function call is wrapped in a ``try`` expression.
 By wrapping the function call in a ``do`` statement,
 any errors that are thrown will be propagated
@@ -1327,9 +1327,10 @@ In these situations,
 you can use an assertion or a precondition in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.
 
-An assertion is a runtime check that a Boolean condition definitely evaluates to ``true``.
-Literally put, an assertion “asserts” that a condition is true.
-You use an assertion to make sure that an essential condition is satisfied
+An assertion or precondition is a runtime check
+that a Boolean condition definitely evaluates to ``true``.
+You use assertions and a preconditions
+to make sure that an essential condition is satisfied
 before executing any further code.
 If the condition evaluates to ``true``,
 code execution continues as usual;
@@ -1345,7 +1346,8 @@ Suitable scenarios for an assertion check include:
   but an invalid value means that the function cannot fulfill its task.
 
 * An optional value is currently ``nil``,
-  but a non-``nil`` value is essential for subsequent code to execute successfully.
+  but a non-``nil`` value is essential
+  for subsequent code to execute successfully.
 
 .. assertions/preconditions are for unrecoverable errors
 
@@ -1359,6 +1361,15 @@ Suitable scenarios for an assertion check include:
 .. in -Ounchecked even precoditions don't run (it removes runtime safety checks)
 
 .. during development, you can use assert(false) in stub implementations
+
+.. In Xcode, can you set a breakpoint on assertion/precondition failure?
+   If so, mention that fact and give a link to a guide that shows you how.
+   In LLDB, 'breakpoint set -E swift' catches when errors are thown,
+   but doesn't stop at assertions.
+
+.. In contrast to assert/precondition,
+   fatalError(_:file:line:) always halts execution,
+   regardles of the current optimization settings.
 
 .. _TheBasics_DebuggingWithAssertions:
 
