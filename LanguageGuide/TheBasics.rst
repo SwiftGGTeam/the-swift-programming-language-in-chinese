@@ -1339,6 +1339,17 @@ before executing any further code.
 If the condition evaluates to ``true``, code execution continues as usual;
 if the condition evaluates to ``false``, code execution ends, and your app is terminated.
 
+Suitable scenarios for an assertion check include:
+
+* An integer subscript index is passed to a custom subscript implementation,
+  but the subscript index value could be too low or too high.
+
+* A value is passed to a function,
+  but an invalid value means that the function cannot fulfill its task.
+
+* An optional value is currently ``nil``,
+  but a non-``nil`` value is essential for subsequent code to execute successfully.
+
 If your code triggers an assertion while running in a debug environment,
 such as when you build and run an app in Xcode,
 you can see exactly where the invalid state occurred
