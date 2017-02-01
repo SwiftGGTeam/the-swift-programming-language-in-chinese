@@ -1327,17 +1327,14 @@ In these situations,
 you can use an assertion or a precondition in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.
 
-.. _TheBasics_DebuggingWithAssertions:
-
-Debugging with Assertions
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
 An assertion is a runtime check that a Boolean condition definitely evaluates to ``true``.
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.
-If the condition evaluates to ``true``, code execution continues as usual;
-if the condition evaluates to ``false``, code execution ends, and your app is terminated.
+If the condition evaluates to ``true``,
+code execution continues as usual;
+if the condition evaluates to ``false``,
+code execution ends, and your app is terminated.
 
 Suitable scenarios for an assertion check include:
 
@@ -1349,6 +1346,24 @@ Suitable scenarios for an assertion check include:
 
 * An optional value is currently ``nil``,
   but a non-``nil`` value is essential for subsequent code to execute successfully.
+
+.. assertions/preconditions are for unrecoverable errors
+
+.. assertions are for checking things during debugging
+   they're protection against mistakes you make during development
+
+.. preconditions are for enforcing invarients
+   they're protection against the program entering invalid state
+   they limit the damage from a programmer error
+
+.. in -Ounchecked even precoditions don't run (it removes runtime safety checks)
+
+.. during development, you can use assert(false) in stub implementations
+
+.. _TheBasics_DebuggingWithAssertions:
+
+Debugging with Assertions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your code triggers an assertion while running in a debug environment,
 such as when you build and run an app in Xcode,
@@ -1388,16 +1403,6 @@ The assertion message can be omitted if desired, as in the following example:
    << // age : Int = -3
    -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
    xx assert
-
-Assertions are disabled when your code is compiled with optimizations,
-such as when building with an app target's default Release configuration in Xcode.
-
-Assertions and are not a substitute
-for designing your code in such a way
-that invalid conditions are unlikely to arise.
-However, assertions are an effective way to ensure that
-such conditions are highlighted and noticed during development,
-before your app is published.
 
 .. _TheBasics_Preconditions:
 
