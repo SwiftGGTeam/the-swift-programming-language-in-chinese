@@ -195,8 +195,7 @@ Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
 Because the players start off the board, on "square zero",
-the board is initialized with 26 zero ``Int`` values, not 25
-(one each at indexes ``0`` through ``25``).
+the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
 
