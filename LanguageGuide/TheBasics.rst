@@ -1409,7 +1409,9 @@ is a runtime check that a Boolean condition definitely evaluates to ``true``.
 If the condition evaluates to ``true``, code execution continues as usual;
 if the condition evaluates to ``false``, code execution ends, and your app is terminated.
 Unlike an assertion, preconditions are checked in both debug builds
-and when your code is compiled with optimizations.
+when your code is compiled with optimizations.
+However, when your code is build in "unchecked" mode (``-Ounchecked``),
+the compiler may assume that preconditions are always true.
 
 Use precondition whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
