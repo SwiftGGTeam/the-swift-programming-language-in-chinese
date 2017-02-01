@@ -1399,7 +1399,7 @@ However, assertions are an effective way to ensure that
 such conditions are highlighted and noticed during development,
 before your app is published.
 
-.. _TheBasics_WhenToUseAssertions:
+.. _TheBasics_Preconditions:
 
 Enforcing Proconditions
 ~~~~~~~~~~~~~~~~~~~~~~~
