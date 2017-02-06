@@ -6,6 +6,12 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-02-06  * Added an example of failable numeric conversions
+              to the :ref:`Initialization_FailableInitializers` section.
+
+            * Updated discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
+----------  ----------------------------------------------------------------------------------------------
 2017-01-24  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
