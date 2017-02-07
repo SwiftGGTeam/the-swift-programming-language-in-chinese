@@ -44,7 +44,7 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
+    type --> array-type | dictionary-type | function-type | type-identifier | parenthesized-type | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
 
 
 .. _Types_TypeAnnotation:
@@ -127,6 +127,22 @@ that is declared in the ``ExampleModule`` module.
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
+
+.. _Types_ParenthesizedType:
+
+Parenthesized Type
+------------------
+
+A single parenthesized type is the same as that type without parentheses.
+For example, ``(Int)`` is equivalent to ``Int``.
+
+.. syntax-grammar::
+
+   Grammar of a parenthized type
+
+   parenthesized-type --> ``(`` type ``)``
+
+
 .. _Types_TupleType:
 
 Tuple Type
@@ -158,8 +174,6 @@ that name is part of the type.
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
-A single parenthesized type is the same as that type without parentheses.
-For example, ``(Int)`` is equivalent to ``Int``.
 
 .. langref-grammar
 
