@@ -23,7 +23,7 @@ and there are no limitations on what that type can be.
 The Problem That Generics Solve
 -------------------------------
 
-Here's a standard, non-generic function called ``swapTwoInts(_:_:)``,
+Here's a standard, nongeneric function called ``swapTwoInts(_:_:)``,
 which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
@@ -76,22 +76,22 @@ the ``swapTwoInts(_:_:)``, ``swapTwoStrings(_:_:)``, and ``swapTwoDoubles(_:_:)`
 The only difference is the type of the values that they accept
 (``Int``, ``String``, and ``Double``).
 
-It would be much more useful, and considerably more flexible,
-to write a single function that could swap two values of *any* type.
+It is more useful, and considerably more flexible,
+to write a single function that swaps two values of *any* type.
 Generic code enables you to write such a function.
 (A generic version of these functions is defined below.)
 
 .. note::
 
    In all three functions,
-   it is important that the types of ``a`` and ``b`` are defined to be the same as each other.
-   If ``a`` and ``b`` were not of the same type,
-   it would not be possible to swap their values.
+   the types of ``a`` and ``b`` must be the same.
+   If ``a`` and ``b`` aren't of the same type,
+   it isn't possible to swap their values.
    Swift is a type-safe language,
-   and does not allow (for example) a variable of type ``String``
+   and doesn't allow (for example) a variable of type ``String``
    and a variable of type ``Double``
    to swap values with each other.
-   Attempting to do so would be reported as a compile-time error.
+   Attempting to do so results in a compile-time error.
 
 .. _Generics_GenericFunctions:
 
@@ -143,13 +143,13 @@ The placeholder type name doesn't say anything about what ``T`` must be,
 but it *does* say that both ``a`` and ``b`` must be of the same type ``T``,
 whatever ``T`` represents.
 The actual type to use in place of ``T``
-will be determined each time the ``swapTwoValues(_:_:)`` function is called.
+is determined each time the ``swapTwoValues(_:_:)`` function is called.
 
 The other difference is that the generic function's name (``swapTwoValues(_:_:)``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
 within the ``swapTwoValues(_:_:)`` function definition.
-Because ``T`` is a placeholder, Swift does not look for an actual type called ``T``.
+Because ``T`` is a placeholder, Swift doesn't look for an actual type called ``T``.
 
 The ``swapTwoValues(_:_:)`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
@@ -262,7 +262,7 @@ Similarly, a stack allows items to be removed only from the end of the collectio
    A stack is a useful collection model whenever you need a strict
    “last in, first out” approach to managing a collection.
 
-The illustration below shows the push / pop behavior for a stack:
+The illustration below shows the push and pop behavior for a stack:
 
 .. image:: ../images/stackPushPop_2x.png
    :align: center
@@ -273,7 +273,7 @@ The illustration below shows the push / pop behavior for a stack:
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
 
-Here's how to write a non-generic version of a stack,
+Here's how to write a nongeneric version of a stack,
 in this case for a stack of ``Int`` values:
 
 .. testcode:: genericStack
@@ -321,7 +321,7 @@ Here's a generic version of the same code:
       }
 
 Note how the generic version of ``Stack``
-is essentially the same as the non-generic version,
+is essentially the same as the nongeneric version,
 but with a type parameter called ``Element``
 instead of an actual type of ``Int``.
 This type parameter is written within a pair of angle brackets (``<Element>``)
@@ -405,9 +405,9 @@ which returns the top item on the stack without popping it from the stack:
 
 The ``topItem`` property returns an optional value of type ``Element``.
 If the stack is empty, ``topItem`` returns ``nil``;
-if the stack is not empty, ``topItem`` returns the final item in the ``items`` array.
+if the stack isn't empty, ``topItem`` returns the final item in the ``items`` array.
 
-Note that this extension does not define a type parameter list.
+Note that this extension doesn't define a type parameter list.
 Instead, the ``Stack`` type's existing type parameter name, ``Element``,
 is used within the extension to indicate the optional type of
 the ``topItem`` computed property.
@@ -465,7 +465,7 @@ are hashable by default.
 
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
-Abstract concepts like ``Hashable``
+Abstract concepts like being hashable
 characterize types in terms of their conceptual characteristics,
 rather than their explicit type.
 
@@ -499,7 +499,7 @@ that requires ``U`` to conform to the protocol ``SomeProtocol``.
 Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here's a non-generic function called ``findIndex(ofString:in:)``,
+Here's a nongeneric function called ``findIndex(ofString:in:)``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
 The ``findIndex(ofString:in:)`` function returns an optional ``Int`` value,
@@ -537,7 +537,7 @@ called ``findIndex(of:in:)``, to be written.
 Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
 not an optional value from the array.
-Be warned, though --- this function does not compile,
+Be warned, though --- this function doesn't compile,
 for reasons explained after the example:
 
 .. testcode:: typeConstraints
@@ -557,13 +557,13 @@ for reasons explained after the example:
    !! if value == valueToFind {
    !!          ^
 
-This function does not compile as written above.
+This function doesn't compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
 Not every type in Swift can be compared with the equal to operator (``==``).
 If you create your own class or structure to represent a complex data model, for example,
 then the meaning of “equal to” for that class or structure
-is not something that Swift can guess for you.
-Because of this, it is not possible to guarantee that this code will work
+isn't something that Swift can guess for you.
+Because of this, it isn't possible to guarantee that this code will work
 for *every* possible type ``T``,
 and an appropriate error is reported when you try to compile the code.
 
@@ -606,8 +606,8 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 
    -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
    << // doubleIndex : Int? = nil
-   /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
+   /> doubleIndex is an optional Int with no value, because 9.3 isn't in the array
+   </ doubleIndex is an optional Int with no value, because 9.3 isn't in the array
    -> let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
    << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
@@ -628,7 +628,7 @@ as part of the protocol's definition.
 An :newterm:`associated type` gives a placeholder name
 to a type that is used as part of the protocol.
 The actual type to use for that associated type
-is not specified until the protocol is adopted.
+isn't specified until the protocol is adopted.
 Associated types are specified with the ``associatedtype`` keyword.
 
 .. _Generics_AssociatedTypesInAction:
@@ -683,14 +683,14 @@ will be of the same type as the container's element type.
 To achieve this,
 the ``Container`` protocol declares an associated type called ``Item``,
 written as  ``associatedtype Item``.
-The protocol does not define what ``Item`` is ---
+The protocol doesn't define what ``Item`` is ---
 that information is left for any conforming type to provide.
 Nonetheless, the ``Item`` alias provides a way to refer to
 the type of the items in a ``Container``,
 and to define a type for use with the ``append(_:)`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
 
-Here's a version of the non-generic ``IntStack`` type from earlier,
+Here's a version of the nongeneric ``IntStack`` type from earlier,
 adapted to conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes
@@ -795,7 +795,7 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_WhereClauses:
 
-Generic Where Clauses
+Generic where Clauses
 ---------------------
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
@@ -888,9 +888,9 @@ and the function returns ``false``.
 
 After making this check, the function iterates over all of the items in ``someContainer``
 with a ``for``-``in`` loop and the half-open range operator (``..<``).
-For each item, the function checks whether the item from ``someContainer`` is not equal to
+For each item, the function checks whether the item from ``someContainer`` isn't equal to
 the corresponding item in ``anotherContainer``.
-If the two items are not equal, then the two containers do not match,
+If the two items aren't equal, then the two containers do not match,
 and the function returns ``false``.
 
 If the loop finishes without finding a mismatch,
@@ -930,7 +930,7 @@ all of the items in the two containers match.
 
 .. _Generics_ExtensionWithWhereClause:
 
-Extensions with a Generic Where Clause
+Extensions with a Generic where Clause
 --------------------------------------
 
 You can also use a generic ``where`` clause as part of an extension.
@@ -955,10 +955,10 @@ and then compares the given item
 against the stack's topmost item.
 If you tried to do this without a generic ``where`` clause,
 you would have a problem:
-The implementation of ``isTop(_:)`` uses the ``==`` operator
+The implementation of ``isTop(_:)`` uses the ``==`` operator,
 but the definition of ``Stack`` doesn't require
 its items to be equatable,
-so using the ``==`` operator would cause a compile-time error.
+so using the ``==`` operator results in a compile-time error.
 Using a generic ``where`` clause
 lets you add a new requirement to the extension,
 so that the extension adds the ``isTop(_:)`` method
