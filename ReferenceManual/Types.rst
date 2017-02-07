@@ -172,7 +172,7 @@ For example, ``(Int)`` is equivalent to ``Int``.
 
     Grammar of a tuple type
 
-    tuple-type --> ``(`` tuple-type-element-list-OPT ``)``
+    tuple-type --> ``(`` ``)`` | ``(`` tuple-type-element ``,`` tuple-type-element-list ``)``
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
     tuple-type-element --> element-name type-annotation | type
     element-name --> identifier
