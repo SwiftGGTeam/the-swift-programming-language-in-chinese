@@ -795,7 +795,7 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_WhereClauses:
 
-Generic where Clauses
+Generic Where Clauses
 ---------------------
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
@@ -930,7 +930,7 @@ all of the items in the two containers match.
 
 .. _Generics_ExtensionWithWhereClause:
 
-Extensions with a Generic where Clause
+Extensions With a Generic where Clause
 --------------------------------------
 
 You can also use a generic ``where`` clause as part of an extension.
