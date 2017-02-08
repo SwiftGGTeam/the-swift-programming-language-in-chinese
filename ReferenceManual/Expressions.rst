@@ -1644,49 +1644,6 @@ you can pass it to a function or method that accepts a type-level argument.
     postfix-self-expression --> postfix-expression ``.`` ``self``
 
 
-.. _Expressions_DynamicTypeExpression:
-
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`dynamic type expression` consists of an expression
-within special syntax that resembles a :ref:`Expressions_FunctionCallExpression`.
-It has the following form:
-
-.. syntax-outline::
-
-    type(of: <#expression#>)
-
-The *expression* can't be the name of a type.
-The entire ``type(of:)`` expression evaluates to the value of the
-runtime type of the *expression*, as the following example shows:
-
-.. testcode:: dynamic-type
-
-    -> class SomeBaseClass {
-           class func printClassName() {
-               print("SomeBaseClass")
-           }
-       }
-    -> class SomeSubClass: SomeBaseClass {
-           override class func printClassName() {
-               print("SomeSubClass")
-           }
-       }
-    -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamic type of SomeSubClass at runtime
-    -> type(of: someInstance).printClassName()
-    <- SomeSubClass
-
-.. syntax-grammar::
-
-    Grammar of a dynamic type expression
-
-    dynamic-type-expression --> ``type`` ``(`` ``of`` ``:`` expression ``)``
-
-
 .. _Expressions_SubscriptExpression:
 
 Subscript Expression
