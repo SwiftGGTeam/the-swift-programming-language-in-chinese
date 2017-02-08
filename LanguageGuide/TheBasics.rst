@@ -1321,6 +1321,57 @@ Throwing, catching, and propagating errors is covered in greater detail in
 Assertions and Preconditions
 ----------------------------
 
+Assertions and preconditions
+let you write down the assumptions and expectations
+that you make while coding,
+including them as part of your code.
+Assertions help you find mistakes and incorrect assumptions during development,
+and preconditions help you find invalid program behavior in production.
+They are also a useful form of documentation
+within the code.
+
+.. TODO: EXAMPLE
+
+The difference between assertions and preconditions is when they are checked.
+Assertions are checked only in debug builds,
+but preconditions are checked in both debug and production builds.
+In production builds,
+the code inside the assertion is never run.
+This means you can use as many assertions as you want
+during your development process,
+without impacting the performance of production.
+
+.. note::
+
+    If you compile in unchecked mode (``-Ounchecked``),
+    preconditions are not checked.
+    The compiler is allowed to assume that preconditions are always true,
+    and it optimizes your code accordingly.
+
+.. "\ " in the first cell below lets it be empty.
+   Otherwise RST treats the row as a continuation.
+
+============ =====  ==========  ===============================
+\            Debug  Production  Production with ``-Ounchecked``
+============ =====  ==========  ===============================
+Assertion    Yes    No          No
+------------ -----  ----------  -------------------------------
+Precondition Yes    Yes         No
+------------ -----  ----------  -------------------------------
+Fatal Error  Yes    Yes         Yes
+============ =====  ==========  ===============================
+
+
+..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..
+
+..  Notes from picking [Contributor 5711]'s brain
+
+    you can & should use assert() liberally
+    write down assumptions you’re making — documentation
+
+    precondition vs fatalError — not meant to be much semantic difference
+   
+
 In some cases, it is simply not possible for your code to continue execution
 if a particular condition is not satisfied.
 In these situations,
