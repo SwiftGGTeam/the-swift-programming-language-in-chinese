@@ -1330,16 +1330,57 @@ and preconditions help you find invalid program behavior in production.
 They are also a useful form of documentation
 within the code.
 
-.. TODO: EXAMPLE
+You write an assertion by calling
+the Swift standard library ``assert(_:_:file:line:)`` function.
+You pass this function an expression that evaluates to ``true`` or ``false``
+and a message that should be displayed if the result of the condition is ``false``.
+For example:
 
-The difference between assertions and preconditions is when they are checked.
+.. https://developer.apple.com/reference/swift/1541112-assert
+.. https://developer.apple.com/reference/swift/1539616-assertionfailure
+
+.. testcode:: assertions
+
+   -> let age = -3
+   << // age : Int = -3
+   -> assert(age >= 0, "A person's age cannot be less than zero")
+   xx assert
+   // This assertion fails because -3 is not >= 0.
+
+In this example, code execution continues if ``age >= 0`` evaluates to ``true``,
+that is, if the value of ``age`` is positive.
+If the value of ``age`` is negative, as in the code above,
+then ``age >= 0`` evaluates to ``false``,
+and the assertion fails, terminating the application.
+
+The assertion message can be omitted if desired, as in the following example:
+
+.. testcode:: assertions
+
+   -> assert(age >= 0)
+   xx assert
+
+.. assertion:: assertionsCanUseStringInterpolation
+
+   -> let age = -3
+   << // age : Int = -3
+   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
+   xx assert
+
+You write a precondition by calling
+the Swift standard library ``precondition(_:_:file:line:)`` function,
+which is almost the same as the ``assert(_:_:file:line:)`` function
+from the examples above.
+The difference between assertions and preconditions is when they are checked:
 Assertions are checked only in debug builds,
 but preconditions are checked in both debug and production builds.
 In production builds,
 the code inside the assertion is never run.
 This means you can use as many assertions as you want
 during your development process,
-without impacting the performance of production.
+without impacting the performance in production.
+
+.. FIXME: The (lack of) perfomance impact from assert is too buried.
 
 .. note::
 
@@ -1433,39 +1474,6 @@ you can see exactly where the invalid state occurred
 and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-You write an assertion by calling
-the Swift standard library ``assert(_:_:file:line:)`` function.
-You pass this function an expression that evaluates to ``true`` or ``false``
-and a message that should be displayed if the result of the condition is ``false``:
-
-.. testcode:: assertions
-
-   -> let age = -3
-   << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero")
-   xx assert
-   // this causes the assertion to trigger, because age is not >= 0
-
-In this example, code execution will continue only if ``age >= 0`` evaluates to ``true``,
-that is, if the value of ``age`` is non-negative.
-If the value of ``age`` *is* negative, as in the code above,
-then ``age >= 0`` evaluates to ``false``,
-and the assertion is triggered, terminating the application.
-
-The assertion message can be omitted if desired, as in the following example:
-
-.. testcode:: assertions
-
-   -> assert(age >= 0)
-   xx assert
-
-.. assertion:: assertionsCanUseStringInterpolation
-
-   -> let age = -3
-   << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
-   xx assert
-
 .. _TheBasics_Preconditions:
 
 Enforcing Proconditions
@@ -1485,8 +1493,6 @@ but must *definitely* be true in order for your code to continue execution.
 For example, use a precondition to check that a subscript is not out of bounds,
 or to check that a function has been passed a valid value.
 
-You write a precondition by calling
-the Swift standard library ``precondition(_:_:file:line:)`` function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
 You can also call the ``preconditionFailure(_:file:line:)`` function
