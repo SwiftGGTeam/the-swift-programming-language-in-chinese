@@ -927,6 +927,8 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
+It returns either the enumeration case matching the raw value
+or ``nil`` if there is no matching ``Rank``.
 
 .. testcode:: guided-tour
 
