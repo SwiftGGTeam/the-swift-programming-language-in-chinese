@@ -1302,7 +1302,6 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
     postfix-expression --> postfix-self-expression
-    postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-value-expression
     postfix-expression --> optional-chaining-expression
