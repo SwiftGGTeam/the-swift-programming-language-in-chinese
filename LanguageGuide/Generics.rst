@@ -268,9 +268,9 @@ The illustration below shows the push and pop behavior for a stack:
    :align: center
 
 1. There are currently three values on the stack.
-2. A fourth value is “pushed” on to the top of the stack.
+2. A fourth value is pushed on to the top of the stack.
 3. The stack now holds four values, with the most recent one at the top.
-4. The top item in the stack is removed, or “popped”.
+4. The top item in the stack is popped.
 5. After popping a value, the stack once again holds three values.
 
 Here's how to write a nongeneric version of a stack,
@@ -328,8 +328,8 @@ This type parameter is written within a pair of angle brackets (``<Element>``)
 immediately after the structure's name.
 
 ``Element`` defines a placeholder name for
-“some type ``Element``” to be provided later on.
-This future type can be referred to as “``Element``”
+a type to be provided later.
+This future type can be referred to as ``Element``
 anywhere within the structure's definition.
 In this case, ``Element`` is used as a placeholder in three places:
 
@@ -423,7 +423,7 @@ to access and query its top item without removing it:
    <- The top item on the stack is tres.
 
 Extensions of a generic type can also include requirements
-which instances of the extended type must satisfy
+that instances of the extended type must satisfy
 in order to gain the new functionality.
 This is discussed in :ref:`Generics_ExtensionWithWhereClause` below.
 
@@ -964,7 +964,7 @@ lets you add a new requirement to the extension,
 so that the extension adds the ``isTop(_:)`` method
 only when the items in the stack are equatable.
 
-Here's how it looks in action:
+Here's how the ``isTop(_:)`` method looks in action:
 
 .. testcode:: associatedTypes
 
