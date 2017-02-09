@@ -27,9 +27,51 @@ For-In Loops
 ------------
 
 You use the ``for``-``in`` loop to iterate over a sequence,
-such as ranges of numbers, items in an array, or characters in a string.
+such as items in an array, ranges of numbers, or characters in a string.
 
-This example prints the first few entries in the five-times table:
+This example uses a ``for``-``in`` loop to iterate over an array's items.
+
+.. testcode:: forLoops
+
+   -> let names = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
+   -> for name in names {
+         print("Hello, \(name)!")
+      }
+   </ Hello, Anna!
+   </ Hello, Alex!
+   </ Hello, Brian!
+   </ Hello, Jack!
+
+You can also iterate over a dictionary to access its key-value pairs.
+Each item in the dictionary is returned as a ``(key, value)`` tuple
+when the dictionary is iterated,
+and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
+for use within the body of the ``for``-``in`` loop.
+In the code example below, the dictionary's keys are decomposed into a constant called ``animalName``,
+and the dictionary's values are decomposed into a constant called ``legCount``.
+
+.. testcode:: forLoops
+
+   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
+   -> for (animalName, legCount) in numberOfLegs {
+         print("\(animalName)s have \(legCount) legs")
+      }
+   </ ants have 6 legs
+   </ spiders have 8 legs
+   </ cats have 4 legs
+
+Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
+The contents of a ``Dictionary`` are inherently unordered,
+and iterating over them does not guarantee the order in which they will be retrieved.
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.
+
+.. TODO: provide some advice on how to iterate over a Dictionary in order
+   (perhaps sorted by key), using a predicate or array sort or some kind.
+
+``for``-``in`` loops also work with numeric ranges.
+This example prints the first few entries in a five-times table:
 
 .. testcode:: forLoops
 
@@ -83,7 +125,7 @@ The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
-by ``3``, ten times,
+by ``3``, 10 times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
@@ -142,47 +184,6 @@ If you want closed ranges, use ``stride(from:through:by:)`` instead.
    << 6
    << 9
    << 12
-
-Use a ``for``-``in`` loop with an array to iterate over its items.
-
-.. testcode:: forLoops
-
-   -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
-   -> for name in names {
-         print("Hello, \(name)!")
-      }
-   </ Hello, Anna!
-   </ Hello, Alex!
-   </ Hello, Brian!
-   </ Hello, Jack!
-
-You can also iterate over a dictionary to access its key-value pairs.
-Each item in the dictionary is returned as a ``(key, value)`` tuple
-when the dictionary is iterated,
-and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
-for use within the body of the ``for``-``in`` loop.
-Here, the dictionary's keys are decomposed into a constant called ``animalName``,
-and the dictionary's values are decomposed into a constant called ``legCount``.
-
-.. testcode:: forLoops
-
-   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
-   -> for (animalName, legCount) in numberOfLegs {
-         print("\(animalName)s have \(legCount) legs")
-      }
-   </ ants have 6 legs
-   </ spiders have 8 legs
-   </ cats have 4 legs
-
-Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
-The contents of a ``Dictionary`` are inherently unordered,
-and iterating over them does not guarantee the order in which they will be retrieved.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.
-
-.. TODO: provide some advice on how to iterate over a Dictionary in order
-   (perhaps sorted by key), using a predicate or array sort or some kind.
 
 .. TODO: include the note below once we have some documentation for Sequence:
    The examples above use a ``for``-``in`` loop to iterate
