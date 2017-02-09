@@ -930,7 +930,7 @@ all of the items in the two containers match.
 
 .. _Generics_ExtensionWithWhereClause:
 
-Extensions With a Generic where Clause
+Extensions with a Generic Where Clause
 --------------------------------------
 
 You can also use a generic ``where`` clause as part of an extension.
