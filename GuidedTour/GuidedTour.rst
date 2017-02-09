@@ -927,6 +927,11 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
+This is an example of a failable initializer,
+which creates an optional value of the type it initializes.
+If ``rawValue`` is valid for ``Rank``,
+then ``convertedRank`` is assigned an enumeration instance.
+Otherwise, the initialization will fail and return ``nil``.
 
 .. testcode:: guided-tour
 
