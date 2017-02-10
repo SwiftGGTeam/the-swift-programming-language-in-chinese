@@ -1110,14 +1110,10 @@ for individual type members.
    -> fileprivate extension PublicStruct {
          func filePrivateMethod() -> Int { return 0 }
       }
-   -> private extension PublicStruct {
-         func privateMethod() -> Int { return 0 }
-      }
    -> var publicStructInSameFile = PublicStruct()
    -> let sameFileA = publicStructInSameFile.implicitlyInternalMethodFromStruct()
    -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
    -> let sameFileC = publicStructInSameFile.filePrivateMethod()
-   -> let sameFileD = publicStructInSameFile.privateMethod()
 
 .. sourcefile:: extensions_Module1_PublicAndInternal
 
@@ -1134,13 +1130,6 @@ for individual type members.
    !!                                                  ^
    !! /tmp/sourcefile_0.swift:9:9: note: 'filePrivateMethod' declared here
    !! func filePrivateMethod() -> Int { return 0 }
-   !! ^
-   -> let differentFileD = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:3:50: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentFileD = publicStructInDifferentFile.privateMethod()
-   !!                                                  ^
-   !! /tmp/sourcefile_0.swift:12:9: note: 'privateMethod' declared here
-   !! func privateMethod() -> Int { return 0 }
    !! ^
 
 .. sourcefile:: extensions_Module2
@@ -1162,11 +1151,6 @@ for individual type members.
    !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
-   -> let differentModuleD = publicStructInDifferentModule.privateMethod()
-   !! /tmp/sourcefile_0.swift:6:54: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentModuleD = publicStructInDifferentModule.privateMethod()
-   !! ^
-   !! <unknown>:0: note: 'privateMethod' declared here
 
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
