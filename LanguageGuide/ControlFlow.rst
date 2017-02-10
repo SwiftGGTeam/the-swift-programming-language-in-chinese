@@ -13,10 +13,6 @@ arrays, dictionaries, ranges, strings, and other sequences.
 
 Swift's ``switch`` statement is considerably more powerful
 than its counterpart in many C-like languages.
-Cases of a ``switch`` statement do not fall through to the next case in Swift,
-that is, the entire ``switch`` statement finishes as soon as the first
-matching case is executed.
-This avoids common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
 including interval matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
@@ -113,7 +109,7 @@ Each item in the dictionary is returned as a ``(key, value)`` tuple
 when the dictionary is iterated,
 and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
 for use within the body of the ``for``-``in`` loop.
-In the next code snippet, the dictionary's keys are decomposed into a constant called ``animalName``,
+In the next code example, the dictionary's keys are decomposed into a constant called ``animalName``,
 and the dictionary's values are decomposed into a constant called ``legCount``.
 
 .. testcode:: forLoops
@@ -185,7 +181,7 @@ This example plays a simple game of *Snakes and Ladders*
 The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25.
-* The player's starting square is “square zero”,
+* The player's starting square is “square 0”,
   which is just off the bottom-left corner of the board.
 * Each turn, you roll a six-sided dice and move by that number of squares,
   following the horizontal path indicated by the dotted arrow above.
@@ -196,7 +192,7 @@ The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
-Because the players start off the board, on "square zero",
+Because the players start off the board, on "square 0",
 the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
@@ -219,7 +215,7 @@ Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, ``board[03]`` is equal to ``+08``,
 which is equivalent to an integer value of ``8``
 (the difference between ``3`` and ``11``).
-To align our values and statements,
+To align the values and statements,
 the unary plus operator (``+i``) is explicitly used with
 the unary minus operator (``-i``)
 and numbers lower than ``10`` are padded with zeros.
@@ -304,9 +300,6 @@ to move the player up or down any ladders or snakes.
    If this check is not performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
    which triggers an error.
-   If ``square`` is equal to ``26``,
-   the code accesses the value of ``board[26]``,
-   which is illegal because it is larger than the size of the array.
 
 The current ``while`` loop execution then ends,
 and the loop's condition is checked to see if the loop should be executed again.
@@ -365,7 +358,7 @@ No ladder on the board takes the player straight to square 25,
 and so it isn't possible to win the game by moving up a ladder.
 Therefore, it's safe to check for a snake or a ladder as the first action in the loop.
 
-At the start of the game, the player is on “square zero”.
+At the start of the game, the player is on “square 0”.
 ``board[0]`` always equals ``0`` and has no effect.
 
 .. testcode:: snakesAndLadders2
@@ -768,8 +761,8 @@ and so all other matching cases would be ignored.
 
 .. _ControlFlow_ValueBindings:
 
-Value Bindings
-++++++++++++++
+Value Binding
++++++++++++++
 
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
