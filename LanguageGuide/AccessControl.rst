@@ -363,11 +363,8 @@ In fact, ``someFunction()`` will not compile as written below:
          // function implementation goes here
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
-   !! <REPL Input>:1:6: error: function must be declared private because its result uses a private type
+   !! <REPL Input>:1:6: error: function must be declared private or fileprivate because its result uses a private type
    !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   !! ^
-   !! <REPL Input>:1:15: note: type declared here
-   !! private class SomePrivateClass {        // explicitly private class
    !! ^
 
 The function's return type is
