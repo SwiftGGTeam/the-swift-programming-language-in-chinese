@@ -29,7 +29,7 @@ For-In Loops
 You use the ``for``-``in`` loop to iterate over a sequence,
 such as items in an array, ranges of numbers, or characters in a string.
 
-This example uses a ``for``-``in`` loop to iterate over an array's items.
+This example uses a ``for``-``in`` loop to iterate over the items in an array:
 
 .. testcode:: forLoops
 
@@ -125,7 +125,7 @@ The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
-by ``3``, 10 times,
+by ``3``, ``10`` times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
@@ -171,7 +171,7 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
    >> print(result.first!, result.last!, result.count)
    << 0 55 12
    
-If you want closed ranges, use ``stride(from:through:by:)`` instead.
+Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 
 .. testcode:: forLoops
 
