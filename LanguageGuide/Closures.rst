@@ -666,7 +666,7 @@ is a nonescaping closure, which means it can refer to ``self`` implicitly.
     <- 200
     ---
     -> completionHandlers.first?()
-    << // r0 : ()? = Optional(())
+    << // r0 : Void? = Optional(())
     -> print(instance.x)
     <- 100
 
