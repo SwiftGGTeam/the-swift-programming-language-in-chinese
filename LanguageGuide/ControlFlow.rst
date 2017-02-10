@@ -138,6 +138,9 @@ In some situations, you might not want to use closed ranges,
 which include both endpoints.
 Consider drawing the tick marks for every minute on a watch face.
 You want to draw ``60`` tick marks, starting with the ``0`` minute.
+Use the half-open range operator (``..<``) to include the
+lower bound but not the upper bound.
+For more on ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
 
