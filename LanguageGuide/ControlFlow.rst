@@ -81,7 +81,7 @@ The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
-by ``3``, ``10`` times,
+by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
@@ -730,15 +730,15 @@ and categorizes it on the graph that follows the example.
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
-            print("(0, 0) is at the origin")
+            print("\(somePoint) is at the origin")
          case (_, 0):
-            print("(\(somePoint.0), 0) is on the x-axis")
+            print("\(somePoint) is on the x-axis")
          case (0, _):
-            print("(0, \(somePoint.1)) is on the y-axis")
+            print("\(somePoint) is on the y-axis")
          case (-2...2, -2...2):
-            print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            print("\(somePoint) is inside the box")
          default:
-            print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+            print("\(somePoint) is outside of the box")
       }
    <- (1, 1) is inside the box
 
@@ -761,10 +761,10 @@ and so all other matching cases would be ignored.
 
 .. _ControlFlow_ValueBindings:
 
-Value Binding
+Naming Values
 +++++++++++++
 
-A ``switch`` case can bind the value or values it matches to temporary constants or variables,
+A ``switch`` case can name the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
 because the values are bound to temporary constants or variables within the case's body.
@@ -1080,7 +1080,7 @@ and code execution continues from the ``if let`` statement.
 Fallthrough
 ~~~~~~~~~~~
 
-``switch`` statements in Swift don't fall through the bottom of each case and into the next one.
+In Swift, ``switch`` statements don't fall through the bottom of each case and into the next one.
 That is, the entire ``switch`` statement completes its execution as soon as the first matching case is completed.
 By contrast, C requires you to insert an explicit ``break`` statement
 at the end of every ``switch`` case to prevent fallthrough.
