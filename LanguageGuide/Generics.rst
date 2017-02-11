@@ -145,7 +145,8 @@ whatever ``T`` represents.
 The actual type to use in place of ``T``
 is determined each time the ``swapTwoValues(_:_:)`` function is called.
 
-The other difference is that the generic function's name (``swapTwoValues(_:_:)``)
+The other difference between a generic function and a nongeneric function
+is that the generic function's name (``swapTwoValues(_:_:)``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
 within the ``swapTwoValues(_:_:)`` function definition.
