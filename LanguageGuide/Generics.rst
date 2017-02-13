@@ -425,8 +425,8 @@ to access and query its top item without removing it.
 
 Extensions of a generic type can also include requirements
 that instances of the extended type must satisfy
-in order to gain the new functionality.
-This is discussed in :ref:`Generics_ExtensionWithWhereClause` below.
+in order to gain the new functionality,
+as discussed in :ref:`Generics_ExtensionWithWhereClause` below.
 
 .. _Generics_TypeConstraints:
 
