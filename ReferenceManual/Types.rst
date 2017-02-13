@@ -26,6 +26,9 @@ For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
+A single parenthesized type is the same as that type without parentheses.
+For example, ``(Int)`` is equivalent to ``Int``.
+
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
@@ -44,7 +47,8 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | parenthesized-type | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
+    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
+    type --> ``(`` type ``)``
 
 
 .. _Types_TypeAnnotation:
@@ -126,21 +130,6 @@ that is declared in the ``ExampleModule`` module.
 
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
-
-
-.. _Types_ParenthesizedType:
-
-Parenthesized Type
-------------------
-
-A single parenthesized type is the same as that type without parentheses.
-For example, ``(Int)`` is equivalent to ``Int``.
-
-.. syntax-grammar::
-
-   Grammar of a parenthized type
-
-   parenthesized-type --> ``(`` type ``)``
 
 
 .. _Types_TupleType:
