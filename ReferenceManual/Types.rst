@@ -26,7 +26,8 @@ For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
-A single parenthesized type is the same as that type without parentheses.
+You can put parentheses around a named type or a compound type.
+However, adding parentheses around a type doesn't have any effect.
 For example, ``(Int)`` is equivalent to ``Int``.
 
 This chapter discusses the types defined in the Swift language itself
