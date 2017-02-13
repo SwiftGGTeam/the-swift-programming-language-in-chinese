@@ -670,7 +670,7 @@ For example, ``SomeClass.self`` returns ``SomeClass`` itself,
 not an instance of ``SomeClass``.
 And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
 not an instance of a type that conforms to ``SomeProtocol`` at runtime.
-You can use a ``type(of:)`` expression with an instance of a type
+You can call the ``type(of:)`` function with an instance of a type
 to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
@@ -692,6 +692,10 @@ as the following example shows:
     -> // and the runtime type of someInstance is SomeSubClass
     -> type(of: someInstance).printClassName()
     <- SomeSubClass
+
+For more information,
+see `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+in the Swift standard library.
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.

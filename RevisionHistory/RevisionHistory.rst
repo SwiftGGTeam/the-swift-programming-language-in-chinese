@@ -112,7 +112,7 @@ Date        Notes
               of the :doc:`../ReferenceManual/Types` chapter
               to use the new ``Protocol1 & Protocol2`` syntax.
 
-            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+            * Updated the discussion in the Dynamic Type Expression section
               to use the new ``type(of:)`` syntax for dynamic type expressions.
 
             * Updated the discussion of line control statements
