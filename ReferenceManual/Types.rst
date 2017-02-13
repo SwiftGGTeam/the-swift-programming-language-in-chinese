@@ -26,6 +26,10 @@ For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
+You can put parentheses around a named type or a compound type.
+However, adding parentheses around a type doesn't have any effect.
+For example, ``(Int)`` is equivalent to ``Int``.
+
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
@@ -44,7 +48,18 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
+    type --> array-type
+    type --> dictionary-type
+    type --> function-type
+    type --> type-identifier
+    type --> tuple-type
+    type --> optional-type
+    type --> implicitly-unwrapped-optional-type
+    type --> protocol-composition-type
+    type --> metatype-type
+    type --> ``Any``
+    type --> ``Self``
+    type --> ``(`` type ``)``
 
 
 .. _Types_TypeAnnotation:
@@ -127,6 +142,7 @@ that is declared in the ``ExampleModule`` module.
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
+
 .. _Types_TupleType:
 
 Tuple Type
@@ -158,8 +174,6 @@ that name is part of the type.
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
-A single parenthesized type is the same as that type without parentheses.
-For example, ``(Int)`` is equivalent to ``Int``.
 
 .. langref-grammar
 
@@ -172,7 +186,7 @@ For example, ``(Int)`` is equivalent to ``Int``.
 
     Grammar of a tuple type
 
-    tuple-type --> ``(`` tuple-type-element-list-OPT ``)``
+    tuple-type --> ``(`` ``)`` | ``(`` tuple-type-element ``,`` tuple-type-element-list ``)``
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
     tuple-type-element --> element-name type-annotation | type
     element-name --> identifier
