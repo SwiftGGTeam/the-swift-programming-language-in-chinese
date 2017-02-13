@@ -47,7 +47,17 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type | ``Any`` | ``Self``
+    type --> array-type
+    type --> dictionary-type
+    type --> function-type
+    type --> type-identifier
+    type --> tuple-type
+    type --> optional-type
+    type --> implicitly-unwrapped-optional-type
+    type --> protocol-composition-type
+    type --> metatype-type
+    type --> ``Any``
+    type --> ``Self``
     type --> ``(`` type ``)``
 
 
