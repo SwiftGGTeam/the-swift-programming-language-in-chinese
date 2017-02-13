@@ -414,7 +414,7 @@ is used within the extension to indicate the optional type of
 the ``topItem`` computed property.
 
 The ``topItem`` computed property can now be used with any ``Stack`` instance
-to access and query its top item without removing it:
+to access and query its top item without removing it.
 
 .. testcode:: genericStack
 
