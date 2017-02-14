@@ -912,10 +912,10 @@ when you decompose the tuple:
 .. test::
     :name: tuples
     :cont:
-    :prints: The status code is 404
 
     let (justTheStatusCode, _) = http404Error
     print("The status code is \(justTheStatusCode)")
+    // -PRINTS-COMMENT- The status code is 404
 
 Alternatively,
 access the individual element values in a tuple using index numbers starting at zero:

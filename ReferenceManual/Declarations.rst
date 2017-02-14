@@ -1303,9 +1303,9 @@ that is automatically incremented from the raw value of the previous case.
 .. test::
    :name: raw value enum
 
-    enum ExampleEnum: Int {
-       case a, b, c = 5, d
-    }
+   enum ExampleEnum: Int {
+      case a, b, c = 5, d
+   }
 
 In the above example, the raw value of ``ExampleEnum.a`` is ``0`` and the value of
 ``ExampleEnum.b`` is ``1``. And because the value of ``ExampleEnum.c`` is
@@ -1319,9 +1319,9 @@ each unassigned case is implicitly assigned a string with the same text as the n
 .. test::
    :name: raw value enum implicit string values
 
-    enum GamePlayMode: String {
-       case cooperative, individual, competitive
-    }
+   enum GamePlayMode: String {
+      case cooperative, individual, competitive
+   }
 
 In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
 the raw value of ``GamePlayMode.individual`` is ``"individual"``,.

@@ -138,7 +138,7 @@ corresponding identifier pattern.
       case let (x, y):
          print("The point is at (\(x), \(y)).")
    }
-   // -PRINTS- The point is at (3, 2).
+   // -PRINTS-COMMENT- The point is at (3, 2).
 
 In the example above, ``let`` distributes to each identifier pattern in the
 tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
@@ -189,11 +189,11 @@ an expression pattern:
                      for (x, 0) in points {
                      ^
 
-    let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    // This code isn't valid.
-    for (x, 0) in points {
-       /* ... */
-    }
+   let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+   // This code isn't valid.
+   for (x, 0) in points {
+      /* ... */
+   }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -394,7 +394,7 @@ as the following example shows.
       default:
          print("The point is at (\(point.0), \(point.1)).")
    }
-   // -PRINTS- (1, 2) is near the origin.
+   // -PRINTS-COMMENT- (1, 2) is near the origin.
 
 You can overload the ``~=`` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
@@ -414,7 +414,7 @@ with a string representations of points.
       default:
          print("The point is at (\(point.0), \(point.1)).")
    }
-   // -PRINTS- The point is at (1, 2).
+   // -PRINTS-COMMENT- The point is at (1, 2).
 
 
 .. syntax-grammar::

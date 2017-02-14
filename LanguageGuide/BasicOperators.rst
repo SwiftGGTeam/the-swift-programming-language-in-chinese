@@ -481,7 +481,7 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
 The preceding example is shorthand for the code below:
 
 .. test::
-   :name: ternary conditional operator part 2
+    :name: ternary conditional operator part 2
 
     let contentHeight = 40
     let hasHeader = true

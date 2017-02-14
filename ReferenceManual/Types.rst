@@ -268,7 +268,6 @@ For example:
    f = functionWithDifferentLabels  // OK
 
    func functionWithDifferentArgumentTypes(left: Int, right: String) {}
-
    f = functionWithDifferentArgumentTypes     // Error
 
    func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}

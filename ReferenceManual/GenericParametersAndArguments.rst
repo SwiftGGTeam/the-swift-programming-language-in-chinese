@@ -69,9 +69,9 @@ to the function or initializer.
    :name: generic params
    :cont:
 
-   let r1 =  // -HIDE
+   let r1 =  // -HIDE-
    simpleMax(17, 42) // T is inferred to be Int
-   let r2 =  // -HIDE
+   let r2 =  // -HIDE-
    simpleMax(3.14159, 2.71828) // T is inferred to be Double
    // -HIDE-
    assert(r1 == 42)
