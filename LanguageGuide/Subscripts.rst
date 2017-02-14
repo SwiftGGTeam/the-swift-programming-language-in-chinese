@@ -54,7 +54,8 @@ A default parameter called ``newValue`` is provided to your setter
 if you do not provide one yourself.
 
 As with read-only computed properties,
-you can drop the ``get`` keyword for read-only subscripts:
+you can simplify the declaration of a read-only subscript
+by removing the ``get`` keyword and its braces:
 
 .. testcode:: subscriptSyntax
 

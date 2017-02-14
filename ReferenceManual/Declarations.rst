@@ -1457,7 +1457,7 @@ see :doc:`../LanguageGuide/ClassesAndStructures`.
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
 
-There are three ways create an instance of a previously declared structure:
+There are three ways to create an instance of a previously declared structure:
 
 * Call one of the initializers declared within the structure,
   as described in :ref:`Initialization_Initializers`.

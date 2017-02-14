@@ -363,11 +363,8 @@ In fact, ``someFunction()`` will not compile as written below:
          // function implementation goes here
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
-   !! <REPL Input>:1:6: error: function must be declared private because its result uses a private type
+   !! <REPL Input>:1:6: error: function must be declared private or fileprivate because its result uses a private type
    !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   !! ^
-   !! <REPL Input>:1:15: note: type declared here
-   !! private class SomePrivateClass {        // explicitly private class
    !! ^
 
 The function's return type is
@@ -639,13 +636,14 @@ the constant, variable, property, or subscript must also be marked as ``private`
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
+   -> class Scope {  // Need to be in a scope to meaningfully use private (vs fileprivate)
    -> private class SomePrivateClass {}
    -> let privateConstant = SomePrivateClass()
-   !! <REPL Input>:1:5: error: constant must be declared private because its type 'SomePrivateClass' uses a private type
+   !! <REPL Input>:3:7: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! let privateConstant = SomePrivateClass()
    !! ^
    -> var privateVariable = SomePrivateClass()
-   !! <REPL Input>:1:5: error: variable must be declared private because its type 'SomePrivateClass' uses a private type
+   !! <REPL Input>:4:7: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! var privateVariable = SomePrivateClass()
    !! ^
    -> class C {
@@ -654,13 +652,14 @@ the constant, variable, property, or subscript must also be marked as ``private`
             return SomePrivateClass()
          }
       }
-   !! <REPL Input>:2:10: error: property must be declared private because its type 'SomePrivateClass' uses a private type
+   -> }  // End surrounding scope
+   !! <REPL Input>:6:10: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! var privateProperty = SomePrivateClass()
    !! ^
-   !! <REPL Input>:3:6: error: subscript must be declared private because its element type uses a private type
+   !! <REPL Input>:7:6: error: subscript must be declared private because its element type uses a private type
    !! subscript(index: Int) -> SomePrivateClass {
    !! ^                        ~~~~~~~~~~~~~~~~
-   !! <REPL Input>:1:15: note: type declared here
+   !! <REPL Input>:2:17: note: type declared here
    !! private class SomePrivateClass {}
    !! ^
 
@@ -1108,14 +1107,10 @@ for individual type members.
    -> fileprivate extension PublicStruct {
          func filePrivateMethod() -> Int { return 0 }
       }
-   -> private extension PublicStruct {
-         func privateMethod() -> Int { return 0 }
-      }
    -> var publicStructInSameFile = PublicStruct()
    -> let sameFileA = publicStructInSameFile.implicitlyInternalMethodFromStruct()
    -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
    -> let sameFileC = publicStructInSameFile.filePrivateMethod()
-   -> let sameFileD = publicStructInSameFile.privateMethod()
 
 .. sourcefile:: extensions_Module1_PublicAndInternal
 
@@ -1132,13 +1127,6 @@ for individual type members.
    !!                                                  ^
    !! /tmp/sourcefile_0.swift:9:9: note: 'filePrivateMethod' declared here
    !! func filePrivateMethod() -> Int { return 0 }
-   !! ^
-   -> let differentFileD = publicStructInDifferentFile.privateMethod()
-   !! /tmp/sourcefile_1.swift:3:50: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentFileD = publicStructInDifferentFile.privateMethod()
-   !!                                                  ^
-   !! /tmp/sourcefile_0.swift:12:9: note: 'privateMethod' declared here
-   !! func privateMethod() -> Int { return 0 }
    !! ^
 
 .. sourcefile:: extensions_Module2
@@ -1160,11 +1148,6 @@ for individual type members.
    !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
-   -> let differentModuleD = publicStructInDifferentModule.privateMethod()
-   !! /tmp/sourcefile_0.swift:6:54: error: 'privateMethod' is inaccessible due to 'private' protection level
-   !! let differentModuleD = publicStructInDifferentModule.privateMethod()
-   !! ^
-   !! <unknown>:0: note: 'privateMethod' declared here
 
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

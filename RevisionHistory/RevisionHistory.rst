@@ -6,6 +6,12 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-02-06  * Added an example of failable numeric conversions
+              to the :ref:`Initialization_FailableInitializers` section.
+
+            * Updated discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
+----------  ----------------------------------------------------------------------------------------------
 2017-01-24  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
@@ -106,7 +112,7 @@ Date        Notes
               of the :doc:`../ReferenceManual/Types` chapter
               to use the new ``Protocol1 & Protocol2`` syntax.
 
-            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+            * Updated the discussion in the Dynamic Type Expression section
               to use the new ``type(of:)`` syntax for dynamic type expressions.
 
             * Updated the discussion of line control statements
