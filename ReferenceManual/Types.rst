@@ -694,7 +694,7 @@ or the entire class marked with the ``final`` keyword.
    }
    let metatype: AnotherSubClass.Type = AnotherSubClass.self
    let anotherInstance = metatype.init(string: "some string")
-   assert(anotherInstance is AnotherSubClass) // -HIDE-
+   assert(type(of: anotherInstance) == AnotherSubClass.self) // -HIDE-
 
 .. langref-grammar
 
@@ -787,8 +787,8 @@ causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` ins
    let e = 2.71828 // The type of e is inferred to be Double.
    let eFloat: Float = 2.71828 // The type of eFloat is Float.
    // -HIDE-
-   assert(e is Double)
-   assert(eFloat is Float)
+   assert(type(of: e) == Double.self)
+   assert(type(of: eFloat) == Float.self)
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

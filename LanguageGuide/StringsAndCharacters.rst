@@ -52,7 +52,7 @@ Use a string literal as an initial value for a constant or variable:
 
     let someString = "Some string literal value"
     // -HIDE-
-    assert(someString is String)
+    assert(type(of: someString) == String.self)
 
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
@@ -549,7 +549,7 @@ the ``Character`` at a particular ``String`` index.
     assert(greeting[greeting.index(after: greeting.startIndex)] == "u") // -HIDE-
     // u
     let index = greeting.index(greeting.startIndex, offsetBy: 7)
-    assert(index is String.CharacterView.Index) // -HIDE-
+    assert(type(of: index) == String.CharacterView.Index.self) // -HIDE-
     greeting[index]
     assert(greeting[index] == "a") // -HIDE-
     // a 

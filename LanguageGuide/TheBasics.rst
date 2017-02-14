@@ -489,7 +489,7 @@ because you have initialized it with a number that looks like an integer:
 
     let meaningOfLife = 42
     // meaningOfLife is inferred to be of type Int
-    assert(meaningOfLife is Int) // -HIDE-
+    assert(type(of: meaningOfLife) == Int.self) // -HIDE-
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift infers that you want to create a ``Double``:
@@ -500,7 +500,7 @@ Swift infers that you want to create a ``Double``:
 
     let pi = 3.14159
     // pi is inferred to be of type Double
-    assert(pi is Double) // -HIDE-
+    assert(type(of: pi) == Doubleself) // -HIDE-
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -514,7 +514,7 @@ a type of ``Double`` will be inferred from the context:
 
     let anotherPi = 3 + 0.14159
     // anotherPi is also inferred to be of type Double
-    assert(anotherPi is Double) // -HIDE-
+    assert(type(of: anotherPi) == Double.self) // -HIDE-
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -683,7 +683,7 @@ and uses this value in place of the original:
     let one: UInt8 = 1
     let twoThousandAndOne = twoThousand + UInt16(one)
     // -HIDE-
-    assert(twoThousandAndOne is UInt16)
+    assert(type(of: twoThousandAndOne) == UInt16.self)
 
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
@@ -717,7 +717,7 @@ Conversions between integer and floating-point numeric types must be made explic
     // -COMMENT- pi equals \(pi), and is inferred to be of type Double
     // -RESULT- pi equals 3.14159, and is inferred to be of type Double
     // -HIDE-
-    assert(pi is Double)
+    assert(type(of: pi) == Double.self)
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -801,8 +801,8 @@ Swift provides two Boolean constant values,
     let orangesAreOrange = true
     let turnipsAreDelicious = false
     // -HIDE-
-    assert(orangesAreOrange is Bool)
-    assert(turnipsAreDelicious is Bool)
+    assert(type(of: orangesAreOrange) == Bool.self)
+    assert(type(of: turnipsAreDelicious) == Bool.self)
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -1008,7 +1008,7 @@ The example below uses the initializer to try to convert a ``String`` into an ``
     let convertedNumber = Int(possibleNumber)
     // convertedNumber is inferred to be of type "Int?", or "optional Int"
     // -HIDE-
-    assert(convertedNumber is Int?)
+    assert(type(of: convertedNumber) == Optional<Int>.self)
 
 Because the initializer might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
@@ -1247,9 +1247,9 @@ when accessing their wrapped value as an explicit ``String``:
     :name: implicitly unwrapped optionals
 
     let possibleString: String? = "An optional string."
-    assert(possibleString is String?) // -HIDE-
+    assert(type(of: possibleString) == Optional<String>.self) // -HIDE-
     let forcedString: String = possibleString! // requires an exclamation mark
-    assert(forcedString is String) // -HIDE-
+    assert(type(of: forcedString) == String.self) // -HIDE-
 
     let assumedString: String! = "An implicitly unwrapped optional string."
     let implicitString: String = assumedString // no need for an exclamation mark

@@ -68,15 +68,13 @@ separated by a colon.
 .. test::
    :name: simple values
    :cont:
-   :compiler-warnings: 'is' test is always true
-                       'is' test is always true
 
    let implicitInteger = 70
    let implicitDouble = 70.0
    let explicitDouble: Double = 70
    // -HIDE-
-   assert(implicitInteger is Int)
-   assert(implicitDouble is Double)
+   assert(type(of: implicitInteger) == Int.self)
+   assert(type(of: implicitDouble) == Double.self)
 
 .. admonition:: Experiment
 
