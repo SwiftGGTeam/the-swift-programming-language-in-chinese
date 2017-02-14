@@ -337,11 +337,11 @@ String literals can include the following special characters:
     :name: string literal UnicodeScalar
     :hidden:
     :compiler-errors: error: \u{...} escape sequence expects between 1 and 8 hex digits
-                      "\u{000000000}"
-                      ^
+                      _ = "\u{000000000}"
+                                        ^
                       error: invalid unicode scalar
-                      "\u{110000}"
-                      ^
+                      _ = "\u{110000}"
+                           ^
 
     _ = "\u{0}"
     _ = "\u{00000000}"

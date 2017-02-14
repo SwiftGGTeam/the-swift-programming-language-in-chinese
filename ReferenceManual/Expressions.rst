@@ -329,11 +329,11 @@ otherwise, it returns ``false``.
    :name: trivially true 'is' and 'as'
    :hidden:
    :compiler-errors: warning: 'is' test is always true
-                     "hello" is String
-                     ^
+                     assert("hello" is String)
+                                    ^
                      warning: cast from 'String' to unrelated type 'Int' always fails
-                     "hello" is Int
-                     ~~~~~~~ ^  ~~~
+                     assert("hello" is Int)
+                            ~~~~~~~ ^  ~~~
 
    assert("hello" is String)
    assert("hello" is Int)
@@ -342,8 +342,8 @@ otherwise, it returns ``false``.
    :name: 'is' operator tautology
    :hidden:
    :compiler-errors: warning: 'is' test is always true
-                     s is Base
-                       ^
+                     assert(s is Base)
+                              ^
 
    class Base {}
    class Subclass: Base {}
