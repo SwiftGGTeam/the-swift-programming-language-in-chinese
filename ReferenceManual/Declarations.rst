@@ -1252,12 +1252,12 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
                      enum E { indirect case c }
                               ^
 
-   -> enum E { indirect case c }
+   enum E { indirect case c }
 
-   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
-   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
+   enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
+   enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
 
-   -> indirect enum E3 { case x }
+   indirect enum E3 { case x }
 
 
 .. _Declarations_EnumerationsWithRawCaseValues:
