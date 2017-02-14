@@ -983,7 +983,6 @@ the error thrown by ``alwaysThrows()``.
             throw AnotherError.error
          }
       }
-
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
