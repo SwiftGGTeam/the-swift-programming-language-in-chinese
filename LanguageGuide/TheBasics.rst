@@ -500,7 +500,7 @@ Swift infers that you want to create a ``Double``:
 
     let pi = 3.14159
     // pi is inferred to be of type Double
-    assert(type(of: pi) == Doubleself) // -HIDE-
+    assert(type(of: pi) == Double.self) // -HIDE-
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.

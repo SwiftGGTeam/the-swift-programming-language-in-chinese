@@ -1245,6 +1245,7 @@ by writing just the property name, without the class name.
 
 .. test::
    :name: keypath expression
+   :cont:
 
    extension SomeClass {
       func getSomeKeyPath() -> String {
