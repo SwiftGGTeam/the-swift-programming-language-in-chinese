@@ -301,7 +301,9 @@ with ``"Bananas"`` and ``"Apples"``:
 
 .. note::
 
-   You can't use subscript syntax to append a new item to the end of an array.
+   You can't use subscript syntax
+   with an index past the end of the array
+   to append a new item to the end of an array.
 
 To insert an item into the array at a specified index,
 call the array's ``insert(_:at:)`` method:
