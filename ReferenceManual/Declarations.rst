@@ -983,7 +983,6 @@ the error thrown by ``alwaysThrows()``.
             throw AnotherError.error
          }
       }
-
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
@@ -1248,7 +1247,7 @@ that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
 .. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
-.. This list is shorter because these five protocols are explicitly supported in the compiler.
+   This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
@@ -1411,7 +1410,7 @@ see :doc:`../LanguageGuide/ClassesAndStructures`.
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
 
-There are three ways create an instance of a previously declared structure:
+There are three ways to create an instance of a previously declared structure:
 
 * Call one of the initializers declared within the structure,
   as described in :ref:`Initialization_Initializers`.
@@ -2156,6 +2155,7 @@ and therefore you can specify only a list of protocols after the *type name* and
 Extension declarations that extend a generic type can include *requirements*.
 If an instance of the extended type satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
+Note that you can't include *requirements* if the *type name* is a protocol type.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.

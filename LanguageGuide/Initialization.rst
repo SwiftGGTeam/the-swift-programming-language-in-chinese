@@ -1412,6 +1412,33 @@ to indicate a point at which initialization failure can be triggered.
    Although you write ``return nil`` to trigger an initialization failure,
    you do not use the ``return`` keyword to indicate initialization success.
 
+For instance, failable initializers are implemented for numeric type conversions.
+To ensure conversion between numeric types maintains the value exactly,
+use the ``init(exactly:)`` initializer.
+If the type conversion cannot maintain the value,
+the initializer fails.
+
+.. testcode:: failableInitializers
+
+   -> let wholeNumber: Double = 12345.0
+   << // wholeNumber : Double = 12345.0
+   -> let pi = 3.14159
+   <~ // pi : Double = 3.1415
+   ---
+   -> if let valueMaintained = Int(exactly: wholeNumber) {
+          print("\(wholeNumber) conversion to Int maintains value")
+      }
+   <- 12345.0 conversion to Int maintains value
+   ---
+   -> let valueChanged = Int(exactly: pi)
+   << // valueChanged : Int? = nil
+   // valueChanged is of type Int?, not Int
+   ---
+   -> if valueChanged == nil {
+          print("\(pi) conversion to Int does not maintain value")
+      }
+   <- 3.14159 conversion to Int does not maintain value
+
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
 The ``Animal`` structure also defines a failable initializer
@@ -2142,7 +2169,7 @@ in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
 The returned array value is stored in ``boardColors``
-and can be queried with the ``squareIsBlackAtRow`` utility function:
+and can be queried with the ``squareIsBlackAt(row:column:)`` utility function:
 
 .. testcode:: chessboard
 

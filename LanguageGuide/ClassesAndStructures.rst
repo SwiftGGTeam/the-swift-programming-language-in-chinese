@@ -152,6 +152,7 @@ Class and structure initialization is described in more detail
 in :doc:`Initialization`.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
+
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 

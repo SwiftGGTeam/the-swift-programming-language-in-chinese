@@ -1213,22 +1213,31 @@ For example:
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
-         func keyPathTest() -> String {
-            return #keyPath(someProperty)
-         }
       }
    ---
    -> let c = SomeClass(someProperty: 12)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
    << // keyPath : String = "someProperty"
-   -> print(keyPath == c.keyPathTest())
-   <- true
    ---
    -> if let value = c.value(forKey: keyPath) {
    ->     print(value)
    -> }
    <- 12
+
+When you use a key-path expression within a class,
+you can refer to a property of that class
+by writing just the property name, without the class name.
+
+.. testcode:: keypath-expression
+
+   -> extension SomeClass {
+         func getSomeKeyPath() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   -> print(keyPath == c.getSomeKeyPath())
+   <- true
 
 Because the key path is created at compile time, not at runtime,
 the compiler can check that the property exists
@@ -1293,7 +1302,6 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
     postfix-expression --> postfix-self-expression
-    postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-value-expression
     postfix-expression --> optional-chaining-expression
@@ -1633,49 +1641,6 @@ you can pass it to a function or method that accepts a type-level argument.
     Grammar of a self expression
 
     postfix-self-expression --> postfix-expression ``.`` ``self``
-
-
-.. _Expressions_DynamicTypeExpression:
-
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`dynamic type expression` consists of an expression
-within special syntax that resembles a :ref:`Expressions_FunctionCallExpression`.
-It has the following form:
-
-.. syntax-outline::
-
-    type(of: <#expression#>)
-
-The *expression* can't be the name of a type.
-The entire ``type(of:)`` expression evaluates to the value of the
-runtime type of the *expression*, as the following example shows:
-
-.. testcode:: dynamic-type
-
-    -> class SomeBaseClass {
-           class func printClassName() {
-               print("SomeBaseClass")
-           }
-       }
-    -> class SomeSubClass: SomeBaseClass {
-           override class func printClassName() {
-               print("SomeSubClass")
-           }
-       }
-    -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamic type of SomeSubClass at runtime
-    -> type(of: someInstance).printClassName()
-    <- SomeSubClass
-
-.. syntax-grammar::
-
-    Grammar of a dynamic type expression
-
-    dynamic-type-expression --> ``type`` ``(`` ``of`` ``:`` expression ``)``
 
 
 .. _Expressions_SubscriptExpression:

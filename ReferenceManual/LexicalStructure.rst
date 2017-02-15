@@ -201,9 +201,9 @@ so they must be escaped with backticks in that context.
 
    -> func f(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
-   !!        ~~~~~    ^
+   !!        ^~~~~
    !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
@@ -429,7 +429,7 @@ and therefore it can be used in the type annotation for the integer literal ``42
 in the declaration ``let x: Int8 = 42``.
 
 .. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
-.. ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
+   ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
 
 .. syntax-grammar::
 
