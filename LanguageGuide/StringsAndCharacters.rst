@@ -561,7 +561,7 @@ will trigger a runtime error.
 
 .. test::
     :name: string invalid index
-    :xfail: stdlib assertion failure expected here
+    :asserts: fatal error: Can't form a Character from an empty String
 
     let greeting = "Guten Tag!" // -HIDE-
     greeting[greeting.endIndex] // Error
