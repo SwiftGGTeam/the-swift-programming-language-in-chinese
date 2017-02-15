@@ -574,6 +574,10 @@ will trigger a runtime error.
     let emptyString = ""
     assert(emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex)
 
+.. For rdar://29993293 - changing the first listing above
+   from untested code to tested code
+   also generates a non-meaningful diff in the HTML output.
+
 Use the ``indices`` property of the ``characters`` property to access all of the
 indices of individual characters in a string.
 
