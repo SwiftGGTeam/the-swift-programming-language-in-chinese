@@ -634,6 +634,7 @@ using the following escape sequences:
 .. TR: Are \v and \f allowed for vertical tab and formfeed?
    We allow them as whitespace as of now --
    should that mean we want escape sequences for them too?
+   See also feedback 300722.
 
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
