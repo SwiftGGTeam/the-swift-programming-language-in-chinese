@@ -737,8 +737,8 @@ for object in objects {
 
 ```swift
 @objc protocol CounterDataSource {
-    optional func incrementForCount(count: Int) -> Int
-    optional var fixedIncrement: Int { get }
+    @objc optional func incrementForCount(count: Int) -> Int
+    @objc optional var fixedIncrement: Int { get }
 }
 ```
 
@@ -886,10 +886,10 @@ extension PrettyTextRepresentable  {
 例如，你可以扩展 `CollectionType` 协议，但是只适用于集合中的元素遵循了 `TextRepresentable` 协议的情况：
 
 ```swift
-extension CollectionType where Generator.Element: TextRepresentable {
+extension Collection where Iterator.Element: TextRepresentable {
     var textualDescription: String {
-        let itemsAsText = self.map { $0.textualDescription }
-        return "[" + itemsAsText.joinWithSeparator(", ") + "]"
+	let itemsAsText = self.map { $0.textualDescription }
+	return "[" + itemsAsText.joined(separator: ", ") + "]"
     }
 }
 ```
