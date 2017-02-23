@@ -736,7 +736,7 @@ that don't actually override any method in the superclass.
                numberOfSides = 4
            }
     ---
-           func area() ->  Double {
+           func area() -> Double {
                return sideLength * sideLength
            }
     ---

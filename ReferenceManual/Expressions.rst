@@ -892,7 +892,7 @@ because of reference semantics.
     << // x : Int = 100
     -> var y = 7
     << // y : Int = 7
-    -> var f: ()->Int = { [x, y] in x+y }
+    -> var f: () -> Int = { [x, y] in x+y }
     << // f : () -> Int = (Function)
     >> f()
     << // r0 : Int = 107
@@ -904,8 +904,8 @@ because of reference semantics.
 
     -> var x = 100
        var y = 7
-       var f: ()->Int = { [x] in x }
-       var g: ()->Int = { [x] in x+y }
+       var f: () -> Int = { [x] in x }
+       var g: () -> Int = { [x] in x+y }
     << // x : Int = 100
     << // y : Int = 7
     << // f : () -> Int = (Function)
