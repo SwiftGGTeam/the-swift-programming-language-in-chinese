@@ -394,15 +394,17 @@ ensuring that the loop is run at least once.
 
    var n = 2
    while n < 100 {
-       n = n * 2
+       n *= 2
    }
    print(n)
 
    var m = 2
    repeat {
-       m = m * 2
+       m *= 2
    } while m < 100
    print(m)
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
@@ -420,6 +422,8 @@ by using ``..<`` to make a range of indexes.
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Functions and Closures
 ----------------------
@@ -608,8 +612,7 @@ Use ``in`` to separate the arguments and return type from the body.
    :cont:
 
    let result_numbersMap = // -HIDE-
-   numbers.map({
-       (number: Int) -> Int in
+   numbers.map({ (number: Int) -> Int in
        let result = 3 * number
        return result
    })
@@ -765,7 +768,7 @@ that don't actually override any method in the superclass.
            numberOfSides = 4
        }
 
-       func area() ->  Double {
+       func area() -> Double {
            return sideLength * sideLength
        }
 

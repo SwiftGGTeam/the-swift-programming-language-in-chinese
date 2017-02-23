@@ -785,13 +785,11 @@ The following closure expressions are equivalent:
    :name: closure expression forms
 
    func myFunction(f: (Int, Int) -> Int) {} // -HIDE-
-   myFunction {
-       (x: Int, y: Int) -> Int in
+   myFunction { (x: Int, y: Int) -> Int in
        return x + y
    }
 
-   myFunction {
-       (x, y) in
+   myFunction { x, y in
        return x + y
    }
 
@@ -897,7 +895,7 @@ because of reference semantics.
 
    var x = 100
    var y = 7
-   var f: ()->Int = { [x, y] in x+y }
+   var f: () -> Int = { [x, y] in x+y }
    assert(f() == 107)
 
 ..  It's not an error to capture things that aren't included in the capture list,
@@ -909,8 +907,8 @@ because of reference semantics.
 
    var x = 100
    var y = 7
-   var f: ()->Int = { [x] in x }
-   var g: ()->Int = { [x] in x+y }
+   var f: () -> Int = { [x] in x }
+   var g: () -> Int = { [x] in x+y }
 
    assert(f() == 100)
    assert(g() == 107)
@@ -1822,7 +1820,7 @@ without using optional chaining.
    class SomeClass { var property: OtherClass = OtherClass() }
    var c: SomeClass?
    // -SHOW-
-   var result: Bool? = nil
+   var result: Bool?
    if let unwrappedC = c {
       result = unwrappedC.property.performAction()
    }

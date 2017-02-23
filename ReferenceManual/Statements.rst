@@ -88,9 +88,8 @@ For-In Statement
 
 A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
-that conforms to the ``Sequence`` protocol.
-
-.. TODO: Add a link to the reference after we fix <rdar://problem/17682758> RST: Add support for uAPI links
+that conforms to the
+`Sequence <//apple_ref/swift/intf/s:Ps8Sequence>`_ protocol.
 
 A ``for``-``in`` statement has the following form:
 
@@ -102,7 +101,8 @@ A ``for``-``in`` statement has the following form:
 
 The ``makeIterator()`` method is called on the *collection* expression
 to obtain a value of an iterator type---that is,
-a type that conforms to the ``IteratorProtocol`` protocol.
+a type that conforms to the
+`IteratorProtocol <//apple_ref/swift/intf/s:Ps16IteratorProtocol>`_ protocol.
 The program begins executing a loop
 by calling the ``next()`` method on the iterator.
 If the value returned is not ``nil``,
@@ -111,9 +111,6 @@ the program executes the *statements*,
 and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
-
-.. TODO: Add a link to the reference after we fix <rdar://problem/17682758> RST: Add support for uAPI links
-   http://developer.apple.com/reference/swift/iteratorprotocol
 
 .. langref-grammar
 
