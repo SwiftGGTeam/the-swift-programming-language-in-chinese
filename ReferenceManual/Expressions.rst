@@ -1793,7 +1793,7 @@ without using optional chaining.
    >> class SomeClass { var property: OtherClass = OtherClass() }
    >> var c: SomeClass?
    << // c : SomeClass? = nil
-   -> var result: Bool? = nil
+   -> var result: Bool?
    << // result : Bool? = nil
    -> if let unwrappedC = c {
          result = unwrappedC.property.performAction()
