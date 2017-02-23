@@ -776,13 +776,11 @@ The following closure expressions are equivalent:
 .. testcode:: closure-expression-forms
 
     >> func myFunction(f: (Int, Int) -> Int) {}
-    -> myFunction {
-           (x: Int, y: Int) -> Int in
+    -> myFunction { (x: Int, y: Int) -> Int in
            return x + y
        }
     ---
-    -> myFunction {
-           (x, y) in
+    -> myFunction { x, y in
            return x + y
        }
     ---
@@ -892,7 +890,7 @@ because of reference semantics.
     << // x : Int = 100
     -> var y = 7
     << // y : Int = 7
-    -> var f: ()->Int = { [x, y] in x+y }
+    -> var f: () -> Int = { [x, y] in x+y }
     << // f : () -> Int = (Function)
     >> f()
     << // r0 : Int = 107
@@ -904,8 +902,8 @@ because of reference semantics.
 
     -> var x = 100
        var y = 7
-       var f: ()->Int = { [x] in x }
-       var g: ()->Int = { [x] in x+y }
+       var f: () -> Int = { [x] in x }
+       var g: () -> Int = { [x] in x+y }
     << // x : Int = 100
     << // y : Int = 7
     << // f : () -> Int = (Function)
@@ -1793,7 +1791,7 @@ without using optional chaining.
    >> class SomeClass { var property: OtherClass = OtherClass() }
    >> var c: SomeClass?
    << // c : SomeClass? = nil
-   -> var result: Bool? = nil
+   -> var result: Bool?
    << // result : Bool? = nil
    -> if let unwrappedC = c {
          result = unwrappedC.property.performAction()
