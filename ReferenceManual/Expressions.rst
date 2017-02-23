@@ -776,13 +776,11 @@ The following closure expressions are equivalent:
 .. testcode:: closure-expression-forms
 
     >> func myFunction(f: (Int, Int) -> Int) {}
-    -> myFunction {
-           (x: Int, y: Int) -> Int in
+    -> myFunction { (x: Int, y: Int) -> Int in
            return x + y
        }
     ---
-    -> myFunction {
-           (x, y) in
+    -> myFunction { x, y in
            return x + y
        }
     ---

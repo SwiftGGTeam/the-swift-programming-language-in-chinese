@@ -585,8 +585,7 @@ Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
 
-    -> numbers.map({
-           (number: Int) -> Int in
+    -> numbers.map({ (number: Int) -> Int in
            let result = 3 * number
            return result
        })
