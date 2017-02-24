@@ -737,7 +737,7 @@ A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*
 in other programming languages.
 Like a function declaration,
-a closure contains statements that it executes,
+a closure contains statements,
 and it captures constants and variables from its enclosing scope.
 It has the following form:
 
