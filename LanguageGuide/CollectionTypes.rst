@@ -294,6 +294,10 @@ For example, writing ``shoppingList[shoppingList.count] = "Salt"``
 to try to append an item to the end of the array
 results in a runtime error.
 
+.. Unlike Ruby and Javascript, where accesing an invalid index
+   extends the array with nil or similar placeholder values,
+   to make that index become valid.
+
 You can also use subscript syntax to change a range of values at once,
 even if the replacement set of values has a different length than the range you are replacing.
 The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
