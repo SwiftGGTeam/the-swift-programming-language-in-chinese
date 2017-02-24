@@ -493,7 +493,7 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-When used as the default value of a function or method,
+When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
 
@@ -737,7 +737,7 @@ A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*
 in other programming languages.
 Like a function declaration,
-a closure contains statements which it executes,
+a closure contains statements,
 and it captures constants and variables from its enclosing scope.
 It has the following form:
 
