@@ -288,6 +288,12 @@ You can use subscript syntax to change an existing value at a given index:
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
 
+When you use subscript syntax,
+the index you specify needs to be valid.
+For example, writing ``shoppingList[shoppingList.count] = "Salt"``
+to try to append an item to the end of the array
+results in a runtime error.
+
 You can also use subscript syntax to change a range of values at once,
 even if the replacement set of values has a different length than the range you are replacing.
 The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
@@ -298,12 +304,6 @@ with ``"Bananas"`` and ``"Apples"``:
    -> shoppingList[4...6] = ["Bananas", "Apples"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 6 items
-
-.. note::
-
-   You can't use subscript syntax
-   with an index past the end of the array
-   to append a new item to the end of an array.
 
 To insert an item into the array at a specified index,
 call the array's ``insert(_:at:)`` method:
