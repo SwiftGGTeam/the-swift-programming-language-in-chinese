@@ -126,8 +126,6 @@ that is declared in the ``ExampleModule`` module.
 .. test::
    :name: type identifier dot
    :compiler-errors: error: use of undeclared type 'ExampleModule'
-                     var someValue: ExampleModule.MyType
-                                    ^~~~~~~~~~~~~
 
    var someValue: ExampleModule.MyType
 
@@ -164,9 +162,6 @@ that name is part of the type.
 .. test::
    :name: tuple type names
    :compiler-errors: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
-                     someTuple = (left: 5, right: 5)  // Error: names don't match
-                                 ^~~~~~~~~~~~~~~~~~~
-                                                     as! (top: Int, bottom: Int)
 
    var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
    someTuple = (top: 4, bottom: 42) // OK: names match
@@ -253,11 +248,7 @@ For example:
 .. test::
    :name: arguments are not part of function types
    :compiler-errors: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
-                     f = functionWithDifferentArgumentTypes     // Error
-                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
-                     f = functionWithDifferentNumberOfArguments // Error
-                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    func someFunction(left: Int, right: Int) {}
    func anotherFunction(left: Int, right: Int) {}
@@ -694,7 +685,6 @@ as the following example shows:
 
 .. test::
    :name: metatype type
-   :prints: SomeSubClass
 
    class SomeBaseClass {
        class func printClassName() {
