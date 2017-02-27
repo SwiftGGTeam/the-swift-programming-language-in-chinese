@@ -689,7 +689,7 @@ to provide a natural-language count for numbers of any size:
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
-   -> var naturalCount: String
+   -> let naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
