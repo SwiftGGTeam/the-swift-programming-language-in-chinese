@@ -12,7 +12,7 @@ In Swift, this can be done in a single line:
 
 .. test::
    :name: intro
-   :prints: Hello, world
+   :prints: Hello, world!
 
    print("Hello, world!")
 
@@ -1425,6 +1425,7 @@ to make a generic function or type.
        }
        return result
    }
+   let _ = // -HIDE-
    makeArray(repeating: "knock", numberOfTimes:4)
 
 You can make generic forms of functions and methods,

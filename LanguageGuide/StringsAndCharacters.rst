@@ -109,12 +109,7 @@ or to a constant (in which case it cannot be modified):
 .. test::
     :name: string mutability
     :compiler-errors: error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
-                      constantString += " and another Highlander"
-                      ~~~~~~~~~~~~~~ ^
                       note: change 'let' to 'var' to make it mutable
-                      let constantString = "Highlander"
-                      ^~~
-                      var
 
     var variableString = "Horse"
     variableString += " and carriage"
@@ -337,11 +332,7 @@ String literals can include the following special characters:
     :name: string literal UnicodeScalar
     :hidden:
     :compiler-errors: error: \u{...} escape sequence expects between 1 and 8 hex digits
-                      _ = "\u{000000000}"
-                                        ^
                       error: invalid unicode scalar
-                      _ = "\u{110000}"
-                           ^
 
     _ = "\u{0}"
     _ = "\u{00000000}"

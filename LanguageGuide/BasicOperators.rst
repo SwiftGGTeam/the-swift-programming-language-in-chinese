@@ -96,13 +96,12 @@ The following statement is not valid:
 
 .. test::
     :name: assignment operator invalid
-    :compiler-errors: error: use of unresolved identifier 'x'
-                      if x = y {
-                         ^
-                      error: use of unresolved identifier 'y'
-                      if x = y {
-                             ^
+    :compiler-error: error: use of '=' in a boolean context, did you mean '=='?
 
+    // -HIDE-
+    var x = 10
+    var y = 10
+    // -SHOW-
     if x = y {
         // This is not valid, because x = y does not return a value.
     }
@@ -384,11 +383,6 @@ which means tuples that contain a Boolean value can't be compared.
     :name: boolean is not comparable
     :hidden:
     :compiler-errors: error: binary operator '<' cannot be applied to two 'Bool' operands
-                      true < false
-                      ~~~~ ^ ~~~~~
-                      note: overloads for '<' exist with these partially matching parameter lists:
-                      true < false
-                           ^
 
     true < false
 

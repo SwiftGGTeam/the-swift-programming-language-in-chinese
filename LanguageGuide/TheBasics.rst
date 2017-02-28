@@ -207,6 +207,7 @@ Attempting to do so is reported as an error when your code is compiled:
 .. test::
     :name: erroneously reassigning constants
     :compiler-errors: error: cannot assign to value: 'languageName' is a 'let' constant
+                      note: change 'let' to 'var' to make it mutable
 
     let languageName = "Swift"
     languageName = "Swift++"
