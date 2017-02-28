@@ -1340,29 +1340,48 @@ Throwing, catching, and propagating errors is covered in greater detail in
 Assertions and Preconditions
 ----------------------------
 
+An assertion or precondition is a runtime check
+that a Boolean condition definitely evaluates to ``true``.
+You use assertions and a preconditions
+to make sure that an essential condition is satisfied
+before executing any further code.
+If the condition evaluates to ``true``,
+code execution continues as usual;
+if the condition evaluates to ``false``,
+code execution ends, and your app is terminated.
+
 Assertions and preconditions
 let you write down the assumptions and expectations
 that you make while coding,
-including them as part of your code.
+so you can include them as part of your code.
 Assertions help you find mistakes and incorrect assumptions during development,
-and preconditions help you find invalid program behavior in production.
-They are also a useful form of documentation
+and preconditions help you detect issues in production.
+They both also become a useful form of documentation
 within the code.
 
+The difference between assertions and preconditions is when they are checked:
+Assertions are checked only in debug builds,
+but preconditions are checked in both debug and production builds.
+In production builds,
+the condition inside an assertion isn't even evaluated.
+This means you can use as many assertions as you want
+during your development process,
+without impacting the performance in production.
+
 You write an assertion by calling
-the Swift standard library ``assert(_:_:file:line:)`` function.
+`assert(_:_:file:line:) <//apple_ref/swift/func/s:Fs6assertFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+from the Swift standard library.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
 For example:
 
-.. assert(_:_:file:line:) //apple_ref/swift/func/s:Fs6assertFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
-.. assertionFailure(_:file:line:) //apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_
+.. FIXME: Should we omit "from the stdlib" above?
 
 .. testcode:: assertions
 
    -> let age = -3
    << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero")
+   -> assert(age >= 0, "A person's age can't be less than zero.")
    xx assert
    // This assertion fails because -3 is not >= 0.
 
@@ -1383,25 +1402,34 @@ The assertion message can be omitted if desired, as in the following example:
 
    -> let age = -3
    << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
+   -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
    xx assert
 
+
+If there's already code that checks the condition,
+such as an ``if`` statement,
+you use the
+`assertionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+to indicate that an assertion has failed.
+For example:
+
+.. testcode:: assertions
+
+   -> if age > 10 {
+          print("You can ride the roller-coaster or the ferris wheel.")
+      } else if age > 0 {
+          print("You can ride the ferris wheel.")
+      } else {
+          assertionFailure("A person's age can't be less than zero.")
+      }
+   xx assert
+
+In some cases, it is simply not possible for your code to continue execution
+if a particular condition is not satisfied.
+In these situations,
+you can use a precondition in your code to end code execution.
 You write a precondition by calling
-the Swift standard library ``precondition(_:_:file:line:)`` function,
-which is almost the same as the ``assert(_:_:file:line:)`` function
-from the examples above.
-The difference between assertions and preconditions is when they are checked:
-Assertions are checked only in debug builds,
-but preconditions are checked in both debug and production builds.
-In production builds,
-the code inside the assertion is never run.
-This means you can use as many assertions as you want
-during your development process,
-without impacting the performance in production.
-
-.. FIXME: The (lack of) perfomance impact from assert is too buried.
-
-.. precondition(_:_:file:line:) //apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
+the Swift standard library ``precondition(_:_:file:line:)`` function.
 
 .. note::
 
@@ -1409,6 +1437,10 @@ without impacting the performance in production.
     preconditions are not checked.
     The compiler is allowed to assume that preconditions are always true,
     and it optimizes your code accordingly.
+
+XX XX XX END XX XX XX
+
+.. precondition(_:_:file:line:) //apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
 
 .. "\ " in the first cell below lets it be empty.
    Otherwise RST treats the row as a continuation.
@@ -1423,32 +1455,12 @@ Precondition Yes    Yes         No
 Fatal Error  Yes    Yes         Yes
 ============ =====  ==========  ===============================
 
-
-..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..
-
 ..  Notes from picking [Contributor 5711]'s brain
 
     you can & should use assert() liberally
     write down assumptions you’re making — documentation
 
     precondition vs fatalError — not meant to be much semantic difference
-   
-
-In some cases, it is simply not possible for your code to continue execution
-if a particular condition is not satisfied.
-In these situations,
-you can use an assertion or a precondition in your code to end code execution
-and to provide an opportunity to debug the cause of the absent or invalid value.
-
-An assertion or precondition is a runtime check
-that a Boolean condition definitely evaluates to ``true``.
-You use assertions and a preconditions
-to make sure that an essential condition is satisfied
-before executing any further code.
-If the condition evaluates to ``true``,
-code execution continues as usual;
-if the condition evaluates to ``false``,
-code execution ends, and your app is terminated.
 
 Suitable scenarios for an assertion check include:
 
