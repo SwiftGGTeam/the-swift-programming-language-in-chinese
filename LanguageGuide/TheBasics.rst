@@ -1355,8 +1355,8 @@ You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
 For example:
 
-.. https://developer.apple.com/reference/swift/1541112-assert
-.. https://developer.apple.com/reference/swift/1539616-assertionfailure
+.. assert(_:_:file:line:) //apple_ref/swift/func/s:Fs6assertFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
+.. assertionFailure(_:file:line:) //apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_
 
 .. testcode:: assertions
 
@@ -1400,6 +1400,8 @@ during your development process,
 without impacting the performance in production.
 
 .. FIXME: The (lack of) perfomance impact from assert is too buried.
+
+.. precondition(_:_:file:line:) //apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
 
 .. note::
 
