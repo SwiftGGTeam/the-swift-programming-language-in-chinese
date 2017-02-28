@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# coding:utf-8
 
 
 import os
@@ -14,6 +15,7 @@ def iter(path):
                 insert_pos = content.find("</li>", content.find("Generated using GitBook")) + 6
                 content = content[:insert_pos] + '''<li style="margin-left:15%;"> <iframe  src="http://ghbtns.com/github-btn.html?user=numbbbbb&repo=the-swift-programming-language-in-chinese&type=watch&count=true&size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe></li>''' + content[insert_pos:]
+                content.replace(r'<title>.*?</title>', "<title>《The Swift Programming Language》完整中文版</title>")
                 with open(root + '/' + fn, 'w') as f:
                     f.write(content)
 
