@@ -227,9 +227,9 @@ The return value of a function can be ignored when it is called:
    << hello, world
    // prints "hello, world" but does not return a value
 
-The first function, ``printAndCount(_:)``,
+The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
-The second function, ``printWithoutCounting``,
+The second function, ``printWithoutCounting(string:)``,
 calls the first function, but ignores its return value.
 When the second function is called,
 the message is still printed by the first function,
@@ -289,7 +289,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 .. testcode:: tupleTypesAsReturnTypes
 
    -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
-   << // bounds : (min: Int, max: Int) = (-6, 109)
+   << // bounds : (min: Int, max: Int) = (min: -6, max: 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
@@ -382,7 +382,7 @@ unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
 
-   -> func foo(external a: Int, external b: Int) { }
+   -> func foo(external a: Int, external b: Int) {}
    -> foo(external: 7, external: 12)
 
 .. _Functions_ExternalParameterNames:
@@ -399,11 +399,6 @@ separated by a space:
          // In the function body, parameterName refers to the argument value
          // for that parameter.
       }
-
-.. note::
-
-   If you provide an argument label for a parameter,
-   the argument *must* be labeled when you call the function.
 
 Here's a variation of the ``greet(person:)`` function
 that takes a person's name and hometown
@@ -437,6 +432,9 @@ write an underscore (``_``) instead of an explicit argument label for that param
       }
    -> someFunction(1, secondParameterName: 2)
 
+If a parameter has an argument label,
+the argument *must* be labeled when you call the function.
+
 .. _Functions_DefaultParameterValues:
 
 Default Parameter Values
@@ -448,19 +446,21 @@ If a default value is defined, you can omit that parameter when calling the func
 
 .. testcode:: omittedExternalParameterNames
 
-   -> func someFunction(parameterWithDefault: Int = 12) {
-         // In the function body, if no arguments are passed to the function
-         // call, the value of parameterWithDefault is 12.
+   -> func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
+         // If you omit the second argument when calling this function, then
+         // the value of parameterWithDefault is 12 inside the function body.
       }
-   -> someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
-   -> someFunction() // parameterWithDefault is 12
+   -> someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
+   -> someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 
-.. note::
-
-   Place parameters with default values at the end of a function's parameter list.
-   This ensures that all calls to the function
-   use the same order for their nondefault arguments,
-   and makes it clear that the same function is being called in each case.
+Place parameters that don't have default values
+at the beginning of a function's parameter list,
+before the parameters that have default values.
+Parameters that don't have default values
+are usually more important to the function's meaning ---
+writing them first makes it easier to recognize
+that the same function is being called,
+regardless of whether any default parameters are omitted.
 
 .. _Functions_VariadicParameters:
 
@@ -618,7 +618,7 @@ performing an appropriate mathematical operation.
 The type of both of these functions is ``(Int, Int) -> Int``.
 This can be read as:
 
-“A function type that has two parameters, both of type ``Int``,
+“A function that has two parameters, both of type ``Int``,
 and that returns a value of type ``Int``.”
 
 Here's another example, for a function with no parameters or return value:

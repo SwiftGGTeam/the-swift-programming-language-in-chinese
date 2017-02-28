@@ -449,9 +449,11 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> parenthesized-expression
+    primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
+    primary-expression --> key-path-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -471,6 +473,7 @@ Literal Expression
 A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
+a playground literal,
 or one of the following special literals:
 
 =============    ===========  ===============================================
@@ -490,7 +493,7 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-When used as the default value of a function or method,
+When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
 
@@ -574,6 +577,15 @@ of specified key and value types.
     -> var emptyDictionary: [String: Double] = [:]
     << // emptyDictionary : [String : Double] = [:]
 
+A :newTerm:`playground literal`
+is used by Xcode to create an interactive representation
+of a color, file, or image within the program editor.
+Playground literals in plain text outside of Xcode
+are represented using a special literal syntax.
+
+For information on using playground literals in Xcode,
+see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a literal.
+
 
 .. langref-grammar
 
@@ -590,7 +602,7 @@ of specified key and value types.
     Grammar of a literal expression
 
     literal-expression --> literal
-    literal-expression --> array-literal | dictionary-literal
+    literal-expression --> array-literal | dictionary-literal | playground-literal
     literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
@@ -600,6 +612,10 @@ of specified key and value types.
     dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
     dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
     dictionary-literal-item --> expression ``:`` expression
+
+    playground-literal --> ``#colorLiteral`` ``(`` ``red`` ``:`` expression ``,`` ``green`` ``:`` expression ``,`` ``blue`` ``:`` expression ``,`` ``alpha`` ``:`` expression ``)``
+    playground-literal --> ``#fileLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
+    playground-literal --> ``#imageLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
 
 
 .. _Expressions_SelfExpression:
@@ -721,7 +737,7 @@ A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*
 in other programming languages.
 Like a function declaration,
-a closure contains statements which it executes,
+a closure contains statements,
 and it captures constants and variables from its enclosing scope.
 It has the following form:
 
@@ -760,13 +776,11 @@ The following closure expressions are equivalent:
 .. testcode:: closure-expression-forms
 
     >> func myFunction(f: (Int, Int) -> Int) {}
-    -> myFunction {
-           (x: Int, y: Int) -> Int in
+    -> myFunction { (x: Int, y: Int) -> Int in
            return x + y
        }
     ---
-    -> myFunction {
-           (x, y) in
+    -> myFunction { x, y in
            return x + y
        }
     ---
@@ -788,7 +802,7 @@ with strong references to those values.
 You can use a :newTerm:`capture list` to explicitly control
 how values are captured in a closure.
 
-A capture list is written as a comma separated list of expressions
+A capture list is written as a comma-separated list of expressions
 surrounded by square brackets,
 before the list of parameters.
 If you use a capture list, you must also use the ``in`` keyword,
@@ -876,7 +890,7 @@ because of reference semantics.
     << // x : Int = 100
     -> var y = 7
     << // y : Int = 7
-    -> var f: ()->Int = { [x, y] in x+y }
+    -> var f: () -> Int = { [x, y] in x+y }
     << // f : () -> Int = (Function)
     >> f()
     << // r0 : Int = 107
@@ -888,8 +902,8 @@ because of reference semantics.
 
     -> var x = 100
        var y = 7
-       var f: ()->Int = { [x] in x }
-       var g: ()->Int = { [x] in x+y }
+       var f: () -> Int = { [x] in x }
+       var g: () -> Int = { [x] in x+y }
     << // x : Int = 100
     << // y : Int = 7
     << // f : () -> Int = (Function)
@@ -955,7 +969,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
@@ -1013,6 +1027,27 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
+an expression surrounded by parentheses.
+You can use parentheses to specify the precedence of operations
+by explicitly grouping expressions.
+Grouping parentheses don't change an expression's type ---
+for example, the type of ``(1)`` is simply ``Int``.
+
+.. See "Tuple Expression" below for langref grammar.
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression ``)``
+
+
+.. _Expressions_TupleExpression:
+
+Tuple Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`tuple expression` consists of
 a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
@@ -1022,13 +1057,9 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Use parenthesized expressions to create tuples
-and to pass arguments to a function call.
-If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value.
-For example,
-the type of the parenthesized expression ``(1)``
-is ``Int``, not ``(Int)``.
+A tuple expression can contain zero expressions,
+or it can contain two or more expressions.
+A single expression inside parentheses is a parenthesized expression.
 
 .. langref-grammar
 
@@ -1039,12 +1070,11 @@ is ``Int``, not ``(Int)``.
 
 .. syntax-grammar::
 
-    Grammar of a parenthesized expression
+    Grammar of a tuple expression
 
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
-
+    tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
+    tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
+    tuple-element --> expression | identifier ``:`` expression
 
 .. _Expressions_WildcardExpression:
 
@@ -1076,13 +1106,16 @@ Selector Expression
 ~~~~~~~~~~~~~~~~~~~
 
 A selector expression lets you access the selector
-used to refer to a method in Objective-C.
+used to refer to a method or to a property's
+getter or setter in Objective-C.
 
 .. syntax-outline::
 
    #selector(<#method name#>)
+   #selector(getter: <#property name#>)
+   #selector(setter: <#property name#>)
 
-The *method name* must be a reference to a method
+The *method name* and *property name* must be a reference to a method or a property
 that is available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
@@ -1091,11 +1124,23 @@ For example:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-           @objc(doSomethingWithInt:)
-           func doSomething(_ x: Int) { }
+          let property: String
+          @objc(doSomethingWithInt:)
+          func doSomething(_ x: Int) {}
+   ---
+          init(property: String) {
+              self.property = property
+          }
       }
-   -> let selector = #selector(SomeClass.doSomething(_:))
-   << // selector : Selector = doSomethingWithInt:
+   -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
+   << // selectorForMethod : Selector = doSomethingWithInt:
+   -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
+   << // selectorForPropertyGetter : Selector = property
+
+When creating a selector for a property's getter,
+the *property name* can be a reference to a variable or constant property.
+In contrast, when creating a selector for a property's setter,
+the *property name* must be a reference to a variable property only.
 
 The *method name* can contain parentheses for grouping,
 as well the ``as`` operator to disambiguate between methods that share a name
@@ -1111,21 +1156,14 @@ For example:
    -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
    << // anotherSelector : Selector = doSomethingWithString:
 
-Because the selector is created at compile time, not at runtime,
-the compiler can check that the method exists
-and that the method is exposed to the Objective-C runtime.
-
-.. TODO: Is there any truth to this?
-   Brian and I looked at the proposal, and it doesn't discuss this,
-   but I remember reading something about information being
-   "exposed to the typechecker".
-        It also checks that,
-        when the method is called,
-        the arguments have the correct types.
+Because a selector is created at compile time, not at runtime,
+the compiler can check that a method or property exists
+and that they're exposed to the Objective-C runtime.
 
 .. note::
 
-    Although the *method name* is an expression, it is never evaluated.
+    Although the *method name* and the *property name* are expressions,
+    they're never evaluated.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
@@ -1134,14 +1172,93 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. syntax-grammar::
 
-    Grammar of an Objective-C selector expression
+    Grammar of a selector expression
 
     selector-expression --> ``#selector`` ``(`` expression  ``)``
+    selector-expression --> ``#selector`` ``(`` ``getter:`` expression  ``)``
+    selector-expression --> ``#selector`` ``(`` ``setter:`` expression  ``)``
 
 .. Note: The parser does allow an arbitrary expression inside #selector(), not
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
+
+
+
+.. _Expression_KeyPathExpression:
+
+Key-Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+A key-path expression lets you access the string
+used to refer to a property in Objective-C
+for use in key-value coding and key-value observing APIs.
+
+.. syntax-outline::
+
+   #keyPath(<#property name#>)
+
+The *property name* must be a reference to a property
+that is available in the Objective-C runtime.
+At compile time, the key-path expression is replaced by a string literal.
+For example:
+
+.. testcode:: keypath-expression
+
+   >> import Foundation
+   -> @objc class SomeClass: NSObject {
+         var someProperty: Int
+         init(someProperty: Int) {
+             self.someProperty = someProperty
+         }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 12)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> let keyPath = #keyPath(SomeClass.someProperty)
+   << // keyPath : String = "someProperty"
+   ---
+   -> if let value = c.value(forKey: keyPath) {
+   ->     print(value)
+   -> }
+   <- 12
+
+When you use a key-path expression within a class,
+you can refer to a property of that class
+by writing just the property name, without the class name.
+
+.. testcode:: keypath-expression
+
+   -> extension SomeClass {
+         func getSomeKeyPath() -> String {
+            return #keyPath(someProperty)
+         }
+      }
+   -> print(keyPath == c.getSomeKeyPath())
+   <- true
+
+Because the key path is created at compile time, not at runtime,
+the compiler can check that the property exists
+and that the property is exposed to the Objective-C runtime.
+
+For more information about using selectors
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
+
+.. note::
+
+    Although the *property name* is an expression, it is never evaluated.
+
+
+.. syntax-grammar::
+
+    Grammar of a key-path expression
+
+    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
@@ -1183,7 +1300,6 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
     postfix-expression --> postfix-self-expression
-    postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-value-expression
     postfix-expression --> optional-chaining-expression
@@ -1263,8 +1379,14 @@ the parentheses can be omitted.
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression
-    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-argument-clause
+    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closure
+
+    function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
+    function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
+    function-call-argument --> expression | identifier ``:`` expression
+    function-call-argument --> operator | identifier ``:`` operator
+
     trailing-closure --> closure-expression
 
 .. Multiple trailing closures in LangRef is an error,
@@ -1310,7 +1432,7 @@ For example:
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
     << // initializer : (Int) -> String = (Function)
-    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
+    -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
     << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
     <- 123
@@ -1319,7 +1441,7 @@ If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
-.. testcode:: explitic-implicit-init
+.. testcode:: explicit-implicit-init
 
     >> struct SomeType {
     >>     let data: Int
@@ -1331,13 +1453,13 @@ In all other cases, you must use an initializer expression.
     ---
     >> let someValue = s1
     << // someValue : SomeType = REPL.SomeType(data: 3)
-    -> let s3 = someValue.dynamicType.init(data: 7)  // Valid
+    -> let s3 = type(of: someValue).init(data: 7)  // Valid
     << // s3 : SomeType = REPL.SomeType(data: 7)
-    -> let s4 = someValue.dynamicType(data: 5)       // Error
-    !! <REPL Input>:1:31: error: initializing from a metatype value must reference 'init' explicitly
-    !! let s4 = someValue.dynamicType(data: 5)       // Error
-    !!                               ^
-    !!                               .init
+    -> let s4 = type(of: someValue)(data: 5)       // Error
+    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
+    !! let s4 = type(of: someValue)(data: 5)       // Error
+    !!                              ^
+    !!                              .init
 
 .. langref-grammar
 
@@ -1416,7 +1538,7 @@ For example:
     ---
     << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod(x:y:)'
+    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
     !! <REPL Input>:2:12: note: found this candidate
@@ -1426,7 +1548,7 @@ For example:
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (x: Int, y: Int) -> () = (Function)
+    << // b : (Int, Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
     !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
@@ -1517,48 +1639,6 @@ you can pass it to a function or method that accepts a type-level argument.
     Grammar of a self expression
 
     postfix-self-expression --> postfix-expression ``.`` ``self``
-
-
-.. _Expressions_DynamicTypeExpression:
-
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A ``dynamicType`` expression consists of an expression,
-immediately followed by ``.dynamicType``. It has the following form:
-
-.. syntax-outline::
-
-    <#expression#>.dynamicType
-
-The *expression* can't be the name of a type.
-The entire ``dynamicType`` expression evaluates to the value of the
-runtime type of the *expression*, as the following example shows:
-
-.. testcode:: dynamic-type
-
-    -> class SomeBaseClass {
-           class func printClassName() {
-               print("SomeBaseClass")
-           }
-       }
-    -> class SomeSubClass: SomeBaseClass {
-           override class func printClassName() {
-               print("SomeSubClass")
-           }
-       }
-    -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
-    -> // someInstance has a static type of SomeBaseClass at compile time, and
-    -> // it has a dynamc type of SomeSubClass at runtime
-    -> someInstance.dynamicType.printClassName()
-    <- SomeSubClass
-
-.. syntax-grammar::
-
-    Grammar of a dynamic type expression
-
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
@@ -1711,7 +1791,7 @@ without using optional chaining.
    >> class SomeClass { var property: OtherClass = OtherClass() }
    >> var c: SomeClass?
    << // c : SomeClass? = nil
-   -> var result: Bool? = nil
+   -> var result: Bool?
    << // result : Bool? = nil
    -> if let unwrappedC = c {
          result = unwrappedC.property.performAction()

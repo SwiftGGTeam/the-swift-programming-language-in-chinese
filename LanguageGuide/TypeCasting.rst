@@ -240,77 +240,14 @@ whenever a ``Song`` is found in the library.
 Type Casting for Any and AnyObject
 ----------------------------------
 
-Swift provides two special type aliases for working with non-specific types:
+Swift provides two special types for working with nonspecific types:
 
-* ``AnyObject`` can represent an instance of any class type.
 * ``Any`` can represent an instance of any type at all, including function types.
+* ``AnyObject`` can represent an instance of any class type.
 
-.. note::
-
-   Use ``Any`` and ``AnyObject`` only when you explicitly need
-   the behavior and capabilities they provide.
-   It is always better to be specific about the types you expect to work with in your code.
-
-
-.. _TypeCasting_AnyObject:
-
-AnyObject
-~~~~~~~~~
-
-When working with Cocoa APIs, sometimes you receive
-an array with a type of ``[AnyObject]``, or “an array of values of any object type”.
-Objective-C currently supports explicitly typed arrays,
-but older versions of the language did not have this feature.
-However, you can often be confident about the type of objects contained in such an array
-just from the information you know about the API that provided the array.
-
-In these situations, you can use the forced version of the type cast operator (``as!``)
-to downcast each item in the array to a more specific class type than ``AnyObject``,
-without the need for optional unwrapping.
-
-The example below defines an array of type ``[AnyObject]``
-and populates this array with three instances of the ``Movie`` class:
-
-.. testcode:: typeCasting
-
-   -> let someObjects: [AnyObject] = [
-         Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
-         Movie(name: "Moon", director: "Duncan Jones"),
-         Movie(name: "Alien", director: "Ridley Scott")
-      ]
-   << // someObjects : [AnyObject] = [REPL.Movie, REPL.Movie, REPL.Movie]
-
-Because this array is known to contain only ``Movie`` instances,
-you can downcast and unwrap directly to a nonoptional ``Movie``
-with the forced version of the type cast operator (``as!``):
-
-.. testcode:: typeCasting
-
-   -> for object in someObjects {
-         let movie = object as! Movie
-         print("Movie: \(movie.name), dir. \(movie.director)")
-      }
-   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
-   </ Movie: Moon, dir. Duncan Jones
-   </ Movie: Alien, dir. Ridley Scott
-
-For an even shorter form of this loop,
-downcast the ``someObjects`` array to a type of ``[Movie]``
-instead of downcasting each item:
-
-.. testcode:: typeCasting
-
-   -> for movie in someObjects as! [Movie] {
-         print("Movie: \(movie.name), dir. \(movie.director)")
-      }
-   </ Movie: 2001: A Space Odyssey, dir. Stanley Kubrick
-   </ Movie: Moon, dir. Duncan Jones
-   </ Movie: Alien, dir. Ridley Scott
-
-.. _TypeCasting_Any:
-
-Any
-~~~
+Use ``Any`` and ``AnyObject`` only when you explicitly need
+the behavior and capabilities they provide.
+It is always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
 including function types and non-class types.
@@ -337,9 +274,9 @@ the movie “Ghostbusters”,
 and a closure expression that takes a ``String`` value
 and returns another ``String`` value.
 
-You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
-to discover the specific type of a constant or variable
-that is known only to be of type ``Any`` or ``AnyObject``.
+To discover the specific type of a constant or variable
+that is known only to be of type ``Any`` or ``AnyObject``,
+you can use an ``is`` or ``as`` pattern in a ``switch`` statement's cases.
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.
 Several of the ``switch`` statement's cases bind their matched value to
@@ -381,3 +318,59 @@ a constant of the specified type to enable its value to be printed:
    </ a movie called Ghostbusters, dir. Ivan Reitman
    </ Hello, Michael
 
+.. note::
+
+    The ``Any`` type represents values of any type, including optional types.
+    Swift gives you a warning if you use an optional value
+    where a value of type ``Any`` is expected.
+    If you really do need to use an optional value as an ``Any`` value,
+    you can use the ``as`` operator to explicitly cast the optional to ``Any``,
+    as shown below.
+
+    .. testcode:: typeCasting
+
+       -> let optionalNumber: Int? = 3
+       << // optionalNumber : Int? = Optional(3)
+       -> things.append(optionalNumber)        // Warning
+       !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to Any
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !! <REPL Input>:1:15: note: provide a default value to avoid this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              ?? <#default value#>
+       !! <REPL Input>:1:15: note: force-unwrap the value to avoid this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              !
+       !! <REPL Input>:1:15: note: explicitly cast to Any with 'as Any' to silence this warning
+       !! things.append(optionalNumber)        // Warning
+       !!               ^~~~~~~~~~~~~~
+       !!                              as Any
+       -> things.append(optionalNumber as Any) // No warning
+
+.. Rejected examples to illustrate AnyObject:
+
+.. Array of delegates which may conform to one or more of the class's delegate protocols.
+
+    protocol MovieDelegate {
+        func willPlay(movie: Movie)
+    }
+
+    class Library {
+        var delegates = [AnyObject]
+        ...
+    }
+
+    for delegate in delegates {
+        guard let delegate = delegate as MovieDelegate else { continue }
+        delegate.willPlay(movie: m)
+    }
+
+
+.. A userData object for associating some opaque piece of data or state with an API call.
+
+    class C {
+        // Not userInfo -- that's usually a Dictionary
+        let userData: AnyObject?  // In Cocoa APIs, userData is a void*
+    }

@@ -77,8 +77,9 @@ Declare extensions with the ``extension`` keyword:
       }
 
 An extension can extend an existing type to make it adopt one or more protocols.
-Where this is the case,
-the protocol names are written in exactly the same way as for a class or structure:
+To add protocol conformance,
+you write the protocol names
+the same way as you write them for a class or structure:
 
 .. testcode:: extensionSyntax
 
@@ -90,6 +91,11 @@ the protocol names are written in exactly the same way as for a class or structu
 
 Adding protocol conformance in this way is described in
 :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+
+An extension can be used to extend an existing generic type,
+as described in :ref:`Generics_ExtendingAGenericType`.
+You can also extend a generic type to conditionally add functionality,
+as described in :ref:`Generics_ExtensionWithWhereClause`.
 
 .. note::
 

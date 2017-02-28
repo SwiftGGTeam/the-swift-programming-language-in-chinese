@@ -149,8 +149,7 @@ Modifying Value Types from Within Instance Methods
 Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
-.. TODO: find out why.
-.. TODO: once I actually know why, explain it.
+.. TODO: find out why.  once I actually know why, explain it.
 
 However, if you need to modify the properties of your structure or enumeration
 within a particular method,
@@ -245,12 +244,12 @@ a different case from the same enumeration:
          case off, low, high
          mutating func next() {
             switch self {
-               case off:
-                  self = low
-               case low:
-                  self = high
-               case high:
-                  self = off
+               case .off:
+                  self = .low
+               case .low:
+                  self = .high
+               case .high:
+                  self = .off
             }
          }
       }
@@ -302,8 +301,7 @@ Here's how you call a type method on a class called ``SomeClass``:
 Within the body of a type method,
 the implicit ``self`` property refers to the type itself,
 rather than an instance of that type.
-For structures and enumerations,
-this means that you can use ``self`` to disambiguate between
+This means that you can use ``self`` to disambiguate between
 type properties and type method parameters,
 just as you do for instance properties and instance method parameters.
 
@@ -330,13 +328,17 @@ It also tracks the current level for an individual player.
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
-         static func unlock(_ level: Int) {
+         var currentLevel = 1
+   ---
+   ->    static func unlock(_ level: Int) {
             if level > highestUnlockedLevel { highestUnlockedLevel = level }
          }
-         static func isUnlocked(_ level: Int) -> Bool {
+   ---
+   ->    static func isUnlocked(_ level: Int) -> Bool {
             return level <= highestUnlockedLevel
          }
-         var currentLevel = 1
+   ---
+   ->    @discardableResult
          mutating func advance(to level: Int) -> Bool {
             if LevelTracker.isUnlocked(level) {
                currentLevel = level
@@ -370,6 +372,12 @@ Before updating ``currentLevel``,
 this method checks whether the requested new level is already unlocked.
 The ``advance(to:)`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
+Because it's not necessarily a mistake for
+code that calls the ``advance(to:)`` method
+to ignore the return value,
+this function is marked with the ``@discardableResult`` attribute.
+For more information about this attribute,
+see :doc:`../ReferenceManual/Attributes`.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
 to track and update the progress of an individual player:
@@ -433,5 +441,6 @@ the attempt to set the player's current level fails:
    var c = C()
    var boundFunc = c.foo   // a function with type (Int) -> Float
    var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+
 .. TODO: selector-style methods can be referenced as foo.bar:bas:
    (see Doug's comments from the 2014-03-12 release notes)

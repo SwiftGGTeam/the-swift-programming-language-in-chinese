@@ -37,7 +37,7 @@ Representing and Throwing Errors
 --------------------------------
 
 In Swift, errors are represented by
-values of types that conform to the ``ErrorProtocol`` protocol.
+values of types that conform to the ``Error`` protocol.
 This empty protocol indicates that a type
 can be used for error handling.
 
@@ -50,7 +50,7 @@ of operating a vending machine inside a game:
 
 .. testcode:: throw-enum-error
 
-   -> enum VendingMachineError: ErrorProtocol {
+   -> enum VendingMachineError: Error {
           case invalidSelection
           case insufficientFunds(coinsNeeded: Int)
           case outOfStock
@@ -146,8 +146,8 @@ you write the ``throws`` keyword before the return arrow (``->``).
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
-   -> func f(callback: () -> Int) { }
-   -> func f(callback: () throws -> Int) { } // Allowed
+   -> func f(callback: () -> Int) {}
+   -> func f(callback: () throws -> Int) {} // Allowed
 
 .. TODO: Add more assertions to test these behaviors
 
@@ -172,7 +172,7 @@ or has a cost that exceeds the current deposited amount:
 
 .. testcode:: errorHandling
 
-   >> enum VendingMachineError: ErrorProtocol {
+   >> enum VendingMachineError: Error {
    >>     case invalidSelection
    >>     case insufficientFunds(coinsNeeded: Int)
    >>     case outOfStock
@@ -375,7 +375,7 @@ in the following code ``x`` and ``y`` have the same value and behavior:
     -> }
     ---
     -> let x = try? someThrowingFunction()
-    >> print(x)
+    >> print(x as Any)
     << Optional(40)
     ---
     -> let y: Int?
@@ -384,7 +384,7 @@ in the following code ``x`` and ``y`` have the same value and behavior:
        } catch {
            y = nil
        }
-    >> print(y)
+    >> print(y as Any)
     << Optional(40)
 
 If ``someThrowingFunction()`` throws an error,
@@ -472,7 +472,7 @@ after code in the second, and so on.
    >>    func readline() throws -> String? { return nil }
    >> }
    >> func open(_ file: String) -> File { return File() }
-   >> func close(_ fileHandle: File) { }
+   >> func close(_ fileHandle: File) {}
    -> func processFile(filename: String) throws {
          if exists(filename) {
             let file = open(filename)

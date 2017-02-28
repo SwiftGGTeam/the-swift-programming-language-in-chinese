@@ -64,7 +64,8 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -155,7 +156,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
 
-.. TODO: mutating func sort(isOrderedBefore: (T, T) -> Bool)
+.. TODO: mutating func sort(by: (T, T) -> Bool)
    This is defined in Array.swift.
    Likewise I'm holding off writing about it until NewArray lands.
 
@@ -287,6 +288,16 @@ You can use subscript syntax to change an existing value at a given index:
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
 
+When you use subscript syntax,
+the index you specify needs to be valid.
+For example, writing ``shoppingList[shoppingList.count] = "Salt"``
+to try to append an item to the end of the array
+results in a runtime error.
+
+.. Unlike Ruby and Javascript, where accesing an invalid index
+   extends the array with nil or similar placeholder values,
+   to make that index become valid.
+
 You can also use subscript syntax to change a range of values at once,
 even if the replacement set of values has a different length than the range you are replacing.
 The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
@@ -297,10 +308,6 @@ with ``"Bananas"`` and ``"Apples"``:
    -> shoppingList[4...6] = ["Bananas", "Apples"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 6 items
-
-.. note::
-
-   You can't use subscript syntax to append a new item to the end of an array.
 
 To insert an item into the array at a specified index,
 call the array's ``insert(_:at:)`` method:
@@ -338,9 +345,10 @@ This method removes the item at the specified index and returns the removed item
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
-   Except when ``count`` is ``0`` (meaning the array is empty),
-   the largest valid index in an array will always be ``count - 1``,
-   because arrays are indexed from zero.
+   The largest valid index in an array is ``count - 1``
+   because arrays are indexed from zero ---
+   however, when ``count`` is ``0`` (meaning the array is empty),
+   there are no valid indexes.
 
 Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
@@ -388,7 +396,10 @@ If you need the integer index of each item as well as its value,
 use the ``enumerated()`` method to iterate over the array instead.
 For each item in the array,
 the ``enumerated()`` method returns a tuple
-composed of the index and the value for that item.
+composed of an integer and the item.
+The integers start at zero and count up by one for each item;
+if you enumerate over a whole array,
+these integers match the items' indices.
 You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
@@ -421,7 +432,8 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -502,7 +514,7 @@ you can create an empty set with an empty array literal:
 .. testcode:: setsEmpty
 
    -> letters.insert("a")
-   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (true, "a")
+   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (inserted: true, memberAfterInsert: "a")
    /> letters now contains \(letters.count) value of type Character
    </ letters now contains 1 value of type Character
    -> letters = []
@@ -588,7 +600,7 @@ You can add a new item into a set by calling the set's ``insert(_:)`` method:
 .. testcode:: setUsage
 
    -> favoriteGenres.insert("[Tool J]")
-   << // r0 : (inserted: Bool, memberAfterInsert: String) = (true, "[Tool J]")
+   << // r0 : (inserted: Bool, memberAfterInsert: String) = (inserted: true, memberAfterInsert: "[Tool J]")
    /> favoriteGenres now contains \(favoriteGenres.count) items
    </ favoriteGenres now contains 4 items
 
@@ -724,7 +736,7 @@ because they share no elements in common.
 * Use the ``isSubset(of:)`` method to determine whether all of the values of a set are contained in the specified set.
 * Use the ``isSuperset(of:)`` method to determine whether a set contains all of the values in a specified set.
 * Use the ``isStrictSubset(of:)`` or ``isStrictSuperset(of:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-* Use the ``isDisjoint(with:)`` method to determine whether two sets have any values in common.
+* Use the ``isDisjoint(with:)`` method to determine whether two sets have no values in common.
 
 .. testcode:: setOperations
 
@@ -766,7 +778,8 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 

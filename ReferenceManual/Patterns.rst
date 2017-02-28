@@ -193,10 +193,6 @@ an expression pattern:
     !! <REPL Input>:1:9: error: expected pattern
     !! for (x, 0) in points {
     !! ^
-    !! <REPL Input>:1:9: error: expected ',' separator
-    !! for (x, 0) in points {
-    !! ^
-    !! ,
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
@@ -274,25 +270,25 @@ Optional Pattern
 ----------------
 
 An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
-of an ``Optional<Wrapped>`` or ``ImplicitlyUnwrappedOptional<Wrapped>`` enumeration.
+of an ``Optional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
-and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+enumeration case patterns,
 the following are equivalent:
 
 .. testcode:: optional-pattern
 
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
-   -> // Match using an enumeration case pattern
+   -> // Match using an enumeration case pattern.
    -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42
    ---
-   -> // Match using an optional pattern
+   -> // Match using an optional pattern.
    -> if case let x? = someOptional {
          print(x)
       }
@@ -306,7 +302,7 @@ executing the body of the loop only for non-``nil`` elements.
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
    << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
-   -> // Match only non-nil values
+   -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
       }
@@ -343,7 +339,7 @@ but discard the returned type.
 The ``as`` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the ``as`` pattern---or a subclass of that type.
 If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the left-hand side
+the type of the matched value is cast to the *pattern* specified in the right-hand side
 of the ``as`` pattern.
 
 For an example that uses a ``switch`` statement
@@ -404,8 +400,8 @@ with a string representations of points.
 
 .. testcode:: expression-pattern
 
-    -> // Overload the ~= operator to match a string with an integer
-    -> func ~=(pattern: String, value: Int) -> Bool {
+    -> // Overload the ~= operator to match a string with an integer.
+    -> func ~= (pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }
     -> switch point {

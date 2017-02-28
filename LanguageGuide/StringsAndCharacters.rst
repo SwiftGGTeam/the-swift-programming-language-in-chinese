@@ -28,13 +28,13 @@ and provides support for accessing those characters in various Unicode represent
 .. note::
 
    Swift's ``String`` type is bridged with Foundation's ``NSString`` class.
-   If you are working with the Foundation framework in Cocoa,
-   the entire ``NSString`` API is available to call on any ``String`` value you create
-   when type cast to ``NSString``, as described in :ref:`TypeCasting_AnyObject`.
-   You can also use a ``String`` value with any API that requires an ``NSString`` instance.
+   Foundation also extends ``String`` to expose methods defined by ``NSString``.
+   This means, if you import Foundation,
+   you can access those ``NSString`` methods on ``String`` without casting.
 
    For more information about using ``String`` with Foundation and Cocoa,
-   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
+   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _StringsAndCharacters_Literals:
 
@@ -246,7 +246,7 @@ String Interpolation
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
 Each item that you insert into the string literal is wrapped in
-a pair of parentheses, prefixed by a backslash:
+a pair of parentheses, prefixed by a backslash (``\``):
 
 .. testcode:: stringInterpolation
 
@@ -471,7 +471,7 @@ with a fourth character of ``é``, not ``e``:
 
 .. note::
 
-   Extended grapheme clusters can be composed of one or more Unicode scalars.
+   Extended grapheme clusters can be composed of multiple Unicode scalars.
    This means that different characters—
    and different representations of the same character—
    can require different amounts of memory to store.
@@ -526,7 +526,7 @@ You access the indices before and after a given index
 using the ``index(before:)`` and ``index(after:)`` methods of ``String``.
 To access an index farther away from the given index,
 you can use the ``index(_:offsetBy:)`` method
-instead of calling one these methods multiple times.
+instead of calling one of these methods multiple times.
 
 You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
@@ -545,7 +545,7 @@ the ``Character`` at a particular ``String`` index.
    <$ : Character = "u"
    // u
    -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
-   <~ // index : Index = Swift.String.CharacterView.Index
+   <~ // index : String.Index = Swift.String.CharacterView.Index(
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -556,8 +556,11 @@ will trigger a runtime error.
 
 .. code-block:: swift
 
-   greeting[greeting.endIndex] // error
-   greeting.index(after: endIndex) // error
+   greeting[greeting.endIndex] // Error
+   greeting.index(after: greeting.endIndex) // Error
+
+.. The code above triggers an assertion failure in the stdlib, causing a stack
+   trace, which makes it a poor candidate for being tested.
 
 .. assertion:: emptyStringIndices
 
@@ -575,7 +578,7 @@ indices of individual characters in a string.
          print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
-   << G u t e n   T a g ! 
+   << G u t e n   T a g !
    // Prints "G u t e n   T a g ! "
 
 .. Workaround for rdar://26016325
@@ -584,7 +587,7 @@ indices of individual characters in a string.
 
    You can use the ``startIndex`` and ``endIndex`` properties
    and the ``index(before:)``, ``index(after:)``, and ``index(_:offsetBy:)`` methods
-   on any type that conforms to the ``Indexable`` protocol.
+   on any type that conforms to the ``Collection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
@@ -623,7 +626,7 @@ use the ``removeSubrange(_:)`` method:
    </ welcome now equals "hello there"
    ---
    -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
-   <~ // range : Range<Index> = Range(Swift.String.CharacterView.Index
+   <~ // range : Range<String.Index> = Range(Swift.String.CharacterView.Index(
    -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
@@ -634,7 +637,7 @@ use the ``removeSubrange(_:)`` method:
 
    You can use the the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
    ``remove(at:)``, and ``removeSubrange(_:)`` methods
-   on any type that conforms to the ``RangeReplaceableIndexable`` protocol.
+   on any type that conforms to the ``RangeReplaceableCollection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
@@ -908,7 +911,10 @@ one for each byte in the string's UTF-8 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 226 128 188 240 159 144 182
+   << 68 111 103 226 128 188 240 159 144 182
+   // Prints "68 111 103 226 128 188 240 159 144 182 "
+
+.. Workaround for rdar://26016325
 
 In the example above, the first three decimal ``codeUnit`` values
 (``68``, ``111``, ``103``)

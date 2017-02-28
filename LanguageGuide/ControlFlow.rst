@@ -183,6 +183,8 @@ This example plays a simple game of *Snakes and Ladders*
 The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25.
+* The player's starting square is “square zero”,
+  which is just off the bottom-left corner of the board.
 * Each turn, you roll a six-sided dice and move by that number of squares,
   following the horizontal path indicated by the dotted arrow above.
 * If your turn ends at the bottom of a ladder, you move up that ladder.
@@ -192,8 +194,8 @@ The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
-The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indexes ``0`` through ``25``).
+Because the players start off the board, on "square zero",
+the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
 
@@ -222,9 +224,6 @@ so that all board definitions align.
 (Neither stylistic tweak is strictly necessary,
 but they lead to neater code.)
 
-The player's starting square is “square zero”,
-which is just off the bottom-left corner of the board.
-The first dice roll always moves the player onto the board.
 
 .. testcode:: snakesAndLadders1
 
@@ -636,7 +635,7 @@ It is not valid to write the following code, because the first case is empty:
    !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
-   // this will report a compile-time error
+   // This will report a compile-time error.
 
 Unlike a ``switch`` statement in C,
 this ``switch`` statement does not match both ``"a"`` and ``"A"``.
@@ -690,7 +689,7 @@ to provide a natural-language count for numbers of any size:
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
-   -> var naturalCount: String
+   -> let naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
@@ -963,12 +962,13 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
+   -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
+   << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
    -> for character in puzzleInput.characters {
-         switch character {
-            case "a", "e", "i", "o", "u", " ":
-               continue
-            default:
-               puzzleOutput.append(character)
+         if charactersToRemove.contains(character) {
+            continue
+         } else {
+            puzzleOutput.append(character)
          }
       }
    -> print(puzzleOutput)
@@ -977,9 +977,6 @@ to create a cryptic puzzle phrase:
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
-This behavior enables the switch block to match (and ignore) only
-the vowel and space characters,
-rather than requiring the block to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
@@ -998,7 +995,7 @@ Break in a Loop Statement
 
 When used inside a loop statement,
 ``break`` ends the loop's execution immediately
-and transfers control to the first line of code after the loop's closing brace (``}``).
+and transfers control to the code after the loop's closing brace (``}``).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
@@ -1011,7 +1008,7 @@ Break in a Switch Statement
 
 When used inside a ``switch`` statement,
 ``break`` causes the ``switch`` statement to end its execution immediately
-and to transfer control to the first line of code after
+and to transfer control to the code after
 the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
@@ -1405,26 +1402,35 @@ when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
 
-   -> if #available(iOS 9, OSX 10.10, *) {
-          // Use iOS 9 APIs on iOS, and use OS X v10.10 APIs on OS X
+   -> if #available(iOS 10, macOS 10.12, *) {
+          // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
       } else {
-          // Fall back to earlier iOS and OS X APIs
+          // Fall back to earlier iOS and macOS APIs
       }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The availability condition above specifies that on iOS,
-the body of the ``if`` executes only on iOS 9 and later;
-on OS X, only on OS X v10.10 and later.
+the body of the ``if`` executes only on iOS 10 and later;
+on macOS, only on macOS 10.12 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use platform names such as ``iOS``, ``OSX``, ``watchOS``, and ``tvOS`` ---
+You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
 for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8,
-you can specify minor versions numbers like iOS 8.3 and OS X v10.10.3.
+you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
+
+.. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
+    even though the new editorial guidelines state to only use "macOS"
+    for versions of the OS that are 10.12 and later.
+    However, in the context in which this appears,
+    the more helpful thing to do is to use "macOS",
+    especially because that's what you're going to use in the language.
+    When we have an minor version of 10.12 to use as an example here,
+    we should use that instead.
 
 .. syntax-outline::
 

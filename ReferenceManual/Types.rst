@@ -26,6 +26,10 @@ For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
+You can put parentheses around a named type or a compound type.
+However, adding parentheses around a type doesn't have any effect.
+For example, ``(Int)`` is equivalent to ``Int``.
+
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
@@ -44,7 +48,18 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | dictionary-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type
+    type --> array-type
+    type --> dictionary-type
+    type --> function-type
+    type --> type-identifier
+    type --> tuple-type
+    type --> optional-type
+    type --> implicitly-unwrapped-optional-type
+    type --> protocol-composition-type
+    type --> metatype-type
+    type --> ``Any``
+    type --> ``Self``
+    type --> ``(`` type ``)``
 
 
 .. _Types_TypeAnnotation:
@@ -62,7 +77,7 @@ as the following examples show:
     << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
-.. x* Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 In the first example,
 the expression ``someTuple`` is specified to have the tuple type ``(Double, Double)``.
@@ -127,12 +142,13 @@ that is declared in the ``ExampleModule`` module.
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
+
 .. _Types_TupleType:
 
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of zero or more types, enclosed in parentheses.
+A tuple type is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
@@ -141,12 +157,23 @@ the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
 these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
-``Void`` is a type alias for the empty tuple type, ``()``.
-If there is only one element inside the parentheses,
-the type is simply the type of that element.
-For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
-As a result, you can name a tuple element only when the tuple type has two
-or more elements.
+When an element of a tuple type has a name,
+that name is part of the type.
+
+.. testcode:: tuple-type-names
+
+   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
+   << // someTuple : (top: Int, bottom: Int) = (top: 10, bottom: 12)
+   -> someTuple = (top: 4, bottom: 42) // OK: names match
+   -> someTuple = (9, 99)              // OK: names are inferred
+   -> someTuple = (left: 5, right: 5)  // Error: names don't match
+   !! <REPL Input>:1:13: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
+   !! someTuple = (left: 5, right: 5)  // Error: names don't match
+   !!             ^~~~~~~~~~~~~~~~~~~
+   !!                         as! (top: Int, bottom: Int)
+
+All tuple types contain two or more types,
+except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 
 .. langref-grammar
 
@@ -159,10 +186,9 @@ or more elements.
 
     Grammar of a tuple type
 
-    tuple-type --> ``(`` tuple-type-body-OPT ``)``
-    tuple-type-body --> tuple-type-element-list ``...``-OPT
+    tuple-type --> ``(`` ``)`` | ``(`` tuple-type-element ``,`` tuple-type-element-list ``)``
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attributes-OPT ``inout``-OPT type | element-name type-annotation
+    tuple-type-element --> element-name type-annotation | type
     element-name --> identifier
 
 
@@ -178,9 +204,10 @@ and consists of a parameter and return type separated by an arrow (``->``):
 
     (<#parameter type#>) -> <#return type#>
 
-Because the *parameter type* and the *return type* can be a tuple type,
-function types support functions and methods that take multiple parameters
-and return multiple values.
+The *parameter type* is comma-separated list of types.
+Because the *return type* can be a tuple type,
+function types support functions and methods
+that return multiple values.
 
 A parameter of the function type ``() -> T``
 (where ``T`` is any type)
@@ -204,6 +231,72 @@ see :ref:`Functions_VariadicParameters`.
 To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
 You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
+
+If a function type has only one parameter
+and that parameter's type is a tuple type,
+then the tuple type must be parenthesized when writing the function's type.
+For example,
+``((Int, Int)) -> Void``
+is the type of a function that takes a single parameter
+of the tuple type ``(Int, Int)``
+and doesn't return any value.
+In contrast, without parentheses,
+``(Int, Int) -> Void`` is the type
+of a function that takes two ``Int`` parameters
+and doesn't return any value.
+
+Argument names in functions and methods
+are not part of the corresponding function type.
+For example:
+
+.. testcode::
+
+   -> func someFunction(left: Int, right: Int) {}
+   -> func anotherFunction(left: Int, right: Int) {}
+   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
+   ---
+   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
+   << // f : (Int, Int) -> () = (Function)
+   -> f = anotherFunction              // OK
+   -> f = functionWithDifferentLabels  // OK
+   ---
+   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
+   -> f = functionWithDifferentArgumentTypes     // Error
+   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
+   !! f = functionWithDifferentArgumentTypes     // Error
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
+   -> f = functionWithDifferentNumberOfArguments // Error
+   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
+   !! f = functionWithDifferentNumberOfArguments // Error
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because argument labels are not part of a function's type,
+you omit them when writing a function type.
+
+.. testcode::
+
+   -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !! <REPL Input>:1:17: error: function types cannot have argument labels; use '_' before 'lhs'
+   !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!                    ^
+   !!                    _
+   !! <REPL Input>:1:27: error: function types cannot have argument labels; use '_' before 'rhs'
+   !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!                              ^
+   !!                              _
+   -> var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
+   !!    var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+   !!    ^
+   -> var operation: (Int, Int) -> Int               // OK
+   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
+   !!    var operation: (Int, Int) -> Int               // OK
+   !!    ^
+
+.. The last two lines of the test above shouldn't really fail,
+   but this is a limitation of the REPL.
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
@@ -246,8 +339,15 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
     Grammar of a function type
 
-    function-type --> ``(`` type ``)`` ``throws``-OPT ``->`` type
-    function-type --> ``(`` type ``)`` ``rethrows`` ``->`` type
+    function-type --> attributes-OPT function-type-argument-clause ``throws``-OPT ``->`` type
+    function-type --> attributes-OPT function-type-argument-clause ``rethrows`` ``->`` type
+
+    function-type-argument-clause --> ``(`` ``)``
+    function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
+
+    function-type-argument-list --> function-type-argument | function-type-argument ``,`` function-type-argument-list
+    function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label type-annotation
+    argument-label --> identifier
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
@@ -462,38 +562,47 @@ Implicitly Unwrapped Optional Type
 ----------------------------------
 
 The Swift language defines the postfix ``!`` as syntactic sugar for
-the named type ``ImplicitlyUnwrappedOptional<Wrapped>``,
-which is defined in the Swift standard library.
-In other words, the following two declarations are equivalent:
+the named type ``Optional<Wrapped>``, which is defined in the Swift standard library,
+with the additional behavior that
+it's automatically unwrapped when it's accessed.
+If you try to use an implicitly unwrapped optional that has a value of ``nil``,
+you'll get a runtime error.
+With the exception of the implicit unwrapping behavior,
+the following two declarations are equivalent:
 
 .. code-block:: swift
 
     var implicitlyUnwrappedString: String!
-    var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    var explicitlyUnwrappedString: Optional<String>
 
-.. assertion:: implictly-unwrapped-optional
-
-    >> var implicitlyUnwrappedString1: String!
-    << // implicitlyUnwrappedString1 : String! = nil
-    >> var implicitlyUnwrappedString2: ImplicitlyUnwrappedOptional<String>
-    << // implicitlyUnwrappedString2 : ImplicitlyUnwrappedOptional<String> = nil
-
-In both cases, the variable ``implicitlyUnwrappedString``
-is declared to have the type of an implicitly unwrapped optional string.
 Note that no whitespace may appear between the type and the ``!``.
 
-You can use implicitly unwrapped optionals in all the same places in your code
-that you can use optionals. For instance, you can assign values of implicitly unwrapped
+Because implicit unwrapping
+changes the meaning of the declaration that contains that type,
+optional types that are nested inside a tuple type or a generic type
+--- such as the element types of a dictionary or array ---
+can't be marked as implicitly unwrapped.
+For example:
+
+.. code-block:: swift
+
+    let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // Error
+    let implicitlyUnwrappedTuple: (Int, Int)!             // OK
+
+    let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
+    let implicitlyUnwrappedArray: [Int]!                  // OK
+
+Because implicitly unwrapped optionals
+have the same ``Optional<Wrapped>`` type as optional values,
+you can use implicitly unwrapped optionals
+in all the same places in your code
+that you can use optionals.
+For instance, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
 implicitly unwrapped optional variable or property,
 its value automatically defaults to ``nil``.
-
-Because the value of an implicitly unwrapped optional is automatically unwrapped
-when you use it, there's no need to use the ``!`` operator to unwrap it. That said,
-if you try to use an implicitly unwrapped optional that has a value of ``nil``,
-you'll get a runtime error.
 
 Use optional chaining to conditionally perform an
 operation on an implicitly unwrapped optional expression.
@@ -502,8 +611,6 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types,
 see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
-
-.. TODO Add a link to the ImplicitlyUnwrappedOptional Enum Reference page.
 
 .. syntax-grammar::
 
@@ -519,27 +626,28 @@ Protocol Composition Type
 
 A protocol composition type describes a type that conforms to each protocol
 in a list of specified protocols.
-Protocol composition types may be used in type annotations and in generic parameters.
+Protocol composition types may be used only in type annotations and in generic parameters.
+
+.. In places where a comma-separated list of types is allowed,
+   the P&Q syntax isn't allowed.
 
 Protocol composition types have the following form:
 
 .. syntax-outline::
 
-    protocol<<#Protocol 1#>, <#Protocol 2#>>
+    <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
 of multiple protocols without having to explicitly define a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``protocol<ProtocolA, ProtocolB, ProtocolC>`` is
+specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
 
 Each item in a protocol composition list
 must be either the name of protocol or a type alias of a protocol composition type.
-If the list is empty, it specifies the empty protocol composition type,
-which every type conforms to.
 
 .. langref-grammar
 
@@ -550,9 +658,10 @@ which every type conforms to.
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> ``protocol`` ``<`` protocol-identifier-list-OPT ``>``
-    protocol-identifier-list --> protocol-identifier | protocol-identifier ``,`` protocol-identifier-list
+    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> protocol-identifier | protocol-composition-type
     protocol-identifier --> type-identifier
+
 
 .. _Types_MetatypeType:
 
@@ -575,7 +684,7 @@ For example, ``SomeClass.self`` returns ``SomeClass`` itself,
 not an instance of ``SomeClass``.
 And ``SomeProtocol.self`` returns ``SomeProtocol`` itself,
 not an instance of a type that conforms to ``SomeProtocol`` at runtime.
-You can use a ``dynamicType`` expression with an instance of a type
+You can call the ``type(of:)`` function with an instance of a type
 to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
@@ -595,20 +704,12 @@ as the following example shows:
     << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
     -> // and the runtime type of someInstance is SomeSubClass
-    -> someInstance.dynamicType.printClassName()
+    -> type(of: someInstance).printClassName()
     <- SomeSubClass
 
-Use the identity operators (``===``  and ``!==``) to test
-whether an instance's runtime type is the same as its compile-time type.
-
-.. testcode:: metatype-type
-
-    -> if someInstance.dynamicType === someInstance.self {
-          print("The dynamic and static type of someInstance are the same")
-       } else {
-          print("The dynamic and static type of someInstance are different")
-       }
-    <- The dynamic and static type of someInstance are different
+For more information,
+see `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+in the Swift standard library.
 
 Use an initializer expression to construct an instance of a type
 from that type's metatype value.

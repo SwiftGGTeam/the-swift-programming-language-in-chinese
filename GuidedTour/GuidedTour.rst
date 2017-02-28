@@ -53,9 +53,6 @@ that you determine once but use in many places.
    -> let myConstant = 42
    << // myConstant : Int = 42
 
-.. TR: Is the requirement that constants need an initial value
-   a current REPL limitation, or an expected language feature?
-
 A constant or variable must have the same type
 as the value you want to assign to it.
 However, you don't always have to write the type explicitly.
@@ -388,7 +385,7 @@ ensuring that the loop is run at least once.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-          n = n * 2
+          n *= 2
       }
    -> print(n)
    << 128
@@ -396,10 +393,12 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> repeat {
-          m = m * 2
+          m *= 2
       } while m < 100
    -> print(m)
    << 128
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
@@ -489,7 +488,7 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
+    << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
     << 120
     -> print(statistics.2)
@@ -584,8 +583,7 @@ Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
 
-    -> numbers.map({
-           (number: Int) -> Int in
+    -> numbers.map({ (number: Int) -> Int in
            let result = 3 * number
            return result
        })
@@ -735,7 +733,7 @@ that don't actually override any method in the superclass.
                numberOfSides = 4
            }
     ---
-           func area() ->  Double {
+           func area() -> Double {
                return sideLength * sideLength
            }
     ---
@@ -930,6 +928,8 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
+It returns either the enumeration case matching the raw value
+or ``nil`` if there is no matching ``Rank``.
 
 .. testcode:: guided-tour
 
@@ -987,49 +987,21 @@ because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Use ``struct`` to create a structure.
-Structures support many of the same behaviors as classes,
-including methods and initializers.
-One of the most important differences
-between structures and classes is that
-structures are always copied when they are passed around in your code,
-but classes are passed by reference.
-
-.. testcode:: guided-tour
-
-    -> struct Card {
-           var rank: Rank
-           var suit: Suit
-           func simpleDescription() -> String {
-               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-           }
-       }
-    -> let threeOfSpades = Card(rank: .three, suit: .spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
-    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
-
-.. admonition:: Experiment
-
-   Add a method to ``Card`` that creates
-   a full deck of cards,
-   with one card of each combination of rank and suit.
-
-An instance of an enumeration case
-can have values associated with the instance.
-Instances of the same enumeration case
-can have different values associated with them.
-You provide the associated values when you create the instance.
-Associated values and raw values are different:
-The raw value of an enumeration case
-is the same for all of its instances,
-and you provide the raw value when you define the enumeration.
-
+If an enumeration has raw values,
+those values are determined as part of the declaration,
+which means every instance of a particular enumeration case
+always has the same raw value.
+Another choice for enumeration cases
+is to have values associated with the case ---
+these values are determined when you make the instance,
+and they can be different for each instance of an enumeration case.
+You can think of the associated values
+as behaving like stored properties of the enumeration case instance.
 For example,
 consider the case of requesting
-the sunrise and sunset time from a server.
-The server either responds with the information
-or it responds with some error information.
+the sunrise and sunset times from a server.
+The server either responds with the requested information,
+or it responds with a description of what went wrong.
 
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
@@ -1090,6 +1062,34 @@ or it responds with some error information.
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of matching the value against the switch cases.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code,
+but classes are passed by reference.
+
+.. testcode:: guided-tour
+
+    -> struct Card {
+           var rank: Rank
+           var suit: Suit
+           func simpleDescription() -> String {
+               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+           }
+       }
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
+    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
 
 Protocols and Extensions
 ------------------------
@@ -1198,14 +1198,14 @@ in addition to its protocol conformance.
 Error Handling
 --------------
 
-You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
+You represent errors using any type that adopts the ``Error`` protocol.
 
 .. REFERENCE
    PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
    fire" error message, used when the kernel can't identify the specific error.
    The names of printers used in the examples in this section are names of
    people who were important in the development of printing.
-   
+
    Bi Sheng is credited with inventing the first movable type out of porcelain
    in China in the 1040s.  It was a mixed success, in large part because of the
    vast number of characters needed to write Chinese, and failed to replace
@@ -1219,7 +1219,7 @@ You represent errors using any type that adopts the ``ErrorProtocol`` protocol.
 
 .. testcode:: guided-tour
 
-    -> enum PrinterError: ErrorProtocol {
+    -> enum PrinterError: Error {
            case outOfPaper
            case noToner
            case onFire
@@ -1246,7 +1246,7 @@ Inside the ``do`` block,
 you mark code that can throw an error by writing ``try`` in front of it.
 Inside the ``catch`` block,
 the error is automatically given the name ``error``
-unless you can give it a different name.
+unless you give it a different name.
 
 .. testcode:: guided-tour
 
@@ -1383,7 +1383,7 @@ as well as classes, enumerations, and structures.
     << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
     -> possibleInteger = .some(100)
 
-Use ``where`` after the type name
+Use ``where`` right before the body
 to specify a list of requirements ---
 for example,
 to require the type to implement a protocol,
@@ -1392,7 +1392,8 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements<T: Sequence, U: Sequence where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element>(_ lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1412,4 +1413,4 @@ or to require a class to have a particular superclass.
    of the elements that any two sequences have in common.
 
 Writing ``<T: Equatable>``
-is the same as writing ``<T where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable``.

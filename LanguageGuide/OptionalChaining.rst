@@ -239,10 +239,10 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingName != nil {
-                return buildingName
-            } else if buildingNumber != nil && street != nil {
+            if let buildingNumber = buildingNumber, let street = street {
                 return "\(buildingNumber) \(street)"
+            } else if buildingName != nil {
+                return buildingName
             } else {
                 return nil
             }
@@ -321,7 +321,7 @@ whether the right hand side of the ``=`` operator was evaluated.
           return someAddress
       }
    -> john.residence?.address = createAddress()
-   >> createAddress()
+   >> let _ = createAddress()
    << Function was called.
 
 You can tell that the ``createAddress()`` function isn't called,

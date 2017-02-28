@@ -177,7 +177,7 @@ neither of which is shown in full:
          DataImporter is a class to import data from an external file.
          The class is assumed to take a non-trivial amount of time to initialize.
          */
-         var fileName = "data.txt"
+         var filename = "data.txt"
          // the DataImporter class would provide data importing functionality here
    >>    init() {
    >>       print("the DataImporter instance for the importer property has now been created")
@@ -221,11 +221,11 @@ if and when it is first used.
 Because it is marked with the ``lazy`` modifier,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
-such as when its ``fileName`` property is queried:
+such as when its ``filename`` property is queried:
 
 .. testcode:: lazyProperties
 
-   -> print(manager.importer.fileName)
+   -> print(manager.importer.filename)
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
@@ -306,7 +306,7 @@ to retrieve and set other properties and values indirectly.
 
 This example defines three structures for working with geometric shapes:
 
-* ``Point`` encapsulates an ``(x, y)`` coordinate.
+* ``Point`` encapsulates the x- and y-coordinate of a point.
 * ``Size`` encapsulates a ``width`` and a ``height``.
 * ``Rect`` defines a rectangle by an origin point and a size.
 

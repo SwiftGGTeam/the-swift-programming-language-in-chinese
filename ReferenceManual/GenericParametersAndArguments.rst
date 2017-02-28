@@ -13,8 +13,8 @@ For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
 .. NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
     because they are declared with one or more type parameters.
 
-.. _GenericParametersAndArguments_GenericParameterClause:
 
+.. _GenericParametersAndArguments_GenericParameterClause:
 
 Generic Parameter Clause
 ------------------------
@@ -22,12 +22,11 @@ Generic Parameter Clause
 A :newTerm:`generic parameter clause` specifies the type parameters of a generic
 type or function, along with any associated constraints and requirements on those parameters.
 A generic parameter clause is enclosed in angle brackets (<>)
-and has one of the following forms:
+and has the following form:
 
 .. syntax-outline::
 
     <<#generic parameter list#>>
-    <<#generic parameter list#> where <#requirements#>>
 
 The *generic parameter list* is a comma-separated list of generic parameters,
 each of which has the following form:
@@ -75,35 +74,36 @@ to the function or initializer.
 
 .. _GenericParametersAndArguments_WhereClauses:
 
-Where Clauses
-~~~~~~~~~~~~~
+Generic Where Clauses
+~~~~~~~~~~~~~~~~~~~~~
 
 You can specify additional requirements on type parameters and their associated types
-by including a ``where`` clause after the *generic parameter list*.
-A ``where`` clause consists of the ``where`` keyword,
+by including a generic ``where`` clause right before the opening curly brace
+of a type or function's body.
+A generic ``where`` clause consists of the ``where`` keyword,
 followed by a comma-separated list of one or more *requirements*.
 
-The *requirements* in a ``where`` clause specify that a type parameter inherits from
-a class or conforms to a protocol or protocol composition.
-Although the ``where`` clause provides syntactic
-sugar for expressing simple constraints on type parameters
-(for instance, ``T: Comparable`` is equivalent to ``T where T: Comparable`` and so on),
-you can use it to provide more complex constraints on type parameters
-and their associated types. For instance, you can express the constraints that
-a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`` as
-``<T where T: C, T: P>``.
+.. syntax-outline::
 
-As mentioned above,
+    where <#requirements#>
+
+The *requirements* in a generic ``where`` clause specify that a type parameter inherits from
+a class or conforms to a protocol or protocol composition.
+Although the generic ``where`` clause provides syntactic
+sugar for expressing simple constraints on type parameters
+(for instance, ``<T: Comparable>`` is equivalent to ``<T> where T: Comparable`` and so on),
+you can use it to provide more complex constraints on type parameters
+and their associated types. For instance,
 you can constrain the associated types of type parameters to conform to protocols.
-For example, the generic parameter clause ``<S: Sequence where S.Iterator.Element: Equatable>``
+For example, ``<S: Sequence> where S.Iterator.Element: Equatable``
 specifies that ``S`` conforms to the ``Sequence`` protocol
 and that the associated type ``S.Iterator.Element``
 conforms to the ``Equatable`` protocol.
 This constraint ensures that each element of the sequence is equatable.
 
 You can also specify the requirement that two types be identical,
-using the ``==`` operator. For example, the generic parameter clause
-``<S1: Sequence, S2: Sequence where S1.Iterator.Element == S2.Iterator.Element>``
+using the ``==`` operator. For example,
+``<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element``
 expresses the constraints that ``S1`` and ``S2`` conform to the ``Sequence`` protocol
 and that the elements of both sequences must be of the same type.
 
@@ -111,10 +111,14 @@ Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
 You can overload a generic function or initializer by providing different
-constraints, requirements, or both on the type parameters in the generic parameter clause.
+constraints, requirements, or both on the type parameters.
 When you call an overloaded generic function or initializer,
 the compiler uses these constraints to resolve which overloaded function
 or initializer to invoke.
+
+For more information about generic ``where`` clauses and to see an example
+of one in a generic function declaration,
+see :ref:`Generics_WhereClauses`.
 
 .. langref-grammar
 
@@ -133,13 +137,13 @@ or initializer to invoke.
 
     Grammar of a generic parameter clause
 
-    generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
+    generic-parameter-clause --> ``<`` generic-parameter-list ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
     generic-parameter --> type-name
     generic-parameter --> type-name ``:`` type-identifier
     generic-parameter --> type-name ``:`` protocol-composition-type
 
-    requirement-clause --> ``where`` requirement-list
+    generic-where-clause --> ``where`` requirement-list
     requirement-list --> requirement | requirement ``,`` requirement-list
     requirement --> conformance-requirement | same-type-requirement
 
@@ -149,7 +153,7 @@ or initializer to invoke.
 
 .. NOTE: A conformance requirement can only have one type after the colon,
     otherwise, you'd have a syntactic ambiguity
-    (a comma separated list types inside of a comma separated list of requirements).
+    (a comma-separated list types inside of a comma-separated list of requirements).
 
 
 .. _GenericParametersAndArguments_GenericArgumentClause:
@@ -175,7 +179,7 @@ generic dictionary type.
 
 .. code-block:: swift
 
-    struct Dictionary<Key: Hashable, Value>: Collection, DictionaryLiteralConvertible {
+    struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
         /* ... */
     }
 
@@ -185,7 +189,7 @@ The specialized version of the generic ``Dictionary`` type, ``Dictionary<String,
 is formed by replacing the generic parameters ``Key: Hashable`` and ``Value``
 with the concrete type arguments ``String`` and ``Int``. Each type argument must satisfy
 all the constraints of the generic parameter it replaces, including any additional
-requirements specified in a ``where`` clause. In the example above,
+requirements specified in a generic ``where`` clause. In the example above,
 the ``Key`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.
 
