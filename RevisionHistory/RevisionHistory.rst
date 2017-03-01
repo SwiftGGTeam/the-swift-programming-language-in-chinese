@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-03-06  * Removed Dynamic Type Expression section
+2017-03-07  * Removed Dynamic Type Expression section
               from the :doc:`../ReferenceManual/Expressions` chapter,
               now that ``type(of:)`` is a standard library function.
 ----------  ----------------------------------------------------------------------------------------------
