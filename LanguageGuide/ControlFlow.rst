@@ -980,7 +980,7 @@ Break
 ~~~~~
 
 The ``break`` statement ends execution of an entire control flow statement immediately.
-The ``break`` statement can be used inside a ``switch`` statement or any loop statement
+The ``break`` statement can be used inside a ``switch`` or loop statement
 when you want to terminate the execution of the ``switch`` or loop statement
 earlier than would otherwise be the case.
 
