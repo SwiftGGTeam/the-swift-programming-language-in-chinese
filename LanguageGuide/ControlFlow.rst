@@ -128,7 +128,7 @@ The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
-by ``3``, ``10`` times,
+by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
