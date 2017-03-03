@@ -609,7 +609,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
