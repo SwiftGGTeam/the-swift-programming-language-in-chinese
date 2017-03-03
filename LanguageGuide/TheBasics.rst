@@ -1516,14 +1516,6 @@ and helps makes the problem easier to debug.
 
     precondition vs fatalError — not meant to be much semantic difference
 
-..  Suitable scenarios for an assertion check include:
-
-    * An integer subscript index is passed to a custom subscript implementation,
-      but the subscript index value could be too low or too high.
-
-    * A value is passed to a function,
-      but an invalid value means that the function cannot fulfill its task.
-
 .. assertions are for checking things during debugging
    they're protection against mistakes you make during development
 
