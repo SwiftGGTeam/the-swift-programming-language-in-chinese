@@ -353,7 +353,7 @@ You can apply a declaration attribute to declarations only.
 
     If you do not use this attribute,
     supply a ``main.swift`` file with code at the top level
-    that call the `UIApplicationMain(_:_:_:_:) <//apple_ref/swift/func/c:@F@UIApplicationMain>`_ function.
+    that calls the `UIApplicationMain(_:_:_:_:) <//apple_ref/swift/func/c:@F@UIApplicationMain>`_ function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
     as its principal class,
