@@ -1448,15 +1448,6 @@ you can use a precondition in your code to end code execution.
 You write a precondition by calling
 the Swift standard library ``precondition(_:_:file:line:)`` function.
 
-..  A precondition, like an assertion,
-    is a runtime check that a Boolean condition definitely evaluates to ``true``.
-    If the condition evaluates to ``true``, code execution continues as usual;
-    if the condition evaluates to ``false``, code execution ends, and your app is terminated.
-    Unlike an assertion, preconditions are checked in both debug builds
-    when your code is compiled with optimizations.
-    However, when your code is build in "unchecked" mode (``-Ounchecked``),
-    the compiler may assume that preconditions are always true.
-
 Use precondition whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
 For example, use a precondition to check that a subscript is not out of bounds,
