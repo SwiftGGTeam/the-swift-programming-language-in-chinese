@@ -299,7 +299,7 @@ to move the player up or down any ladders or snakes.
 
    If this check is not performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
-   which triggers an error.
+   which would trigger a runtime error.
 
 The current ``while`` loop execution then ends,
 and the loop's condition is checked to see if the loop should be executed again.
