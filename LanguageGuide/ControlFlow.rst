@@ -148,9 +148,9 @@ For more on ranges, see :ref:`BasicOperators_RangeOperators`.
    << // minutes : Int = 60
    >> var result = [Int]()
    << // result : [Int] = []
-   -> for index in 0..<minutes {
-         // render the mark each minute (60 times)
-   >>    result.append(index)
+   -> for tickMark in 0..<minutes {
+         // render the tick mark each minute (60 times)
+   >>    result.append(tickMark)
       }
    >> print(result.first!, result.last!, result.count)
    << 0 59 60
@@ -161,12 +161,12 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
 .. testcode:: forLoops
 
-   -> let hashInterval = 5
-   << // hashInterval : Int = 5
+   -> let minuteInterval = 5
+   << // minuteInterval : Int = 5
    >> result = [Int]()
-   -> for index in stride(from: 0, to: minutes, by: hashInterval) {
-         // render the 5 minute mark (0, 5, 10, 15 ... 45, 50, 55)
-   >>      result.append(index)
+   -> for tickMark in stride(from: 0, to: minutes, by: markInterval) {
+         // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
+   >>      result.append(tickMark)
       }
    >> print(result.first!, result.last!, result.count)
    << 0 55 12
@@ -179,9 +179,9 @@ Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
    << // hours : Int = 12
    -> let hourInterval = 3
    << // hourInterval : Int = 3
-   -> for index in stride(from: 3, through: hours, by: hourInterval) {
-         // render the hourly mark for 3, 6, 9 and 12.
-   >>    print(index)
+   -> for tickMark in stride(from: 3, through: hours, by: hourInterval) {
+         // render the tick mark every 3 hours (3, 6, 9, 12)
+   >>    print(tickMark)
       }
    << 3
    << 6
