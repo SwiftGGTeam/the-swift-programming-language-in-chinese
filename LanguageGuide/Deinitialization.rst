@@ -133,7 +133,7 @@ The optional lets you track whether there is currently a player in the game.
 
 Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
-and whenever its ``winCoins(_:)`` method is called:
+and whenever its ``win(coins:)`` method is called:
 
 .. testcode:: deinitializer
 

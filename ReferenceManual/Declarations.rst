@@ -983,7 +983,6 @@ the error thrown by ``alwaysThrows()``.
             throw AnotherError.error
          }
       }
-
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
@@ -1514,7 +1513,7 @@ inherited when the subclass meets the conditions described in
 :ref:`Initialization_AutomaticInitializerInheritance`.
 Swift classes do not inherit from a universal base class.
 
-There are two ways create an instance of a previously declared class:
+There are two ways to create an instance of a previously declared class:
 
 * Call one of the initializers declared within the class,
   as described in :ref:`Initialization_Initializers`.

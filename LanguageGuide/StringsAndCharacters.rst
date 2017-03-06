@@ -246,7 +246,7 @@ String Interpolation
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
 Each item that you insert into the string literal is wrapped in
-a pair of parentheses, prefixed by a backslash:
+a pair of parentheses, prefixed by a backslash (``\``):
 
 .. testcode:: stringInterpolation
 
@@ -609,7 +609,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 

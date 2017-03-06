@@ -11,10 +11,8 @@ to transfer the flow of execution to another point in your code.
 Swift also provides a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-Swift's ``switch`` statement is also considerably more powerful
+Swift's ``switch`` statement is considerably more powerful
 than its counterpart in many C-like languages.
-Because the cases of a ``switch`` statement do not fall through to the next case in Swift,
-it avoids common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
 including interval matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
@@ -275,11 +273,11 @@ Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, ``board[03]`` is equal to ``+08``,
 which is equivalent to an integer value of ``8``
 (the difference between ``3`` and ``11``).
-The unary plus operator (``+i``) balances with
-the unary minus operator (``-i``),
-and numbers lower than ``10`` are padded with zeros
-so that all board definitions align.
-(Neither stylistic tweak is strictly necessary,
+To align the values and statements,
+the unary plus operator (``+i``) is explicitly used with
+the unary minus operator (``-i``)
+and numbers lower than ``10`` are padded with zeros.
+(Neither stylistic technique is strictly necessary,
 but they lead to neater code.)
 
 
@@ -350,18 +348,16 @@ After rolling the dice, the player moves forward by ``diceRoll`` squares.
 It's possible that the dice roll may have moved the player beyond square 25,
 in which case the game is over.
 To cope with this scenario,
-the code checks that ``square`` is less than the ``board`` array's ``count`` property
-before adding the value stored in ``board[square]`` onto the current ``square`` value
+the code checks that ``square`` is less than the ``board`` array's ``count`` property.
+If ``square`` is valid, the value stored in ``board[square]`` is added
+to the current ``square`` value
 to move the player up or down any ladders or snakes.
 
 .. note::
 
-   Had this check not been performed,
+   If this check is not performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
-   which would trigger an error.
-   If ``square`` were equal to ``26``,
-   the code would try to check the value of ``board[26]``,
-   which is larger than the size of the array.
+   which would trigger a runtime error.
 
 The current ``while`` loop execution then ends,
 and the loop's condition is checked to see if the loop should be executed again.
@@ -482,7 +478,7 @@ In the ``repeat``-``while`` loop above,
 ``square += board[square]`` is always executed *immediately after*
 the loop's ``while`` condition confirms that ``square`` is still on the board.
 This behavior removes the need for the array bounds check
-seen in the earlier version of the game.
+seen in the ``while`` loop version of the game described earlier.
 
 .. _ControlFlow_ConditionalStatements:
 
@@ -747,7 +743,7 @@ to provide a natural-language count for numbers of any size:
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
-   -> var naturalCount: String
+   -> let naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
@@ -792,15 +788,15 @@ and categorizes it on the graph that follows the example.
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
-            print("(0, 0) is at the origin")
+            print("\(somePoint) is at the origin")
          case (_, 0):
-            print("(\(somePoint.0), 0) is on the x-axis")
+            print("\(somePoint) is on the x-axis")
          case (0, _):
-            print("(0, \(somePoint.1)) is on the y-axis")
+            print("\(somePoint) is on the y-axis")
          case (-2...2, -2...2):
-            print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            print("\(somePoint) is inside the box")
          default:
-            print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+            print("\(somePoint) is outside of the box")
       }
    <- (1, 1) is inside the box
 
@@ -826,7 +822,7 @@ and so all other matching cases would be ignored.
 Value Bindings
 ++++++++++++++
 
-A ``switch`` case can bind the value or values it matches to temporary constants or variables,
+A ``switch`` case can name the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
 because the values are bound to temporary constants or variables within the case's body.
@@ -1042,7 +1038,7 @@ Break
 ~~~~~
 
 The ``break`` statement ends execution of an entire control flow statement immediately.
-The ``break`` statement can be used inside a ``switch`` statement or loop statement
+The ``break`` statement can be used inside a ``switch`` or loop statement
 when you want to terminate the execution of the ``switch`` or loop statement
 earlier than would otherwise be the case.
 
@@ -1121,7 +1117,7 @@ one of the ``switch`` statement's cases sets
 an optional ``Int?`` variable called ``possibleIntegerValue``
 to an appropriate integer value.
 
-After the switch statement completes its execution,
+After the ``switch`` statement completes its execution,
 the example uses optional binding to determine whether a value was found.
 The ``possibleIntegerValue`` variable has an implicit initial value of ``nil``
 by virtue of being an optional type,
@@ -1142,8 +1138,8 @@ and code execution continues from the ``if let`` statement.
 Fallthrough
 ~~~~~~~~~~~
 
-Switch statements in Swift don't fall through the bottom of each case and into the next one.
-Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+In Swift, ``switch`` statements don't fall through the bottom of each case and into the next one.
+That is, the entire ``switch`` statement completes its execution as soon as the first matching case is completed.
 By contrast, C requires you to insert an explicit ``break`` statement
 at the end of every ``switch`` case to prevent fallthrough.
 Avoiding default fallthrough means that Swift ``switch`` statements are
@@ -1468,9 +1464,9 @@ when it verifies that the APIs in that block of code are available.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-The availability condition above specifies that on iOS,
-the body of the ``if`` executes only on iOS 10 and later;
-on macOS, only on macOS 10.12 and later.
+The availability condition above specifies that in iOS,
+the body of the ``if`` statement executes only in iOS 10 and later;
+in macOS, only in macOS 10.12 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
@@ -1478,7 +1474,7 @@ In its general form,
 the availability condition takes a list of platform names and versions.
 You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
 for the full list, see :ref:`Attributes_DeclarationAttributes`.
-In addition to specifying major version numbers like iOS 8,
+In addition to specifying major version numbers like iOS 8 or macOS 10.10,
 you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
 
 .. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
