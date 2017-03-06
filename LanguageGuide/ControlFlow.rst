@@ -165,7 +165,7 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
    -> let minuteInterval = 5
    << // minuteInterval : Int = 5
    >> result = [Int]()
-   -> for tickMark in stride(from: 0, to: minutes, by: markInterval) {
+   -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
          // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
    >>      result.append(tickMark)
       }
