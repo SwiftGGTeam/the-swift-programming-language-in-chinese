@@ -761,8 +761,8 @@ and so all other matching cases would be ignored.
 
 .. _ControlFlow_ValueBindings:
 
-Naming Values
-+++++++++++++
+Value Bindings
+++++++++++++++
 
 A ``switch`` case can name the value or values it matches to temporary constants or variables,
 for use in the body of the case.
