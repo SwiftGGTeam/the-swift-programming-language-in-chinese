@@ -76,7 +76,7 @@ the ``swapTwoInts(_:_:)``, ``swapTwoStrings(_:_:)``, and ``swapTwoDoubles(_:_:)`
 The only difference is the type of the values that they accept
 (``Int``, ``String``, and ``Double``).
 
-It is more useful, and considerably more flexible,
+It's more useful, and considerably more flexible,
 to write a single function that swaps two values of *any* type.
 Generic code enables you to write such a function.
 (A generic version of these functions is defined below.)
