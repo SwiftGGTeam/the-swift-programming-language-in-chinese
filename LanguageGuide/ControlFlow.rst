@@ -62,9 +62,12 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
    </ spiders have 8 legs
    </ cats have 4 legs
 
-Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
-and iterating over them does not guarantee the order in which they will be retrieved.
+and iterating over them does not guarantee the order
+in which they will be retrieved.
+In particular,
+the order you insert items into a ``Dictionary``
+doesn't define the order they are iterated.
 For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
@@ -125,7 +128,7 @@ The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
-by ``3``, ``10`` times,
+by ``3``, ten times,
 using a closed range that starts with ``1`` and ends with ``10``.
 For this calculation, the individual counter values each time through the loop are unnecessary ---
 the code simply executes the loop the correct number of times.
