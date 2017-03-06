@@ -269,7 +269,7 @@ The illustration below shows the push and pop behavior for a stack:
    :align: center
 
 1. There are currently three values on the stack.
-2. A fourth value is pushed on to the top of the stack.
+2. A fourth value is pushed onto the top of the stack.
 3. The stack now holds four values, with the most recent one at the top.
 4. The top item in the stack is popped.
 5. After popping a value, the stack once again holds three values.
