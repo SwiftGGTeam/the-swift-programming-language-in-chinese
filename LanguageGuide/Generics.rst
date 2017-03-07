@@ -466,9 +466,9 @@ are hashable by default.
 
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
-Abstract concepts like being hashable
+Abstract concepts like ``Hashable``
 characterize types in terms of their conceptual characteristics,
-rather than their explicit type.
+rather than their concrete type.
 
 .. _Generics_TypeConstraintSyntax:
 
