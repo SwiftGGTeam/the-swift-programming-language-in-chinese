@@ -20,7 +20,7 @@ Date        Notes
             * Added information to the :ref:`Attributes_DeclarationAttributes` section
               about using the ``available`` attribute with a Swift language version.
 
-            * Updated discussion in the :ref:`Types_FunctionType` section
+            * Updated the discussion in the :ref:`Types_FunctionType` section
               to note that argument labels are not allowed when writing a function type.
 
             * Updated the discussion of Swift language version numbers
@@ -32,9 +32,9 @@ Date        Notes
               now that Swift distinguishes between functions that take multiple parameters
               and functions that take a single parameter of a tuple type.
 
-            * Removed Dynamic Type Expression section
+            * Removed the Dynamic Type Expression section
               from the :doc:`../ReferenceManual/Expressions` chapter,
-              now that ``type(of:)`` is a standard library function.
+              now that ``type(of:)`` is a Swift standard library function.
 ----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
