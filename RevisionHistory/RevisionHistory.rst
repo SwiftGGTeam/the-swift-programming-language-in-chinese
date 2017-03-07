@@ -6,23 +6,22 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-03-08  * Removed Dynamic Type Expression section
-              from the :doc:`../ReferenceManual/Expressions` chapter,
-              now that ``type(of:)`` is a standard library function.
-----------  ----------------------------------------------------------------------------------------------
-2017-02-06  * Added an example of failable numeric conversions
-              to the :ref:`Initialization_FailableInitializers` section.
-
-            * Updated discussion in the :ref:`Types_FunctionType` section
-              to note that argument labels are not allowed when writing a function type.
-----------  ----------------------------------------------------------------------------------------------
-2017-01-24  * Updated for Swift 3.1.
+2017-03-21  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
               with information about extensions that include requirements.
 
+            * Added examples of iterating over a range
+              to the :ref:`ControlFlow_ForLoops` section.
+
+            * Added an example of failable numeric conversions
+              to the :ref:`Initialization_FailableInitializers` section.
+
             * Added information to the :ref:`Attributes_DeclarationAttributes` section
               about using the ``available`` attribute with a Swift language version.
+
+            * Updated discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
 
             * Updated the discussion of Swift language version numbers
               in the :ref:`Statements_BuildConfigurationStatement` section,
@@ -32,6 +31,10 @@ Date        Notes
               in the :ref:`Types_FunctionType` section,
               now that Swift distinguishes between functions that take multiple parameters
               and functions that take a single parameter of a tuple type.
+
+            * Removed Dynamic Type Expression section
+              from the :doc:`../ReferenceManual/Expressions` chapter,
+              now that ``type(of:)`` is a standard library function.
 ----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
