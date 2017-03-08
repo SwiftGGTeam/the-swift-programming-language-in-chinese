@@ -1350,8 +1350,6 @@ code execution continues as usual;
 if the condition evaluates to ``false``,
 code execution ends, and your app is terminated.
 
-.. TODO: Contrast with error handling.
-
 Assertions and preconditions
 let you write down the assumptions and expectations
 that you make while coding,
@@ -1360,6 +1358,14 @@ Assertions help you find mistakes and incorrect assumptions during development,
 and preconditions help you detect issues in production.
 They both also become a useful form of documentation
 within the code.
+
+Unlike the error handling described in the section above,
+assertions and preconditions are not used for recoverable errors ---
+there is no way to catch a failed assertion ---
+nor are they used to detect expected errors.
+An assertion or precondition failure in production
+indicates that, due to an incorrect assumption or a mistake,
+the program has failed so catastrophically that recovery is impossible.
 
 The difference between assertions and preconditions is when they are checked:
 Assertions are checked only in debug builds,
@@ -1381,14 +1387,12 @@ Debugging with Assertions
     and query the state of your app at the time that the assertion was triggered.
     An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-You write an assertion by calling
+You write an assertion by calling the
 `assert(_:_:file:line:) <//apple_ref/swift/func/s:Fs6assertFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
 from the Swift standard library.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
 For example:
-
-.. FIXME: Should we omit "from the stdlib" above?
 
 .. testcode:: assertions
 
@@ -1445,8 +1449,8 @@ In some cases, it is simply not possible for your code to continue execution
 if a particular condition is not satisfied.
 In these situations,
 you can use a precondition in your code to end code execution.
-You write a precondition by calling
-the Swift standard library ``precondition(_:_:file:line:)`` function.
+You write a precondition by calling the
+`precondition(_:_:file:line:) <//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function.
 
 Use precondition whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
@@ -1455,19 +1459,18 @@ or to check that a function has been passed a valid value.
 
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
-You can also call the ``preconditionFailure(_:file:line:)`` function
+You can also call the
+`preconditionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs19preconditionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
 to indicate that a failure has occurred ---
 for example, because the default case of a switch was taken,
 but that should never happen.
 
-.. FIXME: should never happen... under valid input/behavior
+.. testcode:: preconditions
 
-.. https://developer.apple.com/reference/swift/1540960-precondition
-.. https://developer.apple.com/reference/swift/1539374-preconditionfailure
-
-.. precondition(_:_:file:line:) //apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_
-
-.. TODO: example
+   >> let index = -1
+   // In the implementation of a subscript...
+   -> precondition(index > 0, "Index must be greater than zero.")
+   xx assert
 
 Precondition failures
 are not a substitute for designing your code in such a way
