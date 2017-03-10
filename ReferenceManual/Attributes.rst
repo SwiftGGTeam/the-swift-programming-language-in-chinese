@@ -311,6 +311,7 @@ You can apply a declaration attribute to declarations only.
 
     .. test::
        :name: nsapplicationmain
+       :compiler-errors: warning: result of call to 'NSApplicationMain' is unused
        :asserts: No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
        import AppKit

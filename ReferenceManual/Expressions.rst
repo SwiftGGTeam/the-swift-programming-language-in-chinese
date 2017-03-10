@@ -117,8 +117,6 @@ That said, you can use parentheses to be explicit about the scope of the operato
 .. test::
    :name: placement of try
    :compiler-errors: error: call can throw but is not marked with 'try'
-                     sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
-                                                          ^~~~~~~~~~~~~~~~~~~~~~~~~
 
    // -HIDE-
    func someThrowingFunction() throws -> Int { return 10 }
@@ -137,8 +135,6 @@ or the ``try`` expression is enclosed in parentheses.
    :name: try on the right
    :hidden:
    :compiler-errors: error: 'try' cannot appear to the right of a non-assignment operator
-                     sum = 7 + try someThrowingFunction() // Error
-                               ^
 
    func someThrowingFunction() throws -> Int { return 10 }
    var sum = 0
@@ -329,11 +325,7 @@ otherwise, it returns ``false``.
    :name: trivially true 'is' and 'as'
    :hidden:
    :compiler-errors: warning: 'is' test is always true
-                     assert("hello" is String)
-                                    ^
                      warning: cast from 'String' to unrelated type 'Int' always fails
-                     assert("hello" is Int)
-                            ~~~~~~~ ^  ~~~
 
    assert("hello" is String)
    assert("hello" is Int)
@@ -342,8 +334,6 @@ otherwise, it returns ``false``.
    :name: 'is' operator tautology
    :hidden:
    :compiler-errors: warning: 'is' test is always true
-                     assert(s is Base)
-                              ^
 
    class Base {}
    class Subclass: Base {}
@@ -1468,9 +1458,6 @@ In all other cases, you must use an initializer expression.
 .. test::
    :name: explicit implicit init
    :compiler-errors: error: initializing from a metatype value must reference 'init' explicitly
-                    let s4 = type(of: someValue)(data: 5)       // Error
-                                                ^
-                                                .init
 
    // -HIDE-
    struct SomeType {
@@ -1555,32 +1542,8 @@ For example:
 .. test::
    :name: function with argument names
    :compiler-errors: error: ambiguous use of 'someMethod'
-                     let a = instance.someMethod              // Ambiguous
-                             ^
-                     note: found this candidate
-                         func someMethod(x: Int, y: Int) {}
-                             ^
-                     note: found this candidate
-                         func someMethod(x: Int, z: Int) {}
-                             ^
                      error: ambiguous use of 'overloadedMethod(x:y:)'
-                     let d = instance.overloadedMethod        // Ambiguous
-                             ^
-                     note: found this candidate
-                         func overloadedMethod(x: Int, y: Int) {}
-                             ^
-                     note: found this candidate
-                         func overloadedMethod(x: Int, y: Bool) {}
-                             ^
                      error: ambiguous use of 'overloadedMethod(x:y:)'
-                     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-                             ^
-                     note: found this candidate
-                         func overloadedMethod(x: Int, y: Int) {}
-                             ^
-                     note: found this candidate
-                         func overloadedMethod(x: Int, y: Bool) {}
-                             ^
 
    class SomeClass {
        func someMethod(x: Int, y: Int) {}

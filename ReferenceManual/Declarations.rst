@@ -768,11 +768,6 @@ For example:
 .. test::
    :name: can't pass inout aliasing
    :compiler-errors: error: inout arguments are not allowed to alias each other
-                     f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-                                 ^~
-                     note: previous aliasing argument
-                     f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-                          ^~
 
    var x = 10
    func f(a: inout Int, b: inout Int) {
@@ -827,12 +822,8 @@ see :ref:`Functions_InOutParameters`.
 .. test::
    :name: escaping can't capture inout
    :hidden:
-   :compiler-errors: error: nested function cannot capture inout parameter and escape
-                         return inner
-                         ^
-                     error: escaping closures can only capture inout parameters explicitly by value
-                         return { a += 1 }
-                                  ^
+   :compiler-errors: error: escaping closures can only capture inout parameters explicitly by value
+                     error: nested function cannot capture inout parameter and escape
 
    func outer(a: inout Int) -> () -> Void {
        func inner() {
@@ -880,10 +871,9 @@ the default value is used instead.
 
 .. test::
    :name: default args and labels
-   :compiler-errors: error: missing argument label 'x:' in call
-                     f(7)      // Invalid, missing argument label
-                       ^
-                       x:
+   :compiler-errors: warning: result of call to 'f(x:)' is unused
+                     warning: result of call to 'f(x:)' is unused
+                     error: missing argument label 'x:' in call
 
    func f(x: Int = 42) -> Int { return x }
    f()       // Valid, uses default value
@@ -1004,8 +994,6 @@ the error thrown by ``alwaysThrows()``.
 .. test::
    :name: double negative rethrows
    :compiler-errors: error: a function declared 'rethrows' may only throw if its parameter does
-                                   throw AnotherError.error
-                                   ^
 
    // -HIDE-
    enum SomeError: Error { case error }
@@ -1027,8 +1015,6 @@ the error thrown by ``alwaysThrows()``.
    :name: throwing in rethrowing function
    :hidden:
    :compiler-errors: error: a function declared 'rethrows' may only throw if its parameter does
-                     throw SomeError.d  // Error
-                     ^
 
    enum SomeError: Error { case c, d }
    func f1(callback: () throws -> Void) rethrows {
@@ -1240,8 +1226,6 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
    :name: indirect in indirect
    :hidden:
    :compiler-errors: error: enum case in 'indirect' enum cannot also be 'indirect'
-                     indirect enum E { indirect case c(E) }
-                                       ^
 
    indirect enum E { indirect case c(E) }
 
@@ -1249,8 +1233,6 @@ it can't contain any cases that are also marked with the ``indirect`` modifier.
    :name: indirect without recursion
    :hidden:
    :compiler-errors: error: enum case 'c' without associated value cannot be 'indirect'
-                     enum E { indirect case c }
-                              ^
 
    enum E { indirect case c }
 
@@ -2246,8 +2228,6 @@ to ensure members of that type are properly initialized.
    :name: extensions can't have where clause and inheritance together
    :hidden:
    :compiler-errors: error: extension of type 'Array' with constraints cannot have an inheritance clause
-                        extension Array: P where Element: Equatable {
-                        ^                ~
 
    protocol P { func foo() }
    extension Array: P where Element: Equatable {

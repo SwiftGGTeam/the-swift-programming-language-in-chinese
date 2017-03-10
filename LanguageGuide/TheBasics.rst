@@ -207,7 +207,6 @@ Attempting to do so is reported as an error when your code is compiled:
 .. test::
     :name: erroneously reassigning constants
     :compiler-errors: error: cannot assign to value: 'languageName' is a 'let' constant
-                      note: change 'let' to 'var' to make it mutable
 
     let languageName = "Swift"
     languageName = "Swift++"
@@ -490,7 +489,8 @@ because you have initialized it with a number that looks like an integer:
 
     let meaningOfLife = 42
     // meaningOfLife is inferred to be of type Int
-    assert(type(of: meaningOfLife) == Int.self) // -HIDE-
+    // -HIDE-
+    assert(type(of: meaningOfLife) == Int.self)
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift infers that you want to create a ``Double``:
@@ -501,7 +501,8 @@ Swift infers that you want to create a ``Double``:
 
     let pi = 3.14159
     // pi is inferred to be of type Double
-    assert(type(of: pi) == Double.self) // -HIDE-
+    // -HIDE-
+    assert(type(of: pi) == Double.self)
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -515,7 +516,8 @@ a type of ``Double`` will be inferred from the context:
 
     let anotherPi = 3 + 0.14159
     // anotherPi is also inferred to be of type Double
-    assert(type(of: anotherPi) == Double.self) // -HIDE-
+    // -HIDE-
+    assert(type(of: anotherPi) == Double.self)
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -648,12 +650,9 @@ is reported as an error when your code is compiled:
 
 .. test::
     :name: constants and variables overflow error
-    :compiler-errors: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
-                      let cannotBeNegative: UInt8 = -1
-                                             ^
-                      error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
-                      let tooBig: Int8 = Int8.max + 1
-                                         ~~~~~~~~ ^ ~
+    :compiler-errors: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+                      error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
+
 
     let cannotBeNegative: UInt8 = -1
     // UInt8 cannot store negative numbers, and so this will report an error
@@ -836,8 +835,6 @@ The following example reports a compile-time error:
 .. test::
     :name: booleans not boolean
     :compiler-errors: error: 'Int' is not convertible to 'Bool'
-                      if i {
-                        ^
 
     let i = 1
     if i {
@@ -1458,7 +1455,7 @@ The assertion message can be omitted if desired, as in the following example:
 .. test::
     :name: assertions two
     :asserts: 
-    :xfail: Test harness doesn't (?) support empty assertion messages.
+    :xfail: Test harness (Swift code) doesn't support empty assertion messages.
 
     let age = -3 // -HIDE-
     assert(age >= 0)

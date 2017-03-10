@@ -186,8 +186,6 @@ an expression pattern:
 .. test::
    :name: tuple pattern
    :compiler-errors: error: expected pattern
-                     for (x, 0) in points {
-                     ^
 
    let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
    // This code isn't valid.
@@ -204,17 +202,7 @@ equivalent:
 .. test::
    :name: single element tuple pattern
    :compiler-errors: error: invalid redeclaration of 'a'
-                     let (a) = 2      // a: Int = 2
-                     ^
-                     note: 'a' previously declared here
-                     let a = 2        // a: Int = 2
-                     ^
                      error: invalid redeclaration of 'a'
-                     let (a): Int = 2 // a: Int = 2
-                     ^
-                     note: 'a' previously declared here
-                     let a = 2        // a: Int = 2
-                     ^
 
    let a = 2        // a: Int = 2
    let (a) = 2      // a: Int = 2

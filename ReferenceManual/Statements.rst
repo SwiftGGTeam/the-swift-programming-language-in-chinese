@@ -455,8 +455,6 @@ the program executes only the code within the first matching case in source orde
    :name: switch case with multiple patterns - different types
    :hidden:
    :compiler-errors: error: pattern variable bound to type 'Any', expected type 'Int'
-                     case (let x, 5), (let x as Any, 1): print(1)
-                                           ^
 
    let tuple = (1, 1)
    switch tuple {
@@ -1012,8 +1010,6 @@ There must not be whitespace between ``>=`` and the version number.
    :name: pound if swift version (errors)
    :hidden:
    :compiler-errors: error: unary operator cannot be separated from its operand
-                     #if swift(>= 2.1)
-                               ^ ~
 
    #if swift(>= 2.1)
        print(5)

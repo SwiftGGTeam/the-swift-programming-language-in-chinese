@@ -109,7 +109,6 @@ or to a constant (in which case it cannot be modified):
 .. test::
     :name: string mutability
     :compiler-errors: error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
-                      note: change 'let' to 'var' to make it mutable
 
     var variableString = "Horse"
     variableString += " and carriage"
@@ -170,6 +169,9 @@ by iterating over its ``characters`` property with a ``for``-``in`` loop:
     // -RESULT- g
     // -RESULT- !
     // -RESULT- 🐶
+
+.. FIXME: RESULT above should have been PRINTS-COMMENT,
+   but this was wrong on 'develop'.
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
@@ -1037,3 +1039,6 @@ such as with string interpolation:
     // -RESULT- g
     // -RESULT- ‼
     // -RESULT- 🐶
+
+.. FIXME: RESULT above should have been PRINTS-COMMENT,
+   but this was wrong on 'develop'.

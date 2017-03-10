@@ -185,9 +185,6 @@ so they must be escaped with backticks in that context.
    :name: var requires backticks
    :hidden:
    :compiler-errors: error: parameters may not have the 'var' specifier
-                     func f(var x: Int) {}
-                            ^~~
-                     var x = x
 
    func f(`var` x: Int) {}
    func f(var x: Int) {}
@@ -197,8 +194,6 @@ so they must be escaped with backticks in that context.
    :name: let requires backticks
    :hidden:
    :compiler-errors: error: 'let' as a parameter attribute is not allowed
-                     func f(let x: Int) {}
-                            ^~~
 
    func f(`let` x: Int) {}
    func f(let x: Int) {}
@@ -207,9 +202,6 @@ so they must be escaped with backticks in that context.
    :name: inout requires backticks
    :hidden:
    :compiler-errors: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
-                     func f(inout x: Int) {}
-                            ^~~~~
-                                     inout
 
    func f(`inout` x: Int) {}
    func f(inout x: Int) {}
@@ -397,6 +389,10 @@ The following are examples of literals:
 
 .. test::
    :name: basic literals
+   :compiler-errors: warning: integer literal is unused
+                     warning: floating-point literal is unused
+                     warning: string literal is unused
+                     warning: boolean literal is unused
 
    42               // Integer literal
    3.14159          // Floating-point literal
@@ -657,6 +653,11 @@ For example, all the following string literals have the same value:
 
 .. test::
    :name: string literals
+   :compiler-errors: warning: string literal is unused
+                     warning: string literal is unused
+                     warning: string literal is unused
+                     warning: string literal is unused
+                     warning: string literal is unused
 
    "1 2 3"
    "1 2 \("3")"
@@ -762,15 +763,8 @@ the ``+`` operator followed by the ``.+`` operator.
    :name: dot operator must start with dot
    :hidden:
    :compiler-errors: error: consecutive statements on a line must be separated by ';'
-                     infix operator +.+ ;  // ERROR
-                                     ^
-                                     ;
                      error: operator with postfix spacing cannot start a subexpression
-                     infix operator +.+ ;  // ERROR
-                                     ^
                      error: expected expression
-                     infix operator +.+ ;  // ERROR
-                                        ^
 
    infix operator .+     // OK
    infix operator .+.    // OK
@@ -800,11 +794,7 @@ postfix operators cannot begin with either a question mark or an exclamation mar
    :name: postfix operator can't start with question mark
    :hidden:
    :compiler-errors: error: expected operator name in operator declaration
-                     postfix operator ?+
-                                      ^
                      error: '+' is not a postfix unary operator
-                     print(1?+)
-                             ^
 
    postfix operator ?+
    postfix func ?+ (x: Int) -> Int {

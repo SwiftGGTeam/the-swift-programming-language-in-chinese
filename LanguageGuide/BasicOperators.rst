@@ -677,7 +677,7 @@ then the resulting range will be empty.
     :name: half open range start cannot be greater than end
     :hidden:
     :asserts:
-    :xfail: Test harness doesn't (?) support empty assertion messages.
+    :xfail: Test harness (Swift code) doesn't support empty assertion messages.
     
     let range = 1..<0
 
