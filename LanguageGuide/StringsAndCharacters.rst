@@ -529,6 +529,10 @@ the ``Character`` at a particular ``String`` index.
 
 .. test::
     :name: string index
+    :compiler-errors: warning: expression of type 'Character' is unused
+                      warning: expression of type 'Character' is unused
+                      warning: expression of type 'Character' is unused
+                      warning: expression of type 'Character' is unused
 
     let greeting = "Guten Tag!"
     greeting[greeting.startIndex]
@@ -552,6 +556,8 @@ will trigger a runtime error.
 
 .. test::
     :name: string invalid index
+    :compiler-errors: warning: expression of type 'Character' is unused
+                      warning: result of call to 'index(after:)' is unused
     :asserts: fatal error: Can't form a Character from an empty String
 
     let greeting = "Guten Tag!" // -HIDE-

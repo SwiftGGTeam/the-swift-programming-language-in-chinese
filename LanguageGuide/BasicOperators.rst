@@ -128,6 +128,13 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 
 .. test::
     :name: arithmetic operators
+    :compiler-errors: warning: result of operator '+' is unused
+                      warning: result of operator '-' is unused
+                      warning: result of operator '*' is unused
+                      warning: result of operator '/' is unused
+                      warning: result of operator '+' is unused
+                      warning: result of operator '%' is unused
+                      warning: result of operator '%' is unused
 
     1 + 2       // equals 3
     5 - 3       // equals 2
@@ -329,19 +336,26 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 
 .. test::
     :name: comparison operators
+    :compiler-errors: warning: result of operator '==' is unused
+                      warning: result of operator '!=' is unused
+                      warning: result of operator '>' is unused
+                      warning: result of operator '<' is unused
+                      warning: result of operator '>=' is unused
+                      warning: result of operator '<=' is unused
 
     1 == 1   // true because 1 is equal to 1
-    assert(1 == 1) // -HIDE-
     2 != 1   // true because 2 is not equal to 1
-    assert(2 != 1) // -HIDE-
     2 > 1    // true because 2 is greater than 1
-    assert(2 > 1) // -HIDE-
     1 < 2    // true because 1 is less than 2
-    assert(1 < 2) // -HIDE-
     1 >= 1   // true because 1 is greater than or equal to 1
-    assert(1 >= 1) // -HIDE-
     2 <= 1   // false because 2 is not less than or equal to 1
-    assert(!(2 <= 1)) // -HIDE-
+    // -HIDE-
+    assert(1 == 1)
+    assert(2 != 1)
+    assert(2 > 1)
+    assert(1 < 2)
+    assert(1 >= 1)
+    assert(!(2 <= 1))
 
 Comparison operators are often used in conditional statements,
 such as the ``if`` statement:
@@ -399,6 +413,9 @@ For example:
 
 .. test::
     :name: tuple comparison operators
+    :compiler-errors: warning: result of operator '<' is unused
+                      warning: result of operator '<' is unused
+                      warning: result of operator '==' is unused
 
     (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
     (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
@@ -447,6 +464,8 @@ The ternary conditional operator is shorthand for the code below:
 
 .. test::
     :name: ternary conditional operator outline
+    :compiler-errors: warning: expression of type 'Bool' is unused
+                      warning: expression of type 'Bool' is unused
 
     // -HIDE-
     let question = true
@@ -513,6 +532,7 @@ The nil-coalescing operator is shorthand for the code below:
 
 .. test::
     :name: nil coalescing operator outline
+    :compiler-errors: warning: expression of type 'Int' is unused
 
     // -HIDE-
     var a: Int?
