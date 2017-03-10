@@ -6,6 +6,10 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-03-08  * Removed Dynamic Type Expression section
+              from the :doc:`../ReferenceManual/Expressions` chapter,
+              now that ``type(of:)`` is a standard library function.
+----------  ----------------------------------------------------------------------------------------------
 2017-02-06  * Added an example of failable numeric conversions
               to the :ref:`Initialization_FailableInitializers` section.
 

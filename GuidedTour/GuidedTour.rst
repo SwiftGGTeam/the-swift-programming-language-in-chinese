@@ -423,8 +423,6 @@ by using ``..<`` to make a range of indexes.
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 Functions and Closures
 ----------------------
 
