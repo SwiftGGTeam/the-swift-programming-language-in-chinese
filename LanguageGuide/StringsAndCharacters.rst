@@ -919,15 +919,12 @@ one for each byte in the string's UTF-8 representation:
 .. test::
     :name: unicode representations
     :cont:
-    :prints: 68 111 103 226 128 188 240 159 144 182
+    :prints-comment: <<<68 111 103 226 128 188 240 159 144 182 >>>
 
     for codeUnit in dogString.utf8 {
         print("\(codeUnit) ", terminator: "")
     }
     print("")
-    // Prints "68 111 103 226 128 188 240 159 144 182 "
-
-.. Workaround for rdar://26016325
 
 In the example above, the first three decimal ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -961,15 +958,12 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 .. test::
     :name: unicode representations
     :cont:
-    :prints: 68 111 103 8252 55357 56374 
+    :prints-comment: <<<68 111 103 8252 55357 56374 >>>
 
     for codeUnit in dogString.utf16 {
         print("\(codeUnit) ", terminator: "")
     }
     print("")
-    // Prints "68 111 103 8252 55357 56374 "
-
-.. Workaround for rdar://26016325
 
 Again, the first three ``codeUnit`` values
 (``68``, ``111``, ``103``)
@@ -1007,15 +1001,12 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
 .. test::
     :name: unicode representations
     :cont:
-    :prints: 68 111 103 8252 128054 
+    :prints-comment: <<<68 111 103 8252 128054 >>>
 
     for scalar in dogString.unicodeScalars {
         print("\(scalar.value) ", terminator: "")
     }
     print("")
-    // Prints "68 111 103 8252 128054 "
-
-.. Workaround for rdar://26016325
 
 The ``value`` properties for the first three ``UnicodeScalar`` values
 (``68``, ``111``, ``103``)
