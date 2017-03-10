@@ -1030,6 +1030,8 @@ such as with string interpolation:
 .. test::
     :name: unicode representations
     :cont:
+    :xfail: Either needs whitespace at the end of -RESULT-lines
+            or needs the space in the print() removed.
 
     for scalar in dogString.unicodeScalars {
         print("\(scalar) ")
