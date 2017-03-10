@@ -612,7 +612,6 @@ use the ``insert(contentsOf:at:)`` method.
     // -COMMENT- welcome now equals \"\(welcome)\"
     // -RESULT- welcome now equals "hello!"
 
-
     welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
     // -COMMENT- welcome now equals \"\(welcome)\"
     // -RESULT- welcome now equals "hello there!"
