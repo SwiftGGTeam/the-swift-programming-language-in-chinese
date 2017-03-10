@@ -96,7 +96,7 @@ The following statement is not valid:
 
 .. test::
     :name: assignment operator invalid
-    :compiler-error: error: use of '=' in a boolean context, did you mean '=='?
+    :compiler-errors: error: use of '=' in a boolean context, did you mean '=='?
 
     // -HIDE-
     var x = 10
