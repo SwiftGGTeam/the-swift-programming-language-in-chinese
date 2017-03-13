@@ -1340,14 +1340,15 @@ Throwing, catching, and propagating errors is covered in greater detail in
 Assertions and Preconditions
 ----------------------------
 
-An assertion or precondition is a runtime check
+An :newTerm:`assertion` or :newTerm:`precondition` is a runtime check
 that a Boolean condition definitely evaluates to ``true``.
-You use assertions and a preconditions
+You use assertions and preconditions
 to make sure that an essential condition is satisfied
 before executing any further code.
 If the condition evaluates to ``true``,
-code execution continues as usual;
-if the condition evaluates to ``false``,
+code execution continues as usual.
+If the condition evaluates to ``false``,
+this means that the current state of the program is invalid;
 code execution ends, and your app is terminated.
 
 Assertions and preconditions
@@ -1358,20 +1359,27 @@ Assertions help you find mistakes and incorrect assumptions during development,
 and preconditions help you detect issues in production.
 They both also become a useful form of documentation
 within the code.
-
-Unlike the error handling described in the section above,
+Unlike the error conditions discussed in :ref:`TheBasics_ErrorHandling` above,
 assertions and preconditions are not used for recoverable errors ---
 there is no way to catch a failed assertion ---
 nor are they used to detect expected errors.
-An assertion or precondition failure in production
-indicates that, due to an incorrect assumption or a mistake,
-the program has failed so catastrophically that recovery is impossible.
+
+Assertions and preconditions
+are not a substitute for designing your code in such a way
+that invalid conditions are unlikely to arise.
+However,
+using them to enforce valid data and state
+causes your app to terminate more predictably
+if an invalid state occurs,
+and helps makes the problem easier to debug.
+Stopping execution as soon as an invalid state is detected
+also helps limit the damage caused by that invalid state.
 
 The difference between assertions and preconditions is when they are checked:
 Assertions are checked only in debug builds,
 but preconditions are checked in both debug and production builds.
 In production builds,
-the condition inside an assertion isn't even evaluated.
+the condition inside an assertion isn't evaluated.
 This means you can use as many assertions as you want
 during your development process,
 without impacting the performance in production.
@@ -1440,30 +1448,25 @@ For example:
       }
    xx assert
 
+.. note::
+
+   During prototyping and early development,
+   you can create stubs for functionality that hasn't been implemented yet
+   by writing ``assert(false, "Unimplemented")`` as the stub implementation.
+
 .. _TheBasics_Preconditions:
 
-Enforcing Proconditions
+Enforcing Preconditions
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-In some cases, it is simply not possible for your code to continue execution
-if a particular condition is not satisfied.
-In these situations,
-you can use a precondition in your code to end code execution.
-You write a precondition by calling the
-`precondition(_:_:file:line:) <//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function.
-
 Use precondition whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
 For example, use a precondition to check that a subscript is not out of bounds,
 or to check that a function has been passed a valid value.
 
+You write a precondition by calling the
+`precondition(_:_:file:line:) <//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function.
 You pass this function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``.
-You can also call the
-`preconditionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs19preconditionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
-to indicate that a failure has occurred ---
-for example, because the default case of a switch was taken,
-but that should never happen.
 
 .. testcode:: preconditions
 
@@ -1472,14 +1475,12 @@ but that should never happen.
    -> precondition(index > 0, "Index must be greater than zero.")
    xx assert
 
-Precondition failures
-are not a substitute for designing your code in such a way
-that invalid conditions are unlikely to arise.
-However,
-using preconditions to enforce valid data and state
-causes your app to terminate more predictably
-if an invalid state occurs,
-and helps makes the problem easier to debug.
+You can also call the
+`preconditionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs19preconditionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+to indicate that a failure has occurred ---
+for example, because the default case of a switch was taken,
+but all valid input data should have been handled
+by one of the switch's other cases.
 
 .. note::
 
@@ -1493,33 +1494,17 @@ and helps makes the problem easier to debug.
 .. "\ " in the first cell below lets it be empty.
    Otherwise RST treats the row as a continuation.
 
-    ============ =====  ==========  ===============================
-    \            Debug  Production  Production with ``-Ounchecked``
-    ============ =====  ==========  ===============================
-    Assertion    Yes    No          No
-    ------------ -----  ----------  -------------------------------
-    Precondition Yes    Yes         No
-    ------------ -----  ----------  -------------------------------
-    Fatal Error  Yes    Yes         Yes
-    ============ =====  ==========  ===============================
+   ============ =====  ==========  ===============================
+   \            Debug  Production  Production with ``-Ounchecked``
+   ============ =====  ==========  ===============================
+   Assertion    Yes    No          No
+   ------------ -----  ----------  -------------------------------
+   Precondition Yes    Yes         No
+   ------------ -----  ----------  -------------------------------
+   Fatal Error  Yes    Yes         Yes
+   ============ =====  ==========  ===============================
 
-..  Notes from picking [Contributor 5711]'s brain
-
-    you can & should use assert() liberally
-    write down assumptions you’re making — documentation
-
-    precondition vs fatalError — not meant to be much semantic difference
-
-.. assertions are for checking things during debugging
-   they're protection against mistakes you make during development
-
-.. preconditions are for enforcing invarients
-   they're protection against the program entering invalid state
-   they limit the damage from a programmer error
-
-.. during development, you can use assert(false) in stub implementations
-
-.. In Xcode, can you set a breakpoint on assertion/precondition failure?
+.. TODO: In Xcode, can you set a breakpoint on assertion/precondition failure?
    If so, mention that fact and give a link to a guide that shows you how.
    In LLDB, 'breakpoint set -E swift' catches when errors are thown,
    but doesn't stop at assertions.
