@@ -401,7 +401,7 @@ with a string representations of points.
 .. testcode:: expression-pattern
 
     -> // Overload the ~= operator to match a string with an integer.
-    -> func ~=(pattern: String, value: Int) -> Bool {
+    -> func ~= (pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }
     -> switch point {

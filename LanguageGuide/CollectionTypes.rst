@@ -288,6 +288,16 @@ You can use subscript syntax to change an existing value at a given index:
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
 
+When you use subscript syntax,
+the index you specify needs to be valid.
+For example, writing ``shoppingList[shoppingList.count] = "Salt"``
+to try to append an item to the end of the array
+results in a runtime error.
+
+.. Unlike Ruby and Javascript, where accesing an invalid index
+   extends the array with nil or similar placeholder values,
+   to make that index become valid.
+
 You can also use subscript syntax to change a range of values at once,
 even if the replacement set of values has a different length than the range you are replacing.
 The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
@@ -298,10 +308,6 @@ with ``"Bananas"`` and ``"Apples"``:
    -> shoppingList[4...6] = ["Bananas", "Apples"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 6 items
-
-.. note::
-
-   You can't use subscript syntax to append a new item to the end of an array.
 
 To insert an item into the array at a specified index,
 call the array's ``insert(_:at:)`` method:
@@ -339,9 +345,10 @@ This method removes the item at the specified index and returns the removed item
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
-   Except when ``count`` is ``0`` (meaning the array is empty),
-   the largest valid index in an array will always be ``count - 1``,
-   because arrays are indexed from zero.
+   The largest valid index in an array is ``count - 1``
+   because arrays are indexed from zero ---
+   however, when ``count`` is ``0`` (meaning the array is empty),
+   there are no valid indexes.
 
 Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
@@ -729,7 +736,7 @@ because they share no elements in common.
 * Use the ``isSubset(of:)`` method to determine whether all of the values of a set are contained in the specified set.
 * Use the ``isSuperset(of:)`` method to determine whether a set contains all of the values in a specified set.
 * Use the ``isStrictSubset(of:)`` or ``isStrictSuperset(of:)`` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-* Use the ``isDisjoint(with:)`` method to determine whether two sets have any values in common.
+* Use the ``isDisjoint(with:)`` method to determine whether two sets have no values in common.
 
 .. testcode:: setOperations
 

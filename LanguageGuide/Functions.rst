@@ -618,7 +618,7 @@ performing an appropriate mathematical operation.
 The type of both of these functions is ``(Int, Int) -> Int``.
 This can be read as:
 
-“A function type that has two parameters, both of type ``Int``,
+“A function that has two parameters, both of type ``Int``,
 and that returns a value of type ``Int``.”
 
 Here's another example, for a function with no parameters or return value:

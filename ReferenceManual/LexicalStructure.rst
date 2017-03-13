@@ -201,9 +201,9 @@ so they must be escaped with backticks in that context.
 
    -> func f(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:17: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
-   !!        ~~~~~    ^
+   !!        ^~~~~
    !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
@@ -634,6 +634,7 @@ using the following escape sequences:
 .. TR: Are \v and \f allowed for vertical tab and formfeed?
    We allow them as whitespace as of now --
    should that mean we want escape sequences for them too?
+   See also feedback 300722.
 
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
