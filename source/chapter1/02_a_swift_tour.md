@@ -712,9 +712,9 @@ print(protocolValue.simpleDescription)
 
 ```swift
 enum PrinterError: Error {
-	case OutOfPaper
-	case NoToner
-	case OnFire
+	case outOfPaper
+	case noToner
+	case onFire
 }
 ```
 
