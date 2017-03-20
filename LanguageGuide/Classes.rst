@@ -161,7 +161,7 @@ confirms that it changed to ``800``:
 
     -> print("The width of windowOne is now \(windowOne.width)")
     <- The width of windowOne is now 800
-   
+
 .. _Classes_ComparingReferenceTypesForIdentity:
 
 Comparing Reference Types for Identity
