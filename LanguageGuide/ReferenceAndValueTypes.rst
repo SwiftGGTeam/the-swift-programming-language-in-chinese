@@ -47,7 +47,6 @@ When you are working with resources that you
 don't control such as frameworks,
 it is common to be given a base class
 that you are expected to subclass.
-.. XXX Maybe "you typically subclass"?
 For example,
 if you are working with the UIKit framework
 and want to create a custom view,
