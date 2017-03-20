@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-03-21  * Updated for Swift 3.1.
+2017-03-27  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
               with information about extensions that include requirements.
