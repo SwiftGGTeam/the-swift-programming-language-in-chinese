@@ -233,6 +233,8 @@ Here's the general form of a ``while`` loop:
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
+.. iBooks Store screenshot begins here.
+
 .. image:: ../images/snakesAndLadders_2x.png
    :align: center
 
@@ -268,6 +270,8 @@ whereas squares with a snake head have a negative number to move you back down t
 
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+.. iBooks Store screenshot ends here.
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, ``board[03]`` is equal to ``+08``,

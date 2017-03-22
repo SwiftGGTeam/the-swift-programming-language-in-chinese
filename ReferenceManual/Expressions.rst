@@ -674,6 +674,8 @@ For example:
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
 
+.. iBooks Store screenshot begins here.
+
 .. syntax-grammar::
 
     Grammar of a self expression
@@ -753,6 +755,8 @@ as described in :ref:`Declarations_FunctionDeclaration`.
 
 There are several special forms
 that allow closures to be written more concisely:
+
+.. iBooks Store screenshot ends here.
 
 * A closure can omit the types
   of its parameters, its return type, or both.
