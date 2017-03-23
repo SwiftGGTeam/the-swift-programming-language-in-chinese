@@ -923,7 +923,7 @@ For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
    They are not suited to the creation of complex data structures.
    If your data structure is likely to persist beyond a temporary scope,
    model it as a class or structure, rather than as a tuple.
-   For more information, see :doc:`ClassesAndStructures`.
+   For more information, see :doc:`Classes` and :doc:`Structures`.
 
 .. _TheBasics_Optionals:
 

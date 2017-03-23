@@ -1031,8 +1031,8 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    assumes or requires that a conforming type has
    reference semantics rather than value semantics.
    For more on reference and value semantics,
-   see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
-   and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
+   see :ref:`Structures_StructuresAreValueTypes`
+   and :ref:`Classes_ClassesAreReferenceTypes`.
 
 .. assertion:: classMustAppearFirstInTheInheritanceList
 

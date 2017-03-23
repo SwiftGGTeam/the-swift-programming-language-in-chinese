@@ -534,6 +534,8 @@ which means that their values are copied
 when assigned to a variable or constant,
 or when passed to a function.
 
+.. XXX cross reference Structures_StructuresAreValueTypes
+
 Here is an example that uses
 the ``CompassPoint`` enumeration
 from above to show that

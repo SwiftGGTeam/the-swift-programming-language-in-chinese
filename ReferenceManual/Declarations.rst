@@ -1093,7 +1093,7 @@ Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+see :ref:`Structures_StructuresAreValueTypes`.
 
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -1405,7 +1405,7 @@ type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
 that include various kinds of declarations,
-see :doc:`../LanguageGuide/ClassesAndStructures`.
+see :doc:`../LanguageGuide/Structures`.
 
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
@@ -1426,12 +1426,12 @@ The process of initializing a structure's declared properties
 is described in :doc:`../LanguageGuide/Initialization`.
 
 Properties of a structure instance can be accessed using dot (``.``) syntax,
-as described in :ref:`ClassesAndStructures_AccessingProperties`.
+as described in :doc:`../LanguageGuide/Properties`.
 
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+see :ref:`Structures_StructuresAreValueTypes`.
 
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -1475,7 +1475,7 @@ and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include various kinds of declarations,
-see :doc:`../LanguageGuide/ClassesAndStructures`.
+see :doc:`../LanguageGuide/Classes`.
 
 A class type can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
@@ -1523,12 +1523,12 @@ There are two ways to create an instance of a previously declared class:
   as described in :ref:`Initialization_DefaultInitializers`.
 
 Access properties of a class instance with dot (``.``) syntax,
-as described in :ref:`ClassesAndStructures_AccessingProperties`.
+as described in :doc:`../LanguageGuide/Properties`.
 
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+see :ref:`Structures_StructuresAreValueTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.

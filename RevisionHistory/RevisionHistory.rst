@@ -700,7 +700,7 @@ Date        Notes
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`
               and :ref:`CollectionTypes_Arrays` to reflect the new approach.
               Also clarified the
-              :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries`.
+              Assignment and Copy Behavior for Strings Arrays and Dictionaries.
 
             * :ref:`CollectionTypes_ArrayTypeShorthandSyntax` is now written as
               ``[SomeType]`` rather than ``SomeType[]``.

@@ -166,6 +166,9 @@ integers, floating-point numbers, Booleans, strings, arrays, and dictionaries --
 are value types,
 and are implemented as structures in the standard library.
 
+.. XXX Enums are also value types,
+   as discussed in Enumerations_EnumerationsAreValueTypes
+
 Custom structures
 that you build on top of existing standard library value types
 are also value types.
