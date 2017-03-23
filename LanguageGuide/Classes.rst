@@ -5,11 +5,12 @@ Classes
 
 :newTerm:`Classes` in Swift are composed
 of many of the same pieces as structures.
-.. XXX adjust wording -- same pieces...?  same functionality...?
 They can have properties, methods, subscripts, initializers, and so on.
 Just like with structures,
 you use dot syntax to access properties and methods
 of class instances.
+
+.. XXX adjust wording above -- same pieces...?  same functionality...?
 
 While classes are similar to structures in composition,
 classes have different underlying behavior:
@@ -207,7 +208,6 @@ Constants and Reference Types
 
 One of the fundamental characteristics of reference semantics
 is that a single instance can be referred to in multiple places.
-.. XXX maybe put more emphasis on shared mutable state
 In the example above,
 you may have noticed that ``windowOne`` is declared as a *constant*,
 rather than a variable.
@@ -218,6 +218,8 @@ does not store the ``Window`` instance ---
 it *refers* to a ``Window`` instance.
 It is the ``width`` property of the underlying ``Window`` that is changed ---
 not the value of the constant reference to that ``Window``.
+
+.. XXX maybe put more emphasis on shared mutable state
 
 Consider the following example: 
 
@@ -258,7 +260,6 @@ of ``classInstance``.
 Additionally,
 you cannot reassign ``classInstance`` to a different class instance
 because it's a constant reference.
-.. XXX the "because" comes pretty late in this sentence - reword?
 This feature of being able to change
 the underlying variable properties of the same instance
 is something unique you get when working with classes.
@@ -266,6 +267,9 @@ In contrast,
 changing the variable properties of a structure instance
 gives you a whole new structure instance
 instead of the same instance modified in place.
+
+.. XXX the "because it's a constant reference"
+   comes pretty late in this sentence - reword?
 
 .. XXX Above fact about getting a whole new structure is probably wrong.
 

@@ -4,16 +4,18 @@ Choosing Between Reference and Value Types
 Classes and structures in Swift have many similarities.
 Both have properties, methods, subscripts, initializers, use dot syntax,
 and so on.
-.. XXX Also, both can do abstraction via protocols
 As a result,
 it can be hard to know when to use classes and when to use structures
 for the building blocks of your program.
 The fundamental difference between structures and classes
 is that structures are value types
-.. XXX what about enums? they're value types too
 whereas classes are reference types,
 as introduced in :ref:`Structures_StructuresAreValueTypes`
 and :ref:`Classes_ClassesAreReferenceTypes`.
+
+.. XXX Also, both can do abstraction via protocols
+
+.. XXX Difference between... what about enums? they're value types too
 
 .. XXX Reword "it can be hard"
 
@@ -33,10 +35,11 @@ you may be in the habit of writing a lot of classes.
 In Swift,
 you don't need classes as often as you might expect,
 but they still have their place.
-.. XXX Reword line above -- too negative about classes
 Use a class
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
+
+.. XXX Reword "still have their place" -- too negative about classes
 
 .. _ChoosingBetweenClassesAndStructures_WorkingWithFrameworksThatUseClasses:
 
@@ -59,6 +62,7 @@ that expect certain things to be classes.
 For example,
 a framework might expect you to pass around a delegate
 that must be a class.
+
 .. XXX needs a bit of meat -- "pass around" is too colloquial
 
 In these scenarios when you are using a framework based in classes,
@@ -170,13 +174,15 @@ Your custom data type instance that represents that file
 needs to exist in one constant region in memory
 so that you can free up that memory
 when you are ready to delete the file.
-.. XXX No - so the temp file gets deleted after you deallocate the file object,
-.. XXX or so all assecc to the file sees the same state
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
 If you are managing a resource that requires custom deinitialization,
 use a class.
+
+.. XXX Not about memory --
+   it's so the temp file gets deleted after you deallocate the file object,
+   or so all access to the file sees the same state
 
 Another reason that graphical windows and files
 are good examples for when to use a class
