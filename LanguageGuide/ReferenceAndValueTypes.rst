@@ -243,7 +243,7 @@ Initially,
 you set ``ovenTemperature`` to ``roomTemperature``
 because the oven is off and at the same temperature as the room: 
 
- .. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: choosingbetweenclassesandstructureshypothetical
 
     -> var roomTemperature = Temperature()
     << // roomTemperature : Temperature = REPL.Temperature
