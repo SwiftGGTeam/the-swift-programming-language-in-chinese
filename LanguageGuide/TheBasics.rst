@@ -1351,18 +1351,21 @@ If the condition evaluates to ``false``,
 the current state of the program is invalid;
 code execution ends, and your app is terminated.
 
-Assertions and preconditions
-let you write down the assumptions and expectations
+You use assertions and preconditions
+to express the assumptions and expectations
 that you make while coding,
 so you can include them as part of your code.
 Assertions help you find mistakes and incorrect assumptions during development,
 and preconditions help you detect issues in production.
-Both become a useful form of documentation
+In addition to verifying your expectations at runtime,
+assertions and preconditions also become a useful form of documentation
 within the code.
 Unlike the error conditions discussed in :ref:`TheBasics_ErrorHandling` above,
-assertions and preconditions are not used for recoverable errors ---
-there is no way to catch a failed assertion ---
-nor are they used to detect expected errors.
+assertions and preconditions are not used
+for recoverable or expected errors.
+Because a failed assertion or precondition
+indicates an invalid program state,
+there is no way to catch a failed assertion.
 
 Using assertions and preconditions
 is not a substitute for designing your code in such a way
@@ -1487,7 +1490,7 @@ by one of the switch's other cases.
 
     If you compile in unchecked mode (``-Ounchecked``),
     preconditions are not checked.
-    The compiler is allowed to assume that preconditions are always true,
+    The compiler assumes that preconditions are always true,
     and it optimizes your code accordingly.
     However, the ``fatalError(_:file:line:)`` function always halts execution,
     regardless of optimization settings.
