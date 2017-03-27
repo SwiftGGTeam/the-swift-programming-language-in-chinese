@@ -71,7 +71,7 @@ For more on arrays and dictionaries, see :doc:`CollectionTypes`.
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
-``for``-``in`` loops also work with numeric ranges.
+You can also use ``for``-``in`` loops with numeric ranges.
 This example prints the first few entries in a five-times table:
 
 .. testcode:: forLoops
