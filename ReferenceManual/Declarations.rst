@@ -653,7 +653,7 @@ see :ref:`Functions_NestedFunctions`.
 Parameter Names
 ~~~~~~~~~~~~~~~
 
-Function parameters are a comma separated list
+Function parameters are a comma-separated list
 where each parameter has one of several forms.
 The order of arguments in a function call
 must match the order of parameters in the function's declaration.
@@ -983,26 +983,25 @@ the error thrown by ``alwaysThrows()``.
             throw AnotherError.error
          }
       }
-
    !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
 
 .. assertion:: throwing-in-rethrowing-function
 
-   -> enum SomeError: Error { case C, D }
+   -> enum SomeError: Error { case c, d }
    -> func f1(callback: () throws -> Void) rethrows {
           do {
               try callback()
           } catch {
-              throw SomeError.C  // OK
+              throw SomeError.c  // OK
           }
       }
    -> func f2(callback: () throws -> Void) rethrows {
-          throw SomeError.D  // Error
+          throw SomeError.d  // Error
       }
    !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
-   !! throw SomeError.D  // Error
+   !! throw SomeError.d  // Error
    !! ^
 
 A throwing method can't override a rethrowing method,
@@ -1176,9 +1175,9 @@ mark it with the ``indirect`` declaration modifier.
    >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
    >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
    >> let t = Tree.node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(50, REPL.Tree<Swift.Int>.node(10, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty), REPL.Tree<Swift.Int>.node(100, REPL.Tree<Swift.Int>.empty, REPL.Tree<Swift.Int>.empty))
+   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
+   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
+   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration,
 mark the entire enumeration with the ``indirect`` modifier ---
@@ -1248,7 +1247,7 @@ that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
 .. The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
-.. This list is shorter because these five protocols are explicitly supported in the compiler.
+   This list is shorter because these five protocols are explicitly supported in the compiler.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
@@ -1411,7 +1410,7 @@ see :doc:`../LanguageGuide/ClassesAndStructures`.
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
 
-There are three ways create an instance of a previously declared structure:
+There are three ways to create an instance of a previously declared structure:
 
 * Call one of the initializers declared within the structure,
   as described in :ref:`Initialization_Initializers`.
@@ -1514,7 +1513,7 @@ inherited when the subclass meets the conditions described in
 :ref:`Initialization_AutomaticInitializerInheritance`.
 Swift classes do not inherit from a universal base class.
 
-There are two ways create an instance of a previously declared class:
+There are two ways to create an instance of a previously declared class:
 
 * Call one of the initializers declared within the class,
   as described in :ref:`Initialization_Initializers`.
@@ -2120,13 +2119,17 @@ see :doc:`../LanguageGuide/Deinitialization`.
 Extension Declaration
 ---------------------
 
-An :newTerm:`extension declaration` allows you to extend the behavior of existing
-class, structure, and enumeration types.
-Extension declarations are declared using the ``extension`` keyword and have the following form:
+An :newTerm:`extension declaration` allows you to extend
+the behavior of existing types.
+Extension declarations are declared using the ``extension`` keyword and have the following forms:
 
 .. syntax-outline::
 
     extension <#type name#>: <#adopted protocols#> {
+       <#declarations#>
+    }
+
+    extension <#type name#> where <#requirements#> {
        <#declarations#>
     }
 
@@ -2139,10 +2142,20 @@ stored properties, property observers, or other extension declarations.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
+If the *type name* is a class, structure, or enumeration type,
+the extension extends that type.
+If the *type name* is a protocol type,
+the extension extends all types that conform to that protocol.
+
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+Extension declarations that extend a generic type can include *requirements*.
+If an instance of the extended type satisfies the *requirements*,
+the instance gains the behavior specified in the declaration.
+Note that you can't include *requirements* if the *type name* is a protocol type.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
@@ -2175,7 +2188,7 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can-have-where-clause-and-inheritance
+.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
 
    >> protocol P { func foo() }
    >> extension Array: P where Element: Equatable {

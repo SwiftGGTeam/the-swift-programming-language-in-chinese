@@ -139,7 +139,7 @@ and the ``Person`` instance is not deallocated:
 
 ARC does not deallocate the ``Person`` instance until
 the third and final strong reference is broken,
-at which point it is clear that you are no longer using the ``Person`` instance:
+at which point it's clear that you are no longer using the ``Person`` instance:
 
 .. testcode:: howARCWorks
 
@@ -153,9 +153,9 @@ Strong Reference Cycles Between Class Instances
 
 In the examples above,
 ARC is able to track the number of references to the new ``Person`` instance you create
-and to deallocate that ``Person`` instance when it is no longer needed.
+and to deallocate that ``Person`` instance when it's no longer needed.
 
-However, it is possible to write code in which an instance of a class
+However, it's possible to write code in which an instance of a class
 *never* gets to a point where it has zero strong references.
 This can happen if two class instances hold a strong reference to each other,
 such that each instance keeps the other alive.
@@ -167,7 +167,7 @@ as weak or unowned references instead of as strong references.
 This process is described in
 :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
 However, before you learn how to resolve a strong reference cycle,
-it is useful to understand how such a cycle is caused.
+it's useful to understand how such a cycle is caused.
 
 Here's an example of how a strong reference cycle can be created by accident.
 This example defines two classes called ``Person`` and ``Apartment``,
@@ -291,7 +291,7 @@ The instances can then refer to each other without creating a strong reference c
 Use a weak reference when the other instance has a shorter lifetime ---
 that is, when the other instance can be deallocated first.
 In the ``Apartment`` example above,
-it is appropriate for an apartment to be able to have
+it's appropriate for an apartment to be able to have
 no tenant at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
 In contrast, use an unowned reference when the other instance
@@ -314,7 +314,7 @@ You indicate a weak reference by placing the ``weak`` keyword
 before a property or variable declaration.
 
 Because a weak reference does not keep a strong hold on the instance it refers to,
-it is possible for that instance to be deallocated
+it's possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
@@ -406,7 +406,7 @@ there are no more strong references to the ``Person`` instance:
    <- John Appleseed is being deinitialized
 
 Because there are no more strong references to the ``Person`` instance,
-it is deallocated
+it's deallocated
 and the ``tenant`` property is set to ``nil``:
 
 .. image:: ../images/weakReference02_2x.png
@@ -560,7 +560,7 @@ there are no more strong references to the ``Customer`` instance:
    :align: center
 
 Because there are no more strong references to the ``Customer`` instance,
-it is deallocated.
+it's deallocated.
 After this happens,
 there are no more strong references to the ``CreditCard`` instance,
 and it too is deallocated:
@@ -604,7 +604,7 @@ Unowned References and Implicitly Unwrapped Optional Properties
 
 The examples for weak and unowned references above
 cover two of the more common scenarios
-in which it is necessary to break a strong reference cycle.
+in which it's necessary to break a strong reference cycle.
 
 The ``Person`` and ``Apartment`` example shows
 a situation where two properties, both of which are allowed to be ``nil``,
@@ -620,7 +620,7 @@ This scenario is best resolved with an unowned reference.
 However, there is a third scenario,
 in which *both* properties should always have a value,
 and neither property should ever be ``nil`` once initialization is complete.
-In this scenario, it is useful to combine an unowned property on one class
+In this scenario, it's useful to combine an unowned property on one class
 with an implicitly unwrapped optional property on the other class.
 
 This enables both properties to be accessed directly
@@ -731,7 +731,7 @@ this time it's a class instance and a closure that are keeping each other alive.
 Swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
 However, before you learn how to break a strong reference cycle with a closure capture list,
-it is useful to understand how such a cycle can be caused.
+it's useful to understand how such a cycle can be caused.
 
 The example below shows how you can create a strong reference cycle
 when using a closure that references ``self``.
@@ -811,7 +811,7 @@ in order to prevent the representation from returning an empty HTML tag:
 .. note::
 
    The ``asHTML`` property is declared as a lazy property,
-   because it is only needed if and when the element actually needs to be rendered
+   because it's only needed if and when the element actually needs to be rendered
    as a string value for some HTML output target.
    The fact that ``asHTML`` is a lazy property means that you can refer to ``self``
    within the default closure,

@@ -385,7 +385,7 @@ ensuring that the loop is run at least once.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-          n = n * 2
+          n *= 2
       }
    -> print(n)
    << 128
@@ -393,10 +393,12 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> repeat {
-          m = m * 2
+          m *= 2
       } while m < 100
    -> print(m)
    << 128
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
@@ -486,7 +488,7 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
+    << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
     << 120
     -> print(statistics.2)
@@ -581,8 +583,7 @@ Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
 
-    -> numbers.map({
-           (number: Int) -> Int in
+    -> numbers.map({ (number: Int) -> Int in
            let result = 3 * number
            return result
        })
@@ -732,7 +733,7 @@ that don't actually override any method in the superclass.
                numberOfSides = 4
            }
     ---
-           func area() ->  Double {
+           func area() -> Double {
                return sideLength * sideLength
            }
     ---
@@ -927,6 +928,8 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
+It returns either the enumeration case matching the raw value
+or ``nil`` if there is no matching ``Rank``.
 
 .. testcode:: guided-tour
 
@@ -1410,4 +1413,4 @@ or to require a class to have a particular superclass.
    of the elements that any two sequences have in common.
 
 Writing ``<T: Equatable>``
-is the same as writing ``<T> ... where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable``.

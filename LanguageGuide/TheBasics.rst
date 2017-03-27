@@ -896,7 +896,7 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
+   << // http200Status : (statusCode: Int, description: String) = (statusCode: 200, description: "OK")
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:

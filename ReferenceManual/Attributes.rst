@@ -36,12 +36,13 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only.
 
 ``available``
-    Apply this attribute to any declaration to indicate the declaration's lifecycle
-    relative to certain platforms and operating system versions.
+    Apply this attribute to indicate a declaration's lifecycle
+    relative to certain Swift language versions
+    or certain platforms and operating system versions.
 
     The ``available`` attribute always appears
     with a list of two or more comma-separated attribute arguments.
-    These arguments begin with one of the following platform names:
+    These arguments begin with one of the following platform or language names:
 
     * ``iOS``
     * ``iOSApplicationExtension``
@@ -51,45 +52,49 @@ You can apply a declaration attribute to declarations only.
     * ``watchOSApplicationExtension``
     * ``tvOS``
     * ``tvOSApplicationExtension``
+    * ``swift``
 
     .. For the list in source, see include/swift/AST/PlatformKinds.def
 
     You can also use an asterisk (``*``) to indicate the
     availability of the declaration on all of the platform names listed above.
+    An ``available`` attribute specifying a Swift version availability can't
+    use the asterisk.
 
     The remaining arguments can appear in any order
     and specify additional information about the declaration's lifecycle,
     including important milestones.
 
     * The ``unavailable`` argument indicates that the declaration isn't available on the specified platform.
-    * The ``introduced`` argument indicates the first version of the specified platform in which the declaration was introduced.
+      This argument can't be used when specifying Swift version availability.
+    * The ``introduced`` argument indicates the first version of the specified platform or language in which the declaration was introduced.
       It has the following form:
 
       .. syntax-outline::
 
           introduced: <#version number#>
 
-      The *version number* consists of one or more positive integers, separated by periods.
-    * The ``deprecated`` argument indicates the first version of the specified platform in which the declaration was deprecated.
+      The *version number* consists of one to three positive integers, separated by periods.
+    * The ``deprecated`` argument indicates the first version of the specified platform or language in which the declaration was deprecated.
       It has the following form:
 
       .. syntax-outline::
 
           deprecated: <#version number#>
 
-      The optional *version number* consists of one or more positive integers, separated by periods.
+      The optional *version number* consists of one to three positive integers, separated by periods.
       Omitting the version number indicates that the declaration is currently deprecated,
       without giving any information about when the deprecation occurred.
       If you omit the version number, omit the colon (``:``) as well.
-    * The ``obsoleted`` argument indicates the first version of the specified platform in which the declaration was obsoleted.
-      When a declaration is obsoleted, it's removed from the specified platform and can no longer be used.
+    * The ``obsoleted`` argument indicates the first version of the specified platform or language in which the declaration was obsoleted.
+      When a declaration is obsoleted, it's removed from the specified platform or language and can no longer be used.
       It has the following form:
 
       .. syntax-outline::
 
           obsoleted: <#version number#>
 
-      The *version number* consists of one or more positive integers, separated by periods.
+      The *version number* consists of one to three positive integers, separated by periods.
     * The ``message`` argument is used to provide a textual message that's displayed by the compiler
       when emitting a warning or error about the use of a deprecated or obsoleted declaration.
       It has the following form:
@@ -135,17 +140,29 @@ You can apply a declaration attribute to declarations only.
             typealias MyProtocol = MyRenamedProtocol
 
     You can apply multiple ``available`` attributes on a single declaration
-    to specify the declaration's availability on different platforms.
-    The compiler uses an ``available`` attribute only when the attribute specifies
-    a platform that matches the current target platform.
+    to specify the declaration's availability on different platforms
+    and different versions of Swift.
+    The declaration that the ``available`` attribute applies to
+    is ignored if the attribute specifies
+    a platform or language version that doesn't match the current target.
+    If you use multiple ``available`` attributes
+    the effective availability is the combination of
+    the platform and Swift availabilities.
+
+    .. assertion:: multipleAvalableAttributes
+
+       // REPL needs all the attributes on the same line as the  declaration.
+       -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+       -> foo()
 
     If an ``available`` attribute only specifies an ``introduced`` argument
-    in addition to a platform name argument,
+    in addition to a platform or language name argument,
     the following shorthand syntax can be used instead:
 
     .. syntax-outline::
 
         @available(<#platform name#> <#version number#>, *)
+        @available(swift <#version number#>)
 
     The shorthand syntax for ``available`` attributes allows for
     availability for multiple platforms to be expressed concisely.
@@ -158,6 +175,20 @@ You can apply a declaration attribute to declarations only.
        -> @available(iOS 10.0, macOS 10.12, *)
        -> class MyClass {
               // class definition
+          }
+    
+    An ``available`` attribute specifying a Swift version availability can't
+    additionally specify a declaration's platform availability.
+    Instead, use separate ``available`` attributes to specify a Swift
+    version availability and one or more platform availabilities. 
+    
+    .. testcode:: availableMultipleAvailabilities
+       :compile: true
+       
+       -> @available(swift 3.0.2)
+       -> @available(macOS 10.12, *)
+       -> struct MyStruct {
+              // struct definition
           }
 
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
@@ -322,16 +353,12 @@ You can apply a declaration attribute to declarations only.
 
     If you do not use this attribute,
     supply a ``main.swift`` file with code at the top level
-    that calls the ``UIApplicationMain(_:_:_:)`` function.
+    that calls the `UIApplicationMain(_:_:_:_:) <//apple_ref/swift/func/c:@F@UIApplicationMain>`_ function.
     For example,
     if your app uses a custom subclass of ``UIApplication``
     as its principal class,
-    call the ``UIApplicationMain(_:_:_:)`` function
+    call the ``UIApplicationMain(_:_:_:_:)`` function
     instead of using this attribute.
-
-.. TODO: Replace the code voice above with the following:
-   `UIApplicationMain <//apple_ref/c/func/UIApplicationMain>`_ function.
-   Blocked by <rdar://problem/17682758> RST: Add support for uAPI links.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 

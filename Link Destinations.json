@@ -317,6 +317,7 @@
     "generics-associatedtypesinaction": "ID190", 
     "generics-extendingagenerictype": "ID185", 
     "generics-extendinganexistingtypetospecifyanassociatedtype": "ID191", 
+    "generics-extensionwithwhereclause": "ID553", 
     "generics-genericfunctions": "ID181", 
     "generics-generictypes": "ID184", 
     "generics-namingtypeparameters": "ID183", 
@@ -571,5 +572,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 553
+  "next_id": 554
 }

@@ -193,10 +193,6 @@ an expression pattern:
     !! <REPL Input>:1:9: error: expected pattern
     !! for (x, 0) in points {
     !! ^
-    !! <REPL Input>:1:9: error: expected ',' separator
-    !! for (x, 0) in points {
-    !! ^
-    !! ,
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
@@ -405,7 +401,7 @@ with a string representations of points.
 .. testcode:: expression-pattern
 
     -> // Overload the ~= operator to match a string with an integer.
-    -> func ~=(pattern: String, value: Int) -> Bool {
+    -> func ~= (pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }
     -> switch point {

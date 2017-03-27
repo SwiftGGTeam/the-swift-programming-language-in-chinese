@@ -289,7 +289,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 .. testcode:: tupleTypesAsReturnTypes
 
    -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
-   << // bounds : (min: Int, max: Int) = (-6, 109)
+   << // bounds : (min: Int, max: Int) = (min: -6, max: 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
@@ -618,7 +618,7 @@ performing an appropriate mathematical operation.
 The type of both of these functions is ``(Int, Int) -> Int``.
 This can be read as:
 
-“A function type that has two parameters, both of type ``Int``,
+“A function that has two parameters, both of type ``Int``,
 and that returns a value of type ``Int``.”
 
 Here's another example, for a function with no parameters or return value:

@@ -6,6 +6,36 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-03-27  * Updated for Swift 3.1.
+
+            * Added the :ref:`Generics_ExtensionWithWhereClause` section
+              with information about extensions that include requirements.
+
+            * Added examples of iterating over a range
+              to the :ref:`ControlFlow_ForLoops` section.
+
+            * Added an example of failable numeric conversions
+              to the :ref:`Initialization_FailableInitializers` section.
+
+            * Added information to the :ref:`Attributes_DeclarationAttributes` section
+              about using the ``available`` attribute with a Swift language version.
+
+            * Updated the discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
+
+            * Updated the discussion of Swift language version numbers
+              in the :ref:`Statements_BuildConfigurationStatement` section,
+              now that an optional patch number is allowed.
+
+            * Updated the discussion
+              in the :ref:`Types_FunctionType` section,
+              now that Swift distinguishes between functions that take multiple parameters
+              and functions that take a single parameter of a tuple type.
+
+            * Removed the Dynamic Type Expression section
+              from the :doc:`../ReferenceManual/Expressions` chapter,
+              now that ``type(of:)`` is a Swift standard library function.
+----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 
             * Updated the discussion of weak and unowned references
@@ -89,7 +119,7 @@ Date        Notes
               of the :doc:`../ReferenceManual/Types` chapter
               to use the new ``Protocol1 & Protocol2`` syntax.
 
-            * Updated the discussion in the :ref:`Expressions_DynamicTypeExpression` section
+            * Updated the discussion in the Dynamic Type Expression section
               to use the new ``type(of:)`` syntax for dynamic type expressions.
 
             * Updated the discussion of line control statements

@@ -11,10 +11,8 @@ to transfer the flow of execution to another point in your code.
 Swift also provides a ``for``-``in`` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
 
-Swift's ``switch`` statement is also considerably more powerful
+Swift's ``switch`` statement is considerably more powerful
 than its counterpart in many C-like languages.
-Because the cases of a ``switch`` statement do not fall through to the next case in Swift,
-it avoids common C errors caused by missing ``break`` statements.
 Cases can match many different patterns,
 including interval matches, tuples, and casts to a specific type.
 Matched values in a ``switch`` case can be bound to temporary constants or variables
@@ -27,9 +25,54 @@ For-In Loops
 ------------
 
 You use the ``for``-``in`` loop to iterate over a sequence,
-such as ranges of numbers, items in an array, or characters in a string.
+such as items in an array, ranges of numbers, or characters in a string.
 
-This example prints the first few entries in the five-times table:
+This example uses a ``for``-``in`` loop to iterate over the items in an array:
+
+.. testcode:: forLoops
+
+   -> let names = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
+   -> for name in names {
+         print("Hello, \(name)!")
+      }
+   </ Hello, Anna!
+   </ Hello, Alex!
+   </ Hello, Brian!
+   </ Hello, Jack!
+
+You can also iterate over a dictionary to access its key-value pairs.
+Each item in the dictionary is returned as a ``(key, value)`` tuple
+when the dictionary is iterated,
+and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
+for use within the body of the ``for``-``in`` loop.
+In the code example below, the dictionary's keys are decomposed into a constant called ``animalName``,
+and the dictionary's values are decomposed into a constant called ``legCount``.
+
+.. testcode:: forLoops
+
+   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
+   -> for (animalName, legCount) in numberOfLegs {
+         print("\(animalName)s have \(legCount) legs")
+      }
+   </ ants have 6 legs
+   </ spiders have 8 legs
+   </ cats have 4 legs
+
+The contents of a ``Dictionary`` are inherently unordered,
+and iterating over them does not guarantee the order
+in which they will be retrieved.
+In particular,
+the order you insert items into a ``Dictionary``
+doesn't define the order they are iterated.
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.
+
+.. TODO: provide some advice on how to iterate over a Dictionary in order
+   (perhaps sorted by key), using a predicate or array sort or some kind.
+
+``for``-``in`` loops also work with numeric ranges.
+This example prints the first few entries in a five-times table:
 
 .. testcode:: forLoops
 
@@ -92,46 +135,59 @@ used in place of a loop variable
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
-Use a ``for``-``in`` loop with an array to iterate over its items.
+In some situations, you might not want to use closed ranges,
+which include both endpoints.
+Consider drawing the tick marks for every minute on a watch face.
+You want to draw ``60`` tick marks, starting with the ``0`` minute.
+Use the half-open range operator (``..<``) to include the
+lower bound but not the upper bound.
+For more on ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
 
-   -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
-   -> for name in names {
-         print("Hello, \(name)!")
+   -> let minutes = 60
+   << // minutes : Int = 60
+   >> var result = [Int]()
+   << // result : [Int] = []
+   -> for tickMark in 0..<minutes {
+         // render the tick mark each minute (60 times)
+   >>    result.append(tickMark)
       }
-   </ Hello, Anna!
-   </ Hello, Alex!
-   </ Hello, Brian!
-   </ Hello, Jack!
-
-You can also iterate over a dictionary to access its key-value pairs.
-Each item in the dictionary is returned as a ``(key, value)`` tuple
-when the dictionary is iterated,
-and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
-for use within the body of the ``for``-``in`` loop.
-Here, the dictionary's keys are decomposed into a constant called ``animalName``,
-and the dictionary's values are decomposed into a constant called ``legCount``.
+   >> print(result.first!, result.last!, result.count)
+   << 0 59 60
+   
+Some users might want fewer tick marks in their UI.
+They could prefer one mark every ``5`` minutes instead.
+Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
 .. testcode:: forLoops
 
-   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
-   -> for (animalName, legCount) in numberOfLegs {
-         print("\(animalName)s have \(legCount) legs")
+   -> let minuteInterval = 5
+   << // minuteInterval : Int = 5
+   >> result = [Int]()
+   -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+         // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
+   >>      result.append(tickMark)
       }
-   </ ants have 6 legs
-   </ spiders have 8 legs
-   </ cats have 4 legs
+   >> print(result.first!, result.last!, result.count)
+   << 0 55 12
+   
+Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 
-Items in a ``Dictionary`` may not necessarily be iterated in the same order in which they were inserted.
-The contents of a ``Dictionary`` are inherently unordered,
-and iterating over them does not guarantee the order in which they will be retrieved.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.
+.. testcode:: forLoops
 
-.. TODO: provide some advice on how to iterate over a Dictionary in order
-   (perhaps sorted by key), using a predicate or array sort or some kind.
+   -> let hours = 12
+   << // hours : Int = 12
+   -> let hourInterval = 3
+   << // hourInterval : Int = 3
+   -> for tickMark in stride(from: 3, through: hours, by: hourInterval) {
+         // render the tick mark every 3 hours (3, 6, 9, 12)
+   >>    print(tickMark)
+      }
+   << 3
+   << 6
+   << 9
+   << 12
 
 .. TODO: include the note below once we have some documentation for Sequence:
    The examples above use a ``for``-``in`` loop to iterate
@@ -183,6 +239,8 @@ This example plays a simple game of *Snakes and Ladders*
 The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25.
+* The player's starting square is “square zero”,
+  which is just off the bottom-left corner of the board.
 * Each turn, you roll a six-sided dice and move by that number of squares,
   following the horizontal path indicated by the dotted arrow above.
 * If your turn ends at the bottom of a ladder, you move up that ladder.
@@ -192,8 +250,8 @@ The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array
 and also to check for a win condition later in the example.
-The board is initialized with 26 zero ``Int`` values, not 25
-(one each at indexes ``0`` through ``25``).
+Because the players start off the board, on "square zero",
+the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
 
@@ -215,16 +273,13 @@ Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, ``board[03]`` is equal to ``+08``,
 which is equivalent to an integer value of ``8``
 (the difference between ``3`` and ``11``).
-The unary plus operator (``+i``) balances with
-the unary minus operator (``-i``),
-and numbers lower than ``10`` are padded with zeros
-so that all board definitions align.
-(Neither stylistic tweak is strictly necessary,
+To align the values and statements,
+the unary plus operator (``+i``) is explicitly used with
+the unary minus operator (``-i``)
+and numbers lower than ``10`` are padded with zeros.
+(Neither stylistic technique is strictly necessary,
 but they lead to neater code.)
 
-The player's starting square is “square zero”,
-which is just off the bottom-left corner of the board.
-The first dice roll always moves the player onto the board.
 
 .. testcode:: snakesAndLadders1
 
@@ -293,18 +348,16 @@ After rolling the dice, the player moves forward by ``diceRoll`` squares.
 It's possible that the dice roll may have moved the player beyond square 25,
 in which case the game is over.
 To cope with this scenario,
-the code checks that ``square`` is less than the ``board`` array's ``count`` property
-before adding the value stored in ``board[square]`` onto the current ``square`` value
+the code checks that ``square`` is less than the ``board`` array's ``count`` property.
+If ``square`` is valid, the value stored in ``board[square]`` is added
+to the current ``square`` value
 to move the player up or down any ladders or snakes.
 
 .. note::
 
-   Had this check not been performed,
+   If this check is not performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
-   which would trigger an error.
-   If ``square`` were equal to ``26``,
-   the code would try to check the value of ``board[26]``,
-   which is larger than the size of the array.
+   which would trigger a runtime error.
 
 The current ``while`` loop execution then ends,
 and the loop's condition is checked to see if the loop should be executed again.
@@ -425,7 +478,7 @@ In the ``repeat``-``while`` loop above,
 ``square += board[square]`` is always executed *immediately after*
 the loop's ``while`` condition confirms that ``square`` is still on the board.
 This behavior removes the need for the array bounds check
-seen in the earlier version of the game.
+seen in the ``while`` loop version of the game described earlier.
 
 .. _ControlFlow_ConditionalStatements:
 
@@ -690,7 +743,7 @@ to provide a natural-language count for numbers of any size:
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
-   -> var naturalCount: String
+   -> let naturalCount: String
    -> switch approximateCount {
       case 0:
           naturalCount = "no"
@@ -735,15 +788,15 @@ and categorizes it on the graph that follows the example.
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
-            print("(0, 0) is at the origin")
+            print("\(somePoint) is at the origin")
          case (_, 0):
-            print("(\(somePoint.0), 0) is on the x-axis")
+            print("\(somePoint) is on the x-axis")
          case (0, _):
-            print("(0, \(somePoint.1)) is on the y-axis")
+            print("\(somePoint) is on the y-axis")
          case (-2...2, -2...2):
-            print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            print("\(somePoint) is inside the box")
          default:
-            print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+            print("\(somePoint) is outside of the box")
       }
    <- (1, 1) is inside the box
 
@@ -769,7 +822,7 @@ and so all other matching cases would be ignored.
 Value Bindings
 ++++++++++++++
 
-A ``switch`` case can bind the value or values it matches to temporary constants or variables,
+A ``switch`` case can name the value or values it matches to temporary constants or variables,
 for use in the body of the case.
 This behavior is known as :newTerm:`value binding`,
 because the values are bound to temporary constants or variables within the case's body.
@@ -985,7 +1038,7 @@ Break
 ~~~~~
 
 The ``break`` statement ends execution of an entire control flow statement immediately.
-The ``break`` statement can be used inside a ``switch`` statement or loop statement
+The ``break`` statement can be used inside a ``switch`` or loop statement
 when you want to terminate the execution of the ``switch`` or loop statement
 earlier than would otherwise be the case.
 
@@ -1064,7 +1117,7 @@ one of the ``switch`` statement's cases sets
 an optional ``Int?`` variable called ``possibleIntegerValue``
 to an appropriate integer value.
 
-After the switch statement completes its execution,
+After the ``switch`` statement completes its execution,
 the example uses optional binding to determine whether a value was found.
 The ``possibleIntegerValue`` variable has an implicit initial value of ``nil``
 by virtue of being an optional type,
@@ -1085,8 +1138,8 @@ and code execution continues from the ``if let`` statement.
 Fallthrough
 ~~~~~~~~~~~
 
-Switch statements in Swift don't fall through the bottom of each case and into the next one.
-Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+In Swift, ``switch`` statements don't fall through the bottom of each case and into the next one.
+That is, the entire ``switch`` statement completes its execution as soon as the first matching case is completed.
 By contrast, C requires you to insert an explicit ``break`` statement
 at the end of every ``switch`` case to prevent fallthrough.
 Avoiding default fallthrough means that Swift ``switch`` statements are
@@ -1411,9 +1464,9 @@ when it verifies that the APIs in that block of code are available.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-The availability condition above specifies that on iOS,
-the body of the ``if`` executes only on iOS 10 and later;
-on macOS, only on macOS 10.12 and later.
+The availability condition above specifies that in iOS,
+the body of the ``if`` statement executes only in iOS 10 and later;
+in macOS, only in macOS 10.12 and later.
 The last argument, ``*``, is required and specifies that on any other platform,
 the body of the ``if`` executes on the minimum deployment target specified by your target.
 
@@ -1421,7 +1474,7 @@ In its general form,
 the availability condition takes a list of platform names and versions.
 You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
 for the full list, see :ref:`Attributes_DeclarationAttributes`.
-In addition to specifying major version numbers like iOS 8,
+In addition to specifying major version numbers like iOS 8 or macOS 10.10,
 you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
 
 .. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",

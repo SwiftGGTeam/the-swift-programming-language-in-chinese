@@ -246,7 +246,7 @@ String Interpolation
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
 Each item that you insert into the string literal is wrapped in
-a pair of parentheses, prefixed by a backslash:
+a pair of parentheses, prefixed by a backslash (``\``):
 
 .. testcode:: stringInterpolation
 
@@ -471,7 +471,7 @@ with a fourth character of ``é``, not ``e``:
 
 .. note::
 
-   Extended grapheme clusters can be composed of one or more Unicode scalars.
+   Extended grapheme clusters can be composed of multiple Unicode scalars.
    This means that different characters—
    and different representations of the same character—
    can require different amounts of memory to store.
@@ -609,7 +609,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -911,7 +911,10 @@ one for each byte in the string's UTF-8 representation:
          print("\(codeUnit) ", terminator: "")
       }
    -> print("")
-   </ 68 111 103 226 128 188 240 159 144 182
+   << 68 111 103 226 128 188 240 159 144 182
+   // Prints "68 111 103 226 128 188 240 159 144 182 "
+
+.. Workaround for rdar://26016325
 
 In the example above, the first three decimal ``codeUnit`` values
 (``68``, ``111``, ``103``)
