@@ -1345,6 +1345,26 @@ that a Boolean condition definitely evaluates to ``true``.
 You use assertions and preconditions
 to make sure that an essential condition is satisfied
 before executing any further code.
+
+    :newTerm:`Assertions` and :newTerm:`preconditions` are checks
+    that you use to ensure that, at runtime,
+    a Boolean condition definitely evaluates to ``true``.
+    You use assertions and preconditions
+    to make sure that an essential condition is satisfied
+    before executing any further code.
+
+    :newTerm:`Assertions` and :newTerm:`preconditions`
+    are checks that happen at runtime,
+    to make sure that an essential condition is satisfied
+    before executing any further code.
+
+    :newTerm:`Assertions` and :newTerm:`preconditions`
+    are checks that happen at runtime.
+    that a Boolean condition definitely evaluates to ``true``.
+    You use assertions and preconditions
+    to make sure that an essential condition is satisfied
+    before executing any further code.
+
 If the condition evaluates to ``true``,
 code execution continues as usual.
 If the condition evaluates to ``false``,
