@@ -200,13 +200,6 @@ In general,
 this means you should use structures by default,
 and use classes in those special cases discussed above.
 
-.. XXX Lumpy outline...  This paragraph should probably fold into the next section.
-
-.. _ChoosingBetweenClassesAndStructures_WhyToUseAStructure:
-
-Why to Use a Structure
-----------------------
-
 .. XXX the first part of this is all about unintended sharing
    due to using reference semantics when they're the wrong thing
 
