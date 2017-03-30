@@ -289,15 +289,14 @@ When You Need Inheritance
    with an xref from the Inheritance chapter
    and from this chapter.
 
-You might think you should use a class when you need inheritance.
-In many cases,
-Swift's protocols and protocol extensions make it so that
-you can use structures and still have inheritance.
-
-To show how you can use structures and still have inheritance,
-imagine that the ``Vehicle`` base class from :doc:`Inheritance`
-was a ``Vehicle`` a protocol instead
-with a default implementation provided in a protocol extension: 
+In many cases, even when you need inheritance,
+you can still use a structure
+by using protocols and default implementations.
+For example,
+consider the ``Vehicle`` base class from the examples in :doc:`Inheritance`.
+You can create a ``Vehicle`` protocol instead,
+with a default implementation for the ``description`` property
+provided in an extension:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -310,7 +309,6 @@ with a default implementation provided in a protocol extension:
                return "traveling at \(currentSpeed) miles per hour"
            }
        }
-
 
 Instead of using subclasses,
 you can use ``Car`` and ``Train`` structures
