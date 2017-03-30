@@ -1340,32 +1340,12 @@ Throwing, catching, and propagating errors is covered in greater detail in
 Assertions and Preconditions
 ----------------------------
 
-:newTerm:`Assertions` and :newTerm:`preconditions` are runtime checks
-that a Boolean condition definitely evaluates to ``true``.
-You use assertions and preconditions
-to make sure that an essential condition is satisfied
+:newTerm:`Assertions` and :newTerm:`preconditions`
+are checks that happen at runtime.
+You use them to make sure an essential condition is satisfied
 before executing any further code.
-
-    :newTerm:`Assertions` and :newTerm:`preconditions` are checks
-    that you use to ensure that, at runtime,
-    a Boolean condition definitely evaluates to ``true``.
-    You use assertions and preconditions
-    to make sure that an essential condition is satisfied
-    before executing any further code.
-
-    :newTerm:`Assertions` and :newTerm:`preconditions`
-    are checks that happen at runtime,
-    to make sure that an essential condition is satisfied
-    before executing any further code.
-
-    :newTerm:`Assertions` and :newTerm:`preconditions`
-    are checks that happen at runtime.
-    that a Boolean condition definitely evaluates to ``true``.
-    You use assertions and preconditions
-    to make sure that an essential condition is satisfied
-    before executing any further code.
-
-If the condition evaluates to ``true``,
+If the Boolean condition in the assertion or precondition
+evaluates to ``true``,
 code execution continues as usual.
 If the condition evaluates to ``false``,
 the current state of the program is invalid;
