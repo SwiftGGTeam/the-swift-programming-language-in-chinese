@@ -5,19 +5,15 @@ Classes and structures in Swift have many similarities.
 Both have properties, methods, subscripts, initializers, use dot syntax,
 and so on.
 As a result,
-it can be hard to know when to use classes and when to use structures
+it's not always obvious when to use a class and when to use a structure.
 for the building blocks of your program.
 The fundamental difference between structures and classes
 is that structures are value types
-whereas classes are reference types,
+but classes are reference types,
 as introduced in :ref:`Structures_StructuresAreValueTypes`
 and :ref:`Classes_ClassesAreReferenceTypes`.
 
 .. XXX Also, both can do abstraction via protocols
-
-.. XXX Difference between... what about enums? they're value types too
-
-.. XXX Reword "it can be hard"
 
 .. XXX General question: what happens when I put a class instance inside a struct?
    In particular, call out the fact that this breaks value semantics,
@@ -33,13 +29,10 @@ If you're used to working in object-oriented languages
 like Objective-C or C++,
 you may be in the habit of writing a lot of classes.
 In Swift,
-you don't need classes as often as you might expect,
-but they still have their place.
-Use a class
+you don't need classes as often as you might expect.
+The major reasons to use a class are
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
-
-.. XXX Reword "still have their place" -- too negative about classes
 
 .. _ChoosingBetweenClassesAndStructures_WorkingWithFrameworksThatUseClasses:
 
@@ -75,7 +68,7 @@ Using Classes For Stable Identity
 
 Class instances have stable identity.
 When you initialize a class instance,
-Swift picks out a region in memory to store that instance.
+Swift allocates a region in memory to store that instance.
 That region in memory has an address.
 Constants or variables that are assigned to that instance
 store that address to refer to that instance indirectly.
@@ -170,19 +163,18 @@ There are other times
 when you want the stable identity of a class because 
 the lifetime of an instance is tied to some external entity,
 such as a file that temporarily appears on a disk.
-Your custom data type instance that represents that file
-needs to exist in one constant region in memory
-so that you can free up that memory
-when you are ready to delete the file.
+A custom data type instance that represents that file
+needs to have reference semantics
+so that all of your code that interacts with the object
+is able to interact with the same on-disk file
+and sees that file in the same state.
+In addition, when the object is no longer needed
+the on-disk file needs to be deleted.
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
 If you are managing a resource that requires custom deinitialization,
 use a class.
-
-.. XXX Not about memory --
-   it's so the temp file gets deleted after you deallocate the file object,
-   or so all access to the file sees the same state
 
 Another reason that graphical windows and files
 are good examples for when to use a class

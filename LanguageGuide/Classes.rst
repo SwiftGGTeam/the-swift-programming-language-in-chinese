@@ -3,17 +3,12 @@ Classes
 
 .. XXX As in structs chapter, scrub for imperative -> indicative
 
-:newTerm:`Classes` in Swift are composed
-of many of the same pieces as structures.
+:newTerm:`Classes` in Swift have a lot in common with structures.
 They can have properties, methods, subscripts, initializers, and so on.
 Just like with structures,
 you use dot syntax to access properties and methods
 of class instances.
-
-.. XXX adjust wording above -- same pieces...?  same functionality...?
-
-While classes are similar to structures in composition,
-classes have different underlying behavior:
+However, there are a few important differences:
 
 * Inheritance enables one class to inherit the characteristics of another,
   as described in :doc:`Inheritance`.
