@@ -94,12 +94,13 @@ and initializes its properties to their default values.
 
 .. _Structures_MemberwiseInitializer:
 
-Memberwise Initializer
-~~~~~~~~~~~~~~~~~~~~~~
+Initializing a Structure
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an initializer that's implemented for you by the compiler,
-known as a :newterm:`memberwise initializer`.
-This initializer lets you create an instance of the structure
+known as a :newterm:`memberwise initializer`,
+although you can also define your own initializers.
+The memberwise initializer lets you create an instance of the structure
 by providing a value for each of the structure's stored properties.
 
 .. testcode:: structures
