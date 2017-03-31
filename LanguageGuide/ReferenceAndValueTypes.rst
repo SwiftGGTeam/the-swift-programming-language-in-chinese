@@ -1,50 +1,19 @@
 Choosing Between Reference and Value Types
 ==========================================
 
-Classes and structures in Swift have many similarities.
-Both have properties, methods, subscripts, initializers, use dot syntax,
-and so on.
-As a result,
-it's not always obvious when to use a class and when to use a structure.
-for the building blocks of your program.
-The fundamental difference between structures and classes
-is that structures are value types
-but classes are reference types,
-as introduced in :ref:`Structures_StructuresAreValueTypes`
-and :ref:`Classes_ClassesAreReferenceTypes`.
-
-.. XXX Also, both can do abstraction via protocols
-
-.. XXX General question: what happens when I put a class instance inside a struct?
-   In particular, call out the fact that this breaks value semantics,
-   because copies of the struct all refer to the same classs instance.
-   In contrast, composing value semantics preserves value semantics.
-
-.. XXX Notes from WWDC 2016 session on Swift performance
-   https://developer.apple.com/videos/play/wwdc2016/416/
-
-   Classes give you a high degree of flexibility and dynamic behavior...
-   but there's a cost to that dynamism.
-   If you aren't using it, use a struct instead.
-
-   Classes are allocated on the heap, which is more expensive
-   than stack allocation for classes.
-
-   Classes are reference counted, which takes time,
-   and structs aren't.
-
-   Classes have dynamic dispatch, which takes a little more time
-   and which can't be optimized very much.
-   (Final classes are a little better,
-   as are classes that aren't exposed outside your module.)
-   Structs use static dispatch, which can be aggressively optimized
-   to do inlining.
-
-   Not from that talk, but there's also a cognitive cost to using classes,
-   because reference semantics requires you to think about every place
-   that could be using the object,
-   rather than being able to know that only code nearby
-   is effected by changes to a struct's state.
+Classes and structures in Swift have many similarities,
+such as properties, methods, subscripts, and initializers,
+which means it's not always obvious
+when to use a class and when to use a structure.
+The fundamental difference between classes and structures
+is that classes are reference types
+but structures are value types,
+as introduced in :ref:`Classes_ClassesAreReferenceTypes`
+and :ref:`Structures_StructuresAreValueTypes`.
+In general,
+most of the time you should use a structure
+unless you need that additional dynamic behavior
+that classes provide.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
 
@@ -369,3 +338,41 @@ inheritance in itself is not a compelling reason to use a class ---
 with the exception of those times when you need
 to subclass an existing class
 from a resource you don't control.
+
+
+
+
+
+.. XXX Both can do abstraction via protocols
+
+.. XXX General question: what happens when I put a class instance inside a struct?
+   In particular, call out the fact that this breaks value semantics,
+   because copies of the struct all refer to the same classs instance.
+   In contrast, composing value semantics preserves value semantics.
+
+.. XXX Notes from WWDC 2016 session on Swift performance
+   https://developer.apple.com/videos/play/wwdc2016/416/
+
+   Classes give you a high degree of flexibility and dynamic behavior...
+   but there's a cost to that dynamism.
+   If you aren't using it, use a struct instead.
+
+   Classes are allocated on the heap, which is more expensive
+   than stack allocation for classes.
+
+   Classes are reference counted, which takes time,
+   and structs aren't.
+
+   Classes have dynamic dispatch, which takes a little more time
+   and which can't be optimized very much.
+   (Final classes are a little better,
+   as are classes that aren't exposed outside your module.)
+   Structs use static dispatch, which can be aggressively optimized
+   to do inlining.
+
+   Not from that talk, but there's also a cognitive cost to using classes,
+   because reference semantics requires you to think about every place
+   that could be using the object,
+   rather than being able to know that only code nearby
+   is affected by changes to a struct's state.
+
