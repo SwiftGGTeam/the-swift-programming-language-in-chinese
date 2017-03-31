@@ -20,6 +20,32 @@ and :ref:`Classes_ClassesAreReferenceTypes`.
    because copies of the struct all refer to the same classs instance.
    In contrast, composing value semantics preserves value semantics.
 
+.. XXX Notes from WWDC 2016 session on Swift performance
+   https://developer.apple.com/videos/play/wwdc2016/416/
+
+   Classes give you a high degree of flexibility and dynamic behavior...
+   but there's a cost to that dynamism.
+   If you aren't using it, use a struct instead.
+
+   Classes are allocated on the heap, which is more expensive
+   than stack allocation for classes.
+
+   Classes are reference counted, which takes time,
+   and structs aren't.
+
+   Classes have dynamic dispatch, which takes a little more time
+   and which can't be optimized very much.
+   (Final classes are a little better,
+   as are classes that aren't exposed outside your module.)
+   Structs use static dispatch, which can be aggressively optimized
+   to do inlining.
+
+   Not from that talk, but there's also a cognitive cost to using classes,
+   because reference semantics requires you to think about every place
+   that could be using the object,
+   rather than being able to know that only code nearby
+   is effected by changes to a struct's state.
+
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
 
 When to Use a Reference Type
