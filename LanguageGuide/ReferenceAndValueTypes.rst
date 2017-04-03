@@ -57,10 +57,8 @@ when you want to refer to the same instance of a type in multiple places.
 Working With Frameworks That Use Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you are working with resources that you
-don't control such as frameworks,
-it is common to be given a base class
-that you are expected to subclass.
+A common pattern in frameworks
+is to define a class that you are expected to subclass.
 For example,
 if you are working with the UIKit framework
 and want to create a custom view,
