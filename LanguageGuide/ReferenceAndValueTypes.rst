@@ -24,6 +24,11 @@
 Choosing Between Reference and Value Types
 ==========================================
 
+.. The chapter title was changed from classes vs structs
+   in commit 0909150, which doesn't describe *why* the change was made.
+   I don't reamember exactly what that reason was,
+   and I don't have any notes in email about the feedback Andrew got.
+
 Classes and structures in Swift have many similarities,
 such as properties, methods, subscripts, and initializers,
 which means it's not always obvious
@@ -38,7 +43,6 @@ most of the time you should use a structure
 unless you need that additional dynamic behavior
 that classes provide.
 
-
 .. _ReferenceAndValueTypes_StructsAndEnums:
 
 Using Structures and Enumerations
@@ -46,14 +50,14 @@ Using Structures and Enumerations
 
 Structures make it easier to reason about your code.
 Because structures are value types,
-they help you avoid accidental changes
-due to confusion about the logic of your code.
+they help you avoid accidental shared state
+between parts of a program.
 In order to explore an example
 of this kind of unintended mutation,
-imagine that the ``Temperature`` structure from :doc:`Structures`
-was a class instead:
+let's take the ``Temperature`` structure from :doc:`Structures`
+and look at the problem that happens when it's a class:
 
-.. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: struct-vs-class-temperature
 
     -> class Temperature {
            var celsius = 0.0
@@ -69,7 +73,7 @@ Initially,
 you set ``ovenTemperature`` to ``roomTemperature``
 because the oven is off and at the same temperature as the room:
 
-.. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: struct-vs-class-temperature
 
     -> var roomTemperature = Temperature()
     << // roomTemperature : Temperature = REPL.Temperature
@@ -80,7 +84,7 @@ because the oven is off and at the same temperature as the room:
 When you turn on the oven,
 you accidentally change the temperature of the room as well:
 
-.. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: struct-vs-class-temperature
 
     -> ovenTemperature.celsius = 180.0
     -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
@@ -91,34 +95,36 @@ you accidentally change the temperature of the room as well:
 Because ``Temperature`` is a class,
 setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer to the same ``Temperature`` instance.
-Therefore, changing ``ovenTemperature``
-also changes ``roomTemperature``,
-which is clearly unintended.
+Changing ``ovenTemperature`` also changes ``roomTemperature``
 
-This example of unintended sharing
-is a simple illustration of a problem that often comes up
-when using classes.
-It is clear to see where things went wrong in this example,
-but when you write more complicated code
-and changes come from many different places,
-it is much more difficult to reason about your code.
+.. FIXME: ART
 
-One solution to unintended sharing when using classes
-is to manually copy your class instances as needed.
-However,
-manually copying class instances as needed is hard to justify
-when structures do that for you with their copy-on-write behavior.
+.. XXX REWRITE
 
-.. XXX weak argument -- better framed as structs give you (via reference semantics)
-   what you were trying to build via defensive copying of class instances
+    This example of unintended sharing
+    is a simple illustration of a problem that often comes up
+    when using classes.
+    It is clear to see where things went wrong in this example,
+    but when you write more complicated code
+    and changes come from many different places,
+    it is much more difficult to reason about your code.
 
-Much like constants,
-structures make it easier to reason about your code
-because you don't have to worry about
-where far-away changes might be coming from.
-Structures provide a simpler abstraction,
-saving you from having to think about unintended sharing
-in those cases when you really don't need reference semantics.
+    One solution to unintended sharing when using classes
+    is to manually copy your class instances as needed.
+    However,
+    manually copying class instances as needed is hard to justify
+    when structures do that for you with their copy-on-write behavior.
+
+    .. XXX weak argument -- better framed as structs give you (via reference semantics)
+       what you were trying to build via defensive copying of class instances
+
+    Much like constants,
+    structures make it easier to reason about your code
+    because you don't have to worry about
+    where far-away changes might be coming from.
+    Structures provide a simpler abstraction,
+    saving you from having to think about unintended sharing
+    in those cases when you really don't need reference semantics.
 
 .. _ReferenceAndValueTypes_StructInherit:
 
@@ -134,7 +140,7 @@ You can create a ``Vehicle`` protocol instead,
 with a default implementation for the ``description`` property
 provided in an extension:
 
-.. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: struct-vs-class-temperature
 
     -> protocol Vehicle {
            var currentSpeed: Double { get set }
@@ -150,7 +156,7 @@ Instead of using subclasses,
 you can use ``Car`` and ``Train`` structures
 that conform to the ``Vehicle`` protocol:
 
-.. testcode:: choosingbetweenclassesandstructureshypothetical
+.. testcode:: struct-vs-class-temperature
 
     -> struct Train: Vehicle {
            var currentSpeed = 0.0
@@ -180,17 +186,27 @@ with the exception of those times when you need
 to subclass an existing class
 from a resource you don't control.
 
+.. REWRITE ENDED HERE
+
+
+
+
+
+
+
 XXX When to Use a Reference Type
 --------------------------------
 
-If you're used to working in object-oriented languages
-like Objective-C or C++,
-you may be in the habit of writing a lot of classes.
-In Swift,
-you don't need classes as often as you might expect.
-The major reasons to use a class are
-when you're working with a framework whose API uses classes and
-when you want to refer to the same instance of a type in multiple places.
+.. XXX Move or delete.
+
+    If you're used to working in object-oriented languages
+    like Objective-C or C++,
+    you may be in the habit of writing a lot of classes.
+    In Swift,
+    you don't need classes as often as you might expect.
+    The major reasons to use a class are
+    when you're working with a framework whose API uses classes and
+    when you want to refer to the same instance of a type in multiple places.
 
 XXX Working With Frameworks That Use Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
