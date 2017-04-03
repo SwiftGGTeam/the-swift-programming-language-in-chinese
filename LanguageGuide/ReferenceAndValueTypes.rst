@@ -2,6 +2,9 @@
     * Classes & structs have a lot in common.
        - It might not be clear to the novice which one to use.
        - Default answer: start with a struct.
+    * Structs are value types.
+       - They help you avoid unintentional shared  state.
+       - They're easier to reason about, which means fewer bugs.
     * I need subclasses!
        - Subclassing a framework class?  Ok, use a class.
        - Try using a protocol + a default implementation.
@@ -12,9 +15,6 @@
        - For example, a file on disk or a view on screen.
        - Needs stable identity or custom init/deinit
        - Ok, use a class.
-    * Structs are value types.
-       - They help you avoid unintentional shared  state.
-       - They're easier to reason about, which means fewer bugs.
     * Classes have more dynamic behavior, which comes at a cost.
        - If you don't need it, don't pay for it.
        - ARC and heap allocation are more expensive than static stack allocation.
@@ -38,10 +38,25 @@ most of the time you should use a structure
 unless you need that additional dynamic behavior
 that classes provide.
 
+
+.. _ReferenceAndValueTypes_StructsAndEnums:
+
+Using Structures and Enumerations
+---------------------------------
+
+
+.. _ReferenceAndValueTypes_StructInherit:
+
+Structures and Inheritance
+--------------------------
+
+
+
+
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
 
-When to Use a Reference Type
-----------------------------
+XXX When to Use a Reference Type
+--------------------------------
 
 If you're used to working in object-oriented languages
 like Objective-C or C++,
@@ -54,8 +69,8 @@ when you want to refer to the same instance of a type in multiple places.
 
 .. _ChoosingBetweenClassesAndStructures_WorkingWithFrameworksThatUseClasses:
 
-Working With Frameworks That Use Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+XXX Working With Frameworks That Use Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A common pattern in frameworks
 is to define a class that you are expected to subclass.
@@ -79,8 +94,8 @@ use classes.
 
 .. _ChoosingBetweenClassesAndStructures_UsingClassesForStableIdentity:
 
-Using Classes For Stable Identity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+XXX Using Classes For Stable Identity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Class instances have stable identity.
 When you initialize a class instance,
@@ -205,8 +220,8 @@ use a class.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
 
-When To Use a Value Type
-------------------------
+XXX When To Use a Value Type
+----------------------------
 
 If you don't need your custom data construct
 to have reference semantics
@@ -297,8 +312,8 @@ in those cases when you really don't need reference semantics.
 
 .. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 
-When You Need Inheritance
--------------------------
+XXX When You Need Inheritance
+-----------------------------
 
 .. XXX is this the right place for this?
    Maybe it should have gone in the Protocols chapter,
