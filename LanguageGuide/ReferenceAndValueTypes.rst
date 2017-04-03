@@ -44,14 +44,141 @@ that classes provide.
 Using Structures and Enumerations
 ---------------------------------
 
+Structures make it easier to reason about your code.
+Because structures are value types,
+they help you avoid accidental changes
+due to confusion about the logic of your code. 
+In order to explore an example
+of this kind of unintended mutation,
+imagine that the ``Temperature`` structure from :doc:`Structures`
+was a class instead:
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> class Temperature {
+           var celsius = 0.0
+           var fahrenheit: Double {
+               return celsius * 9/5 + 32
+           }
+       }
+       
+You can create ``roomTemperature`` and ``ovenTemperature`` variables
+like before to model the ambient temperature of a room
+and the temperature of an oven in that room.
+Initially,
+you set ``ovenTemperature`` to ``roomTemperature``
+because the oven is off and at the same temperature as the room: 
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> var roomTemperature = Temperature()
+    << // roomTemperature : Temperature = REPL.Temperature
+    -> roomTemperature.celsius = 21.0
+    -> var ovenTemperature = roomTemperature
+    << // ovenTemperature : Temperature = REPL.Temperature
+
+When you turn on the oven,
+you accidentally change the temperature of the room as well: 
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> ovenTemperature.celsius = 180.0
+    -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
+    <- ovenTemperature is now 180.0 degrees Celsius
+    -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
+    <- roomTemperature is also now 180.0 degrees Celsius
+
+Because ``Temperature`` is a class,
+setting ``ovenTemperature`` to ``roomTemperature``
+means that both variables refer to the same ``Temperature`` instance.
+Therefore, changing ``ovenTemperature``
+also changes ``roomTemperature``,
+which is clearly unintended. 
+
+This example of unintended sharing
+is a simple illustration of a problem that often comes up
+when using classes.
+It is clear to see where things went wrong in this example,
+but when you write more complicated code
+and changes come from many different places,
+it is much more difficult to reason about your code.
+
+One solution to unintended sharing when using classes
+is to manually copy your class instances as needed.
+However,
+manually copying class instances as needed is hard to justify
+when structures do that for you with their copy-on-write behavior.
+
+.. XXX weak argument -- better framed as structs give you (via reference semantics)
+   what you were trying to build via defensive copying of class instances
+
+Much like constants,
+structures make it easier to reason about your code
+because you don't have to worry about
+where far-away changes might be coming from.
+Structures provide a simpler abstraction,
+saving you from having to think about unintended sharing
+in those cases when you really don't need reference semantics.
 
 .. _ReferenceAndValueTypes_StructInherit:
 
 Structures and Inheritance
 --------------------------
 
+In many cases, even when you need inheritance,
+you can still use a structure
+by using protocols and default implementations.
+For example,
+consider the ``Vehicle`` base class from the examples in :doc:`Inheritance`.
+You can create a ``Vehicle`` protocol instead,
+with a default implementation for the ``description`` property
+provided in an extension:
 
+.. testcode:: choosingbetweenclassesandstructureshypothetical
 
+    -> protocol Vehicle {
+           var currentSpeed: Double { get set }
+           func makeNoise()
+       }
+    -> extension Vehicle { 
+           var description: String { 
+               return "traveling at \(currentSpeed) miles per hour"
+           }
+       }
+
+Instead of using subclasses,
+you can use ``Car`` and ``Train`` structures
+that conform to the ``Vehicle`` protocol: 
+
+.. testcode:: choosingbetweenclassesandstructureshypothetical
+
+    -> struct Train: Vehicle {
+           var currentSpeed = 0.0
+           func makeNoise() {
+               print("Choo Choo")
+           }
+       }
+    -> struct Car: Vehicle {
+           var currentSpeed = 0.0
+           var gear = 1
+           func makeNoise() {
+               print("Vroom Vroom")
+           }
+           var description: String {
+               return "traveling at \(currentSpeed) miles per house in gear \(gear)"
+           }
+       }
+
+Much like their class counterparts,
+the ``Train`` and ``Car`` structures
+get a default implementation of ``description``
+that they can override.
+
+With protocols and protocol extensions at your disposal,
+inheritance in itself is not a compelling reason to use a class --- 
+with the exception of those times when you need
+to subclass an existing class
+from a resource you don't control.
 
 .. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
 
@@ -234,81 +361,6 @@ and use classes in those special cases discussed above.
 .. XXX the first part of this is all about unintended sharing
    due to using reference semantics when they're the wrong thing
 
-Structures make it easier to reason about your code.
-Because structures are value types,
-they help you avoid accidental changes
-due to confusion about the logic of your code. 
-In order to explore an example
-of this kind of unintended mutation,
-imagine that the ``Temperature`` structure from :doc:`Structures`
-was a class instead:
-
-.. testcode:: choosingbetweenclassesandstructureshypothetical
-
-    -> class Temperature {
-           var celsius = 0.0
-           var fahrenheit: Double {
-               return celsius * 9/5 + 32
-           }
-       }
-       
-You can create ``roomTemperature`` and ``ovenTemperature`` variables
-like before to model the ambient temperature of a room
-and the temperature of an oven in that room.
-Initially,
-you set ``ovenTemperature`` to ``roomTemperature``
-because the oven is off and at the same temperature as the room: 
-
-.. testcode:: choosingbetweenclassesandstructureshypothetical
-
-    -> var roomTemperature = Temperature()
-    << // roomTemperature : Temperature = REPL.Temperature
-    -> roomTemperature.celsius = 21.0
-    -> var ovenTemperature = roomTemperature
-    << // ovenTemperature : Temperature = REPL.Temperature
-
-When you turn on the oven,
-you accidentally change the temperature of the room as well: 
-
-.. testcode:: choosingbetweenclassesandstructureshypothetical
-
-    -> ovenTemperature.celsius = 180.0
-    -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
-    <- ovenTemperature is now 180.0 degrees Celsius
-    -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
-    <- roomTemperature is also now 180.0 degrees Celsius
-
-Because ``Temperature`` is a class,
-setting ``ovenTemperature`` to ``roomTemperature``
-means that both variables refer to the same ``Temperature`` instance.
-Therefore, changing ``ovenTemperature``
-also changes ``roomTemperature``,
-which is clearly unintended. 
-
-This example of unintended sharing
-is a simple illustration of a problem that often comes up
-when using classes.
-It is clear to see where things went wrong in this example,
-but when you write more complicated code
-and changes come from many different places,
-it is much more difficult to reason about your code.
-
-One solution to unintended sharing when using classes
-is to manually copy your class instances as needed.
-However,
-manually copying class instances as needed is hard to justify
-when structures do that for you with their copy-on-write behavior.
-
-.. XXX weak argument -- better framed as structs give you (via reference semantics)
-   what you were trying to build via defensive copying of class instances
-
-Much like constants,
-structures make it easier to reason about your code
-because you don't have to worry about
-where far-away changes might be coming from.
-Structures provide a simpler abstraction,
-saving you from having to think about unintended sharing
-in those cases when you really don't need reference semantics.
 
 .. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 
@@ -319,61 +371,6 @@ XXX When You Need Inheritance
    Maybe it should have gone in the Protocols chapter,
    with an xref from the Inheritance chapter
    and from this chapter.
-
-In many cases, even when you need inheritance,
-you can still use a structure
-by using protocols and default implementations.
-For example,
-consider the ``Vehicle`` base class from the examples in :doc:`Inheritance`.
-You can create a ``Vehicle`` protocol instead,
-with a default implementation for the ``description`` property
-provided in an extension:
-
-.. testcode:: choosingbetweenclassesandstructureshypothetical
-
-    -> protocol Vehicle {
-           var currentSpeed: Double { get set }
-           func makeNoise()
-       }
-    -> extension Vehicle { 
-           var description: String { 
-               return "traveling at \(currentSpeed) miles per hour"
-           }
-       }
-
-Instead of using subclasses,
-you can use ``Car`` and ``Train`` structures
-that conform to the ``Vehicle`` protocol: 
-
-.. testcode:: choosingbetweenclassesandstructureshypothetical
-
-    -> struct Train: Vehicle {
-           var currentSpeed = 0.0
-           func makeNoise() {
-               print("Choo Choo")
-           }
-       }
-    -> struct Car: Vehicle {
-           var currentSpeed = 0.0
-           var gear = 1
-           func makeNoise() {
-               print("Vroom Vroom")
-           }
-           var description: String {
-               return "traveling at \(currentSpeed) miles per house in gear \(gear)"
-           }
-       }
-
-Much like their class counterparts,
-the ``Train`` and ``Car`` structures
-get a default implementation of ``description``
-that they can override.
-
-With protocols and protocol extensions at your disposal,
-inheritance in itself is not a compelling reason to use a class --- 
-with the exception of those times when you need
-to subclass an existing class
-from a resource you don't control.
 
 
 
