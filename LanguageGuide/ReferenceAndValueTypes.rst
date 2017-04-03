@@ -180,8 +180,6 @@ with the exception of those times when you need
 to subclass an existing class
 from a resource you don't control.
 
-.. _ChoosingBetweenClassesAndStructures_WhenToUseAClass:
-
 XXX When to Use a Reference Type
 --------------------------------
 
@@ -193,8 +191,6 @@ you don't need classes as often as you might expect.
 The major reasons to use a class are
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
-
-.. _ChoosingBetweenClassesAndStructures_WorkingWithFrameworksThatUseClasses:
 
 XXX Working With Frameworks That Use Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -218,8 +214,6 @@ that must be a class.
 
 In these scenarios when you are using a framework based in classes,
 use classes.
-
-.. _ChoosingBetweenClassesAndStructures_UsingClassesForStableIdentity:
 
 XXX Using Classes For Stable Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -345,8 +339,6 @@ When you need the ability
 to change the same instance from multiple places,
 use a class.
 
-.. _ChoosingBetweenClassesAndStructures_WhenToUseAStructure:
-
 XXX When To Use a Value Type
 ----------------------------
 
@@ -361,8 +353,6 @@ and use classes in those special cases discussed above.
 .. XXX the first part of this is all about unintended sharing
    due to using reference semantics when they're the wrong thing
 
-
-.. _ChoosingBetweenClassesAndStructures_WhenYouNeedInheritance:
 
 XXX When You Need Inheritance
 -----------------------------
