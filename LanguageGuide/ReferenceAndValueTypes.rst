@@ -47,7 +47,7 @@ Using Structures and Enumerations
 Structures make it easier to reason about your code.
 Because structures are value types,
 they help you avoid accidental changes
-due to confusion about the logic of your code. 
+due to confusion about the logic of your code.
 In order to explore an example
 of this kind of unintended mutation,
 imagine that the ``Temperature`` structure from :doc:`Structures`
@@ -61,13 +61,13 @@ was a class instead:
                return celsius * 9/5 + 32
            }
        }
-       
+
 You can create ``roomTemperature`` and ``ovenTemperature`` variables
 like before to model the ambient temperature of a room
 and the temperature of an oven in that room.
 Initially,
 you set ``ovenTemperature`` to ``roomTemperature``
-because the oven is off and at the same temperature as the room: 
+because the oven is off and at the same temperature as the room:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -78,7 +78,7 @@ because the oven is off and at the same temperature as the room:
     << // ovenTemperature : Temperature = REPL.Temperature
 
 When you turn on the oven,
-you accidentally change the temperature of the room as well: 
+you accidentally change the temperature of the room as well:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -93,7 +93,7 @@ setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer to the same ``Temperature`` instance.
 Therefore, changing ``ovenTemperature``
 also changes ``roomTemperature``,
-which is clearly unintended. 
+which is clearly unintended.
 
 This example of unintended sharing
 is a simple illustration of a problem that often comes up
@@ -140,15 +140,15 @@ provided in an extension:
            var currentSpeed: Double { get set }
            func makeNoise()
        }
-    -> extension Vehicle { 
-           var description: String { 
+    -> extension Vehicle {
+           var description: String {
                return "traveling at \(currentSpeed) miles per hour"
            }
        }
 
 Instead of using subclasses,
 you can use ``Car`` and ``Train`` structures
-that conform to the ``Vehicle`` protocol: 
+that conform to the ``Vehicle`` protocol:
 
 .. testcode:: choosingbetweenclassesandstructureshypothetical
 
@@ -175,7 +175,7 @@ get a default implementation of ``description``
 that they can override.
 
 With protocols and protocol extensions at your disposal,
-inheritance in itself is not a compelling reason to use a class --- 
+inheritance in itself is not a compelling reason to use a class ---
 with the exception of those times when you need
 to subclass an existing class
 from a resource you don't control.
@@ -244,14 +244,14 @@ to remain in the same region in memory with the same address ---
 when you really do want to refer to one instance of a type.
 
 Take the ``Window`` class from :doc:`Classes`,
-which represents a graphical window: 
+which represents a graphical window:
 
 .. testcode:: choosingbetweenclassesandstructures
 
     -> class Window {
            var width: Int
            var height: Int
-           
+
            init(width: Int, height: Int) {
                self.width = width
                self.height = height
@@ -318,7 +318,7 @@ use a class.
 .. XXX polish prose in para above & below for clarity
 
 There are other times
-when you want the stable identity of a class because 
+when you want the stable identity of a class because
 the lifetime of an instance is tied to some external entity,
 such as a file that temporarily appears on a disk.
 A custom data type instance that represents that file
