@@ -208,21 +208,21 @@ to make sure you get reference semantics.
 
 .. testcode:: struct-shared-state-bad
 
-    class Score {
-        var points = 0
-    }
-
-    class Game {
-        var player1: Score
-        var player2: Score
-        init() {
-            self.player1 = Score()
-            self.player2 = Score()
-        }
-    }
-
-    var currentGame = Game()
-    currentGame.player1.points += 10
+    -> class Score {
+           var points = 0
+       }
+    ---
+    -> class Game {
+           var player1: Score
+           var player2: Score
+           init() {
+               self.player1 = Score()
+               self.player2 = Score()
+           }
+       }
+    ---
+    -> var currentGame = Game()
+    -> currentGame.player1.points += 10
 
 However,
 notice that all code that interacts with the scores
@@ -238,21 +238,21 @@ and then use structures for all of the data inside it.
 
 .. testcode:: struct-shared-state-good
 
-    struct Score {
-        var points = 0
-    }
-
-    class Game {
-        var player1: Score
-        var player2: Score
-        init() {
-            self.player1 = Score()
-            self.player2 = Score()
-        }
-    }
-
-    var currentGame = Game()
-    currentGame.player1.points += 10
+    -> class Score {
+           var points = 0
+       }
+    ---
+    -> class Game {
+           var player1: Score
+           var player2: Score
+           init() {
+               self.player1 = Score()
+               self.player2 = Score()
+           }
+       }
+    ---
+    -> var currentGame = Game()
+    -> currentGame.player1.points += 10
 
 Any code that needs to access the board or players
 goes through ``game``.
