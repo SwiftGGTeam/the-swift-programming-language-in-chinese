@@ -187,6 +187,8 @@ and an empty dictionary as ``[:]`` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
+.. iBooks Store screenshot begins here.
+
 .. test::
    :name: simple values
    :cont:
@@ -241,6 +243,8 @@ An optional value either contains a value
 or contains ``nil`` to indicate that a value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
+
+.. iBooks Store screenshot ends here.
 
 .. REFERENCE
    John Appleseed is a stock Apple fake name,
