@@ -24,10 +24,14 @@
 Choosing Between Reference and Value Types
 ==========================================
 
-.. The chapter title was changed from classes vs structs
+.. XXX The chapter title was changed from classes vs structs
    in commit 0909150, which doesn't describe *why* the change was made.
-   I don't reamember exactly what that reason was,
+   I don't remember exactly what that reason was,
    and I don't have any notes in email about the feedback Andrew got.
+   [Contributor 4485] called out in the dev edit the fact that
+   the higher-level headings are about ref/value types
+   but the content is about classes and structs.
+   Worth re-evaluating which way to frame this.
 
 Classes and structures in Swift have many similarities,
 such as properties, methods, subscripts, and initializers,
