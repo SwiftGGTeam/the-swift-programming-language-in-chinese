@@ -199,55 +199,53 @@ In many cases,
 even when you need shared mutable state,
 you can still use a structure
 by taking advantage of a containing class.
-
 For example,
 consider a board game that models its players, board, and game state
 all using classes:
 
-.. testcode:: class-composition-1
-
-    -> class Player { /* ... */ }
-    -> class Board { /* ... */ }
-    -> class Game {
-           var player1: Player
-           var player2: Player
-           var board: Board
-           /* ... */
-       }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 .. FIXME: ART
-   --> Game
-        |- player1
-        |- player2
-        \_ board
 
-    Having a reference to the shared game is sufficient.
-    It contains the player states and the board,
-    so there isn't a need to have a reference to those things.
+::
 
-.. testcode:: class-composition-2
+   --> game: Game (Class)
+        |- player1: Player (Class)
+        |- player2: Player (Class)
+        \_ board: Board (Class)
 
-    -> struct Player { /* ... */ }
-    -> struct Board { /* ... */ }
-    -> class Game {
-           var player1: Player
-           var player2: Player
-           var board: Board
-            /* ... */
-       }
+In this example,
+all code that interacts with the player objects or the board
+needs to access the same instance of those object.
+However,
+because ``player1``, ``player2``, and ``board`` are all properties
+of the ``game`` object,
+you can use a structure for those three types
+and still get the same shared behavior:
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+::
+
+   --> game: Game (Class)
+        |- player1: Player (Structure)
+        |- player2: Player (Structure)
+        \_ board: Board (Structure)
+
+Any code that needs to access the board or players
+goes through ``game``.
+Because ``game`` itself is shared,
+all of its properties are also shared.
+This technique is sometimes called :newTerm:`composition`.
+
+.. XXX
+   Take another pass over this to make it more approachable
+   to the novice who is still getting their head around
+   the difference between reference & value semantics.
 
 .. XXX
    Does this makes thing easier to test in this case?
    It usually does, in general.
 
 .. XXX
-   this technique is sometimes called "composition"
-   think of breaking a complex view class
-   into a simple wrapper-y class
+   Composition can also be used to break a complex view class
+   into a simple(r) wrapper-y class
    with a bunch of easy-to-test structs supporting it.
 
 
