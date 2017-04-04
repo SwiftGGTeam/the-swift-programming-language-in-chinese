@@ -200,39 +200,65 @@ even when you need shared mutable state,
 you can still use a structure
 by taking advantage of a containing class.
 For example,
-consider a board game that models its players, board, and game state
-all using classes:
+consider part of the data model used by a game to track players' scores.
+Because the scores need to be shared
+between different parts of of the game,
+you might initially use a class for everything,
+to make sure you get reference semantics.
 
-.. FIXME: ART
+.. testcode:: struct-shared-state-bad
 
-::
+    class Score {
+        var points = 0
+    }
 
-   --> game: Game (Class)
-        |- player1: Player (Class)
-        |- player2: Player (Class)
-        \_ board: Board (Class)
+    class Game {
+        var player1: Score
+        var player2: Score
+        init() {
+            self.player1 = Score()
+            self.player2 = Score()
+        }
+    }
 
-In this example,
-all code that interacts with the player objects or the board
-needs to access the same instance of those object.
+    var currentGame = Game()
+    currentGame.player1.points += 10
+
 However,
-because ``player1``, ``player2``, and ``board`` are all properties
-of the ``game`` object,
-you can use a structure for those three types
-and still get the same shared behavior:
+notice that all code that interacts with the scores
+accesses them as properties of ``currentGame``,
+which has reference semantics because it's also a class.
+This is a fairly common pattern:
+A shared data model is shaped like a tree,
+with one object that contains several other shared objects.
+When you see this pattern,
+you can make a class for the outermost container,
+like ``Game`` in this example,
+and then use structures for all of the data inside it.
 
-::
+.. testcode:: struct-shared-state-good
 
-   --> game: Game (Class)
-        |- player1: Player (Structure)
-        |- player2: Player (Structure)
-        \_ board: Board (Structure)
+    struct Score {
+        var points = 0
+    }
+
+    class Game {
+        var player1: Score
+        var player2: Score
+        init() {
+            self.player1 = Score()
+            self.player2 = Score()
+        }
+    }
+
+    var currentGame = Game()
+    currentGame.player1.points += 10
 
 Any code that needs to access the board or players
 goes through ``game``.
 Because ``game`` itself is shared,
 all of its properties are also shared.
-This technique is sometimes called :newTerm:`composition`.
+
 
 .. XXX
    Take another pass over this to make it more approachable
@@ -244,6 +270,7 @@ This technique is sometimes called :newTerm:`composition`.
    It usually does, in general.
 
 .. XXX
+   This is sometimes called :newTerm:`composition`.
    Composition can also be used to break a complex view class
    into a simple(r) wrapper-y class
    with a bunch of easy-to-test structs supporting it.
