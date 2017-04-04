@@ -208,6 +208,7 @@ all using classes:
            var player1: Player
            var player2: Player
            var board: Board
+           /* ... */
        }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -222,15 +223,16 @@ all using classes:
     It contains the player states and the board,
     so there isn't a need to have a reference to those things.
 
-.. testcode:: class-composition-v
+.. testcode:: class-composition-2
 
-   -> struct Player { /* ... */ }
-   -> struct Board { /* ... */ }
-   -> class Game {
-          var player1: Player
-          var player2: Player
-          var board: Board
-      }
+    -> struct Player { /* ... */ }
+    -> struct Board { /* ... */ }
+    -> class Game {
+           var player1: Player
+           var player2: Player
+           var board: Board
+            /* ... */
+       }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
