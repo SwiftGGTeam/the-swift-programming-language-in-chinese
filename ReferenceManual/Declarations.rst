@@ -1285,7 +1285,7 @@ Enumerations that have cases of a raw-value type implicitly conform to the
 As a result, they have a ``rawValue`` property
 and a failable initializer with the signature ``init?(rawValue: RawValue)``.
 You can use the ``rawValue`` property to access the raw value of an enumeration case,
-as in ``ExampleEnum.B.rawValue``.
+as in ``ExampleEnum.b.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
 by calling the enumeration's failable initializer,
 as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
