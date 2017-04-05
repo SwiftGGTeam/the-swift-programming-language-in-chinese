@@ -1,26 +1,3 @@
-.. New outline:
-    * Classes & structs have a lot in common.
-       - It might not be clear to the novice which one to use.
-       - Default answer: start with a struct.
-    * Structs are value types.
-       - They help you avoid unintentional shared  state.
-       - They're easier to reason about, which means fewer bugs.
-    * I need subclasses!
-       - Subclassing a framework class?  Ok, use a class.
-       - Try using a protocol + a default implementation.
-    * I need reference semantics!
-       - Do you really?  Try making the struct a member of a class.
-       - Ok, use a class.
-    * Modelling an "external system"
-       - For example, a file on disk or a view on screen.
-       - Needs stable identity or custom init/deinit
-       - Ok, use a class.
-    * Classes have more dynamic behavior, which comes at a cost.
-       - If you don't need it, don't pay for it.
-       - ARC and heap allocation are more expensive than static stack allocation.
-       - The optimizer can't be as agressive -- for example, with inlining.
-
-
 Choosing Between Reference and Value Types
 ==========================================
 
