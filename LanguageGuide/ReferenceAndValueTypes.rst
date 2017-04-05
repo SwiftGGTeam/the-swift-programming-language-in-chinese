@@ -132,8 +132,8 @@ Changing ``ovenTemperature`` also changes ``roomTemperature``
 
 .. _ReferenceAndValueTypes_StructInherit:
 
-Structures and Inheritance
---------------------------
+Inheritance Using Structures
+----------------------------
 
 In many cases, even when you need inheritance,
 you can still use a structure
@@ -192,8 +192,8 @@ from a resource you don't control.
 
 .. _ReferenceAndValueTypes_StructSharedState:
 
-Structures and Shared State
----------------------------
+Shared State Using Structures
+-----------------------------
 
 In many cases,
 even when you need shared mutable state,
@@ -275,51 +275,37 @@ all of its properties are also shared.
    into a simple(r) wrapper-y class
    with a bunch of easy-to-test structs supporting it.
 
+.. _ReferenceAndValueTypes_ClassRefSemantics:
 
-.. REWRITE ENDED HERE
+Using Classes For Reference Semantics
+-------------------------------------
 
+.. _ReferenceAndValueTypes_ClassFrameworks:
 
+Working with Frameworks That Expect Classes
+-------------------------------------------
 
-
-
-
-
-XXX When to Use a Reference Type
---------------------------------
-
-.. XXX Move or delete.
-
-    If you're used to working in object-oriented languages
-    like Objective-C or C++,
-    you may be in the habit of writing a lot of classes.
-    In Swift,
-    you don't need classes as often as you might expect.
-    The major reasons to use a class are
-    when you're working with a framework whose API uses classes and
-    when you want to refer to the same instance of a type in multiple places.
-
-XXX Working With Frameworks That Use Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A common pattern in frameworks
-is to define a class that you are expected to subclass.
+Many frameworks define base classes
+that you are expected to subclass
+as part of using the framework.
 For example,
 if you are working with the UIKit framework
 and want to create a custom view,
 you subclass ``UIView``.
+In these cases,
+it doesn't matter whether you want reference semantics or value semantics ---
+you always use a class,
+because only classes can have superclasses.
 
-It is also common when working with frameworks
-to be expected to work with and pass around class instances.
-Many framework APIs have method calls
-that expect certain things to be classes.
-For example,
-a framework might expect you to pass around a delegate
-that must be a class.
+Another common scenario where the framework expects you to provide a class
+is when you provide a delegate or a data source.
+For these patterns,
+the framework defines a protocol that your class adopts,
+and you provide an instance of your class
+when configuring some object provided by the framework.
 
-.. XXX needs a bit of meat -- "pass around" is too colloquial
+.. REWRITE ENDED HERE
 
-In these scenarios when you are using a framework based in classes,
-use classes.
 
 XXX Using Classes For Stable Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -445,34 +431,25 @@ When you need the ability
 to change the same instance from multiple places,
 use a class.
 
-XXX When To Use a Value Type
-----------------------------
-
-If you don't need your custom data construct
-to have reference semantics
-for any of the reasons discussed above,
-use a structure.
-In general,
-this means you should use structures by default,
-and use classes in those special cases discussed above.
-
-.. XXX the first part of this is all about unintended sharing
-   due to using reference semantics when they're the wrong thing
-
-
-XXX When You Need Inheritance
------------------------------
-
-.. XXX is this the right place for this?
-   Maybe it should have gone in the Protocols chapter,
-   with an xref from the Inheritance chapter
-   and from this chapter.
 
 
 
 
 
-.. XXX Both can do abstraction via protocols
+
+
+.. XXX Leftover prose -- might be useful in the intro.
+
+   If you're used to working in object-oriented languages
+   like Objective-C or C++,
+   you may be in the habit of writing a lot of classes.
+   In Swift,
+   you don't need classes as often as you might expect.
+   The major reasons to use a class are
+   when you're working with a framework whose API uses classes and
+   when you want to refer to the same instance of a type in multiple places.
+
+.. XXX Both structs & classes can do abstraction via protocols
 
 .. XXX General question: what happens when I put a class instance inside a struct?
    In particular, call out the fact that this breaks value semantics,
