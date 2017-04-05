@@ -49,8 +49,8 @@ that classes provide.
 
 .. _ReferenceAndValueTypes_StructsAndEnums:
 
-Using Structures and Enumerations
----------------------------------
+Use Structures and Enumerations for Value Semantics
+---------------------------------------------------
 
 Structures make it easier to reason about your code.
 Because structures are value types,
@@ -279,8 +279,8 @@ all of its properties are also shared.
 
 .. _ReferenceAndValueTypes_ClassRefSemantics:
 
-Using Classes For Reference Semantics
--------------------------------------
+Use Classes For Reference Semantics
+-----------------------------------
 
 .. _ReferenceAndValueTypes_ClassFrameworks:
 
