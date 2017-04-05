@@ -223,6 +223,7 @@ to make sure you get reference semantics.
     ---
     -> var currentGame = Game()
     -> currentGame.player1.points += 10
+    << // currentGame : Game = REPL.Game
 
 However,
 notice that all code that interacts with the scores
@@ -253,6 +254,7 @@ and then use structures for all of the data inside it.
     ---
     -> var currentGame = Game()
     -> currentGame.player1.points += 10
+    << // currentGame : Game = REPL.Game
 
 Any code that needs to access the board or players
 goes through ``game``.
