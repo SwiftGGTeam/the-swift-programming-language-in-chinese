@@ -1285,7 +1285,7 @@ Enumerations that have cases of a raw-value type implicitly conform to the
 As a result, they have a ``rawValue`` property
 and a failable initializer with the signature ``init?(rawValue: RawValue)``.
 You can use the ``rawValue`` property to access the raw value of an enumeration case,
-as in ``ExampleEnum.B.rawValue``.
+as in ``ExampleEnum.b.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
 by calling the enumeration's failable initializer,
 as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
@@ -2155,7 +2155,6 @@ and therefore you can specify only a list of protocols after the *type name* and
 Extension declarations that extend a generic type can include *requirements*.
 If an instance of the extended type satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
-Note that you can't include *requirements* if the *type name* is a protocol type.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.

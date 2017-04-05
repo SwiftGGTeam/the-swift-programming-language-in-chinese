@@ -194,7 +194,7 @@ Control Flow
 ------------
 
 Use ``if`` and ``switch`` to make conditionals,
-and use ``for``-``in``, ``for``, ``while``, and ``repeat``-``while``
+and use ``for``-``in``, ``while``, and ``repeat``-``while``
 to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
