@@ -161,6 +161,13 @@ Much like their class counterparts,
 the ``Train`` and ``Car`` structures
 get a default implementation of ``description``
 that they can override.
+Like the class version,
+``Vehicle`` still provides the default implementation ---
+but in the structure version, ``Vehicle`` is a protocol.
+``Train`` doesn't implement a ``description`` property,
+so it uses the default implementation from ``Vehicle``.
+``Car`` implements its own ``description``
+which overrides the default implementation.
 
 With protocols and protocol extensions at your disposal,
 inheritance in itself is not a compelling reason to use a class ---
@@ -208,16 +215,17 @@ notice that all code that interacts with the scores
 accesses them as properties of ``currentGame``,
 which has reference semantics because it's also a class.
 This is a fairly common pattern:
-A shared data model is shaped like a tree,
+This shared data model is shaped like a tree,
 with one object that contains several other shared objects.
 When you see this pattern,
 you can make a class for the outermost container,
 like ``Game`` in this example,
 and then use structures for all of the data inside it.
+Here's what that approach looks like:
 
 .. testcode:: struct-shared-state-good
 
-    -> class Score {
+    -> struct Score {
            var points = 0
        }
     ---
@@ -238,22 +246,51 @@ Any code that needs to access the board or players
 goes through ``game``.
 Because ``game`` itself is shared,
 all of its properties are also shared.
+For example,
+in the all-classes approach,
+the code in your underlying game engine
+and the code in your user interface
+both could refer to ``Score`` objects directly.
+(Although, many coding styles would recommend against this.)
+In the approach where only ``Game`` is a class,
+all of your code keeps a reference to the ``Game`` object
+and uses the game to access the its scores.
 
+.. Referring from the view directly to a score object
+   is at least an in-spirit violation of the Law of Demeter.
+   I don't have a good reason to call it straight-out "wrong"
+   but it's certainly not good code either.
 
-.. XXX
-   Take another pass over this to make it more approachable
-   to the novice who is still getting their head around
-   the difference between reference & value semantics.
+.. FIXME: ART
 
-.. XXX
-   Does this makes thing easier to test in this case?
-   It usually does, in general.
+::
+              game
+               ||
+   Model --> player1: Score <-- View
+         --> player2: Score <-- View
 
-.. XXX
-   This is sometimes called :newTerm:`composition`.
-   Composition can also be used to break a complex view class
-   into a simple(r) wrapper-y class
-   with a bunch of easy-to-test structs supporting it.
+   Model -->  game <-- View
+               ||
+             player1: Score
+             player2: Score
+
+.. note::
+
+   This arrangement of a class that contains several structures
+   is sometimes called :newTerm:`composition`.
+   Composition can also be used to divide up a complex class
+   into a simpler class plus several structures
+   that are each responsible for one part of the overall logic or behavior.
+
+   Using composition can also make your code easier to test.
+   For example,
+   if you a testing code used to calculate the size
+   of different parts of a complex user interface,
+   it is easier to test a structure
+   that is responsible for only the calculations
+   that is responsible for both calculations and drawing.
+   The structure has fewer dependencies,
+   and it exposes the calculated results directly.
 
 .. _ReferenceAndValueTypes_ClassRefSemantics:
 
