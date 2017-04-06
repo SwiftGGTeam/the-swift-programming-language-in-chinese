@@ -108,6 +108,18 @@ Changing ``ovenTemperature`` also changes ``roomTemperature``
     saving you from having to think about unintended sharing
     in those cases when you really don't need reference semantics.
 
+.. XXX Note from discission with Alex Migicovsky
+   If you're coming from another language
+   where you model pretty much everything as a class,
+   watch for places where you create
+   immutable clas instances in that language.
+   This is a good example of actually wanting value semantics
+   but not having a language that can give it to you.
+   For example, consider UIImage.
+   ... look for a good example that actually *does* get
+   a Swift value type...
+   NSDecimalNumber or NSUUID might work
+
 .. _ReferenceAndValueTypes_StructInherit:
 
 Inheritance Using Structures
