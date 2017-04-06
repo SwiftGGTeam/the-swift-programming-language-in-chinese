@@ -263,21 +263,34 @@ Use Classes For Reference Semantics
 The most common reason to use a class
 instead of a structure or an enumeration
 is because you need reference semantics.
+In the example above,
+although it was possible to model the players scores using structures,
+at some point in the data you need to have a single shared game object.
+Because structures have value semantics,
+you can use them for shared state
+only when they are part of some larger data structure.
+From the point of view of how you organize your data,
+the structures are "inside" the class,
+    and so they inherit/obtain/mooch off of its reference-y semantics.
+    The outermost data structure
+    needs to have its own reference-nature.
+
+Another reason you need reference semantics
+is when you need to model some external entity.
 For example,
-A custom data type instance that represents a file on disk
+a custom data type instance that represents a file on disk
 needs to have reference semantics
 so that all of your code that interacts with the object
-is able to interact with the same on-disk file
+is able to interact with the same on-disk file,
 and sees that file in the same state.
 
+.. XXX Is a code listing helpful here or just confusing?
 
 ::
 
     class TemporaryFile {
         append(string: String) { /* ... */ }
     }
-
-
 
 In addition, when the object is no longer needed
 the on-disk file needs to be deleted.
