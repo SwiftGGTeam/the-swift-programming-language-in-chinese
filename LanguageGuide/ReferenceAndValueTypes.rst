@@ -25,6 +25,17 @@ unless you need reference semantics
 or the additional dynamic behavior
 that classes provide.
 
+.. XXX Weave in above or remove.
+
+   If you're used to working in object-oriented languages
+   like Objective-C or C++,
+   you may be in the habit of writing a lot of classes.
+   In Swift,
+   you don't need classes as often as you might expect.
+   The major reasons to use a class are
+   when you're working with a framework whose API uses classes and
+   when you want to refer to the same instance of a type in multiple places.
+
 .. _ReferenceAndValueTypes_StructsAndEnums:
 
 Use Structures and Enumerations for Value Semantics
@@ -324,6 +335,8 @@ the structures are "inside" the class,
     The outermost data structure
     needs to have its own reference-nature.
 
+.. XXX Fix wording above
+
 Another reason you need reference semantics
 is when you need to model some external entity.
 For example,
@@ -346,6 +359,18 @@ the on-disk file needs to be deleted.
 In other words,
 you need to manually handle deinitialization ---
 something you can only do with classes.
+
+.. XXX classes have *identity*
+
+.. XXX copying a class gives you a new unrelated thing
+       (or is a nonsensical operation)
+       because structs have no identity,
+       copying one doesn't mean anything
+
+.. XXX being something that he user interacts with
+   is sometimes a good indication that it should be a reference type
+   (a physical object or a simulation of one,
+   like a window on the screen)
 
 .. _ReferenceAndValueTypes_ClassFrameworks:
 
@@ -370,159 +395,3 @@ For these patterns,
 the framework defines a protocol that your class adopts,
 and you provide an instance of your class
 when configuring some object provided by the framework.
-
-.. REWRITE ENDED HERE
-
-
-XXX Using Classes For Stable Identity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Class instances have stable identity.
-When you initialize a class instance,
-Swift allocates a region in memory to store that instance.
-That region in memory has an address.
-Constants or variables that are assigned to that instance
-store that address to refer to that instance indirectly.
-When you mutate that instance,
-Swift keeps that instance stored in the same region in memory
-with the same address.
-
-.. XXX Talk about one thing at a time.
-
-.. XXX can we have this discussion without talking about raw memory?
-   many readers won't know what that is either
-
-There are times when you want an instance
-to remain in the same region in memory with the same address ---
-when you really do want to refer to one instance of a type.
-
-Take the ``Window`` class from :doc:`Classes`,
-which represents a graphical window:
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> class Window {
-           var width: Int
-           var height: Int
-
-           init(width: Int, height: Int) {
-               self.width = width
-               self.height = height
-           }
-       }
-
-It makes sense for ``Window`` to be a class
-because you want to be able to refer to one instance of a ``Window``
-from several places in code,
-and it makes no sense to copy it.
-
-.. XXX it's representing a resource
-
-.. XXX fix the wording so it's not about "making sense";
-   give a real reason instead
-
-.. XXX being something that he user interacts with
-   is a good indication that it should be a reference type
-   (a physical object or a simulation of one,
-   like a window on the screen)
-
-Recall the ``rootWindow`` constant and the ``currentWindow`` variable:
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> let windowOne = Window(width: 500, height: 300)
-    << // windowOne : Window = REPL.Window
-    -> let windowTwo = Window(width: 400, height: 400)
-    << // windowTwo : Window = REPL.Window
-    -> var currentWindow = windowOne
-    << // currentWindow : Window = REPL.Window
-
-Imagine you wanted to perform a check
-to see if the current window is ``windowOne``,
-and if not,
-close the current window:
-
-.. testcode:: choosingbetweenclassesandstructures
-
-    -> if currentWindow !== windowOne {
-           // close currentWindow
-       }
-
-This example makes sense only if ``currentWindow``
-is a class instance rather than a structure instance.
-If ``currentWindow`` were a copy of the current window
-rather than a reference to the actual current window,
-that would make no sense.
-You are trying to close the actual current window ---
-not a copy of it.
-
-.. XXX the window object above is representing a resource
-
-It is unclear what it would even mean
-to copy a ``Window`` in the first place.
-Assigning ``windowOne`` to ``currentWindow``
-would give you multiple graphical windows
-when you want only one.
-When there really is just one of something
-and you need to access that one thing
-in multiple places in your code,
-use a class.
-
-.. XXX polish prose in para above & below for clarity
-
-    Another reason that graphical windows and files
-    are good examples for when to use a class
-    is that it is likely that many places in your code
-    would need to access or modify the same window or file.
-    For instance,
-    you can imagine needing to read from and write to the same file
-    in multiple places in your code.
-    When you need the ability
-    to change the same instance from multiple places,
-    use a class.
-
-
-.. XXX Leftover prose -- might be useful in the intro.
-
-   If you're used to working in object-oriented languages
-   like Objective-C or C++,
-   you may be in the habit of writing a lot of classes.
-   In Swift,
-   you don't need classes as often as you might expect.
-   The major reasons to use a class are
-   when you're working with a framework whose API uses classes and
-   when you want to refer to the same instance of a type in multiple places.
-
-.. XXX Both structs & classes can do abstraction via protocols
-
-.. XXX General question: what happens when I put a class instance inside a struct?
-   In particular, call out the fact that this breaks value semantics,
-   because copies of the struct all refer to the same classs instance.
-   In contrast, composing value semantics preserves value semantics.
-
-.. XXX Notes from WWDC 2016 session on Swift performance
-   https://developer.apple.com/videos/play/wwdc2016/416/
-
-   Classes give you a high degree of flexibility and dynamic behavior...
-   but there's a cost to that dynamism.
-   If you aren't using it, use a struct instead.
-
-   Classes are allocated on the heap, which is more expensive
-   than stack allocation for classes.
-
-   Classes are reference counted, which takes time,
-   and structs aren't.
-
-   Classes have dynamic dispatch, which takes a little more time
-   and which can't be optimized very much.
-   (Final classes are a little better,
-   as are classes that aren't exposed outside your module.)
-   Structs use static dispatch, which can be aggressively optimized
-   to do inlining.
-
-   Not from that talk, but there's also a cognitive cost to using classes,
-   because reference semantics requires you to think about every place
-   that could be using the object,
-   rather than being able to know that only code nearby
-   is affected by changes to a struct's state.
-
