@@ -21,7 +21,8 @@ as introduced in :ref:`Classes_ClassesAreReferenceTypes`
 and :ref:`Structures_StructuresAreValueTypes`.
 In general,
 most of the time you should use a structure
-unless you need that additional dynamic behavior
+unless you need reference semantics
+or the additional dynamic behavior
 that classes provide.
 
 .. _ReferenceAndValueTypes_StructsAndEnums:
@@ -259,6 +260,31 @@ all of its properties are also shared.
 Use Classes For Reference Semantics
 -----------------------------------
 
+The most common reason to use a class
+instead of a structure or an enumeration
+is because you need reference semantics.
+For example,
+A custom data type instance that represents a file on disk
+needs to have reference semantics
+so that all of your code that interacts with the object
+is able to interact with the same on-disk file
+and sees that file in the same state.
+
+
+::
+
+    class TemporaryFile {
+        append(string: String) { /* ... */ }
+    }
+
+
+
+In addition, when the object is no longer needed
+the on-disk file needs to be deleted.
+In other words,
+you need to manually handle deinitialization ---
+something you can only do with classes.
+
 .. _ReferenceAndValueTypes_ClassFrameworks:
 
 Working with Frameworks That Expect Classes
@@ -382,39 +408,16 @@ use a class.
 
 .. XXX polish prose in para above & below for clarity
 
-There are other times
-when you want the stable identity of a class because
-the lifetime of an instance is tied to some external entity,
-such as a file that temporarily appears on a disk.
-A custom data type instance that represents that file
-needs to have reference semantics
-so that all of your code that interacts with the object
-is able to interact with the same on-disk file
-and sees that file in the same state.
-In addition, when the object is no longer needed
-the on-disk file needs to be deleted.
-In other words,
-you need to manually handle deinitialization ---
-something you can only do with classes.
-If you are managing a resource that requires custom deinitialization,
-use a class.
-
-Another reason that graphical windows and files
-are good examples for when to use a class
-is that it is likely that many places in your code
-would need to access or modify the same window or file.
-For instance,
-you can imagine needing to read from and write to the same file
-in multiple places in your code.
-When you need the ability
-to change the same instance from multiple places,
-use a class.
-
-
-
-
-
-
+    Another reason that graphical windows and files
+    are good examples for when to use a class
+    is that it is likely that many places in your code
+    would need to access or modify the same window or file.
+    For instance,
+    you can imagine needing to read from and write to the same file
+    in multiple places in your code.
+    When you need the ability
+    to change the same instance from multiple places,
+    use a class.
 
 
 .. XXX Leftover prose -- might be useful in the intro.
