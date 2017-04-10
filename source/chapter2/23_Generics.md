@@ -543,7 +543,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 <a name="extensions_with_a_generic_where_clause"></a>
 ## 具有泛型 where 子句的扩展
 
-你也可以使用泛型`where`子句作为扩展的一部分。基于以前的例子，下面的示例扩展了泛型`Stack`结构体，添加一个`isTop(_:)`方法。  
+你也可以使用泛型 `where` 子句作为扩展的一部分。基于以前的例子，下面的示例扩展了泛型 `Stack` 结构体，添加一个 `isTop(_:)` 方法。  
 
 ```swift
 extension Stack where Element: Equatable {
@@ -556,9 +556,9 @@ extension Stack where Element: Equatable {
 }
 ```
 
-这个新的`isTop(_:)`方法首先检查这个栈是不是空的，然后比较给定的元素与栈顶部的元素。如果你尝试不用泛型`where`子句，会有一个问题：在`isTop(_:)`里面使用了`==`运算符，但是`Stack`的定义没有要求它的元素是符合 Equatable 协议的，所以使用`==`运算符导致编译时错误。使用泛型`where`子句可以为扩展添加新的条件，因此只有当栈中的元素符合 Equatable 协议时，扩展才会添加`isTop(_:)`方法。  
+这个新的 `isTop(_:)` 方法首先检查这个栈是不是空的，然后比较给定的元素与栈顶部的元素。如果你尝试不用泛型 `where` 子句，会有一个问题：在 `isTop(_:)` 里面使用了 `==` 运算符，但是 `Stack` 的定义没有要求它的元素是符合 Equatable 协议的，所以使用 `==` 运算符导致编译时错误。使用泛型 `where` 子句可以为扩展添加新的条件，因此只有当栈中的元素符合 Equatable 协议时，扩展才会添加 `isTop(_:)` 方法。  
 
-以下是`isTop(_:)`方法的调用方式：  
+以下是 `isTop(_:)` 方法的调用方式：  
 
 ```swift
 if stackOfStrings.isTop("tres") {
@@ -569,7 +569,7 @@ if stackOfStrings.isTop("tres") {
 // 打印 "Top element is tres."
 ```
 
-如果尝试在其元素不符合 Equatable 协议的栈上调用`isTop(_:)`方法，则会收到编译时错误。  
+如果尝试在其元素不符合 Equatable 协议的栈上调用 `isTop(_:)` 方法，则会收到编译时错误。  
 
 ```swift
 struct NotEquatable { }
@@ -579,7 +579,7 @@ notEquatableStack.push(notEquatableValue)
 notEquatableStack.isTop(notEquatableValue)  // 报错
 ```
 
-你可以使用泛型`where`子句去扩展一个协议。基于以前的示例，下面的示例扩展了`Container`协议，添加一个`startsWith(_:)`方法。  
+你可以使用泛型 `where` 子句去扩展一个协议。基于以前的示例，下面的示例扩展了 `Container` 协议，添加一个 `startsWith(_:)` 方法。  
 
 ```swift
 extension Container where Item: Equatable {
@@ -589,7 +589,7 @@ extension Container where Item: Equatable {
 }
 ```
 
-这个`startsWith(_:)`方法首先确保容器至少有一个元素，然后检查容器中的第一个元素是否与给定的元素相等。任何符合`Container`协议的类型都可以使用这个新的`startsWith(_:)`方法，包括上面使用的栈和数组，只要容器的元素是符合 Equatable 协议的。  
+这个 `startsWith(_:)` 方法首先确保容器至少有一个元素，然后检查容器中的第一个元素是否与给定的元素相等。任何符合 `Container` 协议的类型都可以使用这个新的 `startsWith(_:)` 方法，包括上面使用的栈和数组，只要容器的元素是符合 Equatable 协议的。  
 
 ```swift
 if [9, 9, 9].startsWith(42) {
@@ -600,7 +600,7 @@ if [9, 9, 9].startsWith(42) {
 // 打印 "Starts with something else."
 ```
 
-上述示例中的泛型`where`子句要求`Item`符合协议，但也可以编写一个泛型`where`子句去要求`Item`为特定类型。例如：  
+上述示例中的泛型 `where` 子句要求 `Item` 符合协议，但也可以编写一个泛型 `where` 子句去要求 `Item` 为特定类型。例如：  
 
 ```swift
 extension Container where Item == Double {
@@ -616,6 +616,6 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 // 打印 "648.9"
 ```
 
-此示例将一个`average()`方法添加到`Item`类型为`Double`的容器中。此方法遍历容器中的元素将其累加，并除以容器的数量计算平均值。它将数量从`Int`转换为`Double`确保能够进行浮点除法。  
+此示例将一个 `average()` 方法添加到 `Item` 类型为 `Double` 的容器中。此方法遍历容器中的元素将其累加，并除以容器的数量计算平均值。它将数量从 `Int` 转换为 `Double` 确保能够进行浮点除法。  
 
-就像可以在其他地方写泛型`where`子句一样，你可以在一个泛型`where`子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。  
+就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。  
