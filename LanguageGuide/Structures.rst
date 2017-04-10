@@ -215,7 +215,16 @@ but ``roomTemperature`` remains unchanged:
     -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is still 21.0 degrees Celsius
 
-.. XXX diagram showing (lack of) shared mutable state
+.. FIXME: ART diagram showing (lack of) shared mutable state
+
+    May be able to lean on WWDC talks -- Dave Abrahams and Alex Migicovsky
+    both had similar figures
+
+    let x = getBoringData()
+    let y = x
+
+    let x = getMagicalPony()
+    // y is still boring data
 
 .. note::
 

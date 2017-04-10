@@ -286,7 +286,6 @@ and uses the game to access the its scores.
 
 .. FIXME: ART
 
-::
               game
                ||
    Model --> player1: Score <-- View
