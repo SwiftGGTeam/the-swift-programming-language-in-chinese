@@ -255,12 +255,7 @@ but ``roomTemperature`` remains unchanged:
    you need to do some additional work to copy the instance of the class
    when a shared instance of the structure is mutated.
    For more information, see the
-   `isKnownUniquelyReferenced(_:) <https://developer.apple.com/reference/swift/2430721-isknownuniquelyreferenced>`_ function.
-
-   .. FIXME: It would be much better to have the function name
-      actually in code voice.
-      I haven't found any way to make that work with RST's link markup.
-      This is a workaround for <rdar://problem/17682758> RST: Add support for uAPI links
+   `isKnownUniquelyReferenced(_:) <//apple_ref/swift/func/s:Fs25isKnownUniquelyReferenceduRxs9AnyObjectrFRxSb/>`_ function
 
    .. No example of implementing COW for a struct that contains a class,
       because it's too complicated.
