@@ -538,7 +538,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 // 打印 “All items match.”
 ```
 
-上面的例子创建了一个 `Stack` 实例来存储一些 `String` 值，然后将三个字符串压入栈中。这个例子还通过数组字面量创建了一个 `Array` 实例，数组中包含同栈中一样的三个字符串。即使栈和数组是不同的类型，但它们都遵从 `Container` 协议，而且它们都包含相同类型的值。因此你可以用这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上面的例子中，`allItemsMatch(_:_:)` 函数正确地显示了这两个容器中的所有元素都是相互匹配的。  
+上面的例子创建了一个 `Stack` 实例来存储一些 `String` 值，然后将三个字符串压入栈中。这个例子还通过数组字面量创建了一个 `Array` 实例，数组中包含同栈中一样的三个字符串。即使栈和数组是不同的类型，但它们都遵从 `Container` 协议，而且它们都包含相同类型的值。因此你可以用这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上面的例子中，`allItemsMatch(_:_:)` 函数正确地显示了这两个容器中的所有元素都是相互匹配的。
 
 <a name="extensions_with_a_generic_where_clause"></a>
 ## 具有泛型where子句的扩展
