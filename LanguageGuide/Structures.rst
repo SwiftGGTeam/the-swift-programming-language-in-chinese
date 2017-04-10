@@ -22,6 +22,9 @@ In Swift, structures can:
 
 .. XXX (migi) polymorphism is possible with structs
 
+.. XXX Most of the time you use structs, not classes.
+   For details, see ReferenceAndValueTypes
+
 .. _Structures_StructureSyntax:
 
 Structure Syntax
