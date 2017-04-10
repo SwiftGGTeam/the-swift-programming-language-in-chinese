@@ -20,7 +20,11 @@ However, there are a few important differences:
 
 .. XXX ARC is more about sharing and identity
 
-For an in-depth discussion of when to use classes and when to use structures,
+.. The paragraph below appears verbatim in both Classes and Structures.
+
+Swift provides both classes and structures,
+but most of the time your code uses structures.
+For more details about choosing between them,
 see :doc:`ReferenceAndValueTypes`.
 
 .. XXX Restore and reword the terminology note about "object" versus "instance".
@@ -113,9 +117,6 @@ Classes Are Reference Types
 Classes have different behavior from structures
 because they are reference types ---
 not value types.
-For information on when to use classes and when to use structures,
-see :doc:`ReferenceAndValueTypes`.
-
 A :newTerm:`reference type` is a type
 whose instance is referenced rather than copied
 when it is assigned to a variable or constant,

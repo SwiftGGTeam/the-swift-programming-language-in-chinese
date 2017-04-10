@@ -20,10 +20,12 @@ In Swift, structures can:
 * Conform to protocols to implement a shared abstraction or cooperate
   with a default implementation, as described in :doc:`Protocols`.
 
-.. XXX (migi) polymorphism is possible with structs
+.. The paragraph below appears verbatim in both Classes and Structures.
 
-.. XXX Most of the time you use structs, not classes.
-   For details, see ReferenceAndValueTypes
+Swift provides both classes and structures,
+but most of the time your code uses structures.
+For more details about choosing between them,
+see :doc:`ReferenceAndValueTypes`.
 
 .. _Structures_StructureSyntax:
 
@@ -169,9 +171,6 @@ All the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays, and dictionaries ---
 are value types,
 and are implemented as structures in the standard library.
-
-.. XXX Enums are also value types,
-   as discussed in Enumerations_EnumerationsAreValueTypes
 
 Custom structures
 that you build on top of existing standard library value types
