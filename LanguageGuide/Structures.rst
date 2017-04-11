@@ -263,11 +263,6 @@ but ``roomTemperature`` remains unchanged:
       and then inside it you have to copy the class property
       if it isn't uniquely referenced.
 
-.. XXX General question: what happens when I put a class instance inside a struct?
-   In particular, call out the fact that this breaks value semantics,
-   because copies of the struct all refer to the same classs instance.
-   In contrast, composing value semantics preserves value semantics.
-
 For an in-depth discussion of value types
 and when to use them,
 see :doc:`ReferenceAndValueTypes`.
