@@ -253,6 +253,8 @@ You can apply a declaration attribute to declarations only.
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
+    .. XXX Discussion of @objc and extensions.
+
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
     as the concatenation of the enumeration name and the case name.
@@ -289,6 +291,15 @@ You can apply a declaration attribute to declarations only.
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
     Possibly link to Anna and Jack's guide too.
+
+``objcMembers``
+    Apply this attribute to any declaration
+    that can have the ``objc`` attribute.
+    The ``objc`` attribute is implicitly added
+    to Objective-C compatible members of the class,
+    its extensions, its subclasses, and all of their extensions.
+
+    .. XXX Is this attribute only for classes?
 
 ``nonobjc``
     Apply this attribute to a
