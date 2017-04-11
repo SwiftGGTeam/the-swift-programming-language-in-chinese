@@ -238,14 +238,19 @@ You can apply a declaration attribute to declarations only.
     that a declaration is available to use in Objective-C code.
 
     Classes marked with the ``objc`` attribute
-    must inherit from a class defined in Objective-C.
-    If you apply the ``objc`` attribute to a class or protocol, it's
-    implicitly applied to the Objective-C compatible members of that class or protocol.
-    The compiler also implicitly adds the ``objc`` attribute to a class
-    that inherits from another class marked with the ``objc`` attribute
-    or a class defined in Objective-C.
+    must inherit from a class defined in Objective-C
+    or from another class marked with the ``objc`` attribute.
     Protocols marked with the ``objc`` attribute can't inherit
-    from protocols that aren't.
+    from protocols that aren't marked with the ``objc`` attribute.
+
+    The ``objc`` attribute is implicitly added in the following cases:
+
+    * The declaration is an override in a subclass
+      and the superclass's declaration has the ``objc`` attribute.
+    * The declaration satisfies a requirement
+      from a protocol has the ``objc`` attribute
+    * The declaration has the ``IBAction``, ``IBOutlet``,
+      ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
