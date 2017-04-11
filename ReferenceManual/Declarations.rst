@@ -1901,7 +1901,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT generic-where-clause-OPT
 
 .. _Declarations_InitializerDeclaration:
 
