@@ -213,9 +213,8 @@ it *refers* to a ``Window`` instance.
 It is the ``width`` property of the underlying ``Window`` that is changed ---
 not the value of the constant reference to that ``Window``.
 
-.. XXX maybe put more emphasis on shared mutable state
-
-Consider the following example: 
+The following example illustrates the difference in behavior
+between constant values and constant references:
 
 .. testcode:: classes
 
@@ -223,36 +222,56 @@ Consider the following example:
            let constant = 5
            var variable = 8
        }
-    
-    -> let classInstance = ExampleClass()
-    << // classInstance : ExampleClass = REPL.ExampleClass
-    -> classInstance.constant = 10 // Error
-    !! <REPL Input>:1:24: error: cannot assign to property: 'constant' is a 'let' constant
-    !! classInstance.constant = 10 // Error
-    !! ~~~~~~~~~~~~~~~~~~~~~~ ^
+    -> let constantInstance = ExampleClass()
+    -> let variableInstance = ExampleClass()
+    << // constantInstance : ExampleClass = REPL.ExampleClass
+    << // variableInstance : ExampleClass = REPL.ExampleClass
+    ---
+    -> constantInstance = ExampleClass()  // Error
+    -> constantInstance.constant = 10     // Error
+    -> constantInstance.variable = 16     // OK
+    !! <REPL Input>:1:18: error: cannot assign to value: 'constantInstance' is a 'let' constant
+    !! constantInstance = ExampleClass()  // Error
+    !! ~~~~~~~~~~~~~~~~ ^
+    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+    !! let constantInstance = ExampleClass()
+    !! ^~~
+    !! var
+    !! <REPL Input>:1:27: error: cannot assign to property: 'constant' is a 'let' constant
+    !! constantInstance.constant = 10     // Error
+    !! ~~~~~~~~~~~~~~~~~~~~~~~~~ ^
     !! <REPL Input>:2:7: note: change 'let' to 'var' to make it mutable
     !! let constant = 5
     !! ^~~
     !! var
-    -> classInstance.variable = 16
-    -> classInstance = Window()    // Error
-    !! <REPL Input>:1:15: error: cannot assign to value: 'classInstance' is a 'let' constant
-    !! classInstance = Window()    // Error
-    !! ~~~~~~~~~~~~~ ^
+    ---
+    -> variableInstance = ExampleClass()  // OK
+    -> variableInstance.constant = 10     // Error
+    -> variableInstance.variable = 16     // OK
+    !! <REPL Input>:1:18: error: cannot assign to value: 'variableInstance' is a 'let' constant
+    !! variableInstance = ExampleClass()  // OK
+    !! ~~~~~~~~~~~~~~~~ ^
     !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
-    !! let classInstance = ExampleClass()
+    !! let variableInstance = ExampleClass()
+    !! ^~~
+    !! var
+    !! <REPL Input>:1:27: error: cannot assign to property: 'constant' is a 'let' constant
+    !! variableInstance.constant = 10     // Error
+    !! ~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+    !! <REPL Input>:2:7: note: change 'let' to 'var' to make it mutable
+    !! let constant = 5
     !! ^~~
     !! var
 
-Because ``classInstance`` is a class instance,
+Because ``constanceInstance`` is a class instance,
 it refers to an ``ExampleClass`` instance
 rather than storing it.
 As a result,
 it is valid to mutate the ``variable`` property
 and invalid to mutate the ``constant`` property
-of ``classInstance``.
+of ``constanceInstance``.
 Additionally,
-you cannot reassign ``classInstance`` to a different class instance
+you cannot reassign ``constanceInstance`` to a different class instance
 because it's a constant reference.
 This feature of being able to change
 the underlying variable properties of the same instance
@@ -264,6 +283,8 @@ instead of the same instance modified in place.
 
 .. XXX the "because it's a constant reference"
    comes pretty late in this sentence - reword?
+
+.. XXX Contrast ``variableInstance`` above
 
 .. XXX Above fact about getting a whole new structure is probably wrong.
 
