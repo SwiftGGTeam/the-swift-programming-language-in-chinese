@@ -1,8 +1,6 @@
 Classes
 =======
 
-.. XXX As in structs chapter, scrub for imperative -> indicative
-
 :newTerm:`Classes` in Swift have a lot in common with structures.
 They can have properties, methods, subscripts, initializers, and so on.
 Just like with structures,
