@@ -215,7 +215,7 @@ but ``roomTemperature`` remains unchanged:
     -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is still 21.0 degrees Celsius
 
-.. FIXME: ART diagram showing (lack of) shared mutable state
+.. XXX ART diagram showing (lack of) shared mutable state
 
     May be able to lean on WWDC talks -- Dave Abrahams and Alex Migicovsky
     both had similar figures

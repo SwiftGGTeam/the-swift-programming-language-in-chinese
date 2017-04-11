@@ -90,7 +90,7 @@ setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer to the same ``Temperature`` instance.
 Changing ``ovenTemperature`` also changes ``roomTemperature``
 
-.. FIXME: ART
+.. XXX ART
 
 .. XXX REWRITE
 
@@ -284,7 +284,7 @@ and uses the game to access the its scores.
    I don't have a good reason to call it straight-out "wrong"
    but it's certainly not good code either.
 
-.. FIXME: ART
+.. XXX ART
 
               game
                ||
