@@ -1659,7 +1659,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT generic-where-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
