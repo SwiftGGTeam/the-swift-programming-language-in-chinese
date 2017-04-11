@@ -139,6 +139,8 @@ You can apply a declaration attribute to declarations only.
          -> @available(*, unavailable, renamed: "MyRenamedProtocol")
             typealias MyProtocol = MyRenamedProtocol
 
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
     You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms
     and different versions of Swift.
@@ -154,6 +156,8 @@ You can apply a declaration attribute to declarations only.
        // REPL needs all the attributes on the same line as the  declaration.
        -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
        -> foo()
+
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
     If an ``available`` attribute only specifies an ``introduced`` argument
     in addition to a platform or language name argument,
@@ -176,6 +180,8 @@ You can apply a declaration attribute to declarations only.
        -> class MyClass {
               // class definition
           }
+
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
     
     An ``available`` attribute specifying a Swift version availability can't
     additionally specify a declaration's platform availability.
@@ -191,6 +197,8 @@ You can apply a declaration attribute to declarations only.
               // struct definition
           }
 
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+    
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
