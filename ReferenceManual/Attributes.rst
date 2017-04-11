@@ -224,6 +224,7 @@ You can apply a declaration attribute to declarations only.
 ``GKInspectable``
     Apply this attribute to expose a custom GameplayKit component property
     to the SpriteKit editor UI.
+    Applying this attribute also implies the ``objc`` attribute.
 
 .. See also <rdar://problem/27287369> Document @GKInspectable attribute
    which we will want to link to, once it's written.
@@ -392,7 +393,8 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-Both the ``IBAction`` and ``IBOutlet`` attributes imply the ``objc`` attribute.
+Applying ``IBAction``, ``IBOutlet``, or ``IBDesignable`` attribute
+also implies the ``objc`` attribute.
 
 
 .. _Attributes_TypeAttributes:
