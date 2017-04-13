@@ -1150,15 +1150,37 @@ for individual type members.
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
 
+
+.. _AccessControl_PrivateExtension:
+
 Using Private Members in Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extensions to a class, structure, or enumeration
+that are in the *same* file as the original declaration
+have access to private entities of that type.
+From the perspective of access control,
+it is as if the contents of the extension
+had been written in the source code
+as part of the type's declaration.
+However, extensions in a *different* file don't have any special behavior.
+
+This means you can organize your code using extensions
+even when your types have private entities,
+in the same way you use extensions to organize code
+that doesn't use access control at all.
+For example, given the following simple protocol:
 
 .. testcode:: extensions_privatemembers
 
    -> protocol SomeProtocol {
           func doSomething()
       }
-   ---
+
+You can use an extension to add protocol conformance like this:
+
+.. testcode:: extensions_privatemembers
+
    -> struct SomeStruct {
           private var privateVariable = 12
       }
