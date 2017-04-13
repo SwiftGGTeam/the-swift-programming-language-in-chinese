@@ -1150,6 +1150,29 @@ for individual type members.
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
 
+Using Private Members in Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. testcode:: extensions_privatemembers
+
+   -> protocol SomeProtocol {
+          func doSomething()
+      }
+   ---
+   -> struct SomeStruct {
+          private var privateVariable = 12
+      }
+   ---
+   -> extension SomeStruct: SomeProtocol {
+          func doSomething() {
+              print(privateVariable)
+          }
+      }
+   >> let s = SomeStruct()
+   >> s.doSomething()
+   << 12
+
+
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
