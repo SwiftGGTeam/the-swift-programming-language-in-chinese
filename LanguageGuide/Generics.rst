@@ -1063,6 +1063,34 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
+
+
+
+::
+
+    // Redeclaring the associated type to add a constraint.
+    protocol ComparableContainer: Container {
+        associatedtype Item: Comparable
+    }
+
+    // Adding the contstraint using a where clause.
+    protocol ComparableContainer: Container where Item: Comparable { }
+
+    function < (lhs: ComparableContainer, rhs: ComparableContainer) -> Bool {
+        // Sort empty containers before nonempty containers.
+        if lhs.count == 0 {
+            return true
+        } else if rhs.count  == 0 {
+            return false
+        }
+
+        // Sort nonempty containers by their first element.
+        // (In real code, you would want to compare the second element
+        // if the first elements are equal, and so on.)
+        return lhs[0] < rhs[0]
+    }
+
+
 .. TODO: Subscripts
    ----------------
 
