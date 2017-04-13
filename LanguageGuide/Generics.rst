@@ -1063,8 +1063,12 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
+Associated Types That Have Generic Where Clauses
+------------------------------------------------
 
 
+.. This code should eventually be valid Swift,
+   but as of Xcode 9 (9M96i) (swiftlang-900.0.15) it doesn't work yet.
 
 ::
 
@@ -1089,6 +1093,10 @@ Separate each requirement in the list with a comma.
         // if the first elements are equal, and so on.)
         return lhs[0] < rhs[0]
     }
+
+
+
+
 
 
 .. TODO: Subscripts
