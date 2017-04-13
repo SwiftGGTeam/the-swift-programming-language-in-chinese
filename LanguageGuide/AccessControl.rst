@@ -76,7 +76,8 @@ and also relative to the module that source file belongs to.
   when those details are used within an entire file.
 
 * :newTerm:`Private access`
-  restricts the use of an entity to the enclosing declaration.
+  restricts the use of an entity to the enclosing declaration,
+  and to extensions of that declaration that are in the same file.
   Use private access to hide the implementation details of
   a specific piece of functionality
   when those details are used only within a single declaration.

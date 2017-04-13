@@ -2620,7 +2620,8 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
 ``private``
     Apply this modifier to a declaration to indicate the declaration can be accessed
-    only by code within the declaration's immediate enclosing scope.
+    only by code within the declaration's immediate enclosing scope,
+    and by code within an extension to that declaration in the same file.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
