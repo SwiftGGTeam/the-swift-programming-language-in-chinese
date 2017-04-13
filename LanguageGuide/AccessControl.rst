@@ -1192,6 +1192,7 @@ You can use an extension to add protocol conformance like this:
       }
    >> let s = SomeStruct()
    >> s.doSomething()
+   << // s : SomeStruct = REPL.SomeStruct(privateVariable: 12)
    << 12
 
 
