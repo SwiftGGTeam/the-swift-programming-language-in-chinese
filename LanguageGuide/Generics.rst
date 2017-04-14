@@ -1085,22 +1085,60 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
-Associated Types That Have Generic Where Clauses
-------------------------------------------------
+Associated Types with a Generic Where Clause
+--------------------------------------------
 
+You can include a generic where clause on an associated type.
+For example, suppose you wanted to make a version of ``Container``
+that accepts a ranged of indexes it its subscript
+and returns a subcontainer ---
+similar to how ``Collection`` works in the standard library.
+Here's how you write that:
 
-.. This code should eventually be valid Swift,
-   but as of Xcode 9 (9M96i) (swiftlang-900.0.15) it doesn't work yet.
+.. testcode:: associatedTypes-subcontainer
 
-::
+   -> protocol Container {
+         associatedtype Item
+         associatedtype SubContainer: Container where SubContainer.Item == Item
 
-    // Redeclaring the associated type to add a constraint.
-    protocol ComparableContainer: Container {
-        associatedtype Item: Comparable
-    }
+         mutating func append(_ item: Item)
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+         subscript(range: Range<Int>) -> SubContainer { get }
+      }
 
-    // Adding the contstraint using a where clause.
-    protocol ComparableContainer: Container where Item: Comparable { }
+The generic where clause on ``SubContainer`` requires that
+the subcontainer must have the same item type as the container has,
+regardless of what type the subcontainer is.
+The original container and the subcontainer
+could be represented by the same type
+or by different types.
+The new subscript that accepts a range
+uses this new associated type as its return value.
+
+For a protocol that inherits from another protocol,
+there are two ways you can add a constraint
+to an inherited associated type.
+You can redeclare an inherited associated type,
+add include the generic where clause in the redeclaration.
+You can also include the generic where clause in the protocol declaration.
+The following declarations are equivalent:
+
+.. testcode:: associatedTypes
+
+    -> protocol ComparableContainer: Container {
+           associatedtype Item: Comparable
+       }
+    ---
+    -> protocol ComparableContainer: Container where Item: Comparable { }
+
+.. XXX The redeclaration will fail.  Add a REPL expectation.
+
+In both of the versions of ``ComparableContainer`` above,
+the protocol requires that ``Item`` must conform to ``Comparable``.
+
+..  Exercise the new container -- this might not actually be needed,
+    and it adds a level of complexity.
 
     function < (lhs: ComparableContainer, rhs: ComparableContainer) -> Bool {
         // Sort empty containers before nonempty containers.
