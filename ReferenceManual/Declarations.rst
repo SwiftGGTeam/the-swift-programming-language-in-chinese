@@ -1838,19 +1838,17 @@ can add constraints to an associated types inherited from another protocol,
 without redeclaring the associated types.
 For example, the declarations of ``SubProtocol`` below are equivalent:
 
-::
+.. testcode:: protocol-associatedtype
 
-    protocol SomeProtocol {
-        associatedtype SomeType
-    }
-
-    protocol SubProtocol: SomeProtocol {
-        associatedtype SomeType: Equatable
-    }
-
-    protocol SubProtocol: SomeProtocol where SomeType: Equatable {}
-
-.. XXX Convert the above tested code.
+    -> protocol SomeProtocol {
+           associatedtype SomeType
+       }
+    ---
+    -> protocol SubProtocol: SomeProtocol {
+           associatedtype SomeType: Equatable
+       }
+    ---
+    -> protocol SubProtocol: SomeProtocol where SomeType: Equatable {}
 
 .. XXX This could also go around line 1600, just before the discussion of 'optional'.
 
