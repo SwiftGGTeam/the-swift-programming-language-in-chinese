@@ -794,6 +794,28 @@ the appropriate type to use for ``Item``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.
 
+Using Type Annotations to Constrain an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can add a type annotation to an associated type in a protocol,
+to require that conforming types must satisfy the constrain
+described by the type annotation.
+For example,
+the following code defines a version of ``Container``
+that requires the items in the container to be equatable.
+
+.. testcode:: associatedTypes-equatable
+
+   -> protocol Container {
+         associatedtype Item: Equatable
+         mutating func append(_ item: Item)
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+      }
+
+In order to conform to this version of ``Container``,
+the container's ``Item`` type has to conform to the ``Equatable`` protocol.
+
 .. _Generics_WhereClauses:
 
 Generic Where Clauses
