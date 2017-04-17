@@ -452,6 +452,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
+    primary-expression --> key-path-expression
     primary-expression --> selector-expression
     primary-expression --> key-path-string-expression
 
@@ -1102,6 +1103,22 @@ For example, in the following assignment
     Grammar of a wildcard expression
 
     wildcard-expression --> ``_``
+
+
+.. _Expression_TypedKeyPathExpression:
+
+Key-Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
+   key-path-components --> key-path-component ``.`` key-path-components
+   key-path-components --> key-path-component
+
+   key-path-component --> identifier
+   key-path-component --> identifier ``?``
+   key-path-component --> ``[`` expression ``]``
 
 
 .. _Expression_SelectorExpression:
