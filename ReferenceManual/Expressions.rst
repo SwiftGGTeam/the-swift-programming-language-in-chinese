@@ -453,7 +453,7 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
     primary-expression --> selector-expression
-    primary-expression --> key-path-expression
+    primary-expression --> key-path-string-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -1191,10 +1191,10 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _Expression_KeyPathExpression:
 
-Key-Path Expression
-~~~~~~~~~~~~~~~~~~~
+Key-Path String Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you access the string
+A key-path string expression lets you access the string
 used to refer to a property in Objective-C
 for use in key-value coding and key-value observing APIs.
 
@@ -1204,7 +1204,7 @@ for use in key-value coding and key-value observing APIs.
 
 The *property name* must be a reference to a property
 that is available in the Objective-C runtime.
-At compile time, the key-path expression is replaced by a string literal.
+At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
 .. testcode:: keypath-expression
@@ -1227,7 +1227,7 @@ For example:
    -> }
    <- 12
 
-When you use a key-path expression within a class,
+When you use a key-path string expression within a class,
 you can refer to a property of that class
 by writing just the property name, without the class name.
 
@@ -1241,7 +1241,7 @@ by writing just the property name, without the class name.
    -> print(keyPath == c.getSomeKeyPath())
    <- true
 
-Because the key path is created at compile time, not at runtime,
+Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists
 and that the property is exposed to the Objective-C runtime.
 
@@ -1260,9 +1260,9 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. syntax-grammar::
 
-    Grammar of a key-path expression
+    Grammar of a key-path string expression
 
-    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
+    key-path-string-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
