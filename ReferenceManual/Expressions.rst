@@ -1115,8 +1115,7 @@ Key-Path Expression
    Grammar of a key-path expression
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
-   key-path-components --> key-path-component ``.`` key-path-components
-   key-path-components --> key-path-component
+   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
 
    key-path-component --> identifier
    key-path-component --> identifier ``?``
