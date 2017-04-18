@@ -1112,6 +1112,8 @@ Key-Path Expression
 
 .. syntax-grammar::
 
+   Grammar of a key-path expression
+
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component ``.`` key-path-components
    key-path-components --> key-path-component
