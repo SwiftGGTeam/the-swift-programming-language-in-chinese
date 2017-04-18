@@ -41,41 +41,9 @@ Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某
 <a name="for_in_loops"></a>
 ## For-In 循环
 
-你可以使用`for-in`循环来遍历一个集合中的所有元素，例如数字范围、数组中的元素或者字符串中的字符。
+你可以使用 `for-in` 循环来遍历一个集合中的所有元素，例如数组中的元素、数字范围或者字符串中的字符。
 
-下面的例子用来输出乘 5 乘法表前面一部分内容：
-
-```swift
-for index in 1...5 {
-    print("\(index) times 5 is \(index * 5)")
-}
-// 1 times 5 is 5
-// 2 times 5 is 10
-// 3 times 5 is 15
-// 4 times 5 is 20
-// 5 times 5 is 25
-```
-
-例子中用来进行遍历的元素是使用闭区间操作符（`...`）表示的从`1`到`5`的数字区间。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表的结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`print(_:separator:terminator:)`函数会再执行一次。整个过程会进行到闭区间结尾为止。
-
-上面的例子中，`index`是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index`在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用`let`关键字声明。
-
-如果你不需要区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略这个值：
-
-```swift
-let base = 3
-let power = 10
-var answer = 1
-for _ in 1...power {
-    answer *= base
-}
-print("\(base) to the power of \(power) is \(answer)")
-// 输出 "3 to the power of 10 is 59049"
-```
-
-这个例子计算 base 这个数的 power 次幂（本例中，是`3`的`10`次幂），从`1`（`3`的`0`次幂）开始做`3`的乘法， 进行`10`次，使用`1`到`10`的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号`_`（替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。
-
-使用`for-in`遍历一个数组所有元素：
+以下例子使用 `for-in` 遍历一个数组所有元素：  
 
 ```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
@@ -88,7 +56,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以`(key, value)`元组的形式返回，你可以在`for-in`循环中使用显式的常量名称来解读`(key, value)`元组。下面的例子中，字典的键（key）解读为常量`animalName`，字典的值会被解读为常量`legCount`：
+你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键解读为常量 `animalName`，字典的值会被解读为常量 `legCount`：  
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -96,11 +64,71 @@ for (animalName, legCount) in numberOfLegs {
     print("\(animalName)s have \(legCount) legs")
 }
 // ants have 6 legs
-// cats have 4 legs
 // spiders have 8 legs
+// cats have 4 legs
 ```
 
-字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。
+字典的内容本质上是无序的，遍历元素时不能保证顺序。特别地，将元素插入一个字典的顺序并不会决定它们被遍历的顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。  
+
+`for-in` 循环还可以使用数字范围。下面的例子用来输出乘 5 乘法表前面一部分内容：  
+
+```swift
+for index in 1...5 {
+    print("\(index) times 5 is \(index * 5)")
+}
+// 1 times 5 is 5
+// 2 times 5 is 10
+// 3 times 5 is 15
+// 4 times 5 is 20
+// 5 times 5 is 25
+```
+
+例子中用来进行遍历的元素是使用闭区间操作符（`...`）表示的从 `1` 到 `5` 的数字区间。`index` 被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前 `index` 值所对应的乘 5 乘法表的结果。该语句执行后，`index` 的值被更新为闭区间中的第二个数字（`2`），之后 `print(_:separator:terminator:)` 函数会再执行一次。整个过程会进行到闭区间结尾为止。  
+
+上面的例子中，`index` 是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index` 在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用 `let` 关键字声明。  
+
+如果你不需要区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略这个值：  
+
+```swift
+let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
+}
+print("\(base) to the power of \(power) is \(answer)")
+// 输出 "3 to the power of 10 is 59049"
+```
+
+这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（ `3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。  
+
+在某些情况下，你可能不想使用闭区间，包括两个端点。在一个手表上每分钟绘制一个刻度线。要绘制 `60` 个刻度，从 `0` 分钟开始。使用半开区间运算符（`..<`）来包含下限，但不包括上限。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。  
+
+```
+let minutes = 60
+for tickMark in 0..<minutes {
+    // 每1分钟呈现一个刻度线（60次）
+}
+```
+
+一些用户可能在其UI中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。  
+
+```
+let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+    // 每5分钟呈现一个刻度线 (0, 5, 10, 15 ... 45, 50, 55)
+}
+```
+
+可以在闭区间使用 `stride(from:through:by:)` 起到同样作用：  
+
+```
+let hours = 12
+let hourInterval = 3
+for tickMark in stride(from: 3, through: hours, by: hourInterval) {
+    // 每3小时呈现一个刻度线 (3, 6, 9, 12)
+}
+```
 
 <a name="while_loops"></a>
 ## While 循环
