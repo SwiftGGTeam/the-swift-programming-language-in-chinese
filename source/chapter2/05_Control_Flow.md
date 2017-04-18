@@ -20,6 +20,8 @@
 > 翻译：[Realank](https://github.com/realank) 2016-09-13  
 > 3.0.1，shanks，2016-11-12
 
+> 3.1
+> 翻译：[qhd](https://github.com/qhd) 2017-04-17  
 
 本页包含内容：
 
