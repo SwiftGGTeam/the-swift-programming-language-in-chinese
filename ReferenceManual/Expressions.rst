@@ -1110,6 +1110,25 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
+A key-path expression lets you create
+an instance of the ``KeyPath`` type.
+
+.. syntax-outline::
+
+   \<#type name#>.<#key path components#>
+
+
+
+Key paths can be used to access properties and subscripts
+by passing them to the ``[keyPath:]`` subscript.
+
+.. XXX live link for KeyPath and subscript[keyPath:]
+.. XXX check naming convention for subscripts
+
+.. The SE proposal doesn't talk about using typed key paths
+   with existing Obj-C string key path APIs,
+   but David Smith will forward his proposal to adopt them in Foundation.
+
 .. syntax-grammar::
 
    Grammar of a key-path expression
@@ -1119,7 +1138,15 @@ Key-Path Expression
 
    key-path-component --> identifier
    key-path-component --> identifier ``?``
-   key-path-component --> ``[`` expression ``]``
+   key-path-component --> ``[`` expression-list ``]``
+
+.. XXX: Grammar for subscripts is wrong.
+
+   The grammar for the subscript version of key-path-component matches
+   the grammar far self-subscript-expression, superclass-subscript-expression
+   and subscript-expression.  However, a subscript can have labeled parameters,
+   which expression-list doesn't match.  Most likely the correct fix is to swap
+   it out for function-call-argument-list but I need to check that.
 
 
 .. _Expression_SelectorExpression:
