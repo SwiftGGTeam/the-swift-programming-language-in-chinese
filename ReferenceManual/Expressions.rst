@@ -684,7 +684,7 @@ For example:
     self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
     self-method-expression --> ``self`` ``.`` identifier
-    self-subscript-expression --> ``self`` ``[`` expression-list ``]``
+    self-subscript-expression --> ``self`` ``[`` function-argument-list ``]``
     self-initializer-expression --> ``self`` ``.`` ``init``
 
 
@@ -727,7 +727,7 @@ to make use of the implementation in their superclass.
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
-    superclass-subscript-expression --> ``super`` ``[`` expression-list ``]``
+    superclass-subscript-expression --> ``super`` ``[`` function-argument-list ``]``
     superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
@@ -1138,15 +1138,7 @@ by passing them to the ``[keyPath:]`` subscript.
 
    key-path-component --> identifier
    key-path-component --> identifier ``?``
-   key-path-component --> ``[`` expression-list ``]``
-
-.. XXX: Grammar for subscripts is wrong.
-
-   The grammar for the subscript version of key-path-component matches
-   the grammar far self-subscript-expression, superclass-subscript-expression
-   and subscript-expression.  However, a subscript can have labeled parameters,
-   which expression-list doesn't match.  Most likely the correct fix is to swap
-   it out for function-call-argument-list but I need to check that.
+   key-path-component --> ``[`` function-argument-list ``]``
 
 
 .. _Expression_SelectorExpression:
@@ -1733,7 +1725,21 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
     Grammar of a subscript expression
 
-    subscript-expression --> postfix-expression ``[`` expression-list ``]``
+    subscript-expression --> postfix-expression ``[`` function-argument-list ``]``
+
+.. assertion:: subscripts-can-take-operators
+
+   >> struct S {
+          let x: Int
+          let y: Int
+          subscript(operation: (Int, Int) -> Int) -> Int {
+              return operation(x, y)
+          }
+      }
+   >> let s = S(x: 10, y: 20)
+   << // s : S = REPL.S(x: 10, y: 20)
+   >> s[+]
+   << // r0 : Int = 30
 
 
 .. _Expressions_Forced-ValueExpression:
