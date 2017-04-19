@@ -14,6 +14,10 @@ Classes and structures in Swift have many similarities,
 such as properties, methods, subscripts, and initializers,
 which means it's not always obvious
 when to use a class and when to use a structure.
+If you're used to working in languages like Objective-C or C++,
+you're probably used to writing a lot of classes.
+In Swift, you don't need classes as often as you might expect.
+
 The fundamental difference between classes and structures
 is that classes are reference types
 but structures are value types,
@@ -24,17 +28,9 @@ most of the time you should use a structure
 unless you need reference semantics
 or the additional dynamic behavior
 that classes provide.
-
-.. XXX Weave in above or remove.
-
-   If you're used to working in object-oriented languages
-   like Objective-C or C++,
-   you may be in the habit of writing a lot of classes.
-   In Swift,
-   you don't need classes as often as you might expect.
-   The major reasons to use a class are
-   when you're working with a framework whose API uses classes and
-   when you want to refer to the same instance of a type in multiple places.
+The major reasons to use a class are
+when you're working with a framework whose API uses classes and
+when you want to refer to the same instance of a type in multiple places.
 
 .. _ReferenceAndValueTypes_StructsAndEnums:
 
@@ -158,33 +154,17 @@ Changing one temperature has no effect on the other.
     roomTemperature --> Temperature (21.0)
     ovenTemperature --> Temperature (180.0)
 
-
-.. XXX REWRITE
-
-    This example of unintended sharing
-    is a simple illustration of a problem that often comes up
-    when using classes.
-    It is clear to see where things went wrong in this example,
-    but when you write more complicated code
-    and changes come from many different places,
-    it is much more difficult to reason about your code.
-
-    One solution to unintended sharing when using classes
-    is to manually copy your class instances as needed.
-    However,
-    manually copying class instances as needed is hard to justify
-    when structures do that for you with their copy-on-write behavior.
-
-    .. XXX weak argument -- better framed as structs give you (via reference semantics)
-       what you were trying to build via defensive copying of class instances
-
-    Much like constants,
-    structures make it easier to reason about your code
-    because you don't have to worry about
-    where far-away changes might be coming from.
-    Structures provide a simpler abstraction,
-    saving you from having to think about unintended sharing
-    in those cases when you really don't need reference semantics.
+This example of unintended sharing
+is a simple illustration of a problem that often comes up
+when using classes.
+It is clear to see where things went wrong in this example,
+but when you write more complicated code
+and changes come from many different places,
+it is much more difficult to reason about your code.
+Much like constants,
+structures make it easier to reason about your code
+because you don't have to worry about
+where far-away changes might be coming from.
 
 .. XXX Note from discission with Alex Migicovsky
    If you're coming from another language
@@ -394,18 +374,14 @@ The most common reason to use a class
 instead of a structure or an enumeration
 is because you need reference semantics.
 In the example above,
-although it was possible to model the players scores using structures,
+although it was possible to model the players' scores using structures,
 at some point in the data you need to have a single shared game object.
 Because structures have value semantics,
 you can use them for shared state
 only when they are part of some larger data structure.
-From the point of view of how you organize your data,
-the structures are "inside" the class,
-    and so they inherit/obtain/mooch off of its reference-y semantics.
-    The outermost data structure
-    needs to have its own reference-nature.
-
-.. XXX Fix wording above
+For example,
+it wouldn't work to make ``Game`` a structure ---
+then there wouldn't be any overarching shared state.
 
 Another reason you need reference semantics
 is when you need to model some external entity.
@@ -415,14 +391,6 @@ needs to have reference semantics
 so that all of your code that interacts with the object
 is able to interact with the same on-disk file,
 and sees that file in the same state.
-
-.. XXX Is a code listing helpful here or just confusing?
-
-::
-
-    class TemporaryFile {
-        append(string: String) { /* ... */ }
-    }
 
 In addition, when the object is no longer needed
 the on-disk file needs to be deleted.
