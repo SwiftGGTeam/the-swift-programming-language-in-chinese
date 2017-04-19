@@ -85,10 +85,40 @@ you accidentally change the temperature of the room as well:
     -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is also now 180.0 degrees Celsius
 
+.. XXX ART
+
 Because ``Temperature`` is a class,
 setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer to the same ``Temperature`` instance.
 Changing ``ovenTemperature`` also changes ``roomTemperature``
+
+In contrast,
+what you actually wanted here was two independent temperatures:
+one for the oven and one for the room.
+Modelling ``Temperature`` as a structure
+gives the temperatures value semantics instead of any shared state.
+
+
+.. testcode:: struct-vs-class-temperature-correct
+
+    -> struct Temperature {
+           var celsius = 0.0
+           var fahrenheit: Double {
+               return celsius * 9/5 + 32
+           }
+       }
+    ---
+    -> var roomTemperature = Temperature()
+    << // roomTemperature : Temperature = REPL.Temperature(celsius: 0.0)
+    -> roomTemperature.celsius = 21.0
+    -> var ovenTemperature = roomTemperature
+    << // ovenTemperature : Temperature = REPL.Temperature(celsius: 21.0)
+    ---
+    -> ovenTemperature.celsius = 180.0
+    -> print("ovenTemperature is now \(ovenTemperature.celsius) degrees Celsius")
+    <- ovenTemperature is now 180.0 degrees Celsius
+    -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
+    <- roomTemperature is still 21.0 degrees Celsius
 
 .. XXX ART
 
