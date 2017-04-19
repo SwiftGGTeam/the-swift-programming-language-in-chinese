@@ -103,17 +103,17 @@ you accidentally change the temperature of the room as well:
     roomTemperature --> Temperature (180.0)
     ovenTemperature ----^
 
-Because ``Temperature`` is a class,
-setting ``ovenTemperature`` to ``roomTemperature``
-means that both variables refer to the same ``Temperature`` instance.
+Because ``Temperature`` is a class, it has reference semantics ---
+both``ovenTemperature`` and ``roomTemperature``
+refer to the same ``Temperature`` instance.
 Changing ``ovenTemperature`` also changes ``roomTemperature``
+because there is only one temperature.
 
 In contrast,
-what you actually wanted here was two independent temperatures:
+if you declare ``Temperature`` as a structure,
+that gives the temperatures value semantics instead of any shared state.
+This gives you what you actually wanted: two independent temperatures,
 one for the oven and one for the room.
-Modelling ``Temperature`` as a structure
-gives the temperatures value semantics instead of any shared state.
-
 
 .. testcode:: struct-vs-class-temperature-correct
 
@@ -136,7 +136,9 @@ gives the temperatures value semantics instead of any shared state.
     -> print("roomTemperature is still \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is still 21.0 degrees Celsius
 
-.. XXX ART
+With value semantics,
+there is no shared state between the room temperature and the oven temperature.
+Changing one temperature has no effect on the other.
 
 .. XXX ART
 
