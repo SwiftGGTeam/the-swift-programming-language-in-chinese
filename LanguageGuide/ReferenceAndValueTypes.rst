@@ -87,6 +87,22 @@ you accidentally change the temperature of the room as well:
 
 .. XXX ART
 
+::
+
+    XXX FIGURE GOES HERE XXX
+
+    Two labels pointing at the same box.
+
+    Before:
+
+    roomTemperature --> Temperature (21.0)
+    ovenTemperature ----^
+
+    After:
+
+    roomTemperature --> Temperature (180.0)
+    ovenTemperature ----^
+
 Because ``Temperature`` is a class,
 setting ``ovenTemperature`` to ``roomTemperature``
 means that both variables refer to the same ``Temperature`` instance.
@@ -121,6 +137,25 @@ gives the temperatures value semantics instead of any shared state.
     <- roomTemperature is still 21.0 degrees Celsius
 
 .. XXX ART
+
+.. XXX ART
+
+::
+
+    XXX FIGURE GOES HERE XXX
+
+    Two labels pointing at different boxes.
+
+    Before:
+
+    roomTemperature --> Temperature (21.0)
+    ovenTemperature --> Temperature (21.0)
+
+    After:
+
+    roomTemperature --> Temperature (21.0)
+    ovenTemperature --> Temperature (180.0)
+
 
 .. XXX REWRITE
 
@@ -315,6 +350,10 @@ and uses the game to access the its scores.
    but it's certainly not good code either.
 
 .. XXX ART
+
+::
+
+   XXX FIGURE GOES HERE XXX
 
               game
                ||
