@@ -435,7 +435,7 @@ in the declaration ``let x: Int8 = 42``.
 
     Grammar of a literal
 
-	literal --> numeric-literal | string-literal | boolean-literal | nil-literal
+	literal --> numeric-literal | string-literal | multiline-string-literal | boolean-literal | nil-literal
 
 	numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
 	boolean-literal --> ``true`` | ``false``
@@ -727,6 +727,57 @@ no runtime concatenation is performed.
    character-literal --> ``'`` quoted-character ``'``
    quoted-character --> escaped-character
    quoted-character --> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
+
+
+.. _LexicalStructure_MultilineStringLiterals:
+
+Multiline String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-outline::
+
+   """
+   <#characters#>
+   """
+
+.. All of the special characters for a string literal are allowed.
+
+.. There's no newline at the start after the opening quotes
+   or at the end before the closing quotes.
+
+.. To make a multiline string that starts or ends with a blank line,
+   skip a line inside the quotes.  These are the same:
+
+   "\nblank line before and after\n"
+
+   """
+
+   blank line before and after
+
+   """
+
+.. The indentation of the lines must match the closing """.
+   Its indentation tells Swift how much leading whitespace to strip.
+
+.. Line endings are normalized (XXX: To what?)
+   Even if your source file has a mix of CR/LF,
+   all of the line endings in the string will be the same.
+
+.. syntax-grammar::
+
+    Grammar of a multiline string literal
+
+    multiline-string-literal --> ``"""`` interpolated-text-OPT ``"""``
+
+.. XXX We split the grammar
+   for static and interpolated strings in commit 84e6a096e
+   because we needed static strings for raw-value enums.
+   Can you use a multiline string to supply a raw value?
+   If you can,
+   I'll need to make multiline string have parallel productions
+   for the static/interpolated forms,
+   and probably make it come off of string-literal instead of literal.
+
 
 
 .. _LexicalStructure_Operators:

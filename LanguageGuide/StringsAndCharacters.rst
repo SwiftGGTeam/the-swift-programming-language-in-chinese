@@ -60,6 +60,8 @@ because it is initialized with a string literal value.
    For information about using special characters in string literals,
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
+.. XXX Multiline string literals
+
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
 Initializing an Empty String
