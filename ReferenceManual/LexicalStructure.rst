@@ -690,11 +690,10 @@ The following string literals are equivalent:
 
 All of the escape sequences for a string literal
 are also allowed in a multiline string literal.
-Line endings in a multiline string literal are normalized.
+Line endings in a multiline string literal are
+normalized to use the line feed (``\n``) character.
 Even if your source file has a mix of carriage returns and line feeds,
 all of the line endings in the string will be the same.
-
-.. XXX TR: Normalized to what?
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
