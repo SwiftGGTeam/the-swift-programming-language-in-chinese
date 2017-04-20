@@ -676,7 +676,7 @@ spaces and tabs that are part of that indentation
 are not part of the string.
 The ``"""`` that ends the literal
 determines the indentation:
-Every line in the literal must begin with the same whitespace characters
+Every nonblank line in the literal must begin with the same whitespace characters
 that appear before the ``"""`` terminator.
 The following string literals are equivalent:
 
