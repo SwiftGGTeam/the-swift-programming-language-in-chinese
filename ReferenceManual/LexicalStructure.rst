@@ -642,7 +642,7 @@ using the following escape sequences:
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
 
-A string literal is a sequence of characters with three double quotes
+A multiline string literal is a sequence of characters with three double quotes
 before and after it.
 
 .. syntax-outline::
@@ -651,29 +651,49 @@ before and after it.
    <#characters#>
    """
 
-.. All of the special characters for a string literal are allowed.
+The carriage return or line feed after the ``"""``
+that begins the multiline string literal
+is not part of the string.
+The carriage return or line feed before the ``"""```
+that ends the literal is also not part of the string.
+To make a multiline string literal
+that begins or ends with a blank line,
+write a blank line as the first or last line.
+For example:
 
-.. There's no newline at the start after the opening quotes
-   or at the end before the closing quotes.
+.. testcode:: multiline-string-literal
 
-.. To make a multiline string that starts or ends with a blank line,
-   skip a line inside the quotes.  These are the same:
+   -> "\nblank line before and after\n"
+   -> """
 
-   "\nblank line before and after\n"
+      blank line before and after
 
-   """
+      """
 
-   blank line before and after
+A multiline string literal can be indented;
+spaces and tabs that are part of that indentation
+are not part of the string.
+The ``"""`` that ends the literal
+determines the indentation:
+Every line in the literal must begin with the same whitespace characters
+that appear before the ``"""`` terminator.
+The following string literals are equivalent:
 
-   """
+.. testcode:: multiline-string-literal
 
-.. The indentation of the lines must match the closing """.
-   Its indentation tells Swift how much leading whitespace to strip.
+   -> let x = "first line\nsecond line"
+   -> let x = """
+              first line
+              second line
+              """
 
-.. Line endings are normalized (XXX: To what?)
-   Even if your source file has a mix of CR/LF,
-   all of the line endings in the string will be the same.
+All of the escape sequences for a string literal
+are also allowed in a multiline string literal.
+Line endings in a multiline string literal are normalized.
+Even if your source file has a mix of carriage returns and line feeds,
+all of the line endings in the string will be the same.
 
+.. XXX TR: Normalized to what?
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
