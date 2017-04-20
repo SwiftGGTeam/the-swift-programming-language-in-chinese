@@ -198,14 +198,14 @@ You can apply a declaration attribute to declarations only.
           }
 
     .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-    
-..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
-    "It's not there yet, but it'll be there at runtime, trust me."
 
-.. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-    Semantically, the it's replaced with a 'class' requirement,
-    e.g., @class_protocol protocol P {} --> protocol P: class {}
+    ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
+        "It's not there yet, but it'll be there at runtime, trust me."
+
+    .. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
+        I'm keeping the prose here in case it comes back for some reason.
+        Semantically, the it's replaced with a 'class' requirement,
+        e.g., @class_protocol protocol P {} --> protocol P: class {}
 
     ``class_protocol``
         Apply this attribute to a protocol to indicate
@@ -226,8 +226,8 @@ You can apply a declaration attribute to declarations only.
     to the SpriteKit editor UI.
     Applying this attribute also implies the ``objc`` attribute.
 
-.. See also <rdar://problem/27287369> Document @GKInspectable attribute
-   which we will want to link to, once it's written.
+    .. See also <rdar://problem/27287369> Document @GKInspectable attribute
+       which we will want to link to, once it's written.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
@@ -288,9 +288,9 @@ You can apply a declaration attribute to declarations only.
              }
           }
 
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-    Possibly link to Anna and Jack's guide too.
+    .. TODO: If and when Dave includes a section about this in the Guide,
+        provide a link to the relevant section.
+        Possibly link to Anna and Jack's guide too.
 
 ``objcMembers``
     Apply this attribute to any declaration
@@ -348,8 +348,8 @@ You can apply a declaration attribute to declarations only.
     The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
     property attribute.
 
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
+    .. TODO: If and when Dave includes a section about this in the Guide,
+        provide a link to the relevant section.
 
 ``NSManaged``
     Apply this attribute to an instance method or stored variable property
