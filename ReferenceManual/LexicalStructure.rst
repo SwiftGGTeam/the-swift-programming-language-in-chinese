@@ -435,7 +435,7 @@ in the declaration ``let x: Int8 = 42``.
 
     Grammar of a literal
 
-	literal --> numeric-literal | string-literal |  boolean-literal | nil-literal
+	literal --> numeric-literal | string-literal | boolean-literal | nil-literal
 
 	numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
 	boolean-literal --> ``true`` | ``false``
@@ -654,7 +654,7 @@ before and after it.
 The carriage return or line feed after the ``"""``
 that begins the multiline string literal
 is not part of the string.
-The carriage return or line feed before the ``"""```
+The carriage return or line feed before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
 that begins or ends with a blank line,
