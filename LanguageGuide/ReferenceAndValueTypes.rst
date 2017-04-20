@@ -405,7 +405,7 @@ something you can only do with classes.
        because structs have no identity,
        copying one doesn't mean anything
 
-.. XXX being something that he user interacts with
+.. XXX being something that the user interacts with
    is sometimes a good indication that it should be a reference type
    (a physical object or a simulation of one,
    like a window on the screen)
