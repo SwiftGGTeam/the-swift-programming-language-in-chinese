@@ -642,8 +642,9 @@ using the following escape sequences:
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
 
-A multiline string literal is a sequence of characters with three double quotes
-before and after it.
+A multiline string literal is a sequence of characters
+that has three double quotes before and after it,
+with the following form:
 
 .. syntax-outline::
 
@@ -659,7 +660,7 @@ that ends the literal is also not part of the string.
 To make a multiline string literal
 that begins or ends with a blank line,
 write a blank line as the first or last line.
-For example:
+For example, the following string literals are equivalent:
 
 .. testcode:: multiline-string-literal
 
