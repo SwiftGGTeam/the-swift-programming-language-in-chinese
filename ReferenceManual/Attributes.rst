@@ -238,6 +238,12 @@ You can apply a declaration attribute to declarations only.
     The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
+    Applying this attribute to an extension
+    has the same effect as
+    applying it to every member of that extension
+    that is not explicitly marked with
+    either the ``objc`` or ``nonobjc`` attribute.
+
     Classes marked with the ``objc`` attribute
     must inherit from a class defined in Objective-C
     or from another class marked with the ``objc`` attribute.
@@ -252,8 +258,6 @@ You can apply a declaration attribute to declarations only.
       from a protocol has the ``objc`` attribute
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
-
-    .. XXX Discussion of @objc and extensions.
 
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
@@ -308,6 +312,12 @@ You can apply a declaration attribute to declarations only.
     The ``nonobjc`` attribute tells the compiler
     to make the declaration unavailable in Objective-C code,
     even though it is possible to represent it in Objective-C.
+
+    Applying this attribute to an extension
+    has the same effect as
+    applying it to every member of that extension
+    that is not explicitly marked with
+    either the ``objc`` or ``nonobjc`` attribute.
 
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
