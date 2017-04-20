@@ -404,7 +404,7 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-Applying ``IBAction``, ``IBOutlet``, or ``IBDesignable`` attribute
+Applying the ``IBAction``, ``IBOutlet``, or ``IBDesignable`` attribute
 also implies the ``objc`` attribute.
 
 
