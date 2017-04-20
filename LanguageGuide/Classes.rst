@@ -57,14 +57,14 @@ Here is an example of a class definition:
     -> class Window {
            var width: Int
            var height: Int
-           
+
            init(width: Int, height: Int) {
                self.width = width
                self.height = height
            }
        }
 
-The example above defines a new class called ``Window`` 
+The example above defines a new class called ``Window``
 to describe a graphical window.
 This class has two variable stored properties called ``width`` and ``height``.
 Because there is no natural default for a window's width and height,
