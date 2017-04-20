@@ -1142,8 +1142,13 @@ by passing them to the ``[keyPath:]`` subscript.
    As of 2017-04-19 Joe Groff says he expects to only implement property names
    for WWDC.  More stuff will land later.
 
-   key-path-component --> identifier ``?``
-   key-path-component --> ``[`` function-argument-list ``]``
+   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
+
+   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
+   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+
+   key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
+   key-path-postfix --> ``?`` | ``!`` | ``[`` function-argument-list ``]``
 
 
 .. _Expression_SelectorExpression:
