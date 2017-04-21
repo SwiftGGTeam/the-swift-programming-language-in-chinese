@@ -37,11 +37,11 @@
 print("Hello, world!")
 ```
 
-如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main()`函数。你同样不需要在每个语句结尾写上分号。
+如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要 `main()` 函数。你同样不需要在每个语句结尾写上分号。
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解到。
 
-> 注意：
+> 注意：  
 > 在 Mac 中下载 Playground 文件并用双击的方式在 Xcode 中打开：[https://developer.apple.com/go/?id=swift-tour](https://developer.apple.com/go/?id=swift-tour)
 
 <a name="simple_values"></a>
@@ -120,7 +120,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用 `if` 和 `switch` 来进行条件操作，使用 `for-in` 、 `for` 、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
+使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、 `for`、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -135,7 +135,7 @@ for score in individualScores {
 print(teamScore)
 ```
 
-在 `if` 语句中，条件必须是一个布尔表达式——这意味着像 `if score { ... }`这样的代码将报错，而不会隐形地与 0 做对比。
+在 `if` 语句中，条件必须是一个布尔表达式——这意味着像 `if score { ... }` 这样的代码将报错，而不会隐形地与 0 做对比。
 
 你可以一起使用 `if` 和 `let` 来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是 `nil` 以表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
 
@@ -153,7 +153,7 @@ if let name = optionalName {
 > 练习：  
 > 把 `optionalName` 改成 `nil`，greeting会是什么？添加一个 `else` 语句，当 `optionalName` 是 `nil` 时给 greeting 赋一个不同的值。
 
-如果变量的可选值是 `nil` ，条件会判断为 `false` ，大括号中的代码会被跳过。如果不是 `nil` ，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个值了。  
+如果变量的可选值是 `nil`，条件会判断为 `false`，大括号中的代码会被跳过。如果不是 `nil`，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个值了。  
 另一种处理可选值的方法是通过使用 `??` 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
 
 ```swift
@@ -185,7 +185,7 @@ default:
 
 运行 `switch` 中匹配到的子句之后，程序会退出 `switch` 语句，并不会继续向下运行，所以不需要在每个子句结尾写 `break`。
 
-你可以使用`for-in`来遍历字典，需要两个变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
+你可以使用 `for-in` 来遍历字典，需要两个变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
 
 ```swift
 let interestingNumbers = [
@@ -375,7 +375,7 @@ print(sortedNumbers)
 <a name="objects_and_classes"></a>
 ## 对象和类
 
-使用`class`和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。
+使用 `class` 和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。
 
 ```swift
 class Shape {
@@ -387,7 +387,7 @@ class Shape {
 ```
 
 > 练习：  
-> 使用`let`添加一个常量属性，再添加一个接收一个参数的方法。
+> 使用 `let` 添加一个常量属性，再添加一个接收一个参数的方法。
 
 要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。
 
@@ -397,7 +397,7 @@ shape.numberOfSides = 7
 var shapeDescription = shape.simpleDescription()
 ```
 
-这个版本的`Shape`类缺少了一些重要的东西：一个构造函数来初始化类实例。使用`init`来创建一个构造器。
+这个版本的 `Shape` 类缺少了一些重要的东西：一个构造函数来初始化类实例。使用 `init` 来创建一个构造器。
 
 ```swift
 class NamedShape {
@@ -414,7 +414,7 @@ class NamedShape {
 }
 ```
 
-注意 `self` 被用来区别实例变量 `name` 和构造器的参数 `name`。当你创建实例的时候，像传入函数参数一样给类传入构造器的参数。每个属性都需要赋值——无论是通过声明（就像 `numberOfSides` ）还是通过构造器（就像 `name`）。
+注意 `self` 被用来区别实例变量 `name` 和构造器的参数 `name`。当你创建实例的时候，像传入函数参数一样给类传入构造器的参数。每个属性都需要赋值——无论是通过声明（就像 `numberOfSides`）还是通过构造器（就像 `name`）。
 
 如果你需要在删除对象之前进行一些清理工作，使用 `deinit` 创建一个析构函数。
 
@@ -479,7 +479,7 @@ triangle.perimeter = 9.9
 print(triangle.sideLength)
 ```
 
-在 `perimeter` 的 setter 中，新值的名字是 `newValue` 。你可以在 `set` 之后显式的设置一个名字。
+在 `perimeter` 的 setter 中，新值的名字是 `newValue`。你可以在 `set` 之后显式的设置一个名字。
 
 注意 `EquilateralTriangle` 类的构造器执行了三步：
 
@@ -487,7 +487,7 @@ print(triangle.sideLength)
 2. 调用父类的构造器
 3. 改变父类定义的属性值。其他的工作比如调用方法、getters 和 setters 也可以在这个阶段完成。
 
-如果你不需要计算属性，但是仍然需要在设置一个新值之前或者之后运行代码，使用 `willSet` 和 `didSet` 。写入的代码会在属性值发生改变时调用，但不包含构造器中发生值改变的情况。比如，下面的类确保三角形的边长总是和正方形的边长相同。
+如果你不需要计算属性，但是仍然需要在设置一个新值之前或者之后运行代码，使用 `willSet` 和 `didSet`。写入的代码会在属性值发生改变时调用，但不包含构造器中发生值改变的情况。比如，下面的类确保三角形的边长总是和正方形的边长相同。
 
 ```swift
 class TriangleAndSquare {
@@ -513,7 +513,7 @@ triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
 print(triangleAndSquare.triangle.sideLength)
 ```
 
-处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加 `?`。如果 `?` 之前的值是 `nil` ， `?` 后面的东西都会被忽略，并且整个表达式返回 `nil` 。否则，`?` 之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
+处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加 `?`。如果 `?` 之前的值是 `nil`，`?` 后面的东西都会被忽略，并且整个表达式返回 `nil`。否则，`?` 之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
 
 ```swift
 let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
@@ -550,7 +550,7 @@ let aceRawValue = ace.rawValue
 ```
 
 > 练习：  
-> 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
+> 写一个函数，通过比较它们的原始值来比较两个 `Rank` 值。
 
 默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在上面的例子中，`Ace` 被显式赋值为 1，并且剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用 `rawValue` 属性来访问一个枚举成员的原始值。
 
@@ -609,7 +609,7 @@ case let .failure(message):
 ```
 
 > 练习：  
-> 给`ServerResponse`和 switch 添加第三种情况。
+> 给 `ServerResponse` 和 switch 添加第三种情况。
 
 注意日升和日落时间是如何从 `ServerResponse` 中提取到并与 `switch` 的 `case` 相匹配的。
 
@@ -628,13 +628,13 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
 > 练习：  
-> 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
+> 给 `Card` 添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展
 
-使用`protocol`来声明一个协议。
+使用 `protocol` 来声明一个协议。
 
 ```swift
 protocol ExampleProtocol {
@@ -671,9 +671,9 @@ let bDescription = b.simpleDescription
 > 练习：  
 > 写一个实现这个协议的枚举。
 
-注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
+注意声明 `SimpleStructure` 时候 `mutating` 关键字用来标记一个会修改结构体的方法。`SimpleClass` 的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
-使用`extension`来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展让某个在别处声明的类型来遵守某个协议，这同样适用于从外部库或者框架引入的类型。
+使用 `extension` 来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展让某个在别处声明的类型来遵守某个协议，这同样适用于从外部库或者框架引入的类型。
 
 ```swift
 extension Int: ExampleProtocol {
@@ -703,7 +703,7 @@ print(protocolValue.simpleDescription)
 <a name="error_handling"></a>
 ## 错误处理
 
-使用采用`Error`协议的类型来表示错误。
+使用采用 `Error` 协议的类型来表示错误。
 
 ```swift
 enum PrinterError: Error {
@@ -754,7 +754,7 @@ do {
 ```
 
 > 练习：  
-> 在`do`代码块中添加抛出错误的代码。你需要抛出哪种错误来使第一个`catch`块进行接收？怎么使第二个和第三个`catch`进行接收呢？
+> 在 `do` 代码块中添加抛出错误的代码。你需要抛出哪种错误来使第一个 `catch` 块进行接收？怎么使第二个和第三个 `catch` 进行接收呢？
 
 另一种处理错误的方式使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则的话，结果会是一个包含函数返回值的可选值。
 
@@ -763,7 +763,7 @@ let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
 let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 ```
 
-使用 `defer` 代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。使用`defer`，可以把函数调用之初就要执行的代码和函数调用结束时的扫尾代码写在一起，虽然这两者的执行时机截然不同。
+使用 `defer` 代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。使用 `defer`，可以把函数调用之初就要执行的代码和函数调用结束时的扫尾代码写在一起，虽然这两者的执行时机截然不同。
 
 ```swift
 var fridgeIsOpen = false
