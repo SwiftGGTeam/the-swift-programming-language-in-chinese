@@ -233,7 +233,8 @@ You can apply a declaration attribute to declarations only.
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
     nongeneric enumerations (constrained to integer raw-value types),
-    properties and methods (including getters and setters) of classes and protocols,
+    properties and methods (including getters and setters) of classes,
+    protocols and optional members of a protocol,
     initializers, deinitializers, and subscripts.
     The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
@@ -255,7 +256,7 @@ You can apply a declaration attribute to declarations only.
     * The declaration is an override in a subclass
       and the superclass's declaration has the ``objc`` attribute.
     * The declaration satisfies a requirement
-      from a protocol has the ``objc`` attribute
+      from a protocol that has the ``objc`` attribute
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
@@ -297,13 +298,11 @@ You can apply a declaration attribute to declarations only.
         Possibly link to Anna and Jack's guide too.
 
 ``objcMembers``
-    Apply this attribute to any declaration
+    Apply this attribute to any class declaration
     that can have the ``objc`` attribute.
     The ``objc`` attribute is implicitly added
     to Objective-C compatible members of the class,
     its extensions, its subclasses, and all of their extensions.
-
-    .. XXX Is this attribute only for classes?
 
 ``nonobjc``
     Apply this attribute to a
