@@ -641,6 +641,18 @@ use the ``removeSubrange(_:)`` method:
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
+.. _StringsAndCharacters_Views:
+
+Different Views of a String
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. _StringsAndCharacters_Substrings:
+
+Strings and Substrings
+----------------------
+
 .. _StringsAndCharacters_ComparingStrings:
 
 Comparing Strings
@@ -749,6 +761,13 @@ but do not have the same linguistic meaning:
 .. TODO: Add a cross reference to NSString.localizedCompare and
    NSString.localizedCaseInsensitiveCompare.  See also
    https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
+
+.. _StringsAndCharacters_CaseAndLocale:
+
+Case and Locale Sensitivity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
 
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
@@ -1027,3 +1046,11 @@ such as with string interpolation:
    </ g
    </ ‼
    </ 🐶
+
+.. _StringsAndCharacters_UnicodeProtocol:
+
+The Unicode Protocol
+~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
