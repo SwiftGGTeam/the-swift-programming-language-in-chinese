@@ -257,6 +257,9 @@ You can apply a declaration attribute to declarations only.
       and the superclass's declaration has the ``objc`` attribute.
     * The declaration satisfies a requirement
       from a protocol that has the ``objc`` attribute
+    * The declaration is a member of a class
+      that was marked with ``objcMembers``
+      or of a class whose superclass was marked with ``objcMembers``.
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
