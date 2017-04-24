@@ -251,15 +251,12 @@ You can apply a declaration attribute to declarations only.
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't marked with the ``objc`` attribute.
 
-    The ``objc`` attribute is implicitly added in the following cases:
+    The ``objc`` attribute is also implicitly added in the following cases:
 
     * The declaration is an override in a subclass
       and the superclass's declaration has the ``objc`` attribute.
     * The declaration satisfies a requirement
       from a protocol that has the ``objc`` attribute
-    * The declaration is a member of a class
-      that was marked with ``objcMembers``
-      or of a class whose superclass was marked with ``objcMembers``.
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
