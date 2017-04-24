@@ -229,6 +229,71 @@ You can apply a declaration attribute to declarations only.
     .. See also <rdar://problem/27287369> Document @GKInspectable attribute
        which we will want to link to, once it's written.
 
+``nonobjc``
+    Apply this attribute to a
+    method, property, subscript, or initializer declaration
+    to suppress an implicit ``objc`` attribute.
+    The ``nonobjc`` attribute tells the compiler
+    to make the declaration unavailable in Objective-C code,
+    even though it is possible to represent it in Objective-C.
+
+    Applying this attribute to an extension
+    has the same effect as
+    applying it to every member of that extension
+    that is not explicitly marked with
+    either the ``objc`` or ``nonobjc`` attribute.
+
+    You use the ``nonobjc`` attribute to resolve circularity
+    for bridging methods in a class marked with the ``objc`` attribute,
+    and to allow overloading of methods and initializers
+    in a class marked with the ``objc`` attribute.
+
+    A method marked with the ``nonobjc`` attribute
+    cannot override a method marked with the ``objc`` attribute.
+    However, a method marked with the ``objc`` attribute
+    can override a method marked with the ``nonobjc`` attribute.
+    Similarly, a method marked with the ``nonobjc`` attribute
+    cannot satisfy a protocol requirement
+    for a method marked with the ``objc`` attribute.
+
+``NSApplicationMain``
+    Apply this attribute to a class
+    to indicate that it is the application delegate.
+    Using this attribute is equivalent to calling the
+    ``NSApplicationMain(_:_:)`` function.
+
+    If you do not use this attribute,
+    supply a ``main.swift`` file with code at the top level
+    that calls the ``NSApplicationMain(_:_:)`` function as follows:
+
+    .. testcode:: nsapplicationmain
+
+       -> import AppKit
+       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+
+``NSCopying``
+    Apply this attribute to a stored variable property of a class.
+    This attribute causes the property's setter to be synthesized with a *copy*
+    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
+    value of the property itself.
+    The type of the property must conform to the ``NSCopying`` protocol.
+
+    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
+    property attribute.
+
+    .. TODO: If and when Dave includes a section about this in the Guide,
+        provide a link to the relevant section.
+
+``NSManaged``
+    Apply this attribute to an instance method or stored variable property
+    of a class that inherits from ``NSManagedObject``
+    to indicate that Core Data dynamically provides its implementation at runtime,
+    based on the associated entity description.
+    For a property marked with the ``NSManaged`` attribute,
+    Core Data also provides the storage at runtime.
+    Applying this attribute also implies the ``objc`` attribute.
+
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
     for example, non-nested classes, protocols,
@@ -303,71 +368,6 @@ You can apply a declaration attribute to declarations only.
     The ``objc`` attribute is implicitly added
     to Objective-C compatible members of the class,
     its extensions, its subclasses, and all of their extensions.
-
-``nonobjc``
-    Apply this attribute to a
-    method, property, subscript, or initializer declaration
-    to suppress an implicit ``objc`` attribute.
-    The ``nonobjc`` attribute tells the compiler
-    to make the declaration unavailable in Objective-C code,
-    even though it is possible to represent it in Objective-C.
-
-    Applying this attribute to an extension
-    has the same effect as
-    applying it to every member of that extension
-    that is not explicitly marked with
-    either the ``objc`` or ``nonobjc`` attribute.
-
-    You use the ``nonobjc`` attribute to resolve circularity
-    for bridging methods in a class marked with the ``objc`` attribute,
-    and to allow overloading of methods and initializers
-    in a class marked with the ``objc`` attribute.
-
-    A method marked with the ``nonobjc`` attribute
-    cannot override a method marked with the ``objc`` attribute.
-    However, a method marked with the ``objc`` attribute
-    can override a method marked with the ``nonobjc`` attribute.
-    Similarly, a method marked with the ``nonobjc`` attribute
-    cannot satisfy a protocol requirement
-    for a method marked with the ``objc`` attribute.
-
-``NSApplicationMain``
-    Apply this attribute to a class
-    to indicate that it is the application delegate.
-    Using this attribute is equivalent to calling the
-    ``NSApplicationMain(_:_:)`` function.
-
-    If you do not use this attribute,
-    supply a ``main.swift`` file with code at the top level
-    that calls the ``NSApplicationMain(_:_:)`` function as follows:
-
-    .. testcode:: nsapplicationmain
-
-       -> import AppKit
-       -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-       !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
-
-``NSCopying``
-    Apply this attribute to a stored variable property of a class.
-    This attribute causes the property's setter to be synthesized with a *copy*
-    of the property's value---returned by the ``copyWithZone(_:)`` method---instead of the
-    value of the property itself.
-    The type of the property must conform to the ``NSCopying`` protocol.
-
-    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
-    property attribute.
-
-    .. TODO: If and when Dave includes a section about this in the Guide,
-        provide a link to the relevant section.
-
-``NSManaged``
-    Apply this attribute to an instance method or stored variable property
-    of a class that inherits from ``NSManagedObject``
-    to indicate that Core Data dynamically provides its implementation at runtime,
-    based on the associated entity description.
-    For a property marked with the ``NSManaged`` attribute,
-    Core Data also provides the storage at runtime.
-    Applying this attribute also implies the ``objc`` attribute.
 
 ``testable``
     Apply this attribute to ``import`` declarations
