@@ -1090,31 +1090,58 @@ Associated Types with a Generic Where Clause
 
 You can include a generic where clause on an associated type.
 For example, suppose you wanted to make a version of ``Container``
-that accepts a ranged of indexes it its subscript
-and returns a subcontainer ---
-similar to how ``Collection`` works in the standard library.
+that includes an iterator,
+like what the ``Sequence`` protocol uses in the standard library.
 Here's how you write that:
 
-.. testcode:: associatedTypes-subcontainer
+.. testcode:: associatedTypes-iterator
 
    -> protocol Container {
          associatedtype Item
-         associatedtype SubContainer: Container where SubContainer.Item == Item
-
          mutating func append(_ item: Item)
          var count: Int { get }
          subscript(i: Int) -> Item { get }
-         subscript(range: Range<Int>) -> SubContainer { get }
+   ---
+         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+         func makeIterator() -> Iterator
       }
 
-The generic where clause on ``SubContainer`` requires that
-the subcontainer must have the same item type as the container has,
-regardless of what type the subcontainer is.
-The original container and the subcontainer
-could be represented by the same type
-or by different types.
-The new subscript that accepts a range
-uses this new associated type as its return value.
+.. Adding makeIterator() to Container lets it conform to Sequence,
+   although we don't call that out here.
+
+The generic where clause on ``Iterator`` requires that
+the elements used by the iterator
+must have the same item type as the container's items,
+regardless of what type the iterator  is.
+The ``makeIterator()`` function provides access to a container's iterator.
+
+.. This example requires SE-0157 Recursive protocol constraints
+   which is tracked by rdar://20531108
+
+    that accepts a ranged of indexes it its subscript
+    and returns a subcontainer ---
+    similar to how ``Collection`` works in the standard library.
+
+    .. testcode:: associatedTypes-subcontainer
+
+       -> protocol Container {
+             associatedtype Item
+             associatedtype SubContainer: Container where SubContainer.Item == Item
+
+             mutating func append(_ item: Item)
+             var count: Int { get }
+             subscript(i: Int) -> Item { get }
+             subscript(range: Range<Int>) -> SubContainer { get }
+          }
+
+    The generic where clause on ``SubContainer`` requires that
+    the subcontainer must have the same item type as the container has,
+    regardless of what type the subcontainer is.
+    The original container and the subcontainer
+    could be represented by the same type
+    or by different types.
+    The new subscript that accepts a range
+    uses this new associated type as its return value.
 
 For a protocol that inherits from another protocol,
 there are two ways you can add a constraint
