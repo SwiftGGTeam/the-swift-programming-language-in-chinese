@@ -1816,7 +1816,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -2308,11 +2308,11 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head subscript-result code-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
-    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` parameter-clause
-    subscript-result --> ``->`` attributes-OPT type
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT code-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
+    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generic-parameter-clause-OPT parameter-clause
+    subscript-result --> ``->`` attributes-OPT type 
 
 
 .. _Declarations_OperatorDeclaration:
