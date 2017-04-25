@@ -823,7 +823,7 @@ Generic Where Clauses
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
 enable you to define requirements on the type parameters associated with
-a generic function or type.
+a generic function, subscript, or type.
 
 It can also be useful to define requirements for associated types.
 You do this by defining a :newTerm:`generic where clause`.
