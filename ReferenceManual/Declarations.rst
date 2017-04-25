@@ -2312,7 +2312,7 @@ see :doc:`../LanguageGuide/Subscripts`.
     subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-block
     subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
     subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generic-parameter-clause-OPT parameter-clause
-    subscript-result --> ``->`` attributes-OPT type 
+    subscript-result --> ``->`` attributes-OPT type
 
 
 .. _Declarations_OperatorDeclaration:
