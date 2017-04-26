@@ -232,48 +232,6 @@ such as ``T`` in the ``swapTwoValues(_:_:)`` function above.
    (such as ``T`` and ``MyTypeParameter``)
    to indicate that they are a placeholder for a *type*, not a value.
 
-.. _Generics_Subscripts:
-
-Generic Subscripts
-------------------
-
-.. XXX Finish this before merging.
-
-..  Doesn't work...  ExpressibleByIntegerLiteral.IntegerLiteralType might
-    not be Int and T might not conform to Equatable.
-
-    struct SomeStructure {
-        var value = 7
-        subscript<T> (value: T) where T: ExpressibleByIntegerLiteral -> Bool {
-            let wrappedValue = T(integerLiteral: value)
-            return value == wrappedValue
-        }
-    }
-
-Subscripts can be generic,
-using the same approach described above for functions.
-You write the placeholder type name inside angle brackets
-for subscripts after ``subscript``.
-For example:
-
-::
-
-    struct SomeStructure {
-        subscript<T> (value: T) -> SomeType {
-            ...
-        }
-    }
-
-.. XXX This goes later, after we've introduced 'where' clauses.
-
-    struct SomeStructure {
-        subscript<T> (value: T) where T: Equatable -> SomeType {
-            ...
-        }
-    }
-
-
-
 .. _Generics_GenericTypes:
 
 Generic Types
@@ -1222,6 +1180,63 @@ the protocol requires that ``Item`` must conform to ``Comparable``.
         // if the first elements are equal, and so on.)
         return lhs[0] < rhs[0]
     }
+
+.. _Generics_Subscripts:
+
+Generic Subscripts
+------------------
+
+.. XXX Finish this before merging.
+
+..  Doesn't work...  ExpressibleByIntegerLiteral.IntegerLiteralType might
+    not be Int and T might not conform to Equatable.
+
+    struct SomeStructure {
+        var value = 7
+        subscript<T> (value: T) where T: ExpressibleByIntegerLiteral -> Bool {
+            let wrappedValue = T(integerLiteral: value)
+            return value == wrappedValue
+        }
+    }
+
+Subscripts can be generic,
+using the same approach described above for functions.
+You write the placeholder type name inside angle brackets
+for subscripts after ``subscript``.
+For example:
+
+::
+
+    struct SomeStructure {
+        subscript<T> (value: T) -> SomeType {
+            ...
+        }
+    }
+
+
+.. Examples from SE0148
+
+    extension Collection {
+      subscript<Indices: Sequence>(indices: Indices) -> [Iterator.Element] where Indices.Iterator.Element == Index {
+        // ...
+      }
+    }
+
+    extension JSON {
+      subscript<T: JSONConvertible>(key: String) -> T? {
+        // ...
+      }
+    }
+
+.. XXX This goes later, after we've introduced 'where' clauses.
+
+    struct SomeStructure {
+        subscript<T> (value: T) where T: Equatable -> SomeType {
+            ...
+        }
+    }
+
+
 
 
 
