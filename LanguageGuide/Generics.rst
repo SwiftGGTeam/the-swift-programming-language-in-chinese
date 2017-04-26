@@ -1088,7 +1088,7 @@ Separate each requirement in the list with a comma.
 Associated Types with a Generic Where Clause
 --------------------------------------------
 
-You can include a generic where clause on an associated type.
+You can include a generic ``where`` clause on an associated type.
 For example, suppose you wanted to make a version of ``Container``
 that includes an iterator,
 like what the ``Sequence`` protocol uses in the standard library.
@@ -1109,7 +1109,7 @@ Here's how you write that:
 .. Adding makeIterator() to Container lets it conform to Sequence,
    although we don't call that out here.
 
-The generic where clause on ``Iterator`` requires that
+The generic ``where`` clause on ``Iterator`` requires that
 the elements used by the iterator
 must have the same item type as the container's items,
 regardless of what type the iterator  is.
@@ -1134,7 +1134,7 @@ The ``makeIterator()`` function provides access to a container's iterator.
              subscript(range: Range<Int>) -> SubContainer { get }
           }
 
-    The generic where clause on ``SubContainer`` requires that
+    The generic ``where`` clause on ``SubContainer`` requires that
     the subcontainer must have the same item type as the container has,
     regardless of what type the subcontainer is.
     The original container and the subcontainer
@@ -1147,8 +1147,8 @@ For a protocol that inherits from another protocol,
 there are two ways you can add a constraint
 to an inherited associated type.
 You can redeclare an inherited associated type,
-add include the generic where clause in the redeclaration.
-You can also include the generic where clause in the protocol declaration.
+add include the generic ``where`` clause in the redeclaration.
+You can also include the generic ``where`` clause in the protocol declaration.
 The following declarations are equivalent:
 
 .. testcode:: associatedTypes
