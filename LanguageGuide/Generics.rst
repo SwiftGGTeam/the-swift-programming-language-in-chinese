@@ -1110,9 +1110,9 @@ Here's how you write that:
    although we don't call that out here.
 
 The generic ``where`` clause on ``Iterator`` requires that
-the elements used by the iterator
-must have the same item type as the container's items,
-regardless of what type the iterator  is.
+the iterator must traverse over elements
+of the same item type as the container's items,
+regardless of what type the iterator itself is.
 The ``makeIterator()`` function provides access to a container's iterator.
 
 .. This example requires SE-0157 Recursive protocol constraints
@@ -1248,7 +1248,7 @@ For example:
 This extension to the ``Container`` protocol
 adds a subscript that takes a sequence of indices
 and returns an array containing the items at each given index.
-There are three parts to this generic subscript:
+This generic subscript is constrained as follows:
 
 * The generic parameter ``Indices`` in angle brackets
   has to be some type that conforms to the ``Sequence`` protocol
@@ -1257,10 +1257,15 @@ There are three parts to this generic subscript:
 * The subscript takes a single parameter, ``indices``,
   which is an instance of that ``Indices`` type.
 
-* The generic ``where`` clause requires that the elements in
-  any sequence of indices that are passed
-  must match the indices used for a container ---
-  they must be ``Int`` values.
+* The generic ``where`` clause requires
+  that the iterator for the sequence
+  must traverse over elements of type ``Int``.
+  This ensures that the indices in the sequence
+  are the same type as the indices used for a container.
+
+Taken together, these constraints mean that
+the value passed for the ``indices`` parameter
+is a sequence of integers.
 
 .. TODO: Generic Enumerations
    --------------------------
