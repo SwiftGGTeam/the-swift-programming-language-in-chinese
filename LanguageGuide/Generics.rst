@@ -1186,69 +1186,82 @@ the protocol requires that ``Item`` must conform to ``Comparable``.
 Generic Subscripts
 ------------------
 
-.. XXX Finish this before merging.
-
-..  Doesn't work...  ExpressibleByIntegerLiteral.IntegerLiteralType might
-    not be Int and T might not conform to Equatable.
-
-    struct SomeStructure {
-        var value = 7
-        subscript<T> (value: T) where T: ExpressibleByIntegerLiteral -> Bool {
-            let wrappedValue = T(integerLiteral: value)
-            return value == wrappedValue
-        }
-    }
-
-Subscripts can be generic,
-using the same approach described above for functions.
+Subscripts can be generic
+and they can include generic ``where`` clauses,
+using the same approach described above for functions and types.
 You write the placeholder type name inside angle brackets
-for subscripts after ``subscript``.
+for subscripts after ``subscript``,
+and you write a generic ``where`` clause right before the opening curly brace
+of the subscript's body.
 For example:
 
-::
+.. The paragraph above borrows the wording used to introduce
+   generics and 'where' clauses earlier in this chapter.
 
-    struct SomeStructure {
-        subscript<T> (value: T) -> SomeType {
-            ...
-        }
-    }
+.. testcode:: genericSubscript
 
-
-.. Examples from SE0148
-
-    extension Collection {
-      subscript<Indices: Sequence>(indices: Indices) -> [Iterator.Element] where Indices.Iterator.Element == Index {
-        // ...
+   >> protocol Container {
+   >>    associatedtype Item
+   >>    mutating func append(_ item: Item)
+   >>    var count: Int { get }
+   >>    subscript(i: Int) -> Item { get }
+   >> }
+   -> extension Container {
+          subscript<Indices: Sequence>(indices: Indices) -> [Item] where Indices.Iterator.Element == Int {
+              var result: [Item] = []
+              for index in indices {
+                  result.append(self[index])
+              }
+              return result
+          }
       }
-    }
 
-    extension JSON {
-      subscript<T: JSONConvertible>(key: String) -> T? {
-        // ...
+.. assertion:: genericSubscript
+
+   -> struct IntStack: Container {
+         // original IntStack implementation
+         var items = [Int]()
+         mutating func push(_ item: Int) {
+            items.append(item)
+         }
+         mutating func pop() -> Int {
+            return items.removeLast()
+         }
+         // conformance to the Container protocol
+         typealias Item = Int
+         mutating func append(_ item: Int) {
+            self.push(item)
+         }
+         var count: Int {
+            return items.count
+         }
+         subscript(i: Int) -> Int {
+            return items[i]
+         }
       }
-    }
+      var s = IntStack()
+      s.push(10); s.push(20); s.push(30)
+      let items = s[ [0, 2] ]
+      // Should get back 10 and 30.
 
-.. XXX This goes later, after we've introduced 'where' clauses.
+.. XXX Add test expectations to the assertion above.
 
-    struct SomeStructure {
-        subscript<T> (value: T) where T: Equatable -> SomeType {
-            ...
-        }
-    }
+This extension to the ``Container`` protocol
+adds a subscript that takes a sequence of indices
+and returns an array containing the items at each given index.
+There are three parts to this generic subscript:
 
+* The generic parameter ``Indices`` in angle brackets
+  has to be some type that conforms to the ``Sequence`` protocol
+  from the standard library.
 
+* The subscript takes a single parameter, ``indices``,
+  which is an instance of that ``Indices`` type.
 
-
-
-
-
-
-.. TODO: Subscripts
-   ----------------
-
-.. TODO: Protocols can require conforming types to provide specific subscripts
-
-.. TODO: These typically return a value of type T, which is why I've moved this here
+* The generic ``where`` clause requires that the elements in
+  any sequence of indices that are passed
+  must match the indices used for a container ---
+  they must be ``Int`` values.
 
 .. TODO: Generic Enumerations
    --------------------------
