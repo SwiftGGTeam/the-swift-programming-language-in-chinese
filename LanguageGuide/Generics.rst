@@ -1144,25 +1144,24 @@ The ``makeIterator()`` function provides access to a container's iterator.
     uses this new associated type as its return value.
 
 For a protocol that inherits from another protocol,
-there are two ways you can add a constraint
-to an inherited associated type.
-You can redeclare an inherited associated type,
-add include the generic ``where`` clause in the redeclaration.
-You can also include the generic ``where`` clause in the protocol declaration.
-The following declarations are equivalent:
+you add a constraint to an inherited associated type
+by including the generic ``where`` clause in the protocol declaration.
+For example, the following code
+declares a ``ComparableContainer`` protocol
+which requires ``Item`` to conform to ``Comparable``:
 
 .. testcode:: associatedTypes
+
+    -> protocol ComparableContainer: Container where Item: Comparable { }
+
+.. This version throws a warning as of Swift commit de66b0c25c70:
+   "redeclaration of associated type %0 from protocol %1 is better
+   expressed as a 'where' clause on the protocol"
 
     -> protocol ComparableContainer: Container {
            associatedtype Item: Comparable
        }
-    ---
-    -> protocol ComparableContainer: Container where Item: Comparable { }
 
-.. XXX The redeclaration will fail.  Add a REPL expectation.
-
-In both of the versions of ``ComparableContainer`` above,
-the protocol requires that ``Item`` must conform to ``Comparable``.
 
 ..  Exercise the new container -- this might not actually be needed,
     and it adds a level of complexity.
