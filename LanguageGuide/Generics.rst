@@ -1217,7 +1217,7 @@ For example:
 
 .. assertion:: genericSubscript
 
-   -> struct IntStack: Container {
+   >> struct IntStack: Container {
          // original IntStack implementation
          var items = [Int]()
          mutating func push(_ item: Int) {
@@ -1238,12 +1238,11 @@ For example:
             return items[i]
          }
       }
-      var s = IntStack()
-      s.push(10); s.push(20); s.push(30)
-      let items = s[ [0, 2] ]
-      // Should get back 10 and 30.
-
-.. XXX Add test expectations to the assertion above.
+   >> var s = IntStack()
+   << // s : IntStack = REPL.IntStack(items: [])
+   >> s.push(10); s.push(20); s.push(30)
+   >> let items = s[ [0, 2] ]
+   << // items : [IntStack.Item] = [10, 30]
 
 This extension to the ``Container`` protocol
 adds a subscript that takes a sequence of indices
