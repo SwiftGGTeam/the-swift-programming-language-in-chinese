@@ -60,7 +60,60 @@ because it is initialized with a string literal value.
    For information about using special characters in string literals,
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
-.. XXX Multiline string literals
+There is also a second form of string literal
+that uses three quotes before and after the text:
+
+.. Quote comes from "Alice's Adventures in Wonderland,
+   which has been public domain as of 1907.
+
+.. testcode:: stringLiterals
+   
+   -> let quotation = """
+      The White Rabbit put on his spectacles.
+      "Where shall I begin, please your Majesty?" he asked.
+
+      "Begin at the beginning," the King said gravely,
+      "and go on till you come to the end; then stop."
+      """
+
+In this multiline form,
+the string literal includes all of the lines between the triple quotes.
+You don't need to escape double quotes (``"``) inside of a multiline string.
+This makes the multiline form easier to read and edit.
+
+.. testcode:: stringLiterals
+
+   -> let quotation2 = "The White Rabbit put on his spectacles.\n" +
+      "\"Where shall I begin, please your Majesty?\" he asked.\n" +
+      "\n"
+      "\"Begin at the beginning,\" the King said gravely,\n" +
+      "\"and go on till you come to the end; then stop.\""
+   ---
+   -> print(quotation == quotation2)
+   <- true
+
+A multiline string can be indented to match the surrounding code,
+without effecting the result.
+The whitespace before the closing triple quote
+tells Swift what whitespace to ignore before all of the other lines.
+For example, the function below returns a string
+that's equal to the two strings above,
+even though the multiline string literal has been indented.
+
+.. testcode:: stringLiterals
+
+   -> function generateQuotation() -> String {
+          let quotation = """
+              The White Rabbit put on his spectacles.
+              "Where shall I begin, please your Majesty?" he asked.
+
+              "Begin at the beginning," the King said gravely,
+              "and go on till you come to the end; then stop."
+              """
+          return quotation
+      }
+   -> print(quotation == generateQuotation())
+   <- true
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
