@@ -61,7 +61,7 @@ because it is initialized with a string literal value.
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
 There is also a second form of string literal
-that uses three quotes before and after the text:
+that uses three double quotes before and after the text:
 
 .. Quote comes from "Alice's Adventures in Wonderland,
    which has been public domain as of 1907.
@@ -77,31 +77,35 @@ that uses three quotes before and after the text:
       till you come to the end; then stop."
       """
 
+Because the multiline form uses three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal,
+like the example above does.
+
 In this multiline form,
 the string literal includes all of the lines between the triple quotes.
-You don't need to escape double quotes (``"``) inside of a multiline string.
-This makes the multiline form easier to read and edit.
+The string begins on the first line after the opening triple quote (``"""``)
+and ends on the line before the closing triple quote (``"""``),
+which means that ``quotation`` doesn't start or end with a line feed.
+To make a multiline string literal that begins or ends with a line feed,
+write a blank line as the first or last line.
+For example:
 
-.. testcode:: multiline-string-literals
+.. testcode:: multiline-string-literal
    :compile: true
 
-   -> let quotation2 =
-      "The White Rabbit put on his spectacles.  \"Where shall I begin,\n"
-      + "please your Majesty?\" he asked.\n"
-      + "\n"
-      + "\"Begin at the beginning,\" the King said gravely, \"and go on\n"
-      + "till you come to the end; then stop.\""
-   ---
-   -> print(quotation == quotation2)
-   <- true
+   -> """
 
-A multiline string can be indented to match the surrounding code,
-without effecting the result.
+      This string starts with a line feed.
+      It alse ends with a line feed.
+
+      """
+
+A multiline string can be indented to match the surrounding code.
 The whitespace before the closing triple quote
 tells Swift what whitespace to ignore before all of the other lines.
-For example, the function below returns a string
-that's equal to the two strings above,
-even though the multiline string literal has been indented.
+For example,
+even though the multiline string literal in the function below is indented,
+the lines in the actual string don't begin with any whitespace.
 
 .. testcode:: multiline-string-literals
    :compile: true
@@ -118,6 +122,20 @@ even though the multiline string literal has been indented.
       }
    -> print(quotation == generateQuotation())
    <- true
+
+However, if you write whitespace at the beginning of a line
+in addition to what's before the closing triple quote,
+that whitespace *is* included.
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let linesWithIndentation = """
+          This line doesn't begin with whitespace.
+              This line starts with four spaces.
+                  This line starts with eight spaces.
+          This line doesn't begin with whitespace.
+          """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -304,6 +322,8 @@ String Interpolation
 :newTerm:`String interpolation` is a way to construct a new ``String`` value
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
+You can use string interpolation
+in both ordinary string literals and multiline string literals.
 Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash (``\``):
 

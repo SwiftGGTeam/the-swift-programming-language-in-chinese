@@ -613,7 +613,7 @@ with the following form:
 
     "<#characters#>"
 
-String literals cannot contain
+String literals can't contain
 an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
@@ -652,24 +652,18 @@ with the following form:
    <#characters#>
    """
 
+This form of string literal can include
+all of the special characters listed above.
+Unlike a single-line string literal,
+a multiline string literal can contain
+unescaped double quotes (``"``), carriage returns, and line feeds.
+It can't contain three unescaped double quotes next to each other.
+
 The carriage return or line feed after the ``"""``
 that begins the multiline string literal
 is not part of the string.
 The carriage return or line feed before the ``"""``
 that ends the literal is also not part of the string.
-To make a multiline string literal
-that begins or ends with a blank line,
-write a blank line as the first or last line.
-For example, the following string literals are equivalent:
-
-.. testcode:: multiline-string-literal
-
-   -> "\nblank line before and after\n"
-   -> """
-
-      blank line before and after
-
-      """
 
 A multiline string literal can be indented;
 spaces and tabs that are part of that indentation
@@ -678,15 +672,17 @@ The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin with the same whitespace characters
 that appear before the ``"""`` terminator.
-The following string literals are equivalent:
+The string literals in the following code are equivalent:
 
 .. testcode:: multiline-string-literal
 
    -> let x = "first line\nsecond line"
-   -> let x = """
+   -> let y = """
               first line
               second line
               """
+   >> x == y
+   << true
 
 All of the escape sequences for a string literal
 are also allowed in a multiline string literal.
