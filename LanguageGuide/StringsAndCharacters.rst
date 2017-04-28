@@ -66,14 +66,15 @@ that uses three quotes before and after the text:
 .. Quote comes from "Alice's Adventures in Wonderland,
    which has been public domain as of 1907.
 
-.. testcode:: stringLiterals
+.. testcode:: multiline-string-literals
+   :compile: true
    
    -> let quotation = """
-      The White Rabbit put on his spectacles.
-      "Where shall I begin, please your Majesty?" he asked.
+      The White Rabbit put on his spectacles.  "Where shall I begin,
+      please your Majesty?" he asked.
 
-      "Begin at the beginning," the King said gravely,
-      "and go on till you come to the end; then stop."
+      "Begin at the beginning," the King said gravely, "and go on
+      till you come to the end; then stop."
       """
 
 In this multiline form,
@@ -81,13 +82,15 @@ the string literal includes all of the lines between the triple quotes.
 You don't need to escape double quotes (``"``) inside of a multiline string.
 This makes the multiline form easier to read and edit.
 
-.. testcode:: stringLiterals
+.. testcode:: multiline-string-literals
+   :compile: true
 
-   -> let quotation2 = "The White Rabbit put on his spectacles.\n" +
-      "\"Where shall I begin, please your Majesty?\" he asked.\n" +
-      "\n"
-      "\"Begin at the beginning,\" the King said gravely,\n" +
-      "\"and go on till you come to the end; then stop.\""
+   -> let quotation2 =
+      "The White Rabbit put on his spectacles.  \"Where shall I begin,\n"
+      + "please your Majesty?\" he asked.\n"
+      + "\n"
+      + "\"Begin at the beginning,\" the King said gravely, \"and go on\n"
+      + "till you come to the end; then stop.\""
    ---
    -> print(quotation == quotation2)
    <- true
@@ -100,15 +103,16 @@ For example, the function below returns a string
 that's equal to the two strings above,
 even though the multiline string literal has been indented.
 
-.. testcode:: stringLiterals
+.. testcode:: multiline-string-literals
+   :compile: true
 
-   -> function generateQuotation() -> String {
+   -> func generateQuotation() -> String {
           let quotation = """
-              The White Rabbit put on his spectacles.
-              "Where shall I begin, please your Majesty?" he asked.
+              The White Rabbit put on his spectacles.  "Where shall I begin,
+              please your Majesty?" he asked.
 
-              "Begin at the beginning," the King said gravely,
-              "and go on till you come to the end; then stop."
+              "Begin at the beginning," the King said gravely, "and go on
+              till you come to the end; then stop."
               """
           return quotation
       }
