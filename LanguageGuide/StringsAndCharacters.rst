@@ -667,6 +667,10 @@ but a substring re-uses the same memory
 as the string you used to create the substring.
 For example:
 
+.. XXX Add to para above
+   the API on a string & substring is almost the same.
+   (they both conform to Unicode)
+
 .. testcode:: string-and-substring
 
    -> let greeting = "Hello, world!"
@@ -684,7 +688,7 @@ as shown in the figure below:
 ::
 
    string -->  [h e l l o _ w o r l d] 
-   substring ---^ ^ ^ ^ ^
+   substring ---^ ^
 
 Because subscripts don't have their own in-memory storage,
 there's no performance overhead
@@ -758,6 +762,7 @@ create a new string for long-term storage.
     print(type(of: e))
     
 ::
+
     let romeoAndJuliet = 
          "Act 1 Scene 1: Verona, A public place\n" +
          "Act 1 Scene 2: Capulet's mansion\n" +
@@ -775,31 +780,9 @@ create a new string for long-term storage.
     }
 
 
-.. A variety of string operations give you back another string -- at least conceptually.
-   For example, the [ ] operator gives you back a portion of the string.
-
-.. Returning the results from these operations using ``String``
-   would require allocating memory and making a copy.
-
 .. That's not ideal when you're doing a bunch of read operations
    over different portions of the same string,
    one after the next.
-
-.. What Swift does instead is to use ``Substring``.
-
-.. Its interface looks almost the same as string.
-   (SE propsal says so... but what are the differences?)
-
-.. One key difference: a substring shares memory of the string that it came from.
-
-.. That means as long as the substring is being used,
-   the entire string is kept in memory.
-
-.. So when you get a substring that you want to keep
-   for more than a moderate amount of time,
-   "promote" it to a full on string.
-
-   (let newString = String(mySubstring)
 
 .. You can't pass a substring to any API that expects a string,
    but you can use the Unicode protocol to make APIs
