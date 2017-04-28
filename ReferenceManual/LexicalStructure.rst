@@ -638,25 +638,21 @@ that begins the multiline string literal
 is not part of the string.
 The carriage return or line feed before the ``"""``
 that ends the literal is also not part of the string.
+To make a multiline string literal
+that begins or ends with a line feed,
+write a blank line as its first or last line.
 
-A multiline string literal can be indented;
-spaces and tabs that are part of that indentation
-are not part of the string.
+A multiline string literal can be indented
+using any combination of spaces and tabs.
+This indentation is not included in the string
+that the multiline string literal creates.
 The ``"""`` that ends the literal
 determines the indentation:
-Every nonblank line in the literal must begin with the same whitespace characters
-that appear before the ``"""`` terminator.
-The string literals in the following code are equivalent:
-
-.. testcode:: multiline-string-literal
-
-   -> let x = "first line\nsecond line"
-   -> let y = """
-              first line
-              second line
-              """
-   >> x == y
-   << true
+Every nonblank line in the literal must begin
+with the same indentation
+that appears before the ``"""`` terminator.
+You can include additional spaces and tabs after that indentation;
+those spaces and tabs appear in the string.
 
 Line endings in a multiline string literal are
 normalized to use the line feed (``\n``) character.
