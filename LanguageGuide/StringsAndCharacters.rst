@@ -653,6 +653,68 @@ Different Views of a String
 Strings and Substrings
 ----------------------
 
+.. XXX TR: Does split() use subscripting,
+   meaning it gives you back [SubString],
+   or does it perform the copy and give you [String] back?
+
+When you access part of a string using a subscript,
+the result is a :newTerm:`substring`.
+The difference between a string and a substring
+is that a substring doesn't have its own storage.
+A string has a region of memory
+where the characters that make up the string are stored,
+but a substring re-uses the same memory
+as the string you used to create the substring.
+For example:
+
+.. testcode:: string-and-substring
+
+   -> let greeting = "Hello, world!"
+   << // greeting : String = "Hello, world!"
+   -> let beginning = greeting[0..<2]
+
+In the code above,
+``beginning`` is a substring of ``greeting``,
+and so ``beginning`` re-uses the same memory
+that is used to store the entire string ``"Hello, world!"``
+as shown in the figure below:
+
+.. XXX Art from rdar://31490503
+
+::
+
+   string -->  [h e l l o _ w o r l d] 
+   substring ---^ ^ ^ ^ ^
+
+Because subscripts don't have their own in-memory storage,
+there's no performance overhead
+due to copying the original string ---
+nothing is copied.
+That's a good thing when you're doing several different substring operations
+on a single large string.
+However, because the entire string must be kept in memory
+as long as substrings of that string are being used,
+use substrings for short- or medium-term work;
+create a new string for long-term storage.
+
+.. XXX Sketch a use case like what's below:
+
+::
+
+    func f() -> SubString {
+        let s = "123 456 789"
+        return s[0]
+    }
+    // Now the whole string is stuck in memory
+    // until you get rid of the result of f()
+
+    let substring = f()
+    let string = String(substring)
+
+
+
+
+
 .. write-me::
 
 .. This approach would be nice, but I don't think we have a way to find a string
@@ -686,9 +748,14 @@ Strings and Substrings
     let input = "2017-04-24 63\n" +
                 "2017-04-25 67\n" +
                 "2017-04-26 52"
-    for entry in input.split("\n") {
+    for entry in input.split(separator: "\n") {
         print(entry)
+        print(type(of: entry))
+        print()
     }
+    let e = input[0]
+    print(e)
+    print(type(of: e))
     
 ::
     let romeoAndJuliet = 
@@ -725,10 +792,6 @@ Strings and Substrings
 
 .. One key difference: a substring shares memory of the string that it came from.
 
-.. FIGURE
-   string -->  [h e l l o _ w o r l d] 
-   substring ---^ ^ ^ ^ ^
-
 .. That means as long as the substring is being used,
    the entire string is kept in memory.
 
@@ -737,6 +800,10 @@ Strings and Substrings
    "promote" it to a full on string.
 
    (let newString = String(mySubstring)
+
+.. You can't pass a substring to any API that expects a string,
+   but you can use the Unicode protocol to make APIs
+   that accept either strings or substrings.
 
 .. _StringsAndCharacters_ComparingStrings:
 
