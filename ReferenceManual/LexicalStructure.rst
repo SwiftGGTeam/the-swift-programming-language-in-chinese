@@ -618,30 +618,6 @@ an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-Special characters
-can be included in string literals
-using the following escape sequences:
-
-* Null Character (``\0``)
-* Backslash (``\\``)
-* Horizontal Tab (``\t``)
-* Line Feed (``\n``)
-* Carriage Return (``\r``)
-* Double Quote (``\"``)
-* Single Quote (``\'``)
-* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
-
-.. TR: Are \v and \f allowed for vertical tab and formfeed?
-   We allow them as whitespace as of now --
-   should that mean we want escape sequences for them too?
-   See also feedback 300722.
-
-.. The behavior of \n and \r is not the same as C.
-   We specify exactly what those escapes mean.
-   The behavior on C is platform dependent --
-   in text mode, \n maps to the platform's line separator
-   which could be CR or LF or CRLF.
-
 A multiline string literal is a sequence of characters
 that has three double quotes before and after it,
 with the following form:
@@ -652,8 +628,6 @@ with the following form:
    <#characters#>
    """
 
-This form of string literal can include
-all of the special characters listed above.
 Unlike a single-line string literal,
 a multiline string literal can contain
 unescaped double quotes (``"``), carriage returns, and line feeds.
@@ -684,12 +658,34 @@ The string literals in the following code are equivalent:
    >> x == y
    << true
 
-All of the escape sequences for a string literal
-are also allowed in a multiline string literal.
 Line endings in a multiline string literal are
 normalized to use the line feed (``\n``) character.
 Even if your source file has a mix of carriage returns and line feeds,
 all of the line endings in the string will be the same.
+
+Special characters
+can be included in string literals
+using the following escape sequences:
+
+* Null Character (``\0``)
+* Backslash (``\\``)
+* Horizontal Tab (``\t``)
+* Line Feed (``\n``)
+* Carriage Return (``\r``)
+* Double Quote (``\"``)
+* Single Quote (``\'``)
+* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
+
+.. TR: Are \v and \f allowed for vertical tab and formfeed?
+   We allow them as whitespace as of now --
+   should that mean we want escape sequences for them too?
+   See also feedback 300722.
+
+.. The behavior of \n and \r is not the same as C.
+   We specify exactly what those escapes mean.
+   The behavior on C is platform dependent --
+   in text mode, \n maps to the platform's line separator
+   which could be CR or LF or CRLF.
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
