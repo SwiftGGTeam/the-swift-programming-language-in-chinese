@@ -661,6 +661,7 @@ all of the line endings in the string will be the same.
 
 Special characters
 can be included in string literals
+of both the single-line and multiline forms
 using the following escape sequences:
 
 * Null Character (``\0``)
