@@ -160,7 +160,7 @@ by iterating over its ``characters`` property with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
-   -> for character in "Dog!🐶".characters {
+   -> for character in "Dog!🐶" {
          print(character)
       }
    </ D
@@ -445,7 +445,7 @@ use the ``count`` property of the string's ``characters`` property:
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+   -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -461,12 +461,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in café is 4
 
 .. note::
@@ -574,7 +574,7 @@ indices of individual characters in a string.
 
 .. testcode:: stringIndex
 
-   -> for index in greeting.characters.indices {
+   -> for index in greeting.indices {
          print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
@@ -609,7 +609,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -745,7 +745,7 @@ create a new string for long-term storage.
 ::
 
     let inventory = "12 - red boxes\n7 - green bins \n29 blue containers"
-    for line in inventory.characters.split(separator: "\n") {
+    for line in inventory.split(separator: "\n") {
         print(String(line))
     }
 
@@ -777,7 +777,7 @@ create a new string for long-term storage.
          "Act 2 Scene 4: A street in Verona\n" +
          "Act 2 Scene 5: Capulet's mansion\n" +
          "Act 2 Scene 6: Friar Lawrence's cell"
-    for scene in romeoAndJuliet.characters.split(separator: "\n") {
+    for scene in romeoAndJuliet.split(separator: "\n") {
         ... can't use scene.hasPrefix -- that's introduced in the next section ...
     }
 
