@@ -656,6 +656,8 @@ Strings and Substrings
 .. XXX TR: Does split() use subscripting,
    meaning it gives you back [SubString],
    or does it perform the copy and give you [String] back?
+   The default implementation on Sequence doesn't use subscripts,
+   so this will only be the case if String has its own split.
 
 When you access part of a string using a subscript,
 the result is a :newTerm:`substring`.
