@@ -96,7 +96,7 @@ For example:
    -> """
 
       This string starts with a line feed.
-      It alse ends with a line feed.
+      It also ends with a line feed.
 
       """
 
