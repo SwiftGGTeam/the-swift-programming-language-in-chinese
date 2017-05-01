@@ -649,8 +649,9 @@ that the multiline string literal creates.
 The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
-with the same indentation
-that appears before the ``"""`` terminator.
+with exactly the same indentation
+that appears before the ``"""`` terminator;
+there is no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
