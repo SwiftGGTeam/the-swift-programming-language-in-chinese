@@ -441,7 +441,7 @@ the program executes only the code within the first matching case in source orde
    >> let tuple = (1, 1)
    << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
-   >>     case (let x, 5), (let x, 1): print(1)
+   >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
