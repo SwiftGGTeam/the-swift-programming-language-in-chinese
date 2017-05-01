@@ -68,7 +68,7 @@ that uses three double quotes before and after the text:
 
 .. testcode:: multiline-string-literals
    :compile: true
-   
+
    -> let quotation = """
       The White Rabbit put on his spectacles.  "Where shall I begin,
       please your Majesty?" he asked.
