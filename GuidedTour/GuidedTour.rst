@@ -498,27 +498,6 @@ either by name or by number.
     -> print(statistics.2)
     << 120
 
-Functions can also take a variable number of arguments,
-collecting them into an array.
-
-.. testcode:: guided-tour
-
-   -> func sumOf(numbers: Int...) -> Int {
-          var sum = 0
-          for number in numbers {
-              sum += number
-          }
-          return sum
-      }
-   -> sumOf()
-   <$ : Int = 0
-   -> sumOf(numbers: 42, 597, 12)
-   <$ : Int = 651
-
-.. admonition:: Experiment
-
-   Write a function that calculates the average of its arguments.
-
 Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
