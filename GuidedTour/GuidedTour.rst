@@ -1349,7 +1349,7 @@ to make a generic function or type.
            }
            return result
        }
-    -> makeArray(repeating: "knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes: 4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
