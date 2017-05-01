@@ -669,10 +669,6 @@ but a substring re-uses the same memory
 as the string you used to create the substring.
 For example:
 
-.. XXX Add to para above
-   the API on a string & substring is almost the same.
-   (they both conform to Unicode)
-
 .. testcode:: string-and-substring
 
    -> let greeting = "Hello, world!"
@@ -703,6 +699,10 @@ as long as substrings of that string are being used,
 use substrings for short- or medium-term work;
 create a new string for long-term storage.
 
+.. That's not ideal when you're doing a bunch of read operations
+   over different portions of the same string,
+   one after the next.
+
 .. XXX Sketch a use case like what's below:
 
 ::
@@ -717,6 +717,14 @@ create a new string for long-term storage.
     let substring = f()
     let string = String(substring)
 
+
+.. XXX Add to para above
+   the API on a string & substring is almost the same.
+   (they both conform to Unicode)
+
+.. You can't pass a substring to any API that expects a string,
+   but you can use the Unicode protocol to make APIs
+   that accept either strings or substrings.
 
 
 
@@ -781,14 +789,6 @@ create a new string for long-term storage.
         ... can't use scene.hasPrefix -- that's introduced in the next section ...
     }
 
-
-.. That's not ideal when you're doing a bunch of read operations
-   over different portions of the same string,
-   one after the next.
-
-.. You can't pass a substring to any API that expects a string,
-   but you can use the Unicode protocol to make APIs
-   that accept either strings or substrings.
 
 .. _StringsAndCharacters_ComparingStrings:
 
