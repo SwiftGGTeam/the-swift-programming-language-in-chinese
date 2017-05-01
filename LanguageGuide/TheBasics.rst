@@ -745,7 +745,7 @@ you can use the alias anywhere you might use the original name:
 .. testcode:: typeAliases
 
    -> var maxAmplitudeFound = AudioSample.min
-   << // maxAmplitudeFound : UInt16 = 0
+   << // maxAmplitudeFound : AudioSample = 0
    /> maxAmplitudeFound is now \(maxAmplitudeFound)
    </ maxAmplitudeFound is now 0
 
