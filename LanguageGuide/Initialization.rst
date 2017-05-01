@@ -1426,9 +1426,9 @@ the initializer fails.
    <~ // pi : Double = 3.1415
    ---
    -> if let valueMaintained = Int(exactly: wholeNumber) {
-          print("\(wholeNumber) conversion to Int maintains value")
+          print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
       }
-   <- 12345.0 conversion to Int maintains value
+   <- 12345.0 conversion to Int maintains value of 12345
    ---
    -> let valueChanged = Int(exactly: pi)
    << // valueChanged : Int? = nil
