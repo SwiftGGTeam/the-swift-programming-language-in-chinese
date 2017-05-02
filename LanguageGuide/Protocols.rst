@@ -1058,6 +1058,10 @@ Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
 You can list as many protocols as you need to,
 separating them by ampersands (``&``).
 
+Protocol compositions do not define a new, permanent protocol type.
+Rather, they define a temporary local protocol that has the combined requirements
+of all protocols in the composition.
+
 Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
 
@@ -1097,12 +1101,6 @@ The example then creates a new ``Person`` instance called ``birthdayPerson``
 and passes this new instance to the ``wishHappyBirthday(to:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
 and the ``wishHappyBirthday(to:)`` function is able to print its birthday greeting.
-
-.. note::
-
-   Protocol compositions do not define a new, permanent protocol type.
-   Rather, they define a temporary local protocol that has the combined requirements
-   of all protocols in the composition.
 
 .. _Protocols_CheckingForProtocolConformance:
 
