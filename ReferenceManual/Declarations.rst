@@ -2023,6 +2023,7 @@ except that you must deal with the optionality of the result.
 
     -> if let actualInstance = SomeStruct(input: "Hello") {
            // do something with the instance of 'SomeStruct'
+    >>     _ = actualInstance
        } else {
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }

@@ -360,6 +360,7 @@ in an arbitrary order.
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
+   >>     _ = kind
           for number in numbers {
               if number > largest {
                   largest = number

@@ -270,12 +270,15 @@ and it handles any errors that it encounters by propagating them to its caller.
        }
     >> do {
     >>     let succeeds = try PurchasedSnack(name: "Candy Bar", vendingMachine: v)
+    >>     print(succeeds)
     >> } catch {
     >>     print("Threw unexpected error.")
     >> }
     << Dispensing Candy Bar
+    << PurchasedSnack(name: "Candy Bar")
     >> do {
     >>     let throwsError = try PurchasedSnack(name: "Jelly Baby", vendingMachine: v)
+    >>     print(throwsError)
     >> } catch {
     >>     print("Threw EXPECTED error.")
     >> }
