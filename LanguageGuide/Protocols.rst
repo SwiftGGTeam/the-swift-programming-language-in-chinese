@@ -1057,6 +1057,8 @@ with a :newTerm:`protocol composition`.
 Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
 You can list as many protocols as you need to,
 separating them by ampersands (``&``).
+In addition to its list of protocols,
+a protocol composition can also contain one class type.
 
 Protocol compositions do not define a new, permanent protocol type.
 Rather, they define a temporary local protocol that has the combined requirements
@@ -1101,6 +1103,50 @@ The example then creates a new ``Person`` instance called ``birthdayPerson``
 and passes this new instance to the ``wishHappyBirthday(to:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
 and the ``wishHappyBirthday(to:)`` function is able to print its birthday greeting.
+
+Here's an example that combines
+the ``Named`` protocol from the previous example
+with a ``Location`` class:
+
+.. testcode:: protocolComposition
+
+   -> class Location {
+          var latitude: Double
+          var longitude: Double
+          init(latitude: Double, longitude: Double) {
+              self.latitude = latitude
+              self.longitude = longitude
+          }
+      }
+   -> class City: Location, Named {
+          var name: String
+          init(name: String, latitude: Double, longitude: Double) {
+              self.name = name
+              self.latitude = latitude
+              self.longitude = longitude
+          }
+      }
+   -> func beginConcert(in location: Location & Named) {
+          print("Hello, \(location.name)!")
+      }
+   ---
+   -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
+   -> beginConcert(in: seattle)
+   <- Hello, Seattle!
+
+The ``beginConcert(in:)`` function takes
+a parameter of type ``Location & Named``
+which means any type that is a subclass of ``Location``
+and that conforms to the ``Named`` protocol.
+In this case, ``City`` satisfies both requirements.
+
+If you tried to pass ``birthdayPerson`` to the ``beginConcert(in:)`` function,
+that would be invalid because ``Person`` isn't a subclass of ``Location``.
+Likewise,
+if you made a subclass of ``Location``
+that didn't conform to the ``Named`` protocol,
+calling ``beginConcert(in:)`` with an instance of that type
+would also be invalid for.
 
 .. _Protocols_CheckingForProtocolConformance:
 
