@@ -1127,8 +1127,8 @@ For example:
 .. testcode:: selector-expression
 
    >> import Foundation
-   -> class SomeClass: NSObject {
-          let property: String
+   -> @objc class SomeClass: NSObject {
+          @objc let property: String
           @objc(doSomethingWithInt:)
           func doSomething(_ x: Int) {}
    ---
@@ -1211,7 +1211,7 @@ For example:
 
    >> import Foundation
    -> @objc class SomeClass: NSObject {
-         var someProperty: Int
+         @objc var someProperty: Int
          init(someProperty: Int) {
              self.someProperty = someProperty
          }

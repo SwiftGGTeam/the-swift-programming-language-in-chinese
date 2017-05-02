@@ -1364,7 +1364,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> class ThreeSource: NSObject, CounterDataSource {
+   -> @objc class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 

@@ -348,9 +348,8 @@ You can apply a declaration attribute to declarations only.
        :compile: true
 
        >> import Foundation
-       -> @objc
-          class ExampleClass: NSObject {
-             var enabled: Bool {
+       -> @objc class ExampleClass: NSObject {
+             @objc var enabled: Bool {
                 @objc(isEnabled) get {
                    // Return the appropriate value
        >>          return true
