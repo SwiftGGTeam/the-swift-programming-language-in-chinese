@@ -1122,8 +1122,7 @@ with a ``Location`` class:
           var name: String
           init(name: String, latitude: Double, longitude: Double) {
               self.name = name
-              self.latitude = latitude
-              self.longitude = longitude
+              super.init(latitude: latitude, longitude: longitude)
           }
       }
    -> func beginConcert(in location: Location & Named) {
@@ -1131,6 +1130,7 @@ with a ``Location`` class:
       }
    ---
    -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
+   << // seattle : City = REPL.City
    -> beginConcert(in: seattle)
    <- Hello, Seattle!
 
