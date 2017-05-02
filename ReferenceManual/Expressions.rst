@@ -1120,10 +1120,12 @@ an instance of the ``KeyPath`` type.
 
 
 Key paths can be used to access properties and subscripts
-by passing them to the ``[keyPath:]`` subscript.
+by passing them to the ``subscript(keyPath:)`` subscript.
 
 .. XXX live link for KeyPath and subscript[keyPath:]
-.. XXX check naming convention for subscripts
+
+.. Subscript name above is a little odd,
+   but it matches what should be displayed on the web.
 
 .. The SE proposal doesn't talk about using typed key paths
    with existing Obj-C string key path APIs,
