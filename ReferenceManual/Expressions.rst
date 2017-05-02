@@ -1110,26 +1110,80 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you create
-an instance of the ``KeyPath`` type.
+A key-path string expression lets you
+refer to a property in Objective-C
+for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
 
-   \<#type name#>.<#key path components#>
+   \<#type name#>.<#property names#>
 
+The *property names* must be a reference to a property
+that is available in the Objective-C runtime.
+At compile time, the key-path expression
+is replaced by a ``KeyPath`` value.
+For example:
 
+.. testcode:: keypath-expression
 
-Key paths can be used to access properties and subscripts
+   >> import Foundation
+   -> @objc class SomeClass: NSObject {
+         var someProperty: Int
+         init(someProperty: Int) {
+             self.someProperty = someProperty
+         }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 12)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> let keyPath = \SomeClass.someProperty
+   ---
+   -> if let value = c.value(forKey: keyPath) {
+   ->     print(value)
+   -> }
+   <- 12
+
+.. XXX Add REPL expectation for "let keyPath" lines here and in the next listing.
+
+The *property names* can contain multiple property names, separated by periods,
+which lets you access a property of the given property's value.
+For example:
+
+.. testcode:: keypath-expression
+
+   >> import Foundation
+   -> @objc class OuterClass: NSObject {
+         var outerProperty: SomeClass
+         init(someProperty: Int) {
+             self.someProperty = SomeClass(someProperty: someProperty)
+         }
+      }
+   -> let nested = OuterClass(someProperty: 24)
+   <~ // nested : OuterClass = <REPL.OuterClass:
+   -> let nestedKeyPath = \OuterClass.outerProperty.someProperty
+   -> if let value = nested.value(forKey nestedKeyPath) {
+          print(value)
+      }
+   <- 24
+
+Key paths can be used to access properties
 by passing them to the ``subscript(keyPath:)`` subscript.
 
-.. XXX live link for KeyPath and subscript[keyPath:]
+.. XXX TR: Which is the preferred spelling,
+   the native foo[keyPath:] or foo.value(for:) from NSObject?
 
-.. Subscript name above is a little odd,
-   but it matches what should be displayed on the web.
+.. XXX add live links for KeyPath and subscript[keyPath:]
 
-.. The SE proposal doesn't talk about using typed key paths
-   with existing Obj-C string key path APIs,
-   but David Smith will forward his proposal to adopt them in Foundation.
+.. The subscript name subscript(keyPath:) above is a little odd,
+   but it matches what should be displayed on the web
+   when this API actually lands.
+
+.. testcode:: keypath-expression
+
+   -> if let value = c[keyPath: keyPath] {
+   ->     print(value)
+   -> }
+   <- 12
 
 .. syntax-grammar::
 
