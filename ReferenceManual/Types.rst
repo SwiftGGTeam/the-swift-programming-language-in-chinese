@@ -625,7 +625,9 @@ Protocol Composition Type
 -------------------------
 
 A protocol composition type describes a type that conforms to each protocol
-in a list of specified protocols.
+in a list of specified protocols,
+or a type that is a subclass of a given class
+and conforms to each protocol in a list of specified protocols.
 Protocol composition types may be used only in type annotations and in generic parameters.
 
 .. In places where a comma-separated list of types is allowed,
@@ -645,9 +647,15 @@ specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
+Likewise,
+specifying a protocol composition type ``SuperClass & ProtocolA``
+is effectively the same as declaring a new class ``SubClass``
+that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
+but without having to introduce a new name.
 
 Each item in a protocol composition list
-must be either the name of protocol or a type alias of a protocol composition type.
+must be either the name of a class, a protocol, or a type alias of a protocol composition type.
+The list can contain at most one class.
 
 .. langref-grammar
 
@@ -658,9 +666,8 @@ must be either the name of protocol or a type alias of a protocol composition ty
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
+    protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
     protocol-composition-continuation --> protocol-identifier | protocol-composition-type
-    protocol-identifier --> type-identifier
 
 
 .. _Types_MetatypeType:
