@@ -996,7 +996,7 @@ by assigning a value of ``nil`` for that key:
    // APL has now been removed from the dictionary
    >> if let deletedName = airports["APL"] {
    >>    print("The key-value pair for APL has *not* been deleted, but it should have been!")
-   >>    print("It still hase a value of \(deletedName)")
+   >>    print("It still has a value of \(deletedName)")
    >> } else {
    >>    print("APL has now been removed from the dictionary")
    >> }
