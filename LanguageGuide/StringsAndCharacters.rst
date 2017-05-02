@@ -671,22 +671,18 @@ For example:
 
 .. testcode:: string-and-substring
 
-   -> let greeting = "Hello, world!"
-   << // greeting : String = "Hello, world!"
+   -> let greeting = "Hello world"
+   << // greeting : String = "Hello world"
    -> let beginning = greeting[0..<2]
 
 In the code above,
 ``beginning`` is a substring of ``greeting``,
 and so ``beginning`` re-uses the same memory
-that is used to store the entire string ``"Hello, world!"``
+that is used to store the entire string ``"Hello world"``
 as shown in the figure below:
 
-.. XXX Art from rdar://31490503
-
-::
-
-   string -->  [h e l l o _ w o r l d] 
-   substring ---^ ^
+.. image:: ../images/stringSubstring_2x.png
+   :align: center
 
 Because subscripts don't have their own in-memory storage,
 there's no performance overhead
