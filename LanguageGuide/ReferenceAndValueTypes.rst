@@ -81,29 +81,14 @@ you accidentally change the temperature of the room as well:
     -> print("roomTemperature is also now \(roomTemperature.celsius) degrees Celsius")
     <- roomTemperature is also now 180.0 degrees Celsius
 
-.. XXX ART
-
-::
-
-    XXX FIGURE GOES HERE XXX
-
-    Two labels pointing at the same box.
-
-    Before:
-
-    roomTemperature --> Temperature (21.0)
-    ovenTemperature ----^
-
-    After:
-
-    roomTemperature --> Temperature (180.0)
-    ovenTemperature ----^
-
 Because ``Temperature`` is a class, it has reference semantics ---
 both``ovenTemperature`` and ``roomTemperature``
 refer to the same ``Temperature`` instance.
 Changing ``ovenTemperature`` also changes ``roomTemperature``
 because there is only one temperature.
+
+.. image:: ../images/sharedStateClass_2x.png
+   :align: center
 
 In contrast,
 if you declare ``Temperature`` as a structure,
@@ -136,23 +121,8 @@ With value semantics,
 there is no shared state between the room temperature and the oven temperature.
 Changing one temperature has no effect on the other.
 
-.. XXX ART
-
-::
-
-    XXX FIGURE GOES HERE XXX
-
-    Two labels pointing at different boxes.
-
-    Before:
-
-    roomTemperature --> Temperature (21.0)
-    ovenTemperature --> Temperature (21.0)
-
-    After:
-
-    roomTemperature --> Temperature (21.0)
-    ovenTemperature --> Temperature (180.0)
+.. image:: ../images/sharedStateStruct_2x.png
+   :align: center
 
 This example of unintended sharing
 is a simple illustration of a problem that often comes up
