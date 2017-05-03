@@ -1111,7 +1111,7 @@ Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
 A key-path string expression lets you
-refer to a property in Objective-C
+refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
@@ -1298,7 +1298,7 @@ Key-Path String Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A key-path string expression lets you access the string
-used to refer to a property in Objective-C
+used to refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
 
 .. syntax-outline::
