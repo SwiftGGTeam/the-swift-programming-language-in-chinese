@@ -1122,7 +1122,15 @@ The *property names* must be a reference to a property
 that is available in the Objective-C runtime.
 At compile time, the key-path expression
 is replaced by a ``KeyPath`` value.
+Key paths can be used to access properties
+by passing them to the ``subscript(keyPath:)`` subscript.
 For example:
+
+.. XXX add live links for KeyPath and subscript[keyPath:]
+
+.. The subscript name subscript(keyPath:) above is a little odd,
+   but it matches what should be displayed on the web
+   when this API actually lands.
 
 .. testcode:: keypath-expression
 
@@ -1138,7 +1146,7 @@ For example:
    <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = \SomeClass.someProperty
    ---
-   -> if let value = c.value(forKey: keyPath) {
+   -> if let value = c[keyPath: keyPath] {
    ->     print(value)
    -> }
    <- 12
@@ -1161,29 +1169,10 @@ For example:
    -> let nested = OuterClass(someProperty: 24)
    <~ // nested : OuterClass = <REPL.OuterClass:
    -> let nestedKeyPath = \OuterClass.outerProperty.someProperty
-   -> if let value = nested.value(forKey nestedKeyPath) {
+   -> if let value = nested[keyPath: nestedKeyPath] {
           print(value)
       }
    <- 24
-
-Key paths can be used to access properties
-by passing them to the ``subscript(keyPath:)`` subscript.
-
-.. XXX TR: Which is the preferred spelling,
-   the native foo[keyPath:] or foo.value(for:) from NSObject?
-
-.. XXX add live links for KeyPath and subscript[keyPath:]
-
-.. The subscript name subscript(keyPath:) above is a little odd,
-   but it matches what should be displayed on the web
-   when this API actually lands.
-
-.. testcode:: keypath-expression
-
-   -> if let value = c[keyPath: keyPath] {
-   ->     print(value)
-   -> }
-   <- 12
 
 .. syntax-grammar::
 
