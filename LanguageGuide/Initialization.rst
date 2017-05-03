@@ -33,6 +33,7 @@ or by assigning a default property value as part of the property's definition.
 These actions are described in the following sections.
 
 .. note::
+
    When you assign a default value to a stored property,
    or set its initial value within an initializer,
    the value of that property is set directly,
@@ -75,7 +76,7 @@ The ``Fahrenheit`` structure has one stored property,
 
 The structure defines a single initializer, ``init``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
-(the freezing point of water when expressed in the Fahrenheit scale).
+(the freezing point of water in degrees Fahrenheit).
 
 .. _Initialization_DefaultPropertyValues:
 
@@ -132,7 +133,7 @@ Initialization parameters have the same capabilities and syntax
 as function and method parameters.
 
 The following example defines a structure called ``Celsius``,
-which stores temperatures expressed in the Celsius scale.
+which stores temperatures expressed in degrees Celsius.
 The ``Celsius`` structure implements two custom initializers called
 ``init(fromFahrenheit:)`` and ``init(fromKelvin:)``,
 which initialize a new instance of the structure
@@ -159,11 +160,11 @@ with a value from a different temperature scale:
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
 The first initializer has a single initialization parameter
-with an external name of ``fromFahrenheit`` and a local name of ``fahrenheit``.
+with an argument label of ``fromFahrenheit`` and a parameter name of ``fahrenheit``.
 The second initializer has a single initialization parameter
-with an external name of ``fromKelvin`` and a local name of ``kelvin``.
+with an argument label of ``fromKelvin`` and a parameter name of ``kelvin``.
 Both initializers convert their single argument into
-a value in the Celsius scale
+the corresponding Celsius value
 and store this value in a property called ``temperatureInCelsius``.
 
 .. TODO: I need to provide an example of default values for initializer parameters,
@@ -171,20 +172,20 @@ and store this value in a property called ``temperatureInCelsius``.
 
 .. _Initialization_LocalAndExternalNames:
 
-Local and External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parameter Names and Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As with function and method parameters,
-initialization parameters can have both a local name
+initialization parameters can have both a parameter name
 for use within the initializer's body
-and an external name for use when calling the initializer.
+and an argument label for use when calling the initializer.
 
 However, initializers do not have an identifying function name before their parentheses
 in the way that functions and methods do.
 Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
-Because of this, Swift provides an automatic external name
-for *every* parameter in an initializer if you don't provide an external name yourself.
+Because of this, Swift provides an automatic argument label
+for *every* parameter in an initializer if you don't provide one.
 
 The following example defines a structure called ``Color``,
 with three constant properties called ``red``, ``green``, and ``blue``.
@@ -224,14 +225,14 @@ by providing named values for each initializer parameter:
    << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
 
 Note that it is not possible to call these initializers
-without using external parameter names.
-External names must always be used in an initializer if they are defined,
+without using argument labels.
+Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
 .. testcode:: externalParameterNames
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
-   // this reports a compile-time error - external names are required
+   // this reports a compile-time error - argument labels are required
    !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
@@ -239,11 +240,11 @@ and omitting them is a compile-time error:
 
 .. _Initialization_InitializerParametersWithoutExternalNames:
 
-Initializer Parameters Without External Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializer Parameters Without Argument Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an external name for an initializer parameter,
-write an underscore (``_``) instead of an explicit external name for that parameter
+If you do not want to use an argument label for an initializer parameter,
+write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
 Here's an expanded version of the ``Celsius`` example from earlier,
@@ -270,7 +271,7 @@ from a ``Double`` value that is already in the Celsius scale:
    </ bodyTemperature.temperatureInCelsius is 37.0
 
 The initializer call ``Celsius(37.0)`` is clear in its intent
-without the need for an external parameter name.
+without the need for an argument label.
 It is therefore appropriate to write this initializer as ``init(_ celsius: Double)``
 so that it can be called by providing an unnamed ``Double`` value.
 
@@ -364,8 +365,8 @@ it can't be further modified.
 .. note::
 
    For class instances,
-   a constant property can only be modified during initialization
-   by the class that introduces it.
+   a constant property can be modified during initialization
+   only by the class that introduces it.
    It cannot be modified by a subclass.
 
 You can revise the ``SurveyQuestion`` example from above to use
@@ -460,6 +461,10 @@ even if it has stored properties that do not have default values.
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
    << // s : S = REPL.S(int: 42, string: "hello")
+   ---
+   -> struct SS { var int = 10; var string: String }
+   -> let ss = SS(int: 42, string: "hello")
+   << // ss : SS = REPL.SS(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -507,14 +512,14 @@ These responsibilities are described in
 
 For value types, you use ``self.init`` to refer to other initializers
 from the same value type when writing your own custom initializers.
-You can only call ``self.init`` from within an initializer.
+You can call ``self.init`` only from within an initializer.
 
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
 (or the memberwise initializer, if it is a structure) for that type.
 This constraint prevents a situation in which additional essential setup
 provided in a more complex initializer
-is circumvented by someone accidentally using one of the automatic initializers instead.
+is accidentally circumvented by someone using one of the automatic initializers.
 
 .. note::
 
@@ -566,8 +571,7 @@ The first ``Rect`` initializer, ``init()``,
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
-represented by an empty pair of curly braces ``{}``,
-and does not perform any initialization.
+represented by an empty pair of curly braces ``{}``.
 Calling this initializer returns a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
 the default values of ``Point(x: 0.0, y: 0.0)``
@@ -734,7 +738,7 @@ from the superclass, to satisfy rule 1 from above.
    These rules don't affect how users of your classes *create* instances of each class.
    Any initializer in the diagram above can be used to create
    a fully-initialized instance of the class they belong to.
-   The rules only affect how you write the class's implementation.
+   The rules only affect how you write the implementation of the class's initializers.
 
 The figure below shows a more complex class hierarchy for four classes.
 It illustrates how the designated initializers in this hierarchy
@@ -784,7 +788,7 @@ As mentioned above,
 the memory for an object is only considered fully initialized
 once the initial state of all of its stored properties is known.
 In order for this rule to be satisfied, a designated initializer must make sure that
-all its own properties are initialized before it hands off up the chain.
+all of its own properties are initialized before it hands off up the chain.
 
 **Safety check 2**
   A designated initializer must delegate up to a superclass initializer
@@ -1372,7 +1376,7 @@ the absence of a required external resource,
 or some other condition that prevents initialization from succeeding.
 
 To cope with initialization conditions that can fail,
-define one or more :newTerm:`failable initializers` as part of
+define one or more failable initializers as part of
 a class, structure, or enumeration definition.
 You write a failable initializer
 by placing a question mark after the ``init`` keyword (``init?``).
@@ -1407,6 +1411,33 @@ to indicate a point at which initialization failure can be triggered.
    by the time that initialization ends.
    Although you write ``return nil`` to trigger an initialization failure,
    you do not use the ``return`` keyword to indicate initialization success.
+
+For instance, failable initializers are implemented for numeric type conversions.
+To ensure conversion between numeric types maintains the value exactly,
+use the ``init(exactly:)`` initializer.
+If the type conversion cannot maintain the value,
+the initializer fails.
+
+.. testcode:: failableInitializers
+
+   -> let wholeNumber: Double = 12345.0
+   << // wholeNumber : Double = 12345.0
+   -> let pi = 3.14159
+   <~ // pi : Double = 3.1415
+   ---
+   -> if let valueMaintained = Int(exactly: wholeNumber) {
+          print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
+      }
+   <- 12345.0 conversion to Int maintains value of 12345
+   ---
+   -> let valueChanged = Int(exactly: pi)
+   << // valueChanged : Int? = nil
+   // valueChanged is of type Int?, not Int
+   ---
+   -> if valueChanged == nil {
+          print("\(pi) conversion to Int does not maintain value")
+      }
+   <- 3.14159 conversion to Int does not maintain value
 
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
@@ -1458,7 +1489,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
+   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,
@@ -1469,28 +1500,28 @@ the initializer triggers an initialization failure:
 Failable Initializers for Enumerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use a failable initializer to select an appropriate enumeration member
+You can use a failable initializer to select an appropriate enumeration case
 based on one or more parameters.
 The initializer can then fail if the provided parameters
-do not match an appropriate enumeration member.
+do not match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
-with three possible states (``Kelvin``, ``Celsius``, and ``Fahrenheit``).
-A failable initializer is used to find an appropriate enumeration member
+with three possible states (``kelvin``, ``celsius``, and ``fahrenheit``).
+A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
 
    -> enum TemperatureUnit {
-         case Kelvin, Celsius, Fahrenheit
+         case kelvin, celsius, fahrenheit
          init?(symbol: Character) {
             switch symbol {
                case "K":
-                  self = .Kelvin
+                  self = .kelvin
                case "C":
-                  self = .Celsius
+                  self = .celsius
                case "F":
-                  self = .Fahrenheit
+                  self = .fahrenheit
                default:
                   return nil
             }
@@ -1498,14 +1529,14 @@ for a ``Character`` value representing a temperature symbol:
       }
 
 You can use this failable initializer to choose
-an appropriate enumeration member for the three possible states
+an appropriate enumeration case for the three possible states
 and to cause initialization to fail if the parameter does not match one of these
 states:
 
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1526,7 +1557,7 @@ Failable Initializers for Enumerations with Raw Values
 Enumerations with raw values automatically receive a failable initializer,
 ``init?(rawValue:)``,
 that takes a parameter called ``rawValue`` of the appropriate raw-value type
-and selects a matching enumeration member if one is found,
+and selects a matching enumeration case if one is found,
 or triggers an initialization failure if no matching value exists.
 
 You can rewrite the ``TemperatureUnit`` example from above
@@ -1536,11 +1567,11 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
 .. testcode:: failableInitializersForEnumerations
 
    -> enum TemperatureUnit: Character {
-         case Kelvin = "K", Celsius = "C", Fahrenheit = "F"
+         case kelvin = "K", celsius = "C", fahrenheit = "F"
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.Fahrenheit)
+   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
@@ -1552,73 +1583,6 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
          print("This is not a defined temperature unit, so initialization failed.")
       }
    <- This is not a defined temperature unit, so initialization failed.
-
-.. _Initialization_FailableInitializersForClasses:
-
-Failable Initializers for Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A failable initializer for a value type (that is, a structure or enumeration)
-can trigger an initialization failure at any point within its initializer implementation.
-In the ``Animal`` structure example above,
-the initializer triggers an initialization failure at the very start of its implementation,
-before the ``species`` property has been set.
-
-For classes, however, a failable initializer can trigger an initialization failure
-only *after* all stored properties introduced by that class have been set to an initial value
-and any initializer delegation has taken place.
-
-The example below shows how you can use an implicitly unwrapped optional property
-to satisfy this requirement within a failable class initializer:
-
-.. testcode:: failableInitializers
-
-   -> class Product {
-         let name: String!
-         init?(name: String) {
-            self.name = name
-            if name.isEmpty { return nil }
-         }
-      }
-
-The ``Product`` class defined above is very similar to the ``Animal`` structure seen earlier.
-The ``Product`` class has a constant ``name`` property
-that must not be allowed to take an empty string value.
-To enforce this requirement,
-the ``Product`` class uses a failable initializer to ensure that
-the property's value is non-empty before allowing initialization to succeed.
-
-However, ``Product`` is a class, not a structure.
-This means that unlike ``Animal``,
-any failable initializer for the ``Product`` class must provide
-an initial value for the ``name`` property *before* triggering an initialization failure.
-
-In the example above,
-the ``name`` property of the ``Product`` class is defined as having
-an implicitly unwrapped optional string type (``String!``).
-Because it is of an optional type,
-this means that the ``name`` property has a default value of ``nil``
-before it is assigned a specific value during initialization.
-This default value of ``nil`` in turn means that
-all of the properties introduced by the ``Product`` class have a valid initial value.
-As a result, the failable initializer for ``Product``
-can trigger an initialization failure at the start of the initializer if it is passed an empty string,
-*before* assigning a specific value to the ``name`` property within the initializer.
-
-Because the ``name`` property is a constant,
-you can be confident that it will always contain
-a non-``nil`` value if initialization succeeds.
-Even though it is defined with an implicitly unwrapped optional type,
-you can always access its implicitly unwrapped value with confidence,
-without needing to check for a value of ``nil``:
-
-.. testcode:: failableInitializers
-
-   -> if let bowTie = Product(name: "bow tie") {
-         // no need to check if bowTie.name == nil
-         print("The product's name is \(bowTie.name)")
-      }
-   <- The product's name is bow tie
 
 .. _Initialization_PropagationOfInitializationFailure:
 
@@ -1684,33 +1648,36 @@ and ensures that this property always has a value of at least ``1``:
 
 .. testcode:: failableInitializers
 
+   -> class Product {
+         let name: String
+         init?(name: String) {
+            if name.isEmpty { return nil }
+            self.name = name
+         }
+      }
+   >> let p = Product(name: "")
+   << // p : Product? = nil
+   ---
    -> class CartItem: Product {
-         let quantity: Int!
+         let quantity: Int
          init?(name: String, quantity: Int) {
+            if quantity < 1 { return nil }
             self.quantity = quantity
             super.init(name: name)
-            if quantity < 1 { return nil }
          }
       }
 
-The ``quantity`` property has an implicitly unwrapped integer type (``Int!``).
-As with the ``name`` property of the ``Product`` class,
-this means that the ``quantity`` property has a default value of ``nil``
-before it is assigned a specific value during initialization.
-
-The failable initializer for ``CartItem`` starts by delegating up to
-the ``init(name:)`` initializer from its superclass, ``Product``.
-This satisfies the requirement that a failable initializer
-must always perform initializer delegation before triggering an initialization failure.
-
-If the superclass initialization fails because of an empty ``name`` value,
+The failable initializer for ``CartItem`` starts by
+validating that it has received a ``quantity`` value of ``1`` or more.
+If the ``quantity`` is invalid,
 the entire initialization process fails immediately
 and no further initialization code is executed.
-If the superclass initialization succeeds,
-the ``CartItem`` initializer validates that it has received
-a ``quantity`` value of ``1`` or more.
+Likewise, the failable initializer for ``Product``
+checks the ``name`` value,
+and the initializer process fails immediately
+if ``name`` is the empty string.
 
-If you create a ``CartItem`` instance with a non-empty name and a quantity of ``1`` or more,
+If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1`` or more,
 initialization succeeds:
 
 .. testcode:: failableInitializers
@@ -1752,15 +1719,13 @@ Overriding a Failable Initializer
 You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
-with a subclass *non*-failable initializer.
+with a subclass *nonfailable* initializer.
 This enables you to define a subclass for which initialization cannot fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
-the subclass initializer cannot delegate up to the superclass initializer.
-A nonfailable initializer can never delegate to a failable initializer.
-
-.. QUESTION: is this last sentence strictly true if we take IUO initializers into account?
+the only way to delegate up to the superclass initializer
+is to force-unwrap the result of the failable superclass initializer.
 
 .. note::
 
@@ -1784,7 +1749,7 @@ A nonfailable initializer can never delegate to a failable initializer.
 
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
-a ``name`` property that is either a non-empty string value or ``nil``,
+a ``name`` property that is either a nonempty string value or ``nil``,
 but cannot be an empty string:
 
 .. testcode:: failableInitializers
@@ -1793,10 +1758,10 @@ but cannot be an empty string:
          var name: String?
          // this initializer creates a document with a nil name value
          init() {}
-         // this initializer creates a document with a non-empty name value
+         // this initializer creates a document with a nonempty name value
          init?(name: String) {
-            self.name = name
             if name.isEmpty { return nil }
+            self.name = name
          }
       }
 
@@ -1831,6 +1796,29 @@ Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way than its superclass,
 its initializer does not need to fail,
 and so it provides a nonfailable version of the initializer instead.
+
+You can use forced unwrapping in an initializer
+to call a failable initializer from the superclass
+as part of the implementation of a subclass's nonfailable initializer.
+For example, the ``UntitledDocument`` subclass below is always named ``"[Untitled]"``,
+and it uses the failable ``init(name:)`` initializer
+from its superclass during initialization.
+
+.. testcode:: failableInitializers
+
+   -> class UntitledDocument: Document {
+         override init() {
+            super.init(name: "[Untitled]")!
+         }
+      }
+
+In this case, if the ``init(name:)`` initializer of the superclass
+were ever called with an empty string as the name,
+the forced unwrapping operation would result in a runtime error.
+However, because it's called with a string constant,
+you can see that the initializer won't fail,
+so no runtime error can occur in this case.
+
 
 .. _Initialization_ImplicitlyUnwrappedFailableInitializers:
 
@@ -2076,8 +2064,9 @@ You do not write the ``override`` modifier when overriding a required designated
 .. FIXME: This section still does not describe why required initializers are useful.
    This is because the reason for their usefulness -
    construction through a metatype of some protocol type with an initializer requirement -
-   is currently broken due to
+   used to be broken due to
    <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+   As of early 2015 that bug has been fixed.
    See the corresponding FIXME in the Protocols chapter introduction too.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
@@ -2134,17 +2123,17 @@ and not the return value of the closure.
    You also cannot use the implicit ``self`` property,
    or call any of the instance's methods.
 
-The example below defines a structure called ``Checkerboard``,
-which models a board for the game of *Checkers* (also known as *Draughts*):
+The example below defines a structure called ``Chessboard``,
+which models a board for the game of chess.
+Chess is played on an 8 x 8 board,
+with alternating black and white squares.
 
-.. image:: ../images/checkersBoard_2x.png
+.. image:: ../images/chessBoard_2x.png
    :align: center
 
-The game of *Checkers* is played on a ten-by-ten board,
-with alternating black and white squares.
 To represent this game board,
-the ``Checkerboard`` structure has a single property called ``boardColors``,
-which is an array of 100 ``Bool`` values.
+the ``Chessboard`` structure has a single property called ``boardColors``,
+which is an array of 64 ``Bool`` values.
 A value of ``true`` in the array represents a black square
 and a value of ``false`` represents a white square.
 The first item in the array represents the top left square on the board
@@ -2152,14 +2141,14 @@ and the last item in the array represents the bottom right square on the board.
 
 The ``boardColors`` array is initialized with a closure to set up its color values:
 
-.. testcode:: checkers
+.. testcode:: chessboard
 
-   -> struct Checkerboard {
+   -> struct Chessboard {
          let boardColors: [Bool] = {
             var temporaryBoard = [Bool]()
             var isBlack = false
-            for i in 1...10 {
-               for j in 1...10 {
+            for i in 1...8 {
+               for j in 1...8 {
                   temporaryBoard.append(isBlack)
                   isBlack = !isBlack
                }
@@ -2167,12 +2156,12 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
-            return boardColors[(row * 10) + column]
+         func squareIsBlackAt(row: Int, column: Int) -> Bool {
+            return boardColors[(row * 8) + column]
          }
       }
 
-Whenever a new ``Checkerboard`` instance is created, the closure is executed,
+Whenever a new ``Chessboard`` instance is created, the closure is executed,
 and the default value of ``boardColors`` is calculated and returned.
 The closure in the example above calculates and sets
 the appropriate color for each square on the board
@@ -2180,13 +2169,13 @@ in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
 The returned array value is stored in ``boardColors``
-and can be queried with the ``squareIsBlackAtRow`` utility function:
+and can be queried with the ``squareIsBlackAt(row:column:)`` utility function:
 
-.. testcode:: checkers
+.. testcode:: chessboard
 
-   -> let board = Checkerboard()
-   << // board : Checkerboard = REPL.Checkerboard(boardColors: [false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
-   -> print(board.squareIsBlackAtRow(0, column: 1))
+   -> let board = Chessboard()
+   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
+   -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
-   -> print(board.squareIsBlackAtRow(9, column: 9))
+   -> print(board.squareIsBlackAt(row: 7, column: 7))
    <- false

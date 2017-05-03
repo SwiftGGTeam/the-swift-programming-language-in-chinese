@@ -118,7 +118,7 @@ The first, ``resolution``, is initialized with a new ``Resolution`` structure in
 which infers a property type of ``Resolution``.
 For the other three properties,
 new ``VideoMode`` instances will be initialized with
-an ``interlaced`` setting of ``false`` (meaning “non-interlaced video”),
+an ``interlaced`` setting of ``false`` (meaning “noninterlaced video”),
 a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``.
 The ``name`` property is automatically given a default value of ``nil``,
@@ -152,6 +152,7 @@ Class and structure initialization is described in more detail
 in :doc:`Initialization`.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
+
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
@@ -219,13 +220,9 @@ Initializers are described in more detail in :doc:`Initialization`.
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
-   !! <REPL Input>:1:10: error: extra argument 'x' in call
+   !! <REPL Input>:1:14: error: argument passed to call that takes no arguments
    !! let c = C(x: 1, y: 1)
-   !! ^   ~
-
-.. FIXME: The current plan is to introduce a memberwise initializer for classes too,
-   as described in rdar://16704095.
-   We hope to have this by WWDC, and this section will need updating if this lands.
+   !!         ~~~~^~~~~~~~
 
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
@@ -308,17 +305,17 @@ The same behavior applies to enumerations:
 .. testcode:: ClassesAndStructures
 
    -> enum CompassPoint {
-         case North, South, East, West
+         case north, south, east, west
       }
-   -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = REPL.CompassPoint.West
+   -> var currentDirection = CompassPoint.west
+   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.West
-   -> currentDirection = .East
-   -> if rememberedDirection == .West {
-         print("The remembered direction is still .West")
+   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
+   -> currentDirection = .east
+   -> if rememberedDirection == .west {
+         print("The remembered direction is still .west")
       }
-   <- The remembered direction is still .West
+   <- The remembered direction is still .west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it is actually set to a copy of that value.
@@ -412,21 +409,27 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!    ~~ ^   ~~
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !!       ^
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
-   -> enum E { case A, B }
-   -> let e1 = E.A
-   << // e1 : E = REPL.E.A
-   -> let e2 = E.B
-   << // e2 : E = REPL.E.B
+   -> enum E { case a, b }
+   -> let e1 = E.a
+   << // e1 : E = REPL.E.a
+   -> let e2 = E.b
+   << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two E operands
+   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!    ~~ ^   ~~
+   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !!       ^
 
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
@@ -466,9 +469,12 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let c2 = C()
    << // c2 : C = REPL.C
    -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two C operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
+   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
+   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
+   !!       ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -478,9 +484,12 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two S operands
+   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
+   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
+   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
+   !!       ^
 
 .. TODO: This needs clarifying with regards to function references.
 
@@ -553,13 +562,17 @@ not structures.
 Assignment and Copy Behavior for Strings, Arrays, and Dictionaries
 ------------------------------------------------------------------
 
-Swift's ``String``, ``Array``, and ``Dictionary`` types are implemented as structures.
-This means that strings, arrays, and dictionaries are copied when they are assigned to
+In Swift,
+many basic data types such as ``String``, ``Array``, and ``Dictionary``
+are implemented as structures.
+This means that data such as strings, arrays, and dictionaries
+are copied when they are assigned to
 a new constant or variable, or when they are passed to a function or method.
 
-This behavior is different from ``NSString``, ``NSArray``, and ``NSDictionary`` in Foundation,
-which are implemented as classes, not structures.
-``NSString``, ``NSArray``, and ``NSDictionary`` instances are always
+This behavior is different from Foundation:
+``NSString``, ``NSArray``, and ``NSDictionary``
+are implemented as classes, not structures.
+Strings, arrays, and dictionaries in Foundation are always
 assigned and passed around as a reference to an existing instance,
 rather than as a copy.
 

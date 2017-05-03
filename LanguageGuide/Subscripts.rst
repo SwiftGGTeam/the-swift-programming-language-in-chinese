@@ -54,7 +54,8 @@ A default parameter called ``newValue`` is provided to your setter
 if you do not provide one yourself.
 
 As with read-only computed properties,
-you can drop the ``get`` keyword for read-only subscripts:
+you can simplify the declaration of a read-only subscript
+by removing the ``get`` keyword and its braces:
 
 .. testcode:: subscriptSyntax
 
@@ -111,13 +112,13 @@ your particular class or structure's functionality.
 For example, Swift's ``Dictionary`` type implements a subscript
 to set and retrieve the values stored in a ``Dictionary`` instance.
 You can set a value in a dictionary
-by providing a key of the dictionary's key type within subscript braces,
+by providing a key of the dictionary's key type within subscript brackets,
 and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "spider": 8, "cat": 4]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -133,7 +134,7 @@ see :ref:`CollectionTypes_AccessingAndModifyingADictionary`.
 .. note::
 
    Swift's ``Dictionary`` type implements its key-value subscripting
-   as a subscript that takes and receives an *optional* type.
+   as a subscript that takes and returns an *optional* type.
    For the ``numberOfLegs`` dictionary above,
    the key-value subscript takes and returns a value of type ``Int?``,
    or “optional int”.
@@ -149,12 +150,12 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
-Subscripts can use variable parameters and variadic parameters,
-but cannot use in-out parameters or provide default parameter values. 
+Subscripts can use variadic parameters,
+but they can't use in-out parameters or provide default parameter values.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
-the types of the value or values that are contained within the subscript braces
+the types of the value or values that are contained within the subscript brackets
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 
@@ -173,18 +174,18 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            grid = Array(count: rows * columns, repeatedValue: 0.0)
+            grid = Array(repeating: 0.0, count: rows * columns)
          }
-         func indexIsValidForRow(row: Int, column: Int) -> Bool {
+         func indexIsValid(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double {
             get {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                return grid[(row * columns) + column]
             }
             set {
-               assert(indexIsValidForRow(row, column: column), "Index out of range")
+               assert(indexIsValid(row: row, column: column), "Index out of range")
                grid[(row * columns) + column] = newValue
             }
          }
@@ -196,7 +197,7 @@ Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
 This initializer is described in more detail
-in :ref:`CollectionTypes_CreatingAnEmptyArray`.
+in :ref:`CollectionTypes_CreatingAnArrayWithADefaultValue`.
 
 You can construct a new ``Matrix`` instance by passing
 an appropriate row and column count to its initializer:
@@ -238,7 +239,7 @@ and ``3.2`` in the bottom left position
 The ``Matrix`` subscript's getter and setter both contain an assertion
 to check that the subscript's  ``row`` and ``column`` values are valid.
 To assist with these assertions,
-``Matrix`` includes a convenience method called ``indexIsValidForRow(_:column:)``,
+``Matrix`` includes a convenience method called ``indexIsValid(row:column:)``,
 which checks whether the requested ``row`` and ``column``
 are inside the bounds of the matrix:
 
@@ -260,7 +261,3 @@ that is outside of the matrix bounds:
    -> let someValue = matrix[2, 2]
    xx assert
    // this triggers an assert, because [2, 2] is outside of the matrix bounds
-
-.. TODO: subscripts can provide external names for their parameters,
-   to enable subscript overloading (e.g. subscript(row: Int) and subscript(column: Int)
-   to get a slice of the matrix). This would make a great example!

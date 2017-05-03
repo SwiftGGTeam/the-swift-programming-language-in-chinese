@@ -29,7 +29,7 @@ whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
 
 To reflect the fact that optional chaining can be called on a ``nil`` value,
 the result of an optional chaining call is always an optional value,
-even if the property, method, or subscript you are querying returns a non-optional value.
+even if the property, method, or subscript you are querying returns a nonoptional value.
 You can use this optional return value to check whether
 the optional chaining call was successful
 (the returned optional contains a value),
@@ -110,8 +110,11 @@ the optional chaining attempt returns a value of type ``Int?``, or “optional `
 When ``residence`` is ``nil``, as in the example above,
 this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
+The optional ``Int`` is accessed through optional binding
+to unwrap the integer and assign the nonoptional value
+to the ``roomCount`` variable.
 
-Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
+Note that this is true even though ``numberOfRooms`` is a nonoptional ``Int``.
 The fact that it is queried through an optional chain
 means that the call to ``numberOfRooms``
 will always return an ``Int?`` instead of an ``Int``.
@@ -236,10 +239,10 @@ The third property, ``street``, is used to name the street for that address:
          var buildingNumber: String?
          var street: String?
          func buildingIdentifier() -> String? {
-            if buildingName != nil {
-                return buildingName
-            } else if buildingNumber != nil && street != nil {
+            if let buildingNumber = buildingNumber, let street = street {
                 return "\(buildingNumber) \(street)"
+            } else if buildingName != nil {
+                return buildingName
             } else {
                 return nil
             }
@@ -292,6 +295,37 @@ You can also attempt to set a property's value through optional chaining:
 In this example,
 the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
+
+The assignment is part of the optional chaining,
+which means none of the code on the right hand side of the ``=`` operator
+is evaluated.
+In the previous example,
+it's not easy to see that ``someAddress`` is never evaluated,
+because accessing a constant doesn't have any side effects.
+The listing below does the same assignment,
+but it uses a function to create the address.
+The function prints "Function was called" before returning a value,
+which lets you see
+whether the right hand side of the ``=`` operator was evaluated.
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> func createAddress() -> Address {
+          print("Function was called.")
+   ---
+          let someAddress = Address()
+          someAddress.buildingNumber = "29"
+          someAddress.street = "Acacia Road"
+   ---
+          return someAddress
+      }
+   -> john.residence?.address = createAddress()
+   >> let _ = createAddress()
+   << Function was called.
+
+You can tell that the ``createAddress()`` function isn't called,
+because nothing is printed.
 
 .. _OptionalChaining_CallingMethodsThroughOptionalChaining:
 
@@ -435,7 +469,7 @@ to chain on its optional return value:
 
    -> var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
    -> testScores["Dave"]?[0] = 91
-   -> testScores["Bev"]?[0]++
+   -> testScores["Bev"]?[0] += 1
    -> testScores["Brian"]?[0] = 72
    >> let dave = "Dave"
    >> let bev = "Bev"

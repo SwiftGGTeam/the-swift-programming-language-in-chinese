@@ -9,9 +9,9 @@ Stored properties are provided only by classes and structures.
 
 .. assertion:: enumerationsCantProvideStoredProperties
 
-   -> enum E { case A, B; var x = 0 }
+   -> enum E { case a, b; var x = 0 }
    !! <REPL Input>:1:25: error: enums may not contain stored properties
-   !! enum E { case A, B; var x = 0 }
+   !! enum E { case a, b; var x = 0 }
    !! ^
 
 Stored and computed properties are usually associated with instances of a particular type.
@@ -177,7 +177,7 @@ neither of which is shown in full:
          DataImporter is a class to import data from an external file.
          The class is assumed to take a non-trivial amount of time to initialize.
          */
-         var fileName = "data.txt"
+         var filename = "data.txt"
          // the DataImporter class would provide data importing functionality here
    >>    init() {
    >>       print("the DataImporter instance for the importer property has now been created")
@@ -195,6 +195,8 @@ neither of which is shown in full:
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property has not yet been created
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The ``DataManager`` class has a stored property called ``data``,
 which is initialized with a new, empty array of ``String`` values.
@@ -219,11 +221,11 @@ if and when it is first used.
 Because it is marked with the ``lazy`` modifier,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
-such as when its ``fileName`` property is queried:
+such as when its ``filename`` property is queried:
 
 .. testcode:: lazyProperties
 
-   -> print(manager.importer.fileName)
+   -> print(manager.importer.filename)
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
@@ -304,7 +306,7 @@ to retrieve and set other properties and values indirectly.
 
 This example defines three structures for working with geometric shapes:
 
-* ``Point`` encapsulates an ``(x, y)`` coordinate.
+* ``Point`` encapsulates the x- and y-coordinate of a point.
 * ``Size`` encapsulates a ``width`` and a ``height``.
 * ``Rect`` defines a rectangle by an origin point and a size.
 
@@ -332,6 +334,8 @@ to the new position shown by the orange square in the diagram below.
 Setting the ``center`` property calls the setter for ``center``,
 which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
+
+.. iBooks Store screenshot begins here.
 
 .. image:: ../images/computedProperties_2x.png
    :align: center
@@ -363,6 +367,8 @@ which takes advantage of this shorthand notation:
             }
          }
       }
+
+.. iBooks Store screenshot ends here.
 
 .. _Properties_ReadOnlyComputedProperties:
 
@@ -435,7 +441,7 @@ to enable external users to discover its current calculated volume.
 Property Observers
 ------------------
 
-:newTerm:`Property observers` observe and respond to changes in a property's value.
+Property observers observe and respond to changes in a property's value.
 Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
@@ -452,9 +458,12 @@ even if the new value is the same as the property's current value.
    <- didSet
 
 You can add property observers to any stored properties you define,
-apart from lazy stored properties.
+except for lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
+You don't need to define property observers for nonoverridden computed properties,
+because you can observe and respond to changes to their value
+in the computed property's setter.
 Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. assertion:: lazyPropertiesCannotHaveObservers
@@ -495,48 +504,69 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
    <- D willSet y to 42
    <- D didSet y from 42
 
-.. note::
-
-   You don't need to define property observers for non-overridden computed properties,
-   because you can observe and respond to changes to their value
-   from directly within the computed property's setter.
-
 You have the option to define either or both of these observers on a property:
 
 * ``willSet`` is called just before the value is stored.
 * ``didSet`` is called immediately after the new value is stored.
 
 If you implement a ``willSet`` observer,
-it is passed the new property value as a constant parameter.
+it's passed the new property value as a constant parameter.
 You can specify a name for this parameter as part of your ``willSet`` implementation.
-If you choose not to write the parameter name and parentheses within your implementation,
-the parameter will still be made available with a default parameter name of ``newValue``.
+If you don't write the parameter name and parentheses within your implementation,
+the parameter is made available with a default parameter name of ``newValue``.
 
 Similarly, if you implement a ``didSet`` observer,
-it will be passed a constant parameter containing the old property value.
-You can name the parameter if you wish,
-or use the default parameter name of ``oldValue``.
+it's passed a constant parameter containing the old property value.
+You can name the parameter or use the default parameter name of ``oldValue``.
+If you assign a value to a property within its own ``didSet`` observer,
+the new value that you assign replaces the one that was just set.
+
+.. assertion:: assigningANewValueInADidSetReplacesTheNewValue
+
+   -> class C { var x: Int = 0 { didSet { x = -273 } } }
+   -> let c = C()
+   << // c : C = REPL.C
+   -> c.x = 24
+   -> print(c.x)
+   <- -273
 
 .. note::
 
-   ``willSet`` and ``didSet`` observers of superclass properties
-   are called when a property is set in a subclass initializer.
+   The ``willSet`` and ``didSet`` observers of superclass properties
+   are called when a property is set in a subclass initializer,
+   after the superclass initializer has been called.
+   They are not called while a class is setting its own properties,
+   before the superclass initializer has been called.
 
    For more information about initializer delegation,
    see :ref:`Initialization_InitializerDelegationForValueTypes`
    and :ref:`Initialization_InitializerChaining`.
 
-.. assertion:: observersAreNotCalledDuringInitialization
+.. assertion:: observersDuringInitialization
 
    -> class C {
-         var x: Int { willSet { print("willSet") } didSet { print("didSet") } }
+         var x: Int { willSet { print("willSet x") } didSet { print("didSet x") } }
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
    << // c : C = REPL.C
    -> c.x = 24
-   <- willSet
-   <- didSet
+   <- willSet x
+   <- didSet x
+   -> class C2: C {
+         var y: Int { willSet { print("willSet y") } didSet { print("didSet y") } }
+         init() {
+             self.y = 1
+             print("calling super")
+             super.init(x: 100)
+             self.x = 10
+         }
+      }
+   -> let c2 = C2()
+   <- calling super
+   <- willSet x
+   <- didSet x
+   << // c2 : C2 = REPL.C2
 
 Here's an example of ``willSet`` and ``didSet`` in action.
 The example below defines a new class called ``StepCounter``,
@@ -590,17 +620,26 @@ and the default name of ``oldValue`` is used instead.
 
 .. note::
 
-   If you assign a value to a property within its own ``didSet`` observer,
-   the new value that you assign will replace the one that was just set.
+   If you pass a property that has observers
+   to a function as an in-out parameter,
+   the ``willSet`` and ``didSet`` observers are always called.
+   This is because of the copy-in copy-out memory model for in-out parameters:
+   The value is always written back to the property at the end of the function.
+   For a detailed discussion of the behavior of in-out parameters,
+   see :ref:`Declarations_InOutParameters`.
 
-.. assertion:: assigningANewValueInADidSetReplacesTheNewValue
+.. assertion:: observersCalledAfterInout
 
-   -> class C { var x: Int = 0 { didSet { x = -273 } } }
-   -> let c = C()
-   << // c : C = REPL.C
-   -> c.x = 24
-   -> print(c.x)
-   <- -273
+   -> var a: Int = 0 {
+          willSet { print("willSet") }
+          didSet { print("didSet") }
+      }
+   << // a : Int = 0
+   -> func f(b: inout Int) { print("in f") }
+   -> f(b: &a)
+   << in f
+   << willSet
+   << didSet
 
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
@@ -627,8 +666,8 @@ provide storage for a value of a certain type and allow that value to be set and
 However, you can also define :newTerm:`computed variables`
 and define observers for stored variables,
 in either a global or local scope.
-Computed variables calculate rather than store a value,
-and are written in the same way as computed properties.
+Computed variables calculate their value, rather than storing it,
+and they are written in the same way as computed properties.
 
 .. assertion:: computedVariables
    :compile: true
@@ -695,12 +734,10 @@ in the same way as computed instance properties.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
-.. TODO: I've found a note saying that
-   "Global variables and static properties are now lazily initialized on first use.
-   Where you would use dispatch_once to lazily initialize a singleton object
-   in Objective-C, you can simply declare a global variable with an initializer in Swift.
-   Like dispatch_once, this lazy initialization is thread safe."
-   If this is true, I haven't yet mentioned it for static properties.
+   Stored type properties are lazily initialized on their first access.
+   They are guaranteed to be initialized only once,
+   even when accessed by multiple threads simultaneously,
+   and they do not need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 
@@ -756,7 +793,7 @@ The example below shows the syntax for stored and computed type properties:
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:1:34: error: class var overrides a 'final' class var
+   !! <REPL Input>:1:34: error: cannot override static var
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
    !! <REPL Input>:1:22: note: overridden declaration is here

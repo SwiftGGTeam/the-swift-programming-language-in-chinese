@@ -13,7 +13,7 @@ to a constant or variable name.
 
 In Swift, there are two basic kinds of patterns:
 those that successfully match any kind of value,
-and those that may fail to match a specified value at run time.
+and those that may fail to match a specified value at runtime.
 
 The first kind of pattern is used for destructuring values
 in simple variable, constant, and optional bindings.
@@ -23,7 +23,7 @@ them. You can specify a type annotation for these patterns
 to constrain them to match only values of a certain type.
 
 The second kind of pattern is used for full pattern matching,
-where the values you're trying to match against may not be there at run time.
+where the values you're trying to match against may not be there at runtime.
 These include enumeration case patterns, optional patterns, expression patterns,
 and type-casting patterns. You use these patterns in a case label of a ``switch``
 statement, a ``catch`` clause of a ``do`` statement,
@@ -120,8 +120,8 @@ Value-Binding Pattern
 
 A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
 Value-binding patterns that bind a matched value to the name of a constant
-begin with the keyword ``let``; those that bind to the name of variable
-begin with the keyword ``var``.
+begin with the ``let`` keyword; those that bind to the name of variable
+begin with the ``var`` keyword.
 
 Identifiers patterns within a value-binding pattern
 bind new named variables or constants to their matching values. For example,
@@ -173,10 +173,7 @@ You can constrain a tuple pattern to match certain kinds of tuple types
 by using type annotations.
 For example, the tuple pattern ``(x, y): (Int, Int)`` in the constant declaration
 ``let (x, y): (Int, Int) = (1, 2)`` matches only tuple types in which
-both elements are of type ``Int``. To constrain only some elements of a tuple pattern,
-provide type annotations directly to those individual elements. For example, the tuple
-pattern in ``let (x: String, y)`` matches any two-element tuple type, as long as the first
-element is of type ``String``.
+both elements are of type ``Int``.
 
 When a tuple pattern is used as the pattern in a ``for``-``in`` statement
 or in a variable or constant declaration, it can contain only wildcard patterns,
@@ -191,15 +188,12 @@ an expression pattern:
     << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
+    >>    _ = x
           /* ... */
        }
     !! <REPL Input>:1:9: error: expected pattern
     !! for (x, 0) in points {
     !! ^
-    !! <REPL Input>:1:9: error: expected ',' separator
-    !! for (x, 0) in points {
-    !! ^
-    !! ,
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
@@ -241,7 +235,7 @@ equivalent:
 
     tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
-    tuple-pattern-element --> pattern
+    tuple-pattern-element --> pattern | identifier ``:`` pattern
 
 
 .. _Patterns_EnumerationCasePattern:
@@ -276,26 +270,26 @@ see :ref:`Enumerations_AssociatedValues`.
 Optional Pattern
 ----------------
 
-An :newTerm:`optional pattern` matches values wrapped in a ``Some(T)`` case
-of an ``Optional<T>`` or ``ImplicitlyUnwrappedOptional<T>`` enumeration.
+An :newTerm:`optional pattern` matches values wrapped in a ``some(Wrapped)`` case
+of an ``Optional<Wrapped>`` enumeration.
 Optional patterns consist of an identifier pattern followed immediately by a question mark
 and appear in the same places as enumeration case patterns.
 
 Because optional patterns are syntactic sugar for ``Optional``
-and ``ImplicitlyUnwrappedOptional`` enumeration case patterns,
+enumeration case patterns,
 the following are equivalent:
 
 .. testcode:: optional-pattern
 
    -> let someOptional: Int? = 42
    << // someOptional : Int? = Optional(42)
-   -> // Match using an enumeration case pattern
-   -> if case .Some(let x) = someOptional {
+   -> // Match using an enumeration case pattern.
+   -> if case .some(let x) = someOptional {
          print(x)
       }
    << 42
    ---
-   -> // Match using an optional pattern
+   -> // Match using an optional pattern.
    -> if case let x? = someOptional {
          print(x)
       }
@@ -309,7 +303,7 @@ executing the body of the loop only for non-``nil`` elements.
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
    << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
-   -> // Match only non-nil values
+   -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
       }
@@ -330,7 +324,7 @@ Type-Casting Patterns
 ---------------------
 
 There are two type-casting patterns, the ``is`` pattern and the ``as`` pattern.
-Both type-casting patterns appear only in ``switch`` statement
+The ``is`` pattern appears only in ``switch`` statement
 case labels. The ``is`` and ``as`` patterns have the following form:
 
 .. syntax-outline::
@@ -346,7 +340,7 @@ but discard the returned type.
 The ``as`` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the ``as`` pattern---or a subclass of that type.
 If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the left-hand side
+the type of the matched value is cast to the *pattern* specified in the right-hand side
 of the ``as`` pattern.
 
 For an example that uses a ``switch`` statement
@@ -382,8 +376,10 @@ is compared with the value of an input expression
 using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
-two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in an ``Range`` object, as the following example shows:
+two values of the same type using the ``==`` operator.
+It can also match a value with a range of values,
+by checking whether the value is contained within the range,
+as the following example shows.
 
 .. testcode:: expression-pattern
 
@@ -405,8 +401,8 @@ with a string representations of points.
 
 .. testcode:: expression-pattern
 
-    -> // Overload the ~= operator to match a string with an integer
-    -> func ~=(pattern: String, value: Int) -> Bool {
+    -> // Overload the ~= operator to match a string with an integer.
+    -> func ~= (pattern: String, value: Int) -> Bool {
           return pattern == "\(value)"
        }
     -> switch point {

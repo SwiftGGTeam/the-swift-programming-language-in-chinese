@@ -53,9 +53,6 @@ that you determine once but use in many places.
    -> let myConstant = 42
    << // myConstant : Int = 42
 
-.. TR: Is the requirement that constants need an initial value
-   a current REPL limitation, or an expected language feature?
-
 A constant or variable must have the same type
 as the value you want to assign to it.
 However, you don't always have to write the type explicitly.
@@ -186,6 +183,8 @@ and an empty dictionary as ``[:]`` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
+.. iBooks Store screenshot begins here.
+
 .. testcode:: guided-tour
 
    -> shoppingList = []
@@ -195,7 +194,7 @@ Control Flow
 ------------
 
 Use ``if`` and ``switch`` to make conditionals,
-and use ``for``-``in``, ``for``, ``while``, and ``repeat``-``while``
+and use ``for``-``in``, ``while``, and ``repeat``-``while``
 to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
@@ -218,7 +217,7 @@ Braces around the body are required.
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
-   with past incartations of the Doctor in Dr. Who.
+   with past incarnations of the Doctor in Dr. Who.
 
 ..
    -> let haveJellyBabies = true
@@ -239,6 +238,8 @@ An optional value either contains a value
 or contains ``nil`` to indicate that a value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
+
+.. iBooks Store screenshot ends here.
 
 .. REFERENCE
    John Appleseed is a stock Apple fake name,
@@ -276,6 +277,20 @@ to the constant after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
+Another way to handle optional values
+is to provide a default value using the ``??`` operator.
+If the optional value is missing,
+the default value is used instead.
+
+.. testcode:: guided-tour
+
+    -> let nickName: String? = nil
+    << // nickName : String? = nil
+    -> let fullName: String = "John Appleseed"
+    << // fullName : String = "John Appleseed"
+    -> let informalGreeting = "Hi \(nickName ?? fullName)"
+    << // informalGreeting : String = "Hi John Appleseed"
+
 Switches support any kind of data
 and a wide variety of comparison operations ---
 they aren't limited to integers
@@ -293,14 +308,15 @@ and tests for equality.
    << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
-              let vegetableComment = "Add some raisins and make ants on a log."
+              print("Add some raisins and make ants on a log.")
           case "cucumber", "watercress":
-              let vegetableComment = "That would make a good tea sandwich."
+              print("That would make a good tea sandwich.")
           case let x where x.hasSuffix("pepper"):
-              let vegetableComment = "Is it a spicy \(x)?"
+              print("Is it a spicy \(x)?")
           default:
-              let vegetableComment = "Everything tastes good in soup."
+              print("Everything tastes good in soup.")
       }
+   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -308,7 +324,7 @@ and tests for equality.
    What error do you get?
 
 Notice how ``let`` can be used in a pattern
-to assign the value that matched that part of a pattern
+to assign the value that matched the pattern
 to a constant.
 
 After executing the code inside the switch case that matched,
@@ -340,10 +356,11 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25]]
+   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
+   >>     _ = kind
           for number in numbers {
               if number > largest {
                   largest = number
@@ -373,7 +390,7 @@ ensuring that the loop is run at least once.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-          n = n * 2
+          n *= 2
       }
    -> print(n)
    << 128
@@ -381,32 +398,24 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> repeat {
-          m = m * 2
+          m *= 2
       } while m < 100
    -> print(m)
    << 128
 
-You can keep an index in a loop ---
-either by using ``..<`` to make a range of indexes
-or by writing an explicit initialization, condition, and increment.
-These two loops do the same thing:
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+You can keep an index in a loop
+by using ``..<`` to make a range of indexes.
 
 .. testcode:: guided-tour
 
-   -> var firstForLoop = 0
-   << // firstForLoop : Int = 0
+   -> var total = 0
+   << // total : Int = 0
    -> for i in 0..<4 {
-          firstForLoop += i
+          total += i
       }
-   -> print(firstForLoop)
-   << 6
-   ---
-   -> var secondForLoop = 0
-   << // secondForLoop : Int = 0
-   -> for var i = 0; i < 4; ++i {
-          secondForLoop += i
-      }
-   -> print(secondForLoop)
+   -> print(total)
    << 6
 
 Use ``..<`` to make a range that omits its upper value,
@@ -429,16 +438,30 @@ from the function's return type.
 
 .. testcode:: guided-tour
 
-    -> func greet(name: String, day: String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(person: String, day: String) -> String {
+           return "Hello \(person), today is \(day)."
        }
-    -> greet("Bob", day: "Tuesday")
+    -> greet(person: "Bob", day: "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
 
 .. admonition:: Experiment
 
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
+
+By default,
+functions use their parameter names
+as labels for their arguments.
+Write a custom argument label before the parameter name,
+or write ``_`` to use no argument label.
+
+.. testcode:: guided-tour
+
+    -> func greet(_ person: String, on day: String) -> String {
+           return "Hello \(person), today is \(day)."
+       }
+    -> greet("John", on: "Wednesday")
+    <$ : String = "Hello John, today is Wednesday."
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
@@ -469,33 +492,12 @@ either by name or by number.
 
            return (min, max, sum)
        }
-    -> let statistics = calculateStatistics([5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (3, 100, 120)
+    -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
+    << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
     << 120
     -> print(statistics.2)
     << 120
-
-Functions can also take a variable number of arguments,
-collecting them into an array.
-
-.. testcode:: guided-tour
-
-   -> func sumOf(numbers: Int...) -> Int {
-          var sum = 0
-          for number in numbers {
-              sum += number
-          }
-          return sum
-      }
-   -> sumOf()
-   <$ : Int = 0
-   -> sumOf(42, 597, 12)
-   <$ : Int = 651
-
-.. admonition:: Experiment
-
-   Write a function that calculates the average of its arguments.
 
 Functions can be nested.
 Nested functions have access to variables
@@ -503,8 +505,6 @@ that were declared in the outer function.
 You can use nested functions
 to organize the code in a function
 that is long or complex.
-
-.. TR: Any objections to this guidance?
 
 .. testcode:: guided-tour
 
@@ -524,14 +524,14 @@ This means that a function can return another function as its value.
 
 .. testcode:: guided-tour
 
-    -> func makeIncrementer() -> (Int -> Int) {
+    -> func makeIncrementer() -> ((Int) -> Int) {
            func addOne(number: Int) -> Int {
                return 1 + number
            }
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : Int -> Int = (Function)
+    << // increment : (Int) -> Int = (Function)
     -> increment(7)
     <$ : Int = 8
 
@@ -539,7 +539,7 @@ A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
 
-    -> func hasAnyMatches(list: [Int], condition: Int -> Bool) -> Bool {
+    -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
            for item in list {
                if condition(item) {
                    return true
@@ -552,7 +552,7 @@ A function can take another function as one of its arguments.
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : [Int] = [20, 19, 7, 12]
-    -> hasAnyMatches(numbers, condition: lessThanTen)
+    -> hasAnyMatches(list: numbers, condition: lessThanTen)
     <$ : Bool = true
 
 Functions are actually a special case of closures:
@@ -567,8 +567,7 @@ Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
 
-    -> numbers.map({
-           (number: Int) -> Int in
+    -> numbers.map({ (number: Int) -> Int in
            let result = 3 * number
            return result
        })
@@ -602,7 +601,7 @@ you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
 
-    -> let sortedNumbers = numbers.sort { $0 > $1 }
+    -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
     << [20, 19, 12, 7]
@@ -611,7 +610,7 @@ you can omit the parentheses entirely.
 
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
-.. Omitted curried functions and custom operators as "advanced" topics.
+.. Omitted custom operators as "advanced" topics.
 
 Objects and Classes
 -------------------
@@ -718,7 +717,7 @@ that don't actually override any method in the superclass.
                numberOfSides = 4
            }
     ---
-           func area() ->  Double {
+           func area() -> Double {
                return sideLength * sideLength
            }
     ---
@@ -729,7 +728,7 @@ that don't actually override any method in the superclass.
     -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = REPL.Square
     -> test.area()
-    <$ : Double = 27.04
+    <$ : Double = 27.040000000000003
     -> test.simpleDescription()
     <$ : String = "A square with sides of length 5.2."
 
@@ -796,6 +795,7 @@ has three different steps:
 If you don't need to compute the property
 but still need to provide code that is run before and after setting a new value,
 use ``willSet`` and ``didSet``.
+The code you provide is run any time the value changes outside of an initializer.
 For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
@@ -873,26 +873,26 @@ enumerations can have methods associated with them.
 .. testcode:: guided-tour
 
     -> enum Rank: Int {
-           case Ace = 1
-           case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-           case Jack, Queen, King
+           case ace = 1
+           case two, three, four, five, six, seven, eight, nine, ten
+           case jack, queen, king
            func simpleDescription() -> String {
                switch self {
-                   case .Ace:
+                   case .ace:
                        return "ace"
-                   case .Jack:
+                   case .jack:
                        return "jack"
-                   case .Queen:
+                   case .queen:
                        return "queen"
-                   case .King:
+                   case .king:
                        return "king"
                    default:
                        return String(self.rawValue)
                }
            }
        }
-    -> let ace = Rank.Ace
-    << // ace : Rank = REPL.Rank.Ace
+    -> let ace = Rank.ace
+    << // ace : Rank = REPL.Rank.ace
     -> let aceRawValue = ace.rawValue
     <$ : Int = 1
 
@@ -901,16 +901,19 @@ enumerations can have methods associated with them.
    Write a function that compares two ``Rank`` values
    by comparing their raw values.
 
-In the example above,
-the raw-value type of the enumeration is ``Int``,
-so you only have to specify the first raw value.
-The rest of the raw values are assigned in order.
+By default, Swift assigns the raw values starting at zero
+and incrementing by one each time,
+but you can change this behavior by explicitly specifying values.
+In the example above, ``Ace`` is explicitly given a raw value of ``1``,
+and the rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
-Use the ``rawValue`` property to access the raw value of an enumeration member.
+Use the ``rawValue`` property to access the raw value of an enumeration case.
 
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
+It returns either the enumeration case matching the raw value
+or ``nil`` if there is no matching ``Rank``.
 
 .. testcode:: guided-tour
 
@@ -920,7 +923,7 @@ to make an instance of an enumeration from a raw value.
     << 3
     -> }
 
-The member values of an enumeration are actual values,
+The case values of an enumeration are actual values,
 not just another way of writing their raw values.
 In fact,
 in cases where there isn't a meaningful raw value,
@@ -929,22 +932,22 @@ you don't have to provide one.
 .. testcode:: guided-tour
 
     -> enum Suit {
-           case Spades, Hearts, Diamonds, Clubs
+           case spades, hearts, diamonds, clubs
            func simpleDescription() -> String {
                switch self {
-                   case .Spades:
+                   case .spades:
                        return "spades"
-                   case .Hearts:
+                   case .hearts:
                        return "hearts"
-                   case .Diamonds:
+                   case .diamonds:
                        return "diamonds"
-                   case .Clubs:
+                   case .clubs:
                        return "clubs"
                }
            }
        }
-    -> let hearts = Suit.Hearts
-    << // hearts : Suit = REPL.Suit.Hearts
+    -> let hearts = Suit.hearts
+    << // hearts : Suit = REPL.Suit.hearts
     -> let heartsDescription = hearts.simpleDescription()
     << // heartsDescription : String = "hearts"
 
@@ -957,60 +960,32 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-Notice the two ways that the ``Hearts`` member of the enumeration
+Notice the two ways that the ``hearts`` case of the enumeration
 is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` is referred to by its full name
+the enumeration case ``Suit.hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
 Inside the switch,
-the enumeration member is referred to by the abbreviated form ``.Hearts``
+the enumeration case is referred to by the abbreviated form ``.hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Use ``struct`` to create a structure.
-Structures support many of the same behaviors as classes,
-including methods and initializers.
-One of the most important differences
-between structures and classes is that
-structures are always copied when they are passed around in your code,
-but classes are passed by reference.
-
-.. testcode:: guided-tour
-
-    -> struct Card {
-           var rank: Rank
-           var suit: Suit
-           func simpleDescription() -> String {
-               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-           }
-       }
-    -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.Three, suit: REPL.Suit.Spades)
-    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
-
-.. admonition:: Experiment
-
-   Add a method to ``Card`` that creates
-   a full deck of cards,
-   with one card of each combination of rank and suit.
-
-An instance of an enumeration member
-can have values associated with the instance.
-Instances of the same enumeration member
-can have different values associated with them.
-You provide the associated values when you create the instance.
-Associated values and raw values are different:
-The raw value of an enumeration member
-is the same for all of its instances,
-and you provide the raw value when you define the enumeration.
-
+If an enumeration has raw values,
+those values are determined as part of the declaration,
+which means every instance of a particular enumeration case
+always has the same raw value.
+Another choice for enumeration cases
+is to have values associated with the case ---
+these values are determined when you make the instance,
+and they can be different for each instance of an enumeration case.
+You can think of the associated values
+as behaving like stored properties of the enumeration case instance.
 For example,
 consider the case of requesting
-the sunrise and sunset time from a server.
-The server either responds with the information
-or it responds with some error information.
+the sunrise and sunset times from a server.
+The server either responds with the requested information,
+or it responds with a description of what went wrong.
 
 .. REFERENCE
    The server response is a simple way to essentially re-implement Optional
@@ -1035,50 +1010,34 @@ or it responds with some error information.
    As the story goes, during the course of a rather wild party,
    one of the computer's vacuum tube cabinets
    was opened to provide heat to a cold room in the winter.
-   As the story goes, through great coincidence,
-   when got a cheese tray bashed into it during the celebration,
+   Through great coincidence,
+   when a cheese tray got bashed into it during the celebration,
    the computer kept on working even though some of the tubes were broken
    and had cheese splattered & melted all over them.
    Tech were dispatched to make sure the computer was ok
-   and told add more cheese if necesary --
+   and told add more cheese if necessary --
    the officer in charge said that he didn't want
    an "out of cheese error" interrupting the calculation.
 
 .. testcode:: guided-tour
 
     -> enum ServerResponse {
-           case Result(String, String)
-           case Error(String)
+           case result(String, String)
+           case failure(String)
        }
     ---
-    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse
-    -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse
+    -> let success = ServerResponse.result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
+    -> let failure = ServerResponse.failure("Out of cheese.")
+    << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
     ---
-    >> var test_response: String = ""
-    << // test_response : String = ""
-    >> switch success {
-    >>     case let .Result(sunrise, sunset):
-    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>     case let .Error(error):
-    >>         test_response = "Failure...  \(error)"
-    >> }
-    >> test_response
-    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
-           case let .Result(sunrise, sunset):
-               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-           case let .Error(error):
-               let serverResponse = "Failure...  \(error)"
+           case let .result(sunrise, sunset):
+               print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+           case let .failure(message):
+               print("Failure...  \(message)")
        }
-
-.. Note:
-   The repetition and odd structure for the switch above is because
-   the REPL requires an initial value for variables to make it testable.
-   From a playground side, I can see the value of a variable
-   that's scoped only within the switch,
-   so I don't need a variable in the outer scope.
+    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 
@@ -1087,6 +1046,34 @@ or it responds with some error information.
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of matching the value against the switch cases.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code,
+but classes are passed by reference.
+
+.. testcode:: guided-tour
+
+    -> struct Card {
+           var rank: Rank
+           var suit: Suit
+           func simpleDescription() -> String {
+               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+           }
+       }
+    -> let threeOfSpades = Card(rank: .three, suit: .spades)
+    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
+    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
 
 Protocols and Extensions
 ------------------------
@@ -1192,6 +1179,157 @@ This means that you can't accidentally access
 methods or properties that the class implements
 in addition to its protocol conformance.
 
+Error Handling
+--------------
+
+You represent errors using any type that adopts the ``Error`` protocol.
+
+.. REFERENCE
+   PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
+   fire" error message, used when the kernel can't identify the specific error.
+   The names of printers used in the examples in this section are names of
+   people who were important in the development of printing.
+
+   Bi Sheng is credited with inventing the first movable type out of porcelain
+   in China in the 1040s.  It was a mixed success, in large part because of the
+   vast number of characters needed to write Chinese, and failed to replace
+   wood block printing.  Johannes Gutenberg is credited as the first European
+   to use movable type in the 1440s --- his metal type enabled the printing
+   revolution.  Ottmar Mergenthaler invented the Linotype machine in the 1884,
+   which dramatically increased the speed of setting type for printing compared
+   to the previous manual typesetting.  It set an entire line of type (hence
+   the name) at a time, and was controlled by a keyboard.  The Monotype
+   machine, invented in 1885 by Tolbert Lanston, performed similar work.
+
+.. testcode:: guided-tour
+
+    -> enum PrinterError: Error {
+           case outOfPaper
+           case noToner
+           case onFire
+       }
+
+Use ``throw`` to throw an error
+and ``throws`` to mark a function that can throw an error.
+If you throw an error in a function,
+the function returns immediately and the code that called the function
+handles the error.
+
+.. testcode:: guided-tour
+
+    -> func send(job: Int, toPrinter printerName: String) throws -> String {
+           if printerName == "Never Has Toner" {
+               throw PrinterError.noToner
+           }
+           return "Job sent"
+       }
+
+There are several ways to handle errors.
+One way is to use ``do``-``catch``.
+Inside the ``do`` block,
+you mark code that can throw an error by writing ``try`` in front of it.
+Inside the ``catch`` block,
+the error is automatically given the name ``error``
+unless you give it a different name.
+
+.. testcode:: guided-tour
+
+    -> do {
+           let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
+           print(printerResponse)
+       } catch {
+           print(error)
+       }
+    << Job sent
+
+.. admonition:: Experiment
+
+   Change the printer name to ``"Never Has Toner"``,
+   so that the ``send(job:toPrinter:)`` function throws an error.
+
+.. Assertion tests the change that the Experiment box instructs you to make.
+
+.. assertion:: guided-tour
+
+    >> do {
+           let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
+           print(printerResponse)
+       } catch {
+           print(error)
+       }
+    << noToner
+
+You can provide multiple ``catch`` blocks
+that handle specific errors.
+You write a pattern after ``catch`` just as you do
+after ``case`` in a switch.
+
+.. REFERENCE
+   The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
+
+.. testcode:: guided-tour
+
+    -> do {
+           let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+           print(printerResponse)
+       } catch PrinterError.onFire {
+           print("I'll just put this over here, with the rest of the fire.")
+       } catch let printerError as PrinterError {
+           print("Printer error: \(printerError).")
+       } catch {
+           print(error)
+       }
+    << Job sent
+
+.. admonition:: Experiment
+
+   Add code to throw an error inside the ``do`` block.
+   What kind of error do you need to throw
+   so that the error is handled by the first ``catch`` block?
+   What about the second and third blocks?
+
+Another way to handle errors
+is to use ``try?`` to convert the result to an optional.
+If the function throws an error,
+the specific error is discarded and the result is ``nil``.
+Otherwise, the result is an optional containing
+the value that the function returned.
+
+.. testcode:: guided-tour
+
+    -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+    << // printerSuccess : String? = Optional("Job sent")
+    -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
+    << // printerFailure : String? = nil
+
+Use ``defer`` to write a block of code
+that is executed after all other code in the function,
+just before the function returns.
+The code is executed regardless of whether the function throws an error.
+You can use ``defer`` to write setup and cleanup code next to each other,
+even though they need to be executed at different times.
+
+.. testcode:: guided-tour
+
+    -> var fridgeIsOpen = false
+    << // fridgeIsOpen : Bool = false
+    -> let fridgeContent = ["milk", "eggs", "leftovers"]
+    << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
+    ---
+    -> func fridgeContains(_ food: String) -> Bool {
+           fridgeIsOpen = true
+           defer {
+               fridgeIsOpen = false
+           }
+    ---
+           let result = fridgeContent.contains(food)
+           return result
+       }
+    -> fridgeContains("banana")
+    <$ : Bool = false
+    -> print(fridgeIsOpen)
+    << false
+
 Generics
 --------
 
@@ -1205,14 +1343,14 @@ to make a generic function or type.
 
 .. testcode:: guided-tour
 
-    -> func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }
            return result
        }
-    -> repeatItem("knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes: 4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
@@ -1221,15 +1359,15 @@ as well as classes, enumerations, and structures.
 .. testcode:: guided-tour
 
     // Reimplement the Swift standard library's optional type
-    -> enum OptionalValue<T> {
-           case None
-           case Some(T)
+    -> enum OptionalValue<Wrapped> {
+           case none
+           case some(Wrapped)
        }
-    -> var possibleInteger: OptionalValue<Int> = .None
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.None
-    -> possibleInteger = .Some(100)
+    -> var possibleInteger: OptionalValue<Int> = .none
+    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
+    -> possibleInteger = .some(100)
 
-Use ``where`` after the type name
+Use ``where`` right before the body
 to specify a list of requirements ---
 for example,
 to require the type to implement a protocol,
@@ -1238,7 +1376,8 @@ or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
 
-   -> func anyCommonElements <T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element> (lhs: T, _ rhs: U) -> Bool {
+   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1257,8 +1396,5 @@ or to require a class to have a particular superclass.
    to make a function that returns an array
    of the elements that any two sequences have in common.
 
-In the simple cases,
-you can omit ``where`` and simply
-write the protocol or class name after a colon.
 Writing ``<T: Equatable>``
-is the same as writing ``<T where T: Equatable>``.
+is the same as writing ``<T> ... where T: Equatable``.

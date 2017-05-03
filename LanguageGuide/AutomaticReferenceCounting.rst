@@ -13,6 +13,9 @@ about the relationships between parts of your code
 in order to manage memory for you.
 This chapter describes those situations
 and shows how you enable ARC to manage all of your app's memory.
+Using ARC in Swift is very similar to the approach described in
+`Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
+for using ARC with Objective-C.
 
 .. note::
 
@@ -50,7 +53,7 @@ as long as at least one active reference to that instance still exists.
 To make this possible,
 whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
-The reference is called a “strong“ reference because
+The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
 and does not allow it to be deallocated for as long as that strong reference remains.
 
@@ -136,7 +139,7 @@ and the ``Person`` instance is not deallocated:
 
 ARC does not deallocate the ``Person`` instance until
 the third and final strong reference is broken,
-at which point it is clear that you are no longer using the ``Person`` instance:
+at which point it's clear that you are no longer using the ``Person`` instance:
 
 .. testcode:: howARCWorks
 
@@ -150,9 +153,9 @@ Strong Reference Cycles Between Class Instances
 
 In the examples above,
 ARC is able to track the number of references to the new ``Person`` instance you create
-and to deallocate that ``Person`` instance when it is no longer needed.
+and to deallocate that ``Person`` instance when it's no longer needed.
 
-However, it is possible to write code in which an instance of a class
+However, it's possible to write code in which an instance of a class
 *never* gets to a point where it has zero strong references.
 This can happen if two class instances hold a strong reference to each other,
 such that each instance keeps the other alive.
@@ -164,7 +167,7 @@ as weak or unowned references instead of as strong references.
 This process is described in
 :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
 However, before you learn how to resolve a strong reference cycle,
-it is useful to understand how such a cycle is caused.
+it's useful to understand how such a cycle is caused.
 
 Here's an example of how a strong reference cycle can be created by accident.
 This example defines two classes called ``Person`` and ``Apartment``,
@@ -285,18 +288,18 @@ Weak and unowned references enable one instance in a reference cycle
 to refer to the other instance *without* keeping a strong hold on it.
 The instances can then refer to each other without creating a strong reference cycle.
 
-Use a weak reference whenever it is valid for that reference to become ``nil``
-at some point during its lifetime.
-Conversely, use an unowned reference when you know that
-the reference will never be ``nil`` once it has been set during initialization.
+Use a weak reference when the other instance has a shorter lifetime ---
+that is, when the other instance can be deallocated first.
+In the ``Apartment`` example above,
+it's appropriate for an apartment to be able to have
+no tenant at some point in its lifetime,
+and so a weak reference is an appropriate way to break the reference cycle in this case.
+In contrast, use an unowned reference when the other instance
+has the same lifetime or a longer lifetime.
 
 .. QUESTION: how do I answer the question
    "which of the two properties in the reference cycle
    should be marked as weak or unowned?"
-
-.. TODO: mention the fact that unowned references don't have to perform checks.
-   Don't describe it in terms of speed;
-   rather, note that the extra checks don't need to be performed.
 
 .. _AutomaticReferenceCounting_WeakReferencesBetweenClassInstances:
 
@@ -310,38 +313,43 @@ This behavior prevents the reference from becoming part of a strong reference cy
 You indicate a weak reference by placing the ``weak`` keyword
 before a property or variable declaration.
 
-Use a weak reference to avoid reference cycles
-whenever it is possible for that reference to have
-“no value” at some point in its life.
-If the reference will *always* have a value,
-use an unowned reference instead,
-as described in :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
-In the ``Apartment`` example above,
-it is appropriate for an apartment to be able to have
-“no tenant” at some point in its lifetime,
-and so a weak reference is an appropriate way to break the reference cycle in this case.
-
-.. note::
-
-   Weak references must be declared as variables,
-   to indicate that their value can change at runtime.
-   A weak reference cannot be declared as a constant.
-
-Because weak references are allowed to have “no value”,
-you must declare every weak reference as having an optional type.
-Optional types are the preferred way to represent the possibility for “no value” in Swift.
-
 Because a weak reference does not keep a strong hold on the instance it refers to,
-it is possible for that instance to be deallocated
+it's possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
+And, because weak references need to allow
+their value to be changed to ``nil`` at runtime,
+they are always declared as variables, rather than constants, of an optional type.
+
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
 a reference to an invalid instance that no longer exists.
 
-.. TODO: I'm not actually demonstrating this fact. Should I?
+.. note::
+
+    Property observers aren't called
+    when ARC sets a weak reference to ``nil``.
+
+.. assertion:: weak-reference-doesnt-trigger-didset
+
+    -> class C {
+           weak var w: C? { didSet { print("did set") } }
+       }
+    -> var c1 = C()
+    << // c1 : C = REPL.C
+    -> do {
+    -> let c2 = C()  // Inside a do{} block, so no REPL result.
+    -> print(c1.w as Any)
+    << nil
+    -> c1.w = c2
+    << did set
+    -> print(c1.w as Any)
+    << Optional(REPL.C)
+    -> } // ARC deallocates c2; didSet doesn't fire.
+    -> print(c1.w as Any)
+    << nil
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -388,14 +396,8 @@ Here's how the references look now that you've linked the two instances together
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
 but the ``Apartment`` instance now has a *weak* reference to the ``Person`` instance.
 This means that when you break the strong reference held by
-the ``john`` variables,
+the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
-
-.. image:: ../images/weakReference02_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Person`` instance,
-it is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -403,16 +405,17 @@ it is deallocated:
    -> john = nil
    <- John Appleseed is being deinitialized
 
+Because there are no more strong references to the ``Person`` instance,
+it's deallocated
+and the ``tenant`` property is set to ``nil``:
+
+.. image:: ../images/weakReference02_2x.png
+   :align: center
+
 The only remaining strong reference to the ``Apartment`` instance
 is from the ``unit4A`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
-
-.. image:: ../images/weakReference03_2x.png
-   :align: center
-
-Because there are no more strong references to the ``Apartment`` instance,
-it too is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -420,52 +423,54 @@ it too is deallocated:
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
 
-The final two code snippets above show that
-the deinitializers for the ``Person`` instance and ``Apartment`` instance
-print their “deinitialized” messages
-after the ``john`` and ``unit4A`` variables are set to ``nil``.
-This proves that the reference cycle has been broken.
+Because there are no more strong references to the ``Apartment`` instance,
+it too is deallocated:
 
-.. TODO: Feedback from [Contributor 7746] to be incorporated here:
-   “In the ARC section, at the end of the weak pointer section,
-   it is worth mentioning that trying to use weak pointers as a cache
-   (like you might do in a GC'd system) is doomed to failure:
-   values will be deallocated as soon as the last strong reference is removed.”
+.. image:: ../images/weakReference03_2x.png
+   :align: center
+
+.. note::
+
+   In systems that use garbage collection,
+   weak pointers are sometimes used to implement a simple caching mechanism
+   because objects with no strong references are deallocated
+   only when memory pressure triggers garbage collection.
+   However, with ARC, values are deallocated
+   as soon as their last strong reference is removed,
+   making weak references unsuitable for such a purpose.
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
 Unowned References
 ~~~~~~~~~~~~~~~~~~
 
-Like weak references,
+Like a weak reference,
 an :newTerm:`unowned reference` does not keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
-an unowned reference is assumed to *always* have a value.
-Because of this, an unowned reference is always defined as a non-optional type.
+an unowned reference is used when the other instance
+has the same lifetime or a longer lifetime.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
-Because an unowned reference is non-optional,
-you don't need to unwrap the unowned reference each time it is used.
-An unowned reference can always be accessed directly.
-However, ARC cannot set the reference to ``nil`` when the instance it refers to is deallocated,
-because variables of a non-optional type cannot be set to ``nil``.
+An unowned reference is expected to always have a value.
+As a result,
+ARC never sets an unowned reference's value to ``nil``,
+which means that unowned references are defined using nonoptional types.
 
-.. note::
+..  Everything that unowned can do, weak can do slower and more awkwardly
+   (but still correctly).
+   Unowned is interesting because it's faster and easier (no optionals) ---
+   in the cases where it's actually correct for your data.
 
-   If you try to access an unowned reference
-   after the instance that it references is deallocated,
-   you will trigger a runtime error.
-   Use unowned references only when you are sure that
-   the reference will *always* refer to an instance.
+.. important::
 
-   Note also that Swift guarantees your app will crash
-   if you try to access an unowned reference
-   after the instance it references is deallocated.
-   You will never encounter unexpected behavior in this situation.
-   Your app will always crash reliably,
-   although you should, of course, prevent it from doing so.
+   Use an unowned reference only when you are sure that
+   the reference *always* refers to an instance that has not been deallocated.
+
+   If you try to access the value of an unowned reference
+   after that instance has been deallocated,
+   you'll get a runtime error.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
@@ -477,8 +482,9 @@ the relationship between ``Apartment`` and ``Person``
 seen in the weak reference example above.
 In this data model, a customer may or may not have a credit card,
 but a credit card will *always* be associated with a customer.
+A ``CreditCard`` instance never outlives the ``Customer`` that it refers to.
 To represent this, the ``Customer`` class has an optional ``card`` property,
-but the ``CreditCard`` class has a non-optional ``customer`` property.
+but the ``CreditCard`` class has an unowned (and nonoptional) ``customer`` property.
 
 Furthermore, a new ``CreditCard`` instance can *only* be created
 by passing a ``number`` value and a ``customer`` instance
@@ -554,7 +560,7 @@ there are no more strong references to the ``Customer`` instance:
    :align: center
 
 Because there are no more strong references to the ``Customer`` instance,
-it is deallocated.
+it's deallocated.
 After this happens,
 there are no more strong references to the ``CreditCard`` instance,
 and it too is deallocated:
@@ -571,6 +577,26 @@ the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
 both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
 
+.. note::
+
+    The examples above show how to use *safe* unowned references.
+    Swift also provides *unsafe* unowned references for cases where
+    you need to disable runtime safety checks ---
+    for example, for performance reasons.
+    As with all unsafe operations,
+    you take on the responsiblity for checking that code for safety.
+
+    You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
+    If you try to access an unsafe unowned reference
+    after the instance that it refers to is deallocated,
+    your program will try to access the memory location
+    where the instance used to be,
+    which is an unsafe operation.
+
+.. <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
+   Try expanding the example above so each customer has an array of credit cards.
+
+
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
 Unowned References and Implicitly Unwrapped Optional Properties
@@ -578,7 +604,7 @@ Unowned References and Implicitly Unwrapped Optional Properties
 
 The examples for weak and unowned references above
 cover two of the more common scenarios
-in which it is necessary to break a strong reference cycle.
+in which it's necessary to break a strong reference cycle.
 
 The ``Person`` and ``Apartment`` example shows
 a situation where two properties, both of which are allowed to be ``nil``,
@@ -594,7 +620,7 @@ This scenario is best resolved with an unowned reference.
 However, there is a third scenario,
 in which *both* properties should always have a value,
 and neither property should ever be ``nil`` once initialization is complete.
-In this scenario, it is useful to combine an unowned property on one class
+In this scenario, it's useful to combine an unowned property on one class
 with an implicitly unwrapped optional property on the other class.
 
 This enables both properties to be accessed directly
@@ -671,7 +697,7 @@ without needing to use an exclamation mark to unwrap its optional value:
 
 In the example above, the use of an implicitly unwrapped optional
 means that all of the two-phase class initializer requirements are satisfied.
-The ``capitalCity`` property can be used and accessed like a non-optional value
+The ``capitalCity`` property can be used and accessed like a nonoptional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 
@@ -705,7 +731,7 @@ this time it's a class instance and a closure that are keeping each other alive.
 Swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
 However, before you learn how to break a strong reference cycle with a closure capture list,
-it is useful to understand how such a cycle can be caused.
+it's useful to understand how such a cycle can be caused.
 
 The example below shows how you can create a strong reference cycle
 when using a closure that references ``self``.
@@ -719,7 +745,7 @@ which provides a simple model for an individual element within an HTML document:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: Void -> String = {
+         lazy var asHTML: () -> String = {
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
             } else {
@@ -739,7 +765,9 @@ which provides a simple model for an individual element within an HTML document:
       }
 
 The ``HTMLElement`` class defines a ``name`` property,
-which indicates the name of the element, such as ``"p"`` for a paragraph element,
+which indicates the name of the element,
+such as ``"h1"`` for a heading element,
+``"p"`` for a paragraph element,
 or ``"br"`` for a line break element.
 ``HTMLElement`` also defines an optional ``text`` property,
 which you can set to a string that represents
@@ -764,12 +792,26 @@ However, because ``asHTML`` is a closure property rather than an instance method
 you can replace the default value of the ``asHTML`` property with a custom closure,
 if you want to change the HTML rendering for a particular HTML element.
 
-.. QUESTION: I don't actually do so, however. Is this a valid justification here?
+For example, the ``asHTML`` property could be set to a closure
+that defaults to some text if the ``text`` property is ``nil``,
+in order to prevent the representation from returning an empty HTML tag:
+
+.. testcode:: strongReferenceCyclesForClosures
+
+   -> let heading = HTMLElement(name: "h1")
+   << // heading : HTMLElement = REPL.HTMLElement
+   -> let defaultText = "some default text"
+   << // defaultText : String = "some default text"
+   -> heading.asHTML = {
+         return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+      }
+   -> print(heading.asHTML())
+   <- <h1>some default text</h1>
 
 .. note::
 
    The ``asHTML`` property is declared as a lazy property,
-   because it is only needed if and when the element actually needs to be rendered
+   because it's only needed if and when the element actually needs to be rendered
    as a string value for some HTML output target.
    The fact that ``asHTML`` is a lazy property means that you can refer to ``self``
    within the default closure,
@@ -886,7 +928,7 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: Void -> String = {
+      lazy var someClosure: () -> String = {
             [unowned self, weak delegate = self.delegate!] in
          // closure body goes here
    >>    return "foo"
@@ -908,6 +950,8 @@ Weak references are always of an optional type,
 and automatically become ``nil`` when the instance they reference is deallocated.
 This enables you to check for their existence within the closure's body.
 
+.. <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
+
 .. note::
 
    If the captured reference will never become ``nil``,
@@ -925,7 +969,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
          let name: String
          let text: String?
    ---
-         lazy var asHTML: Void -> String = {
+         lazy var asHTML: () -> String = {
                [unowned self] in
             if let text = self.text {
                return "<\(self.name)>\(text)</\(self.name)>"
@@ -975,5 +1019,5 @@ as can be seen from the printing of its deinitializer message in the example bel
    -> paragraph = nil
    <- p is being deinitialized
 
-.. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
-   Unowned capture of self in a closure capture list does not avoid a reference cycle
+For more information about capture lists,
+see :ref:`Expressions_CaptureLists`.
