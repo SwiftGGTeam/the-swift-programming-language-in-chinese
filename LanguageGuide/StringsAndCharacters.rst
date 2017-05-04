@@ -727,68 +727,6 @@ for long-term storage.
 
 
 
-
-.. write-me::
-
-.. This approach would be nice, but I don't think we have a way to find a string
-   inside another string.
-
-    let inventory = "12 - red boxes\n7 - green bins \n29 blue containers"
-    let separator = " - "
-    for inventoryLine in inventory.lines {
-        let offset = inventoryLine.find(separator)
-        let quantity = Int(inventoryLine[..<separator])
-        let item = inventoryLine[(offset + separator.length)...]
-        ... do something with the parsed line ...
-    }
-
-::
-
-    let inventory = "red boxes - 12"
-    for inventoryLine in inventory.lines {
-        let offset = inventoryLine.split(separator: " - ", maxSplits: 1)
-    }
-
-::
-
-    let inventory = "12 - red boxes\n7 - green bins \n29 blue containers"
-    for line in inventory.split(separator: "\n") {
-        print(String(line))
-    }
-
-::
-
-    let input = "2017-04-24 63\n" +
-                "2017-04-25 67\n" +
-                "2017-04-26 52"
-    for entry in input.split(separator: "\n") {
-        print(entry)
-        print(type(of: entry))
-        print()
-    }
-    let e = input[0]
-    print(e)
-    print(type(of: e))
-    
-::
-
-    let romeoAndJuliet = 
-         "Act 1 Scene 1: Verona, A public place\n" +
-         "Act 1 Scene 2: Capulet's mansion\n" +
-         "Act 1 Scene 3: A room in Capulet's mansion\n" +
-         "Act 1 Scene 4: A street outside Capulet's mansion\n" +
-         "Act 1 Scene 5: The Great Hall in Capulet's mansion\n" +
-         "Act 2 Scene 1: Outside Capulet's mansion\n" +
-         "Act 2 Scene 2: Capulet's orchard\n" +
-         "Act 2 Scene 3: Outside Friar Lawrence's cell\n" +
-         "Act 2 Scene 4: A street in Verona\n" +
-         "Act 2 Scene 5: Capulet's mansion\n" +
-         "Act 2 Scene 6: Friar Lawrence's cell"
-    for scene in romeoAndJuliet.split(separator: "\n") {
-        ... can't use scene.hasPrefix -- that's introduced in the next section ...
-    }
-
-
 .. _StringsAndCharacters_ComparingStrings:
 
 Comparing Strings
