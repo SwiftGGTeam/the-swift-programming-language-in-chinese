@@ -701,16 +701,16 @@ For example:
 .. testcode:: string-and-substring
 
     -> func someBadFunction() -> SubString {
-        let s = "123 456 789"
+           let s = "123 456 789"
 
-        // Bad code.  Returning a substring is fast, but doesn't allow
-        // s to be deallocated, wasting memory.
-        return s[0]
+           // Bad code.  Returning a substring is fast, but doesn't allow
+           // s to be deallocated, wasting memory.
+           return s[0]
     }
     -> func someBetterFunction() -> String {
-        let s = "123 456 789"
-        let substring = s[0]
-        return String(substring)
+           let s = "123 456 789"
+           let substring = s[0]
+           return String(substring)
     }
     >> someBadFunction()
     >> someBetterFunction()
