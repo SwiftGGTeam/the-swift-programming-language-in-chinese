@@ -17,7 +17,7 @@ Swift defines away large classes of common programming errors.
 Variables are always initialized before use,
 arrays indices are checked for out-of-bounds errors,
 integers are checked for overflow,
-optionals ensure that `nil` values are handled explicitly,
+optionals ensure that ``nil`` values are handled explicitly,
 memory is managed automatically,
 and error handling allows controlled recovery from unexpected failures.
 Swift is also built to be fast.
