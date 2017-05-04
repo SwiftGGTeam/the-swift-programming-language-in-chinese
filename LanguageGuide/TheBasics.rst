@@ -1451,11 +1451,6 @@ For example:
       }
    xx assert
 
-.. note::
-
-   During prototyping and early development,
-   you can create stubs for functionality that hasn't been implemented yet
-   by writing ``assert(false, "Unimplemented")`` as the stub implementation.
 
 .. _TheBasics_Preconditions:
 
@@ -1494,6 +1489,16 @@ by one of the switch's other cases.
     and it optimizes your code accordingly.
     However, the ``fatalError(_:file:line:)`` function always halts execution,
     regardless of optimization settings.
+
+    You can use the ``fatalError(_:file:line:)`` function
+    during prototyping and early development
+    to create stubs for functionality that hasn't been implemented yet,
+    by writing ``fatalError("Unimplemented")`` as the stub implementation.
+    Because fatal errors are never optimized out,
+    unlike assertions or preconditions,
+    you can be sure that execution always halts
+    if it encounters a stub implementation.
+
 
 .. "\ " in the first cell below lets it be empty.
    Otherwise RST treats the row as a continuation.
