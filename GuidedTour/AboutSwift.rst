@@ -3,10 +3,17 @@ About Swift
 
 Swift is a safe, fast, and interactive programming language
 that combines the best in modern language thinking
-with wisdom from the wider Apple engineering culture.
+with wisdom from the wider Apple engineering culture
+and the diverse contributions from its open-source community.
 The compiler is optimized for performance,
 and the language is optimized for development,
 without compromising on either.
+
+.. Does the paragraph below still need to exist?
+   (I'm guessing not.)
+   It describes the history of how Swift came to be
+   through various improvements to Objective-C
+   which programmers starting out today likely take for granted.
 
 Swift is a fantastic way to write iOS, OS X, and watchOS apps.
 Apple laid the foundation for Swift
@@ -20,26 +27,36 @@ Building from this common ground,
 Swift provides seamless access to existing Cocoa frameworks
 and mix-and-match interoperability with Objective-C code.
 
+.. Need a different word than "safe" in the paragraph below.
+   In a technical/Swift context, "safe" means "memory safe" --
+   that is, the opposite of permitting/causing memory corruption.
+
+.. I'm not sure exactly what "optimized native code" is meant to mean below,
+   but I think the intent was to point out that Swift isn't interpreted
+   and doesn't use some sort of high-level, JVM-like bytecode.
+
 Swift is an industrial-quality systems programming language.
 By adopting safe programming patterns,
-Swift eliminates entire classes of unsafe code.
+Swift eliminates entire classes of unsafe code:
 Variables are always initialized before use,
-arrays and integers are checked for overflow,
-and memory is managed automatically.
-Optionals ensure that `nil` values are not created or accessed at runtime.
-Not just safe, Swift is built to be fast as well.
-Using the incredibly high-performance LLVM compiler,
+arrays indices are checked for out-of-bounds errors,
+integers are checked for overflow,
+optionals ensure that `nil` values are handled explicitly,
+memory is managed automatically,
+and error handling allows controlled recovery from unexpected failures.
+Swift is also built to be fast.
 Swift code is transformed into optimized native code that gets the most out of modern hardware.
 The syntax and standard library have also been tuned
-to make the most obvious way to write your code also perform the best.
+based on the guiding principle that
+the obvious way to write your code should also perform the best.
 Combining safety and speed, Swift is an excellent choice for
-everything from "hello, world" to an entire operating system.
+everything from "Hello, world!" to an entire operating system.
 
 Swift is friendly to new programmers.
 It's the first compiled language
 that is as expressive and enjoyable as a scripting language.
 It supports playgrounds, an innovative feature
-that allows programmers to experiment with Swift code and see the results immediately,
+that allows you to experiment with Swift code and see the results immediately,
 without the overhead of building and running an app.
 Combining powerful type inference and pattern matching with
 a modern, lightweight syntax
