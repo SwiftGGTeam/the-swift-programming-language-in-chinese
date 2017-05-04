@@ -661,7 +661,7 @@ Strings and Substrings
 
 When you access part of a string using a subscript,
 the result is a :newTerm:`substring`.
-The difference between a string and a substring
+The most important difference between a string and a substring
 is that a substring doesn't have its own storage.
 A string has a region of memory
 where the characters that make up the string are stored,
@@ -685,42 +685,45 @@ as shown in the figure below:
    :align: center
 
 Because subscripts don't have their own in-memory storage,
-there's no performance overhead
-due to copying the original string ---
-nothing is copied.
-That's a good thing when you're doing several different substring operations
-on a single large string.
-However, because the entire string must be kept in memory
-as long as substrings of that string are being used,
-use substrings for short- or medium-term work;
-create a new string for long-term storage.
+there's no performance overhead when you create a substring
+due to copying a portion the original string ---
+nothing is actually copied.
+This characteristic makes substrings well suited short-term storage,
+for tasks such as parsing a custom data format
+to extract the values needed to populate a data structure.
+However, substrings are not suitable for long-term storage
+of a portion of a string.
+Substrings re-use the backing storage of the original string,
+which means the entire original string must be kept in memory
+as long as any of its substrings are being used.
+For example:
 
-.. That's not ideal when you're doing a bunch of read operations
-   over different portions of the same string,
-   one after the next.
+.. testcode:: string-and-substring
 
-.. XXX Sketch a use case like what's below:
-
-::
-
-    func f() -> SubString {
+    -> func someBadFunction() -> SubString {
         let s = "123 456 789"
+
+        // Bad code.  Returning a substring is fast, but doesn't allow
+        // s to be deallocated, wasting memory.
         return s[0]
     }
-    // Now the whole string is stuck in memory
-    // until you get rid of the result of f()
+    -> func someBetterFunction() -> String {
+        let s = "123 456 789"
+        let substring = s[0]
+        return String(substring)
+    }
+    >> someBadFunction()
+    >> someBetterFunction()
 
-    let substring = f()
-    let string = String(substring)
+.. XXX add test expectation above
 
-
-.. XXX Add to para above
-   the API on a string & substring is almost the same.
-   (they both conform to Unicode)
-
-.. You can't pass a substring to any API that expects a string,
-   but you can use the Unicode protocol to make APIs
-   that accept either strings or substrings.
+The function ``someBadFunction`` returns a substring of only one character,
+but the entire original string must be kept in memory
+for as long as the function's return value remains in memory.
+The function ``someBetterFunction`` shows the better practice
+of using a substring for short term work on a string,
+and then conversion to a ``String`` value
+for long-term storage.
 
 
 
