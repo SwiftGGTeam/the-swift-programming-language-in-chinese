@@ -25,16 +25,16 @@ Swift code is compiled and optimized to get the most out of modern hardware.
 The syntax and standard library have been tuned
 based on the guiding principle that
 the obvious way to write your code should also perform the best.
-Combining safety and speed, Swift is an excellent choice for
+Its combination of safety and speed make Swift an excellent choice for
 everything from "Hello, world!" to an entire operating system.
 
 Swift is friendly to new programmers.
 It supports playgrounds, an innovative feature
 that allows you to experiment with Swift code and see the results immediately,
 without the overhead of building and running an app.
-Combining powerful type inference and pattern matching with
-a modern, lightweight syntax
-Swift allows complex ideas to be expressed in a clear and concise manner.
+Swift combines powerful type inference and pattern matching with
+a modern, lightweight syntax,
+allowing complex ideas to be expressed in a clear and concise manner.
 As a result, code is not just easier to write,
 but easier to read and maintain as well.
 
