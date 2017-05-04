@@ -21,7 +21,7 @@ optionals ensure that `nil` values are handled explicitly,
 memory is managed automatically,
 and error handling allows controlled recovery from unexpected failures.
 Swift is also built to be fast.
-Swift code is compiled and to get the most out of modern hardware.
+Swift code is compiled and optimized to get the most out of modern hardware.
 The syntax and standard library have been tuned
 based on the guiding principle that
 the obvious way to write your code should also perform the best.
