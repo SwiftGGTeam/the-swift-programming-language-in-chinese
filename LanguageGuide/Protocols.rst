@@ -1146,7 +1146,7 @@ Likewise,
 if you made a subclass of ``Location``
 that didn't conform to the ``Named`` protocol,
 calling ``beginConcert(in:)`` with an instance of that type
-would also be invalid for.
+would also be invalid.
 
 .. _Protocols_CheckingForProtocolConformance:
 
