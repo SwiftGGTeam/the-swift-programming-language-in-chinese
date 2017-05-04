@@ -1,7 +1,7 @@
 About Swift
 ===========
 
-Swift is a fantastic way to write iOS, OS X, watchOS, and tvOS apps.
+Swift is a fantastic way to write iOS, macOS, watchOS, and tvOS apps.
 It's a safe, fast, and interactive programming language
 that combines the best in modern language thinking
 with wisdom from the wider Apple engineering culture
