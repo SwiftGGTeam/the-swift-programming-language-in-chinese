@@ -13,7 +13,7 @@ without compromising on either.
 Swift is an industrial-quality programming language
 that's as expressive and enjoyable as a scripting language.
 By adopting modern programming patterns,
-Swift prevents entire classes of categories of bugs:
+Swift defines away large classes of common programming errors.
 Variables are always initialized before use,
 arrays indices are checked for out-of-bounds errors,
 integers are checked for overflow,
