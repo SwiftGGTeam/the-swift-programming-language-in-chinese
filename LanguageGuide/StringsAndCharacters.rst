@@ -725,7 +725,12 @@ of using a substring for short term work on a string,
 and then conversion to a ``String`` value
 for long-term storage.
 
+.. note::
 
+   Both ``String`` and ``SubString`` conform to the ``Unicode`` protocol,
+   as described below in :ref:`StringsAndCharacters_Unicode`.
+   If you're writing code that manipulates string data,
+   accepting any ``Unicode`` value lets you pass either a string or a substring.
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -1127,4 +1132,11 @@ The Unicode Protocol
 ~~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
+
+.. The API on a string & substring is almost the same.
+   (they both conform to Unicode)
+
+.. You can't pass a substring to any API that expects a string,
+   but you can use the Unicode protocol to make APIs
+   that accept either strings or substrings.
 
