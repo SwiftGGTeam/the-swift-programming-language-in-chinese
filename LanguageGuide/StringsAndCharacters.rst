@@ -641,13 +641,6 @@ use the ``removeSubrange(_:)`` method:
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
 
-.. _StringsAndCharacters_Views:
-
-Different Views of a String
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. write-me::
-
 .. _StringsAndCharacters_Substrings:
 
 Strings and Substrings
@@ -727,10 +720,12 @@ for long-term storage.
 
 .. note::
 
-   Both ``String`` and ``SubString`` conform to the ``Unicode`` protocol,
-   as described below in :ref:`StringsAndCharacters_Unicode`.
+   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol.
    If you're writing code that manipulates string data,
-   accepting any ``Unicode`` value lets you pass either a string or a substring.
+   accepting a ``StringProtocol`` value lets you pass that string data
+   as either a ``String`` or ``Substring`` value.
+
+.. XXX Live link to the StringProtocol protocol reference.
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -840,13 +835,6 @@ but do not have the same linguistic meaning:
 .. TODO: Add a cross reference to NSString.localizedCompare and
    NSString.localizedCaseInsensitiveCompare.  See also
    https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
-
-.. _StringsAndCharacters_CaseAndLocale:
-
-Case and Locale Sensitivity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. write-me::
 
 .. _StringsAndCharacters_PrefixAndSuffixEquality:
 
@@ -1125,18 +1113,4 @@ such as with string interpolation:
    </ g
    </ ‼
    </ 🐶
-
-.. _StringsAndCharacters_UnicodeProtocol:
-
-The Unicode Protocol
-~~~~~~~~~~~~~~~~~~~~
-
-.. write-me::
-
-.. The API on a string & substring is almost the same.
-   (they both conform to Unicode)
-
-.. You can't pass a substring to any API that expects a string,
-   but you can use the Unicode protocol to make APIs
-   that accept either strings or substrings.
 
