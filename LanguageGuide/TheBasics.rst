@@ -1337,53 +1337,90 @@ Throwing, catching, and propagating errors is covered in greater detail in
 
 .. _TheBasics_Assertions:
 
-Assertions
-----------
+Assertions and Preconditions
+----------------------------
 
-In some cases, it is simply not possible for your code to continue execution
-if a particular condition is not satisfied.
-In these situations,
-you can trigger an :newTerm:`assertion` in your code to end code execution
-and to provide an opportunity to debug the cause of the absent or invalid value.
+:newTerm:`Assertions` and :newTerm:`preconditions`
+are checks that happen at runtime.
+You use them to make sure an essential condition is satisfied
+before executing any further code.
+If the Boolean condition in the assertion or precondition
+evaluates to ``true``,
+code execution continues as usual.
+If the condition evaluates to ``false``,
+the current state of the program is invalid;
+code execution ends, and your app is terminated.
+
+You use assertions and preconditions
+to express the assumptions and expectations
+that you make while coding,
+so you can include them as part of your code.
+Assertions help you find mistakes and incorrect assumptions during development,
+and preconditions help you detect issues in production.
+In addition to verifying your expectations at runtime,
+assertions and preconditions also become a useful form of documentation
+within the code.
+Unlike the error conditions discussed in :ref:`TheBasics_ErrorHandling` above,
+assertions and preconditions are not used
+for recoverable or expected errors.
+Because a failed assertion or precondition
+indicates an invalid program state,
+there is no way to catch a failed assertion.
+
+Using assertions and preconditions
+is not a substitute for designing your code in such a way
+that invalid conditions are unlikely to arise.
+However,
+using them to enforce valid data and state
+causes your app to terminate more predictably
+if an invalid state occurs,
+and helps makes the problem easier to debug.
+Stopping execution as soon as an invalid state is detected
+also helps limit the damage caused by that invalid state.
+
+The difference between assertions and preconditions is in when they are checked:
+Assertions are checked only in debug builds,
+but preconditions are checked in both debug and production builds.
+In production builds,
+the condition inside an assertion isn't evaluated.
+This means you can use as many assertions as you want
+during your development process,
+without impacting the performance in production.
 
 .. _TheBasics_DebuggingWithAssertions:
 
 Debugging with Assertions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An assertion is a runtime check that a Boolean condition definitely evaluates to ``true``.
-Literally put, an assertion “asserts” that a condition is true.
-You use an assertion to make sure that an essential condition is satisfied
-before executing any further code.
-If the condition evaluates to ``true``, code execution continues as usual;
-if the condition evaluates to ``false``, code execution ends, and your app is terminated.
+..  If your code triggers an assertion while running in a debug environment,
+    such as when you build and run an app in Xcode,
+    you can see exactly where the invalid state occurred
+    and query the state of your app at the time that the assertion was triggered.
+    An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
-If your code triggers an assertion while running in a debug environment,
-such as when you build and run an app in Xcode,
-you can see exactly where the invalid state occurred
-and query the state of your app at the time that the assertion was triggered.
-An assertion also lets you provide a suitable debug message as to the nature of the assert.
-
-You write an assertion by calling
-the Swift standard library global ``assert(_:_:file:line:)`` function.
+You write an assertion by calling the
+`assert(_:_:file:line:) <//apple_ref/swift/func/s:Fs6assertFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+from the Swift standard library.
 You pass this function an expression that evaluates to ``true`` or ``false``
-and a message that should be displayed if the result of the condition is ``false``:
+and a message to display if the result of the condition is ``false``.
+For example:
 
 .. testcode:: assertions
 
    -> let age = -3
    << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero")
+   -> assert(age >= 0, "A person's age can't be less than zero.")
    xx assert
-   // this causes the assertion to trigger, because age is not >= 0
+   // This assertion fails because -3 is not >= 0.
 
-In this example, code execution will continue only if ``age >= 0`` evaluates to ``true``,
-that is, if the value of ``age`` is non-negative.
-If the value of ``age`` *is* negative, as in the code above,
+In this example, code execution continues if ``age >= 0`` evaluates to ``true``,
+that is, if the value of ``age`` is positive.
+If the value of ``age`` is negative, as in the code above,
 then ``age >= 0`` evaluates to ``false``,
-and the assertion is triggered, terminating the application.
+and the assertion fails, terminating the application.
 
-The assertion message can be omitted if desired, as in the following example:
+You can omit the assertion message ---
+for example, when it would just repeat the condition as prose.
 
 .. testcode:: assertions
 
@@ -1394,40 +1431,89 @@ The assertion message can be omitted if desired, as in the following example:
 
    -> let age = -3
    << // age : Int = -3
-   -> assert(age >= 0, "A person's age cannot be less than zero, but value is \(age)")
+   -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
    xx assert
 
+If the code already checks the condition,
+you use the
+`assertionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+to indicate that an assertion has failed.
+For example:
+
+.. testcode:: assertions
+
+   -> if age > 10 {
+          print("You can ride the roller-coaster or the ferris wheel.")
+      } else if age > 0 {
+          print("You can ride the ferris wheel.")
+      } else {
+          assertionFailure("A person's age can't be less than zero.")
+      }
+   xx assert
+
+
+.. _TheBasics_Preconditions:
+
+Enforcing Preconditions
+~~~~~~~~~~~~~~~~~~~~~~~
+Use a precondition whenever a condition has the potential to be false,
+but must *definitely* be true for your code to continue execution.
+For example, use a precondition to check that a subscript is not out of bounds,
+or to check that a function has been passed a valid value.
+
+You write a precondition by calling the
+`precondition(_:_:file:line:) <//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/>`_ function.
+You pass this function an expression that evaluates to ``true`` or ``false``
+and a message to display if the result of the condition is ``false``.
+For example:
+
+.. testcode:: preconditions
+
+   >> let index = -1
+   // In the implementation of a subscript...
+   -> precondition(index > 0, "Index must be greater than zero.")
+   xx assert
+
+You can also call the
+`preconditionFailure(_:file:line:) <//apple_ref/swift/func/s:Fs19preconditionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/>`_ function
+to indicate that a failure has occurred ---
+for example, if the default case of a switch was taken,
+but all valid input data should have been handled
+by one of the switch's other cases.
+
 .. note::
 
-   Assertions are disabled when your code is compiled with optimizations,
-   such as when building with an app target's default Release configuration in Xcode.
+    If you compile in unchecked mode (``-Ounchecked``),
+    preconditions are not checked.
+    The compiler assumes that preconditions are always true,
+    and it optimizes your code accordingly.
+    However, the ``fatalError(_:file:line:)`` function always halts execution,
+    regardless of optimization settings.
 
-.. _TheBasics_WhenToUseAssertions:
+    You can use the ``fatalError(_:file:line:)`` function
+    during prototyping and early development
+    to create stubs for functionality that hasn't been implemented yet,
+    by writing ``fatalError("Unimplemented")`` as the stub implementation.
+    Because fatal errors are never optimized out,
+    unlike assertions or preconditions,
+    you can be sure that execution always halts
+    if it encounters a stub implementation.
 
-When to Use Assertions
-~~~~~~~~~~~~~~~~~~~~~~
 
-Use an assertion whenever a condition has the potential to be false,
-but must *definitely* be true in order for your code to continue execution.
-Suitable scenarios for an assertion check include:
+.. "\ " in the first cell below lets it be empty.
+   Otherwise RST treats the row as a continuation.
 
-* An integer subscript index is passed to a custom subscript implementation,
-  but the subscript index value could be too low or too high.
+   ============ =====  ==========  ===============================
+   \            Debug  Production  Production with ``-Ounchecked``
+   ============ =====  ==========  ===============================
+   Assertion    Yes    No          No
+   ------------ -----  ----------  -------------------------------
+   Precondition Yes    Yes         No
+   ------------ -----  ----------  -------------------------------
+   Fatal Error  Yes    Yes         Yes
+   ============ =====  ==========  ===============================
 
-* A value is passed to a function,
-  but an invalid value means that the function cannot fulfill its task.
-
-* An optional value is currently ``nil``,
-  but a non-``nil`` value is essential for subsequent code to execute successfully.
-
-See also :doc:`Subscripts` and :doc:`Functions`.
-
-.. note::
-
-   Assertions cause your app to terminate
-   and are not a substitute for designing your code in such a way
-   that invalid conditions are unlikely to arise.
-   Nonetheless, in situations where invalid conditions are possible,
-   an assertion is an effective way to ensure that
-   such conditions are highlighted and noticed during development,
-   before your app is published.
+.. TODO: In Xcode, can you set a breakpoint on assertion/precondition failure?
+   If so, mention that fact and give a link to a guide that shows you how.
+   In LLDB, 'breakpoint set -E swift' catches when errors are thown,
+   but doesn't stop at assertions.
