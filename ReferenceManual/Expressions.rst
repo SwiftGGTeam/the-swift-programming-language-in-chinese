@@ -1118,8 +1118,7 @@ for use in key-value coding and key-value observing APIs.
 
    \<#type name#>.<#property names#>
 
-The *property names* must be a reference to a property
-that is available in the Objective-C runtime.
+The *property names* must be a reference to a property.
 At compile time, the key-path expression
 is replaced by a ``KeyPath`` value.
 Key paths can be used to access properties
@@ -1134,17 +1133,16 @@ For example:
 
 .. testcode:: keypath-expression
 
-   >> import Foundation
-   -> @objc class SomeClass: NSObject {
+   -> struct SomeStructure {
          var someProperty: Int
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
       }
    ---
-   -> let c = SomeClass(someProperty: 12)
-   <~ // c : SomeClass = <REPL.SomeClass:
-   -> let keyPath = \SomeClass.someProperty
+   -> let c = SomeStructure(someProperty: 12)
+   <~ // c : SomeStructure = <REPL.SomeStructure:
+   -> let keyPath = \SomeStructure.someProperty
    ---
    -> if let value = c[keyPath: keyPath] {
    ->     print(value)
