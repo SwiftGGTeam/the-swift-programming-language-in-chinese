@@ -156,7 +156,7 @@ Working with Characters
 -----------------------
 
 You can access the individual ``Character`` values for a ``String``
-by iterating over its ``characters`` property with a ``for``-``in`` loop:
+by iterating over the string with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
