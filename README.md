@@ -1,5 +1,7 @@
 《The Swift Programming Language》in Chinese
 =============================================
+哈哈哈哈
+fksdgfljdsfhlak
 
 中文版 Apple 官方 Swift 教程《The Swift Programming Language》
 
@@ -81,7 +83,7 @@ Language Reference:
 # 1.0 译者记录
 
 * 欢迎使用 Swift
-   * 关于 Swift ([numbbbbb])
+
    * Swift 初见 ([numbbbbb])
 * Swift 教程
    * 基础部分 ([numbbbbb], [lyuka], [JaySurplus])
