@@ -1059,15 +1059,17 @@ Protocol Composition
 It can be useful to require a type to conform to multiple protocols at once.
 You can combine multiple protocols into a single requirement
 with a :newTerm:`protocol composition`.
+Protocol compositions behave like you
+defined a temporary local protocol that has the combined requirements
+of all protocols in the composition.
+Protocol compositions don't define any new protocol types.
+
 Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
 You can list as many protocols as you need to,
 separating them by ampersands (``&``).
 In addition to its list of protocols,
-a protocol composition can also contain one class type.
-
-Protocol compositions do not define a new, permanent protocol type.
-Rather, they define a temporary local protocol that has the combined requirements
-of all protocols in the composition.
+a protocol composition can also contain one class type,
+which lets you specify a required superclass.
 
 Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
