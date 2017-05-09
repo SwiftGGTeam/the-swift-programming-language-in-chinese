@@ -7,7 +7,9 @@ Choosing Between Reference and Value Types
    and I don't have any notes in email about the feedback Andrew got.
    [Contributor 4485] called out in the dev edit the fact that
    the higher-level headings are about ref/value types
-   but the content is about classes and structs.
+   but the content is about classes and structs,
+   and she called out in the copyedit
+   that this is the only chapter with a gerund title.
    Worth re-evaluating which way to frame this.
 
 Classes and structures in Swift have many similarities,
@@ -39,7 +41,7 @@ Use Structures and Enumerations for Value Semantics
 
 Structures make it easier to reason about your code.
 Because structures are value types,
-they help you avoid accidental shared state
+they help you avoid accidentally shared state
 between parts of a program.
 In order to explore an example
 of this kind of unintended mutation,
@@ -82,7 +84,7 @@ you accidentally change the temperature of the room as well:
     <- roomTemperature is also now 180.0 degrees Celsius
 
 Because ``Temperature`` is a class, it has reference semantics ---
-both``ovenTemperature`` and ``roomTemperature``
+both ``ovenTemperature`` and ``roomTemperature``
 refer to the same ``Temperature`` instance.
 Changing ``ovenTemperature`` also changes ``roomTemperature``
 because there is only one temperature.
@@ -91,8 +93,8 @@ because there is only one temperature.
    :align: center
 
 In contrast,
-if you declare ``Temperature`` as a structure,
-that gives the temperatures value semantics instead of any shared state.
+declaring ``Temperature`` as a structure,
+gives the temperatures value semantics instead of any shared state.
 This gives you what you actually wanted: two independent temperatures,
 one for the oven and one for the room.
 
@@ -118,7 +120,7 @@ one for the oven and one for the room.
     <- roomTemperature is still 21.0 degrees Celsius
 
 With value semantics,
-there is no shared state between the room temperature and the oven temperature.
+there's no shared state between the room temperature and the oven temperature.
 Changing one temperature has no effect on the other.
 
 .. image:: ../images/sharedStateStruct_2x.png
@@ -127,10 +129,10 @@ Changing one temperature has no effect on the other.
 This example of unintended sharing
 is a simple illustration of a problem that often comes up
 when using classes.
-It is clear to see where things went wrong in this example,
+It's clear to see where things went wrong in this example,
 but when you write more complicated code
 and changes come from many different places,
-it is much more difficult to reason about your code.
+it's much more difficult to reason about your code.
 Much like constants,
 structures make it easier to reason about your code
 because you don't have to worry about
@@ -206,7 +208,7 @@ Like the class version,
 but in the structure version, ``Vehicle`` is a protocol.
 ``Train`` doesn't implement a ``description`` property,
 so it uses the default implementation from ``Vehicle``.
-``Car`` implements its own ``description``
+``Car`` implements its own ``description``,
 which overrides the default implementation.
 
 With protocols and protocol extensions at your disposal,

@@ -22,8 +22,9 @@ However, there are a few important differences:
 
 Swift provides both classes and structures,
 but most of the time your code uses structures.
-For more details about choosing between them,
+For more information to help you choose between them,
 see :doc:`ReferenceAndValueTypes`.
+
 
 .. XXX Restore and reword the terminology note about "object" versus "instance".
 
@@ -50,7 +51,7 @@ within a pair of braces:
            // class definition goes here
        }
 
-Here is an example of a class definition:
+Here's an example of a class definition:
 
 .. testcode:: classes
 
@@ -67,7 +68,7 @@ Here is an example of a class definition:
 The example above defines a new class called ``Window``
 to describe a graphical window.
 This class has two variable stored properties called ``width`` and ``height``.
-Because there is no natural default for a window's width and height,
+Because there's no natural default for a window's width and height,
 these two properties are explicitly defined to be of type ``Int``
 and are set to the integer values passed in to the initializer.
 
@@ -89,13 +90,13 @@ Unlike structures,
 classes do not have a default memberwise initializer.
 Instead, you define custom initializers
 that provide the initialization logic you need.
-Because the two stored properties belonging to ``Window``
-are not set to initial values by default,
+Because the two stored properties that belong to ``Window``
+aren't set to initial values by default,
 ``Window`` needs a custom initializer.
 To initialize a class like ``Window`` with a custom initializer,
 use the type name of the class
-followed by any parameters needed
-for initialization in parentheses:
+followed, in parentheses, by any parameters needed
+for initialization:
 
 .. testcode:: classes
 
@@ -103,9 +104,9 @@ for initialization in parentheses:
     << // someWindow : Window = REPL.Window
 
 This creates a new instance of the ``Window`` class
-and initializes its ``width`` to ``500`` and ``height`` to 300.
+and initializes its ``width`` to ``500`` and its ``height`` to 300.
 
-For more information on class initialization, see :doc:`Initialization`.
+For more information about class initialization, see :doc:`Initialization`.
 
 .. _Classes_ClassesAreReferenceTypes:
 
@@ -113,12 +114,12 @@ Classes Are Reference Types
 ---------------------------
 
 Classes have different behavior from structures
-because they are reference types ---
+because classes are reference types ---
 not value types.
 A :newTerm:`reference type` is a type
 whose instance is referenced rather than copied
-when it is assigned to a variable or constant,
-or when it is passed to a function.
+when it's assigned to a variable or constant,
+or when it's passed to a function.
 
 Imagine an application that can have multiple windows open and
 needs to keep track of the currently selected window.
@@ -163,7 +164,7 @@ Comparing Reference Types for Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
-it is possible for multiple constants and variables
+it's possible for multiple constants and variables
 to refer to the same instance of a class.
 
 As mentioned in :ref:`BasicOperators_ComparisonOperators`,
@@ -172,7 +173,7 @@ that allow you to check
 if two constants or variables
 refer to the same instance of a class.
 
-Here is an example
+Here's an example
 that uses the ``windowOne`` and ``currentWindow`` instances from above
 to show an identity operator in use:
 
@@ -263,19 +264,19 @@ between constant values and constant references:
     !! ^~~
     !! var
 
-Because ``constanceInstance`` is a class instance,
+Because ``constantInstance`` is a class instance,
 it refers to an ``ExampleClass`` instance
 rather than storing it.
 As a result,
-it is valid to mutate the ``variable`` property
+it's valid to mutate the ``variable`` property
 and invalid to mutate the ``constant`` property
-of ``constanceInstance``.
+of ``constantInstance``.
 Additionally,
-you cannot reassign ``constanceInstance`` to a different class instance
+you cannot reassign ``constantInstance`` to a different class instance
 because it's a constant reference.
-This feature of being able to change
+This ability change
 the underlying variable properties of the same instance
-is something unique you get when working with classes.
+is unique to working with classes.
 In contrast,
 changing the variable properties of a structure instance
 gives you a whole new structure instance
@@ -296,9 +297,9 @@ instead of the same instance modified in place.
    A Swift constant or variable
    that refers to an instance of some reference type
    is similar to a pointer in C,
-   but is not a direct pointer to an address in memory,
-   and does not require you to write an asterisk (``*``)
-   to indicate that you are creating a reference.
+   but it's not a direct pointer to an address in memory,
+   and it doesn't require you to write an asterisk (``*``)
+   to indicate that you're creating a reference.
    Instead, these references are defined
    like any other Swift constant or variable.
 

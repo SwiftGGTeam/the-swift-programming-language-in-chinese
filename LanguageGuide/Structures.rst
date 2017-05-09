@@ -4,8 +4,8 @@ Structures
 :newTerm:`Structures` in Swift are
 general-purpose, flexible building blocks for your program.
 They are far more powerful than the simple structures you may be familiar with
-from other languages such as C and Objective-C,
-providing new ways to architect your code for optimal safety and performance.
+from other languages such as C and Objective-C.
+They provide new ways to architect your code for optimal safety and performance.
 
 In Swift, structures can:
 
@@ -24,7 +24,7 @@ In Swift, structures can:
 
 Swift provides both classes and structures,
 but most of the time your code uses structures.
-For more details about choosing between them,
+For more information to help you choose between them,
 see :doc:`ReferenceAndValueTypes`.
 
 .. _Structures_StructureSyntax:
@@ -42,7 +42,7 @@ definition within a pair of braces:
        }
     
 When you define a structure,
-you create a brand new Swift type.
+you create a new Swift type.
 Give types ``UpperCamelCase`` names,
 such as ``SomeStructure`` here,
 to match the capitalization of standard Swift types
@@ -51,7 +51,7 @@ Conversely, give properties and methods ``lowerCamelCase`` names,
 such as ``someProperty`` and ``someMethod``,
 to differentiate them from type names.
 
-Here is an example of a structure definition:
+Here's an example of a structure definition:
 
 .. testcode:: structures
 
@@ -74,16 +74,15 @@ so there is no need to store a second value for ``fahrenheit``.
 For more information about stored and computed properties,
 see :doc:`Properties`.
 
-The ``celsius`` property is inferred to be of type ``Double``
-because of its initial floating-point value of ``0.0``,
-so it is inferred to be of type ``Double``.
+The ``celsius`` property has an initial value of ``0.0``,
+so it's inferred to be of type ``Double``,
 as discussed in :ref:`TheBasics_TypeSafetyAndTypeInference`.
 Because ``fahrenheit`` is a computed property,
-it is explicitly defined as a ``Double``.
+it's explicitly defined as a ``Double``.
 
 The ``Temperature`` structure definition describes only
 what a ``Temperature`` instance looks like.
-It does not describe a specific ``Temperature`` instance.
+It doesn't describe a specific ``Temperature`` instance.
 To do that, you create an instance of the structure.
 The simplest form of initialization syntax for structures
 uses the type name of the structure
@@ -121,8 +120,8 @@ For information on structure initialization, see :doc:`Initialization`.
 
 .. _Structures_AccessingPropertiesOfStructures:
 
-Accessing Properties and Methods of Structures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Accessing the Properties and Methods of Structures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You access a property or a method of a structure instance using dot syntax.
 Write the name of the instance,
@@ -163,9 +162,9 @@ Structures Are Value Types
 --------------------------
 
 A :newTerm:`value type` is a type whose value is copied
-when it is assigned to a variable or constant,
-or when it is passed to a function.
-You've already been using value types extensively
+when it's assigned to a variable or constant,
+or when it's passed to a function.
+You've already used value types extensively
 throughout the previous chapters.
 All the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays, and dictionaries ---
@@ -181,7 +180,7 @@ because the class isn't a value type.)
 This means that any structure instances you create ---
 and any value types you give them as properties ---
 are copied when they are passed around in your code.
-For example, consider the following code
+For example, consider the following code,
 which keeps track of the temperature of a room
 and the temperature of the oven in that room.
 
@@ -229,7 +228,7 @@ but ``roomTemperature`` remains unchanged:
 .. note::
 
    Swift uses an optimization called :newTerm:`copy-on-write`,
-   sometimes abbreviated "COW",
+   sometimes abbreviated as COW,
    to reduce the number of copies it makes of a given value.
    Your code behaves as though structure instances are copied
    when you assign them to a new variable or constant,
@@ -239,23 +238,23 @@ but ``roomTemperature`` remains unchanged:
    if Swift had made a copy of the instance,
    the original instance would be identical to the copy.
    If one place mutates the instance,
-   then the original instance and the copy are no longer identical,
-   and they can't be shared any more ---
-   this means Swift has to make a copy and mutate the copy.
+   the original instance and the copy are no longer identical
+   and can no longer be shared.
+   Swift has to make a copy and mutate the copy.
 
    In the standard library,
    types like ``Array`` and ``Dictionary`` and ``String``
    that take up larger amounts of memory
    implement copy-on-write,
    but some small types like ``Int`` don't implement this optimization.
-   Your custom structures whose properties are structures from the standard library
+   Custom structures whose properties are structures from the standard library
    get copy-on-write behavior automatically.
    However, if you declare structures
    that have a property whose type is a class,
    you need to do some additional work to copy the instance of the class
    when a shared instance of the structure is mutated.
    For more information, see the
-   `isKnownUniquelyReferenced(_:) <//apple_ref/swift/func/s:Fs25isKnownUniquelyReferenceduRxs9AnyObjectrFRxSb/>`_ function
+   `isKnownUniquelyReferenced(_:) <//apple_ref/swift/func/s:Fs25isKnownUniquelyReferenceduRxs9AnyObjectrFRxSb/>`_ function.
 
    .. No example of implementing COW for a struct that contains a class,
       because it's too complicated.
