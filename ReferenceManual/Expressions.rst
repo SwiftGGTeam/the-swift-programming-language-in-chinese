@@ -1140,11 +1140,11 @@ For example:
          }
       }
    ---
-   -> let c = SomeStructure(someProperty: 12)
-   <~ // c : SomeStructure = <REPL.SomeStructure:
+   -> let s = SomeStructure(someProperty: 12)
+   <~ // s : SomeStructure = <REPL.SomeStructure:
    -> let keyPath = \SomeStructure.someProperty
    ---
-   -> if let value = c[keyPath: keyPath] {
+   -> if let value = s[keyPath: keyPath] {
    ->     print(value)
    -> }
    <- 12
