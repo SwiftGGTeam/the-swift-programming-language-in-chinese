@@ -55,7 +55,7 @@ and describes the type inference behavior of Swift.
     type --> tuple-type
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
-    type --> protocol-constrained-type
+    type --> protocol-composition-type
     type --> metatype-type
     type --> ``Any``
     type --> ``Self``
@@ -621,14 +621,14 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 
 .. _Types_ProtocolCompositionType:
 
-Protocol-Constrained Type
+Protocol-Composition Type
 -------------------------
 
-A protocol-constrained type describes a type that conforms to each protocol
+A protocol-composition type describes a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
-Protocol-constrained types may be used only when specifying a type
+Protocol-composition types may be used only when specifying a type
 in type annotations,
 in generic parameter clauses,
 and in generic where clauses.
@@ -636,34 +636,34 @@ and in generic where clauses.
 .. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
 
-Protocol-constrained types have the following form:
+Protocol-composition types have the following form:
 
 .. syntax-outline::
 
     <#Protocol 1#> & <#Protocol 2#>
 
-A protocol-constrained type allows you to specify a value whose type conforms to the requirements
+A protocol-composition type allows you to specify a value whose type conforms to the requirements
 of multiple protocols without having to explicitly define a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol constrained type ``ProtocolA & ProtocolB & ProtocolC`` is
+specifying a protocol-composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
 Likewise,
-specifying a protocol constrained type ``SuperClass & ProtocolA``
+specifying a protocol composition type ``SuperClass & ProtocolA``
 is effectively the same as declaring a new class ``SubClass``
 that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
 but without having to introduce a new name.
 
-Each item in a protocol constrained list is either
+Each item in a protocol composition list is either
 the name of a class,
 the name of a protocol,
-or a type alias whose underlying type is a protocol-constrained type,
+or a type alias whose underlying type is a protocol-composition type,
 a protocol or a class.
 The list can contain at most one class.
 
-When a protocol-constrained type contains type aliases,
+When a protocol-composition type contains type aliases,
 it's possible for the same protocol to appear
 more than once in the definitions ---
 duplicates are ignored.
@@ -683,10 +683,10 @@ is equivalent to ``P & Q & R``.
 
 .. syntax-grammar::
 
-    Grammar of a protocol constrained type
+    Grammar of a protocol composition type
 
-    protocol-constrained-type --> type-identifier ``&`` protocol-constrained-continuation
-    protocol-constrained-continuation --> type-identifier | protocol-constrained-type
+    protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> type-identifier | protocol-composition-type
 
 .. _Types_MetatypeType:
 
