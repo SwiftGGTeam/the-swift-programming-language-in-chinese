@@ -672,16 +672,8 @@ The list can contain at most one class.
 
     Grammar of a protocol constrained type
 
-    protocol-constrained-type --> superclass-identifier ``&`` protocol-constrained-continuation
-    protocol-constrained-type --> protocol-constrained-type-without-superclass 
-
-    protocol-constrained-type-without-superclass --> protocol-identifier ``&`` protocol-constrained-continuation-without-superclass
-
-    protocol-constrained-continuation --> superclass-identifier | protocol-constrained-type
-    protocol-constrained-continuation-without-superclass --> protocol-identifier | protocol-constrained-type-without-superclass
-
-    protocol-identifier --> type-identifier
-    superclass-identifier --> type-identifier
+    protocol-constrained-type --> type-identifier ``&`` protocol-constrained-continuation
+    protocol-constrained-continuation --> type-identifier | protocol-constrained-type
 
 .. _Types_MetatypeType:
 
