@@ -194,19 +194,6 @@ You can apply a declaration attribute to declarations only.
 ..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
-.. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-    Semantically, the it's replaced with a 'class' requirement,
-    e.g., @class_protocol protocol P {} --> protocol P: class {}
-
-    ``class_protocol``
-        Apply this attribute to a protocol to indicate
-        that the protocol can be adopted by class types only.
-
-        If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
-        is implicitly applied to that protocol; there's no need to mark the protocol with
-        the ``class_protocol`` attribute explicitly.
-
 ``discardableResult``
    Apply this attribute to a function or method declaration
    to suppress the compiler warning
