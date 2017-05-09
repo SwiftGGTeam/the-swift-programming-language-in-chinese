@@ -1110,7 +1110,7 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key-path string expression lets you
+A key-path expression lets you
 refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
 
