@@ -1021,3 +1021,65 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
+
+.. _AutomaticReferenceCounting_Exclusivity:
+
+Exclusive Access to Memory
+--------------------------
+
+Two accesses to the same mutable memory ---
+global and local variables, class and structure properties, and so on ---
+are not allowed to overlap unless both accesses are reads.
+
+.. What kinds of operations involve non-instantateous reads or writes?
+
+.. Does this simplification from the SE proposal work,
+   or are both globals needed to trigger the overlap?
+   It seems like a violation to me.
+
+::
+    var global: Int = 0
+
+    extension Int {
+      mutating func increase() {
+        self += global
+      }
+    }
+
+    // This is fine.
+    var x = 10
+    x.increase()
+
+    // This is a problem.  Inside ``increase()`` both ``self`` and ``global``
+    // refer to the same variable.  Because ``increase`` is a mutating function,
+    // it accesses ``self`` through the entire duration of that function.
+    // That means the code inside that function will try to read ``global``
+    // while the function is modifying it.
+    global.increase()
+
+::
+
+    // Overlapping reads -- ok.
+    let array = [10, 20, 30, 40]
+    for element in array {
+        if element > array[0] {
+            print(element)
+        }
+    }
+
+    // Overlapping read and write -- error.
+    var array = [10, 20, 30, 40]
+    for element in array {
+        if element > 20 {
+            array.append(0)
+        }
+    }
+
+    // Explicit copy to resolve the overlapping read/write.
+    let array = [10, 20, 30, 40]
+    var arrayCopy = array
+    for element in array {
+        if element > 20 {
+            arrayCopy.append(0)
+        }
+    }
