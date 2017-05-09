@@ -663,6 +663,19 @@ or a type alias whose underlying type is a protocol-constrained type,
 a protocol or a class.
 The list can contain at most one class.
 
+When a protocol-constrained type contains type aliases,
+it's possible for the same protocol to appear
+more than once in the definitions ---
+duplicates are ignored.
+For example,
+the definition of ``PQR`` in the code below
+is equivalent to ``P & Q & R``.
+
+.. testcode:: protocol-composition-can-have-repeats
+
+    -> typealias PQ = P & Q
+    -> typealias PQR = PQ & Q & R
+
 .. langref-grammar
 
     type-composition ::= 'protocol' '<' type-composition-list? '>'
