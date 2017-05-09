@@ -770,10 +770,9 @@ Type Inheritance Clause
 -----------------------
 
 A type inheritance clause is used to specify which class a named type inherits from
-and which protocols a named type conforms to. A type inheritance clause is also
-used to specify a ``class`` requirement on a protocol.
+and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
-followed by either a ``class`` requirement, a list of type identifiers, or both.
+followed by a list of type identifiers.
 
 Class types can inherit from a single superclass and conform to any number of protocols.
 When defining a class,
@@ -789,9 +788,6 @@ Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
-As discussed in :ref:`Declarations_ProtocolDeclaration`,
-you can include the ``class`` keyword as the first item in the type inheritance clause
-to mark a protocol declaration with a ``class`` requirement.
 
 A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
@@ -807,11 +803,8 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ``:`` class-requirement ``,`` type-inheritance-list
-    type-inheritance-clause --> ``:`` class-requirement
     type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
-    class-requirement --> ``class``
 
 .. _Types_TypeInference:
 

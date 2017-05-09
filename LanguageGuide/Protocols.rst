@@ -1010,14 +1010,12 @@ Class-Only Protocols
 --------------------
 
 You can limit protocol adoption to class types (and not structures or enumerations)
-by adding the ``class`` keyword to a protocol's inheritance list.
-The ``class`` keyword must always appear first in a protocol's inheritance list,
-before any inherited protocols:
+by adding the ``AnyObject`` protocol to a protocol's inheritance list.
 
 .. testcode:: classOnlyProtocols
 
    >> protocol SomeInheritedProtocol {}
-   -> protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+   -> protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
          // class-only protocol definition goes here
       }
 
@@ -1043,6 +1041,13 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    !! protocol P3: P1, class {}
    !! ~~^~~~~
    !! class,
+
+.. assertion:: anyobject-doesn't-have-to-be-first
+
+   >> protocol SomeInheritedProtocol {}
+   -> protocol SomeClassOnlyProtocol: SomeInheritedProtocol, AnyObject {
+         // class-only protocol definition goes here
+      }
 
 .. TODO: a Cacheable protocol might make a good example here?
 
