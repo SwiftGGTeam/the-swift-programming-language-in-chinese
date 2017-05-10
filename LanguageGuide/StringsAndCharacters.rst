@@ -675,15 +675,16 @@ as shown in the figure below:
 .. image:: ../images/stringSubstring_2x.png
    :align: center
 
+.. XXX Fix the figure to match the code listing.
+
 Because subscripts don't have their own in-memory storage,
-there's no performance overhead when you create a substring
-due to copying a portion the original string ---
-nothing is actually copied.
-This characteristic makes substrings well suited short-term storage,
+you don't have to pay the performance cost
+of copying a portion the original string.
+This characteristic makes substrings well suited for short-term storage,
 for tasks such as parsing a custom data format
 to extract the values needed to populate a data structure.
 However, substrings are not suitable for long-term storage
-of a portion of a string.
+of portions of a string.
 Substrings re-use the backing storage of the original string,
 which means the entire original string must be kept in memory
 as long as any of its substrings are being used.
