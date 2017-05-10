@@ -660,7 +660,11 @@ For example:
 
    -> let greeting = "Hello world"
    << // greeting : String = "Hello world"
-   -> let beginning = greeting[0..<2]
+   -> if let space = greeting.index(of: " ") {
+          let beginning = greeting[..<space]
+   >>     print(beginning)
+      }
+   << Hello
 
 In the code above,
 ``beginning`` is a substring of ``greeting``,
@@ -687,22 +691,24 @@ For example:
 
 .. testcode:: string-and-substring
 
-    -> func someBadFunction() -> SubString {
-           let s = "123 456 789"
+    -> func someBadFunction() -> Substring {
+           let longString = String(repeating: "12345\n", count: 100)
+           let index = longString.index(after: longString.startIndex)
+           let substring = longString[..<index]
 
-           // Bad code.  Returning a substring is fast, but doesn't allow
-           // s to be deallocated, wasting memory.
-           return s[0]
+           return substring  // Bad
     }
     -> func someBetterFunction() -> String {
-           let s = "123 456 789"
-           let substring = s[0]
+           let longString = String(repeating: "12345\n", count: 100)
+           let index = longString.index(after: longString.startIndex)
+           let substring = longString[..<index]
+
            return String(substring)
     }
     >> someBadFunction()
     >> someBetterFunction()
-
-.. XXX add test expectation above
+    << // r0 : Substring = "1"
+    << // r1 : String = "1"
 
 The function ``someBadFunction`` returns a substring of only one character,
 but the entire original string must be kept in memory
