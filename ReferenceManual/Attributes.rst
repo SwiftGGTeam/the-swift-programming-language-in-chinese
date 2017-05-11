@@ -321,7 +321,7 @@ You can apply a declaration attribute to declarations only.
     * The declaration is an override in a subclass
       and the superclass's declaration has the ``objc`` attribute.
     * The declaration satisfies a requirement
-      from a protocol that has the ``objc`` attribute
+      from a protocol that has the ``objc`` attribute.
     * The declaration has the ``IBAction``, ``IBOutlet``,
       ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
 
