@@ -60,7 +60,7 @@ because it is initialized with a string literal value.
    For information about using special characters in string literals,
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
-There is also a second form of string literal
+There is a second form of string literal
 that uses three double quotes before and after the text:
 
 .. Quote comes from "Alice's Adventures in Wonderland,
@@ -86,6 +86,18 @@ the string literal includes all of the lines between the triple quotes.
 The string begins on the first line after the opening triple quote (``"""``)
 and ends on the line before the closing triple quote (``"""``),
 which means that ``quotation`` doesn't start or end with a line feed.
+Both of the strings below are the same:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let singleLineString = "These are the same."
+   -> let multilineString = """
+      These are the same.
+      """
+   >> print(singleLineString == multilineString)
+   << true
+
 To make a multiline string literal that begins or ends with a line feed,
 write a blank line as the first or last line.
 For example:
@@ -93,6 +105,7 @@ For example:
 .. testcode:: multiline-string-literal
    :compile: true
 
+   >> let blank = 
    -> """
 
       This string starts with a line feed.
