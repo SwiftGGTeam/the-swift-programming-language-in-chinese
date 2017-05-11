@@ -1,16 +1,24 @@
 Version Compatibility
 =====================
 
-.. XXX Copy the swift-version assertion from USWCAOC into this chapter.
-
 This book describes version 4.0 of the Swift language,
 which ships as part of Xcode 9.
 You can use Xcode 9 to build targets
 that are written in either Swift 4 or Swift 3.
 
+.. assertion:: swift-version
+
+   >> #if swift(>=4.0.1)
+   >>     print("Too new")
+   >> #elseif swift(>=4.0)
+   >>     print("Just right")
+   >> #else
+   >>     print("Too old")
+   >> #endif
+   << Just right
+
 When you use Xcode 9 to build Swift 3 code,
-the compiler uses the version number Swift 3.2
-and most of the new Swift 4 functionality is available.
+most of the new Swift 4 functionality is available.
 The following features are available only to Swift 4 code:
 
 .. XXX This list is a rough guess.
@@ -28,43 +36,20 @@ that is divided into multiple frameworks,
 you can migrate your code from Swift 3 to Swift 4
 one framework at a time.
 
-.. XXX In the paragraph above, is it "target" or "product"?
-
 When the Swift 4 compiler is working with Swift 3 code,
 it identifies its language version as 3.2 ---
 this means you can use conditional compilation blocks
 like ``#if swift(>=3.2)``.
 
-.. XXX How about an example of the exact incantation
-   needed to detect Swift 3.2 but not 3.1 or 4.0?
+.. The incantation to determine which Swift you're on:
 
-.. Scratch writing...
+   #if swift(>=4)
+       print("Swift 4 compiler reading Swift 4 code")
+   #elseif swift(>=3.2)
+       print("Swift 4 compiler reading Swift 3 code")
+   #elseif swift(>=3.1)
+       print("Swift 3.1 compiler")
+   #else
+       print("An older compiler")
+   #endif
 
-    - This book describes version 4.0 of the Swift language.
-
-    - The Swift 4 compiler (Xcode 9) supports both Swift 4 code
-      and code that was written in Swift 3.
-
-    - Most of the new features of Swift 4
-      are still available when you're writing Swift 3 code
-      that you compile with the new compiler.
-
-    - The following features of Swift 4/Xcode 9
-      are available only in Swift 4 mode.
-      
-      (...)
-
-    Versions of Xcode that support Swift 4.0
-    can also work with existing Swift 3 code
-    using a build setting.
-    The Swift 4 tools identify as "Swift 3.2"
-    when they are compiling Swift 3 code.
-
-
-    Because Xcode 9 uses the same Swift compiler
-    for both Swift 3 and Swift 4 code,
-    you can link between targets written in either language version.
-
-
-    You can use Xcode 9 to compile both Swift 4 code and Swift 3 code,
-    and you can mix them.
