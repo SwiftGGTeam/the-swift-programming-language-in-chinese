@@ -656,7 +656,7 @@ You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
 Line endings in a multiline string literal are
-normalized to use the line feed (``\n``) character.
+normalized to use the line feed character.
 Even if your source file has a mix of carriage returns and line feeds,
 all of the line endings in the string will be the same.
 
