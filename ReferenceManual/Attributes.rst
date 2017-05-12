@@ -358,10 +358,6 @@ You can apply a declaration attribute to declarations only.
              }
           }
 
-    .. TODO: If and when Dave includes a section about this in the Guide,
-        provide a link to the relevant section.
-        Possibly link to Anna and Jack's guide too.
-
 ``objcMembers``
     Apply this attribute to any class declaration
     that can have the ``objc`` attribute.
