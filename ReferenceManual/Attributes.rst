@@ -376,9 +376,10 @@ You can apply a declaration attribute to declarations only.
     that make heavy use of
     the introspection facilities of the Objective-C runtime.
     There is a cost in binary size and in performance
-    incurred by exposing declarations to the Objective-C runtime,
+    incurred by making declarations
+    available to use in the Objective-C code,
     which means you usually want
-    to limit the declarations exposed to the Objective-C runtime.
+    to limit which declarations are made available.
 
 ``testable``
     Apply this attribute to ``import`` declarations
