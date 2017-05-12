@@ -606,7 +606,8 @@ which represents a 32-bit floating-point number.
 String Literals
 ~~~~~~~~~~~~~~~
 
-A string literal is a sequence of characters surrounded by double quotes,
+A string literal is a sequence of characters surrounded by quotes.
+A single-line string literal is surrounded by double quotes,
 with the following form:
 
 .. syntax-outline::
@@ -618,8 +619,7 @@ an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-A multiline string literal is a sequence of characters
-that has three double quotes before and after it,
+A multiline string literal is surrounded by three double quotes,
 with the following form:
 
 .. syntax-outline::
@@ -650,7 +650,7 @@ The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
 with exactly the same indentation
-that appears before the ``"""`` terminator;
+that appears before the closing ``"""``;
 there is no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
@@ -746,10 +746,15 @@ no runtime concatenation is performed.
     string-literal --> static-string-literal | interpolated-string-literal
 
     static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` quoted-text-OPT ``"""``
+    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
+
+    multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
+    multiline-quoted-text-item --> escaped-charatcer
+    multiline-quoted-text-item --> Any Unicode scalar value except ``\``
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` interpolated-text-OPT ``"""``
