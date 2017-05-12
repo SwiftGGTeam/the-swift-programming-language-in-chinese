@@ -80,8 +80,24 @@ that uses three double quotes before and after the text:
 Because the multiline form uses three double quotes instead of just one,
 you can include a double quote (``"``) inside of a multiline string literal,
 like the example above does.
+To include a literal ``"""`` in a multiline string,
+you have to escape at least one of the quotation marks,
+as discussed below in
+:ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+For example:
 
-In this multiline form,
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let tripleQuote = """
+      Escaping the first quote \"""
+      Escaping all three quotes \"\"\"
+      """
+   >> print(tripleQuote)
+   << Escaping the first quote """
+   << Escaping all three quotes """
+
+In its multiline form,
 the string literal includes all of the lines between the triple quotes.
 The string begins on the first line after the opening triple quote (``"""``)
 and ends on the line before the closing triple quote (``"""``),
@@ -112,6 +128,8 @@ For example:
       It also ends with a line feed.
 
       """
+
+.. These are well-fed lines!
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing triple quote
@@ -455,12 +473,6 @@ demonstrate the Unicode scalar format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    >> print(sparklingHeart)
    << 💖
-   ---
-   -> let tripleQuote = """
-      There are three quotes \""" in here.
-      """
-   >> print(tripleQuote)
-   << There are three quotes """ in here.
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
