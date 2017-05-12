@@ -440,17 +440,27 @@ The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the Unicode scalar format:
 
 .. testcode:: specialCharacters
+   :compile: true
 
    -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
    >> print(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
+   ---
    -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
+   >> print(dollarSign)
+   << $
    -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
+   >> print(blackHeart)
+   << ♥
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
+   >> print(sparklingHeart)
+   << 💖
+   ---
+   -> let tripleQuote = """
+      There are three quotes \""" in here.
+      """
+   >> print(tripleQuote)
+   << There are three quotes """ in here.
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
