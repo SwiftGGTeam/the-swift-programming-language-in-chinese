@@ -146,7 +146,6 @@ that whitespace *is* included.
    -> let linesWithIndentation = """
           This line doesn't begin with whitespace.
               This line starts with four spaces.
-                  This line starts with eight spaces.
           This line doesn't begin with whitespace.
           """
 
