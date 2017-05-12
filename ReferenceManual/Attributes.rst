@@ -323,7 +323,8 @@ You can apply a declaration attribute to declarations only.
     * The declaration satisfies a requirement
       from a protocol that has the ``objc`` attribute.
     * The declaration has the ``IBAction``, ``IBOutlet``,
-      ``IBInspectable``, ``NSManaged`` or ``GKInspectable`` attribute.
+      ``IBDesignable``, ``IBInspectable``,
+      ``NSManaged``, or ``GKInspectable`` attribute.
 
     If you apply the ``objc`` attribute to an enumeration,
     each enumeration case is exposed to Objective-C code
@@ -412,7 +413,7 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-Applying the ``IBAction``, ``IBOutlet``, or ``IBDesignable`` attribute
+Applying the ``IBAction``, ``IBOutlet``, ``IBDesignable``, or ``IBInspectable`` attribute
 also implies the ``objc`` attribute.
 
 
