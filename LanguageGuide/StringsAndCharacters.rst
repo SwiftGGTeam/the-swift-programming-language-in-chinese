@@ -60,8 +60,10 @@ because it is initialized with a string literal value.
    For information about using special characters in string literals,
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
-There is a second form of string literal
-that uses three double quotes before and after the text:
+If you need a string that spans several lines,
+use a multiline string literal.
+A multiline string literal is a fixed sequence of textual characters
+surrounded by three double quotes:
 
 .. Quote comes from "Alice's Adventures in Wonderland,
    which has been public domain as of 1907.
@@ -79,7 +81,7 @@ that uses three double quotes before and after the text:
 
 Because the multiline form uses three double quotes instead of just one,
 you can include a double quote (``"``) inside of a multiline string literal,
-like the example above does.
+as shown in the example above.
 To include a literal ``"""`` in a multiline string,
 you have to escape at least one of the quotation marks,
 as discussed below in
@@ -89,18 +91,19 @@ For example:
 .. testcode:: multiline-string-literals
    :compile: true
 
-   -> let tripleQuote = """
+   -> let threeDoubleQuotes = """
       Escaping the first quote \"""
       Escaping all three quotes \"\"\"
       """
-   >> print(tripleQuote)
+   >> print(threeDoubleQuotes)
    << Escaping the first quote """
    << Escaping all three quotes """
 
 In its multiline form,
-the string literal includes all of the lines between the triple quotes.
-The string begins on the first line after the opening triple quote (``"""``)
-and ends on the line before the closing triple quote (``"""``),
+the string literal includes all of the lines between
+its opening and closing quotes.
+The string begins on the first line after the opening quotes (``"""``)
+and ends on the line before the closing quotes (``"""``),
 which means that ``quotation`` doesn't start or end with a line feed.
 Both of the strings below are the same:
 
@@ -353,7 +356,7 @@ String Interpolation
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
 You can use string interpolation
-in both ordinary string literals and multiline string literals.
+in both single-line and multiline string literals.
 Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash (``\``):
 
