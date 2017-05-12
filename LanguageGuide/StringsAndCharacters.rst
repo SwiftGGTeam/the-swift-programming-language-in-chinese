@@ -145,7 +145,7 @@ that whitespace *is* included.
 
    -> let linesWithIndentation = """
           This line doesn't begin with whitespace.
-              This line starts with four spaces.
+              This line begins with four spaces.
           This line doesn't begin with whitespace.
           """
 
@@ -362,7 +362,7 @@ when it is included inside the string literal.
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
-   cannot contain an unescaped backslash (``\``), a carriage return, or a line feed.
+   can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
 
 .. TODO: add a bit here about making things Printable.
