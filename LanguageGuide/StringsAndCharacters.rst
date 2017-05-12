@@ -121,7 +121,7 @@ For example:
 .. testcode:: multiline-string-literal
    :compile: true
 
-   >> let blank = 
+   >> let blank =
    -> """
 
       This string starts with a line feed.
