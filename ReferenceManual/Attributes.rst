@@ -369,22 +369,16 @@ You can apply a declaration attribute to declarations only.
     to Objective-C compatible members of the class,
     its extensions, its subclasses, and all of their extensions.
 
-    Most code should use the ``objc`` attribute
-    to expose only the declarations that are needed,
-    instead of using this attribute.
-    Exposing declarations to the Objective-C runtime
-    requires a thunk method to translate between calling conventions,
-    which has a negative impact on performance and binary size.
-    Using the ``objc`` attribute lets you avoid paying that cost
-    except when it is actually doing something useful.
-
+    Most code should use the ``objc`` attribute instead,
+    to expose only the declarations that are needed.
     This attribute is a convenience for
-    libraries and systems that make heavy use of
-    the introspection facilities of the Objective-C runtime ---
-    for example, the XCTest framework ---
-    where the declarations that the ``objcMembers`` attribute
-    implicitly marks with the ``objc`` attribute
-    would otherwise have been marked with ``objc`` explicitly.
+    libraries such as the XCTest framework
+    that make heavy use of
+    the introspection facilities of the Objective-C runtime.
+    There is a cost in binary size and in performance
+    incurred by exposing declarations to the Objective-C runtime,
+    which means you usually want
+    to limit the declarations exposed to the Objective-C runtime.
 
 ``testable``
     Apply this attribute to ``import`` declarations
