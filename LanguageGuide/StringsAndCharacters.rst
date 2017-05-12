@@ -460,6 +460,7 @@ demonstrate the Unicode scalar format:
 .. testcode:: specialCharacters
 
    -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
    >> print(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
    -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
