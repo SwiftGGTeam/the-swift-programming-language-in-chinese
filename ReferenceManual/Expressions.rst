@@ -1127,7 +1127,7 @@ For example:
 .. testcode:: selector-expression
 
    >> import Foundation
-   -> @objc class SomeClass: NSObject {
+   -> class SomeClass: NSObject {
           @objc let property: String
           @objc(doSomethingWithInt:)
           func doSomething(_ x: Int) {}
@@ -1210,7 +1210,7 @@ For example:
 .. testcode:: keypath-expression
 
    >> import Foundation
-   -> @objc class SomeClass: NSObject {
+   -> class SomeClass: NSObject {
          @objc var someProperty: Int
          init(someProperty: Int) {
              self.someProperty = someProperty

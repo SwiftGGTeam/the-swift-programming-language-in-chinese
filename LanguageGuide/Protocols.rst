@@ -1364,7 +1364,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> @objc class ThreeSource: NSObject, CounterDataSource {
+   -> class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1396,7 +1396,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
+   -> class TowardsZeroSource: NSObject, CounterDataSource {
          func increment(forCount count: Int) -> Int {
             if count == 0 {
                return 0

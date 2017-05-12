@@ -300,7 +300,7 @@ You can apply a declaration attribute to declarations only.
     nongeneric enumerations (constrained to integer raw-value types),
     properties and methods (including getters and setters) of classes,
     protocols and optional members of a protocol,
-    initializers, deinitializers, and subscripts.
+    initializers, and subscripts.
     The ``objc`` attribute tells the compiler
     that a declaration is available to use in Objective-C code.
 
@@ -318,7 +318,10 @@ You can apply a declaration attribute to declarations only.
 
     The ``objc`` attribute is also implicitly added in the following cases:
 
-    * The declaration is an override in a subclass
+    * The declaration is a nongeneric subclass of a class
+      that has the ``objc`` attribute
+      or of a class that is defined in Objective-C code.
+    * The declaration is an override in a subclass,
       and the superclass's declaration has the ``objc`` attribute.
     * The declaration satisfies a requirement
       from a protocol that has the ``objc`` attribute.
@@ -349,7 +352,7 @@ You can apply a declaration attribute to declarations only.
        :compile: true
 
        >> import Foundation
-       -> @objc class ExampleClass: NSObject {
+       -> class ExampleClass: NSObject {
              @objc var enabled: Bool {
                 @objc(isEnabled) get {
                    // Return the appropriate value
