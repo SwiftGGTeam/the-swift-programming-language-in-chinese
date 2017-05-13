@@ -298,8 +298,9 @@ You can apply a declaration attribute to declarations only.
     must inherit from a class defined in Objective-C
     or from another class marked with the ``objc`` attribute.
     The compiler implicitly adds the ``objc`` attribute to a nongeneric class
-    that inherits from another class marked with the ``objc`` attribute
-    or from a class defined in Objective-C.
+    that doesn't have any generic superclasses,
+    and that inherits from either another class marked with the ``objc`` attribute
+    or a class defined in Objective-C.
     Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't marked with the ``objc`` attribute.
 
