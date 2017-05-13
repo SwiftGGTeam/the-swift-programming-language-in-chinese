@@ -2146,7 +2146,9 @@ see :doc:`../LanguageGuide/Extensions`.
 If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
-the extension extends all types that conform to that protocol.
+the extension extends all types that conform to that protocol,
+and the declarations in the extension's body
+can't be marked ``final``.
 
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
