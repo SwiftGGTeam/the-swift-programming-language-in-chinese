@@ -17,6 +17,9 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14   
 > 3.0.1，shanks，2016-11-13
 
+> 3.1
+> 翻译：[qhd](https://github.com/qhd) 2017-04-18  
+
 本页包含内容：
 
 - [存储属性的初始赋值](#setting_initial_values_for_stored_properties)
@@ -706,6 +709,26 @@ for item in breakfastList {
 
 > 注意  
 严格来说，构造器都不支持返回值。因为构造器本身的作用，只是为了确保对象能被正确构造。因此你只是用`return nil`表明可失败构造器构造失败，而不要用关键字`return`来表明构造成功。
+
+例如，实现针对数字类型转换的可失败构造器。确保数字类型之间的转换能保持精确的值，使用这个 `init(exactly:)` 构造器。如果类型转换不能保持值不变，则这个构造器构造失败。  
+
+```
+let wholeNumber: Double = 12345.0
+let pi = 3.14159
+ 
+if let valueMaintained = Int(exactly: wholeNumber) {
+    print("\(wholeNumber) conversion to Int maintains value")
+}
+// 打印 "12345.0 conversion to Int maintains value"
+ 
+let valueChanged = Int(exactly: pi)
+// valueChanged 是 Int? 类型, 不是 Int 类型
+ 
+if valueChanged == nil {
+    print("\(pi) conversion to Int does not maintain value")
+}
+// 打印 "3.14159 conversion to Int does not maintain value"
+```
 
 下例中，定义了一个名为`Animal`的结构体，其中有一个名为`species`的`String`类型的常量属性。同时该结构体还定义了一个接受一个名为`species`的`String`类型参数的可失败构造器。这个可失败构造器检查传入的参数是否为一个空字符串。如果为空字符串，则构造失败。否则，`species`属性被赋值，构造成功。
 
