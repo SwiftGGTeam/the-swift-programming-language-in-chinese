@@ -757,9 +757,13 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
-    interpolated-string-literal --> ``"""`` interpolated-text-OPT ``"""``
+    interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
+
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
+
+    multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
+    multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
