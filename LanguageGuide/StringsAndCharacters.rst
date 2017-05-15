@@ -135,7 +135,7 @@ For example:
 .. These are well-fed lines!
 
 A multiline string can be indented to match the surrounding code.
-The whitespace before the closing triple quote
+The whitespace before the closing quotes (``"""``)
 tells Swift what whitespace to ignore before all of the other lines.
 For example,
 even though the multiline string literal in the function below is indented,
@@ -158,7 +158,7 @@ the lines in the actual string don't begin with any whitespace.
    <- true
 
 However, if you write whitespace at the beginning of a line
-in addition to what's before the closing triple quote,
+in addition to what's before the closing quotes (``"""``),
 that whitespace *is* included.
 
 .. testcode:: multiline-string-literals
