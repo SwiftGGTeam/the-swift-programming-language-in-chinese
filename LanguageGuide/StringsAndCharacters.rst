@@ -65,7 +65,7 @@ use a multiline string literal.
 A multiline string literal is a fixed sequence of textual characters
 surrounded by three double quotes:
 
-.. Quote comes from "Alice's Adventures in Wonderland,
+.. Quote comes from "Alice's Adventures in Wonderland",
    which has been public domain as of 1907.
 
 .. testcode:: multiline-string-literals
