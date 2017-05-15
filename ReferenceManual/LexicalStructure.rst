@@ -753,7 +753,7 @@ no runtime concatenation is performed.
     quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
 
     multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
-    multiline-quoted-text-item --> escaped-charatcer
+    multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
