@@ -12,10 +12,15 @@ The compiler is optimized for performance
 and the language is optimized for development,
 without compromising on either.
 
-Swift is an industrial-quality programming language
+Swift is friendly to new programmers.
+It's an industrial-quality programming language
 that's as expressive and enjoyable as a scripting language.
-By adopting modern programming patterns,
-Swift defines away large classes of common programming errors:
+Writing Swift code in a playground
+lets you experiment with code and see the results immediately,
+without the overhead of building and running an app.
+
+Swift defines away large classes of common programming errors
+by adopting modern programming patterns:
 
 - Variables are always initialized before use.
 - Array indices are checked for out-of-bounds errors.
@@ -24,7 +29,6 @@ Swift defines away large classes of common programming errors:
 - Memory is managed automatically.
 - Error handling allows controlled recovery from unexpected failures.
 
-Swift is also built to be fast.
 Swift code is compiled and optimized to get the most out of modern hardware.
 The syntax and standard library have been designed
 based on the guiding principle that
@@ -32,10 +36,6 @@ the obvious way to write your code should also perform the best.
 Its combination of safety and speed make Swift an excellent choice for
 everything from "Hello, world!" to an entire operating system.
 
-Swift is friendly to new programmers.
-Writing Swift code in a playground
-allows you to experiment with code and see the results immediately,
-without the overhead of building and running an app.
 Swift combines powerful type inference and pattern matching with
 a modern, lightweight syntax,
 allowing complex ideas to be expressed in a clear and concise manner.
