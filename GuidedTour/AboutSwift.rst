@@ -32,7 +32,7 @@ everything from "Hello, world!" to an entire operating system.
 
 Swift is friendly to new programmers.
 Writing Swift code in a playground
-allows you to experiment with Swift code and see the results immediately,
+allows you to experiment with code and see the results immediately,
 without the overhead of building and running an app.
 Swift combines powerful type inference and pattern matching with
 a modern, lightweight syntax,
@@ -41,7 +41,6 @@ As a result, code is not just easier to write,
 but easier to read and maintain as well.
 
 Swift has been years in the making,
-and it continues to evolve with new features and capabilities
-for many years to come.
+and it continues to evolve with new features and capabilities.
 Our goals for Swift are ambitious.
 We can’t wait to see what you create with it.
