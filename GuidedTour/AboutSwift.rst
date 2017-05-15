@@ -15,13 +15,15 @@ without compromising on either.
 Swift is an industrial-quality programming language
 that's as expressive and enjoyable as a scripting language.
 By adopting modern programming patterns,
-Swift defines away large classes of common programming errors.
-Variables are always initialized before use,
-array indices are checked for out-of-bounds errors,
-integers are checked for overflow,
-optionals ensure that ``nil`` values are handled explicitly,
-memory is managed automatically,
-and error handling allows controlled recovery from unexpected failures.
+Swift defines away large classes of common programming errors:
+
+- Variables are always initialized before use.
+- Array indices are checked for out-of-bounds errors.
+- Integers are checked for overflow.
+- Optionals ensure that ``nil`` values are handled explicitly.
+- Memory is managed automatically.
+- Error handling allows controlled recovery from unexpected failures.
+
 Swift is also built to be fast.
 Swift code is compiled and optimized to get the most out of modern hardware.
 The syntax and standard library have been designed
