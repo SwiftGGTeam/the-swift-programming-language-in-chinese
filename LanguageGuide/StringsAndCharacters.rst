@@ -665,8 +665,8 @@ For example:
    << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 5), _countUTF16: 1)
    -> let beginning = greeting[..<index]
    << // beginning : String.SubSequence = "Hello"
-   /> beginning is "\(beginning)".
-   </ beginning is "Hello".
+   /> beginning is "\(beginning)"
+   </ beginning is "Hello"
 
 In the code above,
 ``beginning`` is a substring of ``greeting``,
