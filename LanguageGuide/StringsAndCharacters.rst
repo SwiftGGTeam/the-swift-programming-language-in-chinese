@@ -646,8 +646,9 @@ use the ``removeSubrange(_:)`` method:
 Strings and Substrings
 ----------------------
 
-When you access part of a string using a subscript,
-the result is a :newTerm:`substring`.
+When you access part of a string,
+the substring is returned as an instance
+of the `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_ type.
 The most important difference between a string and a substring
 is that a substring doesn't have its own storage.
 A string has a region of memory
