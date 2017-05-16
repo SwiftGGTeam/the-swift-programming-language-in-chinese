@@ -683,43 +683,31 @@ Because subscripts don't have their own in-memory storage,
 you don't have to pay the performance cost
 of copying a portion the original string.
 This characteristic makes substrings well suited for short-term storage,
-for tasks such as parsing a custom data format
-to extract the values needed to populate a data structure.
-However, substrings are not suitable for long-term storage
-of portions of a string.
-Substrings re-use the backing storage of the original string,
+for tasks such as performing multistep string manipulation.
+However, substrings are not suitable for long-term storage.
+Substrings re-use the storage of the original string,
 which means the entire original string must be kept in memory
 as long as any of its substrings are being used.
 For example:
 
 .. testcode:: string-and-substring
 
-    -> func someBadFunction() -> Substring {
-           let longString = String(repeating: "12345\n", count: 100)
-           let index = longString.index(after: longString.startIndex)
-           let substring = longString[..<index]
+    -> let longString = String(repeating: "12345", count: 10)
+    << // longString : String = "12345123451234512345123451234512345123451234512345"
+    -> let index = longString.index(after: longString.startIndex)
+    << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 1), _countUTF16: 1)
+    ---
+    -> let firstCharacter = longString[..<index]
+    << // firstCharacter : Substring = "1"
+    -> let newString = String(firstCharacter)
+    << // newString : String = "1"
 
-           return substring  // Bad
-    }
-    -> func someBetterFunction() -> String {
-           let longString = String(repeating: "12345\n", count: 100)
-           let index = longString.index(after: longString.startIndex)
-           let substring = longString[..<index]
-
-           return String(substring)
-    }
-    >> someBadFunction()
-    >> someBetterFunction()
-    << // r0 : Substring = "1"
-    << // r1 : String = "1"
-
-The function ``someBadFunction`` returns a substring of only one character,
-but the entire original string must be kept in memory
-for as long as the function's return value remains in memory.
-The function ``someBetterFunction`` shows the better practice
-of using a substring for short term work on a string,
-and then conversion to a ``String`` value
-for long-term storage.
+The constant ``firstCharacter`` a substring
+that contains the first character of a much longer string.
+The entire original string must be kept in memory
+for as long as ``firstCharacter`` remains in memory.
+The last line copies the extracted character
+into a ``String`` so it can be stored long-term.
 
 .. note::
 
