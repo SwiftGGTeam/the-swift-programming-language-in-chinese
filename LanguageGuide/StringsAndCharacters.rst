@@ -667,47 +667,41 @@ For example:
    << // beginning : String.SubSequence = "Hello"
    /> beginning is "\(beginning)"
    </ beginning is "Hello"
+   ---
+   // Convert the result to a String for long-term storage.
+   -> let newString = String(beginning)
+   << // newString : String = "Hello"
 
-In the code above,
+In this example,
 ``beginning`` is a substring of ``greeting``,
-and so ``beginning`` re-uses the same memory
-that is used to store the entire string ``"Hello world"``
-as shown in the figure below:
+which means ``beginning`` re-uses the memory that ``greeting`` uses.
+In contrast,
+``newString`` is a string, which means it has its own storage.
+The figure below shows these relationships:
 
 .. image:: ../images/stringSubstring_2x.png
    :align: center
+   :width: 75%
+
+.. XXX Remove the :width: from the figure.
+   It's a hack to make my placeholder art not giant,
+   although it (probably) doesn't do anything to the [Tool S] XML.
 
 .. XXX Fix the figure to match the code listing.
+   2017-05-15 Emailed Shaun with changes.
 
 Because subscripts don't have their own in-memory storage,
 you don't have to pay the performance cost
-of copying a portion the original string.
+of copying anything from the original string.
 This characteristic makes substrings well suited for short-term storage,
-for tasks such as performing multistep string manipulation.
-However, substrings are not suitable for long-term storage.
-Substrings re-use the storage of the original string,
-which means the entire original string must be kept in memory
+such as the intermediate results of a multistep string manipulation.
+However, substrings are not suitable for long-term storage,
+because they re-use the storage of the original string.
+This re-use means the entire original string must be kept in memory
 as long as any of its substrings are being used.
-For example:
-
-.. testcode:: string-and-substring
-
-    -> let longString = String(repeating: "12345", count: 10)
-    << // longString : String = "12345123451234512345123451234512345123451234512345"
-    -> let index = longString.index(after: longString.startIndex)
-    << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 1), _countUTF16: 1)
-    ---
-    -> let firstCharacter = longString[..<index]
-    << // firstCharacter : Substring = "1"
-    -> let newString = String(firstCharacter)
-    << // newString : String = "1"
-
-The constant ``firstCharacter`` a substring
-that contains the first character of a much longer string.
-The entire original string must be kept in memory
-for as long as ``firstCharacter`` remains in memory.
-The last line copies the extracted character
-into a ``String`` so it can be stored long-term.
+As shown in the example and figure above,
+when you need to use the result for a long time,
+convert the ``Substring`` to a ``String``.
 
 .. note::
 
