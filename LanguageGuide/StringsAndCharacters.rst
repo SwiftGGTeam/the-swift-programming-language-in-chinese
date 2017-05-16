@@ -659,13 +659,14 @@ For example:
 
 .. testcode:: string-and-substring
 
-   -> let greeting = "Hello world"
-   << // greeting : String = "Hello world"
-   -> if let space = greeting.index(of: " ") {
-          let beginning = greeting[..<space]
-   >>     print(beginning)
-      }
-   << Hello
+   -> let greeting = "Hello, world!"
+   << // greeting : String = "Hello, world!"
+   -> let index = greeting.index(of: ",") ?? greeting.endIndex
+   << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 5), _countUTF16: 1)
+   -> let beginning = greeting[..<index]
+   << // beginning : String.SubSequence = "Hello"
+   /> beginning is "\(beginning)".
+   </ beginning is "Hello".
 
 In the code above,
 ``beginning`` is a substring of ``greeting``,
