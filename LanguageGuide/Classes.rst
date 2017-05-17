@@ -103,7 +103,7 @@ for initialization:
     -> let someWindow = Window(width: 500, height: 300)
     << // someWindow : Window = REPL.Window
 
-This creates a new instance of the ``Window`` class
+The example above creates a new instance of the ``Window`` class
 and initializes its ``width`` to ``500`` and its ``height`` to 300.
 
 For more information about class initialization, see :doc:`Initialization`.
@@ -151,7 +151,7 @@ As a result, changing the width of ``currentWindow``
 changes the width of ``windowOne``.
 
 Checking the ``width`` property of ``windowOne``
-confirms that it changed to ``800``:
+confirms that has it changed to ``800``:
 
 .. testcode:: classes
 
@@ -186,14 +186,16 @@ to show an identity operator in use:
 
 .. note:: 
 
-   “Identical to” (represented by three equals signs, or ``===``)
+   Comparing for identity,
+   represented by three equal signs (``===``)
    does not mean the same thing
-   as “equal to” (represented by two equals signs, or ``==``).
-   “Identical to” means that two constants or variables of class type
+   as comparing for equality,
+   represented by two equal signs (``==``).
+   Identity means that two constants or variables of class type
    refer to exactly the same class instance.
-   “Equal to” means that two instances
-   are considered “equal” or “equivalent” in value,
-   for some appropriate meaning of “equal”,
+   Equality means that two instances
+   are considered equal or equivalent in value,
+   for some appropriate meaning of equality,
    as defined by the type's designer.
 
 .. _Classes_ConstantsAndReferenceTypes:
@@ -205,16 +207,16 @@ One of the fundamental characteristics of reference semantics
 is that a single instance can be referred to in multiple places.
 In the example above,
 you may have noticed that ``windowOne`` is declared as a *constant*,
-rather than a variable.
-However, you can still change the variable properties of ``windowOne``
+rather than as a variable.
+However, you can still change variable properties of ``windowOne``,
 such as ``windowOne.width``.
-This is because the value of the ``windowOne`` constant itself
+You can do so because the value of the ``windowOne`` constant itself
 does not store the ``Window`` instance ---
 it *refers* to a ``Window`` instance.
-It is the ``width`` property of the underlying ``Window`` that is changed ---
-not the value of the constant reference to that ``Window``.
+It's the ``width`` property of the underlying ``Window`` object that's changed ---
+not the value of the constant reference to that ``Window`` object.
 
-The following example illustrates the difference in behavior
+The following example shows the difference in behavior
 between constant values and constant references:
 
 .. testcode:: classes

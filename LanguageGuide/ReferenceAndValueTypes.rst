@@ -257,7 +257,7 @@ notice that all code that interacts with the scores
 accesses them as properties of ``currentGame``,
 which has reference semantics because it's also a class.
 This is a fairly common pattern:
-This shared data model is shaped like a tree,
+The shared data model is shaped like a tree,
 with one object that contains several other shared objects.
 When you see this pattern,
 you can make a class for the outermost container,
@@ -329,7 +329,7 @@ and uses the game to access the its scores.
 
    Using composition can also make your code easier to test.
    For example,
-   if you a testing code used to calculate the size
+   if you are testing code used to calculate the size
    of different parts of a complex user interface,
    it is easier to test a structure
    that is responsible for only the calculations

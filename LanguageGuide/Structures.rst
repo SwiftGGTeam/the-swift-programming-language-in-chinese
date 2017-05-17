@@ -93,7 +93,7 @@ followed by empty parentheses:
     -> let someTemperature = Temperature()
     << // someTemperature : Temperature = REPL.Temperature(celsius: 0.0)
 
-This creates a new instance of the ``Temperature`` structure
+This syntax creates a new instance of the ``Temperature`` structure
 and initializes its properties to their default values.
 
 .. _Structures_MemberwiseInitializer:
@@ -101,11 +101,12 @@ and initializes its properties to their default values.
 Initializing a Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-All structures have an initializer that's implemented for you by the compiler,
-known as a :newterm:`memberwise initializer`,
+All structures have a :newterm:`memberwise initializer`
+that's implemented for you by the compiler,
 although you can also define your own initializers.
-The memberwise initializer lets you create an instance of the structure
-by providing a value for each of the structure's stored properties.
+With a memberwise initializer,
+you can create an instance of the structure
+by providing a value for each of the structure's stored properties:
 
 .. testcode:: structures
 
@@ -116,7 +117,7 @@ Initializing ``waterBoilingPoint`` with the memberwise initializer
 creates an instance of ``Temperature`` with the ``celsius`` property
 set to ``100.0`` degrees Celsius.
 
-For information on structure initialization, see :doc:`Initialization`.
+For more information on initializing a structure, see :doc:`Initialization`.
 
 .. _Structures_AccessingPropertiesOfStructures:
 
@@ -169,10 +170,10 @@ throughout the previous chapters.
 All the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays, and dictionaries ---
 are value types,
-and are implemented as structures in the standard library.
+and all are implemented as structures in the standard library.
 
 Custom structures
-that you build on top of existing standard library value types
+that you build using existing value types from the standard library 
 are also value types.
 (However, a structure with a property of some class type
 might not be a value type,
@@ -182,7 +183,7 @@ and any value types you give them as properties ---
 are copied when they are passed around in your code.
 For example, consider the following code,
 which keeps track of the temperature of a room
-and the temperature of the oven in that room.
+and the temperature of the oven in that room:
 
 .. testcode:: structures
 
