@@ -13,7 +13,7 @@
 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-11
-> 
+>
 > 3.0
 > 校对：[shanks](http://codebuild.me) ，2016-10-09   
 > 3.0.1，shanks，2016-11-12
@@ -212,7 +212,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 类似的我们可以使用`remove(at:)`方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（我们不需要的时候就可以无视它）：
 
 ```swift
-let mapleSyrup = remove(at: 0)
+let mapleSyrup = shoppingList.remove(at: 0)
 // 索引值为0的数据项被移除
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
 // mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
