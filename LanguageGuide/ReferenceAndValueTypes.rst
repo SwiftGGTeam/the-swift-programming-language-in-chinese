@@ -1,16 +1,5 @@
-Choosing Between Reference and Value Types
-==========================================
-
-.. XXX The chapter title was changed from classes vs structs
-   in commit 0909150, which doesn't describe *why* the change was made.
-   I don't remember exactly what that reason was,
-   and I don't have any notes in email about the feedback Andrew got.
-   [Contributor 4485] called out in the dev edit the fact that
-   the higher-level headings are about ref/value types
-   but the content is about classes and structs,
-   and she called out in the copyedit
-   that this is the only chapter with a gerund title.
-   Worth re-evaluating which way to frame this.
+Reference and Value Types
+=========================
 
 Classes and structures in Swift have many similarities,
 such as properties, methods, subscripts, and initializers,
@@ -26,13 +15,28 @@ but structures are value types,
 as introduced in :ref:`Classes_ClassesAreReferenceTypes`
 and :ref:`Structures_StructuresAreValueTypes`.
 In general,
-most of the time you should use a structure
+use a structure
 unless you need reference semantics
 or the additional dynamic behavior
 that classes provide.
 The major reasons to use a class are
 when you're working with a framework whose API uses classes and
 when you want to refer to the same instance of a type in multiple places.
+
+.. XXX Migi:
+   The major reasons to use a class are
+   when you're working with a framework whose API uses classes
+   and when you need to use a class for shared mutable state.
+   And sometimes for perf for COW with value types.
+
+.. XXX Migi:
+   In Swift,
+   when you need value semantics,
+   use a structure, an enumeration, or a tuple.
+   When you need reference semantics,
+   use a class.
+   (The memory pointed to by an unsafe pointer
+   also has reference semantics.)
 
 .. _ReferenceAndValueTypes_StructsAndEnums:
 
@@ -43,10 +47,10 @@ Structures make it easier to reason about your code.
 Because structures are value types,
 they help you avoid accidentally shared state
 between parts of a program.
-In order to explore an example
+For an example
 of this kind of unintended mutation,
-let's take the ``Temperature`` structure from :doc:`Structures`
-and look at the problem that happens when it's a class:
+look at the ``Temperature`` structure from :doc:`Structures`
+to see what happens when it's a class:
 
 .. testcode:: struct-vs-class-temperature
 
@@ -58,11 +62,11 @@ and look at the problem that happens when it's a class:
        }
 
 You can create ``roomTemperature`` and ``ovenTemperature`` variables
-like before to model the ambient temperature of a room
+to model the ambient temperature of a room
 and the temperature of an oven in that room.
 Initially,
 you set ``ovenTemperature`` to ``roomTemperature``
-because the oven is off and at the same temperature as the room:
+because the oven is off and is the same temperature as the room:
 
 .. testcode:: struct-vs-class-temperature
 
@@ -161,8 +165,12 @@ by using protocols and default implementations.
 For example,
 consider the ``Vehicle`` base class from the examples in :doc:`Inheritance`.
 You can create a ``Vehicle`` protocol instead,
-with a default implementation for the ``description`` property
-provided in an extension:
+providing a default implementation for the ``description`` property
+in an extension:
+
+.. XXX This example doesn't work.
+   Because 'description' isn't a protocol requirement,
+   you can't override the default implementation.
 
 .. testcode:: struct-vs-class-temperature
 
