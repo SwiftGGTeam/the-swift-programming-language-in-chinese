@@ -681,14 +681,6 @@ The figure below shows these relationships:
 
 .. image:: ../images/stringSubstring_2x.png
    :align: center
-   :width: 75%
-
-.. XXX Remove the :width: from the figure.
-   It's a hack to make my placeholder art not giant,
-   although it (probably) doesn't do anything to the [Tool S] XML.
-
-.. XXX Fix the figure to match the code listing.
-   2017-05-15 Emailed Shaun with changes.
 
 Because subscripts don't have their own in-memory storage,
 you don't have to pay the performance cost
