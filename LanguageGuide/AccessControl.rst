@@ -1195,12 +1195,11 @@ You can use an extension to add protocol conformance like this:
    << // s : SomeStruct = REPL.SomeStruct(privateVariable: 12)
    << 12
 
-
 Adding Protocol Conformance with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You cannot provide an explicit access-level modifier for an extension
-if you are using that extension to add protocol conformance.
+You can't provide an explicit access-level modifier for an extension
+if you're using that extension to add protocol conformance.
 Instead, the protocol's own access level is used to provide
 the default access level for each protocol requirement implementation within the extension.
 
