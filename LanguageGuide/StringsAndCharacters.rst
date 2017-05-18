@@ -650,11 +650,16 @@ When you access part of a string,
 the substring is returned as an instance
 of the `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_ type.
 The most important difference between a string and a substring
-is that a substring doesn't have its own storage.
+is that, as a performance optimization,
+a substrings can share the storage of the string.
 A string has a region of memory
 where the characters that make up the string are stored,
-but a substring re-uses the same memory
-as the string you used to create the substring.
+and every string needs its own memory for storage.
+However, a substring can re-use the same memory as a string,
+as long as you don't modify the substring or the string.
+If you modify one of them,
+the string and substring each use their own storage,
+and you have to pay the cost of making a copy.
 For example:
 
 .. testcode:: string-and-substring
@@ -682,7 +687,7 @@ The figure below shows these relationships:
 .. image:: ../images/stringSubstring_2x.png
    :align: center
 
-Because subscripts don't have their own in-memory storage,
+Because substrings don't have their own in-memory storage,
 you don't have to pay the performance cost
 of copying anything from the original string.
 This characteristic makes substrings well suited for short-term storage,
