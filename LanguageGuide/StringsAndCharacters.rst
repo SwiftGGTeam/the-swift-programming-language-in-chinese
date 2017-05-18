@@ -654,24 +654,18 @@ of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
 not another string.
 Substrings in Swift have most of the same methods as strings,
 which means you can work with substrings like strings.
+Like strings, each substring has a region of memory
+where the characters that make up the substring are stored.
 The difference between strings and substrings
 is that, as a performance optimization,
 a substring can re-use the memory
 that's used to store the original string.
-A string has a region of memory
-where the characters that make up the string are stored,
-and every string needs its own memory for storage.
-However, a substring can re-use the same memory as a string,
-as long as you don't modify the substring or the string.
 This performance optimization means
 you don't have to pay the performance cost of copying memory
 until you modify either the string or substring.
 For example:
 
 .. XXX Make sure the link to prefix(_:) actually works.
-
-.. XXX Para above repeats "until you modify" and "can re-use".
-   Prune it down to just one statement of each fact.
 
 .. testcode:: string-and-substring
 
