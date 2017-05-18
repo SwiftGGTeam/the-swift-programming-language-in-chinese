@@ -2620,8 +2620,16 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 
 ``private``
     Apply this modifier to a declaration to indicate the declaration can be accessed
-    only by code within the declaration's immediate enclosing scope,
-    and by code within an extension to that declaration in the same file.
+    only by code within the declaration's immediate enclosing scope.
+
+For the purpose of access control,
+extensions that are in the same file
+as the declaration of the type they extend
+behave as if they were part of that type's declaration.
+Private members declared in the type's declaration
+can be accessed from extensions,
+and private members declared in one extension
+can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).

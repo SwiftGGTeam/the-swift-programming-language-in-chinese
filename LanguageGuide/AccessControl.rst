@@ -1156,16 +1156,26 @@ for individual type members.
 Using Private Members in Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Extensions to a class, structure, or enumeration
-that are in the *same* file as the original declaration
-have access to private entities of that type.
 From the perspective of access control,
-it is as if the contents of the extension
+extensions to a class, structure, or enumeration
+that are in the *same* file as the original declaration
+behave as if the contents of the extension
 had been written in the source code
 as part of the type's declaration.
 However, extensions in a *different* file don't have any special behavior.
 
-This means you can organize your code using extensions
+This behavior lets you do the following:
+
+- You can declare a private member in the original declaration
+  and access that member from extensions.
+
+- You can declare a private member in one extension
+  and access it from another extension.
+
+- You can declare a private member in an extension
+  and access it from the original declaration.
+
+This behavior means you can organize your code using extensions
 even when your types have private entities,
 in the same way you use extensions to organize code
 that doesn't use access control at all.
