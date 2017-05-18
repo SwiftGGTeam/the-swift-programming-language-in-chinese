@@ -646,21 +646,22 @@ use the ``removeSubrange(_:)`` method:
 Strings and Substrings
 ----------------------
 
-When you access part of a string,
-the substring is returned as an instance
-of the `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_ type.
-The most important difference between a string and a substring
-is that, as a performance optimization,
-a substrings can share the storage of the string.
-A string has a region of memory
-where the characters that make up the string are stored,
-and every string needs its own memory for storage.
-However, a substring can re-use the same memory as a string,
-as long as you don't modify the substring or the string.
-If you modify one of them,
-the string and substring each use their own storage,
-and you have to pay the cost of making a copy.
+When you get a substring from a string ---
+for example, using a subscript or a method like
+`prefix(_:) <//apple_ref/swift/structm/String/s:s10CollectionPsE6prefix11SubSequenceQzSiF::SYNTHESIZED::s:SS>`_,
+the result is an instance
+of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
+not another string.
+Substrings in Swift have all the same methods as strings,
+but there's one important difference between strings and substrings:
+A substring can re-use the memory
+that's used to store the original string.
+This performance optimization means
+you don't have to pay the performance cost of copying memory
+until you modify either the string or substring.
 For example:
+
+.. XXX Make sure the link to prefix(_:) actually works.
 
 .. testcode:: string-and-substring
 
@@ -674,12 +675,17 @@ For example:
    </ beginning is "Hello"
    ---
    // Convert the result to a String for long-term storage.
+   // This is the first time anything is copied.
    -> let newString = String(beginning)
    << // newString : String = "Hello"
 
 In this example,
+``greeting`` is a string,
+which means it has a region of memory
+where the characters that make up the string are stored.
+Because
 ``beginning`` is a substring of ``greeting``,
-which means ``beginning`` re-uses the memory that ``greeting`` uses.
+it re-uses the memory that ``greeting`` uses.
 In contrast,
 ``newString`` is a string, which means it has its own storage.
 The figure below shows these relationships:
@@ -687,10 +693,8 @@ The figure below shows these relationships:
 .. image:: ../images/stringSubstring_2x.png
    :align: center
 
-Because substrings don't have their own in-memory storage,
-you don't have to pay the performance cost
-of copying anything from the original string.
-This characteristic makes substrings well suited for short-term storage,
+
+Substrings are well suited for short-term storage,
 such as the intermediate results of a multistep string manipulation.
 However, substrings are not suitable for long-term storage,
 because they re-use the storage of the original string.
@@ -708,6 +712,7 @@ convert the ``Substring`` to a ``String``.
    as either a ``String`` or ``Substring`` value.
 
 .. XXX Live link to the StringProtocol protocol reference.
+   It's not showing up in the database yet (2017-05-17).
 
 .. _StringsAndCharacters_ComparingStrings:
 
