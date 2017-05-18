@@ -697,11 +697,11 @@ The figure below shows these relationships:
 .. image:: ../images/stringSubstring_2x.png
    :align: center
 
-Substrings are well suited for short-term storage,
+Substrings work well for short-term storage,
 such as the intermediate results of a multistep string manipulation.
-However, substrings are not suitable for long-term storage,
-because they re-use the storage of the original string.
-This re-use means the entire original string must be kept in memory
+However, substrings aren't suitable for long-term storage ---
+because they re-use the storage of the original string,
+the entire original string must be kept in memory
 as long as any of its substrings are being used.
 As shown in the example and figure above,
 when you need to use the result for a long time,
