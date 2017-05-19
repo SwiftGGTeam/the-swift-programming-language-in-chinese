@@ -722,18 +722,13 @@ but the property is settable only from within
 code that's part of the ``TrackedString`` structure.
 This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
 but to present the property as a read-only property
-when it is used outside the structure's definition ---
-including any extensions to ``TrackedString``.
+when it is used outside the structure's definition.
 
 .. assertion:: reducedSetterScope
 
    -> extension TrackedString {
           mutating func f() { numberOfEdits += 1 }
       }
-   !! <REPL Input>:2:41: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
-   !! mutating func f() { numberOfEdits += 1 }
-   !!                     ~~~~~~~~~~~~~ ^
-   ---
    // check that we can't set its value with from the same file
    -> var s = TrackedString()
    << // s : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
