@@ -658,8 +658,11 @@ Like strings, each substring has a region of memory
 where the characters that make up the substring are stored.
 The difference between strings and substrings
 is that, as a performance optimization,
-a substring can re-use the memory
-that's used to store the original string.
+a substring can re-use part of the memory
+that's used to store the original string,
+or part of the memory that's used to store another substring.
+(Strings have a similar optimization,
+but if two strings share memory, they are equal.)
 This performance optimization means
 you don't have to pay the performance cost of copying memory
 until you modify either the string or substring.
@@ -691,7 +694,9 @@ Because
 ``beginning`` is a substring of ``greeting``,
 it re-uses the memory that ``greeting`` uses.
 In contrast,
-``newString`` is a string, which means it has its own storage.
+``newString`` is a string ---
+when it's created from the substring,
+it has its own storage.
 The figure below shows these relationships:
 
 .. image:: ../images/stringSubstring_2x.png
