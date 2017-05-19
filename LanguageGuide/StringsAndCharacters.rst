@@ -670,6 +670,10 @@ For example:
 
 .. XXX Make sure the link to prefix(_:) actually works.
 
+.. FIXME: After merging 23592978_struct_class,
+   link to the COW note in "Structures"
+   from the (aside) above about String.
+
 .. testcode:: string-and-substring
 
    -> let greeting = "Hello, world!"
