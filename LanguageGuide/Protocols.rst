@@ -1396,7 +1396,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
+   -> class TowardsZeroSource: NSObject, CounterDataSource {
          func increment(forCount count: Int) -> Int {
             if count == 0 {
                return 0

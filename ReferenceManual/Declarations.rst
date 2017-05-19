@@ -2500,7 +2500,7 @@ that introduces the declaration.
     Access to that member is never inlined or devirtualized by the compiler.
 
     Because declarations marked with the ``dynamic`` modifier are dispatched
-    using the Objective-C runtime, they're implicitly marked with the
+    using the Objective-C runtime, they must be marked with the
     ``objc`` attribute.
 
 ``final``

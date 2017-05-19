@@ -139,6 +139,8 @@ You can apply a declaration attribute to declarations only.
          -> @available(*, unavailable, renamed: "MyRenamedProtocol")
             typealias MyProtocol = MyRenamedProtocol
 
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
     You can apply multiple ``available`` attributes on a single declaration
     to specify the declaration's availability on different platforms
     and different versions of Swift.
@@ -154,6 +156,8 @@ You can apply a declaration attribute to declarations only.
        // REPL needs all the attributes on the same line as the  declaration.
        -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
        -> foo()
+
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
     If an ``available`` attribute only specifies an ``introduced`` argument
     in addition to a platform or language name argument,
@@ -176,6 +180,8 @@ You can apply a declaration attribute to declarations only.
        -> class MyClass {
               // class definition
           }
+
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
     
     An ``available`` attribute specifying a Swift version availability can't
     additionally specify a declaration's platform availability.
@@ -191,21 +197,7 @@ You can apply a declaration attribute to declarations only.
               // struct definition
           }
 
-..    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
-    "It's not there yet, but it'll be there at runtime, trust me."
-
-.. NOTE: As of Beta 5, 'class_protocol' is removed from the language.
-    I'm keeping the prose here in case it comes back for some reason.
-    Semantically, the it's replaced with a 'class' requirement,
-    e.g., @class_protocol protocol P {} --> protocol P: class {}
-
-    ``class_protocol``
-        Apply this attribute to a protocol to indicate
-        that the protocol can be adopted by class types only.
-
-        If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
-        is implicitly applied to that protocol; there's no need to mark the protocol with
-        the ``class_protocol`` attribute explicitly.
+    .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 ``discardableResult``
    Apply this attribute to a function or method declaration
@@ -216,65 +208,10 @@ You can apply a declaration attribute to declarations only.
 ``GKInspectable``
     Apply this attribute to expose a custom GameplayKit component property
     to the SpriteKit editor UI.
+    Applying this attribute also implies the ``objc`` attribute.
 
-.. See also <rdar://problem/27287369> Document @GKInspectable attribute
-   which we will want to link to, once it's written.
-
-``objc``
-    Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols,
-    nongeneric enumerations (constrained to integer raw-value types),
-    properties and methods (including getters and setters) of classes and protocols,
-    initializers, deinitializers, and subscripts.
-    The ``objc`` attribute tells the compiler
-    that a declaration is available to use in Objective-C code.
-
-    Classes marked with the ``objc`` attribute
-    must inherit from a class defined in Objective-C.
-    If you apply the ``objc`` attribute to a class or protocol, it's
-    implicitly applied to the Objective-C compatible members of that class or protocol.
-    The compiler also implicitly adds the ``objc`` attribute to a class
-    that inherits from another class marked with the ``objc`` attribute
-    or a class defined in Objective-C.
-    Protocols marked with the ``objc`` attribute can't inherit
-    from protocols that aren't.
-
-    If you apply the ``objc`` attribute to an enumeration,
-    each enumeration case is exposed to Objective-C code
-    as the concatenation of the enumeration name and the case name.
-    The first letter of the case name is capitalized.
-    For example, a case named ``venus`` in a Swift ``Planet`` enumeration
-    is exposed to Objective-C code as a case named ``PlanetVenus``.
-
-    The ``objc`` attribute optionally accepts a single attribute argument,
-    which consists of an identifier.
-    Use this attribute when you want to expose a different
-    name to Objective-C for the entity the ``objc`` attribute applies to.
-    You can use this argument to name
-    classes, enumerations, enumeration cases, protocols,
-    methods, getters, setters, and initializers.
-    The example below exposes
-    the getter for the ``enabled`` property of the ``ExampleClass``
-    to Objective-C code as ``isEnabled``
-    rather than just as the name of the property itself.
-
-    .. testcode:: objc-attribute
-       :compile: true
-
-       >> import Foundation
-       -> @objc
-          class ExampleClass: NSObject {
-             var enabled: Bool {
-                @objc(isEnabled) get {
-                   // Return the appropriate value
-       >>          return true
-                }
-             }
-          }
-
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
-    Possibly link to Anna and Jack's guide too.
+    .. See also <rdar://problem/27287369> Document @GKInspectable attribute
+       which we will want to link to, once it's written.
 
 ``nonobjc``
     Apply this attribute to a
@@ -283,6 +220,11 @@ You can apply a declaration attribute to declarations only.
     The ``nonobjc`` attribute tells the compiler
     to make the declaration unavailable in Objective-C code,
     even though it is possible to represent it in Objective-C.
+
+    Applying this attribute to an extension
+    has the same effect as
+    applying it to every member of that extension
+    that isn't explicitly marked with the ``objc`` attribute.
 
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
@@ -323,8 +265,8 @@ You can apply a declaration attribute to declarations only.
     The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
     property attribute.
 
-.. TODO: If and when Dave includes a section about this in the Guide,
-    provide a link to the relevant section.
+    .. TODO: If and when Dave includes a section about this in the Guide,
+        provide a link to the relevant section.
 
 ``NSManaged``
     Apply this attribute to an instance method or stored variable property
@@ -334,6 +276,88 @@ You can apply a declaration attribute to declarations only.
     For a property marked with the ``NSManaged`` attribute,
     Core Data also provides the storage at runtime.
     Applying this attribute also implies the ``objc`` attribute.
+
+``objc``
+    Apply this attribute to any declaration that can be represented in Objective-C---
+    for example, non-nested classes, protocols,
+    nongeneric enumerations (constrained to integer raw-value types),
+    properties and methods (including getters and setters) of classes,
+    protocols and optional members of a protocol,
+    initializers, and subscripts.
+    The ``objc`` attribute tells the compiler
+    that a declaration is available to use in Objective-C code.
+
+    Applying this attribute to an extension
+    has the same effect as
+    applying it to every member of that extension
+    that isn't explicitly marked with the ``nonobjc`` attribute.
+
+    Classes marked with the ``objc`` attribute
+    must inherit from a class defined in Objective-C
+    or from another class marked with the ``objc`` attribute.
+    The compiler implicitly adds the ``objc`` attribute
+    to subclasses of any class defined in Objective-C.
+    However, the subclass must not be generic,
+    and must not inherit from any generic classes.
+    Protocols marked with the ``objc`` attribute can't inherit
+    from protocols that aren't marked with the ``objc`` attribute.
+
+    The ``objc`` attribute is also implicitly added in the following cases:
+
+    * The declaration is an override in a subclass,
+      and the superclass's declaration has the ``objc`` attribute.
+    * The declaration satisfies a requirement
+      from a protocol that has the ``objc`` attribute.
+    * The declaration has the ``IBAction``, ``IBOutlet``,
+      ``IBDesignable``, ``IBInspectable``,
+      ``NSManaged``, or ``GKInspectable`` attribute.
+
+    If you apply the ``objc`` attribute to an enumeration,
+    each enumeration case is exposed to Objective-C code
+    as the concatenation of the enumeration name and the case name.
+    The first letter of the case name is capitalized.
+    For example, a case named ``venus`` in a Swift ``Planet`` enumeration
+    is exposed to Objective-C code as a case named ``PlanetVenus``.
+
+    The ``objc`` attribute optionally accepts a single attribute argument,
+    which consists of an identifier.
+    Use this attribute when you want to expose a different
+    name to Objective-C for the entity the ``objc`` attribute applies to.
+    You can use this argument to name
+    classes, enumerations, enumeration cases, protocols,
+    methods, getters, setters, and initializers.
+    The example below exposes
+    the getter for the ``enabled`` property of the ``ExampleClass``
+    to Objective-C code as ``isEnabled``
+    rather than just as the name of the property itself.
+
+    .. testcode:: objc-attribute
+       :compile: true
+
+       >> import Foundation
+       -> class ExampleClass: NSObject {
+             @objc var enabled: Bool {
+                @objc(isEnabled) get {
+                   // Return the appropriate value
+       >>          return true
+                }
+             }
+          }
+
+``objcMembers``
+    Apply this attribute to any class declaration
+    that can have the ``objc`` attribute.
+    The ``objc`` attribute is implicitly added
+    to Objective-C compatible members of the class,
+    its extensions, its subclasses, and all of their extensions.
+
+    Most code should use the ``objc`` attribute instead,
+    to expose only the declarations that are needed.
+    This attribute is a convenience for
+    libraries that make heavy use of
+    the introspection facilities of the Objective-C runtime.
+    Applying the ``objc`` attribute when it isn't needed
+    can increase your binary size and adversely effect performance.
 
 ``testable``
     Apply this attribute to ``import`` declarations
@@ -379,7 +403,8 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-Both the ``IBAction`` and ``IBOutlet`` attributes imply the ``objc`` attribute.
+Applying the ``IBAction``, ``IBOutlet``, ``IBDesignable``, or ``IBInspectable`` attribute
+also implies the ``objc`` attribute.
 
 
 .. _Attributes_TypeAttributes:
