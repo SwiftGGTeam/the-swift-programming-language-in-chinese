@@ -353,11 +353,18 @@ You can apply a declaration attribute to declarations only.
 
     Most code should use the ``objc`` attribute instead,
     to expose only the declarations that are needed.
+    If you need to expose many declarations,
+    you can group them in an extension that has the ``objc`` attribute.
     This attribute is a convenience for
     libraries that make heavy use of
     the introspection facilities of the Objective-C runtime.
     Applying the ``objc`` attribute when it isn't needed
     can increase your binary size and adversely effect performance.
+
+    .. The binary size comes from the additional thunks
+       to translate between calling conventions.
+       The performance of linking and launch are slower
+       because of the larger symbol table slowing dyld down.
 
 ``testable``
     Apply this attribute to ``import`` declarations
