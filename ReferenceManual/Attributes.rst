@@ -354,14 +354,10 @@ You can apply a declaration attribute to declarations only.
     Most code should use the ``objc`` attribute instead,
     to expose only the declarations that are needed.
     This attribute is a convenience for
-    libraries such as the XCTest framework
-    that make heavy use of
+    libraries that make heavy use of
     the introspection facilities of the Objective-C runtime.
-    There is a cost in binary size and in performance
-    incurred by making declarations
-    available to use in the Objective-C code,
-    which means you usually want
-    to limit which declarations are made available.
+    Applying the ``objc`` attribute when it isn't needed
+    can increase your binary size and adversely effect performance.
 
 ``testable``
     Apply this attribute to ``import`` declarations
