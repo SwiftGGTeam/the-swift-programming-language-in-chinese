@@ -224,8 +224,7 @@ You can apply a declaration attribute to declarations only.
     Applying this attribute to an extension
     has the same effect as
     applying it to every member of that extension
-    that is not explicitly marked with
-    either the ``objc`` or ``nonobjc`` attribute.
+    that isn't explicitly marked with the ``objc`` attribute.
 
     You use the ``nonobjc`` attribute to resolve circularity
     for bridging methods in a class marked with the ``objc`` attribute,
@@ -291,8 +290,7 @@ You can apply a declaration attribute to declarations only.
     Applying this attribute to an extension
     has the same effect as
     applying it to every member of that extension
-    that is not explicitly marked with
-    either the ``objc`` or ``nonobjc`` attribute.
+    that isn't explicitly marked with the ``nonobjc`` attribute.
 
     Classes marked with the ``objc`` attribute
     must inherit from a class defined in Objective-C
