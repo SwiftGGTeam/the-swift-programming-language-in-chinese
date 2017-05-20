@@ -684,7 +684,7 @@ For example:
     self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
     self-method-expression --> ``self`` ``.`` identifier
-    self-subscript-expression --> ``self`` ``[`` function-argument-list ``]``
+    self-subscript-expression --> ``self`` ``[`` function-call-argument-list ``]``
     self-initializer-expression --> ``self`` ``.`` ``init``
 
 
@@ -727,7 +727,7 @@ to make use of the implementation in their superclass.
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
-    superclass-subscript-expression --> ``super`` ``[`` function-argument-list ``]``
+    superclass-subscript-expression --> ``super`` ``[`` function-call-argument-list ``]``
     superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
@@ -1191,7 +1191,7 @@ For example:
    key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
 
    key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
-   key-path-postfix --> ``?`` | ``!`` | ``[`` function-argument-list ``]``
+   key-path-postfix --> ``?`` | ``!`` | ``[`` function-call-argument-list ``]``
 
 
 .. _Expression_SelectorExpression:
@@ -1778,7 +1778,7 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
     Grammar of a subscript expression
 
-    subscript-expression --> postfix-expression ``[`` function-argument-list ``]``
+    subscript-expression --> postfix-expression ``[`` function-call-argument-list ``]``
 
 .. assertion:: subscripts-can-take-operators
 
