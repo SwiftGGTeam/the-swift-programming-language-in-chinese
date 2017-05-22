@@ -188,6 +188,7 @@ an expression pattern:
     << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
+    >>    _ = x
           /* ... */
        }
     !! <REPL Input>:1:9: error: expected pattern

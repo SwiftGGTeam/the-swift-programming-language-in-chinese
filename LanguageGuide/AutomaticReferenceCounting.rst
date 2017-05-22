@@ -340,7 +340,7 @@ a reference to an invalid instance that no longer exists.
     -> var c1 = C()
     << // c1 : C = REPL.C
     -> do {
-    -> var c2 = C()  // Inside a do{} block, so no REPL result.
+    -> let c2 = C()  // Inside a do{} block, so no REPL result.
     -> print(c1.w as Any)
     << nil
     -> c1.w = c2

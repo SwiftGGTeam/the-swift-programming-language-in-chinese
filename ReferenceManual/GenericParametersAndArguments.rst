@@ -2,7 +2,7 @@ Generic Parameters and Arguments
 ================================
 
 This chapter describes parameters and arguments for generic types, functions, and
-initializers. When you declare a generic type, function, or initializer,
+initializers. When you declare a generic type, function, subscript, or initializer,
 you specify the type parameters that the generic type, function, or initializer
 can work with. These type parameters act as placeholders that
 are replaced by actual concrete type arguments when an instance of a generic type is

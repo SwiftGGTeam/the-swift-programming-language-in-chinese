@@ -1447,7 +1447,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> @objc class TowardsZeroSource: NSObject, CounterDataSource {
+   -> class TowardsZeroSource: NSObject, CounterDataSource {
          func increment(forCount count: Int) -> Int {
             if count == 0 {
                return 0
@@ -1554,6 +1554,23 @@ to simply return the result of accessing the ``textualDescription`` property:
             return textualDescription
          }
       }
+
+.. TODO <rdar://problem/32211512> TSPL: Explain when you can/can't override a protocol default implementation
+
+.. If something is a protocol requirement,
+   types that conform to the protocol can override the default implementation.
+
+.. If something isn't a requirement,
+   you get wonky behavior when you try to override the default implementation.
+
+.. If the static type is the conforming type,
+   your override is used.
+
+.. If the static type is the protocol type,
+   the default implementation is used.
+
+.. You can't write ``final`` on a default implementation
+   to prevent someone from overriding it in a conforming tpye.
 
 .. _Protocols_AddingConstraintsToProtocolExtensions:
 

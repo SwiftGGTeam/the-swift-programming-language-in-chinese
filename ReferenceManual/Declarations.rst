@@ -1660,7 +1660,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT generic-where-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
@@ -1817,7 +1817,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -1833,6 +1833,25 @@ but they're associated with ``Self`` in the protocol in which they're declared.
 In that context, ``Self`` refers to the eventual type that conforms to the protocol.
 For more information and examples,
 see :ref:`Generics_AssociatedTypes`.
+
+A generic ``where`` clause in a protocol declaration
+can add constraints to an associated types inherited from another protocol,
+without redeclaring the associated types.
+For example, the declarations of ``SubProtocol`` below are equivalent:
+
+.. testcode:: protocol-associatedtype
+
+    -> protocol SomeProtocol {
+           associatedtype SomeType
+       }
+    ---
+    -> protocol SubProtocol: SomeProtocol {
+           associatedtype SomeType: Equatable
+       }
+    ---
+    -> protocol SubProtocol: SomeProtocol where SomeType: Equatable {}
+
+.. XXX This could also go around line 1600, just before the discussion of 'optional'.
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -1902,7 +1921,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT generic-where-clause-OPT
 
 .. _Declarations_InitializerDeclaration:
 
@@ -2024,6 +2043,7 @@ except that you must deal with the optionality of the result.
 
     -> if let actualInstance = SomeStruct(input: "Hello") {
            // do something with the instance of 'SomeStruct'
+    >>     _ = actualInstance
        } else {
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
@@ -2147,6 +2167,8 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
+Declarations in a protocol extension's body
+can't be marked ``final``.
 
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
@@ -2289,10 +2311,10 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head subscript-result code-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
-    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` parameter-clause
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT code-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
+    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generic-parameter-clause-OPT parameter-clause
     subscript-result --> ``->`` attributes-OPT type
 
 
@@ -2500,7 +2522,7 @@ that introduces the declaration.
     Access to that member is never inlined or devirtualized by the compiler.
 
     Because declarations marked with the ``dynamic`` modifier are dispatched
-    using the Objective-C runtime, they're implicitly marked with the
+    using the Objective-C runtime, they must be marked with the
     ``objc`` attribute.
 
 ``final``
