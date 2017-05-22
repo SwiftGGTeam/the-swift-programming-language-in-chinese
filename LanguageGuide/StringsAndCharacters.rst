@@ -42,7 +42,7 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters
+A string literal is a sequence of characters
 surrounded by double quotes (``"``).
 
 Use a string literal as an initial value for a constant or variable:
@@ -62,7 +62,7 @@ because it is initialized with a string literal value.
 
 If you need a string that spans several lines,
 use a multiline string literal.
-A multiline string literal is a fixed sequence of textual characters
+A multiline string literal is a sequence of characters
 surrounded by three double quotes:
 
 .. Quote comes from "Alice's Adventures in Wonderland",
