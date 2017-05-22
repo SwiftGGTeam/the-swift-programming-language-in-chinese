@@ -131,8 +131,12 @@ Indentation at the start of each quoted line is removed,
 as long as it matches the indentation of the closing quote.
 For example:
 
-.. testcode:: guided-tour
+.. testcode:: guided-tour-compiled
+   :compile: true
 
+
+   >> let apples = 3
+   >> let oranges = 5
    -> let quotation = """
           Even though there's whitespace to the left,
           the actual lines aren't indented.
