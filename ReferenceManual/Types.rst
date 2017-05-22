@@ -673,6 +673,9 @@ is equivalent to ``P & Q & R``.
 
 .. testcode:: protocol-composition-can-have-repeats
 
+    >> protocol P {}
+    >> protocol Q {}
+    >> protocol R {}
     -> typealias PQ = P & Q
     -> typealias PQR = PQ & Q & R
 
