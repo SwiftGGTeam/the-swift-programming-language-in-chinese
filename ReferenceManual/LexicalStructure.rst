@@ -643,9 +643,8 @@ that begins or ends with a line feed,
 write a blank line as its first or last line.
 
 A multiline string literal can be indented
-using any combination of spaces and tabs.
-This indentation is not included in the string
-that the multiline string literal creates.
+using any combination of spaces and tabs;
+this indentation is not included in the string.
 The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
