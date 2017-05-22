@@ -606,20 +606,62 @@ which represents a 32-bit floating-point number.
 String Literals
 ~~~~~~~~~~~~~~~
 
-A string literal is a sequence of characters surrounded by double quotes,
+A string literal is a sequence of characters surrounded by quotes.
+A single-line string literal is surrounded by double quotes,
 with the following form:
 
 .. syntax-outline::
 
     "<#characters#>"
 
-String literals cannot contain
+String literals can't contain
 an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
+A multiline string literal is surrounded by three double quotes,
+with the following form:
+
+.. syntax-outline::
+
+   """
+   <#characters#>
+   """
+
+Unlike a single-line string literal,
+a multiline string literal can contain
+unescaped double quotes (``"``), carriage returns, and line feeds.
+It can't contain three unescaped double quotes next to each other.
+
+The carriage return or line feed after the ``"""``
+that begins the multiline string literal
+is not part of the string.
+The carriage return or line feed before the ``"""``
+that ends the literal is also not part of the string.
+To make a multiline string literal
+that begins or ends with a line feed,
+write a blank line as its first or last line.
+
+A multiline string literal can be indented
+using any combination of spaces and tabs;
+this indentation is not included in the string.
+The ``"""`` that ends the literal
+determines the indentation:
+Every nonblank line in the literal must begin
+with exactly the same indentation
+that appears before the closing ``"""``;
+there is no conversion between tabs and spaces.
+You can include additional spaces and tabs after that indentation;
+those spaces and tabs appear in the string.
+
+Line endings in a multiline string literal are
+normalized to use the line feed character.
+Even if your source file has a mix of carriage returns and line feeds,
+all of the line endings in the string will be the same.
+
 Special characters
 can be included in string literals
+of both the single-line and multiline forms
 using the following escape sequences:
 
 * Null Character (``\0``)
@@ -703,13 +745,24 @@ no runtime concatenation is performed.
     string-literal --> static-string-literal | interpolated-string-literal
 
     static-string-literal --> ``"`` quoted-text-OPT ``"``
+    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> Any Unicode scalar value except ``"``, ``\``, U+000A, or U+000D
 
+    multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
+    multiline-quoted-text-item --> escaped-character
+    multiline-quoted-text-item --> Any Unicode scalar value except ``\``
+
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
+    interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
+
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
+
+    multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
+    multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``

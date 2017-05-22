@@ -42,8 +42,8 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters
-surrounded by a pair of double quotes (``""``).
+A string literal is a sequence of characters
+surrounded by double quotes (``"``).
 
 Use a string literal as an initial value for a constant or variable:
 
@@ -59,6 +59,118 @@ because it is initialized with a string literal value.
 
    For information about using special characters in string literals,
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+
+If you need a string that spans several lines,
+use a multiline string literal.
+A multiline string literal is a sequence of characters
+surrounded by three double quotes:
+
+.. Quote comes from "Alice's Adventures in Wonderland",
+   which has been public domain as of 1907.
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let quotation = """
+      The White Rabbit put on his spectacles.  "Where shall I begin,
+      please your Majesty?" he asked.
+
+      "Begin at the beginning," the King said gravely, "and go on
+      till you come to the end; then stop."
+      """
+
+Because the multiline form uses three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal,
+as shown in the example above.
+To include a literal ``"""`` in a multiline string,
+you have to escape at least one of the quotation marks,
+using a backslash (``\``).
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let threeDoubleQuotes = """
+      Escaping the first quote \"""
+      Escaping all three quotes \"\"\"
+      """
+   >> print(threeDoubleQuotes)
+   << Escaping the first quote """
+   << Escaping all three quotes """
+
+For more information about using a backslash to escape special characters,
+see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+
+In its multiline form,
+the string literal includes all of the lines between
+its opening and closing quotes.
+The string begins on the first line after the opening quotes (``"""``)
+and ends on the line before the closing quotes (``"""``),
+which means that ``quotation`` doesn't start or end with a line feed.
+Both of the strings below are the same:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let singleLineString = "These are the same."
+   -> let multilineString = """
+      These are the same.
+      """
+   >> print(singleLineString == multilineString)
+   << true
+
+To make a multiline string literal that begins or ends with a line feed,
+write a blank line as the first or last line.
+For example:
+
+.. testcode:: multiline-string-literal
+   :compile: true
+
+   >> let blank =
+   -> """
+
+      This string starts with a line feed.
+      It also ends with a line feed.
+
+      """
+
+.. These are well-fed lines!
+
+A multiline string can be indented to match the surrounding code.
+The whitespace before the closing quotes (``"""``)
+tells Swift what whitespace to ignore before all of the other lines.
+For example,
+even though the multiline string literal in the function below is indented,
+the lines in the actual string don't begin with any whitespace.
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> func generateQuotation() -> String {
+          let quotation = """
+              The White Rabbit put on his spectacles.  "Where shall I begin,
+              please your Majesty?" he asked.
+
+              "Begin at the beginning," the King said gravely, "and go on
+              till you come to the end; then stop."
+              """
+          return quotation
+      }
+   -> print(quotation == generateQuotation())
+   <- true
+
+However, if you write whitespace at the beginning of a line
+in addition to what's before the closing quotes (``"""``),
+that whitespace *is* included.
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let linesWithIndentation = """
+          This line doesn't begin with whitespace.
+              This line begins with four spaces.
+          This line doesn't begin with whitespace.
+          """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -245,6 +357,8 @@ String Interpolation
 :newTerm:`String interpolation` is a way to construct a new ``String`` value
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
+You can use string interpolation
+in both single-line and multiline string literals.
 Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash (``\``):
 
@@ -271,7 +385,7 @@ when it is included inside the string literal.
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
-   cannot contain an unescaped backslash (``\``), a carriage return, or a line feed.
+   can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
 
 .. TODO: add a bit here about making things Printable.
