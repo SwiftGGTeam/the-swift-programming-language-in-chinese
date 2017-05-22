@@ -2623,9 +2623,10 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
     only by code within the declaration's immediate enclosing scope.
 
 For the purpose of access control,
-extensions that are in the same file
-as the declaration of the type they extend
-behave as if they were part of that type's declaration.
+extensions to the same type that are in the same file
+share an access control scope.
+If the type that they extend is also in the same file,
+they share its access control scope.
 Private members declared in the type's declaration
 can be accessed from extensions,
 and private members declared in one extension

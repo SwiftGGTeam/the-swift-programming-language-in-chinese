@@ -1157,8 +1157,6 @@ that are in the *same* file as the original declaration
 behave as if the contents of the extension
 had been written in the source code
 as part of the type's declaration.
-However, extensions in a *different* file don't have any special behavior.
-
 This behavior lets you do the following:
 
 - You can declare a private member in the original declaration
