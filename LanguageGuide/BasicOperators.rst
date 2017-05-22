@@ -648,6 +648,21 @@ but ``0..<count`` only counts as far as ``3``
 because it is a half-open range.
 For more on arrays, see :ref:`CollectionTypes_Arrays`.
 
+.. _BasicOperators_OneSidedRanges:
+
+One-Sided Ranges
+~~~~~~~~~~~~~~~~
+
+You can omit the start or end index of a range
+when the range starts at the beginning or ends at the end.
+For example:
+
+.. testcode:: rangeOperators
+
+   -> names[2...]
+   -> names[...3]
+   -> names[..<3]
+
 .. _BasicOperators_LogicalOperators:
 
 Logical Operators
