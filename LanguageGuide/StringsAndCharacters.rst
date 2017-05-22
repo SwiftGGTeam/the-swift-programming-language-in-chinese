@@ -84,8 +84,7 @@ you can include a double quote (``"``) inside of a multiline string literal,
 as shown in the example above.
 To include a literal ``"""`` in a multiline string,
 you have to escape at least one of the quotation marks,
-as discussed below in
-:ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+using a backslash (``\``).
 For example:
 
 .. testcode:: multiline-string-literals
@@ -98,6 +97,9 @@ For example:
    >> print(threeDoubleQuotes)
    << Escaping the first quote """
    << Escaping all three quotes """
+
+For more information about using a backslash to escape special characters,
+see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
 In its multiline form,
 the string literal includes all of the lines between
