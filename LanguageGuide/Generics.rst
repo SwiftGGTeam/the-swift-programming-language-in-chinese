@@ -798,7 +798,7 @@ Using Type Annotations to Constrain an Associated Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can add a type annotation to an associated type in a protocol,
-to require that conforming types must satisfy the constrain
+to require that conforming types satisfy the constraints
 described by the type annotation.
 For example,
 the following code defines a version of ``Container``
@@ -1110,9 +1110,9 @@ Here's how you write that:
    although we don't call that out here.
 
 The generic ``where`` clause on ``Iterator`` requires that
-the iterator must traverse over elements
+the iterator traverses over elements
 of the same item type as the container's items,
-regardless of what type the iterator itself is.
+regardless of the iterator's type.
 The ``makeIterator()`` function provides access to a container's iterator.
 
 .. This example requires SE-0157 Recursive protocol constraints
@@ -1185,11 +1185,9 @@ which requires ``Item`` to conform to ``Comparable``:
 Generic Subscripts
 ------------------
 
-Subscripts can be generic
-and they can include generic ``where`` clauses,
-using the same approach described above for functions and types.
-You write the placeholder type name inside angle brackets
-for subscripts after ``subscript``,
+Subscripts can be generic,
+and they can include generic ``where`` clauses.
+You write the placeholder type name inside angle brackets after ``subscript``,
 and you write a generic ``where`` clause right before the opening curly brace
 of the subscript's body.
 For example:
@@ -1207,7 +1205,7 @@ For example:
    >> }
    -> extension Container {
           subscript<Indices: Sequence>(indices: Indices) -> [Item]
-          where Indices.Iterator.Element == Int {
+                  where Indices.Iterator.Element == Int {
               var result = [Item]()
               for index in indices {
                   result.append(self[index])
