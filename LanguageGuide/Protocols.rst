@@ -1010,14 +1010,12 @@ Class-Only Protocols
 --------------------
 
 You can limit protocol adoption to class types (and not structures or enumerations)
-by adding the ``class`` keyword to a protocol's inheritance list.
-The ``class`` keyword must always appear first in a protocol's inheritance list,
-before any inherited protocols:
+by adding the ``AnyObject`` protocol to a protocol's inheritance list.
 
 .. testcode:: classOnlyProtocols
 
    >> protocol SomeInheritedProtocol {}
-   -> protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
+   -> protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
          // class-only protocol definition goes here
       }
 
@@ -1044,6 +1042,13 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    !! ~~^~~~~
    !! class,
 
+.. assertion:: anyobject-doesn't-have-to-be-first
+
+   >> protocol SomeInheritedProtocol {}
+   -> protocol SomeClassOnlyProtocol: SomeInheritedProtocol, AnyObject {
+         // class-only protocol definition goes here
+      }
+
 .. TODO: a Cacheable protocol might make a good example here?
 
 .. _Protocols_ProtocolComposition:
@@ -1054,9 +1059,17 @@ Protocol Composition
 It can be useful to require a type to conform to multiple protocols at once.
 You can combine multiple protocols into a single requirement
 with a :newTerm:`protocol composition`.
+Protocol compositions behave like you
+defined a temporary local protocol that has the combined requirements
+of all protocols in the composition.
+Protocol compositions don't define any new protocol types.
+
 Protocol compositions have the form ``SomeProtocol & AnotherProtocol``.
 You can list as many protocols as you need to,
 separating them by ampersands (``&``).
+In addition to its list of protocols,
+a protocol composition can also contain one class type,
+which lets you specify a required superclass.
 
 Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
@@ -1098,11 +1111,49 @@ and passes this new instance to the ``wishHappyBirthday(to:)`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
 and the ``wishHappyBirthday(to:)`` function is able to print its birthday greeting.
 
-.. note::
+Here's an example that combines
+the ``Named`` protocol from the previous example
+with a ``Location`` class:
 
-   Protocol compositions do not define a new, permanent protocol type.
-   Rather, they define a temporary local protocol that has the combined requirements
-   of all protocols in the composition.
+.. testcode:: protocolComposition
+
+   -> class Location {
+          var latitude: Double
+          var longitude: Double
+          init(latitude: Double, longitude: Double) {
+              self.latitude = latitude
+              self.longitude = longitude
+          }
+      }
+   -> class City: Location, Named {
+          var name: String
+          init(name: String, latitude: Double, longitude: Double) {
+              self.name = name
+              super.init(latitude: latitude, longitude: longitude)
+          }
+      }
+   -> func beginConcert(in location: Location & Named) {
+          print("Hello, \(location.name)!")
+      }
+   ---
+   -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
+   << // seattle : City = REPL.City
+   -> beginConcert(in: seattle)
+   <- Hello, Seattle!
+
+The ``beginConcert(in:)`` function takes
+a parameter of type ``Location & Named``,
+which means any type that is a subclass of ``Location``
+and that conforms to the ``Named`` protocol.
+In this case, ``City`` satisfies both requirements.
+
+If you tried to pass ``birthdayPerson`` to the ``beginConcert(in:)`` function,
+that would be invalid because ``Person`` isn't a subclass of ``Location``.
+Likewise,
+if you made a subclass of ``Location``
+that didn't conform to the ``Named`` protocol,
+calling ``beginConcert(in:)`` with an instance of that type
+would also be invalid.
 
 .. _Protocols_CheckingForProtocolConformance:
 
