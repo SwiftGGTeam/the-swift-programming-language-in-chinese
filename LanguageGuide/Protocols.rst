@@ -1142,7 +1142,7 @@ with a ``Location`` class:
    <- Hello, Seattle!
 
 The ``beginConcert(in:)`` function takes
-a parameter of type ``Location & Named``
+a parameter of type ``Location & Named``,
 which means any type that is a subclass of ``Location``
 and that conforms to the ``Named`` protocol.
 In this case, ``City`` satisfies both requirements.
