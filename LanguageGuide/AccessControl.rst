@@ -76,7 +76,8 @@ and also relative to the module that source file belongs to.
   when those details are used within an entire file.
 
 * :newTerm:`Private access`
-  restricts the use of an entity to the enclosing declaration.
+  restricts the use of an entity to the enclosing declaration,
+  and to extensions of that declaration that are in the same file.
   Use private access to hide the implementation details of
   a specific piece of functionality
   when those details are used only within a single declaration.
@@ -721,18 +722,13 @@ but the property is settable only from within
 code that's part of the ``TrackedString`` structure.
 This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
 but to present the property as a read-only property
-when it is used outside the structure's definition ---
-including any extensions to ``TrackedString``.
+when it's used outside the structure's definition.
 
 .. assertion:: reducedSetterScope
 
    -> extension TrackedString {
           mutating func f() { numberOfEdits += 1 }
       }
-   !! <REPL Input>:2:41: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
-   !! mutating func f() { numberOfEdits += 1 }
-   !!                     ~~~~~~~~~~~~~ ^
-   ---
    // check that we can't set its value with from the same file
    -> var s = TrackedString()
    << // s : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
@@ -1095,6 +1091,11 @@ to set a new default access level for all members defined within the extension.
 This new default can still be overridden within the extension
 for individual type members.
 
+You can't provide an explicit access-level modifier for an extension
+if you're using that extension to add protocol conformance.
+Instead, the protocol's own access level is used to provide
+the default access level for each protocol requirement implementation within the extension.
+
 .. sourcefile:: extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private
 
    -> public struct PublicStruct {
@@ -1149,13 +1150,55 @@ for individual type members.
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
 
-Adding Protocol Conformance with an Extension
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You cannot provide an explicit access-level modifier for an extension
-if you are using that extension to add protocol conformance.
-Instead, the protocol's own access level is used to provide
-the default access level for each protocol requirement implementation within the extension.
+.. _AccessControl_PrivateExtension:
+
+Private Members in Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extensions that are in the same file as
+the class, structure, or enumeration that they extend
+behave as if the code in the extension
+had been written as part of the original type's declaration.
+As a result, you can:
+
+- Declare a private member in the original declaration,
+  and access that member from extensions that are in the same file.
+
+- Declare a private member in one extension,
+  and access it from another extension that are in the same file.
+
+- Declare a private member in an extension,
+  and access it from the original declaration that are in the same file.
+
+This behavior means you can use extensions in the same way
+to organize your code,
+whether or not your types have private entities.
+For example, given the following simple protocol:
+
+.. testcode:: extensions_privatemembers
+
+   -> protocol SomeProtocol {
+          func doSomething()
+      }
+
+You can use an extension to add protocol conformance like this:
+
+.. testcode:: extensions_privatemembers
+
+   -> struct SomeStruct {
+          private var privateVariable = 12
+      }
+   ---
+   -> extension SomeStruct: SomeProtocol {
+          func doSomething() {
+              print(privateVariable)
+          }
+      }
+   >> let s = SomeStruct()
+   >> s.doSomething()
+   << // s : SomeStruct = REPL.SomeStruct(privateVariable: 12)
+   << 12
 
 .. _AccessControl_Generics:
 
