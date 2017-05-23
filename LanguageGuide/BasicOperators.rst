@@ -654,10 +654,12 @@ One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
 Both the closed range and half-open range operator
-have an alternate form
-that's convenient for ranges that use
-the largest or smallest possible value on one side of the operator.
-In these cases, you can omit the value.
+have an alternate form for ranges that use
+the largest or smallest possible value on one side of the operator ---
+for example,
+ranges that start at the beginning of an array.
+In these cases, you can omit the value
+from one side of the range operator.
 This kind of range is called a :newTerm:`one-sided range`
 because the operator has a value on only one side.
 For example:
