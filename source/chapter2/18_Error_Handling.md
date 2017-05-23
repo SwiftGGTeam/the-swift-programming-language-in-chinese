@@ -7,7 +7,7 @@
 >  
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
-> 
+>
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me) 2016-09-24   
 > 3.0.1，shanks，2016-11-13
@@ -93,22 +93,22 @@ class VendingMachine {
     func dispenseSnack(snack: String) {
         print("Dispensing \(snack)")
     }
-    
+
     func vend(itemNamed name: String) throws {
         guard let item = inventory[name] else {
             throw VendingMachineError.InvalidSelection
         }
-        
+
         guard item.count > 0 else {
             throw VendingMachineError.OutOfStock
         }
-        
+
         guard item.price <= coinsDeposited else {
             throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
         }
-        
+
         coinsDeposited -= item.price
-        
+
         var newItem = item
         newItem.count -= 1
         inventory[name] = newItem
@@ -120,7 +120,7 @@ class VendingMachine {
 
 在`vend(itemNamed:)`方法的实现中使用了`guard`语句来提前退出方法，确保在购买某个物品所需的条件中，有任一条件不满足时，能提前退出方法并抛出相应的错误。由于`throw`语句会立即退出方法，所以物品只有在所有条件都满足时才会被售出。
 
-因为`vend(itemNamed:)`方法会传递出它抛出的任何错误，在你的代码中调用此方法的地方，必须要么直接处理这些错误——使用`do-catch`语句，`try?`或`try!`；要么继续将这些错误传递下去。例如下面例子中，`buyFavoriteSnack(_:vendingMachine:)`同样是一个 throwing 函数，任何由`vend(itemNamed:)`方法抛出的错误会一直被传递到`buyFavoriteSnack(person:vendingMachine:) `函数被调用的地方。
+因为`vend(itemNamed:)`方法会传递出它抛出的任何错误，在你的代码中调用此方法的地方，必须要么直接处理这些错误——使用`do-catch`语句，`try?`或`try!`；要么继续将这些错误传递下去。例如下面例子中，`buyFavoriteSnack(person:vendingMachine:)`同样是一个 throwing 函数，任何由`vend(itemNamed:)`方法抛出的错误会一直被传递到`buyFavoriteSnack(person:vendingMachine:) `函数被调用的地方。
 
 ```swift
 let favoriteSnacks = [
@@ -174,7 +174,7 @@ do {
 var vendingMachine = VendingMachine()
 vendingMachine.coinsDeposited = 8
 do {
-    try buyFavoriteSnack("Alice", vendingMachine: vendingMachine)
+    try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
 } catch VendingMachineError.InvalidSelection {
     print("Invalid Selection.")
 } catch VendingMachineError.OutOfStock {
@@ -195,9 +195,9 @@ do {
 func someThrowingFunction() throws -> Int {
     // ...
 }
- 
+
 let x = try? someThrowingFunction()
- 
+
 let y: Int?
 do {
     y = try someThrowingFunction()
