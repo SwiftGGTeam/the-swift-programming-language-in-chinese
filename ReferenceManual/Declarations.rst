@@ -1834,8 +1834,8 @@ In that context, ``Self`` refers to the eventual type that conforms to the proto
 For more information and examples,
 see :ref:`Generics_AssociatedTypes`.
 
-A generic ``where`` clause in a protocol declaration
-can add constraints to an associated types inherited from another protocol,
+You use a generic ``where`` clause in a protocol declaration
+to add constraints to an associated types inherited from another protocol,
 without redeclaring the associated types.
 For example, the declarations of ``SubProtocol`` below are equivalent:
 
@@ -1845,13 +1845,16 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
            associatedtype SomeType
        }
     ---
-    -> protocol SubProtocol: SomeProtocol {
+    -> protocol SubProtocolA: SomeProtocol {
+           // This syntax produces a warning.
            associatedtype SomeType: Equatable
        }
+    !! <REPL Input>:2:22: warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+    !! associatedtype SomeType: Equatable
+    !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
     ---
-    -> protocol SubProtocol: SomeProtocol where SomeType: Equatable {}
-
-.. XXX This could also go around line 1600, just before the discussion of 'optional'.
+    // This syntax is preferred.
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
 
 .. TODO: Finish writing this section after WWDC.
 
