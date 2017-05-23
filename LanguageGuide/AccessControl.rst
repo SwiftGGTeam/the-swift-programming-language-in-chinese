@@ -722,7 +722,7 @@ but the property is settable only from within
 code that's part of the ``TrackedString`` structure.
 This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
 but to present the property as a read-only property
-when it is used outside the structure's definition.
+when it's used outside the structure's definition.
 
 .. assertion:: reducedSetterScope
 
@@ -1157,21 +1157,20 @@ that are in the *same* file as the original declaration
 behave as if the contents of the extension
 had been written in the source code
 as part of the type's declaration.
-This behavior lets you do the following:
+As a result, you can:
 
-- You can declare a private member in the original declaration
-  and access that member from extensions.
+- Declare a private member in the original declaration
+  and access that member from extensions in the same file.
 
-- You can declare a private member in one extension
-  and access it from another extension.
+- Declare a private member in one extension
+  and access it from another extension in the same file.
 
-- You can declare a private member in an extension
-  and access it from the original declaration.
+- Declare a private member in an extension
+  and access it from the original declaration in the same file.
 
-This behavior means you can organize your code using extensions
-even when your types have private entities,
-in the same way you use extensions to organize code
-that doesn't use access control at all.
+This behavior means you can use extensions in the same way
+to organize your code,
+whether or not your types have private entities.
 For example, given the following simple protocol:
 
 .. testcode:: extensions_privatemembers
