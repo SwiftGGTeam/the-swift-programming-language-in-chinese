@@ -643,29 +643,22 @@ use the ``removeSubrange(_:)`` method:
 
 .. _StringsAndCharacters_Substrings:
 
-Strings and Substrings
-----------------------
+Substrings
+----------
 
 When you get a substring from a string ---
 for example, using a subscript or a method like
-`prefix(_:) <//apple_ref/swift/structm/String/s:s10CollectionPsE6prefix11SubSequenceQzSiF::SYNTHESIZED::s:SS>`_,
+`prefix(_:) <//apple_ref/swift/structm/String/s:s10CollectionPsE6prefix11SubSequenceQzSiF::SYNTHESIZED::s:SS>`_ ---
 the result is an instance
 of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
 not another string.
 Substrings in Swift have most of the same methods as strings,
 which means you can work with substrings like strings.
-Like strings, each substring has a region of memory
-where the characters that make up the substring are stored.
-The difference between strings and substrings
-is that, as a performance optimization,
-a substring can re-use part of the memory
-that's used to store the original string,
-or part of the memory that's used to store another substring.
-(Strings have a similar optimization,
-but if two strings share memory, they are equal.)
-This performance optimization means
-you don't have to pay the performance cost of copying memory
-until you modify either the string or substring.
+Unlike strings,
+you use substrings for only a short amount of time
+while performing actions on a string.
+When you're ready to store the result for a longer time,
+you convert the substring to an instance of ``String``.
 For example:
 
 .. XXX Make sure the link to prefix(_:) actually works.
@@ -686,11 +679,28 @@ For example:
    </ beginning is "Hello"
    ---
    // Convert the result to a String for long-term storage.
-   // This is the first time anything is copied.
    -> let newString = String(beginning)
    << // newString : String = "Hello"
 
-In this example,
+Like strings, each substring has a region of memory
+where the characters that make up the substring are stored.
+The difference between strings and substrings
+is that, as a performance optimization,
+a substring can re-use part of the memory
+that's used to store the original string,
+or part of the memory that's used to store another substring.
+(Strings have a similar optimization,
+but if two strings share memory, they are equal.)
+This performance optimization means
+you don't have to pay the performance cost of copying memory
+until you modify either the string or substring.
+As mentioned above,
+substrings aren't suitable for long-term storage ---
+because they re-use the storage of the original string,
+the entire original string must be kept in memory
+as long as any of its substrings are being used.
+
+In the example above,
 ``greeting`` is a string,
 which means it has a region of memory
 where the characters that make up the string are stored.
@@ -703,18 +713,11 @@ when it's created from the substring,
 it has its own storage.
 The figure below shows these relationships:
 
+.. FIXME: The connection between the code and the figure
+   would be clearer if the variable names appeared in the figure.
+
 .. image:: ../images/stringSubstring_2x.png
    :align: center
-
-Substrings work well for short-term storage,
-such as the intermediate results of a multistep string manipulation.
-However, substrings aren't suitable for long-term storage ---
-because they re-use the storage of the original string,
-the entire original string must be kept in memory
-as long as any of its substrings are being used.
-As shown in the example and figure above,
-when you need to use the result for a long time,
-convert the ``Substring`` to a ``String``.
 
 .. note::
 
