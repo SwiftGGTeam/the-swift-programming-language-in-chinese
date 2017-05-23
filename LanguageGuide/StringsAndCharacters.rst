@@ -268,11 +268,11 @@ Working with Characters
 -----------------------
 
 You can access the individual ``Character`` values for a ``String``
-by iterating over its ``characters`` property with a ``for``-``in`` loop:
+by iterating over the string with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
-   -> for character in "Dog!🐶".characters {
+   -> for character in "Dog!🐶" {
          print(character)
       }
    </ D
@@ -553,13 +553,13 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-use the ``count`` property of the string's ``characters`` property:
+use the ``count`` property of the string:
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+   -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -575,12 +575,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in café is 4
 
 .. note::
@@ -595,11 +595,11 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``characters`` property
+   be aware that the ``count`` property
    must iterate over the Unicode scalars in the entire string
    in order to determine the characters for that string.
 
-   The count of the characters returned by the ``characters`` property
+   The count of the characters returned by the ``count`` property
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
@@ -683,12 +683,12 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property to access all of the
+Use the ``indices`` property to access all of the
 indices of individual characters in a string.
 
 .. testcode:: stringIndex
 
-   -> for index in greeting.characters.indices {
+   -> for index in greeting.indices {
          print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
@@ -723,7 +723,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -754,6 +754,94 @@ use the ``removeSubrange(_:)`` method:
    on any type that conforms to the ``RangeReplaceableCollection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
+
+.. _StringsAndCharacters_Substrings:
+
+Substrings
+----------
+
+When you get a substring from a string ---
+for example, using a subscript or a method like
+`prefix(_:) <//apple_ref/swift/structm/String/s:s10CollectionPsE6prefix11SubSequenceQzSiF::SYNTHESIZED::s:SS>`_ ---
+the result is an instance
+of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
+not another string.
+Substrings in Swift have most of the same methods as strings,
+which means you can work with substrings like strings.
+Unlike strings,
+you use substrings for only a short amount of time
+while performing actions on a string.
+When you're ready to store the result for a longer time,
+you convert the substring to an instance of ``String``.
+For example:
+
+.. XXX Make sure the link to prefix(_:) actually works.
+
+.. FIXME: After merging 23592978_struct_class,
+   link to the COW note in "Structures"
+   from the (aside) above about String.
+
+.. testcode:: string-and-substring
+
+   -> let greeting = "Hello, world!"
+   << // greeting : String = "Hello, world!"
+   -> let index = greeting.index(of: ",") ?? greeting.endIndex
+   << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 5), _countUTF16: 1)
+   -> let beginning = greeting[..<index]
+   << // beginning : String.SubSequence = "Hello"
+   /> beginning is "\(beginning)"
+   </ beginning is "Hello"
+   ---
+   // Convert the result to a String for long-term storage.
+   -> let newString = String(beginning)
+   << // newString : String = "Hello"
+
+Like strings, each substring has a region of memory
+where the characters that make up the substring are stored.
+The difference between strings and substrings
+is that, as a performance optimization,
+a substring can re-use part of the memory
+that's used to store the original string,
+or part of the memory that's used to store another substring.
+(Strings have a similar optimization,
+but if two strings share memory, they are equal.)
+This performance optimization means
+you don't have to pay the performance cost of copying memory
+until you modify either the string or substring.
+As mentioned above,
+substrings aren't suitable for long-term storage ---
+because they re-use the storage of the original string,
+the entire original string must be kept in memory
+as long as any of its substrings are being used.
+
+In the example above,
+``greeting`` is a string,
+which means it has a region of memory
+where the characters that make up the string are stored.
+Because
+``beginning`` is a substring of ``greeting``,
+it re-uses the memory that ``greeting`` uses.
+In contrast,
+``newString`` is a string ---
+when it's created from the substring,
+it has its own storage.
+The figure below shows these relationships:
+
+.. FIXME: The connection between the code and the figure
+   would be clearer if the variable names appeared in the figure.
+
+.. image:: ../images/stringSubstring_2x.png
+   :align: center
+
+.. note::
+
+   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol.
+   If you're writing code that manipulates string data,
+   accepting a ``StringProtocol`` value lets you pass that string data
+   as either a ``String`` or ``Substring`` value.
+
+.. XXX Live link to the StringProtocol protocol reference.
+   It's not showing up in the database yet (2017-05-17).
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -1141,3 +1229,4 @@ such as with string interpolation:
    </ g
    </ ‼
    </ 🐶
+

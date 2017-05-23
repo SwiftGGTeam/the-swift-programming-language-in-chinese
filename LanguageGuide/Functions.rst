@@ -214,7 +214,7 @@ The return value of a function can be ignored when it is called:
 
    -> func printAndCount(string: String) -> Int {
          print(string)
-         return string.characters.count
+         return string.count
       }
    -> func printWithoutCounting(string: String) {
          let _ = printAndCount(string: string)

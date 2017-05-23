@@ -1022,7 +1022,7 @@ to create a cryptic puzzle phrase:
    << // puzzleOutput : String = ""
    -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
    << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
-   -> for character in puzzleInput.characters {
+   -> for character in puzzleInput {
          if charactersToRemove.contains(character) {
             continue
          } else {
