@@ -439,7 +439,7 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-use the ``count`` property of the string's ``characters`` property:
+use the ``count`` property of the string:
 
 .. testcode:: characterCount
 
@@ -481,11 +481,11 @@ with a fourth character of ``é``, not ``e``:
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``characters`` property
+   be aware that the ``count`` property
    must iterate over the Unicode scalars in the entire string
    in order to determine the characters for that string.
 
-   The count of the characters returned by the ``characters`` property
+   The count of the characters returned by the ``count`` property
    is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
@@ -569,7 +569,7 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property to access all of the
+Use the ``indices`` property to access all of the
 indices of individual characters in a string.
 
 .. testcode:: stringIndex
