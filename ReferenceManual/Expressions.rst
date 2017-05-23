@@ -1141,15 +1141,12 @@ For example:
       }
    ---
    -> let s = SomeStructure(someProperty: 12)
-   <~ // s : SomeStructure = <REPL.SomeStructure:
+   << // s : SomeStructure = REPL.SomeStructure(someProperty: 12)
    -> let keyPath = \SomeStructure.someProperty
+   << // keyPath : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
    ---
-   -> if let value = s[keyPath: keyPath] {
-   ->     print(value)
-   -> }
-   <- 12
-
-.. XXX Add REPL expectation for "let keyPath" lines here and in the next listing.
+   -> let value = s[keyPath: keyPath]
+   << // value : Int = 12
 
 The *property names* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
@@ -1157,20 +1154,18 @@ For example:
 
 .. testcode:: keypath-expression
 
-   >> import Foundation
-   -> @objc class OuterClass: NSObject {
-         var outerProperty: SomeClass
+   -> struct OuterStructure {
+         var outerProperty: SomeStructure
          init(someProperty: Int) {
-             self.someProperty = SomeClass(someProperty: someProperty)
+             self.outerProperty = SomeStructure(someProperty: someProperty)
          }
       }
-   -> let nested = OuterClass(someProperty: 24)
-   <~ // nested : OuterClass = <REPL.OuterClass:
-   -> let nestedKeyPath = \OuterClass.outerProperty.someProperty
-   -> if let value = nested[keyPath: nestedKeyPath] {
-          print(value)
-      }
-   <- 24
+   -> let nested = OuterStructure(someProperty: 24)
+   << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
+   -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
+   << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
+   -> let nestedValue = nested[keyPath: nestedKeyPath]
+   << // nestedValue : Int = 24
 
 .. syntax-grammar::
 
