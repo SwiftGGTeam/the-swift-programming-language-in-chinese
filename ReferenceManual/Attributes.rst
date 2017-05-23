@@ -273,7 +273,7 @@ You can apply a declaration attribute to declarations only.
     used by ``NSKeyedArchiver`` and ``NSKeyedUnarchiver``
     when archiving instances of the class.
     Unless you need to add backward compatibility with existing archives,
-    you should use the ``objc`` attribute instead
+    use the ``objc`` attribute instead
     to specify an Objective-C name.
 
 ``NSManaged``
