@@ -761,8 +761,7 @@ Substrings
 ----------
 
 When you get a substring from a string ---
-for example, using a subscript or a method like
-`prefix(_:) <//apple_ref/swift/structm/String/s:s10CollectionPsE6prefix11SubSequenceQzSiF::SYNTHESIZED::s:SS>`_ ---
+for example, using a subscript or a method like ``prefix(_:)`` ---
 the result is an instance
 of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
 not another string.
@@ -774,8 +773,6 @@ while performing actions on a string.
 When you're ready to store the result for a longer time,
 you convert the substring to an instance of ``String``.
 For example:
-
-.. XXX Make sure the link to prefix(_:) actually works.
 
 .. FIXME: After merging 23592978_struct_class,
    link to the COW note in "Structures"
