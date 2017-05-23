@@ -268,6 +268,14 @@ You can apply a declaration attribute to declarations only.
     .. TODO: If and when Dave includes a section about this in the Guide,
         provide a link to the relevant section.
 
+``NSKeyedArchiverClassName``
+    Apply this attribute to a class to manually specify the name
+    used by ``NSKeyedArchiver`` and ``NSKeyedUnarchiver``
+    when archiving instances of the class.
+    Unless you need to add backward compatibility with existing archives,
+    use the ``objc`` attribute instead
+    to specify an Objective-C name.
+
 ``NSManaged``
     Apply this attribute to an instance method or stored variable property
     of a class that inherits from ``NSManagedObject``
@@ -326,6 +334,11 @@ You can apply a declaration attribute to declarations only.
     You can use this argument to name
     classes, enumerations, enumeration cases, protocols,
     methods, getters, setters, and initializers.
+    If you specify the Objective-C name
+    for a class, protocol, or enumeration,
+    include a three-letter prefix on the name,
+    as described in `Conventions <//apple_ref/doc/uid/TP40011210-CH10-SW1>`_
+    in `Programming with Objective-C <//apple_ref/doc/uid/TP40011210>`_.
     The example below exposes
     the getter for the ``enabled`` property of the ``ExampleClass``
     to Objective-C code as ``isEnabled``
