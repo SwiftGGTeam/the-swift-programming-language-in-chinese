@@ -24,7 +24,6 @@ The following features are available only to Swift 4 code:
 .. XXX This list is a rough guess.
 
 - Access to private members from extensions
-- Enforcement of exclusive memory access
 - Strings and substrings as separate types
 - Reduced implicit ``@objc``
 
