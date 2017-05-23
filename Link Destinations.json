@@ -61,6 +61,7 @@
     "accesscontrol-initializers": "ID19", 
     "accesscontrol-modulesandsourcefiles": "ID4", 
     "accesscontrol-nestedtypes": "ID15", 
+    "accesscontrol-privateextension": "ID559", 
     "accesscontrol-protocolconformance": "ID24", 
     "accesscontrol-protocolinheritance": "ID23", 
     "accesscontrol-protocols": "ID22", 
@@ -315,12 +316,15 @@
     "genericparametersandarguments-whereclauses": "ID408", 
     "generics-associatedtypes": "ID189", 
     "generics-associatedtypesinaction": "ID190", 
+    "generics-associatedtypeswithwhereclause": "ID557", 
+    "generics-constrainassociatedtype": "ID560", 
     "generics-extendingagenerictype": "ID185", 
     "generics-extendinganexistingtypetospecifyanassociatedtype": "ID191", 
     "generics-extensionwithwhereclause": "ID553", 
     "generics-genericfunctions": "ID181", 
     "generics-generictypes": "ID184", 
     "generics-namingtypeparameters": "ID183", 
+    "generics-subscripts": "ID558", 
     "generics-theproblemthatgenericssolve": "ID180", 
     "generics-typeconstraints": "ID186", 
     "generics-typeconstraintsinaction": "ID188", 
@@ -488,6 +492,7 @@
     "stringsandcharacters-stringmutability": "ID288", 
     "stringsandcharacters-stringsareunicodescalars": "ID294", 
     "stringsandcharacters-stringsarevaluetypes": "ID289", 
+    "stringsandcharacters-substrings": "ID555", 
     "stringsandcharacters-unicode": "ID293", 
     "stringsandcharacters-unicoderepresentationsofstrings": "ID301", 
     "stringsandcharacters-unicodescalars": "ID304", 
@@ -518,6 +523,7 @@
     "thebasics-numerictypeconversion": "ID324", 
     "thebasics-optionalbinding": "ID333", 
     "thebasics-optionals": "ID330", 
+    "thebasics-preconditions": "ID554", 
     "thebasics-printingconstantsandvariables": "ID314", 
     "thebasics-semicolons": "ID316", 
     "thebasics-tuples": "ID329", 
@@ -572,5 +578,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 554
+  "next_id": 561
 }

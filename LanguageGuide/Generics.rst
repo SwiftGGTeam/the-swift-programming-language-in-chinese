@@ -794,6 +794,8 @@ the appropriate type to use for ``Item``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.
 
+.. _Generics_ConstrainAssociatedType:
+
 Using Type Annotations to Constrain an Associated Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
