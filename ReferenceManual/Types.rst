@@ -631,7 +631,7 @@ and conforms to each protocol in a list of specified protocols.
 Protocol-composition types may be used only when specifying a type
 in type annotations,
 in generic parameter clauses,
-and in generic where clauses.
+and in generic ``where`` clauses.
 
 .. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
