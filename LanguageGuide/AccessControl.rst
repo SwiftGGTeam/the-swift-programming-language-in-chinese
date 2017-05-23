@@ -1153,25 +1153,23 @@ the default access level for each protocol requirement implementation within the
 
 .. _AccessControl_PrivateExtension:
 
-Using Private Members in Extensions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Private Members in Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-From the perspective of access control,
-extensions to a class, structure, or enumeration
-that are in the *same* file as the original declaration
-behave as if the contents of the extension
-had been written in the source code
-as part of the type's declaration.
+Extensions that are in the same file as
+the class, structure, or enumeration that they extend
+behave as if the code in the extension
+had been written as part of the original type's declaration.
 As a result, you can:
 
-- Declare a private member in the original declaration
-  and access that member from extensions in the same file.
+- Declare a private member in the original declaration,
+  and access that member from extensions that are in the same file.
 
-- Declare a private member in one extension
-  and access it from another extension in the same file.
+- Declare a private member in one extension,
+  and access it from another extension that are in the same file.
 
-- Declare a private member in an extension
-  and access it from the original declaration in the same file.
+- Declare a private member in an extension,
+  and access it from the original declaration that are in the same file.
 
 This behavior means you can use extensions in the same way
 to organize your code,
