@@ -334,7 +334,8 @@ You can apply a declaration attribute to declarations only.
     You can use this argument to name
     classes, enumerations, enumeration cases, protocols,
     methods, getters, setters, and initializers.
-    If you specify the Objective-C name for a class,
+    If you specify the Objective-C name
+    for a class, protocol, or enumeration,
     include a three-letter prefix on the name,
     as described in `Conventions <//apple_ref/doc/uid/TP40011210-CH10-SW1>`_
     in `Programming with Objective-C <//apple_ref/doc/uid/TP40011210>`_.
