@@ -1085,6 +1085,8 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
+.. _Generics_AssociatedTypesWithWhereClause:
+
 Associated Types with a Generic Where Clause
 --------------------------------------------
 
