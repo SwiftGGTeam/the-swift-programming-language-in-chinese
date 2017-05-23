@@ -653,15 +653,33 @@ For more on arrays, see :ref:`CollectionTypes_Arrays`.
 One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
-You can omit the start or end index of a range
-when the range starts at the beginning or ends at the end.
+Both the closed range and half-open range operator
+have an alternate form
+that's convenient for ranges that use
+the largest or smallest possible value on one side of the operator.
+In these cases, you can omit the value.
+This kind of range is called a :newTerm:`one-sided range`
+because the operator has a value on only one side.
 For example:
 
 .. testcode:: rangeOperators
 
-   -> names[2...]
-   -> names[...3]
-   -> names[..<3]
+   -> for name in names[2...] {
+          print(name)
+      }
+   </ Brian
+   </ Jack
+   ---
+   -> for name in names[...2] {
+          print(name)
+      }
+   </ Anna
+   </ Alex
+   ---
+   -> for name in names[..<2] {
+          print(name)
+      }
+   </ Anna
 
 .. _BasicOperators_LogicalOperators:
 
