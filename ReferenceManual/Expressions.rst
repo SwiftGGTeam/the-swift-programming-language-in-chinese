@@ -1218,7 +1218,7 @@ For example:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-          let property: String
+          @objc let property: String
           @objc(doSomethingWithInt:)
           func doSomething(_ x: Int) {}
    ---
@@ -1297,11 +1297,11 @@ that is available in the Objective-C runtime.
 At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
-.. testcode:: keypath-expression
+.. testcode:: keypath-string-expression
 
    >> import Foundation
-   -> @objc class SomeClass: NSObject {
-         var someProperty: Int
+   -> class SomeClass: NSObject {
+         @objc var someProperty: Int
          init(someProperty: Int) {
              self.someProperty = someProperty
          }
@@ -1321,7 +1321,7 @@ When you use a key-path string expression within a class,
 you can refer to a property of that class
 by writing just the property name, without the class name.
 
-.. testcode:: keypath-expression
+.. testcode:: keypath-string-expression
 
    -> extension SomeClass {
          func getSomeKeyPath() -> String {
