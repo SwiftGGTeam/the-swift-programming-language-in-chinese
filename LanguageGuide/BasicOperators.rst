@@ -653,11 +653,12 @@ For more on arrays, see :ref:`CollectionTypes_Arrays`.
 One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
-Both the closed range and half-open range operator
-have an alternate form for ranges that use
+The closed range operator
+has an alternate form for ranges that use
 the largest or smallest possible value on one side of the operator ---
 for example,
-ranges that start at the beginning of an array.
+a range that includes all the elements of an array,
+from index 2 to the end of the array.
 In these cases, you can omit the value
 from one side of the range operator.
 This kind of range is called a :newTerm:`one-sided range`
@@ -677,7 +678,17 @@ For example:
       }
    </ Anna
    </ Alex
-   ---
+   </ Brian
+
+The half-open range operator also has
+a one-sided form that is written
+with only its final value.
+Just like when you include a value on both sides,
+the final value isn't part of the range.
+For example:
+
+.. testcode:: rangeOperators
+
    -> for name in names[..<2] {
           print(name)
       }
