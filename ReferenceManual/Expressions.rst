@@ -1171,6 +1171,14 @@ For example:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+For more information about using key paths
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
+
 .. syntax-grammar::
 
    Grammar of a key-path expression
@@ -1336,7 +1344,7 @@ Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists
 and that the property is exposed to the Objective-C runtime.
 
-For more information about using selectors
+For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
 in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
