@@ -1148,6 +1148,37 @@ For example:
    /> value is \(value)
    </ value is 12
 
+.. To get \.foo to compile, you have to pass an explicit type,
+   so the subscript works, which defeats the whole point:
+
+   // OK
+   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
+   let implied = s[keyPath: key]
+
+   // OK
+   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
+
+   // NOPE
+   s[keyPath: \.someProperty] as Int
+
+
+    The *type name* can be omitted
+    in contexts where type inference
+    can determine the implied type.
+    For example:
+
+    .. testcode:: keypath-expression
+
+       -> let implied = s[keyPath: \.someProperty]
+       << // implied : Int = 12
+       /> implied is \(implied)
+       </ implied is 12
+
+.. FIXME This is similar to an implicit member expression --
+   likely worth calling out,
+   assuming I can confirm that it's the same kind of type-inference context
+   that lets both of them be used.
+
 The *property names* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
 For example:
