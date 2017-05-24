@@ -17,9 +17,30 @@ that are written in either Swift 4 or Swift 3.
    >> #endif
    << Just right
 
+.. note::
+
+    When the Swift 4 compiler is working with Swift 3 code,
+    it identifies its language version as 3.2 ---
+    this means you can use conditional compilation blocks
+    like ``#if swift(>=3.2)`` to write code
+    that is compatible with multiple versions of the Swift compiler.
+
+.. The incantation to determine which Swift you're on:
+
+   #if swift(>=4)
+       print("Swift 4 compiler reading Swift 4 code")
+   #elseif swift(>=3.2)
+       print("Swift 4 compiler reading Swift 3 code")
+   #elseif swift(>=3.1)
+       print("Swift 3.1 compiler")
+   #else
+       print("An older compiler")
+   #endif
+
 When you use Xcode 9 to build Swift 3 code,
 most of the new Swift 4 functionality is available.
-The following features are available only to Swift 4 code:
+That said,
+the following features are available only to Swift 4 code:
 
 - Substring operations return an instance of the ``Substring`` type,
   instead of ``String``.
@@ -34,22 +55,3 @@ This means, if you have a large project
 that is divided into multiple frameworks,
 you can migrate your code from Swift 3 to Swift 4
 one framework at a time.
-
-When the Swift 4 compiler is working with Swift 3 code,
-it identifies its language version as 3.2 ---
-this means you can use conditional compilation blocks
-like ``#if swift(>=3.2)`` to write code
-that is compatible with multiple versions of the Swift compiler.
-
-.. The incantation to determine which Swift you're on:
-
-   #if swift(>=4)
-       print("Swift 4 compiler reading Swift 4 code")
-   #elseif swift(>=3.2)
-       print("Swift 4 compiler reading Swift 3 code")
-   #elseif swift(>=3.1)
-       print("Swift 3.1 compiler")
-   #else
-       print("An older compiler")
-   #endif
-
