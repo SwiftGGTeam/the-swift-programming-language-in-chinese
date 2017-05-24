@@ -5,4 +5,5 @@ Welcome to Swift
     :maxdepth: 1
 
     AboutSwift
+    Compatibility
     GuidedTour
