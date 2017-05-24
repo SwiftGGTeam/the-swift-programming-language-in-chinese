@@ -1136,9 +1136,6 @@ For example:
 
    -> struct SomeStructure {
          var someProperty: Int
-         init(someProperty: Int) {
-             self.someProperty = someProperty
-         }
       }
    ---
    -> let s = SomeStructure(someProperty: 12)
