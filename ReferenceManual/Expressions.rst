@@ -1113,6 +1113,7 @@ Key-Path Expression
 A key-path expression lets you
 refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
+It has the following form:
 
 .. syntax-outline::
 
@@ -1197,6 +1198,7 @@ Selector Expression
 A selector expression lets you access the selector
 used to refer to a method or to a property's
 getter or setter in Objective-C.
+It has the following form:
 
 .. syntax-outline::
 
@@ -1282,6 +1284,7 @@ Key-Path String Expression
 A key-path string expression lets you access the string
 used to refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
+It has the following form:
 
 .. syntax-outline::
 
