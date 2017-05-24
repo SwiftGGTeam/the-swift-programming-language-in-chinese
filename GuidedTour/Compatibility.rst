@@ -25,8 +25,6 @@ The following features are available only to Swift 4 code:
 - The ``@objc`` attribute is implicitly added in fewer places.
 - Extensions to a type in the same file
   can access that type's private members.
-- Protocol composition types imported from Objective-C code
-  can include a superclass constraint.
 
 A target written in Swift 4 can depend on
 a target that's written using Swift 3,
