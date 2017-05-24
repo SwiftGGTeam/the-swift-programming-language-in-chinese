@@ -683,7 +683,7 @@ For example:
 
 The half-open range operator also has
 a one-sided form that's written
-with only it's final value.
+with only its final value.
 Just like when you include a value on both sides,
 the final value isn't part of the range.
 For example:
