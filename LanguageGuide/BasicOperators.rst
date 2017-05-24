@@ -655,8 +655,8 @@ One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
 The closed range operator
-has an alternate form for ranges that use
-the largest or smallest possible value on one side of the operator ---
+has an alternate form for ranges that continue
+as far as possible in one direction ---
 for example,
 a range that includes all the elements of an array,
 from index 2 to the end of the array.
