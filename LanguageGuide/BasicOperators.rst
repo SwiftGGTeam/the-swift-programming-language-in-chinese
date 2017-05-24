@@ -693,6 +693,7 @@ For example:
           print(name)
       }
    </ Anna
+   </ Alex
 
 .. _BasicOperators_LogicalOperators:
 
