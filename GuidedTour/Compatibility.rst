@@ -1,8 +1,8 @@
 Version Compatibility
 =====================
 
-This book describes version 4.0 of the Swift language,
-which ships as part of Xcode 9.
+This book describes Swift 4.0,
+which is the default version of Swift included in Xcode 9.
 You can use Xcode 9 to build targets
 that are written in either Swift 4 or Swift 3.
 
@@ -21,7 +21,8 @@ When you use Xcode 9 to build Swift 3 code,
 most of the new Swift 4 functionality is available.
 The following features are available only to Swift 4 code:
 
-- Substring operations return an instance of the ``Substring`` type.
+- Substring operations return an instance of the ``Substring`` type,
+  instead of ``String``.
 - The ``@objc`` attribute is implicitly added in fewer places.
 - Extensions to a type in the same file
   can access that type's private members.
@@ -37,7 +38,8 @@ one framework at a time.
 When the Swift 4 compiler is working with Swift 3 code,
 it identifies its language version as 3.2 ---
 this means you can use conditional compilation blocks
-like ``#if swift(>=3.2)``.
+like ``#if swift(>=3.2)`` to write code
+that is compatible with multiple versions of the Swift compiler.
 
 .. The incantation to determine which Swift you're on:
 
