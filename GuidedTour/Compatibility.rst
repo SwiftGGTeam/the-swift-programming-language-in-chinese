@@ -21,11 +21,13 @@ When you use Xcode 9 to build Swift 3 code,
 most of the new Swift 4 functionality is available.
 The following features are available only to Swift 4 code:
 
-.. XXX This list is a rough guess.
-
-- Access to private members from extensions
-- Strings and substrings as separate types
-- Reduced implicit ``@objc``
+- Strings and substrings are separate types,
+  ``String`` and ``Substring``,
+  and ``String`` conforms to the ``Collection`` protocol.
+- The ``@objc`` attribute is implicitly added in fewer places.
+- Extensions to a type in the same file
+  can access that type's private members.
+- Protocol composition types can include a superclass constraint.
 
 A target written in Swift 4 can depend on
 a target that's written using Swift 3,
