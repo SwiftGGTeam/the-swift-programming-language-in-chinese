@@ -21,7 +21,8 @@ You can opt in to value overflow behavior
 by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
-Swift also provides two range operators (``a..<b`` and ``a...b``) not found in C,
+Swift also provides range operators that are not found in C,
+such as ``a..<b`` and ``a...b``,
 as a shortcut for expressing a range of values.
 
 This chapter describes the common operators in Swift.
@@ -548,7 +549,7 @@ the value wrapped inside ``userDefinedColorName`` is used instead of the default
 Range Operators
 ---------------
 
-Swift includes two :newTerm:`range operators`,
+Swift includes several :newTerm:`range operators`,
 which are shortcuts for expressing a range of values.
 
 .. _BasicOperators_ClosedRangeOperator:
