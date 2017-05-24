@@ -1145,6 +1145,8 @@ For example:
    ---
    -> let value = s[keyPath: keyPath]
    << // value : Int = 12
+   /> value is \(value)
+   </ value is 12
 
 The *property names* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
@@ -1158,12 +1160,16 @@ For example:
              self.outerProperty = SomeStructure(someProperty: someProperty)
          }
       }
+   ---
    -> let nested = OuterStructure(someProperty: 24)
    << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
    -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
    << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
+   ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
    << // nestedValue : Int = 24
+   /> nestedValue is \(nestedValue)
+   </ nestedValue is 24
 
 .. syntax-grammar::
 
