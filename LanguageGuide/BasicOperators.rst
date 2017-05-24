@@ -701,9 +701,9 @@ not just in subscripts.
 You can't iterate over a one-sided range
 that omits a first value,
 because it isn't clear where iteration should begin.
-You can iterate over a one-sided range that omits its final value,
-although you need to some end condition ---
-the range continues indefinitely.
+You can iterate over a one-sided range that omits its final value;
+however, because the range continues indefinitely,
+make sure to add an explicit end condition for the loop.
 You can also check whether a one-sided range contains a particular value,
 as shown in the code below.
 
