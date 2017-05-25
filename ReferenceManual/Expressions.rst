@@ -1121,13 +1121,11 @@ It has the following form:
 
 The *property names* must be a reference to a property.
 At compile time, the key-path expression
-is replaced by a ``KeyPath`` value.
+is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
 Key paths can be used to access properties
 by passing them to the ``subscript(keyPath:)`` subscript.
 (This subscript is available on all Swift types.)
 For example:
-
-.. XXX add live links for KeyPath and subscript[keyPath:]
 
 .. The subscript name subscript(keyPath:) above is a little odd,
    but it matches what should be displayed on the web
