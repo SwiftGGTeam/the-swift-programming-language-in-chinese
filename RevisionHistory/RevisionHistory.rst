@@ -19,7 +19,7 @@ Date        Notes
               to the :ref:`StringsAndCharacters_Literals` section
               of the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
               and to :ref:`LexicalStructure_StringLiterals` section
-              of the :doc:`../ReferenceManual/LexicalStructures` chapter.
+              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
 
             * Updated the discussion of the ``objc`` attribute
               in :ref:`Attributes_DeclarationAttributes`,
@@ -27,9 +27,9 @@ Date        Notes
 
             * Updated the discussion
               in the :ref:`Protocols_ProtocolComposition` section
-              of the :doc:`../LanguageGuide/Protocol` chapter,
+              of the :doc:`../LanguageGuide/Protocols` chapter,
               and in the :ref:`Types_ProtocolCompositionType` section
-              of the :doc:`../Reference/Types` chapter,
+              of the :doc:`../ReferenceManual/Types` chapter,
               now that protocol composition types can contain a superclass requirement.
 
             * Updated the discussion of protocol extensions
