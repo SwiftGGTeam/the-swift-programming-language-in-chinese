@@ -1849,9 +1849,13 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
            // This syntax produces a warning.
            associatedtype SomeType: Equatable
        }
-    !! <REPL Input>:2:22: warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+    !! <REPL Input>:3:22: warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
     !! associatedtype SomeType: Equatable
     !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+    !!-
+    !! <REPL Input>:2:22: note: 'SomeType' declared here
+    !! associatedtype SomeType
+    !! ^
     ---
     // This syntax is preferred.
     -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
