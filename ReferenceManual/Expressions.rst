@@ -1147,7 +1147,32 @@ For example:
    /> value is \(value)
    </ value is 12
 
-.. To get \.foo to compile, you have to pass an explicit type,
+The *type name* can be omitted
+in contexts where type inference
+can determine the implied type.
+For example:
+
+.. testcode:: keypath-expression-TEMP
+
+   >> import Foundation
+   -> class SomeClass: NSObject {
+          @objc var someProperty: Int
+          init(someProperty: Int) {
+              self.someProperty = someProperty
+          }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 10)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> c.observe(\.someProperty) { object, change in
+         // ...
+      }
+   <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+
+.. Omitting the type doesn't work properly in some places in beta 1
+   <rdar://problem/32237567> This keypath code doesn't ever complete executing
+
+   To get \.foo to compile, you have to pass an explicit type,
    so the subscript works, which defeats the whole point:
 
    // OK
@@ -1159,12 +1184,6 @@ For example:
 
    // NOPE
    s[keyPath: \.someProperty] as Int
-
-
-    The *type name* can be omitted
-    in contexts where type inference
-    can determine the implied type.
-    For example:
 
     .. testcode:: keypath-expression
 
