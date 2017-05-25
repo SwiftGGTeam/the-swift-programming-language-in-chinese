@@ -1150,7 +1150,9 @@ For example:
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
-For example:
+For example,
+the following code uses ``\.someProperty``:
+
 
 .. testcode:: keypath-expression-TEMP
 
@@ -1199,7 +1201,8 @@ For example:
 
 The *property names* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
-For example:
+For example,
+the following code uses ``\OuterStructure.outerProperty.someProperty``:
 
 .. testcode:: keypath-expression
 
