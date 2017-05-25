@@ -1124,6 +1124,7 @@ At compile time, the key-path expression
 is replaced by a ``KeyPath`` value.
 Key paths can be used to access properties
 by passing them to the ``subscript(keyPath:)`` subscript.
+(This subscript is available on all Swift types.)
 For example:
 
 .. XXX add live links for KeyPath and subscript[keyPath:]
