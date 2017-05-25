@@ -452,8 +452,9 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> tuple-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
-    primary-expression --> selector-expression
     primary-expression --> key-path-expression
+    primary-expression --> selector-expression
+    primary-expression --> key-path-string-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -683,7 +684,7 @@ For example:
     self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
 
     self-method-expression --> ``self`` ``.`` identifier
-    self-subscript-expression --> ``self`` ``[`` expression-list ``]``
+    self-subscript-expression --> ``self`` ``[`` function-call-argument-list ``]``
     self-initializer-expression --> ``self`` ``.`` ``init``
 
 
@@ -726,7 +727,7 @@ to make use of the implementation in their superclass.
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
-    superclass-subscript-expression --> ``super`` ``[`` expression-list ``]``
+    superclass-subscript-expression --> ``super`` ``[`` function-call-argument-list ``]``
     superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
@@ -1104,6 +1105,154 @@ For example, in the following assignment
     wildcard-expression --> ``_``
 
 
+.. _Expression_TypedKeyPathExpression:
+
+Key-Path Expression
+~~~~~~~~~~~~~~~~~~~
+
+A key-path expression lets you
+refer to a property
+for use in key-value coding and key-value observing APIs.
+It has the following form:
+
+.. syntax-outline::
+
+   \<#type name#>.<#property names#>
+
+The *property names* must be a reference to a property.
+At compile time, the key-path expression
+is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
+Key paths can be used to access properties
+by passing them to the ``subscript(keyPath:)`` subscript.
+(This subscript is available on all Swift types.)
+For example:
+
+.. The subscript name subscript(keyPath:) above is a little odd,
+   but it matches what should be displayed on the web
+   when this API actually lands.
+
+.. testcode:: keypath-expression
+
+   -> struct SomeStructure {
+         var someProperty: Int
+      }
+   ---
+   -> let s = SomeStructure(someProperty: 12)
+   << // s : SomeStructure = REPL.SomeStructure(someProperty: 12)
+   -> let keyPath = \SomeStructure.someProperty
+   << // keyPath : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
+   ---
+   -> let value = s[keyPath: keyPath]
+   << // value : Int = 12
+   /> value is \(value)
+   </ value is 12
+
+The *type name* can be omitted
+in contexts where type inference
+can determine the implied type.
+For example,
+the following code uses ``\.someProperty``:
+
+
+.. testcode:: keypath-expression-TEMP
+
+   >> import Foundation
+   -> class SomeClass: NSObject {
+          @objc var someProperty: Int
+          init(someProperty: Int) {
+              self.someProperty = someProperty
+          }
+      }
+   ---
+   -> let c = SomeClass(someProperty: 10)
+   <~ // c : SomeClass = <REPL.SomeClass:
+   -> c.observe(\.someProperty) { object, change in
+         // ...
+      }
+   <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+
+.. Omitting the type doesn't work properly in some places in beta 1
+   <rdar://problem/32237567> This keypath code doesn't ever complete executing
+
+   To get \.foo to compile, you have to pass an explicit type,
+   so the subscript works, which defeats the whole point:
+
+   // OK
+   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
+   let implied = s[keyPath: key]
+
+   // OK
+   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
+
+   // NOPE
+   s[keyPath: \.someProperty] as Int
+
+    .. testcode:: keypath-expression
+
+       -> let implied = s[keyPath: \.someProperty]
+       << // implied : Int = 12
+       /> implied is \(implied)
+       </ implied is 12
+
+.. FIXME This is similar to an implicit member expression --
+   likely worth calling out,
+   assuming I can confirm that it's the same kind of type-inference context
+   that lets both of them be used.
+
+The *property names* can contain multiple property names, separated by periods,
+which lets you access a property of the given property's value.
+For example,
+the following code uses ``\OuterStructure.outerProperty.someProperty``:
+
+.. testcode:: keypath-expression
+
+   -> struct OuterStructure {
+         var outerProperty: SomeStructure
+         init(someProperty: Int) {
+             self.outerProperty = SomeStructure(someProperty: someProperty)
+         }
+      }
+   ---
+   -> let nested = OuterStructure(someProperty: 24)
+   << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
+   -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
+   << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
+   ---
+   -> let nestedValue = nested[keyPath: nestedKeyPath]
+   << // nestedValue : Int = 24
+   /> nestedValue is \(nestedValue)
+   </ nestedValue is 24
+
+For more information about using key paths
+in Swift code that interacts with Objective-C APIs,
+see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
+in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+For information about key-value coding and key-value observing,
+see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
+and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
+
+.. syntax-grammar::
+
+   Grammar of a key-path expression
+
+   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
+   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
+   key-path-component --> identifier
+
+.. FUTURE syntax-grammar
+
+   As of 2017-04-19 Joe Groff says he expects to only implement property names
+   for WWDC.  More stuff will land later.
+
+   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
+
+   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
+   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+
+   key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
+   key-path-postfix --> ``?`` | ``!`` | ``[`` function-call-argument-list ``]``
+
+
 .. _Expression_SelectorExpression:
 
 Selector Expression
@@ -1112,6 +1261,7 @@ Selector Expression
 A selector expression lets you access the selector
 used to refer to a method or to a property's
 getter or setter in Objective-C.
+It has the following form:
 
 .. syntax-outline::
 
@@ -1191,12 +1341,13 @@ in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. _Expression_KeyPathExpression:
 
-Key-Path Expression
-~~~~~~~~~~~~~~~~~~~
+Key-Path String Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you access the string
-used to refer to a property in Objective-C
+A key-path string expression lets you access the string
+used to refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
+It has the following form:
 
 .. syntax-outline::
 
@@ -1204,10 +1355,10 @@ for use in key-value coding and key-value observing APIs.
 
 The *property name* must be a reference to a property
 that is available in the Objective-C runtime.
-At compile time, the key-path expression is replaced by a string literal.
+At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
-.. testcode:: keypath-expression
+.. testcode:: keypath-string-expression
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1227,11 +1378,11 @@ For example:
    -> }
    <- 12
 
-When you use a key-path expression within a class,
+When you use a key-path string expression within a class,
 you can refer to a property of that class
 by writing just the property name, without the class name.
 
-.. testcode:: keypath-expression
+.. testcode:: keypath-string-expression
 
    -> extension SomeClass {
          func getSomeKeyPath() -> String {
@@ -1241,11 +1392,11 @@ by writing just the property name, without the class name.
    -> print(keyPath == c.getSomeKeyPath())
    <- true
 
-Because the key path is created at compile time, not at runtime,
+Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists
 and that the property is exposed to the Objective-C runtime.
 
-For more information about using selectors
+For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
 in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
@@ -1260,9 +1411,9 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. syntax-grammar::
 
-    Grammar of a key-path expression
+    Grammar of a key-path string expression
 
-    key-path-expression --> ``#keyPath`` ``(`` expression  ``)``
+    key-path-string-expression --> ``#keyPath`` ``(`` expression  ``)``
 
 
 .. _Expressions_PostfixExpressions:
@@ -1688,7 +1839,21 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
     Grammar of a subscript expression
 
-    subscript-expression --> postfix-expression ``[`` expression-list ``]``
+    subscript-expression --> postfix-expression ``[`` function-call-argument-list ``]``
+
+.. assertion:: subscripts-can-take-operators
+
+   >> struct S {
+          let x: Int
+          let y: Int
+          subscript(operation: (Int, Int) -> Int) -> Int {
+              return operation(x, y)
+          }
+      }
+   >> let s = S(x: 10, y: 20)
+   << // s : S = REPL.S(x: 10, y: 20)
+   >> s[+]
+   << // r0 : Int = 30
 
 
 .. _Expressions_Forced-ValueExpression:
