@@ -167,10 +167,14 @@ that whitespace *is* included.
    :compile: true
 
    -> let linesWithIndentation = """
-          This line doesn't begin with whitespace.
-              This line begins with four spaces.
-          This line doesn't begin with whitespace.
-          """
+          This line doesn't begin with whitespace.
+              This line begins with four spaces.
+          This line doesn't begin with whitespace.
+          """
+
+.. The lines above are indented with a mix of spaces
+   and non-breaking spaces, to prevent SourceKit from eating meaningful
+   leading whitespace.
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
