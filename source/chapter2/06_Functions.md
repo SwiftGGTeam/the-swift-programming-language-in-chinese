@@ -255,7 +255,7 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
 <a name="specifying_argument_labels"></a>
 ### 指定参数标签
 
-你可以在函数名称前指定它的参数标签，中间以空格分隔：
+你可以在参数名称前指定它的参数标签，中间以空格分隔：
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
