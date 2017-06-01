@@ -907,7 +907,7 @@ Compiler Control Statements
 ---------------------------
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has two complier control statements: a conditional compilation block
+Swift has two compiler control statements: a conditional compilation block
 and a line control statement.
 
 .. syntax-grammar::
