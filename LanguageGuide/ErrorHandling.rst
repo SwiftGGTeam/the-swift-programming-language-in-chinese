@@ -464,9 +464,12 @@ The deferred statements may not contain any code
 that would transfer control out of the statements,
 such as a ``break`` or a ``return`` statement,
 or by throwing an error.
-Deferred actions are executed in reverse order of how they are specified ---
-that is, the code in the first ``defer`` statement executes
-after code in the second, and so on.
+Deferred actions are executed in reverse order of how they are written in your source code.
+That is, the code in the first ``defer`` statement executes last,
+the code in the second ``defer`` statement executes second to last,
+and so on.
+The last ``defer`` statement in source code order
+is the first to be executed.
 
 .. testcode:: defer
 
