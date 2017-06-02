@@ -20,6 +20,7 @@ Language Guide
    Initialization
    Deinitialization
    AutomaticReferenceCounting
+   MemorySafety
    OptionalChaining
    ErrorHandling
    TypeCasting
