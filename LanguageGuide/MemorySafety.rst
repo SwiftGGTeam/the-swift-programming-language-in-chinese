@@ -3,6 +3,54 @@ Memory Safety
 
 .. write-me::
 
+.. OUTLINE
+
+   Memory Safety vs Type Safety
+   they both prevent nonsense/invalid operators
+   type safety prevents things like let x: Int = "s"
+   memory safety prevents things like array[9] on an eight-element array
+
+   Trapping Is a Good Thing
+   the choices at runtime are limited when an action would be unsafe
+   we could return a sentinel/invalid/made-up value that looks probably valid, hiding the error
+   we could do like C does and let the compiler just make something up
+   we could trap -- immediate & predictable means easier to debug
+
+   Safety is enforced at compile time, at runtime, and by your code review.
+
+   compile time: let x: Int8 = 9000
+   compile time: array.sort { $0 < array[0] }
+
+   runtime: array[i] // i is out of bounds
+   runtime: 
+
+   "Your code review" or "manually" is for places where you explicitly took
+   ownership of the safety of a piece of code -- for example using an UnsafeFoo
+   pointer type or marking something with @exclusivity(unchecked).  This is
+   typically done because the compiler would need to use dynamic checks, but
+   the runtime cost of such checks is too great, so you do manual static
+   checking instead.
+
+.. Useful bits from the release notes:
+
+   Static checks are used for most local variables, constants, and parameters. In
+   Swift 4 mode, static failures are errors and will block code from successfully
+   compiling. In general, developers will need to rearrange their code (for
+   example, by adding a local copy) to prevent these conflicting accesses. In
+   Swift 3 mode, static failures are merely a warning, but this will be
+   strengthened to an error in a future release of Swift, so developers should
+   take action to fix any of these warnings they find.
+
+   Dynamic checks are used for global variables, static type properties, class
+   instance properties, and local variables that have been captured in an
+   @escaping closure. In Swift 4 mode, failing a dynamic check will cause a trap,
+   much like integer overflow does. In Swift 3 mode, failing a dynamic check
+   merely causes a warning to be printed to stderr.
+
+   The compile-time and run-time checks enforce the rule for accesses that occur
+   within the same thread. Thread Sanitizer will be able to catch most (but not
+   all) violations that occur from different threads.
+
 Exclusive Access to Memory
 --------------------------
 
