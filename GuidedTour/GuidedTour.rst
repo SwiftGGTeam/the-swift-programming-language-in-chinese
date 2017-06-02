@@ -125,6 +125,27 @@ For example:
    include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
+Use three double quotes (``"""``) for strings
+that take up multiple lines.
+Indentation at the start of each quoted line is removed,
+as long as it matches the indentation of the closing quote.
+For example:
+
+.. testcode:: guided-tour-compiled
+   :compile: true
+
+
+   >> let apples = 3
+   >> let oranges = 5
+   -> let quotation = """
+          Even though there's whitespace to the left,
+          the actual lines aren't indented.
+              Except for this line.
+          Double quotes (") can appear without being escaped.
+
+          I still have \(apples + oranges) pieces of fruit.
+          """
+
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.

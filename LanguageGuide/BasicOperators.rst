@@ -21,7 +21,8 @@ You can opt in to value overflow behavior
 by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
-Swift also provides two range operators (``a..<b`` and ``a...b``) not found in C,
+Swift also provides range operators that are not found in C,
+such as ``a..<b`` and ``a...b``,
 as a shortcut for expressing a range of values.
 
 This chapter describes the common operators in Swift.
@@ -548,7 +549,7 @@ the value wrapped inside ``userDefinedColorName`` is used instead of the default
 Range Operators
 ---------------
 
-Swift includes two :newTerm:`range operators`,
+Swift includes several :newTerm:`range operators`,
 which are shortcuts for expressing a range of values.
 
 .. _BasicOperators_ClosedRangeOperator:
@@ -647,6 +648,75 @@ but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-open range.
 For more on arrays, see :ref:`CollectionTypes_Arrays`.
+
+.. _BasicOperators_OneSidedRanges:
+
+One-Sided Ranges
+~~~~~~~~~~~~~~~~
+
+The closed range operator
+has an alternate form for ranges that continue
+as far as possible in one direction ---
+for example,
+a range that includes all the elements of an array,
+from index 2 to the end of the array.
+In these cases, you can omit the value
+from one side of the range operator.
+This kind of range is called a :newTerm:`one-sided range`
+because the operator has a value on only one side.
+For example:
+
+.. testcode:: rangeOperators
+
+   -> for name in names[2...] {
+          print(name)
+      }
+   </ Brian
+   </ Jack
+   ---
+   -> for name in names[...2] {
+          print(name)
+      }
+   </ Anna
+   </ Alex
+   </ Brian
+
+The half-open range operator also has
+a one-sided form that's written
+with only its final value.
+Just like when you include a value on both sides,
+the final value isn't part of the range.
+For example:
+
+.. testcode:: rangeOperators
+
+   -> for name in names[..<2] {
+          print(name)
+      }
+   </ Anna
+   </ Alex
+
+One-sided ranges can be used in other contexts,
+not just in subscripts.
+You can't iterate over a one-sided range
+that omits a first value,
+because it isn't clear where iteration should begin.
+You can iterate over a one-sided range that omits its final value;
+however, because the range continues indefinitely,
+make sure to add an explicit end condition for the loop.
+You can also check whether a one-sided range contains a particular value,
+as shown in the code below.
+
+.. testcode:: rangeOperators
+
+   -> let range = ...5
+   << // range : PartialRangeThrough<Int> = Swift.PartialRangeThrough<Swift.Int>(upperBound: 5)
+   -> range.contains(7)   // false
+   -> range.contains(4)   // true
+   -> range.contains(-1)  // true
+   << // r0 : Bool = false
+   << // r1 : Bool = true
+   << // r2 : Bool = true
 
 .. _BasicOperators_LogicalOperators:
 

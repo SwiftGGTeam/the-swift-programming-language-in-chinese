@@ -625,8 +625,13 @@ Protocol Composition Type
 -------------------------
 
 A protocol composition type describes a type that conforms to each protocol
-in a list of specified protocols.
-Protocol composition types may be used only in type annotations and in generic parameters.
+in a list of specified protocols,
+or a type that is a subclass of a given class
+and conforms to each protocol in a list of specified protocols.
+Protocol composition types may be used only when specifying a type
+in type annotations,
+in generic parameter clauses,
+and in generic ``where`` clauses.
 
 .. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
@@ -645,9 +650,34 @@ specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
+Likewise,
+specifying a protocol composition type ``SuperClass & ProtocolA``
+is effectively the same as declaring a new class ``SubClass``
+that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
+but without having to introduce a new name.
 
-Each item in a protocol composition list
-must be either the name of protocol or a type alias of a protocol composition type.
+Each item in a protocol composition list is either
+the name of a class,
+the name of a protocol,
+or a type alias whose underlying type is a protocol composition type,
+a protocol or a class.
+The list can contain at most one class.
+
+When a protocol composition type contains type aliases,
+it's possible for the same protocol to appear
+more than once in the definitions ---
+duplicates are ignored.
+For example,
+the definition of ``PQR`` in the code below
+is equivalent to ``P & Q & R``.
+
+.. testcode:: protocol-composition-can-have-repeats
+
+    >> protocol P {}
+    >> protocol Q {}
+    >> protocol R {}
+    -> typealias PQ = P & Q
+    -> typealias PQR = PQ & Q & R
 
 .. langref-grammar
 
@@ -658,10 +688,8 @@ must be either the name of protocol or a type alias of a protocol composition ty
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
-    protocol-composition-continuation --> protocol-identifier | protocol-composition-type
-    protocol-identifier --> type-identifier
-
+    protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> type-identifier | protocol-composition-type
 
 .. _Types_MetatypeType:
 
@@ -750,10 +778,9 @@ Type Inheritance Clause
 -----------------------
 
 A type inheritance clause is used to specify which class a named type inherits from
-and which protocols a named type conforms to. A type inheritance clause is also
-used to specify a ``class`` requirement on a protocol.
+and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
-followed by either a ``class`` requirement, a list of type identifiers, or both.
+followed by a list of type identifiers.
 
 Class types can inherit from a single superclass and conform to any number of protocols.
 When defining a class,
@@ -769,9 +796,6 @@ Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
-As discussed in :ref:`Declarations_ProtocolDeclaration`,
-you can include the ``class`` keyword as the first item in the type inheritance clause
-to mark a protocol declaration with a ``class`` requirement.
 
 A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
@@ -787,11 +811,8 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ``:`` class-requirement ``,`` type-inheritance-list
-    type-inheritance-clause --> ``:`` class-requirement
     type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
-    class-requirement --> ``class``
 
 .. _Types_TypeInference:
 
