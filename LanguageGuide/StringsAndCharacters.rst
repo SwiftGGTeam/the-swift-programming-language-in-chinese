@@ -163,7 +163,15 @@ However, if you write whitespace at the beginning of a line
 in addition to what's before the closing quotes (``"""``),
 that whitespace *is* included.
 
-.. testcode:: multiline-string-literals
+.. image:: ../images/multilineStringWhitespace_2x.png
+   :align: center
+
+.. Using an image here is a little clearer,
+   since it can call out which spaces "count",
+   but it also works around
+   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+
+.. assertion:: multiline-string-literal-whitespace
    :compile: true
 
    -> let linesWithIndentation = """
