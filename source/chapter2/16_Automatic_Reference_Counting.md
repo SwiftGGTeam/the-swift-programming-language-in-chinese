@@ -77,10 +77,10 @@ var reference3: Person?
 
 ```swift
 reference1 = Person(name: "John Appleseed")
-// 打印 "John Appleseed is being initialized”
+// 打印 "John Appleseed is being initialized"
 ```
 
-应当注意到当你调用`Person`类的构造函数的时候，`“John Appleseed is being initialized”`会被打印出来。由此可以确定构造函数被执行。
+应当注意到当你调用`Person`类的构造函数的时候，`"John Appleseed is being initialized"`会被打印出来。由此可以确定构造函数被执行。
 
 由于`Person`类的新实例被赋值给了`reference1`变量，所以`reference1`到`Person`类的新实例之间建立了一个强引用。正是因为这一个强引用，ARC 会保证`Person`实例被保持在内存中不被销毁。
 
@@ -104,7 +104,7 @@ reference2 = nil
 
 ```swift
 reference3 = nil
-// 打印 “John Appleseed is being deinitialized”
+// 打印 "John Appleseed is being deinitialized"
 ```
 
 <a name="strong_reference_cycles_between_class_instances"></a>
@@ -248,7 +248,7 @@ unit4A!.tenant = john
 
 ```swift
 john = nil
-// 打印 “John Appleseed is being deinitialized”
+// 打印 "John Appleseed is being deinitialized"
 ```
 
 唯一剩下的指向`Apartment`实例的强引用来自于变量`unit4A`。如果你断开这个强引用，再也没有指向`Apartment`实例的强引用了：
@@ -259,7 +259,7 @@ john = nil
 
 ```swift
 unit4A = nil
-// 打印 “Apartment 4A is being deinitialized”
+// 打印 "Apartment 4A is being deinitialized"
 ```
 
 上面的两段代码展示了变量`john`和`unit4A`在被赋值为`nil`后，`Person`实例和`Apartment`实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
@@ -339,8 +339,8 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 ```swift
 john = nil
-// 打印 “John Appleseed is being deinitialized”
-// 打印 ”Card #1234567890123456 is being deinitialized”
+// 打印 "John Appleseed is being deinitialized"
+// 打印 "Card #1234567890123456 is being deinitialized"
 ```
 
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
@@ -397,7 +397,7 @@ class City {
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
-// 打印 “Canada's capital city is called Ottawa”
+// 打印 "Canada's capital city is called Ottawa"
 ```
 
 在上面的例子中，使用隐式解析可选值意味着满足了类的构造函数的两个构造阶段的要求。`capitalCity`属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
@@ -441,11 +441,11 @@ class HTMLElement {
 }
 ```
 
-`HTMLElement`类定义了一个`name`属性来表示这个元素的名称，例如代表头部元素的`"h1"`，代表段落的`“p”`，或者代表换行的`“br”`。`HTMLElement`还定义了一个可选属性`text`，用来设置 HTML 元素呈现的文本。
+`HTMLElement`类定义了一个`name`属性来表示这个元素的名称，例如代表头部元素的`"h1"`，代表段落的`"p"`，或者代表换行的`"br"`。`HTMLElement`还定义了一个可选属性`text`，用来设置 HTML 元素呈现的文本。
 
 除了上面的两个属性，`HTMLElement`还定义了一个`lazy`属性`asHTML`。这个属性引用了一个将`name`和`text`组合成 HTML 字符串片段的闭包。该属性是`Void -> String`类型，或者可以理解为“一个没有参数，返回`String`的函数”。
 
-默认情况下，闭包赋值给了`asHTML`属性，这个闭包返回一个代表 HTML 标签的字符串。如果`text`值存在，该标签就包含可选值`text`；如果`text`不存在，该标签就不包含文本。对于段落元素，根据`text`是`“some text”`还是`nil`，闭包会返回`"<p>some text</p>"`或者`"<p />"`。
+默认情况下，闭包赋值给了`asHTML`属性，这个闭包返回一个代表 HTML 标签的字符串。如果`text`值存在，该标签就包含可选值`text`；如果`text`不存在，该标签就不包含文本。对于段落元素，根据`text`是`"some text"`还是`nil`，闭包会返回`"<p>some text</p>"`或者`"<p />"`。
 
 可以像实例方法那样去命名、使用`asHTML`属性。然而，由于`asHTML`是闭包而不是实例方法，如果你想改变特定 HTML 元素的处理方式的话，可以用自定义的闭包来取代默认值。
 
@@ -458,7 +458,7 @@ heading.asHTML = {
     return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
 }
 print(heading.asHTML())
-// 打印 “<h1>some default text</h1>”
+// 打印 "<h1>some default text</h1>"
 ```
 
 > 注意  
@@ -471,7 +471,7 @@ print(heading.asHTML())
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// 打印 “<p>hello, world</p>”
+// 打印 "<p>hello, world</p>"
 ```
 
 > 注意  
@@ -571,7 +571,7 @@ class HTMLElement {
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// 打印 “<p>hello, world</p>”
+// 打印 "<p>hello, world</p>"
 ```
 
 使用捕获列表后引用关系如下图所示：
@@ -582,7 +582,7 @@ print(paragraph!.asHTML())
 
 ```swift
 paragraph = nil
-// 打印 “p is being deinitialized”
+// 打印 "p is being deinitialized"
 ```
 
 你可以查看[捕获列表](../chapter3/04_Expressions.html)章节，获取更多关于捕获列表的信息。

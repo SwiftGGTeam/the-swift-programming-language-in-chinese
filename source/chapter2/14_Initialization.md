@@ -70,7 +70,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// 打印 "The default temperature is 32.0° Fahrenheit”
+// 打印 "The default temperature is 32.0° Fahrenheit"
 ```
 
 这个结构体定义了一个不带参数的构造器`init`，并在里面将存储型属性`temperature`的值初始化为`32.0`（华氏温度下水的冰点）。
@@ -602,7 +602,7 @@ class Food {
 
 ```swift
 let namedMeat = Food(name: "Bacon")
-// namedMeat 的名字是 "Bacon”
+// namedMeat 的名字是 "Bacon"
 ```
 
 `Food`类中的构造器`init(name: String)`被定义为一个指定构造器，因为它能确保`Food`实例的所有存储型属性都被初始化。`Food`类没有父类，所以`init(name: String)`构造器不需要调用`super.init()`来完成构造过程。
@@ -875,7 +875,7 @@ class CartItem: Product {
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// 打印 "Item: sock, quantity: 2”
+// 打印 "Item: sock, quantity: 2"
 ```
 
 倘若你以一个值为 0 的 `quantity` 来创建一个 `CartItem` 实例，那么将导致 `CartItem` 构造器失败：
@@ -886,7 +886,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// 打印 "Unable to initialize zero shirts”
+// 打印 "Unable to initialize zero shirts"
 ```  
 
 同样地，如果你尝试传入一个值为空字符串的 `name`来创建一个 `CartItem` 实例，那么将导致父类 `Product` 的构造过程失败：
@@ -897,7 +897,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// 打印 "Unable to initialize one unnamed product”
+// 打印 "Unable to initialize one unnamed product"
 ```
 
 <a name="overriding_a_failable_initializer"></a>
