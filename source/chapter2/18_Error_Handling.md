@@ -96,15 +96,15 @@ class VendingMachine {
 
     func vend(itemNamed name: String) throws {
         guard let item = inventory[name] else {
-            throw VendingMachineError.InvalidSelection
+            throw VendingMachineError.invalidSelection
         }
 
         guard item.count > 0 else {
-            throw VendingMachineError.OutOfStock
+            throw VendingMachineError.outOfStock
         }
 
         guard item.price <= coinsDeposited else {
-            throw VendingMachineError.InsufficientFunds(coinsNeeded: item.price - coinsDeposited)
+            throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
         }
 
         coinsDeposited -= item.price
@@ -175,11 +175,11 @@ var vendingMachine = VendingMachine()
 vendingMachine.coinsDeposited = 8
 do {
     try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
-} catch VendingMachineError.InvalidSelection {
+} catch VendingMachineError.invalidSelection {
     print("Invalid Selection.")
-} catch VendingMachineError.OutOfStock {
+} catch VendingMachineError.outOfStock {
     print("Out of Stock.")
-} catch VendingMachineError.InsufficientFunds(let coinsNeeded) {
+} catch VendingMachineError.insufficientFunds(let coinsNeeded) {
     print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
 }
 // 打印 “Insufficient funds. Please insert an additional 2 coins.”
