@@ -136,7 +136,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 
 上例中，`buyFavoriteSnack(person:vendingMachine:) `函数会查找某人最喜欢的零食，并通过调用`vend(itemNamed:)`方法来尝试为他们购买。因为`vend(itemNamed:)`方法能抛出错误，所以在调用的它时候在它前面加了`try`关键字。  
 
-`throwing`构造器能像`throwing`函数一样传递错误.例如下面代码中的`PurchasedSnack`构造器在构造过程中调用了throwing函数,并且通过传递到它的调用者来处理这些错误。  
+`throwing`构造器能像`throwing`函数一样传递错误。例如下面代码中的`PurchasedSnack`构造器在构造过程中调用了throwing函数，并且通过传递到它的调用者来处理这些错误。  
 
 ```swift
 struct PurchasedSnack {
@@ -189,7 +189,7 @@ do {
 
 ### 将错误转换成可选值
 
-可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如,在下面的代码中,`x`和`y`有着相同的数值和等价的含义：
+可以使用`try?`通过将错误转换成一个可选值来处理错误。如果在评估`try?`表达式时一个错误被抛出，那么表达式的值就是`nil`。例如，在下面的代码中，`x`和`y`有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -208,7 +208,7 @@ do {
 
 如果`someThrowingFunction()`抛出一个错误，`x`和`y`的值是`nil`。否则`x`和`y`的值就是该函数的返回值。注意，无论`someThrowingFunction()`的返回值类型是什么类型，`x`和`y`都是这个类型的可选类型。例子中此函数返回一个整型，所以`x`和`y`是可选整型。
 
-如果你想对所有的错误都采用同样的方式来处理，用`try?`就可以让你写出简洁的错误处理代码。例如，下面的代码用几种方式来获取数据，如果所有方式都失败了则返回`nil`：
+如果你想对所有的错误都采用同样的方式来处理，用`try?`就可以让你写出简洁的错误处理代码。例如，下面的代码用几种方式来获取数据，如果所有方式都失败了则返回`nil`。
 
 ```swift
 func fetchData() -> Data? {
@@ -222,7 +222,7 @@ func fetchData() -> Data? {
 
 有时你知道某个`throwing`函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写`try!`来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误。
 
-例如，下面的代码使用了`loadImage(atPath:)`函数，该函数从给定的路径加载图片资源，如果图片无法载入则抛出一个错误。在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递：
+例如，下面的代码使用了`loadImage(atPath:)`函数，该函数从给定的路径加载图片资源，如果图片无法载入则抛出一个错误。在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递。
 
 ```swift
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
