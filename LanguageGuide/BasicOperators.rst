@@ -10,7 +10,7 @@ as in ``if enteredDoorCode && passedRetinaScan``.
 
 Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
-The assignment operator (``=``) does not return a value,
+The assignment operator (``=``) doesn't return a value,
 to prevent it from being mistakenly used when
 the equal to operator (``==``) is intended.
 Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` and so forth)
@@ -21,7 +21,7 @@ You can opt in to value overflow behavior
 by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
-Swift also provides range operators that are not found in C,
+Swift also provides range operators that aren't found in C,
 such as ``a..<b`` and ``a...b``,
 as a shortcut for expressing a range of values.
 
@@ -138,7 +138,7 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
    << // r3 : Double = 4.0
 
 Unlike the arithmetic operators in C and Objective-C,
-the Swift arithmetic operators do not allow values to overflow by default.
+the Swift arithmetic operators don't allow values to overflow by default.
 You can opt in to value overflow behavior by using Swift's overflow operators
 (such as ``a &+ b``). See :ref:`AdvancedOperators_OverflowOperators`.
 
@@ -163,8 +163,8 @@ and returns the value that is left over
 
    The remainder operator (``%``) is also known as
    a :newTerm:`modulo operator` in other languages.
-   However, its behavior in Swift for negative numbers means that it is,
-   strictly speaking, a remainder rather than a modulo operation.
+   However, its behavior in Swift for negative numbers means that,
+   strictly speaking, it's a remainder rather than a modulo operation.
 
 .. assertion:: percentOperatorIsRemainderNotModulo
 
@@ -283,8 +283,8 @@ that performs both tasks at the same time.
 
 .. note::
 
-   The compound assignment operators do not return a value.
-   For example, you cannot write ``let b = a += 2``.
+   The compound assignment operators don't return a value.
+   For example, you can't write ``let b = a += 2``.
 
 For a complete list of the compound assignment operators
 provided by the Swift standard library,
@@ -412,7 +412,7 @@ Ternary Conditional Operator
 
 The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
-It is a shortcut for evaluating one of two expressions
+It's a shortcut for evaluating one of two expressions
 based on whether ``question`` is true or false.
 If ``question`` is true, it evaluates ``answer1`` and returns its value;
 otherwise, it evaluates ``answer2`` and returns its value.
@@ -602,8 +602,8 @@ Half-Open Range Operator
 
 The :newTerm:`half-open range operator` (``a..<b``)
 defines a range that runs from ``a`` to ``b``,
-but does not include ``b``.
-It is said to be :newTerm:`half-open`
+but doesn't include ``b``.
+It's said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
 As with the closed range operator,
 the value of ``a`` must not be greater than ``b``.
@@ -627,7 +627,7 @@ then the resulting range will be empty.
 
 Half-open ranges are particularly useful when you work with
 zero-based lists such as arrays,
-where it is useful to count up to (but not including) the length of the list:
+where it's useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
 
@@ -646,7 +646,7 @@ where it is useful to count up to (but not including) the length of the list:
 Note that the array contains four items,
 but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
-because it is a half-open range.
+because it's a half-open range.
 For more on arrays, see :ref:`CollectionTypes_Arrays`.
 
 .. _BasicOperators_OneSidedRanges:
@@ -655,10 +655,10 @@ One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
 The closed range operator
-has an alternate form for ranges that continue
+has an alternative form for ranges that continue
 as far as possible in one direction ---
 for example,
-a range that includes all the elements of an array,
+a range that includes all the elements of an array
 from index 2 to the end of the array.
 In these cases, you can omit the value
 from one side of the range operator.
@@ -701,9 +701,9 @@ not just in subscripts.
 You can't iterate over a one-sided range
 that omits a first value,
 because it isn't clear where iteration should begin.
-You can iterate over a one-sided range that omits its final value;
+You *can* iterate over a one-sided range that omits its final value;
 however, because the range continues indefinitely,
-make sure to add an explicit end condition for the loop.
+make sure you add an explicit end condition for the loop.
 You can also check whether a one-sided range contains a particular value,
 as shown in the code below.
 
