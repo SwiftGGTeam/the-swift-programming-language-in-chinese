@@ -42,7 +42,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statement --> defer-statement ``;``-OPT
-    statement --> do-statement ``:``-OPT
+    statement --> do-statement ``;``-OPT
     statement --> compiler-control-statement
     statements --> statement statements-OPT
 
