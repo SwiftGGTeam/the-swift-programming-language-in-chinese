@@ -6,6 +6,39 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2017-06-05  * Updated for Swift 4.0.
+
+            * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
+              now that you can use generic ``where`` clauses
+              to constrain associated types.
+
+            * Added information about multiline string literals
+              to the :ref:`StringsAndCharacters_Literals` section
+              of the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
+              and to the :ref:`LexicalStructure_StringLiterals` section
+              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+
+            * Updated the discussion of the ``objc`` attribute
+              in :ref:`Attributes_DeclarationAttributes`,
+              now that this attribute is inferred in fewer places.
+
+            * Added the :ref:`Generics_Subscripts` section,
+              now that subscripts can be generic.
+
+            * Updated the discussion
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter,
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter,
+              now that protocol composition types can contain a superclass requirement.
+
+            * Updated the discussion of protocol extensions
+              in :ref:`Declarations_ExtensionDeclaration`
+              now that ``final`` isn't allowed in them.
+
+            * Added information about preconditions and fatal errors
+              to the :ref:`TheBasics_Assertions` section.
+----------  ----------------------------------------------------------------------------------------------
 2017-03-27  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
