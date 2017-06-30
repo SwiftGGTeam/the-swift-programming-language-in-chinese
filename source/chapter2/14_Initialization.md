@@ -70,7 +70,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// 打印 "The default temperature is 32.0° Fahrenheit”
+// 打印 "The default temperature is 32.0° Fahrenheit"
 ```
 
 这个结构体定义了一个不带参数的构造器`init`，并在里面将存储型属性`temperature`的值初始化为`32.0`（华氏温度下水的冰点）。
@@ -602,7 +602,7 @@ class Food {
 
 ```swift
 let namedMeat = Food(name: "Bacon")
-// namedMeat 的名字是 "Bacon”
+// namedMeat 的名字是 "Bacon"
 ```
 
 `Food`类中的构造器`init(name: String)`被定义为一个指定构造器，因为它能确保`Food`实例的所有存储型属性都被初始化。`Food`类没有父类，所以`init(name: String)`构造器不需要调用`super.init()`来完成构造过程。
@@ -875,7 +875,7 @@ class CartItem: Product {
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// 打印 "Item: sock, quantity: 2”
+// 打印 "Item: sock, quantity: 2"
 ```
 
 倘若你以一个值为 0 的 `quantity` 来创建一个 `CartItem` 实例，那么将导致 `CartItem` 构造器失败：
@@ -886,7 +886,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// 打印 "Unable to initialize zero shirts”
+// 打印 "Unable to initialize zero shirts"
 ```  
 
 同样地，如果你尝试传入一个值为空字符串的 `name`来创建一个 `CartItem` 实例，那么将导致父类 `Product` 的构造过程失败：
@@ -897,7 +897,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// 打印 "Unable to initialize one unnamed product”
+// 打印 "Unable to initialize one unnamed product"
 ```
 
 <a name="overriding_a_failable_initializer"></a>
@@ -1019,7 +1019,7 @@ class SomeClass {
 
 ![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/chessBoard_2x.png)
 
-西洋跳棋游戏在一副黑白格交替的`10x10`的棋盘中进行。为了呈现这副游戏棋盘，`Checkerboard`结构体定义了一个属性`boardColors`，它是一个包含`100`个`Bool`值的数组。在数组中，值为`true`的元素表示一个黑格，值为`false`的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
+西洋跳棋游戏在一副黑白格交替的 8 x 8 的棋盘中进行。为了呈现这副游戏棋盘，`Checkerboard`结构体定义了一个属性`boardColors`，它是一个包含`100`个`Bool`值的数组。在数组中，值为`true`的元素表示一个黑格，值为`false`的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
 `boardColor`数组是通过一个闭包来初始化并设置颜色值的：
 
