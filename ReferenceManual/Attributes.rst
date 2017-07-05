@@ -219,7 +219,7 @@ You can apply a declaration attribute to declarations only.
     to suppress an implicit ``objc`` attribute.
     The ``nonobjc`` attribute tells the compiler
     to make the declaration unavailable in Objective-C code,
-    even though it is possible to represent it in Objective-C.
+    even though it's possible to represent it in Objective-C.
 
     Applying this attribute to an extension
     has the same effect as
@@ -232,20 +232,20 @@ You can apply a declaration attribute to declarations only.
     in a class marked with the ``objc`` attribute.
 
     A method marked with the ``nonobjc`` attribute
-    cannot override a method marked with the ``objc`` attribute.
+    can't override a method marked with the ``objc`` attribute.
     However, a method marked with the ``objc`` attribute
     can override a method marked with the ``nonobjc`` attribute.
     Similarly, a method marked with the ``nonobjc`` attribute
-    cannot satisfy a protocol requirement
+    can't satisfy a protocol requirement
     for a method marked with the ``objc`` attribute.
 
 ``NSApplicationMain``
     Apply this attribute to a class
-    to indicate that it is the application delegate.
+    to indicate that it's the application delegate.
     Using this attribute is equivalent to calling the
     ``NSApplicationMain(_:_:)`` function.
 
-    If you do not use this attribute,
+    If you don't use this attribute,
     supply a ``main.swift`` file with code at the top level
     that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
@@ -287,7 +287,7 @@ You can apply a declaration attribute to declarations only.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols,
+    for example, nonnested classes, protocols,
     nongeneric enumerations (constrained to integer raw-value types),
     properties and methods (including getters and setters) of classes,
     protocols and optional members of a protocol,
@@ -307,8 +307,8 @@ You can apply a declaration attribute to declarations only.
     You can explicitly add the ``objc`` attribute
     to a subclass that meets these criteria,
     to specify its Objective-C name as discussed below.
-    Protocols marked with the ``objc`` attribute can't inherit
-    from protocols that aren't marked with the ``objc`` attribute.
+    Protocols that are marked with the ``objc`` attribute can't inherit
+    from protocols that aren't marked with this attribute.
 
     The ``objc`` attribute is also implicitly added in the following cases:
 
@@ -329,8 +329,8 @@ You can apply a declaration attribute to declarations only.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
     which consists of an identifier.
-    Use this attribute when you want to expose a different
-    name to Objective-C for the entity the ``objc`` attribute applies to.
+    The identifier specifies the name to be exposed to Objective-C
+    for the entity that the ``objc`` attribute applies to.
     You can use this argument to name
     classes, enumerations, enumeration cases, protocols,
     methods, getters, setters, and initializers.
@@ -362,17 +362,17 @@ You can apply a declaration attribute to declarations only.
     that can have the ``objc`` attribute.
     The ``objc`` attribute is implicitly added
     to Objective-C compatible members of the class,
-    its extensions, its subclasses, and all of their extensions.
+    its extensions, its subclasses, and all of the extensions of its subclasses.
 
     Most code should use the ``objc`` attribute instead,
     to expose only the declarations that are needed.
     If you need to expose many declarations,
     you can group them in an extension that has the ``objc`` attribute.
-    This attribute is a convenience for
+    The ``objcMembers`` attribute is a convenience for
     libraries that make heavy use of
     the introspection facilities of the Objective-C runtime.
     Applying the ``objc`` attribute when it isn't needed
-    can increase your binary size and adversely effect performance.
+    can increase your binary size and adversely affect performance.
 
     .. The binary size comes from the additional thunks
        to translate between calling conventions.
@@ -390,12 +390,12 @@ You can apply a declaration attribute to declarations only.
 
 ``UIApplicationMain``
     Apply this attribute to a class
-    to indicate that it is the application delegate.
+    to indicate that it's the application delegate.
     Using this attribute is equivalent to calling the
     ``UIApplicationMain`` function and
     passing this class's name as the name of the delegate class.
 
-    If you do not use this attribute,
+    If you don't use this attribute,
     supply a ``main.swift`` file with code at the top level
     that calls the `UIApplicationMain(_:_:_:_:) <//apple_ref/swift/func/c:@F@UIApplicationMain>`_ function.
     For example,
