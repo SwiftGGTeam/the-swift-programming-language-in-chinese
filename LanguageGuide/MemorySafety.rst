@@ -3,6 +3,20 @@ Memory Safety
 
 .. write-me::
 
+Swift provides safe access to the memory used to run your app.
+Fundamental data abstractions like variables, structures, arrays, and functions
+are built around principled use and reuse of the underlying memory.
+The principles used to build these abstractions are what provide
+memory safety in Swift.
+
+Memory safety protects against using a given region of memory
+for anything other than the purposes required by your code.
+For example, memory safety prevents you from accessing the hundredth element
+in a ten-element array.
+The memory that's protected by array bounds checking isn't necessarily
+the memory used by the array.
+Rather, it's the memory used by whatever else is consuming memory in your app.
+
 .. OUTLINE
 
    Memory Safety vs Type Safety
@@ -10,6 +24,27 @@ Memory Safety
    type safety prevents things like let x: Int = "s"
    memory safety prevents things like array[9] on an eight-element array
 
+
+Type Safety and Memory Safety
+-----------------------------
+
+Memory safety is related to, but distinct from, type safety. 
+Both kinds of safety prevent or flag known kinds of errors in your code.
+Memory safety is achieved through a combination of type safety rules
+and runtime checks inserted by the compiler.
+
+Type safety prevents unsafe memory assumptions such as the type mismatch
+in the invalid Swift code in the example below:
+
+let x: Int = "s" // Error.
+
+Because integers and strings are laid out differently in memory,
+it would be unsafe to access the memory for ``x`` if Swift accepted the code above
+and the resulting app permitted a string to occupy the memory that ``x`` refers to.
+
+
+
+.. OUTLINE
    Trapping Is a Good Thing
    the choices at runtime are limited when an action would be unsafe
    we could return a sentinel/invalid/made-up value that looks probably valid, hiding the error
