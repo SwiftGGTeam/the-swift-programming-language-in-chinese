@@ -643,24 +643,26 @@ Protocol composition types have the following form:
     <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
-of multiple protocols without having to explicitly define a new, named protocol
+of multiple protocols without explicitly defining a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
 specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
 effectively the same as defining a new protocol ``ProtocolD``
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
-but without having to introduce a new name.
+but without introducing a new name.
 Likewise,
 specifying a protocol composition type ``SuperClass & ProtocolA``
 is effectively the same as declaring a new class ``SubClass``
 that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
-but without having to introduce a new name.
+but without introducing a new name.
 
-Each item in a protocol composition list is either
-the name of a class,
-the name of a protocol,
-or a type alias whose underlying type is a protocol composition type,
-a protocol or a class.
+Each item in a protocol composition list is one of the following:
+
+* The name of a class
+* The name of a protocol
+* A type alias whose underlying type
+  is a protocol composition type, a protocol, or a class.
+
 The list can contain at most one class.
 
 When a protocol composition type contains type aliases,

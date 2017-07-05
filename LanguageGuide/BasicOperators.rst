@@ -808,7 +808,7 @@ Like the Logical AND operator above,
 the Logical OR operator uses short-circuit evaluation to consider its expressions.
 If the left side of a Logical OR expression is ``true``,
 the right side is not evaluated,
-because it cannot change the outcome of the overall expression.
+because it can't change the outcome of the overall expression.
 
 In the example below,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -872,10 +872,10 @@ so the overall compound expression still evaluates to ``true``.
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-It is sometimes useful to include parentheses when they are not strictly needed,
+It's sometimes useful to include parentheses when they're not strictly needed,
 to make the intention of a complex expression easier to read.
 In the door access example above,
-it is useful to add parentheses around the first part of the compound expression
+it's useful to add parentheses around the first part of the compound expression
 to make its intent explicit:
 
 .. testcode:: logicalOperators
