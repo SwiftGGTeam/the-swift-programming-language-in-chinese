@@ -1,8 +1,6 @@
 Memory Safety
 =============
 
-.. write-me::
-
 Swift provides safe access to the memory used to run your app.
 Fundamental data abstractions like variables, structures, arrays, and functions
 are built around principled use and reuse of the underlying memory.
