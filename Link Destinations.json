@@ -1,6 +1,7 @@
 {
   "destinations": {
     "GuidedTour/AboutSwift": "ID0", 
+    "GuidedTour/Compatibility": "ID561", 
     "GuidedTour/GuidedTour": "ID1", 
     "GuidedTour/GuidedTourPart": "ID2", 
     "LanguageGuide/AccessControl": "ID3", 
@@ -116,6 +117,7 @@
     "basicoperators-logicaloperators": "ID76", 
     "basicoperators-logicaloroperator": "ID79", 
     "basicoperators-nilcoalescingoperator": "ID72", 
+    "basicoperators-onesidedranges": "ID562", 
     "basicoperators-rangeoperators": "ID73", 
     "basicoperators-remainderoperator": "ID64", 
     "basicoperators-terminology": "ID61", 
@@ -257,6 +259,7 @@
     "expression-keypathexpression": "ID549", 
     "expression-optionalchainingoperator": "ID405", 
     "expression-selectorexpression": "ID547", 
+    "expression-typedkeypathexpression": "ID563", 
     "expressions-assignmentoperator": "ID386", 
     "expressions-binaryexpressions": "ID385", 
     "expressions-capturelists": "ID544", 
@@ -578,5 +581,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 561
+  "next_id": 564
 }
