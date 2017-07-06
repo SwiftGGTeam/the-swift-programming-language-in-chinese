@@ -624,7 +624,7 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type describes a type that conforms to each protocol
+A protocol composition type defines a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.

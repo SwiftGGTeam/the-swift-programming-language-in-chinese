@@ -49,7 +49,7 @@ the following features are available only to Swift 4 code:
   can access that type's private members.
 
 A target written in Swift 4 can depend on
-a target that's written using Swift 3,
+a target that's written in Swift 3,
 and vice versa.
 This means, if you have a large project
 that's divided into multiple frameworks,
