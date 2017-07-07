@@ -606,7 +606,7 @@ and will match the inferred type for integer literal values.
 Use other integer types only when they're specifically needed for the task at hand,
 because of explicitly sized data from an external source,
 or for performance, memory usage, or other necessary optimization.
-Using explicitly-sized types in these situations
+Using explicitly sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 

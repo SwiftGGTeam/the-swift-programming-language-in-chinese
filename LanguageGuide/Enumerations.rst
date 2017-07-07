@@ -74,7 +74,7 @@ You use the ``case`` keyword to introduce new enumeration cases.
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
    Instead, the different enumeration cases are fully-fledged values in their own right,
-   with an explicitly-defined type of ``CompassPoint``.
+   with an explicitly defined type of ``CompassPoint``.
 
 Multiple cases can appear on a single line, separated by commas:
 
@@ -107,7 +107,7 @@ you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly-typed enumeration values.
+This makes for highly readable code when working with explicitly typed enumeration values.
 
 .. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
 
