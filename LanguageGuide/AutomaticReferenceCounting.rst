@@ -902,7 +902,7 @@ Defining a Capture List
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
 with a reference to a class instance (such as ``self``)
-or a variable initialized with some value (such as ``delegate = self.delegate!``).
+or a variable initialized with some value (such as ``delegate = self.delegate``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
@@ -913,7 +913,7 @@ if they are provided:
    >> class SomeClass {
    >> var delegate: AnyObject?
       lazy var someClosure: (Int, String) -> String = {
-            [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+            [unowned self, weak delegate = self.delegate] (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
@@ -934,7 +934,7 @@ followed by the ``in`` keyword:
    >> class AnotherClass {
    >> var delegate: AnyObject?
       lazy var someClosure: () -> String = {
-            [unowned self, weak delegate = self.delegate!] in
+            [unowned self, weak delegate = self.delegate] in
          // closure body goes here
    >>    return "foo"
       }
