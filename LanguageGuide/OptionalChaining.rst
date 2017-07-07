@@ -297,7 +297,7 @@ the attempt to set the ``address`` property of ``john.residence`` will fail,
 because ``john.residence`` is currently ``nil``.
 
 The assignment is part of the optional chaining,
-which means none of the code on the right hand side of the ``=`` operator
+which means none of the code on the right-hand side of the ``=`` operator
 is evaluated.
 In the previous example,
 it's not easy to see that ``someAddress`` is never evaluated,
@@ -306,7 +306,7 @@ The listing below does the same assignment,
 but it uses a function to create the address.
 The function prints "Function was called" before returning a value,
 which lets you see
-whether the right hand side of the ``=`` operator was evaluated.
+whether the right-hand side of the ``=`` operator was evaluated.
 
 .. testcode:: optionalChaining
    :compile: true

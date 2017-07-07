@@ -109,7 +109,7 @@ It has the following form:
 If the *expression* throws an error,
 a runtime error is produced.
 
-When the expression on the left hand side of a binary operator
+When the expression on the left-hand side of a binary operator
 is marked with ``try``, ``try?``, or ``try!``,
 that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
@@ -127,7 +127,7 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-A ``try`` expression can't appear on the right hand side of a binary operator,
+A ``try`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
@@ -1970,7 +1970,7 @@ The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself,
 or by assigning to one of the value's members.
 If the value of the optional-chaining expression is ``nil``,
-the expression on the right hand side of the assignment operator
+the expression on the right-hand side of the assignment operator
 is not evaluated.
 For example:
 
