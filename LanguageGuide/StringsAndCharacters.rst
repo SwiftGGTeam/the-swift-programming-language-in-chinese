@@ -841,10 +841,10 @@ The figure below shows these relationships:
 
 .. note::
 
-   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol.
-   If you're writing code that manipulates string data,
-   accepting a ``StringProtocol`` value lets you pass that string data
-   as either a ``String`` or ``Substring`` value.
+   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol,
+   which means it's often convenient for string-manipulation functions
+   to accept a ``StringProtocol`` value.
+   You can call such functions with either a ``String`` or ``Substring`` value.
 
 .. XXX Live link to the StringProtocol protocol reference.
    It's not showing up in the database yet (2017-05-17).

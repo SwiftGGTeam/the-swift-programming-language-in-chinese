@@ -671,7 +671,9 @@ using the following escape sequences:
 * Carriage return (``\r``)
 * Double quote (``\"``)
 * Single quote (``\'``)
-* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
+* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`),
+  where *n* is a hexadecimal number
+  that has one to eight digits
 
 .. TR: Are \v and \f allowed for vertical tab and formfeed?
    We allow them as whitespace as of now --

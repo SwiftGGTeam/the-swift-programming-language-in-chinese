@@ -20,10 +20,10 @@ that are written in either Swift 4 or Swift 3.
 .. note::
 
     When the Swift 4 compiler is working with Swift 3 code,
-    it identifies its language version as 3.2 ---
-    this means you can use conditional compilation blocks
-    like ``#if swift(>=3.2)`` to write code
-    that's compatible with multiple versions of the Swift compiler.
+    it identifies its language version as 3.2.
+    You can use this behavior
+    to write code like ``#if swift(>=3.2)``
+    that's compatible with multiple versions of the Swift compiler ---
 
 .. The incantation to determine which Swift you're on:
 
