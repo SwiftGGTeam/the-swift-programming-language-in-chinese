@@ -23,7 +23,7 @@ that are written in either Swift 4 or Swift 3.
     it identifies its language version as 3.2.
     You can use this behavior
     to write code like ``#if swift(>=3.2)``
-    that's compatible with multiple versions of the Swift compiler ---
+    that's compatible with multiple versions of the Swift compiler.
 
 .. The incantation to determine which Swift you're on:
 
