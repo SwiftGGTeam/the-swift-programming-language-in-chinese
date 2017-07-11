@@ -1081,7 +1081,6 @@ A single expression inside parentheses is a parenthesized expression.
     expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
     expr-paren-element ::= (identifier ':')? expr
 
-
 .. syntax-grammar::
 
     Grammar of a tuple expression
@@ -1089,6 +1088,7 @@ A single expression inside parentheses is a parenthesized expression.
     tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
     tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
     tuple-element --> expression | identifier ``:`` expression
+
 
 .. _Expressions_WildcardExpression:
 
