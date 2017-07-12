@@ -650,6 +650,7 @@ you can use the protocol composition type ``ProtocolA & ProtocolB & ProtocolC``
 instead of declaring a new protocol
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 and you can use ``SuperClass & ProtocolA``
+instead of declaring a new protocol
 that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
 Each item in a protocol composition list is one of the following;
