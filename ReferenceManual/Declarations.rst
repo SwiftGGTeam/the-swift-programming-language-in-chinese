@@ -749,6 +749,8 @@ to try to keep the changes from being overwritten.
    as noted above, you're not allowed to depend on
    behavioral differences that happen because of call by reference.
 
+.. XXX Update the above paragraph for rdar://31079627 (exclusivity).
+
 You can't pass the same argument to multiple in-out parameters
 because the order in which the copies are written back
 is not well defined,
