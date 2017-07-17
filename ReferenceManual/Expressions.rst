@@ -1066,12 +1066,20 @@ A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
 
+.. note::
+
+   Both an empty tuple expression and an empty tuple type
+   are written ``()`` in Swift.
+   Because ``Void`` is a type alias for ``()``,
+   you can use it to write an empty tuple type.
+   However, like all type aliases, ``Void`` is always a type ---
+   you can't use it to write an empty tuple expression.
+
 .. langref-grammar
 
     expr-paren      ::= '(' ')'
     expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
     expr-paren-element ::= (identifier ':')? expr
-
 
 .. syntax-grammar::
 
@@ -1080,6 +1088,7 @@ A single expression inside parentheses is a parenthesized expression.
     tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
     tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
     tuple-element --> expression | identifier ``:`` expression
+
 
 .. _Expressions_WildcardExpression:
 
