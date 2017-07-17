@@ -404,7 +404,7 @@ which has the same size as the current platform's native word size:
    Use ``UInt`` only when you specifically need
    an unsigned integer type with the same size as the platform's native word size.
    If this is not the case, ``Int`` is preferred,
-   even when the values to be stored are known to be non-negative.
+   even when the values to be stored are known to be nonnegative.
    A consistent use of ``Int`` for integer values aids code interoperability,
    avoids the need to convert between different number types,
    and matches integer type inference, as described in :ref:`TheBasics_TypeSafetyAndTypeInference`.
@@ -598,7 +598,7 @@ Numeric Type Conversion
 -----------------------
 
 Use the ``Int`` type for all general-purpose integer constants and variables in your code,
-even if they are known to be non-negative.
+even if they are known to be nonnegative.
 Using the default integer type in everyday situations means that
 integer constants and variables are immediately interoperable in your code
 and will match the inferred type for integer literal values.

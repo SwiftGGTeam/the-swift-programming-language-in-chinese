@@ -666,7 +666,7 @@ You can now call the assigned function with the name ``mathFunction``:
    <- Result: 5
 
 A different function with the same matching type can be assigned to the same variable,
-in the same way as for non-function types:
+in the same way as for nonfunction types:
 
 .. testcode:: functionTypes
 

@@ -287,7 +287,7 @@ You can apply a declaration attribute to declarations only.
 
 ``objc``
     Apply this attribute to any declaration that can be represented in Objective-C---
-    for example, non-nested classes, protocols,
+    for example, nonnested classes, protocols,
     nongeneric enumerations (constrained to integer raw-value types),
     properties and methods (including getters and setters) of classes,
     protocols and optional members of a protocol,
