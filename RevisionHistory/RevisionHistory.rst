@@ -6,23 +6,55 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-03-08  * Removed Dynamic Type Expression section
-              from the :doc:`../ReferenceManual/Expressions` chapter,
-              now that ``type(of:)`` is a standard library function.
-----------  ----------------------------------------------------------------------------------------------
-2017-02-06  * Added an example of failable numeric conversions
-              to the :ref:`Initialization_FailableInitializers` section.
+2017-06-05  * Updated for Swift 4.0.
 
-            * Updated discussion in the :ref:`Types_FunctionType` section
-              to note that argument labels are not allowed when writing a function type.
+            * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
+              now that you can use generic ``where`` clauses
+              to constrain associated types.
+
+            * Added information about multiline string literals
+              to the :ref:`StringsAndCharacters_Literals` section
+              of the :doc:`../LanguageGuide/StringsAndCharacters` chapter,
+              and to the :ref:`LexicalStructure_StringLiterals` section
+              of the :doc:`../ReferenceManual/LexicalStructure` chapter.
+
+            * Updated the discussion of the ``objc`` attribute
+              in :ref:`Attributes_DeclarationAttributes`,
+              now that this attribute is inferred in fewer places.
+
+            * Added the :ref:`Generics_Subscripts` section,
+              now that subscripts can be generic.
+
+            * Updated the discussion
+              in the :ref:`Protocols_ProtocolComposition` section
+              of the :doc:`../LanguageGuide/Protocols` chapter,
+              and in the :ref:`Types_ProtocolCompositionType` section
+              of the :doc:`../ReferenceManual/Types` chapter,
+              now that protocol composition types can contain a superclass requirement.
+
+            * Updated the discussion of protocol extensions
+              in :ref:`Declarations_ExtensionDeclaration`
+              now that ``final`` isn't allowed in them.
+
+            * Added information about preconditions and fatal errors
+              to the :ref:`TheBasics_Assertions` section.
 ----------  ----------------------------------------------------------------------------------------------
-2017-01-24  * Updated for Swift 3.1.
+2017-03-27  * Updated for Swift 3.1.
 
             * Added the :ref:`Generics_ExtensionWithWhereClause` section
               with information about extensions that include requirements.
 
+            * Added examples of iterating over a range
+              to the :ref:`ControlFlow_ForLoops` section.
+
+            * Added an example of failable numeric conversions
+              to the :ref:`Initialization_FailableInitializers` section.
+
             * Added information to the :ref:`Attributes_DeclarationAttributes` section
               about using the ``available`` attribute with a Swift language version.
+
+            * Updated the discussion in the :ref:`Types_FunctionType` section
+              to note that argument labels are not allowed when writing a function type.
 
             * Updated the discussion of Swift language version numbers
               in the :ref:`Statements_BuildConfigurationStatement` section,
@@ -32,6 +64,10 @@ Date        Notes
               in the :ref:`Types_FunctionType` section,
               now that Swift distinguishes between functions that take multiple parameters
               and functions that take a single parameter of a tuple type.
+
+            * Removed the Dynamic Type Expression section
+              from the :doc:`../ReferenceManual/Expressions` chapter,
+              now that ``type(of:)`` is a Swift standard library function.
 ----------  ----------------------------------------------------------------------------------------------
 2016-10-27  * Updated for Swift 3.0.1.
 

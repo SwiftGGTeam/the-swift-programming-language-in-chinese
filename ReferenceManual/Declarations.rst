@@ -1285,7 +1285,7 @@ Enumerations that have cases of a raw-value type implicitly conform to the
 As a result, they have a ``rawValue`` property
 and a failable initializer with the signature ``init?(rawValue: RawValue)``.
 You can use the ``rawValue`` property to access the raw value of an enumeration case,
-as in ``ExampleEnum.B.rawValue``.
+as in ``ExampleEnum.b.rawValue``.
 You can also use a raw value to find a corresponding case, if there is one,
 by calling the enumeration's failable initializer,
 as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
@@ -1617,25 +1617,26 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
     properly for optional initializer requirements.
 
 To restrict the adoption of a protocol to class types only,
-mark the protocol with the ``class`` requirement
-by writing the ``class`` keyword as the first item in the *inherited protocols*
+include the ``AnyObject`` protocol in the *inherited protocols*
 list after the colon.
 For example, the following protocol can be adopted only by class types:
 
 .. testcode:: protocol-declaration
 
-    -> protocol SomeProtocol: class {
+    -> protocol SomeProtocol: AnyObject {
            /* Protocol members go here */
        }
 
-Any protocol that inherits from a protocol that's marked with the ``class`` requirement
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+Any protocol that inherits from a protocol that's marked with the ``AnyObject`` requirement
 can likewise be adopted only by class types.
 
 .. note::
 
     If a protocol is marked with the ``objc`` attribute,
-    the ``class`` requirement is implicitly applied to that protocol;
-    there’s no need to mark the protocol with the ``class`` requirement explicitly.
+    the ``AnyObject`` requirement is implicitly applied to that protocol;
+    there’s no need to mark the protocol with the ``AnyObject`` requirement explicitly.
 
 Protocols are named types, and thus they can appear in all the same places
 in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
@@ -1659,7 +1660,7 @@ should implement, as described in :ref:`Protocols_Delegation`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT generic-where-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
@@ -1816,7 +1817,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -1832,6 +1833,32 @@ but they're associated with ``Self`` in the protocol in which they're declared.
 In that context, ``Self`` refers to the eventual type that conforms to the protocol.
 For more information and examples,
 see :ref:`Generics_AssociatedTypes`.
+
+You use a generic ``where`` clause in a protocol declaration
+to add constraints to an associated types inherited from another protocol,
+without redeclaring the associated types.
+For example, the declarations of ``SubProtocol`` below are equivalent:
+
+.. testcode:: protocol-associatedtype
+
+    -> protocol SomeProtocol {
+           associatedtype SomeType
+       }
+    ---
+    -> protocol SubProtocolA: SomeProtocol {
+           // This syntax produces a warning.
+           associatedtype SomeType: Equatable
+       }
+    !! <REPL Input>:3:22: warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+    !! associatedtype SomeType: Equatable
+    !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+    !!-
+    !! <REPL Input>:2:22: note: 'SomeType' declared here
+    !! associatedtype SomeType
+    !! ^
+    ---
+    // This syntax is preferred.
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -1901,7 +1928,7 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
     Grammar of a protocol associated type declaration
 
-    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT
+    protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT generic-where-clause-OPT
 
 .. _Declarations_InitializerDeclaration:
 
@@ -2023,6 +2050,7 @@ except that you must deal with the optionality of the result.
 
     -> if let actualInstance = SomeStruct(input: "Hello") {
            // do something with the instance of 'SomeStruct'
+    >>     _ = actualInstance
        } else {
            // initialization of 'SomeStruct' failed and the initializer returned 'nil'
        }
@@ -2146,6 +2174,8 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
+Declarations in a protocol extension's body
+can't be marked ``final``.
 
 Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
@@ -2155,7 +2185,6 @@ and therefore you can specify only a list of protocols after the *type name* and
 Extension declarations that extend a generic type can include *requirements*.
 If an instance of the extended type satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
-Note that you can't include *requirements* if the *type name* is a protocol type.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
@@ -2289,10 +2318,10 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head subscript-result code-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-block
-    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
-    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` parameter-clause
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT code-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-block
+    subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
+    subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generic-parameter-clause-OPT parameter-clause
     subscript-result --> ``->`` attributes-OPT type
 
 
@@ -2500,7 +2529,7 @@ that introduces the declaration.
     Access to that member is never inlined or devirtualized by the compiler.
 
     Because declarations marked with the ``dynamic`` modifier are dispatched
-    using the Objective-C runtime, they're implicitly marked with the
+    using the Objective-C runtime, they must be marked with the
     ``objc`` attribute.
 
 ``final``
@@ -2622,6 +2651,16 @@ Access control is discussed in detail in :doc:`../LanguageGuide/AccessControl`.
 ``private``
     Apply this modifier to a declaration to indicate the declaration can be accessed
     only by code within the declaration's immediate enclosing scope.
+
+For the purpose of access control,
+extensions to the same type that are in the same file
+share an access-control scope.
+If the type they extend is also in the same file,
+they share the type's access-control scope.
+Private members declared in the type's declaration
+can be accessed from extensions,
+and private members declared in one extension
+can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
 which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).

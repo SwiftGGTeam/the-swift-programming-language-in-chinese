@@ -125,6 +125,27 @@ For example:
    include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
+Use three double quotes (``"""``) for strings
+that take up multiple lines.
+Indentation at the start of each quoted line is removed,
+as long as it matches the indentation of the closing quote.
+For example:
+
+.. testcode:: guided-tour-compiled
+   :compile: true
+
+
+   >> let apples = 3
+   >> let oranges = 5
+   -> let quotation = """
+          Even though there's whitespace to the left,
+          the actual lines aren't indented.
+              Except for this line.
+          Double quotes (") can appear without being escaped.
+
+          I still have \(apples + oranges) pieces of fruit.
+          """
+
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
@@ -183,6 +204,8 @@ and an empty dictionary as ``[:]`` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
+.. iBooks Store screenshot begins here.
+
 .. testcode:: guided-tour
 
    -> shoppingList = []
@@ -192,7 +215,7 @@ Control Flow
 ------------
 
 Use ``if`` and ``switch`` to make conditionals,
-and use ``for``-``in``, ``for``, ``while``, and ``repeat``-``while``
+and use ``for``-``in``, ``while``, and ``repeat``-``while``
 to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
@@ -236,6 +259,8 @@ An optional value either contains a value
 or contains ``nil`` to indicate that a value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
+
+.. iBooks Store screenshot ends here.
 
 .. REFERENCE
    John Appleseed is a stock Apple fake name,
@@ -356,6 +381,7 @@ in an arbitrary order.
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
+   >>     _ = kind
           for number in numbers {
               if number > largest {
                   largest = number
@@ -493,27 +519,6 @@ either by name or by number.
     << 120
     -> print(statistics.2)
     << 120
-
-Functions can also take a variable number of arguments,
-collecting them into an array.
-
-.. testcode:: guided-tour
-
-   -> func sumOf(numbers: Int...) -> Int {
-          var sum = 0
-          for number in numbers {
-              sum += number
-          }
-          return sum
-      }
-   -> sumOf()
-   <$ : Int = 0
-   -> sumOf(numbers: 42, 597, 12)
-   <$ : Int = 651
-
-.. admonition:: Experiment
-
-   Write a function that calculates the average of its arguments.
 
 Functions can be nested.
 Nested functions have access to variables
@@ -1366,7 +1371,7 @@ to make a generic function or type.
            }
            return result
        }
-    -> makeArray(repeating: "knock", numberOfTimes:4)
+    -> makeArray(repeating: "knock", numberOfTimes: 4)
     <$ : [String] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,

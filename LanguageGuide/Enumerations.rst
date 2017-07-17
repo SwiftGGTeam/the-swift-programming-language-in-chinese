@@ -478,8 +478,8 @@ The ``addition`` and ``multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
 For example, the expression ``(5 + 4) * 2``
-has a number on the right hand side of the multiplication
-and another expression on the left hand side of the multiplication.
+has a number on the right-hand side of the multiplication
+and another expression on the left-hand side of the multiplication.
 Because the data is nested,
 the enumeration used to store the data also needs to support nesting ---
 this means the enumeration needs to be recursive.
@@ -520,8 +520,8 @@ For example, here's a function that evaluates an arithmetic expression:
 This function evaluates a plain number
 by simply returning the associated value.
 It evaluates an addition or multiplication
-by evaluating the expression on the left hand side,
-evaluating the expression on the right hand side,
+by evaluating the expression on the left-hand side,
+evaluating the expression on the right-hand side,
 and then adding them or multiplying them.
 
 .. _Enumerations_EnumerationsAreValueTypes:

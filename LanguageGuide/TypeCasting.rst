@@ -250,7 +250,7 @@ the behavior and capabilities they provide.
 It is always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
-including function types and non-class types.
+including function types and nonclass types.
 The example creates an array called ``things``, which can store values of type ``Any``:
 
 .. testcode:: typeCasting

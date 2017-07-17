@@ -69,6 +69,8 @@ which has its first four bits set to ``0``,
 and its second four bits set to ``1``.
 This is equivalent to a decimal value of ``15``.
 
+.. iBooks Store screenshot begins here.
+
 The bitwise NOT operator is then used to create a new constant called ``invertedBits``,
 which is equal to ``initialBits``,
 but with all of the bits inverted.
@@ -114,6 +116,8 @@ if the bits are equal to ``1`` in *either* input number:
 
 .. image:: ../images/bitwiseOR_2x.png
    :align: center
+
+.. iBooks Store screenshot ends here.
 
 In the example below,
 the values of ``someBits`` and ``moreBits`` have different bits set to ``1``.

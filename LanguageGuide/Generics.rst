@@ -794,6 +794,30 @@ the appropriate type to use for ``Item``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.
 
+.. _Generics_ConstrainAssociatedType:
+
+Using Type Annotations to Constrain an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can add a type annotation to an associated type in a protocol,
+to require that conforming types satisfy the constraints
+described by the type annotation.
+For example,
+the following code defines a version of ``Container``
+that requires the items in the container to be equatable.
+
+.. testcode:: associatedTypes-equatable
+
+   -> protocol Container {
+         associatedtype Item: Equatable
+         mutating func append(_ item: Item)
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+      }
+
+In order to conform to this version of ``Container``,
+the container's ``Item`` type has to conform to the ``Equatable`` protocol.
+
 .. _Generics_WhereClauses:
 
 Generic Where Clauses
@@ -801,7 +825,7 @@ Generic Where Clauses
 
 Type constraints, as described in :ref:`Generics_TypeConstraints`,
 enable you to define requirements on the type parameters associated with
-a generic function or type.
+a generic function, subscript, or type.
 
 It can also be useful to define requirements for associated types.
 You do this by defining a :newTerm:`generic where clause`.
@@ -1063,12 +1087,187 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
-.. TODO: Subscripts
-   ----------------
+.. _Generics_AssociatedTypesWithWhereClause:
 
-.. TODO: Protocols can require conforming types to provide specific subscripts
+Associated Types with a Generic Where Clause
+--------------------------------------------
 
-.. TODO: These typically return a value of type T, which is why I've moved this here
+You can include a generic ``where`` clause on an associated type.
+For example, suppose you wanted to make a version of ``Container``
+that includes an iterator,
+like what the ``Sequence`` protocol uses in the standard library.
+Here's how you write that:
+
+.. testcode:: associatedTypes-iterator
+
+   -> protocol Container {
+         associatedtype Item
+         mutating func append(_ item: Item)
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+   ---
+         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+         func makeIterator() -> Iterator
+      }
+
+.. Adding makeIterator() to Container lets it conform to Sequence,
+   although we don't call that out here.
+
+The generic ``where`` clause on ``Iterator`` requires that
+the iterator traverses over elements
+of the same item type as the container's items,
+regardless of the iterator's type.
+The ``makeIterator()`` function provides access to a container's iterator.
+
+.. This example requires SE-0157 Recursive protocol constraints
+   which is tracked by rdar://20531108
+
+    that accepts a ranged of indexes it its subscript
+    and returns a subcontainer ---
+    similar to how ``Collection`` works in the standard library.
+
+    .. testcode:: associatedTypes-subcontainer
+
+       -> protocol Container {
+             associatedtype Item
+             associatedtype SubContainer: Container where SubContainer.Item == Item
+
+             mutating func append(_ item: Item)
+             var count: Int { get }
+             subscript(i: Int) -> Item { get }
+             subscript(range: Range<Int>) -> SubContainer { get }
+          }
+
+    The generic ``where`` clause on ``SubContainer`` requires that
+    the subcontainer must have the same item type as the container has,
+    regardless of what type the subcontainer is.
+    The original container and the subcontainer
+    could be represented by the same type
+    or by different types.
+    The new subscript that accepts a range
+    uses this new associated type as its return value.
+
+For a protocol that inherits from another protocol,
+you add a constraint to an inherited associated type
+by including the generic ``where`` clause in the protocol declaration.
+For example, the following code
+declares a ``ComparableContainer`` protocol
+which requires ``Item`` to conform to ``Comparable``:
+
+.. testcode:: associatedTypes
+
+    -> protocol ComparableContainer: Container where Item: Comparable { }
+
+.. This version throws a warning as of Swift commit de66b0c25c70:
+   "redeclaration of associated type %0 from protocol %1 is better
+   expressed as a 'where' clause on the protocol"
+
+    -> protocol ComparableContainer: Container {
+           associatedtype Item: Comparable
+       }
+
+
+..  Exercise the new container -- this might not actually be needed,
+    and it adds a level of complexity.
+
+    function < (lhs: ComparableContainer, rhs: ComparableContainer) -> Bool {
+        // Sort empty containers before nonempty containers.
+        if lhs.count == 0 {
+            return true
+        } else if rhs.count  == 0 {
+            return false
+        }
+
+        // Sort nonempty containers by their first element.
+        // (In real code, you would want to compare the second element
+        // if the first elements are equal, and so on.)
+        return lhs[0] < rhs[0]
+    }
+
+.. _Generics_Subscripts:
+
+Generic Subscripts
+------------------
+
+Subscripts can be generic,
+and they can include generic ``where`` clauses.
+You write the placeholder type name inside angle brackets after ``subscript``,
+and you write a generic ``where`` clause right before the opening curly brace
+of the subscript's body.
+For example:
+
+.. The paragraph above borrows the wording used to introduce
+   generics and 'where' clauses earlier in this chapter.
+
+.. testcode:: genericSubscript
+
+   >> protocol Container {
+   >>    associatedtype Item
+   >>    mutating func append(_ item: Item)
+   >>    var count: Int { get }
+   >>    subscript(i: Int) -> Item { get }
+   >> }
+   -> extension Container {
+          subscript<Indices: Sequence>(indices: Indices) -> [Item]
+                  where Indices.Iterator.Element == Int {
+              var result = [Item]()
+              for index in indices {
+                  result.append(self[index])
+              }
+              return result
+          }
+      }
+
+.. assertion:: genericSubscript
+
+   >> struct IntStack: Container {
+         // original IntStack implementation
+         var items = [Int]()
+         mutating func push(_ item: Int) {
+            items.append(item)
+         }
+         mutating func pop() -> Int {
+            return items.removeLast()
+         }
+         // conformance to the Container protocol
+         typealias Item = Int
+         mutating func append(_ item: Int) {
+            self.push(item)
+         }
+         var count: Int {
+            return items.count
+         }
+         subscript(i: Int) -> Int {
+            return items[i]
+         }
+      }
+   >> var s = IntStack()
+   << // s : IntStack = REPL.IntStack(items: [])
+   >> s.push(10); s.push(20); s.push(30)
+   >> let items = s[ [0, 2] ]
+   << // items : [IntStack.Item] = [10, 30]
+
+This extension to the ``Container`` protocol
+adds a subscript that takes a sequence of indices
+and returns an array containing the items at each given index.
+This generic subscript is constrained as follows:
+
+* The generic parameter ``Indices`` in angle brackets
+  has to be some type that conforms to the ``Sequence`` protocol
+  from the standard library.
+
+* The subscript takes a single parameter, ``indices``,
+  which is an instance of that ``Indices`` type.
+
+* The generic ``where`` clause requires
+  that the iterator for the sequence
+  must traverse over elements of type ``Int``.
+  This ensures that the indices in the sequence
+  are the same type as the indices used for a container.
+
+Taken together, these constraints mean that
+the value passed for the ``indices`` parameter
+is a sequence of integers.
 
 .. TODO: Generic Enumerations
    --------------------------
