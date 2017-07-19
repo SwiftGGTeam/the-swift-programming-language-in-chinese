@@ -42,7 +42,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statement --> defer-statement ``;``-OPT
-    statement --> do-statement ``:``-OPT
+    statement --> do-statement ``;``-OPT
     statement --> compiler-control-statement
     statements --> statement statements-OPT
 
@@ -907,7 +907,7 @@ Compiler Control Statements
 ---------------------------
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has two complier control statements: a conditional compilation block
+Swift has two compiler control statements: a conditional compilation block
 and a line control statement.
 
 .. syntax-grammar::

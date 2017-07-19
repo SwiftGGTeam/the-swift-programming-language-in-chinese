@@ -244,6 +244,12 @@ In contrast, without parentheses,
 ``(Int, Int) -> Void`` is the type
 of a function that takes two ``Int`` parameters
 and doesn't return any value.
+Likewise, because ``Void`` is a type alias for ``()``,
+the function type ``(Void) -> Void``
+is the same as ``(()) -> ()`` ---
+a function that takes a single argument that is an empty tuple.
+These types are not the same as ``() -> ()`` ---
+a function that takes no arguments.
 
 Argument names in functions and methods
 are not part of the corresponding function type.

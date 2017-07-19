@@ -109,7 +109,7 @@ It has the following form:
 If the *expression* throws an error,
 a runtime error is produced.
 
-When the expression on the left hand side of a binary operator
+When the expression on the left-hand side of a binary operator
 is marked with ``try``, ``try?``, or ``try!``,
 that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
@@ -127,7 +127,7 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-A ``try`` expression can't appear on the right hand side of a binary operator,
+A ``try`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
@@ -1066,12 +1066,20 @@ A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
 
+.. note::
+
+   Both an empty tuple expression and an empty tuple type
+   are written ``()`` in Swift.
+   Because ``Void`` is a type alias for ``()``,
+   you can use it to write an empty tuple type.
+   However, like all type aliases, ``Void`` is always a type ---
+   you can't use it to write an empty tuple expression.
+
 .. langref-grammar
 
     expr-paren      ::= '(' ')'
     expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
     expr-paren-element ::= (identifier ':')? expr
-
 
 .. syntax-grammar::
 
@@ -1080,6 +1088,7 @@ A single expression inside parentheses is a parenthesized expression.
     tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
     tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
     tuple-element --> expression | identifier ``:`` expression
+
 
 .. _Expressions_WildcardExpression:
 
@@ -1970,7 +1979,7 @@ The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself,
 or by assigning to one of the value's members.
 If the value of the optional-chaining expression is ``nil``,
-the expression on the right hand side of the assignment operator
+the expression on the right-hand side of the assignment operator
 is not evaluated.
 For example:
 
