@@ -1,6 +1,137 @@
 Memory Safety
 =============
 
+In Swift, the term _safety_ generally refers to :newTerm:`memory safety`.
+Although there are other types of safety, such as type safety,
+
+
+You can see this by looking in the standard library
+for types and functions that include the word "unsafe" in their name.
+Those APIs don't guarantee memory safety,
+so it's your responsibility to review your code
+when you use them.
+
+Some safety violations are detected by the compiler,
+which gives you a compile-time error.
+Some violations can't be detected at compile time,
+such as an array index being past the end of the array,
+and these are detected at runtime.
+In general,
+Swift detects as many safety violations as possible
+at compile time.
+
+At runtime,
+when a safety violation is detected,
+program execution stops immediately.
+(Using a mechanism called a "trap" to halt
+in a controlled, predictable manner.)
+Because safety violations are *programmer errors*,
+Swift traps instead of throwing an error.
+Swift's error-handling mechanism is for recoverable errors;
+programmer error, such as a safety violation,
+is not recoverable.
+Stopping execution immediately, at the point of the violation,
+prevents propogating invalid state to other parts of the program
+which can corrupt the program's state and the user's data.
+A predictable, immediate failure is also easier to debug.
+
+There are several aspects of memory safety that Swift enforces:
+
+* Variables must have a value assigned to them
+  before they can be read.
+  This guarantee is sometimes called :newTerm:`definite initialization`.
+
+.. TR: Definite or difinitive?  I prefer the former, but I've seen both.
+
+* Only memory that is part of a data structure
+  can be accessed through that data structure.
+  For example, reading past the end of an array
+  is an error,
+  it doesn't access the adjacent memory.
+
+* The only kind of overlapping access to a region of memory
+  is a read overlapping with a read.
+
+The third guarantee above is called :newTerm:`exclusive access`.
+The rest of this chapter discusses this guarantee.
+
+.. XXX: Above needs a bit of polish.
+
+Memory Access Isn't Always Instantaneous
+----------------------------------------
+
+When you think about how your program executes,
+in many cases the smallest unit you consider
+is an individual line of code.
+However, within each line of code,
+Swift performs several actions.
+For example,
+consider the steps needed
+to execute the second line in the following code listing::
+
+	let numbers = [10, 20, 30]
+	let newNumbers = numbers.map { $1 + 100 }
+
+Swift performs the following granular steps:
+
+* Start reading from ``numbers``.
+* Execute the body of the closure three times,
+  accumulating the result in a new array.
+* Finish reading from ``numbers``.
+* Assign the new array as the value of ``newNumbers``.
+
+Note in particular that
+Swift is accessing ``numbers`` for the entire duration
+of the ``map`` operation.
+Because the read access spans several steps
+in the execution,
+it's possible for it to overlap with other accesses.
+For example::
+
+	let numbers = [10, 20, 30]
+	let newNumbers = numbers.map { $1 + numbers[0] }
+
+This time,
+instead of adding a constant amount to each element,
+the closure body adds the value of the first element
+to each element in ``numbers``.
+This overlapping access is safe
+because both accesses are reading from the array.
+
+.. XXX: FIGURE: map
+
+In contrast,
+consider an in-place version of ``map`` called ``mapInPlace``:
+
+.. XXX: Add an implementation of mapInPlace.
+   The outline has one based on Collection.map,
+   but there might be a way to simplify it.
+
+	var numbers = [10, 20, 30]
+	numbers.mapInPlace { $1 + numbers[0] }  // Error
+
+Because ``mapInPlace`` changes the array,
+it has a write access to ``numbers`` for the duration.
+Just like the read access for ``map``,
+the write access for ``mapInPlace`` spans several steps ---
+overlapping with the read inside the closure
+to get the first element of the array.
+Differt parts of the program
+are reading from and writing to the same memory at the same time.
+In this case,
+you can see the ambiguity
+by considering what the value of ``numbers`` should be
+after running the code.
+Should ``numbers[0]`` access the first element
+of the original array,
+giving an answer of ``[20, 30, 40]``
+or should it access the first element
+after it was transformed in place,
+giving an answer of ``[20, 40, 50]``?
+
+
+
+
 Swift provides safe access to the memory used to run your app.
 Fundamental data abstractions like variables, structures, arrays, and functions
 are built around principled use and reuse of the underlying memory.
@@ -11,34 +142,7 @@ Memory safety protects against using a given region of memory
 for anything other than the purposes required by your code.
 For example, memory safety prevents you from accessing the hundredth element
 in a ten-element array.
-The memory that's protected by array bounds checking isn't necessarily
-the memory used by the array.
-Rather, it's the memory used by whatever else is consuming memory in your app.
 
-.. OUTLINE
-
-   Memory Safety vs Type Safety
-   they both prevent nonsense/invalid operators
-   type safety prevents things like let x: Int = "s"
-   memory safety prevents things like array[9] on an eight-element array
-
-
-Type Safety and Memory Safety
------------------------------
-
-Memory safety is related to, but distinct from, type safety. 
-Both kinds of safety prevent or flag known kinds of errors in your code.
-Memory safety is achieved through a combination of type safety rules
-and runtime checks inserted by the compiler.
-
-Type safety prevents unsafe memory assumptions such as the type mismatch
-in the invalid Swift code in the example below:
-
-let x: Int = "s" // Error.
-
-Because integers and strings are laid out differently in memory,
-it would be unsafe to access the memory for ``x`` if Swift accepted the code above
-and the resulting app permitted a string to occupy the memory that ``x`` refers to.
 
 
 
