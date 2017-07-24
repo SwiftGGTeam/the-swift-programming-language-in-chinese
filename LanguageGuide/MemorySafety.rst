@@ -98,17 +98,18 @@ to each element in ``numbers``.
 This overlapping access is safe
 because both accesses are reading from the array.
 
-.. XXX: FIGURE: map
+.. image:: ../images/memory_map_2x.png
+   :align: center
 
 In contrast,
-consider an in-place version of ``map`` called ``mapInPlace``:
+consider an in-place version of ``map`` called ``mapInPlace``::
+
+	var numbers = [10, 20, 30]
+	numbers.mapInPlace { $1 + numbers[0] }  // Error
 
 .. XXX: Add an implementation of mapInPlace.
    The outline has one based on Collection.map,
    but there might be a way to simplify it.
-
-	var numbers = [10, 20, 30]
-	numbers.mapInPlace { $1 + numbers[0] }  // Error
 
 Because ``mapInPlace`` changes the array,
 it has a write access to ``numbers`` for the duration.
@@ -116,10 +117,19 @@ Just like the read access for ``map``,
 the write access for ``mapInPlace`` spans several steps ---
 overlapping with the read inside the closure
 to get the first element of the array.
-Differt parts of the program
+Differs parts of the program
 are reading from and writing to the same memory at the same time.
+
+.. image:: ../images/memory_mapInPlace_2x.png
+   :align: center
+
+.. XXX: Swap the arrow heads in the figure.
+   The long read should suceed, and the short write should fail.
+   Discuss with Shaun and TR...
+   Technically they *both* fail because of the overlap.
+
 In this case,
-you can see the ambiguity
+you can also see the ambiguity
 by considering what the value of ``numbers`` should be
 after running the code.
 Should ``numbers[0]`` access the first element
@@ -129,7 +139,7 @@ or should it access the first element
 after it was transformed in place,
 giving an answer of ``[20, 40, 50]``?
 
-
+.. XXX Probably need more here...
 
 
 Swift provides safe access to the memory used to run your app.
@@ -236,3 +246,15 @@ Exclusive access is enforced in three different ways:
        A nonescaping closure can't be called from inside another nonescaping closure
        if both closures capture the same local variables.
        (Unless one is defined inside the other,
+
+
+
+
+FIGURES
+-------
+
+.. image:: ../images/memory_increment_2x.png
+   :align: center
+
+.. image:: ../images/memory_share_health_2x.png
+   :align: center
