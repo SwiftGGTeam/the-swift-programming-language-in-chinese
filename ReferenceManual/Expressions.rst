@@ -1902,7 +1902,7 @@ For example:
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
@@ -1994,7 +1994,7 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = nil
