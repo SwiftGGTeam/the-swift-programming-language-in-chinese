@@ -78,6 +78,31 @@ surrounded by three double quotes:
       "Begin at the beginning," the King said gravely, "and go on
       till you come to the end; then stop."
       """
+   >> let newlines = quotation.filter { $0 == "\n" }
+   >> print(newlines.count)
+   << 4
+
+In the example above,
+the text in ``quotation`` is hard wrapped:
+it includes explicit line feeds
+in the middle of both paragraphs.
+If you want to keep the line breaks in your source,
+but omit them from the string,
+write a backslash (``\``) at the end of the line:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let softWrappedQuotation = """
+      The White Rabbit put on his spectacles.  "Where shall I begin, \
+      please your Majesty?" he asked.
+
+      "Begin at the beginning," the King said gravely, "and go on \
+      till you come to the end; then stop."
+      """
+   >> let softNewlines = softWrappedQuotation.filter { $0 == "\n" }
+   >> print(softNewlines.count)
+   << 2
 
 Because the multiline form uses three double quotes instead of just one,
 you can include a double quote (``"``) inside of a multiline string literal,

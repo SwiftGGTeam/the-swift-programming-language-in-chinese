@@ -723,6 +723,15 @@ For example, all the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
+In a multiline string literal,
+a backslash (``\``) at the end of a line
+causes the new line after it to be omitted from the string.
+Any whitespace between the backslash and the new line
+is also omitted from the string.
+You can use this syntax
+to hard wrap a multiline string literal in your source code,
+without changing the value of the resulting string.
+
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
