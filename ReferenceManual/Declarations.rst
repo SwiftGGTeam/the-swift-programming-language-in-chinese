@@ -771,6 +771,12 @@ For example:
    !! <REPL Input>:1:6: note: previous aliasing argument
    !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
    !!      ^~
+   !! <REPL Input>:1:6: error: overlapping accesses to 'x', but modification requires exclusive access; consider copying to a local variable
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!             ^~
+   !! <REPL Input>:1:13: note: conflicting access is here
+   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
+   !!      ^~
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
