@@ -791,7 +791,7 @@ For example:
    -> let greeting = "Hello, world!"
    << // greeting : String = "Hello, world!"
    -> let index = greeting.index(of: ",") ?? greeting.endIndex
-   <~ // index : String.Index = Swift.String.Index
+   <~ // index : String.Index = Swift.String.Index(
    -> let beginning = greeting[..<index]
    << // beginning : String.SubSequence = "Hello"
    /> beginning is \"\(beginning)\"
