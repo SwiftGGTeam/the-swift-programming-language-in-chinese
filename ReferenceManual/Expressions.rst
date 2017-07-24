@@ -494,6 +494,11 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
+.. For functions with no parameter labels,
+   #function leaves off the parens and _:
+   and just uses the base name.
+   https://bugs.swift.org/browse/SR-5533
+
 When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
