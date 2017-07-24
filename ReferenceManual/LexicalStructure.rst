@@ -56,9 +56,26 @@ but the comment markers must be balanced.
 
 .. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
 
-.. No formal grammar.
-   No other syntactic category refers to this one,
-   and the prose is sufficient to define it completely.
+.. syntax-grammar::
+
+   Grammar of whitespace
+
+   whitespace --> whitespace-item whitespace-OPT
+   whitespace-item --> new-line
+   whitespace-item --> comment
+   whitespace-item --> U+0000 U+0009, U+000B, U+000C, or U+0020
+   new-line --> U+000A or U+000D
+
+   comment --> ``//`` comment-items new-line
+   comment --> ``/*`` multiline-comment-items ``*/``
+
+   comment-items --> comment-item comment-items-OPT
+   comment-item --> Any Unicode scalar value except U+000A or U+000D
+
+   multiline-comment-items --> multiline-comment-item multiline-comment-items-OPT
+   multiline-comment-item --> multiline-comment
+   multiline-comment-item --> comment-item
+   multiline-comment-item --> Any Unicode scalar value except ``/*`` or ``*/``
 
 Comments can contain additional formatting and markup,
 as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
@@ -754,6 +771,7 @@ no runtime concatenation is performed.
     multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
     multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
+    multiline-quoted-text-item --> escaped-newline
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
@@ -767,6 +785,8 @@ no runtime concatenation is performed.
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
+
+    escaped-newline --> ``\`` whitespace-OPT new-line
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
