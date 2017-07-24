@@ -667,7 +667,7 @@ the ``Character`` at a particular ``String`` index.
    <$ : Character = "u"
    // u
    -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
-   <~ // index : String.Index = Swift.String.CharacterView.Index(
+   <~ // index : String.Index = Swift.String.Index(
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -748,7 +748,7 @@ use the ``removeSubrange(_:)`` method:
    </ welcome now equals "hello there"
    ---
    -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
-   <~ // range : Range<String.Index> = Range(Swift.String.CharacterView.Index(
+   <~ // range : Range<String.Index> = Range(Swift.String.Index(
    -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
@@ -791,7 +791,7 @@ For example:
    -> let greeting = "Hello, world!"
    << // greeting : String = "Hello, world!"
    -> let index = greeting.index(of: ",") ?? greeting.endIndex
-   << // index : String.Index = Swift.String.CharacterView.Index(_base: Swift.String.UnicodeScalarView.Index(_position: 5), _countUTF16: 1)
+   <~ // index : String.Index = Swift.String.Index
    -> let beginning = greeting[..<index]
    << // beginning : String.SubSequence = "Hello"
    /> beginning is \"\(beginning)\"
