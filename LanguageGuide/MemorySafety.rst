@@ -69,8 +69,8 @@ For example,
 consider the steps needed
 to execute the second line in the following code listing::
 
-	let numbers = [10, 20, 30]
-	let newNumbers = numbers.map { $1 + 100 }
+    let numbers = [10, 20, 30]
+    let newNumbers = numbers.map { $1 + 100 }
 
 Swift performs the following granular steps:
 
@@ -88,8 +88,8 @@ in the execution,
 it's possible for it to overlap with other accesses.
 For example::
 
-	let numbers = [10, 20, 30]
-	let newNumbers = numbers.map { $1 + numbers[0] }
+    let numbers = [10, 20, 30]
+    let newNumbers = numbers.map { $1 + numbers[0] }
 
 This time,
 instead of adding a constant amount to each element,
@@ -104,8 +104,8 @@ because both accesses are reading from the array.
 In contrast,
 consider an in-place version of ``map`` called ``mapInPlace``::
 
-	var numbers = [10, 20, 30]
-	numbers.mapInPlace { $1 + numbers[0] }  // Error
+    var numbers = [10, 20, 30]
+    numbers.mapInPlace { $1 + numbers[0] }  // Error
 
 .. XXX: Add an implementation of mapInPlace.
    The outline has one based on Collection.map,
