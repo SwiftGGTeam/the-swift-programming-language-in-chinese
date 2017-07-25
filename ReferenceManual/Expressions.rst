@@ -494,6 +494,11 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
+.. For functions with no parameter labels,
+   #function leaves off the parens and _:
+   and just uses the base name.
+   https://bugs.swift.org/browse/SR-5533
+
 When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
@@ -1066,12 +1071,20 @@ A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
 
+.. note::
+
+   Both an empty tuple expression and an empty tuple type
+   are written ``()`` in Swift.
+   Because ``Void`` is a type alias for ``()``,
+   you can use it to write an empty tuple type.
+   However, like all type aliases, ``Void`` is always a type ---
+   you can't use it to write an empty tuple expression.
+
 .. langref-grammar
 
     expr-paren      ::= '(' ')'
     expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
     expr-paren-element ::= (identifier ':')? expr
-
 
 .. syntax-grammar::
 
@@ -1080,6 +1093,7 @@ A single expression inside parentheses is a parenthesized expression.
     tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
     tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
     tuple-element --> expression | identifier ``:`` expression
+
 
 .. _Expressions_WildcardExpression:
 
@@ -1888,7 +1902,7 @@ For example:
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
@@ -1980,7 +1994,7 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = nil

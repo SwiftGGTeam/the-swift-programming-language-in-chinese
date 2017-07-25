@@ -19,7 +19,7 @@ Nested Types in Action
 
 The example below defines a structure called ``BlackjackCard``,
 which models a playing card as used in the game of Blackjack.
-The ``BlackJack`` structure contains two nested enumeration types
+The ``BlackjackCard`` structure contains two nested enumeration types
 called ``Suit`` and ``Rank``.
 
 In Blackjack, the Ace cards have a value of either one or eleven.

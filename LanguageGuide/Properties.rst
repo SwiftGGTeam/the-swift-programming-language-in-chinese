@@ -175,7 +175,7 @@ neither of which is shown in full:
    -> class DataImporter {
          /*
          DataImporter is a class to import data from an external file.
-         The class is assumed to take a non-trivial amount of time to initialize.
+         The class is assumed to take a nontrivial amount of time to initialize.
          */
          var filename = "data.txt"
          // the DataImporter class would provide data importing functionality here
@@ -207,7 +207,7 @@ this array of ``String`` data.
 Part of the functionality of the ``DataManager`` class
 is the ability to import data from a file.
 This functionality is provided by the ``DataImporter`` class,
-which is assumed to take a non-trivial amount of time to initialize.
+which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
@@ -643,7 +643,7 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
-   of that structure instance are set. This is cool, but non-obvious.
+   of that structure instance are set. This is cool, but nonobvious.
    Provide an example of it here.
 
 .. _Properties_GlobalAndLocalVariables:
