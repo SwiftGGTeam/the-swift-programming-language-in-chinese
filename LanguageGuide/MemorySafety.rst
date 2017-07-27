@@ -149,13 +149,13 @@ any access to the original
 creates a conflict.
 For example::
 
-	var i = 1
+    var i = 1
 
-	func incrementInPlace(_ number: inout Int) {
-		number += i
-	}
+    func incrementInPlace(_ number: inout Int) {
+        number += i
+    }
 
-	incrementInPlace(&i)
+    incrementInPlace(&i)
 
 In the code above,
 even though ``i`` is a global variable,
@@ -172,7 +172,7 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
    instead of a one-off rule specifically for in-out parameters.
 
 For example, consider a game where each player
-has a healthamount, which decreases when taking damage,
+has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
 As part of the game,
 a player is allowed to give health points
@@ -180,28 +180,28 @@ to another player whose health is lower.
 
 ::
 
-	struct Player {
-		var name: String
-		var health: Int
-		var energy: Int
-	}
+    struct Player {
+        var name: String
+        var health: Int
+        var energy: Int
+    }
 
-	var oscar = Player(name: "Oscar", health: 10, energy: 10)
-	var maria = Player(name: "Maria", health: 5, energy: 10)
+    var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    var maria = Player(name: "Maria", health: 5, energy: 10)
 
-	func shareHealth(_ player: inout Player) {
-		player.health += oscar.health
-	}
+    func shareHealth(_ player: inout Player) {
+        player.health += oscar.health
+    }
 
-	shareHealth(&maria)  // Ok
-	shareHealth(&oscar)  // Error
+    shareHealth(&maria)  // Ok
+    shareHealth(&oscar)  // Error
 
 .. Alternate, slightly less contrived version
-	func shareHealth(_ player: inout Player) {
-		let totalHealth = player.health + oscar.health
-		player.health = totalHealth / 2
-		oscar.health = totalHealth - player.health
-	}
+    func shareHealth(_ player: inout Player) {
+        let totalHealth = player.health + oscar.health
+        player.health = totalHealth / 2
+        oscar.health = totalHealth - player.health
+    }
 
 
 In this example,
