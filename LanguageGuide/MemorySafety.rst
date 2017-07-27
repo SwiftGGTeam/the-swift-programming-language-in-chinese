@@ -123,11 +123,6 @@ are reading from and writing to the same memory at the same time.
 .. image:: ../images/memory_mapInPlace_2x.png
    :align: center
 
-.. XXX: Swap the arrow heads in the figure.
-   The long read should suceed, and the short write should fail.
-   Discuss with Shaun and TR...
-   Technically they *both* fail because of the overlap.
-
 In this case,
 you can also see the ambiguity
 by considering what the value of ``numbers`` should be
@@ -140,6 +135,113 @@ after it was transformed in place,
 giving an answer of ``[20, 40, 50]``?
 
 .. XXX Probably need more here...
+
+Exclusive Access in Functions and Methods
+-----------------------------------------
+
+Functions and methods have write access
+to any paremeters passed as in-out
+for the entire duration of the function or method.
+One consequence of this is that you can't access the original
+variable or constant that was passed as in-out,
+even if scoping and access control would otherwise permit it ---
+any access to the original
+creates a conflict.
+For example::
+
+	var i = 1
+
+	func incrementInPlace(_ number: inout Int) {
+		number += i
+	}
+
+	incrementInPlace(&i)
+
+In the code above,
+even though ``i`` is a global variable,
+and would normally be accessible from within ``incrementInPlace(_:)``,
+the read and write accesses to ``i`` conflict
+if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
+
+.. image:: ../images/memory_increment_2x.png
+   :align: center
+
+.. XXX This is a generalization of existing rules around inout.
+   Worth revisiting the discussion in the guide/reference
+   to adjust wording there, now that it's a consequence of a general rule
+   instead of a one-off rule specifically for in-out parameters.
+
+For example, consider a game where each player
+has a healthamount, which decreases when taking damage,
+and an energy amount, which decreases when using special abilities.
+As part of the game,
+a player is allowed to give health points
+to another player whose health is lower.
+
+::
+
+	struct Player {
+		var name: String
+		var health: Int
+		var energy: Int
+	}
+
+	var oscar = Player(name: "Oscar", health: 10, energy: 10)
+	var maria = Player(name: "Maria", health: 5, energy: 10)
+
+	func shareHealth(_ player: inout Player) {
+		player.health += oscar.health
+	}
+
+	shareHealth(&maria)  // Ok
+	shareHealth(&oscar)  // Error
+
+.. Alternate, slightly less contrived version
+	func shareHealth(_ player: inout Player) {
+		let totalHealth = player.health + oscar.health
+		player.health = totalHealth / 2
+		oscar.health = totalHealth - player.health
+	}
+
+
+In this example,
+the `shareHealth(_:)` function lets Oscar share health
+with another player
+by adding together both players' health
+and dividing the health points evenly between them.
+
+.. image:: ../images/memory_share_health_2x.png
+   :align: center
+
+.. XXX Missing whitespace in the figure before "inout"
+.. XXX Incorrect case in figure for "Player.health"
+.. XXX Missing close brace in figure
+
+In the first case,
+Oscar shares health with Maria,
+which works as expected.
+However, in the second case,
+Oscar shares health with himself.
+This results in conflicting accesses
+because ``oscar`` is being modified by the function
+and it's being read within the function.
+
+.. XXX
+
+This results in conflicting accesses to ``oscar``.
+There is a write access to ``oscar``
+for the entire duration of the function,
+because it is passed as an in-out parameter.
+There is also a read access to ``oscar`` from within the function.
+
+.. END OF DRAFT ..
+
+
+
+
+
+
+
 
 
 Swift provides safe access to the memory used to run your app.
@@ -253,8 +355,4 @@ Exclusive access is enforced in three different ways:
 FIGURES
 -------
 
-.. image:: ../images/memory_increment_2x.png
-   :align: center
 
-.. image:: ../images/memory_share_health_2x.png
-   :align: center
