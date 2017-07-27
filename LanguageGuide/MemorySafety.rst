@@ -213,10 +213,6 @@ and dividing the health points evenly between them.
 .. image:: ../images/memory_share_health_2x.png
    :align: center
 
-.. XXX Missing whitespace in the figure before "inout"
-.. XXX Incorrect case in figure for "Player.health"
-.. XXX Missing close brace in figure
-
 In the first case,
 Oscar shares health with Maria,
 which works as expected.
