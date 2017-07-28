@@ -31,7 +31,7 @@ Swift's error-handling mechanism is for recoverable errors;
 programmer error, such as a safety violation,
 is not recoverable.
 Stopping execution immediately, at the point of the violation,
-prevents propogating invalid state to other parts of the program
+prevents propagating invalid state to other parts of the program
 which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
 
@@ -229,6 +229,100 @@ There is a write access to ``oscar``
 for the entire duration of the function,
 because it is passed as an in-out parameter.
 There is also a read access to ``oscar`` from within the function.
+
+Strategies for Resolving Exclusivity Violations
+-----------------------------------------------
+
+Although, like all types of debugging,
+every piece of code is different,
+there are some common strategies that you can use
+to resolve overlapping access to memory.
+
+**Describe what the code should do.**
+Although it might sound silly,
+it's useful to work out exactly what was intended
+by the code that's causing the compiler error.
+In the example above that uses ``mapInPlace``
+there were at least two ways
+that the code could be expected to execute.
+
+**Make an explicit copy.**
+When you have an exclusivity violation
+caused by reading memory while that memory is being modified,
+assign the value to a local constant
+before the mutation begins.
+For example::
+
+    var numbers = [10, 20, 30]
+    let first = numbers[0]
+    numbers.mapInPlace { $0 + first }
+
+In this example,
+the first element in ``numbers`` is assigned to ``first``
+before calling ``mapInPlace``.
+Instead of a long write access to ``numbers``
+with a short, conflicting, read access to it,
+this version of the code has
+a read access that starts and ends on the second line
+and a write access that starts and ends on the third line.
+The read access to assign ``first`` its value
+completes before ``mapInPlace`` starts modifying the array.
+
+**Operate on a whole structure instead of its properties.**
+Instead of passing multiple properties of a structure
+as in-out parameters to the same function,
+either write a version of the function
+that accepts an instance of the structure as a parameter,
+or write a mutating method on the structure.
+Both of these approaches avoid the problem
+of overlapping write accesses
+because they contain only one write access to the structure.
+
+For example,
+consider the earlier example of
+letting a player balance points
+between health and energy.
+
+::
+
+    func balance(_ x: inout Int, _ y: inout Int) {
+        let sum = x + y
+        x = sum / 2
+        y = sum - x
+    }
+    balance(&oscar.health, &oscar.energy)  // Error
+
+    func balanceHealthAndEnergy(player: inout Player) {
+        balance(&player.health, &player.energy)
+    }
+    balanceHealthAndEnerge(&oscar) // Ok
+
+    extension Player {
+        mutating func balanceHealthAndEnergy {
+            balance(&health, &energy)
+        }
+    }
+    oscar.balance()  // Ok
+
+
+The first approach,
+calling ``balance(_:_:)`` and passing it two properties of a ``Player``,
+fails because each in-out parameter has its own write access
+to ``oscar``.
+Both write accesses last the entire duration of the function call,
+so they overlap.
+The alternate approaches ---
+either passing ``oscar`` as the in-out parameter
+or implementing ``balance()`` as a mutating method of ``Player`` ---
+both resolve the issue the same way:
+they have only one write access to ``oscar``.
+
+.. TR: Is this quite accurate?
+   It looks like the underlying/nested call to balance(_:_:)
+   still has two write accesses,
+   one to ``health`` and one to ``energy``.
+   Is the difference because those in-out write accesses
+   are to a local variable of the outer function/method?
 
 .. END OF DRAFT ..
 
