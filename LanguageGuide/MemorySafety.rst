@@ -438,11 +438,3 @@ Exclusive access is enforced in three different ways:
        A nonescaping closure can't be called from inside another nonescaping closure
        if both closures capture the same local variables.
        (Unless one is defined inside the other,
-
-
-
-
-FIGURES
--------
-
-
