@@ -90,7 +90,7 @@ There are several aspects of memory safety that Swift enforces:
 
 The rest of this chapter discusses the guarantee of exclusive access.
 
-Access to Memory Can Overlap
+Overlapping Access to Memory
 ----------------------------
 
 When you think about how your program executes,
@@ -139,7 +139,7 @@ to execute the second line:
 * Start reading from ``numbers``.
 * Execute the closure body three times,
   accumulating the result in a new array.
-  Each time, read from ``numbers[0]`.
+  Each time, read from ``numbers[0]``.
 * Finish reading from ``numbers``.
 * Assign the new array as the vaulue of ``newNumbers``.
 
@@ -196,12 +196,12 @@ are reasonable.
 
 .. XXX Probably need more here...
 
-Exclusive Access in Functions and Methods
------------------------------------------
+Exclusive Access in Functions
+-----------------------------
 
-A function or method has write access
+A function has write access
 to any parameters passed as in-out
-for that entire duration of the function or method.
+for that entire duration of the function.
 One consequence of this is that you can't access the original
 variable or constant that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
