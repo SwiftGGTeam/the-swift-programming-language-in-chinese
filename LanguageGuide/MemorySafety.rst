@@ -1,21 +1,26 @@
 Memory Safety
 =============
 
-In Swift, the term _safety_ generally refers to :newTerm:`memory safety`.
+In Swift, the term *safety* generally refers to :newTerm:`memory safety`.
 Although there are other types of safety, such as type safety,
 
+.. XXX Finish connecting the bits of intro above and below.
 
-You can see this by looking in the standard library
+You can see this naming convention in use
+by looking in the standard library
 for types and functions that include the word "unsafe" in their name.
 Those APIs don't guarantee memory safety,
 so it's your responsibility to review your code
 when you use them.
 
-Some safety violations are detected by the compiler,
-which gives you a compile-time error.
+Some safety violations are detected when you compile your code,
+which gives you an error at that time.
 Some violations can't be detected at compile time,
-such as an array index being past the end of the array,
-and these are detected at runtime.
+because they depend on the current value
+of a variable in your code,
+such as the index you use to access the array.
+These violations that can't be detected at compile time
+are detected at runtime in debug builds.
 In general,
 Swift detects as many safety violations as possible
 at compile time.
@@ -23,10 +28,8 @@ at compile time.
 At runtime,
 when a safety violation is detected,
 program execution stops immediately.
-(Using a mechanism called a "trap" to halt
-in a controlled, predictable manner.)
 Because safety violations are *programmer errors*,
-Swift traps instead of throwing an error.
+Swift stops program execution instead of throwing an error.
 Swift's error-handling mechanism is for recoverable errors;
 programmer error, such as a safety violation,
 is not recoverable.
@@ -35,11 +38,30 @@ prevents propagating invalid state to other parts of the program
 which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
 
+
+.. note::
+
+    When Swift needs to stop program execution
+    in a controlled and predictable manner,
+    it uses a mechanism called a trap.
+    Although a trap may appear to be the same as a crash to a user
+    who sees the program suddenly stop,
+    the control and predictability of a trap
+    are an important difference.
+
+.. Trapping is also something that Foundation and other frameworks do
+   when you violate part of the API contract.
+   (Pretty sure that's the same thing there & here.)
+   It's implemented there an illegal instruction
+   and in the stdlib by Builtin.int_trap().
+
 There are several aspects of memory safety that Swift enforces:
+
+.. TR: Any other kinds of safety we should mention?
 
 * Variables must have a value assigned to them
   before they can be read.
-  This guarantee is sometimes called :newTerm:`definite initialization`.
+  This guarantee is called :newTerm:`definite initialization`.
 
 .. TR: Definite or difinitive?  I prefer the former, but I've seen both.
 
@@ -49,20 +71,35 @@ There are several aspects of memory safety that Swift enforces:
   is an error,
   it doesn't access the adjacent memory.
 
-* The only kind of overlapping access to a region of memory
-  is a read overlapping with a read.
+.. TR: Does this have a name?
 
-The third guarantee above is called :newTerm:`exclusive access`.
-The rest of this chapter discusses this guarantee.
+* Access to a region of memory must not overlap,
+  except for a read overlapping with another read.
+  This guarantee is called :newTerm:`exclusive access`.
 
-.. XXX: Above needs a bit of polish.
+.. XXX Non-overlapping access isn't a 1:1 expression of memory safety ---
+   it's a superset of what's required.
+   The compiler generally enforces this over-general rule,
+   but there are a bunch of special cases
+   where violating exclusivity doesn't violate memory safety.
+   When the compiler can prove that the nonexclusive access is still safe,
+   it concedes to the practical consideration
+   of not overburdening the programmer.
 
-Memory Access Isn't Always Instantaneous
-----------------------------------------
+.. TR: 
+
+The rest of this chapter discusses the guarantee of exclusive access.
+
+Access to Memory Can Overlap
+----------------------------
 
 When you think about how your program executes,
 in many cases the smallest unit you consider
 is an individual line of code.
+For example,
+when you're using the debugger,
+you can step through the execution of your program,
+one line at a time.
 However, within each line of code,
 Swift performs several actions.
 For example,
@@ -72,7 +109,8 @@ to execute the second line in the following code listing::
     let numbers = [10, 20, 30]
     let newNumbers = numbers.map { $1 + 100 }
 
-Swift performs the following granular steps:
+Swift performs the following more granular steps
+to execute that line:
 
 * Start reading from ``numbers``.
 * Execute the body of the closure three times,
@@ -85,7 +123,7 @@ Swift is accessing ``numbers`` for the entire duration
 of the ``map`` operation.
 Because the read access spans several steps
 in the execution,
-it's possible for it to overlap with other accesses.
+it's possible for this access to overlap with other accesses.
 For example::
 
     let numbers = [10, 20, 30]
@@ -95,14 +133,31 @@ This time,
 instead of adding a constant amount to each element,
 the closure body adds the value of the first element
 to each element in ``numbers``.
-This overlapping access is safe
-because both accesses are reading from the array.
+Swift performs the following more granular steps
+to execute the second line:
+
+* Start reading from ``numbers``.
+* Execute the closure body three times,
+  accumulating the result in a new array.
+  Each time, read from ``numbers[0]`.
+* Finish reading from ``numbers``.
+* Assign the new array as the vaulue of ``newNumbers``.
+
+The access to ``numbers[0]`` inside the body of the closure
+overlaps the ongoing access to ``numbers``
+that started in the first step.
+However, this overlap is safe
+because both accesses are *reading* from the array.
 
 .. image:: ../images/memory_map_2x.png
    :align: center
 
-In contrast,
-consider an in-place version of ``map`` called ``mapInPlace``::
+In contrast to the example above,
+where two read operations are allowed to overlap,
+the example below shows a read and write
+that overlap, causing a violation of memory exclusivity,
+and a compiler error.
+Consider an in-place version of ``map`` called ``mapInPlace``::
 
     var numbers = [10, 20, 30]
     numbers.mapInPlace { $1 + numbers[0] }  // Error
@@ -112,13 +167,15 @@ consider an in-place version of ``map`` called ``mapInPlace``::
    but there might be a way to simplify it.
 
 Because ``mapInPlace`` changes the array,
-it has a write access to ``numbers`` for the duration.
+it has a write access to ``numbers`` for the duration
+of the function call.
 Just like the read access for ``map``,
 the write access for ``mapInPlace`` spans several steps ---
 overlapping with the read inside the closure
 to get the first element of the array.
-Differs parts of the program
-are reading from and writing to the same memory at the same time.
+Different parts of the program
+are reading from and writing to the same memory at the same time
+which is a violation of memory safety.
 
 .. image:: ../images/memory_mapInPlace_2x.png
    :align: center
@@ -133,15 +190,18 @@ giving an answer of ``[20, 30, 40]``
 or should it access the first element
 after it was transformed in place,
 giving an answer of ``[20, 40, 50]``?
+The answer isn't clear ---
+both interpretations of that piece of code
+are reasonable.
 
 .. XXX Probably need more here...
 
 Exclusive Access in Functions and Methods
 -----------------------------------------
 
-Functions and methods have write access
-to any paremeters passed as in-out
-for the entire duration of the function or method.
+A function or method has write access
+to any parameters passed as in-out
+for that entire duration of the function or method.
 One consequence of this is that you can't access the original
 variable or constant that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
@@ -157,6 +217,9 @@ For example::
 
     incrementInPlace(&i)
 
+.. XXX Is there a better, more general, example?
+   This is really fast to jump into in-out so early.
+
 In the code above,
 even though ``i`` is a global variable,
 and would normally be accessible from within ``incrementInPlace(_:)``,
@@ -171,12 +234,14 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
 
+.. XXX There's a transition here.
+
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
-As part of the game,
-a player is allowed to give health points
-to another player whose health is lower.
+One of the players, Oscar,
+has an action that lets him give health points
+to another player.
 
 ::
 
@@ -196,42 +261,34 @@ to another player whose health is lower.
     shareHealth(&maria)  // Ok
     shareHealth(&oscar)  // Error
 
-.. Alternate, slightly less contrived version
-    func shareHealth(_ player: inout Player) {
-        let totalHealth = player.health + oscar.health
-        player.health = totalHealth / 2
-        oscar.health = totalHealth - player.health
-    }
-
-
 In this example,
 the `shareHealth(_:)` function lets Oscar share health
 with another player
-by adding together both players' health
-and dividing the health points evenly between them.
-
-.. image:: ../images/memory_share_health_2x.png
-   :align: center
+by adding Oscar's health to that other player's health.
 
 In the first case,
 Oscar shares health with Maria,
 which works as expected.
 However, in the second case,
-Oscar shares health with himself.
-This results in conflicting accesses
-because ``oscar`` is being modified by the function
-and it's being read within the function.
-
-.. XXX
-
-This results in conflicting accesses to ``oscar``.
+Oscar tries to shares health with himself,
+which results in conflicting accesses to ``oscar``.
 There is a write access to ``oscar``
 for the entire duration of the function,
 because it is passed as an in-out parameter.
 There is also a read access to ``oscar`` from within the function.
 
+.. image:: ../images/memory_share_health_2x.png
+   :align: center
+
+.. XXX A bit of polish above 2 paras.
+
+.. XXX Add a "this example does" after the figure,
+   walking through in more detail.
+
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
+
+.. XXX Swap out below with a less throat-clearing intro.
 
 Although, like all types of debugging,
 every piece of code is different,
@@ -249,7 +306,7 @@ that the code could be expected to execute.
 **Make an explicit copy.**
 When you have an exclusivity violation
 caused by reading memory while that memory is being modified,
-assign the value to a local constant
+you can assign the value to a local constant
 before the mutation begins.
 For example::
 
@@ -257,16 +314,11 @@ For example::
     let first = numbers[0]
     numbers.mapInPlace { $0 + first }
 
-In this example,
-the first element in ``numbers`` is assigned to ``first``
+The first element of ``numbers`` is assigned to ``first``
 before calling ``mapInPlace``.
-Instead of a long write access to ``numbers``
-with a short, conflicting, read access to it,
-this version of the code has
-a read access that starts and ends on the second line
-and a write access that starts and ends on the third line.
 The read access to assign ``first`` its value
-completes before ``mapInPlace`` starts modifying the array.
+completes before ``mapInPlace`` starts modifying the array,
+so there isn't a conflict.
 
 **Operate on a whole structure instead of its properties.**
 Instead of passing multiple properties of a structure
@@ -279,9 +331,13 @@ of overlapping write accesses
 because they contain only one write access to the structure.
 
 For example,
-consider the earlier example of
-letting a player balance points
-between health and energy.
+another action that players have in the game
+is to balance the number of points they have
+for health and energy.
+The code listing below shows three ways
+to implement that action.
+
+.. XXX Call out that the first approach will be an error?
 
 ::
 
