@@ -196,8 +196,8 @@ are reasonable.
 
 .. XXX Probably need more here...
 
-Exclusive Access in Functions
------------------------------
+Exclusive Access for Functions
+------------------------------
 
 A function has write access
 to any parameters passed as in-out
@@ -284,6 +284,15 @@ There is also a read access to ``oscar`` from within the function.
 
 .. XXX Add a "this example does" after the figure,
    walking through in more detail.
+
+Exclusive Access for Properties
+-------------------------------
+
+Exclusive Access for Methods
+----------------------------
+
+Exclusive Access for Closures
+-----------------------------
 
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
