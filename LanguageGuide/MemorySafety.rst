@@ -288,6 +288,23 @@ There is also a read access to ``oscar`` from within the function.
 Exclusive Access for Properties
 -------------------------------
 
+.. XXX
+
+For example,
+another action that players have in the game
+is to balance the number of points they have
+for health and energy.
+
+::
+
+    func balance(_ x: inout Int, _ y: inout Int) {
+        let sum = x + y
+        x = sum / 2
+        y = sum - x
+    }
+    balance(&oscar.health, &oscar.energy)  // Error
+
+
 Exclusive Access for Methods
 ----------------------------
 
@@ -340,34 +357,23 @@ of overlapping write accesses
 because they contain only one write access to the structure.
 
 For example,
-another action that players have in the game
-is to balance the number of points they have
-for health and energy.
-The code listing below shows three ways
-to implement that action.
-
-.. XXX Call out that the first approach will be an error?
+the code listing below shows two ways
+to fix the code from earlier in the chapter
+for balancing health and energy.
 
 ::
-
-    func balance(_ x: inout Int, _ y: inout Int) {
-        let sum = x + y
-        x = sum / 2
-        y = sum - x
-    }
-    balance(&oscar.health, &oscar.energy)  // Error
 
     func balanceHealthAndEnergy(player: inout Player) {
         balance(&player.health, &player.energy)
     }
-    balanceHealthAndEnerge(&oscar) // Ok
+    balanceHealthAndEnerge(&oscar)
 
     extension Player {
         mutating func balanceHealthAndEnergy {
             balance(&health, &energy)
         }
     }
-    oscar.balance()  // Ok
+    oscar.balance()
 
 
 The first approach,
