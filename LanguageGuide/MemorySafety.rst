@@ -345,6 +345,57 @@ Exclusive Access for Methods
 Exclusive Access for Closures
 -----------------------------
 
+.. XXX more intro?
+.. XXX is there any rule around capturing that we're missing?
+
+For the purposes of checking exclusive access to memory,
+a closure is considered nonescaping
+if it is one of the following:
+
+* A closure expression that is called immediately.
+* A closure expression that's passed
+  as a nonescaping function argument.
+* A local function that captures a value
+  which is guaranteed to never escape,
+  such as an in-out parameter.
+
+.. XXX
+
+For functions that take multiple closures,
+there is an additional restriction:
+one nonescaping closure that's passed as a parameter
+to the function
+can't be used as a parameter when calling the other closure.
+For example,
+the following isn't allowed:
+
+::
+
+	typealias Transformation = (Int) -> Int
+	typealias MetaTransformation = (Transformation, Int) -> Int
+
+	function myFunction(_ transformation: Transformation, _ metaTransformation: MetaTransformation) {
+		metaTransformation(transformation, 9000)
+	}
+
+In the code above,
+both of the parameters to ``myFunction(_:_:)`` are closures.
+Because neither one is marked ``@escaping``,
+they are both nonescaping.
+However, in the function body,
+one nonescaping closure, ``transformation``,
+is passed as the argument when calling
+another nonescaping closure, ``metaTransformation``.
+
+.. note::
+
+   This rule for nonescaping closures
+   allows Swift to check for memory exclusivity violations
+   only at compile time, and not at runtime.
+   If you have code that needs to violate this rule,
+   mark one of the closures as escaping.
+
+
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
 
