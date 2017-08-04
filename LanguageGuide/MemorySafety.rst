@@ -71,7 +71,7 @@ There are several aspects of memory safety that Swift enforces:
   is an error,
   it doesn't access the adjacent memory.
 
-.. TR: Does this have a name?
+.. TR: Does this guarantee have a name?
 
 * Access to a region of memory must not overlap,
   except for a read overlapping with another read.
@@ -85,8 +85,6 @@ There are several aspects of memory safety that Swift enforces:
    When the compiler can prove that the nonexclusive access is still safe,
    it concedes to the practical consideration
    of not overburdening the programmer.
-
-.. TR: 
 
 The rest of this chapter discusses the guarantee of exclusive access.
 
@@ -207,6 +205,9 @@ variable or constant that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
 any access to the original
 creates a conflict.
+
+.. XXX Probably only want one of the two examples below.
+
 For example::
 
     var i = 1
