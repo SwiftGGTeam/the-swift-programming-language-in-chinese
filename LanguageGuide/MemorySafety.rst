@@ -342,6 +342,25 @@ function again to level the odds for two players.
 Exclusive Access for Methods
 ----------------------------
 
+.. General thoughts on classes vs structs
+
+   It's ok to have spooky action at a distance in classes
+   because they're already reference types.
+   You need to be able to deal with them having overlapping access
+   in the same way that you need to deal with them having
+   reference semantics.
+
+   Likewise, for structures,
+   the language model for mutation is that
+   when you assign a new value to a property of a struct,
+   it's the moral equivalent of assigning a new value
+   to the entire struct.
+   There's no reference semantics,
+   so no spooky action at a distance,
+   and therefore no overlapping access
+   (which could cause such a thing)
+   is allowed.
+
 Exclusive Access for Closures
 -----------------------------
 
