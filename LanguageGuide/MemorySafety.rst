@@ -289,6 +289,19 @@ There is also a read access to ``oscar`` from within the function.
 Exclusive Access for Properties
 -------------------------------
 
+Depending on whether a type is a value type or a reference type,
+exclusivity is either applies to the whole value or only to 
+a reference's individual properties.
+
+Properties Are Inseparable Accesses on Value Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Types like structures, tuples, and enumerations are made up of
+individual constituent values, such as a structure's properties or a tuple's elements.
+
+Because these are value types, mutation to any piece of the value
+is a mutation to the whole value.
+
 .. XXX
 
 For example,
@@ -304,6 +317,26 @@ for health and energy.
         y = sum - x
     }
     balance(&oscar.health, &oscar.energy)  // Error
+
+Properties Are Independently Addressable on Reference Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because classes are reference types, mutations to properties
+are not considered mutations to the class instance as a whole.
+It's not unusual to have faraway code change parts of a class.
+
+For example, consider a ``Game`` class and call the ``balance``
+function again to level the odds for two players.
+
+::
+
+    class Game {
+        var playerOneScore: Int = 5
+        var playerTwoScore: Int = 10
+    }
+    
+    let game = Game()
+    balance(&game.playerOneScore, &game.playerTwoScore) // OK
 
 
 Exclusive Access for Methods
