@@ -290,19 +290,19 @@ Exclusive Access for Properties
 -------------------------------
 
 Depending on whether a type is a value type or a reference type,
-exclusivity is either applies to the whole value or only to 
-a reference's individual properties.
-
-Properties Are Inseparable Accesses on Value Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Types like structures, tuples, and enumerations are made up of
-individual constituent values, such as a structure's properties or a tuple's elements.
-
-Because these are value types, mutation to any piece of the value
-is a mutation to the whole value.
+exclusivity applies either to the whole value
+or only to individual properties.
 
 .. XXX
+
+Properties of Value Types
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Types like structures, tuples, and enumerations
+are made up of individual constituent values,
+such as a structure's properties or a tuple's elements.
+Because these are value types, mutation to any piece of the value
+is a mutation to the whole value.
 
 For example,
 another action that players have in the game
@@ -318,15 +318,38 @@ for health and energy.
     }
     balance(&oscar.health, &oscar.energy)  // Error
 
-Properties Are Independently Addressable on Reference Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the example above,
+Oscar's health and energy are passed
+as the two in-out parameters to ``balance(_:_:)`` ---
+which violates memory exclusivity
+because both are properties of the same structure.
+Any mutation to a property of ``oscar``
+requires mutation to the entire ``Player`` structure,
+so overlapping changes to its properties aren't allowed.
 
-Because classes are reference types, mutations to properties
-are not considered mutations to the class instance as a whole.
+.. XXX Add an example using balance() on a tuple?
+
+.. Because there's no syntax
+   to mutate an enum's associated value in place,
+   we can't show that overlapping mutations
+   to two different associated values on the same enum
+   would violate exclusivity.
+
+Properties of Reference Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because classes are reference types,
+a mutation to one of the properties of a class instance
+isn't considered a mutations to the class instance as a whole.
+That rule ensures that value semantics are preserved for value types,
+but it doesn't apply to classes, which are reference types.
 It's not unusual to have faraway code change parts of a class.
 
-For example, consider a ``Game`` class and call the ``balance``
-function again to level the odds for two players.
+For example,
+the code below uses the ``balance(_:_:)`` function
+from the previous example
+to level the odds for two players
+by balancing their scores.
 
 ::
 
@@ -336,8 +359,26 @@ function again to level the odds for two players.
     }
     
     let game = Game()
-    balance(&game.playerOneScore, &game.playerTwoScore) // OK
+    balance(&game.playerOneScore, &game.playerTwoScore)  // Ok
 
+Here, the access to ``game.playerOneScore`` and ``game.playerTwoScore`` do overlap,
+and they're both write accesses.
+However,
+because ``Game`` is a class,
+access to one of its properties
+**doesn't** require access to the entire instance.
+The two write accesses happen alongside one another
+
+::
+
+    PLACEHOLDER ART FOR SUGGESTED FIGURE
+
+    balance(&game.playerOneScore, &game.playerTwoScore)
+            --------------------  --------------------
+                    |                     |                game
+                    |                     |
+                    |                     +------------->  p2score
+                    +----------------------------------->  p1score
 
 Exclusive Access for Methods
 ----------------------------
