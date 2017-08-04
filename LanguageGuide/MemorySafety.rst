@@ -38,7 +38,6 @@ prevents propagating invalid state to other parts of the program
 which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
 
-
 .. note::
 
     When Swift needs to stop program execution
@@ -55,15 +54,13 @@ A predictable, immediate failure is also easier to debug.
    It's implemented there an illegal instruction
    and in the stdlib by Builtin.int_trap().
 
-There are several aspects of memory safety that Swift enforces:
+.. XXX Details about trapping really belong under "Error Handling".
 
-.. TR: Any other kinds of safety we should mention?
+There are several aspects of memory safety that Swift enforces:
 
 * Variables must have a value assigned to them
   before they can be read.
   This guarantee is called :newTerm:`definite initialization`.
-
-.. TR: Definite or difinitive?  I prefer the former, but I've seen both.
 
 * Only memory that is part of a data structure
   can be accessed through that data structure.
@@ -71,11 +68,13 @@ There are several aspects of memory safety that Swift enforces:
   is an error,
   it doesn't access the adjacent memory.
 
-.. TR: Does this guarantee have a name?
+  .. docnote:: TR: Does this guarantee have a name?
 
 * Access to a region of memory must not overlap,
   except for a read overlapping with another read.
   This guarantee is called :newTerm:`exclusive access`.
+
+.. docnote:: TR: Any other kinds of safety we should mention?
 
 .. XXX Non-overlapping access isn't a 1:1 expression of memory safety ---
    it's a superset of what's required.
@@ -116,6 +115,8 @@ to execute that line:
 * Finish reading from ``numbers``.
 * Assign the new array as the value of ``newNumbers``.
 
+.. XXX May want to expand on the "execute the closure" step.
+
 Note in particular that
 Swift is accessing ``numbers`` for the entire duration
 of the ``map`` operation.
@@ -141,6 +142,8 @@ to execute the second line:
 * Finish reading from ``numbers``.
 * Assign the new array as the vaulue of ``newNumbers``.
 
+.. XXX May want to expand on the "execute the closure" step.
+
 The access to ``numbers[0]`` inside the body of the closure
 overlaps the ongoing access to ``numbers``
 that started in the first step.
@@ -152,8 +155,8 @@ because both accesses are *reading* from the array.
 
 In contrast to the example above,
 where two read operations are allowed to overlap,
-the example below shows a read and write
-that overlap, causing a violation of memory exclusivity,
+the example below shows a read and write that overlap,
+causing a violation of memory exclusivity,
 and a compiler error.
 Consider an in-place version of ``map`` called ``mapInPlace``::
 
@@ -198,7 +201,8 @@ Exclusive Access for Functions
 ------------------------------
 
 A function has write access
-to any parameters passed as in-out
+to any parameters passed as in-out;
+the write access lasts
 for that entire duration of the function.
 One consequence of this is that you can't access the original
 variable or constant that was passed as in-out,
@@ -217,9 +221,6 @@ For example::
     }
 
     incrementInPlace(&i)
-
-.. XXX Is there a better, more general, example?
-   This is really fast to jump into in-out so early.
 
 In the code above,
 even though ``i`` is a global variable,
@@ -293,7 +294,26 @@ Depending on whether a type is a value type or a reference type,
 exclusivity applies either to the whole value
 or only to individual properties.
 
-.. XXX
+.. XXX Finish a bit of framing
+
+.. General thoughts on classes vs structs
+
+   It's ok to have spooky action at a distance in classes
+   because they're already reference types.
+   You need to be able to deal with them having overlapping access
+   in the same way that you need to deal with them having
+   reference semantics.
+
+   Likewise, for structures,
+   the language model for mutation is that
+   when you assign a new value to a property of a struct,
+   it's the moral equivalent of assigning a new value
+   to the entire struct.
+   There's no reference semantics,
+   so no spooky action at a distance,
+   and therefore no overlapping access
+   (which could cause such a thing)
+   is allowed.
 
 Properties of Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -366,7 +386,7 @@ and they're both write accesses.
 However,
 because ``Game`` is a class,
 access to one of its properties
-**doesn't** require access to the entire instance.
+*doesn't* require access to the entire instance.
 The two write accesses happen alongside one another
 
 ::
@@ -383,30 +403,38 @@ The two write accesses happen alongside one another
 Exclusive Access for Methods
 ----------------------------
 
-.. General thoughts on classes vs structs
+Methods on Value Types
+----------------------
 
-   It's ok to have spooky action at a distance in classes
-   because they're already reference types.
-   You need to be able to deal with them having overlapping access
-   in the same way that you need to deal with them having
-   reference semantics.
+.. XXX A nonmutating method has a read access to 'self'
 
-   Likewise, for structures,
-   the language model for mutation is that
-   when you assign a new value to a property of a struct,
-   it's the moral equivalent of assigning a new value
-   to the entire struct.
-   There's no reference semantics,
-   so no spooky action at a distance,
-   and therefore no overlapping access
-   (which could cause such a thing)
-   is allowed.
+.. XXX A nonmutating method has a write  access to 'self'
+
+::
+
+    extension Player {
+        mutating func shareHealth(with: player inout Player) {
+            balance(&player.health, &health)
+        }
+    }
+
+    oscar.shareHealth(with: &maria)  // Ok
+    oscar.shareHealth(with: &oscar)  // Error
+
+Methods on Reference Types
+--------------------------
+
+.. XXX Along the lines of the above discunnion for properties,
+   mutating methods on classes
+   have read/write access to only the properties they actually access.
+   No long-term access to 'self'.
 
 Exclusive Access for Closures
 -----------------------------
 
 Swift has a rule about passing more than one closure to the same function. 
-This rule allows Swift to perform all of its checks for memory exclusivity violations
+This rule allows Swift to perform
+all of its checks for memory exclusivity violations
 in nonescaping closures
 at compile time, and not have to do any at runtime.
 
@@ -422,15 +450,16 @@ if it is one of the following:
 * A nested function that captures a value
   which is guaranteed to never escape,
   such as an in-out parameter.
-  (Recall from :ref:`Closures` that nested functions are closures.)
   Because the captured value can't escape,
   the nested function will also be restricted from escaping,
   making it nonescaping too.
 
-.. XXX
+.. XXX Which needs to come first,
+   the rule or the definition of nonescaping
+   for the purposes of exclusivity checking?
 
 For functions that take multiple closures,
-there is an additional restriction:
+the restriction is as follows:
 one nonescaping closure that's passed as a parameter
 to the function
 can't be used as a parameter when calling the other closure.
@@ -538,7 +567,8 @@ or implementing ``balance()`` as a mutating method of ``Player`` ---
 both resolve the issue the same way:
 they have only one write access to ``oscar``.
 
-.. TR: Is this quite accurate?
+.. docnote:: TR: Is this accurate?
+
    It looks like the underlying/nested call to balance(_:_:)
    still has two write accesses,
    one to ``health`` and one to ``energy``.
