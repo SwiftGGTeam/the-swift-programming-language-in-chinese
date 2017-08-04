@@ -364,7 +364,11 @@ Exclusive Access for Methods
 Exclusive Access for Closures
 -----------------------------
 
-.. XXX more intro?
+Swift has a rule about passing more than one closure to the same function. 
+This rule allows Swift to perform all of its checks for memory exclusivity violations
+in nonescaping closures
+at compile time, and not have to do any at runtime.
+
 .. XXX is there any rule around capturing that we're missing?
 
 For the purposes of checking exclusive access to memory,
@@ -374,9 +378,13 @@ if it is one of the following:
 * A closure expression that is called immediately.
 * A closure expression that's passed
   as a nonescaping function argument.
-* A local function that captures a value
+* A nested function that captures a value
   which is guaranteed to never escape,
   such as an in-out parameter.
+  (Recall from :ref:`Closures` that nested functions are closures.)
+  Because the captured value can't escape,
+  the nested function will also be restricted from escaping,
+  making it nonescaping too.
 
 .. XXX
 
@@ -408,9 +416,6 @@ another nonescaping closure, ``metaTransformation``.
 
 .. note::
 
-   This rule for nonescaping closures
-   allows Swift to check for memory exclusivity violations
-   only at compile time, and not at runtime.
    If you have code that needs to violate this rule,
    mark one of the closures as escaping.
 
