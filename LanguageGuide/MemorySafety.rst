@@ -264,7 +264,7 @@ to another player.
     shareHealth(&oscar)  // Error
 
 In this example,
-the `shareHealth(_:)` function lets Oscar share health
+the ``shareHealth(_:)`` function lets Oscar share health
 with another player
 by adding Oscar's health to that other player's health.
 
