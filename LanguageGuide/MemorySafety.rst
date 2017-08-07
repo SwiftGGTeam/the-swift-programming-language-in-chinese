@@ -1,16 +1,29 @@
 Memory Safety
 =============
 
-In Swift,
-the term *safety* usually refers to :newTerm:`memory safety` ---
-although there are are other kinds of safety,
-such as type safety and thread safety.
-You can see this naming convention in use
-by looking in the standard library
-for types and functions that include the word "unsafe" in their name.
-Those APIs don't guarantee memory safety,
-so it's your responsibility to review your code
-when you use them.
+There are several aspects of memory safety that Swift enforces:
+
+* Variables must have a value assigned to them
+  before they can be read.
+  This guarantee is called :newTerm:`definite initialization`
+  and is discussed in 
+
+  .. XXX xref to chapter
+
+* Only memory that is part of a data structure
+  can be accessed through that data structure.
+  For example, reading past the end of an array
+  is an error,
+  it doesn't access the adjacent memory.
+
+  .. docnote:: TR: Does this guarantee have a name?
+
+* Access to a region of memory must not overlap,
+  except for a read overlapping with another read.
+  This guarantee is called :newTerm:`exclusive access`.
+  The rest of this chapter discusses the guarantee of exclusive access.
+
+.. docnote:: TR: Any other aspects of memory safety we should mention?
 
 Some safety violations are detected when you compile your code,
 which gives you an error at that time.
@@ -23,9 +36,6 @@ are detected at runtime in debug builds.
 In general,
 Swift detects as many safety violations as possible
 at compile time.
-
-.. XXX The para above talks about error handling,
-   but that chapter comes later.
 
 At runtime,
 when a safety violation is detected,
@@ -42,52 +52,14 @@ A predictable, immediate failure is also easier to debug.
 
 .. note::
 
-    When Swift needs to stop program execution
-    in a controlled and predictable manner,
-    it uses a mechanism called a trap.
-    Although a trap may appear to be the same as a crash to a user
-    who sees the program suddenly stop,
-    the control and predictability of a trap
-    are an important difference.
-
-.. Trapping is also something that Foundation and other frameworks do
-   when you violate part of the API contract.
-   (Pretty sure that's the same thing there & here.)
-   It's implemented there an illegal instruction
-   and in the stdlib by Builtin.int_trap().
-
-.. XXX Details about trapping really belong under "Error Handling".
-
-There are several aspects of memory safety that Swift enforces:
-
-* Variables must have a value assigned to them
-  before they can be read.
-  This guarantee is called :newTerm:`definite initialization`.
-
-* Only memory that is part of a data structure
-  can be accessed through that data structure.
-  For example, reading past the end of an array
-  is an error,
-  it doesn't access the adjacent memory.
-
-  .. docnote:: TR: Does this guarantee have a name?
-
-* Access to a region of memory must not overlap,
-  except for a read overlapping with another read.
-  This guarantee is called :newTerm:`exclusive access`.
-
-.. docnote:: TR: Any other aspects of memory safety we should mention?
-
-The rest of this chapter discusses the guarantee of exclusive access.
-
-.. note::
-
     Because exclusive access is a slightly broader guarantee
     than memory safety,
     some code that is memory safe
     violates the guarantee of exclusive access.
     Swift allows this code if can prove at compile time
     that the nonexclusive access is still safe.
+
+    .. XXX Older versions of Swift give you this guarantee by agressively copying.
 
 Overlapping Access to Memory
 ----------------------------
@@ -452,6 +424,11 @@ Methods on Reference Types
 Exclusive Access for Closures
 -----------------------------
 
+.. XXX Either here or elsewhere...
+   closures have value semantics and they behave as such.
+   For example, if you capture x and y in the same closure,
+   you can have overlapping accesses to them elsewhere.
+
 Swift has a rule about passing more than one closure to the same function. 
 This rule allows Swift to perform
 all of its checks for memory exclusivity violations
@@ -571,7 +548,6 @@ for balancing health and energy.
     }
     oscar.balance()
 
-
 The first approach,
 calling ``balance(_:_:)`` and passing it two properties of a ``Player``,
 fails because each in-out parameter has its own write access
@@ -591,4 +567,21 @@ they have only one write access to ``oscar``.
    one to ``health`` and one to ``energy``.
    Is the difference because those in-out write accesses
    are to a local variable of the outer function/method?
+
+
+UNSAFE STUFF
+------------
+
+.. XXX Refactoring dross; needs a better heading.
+
+In Swift,
+the term *safety* usually refers to :newTerm:`memory safety` ---
+although there are are other kinds of safety,
+such as type safety and thread safety.
+You can see this naming convention in use
+by looking in the standard library
+for types and functions that include the word "unsafe" in their name.
+Those APIs don't guarantee memory safety,
+so it's your responsibility to review your code
+when you use them.
 
