@@ -1,11 +1,10 @@
 Memory Safety
 =============
 
-In Swift, the term *safety* generally refers to :newTerm:`memory safety`.
-Although there are other types of safety, such as type safety,
-
-.. XXX Finish connecting the bits of intro above and below.
-
+In Swift,
+the term *safety* usually refers to :newTerm:`memory safety` ---
+although there are are other kinds of safety,
+such as type safety and thread safety.
 You can see this naming convention in use
 by looking in the standard library
 for types and functions that include the word "unsafe" in their name.
@@ -24,6 +23,9 @@ are detected at runtime in debug builds.
 In general,
 Swift detects as many safety violations as possible
 at compile time.
+
+.. XXX The para above talks about error handling,
+   but that chapter comes later.
 
 At runtime,
 when a safety violation is detected,
@@ -74,18 +76,18 @@ There are several aspects of memory safety that Swift enforces:
   except for a read overlapping with another read.
   This guarantee is called :newTerm:`exclusive access`.
 
-.. docnote:: TR: Any other kinds of safety we should mention?
-
-.. XXX Non-overlapping access isn't a 1:1 expression of memory safety ---
-   it's a superset of what's required.
-   The compiler generally enforces this over-general rule,
-   but there are a bunch of special cases
-   where violating exclusivity doesn't violate memory safety.
-   When the compiler can prove that the nonexclusive access is still safe,
-   it concedes to the practical consideration
-   of not overburdening the programmer.
+.. docnote:: TR: Any other aspects of memory safety we should mention?
 
 The rest of this chapter discusses the guarantee of exclusive access.
+
+.. note::
+
+    Because exclusive access is a slightly broader guarantee
+    than memory safety,
+    some code that is memory safe
+    violates the guarantee of exclusive access.
+    Swift allows this code if can prove at compile time
+    that the nonexclusive access is still safe.
 
 Overlapping Access to Memory
 ----------------------------
@@ -110,12 +112,14 @@ Swift performs the following more granular steps
 to execute that line:
 
 * Start reading from ``numbers``.
-* Execute the body of the closure three times,
-  accumulating the result in a new array.
+* Make a new, empty array to accumulate the mapped results.
+* Execute the body of the closure three times:
+    - Start reading from ``$1``.
+    - Calculate ``$1 + 100``
+      and append the result to the new array.
+    - Finish reading from ``$1``.
 * Finish reading from ``numbers``.
 * Assign the new array as the value of ``newNumbers``.
-
-.. XXX May want to expand on the "execute the closure" step.
 
 Note in particular that
 Swift is accessing ``numbers`` for the entire duration
@@ -136,13 +140,16 @@ Swift performs the following more granular steps
 to execute the second line:
 
 * Start reading from ``numbers``.
-* Execute the closure body three times,
-  accumulating the result in a new array.
-  Each time, read from ``numbers[0]``.
+* Make a new, empty array to accumulate the mapped results.
+* Execute the closure body three times:
+    - Start reading from ``$1``.
+    - Start reading from ``numbers``.
+    - Calculate ``$1 + numbers[0]``
+      and append the result to the new array.
+    - Finish reading from ``numbers``.
+    - Finish reading from ``$1``.
 * Finish reading from ``numbers``.
-* Assign the new array as the vaulue of ``newNumbers``.
-
-.. XXX May want to expand on the "execute the closure" step.
+* Assign the new array as the value of ``newNumbers``.
 
 The access to ``numbers[0]`` inside the body of the closure
 overlaps the ongoing access to ``numbers``
@@ -163,7 +170,7 @@ Consider an in-place version of ``map`` called ``mapInPlace``::
     var numbers = [10, 20, 30]
     numbers.mapInPlace { $1 + numbers[0] }  // Error
 
-.. XXX: Add an implementation of mapInPlace.
+.. XXX Add an implementation of mapInPlace.
    The outline has one based on Collection.map,
    but there might be a way to simplify it.
 
@@ -347,7 +354,17 @@ Any mutation to a property of ``oscar``
 requires mutation to the entire ``Player`` structure,
 so overlapping changes to its properties aren't allowed.
 
-.. XXX Add an example using balance() on a tuple?
+Calling ``balance(_:_:)`` on the elements of a tuple
+fails for the same reason:
+
+::
+
+    var myTuple = (10, 20)
+    balance(&myTuple.0, &myTuple.1)  // Error
+
+A tuple is also a value type,
+so access to one of its properties
+requires access to the entire tuple.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
@@ -400,6 +417,9 @@ The two write accesses happen alongside one another
                     |                     +------------->  p2score
                     +----------------------------------->  p1score
 
+.. XXX Contrast the figure above
+   with the "share health" figure for a struct.
+
 Exclusive Access for Methods
 ----------------------------
 
@@ -408,7 +428,7 @@ Methods on Value Types
 
 .. XXX A nonmutating method has a read access to 'self'
 
-.. XXX A nonmutating method has a write  access to 'self'
+.. XXX A nonmutating method has a write access to 'self'
 
 ::
 
@@ -424,7 +444,7 @@ Methods on Value Types
 Methods on Reference Types
 --------------------------
 
-.. XXX Along the lines of the above discunnion for properties,
+.. XXX Along the lines of the above discussion for properties,
    mutating methods on classes
    have read/write access to only the properties they actually access.
    No long-term access to 'self'.
@@ -435,28 +455,25 @@ Exclusive Access for Closures
 Swift has a rule about passing more than one closure to the same function. 
 This rule allows Swift to perform
 all of its checks for memory exclusivity violations
-in nonescaping closures
-at compile time, and not have to do any at runtime.
+in nonescaping closures at compile time,
+and not have to do any checking at runtime.
 
-.. XXX is there any rule around capturing that we're missing?
+.. docnote:: TR: Is there any rule around capturing that we're missing?
 
 For the purposes of checking exclusive access to memory,
 a closure is considered nonescaping
 if it is one of the following:
 
-* A closure expression that is called immediately.
+* A closure expression that's called immediately.
 * A closure expression that's passed
   as a nonescaping function argument.
 * A nested function that captures a value
   which is guaranteed to never escape,
   such as an in-out parameter.
-  Because the captured value can't escape,
-  the nested function will also be restricted from escaping,
-  making it nonescaping too.
 
-.. XXX Which needs to come first,
-   the rule or the definition of nonescaping
-   for the purposes of exclusivity checking?
+.. Because the captured value can't escape,
+   the nested function will also be restricted from escaping,
+   making it nonescaping too.
 
 For functions that take multiple closures,
 the restriction is as follows:
