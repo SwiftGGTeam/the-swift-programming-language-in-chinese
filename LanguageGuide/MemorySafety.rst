@@ -44,6 +44,18 @@ For example,
 consider the steps needed
 to execute the second line in the following code listing:
 
+.. TR: SE-076 wants this to be the model, but it's not today.
+   Today, we do a copy at the beginning of the call,
+   not a long-term read.
+   Today, we don't have anything that does long-term read
+   except for working with an unsafe pointer.
+
+.. TR: Try using sort() below to make a long-term write
+   and then go into a read/write overlap.
+
+.. TR: Looks like you mostly show read/write conflict.
+   Might want to show write/write conflict too.
+
 .. testcode:: memory-map-1
 
     -> let numbers = [10, 20, 30]
@@ -59,6 +71,12 @@ to execute that line:
   Accumulate the results in  a new, empty array.
 * Finish reading from ``numbers``.
 * Assign the new array as the value of ``newNumbers``.
+
+.. TR: We only read ``numbers``
+   while getting ``numbers[0]`` during the addition.
+   Not for the entire duration of the closure.
+   This is related to why ``s+=`` works;
+   we copy ``s`` first and pass it as an argument.
 
 Note in particular that
 Swift is accessing ``numbers`` for the entire duration
@@ -309,6 +327,8 @@ for health and energy.
     }
     balance(&oscar.health, &oscar.energy)  // Error
 
+.. TR: The future is here.  This isn't an error anymore.
+
 In the example above,
 Oscar's health and energy are passed
 as the two in-out parameters to ``balance(_:_:)`` ---
@@ -337,8 +357,10 @@ requires access to the entire tuple.
    would violate exclusivity.
 
 .. docnote:: A nonmutating method has a read access to 'self'
+   for the duration of the method.
 
 .. docnote:: A mutating method has a write access to 'self'
+   for the duration of the method.
 
 ::
 
@@ -425,7 +447,7 @@ Exclusive Access for Closures
 
 .. docnote:: Either here or elsewhere...
 
-   Closures have value semantics and they behave as such.
+   Closures have reference semantics and they behave as such.
    For example, if you capture x and y in the same closure,
    you can have overlapping accesses to them elsewhere.
 
@@ -436,6 +458,11 @@ in nonescaping closures at compile time,
 and not have to do any checking at runtime.
 
 .. docnote:: TR: Is there any rule around capturing that we're missing?
+
+   If you have a nonescaping closure,
+   it's considered as accessing its captures
+   as an instantaneous read
+   at the point where it's passed.
 
 For the purposes of checking exclusive access to memory,
 a closure is considered nonescaping
@@ -448,6 +475,23 @@ if it is one of the following:
   which is guaranteed to never escape,
   such as an in-out parameter.
 
+.. TR: John suggests moving the above.
+   It's the same semantics for closures.
+   This list is the places where we decide
+   that local functions can't escape.
+   The only exclusivity-specific rule here
+   is the restriction on nonescaping function paramaters.
+
+.. TR: There are a bunch of technical restrictions on escaping closures.
+   Maybe that should go in the Reference under function types
+   or under closure expressions?
+   In the type system, a function type does have a notion
+   of whether or not it is escaping.
+   We don't have a spot to put non-syntax entities in the reference,
+   so this kind of cross-cutting topic doesn't have a good home.
+
+.. TR: Xref to the reference and move this whole rule there.
+
 .. Because the captured value can't escape,
    the nested function will also be restricted from escaping,
    making it nonescaping too.
@@ -459,6 +503,10 @@ to the function
 can't be used as a parameter when calling the other closure.
 For example,
 the following isn't allowed:
+
+.. TR: Technically, this doesn't apply
+   only when there are multiple closures.
+   You can also get this by passing a closure to itself.
 
 ::
 
@@ -519,6 +567,15 @@ The read access to assign ``first`` its value
 completes before ``mapInPlace`` starts modifying the array,
 so there isn't a conflict.
 
+.. TR: If you have a conflict using overlapping inout writes,
+   you can make an explicit copy using a var,
+   and then you have to merge the two values after.
+
+   func (inout foo, closure) { c() }
+   var f = 100
+   func(&f) { f += 1 }  // Error
+   // FIXME: Use a local variable to copy 'f'.
+
 **Operate on a whole structure instead of its properties.**
 Instead of passing multiple properties of a structure
 as in-out parameters to the same function,
@@ -528,6 +585,10 @@ or write a mutating method on the structure.
 Both of these approaches avoid the problem
 of overlapping write accesses
 because they contain only one write access to the structure.
+
+.. TR: This won't apply in nearly as many places.
+   The same fundamental problem still applies,
+   but the example will get more complicated.
 
 For example,
 the code listing below shows two ways
@@ -622,6 +683,12 @@ A predictable, immediate failure is also easier to debug.
     The copy is no longer shared, preventing the possibility of conflicts.
     However, the copying appproach has a negative impact
     on performance and memory usage.
+
+    .. TR: Swift 4 does this copying too.
+       Frame this in terms as the copying is the *only* thing Swift 3 did.
+       The carrot today is that you have a cleaner semantic model,
+       not that you don't get copying.
+       It lets you actually know that you have non-overlapping access.
 
 -- -- -- -- -- -- 
 
