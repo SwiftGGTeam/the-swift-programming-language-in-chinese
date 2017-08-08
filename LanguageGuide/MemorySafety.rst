@@ -42,10 +42,14 @@ However, within each line of code,
 Swift performs several actions.
 For example,
 consider the steps needed
-to execute the second line in the following code listing::
+to execute the second line in the following code listing:
 
-    let numbers = [10, 20, 30]
-    let newNumbers = numbers.map { $0 + 100 }
+.. testcode:: memory-map-1
+
+    -> let numbers = [10, 20, 30]
+    -> let newNumbers = numbers.map { $0 + 100 }
+    << // numbers : [Int] = [10, 20, 30]
+    << // newNumbers : [Int] = [110, 120, 130]
 
 Swift performs the following more granular steps
 to execute that line:
@@ -64,10 +68,14 @@ in the same step,
 it's possible for another access to start
 before this access ends,
 which is called an *overlapping access*.
-For example::
+For example:
 
-    let numbers = [10, 20, 30]
-    let newNumbers = numbers.map { $0 + numbers[0] }
+.. testcode:: memory-map-2
+
+    -> let numbers = [10, 20, 30]
+    -> let newNumbers = numbers.map { $0 + numbers[0] }
+    << // numbers : [Int] = [10, 20, 30]
+    << // newNumbers : [Int] = [20, 30, 40]
 
 This time,
 instead of adding a constant amount to each element,
@@ -103,14 +111,24 @@ where two reads are allowed to overlap,
 the example below shows a read and write that overlap,
 violating memory exclusivity,
 and causing a compiler error.
-Consider an in-place, mutating version of ``map`` called ``mapInPlace``::
+Consider an in-place, mutating version of ``map`` called ``mapInPlace``:
 
-    var numbers = [10, 20, 30]
-    numbers.mapInPlace { $0 + numbers[0] }  // Error
+.. testcode:: memory-map-in-place
 
-.. XXX Add an implementation of mapInPlace.
-   The outline has one based on Collection.map,
-   but there might be a way to simplify it.
+    >> extension MutableCollection {
+           mutating func mapInPlace(transform: (Element) -> Element) {
+               var i = self.startIndex
+               while i < self.endIndex {
+                   self[i] = transform(self[i])
+                   formIndex(after: &i)
+               }
+           }
+       }
+    -> var numbers = [10, 20, 30]
+    -> numbers.mapInPlace { $0 + numbers[0] }  // Error
+    xx Simultaneous accesses to 0x11584c8d0, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x115851075).
+    xx Current access (a read) started at:
 
 Because ``mapInPlace`` changes the array,
 it has a write access to ``numbers`` for the duration
@@ -167,15 +185,20 @@ variable that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
 any access to the original
 creates a conflict.
-For example::
+For example:
 
-    var i = 1
+.. testcode:: memory-increment
 
-    func incrementInPlace(_ number: inout Int) {
-        number += i
-    }
-
-    incrementInPlace(&i)  // Error
+    -> var i = 1
+    ---
+    -> func incrementInPlace(_ number: inout Int) {
+           number += i
+       }
+    ---
+    -> incrementInPlace(&i)  // Error
+    xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x10e86b032).
+    xx Current access (a read) started at:
 
 In the code above,
 even though ``i`` is a global variable,
@@ -202,23 +225,28 @@ One of the players, Oscar,
 has an action that lets him give health points
 to another player.
 
-::
+.. testcode:: memory-share-health
 
-    struct Player {
-        var name: String
-        var health: Int
-        var energy: Int
-    }
-
-    var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    var maria = Player(name: "Maria", health: 5, energy: 10)
-
-    func shareHealth(_ player: inout Player) {
-        player.health += oscar.health
-    }
-
-    shareHealth(&maria)  // Ok
-    shareHealth(&oscar)  // Error
+    -> struct Player {
+           var name: String
+           var health: Int
+           var energy: Int
+       }
+    ---
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> var maria = Player(name: "Maria", health: 5, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
+    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
+    ---
+    -> func shareHealth(_ player: inout Player) {
+           player.health += oscar.health
+       }
+    ---
+    -> shareHealth(&maria)  // Ok
+    -> shareHealth(&oscar)  // Error
+    xx Simultaneous accesses to 0x114e79d68, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x114e81032).
+    xx Current access (a read) started at:
 
 In this example,
 the ``shareHealth(_:)`` function lets Oscar share health
