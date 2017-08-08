@@ -344,7 +344,7 @@ Exclusive Access for Reference Types
 
 Because classes are reference types,
 a mutation to one of the properties of a class instance
-isn't considered a mutations to the class instance as a whole.
+isn't considered a mutation to the class instance as a whole.
 That rule ensures that value semantics are preserved for value types,
 but it doesn't apply to classes, which are reference types.
 It's not unusual to have faraway code change parts of a class.
@@ -508,29 +508,37 @@ for balancing health and energy.
 
 ::
 
+    // Original approach:
+    balance(&oscar.health, &oscar.energy)  // Error
+
+    // Passing a single player:
     func balanceHealthAndEnergy(_ player: inout Player) {
         balance(&player.health, &player.energy)
     }
-    balanceHealthAndEnergy(&oscar)
+    balanceHealthAndEnergy(&oscar)  // Ok
 
+    // Implemented as a mutating method:
     extension Player {
         mutating func balanceHealthAndEnergy() {
             balance(&health, &energy)
         }
     }
-    oscar.balanceHealthAndEnergy()
+    oscar.balanceHealthAndEnergy()  // Ok
 
-The first approach,
+The original approach,
 calling ``balance(_:_:)`` and passing it two properties of a ``Player``,
 fails because each in-out parameter has its own write access
 to ``oscar``.
 Both write accesses last the entire duration of the function call,
 so they overlap.
+
 The alternate approaches ---
 either passing ``oscar`` as the in-out parameter
 or implementing ``balance()`` as a mutating method of ``Player`` ---
 both resolve the issue the same way:
 they have only one write access to ``oscar``.
+While that single write access is ongoing,
+the properties of ``oscar`` can be read or written.
 
 .. docnote:: TR: Is this accurate?
 
