@@ -79,7 +79,7 @@ to execute the second line:
 * Start reading from ``numbers``.
 * Make a new, empty array to accumulate the mapped results.
 * Execute the closure body three times:
-    - Start reading from ``numbers``.
+    - Start reading from ``numbers`` to access ``numbers[0]``.
     - Calculate ``$0 + numbers[0]``
       and append the result to the new array.
     - Finish reading from ``numbers``.
@@ -96,6 +96,7 @@ because both accesses are *reading* from the array.
    :align: center
 
 .. docnote:: FIGURE: change $1 to $0
+.. docnote:: FIGURE: add spaces around all { and } braces
 
 In contrast to the example above,
 where two reads are allowed to overlap,
@@ -162,7 +163,7 @@ to any parameters passed as in-out;
 the write access lasts
 for that entire duration of the function call.
 One consequence of this is that you can't access the original
-variable or constant that was passed as in-out,
+variable that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
 any access to the original
 creates a conflict.
@@ -184,6 +185,8 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
 
 .. image:: ../images/memory_increment_2x.png
    :align: center
+
+.. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
 
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
@@ -307,12 +310,12 @@ requires access to the entire tuple.
 
 .. docnote:: A nonmutating method has a read access to 'self'
 
-.. docnote:: A nonmutating method has a write access to 'self'
+.. docnote:: A mutating method has a write access to 'self'
 
 ::
 
     extension Player {
-        mutating func shareHealth(with: player inout Player) {
+        mutating func shareHealth(with player: inout Player) {
             balance(&player.health, &health)
         }
     }
@@ -558,7 +561,7 @@ A predictable, immediate failure is also easier to debug.
     than memory safety,
     some code that is memory safe
     violates the guarantee of exclusive access.
-    Swift allows this code if can prove at compile time
+    Swift allows this code if the compiler can prove
     that the nonexclusive access is still safe.
 
     Versions of Swift before Swift 4 ensure memory safety
