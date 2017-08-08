@@ -323,6 +323,22 @@ requires access to the entire tuple.
     oscar.shareHealth(with: &maria)  // Ok
     oscar.shareHealth(with: &oscar)  // Error
 
+.. docnote:: TR: Check the following example—working as intended?
+
+::
+
+    extension Player {
+        func giveHealth(to player: inout Player) {
+            player.health += health
+            player.health += health
+        }
+    }
+
+    // Is this allowed on purpose? Write access to `oscar` inside read?
+    // Unpredictable results: If `oscar` starts w/ health @ 10, should end with 30 or 40?
+    oscar.giveHealth(to: &oscar)  // Ok
+
+
 Exclusive Access for Reference Types
 ------------------------------------
 
