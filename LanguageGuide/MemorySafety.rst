@@ -489,17 +489,17 @@ for balancing health and energy.
 
 ::
 
-    func balanceHealthAndEnergy(player: inout Player) {
+    func balanceHealthAndEnergy(_ player: inout Player) {
         balance(&player.health, &player.energy)
     }
-    balanceHealthAndEnerge(&oscar)
+    balanceHealthAndEnergy(&oscar)
 
     extension Player {
-        mutating func balanceHealthAndEnergy {
+        mutating func balanceHealthAndEnergy() {
             balance(&health, &energy)
         }
     }
-    oscar.balance()
+    oscar.balanceHealthAndEnergy()
 
 The first approach,
 calling ``balance(_:_:)`` and passing it two properties of a ``Player``,
