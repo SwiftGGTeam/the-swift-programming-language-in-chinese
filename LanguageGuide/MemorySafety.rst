@@ -95,7 +95,7 @@ because both accesses are *reading* from the array.
 .. image:: ../images/memory_map_2x.png
    :align: center
 
-.. XXX FIGURE: change $1 to $0
+.. docnote:: FIGURE: change $1 to $0
 
 In contrast to the example above,
 where two reads are allowed to overlap,
@@ -142,13 +142,13 @@ are reasonable.
 What Exclusive Access Guarantees
 --------------------------------
 
-.. XXX
+.. docnote:: Facts that need to go somewhere...
 
-- Within a single thread (use TSan for multithreading)...
-- When working with shared mutable state...
-- It's not accessed by two pieces of code at the same time
-- Except for two overlapping reads
-- And except for things that we can prove are safe
+    - Within a single thread (use TSan for multithreading)...
+    - When working with shared mutable state...
+    - It's guaranteed not accessed by two pieces of code at the same time
+    - Except for two overlapping reads
+    - And except for things that we can prove are safe
 
 Exclusive Access for Functions
 ------------------------------
@@ -190,7 +190,7 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
 
-.. XXX There's a transition here.
+.. docnote:: There's a missing transition here.
 
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
@@ -305,9 +305,9 @@ requires access to the entire tuple.
    to two different associated values on the same enum
    would violate exclusivity.
 
-.. XXX A nonmutating method has a read access to 'self'
+.. docnote:: A nonmutating method has a read access to 'self'
 
-.. XXX A nonmutating method has a write access to 'self'
+.. docnote:: A nonmutating method has a write access to 'self'
 
 ::
 
@@ -376,8 +376,9 @@ The two write accesses happen alongside one another
 Exclusive Access for Closures
 -----------------------------
 
-.. XXX Either here or elsewhere...
-   closures have value semantics and they behave as such.
+.. docnote:: Either here or elsewhere...
+
+   Closures have value semantics and they behave as such.
    For example, if you capture x and y in the same closure,
    you can have overlapping accesses to them elsewhere.
 
@@ -521,8 +522,10 @@ they have only one write access to ``oscar``.
    are to a local variable of the outer function/method?
 
 
-XXX LEFTOVERS XXX
------------------
+LEFTOVERS
+---------
+
+.. docnote:: These need to move to a section above or another chapter.
 
 Some safety violations are detected when you compile your code,
 which gives you an error at that time.
