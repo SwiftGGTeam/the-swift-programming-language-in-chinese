@@ -3,10 +3,10 @@ Memory Safety
 
 There are several aspects of memory safety that Swift enforces:
 
-* Variables must have a value assigned to them
+* Variables and constants must have a value assigned to them
   before they can be read.
   This guarantee is called :newTerm:`definite initialization`
-  and is discussed in 
+  and is discussed in "Initialization".
 
   .. XXX xref to chapter
 
@@ -16,53 +16,20 @@ There are several aspects of memory safety that Swift enforces:
   is an error,
   it doesn't access the adjacent memory.
 
-  .. docnote:: TR: Does this guarantee have a name?
+* Memory must not be accessed after it has been deallocated.
+  This guarantee is discussed in "Automatic Reference Counting".
 
-* Access to a region of memory must not overlap,
-  except for a read overlapping with another read.
+.. XXX xref to chapter
+   XXX Value types
+   XXX Unsafe types
+
+* Memory that contains shared mutable state
+  must not have conflicting accesses.
   This guarantee is called :newTerm:`exclusive access`.
   The rest of this chapter discusses the guarantee of exclusive access.
 
-.. docnote:: TR: Any other aspects of memory safety we should mention?
-
-Some safety violations are detected when you compile your code,
-which gives you an error at that time.
-Some violations can't be detected at compile time,
-because they depend on the current value
-of a variable in your code,
-such as the index you use to access the array.
-These violations that can't be detected at compile time
-are detected at runtime in debug builds.
-In general,
-Swift detects as many safety violations as possible
-at compile time.
-
-At runtime,
-when a safety violation is detected,
-program execution stops immediately.
-Because safety violations are *programmer errors*,
-Swift stops program execution instead of throwing an error.
-Swift's error-handling mechanism is for recoverable errors;
-programmer error, such as a safety violation,
-is not recoverable.
-Stopping execution immediately, at the point of the violation,
-prevents propagating invalid state to other parts of the program
-which can corrupt the program's state and the user's data.
-A predictable, immediate failure is also easier to debug.
-
-.. note::
-
-    Because exclusive access is a slightly broader guarantee
-    than memory safety,
-    some code that is memory safe
-    violates the guarantee of exclusive access.
-    Swift allows this code if can prove at compile time
-    that the nonexclusive access is still safe.
-
-    .. XXX Older versions of Swift give you this guarantee by agressively copying.
-
-Overlapping Access to Memory
-----------------------------
+Simultaneous Access to Memory
+-----------------------------
 
 When you think about how your program executes,
 in many cases the smallest unit you consider
@@ -78,31 +45,29 @@ consider the steps needed
 to execute the second line in the following code listing::
 
     let numbers = [10, 20, 30]
-    let newNumbers = numbers.map { $1 + 100 }
+    let newNumbers = numbers.map { $0 + 100 }
 
 Swift performs the following more granular steps
 to execute that line:
 
 * Start reading from ``numbers``.
-* Make a new, empty array to accumulate the mapped results.
-* Execute the body of the closure three times:
-    - Start reading from ``$1``.
-    - Calculate ``$1 + 100``
-      and append the result to the new array.
-    - Finish reading from ``$1``.
+* Execute the body of the closure three times.
+  Accumulate the results in  a new, empty array.
 * Finish reading from ``numbers``.
 * Assign the new array as the value of ``newNumbers``.
 
 Note in particular that
 Swift is accessing ``numbers`` for the entire duration
 of the ``map`` operation.
-Because the read access spans several steps
-in the execution,
-it's possible for this access to overlap with other accesses.
+Because the read access doesn't start and end
+in the same step,
+it's possible for another access to start
+before this access ends,
+which is called an *overlapping access*.
 For example::
 
     let numbers = [10, 20, 30]
-    let newNumbers = numbers.map { $1 + numbers[0] }
+    let newNumbers = numbers.map { $0 + numbers[0] }
 
 This time,
 instead of adding a constant amount to each element,
@@ -114,12 +79,10 @@ to execute the second line:
 * Start reading from ``numbers``.
 * Make a new, empty array to accumulate the mapped results.
 * Execute the closure body three times:
-    - Start reading from ``$1``.
     - Start reading from ``numbers``.
-    - Calculate ``$1 + numbers[0]``
+    - Calculate ``$0 + numbers[0]``
       and append the result to the new array.
     - Finish reading from ``numbers``.
-    - Finish reading from ``$1``.
 * Finish reading from ``numbers``.
 * Assign the new array as the value of ``newNumbers``.
 
@@ -132,15 +95,17 @@ because both accesses are *reading* from the array.
 .. image:: ../images/memory_map_2x.png
    :align: center
 
+.. XXX FIGURE: change $1 to $0
+
 In contrast to the example above,
-where two read operations are allowed to overlap,
+where two reads are allowed to overlap,
 the example below shows a read and write that overlap,
-causing a violation of memory exclusivity,
-and a compiler error.
-Consider an in-place version of ``map`` called ``mapInPlace``::
+violating memory exclusivity,
+and causing a compiler error.
+Consider an in-place, mutating version of ``map`` called ``mapInPlace``::
 
     var numbers = [10, 20, 30]
-    numbers.mapInPlace { $1 + numbers[0] }  // Error
+    numbers.mapInPlace { $0 + numbers[0] }  // Error
 
 .. XXX Add an implementation of mapInPlace.
    The outline has one based on Collection.map,
@@ -174,23 +139,33 @@ The answer isn't clear ---
 both interpretations of that piece of code
 are reasonable.
 
-.. XXX Probably need more here...
+What Exclusive Access Guarantees
+--------------------------------
+
+.. XXX
+
+- Within a single thread (use TSan for multithreading)...
+- When working with shared mutable state...
+- It's not accessed by two pieces of code at the same time
+- Except for two overlapping reads
+- And except for things that we can prove are safe
 
 Exclusive Access for Functions
 ------------------------------
 
+.. XXX Maybe this should come after value/reference types
+   since it's less common?
+   But it's also simpler...
+
 A function has write access
 to any parameters passed as in-out;
 the write access lasts
-for that entire duration of the function.
+for that entire duration of the function call.
 One consequence of this is that you can't access the original
 variable or constant that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
 any access to the original
 creates a conflict.
-
-.. XXX Probably only want one of the two examples below.
-
 For example::
 
     var i = 1
@@ -199,7 +174,7 @@ For example::
         number += i
     }
 
-    incrementInPlace(&i)
+    incrementInPlace(&i)  // Error
 
 In the code above,
 even though ``i`` is a global variable,
@@ -261,19 +236,8 @@ There is also a read access to ``oscar`` from within the function.
 .. image:: ../images/memory_share_health_2x.png
    :align: center
 
-.. XXX A bit of polish above 2 paras.
-
-.. XXX Add a "this example does" after the figure,
-   walking through in more detail.
-
-Exclusive Access for Properties
--------------------------------
-
-Depending on whether a type is a value type or a reference type,
-exclusivity applies either to the whole value
-or only to individual properties.
-
-.. XXX Finish a bit of framing
+Exclusive Access for Value Types
+--------------------------------
 
 .. General thoughts on classes vs structs
 
@@ -293,9 +257,6 @@ or only to individual properties.
    and therefore no overlapping access
    (which could cause such a thing)
    is allowed.
-
-Properties of Value Types
-~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
@@ -344,8 +305,23 @@ requires access to the entire tuple.
    to two different associated values on the same enum
    would violate exclusivity.
 
-Properties of Reference Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. XXX A nonmutating method has a read access to 'self'
+
+.. XXX A nonmutating method has a write access to 'self'
+
+::
+
+    extension Player {
+        mutating func shareHealth(with: player inout Player) {
+            balance(&player.health, &health)
+        }
+    }
+
+    oscar.shareHealth(with: &maria)  // Ok
+    oscar.shareHealth(with: &oscar)  // Error
+
+Exclusive Access for Reference Types
+------------------------------------
 
 Because classes are reference types,
 a mutation to one of the properties of a class instance
@@ -391,30 +367,6 @@ The two write accesses happen alongside one another
 
 .. XXX Contrast the figure above
    with the "share health" figure for a struct.
-
-Exclusive Access for Methods
-----------------------------
-
-Methods on Value Types
-----------------------
-
-.. XXX A nonmutating method has a read access to 'self'
-
-.. XXX A nonmutating method has a write access to 'self'
-
-::
-
-    extension Player {
-        mutating func shareHealth(with: player inout Player) {
-            balance(&player.health, &health)
-        }
-    }
-
-    oscar.shareHealth(with: &maria)  // Ok
-    oscar.shareHealth(with: &oscar)  // Error
-
-Methods on Reference Types
---------------------------
 
 .. XXX Along the lines of the above discussion for properties,
    mutating methods on classes
@@ -569,10 +521,51 @@ they have only one write access to ``oscar``.
    are to a local variable of the outer function/method?
 
 
-UNSAFE STUFF
-------------
+XXX LEFTOVERS XXX
+-----------------
 
-.. XXX Refactoring dross; needs a better heading.
+Some safety violations are detected when you compile your code,
+which gives you an error at that time.
+Some violations can't be detected at compile time,
+because they depend on the current value
+of a variable in your code,
+such as the index you use to access the array.
+These violations that can't be detected at compile time
+are detected at runtime.
+In general,
+Swift detects as many safety violations as possible
+at compile time.
+
+At runtime,
+when a safety violation is detected,
+program execution stops immediately.
+Because safety violations are *programmer errors*,
+Swift stops program execution instead of throwing an error.
+Swift's error-handling mechanism is for recoverable errors;
+programmer error, such as a safety violation,
+is not recoverable.
+Stopping execution immediately, at the point of the violation,
+prevents propagating invalid state to other parts of the program
+which can corrupt the program's state and the user's data.
+A predictable, immediate failure is also easier to debug.
+
+.. note::
+
+    Because exclusive access is a slightly broader guarantee
+    than memory safety,
+    some code that is memory safe
+    violates the guarantee of exclusive access.
+    Swift allows this code if can prove at compile time
+    that the nonexclusive access is still safe.
+
+    Versions of Swift before Swift 4 ensure memory safety
+    by agressively making a copy of the shared mutable state
+    when a conflicting access is possible.
+    The copy is no longer shared, preventing the possibility of conflicts.
+    However, the copying appproach has a negative impact
+    on performance and memory usage.
+
+-- -- -- -- -- -- 
 
 In Swift,
 the term *safety* usually refers to :newTerm:`memory safety` ---
@@ -585,3 +578,22 @@ Those APIs don't guarantee memory safety,
 so it's your responsibility to review your code
 when you use them.
 
+-- -- -- -- -- -- 
+
+Move to "Error Handling":
+
+When Swift needs to stop program execution
+in a controlled and predictable manner,
+it uses a mechanism called a trap.
+Although a trap may appear to be the same as a crash to a user
+who sees the program suddenly stop,
+the control and predictability of a trap
+are an important difference.
+
+.. Trapping is also something that Foundation and other frameworks do
+   when you violate part of the API contract.
+   (Pretty sure that's the same thing there & here.)
+   It's implemented there an illegal instruction
+   and in the stdlib by Builtin.int_trap().
+
+.. XXX Details about trapping really belong under "Error Handling".
