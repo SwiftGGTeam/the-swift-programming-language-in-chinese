@@ -229,61 +229,39 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
 
 .. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
 
+Passing the same variable as an in-out parameter more than once
+is also an error because of exclusive access.
+For example:
+
+.. testcode:: memory-double-inout
+
+    -> func balance(_ x: inout Int, _ y: inout Int) {
+           let sum = x + y
+           x = sum / 2
+           y = sum - x
+       }
+    -> var myNumber = 42
+    << // myNumber : Int = 42
+    -> balance(&myNumber, &myNumber)  // Error
+    !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
+    !! balance(&myNumber, &myNumber)  // Error
+    !!                    ^~~~~~~~~
+    !! <REPL Input>:1:9: note: previous aliasing argument
+    !! balance(&myNumber, &myNumber)  // Error
+    !!         ^~~~~~~~~
+    !! <REPL Input>:1:9: error: overlapping accesses to 'myNumber', but modification requires exclusive access; consider copying to a local variable
+    !! balance(&myNumber, &myNumber)  // Error
+    !!                    ^~~~~~~~~
+    !! <REPL Input>:1:20: note: conflicting access is here
+    !! balance(&myNumber, &myNumber)  // Error
+    !!         ^~~~~~~~~
+
+.. XXX explain the violation -- overlapping writes
+
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
-
-.. docnote:: There's a missing transition here.
-
-For example, consider a game where each player
-has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities.
-One of the players, Oscar,
-has an action that lets him give health points
-to another player.
-
-.. testcode:: memory-share-health
-
-    -> struct Player {
-           var name: String
-           var health: Int
-           var energy: Int
-       }
-    ---
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    ---
-    -> func shareHealth(_ player: inout Player) {
-           player.health += oscar.health
-       }
-    ---
-    -> shareHealth(&maria)  // Ok
-    -> shareHealth(&oscar)  // Error
-    xx Simultaneous accesses to 0x114e79d68, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x114e81032).
-    xx Current access (a read) started at:
-
-In this example,
-the ``shareHealth(_:)`` function lets Oscar share health
-with another player
-by adding Oscar's health to that other player's health.
-
-In the first case,
-Oscar shares health with Maria,
-which works as expected.
-However, in the second case,
-Oscar tries to shares health with himself,
-which results in conflicting accesses to ``oscar``.
-There is a write access to ``oscar``
-for the entire duration of the function,
-because it is passed as an in-out parameter.
-There is also a read access to ``oscar`` from within the function.
-
-.. image:: ../images/memory_share_health_2x.png
-   :align: center
 
 Exclusive Access for Value Types
 --------------------------------
@@ -313,33 +291,10 @@ such as a structure's properties or a tuple's elements.
 Because these are value types, mutation to any piece of the value
 is a mutation to the whole value.
 
-For example,
-another action that players have in the game
-is to balance the number of points they have
-for health and energy.
-
-::
-
-    func balance(_ x: inout Int, _ y: inout Int) {
-        let sum = x + y
-        x = sum / 2
-        y = sum - x
-    }
-    balance(&oscar.health, &oscar.energy)  // Error
-
-.. TR: The future is here.  This isn't an error anymore.
-
-In the example above,
-Oscar's health and energy are passed
-as the two in-out parameters to ``balance(_:_:)`` ---
-which violates memory exclusivity
-because both are properties of the same structure.
-Any mutation to a property of ``oscar``
-requires mutation to the entire ``Player`` structure,
-so overlapping changes to its properties aren't allowed.
-
-Calling ``balance(_:_:)`` on the elements of a tuple
-fails for the same reason:
+Calling ``balance(_:_:)`` on the elements of a tuple fails
+because a tuple is a value type.
+Access to one of its properties
+requires access to the entire tuple.
 
 .. testcode:: memory-tuple
 
@@ -351,15 +306,66 @@ fails for the same reason:
     -> var myTuple = (10, 20)
     << // myTuple : (Int, Int) = (10, 20)
     -> balance(&myTuple.0, &myTuple.1)  // Error
-    xx FAILURE: Not all output lines were used.
-    xx Unused lines are:
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x107952037).
     xx Current access (a modification) started at:
 
-A tuple is also a value type,
+Although a structure is also a value type,
 so access to one of its properties
-requires access to the entire tuple.
+also requires access to the entire structure,
+in many cases the compiler can prove
+that the overlapping access are safe.
+This is generally true for stored properties.
+For example, consider a game where each player
+has a health amount, which decreases when taking damage,
+and an energy amount, which decreases when using special abilities.
+
+.. testcode:: memory-share-health
+
+    -> struct Player {
+           var name: String
+           var health: Int
+           var energy: Int
+       }
+    ---
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> var maria = Player(name: "Maria", health: 5, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 12, energy: 10)
+    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
+    ---
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> balance(&oscar.health, &oscar.energy)  // Ok
+
+.. This works in Xcode (9M202q) but fails at the REPL.
+   I don't pretend to understand why.
+
+In the example above,
+Oscar's health and energy are passed
+as the two in-out parameters to ``balance(_:_:)`` ---
+although this technically violates memory exclusivity
+because both are properties of the same structure,
+the compiler can prove that memory safety is preserved.
+The two stored properties don't interact in any way,
+so overlapping writes to them can't cause a problem.
+
+In contrast, if ``health`` is a computed property,
+it's no longer possible to prove that the overlapping writes are safe.
+
+.. Not quite the right wording here...
+   In some places, the compiler could prove this,
+   we just made the bright line that it doesn't try
+   for getters and setters.
+   That would be even more confusing, since you'd have a hidden cliff.
+
+.. XXX
+
+Any mutation to a property of ``oscar``
+requires mutation to the entire ``Player`` structure,
+so overlapping changes to its properties aren't allowed.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
@@ -373,17 +379,42 @@ requires access to the entire tuple.
 .. docnote:: A mutating method has a write access to 'self'
    for the duration of the method.
 
-::
+.. testcode:: memory-player-share-with-self
 
-    extension Player {
-        mutating func shareHealth(with player: inout Player) {
-            balance(&player.health, &health)
-        }
-    }
-
-    oscar.shareHealth(with: &maria)  // Ok
-    oscar.shareHealth(with: &oscar)  // Error
-
+    >> struct Player {
+    >>     var name: String
+    >>     var health: Int
+    >>     var energy: Int
+    >> }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    >> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    >> var maria = Player(name: "Maria", health: 5, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
+    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
+    -> extension Player {
+           mutating func shareHealth(with player: inout Player) {
+               balance(&player.health, &health)
+           }
+       }
+    -> oscar.shareHealth(with: &maria)  // Ok
+    -> oscar.shareHealth(with: &oscar)  // Error
+    !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
+    !! oscar.shareHealth(with: &oscar)  // Error
+    !!                         ^~~~~~
+    !! <REPL Input>:1:1: note: previous aliasing argument
+    !! oscar.shareHealth(with: &oscar)  // Error
+    !! ^~~~~
+    !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !! oscar.shareHealth(with: &oscar)  // Error
+    !!                          ^~~~~
+    !! <REPL Input>:1:25: note: conflicting access is here
+    !! oscar.shareHealth(with: &oscar)  // Error
+    !! ^~~~~~
+   
 .. docnote:: TR: Check the following example—working as intended?
 
 ::
