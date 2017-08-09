@@ -134,14 +134,14 @@ Consider an in-place, mutating version of ``map`` called ``mapInPlace``:
 .. testcode:: memory-map-in-place
 
     >> extension MutableCollection {
-           mutating func mapInPlace(transform: (Element) -> Element) {
-               var i = self.startIndex
-               while i < self.endIndex {
-                   self[i] = transform(self[i])
-                   formIndex(after: &i)
-               }
-           }
-       }
+    >>     mutating func mapInPlace(transform: (Element) -> Element) {
+    >>         var i = self.startIndex
+    >>         while i < self.endIndex {
+    >>             self[i] = transform(self[i])
+    >>             formIndex(after: &i)
+    >>         }
+    >>     }
+    >> }
     -> var numbers = [10, 20, 30]
     -> numbers.mapInPlace { $0 + numbers[0] }  // Error
     xx Simultaneous accesses to 0x11584c8d0, but modification requires exclusive access.
@@ -341,10 +341,21 @@ so overlapping changes to its properties aren't allowed.
 Calling ``balance(_:_:)`` on the elements of a tuple
 fails for the same reason:
 
-::
+.. testcode:: memory-tuple
 
-    var myTuple = (10, 20)
-    balance(&myTuple.0, &myTuple.1)  // Error
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> var myTuple = (10, 20)
+    << // myTuple : (Int, Int) = (10, 20)
+    -> balance(&myTuple.0, &myTuple.1)  // Error
+    xx FAILURE: Not all output lines were used.
+    xx Unused lines are:
+    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x107952037).
+    xx Current access (a modification) started at:
 
 A tuple is also a value type,
 so access to one of its properties
@@ -405,15 +416,25 @@ from the previous example
 to level the odds for two players
 by balancing their scores.
 
-::
+.. testcode:: memory-reference-types
 
-    class Game {
-        var playerOneScore: Int = 5
-        var playerTwoScore: Int = 10
-    }
-    
-    let game = Game()
-    balance(&game.playerOneScore, &game.playerTwoScore)  // Ok
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> class Game {
+           var playerOneScore: Int = 5
+           var playerTwoScore: Int = 10
+       }
+    ---
+    -> let game = Game()
+    << // game : Game = REPL.Game
+    -> balance(&game.playerOneScore, &game.playerTwoScore)  // Ok
+    >> game.playerOneScore
+    << // r0 : Int = 7
+    >> game.playerTwoScore
+    << // r1 : Int = 8
 
 Here, the access to ``game.playerOneScore`` and ``game.playerTwoScore`` do overlap,
 and they're both write accesses.
@@ -508,14 +529,18 @@ the following isn't allowed:
    only when there are multiple closures.
    You can also get this by passing a closure to itself.
 
-::
+.. testcode:: memory-closures
 
-	typealias Transformation = (Int) -> Int
-	typealias MetaTransformation = (Transformation, Int) -> Int
+    -> typealias Transformation = (Int) -> Int
+    -> typealias MetaTransformation = (Transformation, Int) -> Int
+    ---
+    -> func myFunction(_ transformation: Transformation, _ metaTransformation: MetaTransformation) -> Int {
+           return metaTransformation(transformation, 9000)
+       }
+    !! <REPL Input>:2:14: error: passing a non-escaping function parameter 'transformation' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! return metaTransformation(transformation, 9000)
+    !!        ^                  ~~~~~~~~~~~~~~
 
-	function myFunction(_ transformation: Transformation, _ metaTransformation: MetaTransformation) {
-		metaTransformation(transformation, 9000)
-	}
 
 In the code above,
 both of the parameters to ``myFunction(_:_:)`` are closures.
