@@ -1014,7 +1014,7 @@ the variable is automatically set to ``nil`` for you:
 
    Swift's ``nil`` is'nt the same as ``nil`` in Objective-C.
    In Objective-C, ``nil`` is a pointer to a nonexistent object.
-   In Swift, ``nil`` is'n a pointer --- it's the absence of a value of a certain type.
+   In Swift, ``nil`` isn't a pointer --- it's the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
 .. _TheBasics_IfStatementsAndForcedUnwrapping:
