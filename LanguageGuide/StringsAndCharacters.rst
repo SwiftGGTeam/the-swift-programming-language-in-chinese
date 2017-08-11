@@ -86,12 +86,10 @@ In the example above,
 the text in ``quotation`` is hard wrapped:
 It includes explicit line breaks
 in the middle of both paragraphs.
-if you want to keep the line breaks in your source,
-but omit them from the string's value,
+If you want to use line breaks in a multiline string
+to make your source code easier to read,
+but you don't want the line breaks to be part of the string's value,
 write a backslash (``\``) at the end of the line:
-
-.. XXX If you want to... Yes, but *why* do you want to?
-   It's to keep your source tidy without changing the string's value.
 
 .. testcode:: multiline-string-literals
    :compile: true
@@ -147,47 +145,39 @@ Both of the strings below are the same:
    >> print(singleLineString == multilineString)
    << true
 
-To make a multiline string literal that begins or ends with a line break,
-write a blank line as the first or last line.
+Normally, multiline string literals don't end with a line break ---
+but if you're using multiline string literals
+to build up the lines of a longer string,
+you often want to include a line break at the end.
+That line break lets you concatenate strings
+without combining their first and last lines.
+Write a blank line as last line
+to make a multiline string literal that ends with a line break.
+Or, to make a multiline string literal
+that starts with a line break,
+write a blank line as its first line.
 For example:
 
-.. testcode:: multiline-string-literal
+.. testcode:: multiline-string-literals
    :compile: true
 
-   >> let blank =
-   -> """
+   -> let beginning = """
+          Let's begin.
+          """
+   -> let end = """
+          That's the end.
+          """
+   -> print(beginning + end)
+   <- Let's begin.That's the end.
+   ---
+   -> let betterBeginning = """
+          Let's begin.
 
-      This string starts with a line break.
-      It also ends with a line break.
-
-      """
-
-.. These are well-fed lines!
-
-.. XXX Let's add an example of the gotcha around concatenating multiline strings.
-
-    start = """
-    <html>
-    <body>
-    """
-
-    end = """
-    </body>
-    </html>
-    """
-
-    start + end
-
-    EXPECT...
-    <html>
-    <body>
-    </body>
-    </html>
-
-    GET...
-    <html>
-    <body></body>
-    </html>
+          """
+   -> print(betterBeginning + end)
+   // Prints two lines:
+   </ Let's begin.
+   </ That's the end.
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
