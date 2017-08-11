@@ -886,13 +886,11 @@ The figure below shows these relationships:
 
 .. note::
 
-   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol.
+   Both ``String`` and ``Substring`` conform to the
+   `StringProtocol < //apple_ref/swift/intf/s:s14StringProtocolP>` protocol.
    If you're writing code that manipulates string data,
    accepting a ``StringProtocol`` value lets you pass that string data
    as either a ``String`` or ``Substring`` value.
-
-.. XXX Live link to the StringProtocol protocol reference.
-   It's not showing up in the database yet (2017-05-17).
 
 .. _StringsAndCharacters_ComparingStrings:
 
