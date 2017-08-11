@@ -619,7 +619,7 @@ an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-A multiline string literal is surrounded by three double quotes,
+A multiline string literal is surrounded by three double quotes
 and has the following form:
 
 .. syntax-outline::

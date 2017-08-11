@@ -1192,7 +1192,7 @@ Generic Subscripts
 Subscripts can be generic,
 and they can include generic ``where`` clauses.
 You write the placeholder type name inside angle brackets after ``subscript``,
-and you write a generic ``where`` clause immediately before the opening curly brace
+and you write a generic ``where`` clause right before the opening curly brace
 of the subscript's body.
 For example:
 
