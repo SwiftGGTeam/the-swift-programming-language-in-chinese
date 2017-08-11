@@ -61,21 +61,21 @@ but the comment markers must be balanced.
    Grammar of whitespace
 
    whitespace --> whitespace-item whitespace-OPT
-   whitespace-item --> new-line
+   whitespace-item --> line-break
    whitespace-item --> comment
    whitespace-item --> U+0000 U+0009, U+000B, U+000C, or U+0020
-   new-line --> U+000A or U+000D
+   line-break --> U+000A, or U+000D, or U+000D followed by U+000A
 
-   comment --> ``//`` comment-items new-line
-   comment --> ``/*`` multiline-comment-items ``*/``
+   comment --> ``//`` comment-text new-line
+   comment --> ``/*`` multiline-comment-text ``*/``
 
-   comment-items --> comment-item comment-items-OPT
-   comment-item --> Any Unicode scalar value except U+000A or U+000D
+   comment-text --> comment-text-item comment-items-OPT
+   comment-text-item --> Any Unicode scalar value except U+000A or U+000D
 
-   multiline-comment-items --> multiline-comment-item multiline-comment-items-OPT
-   multiline-comment-item --> multiline-comment
-   multiline-comment-item --> comment-item
-   multiline-comment-item --> Any Unicode scalar value except ``/*`` or ``*/``
+   multiline-comment-text --> multiline-comment-text-item multiline-comment-items-OPT
+   multiline-comment-text-item --> multiline-comment
+   multiline-comment-text-item --> comment-item
+   multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
 
 Comments can contain additional formatting and markup,
 as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
@@ -650,10 +650,10 @@ a multiline string literal can contain
 unescaped double quotes (``"``), carriage returns, and line feeds.
 It can't contain three unescaped double quotes next to each other.
 
-The carriage return or line feed after the ``"""``
+The line break after the ``"""``
 that begins the multiline string literal
 is not part of the string.
-The carriage return or line feed before the ``"""``
+The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
 that begins or ends with a line feed,
@@ -671,10 +671,19 @@ there is no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
-Line endings in a multiline string literal are
+Line breaks in a multiline string literal are
 normalized to use the line feed character.
 Even if your source file has a mix of carriage returns and line feeds,
-all of the line endings in the string will be the same.
+all of the line breaks in the string will be the same.
+
+In a multiline string literal,
+a backslash (``\``) at the end of a line
+causes the line feed after it to be omitted from the string.
+Any whitespace between the backslash and the line break
+is also omitted from the string.
+You can use this syntax
+to hard wrap a multiline string literal in your source code,
+without changing the value of the resulting string.
 
 Special characters
 can be included in string literals
@@ -717,15 +726,6 @@ For example, all the following string literals have the same value:
    -> let x = 3; "1 2 \(x)"
    << // x : Int = 3
    <$ : String = "1 2 3"
-
-In a multiline string literal,
-a backslash (``\``) at the end of a line
-causes the new line after it to be omitted from the string.
-Any whitespace between the backslash and the new line
-is also omitted from the string.
-You can use this syntax
-to hard wrap a multiline string literal in your source code,
-without changing the value of the resulting string.
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
