@@ -82,7 +82,7 @@ To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
 For example, ``class`` is not a valid identifier,
 but :literal:`\`class\`` is valid.
-The backticks aren't not considered part of the identifier;
+The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
 
 Inside a closure with no explicit parameter names,
@@ -607,7 +607,7 @@ String Literals
 ~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters surrounded by quotes.
-A single-line string literal is surrounded by double quotes,
+A single-line string literal is surrounded by double quotes
 and has the following form:
 
 .. syntax-outline::

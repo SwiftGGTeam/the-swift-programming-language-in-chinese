@@ -654,8 +654,8 @@ that inherits from each protocol you want the type to conform to.
 For example,
 you can use the protocol composition type ``ProtocolA & ProtocolB & ProtocolC``
 instead of declaring a new protocol
-that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
-and you can use ``SuperClass & ProtocolA``
+that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
+Likewise, you can use ``SuperClass & ProtocolA``
 instead of declaring a new protocol
 that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 

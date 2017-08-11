@@ -776,7 +776,7 @@ not another string.
 Substrings in Swift have most of the same methods as strings,
 which means you can work with substrings
 the same way you work with strings.
-However,
+However, unlike strings,
 you use substrings for only a short amount of time
 while performing actions on a string.
 When you're ready to store the result for a longer time,
