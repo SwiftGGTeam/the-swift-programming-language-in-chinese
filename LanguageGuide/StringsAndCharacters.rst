@@ -55,10 +55,10 @@ Use a string literal as an initial value for a constant or variable:
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
 
-.. note::
+.. _StringsAndCharacters_MultilineLiterals:
 
-   For information about using special characters in string literals,
-   see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+Multiline String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need a string that spans several lines,
 use a multiline string literal.
@@ -84,11 +84,14 @@ surrounded by three double quotes:
 
 In the example above,
 the text in ``quotation`` is hard wrapped:
-it includes explicit line feeds
+It includes explicit line breaks
 in the middle of both paragraphs.
-If you want to keep the line breaks in your source,
-but omit them from the string,
+if you want to keep the line breaks in your source,
+but omit them from the string's value,
 write a backslash (``\``) at the end of the line:
+
+.. XXX If you want to... Yes, but *why* do you want to?
+   It's to keep your source tidy without changing the string's value.
 
 .. testcode:: multiline-string-literals
    :compile: true
@@ -131,7 +134,7 @@ the string literal includes all of the lines between
 its opening and closing quotes.
 The string begins on the first line after the opening quotes (``"""``)
 and ends on the line before the closing quotes (``"""``),
-which means that ``quotation`` doesn't start or end with a line feed.
+which means that ``quotation`` doesn't start or end with a line break.
 Both of the strings below are the same:
 
 .. testcode:: multiline-string-literals
@@ -144,7 +147,7 @@ Both of the strings below are the same:
    >> print(singleLineString == multilineString)
    << true
 
-To make a multiline string literal that begins or ends with a line feed,
+To make a multiline string literal that begins or ends with a line break,
 write a blank line as the first or last line.
 For example:
 
@@ -154,12 +157,37 @@ For example:
    >> let blank =
    -> """
 
-      This string starts with a line feed.
-      It also ends with a line feed.
+      This string starts with a line break.
+      It also ends with a line break.
 
       """
 
 .. These are well-fed lines!
+
+.. XXX Let's add an example of the gotcha around concatenating multiline strings.
+
+    start = """
+    <html>
+    <body>
+    """
+
+    end = """
+    </body>
+    </html>
+    """
+
+    start + end
+
+    EXPECT...
+    <html>
+    <body>
+    </body>
+    </html>
+
+    GET...
+    <html>
+    <body></body>
+    </html>
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
@@ -204,6 +232,58 @@ that whitespace *is* included.
               This line begins with four spaces.
           This line doesn't begin with whitespace.
           """
+
+.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
+
+Special Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+String literals can include the following special characters:
+
+* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
+  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
+  ``\"`` (double quote) and ``\'`` (single quote)
+
+* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+  where *n* is a 1--8 digit hexadecimal number
+  with a value equal to a valid Unicode code point
+  (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
+
+.. assertion:: stringLiteralUnicodeScalar
+
+   -> "\u{0}"
+   << // r0 : String = "\0"
+   -> "\u{00000000}"
+   << // r1 : String = "\0"
+   -> "\u{000000000}"
+   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+   !! "\u{000000000}"
+   !! ^
+   -> "\u{10FFFF}"
+   << // r2 : String = "􏿿"
+   -> "\u{110000}"
+   !! <REPL Input>:1:2: error: invalid unicode scalar
+   !! "\u{110000}"
+   !! ^
+
+The code below shows four examples of these special characters.
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
+demonstrate the Unicode scalar format:
+
+.. testcode:: specialCharacters
+
+   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
+   >> print(wiseWords)
+   </ "Imagination is more important than knowledge" - Einstein
+   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+   << // dollarSign : String = "$"
+   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+   << // blackHeart : String = "♥"
+   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
+
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -458,55 +538,6 @@ Note that not all 21-bit Unicode scalars are assigned to a character ---
 some scalars are reserved for future assignment.
 Scalars that have been assigned to a character typically also have a name,
 such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
-
-.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
-
-Special Characters in String Literals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-String literals can include the following special characters:
-
-* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
-  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
-  ``\"`` (double quote) and ``\'`` (single quote)
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
-
-.. assertion:: stringLiteralUnicodeScalar
-
-   -> "\u{0}"
-   << // r0 : String = "\0"
-   -> "\u{00000000}"
-   << // r1 : String = "\0"
-   -> "\u{000000000}"
-   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
-   !! "\u{000000000}"
-   !! ^
-   -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
-   -> "\u{110000}"
-   !! <REPL Input>:1:2: error: invalid unicode scalar
-   !! "\u{110000}"
-   !! ^
-
-The code below shows four examples of these special characters.
-The ``wiseWords`` constant contains two escaped double quote characters.
-The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the Unicode scalar format:
-
-.. testcode:: specialCharacters
-
-   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> print(wiseWords)
-   </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
-   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
