@@ -1385,7 +1385,7 @@ Assertions are checked only in debug builds,
 but preconditions are checked in both debug and production builds.
 In production builds,
 the condition inside an assertion isn't evaluated.
-You can therefore use as many assertions as you wish
+This means you can use as many assertions as you want
 during your development process,
 without impacting performance in production.
 
