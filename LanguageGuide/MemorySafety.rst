@@ -330,7 +330,7 @@ and an energy amount, which decreases when using special abilities.
     ---
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 12, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     ---
     >> func balance(_ x: inout Int, _ y: inout Int) {
@@ -340,7 +340,8 @@ and an energy amount, which decreases when using special abilities.
     >> }
     -> balance(&oscar.health, &oscar.energy)  // Ok
 
-.. This works in Xcode (9M202q) but fails at the REPL.
+.. XXX This works in Xcode (9M202q swiftlang-900.0.59)
+   but fails at the REPL with an exclusivity violation.
    I don't pretend to understand why.
 
 In the example above,
