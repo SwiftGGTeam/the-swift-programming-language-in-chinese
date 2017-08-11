@@ -63,18 +63,22 @@ but the comment markers must be balanced.
    whitespace --> whitespace-item whitespace-OPT
    whitespace-item --> line-break
    whitespace-item --> comment
-   whitespace-item --> U+0000 U+0009, U+000B, U+000C, or U+0020
-   line-break --> U+000A, or U+000D, or U+000D followed by U+000A
+   whitespace-item --> multiline-comment
+   whitespace-item --> U+0000, U+0009, U+000B, U+000C, or U+0020
 
-   comment --> ``//`` comment-text new-line
-   comment --> ``/*`` multiline-comment-text ``*/``
+   line-break --> U+000A
+   line-break --> U+000D
+   line-break --> U+000D followed by U+000A
 
-   comment-text --> comment-text-item comment-items-OPT
+   comment --> ``//`` comment-text line-break
+   multiline-comment --> ``/*`` multiline-comment-text ``*/``
+
+   comment-text --> comment-text-item comment-text-item-OPT
    comment-text-item --> Any Unicode scalar value except U+000A or U+000D
 
-   multiline-comment-text --> multiline-comment-text-item multiline-comment-items-OPT
+   multiline-comment-text --> multiline-comment-text-item multiline-comment-text-OPT
    multiline-comment-text-item --> multiline-comment
-   multiline-comment-text-item --> comment-item
+   multiline-comment-text-item --> comment-text-item
    multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
 
 Comments can contain additional formatting and markup,
@@ -790,7 +794,7 @@ no runtime concatenation is performed.
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline --> ``\`` whitespace-OPT new-line
+    escaped-newline --> ``\`` whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
