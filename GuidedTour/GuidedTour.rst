@@ -377,7 +377,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
+   << // interestingNumbers : [String : [Int]] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
