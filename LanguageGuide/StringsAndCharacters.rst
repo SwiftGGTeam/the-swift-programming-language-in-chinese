@@ -82,9 +82,6 @@ surrounded by three double quotes:
    >> print(newlines.count)
    << 4
 
-Because the multiline form uses three double quotes instead of just one,
-you can include a double quote (``"``) inside of a multiline string literal.
-
 A multiline string literal includes all of the lines between
 its opening and closing quotes.
 The string begins on the first line after the opening quotes (``"""``)
@@ -278,11 +275,11 @@ demonstrate the Unicode scalar format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
-.. XXX reflow
-
-To include a literal ``"""`` in a multiline string,
-you have to escape at least one of the quotation marks,
-using a backslash (``\``).
+Because the multiline form uses three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal
+without escaping it.
+To include the text ``"""`` in a multiline string,
+escape at least one of the quotation marks.
 For example:
 
 .. testcode:: multiline-string-literals
