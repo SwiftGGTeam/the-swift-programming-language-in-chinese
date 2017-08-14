@@ -107,13 +107,10 @@ start or end with a line break:
 Line Breaks
 +++++++++++
 
-.. XXX reflow
-
-In the example above,
-the text in ``quotation`` is hard wrapped:
-It includes explicit line breaks
-in the middle of both paragraphs.
-If you want to use line breaks in a multiline string
+When your source code includes a line break
+inside of a multiline string literal,
+that line break also appears in the string's value.
+If you want to use line breaks
 to make your source code easier to read,
 but you don't want the line breaks to be part of the string's value,
 write a backslash (``\``) at the end of the line:
@@ -132,39 +129,54 @@ write a backslash (``\``) at the end of the line:
    >> print(softNewlines.count)
    << 2
 
-Normally, multiline string literals don't end with a line break ---
-but if you're using multiline string literals
+If you're using multiline string literals
 to build up the lines of a longer string,
-you often want to include a line break at the end.
-That line break lets you concatenate strings
-without combining their first and last lines.
-Write a blank line as last line
-to make a multiline string literal that ends with a line break.
-Or, to make a multiline string literal
-that starts with a line break,
-write a blank line as its first line.
+you want every line in the string to end with a line break.
+To make a multiline string literal that ends with a line break,
+write a blank line as last line.
 For example:
 
 .. testcode:: multiline-string-literals
    :compile: true
 
-   -> let beginning = """
+   -> let badBeginning = """
           Let's begin.
+          Keep going.
           """
    -> let end = """
           That's the end.
           """
-   -> print(beginning + end)
-   <- Let's begin.That's the end.
-   ---
-   -> let betterBeginning = """
-          Let's begin.
-
-          """
-   -> print(betterBeginning + end)
+   -> print(badBeginning + end)
    // Prints two lines:
    </ Let's begin.
+   </ Keep going.That's the end.
+   ---
+   -> let goodBeginning = """
+          Let's begin.
+          Keep going.
+
+          """
+   -> print(goodBeginning + end)
+   // Prints three lines:
+   </ Let's begin.
+   </ Keep going.
    </ That's the end.
+
+In the code above,
+concatenating ``badBeginning`` with ``end``
+produces a two-line string.
+Because the last line of ``badBeginning``
+doesn't end with a line break,
+that line gets combined with the first line of ``end``.
+In contrast,
+both lines of ``goodBeginning`` end with a line break,
+so when it's combined with ``end``
+the result has three lines,
+as expected.
+
+To make a multiline string literal
+that starts with a line break,
+write a blank line as its first line.
 
 .. _StringsAndCharacters_MultilineLiteralsIndentation:
 
