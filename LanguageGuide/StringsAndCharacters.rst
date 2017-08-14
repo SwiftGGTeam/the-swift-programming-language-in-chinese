@@ -82,6 +82,33 @@ surrounded by three double quotes:
    >> print(newlines.count)
    << 4
 
+Because the multiline form uses three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal.
+
+A multiline string literal includes all of the lines between
+its opening and closing quotes.
+The string begins on the first line after the opening quotes (``"""``)
+and ends on the line before the closing quotes (``"""``),
+which means that neither of the strings below
+start or end with a line break:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let singleLineString = "These are the same."
+   -> let multilineString = """
+      These are the same.
+      """
+   >> print(singleLineString == multilineString)
+   << true
+
+.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
+
+Line Breaks
++++++++++++
+
+.. XXX reflow
+
 In the example above,
 the text in ``quotation`` is hard wrapped:
 It includes explicit line breaks
@@ -104,51 +131,6 @@ write a backslash (``\``) at the end of the line:
    >> let softNewlines = softWrappedQuotation.filter { $0 == "\n" }
    >> print(softNewlines.count)
    << 2
-
-Because the multiline form uses three double quotes instead of just one,
-you can include a double quote (``"``) inside of a multiline string literal,
-as shown in the example above.
-To include a literal ``"""`` in a multiline string,
-you have to escape at least one of the quotation marks,
-using a backslash (``\``).
-For example:
-
-.. testcode:: multiline-string-literals
-   :compile: true
-
-   -> let threeDoubleQuotes = """
-      Escaping the first quote \"""
-      Escaping all three quotes \"\"\"
-      """
-   >> print(threeDoubleQuotes)
-   << Escaping the first quote """
-   << Escaping all three quotes """
-
-For more information about using a backslash to escape special characters,
-see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
-
-.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
-
-Line Breaks
-+++++++++++
-
-In its multiline form,
-the string literal includes all of the lines between
-its opening and closing quotes.
-The string begins on the first line after the opening quotes (``"""``)
-and ends on the line before the closing quotes (``"""``),
-which means that ``quotation`` doesn't start or end with a line break.
-Both of the strings below are the same:
-
-.. testcode:: multiline-string-literals
-   :compile: true
-
-   -> let singleLineString = "These are the same."
-   -> let multilineString = """
-      These are the same.
-      """
-   >> print(singleLineString == multilineString)
-   << true
 
 Normally, multiline string literals don't end with a line break ---
 but if you're using multiline string literals
@@ -284,6 +266,23 @@ demonstrate the Unicode scalar format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
+.. XXX reflow
+
+To include a literal ``"""`` in a multiline string,
+you have to escape at least one of the quotation marks,
+using a backslash (``\``).
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let threeDoubleQuotes = """
+      Escaping the first quote \"""
+      Escaping all three quotes \"\"\"
+      """
+   >> print(threeDoubleQuotes)
+   << Escaping the first quote """
+   << Escaping all three quotes """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
