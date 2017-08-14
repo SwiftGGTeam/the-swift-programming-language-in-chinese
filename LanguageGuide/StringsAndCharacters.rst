@@ -127,6 +127,11 @@ For example:
 For more information about using a backslash to escape special characters,
 see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
+.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
+
+Line Breaks
++++++++++++
+
 In its multiline form,
 the string literal includes all of the lines between
 its opening and closing quotes.
@@ -178,6 +183,11 @@ For example:
    // Prints two lines:
    </ Let's begin.
    </ That's the end.
+
+.. _StringsAndCharacters_MultilineLiteralsIndentation:
+
+Indentation
++++++++++++
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
