@@ -52,7 +52,7 @@ Use a string literal as an initial value for a constant or variable:
    -> let someString = "Some string literal value"
    << // someString : String = "Some string literal value"
 
-Swift infers a type of ``String`` for the ``someString`` constant
+Note that Swift infers a type of ``String`` for the ``someString`` constant
 because it's initialized with a string literal value.
 
 .. note::
