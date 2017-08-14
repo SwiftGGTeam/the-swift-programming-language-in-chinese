@@ -275,7 +275,7 @@ demonstrate the Unicode scalar format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
-Because the multiline form uses three double quotes instead of just one,
+Because multiline string literals use three double quotes instead of just one,
 you can include a double quote (``"``) inside of a multiline string literal
 without escaping it.
 To include the text ``"""`` in a multiline string,
