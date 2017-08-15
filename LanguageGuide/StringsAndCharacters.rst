@@ -137,27 +137,27 @@ For example:
    :compile: true
 
    -> let badBeginning = """
-          Let's begin.
-          Keep going.
+          one
+          two
           """
    -> let end = """
-          That's the end.
+          three
           """
    -> print(badBeginning + end)
    // Prints two lines:
-   </ Let's begin.
-   </ Keep going.That's the end.
+   </ onetwo
+   </ three
    ---
    -> let goodBeginning = """
-          Let's begin.
-          Keep going.
+          one
+          two
 
           """
    -> print(goodBeginning + end)
    // Prints three lines:
-   </ Let's begin.
-   </ Keep going.
-   </ That's the end.
+   </ one
+   </ two
+   </ three
 
 In the code above,
 concatenating ``badBeginning`` with ``end``
