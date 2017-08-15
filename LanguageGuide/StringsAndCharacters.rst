@@ -161,7 +161,8 @@ For example:
 
 In the code above,
 concatenating ``badBeginning`` with ``end``
-produces a two-line string.
+produces a two-line string,
+which isn't the desired result.
 Because the last line of ``badBeginning``
 doesn't end with a line break,
 that line gets combined with the first line of ``end``.
