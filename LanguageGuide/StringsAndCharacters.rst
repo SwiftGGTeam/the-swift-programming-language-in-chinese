@@ -85,7 +85,7 @@ surrounded by three double quotes:
 A multiline string literal includes all of the lines between
 its opening and closing quotes.
 The string begins on the first line after the opening quotes (``"""``)
-and ends on the line before the closing quotes (``"""``),
+and ends on the line before the closing quotes,
 which means that neither of the strings below
 start or end with a line break:
 
@@ -128,9 +128,11 @@ write a backslash (``\``) at the end of the line:
 
 If you're using multiline string literals
 to build up the lines of a longer string,
-you want every line in the string to end with a line break.
+you want every line in the string to end with a line break ---
+however, as discussed above,
+the last line doesn't normally end with a line break.
 To make a multiline string literal that ends with a line break,
-write a blank line as last line.
+write a blank line as its last line.
 For example:
 
 .. testcode:: multiline-string-literals
