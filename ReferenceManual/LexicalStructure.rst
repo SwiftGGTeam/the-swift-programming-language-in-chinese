@@ -82,7 +82,7 @@ To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
 For example, ``class`` is not a valid identifier,
 but :literal:`\`class\`` is valid.
-The backticks are not considered part of the identifier;
+The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
 
 Inside a closure with no explicit parameter names,
@@ -167,7 +167,7 @@ in a function declaration or function call
 without being escaped with backticks.
 When a member has the same name as a keyword,
 references to that member don't need to be escaped with backticks,
-except when there is ambiguity between referring to the member
+except when there's ambiguity between referring to the member
 and using the keyword ---
 for example, ``self``, ``Type``, and ``Protocol``
 have special meaning in an explicit member expression,
@@ -464,9 +464,9 @@ Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
 
 Underscores (``_``) are allowed between digits for readability,
-but they are ignored and therefore don't affect the value of the literal.
+but they're ignored and therefore don't affect the value of the literal.
 Integer literals can begin with leading zeros (``0``),
-but they are likewise ignored and don't affect the base or value of the literal.
+but they're likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default inferred type of an integer literal is the Swift standard library type ``Int``.
@@ -607,8 +607,8 @@ String Literals
 ~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters surrounded by quotes.
-A single-line string literal is surrounded by double quotes,
-with the following form:
+A single-line string literal is surrounded by double quotes
+and has the following form:
 
 .. syntax-outline::
 
@@ -619,8 +619,8 @@ an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-A multiline string literal is surrounded by three double quotes,
-with the following form:
+A multiline string literal is surrounded by three double quotes
+and has the following form:
 
 .. syntax-outline::
 
@@ -650,7 +650,7 @@ determines the indentation:
 Every nonblank line in the literal must begin
 with exactly the same indentation
 that appears before the closing ``"""``;
-there is no conversion between tabs and spaces.
+there's no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
@@ -664,14 +664,16 @@ can be included in string literals
 of both the single-line and multiline forms
 using the following escape sequences:
 
-* Null Character (``\0``)
+* Null character (``\0``)
 * Backslash (``\\``)
-* Horizontal Tab (``\t``)
-* Line Feed (``\n``)
-* Carriage Return (``\r``)
-* Double Quote (``\"``)
-* Single Quote (``\'``)
-* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
+* Horizontal tab (``\t``)
+* Line feed (``\n``)
+* Carriage return (``\r``)
+* Double quote (``\"``)
+* Single quote (``\'``)
+* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`),
+  where *n* is a hexadecimal number
+  that has one to eight digits
 
 .. TR: Are \v and \f allowed for vertical tab and formfeed?
    We allow them as whitespace as of now --
@@ -687,10 +689,10 @@ using the following escape sequences:
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
 The interpolated expression can contain a string literal,
-but can't contain an unescaped backslash (``\``),
+but can't contain an unescaped backslash,
 a carriage return, or a line feed.
 
-For example, all the following string literals have the same value:
+For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
 
@@ -709,7 +711,7 @@ For example, all the following string literals have the same value:
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
-and `String Structure Reference <//apple_ref/doc/uid/TP40015181>`_.
+and `String Structure Reference <//apple_ref/swift/struct/s:SS>`_.
 
 String literals that are concatenated by the ``+`` operator
 are concatenated at compile time.
@@ -830,7 +832,7 @@ the ``+`` operator followed by the ``.+`` operator.
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
 Additionally, although operators can contain an exclamation mark (``!``),
-postfix operators cannot begin with either a question mark or an exclamation mark.
+postfix operators can't begin with either a question mark or an exclamation mark.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
 
@@ -877,16 +879,16 @@ whether an operator is used as a prefix operator, a postfix operator,
 or a binary operator. This behavior is summarized in the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
-  it is treated as a binary operator.
+  it's treated as a binary operator.
   As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
 * If an operator has whitespace on the left side only,
-  it is treated as a prefix unary operator.
+  it's treated as a prefix unary operator.
   As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
 * If an operator has whitespace on the right side only,
-  it is treated as a postfix unary operator.
+  it's treated as a postfix unary operator.
   As an example, the ``+++`` operator in ``a+++ b`` is treated as a postfix unary operator.
 * If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
-  it is treated as a postfix unary operator.
+  it's treated as a postfix unary operator.
   As an example, the  ``+++`` operator in ``a+++.b`` is treated as a postfix unary operator
   (``a+++ .b`` rather than ``a +++ .b``).
 
@@ -896,9 +898,9 @@ the characters ``)``, ``]``, and ``}`` after an operator,
 and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
-There is one caveat to the rules above.
+There's one caveat to the rules above.
 If the ``!`` or ``?`` predefined operator has no whitespace on the left,
-it is treated as a postfix operator,
+it's treated as a postfix operator,
 regardless of whether it has whitespace on the right.
 To use the ``?`` as the optional-chaining operator,
 it must not have whitespace on the left.
@@ -907,7 +909,7 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there is no need to use whitespace
+and may be split again. As a result, there's no need to use whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
 In this example, the closing ``>`` characters are not treated as a single token

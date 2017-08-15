@@ -52,8 +52,8 @@ Use a string literal as an initial value for a constant or variable:
    -> let someString = "Some string literal value"
    << // someString : String = "Some string literal value"
 
-Note that Swift infers a type of ``String`` for the ``someString`` constant,
-because it is initialized with a string literal value.
+Note that Swift infers a type of ``String`` for the ``someString`` constant
+because it's initialized with a string literal value.
 
 .. note::
 
@@ -61,8 +61,8 @@ because it is initialized with a string literal value.
    see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
 
 If you need a string that spans several lines,
-use a multiline string literal.
-A multiline string literal is a sequence of characters
+use a multiline string literal ---
+a sequence of characters
 surrounded by three double quotes:
 
 .. Quote comes from "Alice's Adventures in Wonderland",
@@ -83,7 +83,7 @@ Because the multiline form uses three double quotes instead of just one,
 you can include a double quote (``"``) inside of a multiline string literal,
 as shown in the example above.
 To include a literal ``"""`` in a multiline string,
-you have to escape at least one of the quotation marks,
+escape at least one of the quotes,
 using a backslash (``\``).
 For example:
 
@@ -217,7 +217,7 @@ String Mutability
 
 You indicate whether a particular ``String`` can be modified (or *mutated*)
 by assigning it to a variable (in which case it can be modified),
-or to a constant (in which case it cannot be modified):
+or to a constant (in which case it can't be modified):
 
 .. testcode:: stringMutability
 
@@ -252,17 +252,17 @@ Strings Are Value Types
 
 Swift's ``String`` type is a *value type*.
 If you create a new ``String`` value,
-that ``String`` value is *copied* when it is passed to a function or method,
-or when it is assigned to a constant or variable.
+that ``String`` value is *copied* when it's passed to a function or method,
+or when it's assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
 Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 Swift's copy-by-default ``String`` behavior ensures that
 when a function or method passes you a ``String`` value,
-it is clear that you own that exact ``String`` value,
+it's clear that you own that exact ``String`` value,
 regardless of where it came from.
-You can be confident that the string you are passed will not be modified
+You can be confident that the string you are passed won't be modified
 unless you modify it yourself.
 
 Behind the scenes, Swift's compiler optimizes string usage
@@ -388,7 +388,7 @@ The value of ``multiplier`` is also part of a larger expression later in the str
 This expression calculates the value of ``Double(multiplier) * 2.5``
 and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
-when it is included inside the string literal.
+when it's included inside the string literal.
 
 .. note::
 
@@ -426,7 +426,7 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
    A Unicode scalar is any Unicode :newTerm:`code point` in the range
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
-   Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points,
+   Unicode scalars don't include the Unicode :newTerm:`surrogate pair` code points,
    which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
 Note that not all 21-bit Unicode scalars are assigned to a character ---
@@ -500,13 +500,13 @@ However, the same letter can also be represented as a *pair* of scalars ---
 a standard letter ``e`` (``LATIN SMALL LETTER E``, or ``U+0065``),
 followed by the ``COMBINING ACUTE ACCENT`` scalar (``U+0301``).
 The ``COMBINING ACUTE ACCENT`` scalar is graphically applied to the scalar that precedes it,
-turning an ``e`` into an ``é`` when it is rendered by
+turning an ``e`` into an ``é`` when it's rendered by
 a Unicode-aware text-rendering system.
 
 In both cases, the letter ``é`` is represented as a single Swift ``Character`` value
 that represents an extended grapheme cluster.
 In the first case, the cluster contains a single scalar;
-in the second case, it is a cluster of two scalars:
+in the second case, it's a cluster of two scalars:
 
 .. testcode:: graphemeClusters1
 
@@ -597,9 +597,9 @@ with a fourth character of ``é``, not ``e``:
    This means that different characters—
    and different representations of the same character—
    can require different amounts of memory to store.
-   Because of this, characters in Swift do not each take up
+   Because of this, characters in Swift don't each take up
    the same amount of memory within a string's representation.
-   As a result, the number of characters in a string cannot be calculated
+   As a result, the number of characters in a string can't be calculated
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
@@ -608,7 +608,7 @@ with a fourth character of ``é``, not ``e``:
    in order to determine the characters for that string.
 
    The count of the characters returned by the ``count`` property
-   is not always the same as the ``length`` property of
+   isn't always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
    the number of 16-bit code units within the string's UTF-16 representation
@@ -635,7 +635,7 @@ As mentioned above,
 different characters can require different amounts of memory to store,
 so in order to determine which ``Character`` is at a particular position,
 you must iterate over each Unicode scalar from the start or end of that ``String``.
-For this reason, Swift strings cannot be indexed by integer values.
+For this reason, Swift strings can't be indexed by integer values.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``.
@@ -774,8 +774,9 @@ the result is an instance
 of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
 not another string.
 Substrings in Swift have most of the same methods as strings,
-which means you can work with substrings like strings.
-Unlike strings,
+which means you can work with substrings
+the same way you work with strings.
+However, unlike strings,
 you use substrings for only a short amount of time
 while performing actions on a string.
 When you're ready to store the result for a longer time,
@@ -805,7 +806,7 @@ Like strings, each substring has a region of memory
 where the characters that make up the substring are stored.
 The difference between strings and substrings
 is that, as a performance optimization,
-a substring can re-use part of the memory
+a substring can reuse part of the memory
 that's used to store the original string,
 or part of the memory that's used to store another substring.
 (Strings have a similar optimization,
@@ -815,7 +816,7 @@ you don't have to pay the performance cost of copying memory
 until you modify either the string or substring.
 As mentioned above,
 substrings aren't suitable for long-term storage ---
-because they re-use the storage of the original string,
+because they reuse the storage of the original string,
 the entire original string must be kept in memory
 as long as any of its substrings are being used.
 
@@ -825,7 +826,7 @@ which means it has a region of memory
 where the characters that make up the string are stored.
 Because
 ``beginning`` is a substring of ``greeting``,
-it re-uses the memory that ``greeting`` uses.
+it reuses the memory that ``greeting`` uses.
 In contrast,
 ``newString`` is a string ---
 when it's created from the substring,
@@ -840,10 +841,10 @@ The figure below shows these relationships:
 
 .. note::
 
-   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol.
-   If you're writing code that manipulates string data,
-   accepting a ``StringProtocol`` value lets you pass that string data
-   as either a ``String`` or ``Substring`` value.
+   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol,
+   which means it's often convenient for string-manipulation functions
+   to accept a ``StringProtocol`` value.
+   You can call such functions with either a ``String`` or ``Substring`` value.
 
 .. XXX Live link to the StringProtocol protocol reference.
    It's not showing up in the database yet (2017-05-17).
@@ -880,7 +881,7 @@ Two ``String`` values (or two ``Character`` values) are considered equal if
 their extended grapheme clusters are :newTerm:`canonically equivalent`.
 Extended grapheme clusters are canonically equivalent if they have
 the same linguistic meaning and appearance,
-even if they are composed from different Unicode scalars behind the scenes.
+even if they're composed from different Unicode scalars behind the scenes.
 
 .. assertion:: characterComparisonUsesCanonicalEquivalence
 
@@ -912,7 +913,7 @@ For example, ``LATIN SMALL LETTER E WITH ACUTE`` (``U+00E9``)
 is canonically equivalent to ``LATIN SMALL LETTER E`` (``U+0065``)
 followed by ``COMBINING ACUTE ACCENT`` (``U+0301``).
 Both of these extended grapheme clusters are valid ways to represent the character ``é``,
-and so they are considered to be canonically equivalent:
+and so they're considered to be canonically equivalent:
 
 .. testcode:: stringEquality
 
@@ -934,7 +935,7 @@ as used in English, is *not* equivalent to
 ``CYRILLIC CAPITAL LETTER A`` (``U+0410``, or ``"А"``),
 as used in Russian.
 The characters are visually similar,
-but do not have the same linguistic meaning:
+but don't have the same linguistic meaning:
 
 .. testcode:: stringEquality
 

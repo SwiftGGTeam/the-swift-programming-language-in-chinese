@@ -2,7 +2,7 @@ Types
 =====
 
 In Swift, there are two kinds of types: named types and compound types.
-A :newTerm:`named type` is a type that can be given a particular name when it is defined.
+A :newTerm:`named type` is a type that can be given a particular name when it's defined.
 Named types include classes, structures, enumerations, and protocols.
 For example,
 instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
@@ -14,7 +14,7 @@ Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift standard library using structures.
-Because they are named types,
+Because they're named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration,
 discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
@@ -107,7 +107,7 @@ For example, ``Int`` is a type identifier that directly refers to the named type
 and the type identifier ``Dictionary<String, Int>`` directly refers
 to the named type ``Dictionary<String, Int>``.
 
-There are two cases in which a type identifier does not refer to a type with the same name.
+There are two cases in which a type identifier doesn't refer to a type with the same name.
 In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
@@ -630,7 +630,7 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type describes a type that conforms to each protocol
+A protocol composition type defines a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
@@ -649,25 +649,23 @@ Protocol composition types have the following form:
     <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
-of multiple protocols without having to explicitly define a new, named protocol
+of multiple protocols without explicitly defining a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
-effectively the same as defining a new protocol ``ProtocolD``
-that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
-but without having to introduce a new name.
-Likewise,
-specifying a protocol composition type ``SuperClass & ProtocolA``
-is effectively the same as declaring a new class ``SubClass``
-that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
-but without having to introduce a new name.
+you can use the protocol composition type ``ProtocolA & ProtocolB & ProtocolC``
+instead of declaring a new protocol
+that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
+Likewise, you can use ``SuperClass & ProtocolA``
+instead of declaring a new protocol
+that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
-Each item in a protocol composition list is either
-the name of a class,
-the name of a protocol,
-or a type alias whose underlying type is a protocol composition type,
-a protocol or a class.
-The list can contain at most one class.
+Each item in a protocol composition list is one of the following;
+the list can contain at most one class:
+
+* The name of a class
+* The name of a protocol
+* A type alias whose underlying type
+  is a protocol composition type, a protocol, or a class.
 
 When a protocol composition type contains type aliases,
 it's possible for the same protocol to appear
@@ -792,7 +790,7 @@ Class types can inherit from a single superclass and conform to any number of pr
 When defining a class,
 the name of the superclass must appear first in the list of type identifiers,
 followed by any number of protocols the class must conform to.
-If the class does not inherit from another class,
+If the class doesn't inherit from another class,
 the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
 see :doc:`../LanguageGuide/Inheritance`.
