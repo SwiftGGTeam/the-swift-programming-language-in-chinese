@@ -486,6 +486,9 @@
     "stringsandcharacters-initializinganemptystring": "ID287", 
     "stringsandcharacters-insertingandremoving": "ID496", 
     "stringsandcharacters-literals": "ID286", 
+    "stringsandcharacters-multilineliterals": "ID564", 
+    "stringsandcharacters-multilineliteralsindentation": "ID566", 
+    "stringsandcharacters-multilineliteralslinebreaks": "ID565", 
     "stringsandcharacters-prefixandsuffixequality": "ID300", 
     "stringsandcharacters-specialcharactersinstringliterals": "ID295", 
     "stringsandcharacters-stringequality": "ID299", 
@@ -581,5 +584,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 564
+  "next_id": 567
 }
