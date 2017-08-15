@@ -681,10 +681,10 @@ Even if your source file has a mix of carriage returns and line feeds,
 all of the line breaks in the string will be the same.
 
 In a multiline string literal,
-a backslash (``\``) at the end of a line
-causes the line feed after it to be omitted from the string.
+writing a backslash (``\``) at the end of a line
+omits that line break from the string.
 Any whitespace between the backslash and the line break
-is also omitted from the string.
+is also omitted.
 You can use this syntax
 to hard wrap a multiline string literal in your source code,
 without changing the value of the resulting string.
