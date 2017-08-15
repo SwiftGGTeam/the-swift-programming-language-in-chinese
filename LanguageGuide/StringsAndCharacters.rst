@@ -99,11 +99,6 @@ start or end with a line break:
    >> print(singleLineString == multilineString)
    << true
 
-.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
-
-Line Breaks
-+++++++++++
-
 When your source code includes a line break
 inside of a multiline string literal,
 that line break also appears in the string's value.
@@ -142,36 +137,11 @@ For example:
 
 .. These are well-fed lines!
 
-.. _StringsAndCharacters_MultilineLiteralsIndentation:
-
-Indentation
-+++++++++++
-
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
 tells Swift what whitespace to ignore before all of the other lines.
-For example,
-even though the multiline string literal in the function below is indented,
-the lines in the actual string don't begin with any whitespace.
-
-.. testcode:: multiline-string-literals
-   :compile: true
-
-   -> func generateQuotation() -> String {
-          let quotation = """
-              The White Rabbit put on his spectacles.  "Where shall I begin,
-              please your Majesty?" he asked.
-
-              "Begin at the beginning," the King said gravely, "and go on
-              till you come to the end; then stop."
-              """
-          return quotation
-      }
-   -> print(quotation == generateQuotation())
-   <- true
-
 However, if you write whitespace at the beginning of a line
-in addition to what's before the closing quotes (``"""``),
+in addition to what's before the closing quotes,
 that whitespace *is* included.
 
 .. image:: ../images/multilineStringWhitespace_2x.png
@@ -190,6 +160,12 @@ that whitespace *is* included.
               This line begins with four spaces.
           This line doesn't begin with whitespace.
           """
+
+In the example above,
+even though the entire multiline string literal is indented,
+the first and last lines in the string don't begin with any whitespace.
+The middle line has more indentation than the closing quotes,
+so it starts with that extra four-space indentation.
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
