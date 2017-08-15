@@ -147,8 +147,8 @@ For example:
           """
    -> print(badBeginning + end)
    // Prints two lines:
-   </ onetwo
-   </ three
+   </ one
+   </ twothree
    ---
    -> let goodBeginning = """
           one
