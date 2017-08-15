@@ -55,10 +55,10 @@ Use a string literal as an initial value for a constant or variable:
 Note that Swift infers a type of ``String`` for the ``someString`` constant
 because it's initialized with a string literal value.
 
-.. note::
+.. _StringsAndCharacters_MultilineLiterals:
 
-   For information about using special characters in string literals,
-   see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+Multiline String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need a string that spans several lines,
 use a multiline string literal ---
@@ -78,36 +78,16 @@ surrounded by three double quotes:
       "Begin at the beginning," the King said gravely, "and go on
       till you come to the end; then stop."
       """
+   >> let newlines = quotation.filter { $0 == "\n" }
+   >> print(newlines.count)
+   << 4
 
-Because the multiline form uses three double quotes instead of just one,
-you can include a double quote (``"``) inside of a multiline string literal,
-as shown in the example above.
-To include a literal ``"""`` in a multiline string,
-escape at least one of the quotes,
-using a backslash (``\``).
-For example:
-
-.. testcode:: multiline-string-literals
-   :compile: true
-
-   -> let threeDoubleQuotes = """
-      Escaping the first quote \"""
-      Escaping all three quotes \"\"\"
-      """
-   >> print(threeDoubleQuotes)
-   << Escaping the first quote """
-   << Escaping all three quotes """
-
-For more information about using a backslash to escape special characters,
-see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
-
-In its multiline form,
-the string literal includes all of the lines between
+A multiline string literal includes all of the lines between
 its opening and closing quotes.
 The string begins on the first line after the opening quotes (``"""``)
-and ends on the line before the closing quotes (``"""``),
-which means that ``quotation`` doesn't start or end with a line feed.
-Both of the strings below are the same:
+and ends on the line before the closing quotes,
+which means that neither of the strings below
+start or end with a line break:
 
 .. testcode:: multiline-string-literals
    :compile: true
@@ -119,22 +99,89 @@ Both of the strings below are the same:
    >> print(singleLineString == multilineString)
    << true
 
-To make a multiline string literal that begins or ends with a line feed,
-write a blank line as the first or last line.
-For example:
+.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
 
-.. testcode:: multiline-string-literal
+Line Breaks
++++++++++++
+
+When your source code includes a line break
+inside of a multiline string literal,
+that line break also appears in the string's value.
+If you want to use line breaks
+to make your source code easier to read,
+but you don't want the line breaks to be part of the string's value,
+write a backslash (``\``) at the end of the line:
+
+.. testcode:: multiline-string-literals
    :compile: true
 
-   >> let blank =
-   -> """
+   -> let softWrappedQuotation = """
+      The White Rabbit put on his spectacles.  "Where shall I begin, \
+      please your Majesty?" he asked.
 
-      This string starts with a line feed.
-      It also ends with a line feed.
-
+      "Begin at the beginning," the King said gravely, "and go on \
+      till you come to the end; then stop."
       """
+   >> let softNewlines = softWrappedQuotation.filter { $0 == "\n" }
+   >> print(softNewlines.count)
+   << 2
 
-.. These are well-fed lines!
+If you're using multiline string literals
+to build up the lines of a longer string,
+you want every line in the string to end with a line break ---
+however, as discussed above,
+the last line doesn't normally end with a line break.
+To make a multiline string literal that ends with a line break,
+write a blank line as its last line.
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let badBeginning = """
+          one
+          two
+          """
+   -> let end = """
+          three
+          """
+   -> print(badBeginning + end)
+   // Prints two lines:
+   </ one
+   </ twothree
+   ---
+   -> let goodBeginning = """
+          one
+          two
+
+          """
+   -> print(goodBeginning + end)
+   // Prints three lines:
+   </ one
+   </ two
+   </ three
+
+In the code above,
+concatenating ``badBeginning`` with ``end``
+produces a two-line string,
+which isn't the desired result.
+Because the last line of ``badBeginning``
+doesn't end with a line break,
+that line gets combined with the first line of ``end``.
+In contrast,
+both lines of ``goodBeginning`` end with a line break,
+so when it's combined with ``end``
+the result has three lines,
+as expected.
+
+To make a multiline string literal
+that starts with a line break,
+write a blank line as its first line.
+
+.. _StringsAndCharacters_MultilineLiteralsIndentation:
+
+Indentation
++++++++++++
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
@@ -179,6 +226,75 @@ that whitespace *is* included.
               This line begins with four spaces.
           This line doesn't begin with whitespace.
           """
+
+.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
+
+Special Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+String literals can include the following special characters:
+
+* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
+  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
+  ``\"`` (double quote) and ``\'`` (single quote)
+
+* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+  where *n* is a 1--8 digit hexadecimal number
+  with a value equal to a valid Unicode code point
+  (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
+
+.. assertion:: stringLiteralUnicodeScalar
+
+   -> "\u{0}"
+   << // r0 : String = "\0"
+   -> "\u{00000000}"
+   << // r1 : String = "\0"
+   -> "\u{000000000}"
+   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+   !! "\u{000000000}"
+   !! ^
+   -> "\u{10FFFF}"
+   << // r2 : String = "􏿿"
+   -> "\u{110000}"
+   !! <REPL Input>:1:2: error: invalid unicode scalar
+   !! "\u{110000}"
+   !! ^
+
+The code below shows four examples of these special characters.
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
+demonstrate the Unicode scalar format:
+
+.. testcode:: specialCharacters
+
+   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
+   >> print(wiseWords)
+   </ "Imagination is more important than knowledge" - Einstein
+   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+   << // dollarSign : String = "$"
+   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+   << // blackHeart : String = "♥"
+   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
+
+Because multiline string literals use three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal
+without escaping it.
+To include the text ``"""`` in a multiline string,
+escape at least one of the quotation marks.
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let threeDoubleQuotes = """
+      Escaping the first quote \"""
+      Escaping all three quotes \"\"\"
+      """
+   >> print(threeDoubleQuotes)
+   << Escaping the first quote """
+   << Escaping all three quotes """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -433,55 +549,6 @@ Note that not all 21-bit Unicode scalars are assigned to a character ---
 some scalars are reserved for future assignment.
 Scalars that have been assigned to a character typically also have a name,
 such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
-
-.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
-
-Special Characters in String Literals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-String literals can include the following special characters:
-
-* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
-  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
-  ``\"`` (double quote) and ``\'`` (single quote)
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
-
-.. assertion:: stringLiteralUnicodeScalar
-
-   -> "\u{0}"
-   << // r0 : String = "\0"
-   -> "\u{00000000}"
-   << // r1 : String = "\0"
-   -> "\u{000000000}"
-   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
-   !! "\u{000000000}"
-   !! ^
-   -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
-   -> "\u{110000}"
-   !! <REPL Input>:1:2: error: invalid unicode scalar
-   !! "\u{110000}"
-   !! ^
-
-The code below shows four examples of these special characters.
-The ``wiseWords`` constant contains two escaped double quote characters.
-The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the Unicode scalar format:
-
-.. testcode:: specialCharacters
-
-   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> print(wiseWords)
-   </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
-   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
@@ -841,13 +908,11 @@ The figure below shows these relationships:
 
 .. note::
 
-   Both ``String`` and ``Substring`` conform to the ``StringProtocol`` protocol,
+   Both ``String`` and ``Substring`` conform to the
+   `StringProtocol < //apple_ref/swift/intf/s:s14StringProtocolP>` protocol,
    which means it's often convenient for string-manipulation functions
    to accept a ``StringProtocol`` value.
    You can call such functions with either a ``String`` or ``Substring`` value.
-
-.. XXX Live link to the StringProtocol protocol reference.
-   It's not showing up in the database yet (2017-05-17).
 
 .. _StringsAndCharacters_ComparingStrings:
 

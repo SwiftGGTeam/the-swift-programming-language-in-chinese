@@ -56,9 +56,30 @@ but the comment markers must be balanced.
 
 .. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
 
-.. No formal grammar.
-   No other syntactic category refers to this one,
-   and the prose is sufficient to define it completely.
+.. syntax-grammar::
+
+   Grammar of whitespace
+
+   whitespace --> whitespace-item whitespace-OPT
+   whitespace-item --> line-break
+   whitespace-item --> comment
+   whitespace-item --> multiline-comment
+   whitespace-item --> U+0000, U+0009, U+000B, U+000C, or U+0020
+
+   line-break --> U+000A
+   line-break --> U+000D
+   line-break --> U+000D followed by U+000A
+
+   comment --> ``//`` comment-text line-break
+   multiline-comment --> ``/*`` multiline-comment-text ``*/``
+
+   comment-text --> comment-text-item comment-text-item-OPT
+   comment-text-item --> Any Unicode scalar value except U+000A or U+000D
+
+   multiline-comment-text --> multiline-comment-text-item multiline-comment-text-OPT
+   multiline-comment-text-item --> multiline-comment
+   multiline-comment-text-item --> comment-text-item
+   multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
 
 Comments can contain additional formatting and markup,
 as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
@@ -633,10 +654,10 @@ a multiline string literal can contain
 unescaped double quotes (``"``), carriage returns, and line feeds.
 It can't contain three unescaped double quotes next to each other.
 
-The carriage return or line feed after the ``"""``
+The line break after the ``"""``
 that begins the multiline string literal
 is not part of the string.
-The carriage return or line feed before the ``"""``
+The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
 that begins or ends with a line feed,
@@ -654,10 +675,19 @@ there's no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
-Line endings in a multiline string literal are
+Line breaks in a multiline string literal are
 normalized to use the line feed character.
 Even if your source file has a mix of carriage returns and line feeds,
-all of the line endings in the string will be the same.
+all of the line breaks in the string will be the same.
+
+In a multiline string literal,
+writing a backslash (``\``) at the end of a line
+omits that line break from the string.
+Any whitespace between the backslash and the line break
+is also omitted.
+You can use this syntax
+to hard wrap a multiline string literal in your source code,
+without changing the value of the resulting string.
 
 Special characters
 can be included in string literals
@@ -674,11 +704,6 @@ using the following escape sequences:
 * Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`),
   where *n* is a hexadecimal number
   that has one to eight digits
-
-.. TR: Are \v and \f allowed for vertical tab and formfeed?
-   We allow them as whitespace as of now --
-   should that mean we want escape sequences for them too?
-   See also feedback 300722.
 
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
@@ -756,6 +781,7 @@ no runtime concatenation is performed.
     multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
     multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
+    multiline-quoted-text-item --> escaped-newline
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
@@ -769,6 +795,8 @@ no runtime concatenation is performed.
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
+
+    escaped-newline --> ``\`` whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
