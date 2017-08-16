@@ -200,7 +200,7 @@ In this example, the value of ``friendlyWelcome`` is changed from
    /> friendlyWelcome is now \"\(friendlyWelcome)\"
    </ friendlyWelcome is now "Bonjour!"
 
-Unlike a variable, the value of a constant can't be changed once it's set.
+Unlike a variable, the value of a constant can't be changed after it's set.
 Attempting to do so is reported as an error when your code is compiled:
 
 .. testcode:: constantsAndVariables
