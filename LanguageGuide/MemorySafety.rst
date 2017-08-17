@@ -360,6 +360,13 @@ Exclusive Access for Properties
    in the same way that you need to deal with them having
    reference semantics.
 
+   Because classes are reference types,
+   a mutation to one of the properties of a class instance
+   isn't considered a mutation to the class instance as a whole.
+   That rule ensures that value semantics are preserved for value types,
+   but it doesn't apply to classes, which are reference types.
+   It's not unusual to have faraway code change parts of a class.
+
    Likewise, for structures,
    the language model for mutation is that
    when you assign a new value to a property of a struct,
@@ -465,70 +472,6 @@ so overlapping changes to its properties aren't allowed.
 
 
 .. docnote:: REVISION ENDED HERE
-
-Exclusive Access for Reference Types
-------------------------------------
-
-Because classes are reference types,
-a mutation to one of the properties of a class instance
-isn't considered a mutation to the class instance as a whole.
-That rule ensures that value semantics are preserved for value types,
-but it doesn't apply to classes, which are reference types.
-It's not unusual to have faraway code change parts of a class.
-
-For example,
-the code below uses the ``balance(_:_:)`` function
-from the previous example
-to level the odds for two players
-by balancing their scores.
-
-.. testcode:: memory-reference-types
-
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> class Game {
-           var playerOneScore: Int = 5
-           var playerTwoScore: Int = 10
-       }
-    ---
-    -> let game = Game()
-    << // game : Game = REPL.Game
-    -> balance(&game.playerOneScore, &game.playerTwoScore)  // Ok
-    >> game.playerOneScore
-    << // r0 : Int = 7
-    >> game.playerTwoScore
-    << // r1 : Int = 8
-
-Here, the access to ``game.playerOneScore`` and ``game.playerTwoScore`` do overlap,
-and they're both write accesses.
-However,
-because ``Game`` is a class,
-access to one of its properties
-*doesn't* require access to the entire instance.
-The two write accesses happen alongside one another
-
-::
-
-    PLACEHOLDER ART FOR SUGGESTED FIGURE
-
-    balance(&game.playerOneScore, &game.playerTwoScore)
-            --------------------  --------------------
-                    |                     |                game
-                    |                     |
-                    |                     +------------->  p2score
-                    +----------------------------------->  p1score
-
-.. XXX Contrast the figure above
-   with the "share health" figure for a struct.
-
-.. XXX Along the lines of the above discussion for properties,
-   mutating methods on classes
-   have read/write access to only the properties they actually access.
-   No long-term access to 'self'.
-
 
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
