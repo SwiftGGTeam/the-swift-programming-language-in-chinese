@@ -259,7 +259,12 @@ For example:
 Exclusive Access for Methods
 ----------------------------
 
-A mutating method has write access to ``self``
+.. This (probably?) applies to all value types,
+   but structures are the only place you can observe it.
+   Enumerations can't have mutating methods
+   and tuples can't have methods.
+
+A mutating method on a structure has write access to ``self``
 for the duration of the method.
 For example:
 
@@ -277,31 +282,43 @@ For example:
            var name: String
            var health: Int
            var energy: Int
-    ---
+           mutating func restoreHealth(completionHandler: () -> Void ) {
+               health = 10
+               completionHandler()
+           }
+       }
+
+In the method above that restores a player's health to 10,
+a write access to ``self`` starts at the beginning of the function
+and lasts until the function returns.
+That means, for example,
+that code in the completion handler
+can't also modify ``self``.
+It also means that
+to call ``restoreHealth(completionHandler:)``
+when there's already a write access to ``self``.
+
+By combining a mutating method with an in-out parameter,
+you can construct an example
+where exclusivity violations are possible
+for code whose meaning is also unclear.
+For example:
+
+.. XXX polish wording in para above
+
+.. testcode:: memory-player-share-with-self
+
+    -> extension Player {
            mutating func shareHealth(with player: inout Player) {
                balance(&player.health, &health)
            }
        }
+    ---
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> oscar.shareHealth(with: &maria)  // Ok
-
-.. docnote:: Is this too complex of an example to be first?
-             We've got both mutating and inout to get the write/write violation.
-             Maybe show nonmutating/inout or mutating/non-inout
-             as a version that works, building up to this.
-
-However,
-if you pass ``oscar`` as the other player,
-there's a violation ---
-both the mutating method on ``oscar``
-and passing ``oscar`` as an in-out parameter to that method
-require a write access to the same memory at the same time.
-
-.. testcode:: memory-player-share-with-self
-
     -> oscar.shareHealth(with: &oscar)  // Error
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)  // Error
@@ -316,21 +333,25 @@ require a write access to the same memory at the same time.
     !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~~
 
-.. docnote:: TR: Check the following example—working as intended?
+In the example above,
+calling the `shareHealth(with:)` method
+for Oscar's player to share health with Maria's player
+doesn't cause a violation.
+There's a write access to ``oscar`` during the method call
+because its the value of ``self`` in a mutating method,
+and there's a write access to ``maria``
+for the same duration
+because it was passed as a in-out parameter.
+These write accesses overlap in time,
+but they are accessing different memory,
+so there is no violation.
 
-::
-
-    extension Player {
-        func giveHealth(to player: inout Player) {
-            player.health += health
-            player.health += health
-        }
-    }
-
-    // Is this allowed on purpose? Write access to `oscar` inside read?
-    // Unpredictable results: If `oscar` starts w/ health @ 10, should end with 30 or 40?
-    oscar.giveHealth(to: &oscar)  // Ok
-
+However,
+if you pass ``oscar`` as the other player,
+there's a violation ---
+both the mutating method on ``oscar``
+and passing ``oscar`` as an in-out parameter to that method
+require a write access to the same memory at the same time.
 
 Exclusive Access for Properties
 -------------------------------
