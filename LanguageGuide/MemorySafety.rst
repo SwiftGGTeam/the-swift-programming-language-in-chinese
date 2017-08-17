@@ -271,10 +271,15 @@ for the duration of the method.
 For example:
 
 .. docnote:: This behaves like self is passed to the method as inout
-	     because, under the hood, that's exactly what happens.
+             because, under the hood, that's exactly what happens.
 
 .. testcode:: memory-player-share-with-self
 
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
     -> struct Player {
            var name: String
            var health: Int
@@ -284,11 +289,6 @@ For example:
                balance(&player.health, &health)
            }
        }
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
@@ -296,9 +296,9 @@ For example:
     -> oscar.shareHealth(with: &maria)  // Ok
 
 .. docnote:: Is this too complex of an example to be first?
-	     We've got both mutating and inout to get the write/write violation.
-	     Maybe show nonmutating/inout or mutating/non-inout
-	     as a version that works, building up to this.
+             We've got both mutating and inout to get the write/write violation.
+             Maybe show nonmutating/inout or mutating/non-inout
+             as a version that works, building up to this.
 
 However,
 if you pass ``oscar`` as the other player,
@@ -322,7 +322,7 @@ require a write access to the same memory at the same time.
     !! <REPL Input>:1:25: note: conflicting access is here
     !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~~
-   
+
 .. docnote:: TR: Check the following example—working as intended?
 
 ::
@@ -399,7 +399,7 @@ In the example above,
 calling ``balance(_:_:)`` on the elements of a tuple fails
 because there are overlapping write accesses to the tuple.
 Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
-which means ``balance(_:_:)`` needs write acces to them.
+which means ``balance(_:_:)`` needs write access to them.
 In both cases, a write access to the tuple member
 requires a write access to the entire tuple.
 This means you have two write access to ``myTuple`` with exactly the same duration.
@@ -407,7 +407,7 @@ This means you have two write access to ``myTuple`` with exactly the same durati
 Although a structure is also a value type,
 in many cases the compiler can prove
 that the overlapping access are safe.
-This means most access to stored properties *can* overlap for stuctures.
+This means most access to stored properties *can* overlap for structures.
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
@@ -424,11 +424,16 @@ and an energy amount, which decreases when using special abilities.
     >>     x = sum / 2
     >>     y = sum - x
     >> }
+    >> func f() {
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> balance(&oscar.health, &oscar.energy)  // Ok
+    >> }
+    >> f()
+
+.. docnote:: The code in the listing above is wrapped in a hidden function
+             because this "overlapping property access is safe" caveat really
+             only works for local variables, not globals.  Need to add this to
+             the discussion.
 
 In the example above,
 Oscar's health and energy are passed
@@ -442,7 +447,7 @@ so overlapping writes to them can't cause a problem.
 In contrast, if ``health`` is a computed property,
 it's no longer possible to prove that the overlapping writes are safe.
 
-.. docnoce:: Not quite the right wording here...
+.. docnote:: Not quite the right wording here...
    In some places, the compiler could prove this,
    we just made the bright line that it doesn't try
    for getters and setters.
