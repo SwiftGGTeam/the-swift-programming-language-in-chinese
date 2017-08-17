@@ -974,12 +974,6 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 Exclusive Access
 ++++++++++++++++
 
-.. docnote:: Either here or elsewhere...
-
-   Closures have reference semantics and they behave as such.
-   For example, if you capture x and y in the same closure,
-   you can have overlapping accesses to them elsewhere.
-
 Swift has a rule about passing more than one closure to the same function. 
 This rule allows Swift to perform
 all of its checks for memory exclusivity violations
