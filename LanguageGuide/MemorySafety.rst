@@ -85,7 +85,7 @@ What Exclusive Access Guarantees
     - Except for two overlapping reads
     - And except for things that we can prove are safe
 
-Exclusive Access for In-Out Paramaters
+Exclusive Access for In-Out Parameters
 --------------------------------------
 
 A function has write access
