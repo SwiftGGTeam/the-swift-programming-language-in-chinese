@@ -1,13 +1,20 @@
 Memory Safety
 =============
 
-Memory safety is the guarantee that accessing any allocated memory returns a valid result.  By Swift's standards, a valid result means that the allocated memory has been initialized to a value, the value is of the expected type, and the value is of the most recent modification. Think of writing and reading from memory safely like writing words onto a piece of paper: you would not expect the words to have changed by themselves if you leave and come back to read them later.  Similarly, when you allocate and write to an address in memory, if you are not intentionally modifying that value, other code should not be overwriting that value as an unintentional side-effect .
+Memory safety is the guarantee that accessing any allocated memory returns a valid result.
+By Swift's standards, a valid result means that the allocated memory has been initialized to a value,
+the value is of the expected type, and the value is of the most recent modification.
+Think of writing and reading from memory safely like writing words onto a piece of paper:
+you would not expect the words to have changed by themselves if you leave and come back to read them later.
+Similarly, when you allocate and write to an address in memory, if you are not intentionally modifying that value,
+other code should not be overwriting that value as an unintentional side-effect .
 
-The compiler maintains memory safety by enforcing developer code follow a set of constraints around accessing memory. Many of these constraints have already been covered previously. For example:
+The compiler maintains memory safety by enforcing a set of guarantees around memory access.
+Many of these guarantees have already been covered previously. For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
-  This constraint is called`definite initialization`
+  This guarantee is called`definite initialization`
   and is discussed in "Initialization".
 
 * Only memory that is part of a data structure
@@ -17,157 +24,55 @@ The compiler maintains memory safety by enforcing developer code follow a set of
   it doesn't access the adjacent memory and unintentionally overwrite some other value.
 
 * Memory must not be accessed after it has been deallocated.
-  This constraint is discussed in "Automatic Reference Counting".
+  This guarantee is discussed in "Automatic Reference Counting".
 
-One aspect of memory safety that has not yet been covered is that memory that contains shared mutable state must not be accessed at the same time.  This constraint is called `exclusive access`.
+One aspect of memory safety that has not yet been covered is that
+memory that contains shared mutable state must not be accessed at the same time.
+This guarantee is called `exclusive access`.
 
-Simultaneous Access to Memory
------------------------------
+Types of Memory Access
+----------------------
 
-When you think about how your program executes,
-in many cases the smallest unit you consider
-is an individual line of code.
-For example,
-when you're using the debugger,
-you can step through the execution of your program,
-one line at a time.
-However, within each line of code,
-Swift performs several actions.
-For example,
-consider the steps needed
-to execute the second line in the following code listing:
+For the purposes of explaining exclusive access,
+there are two relevant ways to define how memory is accessed:
 
-.. TR: SE-076 wants this to be the model, but it's not today.
-   Today, we do a copy at the beginning of the call,
-   not a long-term read.
-   Today, we don't have anything that does long-term read
-   except for working with an unsafe pointer.
+* Loading from a value is defined as a _read access_.
+* Assigning to or modifying a value is defined a _write access_.
 
-.. TR: Try using sort() below to make a long-term write
-   and then go into a read/write overlap.
+The following code sample is annotated to demonstrate
+where read and write accesses occur in code:
 
-.. TR: Looks like you mostly show read/write conflict.
-   Might want to show write/write conflict too.
+```
+var i = 1 // assigning to a variable, so this is a write to i
+func incrementInPlace(_ number: inout Int) {
 
-.. testcode:: memory-map-1
+    number += i // a read from i and then a write to number
+}
+```
 
-    -> let numbers = [10, 20, 30]
-    -> let newNumbers = numbers.map { $0 + 100 }
-    << // numbers : [Int] = [10, 20, 30]
-    << // newNumbers : [Int] = [110, 120, 130]
+For the most part, you usually don't need to think about your code in terms of how
+it accesses memory because all the various read and write accesses happen instantaneously.
 
-Swift performs the following more granular steps
-to execute that line:
+Going back to the metaphor that accessing memory is like writing on a shared piece paper,
+imagine your code as a set of people that take turns to either read a set amount of words
+or write something specific onto the paper. Instantaneous access means their turns to interact with the paper never overlap,
+making the resulting output is easy to reason about and predict.
 
-* Start reading from ``numbers``.
-* Execute the body of the closure three times.
-  Accumulate the results in  a new, empty array.
-* Finish reading from ``numbers``.
-* Assign the new array as the value of ``newNumbers``.
+However, not all read and write accesses are instantaneous.
 
-.. TR: We only read ``numbers``
-   while getting ``numbers[0]`` during the addition.
-   Not for the entire duration of the closure.
-   This is related to why ``s+=`` works;
-   we copy ``s`` first and pass it as an argument.
+Using the same shared paper metaphor, if the turns weren't distinct and instead overlapped each other,
+that means you could get people reading and writing on the paper at the same time.
+In the case where it's both people reading the paper at the same time,
+the words on the paper they're sharing is deterministic in that the paper shows the same
+words to both people.
 
-Note in particular that
-Swift is accessing ``numbers`` for the entire duration
-of the ``map`` operation.
-Because the read access doesn't start and end
-in the same step,
-it's possible for another access to start
-before this access ends,
-which is called an *overlapping access*.
-For example:
+However, in the case where one person is writing or editing
+the words while another person is reading, the resulting sentences that are read
+are _not_ deterministic.  Instead, it's dependent on how fast the person reads or
+on how slow the other person writes, making the result non-deterministic.  The same
+result of non-deterministic behavior applies to two people writing at the same time.
 
-.. testcode:: memory-map-2
 
-    -> let numbers = [10, 20, 30]
-    -> let newNumbers = numbers.map { $0 + numbers[0] }
-    << // numbers : [Int] = [10, 20, 30]
-    << // newNumbers : [Int] = [20, 30, 40]
-
-This time,
-instead of adding a constant amount to each element,
-the closure body adds the value of the first element
-to each element in ``numbers``.
-Swift performs the following more granular steps
-to execute the second line:
-
-* Start reading from ``numbers``.
-* Make a new, empty array to accumulate the mapped results.
-* Execute the closure body three times:
-    - Start reading from ``numbers`` to access ``numbers[0]``.
-    - Calculate ``$0 + numbers[0]``
-      and append the result to the new array.
-    - Finish reading from ``numbers``.
-* Finish reading from ``numbers``.
-* Assign the new array as the value of ``newNumbers``.
-
-The access to ``numbers[0]`` inside the body of the closure
-overlaps the ongoing access to ``numbers``
-that started in the first step.
-However, this overlap is safe
-because both accesses are *reading* from the array.
-
-.. image:: ../images/memory_map_2x.png
-   :align: center
-
-.. docnote:: FIGURE: change $1 to $0
-.. docnote:: FIGURE: add spaces around all { and } braces
-
-In contrast to the example above,
-where two reads are allowed to overlap,
-the example below shows a read and write that overlap,
-violating memory exclusivity,
-and causing a compiler error.
-Consider an in-place, mutating version of ``map`` called ``mapInPlace``:
-
-.. testcode:: memory-map-in-place
-
-    >> extension MutableCollection {
-    >>     mutating func mapInPlace(transform: (Element) -> Element) {
-    >>         var i = self.startIndex
-    >>         while i < self.endIndex {
-    >>             self[i] = transform(self[i])
-    >>             formIndex(after: &i)
-    >>         }
-    >>     }
-    >> }
-    -> var numbers = [10, 20, 30]
-    -> numbers.mapInPlace { $0 + numbers[0] }  // Error
-    xx Simultaneous accesses to 0x11584c8d0, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x115851075).
-    xx Current access (a read) started at:
-
-Because ``mapInPlace`` changes the array,
-it has a write access to ``numbers`` for the duration
-of the function call.
-Just like the read access for ``map``,
-the write access for ``mapInPlace`` spans several steps ---
-overlapping with the read inside the closure
-to get the first element of the array.
-Different parts of the program
-are reading from and writing to the same memory at the same time
-which is a violation of memory safety.
-
-.. image:: ../images/memory_mapInPlace_2x.png
-   :align: center
-
-In this case,
-you can also see the ambiguity
-by considering what the value of ``numbers`` should be
-after running the code.
-Should ``numbers[0]`` access the first element
-of the original array,
-giving an answer of ``[20, 30, 40]``
-or should it access the first element
-after it was transformed in place,
-giving an answer of ``[20, 40, 50]``?
-The answer isn't clear ---
-both interpretations of that piece of code
-are reasonable.
 
 What Exclusive Access Guarantees
 --------------------------------
