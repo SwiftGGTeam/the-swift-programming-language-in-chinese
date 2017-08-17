@@ -236,6 +236,7 @@ For example:
     -> var myNumber = 42
     -> var myOtherNumber = 9000
     << // myNumber : Int = 42
+    << // myOtherNumber : Int = 9000
     -> balance(&myNumber, &myOtherNumber)  // Ok
     -> balance(&myNumber, &myNumber)  // Error
     !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
@@ -487,6 +488,7 @@ it's no longer possible to prove that the overlapping writes are safe.
 .. testcode:: memory-computed-property
 
     -> struct Player {
+           var name: String
            var remainingLives = 5
            var energy = 10
            private var _health: Int = 10
@@ -503,6 +505,9 @@ it's no longer possible to prove that the overlapping writes are safe.
                    }
                }
            }
+           init(name: String) {
+               self.name = name
+           }
        }
     >> func balance(_ x: inout Int, _ y: inout Int) {
     >>     let sum = x + y
@@ -510,10 +515,20 @@ it's no longer possible to prove that the overlapping writes are safe.
     >>     y = sum - x
     >> }
     >> func f() {
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> var oscar = Player(name: "Oscar")
     -> balance(&oscar.health, &oscar.energy)  // Error
     >> }
     >> f()
+    !! <REPL Input>:3:11: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !! balance(&oscar.health, &oscar.energy)  // Error
+    !!                        ^~~~~~~~~~~~~
+    !! <REPL Input>:3:26: note: conflicting access is here
+    !! balance(&oscar.health, &oscar.energy)  // Error
+    !!         ^~~~~~~~~~~~~
+    !! <REPL Input>:1:1: error: use of unresolved identifier 'f'
+    !! f()
+    !! ^
+
 
 .. docnote:: Not quite the right wording here...
    In some places, the compiler could prove this,
