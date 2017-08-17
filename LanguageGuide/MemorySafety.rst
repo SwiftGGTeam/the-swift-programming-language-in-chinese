@@ -187,17 +187,17 @@ What Exclusive Access Guarantees
     - Except for two overlapping reads
     - And except for things that we can prove are safe
 
-Exclusive Access for Functions
-------------------------------
-
-.. XXX Maybe this should come after value/reference types
-   since it's less common?
-   But it's also simpler...
+Exclusive Access for In-Out Paramaters
+--------------------------------------
 
 A function has write access
-to any parameters passed as in-out;
-the write access lasts
-for that entire duration of the function call.
+to all of its in-out parameters.
+The write access for in-out parameter starts
+after all of the other parameters have been evaluated
+and lasts for that entire duration of the function call.
+
+.. docnote:: Possible example of the "after all other parameters" rule.
+
 One consequence of this is that you can't access the original
 variable that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
@@ -233,7 +233,7 @@ Passing the same variable as an in-out parameter more than once
 is also an error because of exclusive access.
 For example:
 
-.. testcode:: memory-double-inout
+.. testcode:: memory-balance
 
     -> func balance(_ x: inout Int, _ y: inout Int) {
            let sum = x + y
@@ -256,152 +256,59 @@ For example:
     !! balance(&myNumber, &myNumber)  // Error
     !!         ^~~~~~~~~
 
-.. XXX explain the violation -- overlapping writes
+.. docnote:: TODO: explain the violation -- overlapping writes
 
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
 
-Exclusive Access for Value Types
---------------------------------
+Exclusive Access for Methods
+----------------------------
 
-.. General thoughts on classes vs structs
+A mutating method has write access to ``self``
+for the duration of the method.
+For example:
 
-   It's ok to have spooky action at a distance in classes
-   because they're already reference types.
-   You need to be able to deal with them having overlapping access
-   in the same way that you need to deal with them having
-   reference semantics.
+.. docnote:: This behaves like self is passed to the method as inout
+	     because, under the hood, that's exactly what happens.
 
-   Likewise, for structures,
-   the language model for mutation is that
-   when you assign a new value to a property of a struct,
-   it's the moral equivalent of assigning a new value
-   to the entire struct.
-   There's no reference semantics,
-   so no spooky action at a distance,
-   and therefore no overlapping access
-   (which could cause such a thing)
-   is allowed.
-
-Types like structures, tuples, and enumerations
-are made up of individual constituent values,
-such as a structure's properties or a tuple's elements.
-Because these are value types, mutation to any piece of the value
-is a mutation to the whole value.
-
-Calling ``balance(_:_:)`` on the elements of a tuple fails
-because a tuple is a value type.
-Access to one of its properties
-requires access to the entire tuple.
-
-.. testcode:: memory-tuple
-
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> var myTuple = (10, 20)
-    << // myTuple : (Int, Int) = (10, 20)
-    -> balance(&myTuple.0, &myTuple.1)  // Error
-    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x107952037).
-    xx Current access (a modification) started at:
-
-Although a structure is also a value type,
-so access to one of its properties
-also requires access to the entire structure,
-in many cases the compiler can prove
-that the overlapping access are safe.
-This is generally true for stored properties.
-For example, consider a game where each player
-has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities.
-
-.. testcode:: memory-share-health
+.. testcode:: memory-player-share-with-self
 
     -> struct Player {
            var name: String
            var health: Int
            var energy: Int
-       }
     ---
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    ---
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> balance(&oscar.health, &oscar.energy)  // Ok
-
-.. XXX This works in Xcode (9M202q swiftlang-900.0.59)
-   but fails at the REPL with an exclusivity violation.
-   I don't pretend to understand why.
-
-In the example above,
-Oscar's health and energy are passed
-as the two in-out parameters to ``balance(_:_:)`` ---
-although this technically violates memory exclusivity
-because both are properties of the same structure,
-the compiler can prove that memory safety is preserved.
-The two stored properties don't interact in any way,
-so overlapping writes to them can't cause a problem.
-
-In contrast, if ``health`` is a computed property,
-it's no longer possible to prove that the overlapping writes are safe.
-
-.. Not quite the right wording here...
-   In some places, the compiler could prove this,
-   we just made the bright line that it doesn't try
-   for getters and setters.
-   That would be even more confusing, since you'd have a hidden cliff.
-
-.. XXX
-
-Any mutation to a property of ``oscar``
-requires mutation to the entire ``Player`` structure,
-so overlapping changes to its properties aren't allowed.
-
-.. Because there's no syntax
-   to mutate an enum's associated value in place,
-   we can't show that overlapping mutations
-   to two different associated values on the same enum
-   would violate exclusivity.
-
-.. docnote:: A nonmutating method has a read access to 'self'
-   for the duration of the method.
-
-.. docnote:: A mutating method has a write access to 'self'
-   for the duration of the method.
-
-.. testcode:: memory-player-share-with-self
-
-    >> struct Player {
-    >>     var name: String
-    >>     var health: Int
-    >>     var energy: Int
-    >> }
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    >> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    >> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    -> extension Player {
            mutating func shareHealth(with player: inout Player) {
                balance(&player.health, &health)
            }
        }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> var maria = Player(name: "Maria", health: 5, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
+    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> oscar.shareHealth(with: &maria)  // Ok
+
+.. docnote:: Is this too complex of an example to be first?
+	     We've got both mutating and inout to get the write/write violation.
+	     Maybe show nonmutating/inout or mutating/non-inout
+	     as a version that works, building up to this.
+
+However,
+if you pass ``oscar`` as the other player,
+there's a violation ---
+both the mutating method on ``oscar``
+and passing ``oscar`` as an in-out parameter to that method
+require a write access to the same memory at the same time.
+
+.. testcode:: memory-player-share-with-self
+
     -> oscar.shareHealth(with: &oscar)  // Error
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)  // Error
@@ -431,6 +338,128 @@ so overlapping changes to its properties aren't allowed.
     // Unpredictable results: If `oscar` starts w/ health @ 10, should end with 30 or 40?
     oscar.giveHealth(to: &oscar)  // Ok
 
+
+Exclusive Access for Properties
+-------------------------------
+
+.. docnote:: Outline
+
+   - In general, for value types, access to a property is access to
+     the entire structure.  This preserves value semantics.
+   - For structs, the compiler can often prove the overlap/violation
+     is still safe, so we just let you do it.
+   - Note that the above caveat doesn't apply to tuples.
+   - For classes, ovrelapping access to different properties is always
+     kosher, because there's no value semantics to preserve.
+
+.. General thoughts on classes vs structs
+
+   It's ok to have spooky action at a distance in classes
+   because they're already reference types.
+   You need to be able to deal with them having overlapping access
+   in the same way that you need to deal with them having
+   reference semantics.
+
+   Likewise, for structures,
+   the language model for mutation is that
+   when you assign a new value to a property of a struct,
+   it's the moral equivalent of assigning a new value
+   to the entire struct.
+   There's no reference semantics,
+   so no spooky action at a distance,
+   and therefore no overlapping access
+   (which could cause such a thing)
+   is allowed.
+
+Types like structures, tuples, and enumerations
+are made up of individual constituent values,
+such as a structure's properties or a tuple's elements.
+Because these are value types, mutation to any piece of the value
+is a mutation to the whole value ---
+this means read or write access to one of the properties
+requires read or write access to the whole value.
+
+For example,
+
+.. testcode:: memory-tuple
+
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> var myTuple = (10, 20)
+    << // myTuple : (Int, Int) = (10, 20)
+    -> balance(&myTuple.0, &myTuple.1)  // Error
+    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x107952037).
+    xx Current access (a modification) started at:
+
+In the example above,
+calling ``balance(_:_:)`` on the elements of a tuple fails
+because there are overlapping write accesses to the tuple.
+Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
+which means ``balance(_:_:)`` needs write acces to them.
+In both cases, a write access to the tuple member
+requires a write access to the entire tuple.
+This means you have two write access to ``myTuple`` with exactly the same duration.
+
+Although a structure is also a value type,
+in many cases the compiler can prove
+that the overlapping access are safe.
+This means most access to stored properties *can* overlap for stuctures.
+For example, consider a game where each player
+has a health amount, which decreases when taking damage,
+and an energy amount, which decreases when using special abilities.
+
+.. testcode:: memory-share-health
+
+    >> struct Player {
+    >>     var name: String
+    >>     var health: Int
+    >>     var energy: Int
+    >> }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> var maria = Player(name: "Maria", health: 5, energy: 10)
+    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
+    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
+    -> balance(&oscar.health, &oscar.energy)  // Ok
+
+In the example above,
+Oscar's health and energy are passed
+as the two in-out parameters to ``balance(_:_:)`` ---
+although this technically violates memory exclusivity
+because both are properties of the same structure,
+the compiler can prove that memory safety is preserved.
+The two stored properties don't interact in any way,
+so overlapping writes to them can't cause a problem.
+
+In contrast, if ``health`` is a computed property,
+it's no longer possible to prove that the overlapping writes are safe.
+
+.. docnoce:: Not quite the right wording here...
+   In some places, the compiler could prove this,
+   we just made the bright line that it doesn't try
+   for getters and setters.
+   That would be even more confusing, since you'd have a hidden cliff.
+
+Any mutation to a property of ``oscar``
+requires mutation to the entire ``Player`` structure,
+so overlapping changes to its properties aren't allowed.
+
+.. Because there's no syntax
+   to mutate an enum's associated value in place,
+   we can't show that overlapping mutations
+   to two different associated values on the same enum
+   would violate exclusivity.
+
+
+.. docnote:: REVISION ENDED HERE
 
 Exclusive Access for Reference Types
 ------------------------------------
