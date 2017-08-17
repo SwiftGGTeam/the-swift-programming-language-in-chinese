@@ -187,7 +187,7 @@ A function has write access
 to all of its in-out parameters.
 The write access for in-out parameter starts
 after all of the other parameters have been evaluated
-and lasts for that entire duration of the function call.
+and lasts for the entire duration of that function call.
 
 .. docnote:: Possible example of the "after all other parameters" rule.
 
@@ -234,7 +234,9 @@ For example:
            y = sum - x
        }
     -> var myNumber = 42
+    -> var myOtherNumber = 9000
     << // myNumber : Int = 42
+    -> balance(&myNumber, &myOtherNumber)  // Ok
     -> balance(&myNumber, &myNumber)  // Error
     !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
     !! balance(&myNumber, &myNumber)  // Error
@@ -249,7 +251,20 @@ For example:
     !! balance(&myNumber, &myNumber)  // Error
     !!         ^~~~~~~~~
 
-.. docnote:: TODO: explain the violation -- overlapping writes
+The ``balance(_:_:)`` function above
+modifies its two parameters
+to divide the total value evenly between them.
+(It's used again in the examples below
+to evenly share health points between players in a game.)
+Calling it with ``myNumber`` and ``myOtherNumber`` as parameters
+doesn't violate exclusive access to memory ---
+there are write accesses to both parameters at the same time,
+but they access different memory.
+In contrast,
+passing ``myNumber`` as the value for both parameters
+does violate exclusive access
+because it tries to have two write accesses
+to the same memory at the same time.
 
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
@@ -261,7 +276,8 @@ Exclusive Access for Methods
 
 .. This (probably?) applies to all value types,
    but structures are the only place you can observe it.
-   Enumerations can't have mutating methods
+   Enumerations can have mutating methods
+   but you can't mutate their associated values in place,
    and tuples can't have methods.
 
 A mutating method on a structure has write access to ``self``
@@ -395,8 +411,8 @@ Exclusive Access for Properties
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
 such as a structure's properties or a tuple's elements.
-Because these are value types, mutation to any piece of the value
-is a mutation to the whole value ---
+Because these are value types, mutating any piece of the value
+mutates the whole value ---
 this means read or write access to one of the properties
 requires read or write access to the whole value.
 
@@ -468,22 +484,57 @@ so overlapping writes to them can't cause a problem.
 In contrast, if ``health`` is a computed property,
 it's no longer possible to prove that the overlapping writes are safe.
 
+.. testcode:: memory-computed-property
+
+    -> struct Player {
+           var remainingLives = 5
+           var energy = 10
+           private var _health: Int = 10
+           var health: Int {
+               get {
+                   return _health
+               }
+               set {
+                   if newValue > 0 {
+                       _health = newValue
+                   } else {
+                       remainingLives -= 1
+                       _health = 10
+                   }
+               }
+           }
+       }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    >> func f() {
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> balance(&oscar.health, &oscar.energy)  // Error
+    >> }
+    >> f()
+
 .. docnote:: Not quite the right wording here...
    In some places, the compiler could prove this,
    we just made the bright line that it doesn't try
    for getters and setters.
    That would be even more confusing, since you'd have a hidden cliff.
 
-Any mutation to a property of ``oscar``
+In the version of ``health`` above,
+any time the player runs out of health points,
+the property setter subtracts a life
+and resets ``health`` to its full value of ten.
+Because ``health`` is a computed property,
+any mutation to a property of ``oscar``
 requires mutation to the entire ``Player`` structure,
-so overlapping changes to its properties aren't allowed.
+so overlapping changes to the structure's properties aren't allowed.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
    we can't show that overlapping mutations
    to two different associated values on the same enum
    would violate exclusivity.
-
 
 .. docnote:: REVISION ENDED HERE
 
