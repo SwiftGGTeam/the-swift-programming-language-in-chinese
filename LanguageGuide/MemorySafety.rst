@@ -14,7 +14,7 @@ Many of these guarantees have already been covered previously. For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
-  This guarantee is called`definite initialization`
+  This guarantee is called :newterm:`definite initialization`
   and is discussed in "Initialization".
 
 * Only memory that is part of a data structure
@@ -28,7 +28,7 @@ Many of these guarantees have already been covered previously. For example:
 
 One aspect of memory safety that has not yet been covered is that
 memory that contains shared mutable state must not be accessed at the same time.
-This guarantee is called `exclusive access`.
+This guarantee is called :newterm:`exclusive access`.
 
 Types of Memory Access
 ----------------------
@@ -36,19 +36,19 @@ Types of Memory Access
 For the purposes of explaining exclusive access,
 there are two relevant ways to define how memory is accessed:
 
-* Loading from a value is defined as a _read access_.
-* Assigning to or modifying a value is defined a _write access_.
+* Loading from a value is defined as a *read access*.
+* Assigning to or modifying a value is defined a *write access*.
 
 The following code sample is annotated to demonstrate
 where read and write accesses occur in code:
 
-```
-var i = 1 // assigning to a variable, so this is a write to i
-func incrementInPlace(_ number: inout Int) {
+::
 
-    number += i // a read from i and then a write to number
-}
-```
+    var i = 1 // assigning to a variable, so this is a write to i
+    func incrementInPlace(_ number: inout Int) {
+
+        number += i // a read from i and then a write to number
+    }
 
 For the most part, you usually don't need to think about your code in terms of how
 it accesses memory because all the various read and write accesses happen instantaneously.
