@@ -1,32 +1,25 @@
 Memory Safety
 =============
 
-There are several aspects of memory safety that Swift enforces:
+Memory safety is the guarantee that accessing any allocated memory returns a valid result.  By Swift's standards, a valid result means that the allocated memory has been initialized to a value, the value is of the expected type, and the value is of the most recent modification. Think of writing and reading from memory safely like writing words onto a piece of paper: you would not expect the words to have changed by themselves if you leave and come back to read them later.  Similarly, when you allocate and write to an address in memory, if you are not intentionally modifying that value, other code should not be overwriting that value as an unintentional side-effect .
+
+The compiler maintains memory safety by enforcing developer code follow a set of constraints around accessing memory. Many of these constraints have already been covered previously. For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
-  This guarantee is called :newTerm:`definite initialization`
+  This constraint is called`definite initialization`
   and is discussed in "Initialization".
-
-  .. XXX xref to chapter
 
 * Only memory that is part of a data structure
   can be accessed through that data structure.
   For example, reading past the end of an array
   is an error,
-  it doesn't access the adjacent memory.
+  it doesn't access the adjacent memory and unintentionally overwrite some other value.
 
 * Memory must not be accessed after it has been deallocated.
-  This guarantee is discussed in "Automatic Reference Counting".
+  This constraint is discussed in "Automatic Reference Counting".
 
-.. XXX xref to chapter
-   XXX Value types
-   XXX Unsafe types
-
-* Memory that contains shared mutable state
-  must not have conflicting accesses.
-  This guarantee is called :newTerm:`exclusive access`.
-  The rest of this chapter discusses the guarantee of exclusive access.
+One aspect of memory safety that has not yet been covered is that memory that contains shared mutable state must not be accessed at the same time.  This constraint is called `exclusive access`.
 
 Simultaneous Access to Memory
 -----------------------------
