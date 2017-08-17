@@ -969,8 +969,10 @@ For more information and examples of capture lists,
 see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 
-Exclusive Access for Closures
------------------------------
+.. _Expressions_ClosureExclusivity:
+
+Exclusive Access
+++++++++++++++++
 
 .. docnote:: Either here or elsewhere...
 
