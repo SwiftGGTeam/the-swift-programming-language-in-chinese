@@ -332,42 +332,6 @@ which means the two write accesses conflict.
 Exclusive Access for Properties
 -------------------------------
 
-.. docnote:: Outline
-
-   - In general, for value types, access to a property is access to
-     the entire structure.  This preserves value semantics.
-   - For structs, the compiler can often prove the overlap/violation
-     is still safe, so we just let you do it.
-   - Note that the above caveat doesn't apply to tuples.
-   - For classes, ovrelapping access to different properties is always
-     kosher, because there's no value semantics to preserve.
-
-.. General thoughts on classes vs structs
-
-   It's ok to have spooky action at a distance in classes
-   because they're already reference types.
-   You need to be able to deal with them having overlapping access
-   in the same way that you need to deal with them having
-   reference semantics.
-
-   Because classes are reference types,
-   a mutation to one of the properties of a class instance
-   isn't considered a mutation to the class instance as a whole.
-   That rule ensures that value semantics are preserved for value types,
-   but it doesn't apply to classes, which are reference types.
-   It's not unusual to have faraway code change parts of a class.
-
-   Likewise, for structures,
-   the language model for mutation is that
-   when you assign a new value to a property of a struct,
-   it's the moral equivalent of assigning a new value
-   to the entire struct.
-   There's no reference semantics,
-   so no spooky action at a distance,
-   and therefore no overlapping access
-   (which could cause such a thing)
-   is allowed.
-
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
 such as the properties of a structure or the elements of a tuple.
@@ -375,7 +339,13 @@ Because these are value types, mutating any piece of the value
 mutates the whole value ---
 this means read or write access to one of the properties
 requires read or write access to the whole value.
-For example:
+This rule ensures that value semantics are preserved,
+but it doesn't apply to classes, which are reference types.
+A mutation to one of the properties of a class instance
+isn't considered a mutation to the class instance as a whole.
+
+Here's an example
+of how properties can have conflicting access:
 
 .. testcode:: memory-tuple
 
