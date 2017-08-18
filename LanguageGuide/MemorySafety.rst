@@ -21,36 +21,16 @@ Similarly, when you allocate and write to an address in memory,
 if you are not intentionally modifying that value,
 other code should not be overwriting that value as an unintentional side-effect.
 
-.. Brian: Need a better definition of "memory safety".
-
-.. Attempt at defining memory safety:
-   There are some things that the compiler can prove
-   alway result in valid interactions with memory,
-   which it permits.
-   And there are thing that it can't prove such a thing about,
-   which it doesn't permit.
-
-The compiler maintains memory safety by ensuring that:
-
-* Variables and constants have a value assigned to them
-  before they're read.
-  This guarantee is called :newterm:`definite initialization`,
-  and is discussed in :doc:`../LanguageGuide/Initialization`.
-
-* Only memory that is part of a data structure
-  is accessed through that data structure.
-  For example, reading past the end of an array
-  is an error,
-  it doesn't access the adjacent memory
-  and unintentionally overwrite some other value.
-
-* Memory isn't accessed after it has been deallocated.
-  This guarantee is discussed in "Automatic Reference Counting".
-
-* Memory that contains shared mutable state
-  doesn't have conflicting accesses.
-  This guarantee is called :newterm:`exclusive access`,
-  and is discussed in the rest of this chapter.
+By default, Swift prevents unsafe behavior.
+For example,
+Swift ensures that variables are initialized before they're used,
+memory isn't accessed after it's been deallocated,
+and array indices are checked for out-of-bounds errors.
+In addition,
+Swift makes sure that
+multiple accesses to the same area of memory don't conflict,
+by requiring that code modifying an area of memory
+has exclusive access to that memory.
 
 Characteristics of Memory Access
 --------------------------------
@@ -58,7 +38,7 @@ Characteristics of Memory Access
 .. XXX Convert listings in this section to test code.
 
 There are three characteristics of memory access that are relevant
-to the discussion of exclusive access:
+to the discussion of exclusive access to memory:
 
 * What location in memory is being accessed.
 * How long the access lasts.
@@ -160,10 +140,14 @@ Two accesses to memory conflict if:
    It lets you actually know that you have non-overlapping access.
 
 
+.. Brian: We're using "exclusive access" as an elided form of "exclusive access
+   to memory", but it doesn't really work well.  We don't explicitly define it,
+   and it doesn't stand well on its own as a noun.
+
 What Exclusive Access Guarantees
 --------------------------------
 
-In order to keep the result of write and read accesses deterministic and prevent against memory corruption,
+In order to keep the result of write and read accesses deterministic and prevent memory corruption,
 Swift guarantees *exclusive access* when accessing memory, which means that
 no write access can overlap any other access to the same area of memory at the same time of execution.
 Overlapping read accesses are allowed because the value returned is deterministic.
