@@ -231,10 +231,6 @@ to the same memory at the same time.
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
 
-.. Nate: I think this parenthetical just gets in the way:
-   (It's used again in the examples below 
-   to evenly share health points between players in a game.)
-
 Exclusive Access for Methods
 ----------------------------
 
