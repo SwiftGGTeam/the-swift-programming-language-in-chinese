@@ -974,19 +974,19 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 Exclusive Access
 ++++++++++++++++
 
-Swift has a rule about
-passing closure parameters to other function calls as arguments. 
-This rule allows Swift to perform
+Swift prevents you from passing closure parameters
+to other function calls as arguments
+under certain conditions. 
+This restriction allows Swift to perform
 all of its checks for memory exclusivity violations
 in nonescaping closures at compile time,
-and not have to do any checking at runtime.
+and not have to do any checking related to this restriction at runtime.
+For information about additional restrictions related to 
+memory exclusivity, see Memory Safety.
 
-.. docnote:: TR: Is there any rule around capturing that we're missing?
+.. FIXME: When available, insert a :ref: to the Memory Safety chapter.
 
-   If you have a nonescaping closure,
-   it's considered as accessing its captures
-   as an instantaneous read
-   at the point where it's passed.
+.. TODO: vvvvvvvvv Move out of Exclusive Access
 
 For the purposes of checking exclusive access to memory,
 a closure is considered nonescaping
@@ -1006,7 +1006,9 @@ if it is one of the following:
    The only exclusivity-specific rule here
    is the restriction on nonescaping function paramaters.
 
-.. TR: Xref to the reference and move this whole rule there.
+.. TODO: ^^^^^^^^^ Move out of Exclusive Access
+
+.. TR: Xref to this reference material in the memory safety chapter.
 
 .. Because the captured value can't escape,
    the nested function will also be restricted from escaping,
