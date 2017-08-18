@@ -116,8 +116,38 @@ result of non-deterministic behavior applies to the case of
 multiple people writing on the same paper at the same time.
 
 In essence, multiple accesses to the same area of memory at the same time could potentially
-produce unpredictable or inconsistent behaviour if one of the accessess is a write access.  This
+produce unpredictable or inconsistent behaviour if one of the accesses is a write access.  This
 is called conflicting access.
+Two accesses to memory conflict if:
+
+* Both accesses use the same location in memory.
+* Both accesses happen at the same time.
+* At least one access is writing to that memory.
+
+.. XXX conflicts are unsafe --> they trigger an error
+
+.. note::
+
+    Because exclusive access is a slightly broader guarantee
+    than memory safety,
+    some code that is memory safe
+    violates the guarantee of exclusive access.
+    Swift allows this code if the compiler can prove
+    that the nonexclusive access is still safe.
+
+.. Versions of Swift before Swift 4 ensure memory safety
+   by agressively making a copy of the shared mutable state
+   when a conflicting access is possible.
+   The copy is no longer shared, preventing the possibility of conflicts.
+   However, the copying appproach has a negative impact
+   on performance and memory usage.
+
+.. TR: Swift 4 does this copying too.
+   Frame this in terms as the copying is the *only* thing Swift 3 did.
+   The carrot today is that you have a cleaner semantic model,
+   not that you don't get copying.
+   It lets you actually know that you have non-overlapping access.
+
 
 What Exclusive Access Guarantees
 --------------------------------
@@ -623,28 +653,6 @@ Stopping execution immediately, at the point of the violation,
 prevents propagating invalid state to other parts of the program
 which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
-
-.. note::
-
-    Because exclusive access is a slightly broader guarantee
-    than memory safety,
-    some code that is memory safe
-    violates the guarantee of exclusive access.
-    Swift allows this code if the compiler can prove
-    that the nonexclusive access is still safe.
-
-    Versions of Swift before Swift 4 ensure memory safety
-    by agressively making a copy of the shared mutable state
-    when a conflicting access is possible.
-    The copy is no longer shared, preventing the possibility of conflicts.
-    However, the copying appproach has a negative impact
-    on performance and memory usage.
-
-    .. TR: Swift 4 does this copying too.
-       Frame this in terms as the copying is the *only* thing Swift 3 did.
-       The carrot today is that you have a cleaner semantic model,
-       not that you don't get copying.
-       It lets you actually know that you have non-overlapping access.
 
 -- -- -- -- -- --
 
