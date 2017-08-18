@@ -997,19 +997,6 @@ all of its checks for memory exclusivity violations
 in nonescaping closures when your code compiles,
 rather than performing those checks while your code is running.
 
-.. TODO: vvvvvvvvv Move out of Exclusive Access
-
-.. TR: John suggests moving the above.
-   It's the same semantics for closures.
-   This list is the places where we decide
-   that local functions can't escape.
-   The only exclusivity-specific rule here
-   is the restriction on nonescaping function paramaters.
-
-.. TODO: ^^^^^^^^^ Move out of Exclusive Access
-
-.. TR: Xref to this reference material in the memory safety chapter.
-
 .. Because the captured value can't escape,
    the nested function will also be restricted from escaping,
    making it nonescaping too.
