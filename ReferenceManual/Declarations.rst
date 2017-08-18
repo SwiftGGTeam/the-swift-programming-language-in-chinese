@@ -646,9 +646,11 @@ as the return type of the function.
 A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
 
-* A nested function that captures a value
-  which is guaranteed to never escape,
-  such as an in-out parameter.
+A nested function is nonescaping if it captures
+a value that is guaranteed to never escape---
+such as an in-out parameter---
+or passed as a nonescaping function argument.
+Otherwise, the nested function is an escaping function.
 
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.

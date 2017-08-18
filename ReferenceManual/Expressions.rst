@@ -986,20 +986,16 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 .. _Expressions_ClosureExclusivity:
 
-Exclusive Access
-++++++++++++++++
+Parameters as Arguments
++++++++++++++++++++++++
 
 Swift prevents you from passing closure parameters
-to other function calls as arguments
+to other functions as arguments
 under certain conditions. 
 This restriction allows Swift to perform
 all of its checks for memory exclusivity violations
 in nonescaping closures when your code compiles,
 rather than performing those checks while your code is running.
-
-.. Because the captured value can't escape,
-   the nested function will also be restricted from escaping,
-   making it nonescaping too.
 
 For functions that take closures,
 the restriction is as follows:
