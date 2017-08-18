@@ -1,45 +1,56 @@
 Memory Safety
 =============
 
+By default Swift is a memory-safe language.
+
+.. Brian:
+   Memory safety refers to...
+   The term *safety* usually refers to :newTerm:`memory safety`...
+   Unsafe access to memory is available, if you ask for it explicitly...
+
 Memory safety is the guarantee that
 accessing any allocated memory returns a valid result.
 By Swift's standards,
 a valid result means that the allocated memory has been initialized to a value,
-the value is of the expected type,
-and the value is of the most recent modification.
+the value is of the expected type.
 Think of writing and reading from memory safely
 like writing words onto a piece of paper:
 you would not expect the words to have changed by themselves
 if you leave and come back to read them later.
 Similarly, when you allocate and write to an address in memory,
 if you are not intentionally modifying that value,
-other code should not be overwriting that value as an unintentional side-effect .
+other code should not be overwriting that value as an unintentional side-effect.
 
-The compiler maintains memory safety
-by enforcing a set of guarantees around memory access.
-Many of these guarantees have already been covered previously.
-For example:
+.. Brian: Need a better definition of "memory safety".
 
-* Variables and constants must have a value assigned to them
-  before they can be read.
+.. Attempt at defining memory safety:
+   There are some things that the compiler can prove
+   alway result in valid interactions with memory,
+   which it permits.
+   And there are thing that it can't prove such a thing about,
+   which it doesn't permit.
+
+The compiler maintains memory safety by ensuring that:
+
+* Variables and constants have a value assigned to them
+  before they're read.
   This guarantee is called :newterm:`definite initialization`,
-  and is discussed in "Initialization".
+  and is discussed in :doc:`../LanguageGuide/Initialization`.
 
 * Only memory that is part of a data structure
-  can be accessed through that data structure.
+  is accessed through that data structure.
   For example, reading past the end of an array
   is an error,
   it doesn't access the adjacent memory
   and unintentionally overwrite some other value.
 
-* Memory must not be accessed after it has been deallocated.
+* Memory isn't accessed after it has been deallocated.
   This guarantee is discussed in "Automatic Reference Counting".
 
-One aspect of memory safety that has not yet been covered is that
-memory that contains shared mutable state
-must not have conflicting accesses.
-This guarantee is called :newterm:`exclusive access`,
-and is discussed in the rest of this chapter.
+* Memory that contains shared mutable state
+  doesn't have conflicting accesses.
+  This guarantee is called :newterm:`exclusive access`,
+  and is discussed in the rest of this chapter.
 
 Characteristics of Memory Access
 --------------------------------
@@ -657,17 +668,6 @@ which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
 
 -- -- -- -- -- --
-
-In Swift,
-the term *safety* usually refers to :newTerm:`memory safety` ---
-although there are are other kinds of safety,
-such as type safety and thread safety.
-You can see this naming convention in use
-by looking in the standard library
-for types and functions that include the word "unsafe" in their name.
-Those APIs don't guarantee memory safety,
-so it's your responsibility to review your code
-when you use them.
 
 -- -- -- -- -- --
 
