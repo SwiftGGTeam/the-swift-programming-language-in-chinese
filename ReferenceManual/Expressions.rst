@@ -801,6 +801,21 @@ The following closure expressions are equivalent:
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
 
+Closure expressions can be used
+without being stored in a variable or constant,
+such as when you immediately use a closure as part of a function call.
+The closure expressions passed to ``myFunction`` in code above are
+examples of this kind of immediate use.
+As a result,
+whether a closure expression is escaping or nonescaping depends
+on the surrounding context of the expression.
+A closure expression is nonescaping
+if it is called immediately
+or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
+
+For more information about escaping closures, see :ref:`Closures_Noescape`.
+
 .. _Expressions_CaptureLists:
 
 Capture Lists
@@ -983,15 +998,6 @@ in nonescaping closures when your code compiles,
 rather than performing those checks while your code is running.
 
 .. TODO: vvvvvvvvv Move out of Exclusive Access
-
-Closure expressions can be used immediately within another expression
-without being stored first in a variable or constant.
-As a result,
-whether they are escaping or nonescaping is contextual.
-A closure expression is nonescaping
-if it is called immediately
-or passed as a nonescaping function argument.
-Otherwise, the closure expression is escaping.
 
 * A nested function that captures a value
   which is guaranteed to never escape,
