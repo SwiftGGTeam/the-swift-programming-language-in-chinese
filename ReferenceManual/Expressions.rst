@@ -974,7 +974,8 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 Exclusive Access
 ++++++++++++++++
 
-Swift has a rule about passing closure parameters to other function calls. 
+Swift has a rule about
+passing closure parameters to other function calls as arguments. 
 This rule allows Swift to perform
 all of its checks for memory exclusivity violations
 in nonescaping closures at compile time,
@@ -1005,27 +1006,19 @@ if it is one of the following:
    The only exclusivity-specific rule here
    is the restriction on nonescaping function paramaters.
 
-.. TR: There are a bunch of technical restrictions on escaping closures.
-   Maybe that should go in the Reference under function types
-   or under closure expressions?
-   In the type system, a function type does have a notion
-   of whether or not it is escaping.
-   We don't have a spot to put non-syntax entities in the reference,
-   so this kind of cross-cutting topic doesn't have a good home.
-
 .. TR: Xref to the reference and move this whole rule there.
 
 .. Because the captured value can't escape,
    the nested function will also be restricted from escaping,
    making it nonescaping too.
 
-For functions that take one or more closures,
+For functions that take closures,
 the restriction is as follows:
 a nonescaping closure that's passed as a parameter
 to the enclosing function
 can't be used as a parameter when calling another nonescaping closure.
 For example, none of the following three variations
-on passing nonescaping closure parameters are allowed:
+that involve passing nonescaping closure parameters are allowed:
 
 .. testcode:: memory-closures
 
@@ -1056,6 +1049,8 @@ However, in the function body,
 each of the closures
 are passed as the argument when calling
 another nonescaping closure.
+As a result, each function call in ``takesTwoClosures(_:_:)``
+violates Swift's rule against closure parameters being used as arguments.
 
 .. note::
 
