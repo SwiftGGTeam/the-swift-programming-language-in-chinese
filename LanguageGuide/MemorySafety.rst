@@ -1,208 +1,163 @@
 Memory Safety
 =============
 
-There are several aspects of memory safety that Swift enforces:
+Memory safety is the guarantee that
+accessing any allocated memory returns a valid result.
+By Swift's standards,
+a valid result means that the allocated memory has been initialized to a value,
+the value is of the expected type,
+and the value is of the most recent modification.
+Think of writing and reading from memory safely
+like writing words onto a piece of paper:
+you would not expect the words to have changed by themselves
+if you leave and come back to read them later.
+Similarly, when you allocate and write to an address in memory,
+if you are not intentionally modifying that value,
+other code should not be overwriting that value as an unintentional side-effect .
+
+The compiler maintains memory safety
+by enforcing a set of guarantees around memory access.
+Many of these guarantees have already been covered previously.
+For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
-  This guarantee is called :newTerm:`definite initialization`
+  This guarantee is called :newterm:`definite initialization`,
   and is discussed in "Initialization".
-
-  .. XXX xref to chapter
 
 * Only memory that is part of a data structure
   can be accessed through that data structure.
   For example, reading past the end of an array
   is an error,
-  it doesn't access the adjacent memory.
+  it doesn't access the adjacent memory
+  and unintentionally overwrite some other value.
 
 * Memory must not be accessed after it has been deallocated.
   This guarantee is discussed in "Automatic Reference Counting".
 
-.. XXX xref to chapter
-   XXX Value types
-   XXX Unsafe types
+One aspect of memory safety that has not yet been covered is that
+memory that contains shared mutable state
+must not have conflicting accesses.
+This guarantee is called :newterm:`exclusive access`,
+and is discussed in the rest of this chapter.
 
-* Memory that contains shared mutable state
-  must not have conflicting accesses.
-  This guarantee is called :newTerm:`exclusive access`.
-  The rest of this chapter discusses the guarantee of exclusive access.
+Characteristics of Memory Access
+-------------------------------
 
-Simultaneous Access to Memory
------------------------------
+.. XXX Convert listings in this section to test code.
 
-When you think about how your program executes,
-in many cases the smallest unit you consider
-is an individual line of code.
+There are three characteristics of memory access that are relevant
+to the discussion of exclusive access:
+*what value* is the code acessing,
+for what *intent* is the code accessing the value, and
+for what *duration* the code needs access to the value.
+
+*What value* is being accessed refers to the address in memory where the value is stored.
+
+The *intent* of a memory access refers to
+whether the value is being read from or written to in memory.
+If the code is loading from a value,
+the access is defined as a *read access*.
+If the code is instead assigning to or modifying a value,
+the access is defined as a *write access*.
+
+The following code sample is annotated to demonstrate
+where read and write accesses occur in code:
+
+::
+
+    var i = 1 // this is a write to i
+    func incrementInPlace(_ number: inout Int) {
+
+        number += i // this a read from i and then a write to number
+    }
+
+Finally, the *duration* of a memory access refers to whether
+the code needs *instantaneous* access or *long-term* access.
+
+An access is *instantaneous* if no other code can execute on the same thread
+while the access in question is happening.
+One consequence of this "blocking" property of instantaneous access is that
+no two instantaneous accesses overlap each other's execution.
+
+For the most part, most memory accesses in your code are instantaneous.
 For example,
-when you're using the debugger,
-you can step through the execution of your program,
-one line at a time.
-However, within each line of code,
-Swift performs several actions.
-For example,
-consider the steps needed
-to execute the second line in the following code listing:
+all the accesses in the earlier example code are instantaneous accesses:
 
-.. TR: SE-076 wants this to be the model, but it's not today.
-   Today, we do a copy at the beginning of the call,
-   not a long-term read.
-   Today, we don't have anything that does long-term read
-   except for working with an unsafe pointer.
+::
 
-.. TR: Try using sort() below to make a long-term write
-   and then go into a read/write overlap.
+    var i = 1 // instantaneous write to i
+    func incrementInPlace(_ number: inout Int) {
 
-.. TR: Looks like you mostly show read/write conflict.
-   Might want to show write/write conflict too.
+        number += i // instantaneous read from i, followed by instantaneous write to number
+    }
 
-.. testcode:: memory-map-1
+However, there are certain conditions in code
+(that will be expanded upon later)
+that require the code to have a *long-term* access that lasts
+several lines of execution, meaning that the access can potentially overlap with other accesses.
 
-    -> let numbers = [10, 20, 30]
-    -> let newNumbers = numbers.map { $0 + 100 }
-    << // numbers : [Int] = [10, 20, 30]
-    << // newNumbers : [Int] = [110, 120, 130]
+Another way to conceptualize the difference between
+instantaneous vs. long-term accesses is by going back to the metaphor
+that accessing the same area of memory is like writing and reading a shared piece of paper.
+Imagine your code as a set of people that take turns to either read a set amount of words
+or write something specific onto the paper.
+Instantaneous access means the people take distinct turns to interact with the paper,
+making the resulting output easy to reason about and predict.
+Long-term access means the turns aren't distinct and instead potentially overlap each other,
+meaning you could get people reading and writing on the paper at the same time to potentially
+unpredictable results.
 
-Swift performs the following more granular steps
-to execute that line:
+In the case where multiple people are reading the same paper at the same time,
+regardless of how many people there are, the paper shows the same
+words to everyone. The output is deterministic.
+However, in the case where one person is writing or editing
+the words while another person is reading, the resulting sentences that are read out
+are *not* deterministic.  Instead, it's dependent on factors like how fast one person reads or
+on how slow the other person writes.  The same
+result of non-deterministic behavior applies to the case of
+multiple people writing on the same paper at the same time.
 
-* Start reading from ``numbers``.
-* Execute the body of the closure three times.
-  Accumulate the results in  a new, empty array.
-* Finish reading from ``numbers``.
-* Assign the new array as the value of ``newNumbers``.
-
-.. TR: We only read ``numbers``
-   while getting ``numbers[0]`` during the addition.
-   Not for the entire duration of the closure.
-   This is related to why ``s+=`` works;
-   we copy ``s`` first and pass it as an argument.
-
-Note in particular that
-Swift is accessing ``numbers`` for the entire duration
-of the ``map`` operation.
-Because the read access doesn't start and end
-in the same step,
-it's possible for another access to start
-before this access ends,
-which is called an *overlapping access*.
-For example:
-
-.. testcode:: memory-map-2
-
-    -> let numbers = [10, 20, 30]
-    -> let newNumbers = numbers.map { $0 + numbers[0] }
-    << // numbers : [Int] = [10, 20, 30]
-    << // newNumbers : [Int] = [20, 30, 40]
-
-This time,
-instead of adding a constant amount to each element,
-the closure body adds the value of the first element
-to each element in ``numbers``.
-Swift performs the following more granular steps
-to execute the second line:
-
-* Start reading from ``numbers``.
-* Make a new, empty array to accumulate the mapped results.
-* Execute the closure body three times:
-    - Start reading from ``numbers`` to access ``numbers[0]``.
-    - Calculate ``$0 + numbers[0]``
-      and append the result to the new array.
-    - Finish reading from ``numbers``.
-* Finish reading from ``numbers``.
-* Assign the new array as the value of ``newNumbers``.
-
-The access to ``numbers[0]`` inside the body of the closure
-overlaps the ongoing access to ``numbers``
-that started in the first step.
-However, this overlap is safe
-because both accesses are *reading* from the array.
-
-.. image:: ../images/memory_map_2x.png
-   :align: center
-
-.. docnote:: FIGURE: change $1 to $0
-.. docnote:: FIGURE: add spaces around all { and } braces
-
-In contrast to the example above,
-where two reads are allowed to overlap,
-the example below shows a read and write that overlap,
-violating memory exclusivity,
-and causing a compiler error.
-Consider an in-place, mutating version of ``map`` called ``mapInPlace``:
-
-.. testcode:: memory-map-in-place
-
-    >> extension MutableCollection {
-    >>     mutating func mapInPlace(transform: (Element) -> Element) {
-    >>         var i = self.startIndex
-    >>         while i < self.endIndex {
-    >>             self[i] = transform(self[i])
-    >>             formIndex(after: &i)
-    >>         }
-    >>     }
-    >> }
-    -> var numbers = [10, 20, 30]
-    -> numbers.mapInPlace { $0 + numbers[0] }  // Error
-    xx Simultaneous accesses to 0x11584c8d0, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x115851075).
-    xx Current access (a read) started at:
-
-Because ``mapInPlace`` changes the array,
-it has a write access to ``numbers`` for the duration
-of the function call.
-Just like the read access for ``map``,
-the write access for ``mapInPlace`` spans several steps ---
-overlapping with the read inside the closure
-to get the first element of the array.
-Different parts of the program
-are reading from and writing to the same memory at the same time
-which is a violation of memory safety.
-
-.. image:: ../images/memory_mapInPlace_2x.png
-   :align: center
-
-In this case,
-you can also see the ambiguity
-by considering what the value of ``numbers`` should be
-after running the code.
-Should ``numbers[0]`` access the first element
-of the original array,
-giving an answer of ``[20, 30, 40]``
-or should it access the first element
-after it was transformed in place,
-giving an answer of ``[20, 40, 50]``?
-The answer isn't clear ---
-both interpretations of that piece of code
-are reasonable.
+In essence, multiple accesses to the same area of memory at the same time could potentially
+produce unpredictable or inconsistent behaviour if one of the accessess is a write access.  This
+is called conflicting access.
 
 What Exclusive Access Guarantees
 --------------------------------
+
+In order to keep the the result of write and read accesses deterministic and prevent against memory corruption,
+Swift guarantees *exclusive access* when accessing memory, which means that
+no write access can overlap any other access to the same area of memory at the same time of execution.
+Overlapping read accesses are allowed because the value returned is deterministic.
+
+If a long-term access overlaps with another access of any kind to the same area of memory,
+where one of the accesses is a write access, then that is an exclusive access violation.  If that happens,
+the compiler will either catch the violation at compile time and give you an error, or if the the violation
+is detected at runtime, program execution will stop immediately instead of throwing an error.
+
 
 .. docnote:: Facts that need to go somewhere...
 
     - Within a single thread (use TSan for multithreading)...
     - When working with shared mutable state...
-    - It's guaranteed not accessed by two pieces of code at the same time
-    - Except for two overlapping reads
     - And except for things that we can prove are safe
 
-Exclusive Access for In-Out Paramaters
+Exclusive Access for In-Out Parameters
 --------------------------------------
 
 A function has write access
 to all of its in-out parameters.
-The write access for in-out parameter starts
+The write access for an in-out parameter starts
 after all of the other parameters have been evaluated
-and lasts for that entire duration of the function call.
+and lasts for the entire duration of that function call.
 
-.. docnote:: Possible example of the "after all other parameters" rule.
+.. docnote:: Possible example of the "after all other parameters" rule?
 
-One consequence of this is that you can't access the original
+One consequence of this long-term write access
+is that you can't access the original
 variable that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
-any access to the original
-creates a conflict.
+any access to the original creates a conflict.
 For example:
 
 .. testcode:: memory-increment
@@ -229,9 +184,10 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
 
 .. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
 
+.. docnote:: Code listing & figure: Replace i with a better name.
+
 Passing the same variable as an in-out parameter more than once
-is also an error because of exclusive access.
-For example:
+is also an error --- for example:
 
 .. testcode:: memory-balance
 
@@ -241,7 +197,10 @@ For example:
            y = sum - x
        }
     -> var myNumber = 42
+    -> var myOtherNumber = 9000
     << // myNumber : Int = 42
+    << // myOtherNumber : Int = 9000
+    -> balance(&myNumber, &myOtherNumber)  // Ok
     -> balance(&myNumber, &myNumber)  // Error
     !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
     !! balance(&myNumber, &myNumber)  // Error
@@ -256,7 +215,18 @@ For example:
     !! balance(&myNumber, &myNumber)  // Error
     !!         ^~~~~~~~~
 
-.. docnote:: TODO: explain the violation -- overlapping writes
+The ``balance(_:_:)`` function above
+modifies its two parameters
+to divide the total value evenly between them.
+Calling it with ``myNumber`` and ``myOtherNumber`` as parameters
+doesn't violate exclusive access to memory ---
+there are write accesses to both parameters at the same time,
+but they access different memory.
+In contrast,
+passing ``myNumber`` as the value for both parameters
+does violate exclusive access
+because it tries to have two write accesses
+to the same memory at the same time.
 
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
@@ -266,7 +236,13 @@ For example:
 Exclusive Access for Methods
 ----------------------------
 
-A mutating method has write access to ``self``
+.. This (probably?) applies to all value types,
+   but structures are the only place you can observe it.
+   Enumerations can have mutating methods
+   but you can't mutate their associated values in place,
+   and tuples can't have methods.
+
+A mutating method on a structure has write access to ``self``
 for the duration of the method.
 For example:
 
@@ -284,31 +260,33 @@ For example:
            var name: String
            var health: Int
            var energy: Int
-    ---
+           mutating func restoreHealth() {
+               health = 10
+           }
+       }
+
+In the method above that restores a player's health to 10,
+a write access to ``self`` starts at the beginning of the function
+and lasts until the function returns.
+In this case, there's no other code
+inside of ``restoreHealth()``
+that could have an overlapping access to properties of a ``Player``.
+The ``shareHealth(with:)`` method below takes another ``Player`` as an in-out parameter,
+creating the possibility of overlapping accesses.
+
+.. testcode:: memory-player-share-with-self
+
+    -> extension Player {
            mutating func shareHealth(with player: inout Player) {
                balance(&player.health, &health)
            }
        }
+    ---
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> oscar.shareHealth(with: &maria)  // Ok
-
-.. docnote:: Is this too complex of an example to be first?
-             We've got both mutating and inout to get the write/write violation.
-             Maybe show nonmutating/inout or mutating/non-inout
-             as a version that works, building up to this.
-
-However,
-if you pass ``oscar`` as the other player,
-there's a violation ---
-both the mutating method on ``oscar``
-and passing ``oscar`` as an in-out parameter to that method
-require a write access to the same memory at the same time.
-
-.. testcode:: memory-player-share-with-self
-
     -> oscar.shareHealth(with: &oscar)  // Error
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)  // Error
@@ -323,63 +301,51 @@ require a write access to the same memory at the same time.
     !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~~
 
-.. docnote:: TR: Check the following example—working as intended?
+In the example above,
+calling the ``shareHealth(with:)`` method
+for Oscar's player to share health with Maria's player
+doesn't cause a violation.
+There's a write access to ``oscar`` during the method call
+because its the value of ``self`` in a mutating method,
+and there's a write access to ``maria``
+for the same duration
+because it was passed as a in-out parameter.
+These write accesses overlap in time,
+but they are accessing different memory,
+so there is no violation.
 
-::
+However,
+if you pass ``oscar`` as the other player,
+there's a violation.
+The mutating method needs write access to ``self``
+for the duration of the method,
+and the in-out parameter needs write access to ``player``
+for the same duration.
+Within the method,
+both ``self`` and ``player`` refer to the same ``Player`` ---
+the value of ``oscar``` ---
+which means the two write accesses conflict.
 
-    extension Player {
-        func giveHealth(to player: inout Player) {
-            player.health += health
-            player.health += health
-        }
-    }
-
-    // Is this allowed on purpose? Write access to `oscar` inside read?
-    // Unpredictable results: If `oscar` starts w/ health @ 10, should end with 30 or 40?
-    oscar.giveHealth(to: &oscar)  // Ok
-
+.. XXX Maybe rename the player parameter to teammate?
+   That way you don't have both player and Player in the same discussion.
 
 Exclusive Access for Properties
 -------------------------------
 
-.. docnote:: Outline
-
-   - In general, for value types, access to a property is access to
-     the entire structure.  This preserves value semantics.
-   - For structs, the compiler can often prove the overlap/violation
-     is still safe, so we just let you do it.
-   - Note that the above caveat doesn't apply to tuples.
-   - For classes, ovrelapping access to different properties is always
-     kosher, because there's no value semantics to preserve.
-
-.. General thoughts on classes vs structs
-
-   It's ok to have spooky action at a distance in classes
-   because they're already reference types.
-   You need to be able to deal with them having overlapping access
-   in the same way that you need to deal with them having
-   reference semantics.
-
-   Likewise, for structures,
-   the language model for mutation is that
-   when you assign a new value to a property of a struct,
-   it's the moral equivalent of assigning a new value
-   to the entire struct.
-   There's no reference semantics,
-   so no spooky action at a distance,
-   and therefore no overlapping access
-   (which could cause such a thing)
-   is allowed.
-
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
-such as a structure's properties or a tuple's elements.
-Because these are value types, mutation to any piece of the value
-is a mutation to the whole value ---
+such as the properties of a structure or the elements of a tuple.
+Because these are value types, mutating any piece of the value
+mutates the whole value ---
 this means read or write access to one of the properties
 requires read or write access to the whole value.
+This rule ensures that value semantics are preserved,
+but it doesn't apply to classes, which are reference types.
+A mutation to one of the properties of a class instance
+isn't considered a mutation to the class instance as a whole.
 
-For example,
+Here's an example
+of how properties can have conflicting access:
 
 .. testcode:: memory-tuple
 
@@ -396,13 +362,15 @@ For example,
     xx Current access (a modification) started at:
 
 In the example above,
-calling ``balance(_:_:)`` on the elements of a tuple fails
+calling ``balance(_:_:)`` on the elements of a tuple
+is an error
 because there are overlapping write accesses to the tuple.
 Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
 which means ``balance(_:_:)`` needs write access to them.
-In both cases, a write access to the tuple member
+In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
-This means you have two write access to ``myTuple`` with exactly the same duration.
+This means there are two write access to ``myTuple``
+with exactly the same duration.
 
 Although a structure is also a value type,
 in many cases the compiler can prove
@@ -445,17 +413,61 @@ The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
 
 In contrast, if ``health`` is a computed property,
-it's no longer possible to prove that the overlapping writes are safe.
+the compiler can't prove whether
+the overlapping writes are safe:
 
-.. docnote:: Not quite the right wording here...
-   In some places, the compiler could prove this,
-   we just made the bright line that it doesn't try
-   for getters and setters.
-   That would be even more confusing, since you'd have a hidden cliff.
+.. testcode:: memory-computed-property
 
-Any mutation to a property of ``oscar``
+    -> struct Player {
+           var name: String
+           var remainingLives = 5
+           var energy = 10
+           private var _health: Int = 10
+           var health: Int {
+               get {
+                   return _health
+               }
+               set {
+                   if newValue > 0 {
+                       _health = newValue
+                   } else {
+                       remainingLives -= 1
+                       _health = 10
+                   }
+               }
+           }
+           init(name: String) {
+               self.name = name
+           }
+       }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    >> func f() {
+    -> var oscar = Player(name: "Oscar")
+    -> balance(&oscar.health, &oscar.energy)  // Error
+    >> }
+    >> f()
+    !! <REPL Input>:3:11: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !! balance(&oscar.health, &oscar.energy)  // Error
+    !!                        ^~~~~~~~~~~~~
+    !! <REPL Input>:3:26: note: conflicting access is here
+    !! balance(&oscar.health, &oscar.energy)  // Error
+    !!         ^~~~~~~~~~~~~
+    !! <REPL Input>:1:1: error: use of unresolved identifier 'f'
+    !! f()
+    !! ^
+
+In the version of ``health`` above,
+any time the player runs out of health points,
+the property setter subtracts a life
+and resets ``health`` to its full value of ten.
+Because ``health`` is a computed property,
+any mutation to a property of ``oscar``
 requires mutation to the entire ``Player`` structure,
-so overlapping changes to its properties aren't allowed.
+so overlapping changes to the structure's properties aren't allowed.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
@@ -463,72 +475,21 @@ so overlapping changes to its properties aren't allowed.
    to two different associated values on the same enum
    would violate exclusivity.
 
+.. note::
 
-.. docnote:: REVISION ENDED HERE
+   The compiler can prove
+   that overlapping access to properties of a structure is safe
+   if the structure is the value of local variable
+   that isn't captured by a closure,
+   or if it's the value of a local variables
+   that's captured by a nonescaping closure.
+   For global variables,
+   class properties,
+   and local variables that are captured by an escaping closures,
+   the compiler can’t prove overlapping access is safe.
 
-Exclusive Access for Reference Types
-------------------------------------
-
-Because classes are reference types,
-a mutation to one of the properties of a class instance
-isn't considered a mutation to the class instance as a whole.
-That rule ensures that value semantics are preserved for value types,
-but it doesn't apply to classes, which are reference types.
-It's not unusual to have faraway code change parts of a class.
-
-For example,
-the code below uses the ``balance(_:_:)`` function
-from the previous example
-to level the odds for two players
-by balancing their scores.
-
-.. testcode:: memory-reference-types
-
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> class Game {
-           var playerOneScore: Int = 5
-           var playerTwoScore: Int = 10
-       }
-    ---
-    -> let game = Game()
-    << // game : Game = REPL.Game
-    -> balance(&game.playerOneScore, &game.playerTwoScore)  // Ok
-    >> game.playerOneScore
-    << // r0 : Int = 7
-    >> game.playerTwoScore
-    << // r1 : Int = 8
-
-Here, the access to ``game.playerOneScore`` and ``game.playerTwoScore`` do overlap,
-and they're both write accesses.
-However,
-because ``Game`` is a class,
-access to one of its properties
-*doesn't* require access to the entire instance.
-The two write accesses happen alongside one another
-
-::
-
-    PLACEHOLDER ART FOR SUGGESTED FIGURE
-
-    balance(&game.playerOneScore, &game.playerTwoScore)
-            --------------------  --------------------
-                    |                     |                game
-                    |                     |
-                    |                     +------------->  p2score
-                    +----------------------------------->  p1score
-
-.. XXX Contrast the figure above
-   with the "share health" figure for a struct.
-
-.. XXX Along the lines of the above discussion for properties,
-   mutating methods on classes
-   have read/write access to only the properties they actually access.
-   No long-term access to 'self'.
-
+.. Devin says the latter are "checked at run time"
+   but they appear to just be a hard error.
 
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
@@ -688,7 +649,7 @@ A predictable, immediate failure is also easier to debug.
        not that you don't get copying.
        It lets you actually know that you have non-overlapping access.
 
--- -- -- -- -- -- 
+-- -- -- -- -- --
 
 In Swift,
 the term *safety* usually refers to :newTerm:`memory safety` ---
@@ -701,7 +662,7 @@ Those APIs don't guarantee memory safety,
 so it's your responsibility to review your code
 when you use them.
 
--- -- -- -- -- -- 
+-- -- -- -- -- --
 
 Move to "Error Handling":
 
