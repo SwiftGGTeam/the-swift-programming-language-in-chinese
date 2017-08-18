@@ -999,10 +999,6 @@ rather than performing those checks while your code is running.
 
 .. TODO: vvvvvvvvv Move out of Exclusive Access
 
-* A nested function that captures a value
-  which is guaranteed to never escape,
-  such as an in-out parameter.
-
 .. TR: John suggests moving the above.
    It's the same semantics for closures.
    This list is the places where we decide
