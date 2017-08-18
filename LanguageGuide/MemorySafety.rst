@@ -46,8 +46,6 @@ Characteristics of Memory Access
 
 .. XXX Convert listings in this section to test code.
 
-.. Define "conflicting" access to memory.
-
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
 *what value* is the code acessing,
@@ -105,7 +103,7 @@ that accessing the same area of memory is like writing and reading a shared piec
 Imagine your code as a set of people that take turns to either read a set amount of words
 or write something specific onto the paper.
 Instantaneous access means the people take distinct turns to interact with the paper,
-making the resulting output is easy to reason about and predict.
+making the resulting output easy to reason about and predict.
 Long-term access means the turns aren't distinct and instead potentially overlap each other,
 meaning you could get people reading and writing on the paper at the same time to potentially
 unpredictable results.
@@ -119,6 +117,10 @@ are *not* deterministic.  Instead, it's dependent on factors like how fast one p
 on how slow the other person writes.  The same
 result of non-deterministic behavior applies to the case of
 multiple people writing on the same paper at the same time.
+
+In essence, multiple accesses to the same area of memory at the same time could potentially
+produce unpredictable or inconsistent behaviour if one of the accessess is a write access.  This
+is called conflicting access.
 
 What Exclusive Access Guarantees
 --------------------------------
