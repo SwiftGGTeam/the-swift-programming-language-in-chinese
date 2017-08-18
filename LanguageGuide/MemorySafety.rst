@@ -22,7 +22,7 @@ For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
-  This guarantee is called :newterm:`definite initialization`
+  This guarantee is called :newterm:`definite initialization`,
   and is discussed in "Initialization".
 
 * Only memory that is part of a data structure
@@ -50,8 +50,8 @@ Characteristics of Memory Access
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
-*what value* is the compiler accessing,
-*how* is the compiler accessing the value, and
+*what value* the is compiler accessing,
+*how* the compiler is accessing the value, and
 *how long* the compiler needs access to that value.
 
 *What value* the compiler is accessing is the address in memory the compiler is concerned with.
@@ -60,7 +60,7 @@ The *how* of a memory access refers to
 whether the compiler is reading from or writing to that location in memory.
 If the compiler is loading from a value,
 the access is defined as a *read access*.
-Else if the compiler is assigning to or modifying a value,
+If the compiler is instead assigning to or modifying a value,
 the access is defined as a *write access*.
 
 The following code sample is annotated to demonstrate
@@ -80,7 +80,7 @@ the compiler needs *instantaneous* access or *long-term* access.
 An access is *instantaneous* if no other code can execute on the same thread
 while the access in question is happening.
 One consequence of this "blocking" property of instantaneous access is that
-no two instantaneous accesses can overlap each other's execution.
+no two instantaneous accesses overlap each other's execution.
 
 For the most part, most memory accesses in your code are instantaneous.
 For example,
@@ -216,8 +216,6 @@ is also an error --- for example:
 The ``balance(_:_:)`` function above
 modifies its two parameters
 to divide the total value evenly between them.
-(It's used again in the examples below
-to evenly share health points between players in a game.)
 Calling it with ``myNumber`` and ``myOtherNumber`` as parameters
 doesn't violate exclusive access to memory ---
 there are write accesses to both parameters at the same time,
@@ -232,6 +230,10 @@ to the same memory at the same time.
    Worth revisiting the discussion in the guide/reference
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
+
+.. Nate: I think this parenthetical just gets in the way:
+   (It's used again in the examples below 
+   to evenly share health points between players in a game.)
 
 Exclusive Access for Methods
 ----------------------------
@@ -271,7 +273,7 @@ and lasts until the function returns.
 In this case, there's no other code
 inside of ``restoreHealth()``
 that could have an overlapping access to properties of a ``Player``.
-The ``shareHealth(withe:)`` method below takes an in-out parameter,
+The ``shareHealth(with:)`` method below takes another ``Player`` as an in-out parameter,
 creating the possibility of overlapping accesses.
 
 .. testcode:: memory-player-share-with-self
