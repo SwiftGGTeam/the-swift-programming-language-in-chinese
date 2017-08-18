@@ -1045,14 +1045,14 @@ Because neither one is marked ``@escaping``,
 they are both nonescaping.
 However, in the function body,
 each of the closures
-are passed as the argument when calling
+are passed as an argument when calling
 another nonescaping closure.
 As a result, each function call in ``takesTwoClosures(_:_:)``
-violates Swift's rule against closure parameters being used as arguments.
+violates the restriction against closure parameters being used as arguments.
 
 .. note::
 
-   If you have code that needs to violate this rule,
+   If you have code that needs to avoid this restriction,
    mark one of the closures as escaping.
 
 For information about memory exclusivity,
