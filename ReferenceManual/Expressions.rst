@@ -974,7 +974,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 Exclusive Access
 ++++++++++++++++
 
-Swift has a rule about passing more than one closure to the same function. 
+Swift has a rule about passing closure parameters to other function calls. 
 This rule allows Swift to perform
 all of its checks for memory exclusivity violations
 in nonescaping closures at compile time,
@@ -1019,39 +1019,43 @@ if it is one of the following:
    the nested function will also be restricted from escaping,
    making it nonescaping too.
 
-For functions that take multiple closures,
+For functions that take one or more closures,
 the restriction is as follows:
-one nonescaping closure that's passed as a parameter
-to the function
-can't be used as a parameter when calling the other closure.
-For example,
-the following isn't allowed:
-
-.. TR: Technically, this doesn't apply
-   only when there are multiple closures.
-   You can also get this by passing a closure to itself.
+a nonescaping closure that's passed as a parameter
+to the enclosing function
+can't be used as a parameter when calling another nonescaping closure.
+For example, none of the following three variations
+on passing nonescaping closure parameters are allowed:
 
 .. testcode:: memory-closures
 
-    -> typealias Transformation = (Int) -> Int
-    -> typealias MetaTransformation = (Transformation, Int) -> Int
-    ---
-    -> func myFunction(_ transformation: Transformation, _ metaTransformation: MetaTransformation) -> Int {
-           return metaTransformation(transformation, 9000)
+    -> func takesTwoClosures(
+           _ first: (Any) -> Void,
+           _ second: (Any) -> Void
+       ) {
+           first(first) // Error
+           first(second) // Error
+           second(first) // Error
        }
-    !! <REPL Input>:2:14: error: passing a non-escaping function parameter 'transformation' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! return metaTransformation(transformation, 9000)
-    !!        ^                  ~~~~~~~~~~~~~~
+    !! <REPL Input>:5:7: warning: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(first) // Error
+    !! ^     ~~~~~
+    !! <REPL Input>:6:7: warning: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(second) // Error
+    !! ^     ~~~~~~
+    !! <REPL Input>:7:7: warning: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second(first) // Error
+    !! ^      ~~~~~
 
 
 In the code above,
-both of the parameters to ``myFunction(_:_:)`` are closures.
+both of the parameters to ``takesTwoClosures(_:_:)`` are closures.
 Because neither one is marked ``@escaping``,
 they are both nonescaping.
 However, in the function body,
-one nonescaping closure, ``transformation``,
-is passed as the argument when calling
-another nonescaping closure, ``metaTransformation``.
+each of the closures
+are passed as the argument when calling
+another nonescaping closure.
 
 .. note::
 
