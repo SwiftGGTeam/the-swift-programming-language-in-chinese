@@ -50,7 +50,7 @@ Characteristics of Memory Access
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
-*what value* the is compiler accessing,
+*what value* the compiler is accessing,
 *how* the compiler is accessing the value, and
 *how long* the compiler needs access to that value.
 
