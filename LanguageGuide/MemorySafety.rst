@@ -518,51 +518,7 @@ so overlapping changes to the structure's properties aren't allowed.
 .. Devin says the latter are "checked at run time"
    but they appear to just be a hard error.
 
-Strategies for Resolving Exclusivity Violations
------------------------------------------------
-
-.. XXX Swap out below with a less throat-clearing intro.
-
-Although, like all types of debugging,
-every piece of code is different,
-there are some common strategies that you can use
-to resolve overlapping access to memory.
-
-**Describe what the code should do.**
-Although it might sound silly,
-it's useful to work out exactly what was intended
-by the code that's causing the compiler error.
-In the example above that uses ``mapInPlace``
-there were at least two ways
-that the code could be expected to execute.
-
-**Make an explicit copy.**
-When you have an exclusivity violation
-caused by reading memory while that memory is being modified,
-you can assign the value to a local constant
-before the mutation begins.
-For example::
-
-    var numbers = [10, 20, 30]
-    let first = numbers[0]
-    numbers.mapInPlace { $0 + first }
-
-The first element of ``numbers`` is assigned to ``first``
-before calling ``mapInPlace``.
-The read access to assign ``first`` its value
-completes before ``mapInPlace`` starts modifying the array,
-so there isn't a conflict.
-
-.. TR: If you have a conflict using overlapping inout writes,
-   you can make an explicit copy using a var,
-   and then you have to merge the two values after.
-
-   func (inout foo, closure) { c() }
-   var f = 100
-   func(&f) { f += 1 }  // Error
-   // FIXME: Use a local variable to copy 'f'.
-
-**Operate on a whole structure instead of its properties.**
+There are two potential ways to fix the conflict access.
 Instead of passing multiple properties of a structure
 as in-out parameters to the same function,
 either write a version of the function
@@ -622,6 +578,52 @@ the properties of ``oscar`` can be read or written.
    one to ``health`` and one to ``energy``.
    Is the difference because those in-out write accesses
    are to a local variable of the outer function/method?
+
+
+Strategies for Resolving Exclusivity Violations
+-----------------------------------------------
+
+.. XXX Swap out below with a less throat-clearing intro.
+
+Although, like all types of debugging,
+every piece of code is different,
+there are some common strategies that you can use
+to resolve overlapping access to memory.
+
+**Describe what the code should do.**
+Although it might sound silly,
+it's useful to work out exactly what was intended
+by the code that's causing the compiler error.
+In the example above that uses ``mapInPlace``
+there were at least two ways
+that the code could be expected to execute.
+
+**Make an explicit copy.**
+When you have an exclusivity violation
+caused by reading memory while that memory is being modified,
+you can assign the value to a local constant
+before the mutation begins.
+For example::
+
+    var numbers = [10, 20, 30]
+    let first = numbers[0]
+    numbers.mapInPlace { $0 + first }
+
+The first element of ``numbers`` is assigned to ``first``
+before calling ``mapInPlace``.
+The read access to assign ``first`` its value
+completes before ``mapInPlace`` starts modifying the array,
+so there isn't a conflict.
+
+.. TR: If you have a conflict using overlapping inout writes,
+   you can make an explicit copy using a var,
+   and then you have to merge the two values after.
+
+   func (inout foo, closure) { c() }
+   var f = 100
+   func(&f) { f += 1 }  // Error
+   // FIXME: Use a local variable to copy 'f'.
+
 
 
 LEFTOVERS
