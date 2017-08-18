@@ -1037,13 +1037,13 @@ on passing nonescaping closure parameters are allowed:
            first(second) // Error
            second(first) // Error
        }
-    !! <REPL Input>:5:7: warning: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first(first) // Error
     !! ^     ~~~~~
-    !! <REPL Input>:6:7: warning: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first(second) // Error
     !! ^     ~~~~~~
-    !! <REPL Input>:7:7: warning: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! <REPL Input>:7:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second(first) // Error
     !! ^      ~~~~~
 
