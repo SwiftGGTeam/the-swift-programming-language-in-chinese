@@ -125,7 +125,7 @@ is called conflicting access.
 What Exclusive Access Guarantees
 --------------------------------
 
-In order to keep the the result of write and read accesses deterministic and prevent against memory corruption,
+In order to keep the result of write and read accesses deterministic and prevent against memory corruption,
 Swift guarantees *exclusive access* when accessing memory, which means that
 no write access can overlap any other access to the same area of memory at the same time of execution.
 Overlapping read accesses are allowed because the value returned is deterministic.
