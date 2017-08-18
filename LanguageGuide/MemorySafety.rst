@@ -54,8 +54,7 @@ to the discussion of exclusive access:
 *how* is the compiler accessing the value, and
 *how long* the compiler needs access to that value.
 
-*What value* the compiler is accessing
-is the address in memory the compiler is reading from.
+*What value* the compiler is accessing is the address in memory the compiler is concerned with.
 
 The *how* of a memory access refers to
 whether the compiler is reading from or writing to that location in memory.
