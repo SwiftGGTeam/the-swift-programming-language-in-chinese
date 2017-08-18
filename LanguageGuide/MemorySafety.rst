@@ -36,13 +36,17 @@ For example:
   This guarantee is discussed in "Automatic Reference Counting".
 
 One aspect of memory safety that has not yet been covered is that
-memory that contains shared mutable state must not be accessed at the same time.
-This guarantee is called :newterm:`exclusive access`.
+memory that contains shared mutable state
+must not have conflicting accesses.
+This guarantee is called :newterm:`exclusive access`,
+and is discussed in the rest of this chapter.
 
 Characteristics of Memory Access
 -------------------------------
 
 .. XXX Convert listings in this section to test code.
+
+.. Define "conflicting" access to memory.
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
