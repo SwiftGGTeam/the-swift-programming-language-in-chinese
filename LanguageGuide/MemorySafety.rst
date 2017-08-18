@@ -35,15 +35,15 @@ Characteristics of Memory Access
 
 .. XXX Convert listings in this section to test code.
 
-There are three characteristics of memory access that are relevant 
+There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
 *what value* is the compiler accessing, *how* is the compiler accessing the value, and
 *how long* the compiler needs access to that value.
 
 *What value* the compiler is accessing is the address in memory the compiler is reading from.
 
-The *how* of a memory access refers to whether the compiler is reading from or writing to that location in memory. 
-If the compiler is loading from a value, the access is defined as a *read access*. 
+The *how* of a memory access refers to whether the compiler is reading from or writing to that location in memory.
+If the compiler is loading from a value, the access is defined as a *read access*.
 Else if the compiler is assigning to or modifying a value, the access is defined as a *write access*.
 
 The following code sample is annotated to demonstrate
@@ -57,10 +57,10 @@ where read and write accesses occur in code:
         number += i // this a read from i and then a write to number
     }
 
-Finally, the *how long* of a memory access refers to whether 
-the compiler needs *instantaneous* access or *long-term* access. 
-An access is *instantaneous* if no other accesses can occur while the access in question is happening. 
-For the most part, most memory accesses are instantaneous.  For example, 
+Finally, the *how long* of a memory access refers to whether
+the compiler needs *instantaneous* access or *long-term* access.
+An access is *instantaneous* if no other accesses can occur while the access in question is happening.
+For the most part, most memory accesses are instantaneous.  For example,
 all the accesses in the earlier example code are instantaneous accesses:
 
 
@@ -72,13 +72,13 @@ all the accesses in the earlier example code are instantaneous accesses:
         number += i // instantaneous read from i, followed by instantaneous write to number
     }
 
-However, there are certain conditions in code (that will be expanded upon later) 
-that require the compiler to have a *long-term* access that lasts 
+However, there are certain conditions in code (that will be expanded upon later)
+that require the compiler to have a *long-term* access that lasts
 several lines of execution and can potentially overlap with other accesses.
 
-With these definitions in place, the guarantee of exclusive access can defined as 
+With these definitions in place, the guarantee of exclusive access can defined as
 no write access can overlap any other access to the same area of memory at the same time of execution.
-If a long-term access overlaps with another access to the same area of memory, 
+If a long-term access overlaps with another access to the same area of memory,
 where one of the accesses is a write access, then that is an exclusive access violation.
 
 
@@ -615,7 +615,7 @@ A predictable, immediate failure is also easier to debug.
        not that you don't get copying.
        It lets you actually know that you have non-overlapping access.
 
--- -- -- -- -- -- 
+-- -- -- -- -- --
 
 In Swift,
 the term *safety* usually refers to :newTerm:`memory safety` ---
@@ -628,7 +628,7 @@ Those APIs don't guarantee memory safety,
 so it's your responsibility to review your code
 when you use them.
 
--- -- -- -- -- -- 
+-- -- -- -- -- --
 
 Move to "Error Handling":
 
