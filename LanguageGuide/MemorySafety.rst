@@ -98,17 +98,17 @@ Exclusive Access for In-Out Parameters
 
 A function has write access
 to all of its in-out parameters.
-The write access for in-out parameter starts
+The write access for an in-out parameter starts
 after all of the other parameters have been evaluated
 and lasts for the entire duration of that function call.
 
-.. docnote:: Possible example of the "after all other parameters" rule.
+.. docnote:: Possible example of the "after all other parameters" rule?
 
-One consequence of this is that you can't access the original
+One consequence of this long-term write access
+is that you can't access the original
 variable that was passed as in-out,
 even if scoping and access control would otherwise permit it ---
-any access to the original
-creates a conflict.
+any access to the original creates a conflict.
 For example:
 
 .. testcode:: memory-increment
@@ -135,9 +135,10 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
 
 .. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
 
+.. docnote:: Code listing & figure: Replace i with a better name.
+
 Passing the same variable as an in-out parameter more than once
-is also an error because of exclusive access.
-For example:
+is also an error --- for example:
 
 .. testcode:: memory-balance
 
@@ -212,29 +213,19 @@ For example:
            var name: String
            var health: Int
            var energy: Int
-           mutating func restoreHealth(completionHandler: () -> Void ) {
+           mutating func restoreHealth() {
                health = 10
-               completionHandler()
            }
        }
 
 In the method above that restores a player's health to 10,
 a write access to ``self`` starts at the beginning of the function
 and lasts until the function returns.
-That means, for example,
-that code in the completion handler
-can't also modify ``self``.
-It also means that
-to call ``restoreHealth(completionHandler:)``
-when there's already a write access to ``self``.
-
-By combining a mutating method with an in-out parameter,
-you can construct an example
-where exclusivity violations are possible
-for code whose meaning is also unclear.
-For example:
-
-.. XXX polish wording in para above
+In this case, there's no other code
+inside of ``restoreHealth()``
+that could have an overlapping access to properties of a ``Player``.
+The ``shareHealth(withe:)`` method below takes an in-out parameter,
+creating the possibility of overlapping accesses.
 
 .. testcode:: memory-player-share-with-self
 
@@ -264,7 +255,7 @@ For example:
     !! ^~~~~~
 
 In the example above,
-calling the `shareHealth(with:)` method
+calling the ``shareHealth(with:)`` method
 for Oscar's player to share health with Maria's player
 doesn't cause a violation.
 There's a write access to ``oscar`` during the method call
