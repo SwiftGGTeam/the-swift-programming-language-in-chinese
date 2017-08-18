@@ -59,10 +59,14 @@ where read and write accesses occur in code:
 
 Finally, the *how long* of a memory access refers to whether
 the compiler needs *instantaneous* access or *long-term* access.
-An access is *instantaneous* if no other accesses can occur while the access in question is happening.
-For the most part, most memory accesses are instantaneous.  For example,
-all the accesses in the earlier example code are instantaneous accesses:
 
+An access is *instantaneous* if no other code can execute on the same thread
+while the access in question is happening.
+One consequence of this "blocking" property of instantaneous access is that
+no two instantaneous accesses can overlap each other's execution.
+
+For the most part, most memory accesses in your code are instantaneous.  For example,
+all the accesses in the earlier example code are instantaneous accesses:
 
 ::
 
