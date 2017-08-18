@@ -979,11 +979,8 @@ to other function calls as arguments
 under certain conditions. 
 This restriction allows Swift to perform
 all of its checks for memory exclusivity violations
-in nonescaping closures at compile time,
-and not have to do any checking related to this restriction at runtime.
-For information about additional restrictions related to 
-memory exclusivity,
-see :doc:`../LanguageGuide/MemorySafety`.
+in nonescaping closures when your code compiles,
+rather than performing those checks while your code is running.
 
 .. TODO: vvvvvvvvv Move out of Exclusive Access
 
@@ -1058,6 +1055,8 @@ violates Swift's rule against closure parameters being used as arguments.
    If you have code that needs to violate this rule,
    mark one of the closures as escaping.
 
+For information about memory exclusivity,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. langref-grammar
 
