@@ -30,50 +30,56 @@ One aspect of memory safety that has not yet been covered is that
 memory that contains shared mutable state must not be accessed at the same time.
 This guarantee is called :newterm:`exclusive access`.
 
-Types of Memory Access
-----------------------
+Characteristics of Memory Access
+-------------------------------
 
 .. XXX Convert listings in this section to test code.
 
-For the purposes of explaining exclusive access,
-there are two relevant ways to define how memory is accessed:
+There are three characteristics of memory access that are relevant 
+to the discussion of exclusive access:
+*what value* is the compiler accessing, *how* is the compiler accessing the value, and
+*how long* the compiler needs access to that value.
 
-* Loading from a value is defined as a *read access*.
-* Assigning to or modifying a value is defined a *write access*.
+*What value* the compiler is accessing is the address in memory the compiler is reading from.
+
+The *how* of a memory access refers to whether the compiler is reading from or writing to that location in memory. 
+If the compiler is loading from a value, the access is defined as a *read access*. 
+Else if the compiler is assigning to or modifying a value, the access is defined as a *write access*.
 
 The following code sample is annotated to demonstrate
 where read and write accesses occur in code:
 
 ::
 
-    var i = 1 // assigning to a variable, so this is a write to i
+    var i = 1 // this is a write to i
     func incrementInPlace(_ number: inout Int) {
 
-        number += i // a read from i and then a write to number
+        number += i // this a read from i and then a write to number
     }
 
-For the most part, you usually don't need to think about your code in terms of how
-it accesses memory because all the various read and write accesses happen instantaneously.
+Finally, the *how long* of a memory access refers to whether 
+the compiler needs *instantaneous* access or *long-term* access. 
+An access is *instantaneous* if no other accesses can occur while the access in question is happening. 
+For the most part, most memory accesses are instantaneous.  For example, 
+all the accesses in the earlier example code are instantaneous accesses:
 
-Going back to the metaphor that accessing memory is like writing on a shared piece paper,
-imagine your code as a set of people that take turns to either read a set amount of words
-or write something specific onto the paper. Instantaneous access means their turns to interact with the paper never overlap,
-making the resulting output is easy to reason about and predict.
 
-However, not all read and write accesses are instantaneous.
+::
 
-Using the same shared paper metaphor, if the turns weren't distinct and instead overlapped each other,
-that means you could get people reading and writing on the paper at the same time.
-In the case where it's both people reading the paper at the same time,
-the words on the paper they're sharing is deterministic in that the paper shows the same
-words to both people.
+    var i = 1 // instantaneous write to i
+    func incrementInPlace(_ number: inout Int) {
 
-However, in the case where one person is writing or editing
-the words while another person is reading, the resulting sentences that are read
-are _not_ deterministic.  Instead, it's dependent on how fast the person reads or
-on how slow the other person writes, making the result non-deterministic.  The same
-result of non-deterministic behavior applies to two people writing at the same time.
+        number += i // instantaneous read from i, followed by instantaneous write to number
+    }
 
+However, there are certain conditions in code (that will be expanded upon later) 
+that require the compiler to have a *long-term* access that lasts 
+several lines of execution and can potentially overlap with other accesses.
+
+With these definitions in place, the guarantee of exclusive access can defined as 
+no write access can overlap any other access to the same area of memory at the same time of execution.
+If a long-term access overlaps with another access to the same area of memory, 
+where one of the accesses is a write access, then that is an exclusive access violation.
 
 
 What Exclusive Access Guarantees
