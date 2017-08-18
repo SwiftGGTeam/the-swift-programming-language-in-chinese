@@ -319,13 +319,12 @@ Exclusive Access for Properties
 
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
-such as a structure's properties or a tuple's elements.
+such as the properties of a structure or the elements of a tuple.
 Because these are value types, mutating any piece of the value
 mutates the whole value ---
 this means read or write access to one of the properties
 requires read or write access to the whole value.
-
-For example,
+For example:
 
 .. testcode:: memory-tuple
 
@@ -342,13 +341,15 @@ For example,
     xx Current access (a modification) started at:
 
 In the example above,
-calling ``balance(_:_:)`` on the elements of a tuple fails
+calling ``balance(_:_:)`` on the elements of a tuple
+is an error
 because there are overlapping write accesses to the tuple.
 Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
 which means ``balance(_:_:)`` needs write access to them.
-In both cases, a write access to the tuple member
+In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
-This means you have two write access to ``myTuple`` with exactly the same duration.
+This means there are two write access to ``myTuple``
+with exactly the same duration.
 
 Although a structure is also a value type,
 in many cases the compiler can prove
@@ -391,7 +392,8 @@ The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
 
 In contrast, if ``health`` is a computed property,
-it's no longer possible to prove that the overlapping writes are safe.
+the compiler can't prove whether
+the overlapping writes are safe:
 
 .. testcode:: memory-computed-property
 
@@ -437,13 +439,6 @@ it's no longer possible to prove that the overlapping writes are safe.
     !! f()
     !! ^
 
-
-.. docnote:: Not quite the right wording here...
-   In some places, the compiler could prove this,
-   we just made the bright line that it doesn't try
-   for getters and setters.
-   That would be even more confusing, since you'd have a hidden cliff.
-
 In the version of ``health`` above,
 any time the player runs out of health points,
 the property setter subtracts a life
@@ -459,7 +454,21 @@ so overlapping changes to the structure's properties aren't allowed.
    to two different associated values on the same enum
    would violate exclusivity.
 
-.. docnote:: REVISION ENDED HERE
+.. note::
+
+   The compiler can prove
+   that overlapping access to properties of a structure is safe
+   if the structure is the value of local variable
+   that isn't captured by a closure,
+   or if it's the value of a local variables
+   that's captured by a nonescaping closure.
+   For global variables,
+   class properties,
+   and local variables that are captured by an escaping closures,
+   the compiler can’t prove overlapping access is safe.
+
+.. Devin says the latter are "checked at run time"
+   but they appear to just be a hard error.
 
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
