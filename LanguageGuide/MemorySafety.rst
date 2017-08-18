@@ -33,6 +33,8 @@ This guarantee is called :newterm:`exclusive access`.
 Types of Memory Access
 ----------------------
 
+.. XXX Convert listings in this section to test code.
+
 For the purposes of explaining exclusive access,
 there are two relevant ways to define how memory is accessed:
 
