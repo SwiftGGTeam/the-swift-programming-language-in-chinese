@@ -97,25 +97,47 @@ all the accesses in the earlier example code are instantaneous accesses:
 However, there are certain conditions in code
 (that will be expanded upon later)
 that require the compiler to have a *long-term* access that lasts
-several lines of execution and can potentially overlap with other accesses.
+several lines of execution, meaning that the access can potentially overlap with other accesses.
 
-With these definitions in place,
-the guarantee of exclusive access can defined as
-no write access can overlap any other access to the same area of memory
-at the same time of execution.
-If a long-term access overlaps with another access to the same area of memory,
-where one of the accesses is a write access,
-then that is an exclusive access violation.
+Another way to conceptualize the difference between
+instantaneous vs. long-term accesses is by going back to the metaphor
+that accessing the same area of memory is like writing and reading a shared piece of paper.
+Imagine your code as a set of people that take turns to either read a set amount of words
+or write something specific onto the paper.
+Instantaneous access means the people take distinct turns to interact with the paper,
+making the resulting output is easy to reason about and predict.
+Long-term access means the turns aren't distinct and instead potentially overlap each other,
+meaning you could get people reading and writing on the paper at the same time to potentially
+unpredictable results.
+
+In the case where multiple people are reading the same paper at the same time,
+regardless of how many people there are, the paper shows the same
+words to everyone. The output is deterministic.
+However, in the case where one person is writing or editing
+the words while another person is reading, the resulting sentences that are read out
+are *not* deterministic.  Instead, it's dependent on factors like how fast one person reads or
+on how slow the other person writes.  The same
+result of non-deterministic behavior applies to the case of
+multiple people writing on the same paper at the same time.
 
 What Exclusive Access Guarantees
 --------------------------------
+
+In order to keep the the result of write and read accesses deterministic and prevent against memory corruption,
+Swift guarantees *exclusive access* when accessing memory, which means that
+no write access can overlap any other access to the same area of memory at the same time of execution.
+Overlapping read accesses are allowed because the value returned is deterministic.
+
+If a long-term access overlaps with another access of any kind to the same area of memory,
+where one of the accesses is a write access, then that is an exclusive access violation.  If that happens,
+the compiler will either catch the violation at compile time and give you an error, or if the the violation
+is detected at runtime, program execution will stop immediately instead of throwing an error.
+
 
 .. docnote:: Facts that need to go somewhere...
 
     - Within a single thread (use TSan for multithreading)...
     - When working with shared mutable state...
-    - It's guaranteed not accessed by two pieces of code at the same time
-    - Except for two overlapping reads
     - And except for things that we can prove are safe
 
 Exclusive Access for In-Out Parameters
