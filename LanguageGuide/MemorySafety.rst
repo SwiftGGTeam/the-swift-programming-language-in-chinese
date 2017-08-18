@@ -314,10 +314,18 @@ so there is no violation.
 
 However,
 if you pass ``oscar`` as the other player,
-there's a violation ---
-both the mutating method on ``oscar``
-and passing ``oscar`` as an in-out parameter to that method
-require a write access to the same memory at the same time.
+there's a violation.
+The mutating method needs write access to ``self``
+for the duration of the method,
+and the in-out parameter needs write access to ``player``
+for the same duration.
+Within the method,
+both ``self`` and ``player`` refer to the same ``Player`` ---
+the value of ``oscar``` ---
+which means the two write accesses conflict.
+
+.. XXX Maybe rename the player parameter to teammate?
+   That way you don't have both player and Player in the same discussion.
 
 Exclusive Access for Properties
 -------------------------------
