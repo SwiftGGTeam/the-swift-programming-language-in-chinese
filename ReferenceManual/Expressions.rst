@@ -984,13 +984,15 @@ rather than performing those checks while your code is running.
 
 .. TODO: vvvvvvvvv Move out of Exclusive Access
 
-For the purposes of checking exclusive access to memory,
-a closure is considered nonescaping
-if it is one of the following:
+Closure expressions can be used immediately within another expression
+without being stored first in a variable or constant.
+As a result,
+whether they are escaping or nonescaping is contextual.
+A closure expression is nonescaping
+if it is called immediately
+or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
 
-* A closure expression that's called immediately.
-* A closure expression that's passed
-  as a nonescaping function argument.
 * A nested function that captures a value
   which is guaranteed to never escape,
   such as an in-out parameter.
@@ -1050,11 +1052,7 @@ another nonescaping closure.
 As a result, each function call in ``takesTwoClosures(_:_:)``
 violates the restriction against closure parameters being used as arguments.
 
-.. note::
-
-   If you have code that needs to avoid this restriction,
-   mark one of the closures as escaping.
-
+If you need to avoid this restriction, mark one of the closures as escaping.
 For information about memory exclusivity,
 see :doc:`../LanguageGuide/MemorySafety`.
 
