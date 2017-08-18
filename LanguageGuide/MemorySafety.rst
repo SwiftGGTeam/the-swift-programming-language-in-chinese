@@ -1,16 +1,24 @@
 Memory Safety
 =============
 
-Memory safety is the guarantee that accessing any allocated memory returns a valid result.
-By Swift's standards, a valid result means that the allocated memory has been initialized to a value,
-the value is of the expected type, and the value is of the most recent modification.
-Think of writing and reading from memory safely like writing words onto a piece of paper:
-you would not expect the words to have changed by themselves if you leave and come back to read them later.
-Similarly, when you allocate and write to an address in memory, if you are not intentionally modifying that value,
+Memory safety is the guarantee that
+accessing any allocated memory returns a valid result.
+By Swift's standards,
+a valid result means that the allocated memory has been initialized to a value,
+the value is of the expected type,
+and the value is of the most recent modification.
+Think of writing and reading from memory safely
+like writing words onto a piece of paper:
+you would not expect the words to have changed by themselves
+if you leave and come back to read them later.
+Similarly, when you allocate and write to an address in memory,
+if you are not intentionally modifying that value,
 other code should not be overwriting that value as an unintentional side-effect .
 
-The compiler maintains memory safety by enforcing a set of guarantees around memory access.
-Many of these guarantees have already been covered previously. For example:
+The compiler maintains memory safety
+by enforcing a set of guarantees around memory access.
+Many of these guarantees have already been covered previously.
+For example:
 
 * Variables and constants must have a value assigned to them
   before they can be read.
@@ -21,7 +29,8 @@ Many of these guarantees have already been covered previously. For example:
   can be accessed through that data structure.
   For example, reading past the end of an array
   is an error,
-  it doesn't access the adjacent memory and unintentionally overwrite some other value.
+  it doesn't access the adjacent memory
+  and unintentionally overwrite some other value.
 
 * Memory must not be accessed after it has been deallocated.
   This guarantee is discussed in "Automatic Reference Counting".
@@ -37,14 +46,19 @@ Characteristics of Memory Access
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
-*what value* is the compiler accessing, *how* is the compiler accessing the value, and
+*what value* is the compiler accessing,
+*how* is the compiler accessing the value, and
 *how long* the compiler needs access to that value.
 
-*What value* the compiler is accessing is the address in memory the compiler is reading from.
+*What value* the compiler is accessing
+is the address in memory the compiler is reading from.
 
-The *how* of a memory access refers to whether the compiler is reading from or writing to that location in memory.
-If the compiler is loading from a value, the access is defined as a *read access*.
-Else if the compiler is assigning to or modifying a value, the access is defined as a *write access*.
+The *how* of a memory access refers to
+whether the compiler is reading from or writing to that location in memory.
+If the compiler is loading from a value,
+the access is defined as a *read access*.
+Else if the compiler is assigning to or modifying a value,
+the access is defined as a *write access*.
 
 The following code sample is annotated to demonstrate
 where read and write accesses occur in code:
@@ -65,7 +79,8 @@ while the access in question is happening.
 One consequence of this "blocking" property of instantaneous access is that
 no two instantaneous accesses can overlap each other's execution.
 
-For the most part, most memory accesses in your code are instantaneous.  For example,
+For the most part, most memory accesses in your code are instantaneous.
+For example,
 all the accesses in the earlier example code are instantaneous accesses:
 
 ::
@@ -76,15 +91,18 @@ all the accesses in the earlier example code are instantaneous accesses:
         number += i // instantaneous read from i, followed by instantaneous write to number
     }
 
-However, there are certain conditions in code (that will be expanded upon later)
+However, there are certain conditions in code
+(that will be expanded upon later)
 that require the compiler to have a *long-term* access that lasts
 several lines of execution and can potentially overlap with other accesses.
 
-With these definitions in place, the guarantee of exclusive access can defined as
-no write access can overlap any other access to the same area of memory at the same time of execution.
+With these definitions in place,
+the guarantee of exclusive access can defined as
+no write access can overlap any other access to the same area of memory
+at the same time of execution.
 If a long-term access overlaps with another access to the same area of memory,
-where one of the accesses is a write access, then that is an exclusive access violation.
-
+where one of the accesses is a write access,
+then that is an exclusive access violation.
 
 What Exclusive Access Guarantees
 --------------------------------
