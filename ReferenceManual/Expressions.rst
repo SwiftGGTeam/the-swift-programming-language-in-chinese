@@ -1056,7 +1056,7 @@ violates Swift's rule against closure parameters being used as arguments.
 
    If you have code that needs to violate this rule,
    mark one of the closures as escaping.
-   
+
 
 .. langref-grammar
 
