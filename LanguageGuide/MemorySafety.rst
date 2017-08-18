@@ -50,17 +50,17 @@ Characteristics of Memory Access
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
-*what value* the compiler is accessing,
-*how* the compiler is accessing the value, and
-*how long* the compiler needs access to that value.
+*what value* is the code acessing,
+for what *intent* is the code accessing the value, and
+for what *duration* the code needs access to the value.
 
-*What value* the compiler is accessing is the address in memory the compiler is concerned with.
+*What value* is being accessed refers to the address in memory where the value is stored.
 
-The *how* of a memory access refers to
-whether the compiler is reading from or writing to that location in memory.
-If the compiler is loading from a value,
+The *intent* of a memory access refers to
+whether the value is being read from or written to in memory.
+If the code is loading from a value,
 the access is defined as a *read access*.
-If the compiler is instead assigning to or modifying a value,
+If the code is instead assigning to or modifying a value,
 the access is defined as a *write access*.
 
 The following code sample is annotated to demonstrate
@@ -74,8 +74,8 @@ where read and write accesses occur in code:
         number += i // this a read from i and then a write to number
     }
 
-Finally, the *how long* of a memory access refers to whether
-the compiler needs *instantaneous* access or *long-term* access.
+Finally, the *duration* of a memory access refers to whether
+the code needs *instantaneous* access or *long-term* access.
 
 An access is *instantaneous* if no other code can execute on the same thread
 while the access in question is happening.
@@ -96,7 +96,7 @@ all the accesses in the earlier example code are instantaneous accesses:
 
 However, there are certain conditions in code
 (that will be expanded upon later)
-that require the compiler to have a *long-term* access that lasts
+that require the code to have a *long-term* access that lasts
 several lines of execution, meaning that the access can potentially overlap with other accesses.
 
 Another way to conceptualize the difference between
