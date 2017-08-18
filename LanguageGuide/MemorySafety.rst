@@ -42,24 +42,18 @@ This guarantee is called :newterm:`exclusive access`,
 and is discussed in the rest of this chapter.
 
 Characteristics of Memory Access
--------------------------------
+--------------------------------
 
 .. XXX Convert listings in this section to test code.
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access:
-*what value* is the code acessing,
-for what *intent* is the code accessing the value, and
-for what *duration* the code needs access to the value.
 
-*What value* is being accessed refers to the address in memory where the value is stored.
+* What location in memory is being accessed.
+* How long the access lasts.
+* Whether the memory is being read from or written to.
 
-The *intent* of a memory access refers to
-whether the value is being read from or written to in memory.
-If the code is loading from a value,
-the access is defined as a *read access*.
-If the code is instead assigning to or modifying a value,
-the access is defined as a *write access*.
+.. XXX Add an example/code listing to show aliasing?
 
 The following code sample is annotated to demonstrate
 where read and write accesses occur in code:
@@ -72,30 +66,33 @@ where read and write accesses occur in code:
         number += i // this a read from i and then a write to number
     }
 
-Finally, the *duration* of a memory access refers to whether
-the code needs *instantaneous* access or *long-term* access.
-
-An access is *instantaneous* if no other code can execute on the same thread
-while the access in question is happening.
-One consequence of this "blocking" property of instantaneous access is that
-no two instantaneous accesses overlap each other's execution.
-
-For the most part, most memory accesses in your code are instantaneous.
+An access is :newterm:`instantaneous`
+if it's not possible for other code to run
+after that access starts but before it ends.
+By their nature, two instantaneous accesses can't happen at the same time.
+For the most part,
+most memory access is instantaneous.
 For example,
-all the accesses in the earlier example code are instantaneous accesses:
+all the accesses in the code listing below are instantaneous:
 
 ::
 
     var i = 1 // instantaneous write to i
     func incrementInPlace(_ number: inout Int) {
 
-        number += i // instantaneous read from i, followed by instantaneous write to number
+        // instantaneous read from i, followed by instantaneous write to number
+        number += i
     }
 
-However, there are certain conditions in code
-(that will be expanded upon later)
-that require the code to have a *long-term* access that lasts
-several lines of execution, meaning that the access can potentially overlap with other accesses.
+However,
+there are several kinds of code
+access to memory that spans the execution of other code,
+which is called :newterm:`long-term` access.
+The important difference between instantaneous and long-term access
+is that two long-term accesses can overlap,
+with one access starting before the other ends.
+The specific kinds of Swift code that use long-term access
+are discussed in the sections below.
 
 Another way to conceptualize the difference between
 instantaneous vs. long-term accesses is by going back to the metaphor
