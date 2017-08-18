@@ -982,9 +982,8 @@ all of its checks for memory exclusivity violations
 in nonescaping closures at compile time,
 and not have to do any checking related to this restriction at runtime.
 For information about additional restrictions related to 
-memory exclusivity, see Memory Safety.
-
-.. FIXME: When available, insert a :ref: to the Memory Safety chapter.
+memory exclusivity,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. TODO: vvvvvvvvv Move out of Exclusive Access
 
