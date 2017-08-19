@@ -1037,7 +1037,7 @@ another nonescaping closure.
 As a result, each function call in ``takesTwoClosures(_:_:)``
 violates the restriction against closure parameters being used as arguments.
 
-If you need to avoid this restriction, mark one of the closures as escaping.
+If you need to avoid this restriction, mark one of the parameters as escaping.
 For information about exclusive access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
