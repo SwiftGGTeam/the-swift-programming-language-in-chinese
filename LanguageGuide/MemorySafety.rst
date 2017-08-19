@@ -164,8 +164,8 @@ is detected at runtime, program execution will stop immediately instead of throw
     - When working with shared mutable state...
     - And except for things that we can prove are safe
 
-Exclusive Access for In-Out Parameters
---------------------------------------
+Conflicting Access to In-Out Parameters
+---------------------------------------
 
 A function has write access
 to all of its in-out parameters.
@@ -255,8 +255,8 @@ to the same memory at the same time.
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
 
-Exclusive Access for Methods
-----------------------------
+Conflicting Access to self in Methods
+-------------------------------------
 
 .. This (probably?) applies to all value types,
    but structures are the only place you can observe it.
@@ -351,8 +351,8 @@ which means the two write accesses conflict.
 .. XXX Maybe rename the player parameter to teammate?
    That way you don't have both player and Player in the same discussion.
 
-Exclusive Access for Properties
--------------------------------
+Conflicting Access to Properties
+--------------------------------
 
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
