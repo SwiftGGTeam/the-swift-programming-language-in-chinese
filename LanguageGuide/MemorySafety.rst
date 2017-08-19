@@ -114,12 +114,12 @@ Two accesses to memory conflict if:
 
 .. note::
 
-    Because exclusive access is a slightly broader guarantee
+    Because exclusive access to memory is a slightly broader guarantee
     than memory safety,
     some code that is memory safe
     violates the guarantee of exclusive access.
     Swift allows this code if the compiler can prove
-    that the nonexclusive access is still safe.
+    that the nonexclusive access to memory is still safe.
 
 .. Versions of Swift before Swift 4 ensure memory safety
    by agressively making a copy of the shared mutable state
@@ -135,15 +135,11 @@ Two accesses to memory conflict if:
    It lets you actually know that you have non-overlapping access.
 
 
-.. Brian: We're using "exclusive access" as an elided form of "exclusive access
-   to memory", but it doesn't really work well.  We don't explicitly define it,
-   and it doesn't stand well on its own as a noun.
-
-What Exclusive Access Guarantees
---------------------------------
+What Exclusive Access to Memory Guarantees
+------------------------------------------
 
 In order to keep the result of write and read accesses deterministic and prevent memory corruption,
-Swift guarantees *exclusive access* when accessing memory, which means that
+Swift guarantees exclusive access when accessing memory, which means that
 no write access can overlap any other access to the same area of memory at the same time of execution.
 Overlapping read accesses are allowed because the value returned is deterministic.
 
@@ -241,7 +237,7 @@ there are write accesses to both parameters at the same time,
 but they access different memory.
 In contrast,
 passing ``myNumber`` as the value for both parameters
-does violate exclusive access
+causes conflicting access to memory
 because it tries to have two write accesses
 to the same memory at the same time.
 
