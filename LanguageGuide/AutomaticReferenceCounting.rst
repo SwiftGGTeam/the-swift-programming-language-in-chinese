@@ -21,17 +21,6 @@ Reference counting applies only to instances of classes.
 Structures and enumerations are value types, not reference types,
 and are not stored and passed by reference.
 
-Another aspect of memory management in Swift
-is that the compiler enforces exclusive access to memory.
-This enforcement means that
-two operations can access the same value in memory
-only if both operations are reading that memory.
-Unlike ARC,
-exclusivity applies to all data types,
-not just to instances of classes.
-
-.. XXX Mention threading promise, or lack thereof.
-
 .. _AutomaticReferenceCounting_HowARCWorks:
 
 How ARC Works
