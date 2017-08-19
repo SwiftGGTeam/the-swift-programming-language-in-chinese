@@ -48,6 +48,8 @@ In essence, two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
+.. _MemorySafety_WhatIsExclusivity:
+
 Characteristics of Memory Access
 --------------------------------
 
@@ -124,6 +126,7 @@ are discussed in the sections below.
    not that you don't get copying.
    It lets you actually know that you have non-overlapping access.
 
+.. _MemorySafety_Guarantees:
 
 What Exclusive Access to Memory Guarantees
 ------------------------------------------
@@ -144,6 +147,8 @@ is detected at runtime, program execution will stop immediately instead of throw
     - Within a single thread (use TSan for multithreading)...
     - When working with shared mutable state...
     - And except for things that we can prove are safe
+
+.. _MemorySafety_Inout:
 
 Conflicting Access to In-Out Parameters
 ---------------------------------------
@@ -235,6 +240,8 @@ to the same memory at the same time.
    Worth revisiting the discussion in the guide/reference
    to adjust wording there, now that it's a consequence of a general rule
    instead of a one-off rule specifically for in-out parameters.
+
+.. _MemorySafety_Methods:
 
 Conflicting Access to self in Methods
 -------------------------------------
@@ -331,6 +338,8 @@ which means the two write accesses conflict.
 
 .. XXX Maybe rename the player parameter to teammate?
    That way you don't have both player and Player in the same discussion.
+
+.. _MemorySafety_Properties:
 
 Conflicting Access to Properties
 --------------------------------
@@ -555,6 +564,7 @@ the properties of ``oscar`` can be read or written.
    Is the difference because those in-out write accesses
    are to a local variable of the outer function/method?
 
+.. _MemorySafety_Resolving:
 
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
