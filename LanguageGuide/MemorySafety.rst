@@ -1,16 +1,20 @@
 Memory Safety
 =============
 
-By default, Swift prevents unsafe behavior.
-For example,
-Swift ensures that variables are initialized before they're used,
-memory isn't accessed after it's been deallocated,
+By default, Swift prevents unsafe behavior from happening in your code.
+For example, Swift ensures that variables are initialized before they’re used,
+memory isn’t accessed after it’s been deallocated,
 and array indices are checked for out-of-bounds errors.
-In addition,
-Swift makes sure that
-multiple accesses to the same area of memory don't conflict,
+
+Swift also makes sure that multiple accesses
+to the same area of memory don’t conflict,
 by requiring that code modifying an area of memory
 has exclusive access to that memory.
+Because Swift manages memory automatically,
+most of the time you don't have to think about accessing memory at all.
+That said,
+it's important to understand where potential conflicts can occur,
+so you can avoid writing code that causes either compile-time or runtime errors.
 
 .. Brian:
    Memory safety refers to...
@@ -23,6 +27,27 @@ Understanding Conflicting Access to Memory
 ------------------------------------------
 
 .. XXX Convert listings in this section to test code.
+
+A conflicting access to memory can occur
+when different parts of your code are trying
+to access the same area of memory at the same time.
+In general, your code is accessing memory all the time.
+Accessing memory happens in your code
+when you read from or write to an area of memory.
+For example,
+the following code contains both a read access and a write access:
+
+:: 
+
+    // a write to one
+    var one = 1
+    func incrementInPlace(_ number: inout Int) {
+
+        // a read from one and then a write to number
+        number += one
+    }
+
+.. XXX REFLOW BELOW
 
 You can think of safely reading from and writing to memory
 like writing words onto a shared piece of paper,
