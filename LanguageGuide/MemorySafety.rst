@@ -247,12 +247,12 @@ Conflicting Access to self in Methods
    but you can't mutate their associated values in place,
    and tuples can't have methods.
 
+.. Methods behave like self is passed to the method as inout
+   because, under the hood, that's exactly what happens.
+
 A mutating method on a structure has write access to ``self``
 for the duration of the method.
 For example:
-
-.. docnote:: This behaves like self is passed to the method as inout
-             because, under the hood, that's exactly what happens.
 
 .. testcode:: memory-player-share-with-self
 
