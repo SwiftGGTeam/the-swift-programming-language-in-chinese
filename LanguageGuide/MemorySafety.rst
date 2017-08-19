@@ -145,7 +145,7 @@ Overlapping read accesses are allowed because the value returned is deterministi
 
 If a long-term access overlaps with another access of any kind to the same area of memory,
 where one of the accesses is a write access, then that is an exclusive access violation.  If that happens,
-the compiler will either catch the violation at compile time and give you an error, or if the the violation
+the compiler will either catch the violation at compile time and give you an error, or if the violation
 is detected at runtime, program execution will stop immediately instead of throwing an error.
 
 
