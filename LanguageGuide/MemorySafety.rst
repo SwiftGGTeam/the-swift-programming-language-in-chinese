@@ -636,25 +636,3 @@ Stopping execution immediately, at the point of the violation,
 prevents propagating invalid state to other parts of the program
 which can corrupt the program's state and the user's data.
 A predictable, immediate failure is also easier to debug.
-
--- -- -- -- -- --
-
--- -- -- -- -- --
-
-Move to "Error Handling":
-
-When Swift needs to stop program execution
-in a controlled and predictable manner,
-it uses a mechanism called a trap.
-Although a trap may appear to be the same as a crash to a user
-who sees the program suddenly stop,
-the control and predictability of a trap
-are an important difference.
-
-.. Trapping is also something that Foundation and other frameworks do
-   when you violate part of the API contract.
-   (Pretty sure that's the same thing there & here.)
-   It's implemented there an illegal instruction
-   and in the stdlib by Builtin.int_trap().
-
-.. XXX Details about trapping really belong under "Error Handling".
