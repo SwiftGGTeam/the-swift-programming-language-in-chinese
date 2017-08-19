@@ -1,26 +1,6 @@
 Memory Safety
 =============
 
-By default Swift is a memory-safe language.
-
-.. Brian:
-   Memory safety refers to...
-   The term *safety* usually refers to :newTerm:`memory safety`...
-   Unsafe access to memory is available, if you ask for it explicitly...
-
-Memory safety is the guarantee that
-accessing any allocated memory returns a valid result.
-By Swift's standards,
-a valid result means that the allocated memory has been initialized to a value,
-the value is of the expected type.
-Think of writing and reading from memory safely
-like writing words onto a piece of paper:
-you would not expect the words to have changed by themselves
-if you leave and come back to read them later.
-Similarly, when you allocate and write to an address in memory,
-if you are not intentionally modifying that value,
-other code should not be overwriting that value as an unintentional side-effect.
-
 By default, Swift prevents unsafe behavior.
 For example,
 Swift ensures that variables are initialized before they're used,
@@ -31,6 +11,21 @@ Swift makes sure that
 multiple accesses to the same area of memory don't conflict,
 by requiring that code modifying an area of memory
 has exclusive access to that memory.
+
+.. Brian:
+   Memory safety refers to...
+   The term *safety* usually refers to :newTerm:`memory safety`...
+   Unsafe access to memory is available, if you ask for it explicitly...
+
+.. Brian: Tie the example below to conflicting access.
+
+Think of writing and reading from memory safely
+like writing words onto a piece of paper:
+You would not expect the words to have changed by themselves
+if you leave and come back to read them later.
+Similarly, when you allocate and write to an address in memory,
+if you are not intentionally modifying that value,
+other code should not be overwriting that value as an unintentional side-effect.
 
 Characteristics of Memory Access
 --------------------------------
