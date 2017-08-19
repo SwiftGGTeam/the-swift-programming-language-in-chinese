@@ -52,13 +52,6 @@ Two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
-There are three characteristics of memory access that are relevant
-to the discussion of exclusive access to memory:
-
-* What location in memory is being accessed.
-* How long the access lasts.
-* Whether the memory is being read from or written to.
-
 .. XXX Add an example/code listing to show aliasing?
 
 The following code sample is annotated to demonstrate
@@ -68,7 +61,6 @@ where read and write accesses occur in code:
 
     var i = 1 // this is a write to i
     func incrementInPlace(_ number: inout Int) {
-
         number += i // this a read from i and then a write to number
     }
 
@@ -84,7 +76,6 @@ all the accesses in the code listing below are instantaneous:
 
     var i = 1 // instantaneous write to i
     func incrementInPlace(_ number: inout Int) {
-
         // instantaneous read from i, followed by instantaneous write to number
         number += i
     }
