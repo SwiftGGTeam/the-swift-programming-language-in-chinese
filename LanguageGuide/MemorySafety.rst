@@ -224,6 +224,13 @@ causes conflicting access to memory
 because it tries to have two write accesses
 to the same memory at the same time.
 
+.. note::
+
+    Because operators are implemented as static methods,
+    an operator that modifies one or more of operands
+    behaves the same as a function
+    that takes those value as an in-out parameter.
+
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
    to adjust wording there, now that it's a consequence of a general rule
