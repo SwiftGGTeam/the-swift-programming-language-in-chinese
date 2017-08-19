@@ -17,17 +17,22 @@ has exclusive access to that memory.
    The term *safety* usually refers to :newTerm:`memory safety`...
    Unsafe access to memory is available, if you ask for it explicitly...
 
-.. Brian: Tie the example below to conflicting access.
+.. _MemorySafety_WhatIsExclusivity:
 
-You can think of safely writing and reading from memory
-like writing words onto a shared piece of paper, where your code
-is a set of people that take turns
-to either read a set amount of words
-or write something specific onto the paper.
-If people take distinct turns to interact with the paper,
+Understanding Conflicting Access
+--------------------------------
+
+.. XXX Convert listings in this section to test code.
+
+You can think of safely reading from and writing to memory
+like writing words onto a shared piece of paper,
+where several people take turns
+reading from or writing to the same piece of paper.
+If people take distinct turns interacting with the paper,
 the resulting output is easy to reason about and predict.
-But if the turns aren't distinct and instead potentially overlap each other, you could get people reading and writing on the paper at the same time to potentially
-unpredictable results.
+But if the turns can overlap,
+people could end up reading and writing on the paper at the same time,
+yielding potentially unpredictable results.
 
 In the case where multiple people are reading the same paper at the same time,
 regardless of how many people there are, the paper shows the same
@@ -47,13 +52,6 @@ In essence, two accesses to memory conflict if:
 * Both accesses use the same location in memory.
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
-
-.. _MemorySafety_WhatIsExclusivity:
-
-Characteristics of Memory Access
---------------------------------
-
-.. XXX Convert listings in this section to test code.
 
 There are three characteristics of memory access that are relevant
 to the discussion of exclusive access to memory:
