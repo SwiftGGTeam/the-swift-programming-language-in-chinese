@@ -34,20 +34,20 @@ But if the turns can overlap,
 people could end up reading and writing on the paper at the same time,
 yielding potentially unpredictable results.
 
-In the case where multiple people are reading the same paper at the same time,
-regardless of how many people there are, the paper shows the same
-words to everyone,
-However, in the case where one person is writing or editing
-the words while another person is reading, the resulting sentences that are read out
-are *not* deterministic.  Instead, it's dependent on factors like how fast one person reads or
-on how slow the other person writes.  The same
-result of non-deterministic behavior applies to the case of
-multiple people writing on the same paper at the same time.
+If multiple people are reading from the paper,
+the paper shows the same words to everyone,
+which is not a problem.
+However, if one person is writing
+while another person is reading,
+the person reading could end up reading nonsense ---
+for example, by reading a sentence whose end hasn't been written down yet.
 
-Similarly, multiple accesses to the same area of memory at the same time could potentially
-produce unpredictable or inconsistent behaviour if one of the accesses is a write access.  This is called conflicting access.
-
-In essence, two accesses to memory conflict if:
+Similarly,
+multiple accesses to the same area of memory at the same time could
+produce unpredictable or inconsistent behaviour
+if one of the accesses is writing to that memory.
+This is called :newterm:`conflicting access`.
+Two accesses to memory conflict if:
 
 * Both accesses use the same location in memory.
 * Both accesses happen at the same time.
