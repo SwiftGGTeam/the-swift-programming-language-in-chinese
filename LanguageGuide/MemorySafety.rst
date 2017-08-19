@@ -97,6 +97,9 @@ Most memory access is instantaneous.
 For example,
 all the accesses in the code listing below are instantaneous:
 
+.. XXX Lies!  Lies!  (The in-out parameter is a long-term write.)
+   Let's come up with an example here that doesn't use in-out or +=
+
 ::
 
     var i = 1 // instantaneous write to i
