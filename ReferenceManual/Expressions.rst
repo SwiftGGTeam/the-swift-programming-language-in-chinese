@@ -993,7 +993,7 @@ Swift prevents you from passing closure parameters
 to other functions as arguments
 under certain conditions. 
 This restriction allows Swift to perform
-all of its checks for memory exclusivity violations
+all of its checks for conflicting access to memory
 in nonescaping closures when your code compiles,
 rather than performing those checks while your code is running.
 
@@ -1038,7 +1038,7 @@ As a result, each function call in ``takesTwoClosures(_:_:)``
 violates the restriction against closure parameters being used as arguments.
 
 If you need to avoid this restriction, mark one of the closures as escaping.
-For information about memory exclusivity,
+For information about exclusive access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
 .. langref-grammar
