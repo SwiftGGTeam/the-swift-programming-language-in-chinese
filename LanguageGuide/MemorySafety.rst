@@ -19,13 +19,34 @@ has exclusive access to that memory.
 
 .. Brian: Tie the example below to conflicting access.
 
-Think of writing and reading from memory safely
-like writing words onto a piece of paper:
-You would not expect the words to have changed by themselves
-if you leave and come back to read them later.
-Similarly, when you allocate and write to an address in memory,
-if you are not intentionally modifying that value,
-other code should not be overwriting that value as an unintentional side-effect.
+You can think of safely writing and reading from memory
+like writing words onto a shared piece of paper, where your code
+is a set of people that take turns
+to either read a set amount of words
+or write something specific onto the paper.
+If people take distinct turns to interact with the paper,
+the resulting output is easy to reason about and predict.
+But if the turns aren't distinct and instead potentially overlap each other, you could get people reading and writing on the paper at the same time to potentially
+unpredictable results.
+
+In the case where multiple people are reading the same paper at the same time,
+regardless of how many people there are, the paper shows the same
+words to everyone,
+However, in the case where one person is writing or editing
+the words while another person is reading, the resulting sentences that are read out
+are *not* deterministic.  Instead, it's dependent on factors like how fast one person reads or
+on how slow the other person writes.  The same
+result of non-deterministic behavior applies to the case of
+multiple people writing on the same paper at the same time.
+
+Similarly, multiple accesses to the same area of memory at the same time could potentially
+produce unpredictable or inconsistent behaviour if one of the accesses is a write access.  This is called conflicting access.
+
+In essence, two accesses to memory conflict if:
+
+* Both accesses use the same location in memory.
+* Both accesses happen at the same time.
+* At least one access is writing to that memory.
 
 Characteristics of Memory Access
 --------------------------------
@@ -79,37 +100,6 @@ is that two long-term accesses can overlap,
 with one access starting before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
-
-Another way to conceptualize the difference between
-instantaneous vs. long-term accesses is by going back to the metaphor
-that accessing the same area of memory is like writing and reading a shared piece of paper.
-Imagine your code as a set of people that take turns to either read a set amount of words
-or write something specific onto the paper.
-Instantaneous access means the people take distinct turns to interact with the paper,
-making the resulting output easy to reason about and predict.
-Long-term access means the turns aren't distinct and instead potentially overlap each other,
-meaning you could get people reading and writing on the paper at the same time to potentially
-unpredictable results.
-
-In the case where multiple people are reading the same paper at the same time,
-regardless of how many people there are, the paper shows the same
-words to everyone. The output is deterministic.
-However, in the case where one person is writing or editing
-the words while another person is reading, the resulting sentences that are read out
-are *not* deterministic.  Instead, it's dependent on factors like how fast one person reads or
-on how slow the other person writes.  The same
-result of non-deterministic behavior applies to the case of
-multiple people writing on the same paper at the same time.
-
-In essence, multiple accesses to the same area of memory at the same time could potentially
-produce unpredictable or inconsistent behaviour if one of the accesses is a write access.  This
-is called conflicting access.
-Two accesses to memory conflict if:
-
-* Both accesses use the same location in memory.
-* Both accesses happen at the same time.
-* At least one access is writing to that memory.
-
 .. XXX conflicts are unsafe --> they trigger an error
 
 .. note::
