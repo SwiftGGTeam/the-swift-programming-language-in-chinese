@@ -19,8 +19,8 @@ has exclusive access to that memory.
 
 .. _MemorySafety_WhatIsExclusivity:
 
-Understanding Conflicting Access
---------------------------------
+Understanding Conflicting Access to Memory
+------------------------------------------
 
 .. XXX Convert listings in this section to test code.
 
@@ -36,7 +36,7 @@ yielding potentially unpredictable results.
 
 If multiple people are reading from the paper,
 the paper shows the same words to everyone,
-which is not a problem.
+which isn't a problem.
 However, if one person is writing
 while another person is reading,
 the person reading could end up reading nonsense ---
@@ -46,7 +46,6 @@ Similarly,
 multiple accesses to the same area of memory at the same time could
 produce unpredictable or inconsistent behaviour
 if one of the accesses is writing to that memory.
-This is called :newterm:`conflicting access`.
 Two accesses to memory conflict if:
 
 * Both accesses use the same location in memory.
@@ -77,8 +76,7 @@ An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
 By their nature, two instantaneous accesses can't happen at the same time.
-For the most part,
-most memory access is instantaneous.
+Most memory access is instantaneous.
 For example,
 all the accesses in the code listing below are instantaneous:
 
@@ -92,14 +90,15 @@ all the accesses in the code listing below are instantaneous:
     }
 
 However,
-there are several kinds of code
-access to memory that spans the execution of other code,
-which is called :newterm:`long-term` access.
+there are several ways to access memory
+that span the execution of other code,
+which is called a :newterm:`long-term` access.
 The important difference between instantaneous and long-term access
 is that two long-term accesses can overlap,
 with one access starting before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
+
 .. XXX conflicts are unsafe --> they trigger an error
 
 .. note::
