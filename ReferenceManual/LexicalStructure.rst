@@ -345,7 +345,7 @@ so they must be escaped with backticks in that context.
   ``#if``,
   ``#imageLiteral``,
   ``#line``,
-  ``#selector``.
+  ``#selector``,
   and ``#sourceLocation``.
 
 .. langref-grammar
