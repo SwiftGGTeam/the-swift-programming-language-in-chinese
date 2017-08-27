@@ -165,7 +165,7 @@ is made available in the current scope.
 
     import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
-    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``let`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
