@@ -16,7 +16,7 @@ That said,
 it's important to understand where potential conflicts can occur,
 so you can avoid writing code that causes either compile-time or runtime errors.
 
-.. Brian:
+.. XXX Brian: Let's bring back this discussion.
    Memory safety refers to...
    The term *safety* usually refers to :newTerm:`memory safety`...
    Unsafe access to memory is available, if you ask for it explicitly...
@@ -136,7 +136,7 @@ are discussed in the sections below.
    However, the copying appproach has a negative impact
    on performance and memory usage.
 
-.. TR: Swift 4 does this copying too.
+.. XXX TR: Swift 4 does this copying too.
    Frame this in terms as the copying is the *only* thing Swift 3 did.
    The carrot today is that you have a cleaner semantic model,
    not that you don't get copying.
@@ -146,6 +146,9 @@ are discussed in the sections below.
 
 What Exclusive Access to Memory Guarantees
 ------------------------------------------
+
+.. docnote:: This section shouldn't really exist.
+             It should just be woved into the main flow.
 
 In order to keep the result of write and read accesses deterministic and prevent memory corruption,
 Swift guarantees exclusive access when accessing memory, which means that
@@ -592,7 +595,8 @@ the properties of ``oscar`` can be read or written.
 Strategies for Resolving Exclusivity Violations
 -----------------------------------------------
 
-.. XXX Swap out below with a less throat-clearing intro.
+.. docnote:: Move these fixes to be in-line with the corresponding problem,
+             instead of all the way down here at the end.
 
 Although, like all types of debugging,
 every piece of code is different,
