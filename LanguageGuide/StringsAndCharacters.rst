@@ -99,18 +99,13 @@ start or end with a line break:
    >> print(singleLineString == multilineString)
    << true
 
-.. _StringsAndCharacters_MultilineLiteralsLineBreaks:
-
-Line Breaks
-+++++++++++
-
 When your source code includes a line break
 inside of a multiline string literal,
 that line break also appears in the string's value.
 If you want to use line breaks
 to make your source code easier to read,
 but you don't want the line breaks to be part of the string's value,
-write a backslash (``\``) at the end of the line:
+write a backslash (``\``) at the end of those lines:
 
 .. testcode:: multiline-string-literals
    :compile: true
@@ -126,88 +121,27 @@ write a backslash (``\``) at the end of the line:
    >> print(softNewlines.count)
    << 2
 
-If you're using multiline string literals
-to build up the lines of a longer string,
-you want every line in the string to end with a line break ---
-however, as discussed above,
-the last line doesn't normally end with a line break.
-To make a multiline string literal that ends with a line break,
-write a blank line as its last line.
+To make a multiline string literal that begins or ends with a line feed,
+write a blank line as the first or last line.
 For example:
 
 .. testcode:: multiline-string-literals
    :compile: true
 
-   -> let badBeginning = """
-          one
-          two
-          """
-   -> let end = """
-          three
-          """
-   -> print(badBeginning + end)
-   // Prints two lines:
-   </ one
-   </ twothree
-   ---
-   -> let goodBeginning = """
-          one
-          two
+   -> let lineBreaks = """
 
-          """
-   -> print(goodBeginning + end)
-   // Prints three lines:
-   </ one
-   </ two
-   </ three
+      This string starts with a line break.
+      It also ends with a line break.
 
-In the code above,
-concatenating ``badBeginning`` with ``end``
-produces a two-line string,
-which isn't the desired result.
-Because the last line of ``badBeginning``
-doesn't end with a line break,
-that line gets combined with the first line of ``end``.
-In contrast,
-both lines of ``goodBeginning`` end with a line break,
-so when it's combined with ``end``
-the result has three lines,
-as expected.
+      """
 
-To make a multiline string literal
-that starts with a line break,
-write a blank line as its first line.
-
-.. _StringsAndCharacters_MultilineLiteralsIndentation:
-
-Indentation
-+++++++++++
+.. These are well-fed lines!
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotes (``"""``)
 tells Swift what whitespace to ignore before all of the other lines.
-For example,
-even though the multiline string literal in the function below is indented,
-the lines in the actual string don't begin with any whitespace.
-
-.. testcode:: multiline-string-literals
-   :compile: true
-
-   -> func generateQuotation() -> String {
-          let quotation = """
-              The White Rabbit put on his spectacles.  "Where shall I begin,
-              please your Majesty?" he asked.
-
-              "Begin at the beginning," the King said gravely, "and go on
-              till you come to the end; then stop."
-              """
-          return quotation
-      }
-   -> print(quotation == generateQuotation())
-   <- true
-
 However, if you write whitespace at the beginning of a line
-in addition to what's before the closing quotes (``"""``),
+in addition to what's before the closing quotes,
 that whitespace *is* included.
 
 .. image:: ../images/multilineStringWhitespace_2x.png
@@ -226,6 +160,12 @@ that whitespace *is* included.
               This line begins with four spaces.
           This line doesn't begin with whitespace.
           """
+
+In the example above,
+even though the entire multiline string literal is indented,
+the first and last lines in the string don't begin with any whitespace.
+The middle line has more indentation than the closing quotes,
+so it starts with that extra four-space indentation.
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
@@ -472,6 +412,51 @@ with the ``String`` type's ``append()`` method:
 
    You can't append a ``String`` or ``Character`` to an existing ``Character`` variable,
    because a ``Character`` value must contain a single character only.
+
+If you're using multiline string literals
+to build up the lines of a longer string,
+you want every line in the string to end with a line break,
+including the last line.
+For example:
+
+.. testcode:: concatenate-multiline-string-literals
+   :compile: true
+
+   -> let badStart = """
+          one
+          two
+          """
+   -> let end = """
+          three
+          """
+   -> print(badStart + end)
+   // Prints two lines:
+   </ one
+   </ twothree
+   ---
+   -> let goodStart = """
+          one
+          two
+
+          """
+   -> print(goodStart + end)
+   // Prints three lines:
+   </ one
+   </ two
+   </ three
+
+In the code above,
+concatenating ``badStart`` with ``end``
+produces a two-line string,
+which isn't the desired result.
+Because the last line of ``badStart``
+doesn't end with a line break,
+that line gets combined with the first line of ``end``.
+In contrast,
+both lines of ``goodStart`` end with a line break,
+so when it's combined with ``end``
+the result has three lines,
+as expected.
 
 .. _StringsAndCharacters_StringInterpolation:
 
