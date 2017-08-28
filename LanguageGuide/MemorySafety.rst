@@ -3,8 +3,6 @@ Memory Safety
 
 .. docnote:: TODO
 
-   - Coordinate edit schedule and possible exception request with
-     Natalie and Joe.
    - Replace the examples in the first section with code that doesn't have
      inout functions or inout operators.
    - Revise the introduction of conflicts (including the paper analogy) to make
