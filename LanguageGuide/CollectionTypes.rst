@@ -37,7 +37,7 @@ Mutability of Collections
 
 If you create an array, a set, or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`) the collection after it is created
+This means that you can change (or :newTerm:`mutate`) the collection after it's created
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
 that collection is :newTerm:`immutable`,

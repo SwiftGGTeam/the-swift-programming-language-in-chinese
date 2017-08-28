@@ -67,7 +67,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed once it is created:
+whose range length cannot be changed after it is created:
 
 .. testcode:: storedProperties
 
