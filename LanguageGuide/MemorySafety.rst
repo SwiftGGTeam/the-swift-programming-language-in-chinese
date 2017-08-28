@@ -1,6 +1,21 @@
 Memory Safety
 =============
 
+.. docnote:: TODO
+
+   - Coordinate edit schedule and possible exception request with
+     Natalie and Joe.
+   - Replace the examples in the first section with code that doesn't have
+     inout functions or inout operators.
+   - Revise the introduction of conflicts (including the paper analogy) to make
+     it more obvious that this is about single-thread conflicts, not about
+     anything to do with multithreaded code.
+   - Request art changes to the surviving/existing illustrations per the
+     FIGURE docnotes below.
+   - Meet with art to ask for figures that match the new code listings in the
+     "what is exclusivity" section.
+   - Resolve XXX comments throughout.  (git grep -I XXX)
+
 By default, Swift prevents unsafe behavior from happening in your code.
 For example, Swift ensures that variables are initialized before they’re used,
 memory isn’t accessed after it’s been deallocated,
