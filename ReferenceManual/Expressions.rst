@@ -983,64 +983,6 @@ see :ref:`Closures_ClosureExpressions`.
 For more information and examples of capture lists,
 see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
-
-.. _Expressions_ClosureExclusivity:
-
-Memory Access Conflicts
-+++++++++++++++++++++++
-
-Swift prevents you from passing closure parameters
-to other functions as arguments
-under certain conditions. 
-This restriction allows Swift to perform
-all of its checks for conflicting access to memory
-in nonescaping closures when your code compiles,
-rather than performing those checks while your code is running.
-
-For functions that take closures,
-the restriction is as follows:
-a nonescaping closure that's passed as a parameter
-to the enclosing function
-can't be used as a parameter when calling another nonescaping closure.
-For example, none of the following three variations
-that involve passing nonescaping closure parameters are allowed:
-
-.. testcode:: memory-closures
-
-    -> func takesTwoClosures(
-           _ first: (Any) -> Void,
-           _ second: (Any) -> Void
-       ) {
-           first(first) // Error
-           first(second) // Error
-           second(first) // Error
-       }
-    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(first) // Error
-    !! ^     ~~~~~
-    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(second) // Error
-    !! ^     ~~~~~~
-    !! <REPL Input>:7:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! second(first) // Error
-    !! ^      ~~~~~
-
-
-In the code above,
-both of the parameters to ``takesTwoClosures(_:_:)`` are closures.
-Because neither one is marked ``@escaping``,
-they are both nonescaping.
-However, in the function body,
-each of the closures
-are passed as an argument when calling
-another nonescaping closure.
-As a result, each function call in ``takesTwoClosures(_:_:)``
-violates the restriction against closure parameters being used as arguments.
-
-If you need to avoid this restriction, mark one of the parameters as escaping.
-For information about exclusive access to memory,
-see :doc:`../LanguageGuide/MemorySafety`.
-
 .. langref-grammar
 
     expr-closure ::= '{' closure-signature? brace-item* '}'
