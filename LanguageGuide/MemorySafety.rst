@@ -368,7 +368,7 @@ and the in-out parameter needs write access to ``player``
 for the same duration.
 Within the method,
 both ``self`` and ``player`` refer to the same ``Player`` ---
-the value of ``oscar``` ---
+the value of ``oscar`` ---
 which means the two write accesses conflict.
 
 .. XXX Maybe rename the player parameter to teammate?
