@@ -3,16 +3,12 @@ Memory Safety
 
 .. docnote:: TODO
 
-   - Replace the examples in the first section with code that doesn't have
-     inout functions or inout operators.
-   - Revise the introduction of conflicts (including the paper analogy) to make
-     it more obvious that this is about single-thread conflicts, not about
-     anything to do with multithreaded code.
    - Request art changes to the surviving/existing illustrations per the
      FIGURE docnotes below.
    - Meet with art to ask for figures that match the new code listings in the
      "what is exclusivity" section.
    - Resolve XXX comments throughout.  (git grep -I XXX)
+   - Convert all code listings to tested code.
 
 By default, Swift prevents unsafe behavior from happening in your code.
 For example, Swift ensures that variables are initialized before they’re used,
@@ -39,45 +35,44 @@ so you can avoid writing code that causes either compile-time or runtime errors.
 Understanding Conflicting Access to Memory
 ------------------------------------------
 
-.. XXX Convert listings in this section to test code.
-
-A conflicting access to memory can occur
-when different parts of your code are trying
-to access the same area of memory at the same time.
-Accessing memory happens in your code
-when you read from or write to an area of memory.
+Access to memory happens in your code
+when you do things like set the value of a variable
+or pass an argument to a function.
 For example,
 the following code contains both a read access and a write access:
 
 :: 
 
-    // a write to one
+    // a write to the memory where "one" is stored
     var one = 1
 
-    // a read from one
+    // a read from the memory where "one" is stored
     print("We're number \(one)!")
 
 .. Might be worth a different example,
    or else I'm going to keep getting "We are Number One" stuck in my head.
     
 
-.. XXX REFLOW BELOW
+.. XXX Is the listing above adding any real value?
 
+A conflicting access to memory can occur
+when different parts of your code are trying
+to access the same area of memory at the same time.
 If you've written concurrent or multithreaded programs,
 conflicting access to memory might be a familiar problem.
 However,
-the conflicting accesses we're discussing in this chapter
-*don't* involve concurrent or multithreaded code.
-In Swift, there are some ways to modify a value
-that can span several lines of code,
+the conflicting access discussed in this chapter
+*doesn't* involve concurrent or multithreaded code.
+In Swift, there are ways to modify a value
+that span several lines of code,
 which means it's possible for other code to be executed
 in the middle of the modification.
-The specific kinds of modification are discussed in the sections below.
 
-You can think of safely reading from and writing to memory
-like writing words onto a piece of paper.
-If you make only self-contained changes,
-the resulting output is easy to reason about and predict.
+You can think of reading from and writing to memory
+like writing notes on a piece of paper.
+If all your changes involve only one letter,
+each change is completed in a single step,
+which means one change can't ever happen in the middle of another.
 But if a change requires more than one step,
 it's possible for other reading and writing to happen
 before you finish all of the first change's steps.
@@ -107,7 +102,7 @@ after that access starts but before it ends.
 By their nature, two instantaneous accesses can't happen at the same time.
 Most memory access is instantaneous.
 For example,
-all the accesses in the code listing below are instantaneous:
+all the read and write accesses in the code listing below are instantaneous:
 
 ::
 
@@ -122,7 +117,7 @@ all the accesses in the code listing below are instantaneous:
 However,
 there are several ways to access memory
 that span the execution of other code,
-which is called a :newterm:`long-term` access.
+which are called a :newterm:`long-term` access.
 The important difference between instantaneous and long-term access
 is that two long-term accesses can overlap,
 with one access starting before the other ends.
@@ -153,30 +148,29 @@ are discussed in the sections below.
    not that you don't get copying.
    It lets you actually know that you have non-overlapping access.
 
-.. _MemorySafety_Guarantees:
-
-What Exclusive Access to Memory Guarantees
-------------------------------------------
-
-.. docnote:: This section shouldn't really exist.
-             It should just be woved into the main flow.
-
-In order to keep the result of write and read accesses deterministic and prevent memory corruption,
-Swift guarantees exclusive access when accessing memory, which means that
-no write access can overlap any other access to the same area of memory at the same time of execution.
-Overlapping read accesses are allowed because the value returned is deterministic.
-
-If a long-term access overlaps with another access of any kind to the same area of memory,
-where one of the accesses is a write access, then that is an exclusive access violation.  If that happens,
-the compiler will either catch the violation at compile time and give you an error, or if the violation
-is detected at runtime, program execution will stop immediately instead of throwing an error.
-
-
 .. docnote:: Facts that need to go somewhere...
 
     - Within a single thread (use TSan for multithreading)...
     - When working with shared mutable state...
     - And except for things that we can prove are safe
+
+.. XXX Don't put two note boxes next to each other.
+
+.. note::
+
+   Conceptually,
+   both read and write access to memory
+   can be instantaneous or long-term.
+   For example, a nonmutating method
+   has a long-term read access to ``self`` for the duration of the method.
+   However, in Swift 4.0,
+   the only long-term memory action that the compiler models
+   is a long-term write.
+   It models a long-term read
+   as an instantaneous read to make a local copy of the value,
+   followed by read accesses to the local copy.
+
+.. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
 
 .. _MemorySafety_Inout:
 
