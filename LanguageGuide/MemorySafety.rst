@@ -44,7 +44,6 @@ Understanding Conflicting Access to Memory
 A conflicting access to memory can occur
 when different parts of your code are trying
 to access the same area of memory at the same time.
-In general, your code is accessing memory all the time.
 Accessing memory happens in your code
 when you read from or write to an area of memory.
 For example,
@@ -54,31 +53,37 @@ the following code contains both a read access and a write access:
 
     // a write to one
     var one = 1
-    func incrementInPlace(_ number: inout Int) {
 
-        // a read from one and then a write to number
-        number += one
-    }
+    // a read from one
+    print("We're number \(one)!")
+
+.. Might be worth a different example,
+   or else I'm going to keep getting "We are Number One" stuck in my head.
+    
 
 .. XXX REFLOW BELOW
 
-You can think of safely reading from and writing to memory
-like writing words onto a shared piece of paper,
-where several people take turns
-reading from or writing to the same piece of paper.
-If people take distinct turns interacting with the paper,
-the resulting output is easy to reason about and predict.
-But if the turns can overlap,
-people could end up reading and writing on the paper at the same time,
-yielding potentially unpredictable results.
+If you've written concurrent or multithreaded programs,
+conflicting access to memory might be a familiar problem.
+However,
+the conflicting accesses we're discussing in this chapter
+*don't* involve concurrent or multithreaded code.
+In Swift, there are some ways to modify a value
+can span several lines of code,
+which means it's possible for other code to be executed
+in the middle of the modification.
 
-If multiple people are reading from the paper,
-the paper shows the same words to everyone,
-which isn't a problem.
-However, if one person is writing
-while another person is reading,
-the person reading could end up reading nonsense ---
-for example, by reading a sentence whose end hasn't been written down yet.
+You can think of safely reading from and writing to memory
+like writing words onto a piece of paper.
+If you only make self-contained changes on the paper
+the resulting output is easy to reason about and predict.
+But if a change requires more than one step,
+it's possible for other reading and writing to happen
+before you finish all of the first change's steps.
+You could end up reading some text
+that you're still in the middle of writing ---
+for example, reading a sentence whose end hasn't been written down yet ---
+yielding potentially unpredictable results.
 
 Similarly,
 multiple accesses to the same area of memory at the same time could
@@ -90,17 +95,10 @@ Two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
+.. XXX Above, the bullets assume you know what "at the same time" means,
+   but long/short term access is described below.
+
 .. XXX Add an example/code listing to show aliasing?
-
-The following code sample is annotated to demonstrate
-where read and write accesses occur in code:
-
-::
-
-    var i = 1 // this is a write to i
-    func incrementInPlace(_ number: inout Int) {
-        number += i // this a read from i and then a write to number
-    }
 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
