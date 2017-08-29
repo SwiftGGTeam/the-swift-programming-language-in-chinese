@@ -342,32 +342,38 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 Memory Access Conflicts
 +++++++++++++++++++++++
 
-A parameter that is a nonescaping function type
-can't be passed as an argument to another nonescaping function.
-This restriction lets Swift perform
-all of its checks for conflicting access to memory
-related to nonescaping function types when your code compiles,
-rather than performing those checks while your code is running.
-For example, none of the following three variations
+A parameter that is a nonescaping function
+can't be passed as an argument to another nonescaping function parameter.
+This restriction helps Swift perform
+more of its checks for conflicting access to memory
+at compile time instead of at runtime.
+For example, the first four of the following six variations
 that involve passing nonescaping function parameters are allowed:
 
    .. testcode:: memory-nonescaping-functions
 
-       -> func takesTwoFunctions(
-              _ first: (Any) -> Void,
-              _ second: (Any) -> Void
-          ) {
+       -> let external: (Any) -> Void = { _ in () }
+       << // external : (Any) -> Void = (Function)
+       -> func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
               first(first) // Error
+              second(second) // Error
+              
               first(second) // Error
               second(first) // Error
+              
+              first(external) // OK 
+              external(first) // OK
           }
-       !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+       !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
        !! first(first) // Error
        !! ^     ~~~~~
-       !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+       !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+       !! second(second) // Error
+       !! ^      ~~~~~~
+       !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
        !! first(second) // Error
        !! ^     ~~~~~~
-       !! <REPL Input>:7:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+       !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
        !! second(first) // Error
        !! ^      ~~~~~
 
@@ -376,12 +382,16 @@ In the code above,
 both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
 Because neither one is marked ``@escaping``,
 they are both nonescaping.
-However, in the body of the ``takesTwoFunctions`` function,
-each of the parameters
-are passed as an argument when calling
-another nonescaping function.
-As a result, each function call in ``takesTwoFunctions(_:_:)``
-violates the restriction against parameters of a function type being used as arguments.
+
+In ``takesTwoFunctions``,
+the ``first`` and ``second`` parameters
+are passed as arguments to another nonescaping function parameter.
+As a result, the first four function calls in ``takesTwoFunctions(_:_:)``---
+the ones that only use ``first`` and ``second``---
+cause a compilation error.
+Because the last two function calls use a nonescaping function
+that's not one of the parameters of ``takesTwoFunctions``,
+neither function call causes a compilation error.
 
 If you need to avoid this restriction, mark one of the parameters as escaping.
 For information about avoiding conflicting access to memory,
