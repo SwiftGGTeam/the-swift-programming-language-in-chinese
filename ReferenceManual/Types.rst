@@ -342,25 +342,18 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 Memory Access Conflicts
 +++++++++++++++++++++++
 
-Swift prevents you from passing closure parameters
-to other functions as arguments
-under certain conditions. 
-This restriction allows Swift to perform
+A parameter that is a nonescaping function type
+can't be passed as an argument to another nonescaping function.
+This restriction lets Swift perform
 all of its checks for conflicting access to memory
-in nonescaping closures when your code compiles,
+related to nonescaping function types when your code compiles,
 rather than performing those checks while your code is running.
-
-For functions that take closures,
-the restriction is as follows:
-a nonescaping closure that's passed as a parameter
-to the enclosing function
-can't be used as a parameter when calling another nonescaping closure.
 For example, none of the following three variations
-that involve passing nonescaping closure parameters are allowed:
+that involve passing nonescaping function parameters are allowed:
 
-   .. testcode:: memory-closures
+   .. testcode:: memory-nonescaping-functions
 
-       -> func takesTwoClosures(
+       -> func takesTwoFunctions(
               _ first: (Any) -> Void,
               _ second: (Any) -> Void
           ) {
@@ -380,15 +373,15 @@ that involve passing nonescaping closure parameters are allowed:
 
 
 In the code above,
-both of the parameters to ``takesTwoClosures(_:_:)`` are closures.
+both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
 Because neither one is marked ``@escaping``,
 they are both nonescaping.
-However, in the function body,
-each of the closures
+However, in the body of the ``takesTwoFunctions`` function,
+each of the parameters
 are passed as an argument when calling
-another nonescaping closure.
-As a result, each function call in ``takesTwoClosures(_:_:)``
-violates the restriction against closure parameters being used as arguments.
+another nonescaping function.
+As a result, each function call in ``takesTwoFunctions(_:_:)``
+violates the restriction against parameters of a function type being used as arguments.
 
 If you need to avoid this restriction, mark one of the parameters as escaping.
 For information about exclusive access to memory,
