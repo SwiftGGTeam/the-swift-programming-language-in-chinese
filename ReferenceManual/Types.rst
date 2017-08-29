@@ -359,26 +359,26 @@ that involve passing nonescaping function parameters are allowed:
     -> let external: (Any) -> Void = { _ in () }
     << // external : (Any) -> Void = (Function)
     -> func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
-           first(first)   // Error
-           second(second) // Error
+           first(first)    // Error
+           second(second)  // Error
 
-           first(second) // Error
-           second(first) // Error
+           first(second)   // Error
+           second(first)   // Error
 
            first(external) // OK
            external(first) // OK
        }
     !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(first) // Error
+    !! first(first)    // Error
     !! ^     ~~~~~
     !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! second(second) // Error
+    !! second(second)  // Error
     !! ^      ~~~~~~
     !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(second) // Error
+    !! first(second)   // Error
     !! ^     ~~~~~~
     !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! second(first) // Error
+    !! second(first)   // Error
     !! ^      ~~~~~
 
 In the code above,
