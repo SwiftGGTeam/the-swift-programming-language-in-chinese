@@ -69,13 +69,14 @@ However,
 the conflicting accesses we're discussing in this chapter
 *don't* involve concurrent or multithreaded code.
 In Swift, there are some ways to modify a value
-can span several lines of code,
+that can span several lines of code,
 which means it's possible for other code to be executed
 in the middle of the modification.
+The specific kinds of modification are discussed in the sections below.
 
 You can think of safely reading from and writing to memory
 like writing words onto a piece of paper.
-If you only make self-contained changes on the paper
+If you make only self-contained changes,
 the resulting output is easy to reason about and predict.
 But if a change requires more than one step,
 it's possible for other reading and writing to happen
@@ -108,16 +109,15 @@ Most memory access is instantaneous.
 For example,
 all the accesses in the code listing below are instantaneous:
 
-.. XXX Lies!  Lies!  (The in-out parameter is a long-term write.)
-   Let's come up with an example here that doesn't use in-out or +=
-
 ::
 
-    var i = 1 // instantaneous write to i
-    func incrementInPlace(_ number: inout Int) {
-        // instantaneous read from i, followed by instantaneous write to number
-        number += i
+    func oneMore(than number: Int) {
+        return number + 1
     }
+
+    var one = 1
+    one = oneMore(than: one)
+    print(one)
 
 However,
 there are several ways to access memory
