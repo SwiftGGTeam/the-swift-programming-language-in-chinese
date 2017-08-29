@@ -986,7 +986,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
 .. _Expressions_ClosureExclusivity:
 
-Parameters as Arguments
+Memory Access Conflicts
 +++++++++++++++++++++++
 
 Swift prevents you from passing closure parameters
