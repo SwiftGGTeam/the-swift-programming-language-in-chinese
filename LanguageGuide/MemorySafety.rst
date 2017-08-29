@@ -647,35 +647,3 @@ so there isn't a conflict.
    var f = 100
    func(&f) { f += 1 }  // Error
    // FIXME: Use a local variable to copy 'f'.
-
-
-
-LEFTOVERS
----------
-
-.. docnote:: These need to move to a section above or another chapter.
-
-Some safety violations are detected when you compile your code,
-which gives you an error at that time.
-Some violations can't be detected at compile time,
-because they depend on the current value
-of a variable in your code,
-such as the index you use to access the array.
-These violations that can't be detected at compile time
-are detected at runtime.
-In general,
-Swift detects as many safety violations as possible
-at compile time.
-
-At runtime,
-when a safety violation is detected,
-program execution stops immediately.
-Because safety violations are *programmer errors*,
-Swift stops program execution instead of throwing an error.
-Swift's error-handling mechanism is for recoverable errors;
-programmer error, such as a safety violation,
-is not recoverable.
-Stopping execution immediately, at the point of the violation,
-prevents propagating invalid state to other parts of the program
-which can corrupt the program's state and the user's data.
-A predictable, immediate failure is also easier to debug.
