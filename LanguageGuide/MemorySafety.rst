@@ -609,19 +609,6 @@ Strategies for Resolving Exclusivity Violations
 .. docnote:: Move these fixes to be in-line with the corresponding problem,
              instead of all the way down here at the end.
 
-Although, like all types of debugging,
-every piece of code is different,
-there are some common strategies that you can use
-to resolve overlapping access to memory.
-
-**Describe what the code should do.**
-Although it might sound silly,
-it's useful to work out exactly what was intended
-by the code that's causing the compiler error.
-In the example above that uses ``mapInPlace``
-there were at least two ways
-that the code could be expected to execute.
-
 **Make an explicit copy.**
 When you have an exclusivity violation
 caused by reading memory while that memory is being modified,
