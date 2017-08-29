@@ -79,7 +79,7 @@ before you finish all of the first change's steps.
 You could end up reading some text
 that you're still in the middle of writing ---
 for example, reading a sentence whose end hasn't been written down yet ---
-yielding potentially unpredictable results.
+yielding potentially incorrect results.
 
 Similarly,
 multiple accesses to the same area of memory at the same time could
@@ -152,7 +152,6 @@ are discussed in the sections below.
 
     - Within a single thread (use TSan for multithreading)...
     - When working with shared mutable state...
-    - And except for things that we can prove are safe
 
 .. XXX Don't put two note boxes next to each other.
 
@@ -182,6 +181,9 @@ to all of its in-out parameters.
 The write access for an in-out parameter starts
 after all of the other parameters have been evaluated
 and lasts for the entire duration of that function call.
+
+.. XXX What about multiple inout parameters?
+   Pretty sure this is just left-to-right.
 
 .. docnote:: Possible example of the "after all other parameters" rule?
 
@@ -251,13 +253,13 @@ The ``balance(_:_:)`` function above
 modifies its two parameters
 to divide the total value evenly between them.
 Calling it with ``myNumber`` and ``myOtherNumber`` as parameters
-doesn't violate exclusive access to memory ---
-there are write accesses to both parameters at the same time,
+preserves exclusive access to memory ---
+there are two write accesses that overlap in time,
 but they access different memory.
 In contrast,
 passing ``myNumber`` as the value for both parameters
 causes conflicting access to memory
-because it tries to have two write accesses
+because it tries to perform two write accesses
 to the same memory at the same time.
 
 .. note::
@@ -389,6 +391,8 @@ isn't considered a mutation to the class instance as a whole.
 
 Here's an example
 of how properties can have conflicting access:
+
+.. XXX On a tuple, they're not properties.
 
 .. testcode:: memory-tuple
 
