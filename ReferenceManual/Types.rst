@@ -384,7 +384,7 @@ As a result, each function call in ``takesTwoFunctions(_:_:)``
 violates the restriction against parameters of a function type being used as arguments.
 
 If you need to avoid this restriction, mark one of the parameters as escaping.
-For information about exclusive access to memory,
+For information about avoiding conflicting access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
 .. langref-grammar
