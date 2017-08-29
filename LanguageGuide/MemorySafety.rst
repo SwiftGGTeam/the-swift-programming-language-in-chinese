@@ -391,10 +391,7 @@ but it doesn't apply to classes, which are reference types.
 A mutation to one of the properties of a class instance
 isn't considered a mutation to the class instance as a whole.
 
-Here's an example
-of how properties can have conflicting access:
-
-.. XXX On a tuple, they're not properties.
+Here's an example:
 
 .. testcode:: memory-tuple
 
