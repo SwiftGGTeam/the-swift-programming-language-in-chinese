@@ -290,7 +290,9 @@ Conflicting Access to self in Methods
 
 A mutating method on a structure has write access to ``self``
 for the duration of the method.
-For example:
+For example, consider a game where each player
+has a health amount, which decreases when taking damage,
+and an energy amount, which decreases when using special abilities:
 
 .. testcode:: memory-player-share-with-self
 
