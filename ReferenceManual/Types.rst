@@ -342,6 +342,10 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 Memory Access Conflicts
 +++++++++++++++++++++++
 
+.. XXX We should iterate on this heading.
+   There's reader ambiguity between "conflicts" as a noun/verb,
+   and there isn't an obvious best heading to use.
+
 A parameter that is a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
 This restriction helps Swift perform
