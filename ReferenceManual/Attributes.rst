@@ -268,14 +268,6 @@ You can apply a declaration attribute to declarations only.
     .. TODO: If and when Dave includes a section about this in the Guide,
         provide a link to the relevant section.
 
-``NSKeyedArchiverClassName``
-    Apply this attribute to a class to manually specify the name
-    used by ``NSKeyedArchiver`` and ``NSKeyedUnarchiver``
-    when archiving instances of the class.
-    Unless you need to add backward compatibility with existing archives,
-    use the ``objc`` attribute instead
-    to specify an Objective-C name.
-
 ``NSManaged``
     Apply this attribute to an instance method or stored variable property
     of a class that inherits from ``NSManagedObject``
