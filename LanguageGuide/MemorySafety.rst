@@ -8,7 +8,6 @@ Memory Safety
    - Meet with art to ask for figures that match the new code listings in the
      "what is exclusivity" section.
    - Resolve XXX comments throughout.  (git grep -I XXX)
-   - Convert all code listings to tested code.
 
 By default, Swift prevents unsafe behavior from happening in your code.
 For example, Swift ensures that variables are initialized before they’re used,
@@ -48,13 +47,15 @@ or pass an argument to a function.
 For example,
 the following code contains both a read access and a write access:
 
-:: 
+.. testcode:: memory-read-write
 
     // a write to the memory where "one" is stored
-    var one = 1
-
+    -> var one = 1
+    << // one : Int = 1
+    ---
     // a read from the memory where "one" is stored
-    print("We're number \(one)!")
+    -> print("We're number \(one)!")
+    << We're number 1!
 
 .. Might be worth a different example,
    or else I'm going to keep getting "We are Number One" stuck in my head.
@@ -111,15 +112,17 @@ Most memory access is instantaneous.
 For example,
 all the read and write accesses in the code listing below are instantaneous:
 
-::
+.. testcode:: memory-instantaneous
 
-    func oneMore(than number: Int) {
-        return number + 1
-    }
-
-    var one = 1
-    one = oneMore(than: one)
-    print(one)
+    -> func oneMore(than number: Int) -> Int {
+           return number + 1
+       }
+    ---
+    -> var one = 1
+    << // one : Int = 1
+    -> one = oneMore(than: one)
+    -> print(one)
+    <- 2
 
 However,
 there are several ways to access memory
