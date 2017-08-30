@@ -94,9 +94,6 @@ Two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
-.. XXX Above, the bullets assume you know what "at the same time" means,
-   but long/short term access is described below.
-
 .. XXX Add an example/code listing to show aliasing?
 
 An access is :newterm:`instantaneous`
