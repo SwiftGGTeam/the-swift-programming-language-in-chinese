@@ -23,7 +23,14 @@ Because Swift manages memory automatically,
 most of the time you don't have to think about accessing memory at all.
 That said,
 it's important to understand where potential conflicts can occur,
-so you can avoid writing code that causes either compile-time or runtime errors.
+so you can avoid writing code that has conflicting access to memory.
+If your code has conflicting access to memory,
+you'll get a compile-time or runtime error.
+
+.. XXX Maybe the TSan comment could fit here?
+   We're about half a step away from saying
+   "Swift guarantees that you'll gen an error
+   if you have a memory access conflict within a single thread".
 
 .. XXX Brian: Let's bring back this discussion.
    Memory safety refers to...
@@ -123,8 +130,6 @@ is that two long-term accesses can overlap,
 with one access starting before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
-
-.. XXX conflicts are unsafe --> they trigger an error
 
 .. note::
 
