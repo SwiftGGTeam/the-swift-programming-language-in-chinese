@@ -26,11 +26,6 @@ so you can avoid writing code that has conflicting access to memory.
 If your code has conflicting access to memory,
 you'll get a compile-time or runtime error.
 
-.. XXX Maybe the TSan comment could fit here?
-   We're about half a step away from saying
-   "Swift guarantees that you'll gen an error
-   if you have a memory access conflict within a single thread".
-
 .. XXX Brian: Let's bring back this discussion.
    Memory safety refers to...
    The term *safety* usually refers to :newTerm:`memory safety`...
@@ -134,6 +129,8 @@ with one access starting before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
 
+.. XXX Refactor these "leftover fact" note boxes.
+
 .. note::
 
     Because exclusive access to memory is a slightly broader guarantee
@@ -156,12 +153,6 @@ are discussed in the sections below.
    not that you don't get copying.
    It lets you actually know that you have non-overlapping access.
 
-.. docnote:: Facts that need to go somewhere...
-
-    - Within a single thread (use TSan for multithreading)...
-
-.. XXX Don't put two note boxes next to each other.
-
 .. note::
 
    Conceptually,
@@ -177,6 +168,16 @@ are discussed in the sections below.
    followed by read accesses to the local copy.
 
 .. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
+
+.. note::
+
+   Within single-threaded code,
+   Swift guarantees that you'll get an error
+   if you have conflicting access to memory.
+   For multithreaded code,
+   use the Thread Sanitizer to help detect conflicting access.
+
+.. XXX Check style for referring to TSan, and link somewhere useful.
 
 .. _MemorySafety_Inout:
 
