@@ -56,8 +56,6 @@ the following code contains both a read access and a write access:
    or else I'm going to keep getting "We are Number One" stuck in my head.
     
 
-.. XXX Is the listing above adding any real value?
-
 A conflicting access to memory can occur
 when different parts of your code are trying
 to access the same area of memory at the same time.
@@ -72,10 +70,10 @@ which means it's possible for other code to be executed
 in the middle of the modification.
 
 You can think of reading from and writing to memory
-like writing notes on a piece of paper.
+like taking notes on a piece of paper.
 If all your changes involve only one letter,
 each change is completed in a single step,
-which means one change can't ever happen in the middle of another.
+which means one change can't ever happen in the middle of another change.
 But if a change requires more than one step,
 it's possible for other reading and writing to happen
 before you finish all of the first change's steps.
@@ -84,10 +82,12 @@ that you're still in the middle of writing ---
 for example, reading a sentence whose end hasn't been written down yet ---
 yielding potentially incorrect results.
 
+.. XXX The para above needs a heavy copyedit.
+   Long multiclause sentences are hard to read.
+
 Similarly,
 multiple accesses to the same area of memory at the same time can
-produce unpredictable or inconsistent behaviour
-if one of the accesses is writing to that memory.
+produce unpredictable or inconsistent behaviour.
 Two accesses to memory conflict if:
 
 * Both accesses use the same location in memory.
@@ -121,59 +121,11 @@ there are several ways to access memory
 that span the execution of other code,
 which are called a :newterm:`long-term` access.
 The important difference between instantaneous and long-term access
-is that long-term accesses can overlap with other accesses,
-with one access starting before the other ends.
+is that a long-term access can overlap
+with other long-term accesses and with instantaneous accesses ---
+that is, one access can start before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
-
-.. XXX Refactor these "leftover fact" note boxes.
-
-.. note::
-
-    Because exclusive access to memory is a slightly broader guarantee
-    than memory safety,
-    some code that is memory safe
-    violates the guarantee of exclusive access.
-    Swift allows this code if the compiler can prove
-    that the nonexclusive access to memory is still safe.
-
-.. Versions of Swift before Swift 4 ensure memory safety
-   by agressively making a copy of the shared mutable state
-   when a conflicting access is possible.
-   The copy is no longer shared, preventing the possibility of conflicts.
-   However, the copying appproach has a negative impact
-   on performance and memory usage.
-
-.. XXX TR: Swift 4 does this copying too.
-   Frame this in terms as the copying is the *only* thing Swift 3 did.
-   The carrot today is that you have a cleaner semantic model,
-   not that you don't get copying.
-   It lets you actually know that you have non-overlapping access.
-
-.. note::
-
-   Conceptually,
-   both read and write access to memory
-   can be instantaneous or long-term.
-   For example, a nonmutating method
-   has a long-term read access to ``self`` for the duration of the method.
-   However, in Swift 4.0,
-   the only long-term memory action that the compiler models
-   is a long-term write.
-   It models a long-term read
-   as an instantaneous read to make a local copy of the value,
-   followed by read accesses to the local copy.
-
-.. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
-
-.. note::
-
-   Swift guarantees that you'll get an error
-   if you have conflicting access to memory,
-   but only if the conflict happens within a single thread.
-   For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
-   to help detect conflicting access across threads.
 
 .. _MemorySafety_Inout:
 
@@ -183,7 +135,7 @@ Conflicting Access to In-Out Parameters
 A function has long-term write access
 to all of its in-out parameters.
 The write access for an in-out parameter starts
-after all of the other parameters have been evaluated
+after all of the non-in-out parameters have been evaluated
 and lasts for the entire duration of that function call.
 
 .. XXX What about multiple inout parameters?
@@ -624,3 +576,65 @@ the properties of ``oscar`` can be read or written.
    one to ``health`` and one to ``energy``.
    Is the difference because those in-out write accesses
    are to a local variable of the outer function/method?
+
+.. _MemorySafety_Modeling:
+
+Swift's Model for Conflicting Access
+------------------------------------
+
+.. XXX Let's iterate a little on this title.
+
+Because exclusive access to memory is a slightly broader guarantee
+than memory safety,
+some code that is memory safe
+violates the guarantee of exclusive access.
+Swift allows this code if the compiler can prove
+that the nonexclusive access to memory is still safe.
+
+Swift guarantees that you'll get an error
+if you have conflicting access to memory,
+but only if the conflict happens within a single thread.
+For multithreaded code,
+use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+to help detect conflicting access across threads.
+
+Conceptually,
+both read and write access to memory
+can be instantaneous or long-term.
+For example, a nonmutating method
+has a long-term read access to ``self`` for the duration of the method.
+However, in Swift 4.0,
+the only long-term memory action that the compiler models
+is a long-term write.
+It models a long-term read
+as an instantaneous read to make a local copy of the value,
+followed by read accesses to the local copy.
+
+.. docnote:: TR: Is the above claim about long-term  accurate?
+
+   From email discussion with Andy Trick,
+   we might expect passing an UnsafePointer as inout
+   to create a long-term read,
+   but that doesn't seem to be the case.
+   The example below does trap, but it's a write/write conflict.
+
+   ::
+
+       var global = 10
+       withUnsafePointer(to: &global) {
+           print("Global is \($0).")  // Ok
+           global = 100  // Error
+       }
+       print(global)
+
+.. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
+
+.. TEXT FOR THE FUTURE
+
+   Versions of Swift before Swift 5 ensure memory safety
+   by aggressively making a copy of the shared mutable state
+   when a conflicting access is possible.
+   The copy is no longer shared, preventing the possibility of conflicts.
+   However, the copying approach has a negative impact
+   on performance and memory usage.
+
