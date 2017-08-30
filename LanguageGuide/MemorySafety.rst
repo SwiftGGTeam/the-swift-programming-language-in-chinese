@@ -196,13 +196,13 @@ For example:
 
 .. testcode:: memory-increment
 
-    -> var i = 1
+    -> var stepSize = 1
     ---
     -> func incrementInPlace(_ number: inout Int) {
-           number += i
+           number += stepSize
        }
     ---
-    -> incrementInPlace(&i)  // Error
+    -> incrementInPlace(&stepSize)  // Error
     xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x10e86b032).
     xx Current access (a read) started at:
@@ -217,8 +217,37 @@ if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
    :align: center
 
 .. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
+             and change "i" to "stepSize".
 
-.. docnote:: Code listing & figure: Replace i with a better name.
+One way to solve this conflict
+is to make an explicit copy:
+
+.. testcode:: memory-increment-copy
+
+    >> var stepSize = 1
+    << // stepSize : Int = 1
+    >> func incrementInPlace(_ number: inout Int) {
+    >>     number += stepSize
+    >> }
+    ---
+    // Make an explicit copy.
+    -> var copyOfStepSize = stepSize
+    << // copyOfStepSize : Int = 1
+    -> incrementInPlace(&copyOfStepSize)
+    ---
+    // Update the original.
+    -> stepSize = copyOfStepSize
+    /> stepSize is now \(stepSize)
+    </ stepSize is now 2
+
+In this version,
+both the conflicting access to memory
+and the unclear intended behavior are resolved.
+By making a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
+it's clear that the value of ``copyOfStepSize`` is incremented
+by the current step size.
+There's only one access to ``stepSize`` in the function,
+so there isn't a conflict.
 
 Passing the same variable as an in-out parameter more than once
 is also an error --- for example:
@@ -597,37 +626,3 @@ the properties of ``oscar`` can be read or written.
    one to ``health`` and one to ``energy``.
    Is the difference because those in-out write accesses
    are to a local variable of the outer function/method?
-
-.. _MemorySafety_Resolving:
-
-Strategies for Resolving Exclusivity Violations
------------------------------------------------
-
-.. docnote:: Move these fixes to be in-line with the corresponding problem,
-             instead of all the way down here at the end.
-
-**Make an explicit copy.**
-When you have an exclusivity violation
-caused by reading memory while that memory is being modified,
-you can assign the value to a local constant
-before the mutation begins.
-For example::
-
-    var numbers = [10, 20, 30]
-    let first = numbers[0]
-    numbers.mapInPlace { $0 + first }
-
-The first element of ``numbers`` is assigned to ``first``
-before calling ``mapInPlace``.
-The read access to assign ``first`` its value
-completes before ``mapInPlace`` starts modifying the array,
-so there isn't a conflict.
-
-.. TR: If you have a conflict using overlapping inout writes,
-   you can make an explicit copy using a var,
-   and then you have to merge the two values after.
-
-   func (inout foo, closure) { c() }
-   var f = 100
-   func(&f) { f += 1 }  // Error
-   // FIXME: Use a local variable to copy 'f'.
