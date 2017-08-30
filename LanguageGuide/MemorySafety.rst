@@ -180,7 +180,7 @@ are discussed in the sections below.
 Conflicting Access to In-Out Parameters
 ---------------------------------------
 
-A function has write access
+A function has long-term write access
 to all of its in-out parameters.
 The write access for an in-out parameter starts
 after all of the other parameters have been evaluated
@@ -212,10 +212,10 @@ For example:
     xx Current access (a read) started at:
 
 In the code above,
-even though ``i`` is a global variable,
+even though ``stepSize`` is a global variable,
 and would normally be accessible from within ``incrementInPlace(_:)``,
-the read and write accesses to ``i`` conflict
-if you call ``incrementInPlace(_:)`` with ``i`` as its parameter.
+the read and write accesses to ``stepSize`` conflict
+if you call ``incrementInPlace(_:)`` with ``stepSize`` as its parameter.
 
 .. image:: ../images/memory_increment_2x.png
    :align: center
@@ -298,9 +298,9 @@ to the same memory at the same time.
 .. note::
 
     Because operators are implemented as static methods,
-    an operator that modifies one or more of operands
+    an operator that modifies one or more of its operands
     behaves the same as a function
-    that takes those value as an in-out parameter.
+    that takes those values as in-out parameters.
 
 .. XXX This is a generalization of existing rules around inout.
    Worth revisiting the discussion in the guide/reference
