@@ -146,6 +146,9 @@ For example:
           I still have \(apples + oranges) pieces of fruit.
           """
 
+.. FIXME: Indentation is lost in the listing above, rending the "except" line nonsense.
+   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
