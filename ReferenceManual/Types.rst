@@ -351,8 +351,7 @@ can't be passed as an argument to another nonescaping function parameter.
 This restriction helps Swift perform
 more of its checks for conflicting access to memory
 at compile time instead of at runtime.
-For example, the first four of the following six variations
-that involve passing nonescaping function parameters are allowed:
+For example:
 
 .. testcode:: memory-nonescaping-functions
 
@@ -386,15 +385,15 @@ both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
 Because neither one is marked ``@escaping``,
 they are both nonescaping.
 
-In ``takesTwoFunctions``,
-the ``first`` and ``second`` parameters
-are passed as arguments to another nonescaping function parameter.
-As a result, the first four function calls in ``takesTwoFunctions(_:_:)``---
-the ones that only use ``first`` and ``second``---
-cause a compilation error.
-Because the last two function calls use a nonescaping function
-that's not one of the parameters of ``takesTwoFunctions``,
-neither function call causes a compilation error.
+The four function calls marked "Error" in the example above
+cause a compiler error error ---
+because the ``first`` and ``second`` parameters
+are nonescaping functions,
+they can't passed as arguments to another nonescaping function parameter.
+In contrast,
+the function calls "OK" don't cause a compiler error.
+Because ``external`` isn't one of the parameters of ``takesTwoFunctions``,
+these two function calls don't violate the restriction.
 
 If you need to avoid this restriction, mark one of the parameters as escaping.
 For information about avoiding conflicting access to memory,
