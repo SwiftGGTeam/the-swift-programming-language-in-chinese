@@ -386,16 +386,18 @@ Because neither one is marked ``@escaping``,
 they are both nonescaping.
 
 The four function calls marked "Error" in the example above
-cause a compiler error error ---
+cause compiler errors ---
 because the ``first`` and ``second`` parameters
 are nonescaping functions,
-they can't passed as arguments to another nonescaping function parameter.
+they can't be passed as arguments to another nonescaping function parameter.
 In contrast,
-the function calls "OK" don't cause a compiler error.
+the two function calls marked "OK" don't cause a compiler error.
 Because ``external`` isn't one of the parameters of ``takesTwoFunctions``,
-these two function calls don't violate the restriction.
+these function calls don't violate the restriction.
 
-If you need to avoid this restriction, mark one of the parameters as escaping.
+If you need to avoid this restriction, mark one of the parameters as escaping,
+or temporarily convert one of the nonescaping function parameters to an escaping function
+by using the ``withoutActuallyEscaping(_:do:)`` function.
 For information about avoiding conflicting access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
