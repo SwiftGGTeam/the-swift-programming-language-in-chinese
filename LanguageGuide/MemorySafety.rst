@@ -85,7 +85,7 @@ for example, reading a sentence whose end hasn't been written down yet ---
 yielding potentially incorrect results.
 
 Similarly,
-multiple accesses to the same area of memory at the same time could
+multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behaviour
 if one of the accesses is writing to that memory.
 Two accesses to memory conflict if:
@@ -168,13 +168,12 @@ are discussed in the sections below.
 
 .. note::
 
-   Within single-threaded code,
    Swift guarantees that you'll get an error
-   if you have conflicting access to memory.
+   if you have conflicting access to memory,
+   but only if the conflict happens within a single thread.
    For multithreaded code,
-   use the Thread Sanitizer to help detect conflicting access.
-
-.. XXX Check style for referring to TSan, and link somewhere useful.
+   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   to help detect conflicting access across threads.
 
 .. _MemorySafety_Inout:
 
