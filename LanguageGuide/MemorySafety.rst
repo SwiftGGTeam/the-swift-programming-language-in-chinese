@@ -612,20 +612,27 @@ followed by read accesses to the local copy.
 
 .. docnote:: TR: Is the above claim about long-term  accurate?
 
-   From email discussion with Andy Trick,
-   we might expect passing an UnsafePointer as inout
-   to create a long-term read,
-   but that doesn't seem to be the case.
-   The example below does trap, but it's a write/write conflict.
+   No, it's not. E.g.
 
    ::
 
-       var global = 10
-       withUnsafePointer(to: &global) {
-           print("Global is \($0).")  // Ok
-           global = 100  // Error
+       var global = 4
+
+       func foo(_ x: UnsafePointer<Int>){
+           global = 7
        }
+
+       foo(&global)
        print(global)
+       
+       // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
+       // Previous access (a read) started at temp2`main + 87 (0x10675e417).
+       // Current access (a modification) started at:
+       // 0    libswiftCore.dylib                 0x0000000106ac7b90 swift_beginAccess + 605
+       // 1    temp2                              0x000000010675e500 foo(_:) + 39
+       // 2    temp2                              0x000000010675e3c0 main + 102
+       // 3    libdyld.dylib                      0x00007fff69c75144 start + 1
+       // Fatal access conflict detected.
 
 .. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
 
