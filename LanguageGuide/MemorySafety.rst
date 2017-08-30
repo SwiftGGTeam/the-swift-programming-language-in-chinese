@@ -121,7 +121,7 @@ there are several ways to access memory
 that span the execution of other code,
 which are called a :newterm:`long-term` access.
 The important difference between instantaneous and long-term access
-is that two long-term accesses can overlap,
+is that long-term accesses can overlap with other accesses,
 with one access starting before the other ends.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
