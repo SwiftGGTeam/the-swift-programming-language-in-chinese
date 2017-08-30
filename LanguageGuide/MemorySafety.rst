@@ -321,7 +321,7 @@ A mutating method on a structure has write access to ``self``
 for the duration of the method.
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities:
+and an energy amount, which decreases when using special abilities.
 
 .. testcode:: memory-player-share-with-self
 
@@ -389,7 +389,7 @@ but they are accessing different memory,
 so there is no violation.
 
 However,
-if you pass ``oscar`` as the other player,
+if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
 there's a violation.
 The mutating method needs write access to ``self``
 for the duration of the method,
@@ -448,9 +448,6 @@ Although a structure is also a value type,
 in many cases the compiler can prove
 that the overlapping access are safe.
 This means most access to stored properties *can* overlap for structures.
-For example, consider a game where each player
-has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities.
 
 .. testcode:: memory-share-health
 
