@@ -345,23 +345,7 @@ such as the ``if`` statement:
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 You can also compare
-tuples that have the same number of values,
-as long as each of the values in the tuple can be compared.
-For example, both ``Int`` and ``String`` can be compared,
-which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` can't be compared,
-which means tuples that contain a Boolean value can't be compared.
-
-.. assertion:: boolean-is-not-comparable
-
-   -> true < false
-   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
-   !! true < false
-   !! ~~~~ ^ ~~~~~
-   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
-   !! true < false
-   !!      ^
-
+tuples that have the same number of values.
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -393,6 +377,35 @@ However,
 when the tuples' first elements are the same,
 their second elements *are* compared ---
 this is what happens on the second and third line.
+
+Tuples can only be compared if the given operator can applied
+to each of the values in the tuple.
+For example, both ``Int`` and ``String`` can be compared
+by any comparison operator,
+which means tuples of the type ``(Int, String)`` can be compared.
+In contrast, ``Bool`` can be compared using the ``==`` and ``!=``
+operators and not the other comparison operators,
+which means tuples that contain a Boolean value
+can only be compared using the ``==`` and ``!=`` operators.
+
+.. testcode:: tuple-comparison-operators
+
+   -> ("a", true) == ("a", true)   // true
+   -> ("a", true) != ("a", false)  // true
+   -> ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   << // r0 : Bool = true
+   << // r1 : Bool = true
+
+.. assertion:: boolean-is-not-comparable
+
+   -> true < false
+   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
+   !! true < false
+   !! ~~~~ ^ ~~~~~
+   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
+   !! true < false
+   !!      ^
+
 
 .. note::
 
