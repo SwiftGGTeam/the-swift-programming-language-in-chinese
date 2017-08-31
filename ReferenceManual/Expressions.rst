@@ -1237,6 +1237,15 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+Key paths can contain optional chaining and forced unwrapping.
+For example, the following code uses optional chaining in a key path
+to access a property of an optional string:
+
+.. testcode:: keypath-expression
+
+   -> print(("four" as String?)[keyPath: \.?.count]!)
+   <- 4
+
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
@@ -1251,12 +1260,14 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier
+   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+
+   key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
+   key-path-postfix --> ``?`` | ``!``
 
 .. FUTURE syntax-grammar
 
-   As of 2017-04-19 Joe Groff says he expects to only implement property names
-   for WWDC.  More stuff will land later.
+   As of 2017-08-31, `?` and `!` are implemented, but subscripts aren't yet.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
 
