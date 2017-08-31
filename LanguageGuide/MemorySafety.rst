@@ -5,8 +5,6 @@ Memory Safety
 
    - Request art changes to the surviving/existing illustrations per the
      FIGURE docnotes below.
-   - Meet with art to ask for figures that match the new code listings in the
-     "what is exclusivity" section.
    - Resolve XXX comments throughout.  (git grep -I XXX)
 
 By default, Swift prevents unsafe behavior from happening in your code.
