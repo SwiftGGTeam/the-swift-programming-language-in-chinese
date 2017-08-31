@@ -251,11 +251,6 @@ to the same memory at the same time.
     behaves the same as a function
     that takes those values as in-out parameters.
 
-.. XXX This is a generalization of existing rules around inout.
-   Worth revisiting the discussion in the guide/reference
-   to adjust wording there, now that it's a consequence of a general rule
-   instead of a one-off rule specifically for in-out parameters.
-
 .. _MemorySafety_Methods:
 
 Conflicting Access to self in Methods
