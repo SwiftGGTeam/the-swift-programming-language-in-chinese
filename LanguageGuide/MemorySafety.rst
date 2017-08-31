@@ -94,8 +94,6 @@ Two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
-.. XXX Add an example/code listing to show aliasing?
-
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -137,11 +135,10 @@ to all of its in-out parameters.
 The write access for an in-out parameter starts
 after all of the non-in-out parameters have been evaluated
 and lasts for the entire duration of that function call.
+If there are multiple in-out parameters,
+the right accesses starts in the same order as the parameters appear.
 
-.. XXX What about multiple inout parameters?
-   Pretty sure this is just left-to-right.
-
-.. docnote:: Possible example of the "after all other parameters" rule?
+.. docnote:: TR: Confirm comment about multiple inout.
 
 One consequence of this long-term write access
 is that you can't access the original
@@ -553,6 +550,9 @@ for balancing health and energy.
         }
     }
     oscar.balanceHealthAndEnergy()  // Ok
+
+
+.. XXX Convert to tested code.
 
 The original approach,
 calling ``balance(_:_:)`` and passing it two properties of a ``Player``,
