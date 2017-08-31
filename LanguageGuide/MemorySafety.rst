@@ -598,21 +598,14 @@ For multithreaded code,
 use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
 to help detect conflicting access across threads.
 
-Conceptually,
-both read and write access to memory
-can be instantaneous or long-term.
-For example, a nonmutating method
-has a long-term read access to ``self`` for the duration of the method.
-However, in Swift 4.0,
-the only long-term memory action that the compiler models
-is a long-term write.
-It models a long-term read
-as an instantaneous read to make a local copy of the value,
-followed by read accesses to the local copy.
-
-.. docnote:: TR: Is the above claim about long-term  accurate?
-
-   No, it's not. E.g.
+.. docnote:: Currently, the only way to create a long-term read 
+             is to use implicit pointer conversion 
+             when passing a value as a nonmutating unsafe pointer parameter,
+             as in the example below.
+             There is discussion in <rdar://problem/33115142>
+             about changing the semantics of nonmutating method calls
+             to be long-term reads,
+             but it's not clear if/when that change will land.
 
    ::
 
