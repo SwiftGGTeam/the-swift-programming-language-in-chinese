@@ -362,9 +362,9 @@ For example:
    -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-   << // r0 : Bool = true
-   << // r1 : Bool = true
-   << // r2 : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
 
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
@@ -393,8 +393,15 @@ can only be compared using the ``==`` and ``!=`` operators.
    -> ("a", true) == ("a", true)   // true
    -> ("a", true) != ("a", false)  // true
    -> ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
-   << // r0 : Bool = true
-   << // r1 : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
+   !! <REPL Input>:1:13: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
+   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !! ~~~~~~~~~~~ ^ ~~~~~~~~~~~
+   !~ <REPL Input>:1:13: note: overloads for '<' exist with these partially matching parameter lists:
+   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !!             ^
+
 
 .. assertion:: boolean-is-not-comparable
 
