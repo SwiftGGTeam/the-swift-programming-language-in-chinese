@@ -401,6 +401,7 @@ Although a structure is also a value type,
 in many cases the compiler can prove
 that the overlapping access are safe.
 This means most access to stored properties *can* overlap for structures.
+For example:
 
 .. testcode:: memory-share-health
 
@@ -414,16 +415,11 @@ This means most access to stored properties *can* overlap for structures.
     >>     x = sum / 2
     >>     y = sum - x
     >> }
-    >> func f() {
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> balance(&oscar.health, &oscar.energy)  // Ok
-    >> }
-    >> f()
-
-.. docnote:: The code in the listing above is wrapped in a hidden function
-             because this "overlapping property access is safe" caveat really
-             only works for local variables, not globals.  Need to add this to
-             the discussion.
+    -> func someFunction() {
+           var oscar = Player(name: "Oscar", health: 10, energy: 10)
+           balance(&oscar.health, &oscar.energy)  // Ok
+       }
+    >> someFunction()
 
 In the example above,
 Oscar's health and energy are passed
