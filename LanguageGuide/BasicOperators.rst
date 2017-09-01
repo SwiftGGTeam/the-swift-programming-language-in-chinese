@@ -345,7 +345,49 @@ such as the ``if`` statement:
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 You can also compare
-tuples that have the same number of values.
+two tuples if they have the same number of values
+and the given operator can applied
+to each of the values in both tuples.
+For example:
+
+.. testcode:: tuple-comparison-operators
+
+   -> ("a", 38) == ("a", 18)   // false
+   -> ("a", 38) != ("a", 38)   // true
+   -> ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   <$ : Bool = true
+   <$ : Bool = true
+   !! <REPL Input>:1:13: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
+   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !! ~~~~~~~~~~~ ^ ~~~~~~~~~~~
+   !~ <REPL Input>:1:13: note: overloads for '<' exist with these partially matching parameter lists:
+   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !!             ^
+
+.. XXX Use Ok/Error in comments above.
+
+.. assertion:: boolean-is-not-comparable
+
+   -> true < false
+   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
+   !! true < false
+   !! ~~~~ ^ ~~~~~
+   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
+   !! true < false
+   !!      ^
+
+In the example above,
+because you can use ``<`` to compare two ``Int`` values,
+and you can use ``<`` to compare two ``String`` values
+and to compare two ``String`` values,
+you can use ``<`` to compare
+tuples of the type ``(Int, String)``.
+
+In contrast, ``Bool`` can be compared using the ``==`` and ``!=``
+operators and not the other comparison operators,
+which means tuples that contain a Boolean value
+can only be compared using the ``==`` and ``!=`` operators.
+
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -377,42 +419,6 @@ However,
 when the tuples' first elements are the same,
 their second elements *are* compared ---
 this is what happens on the second and third line.
-
-Tuples can only be compared if the given operator can applied
-to each of the values in the tuple.
-For example, both ``Int`` and ``String`` can be compared
-by any comparison operator,
-which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` can be compared using the ``==`` and ``!=``
-operators and not the other comparison operators,
-which means tuples that contain a Boolean value
-can only be compared using the ``==`` and ``!=`` operators.
-
-.. testcode:: tuple-comparison-operators
-
-   -> ("a", true) == ("a", true)   // true
-   -> ("a", true) != ("a", false)  // true
-   -> ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
-   <$ : Bool = true
-   <$ : Bool = true
-   !! <REPL Input>:1:13: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
-   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
-   !! ~~~~~~~~~~~ ^ ~~~~~~~~~~~
-   !~ <REPL Input>:1:13: note: overloads for '<' exist with these partially matching parameter lists:
-   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
-   !!             ^
-
-
-.. assertion:: boolean-is-not-comparable
-
-   -> true < false
-   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
-   !! true < false
-   !! ~~~~ ^ ~~~~~
-   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
-   !! true < false
-   !!      ^
-
 
 .. note::
 
