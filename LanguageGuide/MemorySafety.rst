@@ -92,6 +92,15 @@ Two accesses to memory conflict if:
 * Both accesses happen at the same time.
 * At least one access is writing to that memory.
 
+.. note::
+
+    Swift guarantees that you'll get an error
+    if you have conflicting access to memory,
+    but only if the conflict happens within a single thread.
+    For multithreaded code,
+    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+    to help detect conflicting access across threads.
+
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -422,6 +431,12 @@ because both are properties of the same structure,
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
+Because exclusive access to memory is a slightly broader guarantee
+than memory safety,
+some code that is memory safe
+violates the guarantee of exclusive access.
+Swift allows this code if the compiler can prove
+that the nonexclusive access to memory is still safe.
 
 In contrast, if ``health`` is a computed property,
 the compiler can't prove whether
@@ -508,20 +523,6 @@ Swift's Model for Conflicting Access
 ------------------------------------
 
 .. XXX Let's iterate a little on this title.
-
-Because exclusive access to memory is a slightly broader guarantee
-than memory safety,
-some code that is memory safe
-violates the guarantee of exclusive access.
-Swift allows this code if the compiler can prove
-that the nonexclusive access to memory is still safe.
-
-Swift guarantees that you'll get an error
-if you have conflicting access to memory,
-but only if the conflict happens within a single thread.
-For multithreaded code,
-use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
-to help detect conflicting access across threads.
 
 .. docnote:: Currently, the only way to create a long-term read 
              is to use implicit pointer conversion 
