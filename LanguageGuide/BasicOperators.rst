@@ -352,17 +352,15 @@ For example:
 
 .. testcode:: tuple-comparison-operators
 
-   -> ("a", 38) < ("a", 18)   // false
-   -> ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
-   <$ : Bool = true
+   -> ("a", 38) < ("a", 18)      // Ok
+   -> ("a", true) < ("b", true)  // Error
+   <$ : Bool = false
    !! <REPL Input>:1:13: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
-   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !! ("a", true) < ("b", true)  // Error
    !! ~~~~~~~~~~~ ^ ~~~~~~~~~~~
    !~ <REPL Input>:1:13: note: overloads for '<' exist with these partially matching parameter lists:
-   !! ("a", true) < ("b", true)    // error because Bool can't be compared with `<`
+   !! ("a", true) < ("b", true)  // Error
    !!             ^
-
-.. XXX Use Ok/Error in comments above.
 
 .. assertion:: boolean-is-not-comparable
 
@@ -379,7 +377,6 @@ because you can use ``<`` to compare ``Int`` values
 as well as ``String`` values,
 you can use ``<`` to compare
 tuples of the type ``(Int, String)``.
-
 In contrast, because ``Bool`` values cannot be compared
 with the ``<`` operator, tuples that contain a Boolean value
 cannot be compared with ``<``.
