@@ -214,7 +214,7 @@ is also an error --- for example:
     -> var myOtherNumber = 9000
     << // myNumber : Int = 42
     << // myOtherNumber : Int = 9000
-    -> balance(&myNumber, &myOtherNumber)  // Ok
+    -> balance(&myNumber, &myOtherNumber)  // OK
     -> balance(&myNumber, &myNumber)  // Error
     !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
     !! balance(&myNumber, &myNumber)  // Error
@@ -306,7 +306,7 @@ creating the possibility of overlapping accesses.
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    -> oscar.shareHealth(with: &maria)  // Ok
+    -> oscar.shareHealth(with: &maria)  // OK
     -> oscar.shareHealth(with: &oscar)  // Error
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)  // Error
@@ -410,7 +410,7 @@ For example:
     >> }
     -> func someFunction() {
            var oscar = Player(name: "Oscar", health: 10, energy: 10)
-           balance(&oscar.health, &oscar.energy)  // Ok
+           balance(&oscar.health, &oscar.energy)  // OK
        }
     >> someFunction()
 
