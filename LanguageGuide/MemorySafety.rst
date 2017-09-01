@@ -134,7 +134,7 @@ The write access for an in-out parameter starts
 after all of the non-in-out parameters have been evaluated
 and lasts for the entire duration of that function call.
 If there are multiple in-out parameters,
-the right accesses starts in the same order as the parameters appear.
+the write accesses start in the same order as the parameters appear.
 
 .. docnote:: TR: Confirm comment about multiple inout.
 
