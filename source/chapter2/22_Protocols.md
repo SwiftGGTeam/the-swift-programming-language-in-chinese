@@ -646,8 +646,36 @@ wishHappyBirthday(to: birthdayPerson)
 
 上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
 
-> 注意  
-> 协议合成并不会生成新的、永久的协议类型，而是将多个协议中的要求合成到一个只在局部作用域有效的临时协议中。
+这里有一个例子：将Location类和前面的Named协议进行组合：
+
+```swift
+class Location {
+    var latitude: Double
+    var longitude: Double
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+}
+class City: Location, Named {
+    var name: String
+    init(name: String, latitude: Double, longitude: Double) {
+        self.name = name
+        super.init(latitude: latitude, longitude: longitude)
+    }
+}
+func beginConcert(in location: Location & Named) {
+    print("Hello, \(location.name)!")
+}
+ 
+let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
+beginConcert(in: seattle)
+// Prints "Hello, Seattle!"
+```
+
+`beginConcert(in:)`方法接受一个类型为 `Location & Named` 的参数，这意味着"任何Location的子类，并且遵循Named协议"。例如，City就满足这样的条件。
+
+将 birthdayPerson 传入`beginConcert(in:)`函数是不合法的，因为 Person不是一个Location的子类。就像，如果你新建一个类继承与Location，但是没有遵循Named协议，你用这个类的实例去调用`beginConcert(in:)`函数也是不合法的。
 
 <a name="checking_for_protocol_conformance"></a>
 ## 检查协议一致性
