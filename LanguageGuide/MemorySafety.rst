@@ -517,12 +517,12 @@ so overlapping changes to the structure's properties aren't allowed.
 .. Devin says the latter are "checked at run time"
    but they appear to just be a hard error.
 
-.. _MemorySafety_Modeling:
 
-Swift's Model for Conflicting Access
-------------------------------------
 
-.. XXX Let's iterate a little on this title.
+
+
+
+
 
 .. docnote:: Currently, the only way to create a long-term read 
              is to use implicit pointer conversion 
