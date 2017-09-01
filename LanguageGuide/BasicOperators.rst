@@ -346,7 +346,7 @@ For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 You can also compare
 two tuples if they have the same number of values
-and the given operator can applied
+and the comparison operator can be applied
 to each of the values in both tuples.
 For example:
 
