@@ -31,6 +31,8 @@
 - [关联类型](#associated_types)
 - [泛型 Where 语句](#where_clauses)
 - [具有泛型 where 子句的扩展](#extensions_with_a_generic_where_clause)
+- [具有泛型 Where 子句的关联类型](#associated_types_with_a_generic_where_clause)
+- [泛型下标](#generic_subscripts)
 
 *泛型代码*让你能够根据自定义的需求，编写出适用于任意类型、灵活可重用的函数及类型。它能让你避免代码的重复，用一种清晰和抽象的方式来表达代码的意图。
 
@@ -618,4 +620,56 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 
 此示例将一个 `average()` 方法添加到 `Item` 类型为 `Double` 的容器中。此方法遍历容器中的元素将其累加，并除以容器的数量计算平均值。它将数量从 `Int` 转换为 `Double` 确保能够进行浮点除法。  
 
-就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。  
+就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。
+
+  
+<a name="associated_types_with_a_generic_where_clause"></a>
+## 具有泛型 Where 子句的关联类型
+
+你能够包含一个具有泛型 Where 子句的关联类型。例如建立一个包含迭代器（Iterator）的容器，就像是标准库中使用的Sequence协议那样。下面是你所写的代码：
+
+```swift
+protocol Container {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+    
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    func makeIterator() -> Iterator
+}
+```
+
+迭代器（Iterator）的泛型Where子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。makeIterator()则提供了容器的迭代器的访问接口。
+
+一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型Where子句，来添加了一个约束到被继承协议的关联类型。例如，下面的代码声明了一个ComparableContainer协议，它要求所有的Item必须是Comparable的。
+
+```swift
+protocol ComparableContainer: Container where Item: Comparable { }
+```
+
+<a name="generic_subscripts"></a>
+##泛型下标
+
+下标能够是泛型的，他们能够包含泛型Where子句。你可以在subscript后面的尖括号中，写下占位符（placeholder）类型名称，在下标代码体开始的标志的花括号之前写下泛型Where子句。例如：
+
+```swift
+extension Container {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        where Indices.Iterator.Element == Int {
+            var result = [Item]()
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
+    }
+}
+```
+
+这个Container协议的扩展添加了一个下标：下标是一个序列的索引，返回的则是索引所在的项目的值所构成的数组。这个泛型下标的约束如下：
+- 在尖括号中的泛型参数Indices，必须是符合标准库中的Sequence协议的类型。
+- 下标使用的单一的参数，indices，必须是Indices的实例。
+- 泛型Where子句要求Sequence（Indices）的迭代器，其所有的元素都是Int类型。这样就能确保在序列（Sequence）中的索引和容器(Container)里面的索引类型是一致的。
+
+综合一下,这些约束意味着，传入到indices下标，是一个整数的序列.
+(译者：原来的Container协议，subscript必须是Int型的，扩展中新的subscript，允许下标是一个的序列，而非单一的值。)
