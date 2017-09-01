@@ -22,6 +22,7 @@
 本页包含内容：
 
 - [字符串字面量](#string_literals)
+- [多行字符串字面量](#multiline_string_literals)
 - [初始化空字符串](#initializing_an_empty_string)
 - [字符串可变性](#string_mutability)
 - [字符串是值类型](#strings_are_value_types)
@@ -62,6 +63,59 @@ let someString = "Some string literal value"
 
 > 注意：
 更多关于在字符串字面量中使用特殊字符的信息，请查看 [字符串字面量的特殊字符](#special_characters_in_string_literals) 。
+
+<a name="multiline_string_literals"></a>
+## 多行字符串字面量
+
+如果你需要一个字符串是跨越多行的，你可以使用多行字符串字面量，它是由三个双引号(`"""`)包裹着的具有固定顺序的文本字符集。
+
+```swift
+let quotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin,
+please your Majesty?" he asked.
+ 
+"Begin at the beginning," the King said gravely, "and go on
+till you come to the end; then stop."
+"""
+```
+
+一个多行字符串字面量包含了所有的在开启和关闭引号（`"""`）中的行。这个字符从开启引号(`"""`)之后的第一行开始，到关闭引号(`"""`)之前为止。这就意味着字符串开启引号之后(`"""`)或者结束引号(`"""`)之前都没有一个换行符号。（译者：下面两个字符串其实是一样的，虽然第二个使用了多行字符串的形势）
+
+```swift
+let singleLineString = "These are the same."
+let multilineString = """
+These are the same.
+"""
+```
+
+如果你的代码中，多行字符串字面量包含换行符的话，则多行字符串字面量中也会包含换行符。如果你想使用换行，使得你的代码获得好的可读性，但是你又不想在你的多行字符串字面量中出现换行符的话，你可以用在行尾写一个反斜杠(`\`)作为续行符。
+
+```swift
+let softWrappedQuotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin, \
+please your Majesty?" he asked.
+ 
+"Begin at the beginning," the King said gravely, "and go on \
+till you come to the end; then stop."
+"""
+```
+
+为了让一个多行字符串字面量开始和结束于换行符，请将换行写在第一行和最后一行，例如：
+
+```swift
+let lineBreaks = """
+ 
+This string starts with a line break.
+It also ends with a line break.
+ 
+"""
+```
+
+一个多行字符串字面量能够缩进来匹配周围的代码。关闭引号(`"""`)之前的空白字符串告诉Swift编译器其他各行多少空白字符串需要忽略。然而，如果你在某行的前面写的空白字符串超出了关闭引号(`"""`)之前的空白字符串，则超出部分将被包含在多行字符串字面量中。
+
+![](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Art/multilineStringWhitespace_2x.png)
+
+在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号(`"""`)之前的空白字符串多，所以，它的行首将有4个空白字符串（实际的变量值）。
 
 
 <a name="initializing_an_empty_string"></a>
