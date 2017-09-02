@@ -342,9 +342,13 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 Memory Access Conflicts
 +++++++++++++++++++++++
 
-.. XXX We should iterate on this heading.
+.. docnote:: [Contributor 4485]: Any suggestions on this heading?
    There's reader ambiguity between "conflicts" as a noun/verb,
-   and there isn't an obvious best heading to use.
+   but there isn't an obvious best heading to use.
+   "Conflicting Access to Memory" might be better,
+   or possible "Memory Access Restrictions"
+   since this is a restriction that's needed by the compiler
+   to allow us to prevent conflicting accesses.
 
 A parameter that is a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
