@@ -8,12 +8,13 @@ Memory Safety
    - Resolve XXX comments throughout.  (git grep -I XXX)
 
 By default, Swift prevents unsafe behavior from happening in your code.
-For example, Swift ensures that variables are initialized before they’re used,
-memory isn’t accessed after it’s been deallocated,
+For example,
+Swift ensures that variables are initialized before they're used,
+memory isn't accessed after it's been deallocated,
 and array indices are checked for out-of-bounds errors.
 
 Swift also makes sure that multiple accesses
-to the same area of memory don’t conflict,
+to the same area of memory don't conflict,
 by requiring that code modifying an area of memory
 has exclusive access to that memory.
 Because Swift manages memory automatically,
@@ -512,7 +513,7 @@ so overlapping changes to the structure's properties aren't allowed.
    For global variables,
    class properties,
    and local variables that are captured by an escaping closures,
-   the compiler can’t prove overlapping access is safe.
+   the compiler can't prove overlapping access is safe.
 
 .. Devin says the latter are "checked at run time"
    but they appear to just be a hard error.
