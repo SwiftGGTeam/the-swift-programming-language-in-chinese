@@ -744,9 +744,9 @@ so that it behaves correctly with or without the optimization.
 
 Within a function, don't access a value that was passed as an in-out argument,
 even if the original value is available in the current scope.
-Accessing the original is a simultaneous access of the value, 
+Accessing the original is a simultaneous access of the value,
 which violates Swift's memory exclusivity guarantee.
-For the same reason, 
+For the same reason,
 you can't pass the same value to multiple in-out parameters.
 
 For more information about memory safety and memory exclusivity,

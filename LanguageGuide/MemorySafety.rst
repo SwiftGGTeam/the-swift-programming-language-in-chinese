@@ -543,7 +543,7 @@ so overlapping changes to the structure's properties aren't allowed.
 
        foo(&global)
        print(global)
-       
+
        // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
        // Previous access (a read) started at temp2`main + 87 (0x10675e417).
        // Current access (a modification) started at:
