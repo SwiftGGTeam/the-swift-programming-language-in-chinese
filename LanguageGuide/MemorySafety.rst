@@ -68,21 +68,15 @@ that span several lines of code,
 which means it's possible for other code to be executed
 in the middle of the modification.
 
-You can think of reading from and writing to memory
-like taking notes on a piece of paper.
-If all your changes involve only one letter,
-each change is completed in a single step,
-which means one change can't ever happen in the middle of another change.
-But if a change requires more than one step,
-it's possible for other reading and writing to happen
-before you finish all of the first change's steps.
-You could end up reading some text
-that you're still in the middle of writing ---
-for example, reading a sentence whose end hasn't been written down yet ---
-yielding potentially incorrect results.
-
-.. XXX The para above needs a heavy copyedit.
-   Long multiclause sentences are hard to read.
+You can think of conflicting access to memory
+by analogy to writing a grocery list on a piece of paper.
+Suppose you're in the middle of adding
+"hamburger buns" to the list
+when your friends call from the store.
+When you read the list to them,
+because you didn't finish writing "hamburger buns" yet,
+the list could have a nonsense entry like "hambu"
+or an incorrect entry like "ham".
 
 Similarly,
 multiple accesses to the same area of memory at the same time can
