@@ -1,12 +1,6 @@
 Memory Safety
 =============
 
-.. docnote:: TODO
-
-   - Request art changes to the surviving/existing illustrations per the
-     FIGURE docnotes below.
-   - Resolve XXX comments throughout.  (git grep -I XXX)
-
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
 Swift ensures that variables are initialized before they're used,
@@ -69,19 +63,25 @@ which means it's possible for other code to be executed
 in the middle of the modification.
 
 You can think of conflicting access to memory
-by analogy to writing a grocery list on a piece of paper.
-Suppose you're in the middle of adding
-"hamburger buns" to the list
-when your friends call from the store.
-When you read the list to them,
-because you didn't finish writing "hamburger buns" yet,
-the list could have a nonsense entry like "hambu"
-or an incorrect entry like "ham".
+by analogy to writing a shopping list on a piece of paper.
+Each time you add something you need to buy,
+you update your total budget:
 
+.. image:: ../images/memory_shopping.jpg
+   :align: center
+   :width: 75%
+
+.. XXX Remove :width: above when you swap out the placeholder art.
+
+If you tried to read the list
+during the process of updating it,
+the total budget would be incorrect.
 Similarly,
 multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behaviour.
-Two accesses to memory conflict if:
+
+Two accesses to memory conflict
+if all of the following are true:
 
 * Both accesses use the same location in memory.
 * Both accesses happen at the same time.
