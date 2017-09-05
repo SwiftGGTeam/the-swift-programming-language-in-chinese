@@ -344,23 +344,32 @@ such as the ``if`` statement:
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
-You can also compare
-two tuples if they have the same number of values
-and the comparison operator can be applied
+You can compare
+two tuples if they have the same type, the same number of values
+and the given comparison operator can be applied
 to each of the values in both tuples.
-For example:
+
+For example, as demonstrated in the code below, you can compare
+two tuples of type ``(String, Int)`` because they are the same type,
+both have the same number of values and both ``String`` and ``Int`` values
+can be compared with values of the same respective type
+using the ``<`` operator.
+
+In contrast, two tuples of type ``(String, Bool)`` can't be compared
+with the ``<`` operator as the ``<`` operator can't be applied to
+``Bool`` values.
 
 .. testcode:: tuple-comparison-operators
 
-   -> ("a", 38) < ("a", 18)      // Ok
-   -> ("a", true) < ("b", true)  // Error
-   <$ : Bool = false
-   !! <REPL Input>:1:13: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
-   !! ("a", true) < ("b", true)  // Error
-   !! ~~~~~~~~~~~ ^ ~~~~~~~~~~~
-   !~ <REPL Input>:1:13: note: overloads for '<' exist with these partially matching parameter lists:
-   !! ("a", true) < ("b", true)  // Error
-   !!             ^
+   -> ("blue", 0) < ("purple", 1)      // OK, evaluates to true
+   -> ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   <$ : Bool = true
+   !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
+   !! ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   !! ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~
+   !~ <REPL Input>:1:17: note: overloads for '<' exist with these partially matching parameter lists:
+   !! ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   !!                 ^
 
 .. assertion:: boolean-is-not-comparable
 
@@ -372,14 +381,6 @@ For example:
    !! true < false
    !!      ^
 
-In the example above,
-because you can use ``<`` to compare ``Int`` values
-as well as ``String`` values,
-you can use ``<`` to compare
-tuples of the type ``(Int, String)``.
-In contrast, because ``Bool`` values cannot be compared
-with the ``<`` operator, tuples that contain a Boolean value
-cannot be compared with ``<``.
 
 Tuples are compared from left to right,
 one value at a time,
