@@ -1185,29 +1185,6 @@ the following code uses ``\.someProperty``:
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-.. Omitting the type doesn't work properly in some places in beta 1
-   <rdar://problem/32237567> This keypath code doesn't ever complete executing
-
-   To get \.foo to compile, you have to pass an explicit type,
-   so the subscript works, which defeats the whole point:
-
-   // OK
-   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
-   let implied = s[keyPath: key]
-
-   // OK
-   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
-
-   // NOPE
-   s[keyPath: \.someProperty] as Int
-
-    .. testcode:: keypath-expression
-
-       -> let implied = s[keyPath: \.someProperty]
-       << // implied : Int = 12
-       /> implied is \(implied)
-       </ implied is 12
-
 .. FIXME This is similar to an implicit member expression --
    likely worth calling out,
    assuming I can confirm that it's the same kind of type-inference context
