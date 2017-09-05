@@ -378,40 +378,27 @@ when the tuples' first elements are the same,
 their second elements *are* compared ---
 this is what happens on the second and third line.
 
-Tuples can only be compared with a given operator if the operator
+Tuples can be compared with a given operator only if the operator
 can be applied to each value in the respective tuples. For example,
 as demonstrated in the code below, you can compare
-two tuples of type ``(String, Int)`` because they are the same type,
-both have the same number of values and both ``String`` and ``Int`` values
-can be compared with values of the same respective type
+two tuples of type ``(String, Int)`` because
+both ``String`` and ``Int`` values can be compared
 using the ``<`` operator.  In contrast,
 two tuples of type ``(String, Bool)`` can't be compared
-with the ``<`` operator as the ``<`` operator can't be applied to
+with the ``<`` operator because the ``<`` operator can't be applied to
 ``Bool`` values.
 
 .. testcode:: tuple-comparison-operators
 
-   -> ("blue", 0) < ("purple", 1)         // OK, evaluates to true
-   -> ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   -> ("blue", -1) < ("purple", 1)         // OK, evaluates to true
+   -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    <$ : Bool = true
    !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
-   !! ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    !! ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~
    !~ <REPL Input>:1:17: note: overloads for '<' exist with these partially matching parameter lists:
-   !! ("blue", false) < ("purple", true)  // Error because `<` can't compare Boolean values
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    !!                 ^
-
-.. assertion:: boolean-is-not-comparable
-
-   -> true < false
-   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
-   !! true < false
-   !! ~~~~ ^ ~~~~~
-   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
-   !! true < false
-   !!      ^
-
-
 
 .. note::
 
