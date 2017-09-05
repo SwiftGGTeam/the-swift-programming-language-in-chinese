@@ -6,7 +6,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-09-xx  * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
+2017-09-xx  * Updated for Swift 4.0.
+
+            * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
               now that you can use generic ``where`` clauses
               to constrain associated types.
 
