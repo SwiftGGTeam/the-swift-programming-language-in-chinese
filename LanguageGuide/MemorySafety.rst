@@ -148,8 +148,6 @@ and lasts for the entire duration of that function call.
 If there are multiple in-out parameters,
 the write accesses start in the same order as the parameters appear.
 
-.. docnote:: TR: Confirm comment about multiple inout.
-
 One consequence of this long-term write access
 is that you can't access the original
 variable that was passed as in-out,
@@ -370,10 +368,15 @@ Because these are value types, mutating any piece of the value
 mutates the whole value ---
 this means read or write access to one of the properties
 requires read or write access to the whole value.
-This rule ensures that value semantics are preserved,
-but it doesn't apply to classes, which are reference types.
-A mutation to one of the properties of a class instance
-isn't considered a mutation to the class instance as a whole.
+
+.. XXX Devin: I don't think the "this rule" bit is correct.
+   The rule makes it possible for Swift to perform certain operations
+   (including enforcing exclusive access) more efficiently.
+
+   This rule ensures that value semantics are preserved,
+   but it doesn't apply to classes, which are reference types.
+   A mutation to one of the properties of a class instance
+   isn't considered a mutation to the class instance as a whole.
 
 Here's an example:
 
