@@ -1220,14 +1220,16 @@ to access a property of an optional string:
 
 .. testcode:: keypath-expression
 
+   -> let message: String? = "hello"
+   << // message : String? = Optional("hello")
    -> print(message?.count as Any)
-   <- 5
+   <- Optional(5)
    ---
    // Do the same thing using a key path.
-   -> let message: String? = "hello"
    -> let count = message[keyPath: \.?.count]
+   << // count : String.IndexDistance? = Optional(5)
    -> print(count as Any)
-   <- 5
+   <- Optional(5)
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
