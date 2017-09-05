@@ -2462,9 +2462,9 @@ For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
 and the multiplication (``*``) and division (``/``) operators
 belong to the ``MultiplicationPrecedence`` group.
-For a complete list of operators and precedence groups
+For a complete list of precedence groups
 provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 The *associativity* of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
