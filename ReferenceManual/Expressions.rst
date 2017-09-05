@@ -1214,7 +1214,7 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
-Key paths can contain optional chaining and forced unwrapping.
+Key paths can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
 to access a property of an optional string:
 
