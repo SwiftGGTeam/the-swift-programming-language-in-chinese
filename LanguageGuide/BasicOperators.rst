@@ -390,7 +390,7 @@ with the ``<`` operator because the ``<`` operator can't be applied to
 
 .. testcode:: tuple-comparison-operators
 
-   -> ("blue", -1) < ("purple", 1)         // OK, evaluates to true
+   -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
    -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    <$ : Bool = true
    !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
