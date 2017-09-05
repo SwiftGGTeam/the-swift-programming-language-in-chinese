@@ -64,8 +64,9 @@ in the middle of the modification.
 
 You can think of conflicting access to memory
 by analogy to writing a shopping list on a piece of paper.
-Each time you add something you need to buy,
-you update your total budget:
+Adding a items to the list is a two-step process:
+you add the items' names and prices,
+and then you update the total budget.
 
 .. image:: ../images/memory_shopping.jpg
    :align: center
@@ -73,9 +74,13 @@ you update your total budget:
 
 .. XXX Remove :width: above when you swap out the placeholder art.
 
-If you tried to read the list
-during the process of updating it,
-the total budget would be incorrect.
+During the process of adding items,
+the shopping list is in a temporary, invalid state
+because the total budget hasn't been updated
+to reflect the newly added items.
+Reading from the shopping list
+in the middle of making an addition
+gives you incorrect information.
 Similarly,
 multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behaviour.
