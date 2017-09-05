@@ -65,7 +65,7 @@ in the middle of the modification.
 You can think of conflicting access to memory
 by analogy to writing a shopping list on a piece of paper.
 Adding a items to the list is a two-step process:
-you add the items' names and prices,
+You add the items' names and prices,
 and then you update the total budget.
 
 .. image:: ../images/memory_shopping.jpg
