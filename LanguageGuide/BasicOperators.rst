@@ -286,9 +286,8 @@ that performs both tasks at the same time.
    The compound assignment operators don't return a value.
    For example, you can't write ``let b = a += 2``.
 
-For a complete list of the compound assignment operators
-provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For information about the operators provided by the Swift standard library,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. _BasicOperators_ComparisonOperators:
 

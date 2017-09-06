@@ -49,7 +49,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
@@ -170,7 +170,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -1444,7 +1444,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. langref-grammar
 

@@ -537,10 +537,9 @@ starting from their left:
 
 This calculation yields the final answer of ``17``.
 
-For a complete list of Swift operator precedences and associativity rules,
-see :doc:`../ReferenceManual/Expressions`.
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+including a complete list of the operator precedence groups and associativity settings,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. note::
 
@@ -845,9 +844,9 @@ and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
 it has been given the same precedence group
 as additive infix operators such as ``+`` and ``-``.
-For a complete list of the operator precedence groups and associativity settings,
-for the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For information about the operators provided by the Swift standard library,
+including a complete list of the operator precedence groups and associativity settings,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 For more information about precedence groups and to see the syntax for
 defining your own operators and precedence groups,
 see :ref:`Declarations_OperatorDeclaration`.
