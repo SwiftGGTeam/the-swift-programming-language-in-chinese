@@ -64,7 +64,7 @@ in the middle of the modification.
 
 You can think of conflicting access to memory
 as being like writing a shopping list on a piece of paper.
-Adding a items to the list is a two-step process:
+Adding items to the list is a two-step process:
 First you add the items' names and prices,
 and then you update your total budget.
 
@@ -119,16 +119,15 @@ all the read and write accesses in the code listing below are instantaneous:
     <- 2
 
 However,
-there are several ways to access memory
-that span the execution of other code,
-which are called a :newterm:`long-term` access.
-Unlike instantaneous accesses,
-it's possible for other code to run
-after a long-term access starts,
-but before before it ends.
-This difference means
-it's possible for a long-term access to overlap
-with long-term and instantaneous accesses.
+there are several ways to access memory,
+called :newterm:`long-term` accesses,
+that span the execution of other code.
+The difference between instantaneous access and long-term access
+is that it’s possible for other code to run
+after a long-term access starts but before it ends,
+which is called :newTerm:`overlap`.
+A long-term access can overlap
+with other long-term accesses and instantaneous accesses.
 The specific kinds of Swift code that use long-term access
 are discussed in the sections below.
 
