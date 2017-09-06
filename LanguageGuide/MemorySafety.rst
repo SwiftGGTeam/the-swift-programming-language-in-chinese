@@ -9,7 +9,7 @@ and array indices are checked for out-of-bounds errors.
 
 Swift also makes sure that multiple accesses
 to the same area of memory don't conflict,
-by requiring code that modifies
+by requiring code that modifies an area of memory
 to have exclusive access to that memory.
 Because Swift manages memory automatically,
 most of the time you don't have to think about accessing memory at all.
@@ -334,7 +334,7 @@ There's a write access to ``oscar`` during the method call
 because ``oscar`` is the value of ``self`` in a mutating method,
 and there's a write access to ``maria``
 for the same duration
-because ``maria`` was passed as a in-out parameter.
+because ``maria`` was passed as an in-out parameter.
 These write accesses overlap in time,
 but they access different memory,
 so there's no violation.
