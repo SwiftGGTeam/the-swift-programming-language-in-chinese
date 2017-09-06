@@ -750,7 +750,7 @@ For the same reason,
 you can't pass the same value to multiple in-out parameters.
 
 For more information about memory safety and memory exclusivity,
-see :ref:`Memory_Safety`.
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. When the call-by-reference optimization is in play,
    it would happen to do what you want.
