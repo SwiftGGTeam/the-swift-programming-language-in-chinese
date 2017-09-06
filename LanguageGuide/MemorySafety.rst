@@ -68,11 +68,8 @@ Adding a items to the list is a two-step process:
 First you add the items' names and prices,
 and then you update your total budget.
 
-.. image:: ../images/memory_shopping.jpg
+.. image:: ../images/memory_shopping_2x.png
    :align: center
-   :width: 75%
-
-.. XXX Remove :width: above when you swap out the placeholder art.
 
 While you're adding items to your shopping list,
 the list is in a temporary, invalid state
