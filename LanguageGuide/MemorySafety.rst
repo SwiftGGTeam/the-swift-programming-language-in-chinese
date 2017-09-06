@@ -9,11 +9,11 @@ and array indices are checked for out-of-bounds errors.
 
 Swift also makes sure that multiple accesses
 to the same area of memory don't conflict,
-by requiring that code modifying an area of memory
-has exclusive access to that memory.
+by requiring code that modifies
+to have exclusive access to that memory.
 Because Swift manages memory automatically,
 most of the time you don't have to think about accessing memory at all.
-That said,
+However,
 it's important to understand where potential conflicts can occur,
 so you can avoid writing code that has conflicting access to memory.
 If your code has conflicting access to memory,
@@ -52,10 +52,10 @@ the following code contains both a read access and a write access:
 A conflicting access to memory can occur
 when different parts of your code are trying
 to access the same area of memory at the same time.
-If you've written concurrent or multithreaded programs,
+If you've written concurrent or multithreaded code,
 conflicting access to memory might be a familiar problem.
 However,
-the conflicting access discussed in this chapter
+the conflicting access discussed here
 *doesn't* involve concurrent or multithreaded code.
 In Swift, there are ways to modify a value
 that span several lines of code,
@@ -63,10 +63,10 @@ which means it's possible for other code to be executed
 in the middle of the modification.
 
 You can think of conflicting access to memory
-by analogy to writing a shopping list on a piece of paper.
+as being like writing a shopping list on a piece of paper.
 Adding a items to the list is a two-step process:
-You add the items' names and prices,
-and then you update the total budget.
+First you add the items' names and prices,
+and then you update your total budget.
 
 .. image:: ../images/memory_shopping.jpg
    :align: center
@@ -74,29 +74,29 @@ and then you update the total budget.
 
 .. XXX Remove :width: above when you swap out the placeholder art.
 
-During the process of adding items,
-the shopping list is in a temporary, invalid state
-because the total budget hasn't been updated
+While you're adding items to your shopping list,
+the list is in a temporary, invalid state
+because your total budget hasn't been updated
 to reflect the newly added items.
-Reading from the shopping list
-in the middle of making an addition
+Reading from the list
+in the middle of adding an item
 gives you incorrect information.
 Similarly,
 multiple accesses to the same area of memory at the same time can
-produce unpredictable or inconsistent behaviour.
+produce unpredictable or inconsistent behavior.
 
 Two accesses to memory conflict
-if all of the following are true:
+if all of the following conditions apply:
 
-* Both accesses use the same location in memory.
-* Both accesses happen at the same time.
-* At least one access is writing to that memory.
+* They use the same location in memory.
+* They happen at the same time.
+* At least one is writing to that memory.
 
 .. note::
 
-    Swift guarantees that you'll get an error
-    if you have conflicting access to memory,
-    but only if the conflict happens within a single thread.
+    If you have conflicting access to memory
+    from within a single thread,
+    Swift guarantees that you'll get an error.
     For multithreaded code,
     use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
     to help detect conflicting access across threads.
@@ -146,7 +146,7 @@ The write access for an in-out parameter starts
 after all of the non-in-out parameters have been evaluated
 and lasts for the entire duration of that function call.
 If there are multiple in-out parameters,
-the write accesses start in the same order as the parameters appear.
+the write accesses start in the same order as the parameters appear in.
 
 One consequence of this long-term write access
 is that you can't access the original
@@ -174,6 +174,8 @@ and would normally be accessible from within ``incrementInPlace(_:)``,
 the read and write accesses to ``stepSize`` conflict
 if you call ``incrementInPlace(_:)`` with ``stepSize`` as its parameter.
 
+.. XXX [Contributor 4485]: Need a lead-in to the figure.
+
 .. image:: ../images/memory_increment_2x.png
    :align: center
 
@@ -181,7 +183,7 @@ if you call ``incrementInPlace(_:)`` with ``stepSize`` as its parameter.
              and change "i" to "stepSize".
 
 One way to solve this conflict
-is to make an explicit copy:
+is to make an explicit copy of the step size:
 
 .. testcode:: memory-increment-copy
 
@@ -210,8 +212,11 @@ by the current step size.
 There's only one access to ``stepSize`` in the function,
 so there isn't a conflict.
 
+.. XXX [Contributor 4485]: It's unclear what "unclear behavior" refers to above.
+
 Passing the same variable as an in-out parameter more than once
-is also an error --- for example:
+is also an error.
+For example:
 
 .. testcode:: memory-balance
 
@@ -299,9 +304,10 @@ In the method above that restores a player's health to 10,
 a write access to ``self`` starts at the beginning of the function
 and lasts until the function returns.
 In this case, there's no other code
-inside of ``restoreHealth()``
-that could have an overlapping access to properties of a ``Player``.
-The ``shareHealth(with:)`` method below takes another ``Player`` as an in-out parameter,
+inside ``restoreHealth()``
+that could have an overlapping access to properties of a ``Player`` instance.
+The ``shareHealth(with:)`` method below
+takes another ``Player`` instance as an in-out parameter,
 creating the possibility of overlapping accesses.
 
 .. testcode:: memory-player-share-with-self
@@ -336,13 +342,13 @@ calling the ``shareHealth(with:)`` method
 for Oscar's player to share health with Maria's player
 doesn't cause a violation.
 There's a write access to ``oscar`` during the method call
-because its the value of ``self`` in a mutating method,
+because ``oscar`` is the value of ``self`` in a mutating method,
 and there's a write access to ``maria``
 for the same duration
-because it was passed as a in-out parameter.
+because ``maria`` was passed as a in-out parameter.
 These write accesses overlap in time,
-but they are accessing different memory,
-so there is no violation.
+but they access different memory,
+so there's no violation.
 
 However,
 if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
@@ -365,8 +371,8 @@ Types like structures, tuples, and enumerations
 are made up of individual constituent values,
 such as the properties of a structure or the elements of a tuple.
 Because these are value types, mutating any piece of the value
-mutates the whole value ---
-this means read or write access to one of the properties
+mutates the whole value,
+meaning read or write access to one of the properties
 requires read or write access to the whole value.
 
 .. XXX Devin: I don't think the "this rule" bit is correct.
@@ -402,13 +408,13 @@ Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
 which means ``balance(_:_:)`` needs write access to them.
 In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
-This means there are two write access to ``myTuple``
+This means there are two write accesses to ``myTuple``
 with exactly the same duration.
 
 Although a structure is also a value type,
 in many cases the compiler can prove
-that the overlapping access are safe.
-This means most access to stored properties *can* overlap for structures.
+that the overlapping accesses are safe.
+This means most accesses to stored properties *can* overlap for structures.
 For example:
 
 .. testcode:: memory-share-health
@@ -439,7 +445,7 @@ The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
 Because exclusive access to memory is a slightly broader guarantee
 than memory safety,
-some code that is memory safe
+some memory-safe code
 violates the guarantee of exclusive access.
 Swift allows this code if the compiler can prove
 that the nonexclusive access to memory is still safe.
@@ -495,7 +501,7 @@ the overlapping writes are safe:
 In the version of ``health`` above,
 any time the player runs out of health points,
 the property setter subtracts a life
-and resets ``health`` to its full value of ten.
+and resets ``health`` to its full value of 10.
 Because ``health`` is a computed property,
 any mutation to a property of ``oscar``
 requires mutation to the entire ``Player`` structure,
@@ -511,14 +517,14 @@ so overlapping changes to the structure's properties aren't allowed.
 
    The compiler can prove
    that overlapping access to properties of a structure is safe
-   if the structure is the value of local variable
+   if the structure is the value of a local variable
    that isn't captured by a closure,
-   or if it's the value of a local variables
+   or if it's the value of a local variable
    that's captured by a nonescaping closure.
    For global variables,
    class properties,
-   and local variables that are captured by an escaping closures,
-   the compiler can't prove overlapping access is safe.
+   and local variables that are captured by an escaping closure,
+   the compiler can't prove that overlapping access is safe.
 
 .. Devin says the latter are "checked at run time"
    but they appear to just be a hard error.

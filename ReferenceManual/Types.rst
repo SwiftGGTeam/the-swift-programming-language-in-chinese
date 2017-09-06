@@ -342,15 +342,13 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 Memory Access Conflicts
 +++++++++++++++++++++++
 
-.. docnote:: [Contributor 4485]: Any suggestions on this heading?
-   There's reader ambiguity between "conflicts" as a noun/verb,
-   but there isn't an obvious best heading to use.
-   "Conflicting Access to Memory" might be better,
-   or possible "Memory Access Restrictions"
-   since this is a restriction that's needed by the compiler
-   to allow us to prevent conflicting accesses.
+.. XXX [Contributor 4485]: Can this subsection be more clearly tied
+   to its parent section?
+   Possible headings:
+   Memory Access Conflict when Using the Function Type
+   Memory Access Restrictions when Using the Function Type
 
-A parameter that is a nonescaping function
+A parameter that's a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
 This restriction helps Swift perform
 more of its checks for conflicting access to memory
@@ -390,8 +388,8 @@ Because neither one is marked ``@escaping``,
 they are both nonescaping.
 
 The four function calls marked "Error" in the example above
-cause compiler errors ---
-because the ``first`` and ``second`` parameters
+cause compiler errors.
+Because the ``first`` and ``second`` parameters
 are nonescaping functions,
 they can't be passed as arguments to another nonescaping function parameter.
 In contrast,
