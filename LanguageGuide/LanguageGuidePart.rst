@@ -19,7 +19,6 @@ Language Guide
    Inheritance
    Initialization
    Deinitialization
-   AutomaticReferenceCounting
    OptionalChaining
    ErrorHandling
    TypeCasting
@@ -27,5 +26,7 @@ Language Guide
    Extensions
    Protocols
    Generics
+   AutomaticReferenceCounting
+   MemorySafety
    AccessControl
    AdvancedOperators

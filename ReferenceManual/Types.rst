@@ -337,6 +337,66 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
    >> b(3)(5)
    << // r1 : Int = 8
 
+.. _Types_FunctionParameterConflicts:
+
+Restrictions for Nonescaping Closures
++++++++++++++++++++++++++++++++++++++
+
+A parameter that's a nonescaping function
+can't be passed as an argument to another nonescaping function parameter.
+This restriction helps Swift perform
+more of its checks for conflicting access to memory
+at compile time instead of at runtime.
+For example:
+
+.. testcode:: memory-nonescaping-functions
+
+    -> let external: (Any) -> Void = { _ in () }
+    << // external : (Any) -> Void = (Function)
+    -> func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
+           first(first)    // Error
+           second(second)  // Error
+
+           first(second)   // Error
+           second(first)   // Error
+
+           first(external) // OK
+           external(first) // OK
+       }
+    !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(first)    // Error
+    !! ^     ~~~~~
+    !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second(second)  // Error
+    !! ^      ~~~~~~
+    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(second)   // Error
+    !! ^     ~~~~~~
+    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second(first)   // Error
+    !! ^      ~~~~~
+
+In the code above,
+both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
+Because neither one is marked ``@escaping``,
+they are both nonescaping.
+
+The four function calls marked "Error" in the example above
+cause compiler errors.
+Because the ``first`` and ``second`` parameters
+are nonescaping functions,
+they can't be passed as arguments to another nonescaping function parameter.
+In contrast,
+the two function calls marked "OK" don't cause a compiler error.
+Because ``external`` isn't one of the parameters of ``takesTwoFunctions``,
+these function calls don't violate the restriction.
+
+If you need to avoid this restriction, mark one of the parameters as escaping,
+or temporarily convert one of the nonescaping function parameters to an escaping function
+by using the ``withoutActuallyEscaping(_:do:)`` function.
+For information about avoiding conflicting access to memory,
+see :doc:`../LanguageGuide/MemorySafety`.
+
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
