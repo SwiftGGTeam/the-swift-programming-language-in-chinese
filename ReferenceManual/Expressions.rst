@@ -1185,29 +1185,6 @@ the following code uses ``\.someProperty``:
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-.. Omitting the type doesn't work properly in some places in beta 1
-   <rdar://problem/32237567> This keypath code doesn't ever complete executing
-
-   To get \.foo to compile, you have to pass an explicit type,
-   so the subscript works, which defeats the whole point:
-
-   // OK
-   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
-   let implied = s[keyPath: key]
-
-   // OK
-   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
-
-   // NOPE
-   s[keyPath: \.someProperty] as Int
-
-    .. testcode:: keypath-expression
-
-       -> let implied = s[keyPath: \.someProperty]
-       << // implied : Int = 12
-       /> implied is \(implied)
-       </ implied is 12
-
 .. FIXME This is similar to an implicit member expression --
    likely worth calling out,
    assuming I can confirm that it's the same kind of type-inference context
@@ -1237,6 +1214,23 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+Key paths can use optional chaining and forced unwrapping.
+For example, the following code uses optional chaining in a key path
+to access a property of an optional string:
+
+.. testcode:: keypath-expression
+
+   -> let message: String? = "hello"
+   << // message : String? = Optional("hello")
+   -> print(message?.count as Any)
+   <- Optional(5)
+   ---
+   // Do the same thing using a key path.
+   -> let count = message[keyPath: \.?.count]
+   << // count : String.IndexDistance? = Optional(5)
+   -> print(count as Any)
+   <- Optional(5)
+
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
@@ -1251,12 +1245,14 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier
+   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+
+   key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
+   key-path-postfix --> ``?`` | ``!``
 
 .. FUTURE syntax-grammar
 
-   As of 2017-04-19 Joe Groff says he expects to only implement property names
-   for WWDC.  More stuff will land later.
+   As of 2017-08-31, `?` and `!` are implemented, but subscripts aren't yet.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
 
