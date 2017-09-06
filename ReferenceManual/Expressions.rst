@@ -1245,7 +1245,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+   key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
 
    key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
    key-path-postfix --> ``?`` | ``!``
