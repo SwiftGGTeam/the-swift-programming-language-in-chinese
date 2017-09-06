@@ -6,10 +6,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-08-21  * Added information about escaping line breaks in multiline string literals
-              to the :ref:`StringsAndCharacters_MultilineLiterals` section.
-----------  ----------------------------------------------------------------------------------------------
-2017-06-05  * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
+2017-09-12  * Updated for Swift 4.0.
+
+            * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
               now that you can use generic ``where`` clauses
               to constrain associated types.
 
