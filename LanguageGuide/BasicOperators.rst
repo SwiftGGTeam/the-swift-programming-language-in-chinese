@@ -343,24 +343,8 @@ such as the ``if`` statement:
 
 For more on the ``if`` statement, see :doc:`ControlFlow`.
 
-You can also compare
-tuples that have the same number of values,
-as long as each of the values in the tuple can be compared.
-For example, both ``Int`` and ``String`` can be compared,
-which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` can't be compared,
-which means tuples that contain a Boolean value can't be compared.
-
-.. assertion:: boolean-is-not-comparable
-
-   -> true < false
-   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
-   !! true < false
-   !! ~~~~ ^ ~~~~~
-   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
-   !! true < false
-   !!      ^
-
+You can compare
+two tuples if they have the same type and the same number of values.
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -377,9 +361,9 @@ For example:
    -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-   << // r0 : Bool = true
-   << // r1 : Bool = true
-   << // r2 : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
 
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
@@ -392,6 +376,28 @@ However,
 when the tuples' first elements are the same,
 their second elements *are* compared ---
 this is what happens on the second and third line.
+
+Tuples can be compared with a given operator only if the operator
+can be applied to each value in the respective tuples. For example,
+as demonstrated in the code below, you can compare
+two tuples of type ``(String, Int)`` because
+both ``String`` and ``Int`` values can be compared
+using the ``<`` operator.  In contrast,
+two tuples of type ``(String, Bool)`` can't be compared
+with the ``<`` operator because the ``<`` operator can't be applied to
+``Bool`` values.
+
+.. testcode:: tuple-comparison-operators
+
+   -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+   -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   <$ : Bool = true
+   !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !! ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~
+   !~ <REPL Input>:1:17: note: overloads for '<' exist with these partially matching parameter lists:
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !!                 ^
 
 .. note::
 
