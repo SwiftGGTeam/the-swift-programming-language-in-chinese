@@ -294,7 +294,7 @@ a write access to ``self`` starts at the beginning of the function
 and lasts until the function returns.
 In this case, there's no other code
 inside ``restoreHealth()``
-that could have an overlapping access to properties of a ``Player`` instance.
+that could have an overlapping access to the properties of a ``Player`` instance.
 The ``shareHealth(with:)`` method below
 takes another ``Player`` instance as an in-out parameter,
 creating the possibility of overlapping accesses.
