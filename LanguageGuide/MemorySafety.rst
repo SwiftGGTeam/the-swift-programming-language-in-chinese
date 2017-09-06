@@ -170,14 +170,11 @@ even though ``stepSize`` is a global variable,
 and would normally be accessible from within ``incrementInPlace(_:)``,
 the read and write accesses to ``stepSize`` conflict
 if you call ``incrementInPlace(_:)`` with ``stepSize`` as its parameter.
-
-.. XXX [Contributor 4485]: Need a lead-in to the figure.
+As shown in the figure below,
+both ``number`` and ``stepSize`` refer to the same memory.
 
 .. image:: ../images/memory_increment_2x.png
    :align: center
-
-.. docnote:: FIGURE: add underscored parameter label: (_ number: inout Int)
-             and change "i" to "stepSize".
 
 One way to solve this conflict
 is to make an explicit copy of the step size:
@@ -200,16 +197,11 @@ is to make an explicit copy of the step size:
     /> stepSize is now \(stepSize)
     </ stepSize is now 2
 
-In this version,
-both the conflicting access to memory
-and the unclear intended behavior are resolved.
 By making a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
 it's clear that the value of ``copyOfStepSize`` is incremented
 by the current step size.
 There's only one access to ``stepSize`` in the function,
 so there isn't a conflict.
-
-.. XXX [Contributor 4485]: It's unclear what "unclear behavior" refers to above.
 
 Passing the same variable as an in-out parameter more than once
 is also an error.

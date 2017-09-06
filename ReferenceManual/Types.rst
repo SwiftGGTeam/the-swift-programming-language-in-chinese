@@ -339,14 +339,8 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
 .. _Types_FunctionParameterConflicts:
 
-Memory Access Conflicts
-+++++++++++++++++++++++
-
-.. XXX [Contributor 4485]: Can this subsection be more clearly tied
-   to its parent section?
-   Possible headings:
-   Memory Access Conflict when Using the Function Type
-   Memory Access Restrictions when Using the Function Type
+Restrictions for Nonescaping Closures
++++++++++++++++++++++++++++++++++++++
 
 A parameter that's a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
