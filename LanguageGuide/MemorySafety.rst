@@ -16,7 +16,7 @@ most of the time you don't have to think about accessing memory at all.
 However,
 it's important to understand where potential conflicts can occur,
 so you can avoid writing code that has conflicting access to memory.
-If your code has conflicting access to memory,
+If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
 .. XXX Brian: Let's bring back this discussion.
@@ -196,7 +196,7 @@ is to make an explicit copy of the step size:
     /> stepSize is now \(stepSize)
     </ stepSize is now 2
 
-By making a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
+When you make a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
 it's clear that the value of ``copyOfStepSize`` is incremented
 by the current step size.
 There's only one access to ``stepSize`` in the function,
@@ -425,8 +425,8 @@ For example:
 
 In the example above,
 Oscar's health and energy are passed
-as the two in-out parameters to ``balance(_:_:)`` ---
-although this technically violates memory exclusivity
+as the two in-out parameters to ``balance(_:_:)``.
+Although this technically violates memory exclusivity
 because both are properties of the same structure,
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,

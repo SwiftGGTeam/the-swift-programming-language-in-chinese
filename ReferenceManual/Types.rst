@@ -379,7 +379,7 @@ For example:
 In the code above,
 both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
 Because neither one is marked ``@escaping``,
-they are both nonescaping.
+they're both nonescaping.
 
 The four function calls marked "Error" in the example above
 cause compiler errors.
