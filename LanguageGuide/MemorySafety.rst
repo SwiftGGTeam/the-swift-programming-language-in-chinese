@@ -350,6 +350,9 @@ both ``self`` and ``teammate`` refer to the same ``Player`` ---
 the value of ``oscar`` ---
 which means the two write accesses conflict.
 
+.. XXX Lost the memory_share_health_2x figure,
+   which needs updated text in it to match the listing.
+
 .. _MemorySafety_Properties:
 
 Conflicting Access to Properties
