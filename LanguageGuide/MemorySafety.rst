@@ -37,11 +37,11 @@ the following code contains both a read access and a write access:
 
 .. testcode:: memory-read-write
 
-    // a write to the memory where "one" is stored
+    // A write access to the memory where "one" is stored
     -> var one = 1
     << // one : Int = 1
     ---
-    // a read from the memory where "one" is stored
+    // A read access from the memory where "one" is stored
     -> print("We're number \(one)!")
     << We're number 1!
 
@@ -85,7 +85,7 @@ produce unpredictable or inconsistent behavior.
 Two accesses to memory conflict
 if all of the following conditions apply:
 
-* They use the same location in memory.
+* They access the same location in memory.
 * They happen at the same time.
 * At least one is writing to that memory.
 
@@ -147,7 +147,7 @@ the write accesses start in the same order as the parameters appear in.
 One consequence of this long-term write access
 is that you can't access the original
 variable that was passed as in-out,
-even if scoping and access control would otherwise permit it ---
+even if scoping rules and access control would otherwise permit it ---
 any access to the original creates a conflict.
 For example:
 
@@ -426,7 +426,7 @@ For example:
 In the example above,
 Oscar's health and energy are passed
 as the two in-out parameters to ``balance(_:_:)``.
-Although this technically violates memory exclusivity
+Although this technically violates exclusive access to memory
 because both are properties of the same structure,
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
