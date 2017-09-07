@@ -62,11 +62,19 @@ that span several lines of code,
 which means it's possible for other code to be executed
 in the middle of the modification.
 
+.. XXX Last sentence is unclear.  Missing connective tissue?
+   You can get conflicting access in mulithreaded code;
+   you can also get conflicting access in just a single thread.
+
 You can think of conflicting access to memory
 as being like writing a shopping list on a piece of paper.
 Adding items to the list is a two-step process:
 First you add the items' names and prices,
 and then you update your total budget.
+
+.. XXX Not really a shopping list... more of a party budget.
+
+.. XXX Need to introduce before/during/after
 
 .. image:: ../images/memory_shopping_2x.png
    :align: center
@@ -75,7 +83,7 @@ While you're adding items to your shopping list,
 the list is in a temporary, invalid state
 because your total budget hasn't been updated
 to reflect the newly added items.
-Reading from the list
+Reading the total from the list
 in the middle of adding an item
 gives you incorrect information.
 Similarly,
@@ -89,14 +97,24 @@ if all of the following conditions apply:
 * They happen at the same time.
 * At least one is writing to that memory.
 
+If you have conflicting access to memory
+from within a single thread,
+Swift guarantees that you'll get an error.
+
+.. XXX error either at runtime or compile time
+
 .. note::
 
-    If you have conflicting access to memory
-    from within a single thread,
-    Swift guarantees that you'll get an error.
     For multithreaded code,
     use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
     to help detect conflicting access across threads.
+
+.. XXX The xref above doesn't seem to give enough information.
+   What should I be looking for when I get to the linked page?
+
+.. XXX Unmarked topic shift here.  Do we need a heading?
+   Or a paragraph to frame it?
+   Axis: location and duration and read/write
 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
@@ -252,6 +270,9 @@ to the same memory at the same time.
     behaves the same as a function
     that takes those values as in-out parameters.
 
+    .. XXX: This needs more of an example.
+       You can also get long-term writes from an operator...
+
 .. _MemorySafety_Methods:
 
 Conflicting Access to self in Methods
@@ -324,6 +345,9 @@ creating the possibility of overlapping accesses.
     !! <REPL Input>:1:25: note: conflicting access is here
     !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~~
+
+.. XXX: Break up the OK and Error lines so they're closer
+   to the paragraph that's discussing them.
 
 In the example above,
 calling the ``shareHealth(with:)`` method
