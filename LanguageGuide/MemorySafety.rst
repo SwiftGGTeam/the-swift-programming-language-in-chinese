@@ -331,23 +331,7 @@ creating the possibility of overlapping accesses.
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    -> oscar.shareHealth(with: &maria)  // OK
-    -> oscar.shareHealth(with: &oscar)  // Error
-    !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
-    !! oscar.shareHealth(with: &oscar)  // Error
-    !!                         ^~~~~~
-    !! <REPL Input>:1:1: note: previous aliasing argument
-    !! oscar.shareHealth(with: &oscar)  // Error
-    !! ^~~~~
-    !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
-    !! oscar.shareHealth(with: &oscar)  // Error
-    !!                          ^~~~~
-    !! <REPL Input>:1:25: note: conflicting access is here
-    !! oscar.shareHealth(with: &oscar)  // Error
-    !! ^~~~~~
-
-.. XXX: Break up the OK and Error lines so they're closer
-   to the paragraph that's discussing them.
+    -> oscar.shareHealth(with: &maria)  // OK! No conflicting accesses.
 
 In the example above,
 calling the ``shareHealth(with:)`` method
@@ -364,7 +348,24 @@ so there's no violation.
 
 However,
 if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
-there's a violation.
+there's a violation:
+
+.. testcode:: memory-player-share-with-self
+
+    -> oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
+    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !!                         ^~~~~~
+    !! <REPL Input>:1:1: note: previous aliasing argument
+    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! ^~~~~
+    !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !!                          ^~~~~
+    !! <REPL Input>:1:25: note: conflicting access is here
+    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! ^~~~~~
+
 The mutating method needs write access to ``self``
 for the duration of the method,
 and the in-out parameter needs write access to ``teammate``
