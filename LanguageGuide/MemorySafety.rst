@@ -29,26 +29,6 @@ you'll get a compile-time or runtime error.
 Understanding Conflicting Access to Memory
 ------------------------------------------
 
-Access to memory happens in your code
-when you do things like set the value of a variable
-or pass an argument to a function.
-For example,
-the following code contains both a read access and a write access:
-
-.. testcode:: memory-read-write
-
-    // A write access to the memory where "one" is stored
-    -> var one = 1
-    << // one : Int = 1
-    ---
-    // A read access from the memory where "one" is stored
-    -> print("We're number \(one)!")
-    << We're number 1!
-
-.. Might be worth a different example,
-   or else I'm going to keep getting "We are Number One" stuck in my head.
-    
-
 A conflicting access to memory can occur
 when different parts of your code are trying
 to access the same area of memory at the same time.
@@ -57,10 +37,7 @@ conflicting access to memory might be a familiar problem.
 However,
 the conflicting access discussed here
 *doesn't* involve concurrent or multithreaded code.
-In Swift, there are ways to modify a value
-that span several lines of code,
-which means it's possible for other code to be executed
-in the middle of the modification.
+It instead involves overlapping accesses which will be discussed in the section below.
 
 .. XXX Last sentence is unclear.  Missing connective tissue?
    You can get conflicting access in mulithreaded code;
@@ -90,24 +67,46 @@ Similarly,
 multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behavior.
 
-Two accesses to memory conflict
-if all of the following conditions apply:
 
-* They access the same location in memory.
-* They happen at the same time.
-* At least one is writing to that memory.
 
-If you have conflicting access to memory
-from within a single thread,
-Swift guarantees that you'll get an error.
+Characteristics of Memory Access
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. 
+.. There are several characteristics of memory access: duration, location, and read/write.
+.. These characteristics become important
+.. when multiple parts of your code interact with possibly related memory.
+.. 
+.. Multiple parts of your code interacting could lead to many memory access.
+
+
+
+Access to memory happens in your code
+when you do things like set the value of a variable
+or pass an argument to a function.
+For example,
+the following code contains both a read access and a write access:
+
+.. testcode:: memory-read-write
+
+    // A write access to the memory where "one" is stored
+    -> var one = 1
+    << // one : Int = 1
+    ---
+    // A read access from the memory where "one" is stored
+    -> print("We're number \(one)!")
+    << We're number 1!
+
+.. Might be worth a different example,
+   or else I'm going to keep getting "We are Number One" stuck in my head.
+    
+
+You can recognize conflicting access to memory
+if you break down your code according to three characteristics:
+whether any accesses are writes,
+the duration of the accesses, the locations in memory being accessed.
+
 
 .. XXX error either at runtime or compile time
-
-.. note::
-
-    For multithreaded code,
-    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
-    to help detect conflicting access across threads.
 
 .. XXX The xref above doesn't seem to give enough information.
    What should I be looking for when I get to the linked page?
@@ -116,6 +115,8 @@ Swift guarantees that you'll get an error.
    Or a paragraph to frame it?
    Axis: location and duration and read/write
 
+
+There are two ways to describe memory access duration: instantaneous and long-term. 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -146,8 +147,22 @@ after a long-term access starts but before it ends,
 which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
-The specific kinds of Swift code that use long-term access
-are discussed in the sections below.
+.. The specific kinds of Swift code that use long-term access
+.. are discussed in the sections below.
+
+--- 
+
+The concepts described above all relate to conflicting access,
+and under the right conditions, accesses can conflict.
+
+Those right conditions are:
+
+Two accesses to memory conflict
+if all of the following conditions apply:
+
+* At least one access is writing to that memory.
+* They access the same location in memory.
+* They happen at the same time.
 
 .. _MemorySafety_Inout:
 
