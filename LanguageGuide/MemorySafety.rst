@@ -390,15 +390,6 @@ mutates the whole value,
 meaning read or write access to one of the properties
 requires read or write access to the whole value.
 
-.. XXX Devin: I don't think the "this rule" bit is correct.
-   The rule makes it possible for Swift to perform certain operations
-   (including enforcing exclusive access) more efficiently.
-
-   This rule ensures that value semantics are preserved,
-   but it doesn't apply to classes, which are reference types.
-   A mutation to one of the properties of a class instance
-   isn't considered a mutation to the class instance as a whole.
-
 Here's an example:
 
 .. testcode:: memory-tuple
