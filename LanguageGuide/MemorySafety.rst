@@ -265,10 +265,10 @@ to the same memory at the same time.
 
 .. note::
 
-    Because operators are implemented as static methods,
-    an operator that modifies one or more of its operands
-    behaves the same as a function
-    that takes those values as in-out parameters.
+    Because operators are functions,
+    they can have long-term accesses to their in-out parameters too.
+    For example, if ``balance`` was an operator function named ``+++`` instead,
+    using ``myNumber`` as both operands would result in the same conflicting access.
 
     .. XXX: This needs more of an example.
        You can also get long-term writes from an operator...
