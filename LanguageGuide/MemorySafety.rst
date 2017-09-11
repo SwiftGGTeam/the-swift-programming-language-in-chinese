@@ -270,8 +270,6 @@ to the same memory at the same time.
     For example, if ``balance`` was an operator function named ``+++`` instead,
     using ``myNumber`` as both operands would result in the same conflicting access.
 
-    .. XXX: This needs more of an example.
-       You can also get long-term writes from an operator...
 
 .. _MemorySafety_Methods:
 
