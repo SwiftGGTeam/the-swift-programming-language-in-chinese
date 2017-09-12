@@ -389,8 +389,9 @@ Because these are value types, mutating any piece of the value
 mutates the whole value,
 meaning read or write access to one of the properties
 requires read or write access to the whole value.
-
-Here's an example:
+For example,
+overlapping write accesses to the elements of a tuple
+is an error:
 
 .. testcode:: memory-tuple
 
@@ -399,9 +400,9 @@ Here's an example:
     >>     x = sum / 2
     >>     y = sum - x
     >> }
-    -> var myTuple = (10, 20)
-    << // myTuple : (Int, Int) = (10, 20)
-    -> balance(&myTuple.0, &myTuple.1)  // Error
+    -> var playerInformation = (health: 10, energy: 20)
+    << // playerInformation : (Int, Int) = (10, 20)
+    -> balance(&playerInformation.health, &playerInformation.energy)  // Error
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x107952037).
     xx Current access (a modification) started at:
@@ -409,13 +410,15 @@ Here's an example:
 In the example above,
 calling ``balance(_:_:)`` on the elements of a tuple
 is an error
-because there are overlapping write accesses to the tuple.
-Both ``myTuple.0`` and ``myTuple.1`` are passed as in-out parameters,
-which means ``balance(_:_:)`` needs write access to them.
+because there are overlapping write accesses to ``playerInformation``.
+Both ``playerInformation.health`` and ``playerInformation.energy``
+are passed as in-out parameters,
+which means ``balance(_:_:)`` needs write access to them
+for the duration of the function call.
 In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
-This means there are two write accesses to ``myTuple``
-with exactly the same duration.
+This means there are two write accesses to ``playerInformation``
+with durations that overlap.
 
 Although a structure is also a value type,
 in many cases the compiler can prove
