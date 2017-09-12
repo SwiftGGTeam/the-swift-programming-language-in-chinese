@@ -423,8 +423,11 @@ with durations that overlap.
 Although a structure is also a value type,
 in many cases the compiler can prove
 that the overlapping accesses are safe.
-This means most accesses to stored properties *can* overlap for structures.
-For example:
+For example,
+if you have a local variable whose value is a structure,
+the compiler can prove that
+overlapping access to its stored properties
+are safe:
 
 .. testcode:: memory-share-health
 
@@ -447,8 +450,7 @@ For example:
 In the example above,
 Oscar's health and energy are passed
 as the two in-out parameters to ``balance(_:_:)``.
-Although this technically violates exclusive access to memory
-because both are properties of the same structure,
+Although this violates exclusive access to memory
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
@@ -456,12 +458,17 @@ Because exclusive access to memory is a slightly broader guarantee
 than memory safety,
 some memory-safe code
 violates the guarantee of exclusive access.
-Swift allows this code if the compiler can prove
+Swift allows this memory-safe code if the compiler can prove
 that the nonexclusive access to memory is still safe.
+
+.. XXX maybe the list of things the compiler can prove should go here?
 
 In contrast, if ``health`` is a computed property,
 the compiler can't prove whether
 the overlapping writes are safe:
+
+.. XXX This is kind of a long/complex example.
+   Is it really pulling its weight?
 
 .. testcode:: memory-computed-property
 
