@@ -37,7 +37,13 @@ conflicting access to memory might be a familiar problem.
 However,
 the conflicting access discussed here can happen
 on a single thread and
-*doesn't* necessarily involve concurrent or multithreaded code.
+*doesn't* involve concurrent or multithreaded code.
+
+.. XXX maybe introduce
+  If you have conflicting access to memory
+  from within a single thread,
+  Swift guarantees that you'll get an error.
+
 
 Conflicting access can happen on a single thread when there's a memory access that
 spans more than one line of execution in a way that might produce
@@ -48,6 +54,13 @@ Updating the list is a two-step process:
 First you add the items' names and prices,
 and then you change your total budget
 to match the new sum.
+
+.. XXX Need to reintroduce note?
+.. XXX .. note::
+
+    For multithreaded code,
+    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+    to help detect conflicting access across threads.
 
 .. XXX Need to introduce before/during/after
 
@@ -68,6 +81,12 @@ multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behavior.
 Memory accesses that can cause inconsistencies is called conflicting access,
 and this exactly what Swift prevents.
+
+.. XXX maybe reintroduce?
+  In Swift, there are ways to modify a value
+  that span several lines of code,
+  which means it's possible for other code to be executed
+  in the middle of the modification.
 
 .. _Memory_Characteristics:
 
