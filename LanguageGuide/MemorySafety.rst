@@ -19,7 +19,8 @@ so you can avoid writing code that has conflicting access to memory.
 If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
-.. XXX Brian: Let's bring back this discussion.
+.. XXX maybe re-introduce this text...
+
    Memory safety refers to...
    The term *safety* usually refers to :newTerm:`memory safety`...
    Unsafe access to memory is available, if you ask for it explicitly...
@@ -39,11 +40,13 @@ the conflicting access discussed here can happen
 on a single thread and
 *doesn't* involve concurrent or multithreaded code.
 
-.. XXX maybe introduce
-  If you have conflicting access to memory
-  from within a single thread,
-  Swift guarantees that you'll get an error.
+.. XXX maybe re-introduce this text...
 
+   If you have conflicting access to memory
+   from within a single thread,
+   Swift guarantees that you'll get an error.
+
+   an error either at runtime or compile time
 
 Conflicting access can happen on a single thread when there's a memory access that
 spans more than one line of execution in a way that might produce
@@ -55,12 +58,17 @@ First you add the items' names and prices,
 and then you change your total budget
 to match the new sum.
 
-.. XXX Need to reintroduce note?
-.. XXX .. note::
+.. XXX maybe re-introduce this text...
+
+   .. note::
 
     For multithreaded code,
     use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
     to help detect conflicting access across threads.
+
+   The xref above doesn't seem to give enough information.
+   What should I be looking for when I get to the linked page?
+
 
 .. XXX Need to introduce before/during/after
 
@@ -82,7 +90,8 @@ produce unpredictable or inconsistent behavior.
 Memory accesses that can cause inconsistencies is called conflicting access,
 and this exactly what Swift prevents.
 
-.. XXX maybe reintroduce?
+.. XXX maybe re-introduce this text...
+
   In Swift, there are ways to modify a value
   that span several lines of code,
   which means it's possible for other code to be executed
@@ -92,14 +101,14 @@ and this exactly what Swift prevents.
 
 Characteristics of Memory Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-..
-.. There are several characteristics of memory access: duration, location, and read/write.
-.. These characteristics become important
-.. when multiple parts of your code interact with possibly related memory.
-..
-.. Multiple parts of your code interacting could lead to many memory access.
 
+.. XXX rough drafting...
 
+   There are several characteristics of memory access: duration, location, and read/write.
+   These characteristics become important
+   when multiple parts of your code interact with possibly related memory.
+
+   Multiple parts of your code interacting could lead to many memory access.
 
 Access to memory happens in your code
 when you do things like set the value of a variable
@@ -141,17 +150,8 @@ The duration of a memory access
 can be described as either instantaneous or long-term.
 
 .. XXX better handwaving around memory location
-   varables and properties that refer to the same instances
+   variables and properties that refer to the same instances
  
-.. XXX error either at runtime or compile time
-
-.. XXX The xref above doesn't seem to give enough information.
-   What should I be looking for when I get to the linked page?
-
-.. XXX Unmarked topic shift here.  Do we need a heading?
-   Or a paragraph to frame it?
-   Axis: location and duration and read/write
-
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -183,9 +183,10 @@ which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
 
-.. XXX weave this text back in
+.. XXX maybe re-introduce this text...
+
    The specific kinds of Swift code that use long-term access
-.. are discussed in the sections below.
+   are discussed in the sections below.
 
 .. _MemorySafety_Inout:
 
