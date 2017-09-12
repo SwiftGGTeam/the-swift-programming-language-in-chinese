@@ -19,7 +19,8 @@ so you can avoid writing code that has conflicting access to memory.
 If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
-.. XXX Brian: Let's bring back this discussion.
+.. XXX maybe re-introduce this text...
+
    Memory safety refers to...
    The term *safety* usually refers to :newTerm:`memory safety`...
    Unsafe access to memory is available, if you ask for it explicitly...
@@ -28,6 +29,86 @@ you'll get a compile-time or runtime error.
 
 Understanding Conflicting Access to Memory
 ------------------------------------------
+
+A conflicting access to memory can occur
+when different parts of your code are trying
+to access the same area of memory at the same time.
+If you've written concurrent or multithreaded code,
+conflicting access to memory might be a familiar problem.
+However,
+the conflicting access discussed here can happen
+on a single thread and
+*doesn't* involve concurrent or multithreaded code.
+
+.. XXX maybe re-introduce this text...
+
+   If you have conflicting access to memory
+   from within a single thread,
+   Swift guarantees that you'll get an error.
+
+   an error either at runtime or compile time
+
+Conflicting access can happen on a single thread when there's a memory access that
+spans more than one line of execution in a way that might produce
+inconsistent memory behaviour.
+You can think of memory consistency
+as similar to totaling up a budget.
+Updating the list is a two-step process:
+First you add the items' names and prices,
+and then you change your total budget
+to match the new sum.
+
+.. XXX maybe re-introduce this text...
+
+   .. note::
+
+    For multithreaded code,
+    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+    to help detect conflicting access across threads.
+
+   The xref above doesn't seem to give enough information.
+   What should I be looking for when I get to the linked page?
+
+
+.. XXX Need to introduce before/during/after
+
+.. image:: ../images/memory_shopping_2x.png
+   :align: center
+
+While you're adding items to your shopping list,
+the list is in a temporary, invalid state
+because your total budget hasn't been updated
+to reflect the newly added items.
+Reading the total from the list
+in the middle of adding an item
+gives you incorrect information.
+
+Similar to how looking at the list at different times can
+produce unpredictable or inconsistent prices,
+multiple accesses to the same area of memory at the same time can
+produce unpredictable or inconsistent behavior.
+Memory accesses that can cause inconsistencies is called conflicting access,
+and this exactly what Swift prevents.
+
+.. XXX maybe re-introduce this text...
+
+  In Swift, there are ways to modify a value
+  that span several lines of code,
+  which means it's possible for other code to be executed
+  in the middle of the modification.
+
+.. _Memory_Characteristics:
+
+Characteristics of Memory Access
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. XXX rough drafting...
+
+   There are several characteristics of memory access: duration, location, and read/write.
+   These characteristics become important
+   when multiple parts of your code interact with possibly related memory.
+
+   Multiple parts of your code interacting could lead to many memory access.
 
 Access to memory happens in your code
 when you do things like set the value of a variable
@@ -49,72 +130,27 @@ the following code contains both a read access and a write access:
    or else I'm going to keep getting "We are Number One" stuck in my head.
     
 
-A conflicting access to memory can occur
-when different parts of your code are trying
-to access the same area of memory at the same time.
-If you've written concurrent or multithreaded code,
-conflicting access to memory might be a familiar problem.
-However,
-the conflicting access discussed here
-*doesn't* involve concurrent or multithreaded code.
-In Swift, there are ways to modify a value
-that span several lines of code,
-which means it's possible for other code to be executed
-in the middle of the modification.
+You can recognize conflicting access to memory
+if you break down your code according to three characteristics:
+whether any accesses are writes,
+the duration of the accesses, the locations in memory being accessed.
+Specifically,
+a conflict occurs if you have two accesses
+that meet all of the following conditions:
 
-.. XXX Last sentence is unclear.  Missing connective tissue?
-   You can get conflicting access in mulithreaded code;
-   you can also get conflicting access in just a single thread.
+- One is a write access.
+- They access the same location.
+- Their durations overlap.
 
-You can think of conflicting access to memory
-as being like writing a shopping list on a piece of paper.
-Adding items to the list is a two-step process:
-First you add the items' names and prices,
-and then you update your total budget.
+The difference between a read and write access
+is explained above.
+The location of a memory access
+refers to the address in memory.
+The duration of a memory access
+can be described as either instantaneous or long-term.
 
-.. XXX Not really a shopping list... more of a party budget.
-
-.. XXX Need to introduce before/during/after
-
-.. image:: ../images/memory_shopping_2x.png
-   :align: center
-
-While you're adding items to your shopping list,
-the list is in a temporary, invalid state
-because your total budget hasn't been updated
-to reflect the newly added items.
-Reading the total from the list
-in the middle of adding an item
-gives you incorrect information.
-Similarly,
-multiple accesses to the same area of memory at the same time can
-produce unpredictable or inconsistent behavior.
-
-Two accesses to memory conflict
-if all of the following conditions apply:
-
-* They access the same location in memory.
-* They happen at the same time.
-* At least one is writing to that memory.
-
-If you have conflicting access to memory
-from within a single thread,
-Swift guarantees that you'll get an error.
-
-.. XXX error either at runtime or compile time
-
-.. note::
-
-    For multithreaded code,
-    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
-    to help detect conflicting access across threads.
-
-.. XXX The xref above doesn't seem to give enough information.
-   What should I be looking for when I get to the linked page?
-
-.. XXX Unmarked topic shift here.  Do we need a heading?
-   Or a paragraph to frame it?
-   Axis: location and duration and read/write
+.. XXX better handwaving around memory location
+   variables and properties that refer to the same instances
 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
@@ -146,8 +182,11 @@ after a long-term access starts but before it ends,
 which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
-The specific kinds of Swift code that use long-term access
-are discussed in the sections below.
+
+.. XXX maybe re-introduce this text...
+
+   The specific kinds of Swift code that use long-term access
+   are discussed in the sections below.
 
 .. _MemorySafety_Inout:
 
@@ -552,8 +591,8 @@ so overlapping changes to the structure's properties aren't allowed.
 
 
 
-.. docnote:: Currently, the only way to create a long-term read 
-             is to use implicit pointer conversion 
+.. docnote:: Currently, the only way to create a long-term read
+             is to use implicit pointer conversion
              when passing a value as a nonmutating unsafe pointer parameter,
              as in the example below.
              There is discussion in <rdar://problem/33115142>
