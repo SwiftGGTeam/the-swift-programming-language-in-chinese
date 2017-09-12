@@ -39,13 +39,15 @@ the conflicting access discussed here can happen
 on a single thread and
 *doesn't* necessarily involve concurrent or multithreaded code.
 
-Conflicting access can happen on a single thread when a memory access
-spans more than one line of code.
-You can think of this multiline memory access
-as similar to writing up a budget on a piece of paper.
-Adding items to the list is a two-step process:
+Conflicting access can happen on a single thread when there's a memory access that
+spans more than one line of execution in a way that might produce
+inconsistent memory behaviour.
+You can think of memory consistency
+as similar to totaling up a budget.
+Updating the list is a two-step process:
 First you add the items' names and prices,
-and then you update your total budget.
+and then you change your total budget
+to match the new sum.
 
 .. XXX Need to introduce before/during/after
 
@@ -59,10 +61,15 @@ to reflect the newly added items.
 Reading the total from the list
 in the middle of adding an item
 gives you incorrect information.
-Similarly,
+
+Similar to how looking at the list at different times can 
+produce unpredictable or inconsistent prices,
 multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behavior.
+Memory accesses that can cause inconsistencies is called conflicting access,
+and this exactly what Swift prevents.
 
+.. _Memory_Characteristics:
 
 Characteristics of Memory Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,8 +106,24 @@ You can recognize conflicting access to memory
 if you break down your code according to three characteristics:
 whether any accesses are writes,
 the duration of the accesses, the locations in memory being accessed.
+Specifically,
+a conflict occurs if you have two accesses
+that meet all of the following conditions:
 
+- One is a write access.
+- They access the same location.
+- Their durations overlap.
 
+The difference between a read and write access
+is explained above.
+The location of a memory access
+refers to the address in memory.
+The duration of a memory access
+can be described as either instantaneous or long-term.
+
+.. XXX better handwaving around memory location
+   varables and properties that refer to the same instances
+ 
 .. XXX error either at runtime or compile time
 
 .. XXX The xref above doesn't seem to give enough information.
@@ -110,8 +133,6 @@ the duration of the accesses, the locations in memory being accessed.
    Or a paragraph to frame it?
    Axis: location and duration and read/write
 
-
-There are two ways to describe memory access duration: instantaneous and long-term. 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -142,22 +163,10 @@ after a long-term access starts but before it ends,
 which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
-.. The specific kinds of Swift code that use long-term access
+
+.. XXX weave this text back in
+   The specific kinds of Swift code that use long-term access
 .. are discussed in the sections below.
-
---- 
-
-The concepts described above all relate to conflicting access,
-and under the right conditions, accesses can conflict.
-
-Those right conditions are:
-
-Two accesses to memory conflict
-if all of the following conditions apply:
-
-* At least one access is writing to that memory.
-* They access the same location in memory.
-* They happen at the same time.
 
 .. _MemorySafety_Inout:
 
