@@ -35,21 +35,17 @@ to access the same area of memory at the same time.
 If you've written concurrent or multithreaded code,
 conflicting access to memory might be a familiar problem.
 However,
-the conflicting access discussed here
-*doesn't* involve concurrent or multithreaded code.
-It instead involves overlapping accesses which will be discussed in the section below.
+the conflicting access discussed here can happen
+on a single thread and
+*doesn't* necessarily involve concurrent or multithreaded code.
 
-.. XXX Last sentence is unclear.  Missing connective tissue?
-   You can get conflicting access in mulithreaded code;
-   you can also get conflicting access in just a single thread.
-
-You can think of conflicting access to memory
-as being like writing a shopping list on a piece of paper.
+Conflicting access can happen on a single thread when a memory access
+spans more than one line of code.
+You can think of this multiline memory access
+as similar to writing up a budget on a piece of paper.
 Adding items to the list is a two-step process:
 First you add the items' names and prices,
 and then you update your total budget.
-
-.. XXX Not really a shopping list... more of a party budget.
 
 .. XXX Need to introduce before/during/after
 
@@ -68,14 +64,13 @@ multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behavior.
 
 
-
 Characteristics of Memory Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. 
+..
 .. There are several characteristics of memory access: duration, location, and read/write.
 .. These characteristics become important
 .. when multiple parts of your code interact with possibly related memory.
-.. 
+..
 .. Multiple parts of your code interacting could lead to many memory access.
 
 
