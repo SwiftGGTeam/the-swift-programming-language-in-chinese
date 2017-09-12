@@ -83,7 +83,7 @@ Reading the total from the list
 in the middle of adding an item
 gives you incorrect information.
 
-Similar to how looking at the list at different times can 
+Similar to how looking at the list at different times can
 produce unpredictable or inconsistent prices,
 multiple accesses to the same area of memory at the same time can
 produce unpredictable or inconsistent behavior.
@@ -151,7 +151,7 @@ can be described as either instantaneous or long-term.
 
 .. XXX better handwaving around memory location
    variables and properties that refer to the same instances
- 
+
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
@@ -580,8 +580,8 @@ so overlapping changes to the structure's properties aren't allowed.
 
 
 
-.. docnote:: Currently, the only way to create a long-term read 
-             is to use implicit pointer conversion 
+.. docnote:: Currently, the only way to create a long-term read
+             is to use implicit pointer conversion
              when passing a value as a nonmutating unsafe pointer parameter,
              as in the example below.
              There is discussion in <rdar://problem/33115142>
