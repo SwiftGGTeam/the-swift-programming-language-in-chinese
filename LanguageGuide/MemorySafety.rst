@@ -382,7 +382,11 @@ for the same duration
 because ``maria`` was passed as an in-out parameter.
 These write accesses overlap in time,
 but they access different memory,
-so there's no violation.
+so there's no violation,
+as shown in the figure below.
+
+.. image:: ../images/memory_share_health_maria_2x.png
+   :align: center
 
 However,
 if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
@@ -411,9 +415,10 @@ for the same duration.
 Within the method,
 both ``self`` and ``teammate`` refer to the same ``Player`` ---
 the value of ``oscar`` ---
-which means the two write accesses conflict.
+which means the two write accesses conflict,
+as shown in the figure below.
 
-.. image:: ../images/memory_share_health_2x.png
+.. image:: ../images/memory_share_health_oscar_2x.png
    :align: center
 
 .. _MemorySafety_Properties:
