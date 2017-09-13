@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-09-12  * Updated for Swift 4.0.
+2017-09-19  * Updated for Swift 4.0.
 
             * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
               now that you can use generic ``where`` clauses
