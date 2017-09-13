@@ -40,62 +40,51 @@ the conflicting access discussed here can happen
 on a single thread and
 *doesn't* involve concurrent or multithreaded code.
 
-.. XXX maybe re-introduce this text...
+Conflicting access can happen on a single thread.
+In Swift, there are ways to modify a value
+that span several lines of code,
+which means it's possible for other code to be executed
+in the middle of the modification.
+Multiple accesses to an area of memory at the same time
+can produce unpredictable or inconsistent behavior.
 
-   If you have conflicting access to memory
-   from within a single thread,
-   Swift guarantees that you'll get an error.
-
-   an error either at runtime or compile time
-
-Conflicting access can happen on a single thread when there's a memory access that
-spans more than one line of execution in a way that might produce
-inconsistent memory behaviour.
-You can think of memory consistency
-as similar to totaling up a budget.
-Updating the list is a two-step process:
+You can see a similar problem
+by thinking about how you update a budget
+that's written on a piece of paper.
+Updating the budget is a two-step process:
 First you add the items' names and prices,
-and then you change your total budget
-to match the new sum.
-
-.. XXX maybe re-introduce this text...
-
-   .. note::
-
-    For multithreaded code,
-    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
-    to help detect conflicting access across threads.
-
-   The xref above doesn't seem to give enough information.
-   What should I be looking for when I get to the linked page?
-
-
-.. XXX Need to introduce before/during/after
+and then you change the total amount
+to reflect the items currently on the list.
+Before and after the update,
+you can read any information from the budget
+and get a correct answer,
+as shown in the figure below.
 
 .. image:: ../images/memory_shopping_2x.png
    :align: center
 
-While you're adding items to your shopping list,
-the list is in a temporary, invalid state
-because your total budget hasn't been updated
+While you're adding items to a budget,
+it's in a temporary, invalid state
+because the total amount hasn't been updated
 to reflect the newly added items.
-Reading the total from the list
-in the middle of adding an item
+Reading the total amount
+during the process of adding an item
 gives you incorrect information.
 
-Similar to how looking at the list at different times can
-produce unpredictable or inconsistent prices,
-multiple accesses to the same area of memory at the same time can
-produce unpredictable or inconsistent behavior.
-Memory accesses that can cause inconsistencies is called conflicting access,
-and this exactly what Swift prevents.
+.. note::
 
-.. XXX maybe re-introduce this text...
+   If you have conflicting access to memory
+   from within a single thread,
+   Swift guarantees that you'll get an error
+   at either compile time or runtime.
+   For multithreaded code,
+   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   to help detect conflicting access across threads.
 
-  In Swift, there are ways to modify a value
-  that span several lines of code,
-  which means it's possible for other code to be executed
-  in the middle of the modification.
+.. XXX The xref above doesn't seem to give enough information.
+   What should I be looking for when I get to the linked page?
+
+.. XXX This still isn't really the right place for this threading aside.
 
 .. _Memory_Characteristics:
 
