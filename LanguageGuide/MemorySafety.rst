@@ -91,14 +91,6 @@ gives you incorrect information.
 Characteristics of Memory Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. XXX rough drafting...
-
-   There are several characteristics of memory access: duration, location, and read/write.
-   These characteristics become important
-   when multiple parts of your code interact with possibly related memory.
-
-   Multiple parts of your code interacting could lead to many memory access.
-
 Access to memory happens in your code
 when you do things like set the value of a variable
 or pass an argument to a function.
@@ -505,12 +497,6 @@ if the following conditions apply:
 - The structure is either not captured by any closures,
   or it's captured only by nonescaping closures.
 
-.. XXX
-   Although overlapping access may be safe in other circumstances,
-   the compiler's ability to reason about it is limited.
-   If it can't prove the access is safe,
-   it doesn't allow the access.
-
 In practice,
 these conditions mean that most access
 to the properties of a structure
@@ -547,24 +533,21 @@ the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
 
-.. XXX leftover but possibly useful
-   Because ``health`` is a computed property,
-   any mutation to a property of ``oscar``
-   requires mutation to the entire ``Player`` structure,
-   so overlapping changes to the structure's properties aren't allowed.
+.. note::
+
+   Although overlapping access may be safe in other circumstances,
+   the compiler's ability to reason about it is limited.
+   If it can't prove the access is safe,
+   it doesn't allow the access.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
    we can't show that overlapping mutations
    to two different associated values on the same enum
    would violate exclusivity.
-
-.. XXX old note, now for fodder
-   
-.. Devin says the latter are "checked at run time"
-   but they appear to just be a hard error.
-
-
+   Otherwise, we'd want an example of that
+   in this section too --
+   it's the moral equivalent of property access.
 
 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
 
