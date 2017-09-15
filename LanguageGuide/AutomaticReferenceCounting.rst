@@ -584,7 +584,7 @@ after the ``john`` variable is set to ``nil``.
     you need to disable runtime safety checks ---
     for example, for performance reasons.
     As with all unsafe operations,
-    you take on the responsiblity for checking that code for safety.
+    you take on the responsibility for checking that code for safety.
 
     You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
     If you try to access an unsafe unowned reference
