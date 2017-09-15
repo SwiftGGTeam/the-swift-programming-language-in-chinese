@@ -71,6 +71,25 @@ Reading the total amount
 during the process of adding an item
 gives you incorrect information.
 
+This example also demonstrates
+a common problem with code
+that contains conflicting access to memory:
+There are multiple ways to fix the conflict
+that produce different answers,
+and the intended behavior isn't obvious.
+If you wanted the old total,
+you'd expect an answer of $5,
+and you'd fix the conflict by reading the total
+before you started adding to the budget.
+However, if wanted the updated total,
+you'd expect an answer of $320,
+and you'd fix the conflict by
+waiting for the total to be updated
+before trying to read it.
+Both interpretations are reasonable ---
+before you can fix the code,
+you have to determine what it was intended to do.
+
 .. note::
 
    If you have conflicting access to memory
@@ -170,13 +189,6 @@ with other long-term accesses and instantaneous accesses.
 
    The specific kinds of Swift code that use long-term access
    are discussed in the sections below.
-
-.. XXX Somewhere, bring back the fact that
-   resolving an exclusivity violation
-   requires thinking about what the correct/desired behavior should be.
-   The old map example showed how
-   there could be two different answers,
-   depending on whether you intended a copy before or not.
 
 .. _MemorySafety_Inout:
 
