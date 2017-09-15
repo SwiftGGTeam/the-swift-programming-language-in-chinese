@@ -40,11 +40,10 @@ the conflicting access discussed here can happen
 on a single thread and
 *doesn't* involve concurrent or multithreaded code.
 
-Conflicting access can happen on a single thread.
 In Swift, there are ways to modify a value
 that span several lines of code,
-which means it's possible for other code to be executed
-in the middle of the modification.
+making it possible to attempt to access a value
+in the middle of its own modification.
 Multiple accesses to an area of memory at the same time
 can produce unpredictable or inconsistent behavior.
 
@@ -63,7 +62,7 @@ as shown in the figure below.
 .. image:: ../images/memory_shopping_2x.png
    :align: center
 
-While you're adding items to a budget,
+While you're adding items to the budget,
 it's in a temporary, invalid state
 because the total amount hasn't been updated
 to reflect the newly added items.
@@ -81,7 +80,7 @@ If you wanted the old total,
 you'd expect an answer of $5,
 and you'd fix the conflict by reading the total
 before you started adding to the budget.
-However, if wanted the updated total,
+However, if you wanted the updated total,
 you'd expect an answer of $320,
 and you'd fix the conflict by
 waiting for the total to be updated
@@ -135,12 +134,13 @@ the following code contains both a read access and a write access:
 You can recognize conflicting access to memory
 if you break down your code according to three characteristics:
 whether any accesses are writes,
-the duration of the accesses, the locations in memory being accessed.
+the duration of the accesses, 
+and the locations in memory being accessed.
 Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
-- One is a write access.
+- At least one is a write access.
 - They access the same location.
 - Their durations overlap.
 
@@ -187,10 +187,12 @@ which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
 
-.. XXX maybe re-introduce this text...
+Overlaps appear primarily in code that uses 
+in-out parameters in functions and methods
+or mutating methods in structures.
+The specific kinds of Swift code that use long-term accesses
+are discussed in the sections below.
 
-   The specific kinds of Swift code that use long-term access
-   are discussed in the sections below.
 
 .. _MemorySafety_Inout:
 
@@ -263,7 +265,7 @@ by the current step size.
 There's only one access to ``stepSize`` in the function,
 so there isn't a conflict.
 
-Passing a variable
+Passing a single variable
 as the argument to multiple in-out parameters
 of the same function is also an error.
 For example:
@@ -347,12 +349,12 @@ and an energy amount, which decreases when using special abilities.
            var name: String
            var health: Int
            var energy: Int
+           
+           static var maxHealth = 10
            mutating func restoreHealth() {
-               health = 10
+               health = Player.maxHealth
            }
        }
-
-.. XXX Brian notes that the 10 above isn't clearly the "max value" of a health.
 
 In the ``restoreHealth()`` method above,
 a write access to ``self`` starts at the beginning of the method
