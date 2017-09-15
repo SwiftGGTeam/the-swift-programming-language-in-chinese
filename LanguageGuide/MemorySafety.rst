@@ -130,6 +130,8 @@ the following code contains both a read access and a write access:
    or else I'm going to keep getting "We are Number One" stuck in my head.
     
 
+.. XXX The three characteristics get listed too many times.
+
 You can recognize conflicting access to memory
 if you break down your code according to three characteristics:
 whether any accesses are writes,
@@ -166,10 +168,10 @@ all the read and write accesses in the code listing below are instantaneous:
            return number + 1
        }
     ---
-    -> var one = 1
-    << // one : Int = 1
-    -> one = oneMore(than: one)
-    -> print(one)
+    -> var myNumber = 1
+    << // myNumber : Int = 1
+    -> myNumber = oneMore(than: myNumber)
+    -> print(myNumber)
     <- 2
 
 .. XXX It's strange to have a value of 2 for a variable called 'one'.
@@ -214,20 +216,20 @@ For example:
 
     -> var stepSize = 1
     ---
-    -> func incrementInPlace(_ number: inout Int) {
+    -> func increment(_ number: inout Int) {
            number += stepSize
        }
     ---
-    -> incrementInPlace(&stepSize)  // Error
+    -> increment(&stepSize)  // Error
     xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x10e86b032).
     xx Current access (a read) started at:
 
 In the code above,
 even though ``stepSize`` is a global variable,
-and would normally be accessible from within ``incrementInPlace(_:)``,
+and would normally be accessible from within ``increment(_:)``,
 the read and write accesses to ``stepSize`` conflict
-if you call ``incrementInPlace(_:)`` with ``stepSize`` as its parameter.
+if you call ``increment(_:)`` with ``stepSize`` as its parameter.
 As shown in the figure below,
 both ``number`` and ``stepSize`` refer to the same memory.
 
@@ -241,28 +243,29 @@ is to make an explicit copy of the step size:
 
     >> var stepSize = 1
     << // stepSize : Int = 1
-    >> func incrementInPlace(_ number: inout Int) {
+    >> func increment(_ number: inout Int) {
     >>     number += stepSize
     >> }
     ---
     // Make an explicit copy.
     -> var copyOfStepSize = stepSize
     << // copyOfStepSize : Int = 1
-    -> incrementInPlace(&copyOfStepSize)
+    -> increment(&copyOfStepSize)
     ---
     // Update the original.
     -> stepSize = copyOfStepSize
     /> stepSize is now \(stepSize)
     </ stepSize is now 2
 
-When you make a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
+When you make a copy of ``stepSize`` before calling ``increment(_:)``,
 it's clear that the value of ``copyOfStepSize`` is incremented
 by the current step size.
 There's only one access to ``stepSize`` in the function,
 so there isn't a conflict.
 
-Passing the same variable as an in-out parameter more than once
-is also an error.
+Passing a variable
+as the argument to multiple in-out parameters
+of the same function is also an error.
 For example:
 
 .. testcode:: memory-balance
@@ -272,34 +275,34 @@ For example:
            x = sum / 2
            y = sum - x
        }
-    -> var myNumber = 42
-    -> var myOtherNumber = 9000
-    << // myNumber : Int = 42
-    << // myOtherNumber : Int = 9000
-    -> balance(&myNumber, &myOtherNumber)  // OK
-    -> balance(&myNumber, &myNumber)  // Error
-    !! <REPL Input>:1:20: error: inout arguments are not allowed to alias each other
-    !! balance(&myNumber, &myNumber)  // Error
-    !!                    ^~~~~~~~~
+    -> var playerOneScore = 42
+    -> var playerTwoScore = 30
+    << // playerOneScore : Int = 42
+    << // playerTwoScore : Int = 30
+    -> balance(&playerOneScore, &playerTwoScore)  // OK
+    -> balance(&playerOneScore, &playerOneScore)  // Error
+    !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
+    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !!                          ^~~~~~~~~~~~~~~
     !! <REPL Input>:1:9: note: previous aliasing argument
-    !! balance(&myNumber, &myNumber)  // Error
-    !!         ^~~~~~~~~
-    !! <REPL Input>:1:9: error: overlapping accesses to 'myNumber', but modification requires exclusive access; consider copying to a local variable
-    !! balance(&myNumber, &myNumber)  // Error
-    !!                    ^~~~~~~~~
-    !! <REPL Input>:1:20: note: conflicting access is here
-    !! balance(&myNumber, &myNumber)  // Error
-    !!         ^~~~~~~~~
+    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !!         ^~~~~~~~~~~~~~~
+    !! <REPL Input>:1:9: error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
+    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !!                          ^~~~~~~~~~~~~~~
+    !! <REPL Input>:1:26: note: conflicting access is here
+    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !!         ^~~~~~~~~~~~~~~
 
 The ``balance(_:_:)`` function above
 modifies its two parameters
 to divide the total value evenly between them.
-Calling it with ``myNumber`` and ``myOtherNumber`` as parameters
+Calling it with ``playerOneScore`` and ``playerTwoScore`` as parameters
 preserves exclusive access to memory ---
 there are two write accesses that overlap in time,
-but they access different memory.
+but they access different locations in memory.
 In contrast,
-passing ``myNumber`` as the value for both parameters
+passing ``playerOneScore`` as the value for both parameters
 causes conflicting access to memory
 because it tries to perform two write accesses
 to the same memory at the same time.
@@ -309,9 +312,9 @@ to the same memory at the same time.
     Because operators are functions,
     they can have long-term accesses to their in-out parameters too.
     For example, if ``balance`` was an operator function named ``+++``,
-    writing ``myNumber +++ myNumber`` would result in the same conflicting access
-    as ``balance(&myNumber, &myNumber)``.
-
+    writing ``playerOneScore +++ playerOneScore``
+    would result in the same conflicting access
+    as ``balance(&playerOneScore, &playerOneScore)``.
 
 .. _MemorySafety_Methods:
 
@@ -328,7 +331,7 @@ Conflicting Access to self in Methods
    because, under the hood, that's exactly what happens.
 
 A mutating method on a structure has write access to ``self``
-for the duration of the method.
+for the duration of the method call.
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
@@ -349,9 +352,11 @@ and an energy amount, which decreases when using special abilities.
            }
        }
 
-In the method above that restores a player's health to 10,
-a write access to ``self`` starts at the beginning of the function
-and lasts until the function returns.
+.. XXX Brian notes that the 10 above isn't clearly the "max value" of a health.
+
+In the ``restoreHealth()`` method above,
+a write access to ``self`` starts at the beginning of the method
+and lasts until the method returns.
 In this case, there's no other code
 inside ``restoreHealth()``
 that could have an overlapping access to the properties of a ``Player`` instance.
