@@ -223,13 +223,17 @@ For example:
     xx Current access (a read) started at:
 
 In the code above,
-even though ``stepSize`` is a global variable,
-and would normally be accessible from within ``increment(_:)``,
-if you call ``increment(_:)`` with ``stepSize`` as its parameter,
-the read access to ``stepSize`` conflicts with
+``stepSize`` is a global variable,
+and it is normally accessible from within ``increment(_:)``.
+However,
+if you try to call ``increment(_:)`` with ``stepSize`` as its parameter,
+the read access to ``stepSize`` overlaps with
 the write access to ``number``.
 As shown in the figure below,
 both ``number`` and ``stepSize`` refer to the same memory.
+The read and write accesses
+refer to the same memory and they overlap,
+producing a conflict.
 
 .. image:: ../images/memory_increment_2x.png
    :align: center
@@ -379,7 +383,7 @@ creating the possibility of overlapping accesses.
 In the example above,
 calling the ``shareHealth(with:)`` method
 for Oscar's player to share health with Maria's player
-doesn't cause a violation.
+doesn't cause a conflict.
 There's a write access to ``oscar`` during the method call
 because ``oscar`` is the value of ``self`` in a mutating method,
 and there's a write access to ``maria``
@@ -387,7 +391,7 @@ for the same duration
 because ``maria`` was passed as an in-out parameter.
 These write accesses overlap in time,
 but they access different memory,
-so there's no violation,
+so there's no conflict,
 as shown in the figure below.
 
 .. image:: ../images/memory_share_health_maria_2x.png
@@ -395,7 +399,7 @@ as shown in the figure below.
 
 However,
 if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
-there's a violation:
+there's a conflict:
 
 .. testcode:: memory-player-share-with-self
 
@@ -438,6 +442,7 @@ Because these are value types, mutating any piece of the value
 mutates the whole value,
 meaning read or write access to one of the properties
 requires read or write access to the whole value.
+(However, there's an exception for most structure properties described later.)
 For example,
 overlapping write accesses to the elements of a tuple
 is an error:
@@ -467,7 +472,8 @@ for the duration of the function call.
 In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
 This means there are two write accesses to ``playerInformation``
-with durations that overlap.
+with durations that overlap,
+causing a conflict.
 
 The listing below shows that the same error appears
 for overlapping write accesses
@@ -487,7 +493,7 @@ that's stored in a global variable.
     >>     y = sum - x
     >> }
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> balance(&oscar.health, &oscar.energy)  // error
+    -> balance(&oscar.health, &oscar.energy)  // Error
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x107952037).
     xx Current access (a modification) started at:
@@ -546,7 +552,7 @@ as the two in-out parameters to ``balance(_:_:)``.
 Although this violates exclusive access to memory
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
-so overlapping writes to them can't cause a problem.
+so overlapping write accesses to them can't cause a problem.
 
 .. note::
 
