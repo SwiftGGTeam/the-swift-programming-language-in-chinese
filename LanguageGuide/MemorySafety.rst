@@ -130,12 +130,11 @@ the following code contains both a read access and a write access:
    or else I'm going to keep getting "We are Number One" stuck in my head.
     
 
-.. XXX The three characteristics get listed too many times.
-
-You can recognize conflicting access to memory
-if you break down your code according to three characteristics:
-whether any accesses are writes,
-the duration of the accesses, the locations in memory being accessed.
+There are three characteristics of memory access
+to consider in the context of conflicting access:
+whether the access is a read or a write,
+the duration of the access,
+and the location in memory being accessed.
 Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
