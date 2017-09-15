@@ -161,6 +161,8 @@ all the read and write accesses in the code listing below are instantaneous:
     -> print(one)
     <- 2
 
+.. XXX It's strange to have a value of 2 for a variable called 'one'.
+
 However,
 there are several ways to access memory,
 called :newterm:`long-term` accesses,
@@ -176,6 +178,13 @@ with other long-term accesses and instantaneous accesses.
 
    The specific kinds of Swift code that use long-term access
    are discussed in the sections below.
+
+.. XXX Somewhere, bring back the fact that
+   resolving an exclusivity violation
+   requires thinking about what the correct/desired behavior should be.
+   The old map example showed how
+   there could be two different answers,
+   depending on whether you intended a copy before or not.
 
 .. _MemorySafety_Inout:
 
@@ -453,16 +462,66 @@ requires a write access to the entire tuple.
 This means there are two write accesses to ``playerInformation``
 with durations that overlap.
 
-Although a structure is also a value type,
-in many cases the compiler can prove
-that the overlapping accesses are safe.
-For example,
-if you have a local variable whose value is a structure,
-the compiler can prove that
-overlapping access to its stored properties
-are safe:
+The listing below shows that the same error appears
+for overlapping write accesses
+to the properties of a structure
+that's stored in a global variable.
 
-.. testcode:: memory-share-health
+.. testcode:: memory-share-health-global
+
+    >> struct Player {
+    >>     var name: String
+    >>     var health: Int
+    >>     var energy: Int
+    >> }
+    >> func balance(_ x: inout Int, _ y: inout Int) {
+    >>     let sum = x + y
+    >>     x = sum / 2
+    >>     y = sum - x
+    >> }
+    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    -> balance(&oscar.health, &oscar.energy)  // error
+    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
+    xx Previous access (a modification) started at  (0x107952037).
+    xx Current access (a modification) started at:
+
+The restriction against
+overlapping access to properties of a structure
+isn't always necessary to preserve memory safety.
+Memory safety is the desired guarantee,
+but exclusive access is a stricter requirement than memory safety ---
+which means some code preserves memory safety,
+even though it violates exclusive access to memory.
+Swift allows this memory-safe code if the compiler can prove
+that the nonexclusive access to memory is still safe.
+Specifically, it can prove
+that overlapping access to properties of a structure is safe
+if the following conditions apply:
+
+- You're accessing only stored properties of an instance,
+  not computed properties or class properties.
+- The structure is the value of a local variable,
+  not a global variable.
+- The structure is either not captured by any closures,
+  or it's captured only by nonescaping closures.
+
+.. XXX
+   Although overlapping access may be safe in other circumstances,
+   the compiler's ability to reason about it is limited.
+   If it can't prove the access is safe,
+   it doesn't allow the access.
+
+In practice,
+these conditions mean that most access
+to the properties of a structure
+can overlap safely.
+For example,
+if the variable ``oscar`` in the example above
+refers to a local variable instead of a global variable,
+the compiler can prove that overlapping access
+to stored properties of the structure is safe:
+
+.. testcode:: memory-share-health-local
 
     >> struct Player {
     >>     var name: String
@@ -487,74 +546,12 @@ Although this violates exclusive access to memory
 the compiler can prove that memory safety is preserved.
 The two stored properties don't interact in any way,
 so overlapping writes to them can't cause a problem.
-Because exclusive access to memory is a slightly broader guarantee
-than memory safety,
-some memory-safe code
-violates the guarantee of exclusive access.
-Swift allows this memory-safe code if the compiler can prove
-that the nonexclusive access to memory is still safe.
 
-.. XXX maybe the list of things the compiler can prove should go here?
-
-In contrast, if ``health`` is a computed property,
-the compiler can't prove whether
-the overlapping writes are safe:
-
-.. XXX This is kind of a long/complex example.
-   Is it really pulling its weight?
-
-.. testcode:: memory-computed-property
-
-    -> struct Player {
-           var name: String
-           var remainingLives = 5
-           var energy = 10
-           private var _health: Int = 10
-           var health: Int {
-               get {
-                   return _health
-               }
-               set {
-                   if newValue > 0 {
-                       _health = newValue
-                   } else {
-                       remainingLives -= 1
-                       _health = 10
-                   }
-               }
-           }
-           init(name: String) {
-               self.name = name
-           }
-       }
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    >> func f() {
-    -> var oscar = Player(name: "Oscar")
-    -> balance(&oscar.health, &oscar.energy)  // Error
-    >> }
-    >> f()
-    !! <REPL Input>:3:11: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
-    !! balance(&oscar.health, &oscar.energy)  // Error
-    !!                        ^~~~~~~~~~~~~
-    !! <REPL Input>:3:26: note: conflicting access is here
-    !! balance(&oscar.health, &oscar.energy)  // Error
-    !!         ^~~~~~~~~~~~~
-    !! <REPL Input>:1:1: error: use of unresolved identifier 'f'
-    !! f()
-    !! ^
-
-In the version of ``health`` above,
-any time the player runs out of health points,
-the property setter subtracts a life
-and resets ``health`` to its full value of 10.
-Because ``health`` is a computed property,
-any mutation to a property of ``oscar``
-requires mutation to the entire ``Player`` structure,
-so overlapping changes to the structure's properties aren't allowed.
+.. XXX leftover but possibly useful
+   Because ``health`` is a computed property,
+   any mutation to a property of ``oscar``
+   requires mutation to the entire ``Player`` structure,
+   so overlapping changes to the structure's properties aren't allowed.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
@@ -562,37 +559,23 @@ so overlapping changes to the structure's properties aren't allowed.
    to two different associated values on the same enum
    would violate exclusivity.
 
-.. note::
-
-   The compiler can prove
-   that overlapping access to properties of a structure is safe
-   if the structure is the value of a local variable
-   that isn't captured by a closure,
-   or if it's the value of a local variable
-   that's captured by a nonescaping closure.
-   For global variables,
-   class properties,
-   and local variables that are captured by an escaping closure,
-   the compiler can't prove that overlapping access is safe.
-
+.. XXX old note, now for fodder
+   
 .. Devin says the latter are "checked at run time"
    but they appear to just be a hard error.
 
 
 
+.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
 
-
-
-
-
-.. docnote:: Currently, the only way to create a long-term read
-             is to use implicit pointer conversion
-             when passing a value as a nonmutating unsafe pointer parameter,
-             as in the example below.
-             There is discussion in <rdar://problem/33115142>
-             about changing the semantics of nonmutating method calls
-             to be long-term reads,
-             but it's not clear if/when that change will land.
+.. In Swift 4, the only way to create a long-term read
+   is to use implicit pointer conversion
+   when passing a value as a nonmutating unsafe pointer parameter,
+   as in the example below.
+   There is discussion in <rdar://problem/33115142>
+   about changing the semantics of nonmutating method calls
+   to be long-term reads,
+   but it's not clear if/when that change will land.
 
    ::
 
@@ -613,8 +596,6 @@ so overlapping changes to the structure's properties aren't allowed.
        // 2    temp2                              0x000000010675e3c0 main + 102
        // 3    libdyld.dylib                      0x00007fff69c75144 start + 1
        // Fatal access conflict detected.
-
-.. <rdar://problem/33115142> [Exclusivity] Write during a long-duration read should be an access violation
 
 .. TEXT FOR THE FUTURE
 
