@@ -9,7 +9,7 @@ and array indices are checked for out-of-bounds errors.
 
 Swift also makes sure that multiple accesses
 to the same area of memory don't conflict,
-by requiring code that modifies an area of memory
+by requiring code that modifies a location in memory
 to have exclusive access to that memory.
 Because Swift manages memory automatically,
 most of the time you don't have to think about accessing memory at all.
@@ -30,22 +30,35 @@ you'll get a compile-time or runtime error.
 Understanding Conflicting Access to Memory
 ------------------------------------------
 
+Access to memory happens in your code
+when you do things like set the value of a variable
+or pass an argument to a function.
+For example,
+the following code contains both a read access and a write access:
+
+.. testcode:: memory-read-write
+
+    // A write access to the memory where one is stored.
+    -> var one = 1
+    << // one : Int = 1
+    ---
+    // A read access from the memory where one is stored.
+    -> print("We're number \(one)!")
+    << We're number 1!
+
+.. Might be worth a different example,
+   or else I'm going to keep getting "We are Number One" stuck in my head.
+    
+
 A conflicting access to memory can occur
 when different parts of your code are trying
-to access the same area of memory at the same time.
-If you've written concurrent or multithreaded code,
-conflicting access to memory might be a familiar problem.
-However,
-the conflicting access discussed here can happen
-on a single thread and
-*doesn't* involve concurrent or multithreaded code.
-
+to access the same location in memory at the same time.
+Multiple accesses to a location in memory at the same time
+can produce unpredictable or inconsistent behavior.
 In Swift, there are ways to modify a value
 that span several lines of code,
 making it possible to attempt to access a value
 in the middle of its own modification.
-Multiple accesses to an area of memory at the same time
-can produce unpredictable or inconsistent behavior.
 
 You can see a similar problem
 by thinking about how you update a budget
@@ -71,25 +84,26 @@ during the process of adding an item
 gives you incorrect information.
 
 This example also demonstrates
-a common problem with code
-that contains conflicting access to memory:
-There are multiple ways to fix the conflict
+a challenge you may encounter
+when fixing conflicting access to memory:
+There are sometimes multiple ways to fix the conflict
 that produce different answers,
-and the intended behavior isn't obvious.
-If you wanted the original total amount,
-you'd expect an answer of $5,
-and you'd fix the conflict by reading the total amount
-before you started making changes to the budget.
-However, if you wanted the updated total amount,
-you'd expect an answer of $320,
-and you'd fix the conflict by
-waiting for changes to the budget to be finished
-before trying to read it.
-Both interpretations are reasonable ---
-before you can fix the conflicting access,
+and it's not always obvious which answer is correct.
+In this example,
+depending on whether you wanted the original total amount
+or the updated total amount,
+either $5 or $320 could be the correct answers.
+Before you can fix the conflicting access,
 you have to determine what it was intended to do.
 
 .. note::
+
+   If you've written concurrent or multithreaded code,
+   conflicting access to memory might be a familiar problem.
+   However,
+   the conflicting access discussed here can happen
+   on a single thread and
+   *doesn't* involve concurrent or multithreaded code.
 
    If you have conflicting access to memory
    from within a single thread,
@@ -102,32 +116,10 @@ you have to determine what it was intended to do.
 .. XXX The xref above doesn't seem to give enough information.
    What should I be looking for when I get to the linked page?
 
-.. XXX This still isn't really the right place for this threading aside.
-
 .. _Memory_Characteristics:
 
 Characteristics of Memory Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Access to memory happens in your code
-when you do things like set the value of a variable
-or pass an argument to a function.
-For example,
-the following code contains both a read access and a write access:
-
-.. testcode:: memory-read-write
-
-    // A write access to the memory where "one" is stored
-    -> var one = 1
-    << // one : Int = 1
-    ---
-    // A read access from the memory where "one" is stored
-    -> print("We're number \(one)!")
-    << We're number 1!
-
-.. Might be worth a different example,
-   or else I'm going to keep getting "We are Number One" stuck in my head.
-    
 
 There are three characteristics of memory access
 to consider in the context of conflicting access:
@@ -139,8 +131,16 @@ a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
 - At least one is a write access.
-- They access the same location.
+- They access the same location in memory.
 - Their durations overlap.
+
+..
+    The difference between a read and write access
+    is explained above.
+    The location of a memory access
+    refers to the address in memory.
+    The duration of a memory access
+    can be described as either instantaneous or long-term.
 
 The difference between a read and write access
 is explained above.
@@ -148,9 +148,6 @@ The location of a memory access
 refers to the address in memory.
 The duration of a memory access
 can be described as either instantaneous or long-term.
-
-.. XXX better handwaving around memory location
-   variables and properties that refer to the same instances
 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
@@ -183,9 +180,9 @@ which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
 
-Overlapping access appear primarily in code that uses 
+Overlapping accesses appear primarily in code that uses 
 in-out parameters in functions and methods
-or mutating methods in structures.
+or mutating methods of a structure.
 The specific kinds of Swift code that use long-term accesses
 are discussed in the sections below.
 
@@ -217,7 +214,8 @@ For example:
            number += stepSize
        }
     ---
-    -> increment(&stepSize)  // Error
+    -> increment(&stepSize)
+    // Error: conflicting accesses to stepSize
     xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x10e86b032).
     xx Current access (a read) started at:
@@ -226,11 +224,10 @@ In the code above,
 ``stepSize`` is a global variable,
 and it is normally accessible from within ``increment(_:)``.
 However,
-if you try to call ``increment(_:)`` with ``stepSize`` as its parameter,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.
 As shown in the figure below,
-both ``number`` and ``stepSize`` refer to the same memory.
+both ``number`` and ``stepSize`` refer to the same location in memory.
 The read and write accesses
 refer to the same memory and they overlap,
 producing a conflict.
@@ -265,6 +262,8 @@ by the current step size.
 The read access ends before the write access starts,
 so there isn't a conflict.
 
+.. XXX Need a better transition.
+
 Passing a single variable
 as the argument for multiple in-out parameters
 of the same function is also an error.
@@ -283,23 +282,24 @@ For example:
     << // playerTwoScore : Int = 30
     -> balance(&playerOneScore, &playerTwoScore)  // OK
     -> balance(&playerOneScore, &playerOneScore)  // Error
+    // Error: Conflicting accesses to playerOneScore
     !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
-    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
     !! <REPL Input>:1:9: note: previous aliasing argument
-    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
     !! <REPL Input>:1:9: error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
-    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
     !! <REPL Input>:1:26: note: conflicting access is here
-    !! balance(&playerOneScore, &playerOneScore)  // Error
+    !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
 
 The ``balance(_:_:)`` function above
 modifies its two parameters
 to divide the total value evenly between them.
-Calling it with ``playerOneScore`` and ``playerTwoScore`` as parameters
+Calling it with ``playerOneScore`` and ``playerTwoScore`` as arguments
 preserves exclusive access to memory ---
 there are two write accesses that overlap in time,
 but they access different locations in memory.
@@ -307,14 +307,14 @@ In contrast,
 passing ``playerOneScore`` as the value for both parameters
 causes conflicting access to memory
 because it tries to perform two write accesses
-to the same memory at the same time.
+to the same location in memory at the same time.
 
 .. note::
 
     Because operators are functions,
-    they can have long-term accesses to their in-out parameters too.
-    For example, if ``balance`` was an operator function named ``+++``,
-    writing ``playerOneScore +++ playerOneScore``
+    they can also have long-term accesses to their in-out parameters.
+    For example, if ``balance(_:_:)`` was an operator function named ``<^>``,
+    writing ``playerOneScore <^> playerOneScore``
     would result in the same conflicting access
     as ``balance(&playerOneScore, &playerOneScore)``.
 
@@ -389,10 +389,10 @@ because ``oscar`` is the value of ``self`` in a mutating method,
 and there's a write access to ``maria``
 for the same duration
 because ``maria`` was passed as an in-out parameter.
-These write accesses overlap in time,
-but they access different memory,
-so there's no conflict,
-as shown in the figure below.
+As shown in the figure below,
+they access different locations in memory.
+Even though the two write accesses overlap in time,
+they don't conflict.
 
 .. image:: ../images/memory_share_health_maria_2x.png
    :align: center
@@ -403,18 +403,19 @@ there's a conflict:
 
 .. testcode:: memory-player-share-with-self
 
-    -> oscar.shareHealth(with: &oscar)  // Error
+    -> oscar.shareHealth(with: &oscar)
+    // Error: conflicting accesses to oscar
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
-    !! oscar.shareHealth(with: &oscar)  // Error
+    !! oscar.shareHealth(with: &oscar)
     !!                         ^~~~~~
     !! <REPL Input>:1:1: note: previous aliasing argument
-    !! oscar.shareHealth(with: &oscar)  // Error
+    !! oscar.shareHealth(with: &oscar)
     !! ^~~~~
     !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
-    !! oscar.shareHealth(with: &oscar)  // Error
+    !! oscar.shareHealth(with: &oscar)
     !!                          ^~~~~
     !! <REPL Input>:1:25: note: conflicting access is here
-    !! oscar.shareHealth(with: &oscar)  // Error
+    !! oscar.shareHealth(with: &oscar)
     !! ^~~~~~
 
 The mutating method needs write access to ``self``
@@ -422,10 +423,12 @@ for the duration of the method,
 and the in-out parameter needs write access to ``teammate``
 for the same duration.
 Within the method,
-both ``self`` and ``teammate`` refer to the same ``Player`` ---
-the value of ``oscar`` ---
-which means the two write accesses conflict,
+both ``self`` and ``teammate`` refer to
+the same location in memory ---
 as shown in the figure below.
+The two write accesses
+refer to the same memory and they overlap,
+producing a conflict.
 
 .. image:: ../images/memory_share_health_oscar_2x.png
    :align: center
@@ -445,7 +448,11 @@ requires read or write access to the whole value.
 (However, there's an exception for most structure properties described later.)
 For example,
 overlapping write accesses to the elements of a tuple
-is an error:
+produces a conflict:
+
+.. XXX Improve the "however" aside above.
+   Is it still needed, now that the "in practice" discussion
+   comes before its explanation?
 
 .. testcode:: memory-tuple
 
@@ -456,14 +463,15 @@ is an error:
     >> }
     -> var playerInformation = (health: 10, energy: 20)
     << // playerInformation : (Int, Int) = (10, 20)
-    -> balance(&playerInformation.health, &playerInformation.energy)  // Error
+    -> balance(&playerInformation.health, &playerInformation.energy)
+    // Error: conflicting access to properties of playerInformation
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x107952037).
     xx Current access (a modification) started at:
 
 In the example above,
 calling ``balance(_:_:)`` on the elements of a tuple
-is an error
+produces a conflict
 because there are overlapping write accesses to ``playerInformation``.
 Both ``playerInformation.health`` and ``playerInformation.energy``
 are passed as in-out parameters,
@@ -475,7 +483,7 @@ This means there are two write accesses to ``playerInformation``
 with durations that overlap,
 causing a conflict.
 
-The listing below shows that the same error appears
+The code below shows that the same error appears
 for overlapping write accesses
 to the properties of a structure
 that's stored in a global variable.
@@ -492,35 +500,14 @@ that's stored in a global variable.
     >>     x = sum / 2
     >>     y = sum - x
     >> }
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> balance(&oscar.health, &oscar.energy)  // Error
+    -> var holly = Player(name: "Holly", health: 10, energy: 10)
+    -> balance(&holly.health, &holly.energy)  // Error
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x107952037).
     xx Current access (a modification) started at:
 
-The restriction against
-overlapping access to properties of a structure
-isn't always necessary to preserve memory safety.
-Memory safety is the desired guarantee,
-but exclusive access is a stricter requirement than memory safety ---
-which means some code preserves memory safety,
-even though it violates exclusive access to memory.
-Swift allows this memory-safe code if the compiler can prove
-that the nonexclusive access to memory is still safe.
-Specifically, it can prove
-that overlapping access to properties of a structure is safe
-if the following conditions apply:
-
-- You're accessing only stored properties of an instance,
-  not computed properties or class properties.
-- The structure is the value of a local variable,
-  not a global variable.
-- The structure is either not captured by any closures,
-  or it's captured only by nonescaping closures.
-
 In practice,
-these conditions mean that most access
-to the properties of a structure
+most access to the properties of a structure
 can overlap safely.
 For example,
 if the variable ``oscar`` in the example above
@@ -549,17 +536,31 @@ to stored properties of the structure is safe:
 In the example above,
 Oscar's health and energy are passed
 as the two in-out parameters to ``balance(_:_:)``.
-Although this violates exclusive access to memory
-the compiler can prove that memory safety is preserved.
-The two stored properties don't interact in any way,
-so overlapping write accesses to them can't cause a problem.
+The compiler can prove that memory safety is preserved
+because the two stored properties don't interact in any way.
 
-.. note::
+The restriction against
+overlapping access to properties of a structure
+isn't always necessary to preserve memory safety.
+Memory safety is the desired guarantee,
+but exclusive access is a stricter requirement than memory safety ---
+which means some code preserves memory safety,
+even though it violates exclusive access to memory.
+Swift allows this memory-safe code if the compiler can prove
+that the nonexclusive access to memory is still safe.
+Specifically, it can prove
+that overlapping access to properties of a structure is safe
+if the following conditions apply:
 
-   Although overlapping access may be safe in other circumstances,
-   the compiler's ability to reason about it is limited.
-   If it can't prove the access is safe,
-   it doesn't allow the access.
+- You're accessing only stored properties of an instance,
+  not computed properties or class properties.
+- The structure is the value of a local variable,
+  not a global variable.
+- The structure is either not captured by any closures,
+  or it's captured only by nonescaping closures.
+
+If the compiler can't prove the access is safe,
+it doesn't allow the access.
 
 .. Because there's no syntax
    to mutate an enum's associated value in place,
