@@ -76,17 +76,17 @@ that contains conflicting access to memory:
 There are multiple ways to fix the conflict
 that produce different answers,
 and the intended behavior isn't obvious.
-If you wanted the old total,
+If you wanted the original total amount,
 you'd expect an answer of $5,
-and you'd fix the conflict by reading the total
-before you started adding to the budget.
-However, if you wanted the updated total,
+and you'd fix the conflict by reading the total amount
+before you started making changes to the budget.
+However, if you wanted the updated total amount,
 you'd expect an answer of $320,
 and you'd fix the conflict by
-waiting for the total to be updated
+waiting for changes to the budget to be finished
 before trying to read it.
 Both interpretations are reasonable ---
-before you can fix the code,
+before you can fix the conflicting access,
 you have to determine what it was intended to do.
 
 .. note::
@@ -172,8 +172,6 @@ all the read and write accesses in the code listing below are instantaneous:
     -> print(myNumber)
     <- 2
 
-.. XXX It's strange to have a value of 2 for a variable called 'one'.
-
 However,
 there are several ways to access memory,
 called :newterm:`long-term` accesses,
@@ -185,12 +183,11 @@ which is called :newTerm:`overlap`.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
 
-Overlaps appear primarily in code that uses 
+Overlapping access appear primarily in code that uses 
 in-out parameters in functions and methods
 or mutating methods in structures.
 The specific kinds of Swift code that use long-term accesses
 are discussed in the sections below.
-
 
 .. _MemorySafety_Inout:
 
@@ -203,7 +200,7 @@ The write access for an in-out parameter starts
 after all of the non-in-out parameters have been evaluated
 and lasts for the entire duration of that function call.
 If there are multiple in-out parameters,
-the write accesses start in the same order as the parameters appear in.
+the write accesses start in the same order as the parameters appear.
 
 One consequence of this long-term write access
 is that you can't access the original
@@ -228,8 +225,9 @@ For example:
 In the code above,
 even though ``stepSize`` is a global variable,
 and would normally be accessible from within ``increment(_:)``,
-the read and write accesses to ``stepSize`` conflict
-if you call ``increment(_:)`` with ``stepSize`` as its parameter.
+if you call ``increment(_:)`` with ``stepSize`` as its parameter,
+the read access to ``stepSize`` conflicts with
+the write access to ``number``.
 As shown in the figure below,
 both ``number`` and ``stepSize`` refer to the same memory.
 
@@ -237,7 +235,7 @@ both ``number`` and ``stepSize`` refer to the same memory.
    :align: center
 
 One way to solve this conflict
-is to make an explicit copy of the step size:
+is to make an explicit copy of ``stepSize``:
 
 .. testcode:: memory-increment-copy
 
@@ -260,11 +258,11 @@ is to make an explicit copy of the step size:
 When you make a copy of ``stepSize`` before calling ``increment(_:)``,
 it's clear that the value of ``copyOfStepSize`` is incremented
 by the current step size.
-There's only one access to ``stepSize`` in the function,
+The read access ends before the write access starts,
 so there isn't a conflict.
 
 Passing a single variable
-as the argument to multiple in-out parameters
+as the argument for multiple in-out parameters
 of the same function is also an error.
 For example:
 
@@ -348,7 +346,7 @@ and an energy amount, which decreases when using special abilities.
            var health: Int
            var energy: Int
            
-           static var maxHealth = 10
+           static let maxHealth = 10
            mutating func restoreHealth() {
                health = Player.maxHealth
            }
@@ -376,7 +374,7 @@ creating the possibility of overlapping accesses.
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
     << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
     << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
-    -> oscar.shareHealth(with: &maria)  // OK! No conflicting accesses.
+    -> oscar.shareHealth(with: &maria)  // OK
 
 In the example above,
 calling the ``shareHealth(with:)`` method
@@ -401,18 +399,18 @@ there's a violation:
 
 .. testcode:: memory-player-share-with-self
 
-    -> oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    -> oscar.shareHealth(with: &oscar)  // Error
     !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
-    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! oscar.shareHealth(with: &oscar)  // Error
     !!                         ^~~~~~
     !! <REPL Input>:1:1: note: previous aliasing argument
-    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~
     !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
-    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! oscar.shareHealth(with: &oscar)  // Error
     !!                          ^~~~~
     !! <REPL Input>:1:25: note: conflicting access is here
-    !! oscar.shareHealth(with: &oscar)  // Error, accesses to oscar conflict!
+    !! oscar.shareHealth(with: &oscar)  // Error
     !! ^~~~~~
 
 The mutating method needs write access to ``self``
