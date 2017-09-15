@@ -13,7 +13,7 @@ Swift also provides powerful versions of the three primary collection types,
 as described in :doc:`CollectionTypes`.
 
 Like C, Swift uses variables to store and refer to values by an identifying name.
-Swift also makes extensive use of variables whose values can't changed.
+Swift also makes extensive use of variables whose values can't be changed.
 These are known as constants, and are much more powerful than constants in C.
 Constants are used throughout Swift to make code safer and clearer in intent
 when you work with values that don't need to change.
