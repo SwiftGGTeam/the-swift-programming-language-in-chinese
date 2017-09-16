@@ -378,8 +378,8 @@ For example:
 
 In the code above,
 both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
-Because neither one is marked ``@escaping``,
-they are both nonescaping.
+Neither parameter is marked ``@escaping``,
+so they're both nonescaping as a result.
 
 The four function calls marked "Error" in the example above
 cause compiler errors.
@@ -388,8 +388,8 @@ are nonescaping functions,
 they can't be passed as arguments to another nonescaping function parameter.
 In contrast,
 the two function calls marked "OK" don't cause a compiler error.
-Because ``external`` isn't one of the parameters of ``takesTwoFunctions``,
-these function calls don't violate the restriction.
+These function calls don't violate the restriction
+because ``external`` isn't one of the parameters of ``takesTwoFunctions``.
 
 If you need to avoid this restriction, mark one of the parameters as escaping,
 or temporarily convert one of the nonescaping function parameters to an escaping function
