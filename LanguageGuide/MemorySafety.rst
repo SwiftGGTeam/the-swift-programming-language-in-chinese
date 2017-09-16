@@ -92,7 +92,7 @@ and it's not always obvious which answer is correct.
 In this example,
 depending on whether you wanted the original total amount
 or the updated total amount,
-either $5 or $320 could be the correct answers.
+either $5 or $320 could be the correct answer.
 Before you can fix the conflicting access,
 you have to determine what it was intended to do.
 
@@ -134,20 +134,15 @@ that meet all of the following conditions:
 - They access the same location in memory.
 - Their durations overlap.
 
-..
-    The difference between a read and write access
-    is explained above.
-    The location of a memory access
-    refers to the address in memory.
-    The duration of a memory access
-    can be described as either instantaneous or long-term.
-
 The difference between a read and write access
-is explained above.
-The location of a memory access
-refers to the address in memory.
+is usually obvious:
+a write access changes the location in memory,
+but a read access doesn't.
+The location in memory
+refers to what is being accessed ---
+for example, a variable, constant, or property.
 The duration of a memory access
-can be described as either instantaneous or long-term.
+is either instantaneous or long-term.
 
 An access is :newterm:`instantaneous`
 if it's not possible for other code to run
@@ -262,11 +257,12 @@ by the current step size.
 The read access ends before the write access starts,
 so there isn't a conflict.
 
-.. XXX Need a better transition.
-
-Passing a single variable
+Another consequence of long-term write access
+to in-out parameters is that
+passing a single variable
 as the argument for multiple in-out parameters
-of the same function is also an error.
+of the same function
+produces a conflict.
 For example:
 
 .. testcode:: memory-balance
@@ -281,7 +277,7 @@ For example:
     << // playerOneScore : Int = 42
     << // playerTwoScore : Int = 30
     -> balance(&playerOneScore, &playerTwoScore)  // OK
-    -> balance(&playerOneScore, &playerOneScore)  // Error
+    -> balance(&playerOneScore, &playerOneScore)
     // Error: Conflicting accesses to playerOneScore
     !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
     !! balance(&playerOneScore, &playerOneScore)
@@ -300,12 +296,12 @@ The ``balance(_:_:)`` function above
 modifies its two parameters
 to divide the total value evenly between them.
 Calling it with ``playerOneScore`` and ``playerTwoScore`` as arguments
-preserves exclusive access to memory ---
+doesn't produce a conflict ---
 there are two write accesses that overlap in time,
 but they access different locations in memory.
 In contrast,
 passing ``playerOneScore`` as the value for both parameters
-causes conflicting access to memory
+produces a conflict
 because it tries to perform two write accesses
 to the same location in memory at the same time.
 
@@ -315,7 +311,7 @@ to the same location in memory at the same time.
     they can also have long-term accesses to their in-out parameters.
     For example, if ``balance(_:_:)`` was an operator function named ``<^>``,
     writing ``playerOneScore <^> playerOneScore``
-    would result in the same conflicting access
+    would result in the same conflict
     as ``balance(&playerOneScore, &playerOneScore)``.
 
 .. _MemorySafety_Methods:
@@ -445,14 +441,9 @@ Because these are value types, mutating any piece of the value
 mutates the whole value,
 meaning read or write access to one of the properties
 requires read or write access to the whole value.
-(However, there's an exception for most structure properties described later.)
 For example,
 overlapping write accesses to the elements of a tuple
 produces a conflict:
-
-.. XXX Improve the "however" aside above.
-   Is it still needed, now that the "in practice" discussion
-   comes before its explanation?
 
 .. testcode:: memory-tuple
 
@@ -510,8 +501,8 @@ In practice,
 most access to the properties of a structure
 can overlap safely.
 For example,
-if the variable ``oscar`` in the example above
-refers to a local variable instead of a global variable,
+if the variable ``holly`` in the example above
+is changed to a local variable instead of a global variable,
 the compiler can prove that overlapping access
 to stored properties of the structure is safe:
 
