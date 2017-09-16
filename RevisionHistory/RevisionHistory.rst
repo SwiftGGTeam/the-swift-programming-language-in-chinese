@@ -8,6 +8,9 @@ Date        Notes
 ==========  ==============================================================================================
 2017-09-19  * Updated for Swift 4.0.
 
+            * Added information about exclusive access to memory
+              to the :doc:`../LanguageGuide/MemorySafety` chapter.
+
             * Added the :ref:`Generics_AssociatedTypesWithWhereClause` section,
               now that you can use generic ``where`` clauses
               to constrain associated types.

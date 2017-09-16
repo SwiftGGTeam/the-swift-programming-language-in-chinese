@@ -17,11 +17,9 @@ Using ARC in Swift is very similar to the approach described in
 `Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
 for using ARC with Objective-C.
 
-.. note::
-
-   Reference counting only applies to instances of classes.
-   Structures and enumerations are value types, not reference types,
-   and are not stored and passed by reference.
+Reference counting applies only to instances of classes.
+Structures and enumerations are value types, not reference types,
+and are not stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -1021,3 +1019,4 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
+
