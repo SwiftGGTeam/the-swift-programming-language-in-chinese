@@ -40,12 +40,12 @@ is treated as a separate module in Swift.
 If you group together aspects of your app's code as a stand-alone framework ---
 perhaps to encapsulate and reuse that code across multiple applications ---
 then everything you define within that framework will be part of a separate module
-when it is imported and used within an app,
-or when it is used within another framework.
+when it's imported and used within an app,
+or when it's used within another framework.
 
 A :newTerm:`source file` is a single Swift source code file within a module
 (in effect, a single file within an app or framework).
-Although it is common to define individual types in separate source files,
+Although it's common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
 
 .. _AccessControl_AccessLevels:
@@ -76,7 +76,8 @@ and also relative to the module that source file belongs to.
   when those details are used within an entire file.
 
 * :newTerm:`Private access`
-  restricts the use of an entity to the enclosing declaration.
+  restricts the use of an entity to the enclosing declaration,
+  and to extensions of that declaration that are in the same file.
   Use private access to hide the implementation details of
   a specific piece of functionality
   when those details are used only within a single declaration.
@@ -115,11 +116,11 @@ a lower (more restrictive) access level.*
 
 For example:
 
-* A public variable cannot be defined as having an internal, file-private, or private type,
+* A public variable can't be defined as having an internal, file-private, or private type,
   because the type might not be available everywhere that the public variable is used.
-* A function cannot have a higher access level than its parameter types and return type,
+* A function can't have a higher access level than its parameter types and return type,
   because the function could be used in situations where
-  its constituent types are not available to the surrounding code.
+  its constituent types are unavailable to the surrounding code.
 
 The specific implications of this guiding principle for different aspects of the language
 are covered in detail below.
@@ -132,8 +133,8 @@ Default Access Levels
 All entities in your code
 (with a few specific exceptions, as described later in this chapter)
 have a default access level of internal
-if you do not specify an explicit access level yourself.
-As a result, in many cases you do not need to specify
+if you don't specify an explicit access level yourself.
+As a result, in many cases you don't need to specify
 an explicit access level in your code.
 
 .. _AccessControl_AccessLevelsForSingleTargetApps:
@@ -143,9 +144,9 @@ Access Levels for Single-Target Apps
 
 When you write a simple single-target app,
 the code in your app is typically self-contained within the app
-and does not need to be made available outside of the app's module.
+and doesn't need to be made available outside of the app's module.
 The default access level of internal already matches this requirement.
-Therefore, you do not need to specify a custom access level.
+Therefore, you don't need to specify a custom access level.
 You may, however, want to mark some parts of your code as file private or private
 in order to hide their implementation details from other code within the app's module.
 
@@ -336,10 +337,10 @@ the access level for that compound tuple type will be private.
 
 .. note::
 
-   Tuple types do not have a standalone definition in the way that
+   Tuple types don't have a standalone definition in the way that
    classes, structures, enumerations, and functions do.
    A tuple type's access level is deduced automatically when the tuple type is used,
-   and cannot be specified explicitly.
+   and can't be specified explicitly.
 
 .. _AccessControl_FunctionTypes:
 
@@ -349,13 +350,13 @@ Function Types
 The access level for a function type is calculated as
 the most restrictive access level of the function's parameter types and return type.
 You must specify the access level explicitly as part of the function's definition
-if the function's calculated access level does not match the contextual default.
+if the function's calculated access level doesn't match the contextual default.
 
 The example below defines a global function called ``someFunction()``,
 without providing a specific access-level modifier for the function itself.
 You might expect this function to have the default access level of “internal”,
-but this is not the case.
-In fact, ``someFunction()`` will not compile as written below:
+but this isn't the case.
+In fact, ``someFunction()`` won't compile as written below:
 
 .. testcode:: accessControlWrong
 
@@ -385,7 +386,7 @@ for the function declaration to be valid:
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
 
-It is not valid to mark the definition of ``someFunction()``
+It's not valid to mark the definition of ``someFunction()``
 with the ``public`` or ``internal`` modifiers,
 or to use the default setting of internal,
 because public or internal users of the function might not have appropriate access
@@ -398,7 +399,7 @@ Enumeration Types
 
 The individual cases of an enumeration automatically receive the same access level as
 the enumeration they belong to.
-You cannot specify a different access level for individual enumeration cases.
+You can't specify a different access level for individual enumeration cases.
 
 In the example below,
 the ``CompassPoint`` enumeration has an explicit access level of “public”.
@@ -433,7 +434,7 @@ Raw Values and Associated Values
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
-You cannot use a ``private`` type as the raw-value type of
+You can't use a ``private`` type as the raw-value type of
 an enumeration with an ``internal`` access level, for example.
 
 .. _AccessControl_NestedTypes:
@@ -570,8 +571,8 @@ Subclassing
 -----------
 
 You can subclass any class that can be accessed in the current access context.
-A subclass cannot have a higher access level than its superclass ---
-for example, you cannot write a public subclass of an internal superclass.
+A subclass can't have a higher access level than its superclass ---
+for example, you can't write a public subclass of an internal superclass.
 
 In addition, you can override any class member
 (method, property, initializer, or subscript)
@@ -594,7 +595,7 @@ the original implementation of ``someMethod()``:
          override internal func someMethod() {}
       }
 
-It is even valid for a subclass member to call
+It's even valid for a subclass member to call
 a superclass member that has lower access permissions than the subclass member,
 as long as the call to the superclass's member takes place within
 an allowed access level context
@@ -614,7 +615,7 @@ or within the same module as the superclass for an internal member call):
       }
 
 Because superclass ``A`` and subclass ``B`` are defined in the same source file,
-it is valid for the ``B`` implementation of ``someMethod()`` to call
+it's valid for the ``B`` implementation of ``someMethod()`` to call
 ``super.someMethod()``.
 
 .. _AccessControl_ConstantsVariablesPropertiesAndSubscripts:
@@ -622,9 +623,9 @@ it is valid for the ``B`` implementation of ``someMethod()`` to call
 Constants, Variables, Properties, and Subscripts
 ------------------------------------------------
 
-A constant, variable, or property cannot be more public than its type.
-It is not valid to write a public property with a private type, for example.
-Similarly, a subscript cannot be more public than either its index type or return type.
+A constant, variable, or property can't be more public than its type.
+It's not valid to write a public property with a private type, for example.
+Similarly, a subscript can't be more public than either its index type or return type.
 
 If a constant, variable, property, or subscript makes use of a private type,
 the constant, variable, property, or subscript must also be marked as ``private``:
@@ -681,7 +682,7 @@ before the ``var`` or ``subscript`` introducer.
 .. note::
 
    This rule applies to stored properties as well as computed properties.
-   Even though you do not write an explicit getter and setter for a stored property,
+   Even though you don't write an explicit getter and setter for a stored property,
    Swift still synthesizes an implicit getter and setter for you
    to provide access to the stored property's backing storage.
    Use ``fileprivate(set)``, ``private(set)``, and ``internal(set)`` to change the access level
@@ -711,7 +712,7 @@ a ``didSet`` property observer on the ``value`` property,
 which increments ``numberOfEdits`` every time the ``value`` property is set to a new value.
 
 The ``TrackedString`` structure and the ``value`` property
-do not provide an explicit access-level modifier,
+don't provide an explicit access-level modifier,
 and so they both receive the default access level of internal.
 However, the access level for the ``numberOfEdits`` property
 is marked with a ``private(set)`` modifier
@@ -721,18 +722,13 @@ but the property is settable only from within
 code that's part of the ``TrackedString`` structure.
 This enables ``TrackedString`` to modify the ``numberOfEdits`` property internally,
 but to present the property as a read-only property
-when it is used outside the structure's definition ---
-including any extensions to ``TrackedString``.
+when it's used outside the structure's definition.
 
 .. assertion:: reducedSetterScope
 
    -> extension TrackedString {
           mutating func f() { numberOfEdits += 1 }
       }
-   !! <REPL Input>:2:41: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
-   !! mutating func f() { numberOfEdits += 1 }
-   !!                     ~~~~~~~~~~~~~ ^
-   ---
    // check that we can't set its value with from the same file
    -> var s = TrackedString()
    << // s : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
@@ -756,7 +752,7 @@ you can see the ``numberOfEdits`` property value update to match the number of m
 
 Although you can query the current value of the ``numberOfEdits`` property
 from within another source file,
-you cannot *modify* the property from another source file.
+you can't *modify* the property from another source file.
 This restriction protects the implementation details of
 the ``TrackedString`` edit-tracking functionality,
 while still providing convenient access to an aspect of that functionality.
@@ -834,7 +830,7 @@ The only exception is for required initializers
 A required initializer must have the same access level as the class it belongs to.
 
 As with function and method parameters,
-the types of an initializer's parameters cannot be more private than
+the types of an initializer's parameters can't be more private than
 the initializer's own access level.
 
 .. _AccessControl_DefaultInitializers:
@@ -846,7 +842,7 @@ As described in :ref:`Initialization_DefaultInitializers`,
 Swift automatically provides a :newTerm:`default initializer` without any arguments
 for any structure or base class
 that provides default values for all of its properties
-and does not provide at least one initializer itself.
+and doesn't provide at least one initializer itself.
 
 A default initializer has the same access level as the type it initializes,
 unless that type is defined as ``public``.
@@ -886,7 +882,7 @@ a certain access context.
 
 The access level of each requirement within a protocol definition
 is automatically set to the same access level as the protocol.
-You cannot set a protocol requirement to a different access level than
+You can't set a protocol requirement to a different access level than
 the protocol it supports.
 This ensures that all of the protocol's requirements will be visible
 on any type that adopts the protocol.
@@ -920,7 +916,7 @@ on any type that adopts the protocol.
 
    If you define a public protocol,
    the protocol's requirements require a public access level
-   for those requirements when they are implemented.
+   for those requirements when they'r implemented.
    This behavior is different from other types,
    where a public type definition implies
    an access level of internal for the type's members.
@@ -1044,7 +1040,7 @@ Protocol Inheritance
 
 If you define a new protocol that inherits from an existing protocol,
 the new protocol can have at most the same access level as the protocol it inherits from.
-You cannot write a public protocol that inherits from an internal protocol, for example.
+You can't write a public protocol that inherits from an internal protocol, for example.
 
 .. _AccessControl_ProtocolConformance:
 
@@ -1070,7 +1066,7 @@ the type's implementation of each protocol requirement must be at least “inter
 .. note::
 
    In Swift, as in Objective-C, protocol conformance is global ---
-   it is not possible for a type to conform to a protocol in two different ways
+   it isn't possible for a type to conform to a protocol in two different ways
    within the same program.
 
 .. _AccessControl_Extensions:
@@ -1094,6 +1090,11 @@ Alternatively, you can mark an extension with an explicit access-level modifier
 to set a new default access level for all members defined within the extension.
 This new default can still be overridden within the extension
 for individual type members.
+
+You can't provide an explicit access-level modifier for an extension
+if you're using that extension to add protocol conformance.
+Instead, the protocol's own access level is used to provide
+the default access level for each protocol requirement implementation within the extension.
 
 .. sourcefile:: extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private
 
@@ -1149,13 +1150,55 @@ for individual type members.
    !!                                                      ^
    !! <unknown>:0: note: 'filePrivateMethod' declared here
 
-Adding Protocol Conformance with an Extension
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You cannot provide an explicit access-level modifier for an extension
-if you are using that extension to add protocol conformance.
-Instead, the protocol's own access level is used to provide
-the default access level for each protocol requirement implementation within the extension.
+.. _AccessControl_PrivateExtension:
+
+Private Members in Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extensions that are in the same file as
+the class, structure, or enumeration that they extend
+behave as if the code in the extension
+had been written as part of the original type's declaration.
+As a result, you can:
+
+- Declare a private member in the original declaration,
+  and access that member from extensions in the same file.
+
+- Declare a private member in one extension,
+  and access that member from another extension in the same file.
+
+- Declare a private member in an extension,
+  and access that member from the original declaration in the same file.
+
+This behavior means you can use extensions in the same way
+to organize your code,
+whether or not your types have private entities.
+For example, given the following simple protocol:
+
+.. testcode:: extensions_privatemembers
+
+   -> protocol SomeProtocol {
+          func doSomething()
+      }
+
+You can use an extension to add protocol conformance, like this:
+
+.. testcode:: extensions_privatemembers
+
+   -> struct SomeStruct {
+          private var privateVariable = 12
+      }
+   ---
+   -> extension SomeStruct: SomeProtocol {
+          func doSomething() {
+              print(privateVariable)
+          }
+      }
+   >> let s = SomeStruct()
+   >> s.doSomething()
+   << // s : SomeStruct = REPL.SomeStruct(privateVariable: 12)
+   << 12
 
 .. _AccessControl_Generics:
 
@@ -1174,7 +1217,7 @@ Type Aliases
 Any type aliases you define are treated as distinct types for the purposes of access control.
 A type alias can have an access level less than or equal to the access level of the type it aliases.
 For example, a private type alias can alias a private, file-private, internal, public, or open type,
-but a public type alias cannot alias an internal, file-private, or private type.
+but a public type alias can't alias an internal, file-private, or private type.
 
 .. note::
 

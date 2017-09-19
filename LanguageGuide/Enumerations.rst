@@ -74,7 +74,7 @@ You use the ``case`` keyword to introduce new enumeration cases.
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
    Instead, the different enumeration cases are fully-fledged values in their own right,
-   with an explicitly-defined type of ``CompassPoint``.
+   with an explicitly defined type of ``CompassPoint``.
 
 Multiple cases can appear on a single line, separated by commas:
 
@@ -107,7 +107,7 @@ you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly-typed enumeration values.
+This makes for highly readable code when working with explicitly typed enumeration values.
 
 .. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
 
@@ -478,8 +478,8 @@ The ``addition`` and ``multiplication`` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
 For example, the expression ``(5 + 4) * 2``
-has a number on the right hand side of the multiplication
-and another expression on the left hand side of the multiplication.
+has a number on the right-hand side of the multiplication
+and another expression on the left-hand side of the multiplication.
 Because the data is nested,
 the enumeration used to store the data also needs to support nesting ---
 this means the enumeration needs to be recursive.
@@ -520,6 +520,6 @@ For example, here's a function that evaluates an arithmetic expression:
 This function evaluates a plain number
 by simply returning the associated value.
 It evaluates an addition or multiplication
-by evaluating the expression on the left hand side,
-evaluating the expression on the right hand side,
+by evaluating the expression on the left-hand side,
+evaluating the expression on the right-hand side,
 and then adding them or multiplying them.

@@ -42,8 +42,8 @@ String Literals
 ---------------
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
-A string literal is a fixed sequence of textual characters
-surrounded by a pair of double quotes (``""``).
+A string literal is a sequence of characters
+surrounded by double quotes (``"``).
 
 Use a string literal as an initial value for a constant or variable:
 
@@ -52,13 +52,189 @@ Use a string literal as an initial value for a constant or variable:
    -> let someString = "Some string literal value"
    << // someString : String = "Some string literal value"
 
-Note that Swift infers a type of ``String`` for the ``someString`` constant,
-because it is initialized with a string literal value.
+Note that Swift infers a type of ``String`` for the ``someString`` constant
+because it's initialized with a string literal value.
 
-.. note::
+.. _StringsAndCharacters_MultilineLiterals:
 
-   For information about using special characters in string literals,
-   see :ref:`StringsAndCharacters_SpecialCharactersInStringLiterals`.
+Multiline String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need a string that spans several lines,
+use a multiline string literal ---
+a sequence of characters
+surrounded by three double quotes:
+
+.. Quote comes from "Alice's Adventures in Wonderland",
+   which has been public domain as of 1907.
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let quotation = """
+      The White Rabbit put on his spectacles.  "Where shall I begin,
+      please your Majesty?" he asked.
+
+      "Begin at the beginning," the King said gravely, "and go on
+      till you come to the end; then stop."
+      """
+   >> let newlines = quotation.filter { $0 == "\n" }
+   >> print(newlines.count)
+   << 4
+
+A multiline string literal includes all of the lines between
+its opening and closing quotes.
+The string begins on the first line after the opening quotes (``"""``)
+and ends on the line before the closing quotes,
+which means that neither of the strings below
+start or end with a line break:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let singleLineString = "These are the same."
+   -> let multilineString = """
+      These are the same.
+      """
+   >> print(singleLineString == multilineString)
+   << true
+
+When your source code includes a line break
+inside of a multiline string literal,
+that line break also appears in the string's value.
+If you want to use line breaks
+to make your source code easier to read,
+but you don't want the line breaks to be part of the string's value,
+write a backslash (``\``) at the end of those lines:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let softWrappedQuotation = """
+      The White Rabbit put on his spectacles.  "Where shall I begin, \
+      please your Majesty?" he asked.
+
+      "Begin at the beginning," the King said gravely, "and go on \
+      till you come to the end; then stop."
+      """
+   >> let softNewlines = softWrappedQuotation.filter { $0 == "\n" }
+   >> print(softNewlines.count)
+   << 2
+
+To make a multiline string literal that begins or ends with a line feed,
+write a blank line as the first or last line.
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let lineBreaks = """
+
+      This string starts with a line break.
+      It also ends with a line break.
+
+      """
+
+.. These are well-fed lines!
+
+A multiline string can be indented to match the surrounding code.
+The whitespace before the closing quotes (``"""``)
+tells Swift what whitespace to ignore before all of the other lines.
+However, if you write whitespace at the beginning of a line
+in addition to what's before the closing quotes,
+that whitespace *is* included.
+
+.. image:: ../images/multilineStringWhitespace_2x.png
+   :align: center
+
+.. Using an image here is a little clearer,
+   since it can call out which spaces "count",
+   but it also works around
+   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+
+.. assertion:: multiline-string-literal-whitespace
+   :compile: true
+
+   -> let linesWithIndentation = """
+          This line doesn't begin with whitespace.
+              This line begins with four spaces.
+          This line doesn't begin with whitespace.
+          """
+
+In the example above,
+even though the entire multiline string literal is indented,
+the first and last lines in the string don't begin with any whitespace.
+The middle line has more indentation than the closing quotes,
+so it starts with that extra four-space indentation.
+
+.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
+
+Special Characters in String Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+String literals can include the following special characters:
+
+* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
+  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
+  ``\"`` (double quote) and ``\'`` (single quote)
+
+* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+  where *n* is a 1--8 digit hexadecimal number
+  with a value equal to a valid Unicode code point
+  (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
+
+.. assertion:: stringLiteralUnicodeScalar
+
+   -> "\u{0}"
+   << // r0 : String = "\0"
+   -> "\u{00000000}"
+   << // r1 : String = "\0"
+   -> "\u{000000000}"
+   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
+   !! "\u{000000000}"
+   !! ^
+   -> "\u{10FFFF}"
+   << // r2 : String = "􏿿"
+   -> "\u{110000}"
+   !! <REPL Input>:1:2: error: invalid unicode scalar
+   !! "\u{110000}"
+   !! ^
+
+The code below shows four examples of these special characters.
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
+demonstrate the Unicode scalar format:
+
+.. testcode:: specialCharacters
+
+   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
+   >> print(wiseWords)
+   </ "Imagination is more important than knowledge" - Einstein
+   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+   << // dollarSign : String = "$"
+   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+   << // blackHeart : String = "♥"
+   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
+
+Because multiline string literals use three double quotes instead of just one,
+you can include a double quote (``"``) inside of a multiline string literal
+without escaping it.
+To include the text ``"""`` in a multiline string,
+escape at least one of the quotation marks.
+For example:
+
+.. testcode:: multiline-string-literals
+   :compile: true
+
+   -> let threeDoubleQuotes = """
+      Escaping the first quote \"""
+      Escaping all three quotes \"\"\"
+      """
+   >> print(threeDoubleQuotes)
+   << Escaping the first quote """
+   << Escaping all three quotes """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -97,7 +273,7 @@ String Mutability
 
 You indicate whether a particular ``String`` can be modified (or *mutated*)
 by assigning it to a variable (in which case it can be modified),
-or to a constant (in which case it cannot be modified):
+or to a constant (in which case it can't be modified):
 
 .. testcode:: stringMutability
 
@@ -132,17 +308,17 @@ Strings Are Value Types
 
 Swift's ``String`` type is a *value type*.
 If you create a new ``String`` value,
-that ``String`` value is *copied* when it is passed to a function or method,
-or when it is assigned to a constant or variable.
+that ``String`` value is *copied* when it's passed to a function or method,
+or when it's assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
 Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 Swift's copy-by-default ``String`` behavior ensures that
 when a function or method passes you a ``String`` value,
-it is clear that you own that exact ``String`` value,
+it's clear that you own that exact ``String`` value,
 regardless of where it came from.
-You can be confident that the string you are passed will not be modified
+You can be confident that the string you are passed won't be modified
 unless you modify it yourself.
 
 Behind the scenes, Swift's compiler optimizes string usage
@@ -156,11 +332,11 @@ Working with Characters
 -----------------------
 
 You can access the individual ``Character`` values for a ``String``
-by iterating over its ``characters`` property with a ``for``-``in`` loop:
+by iterating over the string with a ``for``-``in`` loop:
 
 .. testcode:: characters
 
-   -> for character in "Dog!🐶".characters {
+   -> for character in "Dog!🐶" {
          print(character)
       }
    </ D
@@ -237,6 +413,51 @@ with the ``String`` type's ``append()`` method:
    You can't append a ``String`` or ``Character`` to an existing ``Character`` variable,
    because a ``Character`` value must contain a single character only.
 
+If you're using multiline string literals
+to build up the lines of a longer string,
+you want every line in the string to end with a line break,
+including the last line.
+For example:
+
+.. testcode:: concatenate-multiline-string-literals
+   :compile: true
+
+   -> let badStart = """
+          one
+          two
+          """
+   -> let end = """
+          three
+          """
+   -> print(badStart + end)
+   // Prints two lines:
+   </ one
+   </ twothree
+   ---
+   -> let goodStart = """
+          one
+          two
+
+          """
+   -> print(goodStart + end)
+   // Prints three lines:
+   </ one
+   </ two
+   </ three
+
+In the code above,
+concatenating ``badStart`` with ``end``
+produces a two-line string,
+which isn't the desired result.
+Because the last line of ``badStart``
+doesn't end with a line break,
+that line gets combined with the first line of ``end``.
+In contrast,
+both lines of ``goodStart`` end with a line break,
+so when it's combined with ``end``
+the result has three lines,
+as expected.
+
 .. _StringsAndCharacters_StringInterpolation:
 
 String Interpolation
@@ -245,6 +466,8 @@ String Interpolation
 :newTerm:`String interpolation` is a way to construct a new ``String`` value
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
+You can use string interpolation
+in both single-line and multiline string literals.
 Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash (``\``):
 
@@ -266,12 +489,12 @@ The value of ``multiplier`` is also part of a larger expression later in the str
 This expression calculates the value of ``Double(multiplier) * 2.5``
 and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
-when it is included inside the string literal.
+when it's included inside the string literal.
 
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
-   cannot contain an unescaped backslash (``\``), a carriage return, or a line feed.
+   can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
 
 .. TODO: add a bit here about making things Printable.
@@ -304,62 +527,13 @@ or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
    A Unicode scalar is any Unicode :newTerm:`code point` in the range
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
-   Unicode scalars do not include the Unicode :newTerm:`surrogate pair` code points,
+   Unicode scalars don't include the Unicode :newTerm:`surrogate pair` code points,
    which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
 Note that not all 21-bit Unicode scalars are assigned to a character ---
 some scalars are reserved for future assignment.
 Scalars that have been assigned to a character typically also have a name,
 such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
-
-.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
-
-Special Characters in String Literals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-String literals can include the following special characters:
-
-* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
-  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
-  ``\"`` (double quote) and ``\'`` (single quote)
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
-  where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
-
-.. assertion:: stringLiteralUnicodeScalar
-
-   -> "\u{0}"
-   << // r0 : String = "\0"
-   -> "\u{00000000}"
-   << // r1 : String = "\0"
-   -> "\u{000000000}"
-   !! <REPL Input>:1:15: error: \u{...} escape sequence expects between 1 and 8 hex digits
-   !! "\u{000000000}"
-   !! ^
-   -> "\u{10FFFF}"
-   << // r2 : String = "􏿿"
-   -> "\u{110000}"
-   !! <REPL Input>:1:2: error: invalid unicode scalar
-   !! "\u{110000}"
-   !! ^
-
-The code below shows four examples of these special characters.
-The ``wiseWords`` constant contains two escaped double quote characters.
-The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
-demonstrate the Unicode scalar format:
-
-.. testcode:: specialCharacters
-
-   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
-   >> print(wiseWords)
-   </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-   << // dollarSign : String = "$"
-   -> let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-   << // blackHeart : String = "♥"
-   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-   << // sparklingHeart : String = "💖"
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
 
@@ -378,13 +552,13 @@ However, the same letter can also be represented as a *pair* of scalars ---
 a standard letter ``e`` (``LATIN SMALL LETTER E``, or ``U+0065``),
 followed by the ``COMBINING ACUTE ACCENT`` scalar (``U+0301``).
 The ``COMBINING ACUTE ACCENT`` scalar is graphically applied to the scalar that precedes it,
-turning an ``e`` into an ``é`` when it is rendered by
+turning an ``e`` into an ``é`` when it's rendered by
 a Unicode-aware text-rendering system.
 
 In both cases, the letter ``é`` is represented as a single Swift ``Character`` value
 that represents an extended grapheme cluster.
 In the first case, the cluster contains a single scalar;
-in the second case, it is a cluster of two scalars:
+in the second case, it's a cluster of two scalars:
 
 .. testcode:: graphemeClusters1
 
@@ -439,13 +613,13 @@ Counting Characters
 -------------------
 
 To retrieve a count of the ``Character`` values in a string,
-use the ``count`` property of the string's ``characters`` property:
+use the ``count`` property of the string:
 
 .. testcode:: characterCount
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+   -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
    <- unusualMenagerie has 40 characters
 
 Note that Swift's use of extended grapheme clusters for ``Character`` values
@@ -461,12 +635,12 @@ with a fourth character of ``é``, not ``e``:
 
    -> var word = "cafe"
    << // word : String = "cafe"
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in cafe is 4
    ---
    -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
    ---
-   -> print("the number of characters in \(word) is \(word.characters.count)")
+   -> print("the number of characters in \(word) is \(word.count)")
    <- the number of characters in café is 4
 
 .. note::
@@ -475,18 +649,18 @@ with a fourth character of ``é``, not ``e``:
    This means that different characters—
    and different representations of the same character—
    can require different amounts of memory to store.
-   Because of this, characters in Swift do not each take up
+   Because of this, characters in Swift don't each take up
    the same amount of memory within a string's representation.
-   As a result, the number of characters in a string cannot be calculated
+   As a result, the number of characters in a string can't be calculated
    without iterating through the string to determine
    its extended grapheme cluster boundaries.
    If you are working with particularly long string values,
-   be aware that the ``characters`` property
+   be aware that the ``count`` property
    must iterate over the Unicode scalars in the entire string
    in order to determine the characters for that string.
 
-   The count of the characters returned by the ``characters`` property
-   is not always the same as the ``length`` property of
+   The count of the characters returned by the ``count`` property
+   isn't always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
    the number of 16-bit code units within the string's UTF-16 representation
@@ -513,7 +687,7 @@ As mentioned above,
 different characters can require different amounts of memory to store,
 so in order to determine which ``Character`` is at a particular position,
 you must iterate over each Unicode scalar from the start or end of that ``String``.
-For this reason, Swift strings cannot be indexed by integer values.
+For this reason, Swift strings can't be indexed by integer values.
 
 Use the ``startIndex`` property to access
 the position of the first ``Character`` of a ``String``.
@@ -545,7 +719,7 @@ the ``Character`` at a particular ``String`` index.
    <$ : Character = "u"
    // u
    -> let index = greeting.index(greeting.startIndex, offsetBy: 7)
-   <~ // index : String.Index = Swift.String.CharacterView.Index(
+   <~ // index : String.Index = Swift.String.Index(
    -> greeting[index]
    <$ : Character = "a"
    // a
@@ -569,12 +743,12 @@ will trigger a runtime error.
    -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
    << // r0 : Bool = true
 
-Use the ``indices`` property of the ``characters`` property to access all of the
+Use the ``indices`` property to access all of the
 indices of individual characters in a string.
 
 .. testcode:: stringIndex
 
-   -> for index in greeting.characters.indices {
+   -> for index in greeting.indices {
          print("\(greeting[index]) ", terminator: "")
       }
    >> print("")
@@ -609,7 +783,7 @@ use the ``insert(contentsOf:at:)`` method.
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello!"
    ---
-   -> welcome.insert(contentsOf: " there".characters, at: welcome.index(before: welcome.endIndex))
+   -> welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello there!"
 
@@ -626,7 +800,7 @@ use the ``removeSubrange(_:)`` method:
    </ welcome now equals "hello there"
    ---
    -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
-   <~ // range : Range<String.Index> = Range(Swift.String.CharacterView.Index(
+   <~ // range : Range<String.Index> = Range(Swift.String.Index(
    -> welcome.removeSubrange(range)
    /> welcome now equals \"\(welcome)\"
    </ welcome now equals "hello"
@@ -640,6 +814,90 @@ use the ``removeSubrange(_:)`` method:
    on any type that conforms to the ``RangeReplaceableCollection`` protocol.
    This includes ``String``, as shown here,
    as well as collection types such as ``Array``, ``Dictionary``, and ``Set``.
+
+.. _StringsAndCharacters_Substrings:
+
+Substrings
+----------
+
+When you get a substring from a string ---
+for example, using a subscript or a method like ``prefix(_:)`` ---
+the result is an instance
+of `Substring <//apple_ref/swift/struct/s:s9SubstringV>`_,
+not another string.
+Substrings in Swift have most of the same methods as strings,
+which means you can work with substrings
+the same way you work with strings.
+However, unlike strings,
+you use substrings for only a short amount of time
+while performing actions on a string.
+When you're ready to store the result for a longer time,
+you convert the substring to an instance of ``String``.
+For example:
+
+.. FIXME: After merging 23592978_struct_class,
+   link to the COW note in "Structures"
+   from the (aside) above about String.
+
+.. testcode:: string-and-substring
+
+   -> let greeting = "Hello, world!"
+   << // greeting : String = "Hello, world!"
+   -> let index = greeting.index(of: ",") ?? greeting.endIndex
+   <~ // index : String.Index = Swift.String.Index(
+   -> let beginning = greeting[..<index]
+   << // beginning : String.SubSequence = "Hello"
+   /> beginning is \"\(beginning)\"
+   </ beginning is "Hello"
+   ---
+   // Convert the result to a String for long-term storage.
+   -> let newString = String(beginning)
+   << // newString : String = "Hello"
+
+Like strings, each substring has a region of memory
+where the characters that make up the substring are stored.
+The difference between strings and substrings
+is that, as a performance optimization,
+a substring can reuse part of the memory
+that's used to store the original string,
+or part of the memory that's used to store another substring.
+(Strings have a similar optimization,
+but if two strings share memory, they are equal.)
+This performance optimization means
+you don't have to pay the performance cost of copying memory
+until you modify either the string or substring.
+As mentioned above,
+substrings aren't suitable for long-term storage ---
+because they reuse the storage of the original string,
+the entire original string must be kept in memory
+as long as any of its substrings are being used.
+
+In the example above,
+``greeting`` is a string,
+which means it has a region of memory
+where the characters that make up the string are stored.
+Because
+``beginning`` is a substring of ``greeting``,
+it reuses the memory that ``greeting`` uses.
+In contrast,
+``newString`` is a string ---
+when it's created from the substring,
+it has its own storage.
+The figure below shows these relationships:
+
+.. FIXME: The connection between the code and the figure
+   would be clearer if the variable names appeared in the figure.
+
+.. image:: ../images/stringSubstring_2x.png
+   :align: center
+
+.. note::
+
+   Both ``String`` and ``Substring`` conform to the
+   `StringProtocol < //apple_ref/swift/intf/s:s14StringProtocolP>` protocol,
+   which means it's often convenient for string-manipulation functions
+   to accept a ``StringProtocol`` value.
+   You can call such functions with either a ``String`` or ``Substring`` value.
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -673,7 +931,7 @@ Two ``String`` values (or two ``Character`` values) are considered equal if
 their extended grapheme clusters are :newTerm:`canonically equivalent`.
 Extended grapheme clusters are canonically equivalent if they have
 the same linguistic meaning and appearance,
-even if they are composed from different Unicode scalars behind the scenes.
+even if they're composed from different Unicode scalars behind the scenes.
 
 .. assertion:: characterComparisonUsesCanonicalEquivalence
 
@@ -705,7 +963,7 @@ For example, ``LATIN SMALL LETTER E WITH ACUTE`` (``U+00E9``)
 is canonically equivalent to ``LATIN SMALL LETTER E`` (``U+0065``)
 followed by ``COMBINING ACUTE ACCENT`` (``U+0301``).
 Both of these extended grapheme clusters are valid ways to represent the character ``é``,
-and so they are considered to be canonically equivalent:
+and so they're considered to be canonically equivalent:
 
 .. testcode:: stringEquality
 
@@ -727,7 +985,7 @@ as used in English, is *not* equivalent to
 ``CYRILLIC CAPITAL LETTER A`` (``U+0410``, or ``"А"``),
 as used in Russian.
 The characters are visually similar,
-but do not have the same linguistic meaning:
+but don't have the same linguistic meaning:
 
 .. testcode:: stringEquality
 
@@ -1027,3 +1285,4 @@ such as with string interpolation:
    </ g
    </ ‼
    </ 🐶
+

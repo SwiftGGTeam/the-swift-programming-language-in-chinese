@@ -17,11 +17,9 @@ Using ARC in Swift is very similar to the approach described in
 `Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
 for using ARC with Objective-C.
 
-.. note::
-
-   Reference counting only applies to instances of classes.
-   Structures and enumerations are value types, not reference types,
-   and are not stored and passed by reference.
+Reference counting applies only to instances of classes.
+Structures and enumerations are value types, not reference types,
+and are not stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -340,7 +338,7 @@ a reference to an invalid instance that no longer exists.
     -> var c1 = C()
     << // c1 : C = REPL.C
     -> do {
-    -> var c2 = C()  // Inside a do{} block, so no REPL result.
+    -> let c2 = C()  // Inside a do{} block, so no REPL result.
     -> print(c1.w as Any)
     << nil
     -> c1.w = c2
@@ -584,7 +582,7 @@ after the ``john`` variable is set to ``nil``.
     you need to disable runtime safety checks ---
     for example, for performance reasons.
     As with all unsafe operations,
-    you take on the responsiblity for checking that code for safety.
+    you take on the responsibility for checking that code for safety.
 
     You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
     If you try to access an unsafe unowned reference
@@ -1021,3 +1019,4 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
+

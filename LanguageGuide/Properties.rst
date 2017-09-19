@@ -67,7 +67,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed once it is created:
+whose range length cannot be changed after it is created:
 
 .. testcode:: storedProperties
 
@@ -175,7 +175,7 @@ neither of which is shown in full:
    -> class DataImporter {
          /*
          DataImporter is a class to import data from an external file.
-         The class is assumed to take a non-trivial amount of time to initialize.
+         The class is assumed to take a nontrivial amount of time to initialize.
          */
          var filename = "data.txt"
          // the DataImporter class would provide data importing functionality here
@@ -207,7 +207,7 @@ this array of ``String`` data.
 Part of the functionality of the ``DataManager`` class
 is the ability to import data from a file.
 This functionality is provided by the ``DataImporter`` class,
-which is assumed to take a non-trivial amount of time to initialize.
+which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
@@ -335,6 +335,8 @@ Setting the ``center`` property calls the setter for ``center``,
 which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
+.. iBooks Store screenshot begins here.
+
 .. image:: ../images/computedProperties_2x.png
    :align: center
 
@@ -365,6 +367,8 @@ which takes advantage of this shorthand notation:
             }
          }
       }
+
+.. iBooks Store screenshot ends here.
 
 .. _Properties_ReadOnlyComputedProperties:
 
@@ -639,7 +643,7 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
-   of that structure instance are set. This is cool, but non-obvious.
+   of that structure instance are set. This is cool, but nonobvious.
    Provide an example of it here.
 
 .. _Properties_GlobalAndLocalVariables:

@@ -2,7 +2,7 @@ Types
 =====
 
 In Swift, there are two kinds of types: named types and compound types.
-A :newTerm:`named type` is a type that can be given a particular name when it is defined.
+A :newTerm:`named type` is a type that can be given a particular name when it's defined.
 Named types include classes, structures, enumerations, and protocols.
 For example,
 instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
@@ -14,7 +14,7 @@ Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift standard library using structures.
-Because they are named types,
+Because they're named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration,
 discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
@@ -107,7 +107,7 @@ For example, ``Int`` is a type identifier that directly refers to the named type
 and the type identifier ``Dictionary<String, Int>`` directly refers
 to the named type ``Dictionary<String, Int>``.
 
-There are two cases in which a type identifier does not refer to a type with the same name.
+There are two cases in which a type identifier doesn't refer to a type with the same name.
 In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
@@ -244,6 +244,12 @@ In contrast, without parentheses,
 ``(Int, Int) -> Void`` is the type
 of a function that takes two ``Int`` parameters
 and doesn't return any value.
+Likewise, because ``Void`` is a type alias for ``()``,
+the function type ``(Void) -> Void``
+is the same as ``(()) -> ()`` ---
+a function that takes a single argument that is an empty tuple.
+These types are not the same as ``() -> ()`` ---
+a function that takes no arguments.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
@@ -330,6 +336,66 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
    << // b : (Int) -> ((Int) -> Int) = (Function)
    >> b(3)(5)
    << // r1 : Int = 8
+
+.. _Types_FunctionParameterConflicts:
+
+Restrictions for Nonescaping Closures
++++++++++++++++++++++++++++++++++++++
+
+A parameter that's a nonescaping function
+can't be passed as an argument to another nonescaping function parameter.
+This restriction helps Swift perform
+more of its checks for conflicting access to memory
+at compile time instead of at runtime.
+For example:
+
+.. testcode:: memory-nonescaping-functions
+
+    -> let external: (Any) -> Void = { _ in () }
+    << // external : (Any) -> Void = (Function)
+    -> func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
+           first(first)    // Error
+           second(second)  // Error
+
+           first(second)   // Error
+           second(first)   // Error
+
+           first(external) // OK
+           external(first) // OK
+       }
+    !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(first)    // Error
+    !! ^     ~~~~~
+    !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second(second)  // Error
+    !! ^      ~~~~~~
+    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first(second)   // Error
+    !! ^     ~~~~~~
+    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second(first)   // Error
+    !! ^      ~~~~~
+
+In the code above,
+both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
+Neither parameter is marked ``@escaping``,
+so they're both nonescaping as a result.
+
+The four function calls marked "Error" in the example above
+cause compiler errors.
+Because the ``first`` and ``second`` parameters
+are nonescaping functions,
+they can't be passed as arguments to another nonescaping function parameter.
+In contrast,
+the two function calls marked "OK" don't cause a compiler error.
+These function calls don't violate the restriction
+because ``external`` isn't one of the parameters of ``takesTwoFunctions``.
+
+If you need to avoid this restriction, mark one of the parameters as escaping,
+or temporarily convert one of the nonescaping function parameters to an escaping function
+by using the ``withoutActuallyEscaping(_:do:)`` function.
+For information about avoiding conflicting access to memory,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. langref-grammar
 
@@ -624,9 +690,14 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type describes a type that conforms to each protocol
-in a list of specified protocols.
-Protocol composition types may be used only in type annotations and in generic parameters.
+A protocol composition type defines a type that conforms to each protocol
+in a list of specified protocols,
+or a type that is a subclass of a given class
+and conforms to each protocol in a list of specified protocols.
+Protocol composition types may be used only when specifying a type
+in type annotations,
+in generic parameter clauses,
+and in generic ``where`` clauses.
 
 .. In places where a comma-separated list of types is allowed,
    the P&Q syntax isn't allowed.
@@ -638,16 +709,39 @@ Protocol composition types have the following form:
     <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
-of multiple protocols without having to explicitly define a new, named protocol
+of multiple protocols without explicitly defining a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
-effectively the same as defining a new protocol ``ProtocolD``
-that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
-but without having to introduce a new name.
+you can use the protocol composition type ``ProtocolA & ProtocolB & ProtocolC``
+instead of declaring a new protocol
+that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
+Likewise, you can use ``SuperClass & ProtocolA``
+instead of declaring a new protocol
+that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
-Each item in a protocol composition list
-must be either the name of protocol or a type alias of a protocol composition type.
+Each item in a protocol composition list is one of the following;
+the list can contain at most one class:
+
+* The name of a class
+* The name of a protocol
+* A type alias whose underlying type
+  is a protocol composition type, a protocol, or a class.
+
+When a protocol composition type contains type aliases,
+it's possible for the same protocol to appear
+more than once in the definitions ---
+duplicates are ignored.
+For example,
+the definition of ``PQR`` in the code below
+is equivalent to ``P & Q & R``.
+
+.. testcode:: protocol-composition-can-have-repeats
+
+    >> protocol P {}
+    >> protocol Q {}
+    >> protocol R {}
+    -> typealias PQ = P & Q
+    -> typealias PQR = PQ & Q & R
 
 .. langref-grammar
 
@@ -658,10 +752,8 @@ must be either the name of protocol or a type alias of a protocol composition ty
 
     Grammar of a protocol composition type
 
-    protocol-composition-type --> protocol-identifier ``&`` protocol-composition-continuation
-    protocol-composition-continuation --> protocol-identifier | protocol-composition-type
-    protocol-identifier --> type-identifier
-
+    protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
+    protocol-composition-continuation --> type-identifier | protocol-composition-type
 
 .. _Types_MetatypeType:
 
@@ -750,16 +842,15 @@ Type Inheritance Clause
 -----------------------
 
 A type inheritance clause is used to specify which class a named type inherits from
-and which protocols a named type conforms to. A type inheritance clause is also
-used to specify a ``class`` requirement on a protocol.
+and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
-followed by either a ``class`` requirement, a list of type identifiers, or both.
+followed by a list of type identifiers.
 
 Class types can inherit from a single superclass and conform to any number of protocols.
 When defining a class,
 the name of the superclass must appear first in the list of type identifiers,
 followed by any number of protocols the class must conform to.
-If the class does not inherit from another class,
+If the class doesn't inherit from another class,
 the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
 see :doc:`../LanguageGuide/Inheritance`.
@@ -769,9 +860,6 @@ Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
-As discussed in :ref:`Declarations_ProtocolDeclaration`,
-you can include the ``class`` keyword as the first item in the type inheritance clause
-to mark a protocol declaration with a ``class`` requirement.
 
 A type inheritance clause in an enumeration definition can be either a list of protocols,
 or in the case of an enumeration that assigns raw values to its cases,
@@ -787,11 +875,8 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ``:`` class-requirement ``,`` type-inheritance-list
-    type-inheritance-clause --> ``:`` class-requirement
     type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
-    class-requirement --> ``class``
 
 .. _Types_TypeInference:
 

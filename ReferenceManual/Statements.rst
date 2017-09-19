@@ -42,7 +42,7 @@ and is used to separate multiple statements if they appear on the same line.
     statement --> labeled-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statement --> defer-statement ``;``-OPT
-    statement --> do-statement ``:``-OPT
+    statement --> do-statement ``;``-OPT
     statement --> compiler-control-statement
     statements --> statement statements-OPT
 
@@ -441,7 +441,7 @@ the program executes only the code within the first matching case in source orde
    >> let tuple = (1, 1)
    << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
-   >>     case (let x, 5), (let x, 1): print(1)
+   >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
@@ -907,7 +907,7 @@ Compiler Control Statements
 ---------------------------
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has two complier control statements: a conditional compilation block
+Swift has two compiler control statements: a conditional compilation block
 and a line control statement.
 
 .. syntax-grammar::
@@ -999,6 +999,8 @@ There must not be whitespace between ``>=`` and the version number.
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
+These operators have the same associativity and precedence as the
+logical operators that are used to combine ordinary Boolean expressions.
 
 Similar to an ``if`` statement,
 you can add multiple conditional branches to test for different compilation conditions.
