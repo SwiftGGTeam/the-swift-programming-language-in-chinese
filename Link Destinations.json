@@ -21,6 +21,7 @@
     "LanguageGuide/Inheritance": "ID193", 
     "LanguageGuide/Initialization": "ID203", 
     "LanguageGuide/LanguageGuidePart": "ID233", 
+    "LanguageGuide/MemorySafety": "ID567", 
     "LanguageGuide/Methods": "ID234", 
     "LanguageGuide/NestedTypes": "ID242", 
     "LanguageGuide/OptionalChaining": "ID245", 
@@ -392,6 +393,11 @@
     "lexicalstructure-operators": "ID418", 
     "lexicalstructure-stringliterals": "ID417", 
     "lexicalstructure-whitespaceandcomments": "ID411", 
+    "memory-characteristics": "ID573", 
+    "memorysafety-inout": "ID569", 
+    "memorysafety-methods": "ID570", 
+    "memorysafety-properties": "ID571", 
+    "memorysafety-whatisexclusivity": "ID568", 
     "methods-assigningtoselfwithinamutatingmethod": "ID240", 
     "methods-instancemethods": "ID235", 
     "methods-localandexternalnamesformethods": "ID236", 
@@ -486,6 +492,9 @@
     "stringsandcharacters-initializinganemptystring": "ID287", 
     "stringsandcharacters-insertingandremoving": "ID496", 
     "stringsandcharacters-literals": "ID286", 
+    "stringsandcharacters-multilineliterals": "ID564", 
+    "stringsandcharacters-multilineliteralsindentation": "ID566", 
+    "stringsandcharacters-multilineliteralslinebreaks": "ID565", 
     "stringsandcharacters-prefixandsuffixequality": "ID300", 
     "stringsandcharacters-specialcharactersinstringliterals": "ID295", 
     "stringsandcharacters-stringequality": "ID299", 
@@ -543,6 +552,7 @@
     "typecasting-typecastingforanyandanyobject": "ID342", 
     "types-arraytype": "ID450", 
     "types-dictionarytype": "ID451", 
+    "types-functionparameterconflicts": "ID572", 
     "types-functiontype": "ID449", 
     "types-implicitlyunwrappedoptionaltype": "ID453", 
     "types-metatypetype": "ID455", 
@@ -581,5 +591,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 564
+  "next_id": 574
 }

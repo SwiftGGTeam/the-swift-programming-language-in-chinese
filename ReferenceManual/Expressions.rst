@@ -49,7 +49,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
@@ -170,7 +170,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -294,7 +294,7 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` try-operator-OPT expression ``:``
+    conditional-operator --> ``?`` expression ``:``
 
 
 .. _Expressions_Type-CastingOperators:
@@ -493,6 +493,11 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
+
+.. For functions with no parameter labels,
+   #function leaves off the parens and _:
+   and just uses the base name.
+   https://bugs.swift.org/browse/SR-5533
 
 When used as the default value of a function or method parameter,
 the special literal's value is determined
@@ -795,6 +800,21 @@ The following closure expressions are equivalent:
 
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
+
+Closure expressions can be used
+without being stored in a variable or constant,
+such as when you immediately use a closure as part of a function call.
+The closure expressions passed to ``myFunction`` in code above are
+examples of this kind of immediate use.
+As a result,
+whether a closure expression is escaping or nonescaping depends
+on the surrounding context of the expression.
+A closure expression is nonescaping
+if it is called immediately
+or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
+
+For more information about escaping closures, see :ref:`Closures_Noescape`.
 
 .. _Expressions_CaptureLists:
 
@@ -1180,29 +1200,6 @@ the following code uses ``\.someProperty``:
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-.. Omitting the type doesn't work properly in some places in beta 1
-   <rdar://problem/32237567> This keypath code doesn't ever complete executing
-
-   To get \.foo to compile, you have to pass an explicit type,
-   so the subscript works, which defeats the whole point:
-
-   // OK
-   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
-   let implied = s[keyPath: key]
-
-   // OK
-   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
-
-   // NOPE
-   s[keyPath: \.someProperty] as Int
-
-    .. testcode:: keypath-expression
-
-       -> let implied = s[keyPath: \.someProperty]
-       << // implied : Int = 12
-       /> implied is \(implied)
-       </ implied is 12
-
 .. FIXME This is similar to an implicit member expression --
    likely worth calling out,
    assuming I can confirm that it's the same kind of type-inference context
@@ -1232,6 +1229,23 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+Key paths can use optional chaining and forced unwrapping.
+For example, the following code uses optional chaining in a key path
+to access a property of an optional string:
+
+.. testcode:: keypath-expression
+
+   -> let message: String? = "hello"
+   << // message : String? = Optional("hello")
+   -> print(message?.count as Any)
+   <- Optional(5)
+   ---
+   // Do the same thing using a key path.
+   -> let count = message[keyPath: \.?.count]
+   << // count : String.IndexDistance? = Optional(5)
+   -> print(count as Any)
+   <- Optional(5)
+
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
@@ -1246,12 +1260,14 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier
+   key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
+
+   key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
+   key-path-postfix --> ``?`` | ``!``
 
 .. FUTURE syntax-grammar
 
-   As of 2017-04-19 Joe Groff says he expects to only implement property names
-   for WWDC.  More stuff will land later.
+   As of 2017-08-31, `?` and `!` are implemented, but subscripts aren't yet.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
 
@@ -1439,7 +1455,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. langref-grammar
 
@@ -1897,7 +1913,7 @@ For example:
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
@@ -1989,7 +2005,7 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = nil

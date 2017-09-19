@@ -165,7 +165,7 @@ is made available in the current scope.
 
     import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
-    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``let`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
@@ -645,6 +645,13 @@ as the return type of the function.
 
 A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
+
+A nested function is nonescaping if it captures
+a value that is guaranteed to never escape---
+such as an in-out parameter---
+or passed as a nonescaping function argument.
+Otherwise, the nested function is an escaping function.
+
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
@@ -735,42 +742,21 @@ Write your code using the model given by copy-in copy-out,
 without depending on the call-by-reference optimization,
 so that it behaves correctly with or without the optimization.
 
-Do not access the value that was passed as an in-out argument,
-even if the original argument is available in the current scope.
-When the function returns,
-your changes to the original are overwritten
-with the value of the copy.
-Do not depend on the implementation of the call-by-reference optimization
-to try to keep the changes from being overwritten.
+Within a function, don't access a value that was passed as an in-out argument,
+even if the original value is available in the current scope.
+Accessing the original is a simultaneous access of the value,
+which violates Swift's memory exclusivity guarantee.
+For the same reason,
+you can't pass the same value to multiple in-out parameters.
+
+For more information about memory safety and memory exclusivity,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. When the call-by-reference optimization is in play,
    it would happen to do what you want.
    But you still shouldn't do that --
    as noted above, you're not allowed to depend on
    behavioral differences that happen because of call by reference.
-
-You can't pass the same argument to multiple in-out parameters
-because the order in which the copies are written back
-is not well defined,
-which means the final value of the original
-would also not be well defined.
-For example:
-
-.. testcode:: cant-pass-inout-aliasing
-
-   -> var x = 10
-   << // x : Int = 10
-   -> func f(a: inout Int, b: inout Int) {
-          a += 1
-          b += 10
-      }
-   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!             ^~
-   !! <REPL Input>:1:6: note: previous aliasing argument
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!      ^~
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -2456,9 +2442,9 @@ For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
 and the multiplication (``*``) and division (``/``) operators
 belong to the ``MultiplicationPrecedence`` group.
-For a complete list of operators and precedence groups
+For a complete list of precedence groups
 provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 The *associativity* of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.

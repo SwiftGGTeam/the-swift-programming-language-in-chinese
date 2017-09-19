@@ -1,1011 +1,0 @@
-%PDF-1.5%‚„œ”
-1 0 obj<</Metadata 2 0 R/OCProperties<</D<</OFF[5 0 R 6 0 R]/ON[7 0 R]/Order 8 0 R/RBGroups[]>>/OCGs[5 0 R 7 0 R 6 0 R]>>/Pages 3 0 R/Type/Catalog>>endobj2 0 obj<</Length 65136/Subtype/XML/Type/Metadata>>stream
-<?xpacket begin="Ôªø" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.3-c011 66.145661, 2012/02/06-14:56:27        ">
-   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <rdf:Description rdf:about=""
-            xmlns:dc="http://purl.org/dc/elements/1.1/">
-         <dc:format>application/pdf</dc:format>
-         <dc:title>
-            <rdf:Alt>
-               <rdf:li xml:lang="x-default">stackPushPop</rdf:li>
-            </rdf:Alt>
-         </dc:title>
-      </rdf:Description>
-      <rdf:Description rdf:about=""
-            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-            xmlns:xmpGImg="http://ns.adobe.com/xap/1.0/g/img/">
-         <xmp:MetadataDate>2014-05-13T16:30:57-07:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2014-05-13T16:30:57-07:00</xmp:ModifyDate>
-         <xmp:CreateDate>2014-05-13T16:30:57-07:00</xmp:CreateDate>
-         <xmp:CreatorTool>Adobe Illustrator CS6 (Macintosh)</xmp:CreatorTool>
-         <xmp:Thumbnails>
-            <rdf:Alt>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpGImg:width>256</xmpGImg:width>
-                  <xmpGImg:height>104</xmpGImg:height>
-                  <xmpGImg:format>JPEG</xmpGImg:format>
-                  <xmpGImg:image>/9j/4AAQSkZJRgABAgEBLAEsAAD/7QAsUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAAABABLAAAAAEA&#xA;AQEsAAAAAQAB/+4ADkFkb2JlAGTAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoK&#xA;DBAMDAwMDAwQDA4PEA8ODBMTFBQTExwbGxscHx8fHx8fHx8fHwEHBwcNDA0YEBAYGhURFRofHx8f&#xA;Hx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f/8AAEQgAaAEAAwER&#xA;AAIRAQMRAf/EAaIAAAAHAQEBAQEAAAAAAAAAAAQFAwIGAQAHCAkKCwEAAgIDAQEBAQEAAAAAAAAA&#xA;AQACAwQFBgcICQoLEAACAQMDAgQCBgcDBAIGAnMBAgMRBAAFIRIxQVEGE2EicYEUMpGhBxWxQiPB&#xA;UtHhMxZi8CRygvElQzRTkqKyY3PCNUQnk6OzNhdUZHTD0uIIJoMJChgZhJRFRqS0VtNVKBry4/PE&#xA;1OT0ZXWFlaW1xdXl9WZ2hpamtsbW5vY3R1dnd4eXp7fH1+f3OEhYaHiImKi4yNjo+Ck5SVlpeYmZ&#xA;qbnJ2en5KjpKWmp6ipqqusra6voRAAICAQIDBQUEBQYECAMDbQEAAhEDBCESMUEFURNhIgZxgZEy&#xA;obHwFMHR4SNCFVJicvEzJDRDghaSUyWiY7LCB3PSNeJEgxdUkwgJChgZJjZFGidkdFU38qOzwygp&#xA;0+PzhJSktMTU5PRldYWVpbXF1eX1RlZmdoaWprbG1ub2R1dnd4eXp7fH1+f3OEhYaHiImKi4yNjo&#xA;+DlJWWl5iZmpucnZ6fkqOkpaanqKmqq6ytrq+v/aAAwDAQACEQMRAD8A9U4q7FXYqsjiWNpCP92N&#xA;zI96AfwxVfirsVdirsVdiqlLAJJYpCaekSQKda++KquKuxV2KuxV2KqdxCJ4WiY0DdT1xVUAoAPD&#xA;FXYq7FXYq7FXYqpwwCIyEMW9R+Zr2JAH8MVVMVdirsVdirsVUpbdZJYpCSDESQB3riqrirsVdirs&#xA;VdirsVdirsVdirsVdirsVWPPAkiRvIqyS19NGIDNTrxB60yJnEEAnc8mQgSCQNgvyTF2KuxV2Kux&#xA;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&#xA;sVdirsVdirsVf//Z</xmpGImg:image>
-               </rdf:li>
-            </rdf:Alt>
-         </xmp:Thumbnails>
-      </rdf:Description>
-      <rdf:Description rdf:about=""
-            xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
-            xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
-            xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
-            xmlns:stMfs="http://ns.adobe.com/xap/1.0/sType/ManifestItem#">
-         <xmpMM:InstanceID>uuid:b1be3024-477c-3345-ade1-38e4cbaac3f5</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:7007203C84256811822AF18D084250AB</xmpMM:DocumentID>
-         <xmpMM:OriginalDocumentID>uuid:5D20892493BFDB11914A8590D31508C8</xmpMM:OriginalDocumentID>
-         <xmpMM:RenditionClass>proof:pdf</xmpMM:RenditionClass>
-         <xmpMM:DerivedFrom rdf:parseType="Resource">
-            <stRef:instanceID>xmp.iid:60E1CA3F71226811822AF18D084250AB</stRef:instanceID>
-            <stRef:documentID>xmp.did:60E1CA3F71226811822AF18D084250AB</stRef:documentID>
-            <stRef:originalDocumentID>uuid:5D20892493BFDB11914A8590D31508C8</stRef:originalDocumentID>
-            <stRef:renditionClass>default</stRef:renditionClass>
-         </xmpMM:DerivedFrom>
-         <xmpMM:History>
-            <rdf:Seq>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-05T10:08:37-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F87F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-05T10:48:12-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F97F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-05T10:58:06-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FB7F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-06T09:56:33-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FC7F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-06T09:57:16-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F11740720681180838DA36B5CBBF4</stEvt:instanceID>
-                  <stEvt:when>2012-04-06T11:22-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5.1</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FD7F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-06T11:47:38-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FF7F117407206811808390CF772DFD24</stEvt:instanceID>
-                  <stEvt:when>2012-04-06T18:12:01-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F97F1174072068118083A424E04814F0</stEvt:instanceID>
-                  <stEvt:when>2012-04-09T07:28:36-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:2F37C8E0132068118083A424E04814F0</stEvt:instanceID>
-                  <stEvt:when>2012-04-09T09:28:06-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3037C8E0132068118083A424E04814F0</stEvt:instanceID>
-                  <stEvt:when>2012-04-09T09:29:03-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F1C5117F1C2068118083C5FF55DB2755</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T09:23:32-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F2C5117F1C2068118083C5FF55DB2755</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T09:23:54-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F3C5117F1C2068118083C5FF55DB2755</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T09:24:08-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F4C5117F1C2068118083C5FF55DB2755</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T09:24:43-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:C2622DB5282068118083C5FF55DB2755</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T09:31:18-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:01801174072068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T14:06:57-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:02801174072068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T14:22:38-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:03801174072068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T14:23:16-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:04801174072068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T14:33:29-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:05801174072068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T14:39:29-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:AB07C4600F2068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T15:34:44-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:AE07C4600F2068118083FDBD55976A90</stEvt:instanceID>
-                  <stEvt:when>2012-04-18T16:09:47-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:8EF47BCE1A206811822ADE840730283C</stEvt:instanceID>
-                  <stEvt:when>2012-04-20T17:27:04-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:8FF47BCE1A206811822ADE840730283C</stEvt:instanceID>
-                  <stEvt:when>2012-04-20T18:11:02-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3C0756A532206811822ADE840730283C</stEvt:instanceID>
-                  <stEvt:when>2012-04-20T18:12:57-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F87F1174072068118083AC3203833BCD</stEvt:instanceID>
-                  <stEvt:when>2012-04-23T08:57:35-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F97F1174072068118083AC3203833BCD</stEvt:instanceID>
-                  <stEvt:when>2012-04-23T08:57:45-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FB7F1174072068118083AC3203833BCD</stEvt:instanceID>
-                  <stEvt:when>2012-04-23T09:00:38-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FC7F1174072068118083AC3203833BCD</stEvt:instanceID>
-                  <stEvt:when>2012-04-23T09:01:19-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FA7F117407206811822AE95F216DE968</stEvt:instanceID>
-                  <stEvt:when>2012-05-01T14:52:37-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F117407206811822ABA1E41F8EAC1</stEvt:instanceID>
-                  <stEvt:when>2012-05-16T09:43:32-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:BC17D6B4072068118083BF7799D9D57B</stEvt:instanceID>
-                  <stEvt:when>2012-05-18T15:31:42-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:BD17D6B4072068118083BF7799D9D57B</stEvt:instanceID>
-                  <stEvt:when>2012-05-18T15:32:36-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:81123ED307206811822AA01662FBEF4C</stEvt:instanceID>
-                  <stEvt:when>2012-05-21T09:42:13-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:82123ED307206811822AA01662FBEF4C</stEvt:instanceID>
-                  <stEvt:when>2012-05-21T09:43:25-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4D9A9E8807206811822AB7C3C4210329</stEvt:instanceID>
-                  <stEvt:when>2012-05-21T17:45:27-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:02801174072068118083D774CCE81FAF</stEvt:instanceID>
-                  <stEvt:when>2012-05-22T08:53:24-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F1174072068118083CE221F8D583A</stEvt:instanceID>
-                  <stEvt:when>2012-05-22T10:01-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F87F1174072068118083CE221F8D583A</stEvt:instanceID>
-                  <stEvt:when>2012-05-22T10:01:51-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:24AA9E6D3B206811822A8D568D006E31</stEvt:instanceID>
-                  <stEvt:when>2012-05-23T15:06:18-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F1174072068118A6DC4A6D8E8FBBF</stEvt:instanceID>
-                  <stEvt:when>2012-05-24T14:32:36-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:FD7F1174072068118A6DC4A6D8E8FBBF</stEvt:instanceID>
-                  <stEvt:when>2012-05-24T15:22:48-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:D001E06D1F2068118A6DC4A6D8E8FBBF</stEvt:instanceID>
-                  <stEvt:when>2012-05-24T17:24:13-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:02801174072068118083DA2026DCF405</stEvt:instanceID>
-                  <stEvt:when>2012-05-29T09:46:21-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:03801174072068118083DA2026DCF405</stEvt:instanceID>
-                  <stEvt:when>2012-05-29T09:46:58-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3D81B16109206811808384772C521D3E</stEvt:instanceID>
-                  <stEvt:when>2012-06-14T11:14:47-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4181B16109206811808384772C521D3E</stEvt:instanceID>
-                  <stEvt:when>2012-06-14T14:21:40-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4281B16109206811808384772C521D3E</stEvt:instanceID>
-                  <stEvt:when>2012-06-14T14:23:19-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:00801174072068118083F8FB444FEC64</stEvt:instanceID>
-                  <stEvt:when>2012-06-18T13:21:29-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5.1</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F1E18293082068118083FCC37F570C3E</stEvt:instanceID>
-                  <stEvt:when>2012-06-28T11:01:26-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4BFDBCBF10206811822ABB704872EA25</stEvt:instanceID>
-                  <stEvt:when>2012-07-03T10:12:47-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:40E82E78162068118083F1356FCF4058</stEvt:instanceID>
-                  <stEvt:when>2012-07-05T16:12:06-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4FA4C24783206811822ABA852AE85AE3</stEvt:instanceID>
-                  <stEvt:when>2012-07-17T14:48-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:65708033472068118083BED3ABB89261</stEvt:instanceID>
-                  <stEvt:when>2012-07-24T11:24:52-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:F77F117407206811822AE6D8436EAD9E</stEvt:instanceID>
-                  <stEvt:when>2012-07-26T11:07:21-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS5</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:60E1CA3F71226811822AF18D084250AB</stEvt:instanceID>
-                  <stEvt:when>2014-04-22T12:47:38-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS6 (Macintosh)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>converted</stEvt:action>
-                  <stEvt:parameters>from application/postscript to application/vnd.adobe.illustrator</stEvt:parameters>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:7007203C84256811822AF18D084250AB</stEvt:instanceID>
-                  <stEvt:when>2014-05-13T16:30:57-07:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Illustrator CS6 (Macintosh)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-            </rdf:Seq>
-         </xmpMM:History>
-         <xmpMM:Manifest>
-            <rdf:Seq>
-               <rdf:li rdf:parseType="Resource">
-                  <stMfs:linkForm>EmbedByReference</stMfs:linkForm>
-                  <stMfs:reference rdf:parseType="Resource">
-                     <stRef:filePath>/Users/sbacic/Desktop/Problem 16197740/stackPushPop.png</stRef:filePath>
-                  </stMfs:reference>
-               </rdf:li>
-            </rdf:Seq>
-         </xmpMM:Manifest>
-      </rdf:Description>
-      <rdf:Description rdf:about=""
-            xmlns:illustrator="http://ns.adobe.com/illustrator/1.0/">
-         <illustrator:StartupProfile>Print</illustrator:StartupProfile>
-      </rdf:Description>
-      <rdf:Description rdf:about=""
-            xmlns:xmpTPg="http://ns.adobe.com/xap/1.0/t/pg/"
-            xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
-            xmlns:xmpG="http://ns.adobe.com/xap/1.0/g/">
-         <xmpTPg:HasVisibleOverprint>False</xmpTPg:HasVisibleOverprint>
-         <xmpTPg:HasVisibleTransparency>False</xmpTPg:HasVisibleTransparency>
-         <xmpTPg:NPages>1</xmpTPg:NPages>
-         <xmpTPg:MaxPageSize rdf:parseType="Resource">
-            <stDim:w>436.666504</stDim:w>
-            <stDim:h>179.715820</stDim:h>
-            <stDim:unit>Pixels</stDim:unit>
-         </xmpTPg:MaxPageSize>
-         <xmpTPg:PlateNames>
-            <rdf:Seq>
-               <rdf:li>Cyan</rdf:li>
-               <rdf:li>Magenta</rdf:li>
-               <rdf:li>Yellow</rdf:li>
-               <rdf:li>Black</rdf:li>
-            </rdf:Seq>
-         </xmpTPg:PlateNames>
-         <xmpTPg:SwatchGroups>
-            <rdf:Seq>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpG:groupName>Default Swatch Group</xmpG:groupName>
-                  <xmpG:groupType>0</xmpG:groupType>
-                  <xmpG:Colorants>
-                     <rdf:Seq>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>White copy</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>255</xmpG:red>
-                           <xmpG:green>255</xmpG:green>
-                           <xmpG:blue>255</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Black</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>35</xmpG:red>
-                           <xmpG:green>31</xmpG:green>
-                           <xmpG:blue>32</xmpG:blue>
-                        </rdf:li>
-                     </rdf:Seq>
-                  </xmpG:Colorants>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpG:groupName>Accents 1</xmpG:groupName>
-                  <xmpG:groupType>1</xmpG:groupType>
-                  <xmpG:Colorants>
-                     <rdf:Seq>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Accent Blue</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>76</xmpG:red>
-                           <xmpG:green>126</xmpG:green>
-                           <xmpG:blue>191</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Accent Green</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>107</xmpG:red>
-                           <xmpG:green>179</xmpG:green>
-                           <xmpG:blue>137</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Accent Brown</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>191</xmpG:red>
-                           <xmpG:green>113</xmpG:green>
-                           <xmpG:blue>48</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Accent Red</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>191</xmpG:red>
-                           <xmpG:green>48</xmpG:green>
-                           <xmpG:blue>48</xmpG:blue>
-                        </rdf:li>
-                     </rdf:Seq>
-                  </xmpG:Colorants>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpG:groupName>Element Colors 1</xmpG:groupName>
-                  <xmpG:groupType>1</xmpG:groupType>
-                  <xmpG:Colorants>
-                     <rdf:Seq>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Element Blue</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>186</xmpG:red>
-                           <xmpG:green>225</xmpG:green>
-                           <xmpG:blue>237</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Element Green</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>194</xmpG:red>
-                           <xmpG:green>226</xmpG:green>
-                           <xmpG:blue>199</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Element Orange</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>252</xmpG:red>
-                           <xmpG:green>217</xmpG:green>
-                           <xmpG:blue>181</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Element Red</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>244</xmpG:red>
-                           <xmpG:green>168</xmpG:green>
-                           <xmpG:blue>148</xmpG:blue>
-                        </rdf:li>
-                     </rdf:Seq>
-                  </xmpG:Colorants>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpG:groupName>Standard Non-Text Elements 1</xmpG:groupName>
-                  <xmpG:groupType>1</xmpG:groupType>
-                  <xmpG:Colorants>
-                     <rdf:Seq>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>Conceptual Orange</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>247</xmpG:red>
-                           <xmpG:green>171</xmpG:green>
-                           <xmpG:blue>66</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>IntroBlue</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>128</xmpG:red>
-                           <xmpG:green>170</xmpG:green>
-                           <xmpG:blue>218</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>CODE_DIAGRAM</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>224</xmpG:red>
-                           <xmpG:green>238</xmpG:green>
-                           <xmpG:blue>240</xmpG:blue>
-                        </rdf:li>
-                     </rdf:Seq>
-                  </xmpG:Colorants>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <xmpG:groupName>Grays 1</xmpG:groupName>
-                  <xmpG:groupType>1</xmpG:groupType>
-                  <xmpG:Colorants>
-                     <rdf:Seq>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=70</xmpG:swatchName>
-                           <xmpG:mode>GRAY</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:gray>178</xmpG:gray>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=50</xmpG:swatchName>
-                           <xmpG:mode>GRAY</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:gray>127</xmpG:gray>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=20</xmpG:swatchName>
-                           <xmpG:mode>GRAY</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:gray>50</xmpG:gray>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=15</xmpG:swatchName>
-                           <xmpG:mode>GRAY</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:gray>38</xmpG:gray>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=10</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>230</xmpG:red>
-                           <xmpG:green>231</xmpG:green>
-                           <xmpG:blue>231</xmpG:blue>
-                        </rdf:li>
-                        <rdf:li rdf:parseType="Resource">
-                           <xmpG:swatchName>C=0 M=0 Y=0 K=5</xmpG:swatchName>
-                           <xmpG:mode>RGB</xmpG:mode>
-                           <xmpG:type>PROCESS</xmpG:type>
-                           <xmpG:red>241</xmpG:red>
-                           <xmpG:green>241</xmpG:green>
-                           <xmpG:blue>242</xmpG:blue>
-                        </rdf:li>
-                     </rdf:Seq>
-                  </xmpG:Colorants>
-               </rdf:li>
-            </rdf:Seq>
-         </xmpTPg:SwatchGroups>
-      </rdf:Description>
-      <rdf:Description rdf:about=""
-            xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-         <pdf:Producer>Adobe PDF library 10.01</pdf:Producer>
-      </rdf:Description>
-   </rdf:RDF>
-</x:xmpmeta>
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                           
-<?xpacket end="w"?>endstreamendobj3 0 obj<</Count 1/Kids[9 0 R]/Type/Pages>>endobj9 0 obj<</ArtBox[1.0 3.17969 435.667 177.528]/BleedBox[0.0 0.0 436.667 179.716]/Contents 10 0 R/MediaBox[0.0 0.0 436.667 179.716]/Parent 3 0 R/Resources<</ExtGState<</GS0 11 0 R>>/Properties<</MC0 5 0 R/MC1 7 0 R/MC2 6 0 R>>>>/Thumb 12 0 R/TrimBox[0.0 0.0 436.667 179.716]/Type/Page>>endobj10 0 obj<</Filter/FlateDecode/Length 3909>>stream
-HâÏWÀÆ$G›˜W‘tM>"_[≤Ñd!„ƒÍb°6íÕÇﬂÁúô’›ˆûY∞TÎJ}3™2#„q‚D‘ª?}±Ω˚Íã∞˝Ó˜_ló?|Öüw˛(˙£∏ÒÔœ_^ÍˆüÕ∂Ø ¸sK€±ÔÀo¬ˆ˝ø/?‚Q¿_‹r∞›b-[å}Ô!µÌÌá_Ò7n∑À7óØ/ç{µ≠ÏÕ‚ﬂ¬ˆ˜ÌΩÁSŸãÂÚt>Ó}J>|‘¬·ΩWá}¥ºÖΩ∂ÇﬂT3˝2¯ıõˆ·ßÔt§—ˆ2pT:F™w1Ô54,oó
-œl„/’˛„Úˇ»K⁄ÿ[¨õÂ∫◊⁄∂Îz”∑óølˇ‚Â!m¸≠ÛL`@F 2ëÒ`¬0ˆPrzÙÂc⁄ìa9Õõ~Ò(Lèø˛ÙkcCÏCÔ[¨{´)=Á`]DÂ˜3}Ï±˚î#©ú©q‰„b;Ëd/Pø78˘úÿñxWŸî‡˙Äçk⁄CÌX^ÛP ö=Õµ~ﬁ.ÛEﬂSÅA.%¿#ˆmÜÒÅ?oój{·
- ©{ÒWU'Á	\∂Îø4ﬁ¶‡Ã”aì¬Ä≠≥∞ÇÃﬂ>ü‹Ãäé oÏ›û¸úö‡îW\X»ΩØ•—€˘îø∑%¡xÑ\ÁÆ)Òâ¥˘˙çò‘ÍvA⁄Ê⁄Ê)õ∫ﬁ@∏‡∆ºí;É˛t>`älŸ◊YÍwT\^ñÂªÚ¥ ÚÊgîÇ´rpÿ6}5W÷-ßUZõª:o\á¬›—∞¸∫˛ª' gkH≈¯u ˇ
-Hrñ˚¯Ã1±=”ÕFˇÔ˝¯Òê4ê=ÚQê˛¸‹rØ—≥Ô
-.è‘÷¨˛W”æüMòr|ˇÂ3y¸&›x.å‹˜A
-T“,?∆√ÙqıÒ„˙< ∆iêZãn†HüuwC∑Ã0pÏ÷Fy‚ñòãsKoò8ˆÜõß‡ø¢ΩÎ{å—	Ü2êöåÂ&	(Ôô,„1M¬ùSﬂ‰vl¨Æm*ô“ºB¥√Ö_t[¢[7ıàyx¡GsO2Ñ∏‰∏•òû©«UyAñ'˝0H~Èádpw≤ê^ÍﬂÌê·Pµ¥--w2¢˛˜“Q;âöó\;òIí~oSp´¸¸3Ma.QM¶Ç¸DÛLı%L?¶¥‹X;QEïpê•ÃD_æzª‹=Ú'∑î”Ò‰Z,ºÎ:‰Â”Ò`∫u? 3}Ó¬q°ãæﬁ>©,ΩJ %ÄÉØ8i	‘≤[áã'/Åﬁ/¸ï¿˘J†˜W ÙcØ6p∂¿˜MÄÚs4êøY}}
-ú∑ Œ˝%∞
-‡ı!p⁄8˜w¿*Ä◊g¿È
-`åΩ¬zÓ(‚@Ë∞ı5ù∂Œ=ÇN[ÁÇé
-xMAß´ DiO£éìèA9ñπ∆◊t‚8˜tî¿k:o	ú{:J‡5ùÆrÈØAÛÅˆÑŒ]ÁÑéxBÁ-ÅsBG	º°œ∞Çß|GXRs∞≠ 7Èı¿\$Ba¥Á‘[{ùÎ®kq¡îJ≠⁄ã!
-ˆ!ÿ{Ï@ˇÜä#Ï! «{)
-wf-Ï≠KË)N„ûóÑu5ÓS<∞çÎPÊ∂ëu®ß@†]ÎP„‹F≥#ÂGÄ¯öó:ú´ÔaÙ®|ôCßd1-ß$Wl§á∑å“uÜI¯Bj™Nå∆2¢Ù)ﬁñSq±«qƒ"èa]Ü˘rÀ’ƒ:mLRììÆ–ñw„≤Íππq±g	∞(ëR$Áï¬dÙ¢∫⁄;êó‰"U‡ñ◊2çÅ=êßŒı(ˇS•÷Ïh´≈§*$°m=%Ä`hÄkW“m[íÏñè∑å±ü,⁄Tíc¡ú˘PTõÙµ.°%gÿˇãdá÷mˇêùÛ·éBb∆ÚcÉg›Ó≠±ºµÉ`	9ìË£–9DπŒ¯B,E®¢Ω‡Ö∆çÌX3í©¥%¬œÆCVà“Fd#€I˚:U˙LC«Å`=Ñ†ÙπDãÖ~¨»bƒ$€ìhnj≠Y†â@·ÔzaÈ÷ ”ŸySF˝Içj*IH*©jc	ÇAµ%™º%Ö°¥Ê˛XLcıÄKò·®†¶	@µâf ·Ωi?h¨»MxL#Ãt¥f¢5ÙY∫bsfÃ√âÀÔWjkS%uÒ◊¨˙6c‡v˙´:	Åï”Ω[‡>d'IEAÕÇõΩ,›◊Q-·C`ìaYYÊd T5]€Î6·@#Teïg⁄í»wÛ∏ßåÔjaÂÜ∆7XP"`uÕìøTË¡©∏(Ô9÷ªPÀ$:ä¥±Ø&M1å"„™Ê©öÿ•LÉYÔ—óÙß∂·"¿›¸» æS“oUhòPº<VUÉ≥÷¥™vès¨S"ÓCTŸ0Á2>0EwrYmö:£úo‘l§Ïk3ﬁﬂî¿,íŒàÆS ≥Í=øjqE◊ˆ~¨â	EDRUBí—|c—Óñi.!≈]%ÛMV[™CÈ«9ï¢ó;-(CÚ⁄%,ÜÇô8î"≠ónjÊq¨}¡YIFZ2u¢õ%Y„õ⁄T∑ûì<‘GCue18]Á¶∞5&Ô›ñ@o¨"·›˝î˜HlR@âm’ûzIsÄÈü(ÙòVJ>ã« PvÇRkæÖ,ög#ãªöÀêµ…[	«ÜX$0ÊayUÃ]LÀçtw1
-mâ†Ï(˜“,™·ù"Ùá¢~ƒjÃÃ[í∫∫-+ì€(aÊ*é„ ˜3}'≈ªàî©r™˜â“	Í¢o≥"Õ‰}äBÏÖWàgØ)ı˛*ywI¡«∞«±8éæ3ß3∂Cêíê2ï∏Ï˜Â/≤hú¿@=Ãbc˜8>/HL√aËcç7ˇ‹ÊCÖøïŸh≈5G37-˙€%⁄j8Ïm0/6ßˇ¢∏wıt^ ôM≈˜f∞-§¶Í
-Ïç÷Oes˘Fπõ6˜ÊÂ”§»|@çï≥:¨Ìkî∫¶∫ãnÑ∫tîBHkÍ´Q@·|IˇiÑâÀ)ÈSÀÈì‚Ü‡‹£∫¸å…î8·º]Órô™éË—î6¸™1çì<~Õáª™ˆa$ø˜U´°.*–√	Ä}(Vo∆=¯E'W=—D_ùi6"èë3Ók¶÷|JÖƒÃRÎyı¥Æ¨zR=ßûRœË’S∫2Í	]˘$Ø&lÏ…DækKö:ßé4ßÉ†Zoÿ(ê≈î7O‚Ã!™çÜq(Ú6Xp/˜‡{∆/j0œ`û⁄W‰õ–“\Øº-âYc“!2¢ÄsUIìΩ≤—q”P°d!¡˙(y}æ>?ˇO¿xíÂŸ	¬¥G◊YÿÂW//s≈,ö ÀÌQS[◊ºZ‘dÿg#\¢”§Ü¥úAmÆÏµ¨WQ=èhWÓ{’ÿÕE@Û.o›2¬ú∂]~≥ã»wW∑Ê)"Ù–»B‘ß»ºé9ÛYÕ_ñôN;$G|oo),y"û£mS’*í]Û≥©⁄∆ê›#kñò8~}—,›ìõñ}¸û√©É5˙x™˙ ¬‘ûbv†E[í\*Ωo˘Ì2~ı…^5—√‘ºxcv4ƒÁ˙_ˆÀ…±¢˛úÇòlÖ≈UèÃ	ÖŒ CuW»ó¯$[”PHÌtTı±‘íôuÃÃò¡2º3óJÂÏååiÅ«l≤Œ¡kâòrÅ"´5ÖÕ:û.¨˘DRÍﬂÓ~n˙Q]∑ó ˛ÒS¡n¬è›zü¯¸âœˇ|ŒR˚ü¬|B®yOèsÕœ	·_;!Ï'∆Ìœ◊©Æ*<{Á±É-í~O±⁄£*ÅÉõÊPæ£—Î<TthÄ$fòbM’~AUp# OàÙ¥ù2{˚ùM\‘ÉfÉú¿À;Â*/êG´…Óuóul›©ˆ¸¯íÕ°€§Di∆t±±SŒHï•€ &◊è^≤Øu‹ªÅ>sE¿*°ëyÙAt4:H€Õm«PåÑë∂ıíÚDKU%Ì<˝"ië6g€¶ã˜Ñ·ØÏ˝≥^XeØ6≠m≥9˚•µﬁLÁZî:ES8oπ™íW
-ë[CAËI˝†® kâ”º‚£ΩK“õ-üE*@ÂD†X—IkÌNÆ’◊Ã„rÔóªÂ€b˛}˙Aøé‰_u€[3˛{ÏiÙ¢©é∑§R‘ûu|†A˝]#S≈zq @„hï~+ïÅ„RoÖ~‚i`Q.Ó∑JJ:¨Q^µÎªZ#j6 ù4D£˝J€·Bh„ÚÓ«ÇÔ˛P`˛˜n˙p™ ^{mÈØÿ´◊#ÇÄa~.$Ç˚74˛%P]ów?ûd§Çˆj]+æ™|ÀO˛Œ“n[7äDTp.€ΩsÜ≤¡SJÓ
-oâÔR©≤ ‚íâ…ºí}˚Ë«≈Ì9Ij≥‡!Â≥ıÀÅH\R÷a%¸£•5W™˙é<Zéﬂ∫U¬¨[è	≠∆U·1H˚&™πjR•‹≤†atl$}vf£∫\#Éí°
-ˆJôΩi¥PK¯ËãRP—‚z≤≈áë¢ö™òPuê8jc_3πÍ∫ù´ÀÏê£©[Wåˆ¸RøËı€@Ø L|H≠ Í{@gxZ´˜~iºΩí÷_\≠{Vú>Á‡Ú–€—≥Ä∏F∏$ñj1ñ°ãw+ø|X’w´ÏI»Ò£W0F¨†`Í<∂[~Oú˙}ÜÎ‡° Â‘¿ñ—èRÇíÀn©≥ ^§ƒDNÕ|*y7ïuE^g®À"˝.¬¢DÖùQò&<÷áÛ8\æOa 8¶–⁄Ÿâ¶”zúﬁ»(≤j1ËY+[?2É"4áî¬|ÿ)m^ÆvMxá&H/˛<∫ﬁΩÁi,9W’≥ËC±9◊Ó≤bò®!T~*óC–ìäÁ ¢;*/@ÖU¢P\¥¥0”AÇ!èsiŒ„ä<´Ù|ï¡`®|:.Í˝ÍqÕéHŒÕh/∫†"Õ…ÕÑ≥ÊaVZù@ß’ôØ·–6Rwƒ„K∏†m÷7KÎ2!‰	\©”åÄ÷‰<:é„€o§˙è5≈,ˇÍÈ[ΩkΩx	58Wˆ∑™ŒMâ≤Ö∫\Pˇﬂ[∞´Ó≤Å∫t™YAL1émã«√C¢¶MŒ√-ÿ›5h∫§8/ˆ∞-ò†⁄ì≈	óêTTJ´ˆ®ÚöS∫:„R#˜ÕCXÔ»aIràqÙÀE*‚Öõ SV9†4]vg¯≥¿ëhê¸ÅØzˇı«€ÌÀ∑ﬂﬁnﬂ~ºï€/ﬂ∑«ø~ˇÚ∑  1OAºendstreamendobj12 0 obj<</BitsPerComponent 8/ColorSpace 13 0 R/Filter[/ASCII85Decode/FlateDecode]/Height 22/Length 264/Width 54>>stream
-8;XuW5n_'X#ja)?O#R*$/"V,VDR$,/SK^JL&Y!JEKh2K8Q$")Z.0-IMUKVYUqKJEX
-M>bi)_]36^[p%O4"7Xe\%Ef!:BNKLM\adH#o:".ZE^$+c8gLDu/%X/TB20YkO@&b*
-pfu4#YGM:`VNAqj>)Jd32RE.S.(XNFV1m-S<-;BH&%/$7.E-kLTh;O;<2jRsF,Sod
-3;?C9Ak`Wm*O\/s#tcWVe;ZL'lK&egs5,ncVU`KMD4j>bqa8"g9M]L056Co,A.?Q~>endstreamendobj13 0 obj[/Indexed/DeviceRGB 255 14 0 R]endobj14 0 obj<</Filter[/ASCII85Decode/FlateDecode]/Length 428>>stream
-8;X]O>EqN@%''O_@%e@?J;%+8(9e>X=MR6S?i^YgA3=].HDXF.R$lIL@"pJ+EP(%0
-b]6ajmNZn*!='OQZeQ^Y*,=]?C.B+\Ulg9dhD*"iC[;*=3`oP1[!S^)?1)IZ4dup`
-E1r!/,*0[*9.aFIR2&b-C#s<Xl5FH@[<=!#6V)uDBXnIr.F>oRZ7Dl%MLY\.?d>Mn
-6%Q2oYfNRF$$+ON<+]RUJmC0I<jlL.oXisZ;SYU[/7#<&37rclQKqeJe#,UF7Rgb1
-VNWFKf>nDZ4OTs0S!saG>GGKUlQ*Q?45:CI&4J'_2j<etJICj7e7nPMb=O6S7UOH<
-PO7r\I.Hu&e0d&E<.')fERr/l+*W,)q^D*ai5<uuLX.7g/>$XKrcYp0n+Xl_nU*O(
-l[$6Nn+Z_Nq0]s7hs]`XX1nZ8&94a\~>endstreamendobj5 0 obj<</Intent 15 0 R/Name(Reference)/Type/OCG/Usage 16 0 R>>endobj7 0 obj<</Intent 17 0 R/Name(Art)/Type/OCG/Usage 18 0 R>>endobj6 0 obj<</Intent 19 0 R/Name(Slugline)/Type/OCG/Usage 20 0 R>>endobj19 0 obj[/View/Design]endobj20 0 obj<</CreatorInfo<</Creator(Adobe Illustrator 16.0)/Subtype/Artwork>>>>endobj17 0 obj[/View/Design]endobj18 0 obj<</CreatorInfo<</Creator(Adobe Illustrator 16.0)/Subtype/Artwork>>>>endobj15 0 obj[/View/Design]endobj16 0 obj<</CreatorInfo<</Creator(Adobe Illustrator 16.0)/Subtype/Artwork>>>>endobj11 0 obj<</AIS false/BM/Normal/CA 1.0/OP false/OPM 1/SA true/SMask/None/Type/ExtGState/ca 1.0/op false>>endobj8 0 obj[6 0 R 7 0 R 5 0 R]endobj21 0 obj<</CreationDate(D:20140513163057-07'00')/Creator(Adobe Illustrator CS6 \(Macintosh\))/ModDate(D:20140513163057-07'00')/Producer(Adobe PDF library 10.01)/Title(stackPushPop)>>endobjxref0 220000000000 65535 f
-0000000016 00000 n
-0000000173 00000 n
-0000065386 00000 n
-0000000000 00000 f
-0000070675 00000 n
-0000070813 00000 n
-0000070747 00000 n
-0000071345 00000 n
-0000065437 00000 n
-0000065730 00000 n
-0000071232 00000 n
-0000069709 00000 n
-0000070114 00000 n
-0000070162 00000 n
-0000071116 00000 n
-0000071147 00000 n
-0000071000 00000 n
-0000071031 00000 n
-0000070884 00000 n
-0000070915 00000 n
-0000071380 00000 n
-trailer<</Size 22/Root 1 0 R/Info 21 0 R/ID[<55FC9BDAAAF741FB9611AA7E29E2ACDA><98C9772043244B28915E4225E75F6B40>]>>startxref71571%%EOF

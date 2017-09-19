@@ -37,7 +37,7 @@ Mutability of Collections
 
 If you create an array, a set, or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`) the collection after it is created
+This means that you can change (or :newTerm:`mutate`) the collection after it's created
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
 that collection is :newTerm:`immutable`,
@@ -126,7 +126,7 @@ and the number of times that value is repeated in the new array (called ``count`
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = Array(repeating: 0.0, count: 3)
-   << // threeDoubles : Array<Double> = [0.0, 0.0, 0.0]
+   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
    </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
@@ -142,7 +142,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
-   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---

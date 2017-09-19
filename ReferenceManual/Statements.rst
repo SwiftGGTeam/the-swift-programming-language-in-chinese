@@ -999,6 +999,8 @@ There must not be whitespace between ``>=`` and the version number.
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
+These operators have the same associativity and precedence as the
+logical operators that are used to combine ordinary Boolean expressions.
 
 Similar to an ``if`` statement,
 you can add multiple conditional branches to test for different compilation conditions.
