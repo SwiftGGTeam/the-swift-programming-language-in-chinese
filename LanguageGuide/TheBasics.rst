@@ -13,7 +13,7 @@ Swift also provides powerful versions of the three primary collection types,
 as described in :doc:`CollectionTypes`.
 
 Like C, Swift uses variables to store and refer to values by an identifying name.
-Swift also makes extensive use of variables whose values can't changed.
+Swift also makes extensive use of variables whose values can't be changed.
 These are known as constants, and are much more powerful than constants in C.
 Constants are used throughout Swift to make code safer and clearer in intent
 when you work with values that don't need to change.
@@ -1012,7 +1012,7 @@ the variable is automatically set to ``nil`` for you:
 
 .. note::
 
-   Swift's ``nil`` is'nt the same as ``nil`` in Objective-C.
+   Swift's ``nil`` isn't the same as ``nil`` in Objective-C.
    In Objective-C, ``nil`` is a pointer to a nonexistent object.
    In Swift, ``nil`` isn't a pointer --- it's the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.

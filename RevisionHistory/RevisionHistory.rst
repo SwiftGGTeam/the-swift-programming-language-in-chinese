@@ -6,7 +6,7 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2017-09-12  * Updated for Swift 4.0.
+2017-09-19  * Updated for Swift 4.0.
 
             * Added information about exclusive access to memory
               to the :doc:`../LanguageGuide/MemorySafety` chapter.
