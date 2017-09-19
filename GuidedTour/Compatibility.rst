@@ -1,16 +1,16 @@
 Version Compatibility
 =====================
 
-This book describes Swift 4.0,
-the default version of Swift that's included in Xcode 9.
-You can use Xcode 9 to build targets
+This book describes Swift 4.0.1,
+the default version of Swift that's included in Xcode 9.1.
+You can use Xcode 9.1 to build targets
 that are written in either Swift 4 or Swift 3.
 
 .. assertion:: swift-version
 
-   >> #if swift(>=4.0.1)
+   >> #if swift(>=4.0.2)
    >>     print("Too new")
-   >> #elseif swift(>=4.0)
+   >> #elseif swift(>=4.0.1)
    >>     print("Just right")
    >> #else
    >>     print("Too old")
@@ -37,7 +37,7 @@ that are written in either Swift 4 or Swift 3.
        print("An older compiler")
    #endif
 
-When you use Xcode 9 to build Swift 3 code,
+When you use Xcode 9.1 to build Swift 3 code,
 most of the new Swift 4 functionality is available.
 That said,
 the following features are available only to Swift 4 code:
