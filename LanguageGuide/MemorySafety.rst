@@ -205,11 +205,11 @@ For example:
 
     -> var stepSize = 1
     ---
-    -> func increment(_ number: inout Int) {
+    -> func incrementInPlace(_ number: inout Int) {
            number += stepSize
        }
     ---
-    -> increment(&stepSize)
+    -> incrementInPlace(&stepSize)
     // Error: conflicting accesses to stepSize
     xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
     xx Previous access (a modification) started at  (0x10e86b032).
@@ -217,7 +217,7 @@ For example:
 
 In the code above,
 ``stepSize`` is a global variable,
-and it is normally accessible from within ``increment(_:)``.
+and it is normally accessible from within ``incrementInPlace(_:)``.
 However,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.
@@ -237,21 +237,21 @@ is to make an explicit copy of ``stepSize``:
 
     >> var stepSize = 1
     << // stepSize : Int = 1
-    >> func increment(_ number: inout Int) {
+    >> func incrementInPlace(_ number: inout Int) {
     >>     number += stepSize
     >> }
     ---
     // Make an explicit copy.
     -> var copyOfStepSize = stepSize
     << // copyOfStepSize : Int = 1
-    -> increment(&copyOfStepSize)
+    -> incrementInPlace(&copyOfStepSize)
     ---
     // Update the original.
     -> stepSize = copyOfStepSize
     /> stepSize is now \(stepSize)
     </ stepSize is now 2
 
-When you make a copy of ``stepSize`` before calling ``increment(_:)``,
+When you make a copy of ``stepSize`` before calling ``incrementInPlace(_:)``,
 it's clear that the value of ``copyOfStepSize`` is incremented
 by the current step size.
 The read access ends before the write access starts,
