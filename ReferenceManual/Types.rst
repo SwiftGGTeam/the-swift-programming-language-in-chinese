@@ -377,7 +377,7 @@ For example:
     !! ^      ~~~~~
 
 In the code above,
-both of the parameters to ``takesTwoFunctions(_:_:)`` are functions.
+both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.
 Neither parameter is marked ``@escaping``,
 so they're both nonescaping as a result.
 
@@ -389,7 +389,7 @@ they can't be passed as arguments to another nonescaping function parameter.
 In contrast,
 the two function calls marked "OK" don't cause a compiler error.
 These function calls don't violate the restriction
-because ``external`` isn't one of the parameters of ``takesTwoFunctions``.
+because ``external`` isn't one of the parameters of ``takesTwoFunctions(first:second:)``.
 
 If you need to avoid this restriction, mark one of the parameters as escaping,
 or temporarily convert one of the nonescaping function parameters to an escaping function
