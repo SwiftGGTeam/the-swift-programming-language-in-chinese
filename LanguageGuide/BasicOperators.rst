@@ -723,6 +723,12 @@ as shown in the code below.
    << // r1 : Bool = true
    << // r2 : Bool = true
 
+
+.. _BasicOperators_UnboundedRanges:
+
+Unbounded Ranges
+~~~~~~~~~~~~~~~~
+
 .. _BasicOperators_LogicalOperators:
 
 Logical Operators
