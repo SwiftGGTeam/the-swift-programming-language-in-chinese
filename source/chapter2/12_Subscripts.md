@@ -14,6 +14,9 @@
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-13  
 > 3.0.1，shanks，2016-11-13
+ 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 
 本页包含内容：
@@ -111,16 +114,16 @@ struct Matrix {
         self.columns = columns
         grid = Array(count: rows * columns, repeatedValue: 0.0)
     }
-    func indexIsValidForRow(row: Int, column: Int) -> Bool {
+    func indexIsValid(row: Int, column: Int) -> Bool {
         return row >= 0 && row < rows && column >= 0 && column < columns
     }
     subscript(row: Int, column: Int) -> Double {
         get {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
+            assert(indexIsValid(row: row, column: column), "Index out of range")
             return grid[(row * columns) + column]
         }
         set {
-            assert(indexIsValidForRow(row, column: column), "Index out of range")
+            assert(indexIsValid(row: row, column: column), "Index out of range")
             grid[(row * columns) + column] = newValue
         }
     }
@@ -150,10 +153,10 @@ matrix[1, 0] = 3.2
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix02_2x.png)
 
-`Matrix`下标的 getter 和 setter 中都含有断言，用来检查下标入参`row`和`column`的值是否有效。为了方便进行断言，`Matrix`包含了一个名为`indexIsValidForRow(_:column:)`的便利方法，用来检查入参`row`和`column`的值是否在矩阵范围内：
+`Matrix`下标的 getter 和 setter 中都含有断言，用来检查下标入参`row`和`column`的值是否有效。为了方便进行断言，`Matrix`包含了一个名为`indexIsValid(row:column:)`的便利方法，用来检查入参`row`和`column`的值是否在矩阵范围内：
 
 ```swift
-func indexIsValidForRow(row: Int, column: Int) -> Bool {
+func indexIsValid(row: Int, column: Int) -> Bool {
     return row >= 0 && row < rows && column >= 0 && column < columns
 }
 ```
