@@ -15,6 +15,9 @@
 > 
 > 3.0.1， shanks， 2016-11-12
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [类和结构体对比](#comparing_classes_and_structures)
