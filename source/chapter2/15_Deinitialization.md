@@ -15,6 +15,9 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14   
 > 3.0.1，shanks，2016-11-13
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [析构过程原理](#how_deinitialization_works)
@@ -95,7 +98,7 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 
 创建一个`Player`实例的时候，会向`Bank`对象请求 100 个硬币，如果有足够的硬币可用的话。这个`Player`实例存储在一个名为`playerOne`的可选类型的变量中。这里使用了一个可选类型的变量，因为玩家可以随时离开游戏，设置为可选使你可以追踪玩家当前是否在游戏中。
 
-因为`playerOne`是可选的，所以访问其`coinsInPurse`属性来打印钱包中的硬币数量时，使用感叹号（`!`）来解包：
+因为`playerOne`是可选的，所以访问其`coinsInPurse`属性来打印钱包中的硬币数量时，使用感叹号（`!`）强制解包：
 
 ```swift
 playerOne!.win(coins: 2_000)
