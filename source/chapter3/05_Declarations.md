@@ -1081,15 +1081,21 @@ deinit {
 <a name="extension_declaration"></a>
 ## 扩展声明
 
-*扩展声明 (extension declaration)* 可以扩展一个现存的类、结构体和枚举类型的行为。扩展声明使用关键字 `extension`，遵循如下格式：
+*扩展声明 (extension declaration)* 可以扩展一个现存的类型的行为。扩展声明使用关键字 `extension`，遵循如下格式：
 
 ```swift
 extension 类型名称: 采纳的协议 {  
 	声明语句
 }
 ```
+```swift
+extension 类型名称 where 要求 {  
+	声明语句
+}
+```
+扩展声明体可包含零个或多个声明语句。这些声明语句可以包括计算型属性、计算型类型属性、实例方法、类型方法、构造器、下标声明，甚至是类、结构体和枚举声明。扩展声明不能包含析构器、协议声明、存储型属性、属性观察器或其他扩展声明。关于扩展声明的详细讨论，以及各种扩展声明的例子，请参阅 [扩展](../chapter2/21_Extensions.md)。
 
-扩展声明体可包含零个或多个声明语句。这些声明语句可以包括计算型属性、计算型类型属性、实例方法、类型方法、构造器、下标声明，甚至其他结构体、类和枚举声明。扩展声明不能包含析构器、协议声明、存储型属性、属性观察器或其他扩展声明。关于扩展声明的详细讨论，以及各种扩展声明的例子，请参阅 [扩展](../chapter2/21_Extensions.md)。
+如果类型为类，结构体，或枚举类型，则扩展声明会扩展相应的类型。如果类型为协议类型，则扩展声明会扩展所有遵守这个协议的类型。在扩展的协议体中声明语句不能使用`final`标识符。
 
 扩展声明可以为现存的类、结构体、枚举添加协议一致性，但是不能为类添加超类，因此在扩展声明的类型名称的冒号后面仅能指定一个协议列表。
 
@@ -1100,9 +1106,12 @@ extension 类型名称: 采纳的协议 {
 <a name="grammer_of_an_extension_declaration"></a>
 > 扩展声明语法  
 > <a name="extension-declaration"></a>
-> *扩展声明* → [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **extension** [*类型标识符*](03_Types.md#type-identifier) [*类型继承子句*](03_Types.md#type-inheritance-clause)<sub>可选</sub> [*扩展主体*](#extension-body)  
+> *扩展声明* → [特性](06_Attributes.md#type_attributes)<sub>可选</sub> [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **extension** [*类型标识符*](03_Types.md#type-identifier) [*类型-继承-子句*](03_Types.md#type-inheritance-clause)<sub>可选</sub> [*扩展主体*](#extension-body)  
 > <a name="extension-body"></a>
+> *扩展声明* → [特性](06_Attributes.md#type_attributes)<sub>可选</sub> [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **extension** [*类型标识符*](03_Types.md#type-identifier) [*泛型-where-子句*](03_Types.md#type-inheritance-clause) [*扩展主体*](#extension-body)  
 > *扩展主体* → **{** [*多条声明*](#declarations)<sub>可选</sub> **}**  
+> *多条声明* → [单条声明](#subscript_declaration) [多条声明](#declarations) <sub>可选</sub>  
+> *单条声明* → [声明语句](#declarations) | [编译器-控制-语句](10_Statements.md#compiler-control-statement)
 
 <a name="subscript_declaration"></a>
 ## 下标声明
