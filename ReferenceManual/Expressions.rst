@@ -1140,25 +1140,34 @@ Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
 A key-path expression lets you
-refer to a property
+refer to a property or subscript
 for use in key-value coding and key-value observing APIs.
 It has the following form:
 
 .. syntax-outline::
 
-   \<#type name#>.<#property names#>
+   \<#type name#>.<#path#>
 
-The *property names* must be a reference to a property.
+The *path* consists of
+property names, subscripts, optional chaining,
+and forced unwrapping.
+
+.. XXX The simplest version has just a property name as the path.
+
 At compile time, the key-path expression
 is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
-Key paths can be used to access properties
-by passing them to the ``subscript(keyPath:)`` subscript.
-(This subscript is available on all Swift types.)
+
+.. XXX --topic break--
+
+To access a value using a key path,
+you passing the key path to the ``subscript(keyPath:)`` subscript,
+which is available on all Swift types.
 For example:
 
 .. The subscript name subscript(keyPath:) above is a little odd,
-   but it matches what should be displayed on the web
-   when this API actually lands.
+   but it matches what would be displayed on the web.
+   There isn't actually an extension on Any that implements this subscript;
+   it's a special case in the compiler.
 
 .. testcode:: keypath-expression
 
@@ -1176,12 +1185,13 @@ For example:
    /> value is \(value)
    </ value is 12
 
+.. XXX --topic break--
+
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
 For example,
 the following code uses ``\.someProperty``:
-
 
 .. testcode:: keypath-expression-TEMP
 
@@ -1205,7 +1215,9 @@ the following code uses ``\.someProperty``:
    assuming I can confirm that it's the same kind of type-inference context
    that lets both of them be used.
 
-The *property names* can contain multiple property names, separated by periods,
+.. XXX --topic break--
+
+The *path* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
 For example,
 the following code uses ``\OuterStructure.outerProperty.someProperty``:
@@ -1229,6 +1241,8 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+.. XXX --topic break--
+
 Key paths can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
 to access a property of an optional string:
@@ -1245,6 +1259,8 @@ to access a property of an optional string:
    << // count : String.IndexDistance? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
+
+.. XXX --topic break--
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
