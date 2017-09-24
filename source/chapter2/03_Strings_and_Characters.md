@@ -18,11 +18,14 @@
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13   
 > 3.0.1, shanks, 2016-11-11
+ 
+> 4.0
+> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21 
 
 本页包含内容：
 
 - [字符串字面量](#string_literals)
-- [多行字符串字面量](#multiline_string_literals)
+- [字面量中的特殊字符](#special_characters_in_string_literals)
 - [初始化空字符串](#initializing_an_empty_string)
 - [字符串可变性](#string_mutability)
 - [字符串是值类型](#strings_are_value_types)
@@ -32,6 +35,7 @@
 - [Unicode](#unicode)
 - [计算字符数量](#counting_characters)
 - [访问和修改字符串](#accessing_and_modifying_a_string)
+- [子字符串](#substrings)
 - [比较字符串](#comparing_strings)
 - [字符串的 Unicode 表示形式](#unicode_representations_of_strings)
 
@@ -46,13 +50,14 @@ Swift 的`String`和`Character`类型提供了快速和兼容 Unicode 的方式�
 
 > 注意：    
 > Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation 也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。  
-> 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 3.0.1)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
+> 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
 
 
 <a name="string_literals"></a>
 ## 字符串字面量
 
-您可以在您的代码中包含一段预定义的字符串值作为字符串字面量。字符串字面量是由双引号 (`""`) 包裹着的具有固定顺序的文本字符集。
+你可以在代码里使用一段预定义的字符串值作为字符串字面量。字符串字面量是由一对双引号包裹着的具有固定顺序的字符集。
+
 字符串字面量可以用于为常量和变量提供初始值：
 
 ```swift
@@ -61,13 +66,10 @@ let someString = "Some string literal value"
 
 注意`someString`常量通过字符串字面量进行初始化，Swift 会推断该常量为`String`类型。
 
-> 注意：
-更多关于在字符串字面量中使用特殊字符的信息，请查看 [字符串字面量的特殊字符](#special_characters_in_string_literals) 。
-
 <a name="multiline_string_literals"></a>
-## 多行字符串字面量
+### 多行字符串字面量
 
-如果你需要一个字符串是跨越多行的，你可以使用多行字符串字面量，它是由三个双引号(`"""`)包裹着的具有固定顺序的文本字符集。
+如果你需要一个字符串是跨越多行的，那就使用多行字符串字面量 —— 由一对三个双引号包裹着的具有固定顺序的文本字符集：
 
 ```swift
 let quotation = """
@@ -79,7 +81,7 @@ till you come to the end; then stop."
 """
 ```
 
-一个多行字符串字面量包含了所有的在开启和关闭引号（`"""`）中的行。这个字符从开启引号(`"""`)之后的第一行开始，到关闭引号(`"""`)之前为止。这就意味着字符串开启引号之后(`"""`)或者结束引号(`"""`)之前都没有一个换行符号。（译者：下面两个字符串其实是一样的，虽然第二个使用了多行字符串的形势）
+一个多行字符串字面量包含了所有的在开启和关闭引号（`"""`）中的行。这个字符从开启引号(`"""`)之后的第一行开始，到关闭引号(`"""`)之前为止。这就意味着字符串开启引号之后(`"""`)或者结束引号(`"""`)之前都没有换行符号。（译者：下面两个字符串其实是一样的，虽然第二个使用了多行字符串的形式）
 
 ```swift
 let singleLineString = "These are the same."
@@ -88,7 +90,7 @@ These are the same.
 """
 ```
 
-如果你的代码中，多行字符串字面量包含换行符的话，则多行字符串字面量中也会包含换行符。如果你想使用换行，使得你的代码获得好的可读性，但是你又不想在你的多行字符串字面量中出现换行符的话，你可以用在行尾写一个反斜杠(`\`)作为续行符。
+如果你的代码中，多行字符串字面量包含换行符的话，则多行字符串字面量中也会包含换行符。如果你想换行，以便加强代码的可读性，但是你又不想在你的多行字符串字面量中出现换行符的话，你可以用在行尾写一个反斜杠(`\`)作为续行符。
 
 ```swift
 let softWrappedQuotation = """
@@ -115,8 +117,36 @@ It also ends with a line break.
 
 ![](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Art/multilineStringWhitespace_2x.png)
 
-在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号(`"""`)之前的空白字符串多，所以，它的行首将有4个空白字符串（实际的变量值）。
+在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号(`"""`)之前的空白字符串多，所以，它的行首将有4个空格。
 
+<a name="special_characters_in_string_literals"></a>
+### 字符串字面量的特殊字符
+
+字符串字面量可以包含以下特殊字符：
+
+* 转义字符`\0`(空字符)、`\\`(反斜线)、`\t`(水平制表符)、`\n`(换行符)、`\r`(回车符)、`\"`(双引号)、`\'`(单引号)。
+* Unicode 标量，写成`\u{n}`(u为小写)，其中`n`为任意一到八位十六进制数且可用的 Unicode 位码。
+
+下面的代码为各种特殊字符的使用示例。
+`wiseWords`常量包含了两个双引号。
+`dollarSign`、`blackHeart`和`sparklingHeart`常量演示了三种不同格式的 Unicode 标量：
+
+```swift
+let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+// "Imageination is more important than knowledge" - Enistein
+let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
+let blackHeart = "\u{2665}"           // ♥, Unicode 标量 U+2665
+let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
+```
+
+由于多行字符串字面量使用了三个双引号，而不是一个，所以你可以在多行字符串字面量里直接使用双引号（`"`）而不必加上转义符（`\`）。要在多行字符串字面量中使用 `"""` 的话，就需要使用至少一个转义符（`\`）：
+
+```swift
+let threeDoubleQuotes = """
+Escaping the first quote \"""
+Escaping all three quotes \"\"\"
+"""
+```
 
 <a name="initializing_an_empty_string"></a>
 ## 初始化空字符串
@@ -176,10 +206,10 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 <a name="working_with_characters"></a>
 ## 使用字符
 
-您可通过`for-in`循环来遍历字符串中的`characters`属性来获取每一个字符的值：
+您可通过`for-in`循环来遍历字符串，获取字符串中每一个字符的值：
 
 ```swift
-for character in "Dog!🐶".characters {
+for character in "Dog!🐶" {
     print(character)
 }
 // D
@@ -204,7 +234,6 @@ let catString = String(catCharacters)
 print(catString)
 // 打印输出："Cat!🐱"
 ```
-
 
 <a name="concatenating_strings_and_characters"></a>
 ## 连接字符串和字符
@@ -237,11 +266,39 @@ welcome.append(exclamationMark)
 > 注意：  
 您不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
 
+如果你需要使用多行字符串字面量来拼接字符串，并且你需要字符串每一行都以换行符结尾，包括最后一行：
+
+```swift
+let badStart = """
+one
+two
+"""
+let end = """
+three
+"""
+print(badStart + end)
+// 打印两行:
+// one
+// twothree
+ 
+let goodStart = """
+one
+two
+ 
+"""
+print(goodStart + end)
+// 打印三行:
+// one
+// two
+// three
+```
+
+上面的代码，把 `badStart` 和 `end` 拼接起来的字符串非我们想要的结果。因为 `badStart` 最后一行没有换行符，它与 `end` 的第一行结合到了一起。相反的，`goodStart` 的每一行都以换行符结尾，所以它与 `end` 拼接的字符串总共有三行，正如我们期望的那样。
 
 <a name="string_interpolation"></a>
 ## 字符串插值
 
-*字符串插值*是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。
+*字符串插值*是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。**字符串字面量**和**多行字符串字面量**都可以使用字符串插值。
 您插入的字符串字面量的每一项都在以反斜线为前缀的圆括号中：
 
 ```swift
@@ -281,24 +338,7 @@ Unicode 标量是对应字符或者修饰符的唯一的21位数字，例如`U+0
 注意不是所有的21位 Unicode 标量都代表一个字符，因为有一些标量是留作未来分配的。已经代表一个典型字符的标量都有自己的名字，例如上面例子中的`LATIN SMALL LETTER A`和`FRONT-FACING BABY CHICK`。
 
 <a name="special_characters_in_string_literals"></a>
-### 字符串字面量的特殊字符
 
-字符串字面量可以包含以下特殊字符：
-
-* 转义字符`\0`(空字符)、`\\`(反斜线)、`\t`(水平制表符)、`\n`(换行符)、`\r`(回车符)、`\"`(双引号)、`\'`(单引号)。
-* Unicode 标量，写成`\u{n}`(u为小写)，其中`n`为任意一到八位十六进制数且可用的 Unicode 位码。
-
-下面的代码为各种特殊字符的使用示例。
-`wiseWords`常量包含了两个双引号。
-`dollarSign`、`blackHeart`和`sparklingHeart`常量演示了三种不同格式的 Unicode 标量：
-
-```swift
-let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-// "Imageination is more important than knowledge" - Enistein
-let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
-let blackHeart = "\u{2665}"           // ♥, Unicode 标量 U+2665
-let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
-```
 
 <a name="extended_grapheme_clusters"></a>
 ### 可扩展的字形群集
@@ -346,11 +386,11 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 <a name="counting_characters"></a>
 ## 计算字符数量
 
-如果想要获得一个字符串中`Character`值的数量，可以使用字符串的`characters`属性的`count`属性：
+如果想要获得一个字符串中`Character`值的数量，可以使用`count`属性：
 
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
+print("unusualMenagerie has \(unusualMenagerie.count) characters")
 // 打印输出 "unusualMenagerie has 40 characters"
 ```
 
@@ -360,19 +400,19 @@ print("unusualMenagerie has \(unusualMenagerie.characters.count) characters")
 
 ```swift
 var word = "cafe"
-print("the number of characters in \(word) is \(word.characters.count)")
+print("the number of characters in \(word) is \(word.count)")
 // 打印输出 "the number of characters in cafe is 4"
 
-word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
+word += "\u{301}"    // 拼接一个重音, U+0301
 
-print("the number of characters in \(word) is \(word.characters.count)")
+print("the number of characters in \(word) is \(word.count)")
 // 打印输出 "the number of characters in café is 4"
 ```
 
 > 注意：   
-> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`characters`属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
+> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`count`属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
 >
-> 另外需要注意的是通过`characters`属性返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
+> 另外需要注意的是通过`count`属性返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
 
 
 <a name="accessing_and_modifying_a_string"></a>
@@ -413,10 +453,10 @@ greeting[greeting.endIndex] // error
 greeting.index(after: endIndex) // error
 ```
 
-使用 `characters` 属性的 `indices` 属性会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问单个字符。
+使用 `indices` 属性会创建一个包含全部索引的范围(`Range`)，用来在一个字符串中访问单个字符。
 
 ```swift
-for index in greeting.characters.indices {
+for index in greeting.indices {
    print("\(greeting[index]) ", terminator: "")
 }
 // 打印输出 "G u t e n   T a g ! "
@@ -435,7 +475,7 @@ var welcome = "hello"
 welcome.insert("!", at: welcome.endIndex)
 // welcome 变量现在等于 "hello!"
  
-welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome.endIndex))
+welcome.insert(contentsOf:" there", at: welcome.index(before: welcome.endIndex))
 // welcome 变量现在等于 "hello there!"
 ```
 
@@ -453,6 +493,29 @@ welcome.removeSubrange(range)
 > 注意：
 > 您可以使用 `insert(_:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(_:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。 
 
+<a name="substrings"></a>
+## 子字符串
+
+当你从字符串中获取一个子字符串 —— 例如，使用下标或者 `prefix(_:)` 之类的方法 —— 就可以得到一个 `SubString` 的实例，而非另外一个 `String`。Swift 里的 `SubString` 绝大部分函数都跟 `String` 一样，意味着你可以使用同样的方式去操作 `SubString` 和 `String`。然而，跟 `String` 不同的是，你只有在短时间内需要操作字符串时，才会使用 `SubString`。当你需要长时间保存结果时，就把 `SubString` 转化为 `String` 的实例：
+
+```swift
+let greeting = "Hello, world!"
+let index = greeting.index(of: ",") ?? greeting.endIndex
+let beginning = greeting[..<index]
+// beginning 的值为 "Hello"
+ 
+// 把结果转化为 String 以便长期存储。
+let newString = String(beginning)
+```
+
+就像 `String`，每一个 `SubString` 都会在内存里保存字符集。而 `String` 和 `SubString` 的区别在于性能优化上，`SubString` 可以重用原 `String` 的内存空间，或者另一个 `SubString` 的内存空间（`String` 也有同样的优化，但如果两个 `String` 共享内存的话，它们就会相等）。这一优化意味着你在修改 `String` 和 `SubString` 之前都不需要消耗性能去复制内存。就像前面说的那样，`SubString` 不适合长期存储 —— 因为它重用了原 `String` 的内存空间，原 `String` 的内存空间必须保留直到它的 `SubString` 不再被使用为止。
+
+上面的例子，`greeting` 是一个 `String`，意味着它在内存里有一片空间保存字符集。而由于 `beginning` 是 `greeting` 的 `SubString`，它重用了 `greeting` 的内存空间。相反，`newString` 是一个 `String` —— 它是使用 `SubString` 创建的，拥有一片自己的内存空间。下面的图展示了他们之间的关系：
+
+![](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stringSubstring_2x.png)
+
+> 注意
+`String` 和 `SubString` 都遵循 `StringProtocol<//apple_ref/swift/intf/s:s14StringProtocolP>` 协议，这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `SubString` 去调用函数。
 
 <a name="comparing_strings"></a>
 ## 比较字符串
@@ -755,3 +818,5 @@ for scalar in dogString.unicodeScalars {
 // ‼
 // 🐶
 ```
+
+
