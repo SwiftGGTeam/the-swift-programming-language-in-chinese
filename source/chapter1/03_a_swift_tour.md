@@ -20,6 +20,9 @@
 > 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
 
 
+> 4.0
+> 翻译+校对：[muhlenxi](https://github.com/muhlenxi) 2017-09-26
+
 本页内容包括：
 
 -   [简单值（Simple Values）](#simple_values)
@@ -55,7 +58,7 @@ myVariable = 50
 let myConstant = 42
 ```
 
-常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出 `myVariable` 是一个整数类型（integer）因为它的初始值是整数。
+常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型。当你通过一个值来声明变量和常量时，编译器会自动推断其类型。在上面的例子中，编译器推断出 `myVariable` 是一个整数类型（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
@@ -78,7 +81,7 @@ let widthLabel = label + String(width)
 > 练习：  
 > 删除最后一行中的 `String`，错误提示是什么？
 
-有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：
+有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠（\）。例如：
 
 ```swift
 let apples = 3
@@ -89,6 +92,19 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 > 练习：  
 > 使用 `\()` 来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
+
+使用一对三个单引号（`"""`）来包含多行字符串内容,字符串中的内容（包括引号、空格、换行符等）都会保留下来。举个例子：
+
+```swift
+let quotation = """
+Even though there's whitespace to the left,
+the actual lines aren't indented.
+Except for this line.
+Double quotes (") can appear without being escaped.
+
+I still have \(apples + oranges) pieces of fruit.
+"""
+```
 
 使用方括号 `[]` 来创建数组和字典，并使用下标或者键（key）来访问元素。最后一个元素后面允许有个逗号。
 
@@ -103,7 +119,7 @@ var occupations = [
 occupations["Jayne"] = "Public Relations"
 ```
 
-要创建一个空数组或者字典，使用初始化语法。
+使用初始化语法来创建一个空数组或者空字典。
 
 ```swift
 let emptyArray = [String]()
@@ -120,7 +136,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、 `for`、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
+使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -137,7 +153,7 @@ print(teamScore)
 
 在 `if` 语句中，条件必须是一个布尔表达式——这意味着像 `if score { ... }` 这样的代码将报错，而不会隐形地与 0 做对比。
 
-你可以一起使用 `if` 和 `let` 来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是 `nil` 以表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
+你可以一起使用 `if` 和 `let` 一起来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是 `nil` 以表示值缺失。在类型后面加一个问号（`?ß`）来标记这个变量的值是可选的。
 
 ```swift
 var optionalString: String? = "Hello"
@@ -151,7 +167,7 @@ if let name = optionalName {
 ```
 
 > 练习：  
-> 把 `optionalName` 改成 `nil`，greeting会是什么？添加一个 `else` 语句，当 `optionalName` 是 `nil` 时给 greeting 赋一个不同的值。
+> 把 `optionalName` 改成 `nil`，greeting 会是什么？添加一个 `else` 语句，当 `optionalName` 是 `nil` 时给 greeting 赋一个不同的值。
 
 如果变量的可选值是 `nil`，条件会判断为 `false`，大括号中的代码会被跳过。如果不是 `nil`，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个值了。  
 另一种处理可选值的方法是通过使用 `??` 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。   
@@ -183,9 +199,9 @@ default:
 
 注意 `let` 在上述例子的等式中是如何使用的，它将匹配等式的值赋给常量 `x`。
 
-运行 `switch` 中匹配到的子句之后，程序会退出 `switch` 语句，并不会继续向下运行，所以不需要在每个子句结尾写 `break`。
+运行 `switch` 中匹配到的 `case` 语句之后，程序会退出 `switch` 语句，并不会继续向下运行，所以不需要在每个子句结尾写 `break`。
 
-你可以使用 `for-in` 来遍历字典，需要两个变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
+你可以使用 `for-in` 来遍历字典，需要一对儿变量来表示每个键值对。字典是一个无序的集合，所以他们的键和值以任意顺序迭代结束。
 
 ```swift
 let interestingNumbers = [
@@ -207,23 +223,23 @@ print(largest)
 > 练习：  
 > 添加另一个变量来记录最大数字的种类(kind)，同时仍然记录这个最大数字的值。
 
-使用 `while` 来重复运行一段代码直到不满足条件。循环条件也可以在结尾，保证能至少循环一次。
+使用 `while` 来重复运行一段代码直到条件改变。循环条件也可以在结尾，保证能至少循环一次。
 
 ```swift
 var n = 2
 while n < 100 {
-    n = n * 2
+    n *= 2
 }
 print(n)
 
 var m = 2
 repeat {
-    m = m * 2
+    m *= 2
 } while m < 100
 print(m)
 ```
 
-你可以在循环中使用 `..<` 来表示范围。
+你可以在循环中使用 `..<` 来表示下标范围。
 
 ```swift
 var total = 0
@@ -259,7 +275,7 @@ func greet(_ person: String, on day: String) -> String {
 greet("John", on: "Wednesday")
 ```
 
-使用元组来让一个函数返回多个值。该元组的元素可以用名称或数字来表示。
+使用元组来生成复合值，比如让一个函数返回多个值。该元组的元素可以用名称或数字来获取。
 
 ```swift
 func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
@@ -282,23 +298,6 @@ let statistics = calculateStatistics(scores:[5, 3, 100, 3, 9])
 print(statistics.sum)
 print(statistics.2)
 ```
-
-函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
-
-```swift
-func sumOf(numbers: Int...) -> Int {
-    var sum = 0
-    for number in numbers {
-        sum += number
-    }
-    return sum
-}
-sumOf()
-sumOf(numbers: 42, 597, 12)
-```
-
-> 练习：  
-> 写一个计算参数平均值的函数。
 
 函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。
 
@@ -416,7 +415,7 @@ class NamedShape {
 
 注意 `self` 被用来区别实例变量 `name` 和构造器的参数 `name`。当你创建实例的时候，像传入函数参数一样给类传入构造器的参数。每个属性都需要赋值——无论是通过声明（就像 `numberOfSides`）还是通过构造器（就像 `name`）。
 
-如果你需要在删除对象之前进行一些清理工作，使用 `deinit` 创建一个析构函数。
+如果你需要在对象释放之前进行一些清理工作，使用 `deinit` 创建一个析构函数。
 
 子类的定义方法是在它们的类名后面加上父类的名字，用冒号分割。创建类的时候并不需要一个标准的根类，所以你可以根据需要添加或者忽略父类。
 
@@ -522,6 +521,8 @@ let sideLength = optionalSquare?.sideLength
 
 <a name="enumerations_and_structure"></a>
 ## 枚举和结构体
+
+*翻译到这里了*
 
 使用 `enum` 来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
 
