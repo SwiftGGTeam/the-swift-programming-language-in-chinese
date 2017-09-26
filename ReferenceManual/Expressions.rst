@@ -1151,16 +1151,15 @@ It has the following form:
 The *path* consists of
 property names, subscripts, optional chaining,
 and forced unwrapping.
-
-.. XXX The simplest version has just a property name as the path.
+Each of these key path components
+can be repeated as many times as needed,
+in any order.
 
 At compile time, the key-path expression
 is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
 
-.. XXX --topic break--
-
 To access a value using a key path,
-you passing the key path to the ``subscript(keyPath:)`` subscript,
+pass the key path to the ``subscript(keyPath:)`` subscript,
 which is available on all Swift types.
 For example:
 
@@ -1185,15 +1184,13 @@ For example:
    /> value is \(value)
    </ value is 12
 
-.. XXX --topic break--
-
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
 For example,
 the following code uses ``\.someProperty``:
 
-.. testcode:: keypath-expression-TEMP
+.. testcode:: keypath-expression-implicit-type-name
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1214,8 +1211,6 @@ the following code uses ``\.someProperty``:
    likely worth calling out,
    assuming I can confirm that it's the same kind of type-inference context
    that lets both of them be used.
-
-.. XXX --topic break--
 
 The *path* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
@@ -1241,9 +1236,42 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
-.. XXX --topic break--
+The *path* can access subscripts using brackets.
+For example,
+the following code uses ``\.[3]``:
 
-Key paths can use optional chaining and forced unwrapping.
+.. XXX complex stuff works here just like it does with regular subscripts --
+   generics, multiple parameters, nesting, and so on.
+
+.. testcode:: keypath-expression
+
+   -> let numbers = [10, 20, 30, 40]
+   << // numbers : [Int] = [10, 20, 30, 40]
+   -> let myNumber = numbers[keyPath: \.[3]]
+   << // myNumber : Int = 40
+   /> myNumber is \(myNumber)
+   </ myNumber is 40
+
+.. XXX type is ambiguous on "let myNumber" line
+   Looks like I either need a type annotation on the constant
+   or an explicit type in the key path,
+   neither of which I really want.
+
+.. Trying to build a more complex example...
+   This one doesn't work because 'numbers' becomes heterogeneous.
+
+   -> let numbers = [10, [20, 200], 30, 40]
+   << // numbers : [Int] = [10, 20, 30, 40]
+   -> var myNumber = numbers[keyPath: \.[3]]
+   << // myNumber : Int = 40
+   /> myNumber is \(myNumber)
+   </ myNumber is 40
+   -> myNumber = numbers[keyPath: \.[1][1]]
+   << // myNumber : Int = 200
+   /> myNumber is \(myNumber)
+   </ myNumber is 200
+   
+The *path* can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
 to access a property of an optional string:
 
@@ -1259,8 +1287,6 @@ to access a property of an optional string:
    << // count : String.IndexDistance? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
-
-.. XXX --topic break--
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
