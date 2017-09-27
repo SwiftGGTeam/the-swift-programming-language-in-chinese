@@ -522,7 +522,6 @@ let sideLength = optionalSquare?.sideLength
 <a name="enumerations_and_structure"></a>
 ## 枚举和结构体
 
-*翻译到这里了*
 
 使用 `enum` 来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
 
@@ -588,9 +587,9 @@ let heartsDescription = hearts.simpleDescription()
 > 练习：  
 > 给 `Suit` 添加一个 `color()` 方法，对 `spades` 和 `clubs` 返回 “black” ，对 `hearts` 和 `diamonds` 返回 “red” 。
 
-注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 已经是一个 `suit` 类型，在已知变量类型的情况下可以使用缩写。
+注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 的值已经是一个 `suit` 类型，在已知变量类型的情况下可以使用缩写。
 
-如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着不同的枚举成员的关联值都可以不同。你可以把关联值想象成枚举成员的寄存属性。例如，考虑从服务器获取日出和日落的时间。服务器会返回正常结果或者错误信息。
+如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同枚举实例的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着不同的枚举成员的关联值都可以不同。你可以把关联值想象成枚举成员的寄存属性。例如，考虑从服务器获取日出和日落的时间的情况。服务器会返回正常结果或者错误信息。
 
 ```swift
 enum ServerResponse {
@@ -614,7 +613,7 @@ case let .failure(message):
 
 注意日升和日落时间是如何从 `ServerResponse` 中提取到并与 `switch` 的 `case` 相匹配的。
 
-使用 `struct` 来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
+使用 `struct` 来创建一个结构体。结构体和类有很多相同的地方，包括方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
 
 ```swift
 struct Card {
@@ -644,7 +643,7 @@ protocol ExampleProtocol {
 }
 ```
 
-类、枚举和结构体都可以实现协议。
+类、枚举和结构体都可以遵循协议。
 
 ```swift
 class SimpleClass: ExampleProtocol {
@@ -689,7 +688,7 @@ print(7.simpleDescription)
 ```
 
 > 练习：  
-> 给 `Double` 类型写一个扩展，添加 `absoluteValue` 功能。
+> 给 `Double` 类型写一个扩展，添加 `absoluteValue` 属性。
 
 你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
 
@@ -714,7 +713,7 @@ enum PrinterError: Error {
 }
 ```
 
-使用 `throw` 来抛出一个错误并使用 `throws` 来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函数会立刻返回并且调用该函数的代码会进行错误处理。
+使用 `throw` 来抛出一个错误和使用 `throws` 来表示一个可以抛出错误的函数。如果在函数中抛出一个错误，这个函数会立刻返回并且调用该函数的代码会进行错误处理。
 
 ```swift
 func send(job: Int, toPrinter printerName: String) throws -> String {
@@ -757,7 +756,7 @@ do {
 > 练习：  
 > 在 `do` 代码块中添加抛出错误的代码。你需要抛出哪种错误来使第一个 `catch` 块进行接收？怎么使第二个和第三个 `catch` 进行接收呢？
 
-另一种处理错误的方式使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则的话，结果会是一个包含函数返回值的可选值。
+另一种处理错误的方式使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则，结果会是一个包含函数返回值的可选值。
 
 ```swift
 let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
@@ -789,7 +788,7 @@ print(fridgeIsOpen)
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
 ```swift
-func repeatItem<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
+func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
     var result = [Item]()
     for _ in 0..<numberOfTimes {
         result.append(item)
@@ -804,14 +803,14 @@ repeatItem(repeating: "knock", numberOfTimes:4)
 ```swift
 // 重新实现 Swift 标准库中的可选类型
 enum OptionalValue<Wrapped> {
-    case None
-    case Some(Wrapped)
+    case none
+    case some(Wrapped)
 }
-var possibleInteger: OptionalValue<Int> = .None
-possibleInteger = .Some(100)
+var possibleInteger: OptionalValue<Int> = .none
+possibleInteger = .some(100)
 ```
 
-在类型名后面使用 `where` 来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
+在类型名后面使用 `where` 来指定对类型的一系列需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
 
 ```swift
 func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
