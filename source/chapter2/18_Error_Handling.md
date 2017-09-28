@@ -13,7 +13,7 @@
 > 3.0.1，shanks，2016-11-13
 
 > 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+> 翻译+校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 本页包含内容：
 
@@ -28,7 +28,7 @@
 举个例子，假如有个从磁盘上的某个文件读取数据并进行处理的任务，该任务会有多种可能失败的情况，包括指定路径下文件并不存在，文件不具有可读权限，或者文件编码格式不兼容。区分这些不同的失败情况可以让程序解决并处理某些错误，然后把它解决不了的错误报告给用户。
 
 > 注意  
-Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 3.0.1)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
+Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的`NSError`。关于这个类的更多信息请参见 [Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的[错误处理](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10)。
 
 <a name="representing_and_throwing_errors"></a>
 ## 表示并抛出错误
