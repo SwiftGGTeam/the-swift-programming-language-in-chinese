@@ -19,6 +19,9 @@
 
 > 3.1：翻译：[qhd](https://github.com/qhd)，2017-04-10   
 
+> 4.0
+> 翻译+校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [泛型所解决的问题](#the_problem_that_generics_solve)
@@ -84,7 +87,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 在实际应用中，通常需要一个更实用更灵活的函数来交换两个任意类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
 
 > 注意  
-在上面三个函数中，`a` 和 `b` 类型相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
+在上面三个函数中，`a` 和 `b` 类型必须相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
 
 <a name="generic_functions"></a>
 ## 泛型函数
@@ -107,9 +110,9 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int)
 func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 ```
 
-这个函数的泛型版本使用了占位类型名（在这里用字母 `T` 来表示）来代替实际类型名（例如 `Int`、`String` 或 `Double`）。占位类型名没有指明 `T` 必须是什么类型，但是它指明了 `a` 和 `b` 必须是同一类型 `T`，无论 `T` 代表什么类型。只有 `swapTwoValues(_:_:)` 函数在调用时，才能根据所传入的实际类型决定 `T` 所代表的类型。
+这个函数的泛型版本使用了占位类型名（在这里用字母 `T` 来表示）来代替实际类型名（例如 `Int`、`String` 或 `Double`）。占位类型名没有指明 `T` 必须是什么类型，但是它指明了 `a` 和 `b` 必须是同一类型 `T`，无论 `T` 代表什么类型。只有 `swapTwoValues(_:_:)` 函数在调用时，才会根据所传入的实际类型决定 `T` 所代表的类型。
 
-另外一个不同之处在于这个泛型函数名（`swapTwoValues(_:_:)`）后面跟着占位类型名（`T`），并用尖括号括起来（`<T>`）。这个尖括号告诉 Swift 那个 `T` 是 `swapTwoValues(_:_:)` 函数定义内的一个占位类型名，因此 Swift 不会去查找名为 `T` 的实际类型。
+泛型函数和非泛型函数的另外一个不同之处，在于这个泛型函数名（`swapTwoValues(_:_:)`）后面跟着占位类型名（`T`），并用尖括号括起来（`<T>`）。这个尖括号告诉 Swift 那个 `T` 是 `swapTwoValues(_:_:)` 函数定义内的一个占位类型名，因此 Swift 不会去查找名为 `T` 的实际类型。
 
 `swapTwoValues(_:_:)` 函数现在可以像 `swapTwoInts(_:_:)` 那样调用，不同的是它能接受两个任意类型的值，条件是这两个值有着相同的类型。`swapTwoValues(_:_:)` 函数被调用时，`T` 所代表的类型都会由传入的值的类型推断出来。
 
@@ -164,8 +167,8 @@ swapTwoValues(&someString, &anotherString)
 1. 现在有三个值在栈中。
 2. 第四个值被压入到栈的顶部。
 3. 现在有四个值在栈中，最近入栈的那个值在顶部。
-4. 栈中最顶部的那个值被移除，或称之为出栈。
-5. 移除掉一个值后，现在栈又只有三个值了。
+4. 栈中最顶部的那个值被移除出栈。
+5. 一个值移除出栈后，现在栈又只有三个值了。
 
 下面展示了如何编写一个非泛型版本的栈，以 `Int` 型的栈为例：
 
@@ -461,10 +464,26 @@ extension Array: Container {}
 
 如同上面的泛型 `Stack` 结构体一样，`Array` 的 `append(_:)` 方法和下标确保了 Swift 可以推断出 `ItemType` 的类型。定义了这个扩展后，你可以将任意 `Array` 当作 `Container` 来使用。
 
-<a name="where_clauses"></a>
-## 泛型 Where 语句
+<a name="using_type_annotations_to_constrain_an_associated_type"></a>
+### 约束关联类型
 
-[类型约束](#type_constraints)让你能够为泛型函数或泛型类型的类型参数定义一些强制要求。
+你可以给协议里的关联类型添加类型注释，让遵守协议的类型必须遵循这个约束条件。例如，下面的代码定义了一个 `Item` 必须遵循 `Equatable` 的 `Container` 类型：
+
+```swift
+protocol Container {
+    associatedtype Item: Equatable
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+}
+```
+
+为了遵守了 `Container` 协议，Item 类型也必须遵守 `Equatable` 协议。
+
+<a name="where_clauses"></a>
+## 泛型 where 语句
+
+[类型约束](#type_constraints)让你能够为泛型函数，下标，类型的类型参数定义一些强制要求。
 
 为关联类型定义约束也是非常有用的。你可以在参数列表中通过 `where` 子句为关联类型定义约束。你能通过 `where` 子句要求一个关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 where 子句。
 
@@ -622,11 +641,10 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 
 就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。
 
-  
 <a name="associated_types_with_a_generic_where_clause"></a>
-## 具有泛型 Where 子句的关联类型
+## 具有泛型 where 子句的关联类型
 
-你能够包含一个具有泛型 Where 子句的关联类型。例如建立一个包含迭代器（Iterator）的容器，就像是标准库中使用的Sequence协议那样。下面是你所写的代码：
+你可以在关联类型后面加上具有泛型 `where` 的字句。例如，建立一个包含迭代器（Iterator）的容器，就像是标准库中使用的 `Sequence` 协议那样。你应该这么写：
 
 ```swift
 protocol Container {
@@ -640,9 +658,9 @@ protocol Container {
 }
 ```
 
-迭代器（Iterator）的泛型Where子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。makeIterator()则提供了容器的迭代器的访问接口。
+迭代器（Iterator）的泛型 `where` 子句要求：无论迭代器是什么类型，迭代器中的元素类型，必须和容器项目的类型保持一致。`makeIterator()` 则提供了容器的迭代器的访问接口。
 
-一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型Where子句，来添加了一个约束到被继承协议的关联类型。例如，下面的代码声明了一个ComparableContainer协议，它要求所有的Item必须是Comparable的。
+一个协议继承了另一个协议，你通过在协议声明的时候，包含泛型 `where` 子句，来添加了一个约束到被继承协议的关联类型。例如，下面的代码声明了一个 `ComparableContainer` 协议，它要求所有的 `Item` 必须是 `Comparable` 的。
 
 ```swift
 protocol ComparableContainer: Container where Item: Comparable { }
@@ -651,7 +669,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
 <a name="generic_subscripts"></a>
 ##泛型下标
 
-下标能够是泛型的，他们能够包含泛型Where子句。你可以在subscript后面的尖括号中，写下占位符（placeholder）类型名称，在下标代码体开始的标志的花括号之前写下泛型Where子句。例如：
+下标能够是泛型的，他们能够包含泛型 `where` 子句。你可以把占位符类型的名称写在 `subscript` 后面的尖括号里，在下标代码体开始的标志的花括号之前写下泛型 `where` 子句。例如：
 
 ```swift
 extension Container {
@@ -666,10 +684,14 @@ extension Container {
 }
 ```
 
-这个Container协议的扩展添加了一个下标：下标是一个序列的索引，返回的则是索引所在的项目的值所构成的数组。这个泛型下标的约束如下：
-- 在尖括号中的泛型参数Indices，必须是符合标准库中的Sequence协议的类型。
-- 下标使用的单一的参数，indices，必须是Indices的实例。
-- 泛型Where子句要求Sequence（Indices）的迭代器，其所有的元素都是Int类型。这样就能确保在序列（Sequence）中的索引和容器(Container)里面的索引类型是一致的。
+这个 `Container` 协议的扩展添加了一个下标方法，接收一个索引的集合，返回每一个索引所在的值的数组。这个泛型下标的约束如下：
 
-综合一下,这些约束意味着，传入到indices下标，是一个整数的序列.
-(译者：原来的Container协议，subscript必须是Int型的，扩展中新的subscript，允许下标是一个的序列，而非单一的值。)
+这个 `Container` 协议的扩展添加了一个下标：下标是一个序列的索引，返回的则是索引所在的项目的值所构成的数组。这个泛型下标的约束如下：
+
+- 在尖括号中的泛型参数 `Indices`，必须是符合标准库中的 `Sequence` 协议的类型。
+- 下标使用的单一的参数，`indices`，必须是 `Indices` 的实例。
+- 泛型 `where` 子句要求 Sequence（Indices）的迭代器，其所有的元素都是 `Int` 类型。这样就能确保在序列（Sequence）中的索引和容器(Container)里面的索引类型是一致的。
+
+综合一下，这些约束意味着，传入到 `indices` 下标，是一个整型的序列.
+(译者：原来的 `Container` 协议，`subscript` 必须是 `Int` 型的，扩展中新的 `subscript`，允许下标是一个的序列，而非单一的值。)
+
