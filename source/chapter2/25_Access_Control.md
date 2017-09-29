@@ -7,14 +7,19 @@
 
 > 2.0
 > 翻译+校对：[mmoaay](https://github.com/mmoaay)
-
+>
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
-> 
+>
 > 2.2 
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17   
-> 3.0.1， shanks，2016-11-13
+
+> 3.0.1
+> 翻译+校对： shanks，2016-11-13
+
+> 4.0
+> 翻译：kemchenj，2017-09-23
 
 本页内容包括：
 
@@ -26,15 +31,15 @@
 - [常量、变量、属性、下标](#constants_variables_properties_subscripts)
 - [构造器](#initializers)
 - [协议](#protocols)
-- [扩展](#extensions)
+- [Extension](#extensions)
 - [泛型](#generics)
 - [类型别名](#type_aliases)
 
-*访问控制*可以限定其他源文件或模块中的代码对你的代码的访问级别。这个特性可以让我们隐藏代码的一些实现细节，并且可以为其他人可以访问和使用的代码提供接口。
+*访问控制*可以限定其它源文件或模块中的代码对你的代码的访问级别。这个特性可以让我们隐藏代码的一些实现细节，并且可以为其他人可以访问和使用的代码提供接口。
 
 你可以明确地给单个类型（类、结构体、枚举）设置访问级别，也可以给这些类型的属性、方法、构造器、下标等设置访问级别。协议也可以被限定在一定的范围内使用，包括协议里的全局常量、变量和函数。
 
-Swift 不仅提供了多种不同的访问级别，还为某些典型场景提供了默认的访问级别，这样就不需要我们在每段代码中都申明显式访问级别。其实，如果只是开发一个单一目标的应用程序，我们完全可以不用显式声明代码的访问级别。
+Swift 不仅提供了多种不同的访问级别，还为某些典型场景提供了默认的访问级别，这样就不需要我们在每段代码中都申明显式访问级别。其实，如果只是开发一个单一 target 的应用程序，我们完全可以不用显式声明代码的访问级别。
 
 > 注意  
 为了简单起见，对于代码中可以设置访问级别的特性（属性、基本类型、函数等），在下面的章节中我们会称之为“实体”。
@@ -45,7 +50,7 @@ Swift 中的访问控制模型基于模块和源文件这两个概念。
 
 模块指的是独立的代码单元，框架或应用程序会作为一个独立的模块来构建和发布。在 Swift 中，一个模块可以使用 `import` 关键字导入另外一个模块。
 
-在 Swift 中，Xcode 的每个目标（例如框架或应用程序）都被当作独立的模块处理。如果你是为了实现某个通用的功能，或者是为了封装一些常用方法而将代码打包成独立的框架，这个框架就是 Swift 中的一个模块。当它被导入到某个应用程序或者其他框架时，框架内容都将属于这个独立的模块。  
+在 Swift 中，Xcode 的每个 target（例如框架或应用程序）都被当作独立的模块处理。如果你是为了实现某个通用的功能，或者是为了封装一些常用方法而将代码打包成独立的框架，这个框架就是 Swift 中的一个模块。当它被导入到某个应用程序或者其他框架时，框架内容都将属于这个独立的模块。  
 
 *源文件*就是 Swift 中的源代码文件，它通常属于一个模块，即一个应用程序或者框架。尽管我们一般会将不同的类型分别定义在不同的源文件中，但是同一个源文件也可以包含多个类型、函数之类的定义。
 
@@ -53,21 +58,21 @@ Swift 中的访问控制模型基于模块和源文件这两个概念。
 ## 访问级别
 Swift 为代码中的实体提供了五种不同的*访问级别*。这些访问级别不仅与源文件中定义的实体相关，同时也与源文件所属的模块相关。
 
-- *开放访问*和*公开访问*可以访问同一模块源文件中的任何实体，在模块外也可以通过导入该模块来访问源文件里的所有实体。通常情况下，框架中的某个接口可以被任何人使用时，你可以将其设置为开放或者公开访问。
-- *内部访问*可以访问同一模块源文件中的任何实体，但是不能从模块外访问该模块源文件中的实体。通常情况下，某个接口只在应用程序或框架内部使用时，你可以将其设置为内部访问。
-- *文件私有访问*限制实体只能被所定义的文件内部访问。当需要把这些细节被整个文件使用的时候，使用文件私有访问隐藏了一些特定功能的实现细节。
-- *私有访问*限制实体只能在所定义的作用域内使用。需要把这些细节被整个作用域使用的时候，使用文件私有访问隐藏了一些特定功能的实现细节。
+- *Open* 和 *Public* 级别可以让实体被同一模块源文件中的所有实体访问，在模块外也可以通过导入该模块来访问源文件里的所有实体。通常情况下，你会使用 Open 或 Public 级别来指定框架的外部接口。Open 和 Public 的区别在后面会提到。
+- *Internal* 级别让实体被同一模块源文件中的任何实体访问，但是不能被模块外的实体访问。通常情况下，如果某个接口只在应用程序或框架内部使用，就可以将其设置为 Internal 级别。
+- *File-private* 限制实体只能在其定义的文件内部访问。如果功能的部分细节只需要在文件内使用时，可以使用 File-private 来将其隐藏。
+- *Private* 限制实体只能在其定义的作用域，以及同一文件内的 extension 访问。如果功能的部分细节只需要在当前作用域内使用时，可以使用 Private 来将其隐藏。
 
-开放访问为最高（限制最少）访问级别，私有访问为最低（限制最多）访问级别。
+Open 为最高访问级别（限制最少），Private 为最低访问级别（限制最多）。
 
-开放访问只作用于类类型和类的成员，它和公开访问的区别如下：
+Open 只能作用于类和类的成员，它和 Public 的区别如下：
 
-* 公开访问或者其他更严访问级别的类，只能在它们定义的模块内部被继承。
-* 公开访问或者其他更严访问级别的类成员，只能在它们定义的模块内部的子类中重写。
-* 开放访问的类，可以在它们定义的模块中被继承，也可以在引用它们的模块中被继承。
-* 开放访问的类成员，可以在它们定义的模块中子类中重写，也可以在引用它们的模块中的子类重写。
-* 
-把一个类标记为开放，显式地表明，你认为其他模块中的代码使用此类作为父类，然后你已经设计好了你的类的代码了。
+* Public 或者其它更严访问级别的类，只能在其定义的模块内部被继承。
+* Public 或者其它更严访问级别的类成员，只能在其定义的模块内部的子类中重写。
+* Open 的类，可以在其定义的模块中被继承，也可以在引用它的模块中被继承。
+* Open 的类成员，可以在其定义的模块中子类中重写，也可以在引用它的模块中的子类重写。
+ 
+把一个类标记为 `open`，明确的表示你已经充分考虑过外部模块使用此类作为父类的影响，并且设计好了你的类的代码了。
 
 <a name="guiding_principle_of_access_levels"></a>
 ### 访问级别基本原则
@@ -76,33 +81,33 @@ Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中�
 
 例如：
 
-- 一个公开访问级别的变量，其类型的访问级别不能是内部，文件私有或是私有类型的。因为无法保证变量的类型在使用变量的地方也具有访问权限。
+- 一个 Public 的变量，其类型的访问级别不能是 Internal，File-private 或是 Private。因为无法保证变量的类型在使用变量的地方也具有访问权限。
 - 函数的访问级别不能高于它的参数类型和返回类型的访问级别。因为这样就会出现函数可以在任何地方被访问，但是它的参数类型和返回类型却不可以的情况。
 
-关于此原则的各种情况的具体实现，将在下面的细节中体现。
+关于此原则在各种情况下的具体表现，将在下文有所体现。
 
 <a name="default_access_levels"></a>
 ### 默认访问级别
 
-如果你不为代码中的实体显式指定访问级别，那么它们默认为 `internal` 级别（有一些例外情况，稍后会进行说明）。因此，在大多数情况下，我们不需要显式指定实体的访问级别。
+如果你没有为代码中的实体显式指定访问级别，那么它们默认为 `internal` 级别（有一些例外情况，稍后会进行说明）。因此，在大多数情况下，我们不需要显式指定实体的访问级别。
 
 <a name="access_levels_for_single-target_apps"></a>
-### 单目标应用程序的访问级别
+### 单 target 应用程序的访问级别
 
-当你编写一个单目标应用程序时，应用的所有功能都是为该应用服务，而不需要提供给其他应用或者模块使用，所以我们不需要明确设置访问级别，使用默认的访问级别 `internal` 即可。但是，你也可以使用文件私有访问或私有访问级别，用于隐藏一些功能的实现细节。
+当你编写一个单目标应用程序时，应用的所有功能都是为该应用服务，而不需要提供给其他应用或者模块使用，所以我们不需要明确设置访问级别，使用默认的访问级别 Internal 即可。但是，你也可以使用 `fileprivate` 访问或 `private` 访问级别，用于隐藏一些功能的实现细节。
 
 <a name="access_levels_for_frameworks"></a>
 ### 框架的访问级别
 
-当你开发框架时，就需要把一些对外的接口定义为开放访问或公开访问级别，以便使用者导入该框架后可以正常使用其功能。这些被你定义为对外的接口，就是这个框架的 API。
+当你开发框架时，就需要把一些对外的接口定义为 Open 或 Public，以便使用者导入该框架后可以正常使用其功能。这些被你定义为对外的接口，就是这个框架的 API。
 
-> 注意  
-框架依然会使用默认的内部访问级别，也可以指定为文件私有访问或者私有访问级别。当你想把某个实体作为框架的 API 的时候，需显式为其指定开放访问或公开访问级别。
+> 注意
+框架依然会使用默认的 `internal` ，也可以指定为 `fileprivate` 访问或者 `private` 访问级别。当你想把某个实体作为框架的 API 的时候，需显式为其指定开放访问或公开访问级别。
 
 <a name="access_levels_for_unit_test_targets"></a>
-### 单元测试目标的访问级别
+### 单元测试 target 的访问级别
 
-当你的应用程序包含单元测试目标时，为了测试，测试模块需要访问应用程序模块中的代码。默认情况下只有开放访问或公开访问级别级别的实体才可以被其他模块访问。然而，如果在导入应用程序模块的语句前使用 `@testable` 特性，然后在允许测试的编译设置（`Build Options -> Enable Testability`）下编译这个应用程序模块，单元测试目标就可以访问应用程序模块中所有内部级别的实体。
+当你的应用程序包含单元测试 target 时，为了测试，测试模块需要访问应用程序模块中的代码。默认情况下只有 `open` 或 `public` 级别的实体才可以被其他模块访问。然而，如果在导入应用程序模块的语句前使用 `@testable` 特性，然后在允许测试的编译设置（`Build Options -> Enable Testability`）下编译这个应用程序模块，单元测试目标就可以访问应用程序模块中所有内部级别的实体。
 
 <a name="access_control_syntax"></a>
 ## 访问控制语法
@@ -121,51 +126,51 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-除非专门指定，否则实体默认的访问级别为内部访问级别，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的内部访问级别：
+除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的 `internal` ：
 
 ```swift
-class SomeInternalClass {}   // 隐式内部访问级别
-var someInternalConstant = 0 // 隐式内部访问级别
+class SomeInternalClass {}   // 隐式 internal
+var someInternalConstant = 0 // 隐式 internal
 ```
 
 <a name="custom_types"></a>
 ## 自定义类型
 
-如果想为一个自定义类型指定访问级别，在定义类型时进行指定即可。新类型只能在它的访问级别限制范围内使用。例如，你定义了一个文件私有级别的类，那这个类就只能在定义它的源文件中使用，可以作为属性类型、函数参数类型或者返回类型，等等。
+如果想为一个自定义类型指定访问级别，在定义类型时进行指定即可。新类型只能在它的访问级别限制范围内使用。例如，你定义了一个 `fileprivate` 级别的类，那这个类就只能在定义它的源文件中使用，可以作为属性类型、函数参数类型或者返回类型，等等。
 
-一个类型的访问级别也会影响到类型*成员*（属性、方法、构造器、下标）的默认访问级别。如果你将类型指定为私有或者文件私有级别，那么该类型的所有成员的默认访问级别也会变成私有或者文件私有级别。如果你将类型指定为公开或者内部访问级别（或者不明确指定访问级别，而使用默认的内部访问级别），那么该类型的所有成员的默认访问级别将是内部访问。
+一个类型的访问级别也会影响到类型*成员*（属性、方法、构造器、下标）的默认访问级别。如果你将类型指定为 `private` 或者 `fileprivate` 级别，那么该类型的所有成员的默认访问级别也会变成 `private` 或者 `fileprivate` 级别。如果你将类型指定为公开或者 `internal` （或者不明确指定访问级别，而使用默认的 `internal` ），那么该类型的所有成员的默认访问级别将是内部访问。
 
 > 重要    
-上面提到，一个公开类型的所有成员的访问级别默认为内部访问级别，而不是公开级别。如果你想将某个成员指定为公开访问级别，那么你必须显式指定。这样做的好处是，在你定义公共接口的时候，可以明确地选择哪些接口是需要公开的，哪些是内部使用的，避免不小心将内部使用的接口公开。
+上面提到，一个 `public` 类型的所有成员的访问级别默认为 `internal` 级别，而不是 `public` 级别。如果你想将某个成员指定为 `public` 级别，那么你必须显式指定。这样做的好处是，在你定义公共接口的时候，可以明确地选择哪些接口是需要公开的，哪些是内部使用的，避免不小心将内部使用的接口公开。
 
 ```swift
-public class SomePublicClass {                  // 显式公开类
-    public var somePublicProperty = 0            // 显式公开类成员
-    var someInternalProperty = 0                 // 隐式内部类成员
-    fileprivate func someFilePrivateMethod() {}  // 显式文件私有类成员
-    private func somePrivateMethod() {}          // 显式私有类成员
+public class SomePublicClass {                  // 显式 public 类
+    public var somePublicProperty = 0            // 显式 public 类成员
+    var someInternalProperty = 0                 // 隐式 internal 类成员
+    fileprivate func someFilePrivateMethod() {}  // 显式 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式 private 类成员
 }
  
-class SomeInternalClass {                       // 隐式内部类
-    var someInternalProperty = 0                 // 隐式内部类成员
-    fileprivate func someFilePrivateMethod() {}  // 显式文件私有类成员
-    private func somePrivateMethod() {}          // 显式私有类成员
+class SomeInternalClass {                       // 隐式 internal 类
+    var someInternalProperty = 0                 // 隐式 internal 类成员
+    fileprivate func someFilePrivateMethod() {}  // 显式 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式 private 类成员
 }
  
-fileprivate class SomeFilePrivateClass {        // 显式文件私有类
-    func someFilePrivateMethod() {}              // 隐式文件私有类成员
-    private func somePrivateMethod() {}          // 显式私有类成员
+fileprivate class SomeFilePrivateClass {        // 显式 fileprivate 类
+    func someFilePrivateMethod() {}              // 隐式 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式 private 类成员
 }
  
-private class SomePrivateClass {                // 显式私有类
-    func somePrivateMethod() {}                  // 隐式私有类成员
+private class SomePrivateClass {                // 显式 private 类
+    func somePrivateMethod() {}                  // 隐式 private 类成员
 }
 
 ```
 <a name="tuple_types"></a>
 ### 元组类型
 
-元组的访问级别将由元组中访问级别最严格的类型来决定。例如，如果你构建了一个包含两种不同类型的元组，其中一个类型为内部访问级别，另一个类型为私有访问级别，那么这个元组的访问级别为私有访问级别。
+元组的访问级别将由元组中访问级别最严格的类型来决定。例如，如果你构建了一个包含两种不同类型的元组，其中一个类型为 `internal`，另一个类型为 `private`，那么这个元组的访问级别为 `private`。
 
 > 注意  
 元组不同于类、结构体、枚举、函数那样有单独的定义。元组的访问级别是在它被使用时自动推断出的，而无法明确指定。
@@ -200,7 +205,7 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 枚举成员的访问级别和该枚举类型相同，你不能为枚举成员单独指定不同的访问级别。
 
-比如下面的例子，枚举 `CompassPoint` 被明确指定为 `public` 级别，那么它的成员 `North`、`South`、`East`、`West` 的访问级别同样也是 `public`：
+比如下面的例子，枚举 `CompassPoint` 被明确指定为 `public`，那么它的成员 `North`、`South`、`East`、`West` 的访问级别同样也是 `public`：
 
 ```swift
 public enum CompassPoint {
@@ -214,12 +219,12 @@ public enum CompassPoint {
 <a name="raw_values_and_associated_values"></a>
 #### 原始值和关联值
 
-枚举定义中的任何原始值或关联值的类型的访问级别至少不能低于枚举类型的访问级别。例如，你不能在一个 `internal` 访问级别的枚举中定义 `private` 级别的原始值类型。
+枚举定义中的任何原始值或关联值的类型的访问级别至少不能低于枚举类型的访问级别。例如，你不能在一个 `internal` 的枚举中定义 `private` 的原始值类型。
 
 <a name="nested_types"></a>
 ### 嵌套类型
 
-如果在 `private` 级别的类型中定义嵌套类型，那么该嵌套类型就自动拥有 `private` 访问级别。如果在 `public` 或者 `internal` 级别的类型中定义嵌套类型，那么该嵌套类型自动拥有 `internal` 访问级别。如果想让嵌套类型拥有 `public` 访问级别，那么需要明确指定该嵌套类型的访问级别。
+如果在 `private` 的类型中定义嵌套类型，那么该嵌套类型就自动拥有 `private` 访问级别。如果在 `public` 或者 `internal` 级别的类型中定义嵌套类型，那么该嵌套类型自动拥有 `internal` 访问级别。如果想让嵌套类型拥有 `public` 访问级别，那么需要明确指定该嵌套类型的访问级别。
 
 <a name="subclassing"></a>
 ## 子类
@@ -292,7 +297,7 @@ struct TrackedString {
 
 `TrackedString` 结构体定义了一个用于存储 `String` 值的属性 `value`，并将初始值设为 `""`（一个空字符串）。该结构体还定义了另一个用于存储 `Int` 值的属性 `numberOfEdits`，它用于记录属性 `value` 被修改的次数。这个功能通过属性 `value` 的 `didSet` 观察器实现，每当给 `value` 赋新值时就会调用 `didSet` 方法，然后将 `numberOfEdits` 的值加一。
 
-结构体 `TrackedString` 和它的属性 `value` 均没有显式指定访问级别，所以它们都拥有默认的访问级别 `internal`。但是该结构体的 `numberOfEdits` 属性使用了 `private(set)` 修饰符，这意味着 `numberOfEdits` 属性只能在定义该结构体的源文件中赋值。`numberOfEdits` 属性的 `Getter` 依然是默认的访问级别 `internal`，但是 `Setter` 的访问级别是 `private`，这表示该属性只有在当前的源文件中是可读写的，而在当前源文件所属的模块中只是一个可读的属性。  
+结构体 `TrackedString` 和它的属性 `value` 都没有显式地指定访问级别，所以它们都是用默认的访问级别 `internal`。但是该结构体的 `numberOfEdits` 属性使用了 `private(set)` 修饰符，这意味着 `numberOfEdits` 属性只能在结构体的定义中进行赋值。`numberOfEdits` 属性的 `Getter` 依然是默认的访问级别 `internal`，但是 `Setter` 的访问级别是 `private`，这表示该属性只能在内部修改，而在结构体的外部则表现为一个只读属性。  
 
 如果你实例化 `TrackedString` 结构体，并多次对 `value` 属性的值进行修改，你就会看到 `numberOfEdits` 的值会随着修改次数而变化：
 
@@ -370,16 +375,44 @@ public struct TrackedString {
 Swift 和 Objective-C 一样，协议的一致性是全局的，也就是说，在同一程序中，一个类型不可能用两种不同的方式实现同一个协议。
 
 <a name="extensions"></a>
-## 扩展
+## Extension
 
-你可以在访问级别允许的情况下对类、结构体、枚举进行扩展。扩展成员具有和原始类型成员一致的访问级别。例如，你扩展了一个 `public` 或者 `internal` 类型，扩展中的成员具有默认的 `internal` 访问级别，和原始类型中的成员一致 。如果你扩展了一个 `private` 类型，扩展成员则拥有默认的 `private` 访问级别。
+Extension 可以在访问级别允许的情况下对类、结构体、枚举进行扩展。Extension 的成员具有和原始类型成员一致的访问级别。例如，你使用 extension 扩展了一个 `public` 或者 `internal` 类型，extension 中的成员就默认使用 `internal` 访问级别，和原始类型中的成员一致。如果你使用 extension 扩展了一个 `private` 类型，则 extension 的成员默认使用 `private` 访问级别。
 
-或者，你可以明确指定扩展的访问级别（例如，`private extension`），从而给该扩展中的所有成员指定一个新的默认访问级别。这个新的默认访问级别仍然可以被单独指定的访问级别所覆盖。
+或者，你可以明确指定 extension 的访问级别（例如，`private extension`），从而给该 extension 中的所有成员指定一个新的默认访问级别。这个新的默认访问级别仍然可以被单独指定的访问级别所覆盖。
 
-<a name="adding_protocol_conformance_with_an_extension"></a>
-### 通过扩展添加协议一致性
+如果你使用 extension 来遵循协议的话，就不能显式地声明 extension 的访问级别。extension 每个 protocol 要求的实现都默认使用 protocol 的访问级别。
 
-如果你通过扩展来采纳协议，那么你就不能显式指定该扩展的访问级别了。协议拥有相应的访问级别，并会为该扩展中所有协议要求的实现提供默认的访问级别。
+<a name="Private Members in Extensions"></a>
+### Extension 的私有成员
+
+扩展同一文件内的类，结构体或者枚举，extension 里的代码会表现得跟声明在原类型里的一模一样。也就是说你可以这样：
+
+- 在类型的声明里声明一个私有成员，在同一文件的 extension 里访问。
+- 在 extension 里声明一个私有成员，在同一文件的另一个 extension 里访问。
+- 在 extension 里声明一个私有成员，在同一文件的类型声明里访问。
+
+这意味着你可以像组织的代码去使用 extension，而且不受私有成员的影响。例如，给定下面这样一个简单的协议：
+
+```swift
+protocol SomeProtocol {
+    func doSomething() {}
+}
+```
+
+你可以使用 extension 来遵守协议，就想这样：
+
+```swift
+struct SomeStruct {
+    private var privateVariable = 12
+}
+
+extension SomeStruct: SomeProtocol {
+    func doSomething() {
+        print(privateVariable)
+    }
+}
+```
 
 <a name="generics"></a>
 ## 泛型
@@ -393,3 +426,5 @@ Swift 和 Objective-C 一样，协议的一致性是全局的，也就是说，�
 
 > 注意  
 这条规则也适用于为满足协议一致性而将类型别名用于关联类型的情况。
+
+

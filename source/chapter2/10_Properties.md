@@ -15,12 +15,13 @@
 > 校对：[shanks](http://codebuild.me)，2015-10-29
 
 
->   2.2
->   翻译：[saitjr](https://github.com/saitjr)，2016-04-11，[SketchK](https://github.com/SketchK) 2016-05-13
+> 2.2
+> 翻译：[saitjr](https://github.com/saitjr)，2016-04-11，[SketchK](https://github.com/SketchK) 2016-05-13
 > 
 > 3.0.1，shanks，2016-11-12
 
-
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 本页包含内容：
 

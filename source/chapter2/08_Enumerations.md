@@ -20,6 +20,9 @@
 > 翻译+校对：[shanks](https://codebuild.me) 2016-09-24   
 > 3.0.1，shanks，2016-11-12
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页内容包含：
 
 - [枚举语法](#enumeration_syntax)

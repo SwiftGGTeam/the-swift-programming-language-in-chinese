@@ -19,6 +19,9 @@
 > 翻译：[Lanford](https://github.com/LanfordCai) 2016-09-19   
 > 3.0.1，shanks，2016-11-12
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [闭包表达式](#closure_expressions)

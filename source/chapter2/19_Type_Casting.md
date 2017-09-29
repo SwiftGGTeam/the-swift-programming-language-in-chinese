@@ -15,6 +15,9 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16  
 > 3.0.1，shanks，2016-11-13
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)

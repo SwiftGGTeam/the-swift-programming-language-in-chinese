@@ -20,6 +20,9 @@
 > 校对: [shanks](http://codebuild.me) 2016-09-27
 > 3.0.1，shanks，2016-11-12
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 - [函数定义与调用](#Defining_and_Calling_Functions)
 - [函数参数与返回值](#Function_Parameters_and_Return_Values)
@@ -146,7 +149,7 @@ greet(person: "Dave")
 ```swift
 func printAndCount(string: String) -> Int {
     print(string)
-    return string.characters.count
+    return string.count
 }
 func printWithoutCounting(string: String) {
     let _ = printAndCount(string: string)

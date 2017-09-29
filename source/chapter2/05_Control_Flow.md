@@ -23,6 +23,9 @@
 > 3.1
 > 翻译：[qhd](https://github.com/qhd) 2017-04-17  
 
+> 4.0
+> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [For-In 循环](#for_in_loops)
@@ -34,14 +37,14 @@
 
 Swift提供了多种流程控制结构，包括可以多次执行任务的`while`循环，基于特定条件选择执行不同代码分支的`if`、`guard`和`switch`语句，还有控制流程跳转到其他代码位置的`break`和`continue`语句。
 
-Swift 还提供了`for-in`循环，用来更简单地遍历数组（array），字典（dictionary），区间（range），字符串（string）和其他序列类型。
+Swift 还提供了`for-in`循环，用来更简单地遍历数组（Array），字典（Dictionary），区间（Range），字符串（String）和其他序列类型。
 
-Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了`break`，这个 case 就会贯穿至下一个 case，Swift 无需写`break`，所以不会发生这种贯穿的情况。case 还可以匹配很多不同的模式，包括间隔匹配（interval match），元组（tuple）和转换到特定类型。`switch`语句的 case 中匹配的值可以绑定成临时常量或变量，在case体内使用，也可以用`where`来描述更复杂的匹配条件。
+Swift 的`switch`语句比 C 语言中更加强大。case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。`switch`语句的 case 中匹配的值可以声明为临时常量或变量，在 case 作用域内使用，也可以配合`where`来描述更复杂的匹配条件。
 
 <a name="for_in_loops"></a>
 ## For-In 循环
 
-你可以使用 `for-in` 循环来遍历一个集合中的所有元素，例如数组中的元素、数字范围或者字符串中的字符。
+你可以使用 `for-in` 循环来遍历一个集合中的所有元素，例如数组中的元素、范围内的数字或者字符串中的字符。
 
 以下例子使用 `for-in` 遍历一个数组所有元素：  
 
@@ -56,7 +59,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键解读为常量 `animalName`，字典的值会被解读为常量 `legCount`：  
+你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键声明会为 `animalName` 常量，字典的值会声明为 `legCount` 常量：  
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -68,9 +71,9 @@ for (animalName, legCount) in numberOfLegs {
 // cats have 4 legs
 ```
 
-字典的内容本质上是无序的，遍历元素时不能保证顺序。特别地，将元素插入一个字典的顺序并不会决定它们被遍历的顺序。关于数组和字典，详情参见[集合类型](./04_Collection_Types.html)。  
+字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见[集合类型](./04_Collection_Types.html)。  
 
-`for-in` 循环还可以使用数字范围。下面的例子用来输出乘 5 乘法表前面一部分内容：  
+`for-in` 循环还可以使用数字范围。下面的例子用来输出乘法表的一部分内容：  
 
 ```swift
 for index in 1...5 {
@@ -102,12 +105,12 @@ print("\(base) to the power of \(power) is \(answer)")
 
 这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（ `3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。  
 
-在某些情况下，你可能不想使用闭区间，包括两个端点。在一个手表上每分钟绘制一个刻度线。要绘制 `60` 个刻度，从 `0` 分钟开始。使用半开区间运算符（`..<`）来包含下限，但不包括上限。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。  
+在某些情况下，你可能不想使用闭区间，包括两个端点。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。  
 
 ```
 let minutes = 60
 for tickMark in 0..<minutes {
-    // 每1分钟呈现一个刻度线（60次）
+    // 每一分钟都渲染一个刻度线（60次）
 }
 ```
 
@@ -116,7 +119,7 @@ for tickMark in 0..<minutes {
 ```
 let minuteInterval = 5
 for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
-    // 每5分钟呈现一个刻度线 (0, 5, 10, 15 ... 45, 50, 55)
+    // 每5分钟渲染一个刻度线 (0, 5, 10, 15 ... 45, 50, 55)
 }
 ```
 
@@ -126,7 +129,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 let hours = 12
 let hourInterval = 3
 for tickMark in stride(from: 3, through: hours, by: hourInterval) {
-    // 每3小时呈现一个刻度线 (3, 6, 9, 12)
+    // 每3小时渲染一个刻度线 (3, 6, 9, 12)
 }
 ```
 
@@ -176,7 +179,7 @@ board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 ```
 
-3 号方格是梯子的底部，会让你向上移动到 11 号方格，我们使用`board[03]`等于`+08`（来表示`11`和`3`之间的差值）。使用一元正运算符（`+i`）是为了和一元负运算符（`-i`）对称，为了让盘面代码整齐，小于 10 的数字都使用 0 补齐（这些风格上的调整都不是必须的，只是为了让代码看起来更加整洁）。
+3 号方格是梯子的底部，会让你向上移动到 11 号方格，我们使用`board[03]`等于`+08`（来表示`11`和`3`之间的差值）。为了对齐语句，这里使用了一元正运算符（`+i`）和一元负运算符（`-i`），并且小于 10 的数字都使用 0 补齐（这些语法的技巧不是必要的，只是为了让代码看起来更加整洁）。
 
 玩家由左下角空白处编号为 0 的方格开始游戏。玩家第一次掷骰子后才会进入游戏盘面：
 
@@ -202,7 +205,7 @@ print("Game over!")
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏将会结束，为了应对这种情况，代码会首先判断`square`的值是否小于`board`的`count`属性，只有小于才会在`board[square]`上增加`square`，来向前或向后移动（遇到了梯子或者蛇）。
 
 > 注意：   
-> 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。如果`square`等于`26`， 代码会去尝试访问`board[26]`，超过数组的长度。
+> 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。
 
 当本轮`while`循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为`false`，此时游戏结束。
 
@@ -255,7 +258,7 @@ print("Game over!")
 
 检测完玩家是否踩在梯子或者蛇上之后，开始掷骰子，然后玩家向前移动`diceRoll`个方格，本轮循环结束。
 
-循环条件（`while square < finalSquare`）和`while`方式相同，但是只会在循环结束后进行计算。在这个游戏中，`repeat-while`表现得比`while`循环更好。`repeat-while`方式会在条件判断`square`没有超出后直接运行`square += board[square]`，这种方式可以去掉`while`版本中的数组越界判断。
+循环条件（`while square < finalSquare`）和`while`方式相同，但是只会在循环结束后进行计算。在这个游戏中，`repeat-while`表现得比`while`循环更好。`repeat-while`方式会在条件判断`square`没有超出后直接运行`square += board[square]`，这种方式可以比起前面 `while` 循环的版本，可以省去数组越界的检查。
 
 <a name="conditional_statement"></a>
 ## 条件语句
@@ -416,7 +419,7 @@ case 分支的模式也可以是一个值的区间。下面的例子展示了如
 ```swift
 let approximateCount = 62
 let countedThings = "moons orbiting Saturn"
-var naturalCount: String
+let naturalCount: String
 switch approximateCount {
 case 0:
     naturalCount = "no"
@@ -450,15 +453,15 @@ print("There are \(naturalCount) \(countedThings).")
 let somePoint = (1, 1)
 switch somePoint {
 case (0, 0):
-    print("(0, 0) is at the origin")
+    print("\(somePoint) is at the origin")
 case (_, 0):
-    print("(\(somePoint.0), 0) is on the x-axis")
+    print("\(somePoint) is on the x-axis")
 case (0, _):
-    print("(0, \(somePoint.1)) is on the y-axis")
+    print("\(somePoint) is on the y-axis")
 case (-2...2, -2...2):
-    print("(\(somePoint.0), \(somePoint.1)) is inside the box")
+    print("\(somePoint) is inside the box")
 default:
-    print("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+    print("\(somePoint) is outside of the box")
 }
 // 输出 "(1, 1) is inside the box"
 ```
@@ -473,9 +476,9 @@ default:
 <a name="value_bindings"></a>
 #### 值绑定（Value Bindings）
 
-case 分支允许将匹配的值绑定到一个临时的常量或变量，并且在case分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在case分支体内，与临时的常量或变量绑定。
+case 分支允许将匹配的值声明为临时常量或变量，并且在case分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在case分支体内，与临时的常量或变量绑定。
 
-下面的例子展示了如何在一个`(Int, Int)`类型的元组中使用值绑定来分类下图中的点(x, y)：
+下面的例子将下图中的点(x, y)，使用`(Int, Int)`类型的元组表示，然后分类表示：
 
 ```swift
 let anotherPoint = (2, 0)
@@ -589,7 +592,7 @@ default:
 ```swift
 let puzzleInput = "great minds think alike"
 var puzzleOutput = ""
-for character in puzzleInput.characters {
+for character in puzzleInput {
     switch character {
     case "a", "e", "i", "o", "u", " ":
         continue
@@ -606,7 +609,7 @@ print(puzzleOutput)
 <a name="break"></a>
 ### Break
 
-`break`语句会立刻结束整个控制流的执行。当你想要更早的结束一个`switch`代码块或者一个循环体时，你都可以使用`break`语句。
+`break`语句会立刻结束整个控制流的执行。`break` 可以在 `switch` 或循环语句中使用，用来提前结束`switch`或循环语句。
 
 <a name="break_in_a_loop_statement"></a>
 #### 循环语句中的 break
@@ -657,7 +660,7 @@ if let integerValue = possibleIntegerValue {
 <a name="fallthrough"></a>
 ### 贯穿
 
-Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
+在 Swift 里，`switch`语句不会从上一个 case 分支跳转到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
 如果你确实需要 C 风格的贯穿的特性，你可以在每个需要该特性的 case 分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
 
@@ -801,9 +804,9 @@ if #available(iOS 10, macOS 10.12, *) {
 }
 ```
 
-以上可用性条件指定，在iOS中，`if`语句的代码块仅仅在 iOS 10 及更高的系统下运行；在 macOS中，仅在 macOS 10.12 及更高才会运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
+以上可用性条件指定，`if`语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8的主板本号，我们可以指定像iOS 8.3 以及 macOS 10.10.3的子版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 8.3 以及 macOS 10.10.3 的小版本号。
 
 ```swift
 if #available(platform name version, ..., *) {

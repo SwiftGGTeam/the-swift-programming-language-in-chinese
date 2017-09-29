@@ -20,6 +20,9 @@
 > 
 > 3.0.1, 2016-11-11，shanks
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io)
+
 本页包含内容：
 
 - [常量和变量](#constants_and_variables)
@@ -60,7 +63,7 @@ Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整�
 
 Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示 “那儿有一个值，并且它等于 *x* ” 或者 “那儿没有值” 。可选有点像在 Objective-C 中使用 `nil` ，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的 `nil` 指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。
 
-Swift 是一门*类型安全*的语言，这意味着 Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个 `String` ，类型安全会阻止你不小心传入一个 `Int` 。同样的，如果你的代码期望得到一个 `String`，类型安全会阻止你意外传入一个可选的 `String` 。类型安全可以帮助你在开发阶段尽早发现并修正错误。
+Swift 是一门*类型安全*的语言，这意味着 Swift 可以让你清楚地知道值的类型。如果你的代码需要一个 `String` ，类型安全会阻止你不小心传入一个 `Int` 。同样的，如果你的代码需要一个 `String`，类型安全会阻止你意外传入一个可选的 `String` 。类型安全可以帮助你在开发阶段尽早发现并修正错误。
 
 <a name="constants_and_variables"></a>
 ## 常量和变量
@@ -787,7 +790,7 @@ do {
 
 ### 使用断言进行调试
 
-你可以使用全局 `assert(_:_:file:line:)` 函数来写一个断言。向这个函数传入一个结果为 `true` 或者 `false` 的表达式以及一条信息，当表达式的结果为 `false` 的时候这条信息会被显示：
+你可以调用 Swift 标准库的 `assert(_:_:file:line:)` 函数来写一个断言。向这个函数传入一个结果为 `true` 或者 `false` 的表达式以及一条信息，当表达式的结果为 `false` 的时候这条信息会被显示：
 
 ```swift
 let age = -3
@@ -795,9 +798,9 @@ assert(age >= 0, "A person's age cannot be less than zero")
 // 因为 age < 0，所以断言会触发
 ```
 
-在这个例子中，只有 `age >= 0` 为 `true` 的时候，即 `age` 的值非负的时候，代码才会继续执行。如果 `age` 的值是负数，就像代码中那样，`age >= 0` 为 `false`，断言被触发，终止应用。
+在这个例子中，只有 `age >= 0` 为 `true` 时，即 `age` 的值非负的时候，代码才会继续执行。如果 `age` 的值是负数，就像代码中那样，`age >= 0` 为 `false`，断言被触发，终止应用。
 
-如果不需要断言信息，可以省略，就像这样：
+如果不需要断言信息，可以就像这样忽略掉：
 
 ```swift
 assert(age >= 0)
@@ -822,12 +825,13 @@ if age > 10 {
 你可以使用全局 `precondition(_:_:file:line:)` 函数来写一个先决条件。向这个函数传入一个结果为 `true` 或者 `false` 的表达式以及一条信息，当表达式的结果为 `false` 的时候这条信息会被显示：
 
 ```swift
-// In the implementation of a subscript...
+// 在一个下标的实现里...
 precondition(index > 0, "Index must be greater than zero.")
 ```
 
-你可以调用　`precondition(_:_:file:line:)`方法来表明出现了一个错误，例如，switch进入了default分支，但是所有的有效值应该被任意一个其他分支（非default分支）处理。
+你可以调用　`precondition(_:_:file:line:)`方法来表明出现了一个错误，例如，switch 进入了 default 分支，但是所有的有效值应该被任意一个其他分支（非 default 分支）处理。
 
 > 注意：  
 > 如果你使用unchecked模式（-Ounchecked）编译代码，先决条件将不会进行检查。编译器假设所有的先决条件总是为true（真），他将优化你的代码。然而，`fatalError(_:file:line:)`函数总是中断执行，无论你怎么进行优化设定。  
 >你能使用 `fatalError(_:file:line:)`函数在设计原型和早期开发阶段，这个阶段只有方法的声明，但是没有具体实现，你可以在方法体中写上fatalError("Unimplemented")作为具体实现。因为fatalError不会像断言和先决条件那样被优化掉，所以你可以确保当代码执行到一个没有被实现的方法时，程序会被中断。
+

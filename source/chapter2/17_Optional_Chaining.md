@@ -16,6 +16,9 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15   
 > 3.0.1，shanks，2016-11-13
 
+> 4.0
+> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
 本页包含内容：
 
 - [使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)
@@ -371,7 +374,7 @@ if let johnsStreet = john.residence?.address?.street {
 // 打印 “John's street name is Laurel Street.”
 ```
 
-在上面的例子中，因为`john.residence`包含一个有效的`Residence`实例，所以对`john.residence`的`address`属性赋值将会成功。
+在上面的例子中，因为`john.residence`包含一个有效的`Address`实例，所以对`john.residence`的`address`属性赋值将会成功。
 
 <a name="chaining_on_methods_with_optional_return_values"></a>
 ## 在方法的可选返回值上进行可选链式调用
