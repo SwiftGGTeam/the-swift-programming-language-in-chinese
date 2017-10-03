@@ -894,7 +894,7 @@ The figure below shows these relationships:
 .. note::
 
    Both ``String`` and ``Substring`` conform to the
-   `StringProtocol < //apple_ref/swift/intf/s:s14StringProtocolP>` protocol,
+   `StringProtocol <//apple_ref/swift/intf/s:s14StringProtocolP>`_ protocol,
    which means it's often convenient for string-manipulation functions
    to accept a ``StringProtocol`` value.
    You can call such functions with either a ``String`` or ``Substring`` value.
