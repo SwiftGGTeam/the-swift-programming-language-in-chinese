@@ -916,7 +916,7 @@ on any type that adopts the protocol.
 
    If you define a public protocol,
    the protocol's requirements require a public access level
-   for those requirements when they'r implemented.
+   for those requirements when they're implemented.
    This behavior is different from other types,
    where a public type definition implies
    an access level of internal for the type's members.
