@@ -708,11 +708,11 @@ for more on reference cycles).
 .. testcode:: protocols
    :compile: true
 
-   -> protocol DiceGameDelegate : class {
+   -> protocol ClassBoundProtocol : class {
       }
 
-   -> class SnakesAndLadders: DiceGame {
-         weak var delegate: DiceGameDelegate?
+   -> class ClassWithWeakDelegate {
+         weak var delegate: ClassBoundProtocol?
       }
 
 However, if the protocol is implemented by a value type,
