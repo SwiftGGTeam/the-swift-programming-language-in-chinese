@@ -700,6 +700,26 @@ Because it's of an optional type,
 the ``delegate`` property is automatically set to an initial value of ``nil``.
 Thereafter, the game instantiator has the option to set the property to a suitable delegate.
 
+If the ``DiceGameDelegate`` was declared to only be implemented by classes,
+then the delegate should declared ``weak`` to avoid a reference cycle
+(see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances`
+for more on reference cycles).
+
+.. testcode:: protocols
+   :compile: true
+
+   -> protocol DiceGameDelegate : class {
+      }
+
+   -> class SnakesAndLadders: DiceGame {
+         weak var delegate: DiceGameDelegate?
+      }
+
+However, if the protocol is implemented by a value type,
+the possibility of a reference cycle is negated
+because the instance of the ``SnakesAndLadders`` delegate property
+would be always be a copy of the original value.
+
 ``DiceGameDelegate`` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
 the ``play()`` method above, and are called when
