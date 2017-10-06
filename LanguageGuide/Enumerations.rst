@@ -459,8 +459,8 @@ For example, here is an enumeration that stores simple arithmetic expressions:
            indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
-You can also write ``indirect`` before the beginning of the enumeration,
-to enable indirection for all of the enumeration's cases that need it:
+You can also write ``indirect`` before the beginning of the enumeration
+to enable indirection for all of the enumeration's cases that have an associated value:
 
 .. testcode:: recursive-enum
 
