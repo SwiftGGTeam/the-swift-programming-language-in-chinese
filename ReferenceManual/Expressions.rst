@@ -1171,7 +1171,7 @@ For example:
 .. testcode:: keypath-expression
 
    -> struct SomeStructure {
-         var someProperty: Int
+          var someProperty: Int
       }
    ---
    -> let s = SomeStructure(someProperty: 12)
@@ -1203,7 +1203,7 @@ the following code uses ``\.someProperty``:
    -> let c = SomeClass(someProperty: 10)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> c.observe(\.someProperty) { object, change in
-         // ...
+          // ...
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
@@ -1220,10 +1220,10 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
 .. testcode:: keypath-expression
 
    -> struct OuterStructure {
-         var outerProperty: SomeStructure
-         init(someProperty: Int) {
-             self.outerProperty = SomeStructure(someProperty: someProperty)
-         }
+          var outerProperty: SomeStructure
+          init(someProperty: Int) {
+              self.outerProperty = SomeStructure(someProperty: someProperty)
+          }
       }
    ---
    -> let nested = OuterStructure(someProperty: 24)
