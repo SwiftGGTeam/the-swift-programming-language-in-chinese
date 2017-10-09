@@ -1139,10 +1139,12 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you
-refer to a property or subscript
-for use in key-value coding and key-value observing APIs.
-It has the following form:
+A :newTerm:`key-path expression` lets you
+refer to a property or subscript of a type.
+You use key-path expressions
+in dynamic programming tasks,
+such as key-value coding and key-value observing APIs.
+They have the following form:
 
 .. syntax-outline::
 
@@ -1238,19 +1240,20 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
 
 The *path* can access subscripts using brackets.
 For example,
-the following code uses ``\.[3]``:
+the following code uses a subscript 
+to access the second element of an array:
 
 .. XXX complex stuff works here just like it does with regular subscripts --
    generics, multiple parameters, nesting, and so on.
 
 .. testcode:: keypath-expression
 
-   -> let numbers = [10, 20, 30, 40]
-   << // numbers : [Int] = [10, 20, 30, 40]
-   -> let myNumber = numbers[keyPath: \.[3]]
-   << // myNumber : Int = 40
-   /> myNumber is \(myNumber)
-   </ myNumber is 40
+   -> let greetings = ["hello", "hola", "bonjour", "안녕"]
+   << // greetings : [String] = ["hello", "hola", "bonjour", "안녕"]
+   -> let myGreeting = greetings[keyPath: \[String].[1]]
+   << // myGreeting : String = "hola"
+   /> myGreeting is '\(myGreeting)'
+   </ myGreeting is 'hola'
 
 .. XXX type is ambiguous on "let myNumber" line
    Looks like I either need a type annotation on the constant
@@ -1277,13 +1280,13 @@ to access a property of an optional string:
 
 .. testcode:: keypath-expression
 
-   -> let message: String? = "hello"
-   << // message : String? = Optional("hello")
-   -> print(message?.count as Any)
+   -> let firstGreeting: String? = greetings.first
+   << // firstGreeting : String? = Optional("hello")
+   -> print(firstGreeting?.count as Any)
    <- Optional(5)
    ---
    // Do the same thing using a key path.
-   -> let count = message[keyPath: \.?.count]
+   -> let count = greetings[keyPath: \[String].first?.count]
    << // count : String.IndexDistance? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
