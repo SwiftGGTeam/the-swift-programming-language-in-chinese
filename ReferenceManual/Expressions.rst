@@ -1209,11 +1209,6 @@ the following code uses ``\.someProperty``:
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-.. FIXME This is similar to an implicit member expression --
-   likely worth calling out,
-   assuming I can confirm that it's the same kind of type-inference context
-   that lets both of them be used.
-
 The *path* can contain multiple property names, separated by periods,
 which lets you access a property of the given property's value.
 For example,
