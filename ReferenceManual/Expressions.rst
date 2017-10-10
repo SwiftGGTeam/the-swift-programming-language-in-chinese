@@ -1291,6 +1291,28 @@ to access a property of an optional string:
    -> print(count as Any)
    <- Optional(5)
 
+The *path* can contain any number of properties, 
+subscripts, and unwrapping operators. 
+The following code accesses different values and properties
+of a dictionary of arrays 
+by using key-path expressions 
+that combine these components.
+
+.. testcode:: keypath-expression
+
+   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 15],
+                                "triangular": [1, 3, 6, 10, 15, 21, 28],
+                                "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   << // interestingNumbers : [String : [Int]] = ["prime": [2, 3, 5, 7, 11, 13, 15], "triangular": [1, 3, 6, 10, 15, 21, 28], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
+   <- Optional([2, 3, 5, 7, 11, 13, 15])
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
+   <- 2
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
+   <- 7
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
+   <- 64
+                                
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
