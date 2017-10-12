@@ -1255,19 +1255,6 @@ to access the second element of an array:
    or an explicit type in the key path,
    neither of which I really want.
 
-.. Trying to build a more complex example...
-   This one doesn't work because 'numbers' becomes heterogeneous.
-
-   -> let numbers = [10, [20, 200], 30, 40]
-   << // numbers : [Int] = [10, 20, 30, 40]
-   -> var myNumber = numbers[keyPath: \.[3]]
-   << // myNumber : Int = 40
-   /> myNumber is \(myNumber)
-   </ myNumber is 40
-   -> myNumber = numbers[keyPath: \.[1][1]]
-   << // myNumber : Int = 200
-   /> myNumber is \(myNumber)
-   </ myNumber is 200
    
 The *path* can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
