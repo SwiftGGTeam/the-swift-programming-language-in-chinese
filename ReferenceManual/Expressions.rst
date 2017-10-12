@@ -1233,9 +1233,9 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
-The *path* can access subscripts using brackets.
-For example,
-the following code uses a subscript 
+The *path* can access subscripts using brackets,
+as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
+For example, the following code uses a subscript
 to access the second element of an array:
 
 .. XXX complex stuff works here just like it does with regular subscripts --
@@ -1255,6 +1255,25 @@ to access the second element of an array:
    or an explicit type in the key path,
    neither of which I really want.
 
+The value used in a subscript can be a literal or an instance.
+Instances are captured using value semantics.
+The following code uses the variable ``index``
+in a key-path expression to access 
+the third element of the ``greetings`` array:
+
+.. testcode:: keypath-expression
+
+   -> var index = 2
+   << // index : Int = 2
+   -> let thirdElementPath = \[String].[index]
+   << // thirdElementPath : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
+   -> print(greetings[keyPath: thirdElementPath])
+   <- bonjour
+   ---
+   // Setting 'index' to a new value doesn't affect 'thirdElementPath'
+   -> index += 1
+   -> print(greetings[keyPath: thirdElementPath])
+   <- bonjour
    
 The *path* can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
