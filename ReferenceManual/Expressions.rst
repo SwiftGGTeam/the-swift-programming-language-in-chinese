@@ -1143,7 +1143,7 @@ A :newTerm:`key-path expression` lets you
 refer to a property or subscript of a type.
 You use key-path expressions
 in dynamic programming tasks,
-such as key-value coding and key-value observing APIs.
+such as using key-value observing APIs.
 They have the following form:
 
 .. syntax-outline::
@@ -1162,7 +1162,7 @@ is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
 
 To access a value using a key path,
 pass the key path to the ``subscript(keyPath:)`` subscript,
-which is available on all Swift types.
+which is available on all types.
 For example:
 
 .. The subscript name subscript(keyPath:) above is a little odd,
@@ -1315,7 +1315,7 @@ that combine these components.
    <- 64
                                 
 For more information about using key paths
-in Swift code that interacts with Objective-C APIs,
+in code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
 in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 For information about key-value coding and key-value observing,
