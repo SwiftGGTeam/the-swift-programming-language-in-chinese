@@ -1151,9 +1151,9 @@ They have the following form:
    \<#type name#>.<#path#>
 
 The *path* consists of
-property names, subscripts, optional chaining,
-and forced unwrapping.
-Each of these key path components
+property names, subscripts, 
+and optional chaining and forced unwrapping expressions.
+Each of these key-path components
 can be repeated as many times as needed,
 in any order.
 
@@ -1233,9 +1233,9 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
-The *path* can access subscripts using brackets,
+The *path* can include subscripts using brackets,
 as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
-For example, the following code uses a subscript
+For example, the following code uses a subscript in a key path
 to access the second element of an array:
 
 .. XXX complex stuff works here just like it does with regular subscripts --
@@ -1255,7 +1255,7 @@ to access the second element of an array:
    or an explicit type in the key path,
    neither of which I really want.
 
-The value used in a subscript can be a literal or a named variable or constant.
+The value used in a subscript can be a named value or a literal.
 Values are captured in key paths using value semantics.
 For example, the following code uses the variable ``index``
 in both a key-path expression and in a closure to access
@@ -1270,10 +1270,11 @@ while the closure uses the new index.
    << // index : Int = 2
    -> let path = \[String].[index]
    << // path : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
+   -> let fn: ([String]) -> String = { strings in strings[index] }
+   <~ // fn :
+   ---
    -> print(greetings[keyPath: path])
    <- bonjour
-   -> let fn: ([String]) -> String = { $0[index] }
-   <~ // fn :
    -> print(fn(greetings))
    <- bonjour
    ---
@@ -1281,7 +1282,8 @@ while the closure uses the new index.
    -> index += 1
    -> print(greetings[keyPath: path])
    <- bonjour
-   // The new value of 'index' is used by 'fn', which closes over the variable
+   ---
+   // Because 'fn' closes over 'index', it uses the new value
    -> print(fn(greetings))
    <- 안녕
    
@@ -1302,8 +1304,8 @@ to access a property of an optional string:
    -> print(count as Any)
    <- Optional(5)
 
-The *path* can contain any number of properties, 
-subscripts, and unwrapping operators. 
+You can mix and match components of key paths to access values
+that are deeply nested within a type.
 The following code accesses different values and properties
 of a dictionary of arrays 
 by using key-path expressions 
