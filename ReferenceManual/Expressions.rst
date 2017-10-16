@@ -1255,25 +1255,35 @@ to access the second element of an array:
    or an explicit type in the key path,
    neither of which I really want.
 
-The value used in a subscript can be a literal or an instance.
-Instances are captured using value semantics.
-The following code uses the variable ``index``
-in a key-path expression to access 
-the third element of the ``greetings`` array:
+The value used in a subscript can be a literal or a named variable or constant.
+Values are captured in key paths using value semantics.
+For example, the following code uses the variable ``index``
+in both a key-path expression and in a closure to access
+the third element of the ``greetings`` array.
+When ``index`` is modified,
+the key-path expression still references the third element,
+while the closure uses the new index.
 
 .. testcode:: keypath-expression
 
    -> var index = 2
    << // index : Int = 2
-   -> let thirdElementPath = \[String].[index]
-   << // thirdElementPath : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
-   -> print(greetings[keyPath: thirdElementPath])
+   -> let path = \[String].[index]
+   << // path : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
+   -> print(greetings[keyPath: path])
+   <- bonjour
+   -> let fn: ([String]) -> String = { $0[index] }
+   <~ // fn :
+   -> print(fn(greetings))
    <- bonjour
    ---
-   // Setting 'index' to a new value doesn't affect 'thirdElementPath'
+   // Setting 'index' to a new value doesn't affect 'path'
    -> index += 1
-   -> print(greetings[keyPath: thirdElementPath])
+   -> print(greetings[keyPath: path])
    <- bonjour
+   // The new value of 'index' is used by 'fn', which closes over the variable
+   -> print(fn(greetings))
+   <- 안녕
    
 The *path* can use optional chaining and forced unwrapping.
 For example, the following code uses optional chaining in a key path
