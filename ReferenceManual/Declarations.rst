@@ -1146,6 +1146,7 @@ the compiler must insert a layer of indirection.
 
 To enable indirection for a particular enumeration case,
 mark it with the ``indirect`` declaration modifier.
+An indirect case must have an associated value.
 
 .. TODO The word "enable" is kind of a weasle word.
    Better to have a more concrete discussion of exactly when
@@ -1165,13 +1166,12 @@ mark it with the ``indirect`` declaration modifier.
    << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
    << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
-To enable indirection for all the cases of an enumeration,
+To enable indirection for all the cases of an enumeration
+that have an associated value,
 mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
 
-An enumeration case that's marked with the ``indirect`` modifier
-must have an associated value.
 An enumeration that is marked with the ``indirect`` modifier
 can contain a mixture of cases that have associated values and cases those that don't.
 That said,
