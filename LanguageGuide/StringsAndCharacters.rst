@@ -809,7 +809,7 @@ use the ``removeSubrange(_:)`` method:
 
 .. note::
 
-   You can use the the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
+   You can use the ``insert(_:at:)``, ``insert(contentsOf:at:)``,
    ``remove(at:)``, and ``removeSubrange(_:)`` methods
    on any type that conforms to the ``RangeReplaceableCollection`` protocol.
    This includes ``String``, as shown here,
