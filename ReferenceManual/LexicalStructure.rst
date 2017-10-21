@@ -73,7 +73,7 @@ but the comment markers must be balanced.
    comment --> ``//`` comment-text line-break
    multiline-comment --> ``/*`` multiline-comment-text ``*/``
 
-   comment-text --> comment-text-item comment-text-item-OPT
+   comment-text --> comment-text-item comment-text-OPT
    comment-text-item --> Any Unicode scalar value except U+000A or U+000D
 
    multiline-comment-text --> multiline-comment-text-item multiline-comment-text-OPT
