@@ -628,7 +628,7 @@ String Literals
 ~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters surrounded by quotes.
-A single-line string literal is surrounded by double quotes
+A single-line string literal is surrounded by double quotation marks
 and has the following form:
 
 .. syntax-outline::
@@ -636,11 +636,11 @@ and has the following form:
     "<#characters#>"
 
 String literals can't contain
-an unescaped double quote (``"``),
+an unescaped double quotation mark (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-A multiline string literal is surrounded by three double quotes
+A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
 .. syntax-outline::
@@ -651,8 +651,8 @@ and has the following form:
 
 Unlike a single-line string literal,
 a multiline string literal can contain
-unescaped double quotes (``"``), carriage returns, and line feeds.
-It can't contain three unescaped double quotes next to each other.
+unescaped double quotation marks (``"``), carriage returns, and line feeds.
+It can't contain three unescaped double quotation marks next to each other.
 
 The line break after the ``"""``
 that begins the multiline string literal

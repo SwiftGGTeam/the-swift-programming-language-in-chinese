@@ -125,10 +125,10 @@ For example:
    include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
-Use three double quotes (``"""``) for strings
+Use three double quotation marks (``"""``) for strings
 that take up multiple lines.
 Indentation at the start of each quoted line is removed,
-as long as it matches the indentation of the closing quote.
+as long as it matches the indentation of the closing quotation marks.
 For example:
 
 .. testcode:: guided-tour-compiled

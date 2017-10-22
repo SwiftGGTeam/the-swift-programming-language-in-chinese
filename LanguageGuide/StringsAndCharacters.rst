@@ -43,7 +43,7 @@ String Literals
 
 You can include predefined ``String`` values within your code as :newTerm:`string literals`.
 A string literal is a sequence of characters
-surrounded by double quotes (``"``).
+surrounded by double quotation marks (``"``).
 
 Use a string literal as an initial value for a constant or variable:
 
@@ -63,7 +63,7 @@ Multiline String Literals
 If you need a string that spans several lines,
 use a multiline string literal ---
 a sequence of characters
-surrounded by three double quotes:
+surrounded by three double quotation marks:
 
 .. Quote comes from "Alice's Adventures in Wonderland",
    which has been public domain as of 1907.
@@ -83,9 +83,9 @@ surrounded by three double quotes:
    << 4
 
 A multiline string literal includes all of the lines between
-its opening and closing quotes.
-The string begins on the first line after the opening quotes (``"""``)
-and ends on the line before the closing quotes,
+its opening and closing quotation marks.
+The string begins on the first line after the opening quotation marks (``"""``)
+and ends on the line before the closing quotation marks,
 which means that neither of the strings below
 start or end with a line break:
 
@@ -138,10 +138,10 @@ For example:
 .. These are well-fed lines!
 
 A multiline string can be indented to match the surrounding code.
-The whitespace before the closing quotes (``"""``)
+The whitespace before the closing quotation marks (``"""``)
 tells Swift what whitespace to ignore before all of the other lines.
 However, if you write whitespace at the beginning of a line
-in addition to what's before the closing quotes,
+in addition to what's before the closing quotation marks,
 that whitespace *is* included.
 
 .. image:: ../images/multilineStringWhitespace_2x.png
@@ -164,7 +164,7 @@ that whitespace *is* included.
 In the example above,
 even though the entire multiline string literal is indented,
 the first and last lines in the string don't begin with any whitespace.
-The middle line has more indentation than the closing quotes,
+The middle line has more indentation than the closing quotation marks,
 so it starts with that extra four-space indentation.
 
 .. _StringsAndCharacters_SpecialCharactersInStringLiterals:
@@ -176,7 +176,7 @@ String literals can include the following special characters:
 
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
-  ``\"`` (double quote) and ``\'`` (single quote)
+  ``\"`` (double quotation mark) and ``\'`` (single quotation mark)
 
 * An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
   where *n* is a 1--8 digit hexadecimal number
@@ -201,7 +201,7 @@ String literals can include the following special characters:
    !! ^
 
 The code below shows four examples of these special characters.
-The ``wiseWords`` constant contains two escaped double quote characters.
+The ``wiseWords`` constant contains two escaped double quotation marks.
 The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the Unicode scalar format:
 
@@ -218,8 +218,8 @@ demonstrate the Unicode scalar format:
    -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
    << // sparklingHeart : String = "💖"
 
-Because multiline string literals use three double quotes instead of just one,
-you can include a double quote (``"``) inside of a multiline string literal
+Because multiline string literals use three double quotation marks instead of just one,
+you can include a double quotation mark (``"``) inside of a multiline string literal
 without escaping it.
 To include the text ``"""`` in a multiline string,
 escape at least one of the quotation marks.
@@ -228,13 +228,13 @@ For example:
 .. testcode:: multiline-string-literals
    :compile: true
 
-   -> let threeDoubleQuotes = """
-      Escaping the first quote \"""
-      Escaping all three quotes \"\"\"
+   -> let threeDoubleQuotationMarks = """
+      Escaping the first quotation mark \"""
+      Escaping all three quotation marks \"\"\"
       """
-   >> print(threeDoubleQuotes)
-   << Escaping the first quote """
-   << Escaping all three quotes """
+   >> print(threeDoubleQuotationMarks)
+   << Escaping the first quotation mark """
+   << Escaping all three quotation marks """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
