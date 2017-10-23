@@ -627,7 +627,7 @@ which represents a 32-bit floating-point number.
 String Literals
 ~~~~~~~~~~~~~~~
 
-A string literal is a sequence of characters surrounded by quotes.
+A string literal is a sequence of characters surrounded by quotation marks.
 A single-line string literal is surrounded by double quotation marks
 and has the following form:
 
@@ -699,8 +699,8 @@ using the following escape sequences:
 * Horizontal tab (``\t``)
 * Line feed (``\n``)
 * Carriage return (``\r``)
-* Double quote (``\"``)
-* Single quote (``\'``)
+* Double quotation mark (``\"``)
+* Single quotation mark (``\'``)
 * Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`),
   where *n* is a hexadecimal number
   that has one to eight digits
