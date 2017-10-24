@@ -370,9 +370,9 @@ In fact, ``someFunction()`` won't compile as written below:
 
 The function's return type is
 a tuple type composed from two of the custom classes defined above in :ref:`AccessControl_CustomTypes`.
-One of these classes was defined as “internal”,
-and the other was defined as “private”.
-Therefore, the overall access level of the compound tuple type is “private”
+One of these classes is defined as internal,
+and the other is defined as private.
+Therefore, the overall access level of the compound tuple type is private
 (the minimum access level of the tuple's constituent types).
 
 Because the function's return type is private,
@@ -402,9 +402,9 @@ the enumeration they belong to.
 You can't specify a different access level for individual enumeration cases.
 
 In the example below,
-the ``CompassPoint`` enumeration has an explicit access level of “public”.
+the ``CompassPoint`` enumeration has an explicit access level of public.
 The enumeration cases ``north``, ``south``, ``east``, and ``west``
-therefore also have an access level of “public”:
+therefore also have an access level of public:
 
 .. testcode:: enumerationCases
 
@@ -434,8 +434,8 @@ Raw Values and Associated Values
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
-You can't use a ``private`` type as the raw-value type of
-an enumeration with an ``internal`` access level, for example.
+You can't use a private type as the raw-value type of
+an enumeration with an internal access level, for example.
 
 .. _AccessControl_NestedTypes:
 
