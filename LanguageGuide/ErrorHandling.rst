@@ -307,6 +307,8 @@ Here is the general form of a ``do``-``catch`` statement:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch {
+       <#statements#>
    }
 
 You write a pattern after ``catch`` to indicate what errors
