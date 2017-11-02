@@ -1139,11 +1139,11 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`key-path expression` is used to
-refer to a property or subscript of a type.
+A :newTerm:`key-path expression`
+refers to a property or subscript of a type.
 You use key-path expressions
 in dynamic programming tasks,
-such as using key-value observing APIs.
+such as key-value observing.
 They have the following form:
 
 .. syntax-outline::
@@ -1197,8 +1197,7 @@ For example:
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
-For example,
-the following code uses ``\.someProperty``
+The following code uses ``\.someProperty``
 instead of ``\SomeClass.someProperty``:
 
 .. testcode:: keypath-expression-implicit-type-name
@@ -1221,8 +1220,7 @@ instead of ``\SomeClass.someProperty``:
 The *path* can contain multiple property names, 
 separated by periods,
 to refer to a property of a property's value.
-For example,
-the following code uses the key path expression
+This code uses the key path expression
 ``\OuterStructure.outer.someValue``
 to access the ``someValue`` property
 of the ``OuterStructure`` type's ``outer`` property:
@@ -1248,7 +1246,7 @@ of the ``OuterStructure`` type's ``outer`` property:
 
 The *path* can include subscripts using brackets,
 as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
-For example, the following code uses a subscript in a key path
+This example uses a subscript in a key path
 to access the second element of an array:
 
 .. XXX complex stuff works here just like it does with regular subscripts --
@@ -1270,7 +1268,7 @@ to access the second element of an array:
 
 The value used in a subscript can be a named value or a literal.
 Values are captured in key paths using value semantics.
-For example, the following code uses the variable ``index``
+The following code uses the variable ``index``
 in both a key-path expression and in a closure to access
 the third element of the ``greetings`` array.
 When ``index`` is modified,
@@ -1301,7 +1299,7 @@ while the closure uses the new index.
    <- 안녕
    
 The *path* can use optional chaining and forced unwrapping.
-For example, the following code uses optional chaining in a key path
+This code uses optional chaining in a key path
 to access a property of an optional string:
 
 .. testcode:: keypath-expression
