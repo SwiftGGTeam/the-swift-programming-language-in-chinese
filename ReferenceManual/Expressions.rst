@@ -1139,7 +1139,7 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`key-path expression` lets you
+A :newTerm:`key-path expression` is used to
 refer to a property or subscript of a type.
 You use key-path expressions
 in dynamic programming tasks,
@@ -1150,15 +1150,23 @@ They have the following form:
 
    \<#type name#>.<#path#>
 
+The *type name* is the name of a concrete type,
+including any generic parameters,
+such as ``String`` or ``Array<Int>``.
+Full type names are interchangeable with their shorthand form,
+so ``[Int]`` and ``Array<Int>``
+both refer to the type of an array of ``Int`` elements.
+
 The *path* consists of
-property names, subscripts, 
-and optional chaining and forced unwrapping expressions.
+property names, subscripts, optional chaining expressions, 
+and forced unwrapping expressions.
 Each of these key-path components
 can be repeated as many times as needed,
 in any order.
 
-At compile time, the key-path expression
-is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
+At compile time, a key-path expression
+is replaced by an instance
+of the `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ class.
 
 To access a value using a key path,
 pass the key path to the ``subscript(keyPath:)`` subscript,
@@ -1173,15 +1181,15 @@ For example:
 .. testcode:: keypath-expression
 
    -> struct SomeStructure {
-          var someProperty: Int
+          var someValue: Int
       }
    ---
-   -> let s = SomeStructure(someProperty: 12)
-   << // s : SomeStructure = REPL.SomeStructure(someProperty: 12)
-   -> let keyPath = \SomeStructure.someProperty
-   << // keyPath : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
+   -> let s = SomeStructure(someValue: 12)
+   << // s : SomeStructure = REPL.SomeStructure(someValue: 12)
+   -> let pathToProperty = \SomeStructure.someValue
+   << // pathToProperty : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
    ---
-   -> let value = s[keyPath: keyPath]
+   -> let value = s[keyPath: pathToProperty]
    << // value : Int = 12
    /> value is \(value)
    </ value is 12
@@ -1190,7 +1198,8 @@ The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
 For example,
-the following code uses ``\.someProperty``:
+the following code uses ``\.someProperty``
+instead of ``\SomeClass.someProperty``:
 
 .. testcode:: keypath-expression-implicit-type-name
 
@@ -1209,23 +1218,27 @@ the following code uses ``\.someProperty``:
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-The *path* can contain multiple property names, separated by periods,
-which lets you access a property of the given property's value.
+The *path* can contain multiple property names, 
+separated by periods,
+to refer to a property of a property's value.
 For example,
-the following code uses ``\OuterStructure.outerProperty.someProperty``:
+the following code uses the key path expression
+``\OuterStructure.outer.someValue``
+to access the ``someValue`` property
+of the ``OuterStructure`` type's ``outer`` property:
 
 .. testcode:: keypath-expression
 
    -> struct OuterStructure {
-          var outerProperty: SomeStructure
-          init(someProperty: Int) {
-              self.outerProperty = SomeStructure(someProperty: someProperty)
+          var outer: SomeStructure
+          init(someValue: Int) {
+              self.outer = SomeStructure(someValue: someValue)
           }
       }
    ---
-   -> let nested = OuterStructure(someProperty: 24)
-   << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
-   -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
+   -> let nested = OuterStructure(someValue: 24)
+   << // nested : OuterStructure = REPL.OuterStructure(outer: REPL.SomeStructure(someValue: 24))
+   -> let nestedKeyPath = \OuterStructure.outer.someValue
    << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
    ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
