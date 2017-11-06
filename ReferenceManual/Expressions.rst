@@ -1257,7 +1257,8 @@ to access the second element of an array:
 
 .. TODO: Update examples here and below to remove type names once
    inference bugs are fixed. The compiler currently gives an error
-   that the usage is ambiguous. https://bugs.swift.org/browse/SR-5865
+   that the usage is ambiguous.
+   <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
 
 The value used in a subscript can be a named value or a literal.
 Values are captured in key paths using value semantics.
