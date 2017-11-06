@@ -1246,9 +1246,6 @@ as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
 This example uses a subscript in a key path
 to access the second element of an array:
 
-.. XXX complex stuff works here just like it does with regular subscripts --
-   generics, multiple parameters, nesting, and so on.
-
 .. testcode:: keypath-expression
 
    -> let greetings = ["hello", "hola", "bonjour", "안녕"]
