@@ -628,7 +628,7 @@ The example below defines two protocols for use with dice-based board games:
          var dice: Dice { get }
          func play()
       }
-   -> protocol DiceGameDelegate : AnyObject {
+   -> protocol DiceGameDelegate: AnyObject {
          func gameDidStart(_ game: DiceGame)
          func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(_ game: DiceGame)
@@ -639,10 +639,13 @@ by any game that involves dice.
 
 The ``DiceGameDelegate`` protocol can be adopted
 to track the progress of a ``DiceGame``.
-Because the protocol inherits from ``AnyObject`, the protocol
-can only be implemented by a class.
-For more information on class-bound protocols,
-see :ref:`Protocols_ClassOnlyProtocols`.
+Delegates should be weakly-owned in order to prevent
+reference cycles (see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances`).
+You can enforce this protection by denoting the protocol
+as class-only through inheriting from ``AnyObject``
+(see :ref:`Protocols_ClassOnlyProtocols`).
+Class-binding the protocol will later allow you to declare that
+the object implementing the delegate protocol must be ``weak``.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
@@ -704,11 +707,8 @@ because a delegate isn't required in order to play the game.
 Because it's of an optional type,
 the ``delegate`` property is automatically set to an initial value of ``nil``.
 Thereafter, the game instantiator has the option to set the property to a suitable delegate.
-
-Because the ``DiceGameDelegate`` was declared to be class-bound,
-the delegate should declared ``weak`` to avoid a reference cycle
-(see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances`
-for more on reference cycles).
+Because the ``DiceGameDelegate`` protocol is class-only, you can declare the
+delegate to be ``weak`` to prevent reference cycles.
 
 ``DiceGameDelegate`` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
