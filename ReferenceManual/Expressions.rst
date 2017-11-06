@@ -1255,10 +1255,9 @@ to access the second element of an array:
    /> myGreeting is '\(myGreeting)'
    </ myGreeting is 'hola'
 
-.. XXX type is ambiguous on "let myNumber" line
-   Looks like I either need a type annotation on the constant
-   or an explicit type in the key path,
-   neither of which I really want.
+.. TODO: Update examples here and below to remove type names once
+   inference bugs are fixed. The compiler currently gives an error
+   that the usage is ambiguous. https://bugs.swift.org/browse/SR-5865
 
 The value used in a subscript can be a named value or a literal.
 Values are captured in key paths using value semantics.
