@@ -1152,10 +1152,7 @@ They have the following form:
 
 The *type name* is the name of a concrete type,
 including any generic parameters,
-such as ``String`` or ``Array<Int>``.
-Full type names are interchangeable with their shorthand form,
-so ``[Int]`` and ``Array<Int>``
-both refer to the type of an array of ``Int`` elements.
+such as ``String``, ``[Int]``, or ``Set<Int>``.
 
 The *path* consists of
 property names, subscripts, optional chaining expressions, 
