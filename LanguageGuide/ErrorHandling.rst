@@ -319,21 +319,8 @@ and binds the error to a local constant named ``error``.
 For more information about pattern matching,
 see :doc:`../ReferenceManual/Patterns`.
 
-The ``catch`` clauses don't have to handle every possible error
-that the code in its ``do`` clause can throw.
-If none of the ``catch`` clauses handle the error,
-the error propagates to the surrounding scope.
-However, the error must be handled by *some* surrounding scope ---
-either by an enclosing ``do``-``catch`` clause
-that handles the error
-or by being inside a throwing function.
-For example, the following code handles all three cases
-of the ``VendingMachineError`` enumeration,
-but all other errors have to be handled by its surrounding scope:
-
-.. TODO: Call out the reasoning why we don't let you
-   consider a catch clause exhaustive by just matching
-   the errors in an given enum without a general catch/default.
+For example, the following code matches against all three cases
+of the ``VendingMachineError`` enumeration.
 
 .. testcode:: errorHandling
 
@@ -342,12 +329,15 @@ but all other errors have to be handled by its surrounding scope:
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
+          print("Success! Yum.")
       } catch VendingMachineError.invalidSelection {
           print("Invalid Selection.")
       } catch VendingMachineError.outOfStock {
           print("Out of Stock.")
       } catch VendingMachineError.insufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
+      } catch {
+          print("Unexpected error: \(error).")
       }
    <- Insufficient funds. Please insert an additional 2 coins.
 
@@ -357,8 +347,51 @@ because it can throw an error.
 If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
 which decide whether to allow propagation to continue.
+If no pattern is matched, the error gets caught by the final ``catch``
+clause and is bound to a local ``error`` variable.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
+
+The ``catch`` clauses don't have to handle every possible error
+that the code in its ``do`` clause can throw.
+If none of the ``catch`` clauses handle the error,
+the error propagates to the surrounding scope.
+However, the error must be handled by *some* surrounding scope ---
+either by an enclosing ``do``-``catch`` clause
+that handles the error
+or by being inside a throwing function.
+For example, the above example can be written so any
+error that isn't a ``VendingMachineError`` is instead
+caught by the calling function:
+
+.. testcode:: errorHandling
+
+    -> func replenishSoul(with item:String) throws {
+        do {
+            try vendingMachine.vend(itemNamed: item)
+        } catch is VendingMachineError {
+            print("User error! Wrong selection, out of stock, or not enough money.")
+        }
+    }
+
+    >> do {
+    >>    try replenishSoul(with: "Sugary goodness")
+    >> } catch {
+    >>    print("Unexpected non-vending-machine-related error: \(error)")
+    >> }
+    << User error! Wrong selection, out of stock, or not enough money.
+
+If ``vend(itemNamed:)`` throws an error that doesn't match against
+any of the ``VendingMachineError`` enums cases, then
+``replenishSoul(with:)`` propogates the error to its call site
+where the error is then caught by the general ``catch`` clause.
+
+Technically, the implementation of ``vend(itemNamed:)`` will
+only ever throw a ``VendingMachineError`` such that the aforementioned
+situation shouldn't happen.
+However, because ``throws`` in Swift aren't typed and cannot be checked against,
+to exhaustively handle errors you must include
+a general ``catch`` clause somewhere along the propogation chain.
 
 .. _ErrorHandling_Optional:
 
