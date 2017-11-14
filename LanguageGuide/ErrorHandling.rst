@@ -353,7 +353,7 @@ If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
 
 The ``catch`` clauses don't have to handle every possible error
-that the code in its ``do`` clause can throw.
+that the code in a ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
 However, the error must be handled by *some* surrounding scope ---
@@ -366,7 +366,7 @@ caught by the calling function:
 
 .. testcode:: errorHandling
 
-    -> func replenishSoul(with item:String) throws {
+    -> func nourish(with item:String) throws {
         do {
             try vendingMachine.vend(itemNamed: item)
         } catch is VendingMachineError {
@@ -374,24 +374,25 @@ caught by the calling function:
         }
     }
 
-    >> do {
-    >>    try replenishSoul(with: "Sugary goodness")
-    >> } catch {
-    >>    print("Unexpected non-vending-machine-related error: \(error)")
-    >> }
+    -> do {
+        try nourish(with: "Cadbury chocolate")
+    } catch {
+        print("Unexpected non-vending-machine-related error: \(error)")
+    }
     << User error! Wrong selection, out of stock, or not enough money.
 
 If ``vend(itemNamed:)`` throws an error that doesn't match against
-any of the ``VendingMachineError`` enums cases, then
-``replenishSoul(with:)`` propogates the error to its call site
-where the error is then caught by the general ``catch`` clause.
+any of the ``VendingMachineError`` enums cases,
+``nourish(with:)`` propogates the error to its call site.
+The error is then caught by the general ``catch`` clause.
 
-Technically, the implementation of ``vend(itemNamed:)`` will
-only ever throw a ``VendingMachineError`` such that the aforementioned
-situation shouldn't happen.
-However, because ``throws`` in Swift aren't typed and cannot be checked against,
-to exhaustively handle errors you must include
-a general ``catch`` clause somewhere along the propogation chain.
+The aforementioned situation shouldn't happen since
+``vend(itemNamed:)`` is implemented to
+only ever throw a ``VendingMachineError``.
+However, because ``throws`` don't contain type information,
+you must include a general ``catch`` clause 
+somewhere along the propogation chain
+to exhaustively handle errors.
 
 .. _ErrorHandling_Optional:
 
