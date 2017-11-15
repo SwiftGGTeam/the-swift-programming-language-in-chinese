@@ -7,6 +7,9 @@ This table describes the changes to *The Swift Programming Language*.
 Date        Notes
 ==========  ==============================================================================================
 2017-12-04  * Updated for Swift 4.0.3.
+
+            * Updated the :ref:`Expression_TypedKeyPathExpression` section,
+              now that key paths support subscript components.
 ----------  ----------------------------------------------------------------------------------------------
 2017-09-19  * Updated for Swift 4.0.
 
