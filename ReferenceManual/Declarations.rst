@@ -889,10 +889,11 @@ that doesn't override a superclass method.
 
 Methods associated with a type
 rather than an instance of a type
-must be marked with the ``static`` declaration modifier for enumerations and structures
-or either the ``static`` or ``class`` declaration modifier for classes.
+must be marked with the ``static`` declaration modifier for enumerations and structures,
+or with either the ``static`` or ``class`` declaration modifier for classes.
 A class type method marked with the ``class`` declaration modifier
-can be overridden by a subclass implementation.
+can be overridden by a subclass implementation;
+a class type method marked with ``static`` can't be overridden.
 
 .. _Declarations_ThrowingFunctionsAndMethods:
 
