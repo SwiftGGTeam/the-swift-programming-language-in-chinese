@@ -319,6 +319,10 @@ and binds the error to a local constant named ``error``.
 For more information about pattern matching,
 see :doc:`../ReferenceManual/Patterns`.
 
+.. TODO: Call out the reasoning why we don't let you
+   consider a catch clause exhaustive by just matching
+   the errors in an given enum without a general catch/default.
+
 For example, the following code matches against all three cases
 of the ``VendingMachineError`` enumeration.
 
@@ -385,14 +389,6 @@ If ``vend(itemNamed:)`` throws an error that doesn't match against
 any of the ``VendingMachineError`` enums cases,
 ``nourish(with:)`` propogates the error to its call site.
 The error is then caught by the general ``catch`` clause.
-
-The aforementioned situation shouldn't happen since
-``vend(itemNamed:)`` is implemented to
-only ever throw a ``VendingMachineError``.
-However, because ``throws`` don't contain type information,
-you must include a general ``catch`` clause 
-somewhere along the propogation chain
-to exhaustively handle errors.
 
 .. _ErrorHandling_Optional:
 
