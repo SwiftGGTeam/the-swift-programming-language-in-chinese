@@ -371,18 +371,18 @@ caught by the calling function:
 .. testcode:: errorHandling
 
     -> func nourish(with item:String) throws {
-        do {
-            try vendingMachine.vend(itemNamed: item)
-        } catch is VendingMachineError {
-            print("User error! Wrong selection, out of stock, or not enough money.")
-        }
-    }
-
+           do {
+               try vendingMachine.vend(itemNamed: item)
+           } catch is VendingMachineError {
+               print("User error! Wrong selection, out of stock, or not enough money.")
+           }
+       }
+    ---
     -> do {
-        try nourish(with: "Beet-flavored Chips")
-    } catch {
-        print("Unexpected non-vending-machine-related error: \(error)")
-    }
+           try nourish(with: "Beet-flavored Chips")
+       } catch {
+           print("Unexpected non-vending-machine-related error: \(error)")
+       }
     << User error! Wrong selection, out of stock, or not enough money.
 
 If ``vend(itemNamed:)`` throws an error that doesn't match against
