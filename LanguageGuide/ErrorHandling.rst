@@ -357,7 +357,7 @@ If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
 
 The ``catch`` clauses don't have to handle every possible error
-that the code in a ``do`` clause can throw.
+that the code in the ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
 However, the error must be handled by *some* surrounding scope ---
