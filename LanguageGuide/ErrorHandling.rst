@@ -379,7 +379,7 @@ caught by the calling function:
        }
     ---
     -> do {
-           try nourish(with: "Beet-flavored Chips")
+           try nourish(with: "Beet-Flavored Chips")
        } catch {
            print("Unexpected non-vending-machine-related error: \(error)")
        }
