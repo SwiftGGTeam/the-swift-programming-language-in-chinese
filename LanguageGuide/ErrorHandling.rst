@@ -385,9 +385,12 @@ caught by the calling function:
        }
     << Invalid selection, out of stock, or not enough money.
 
-If ``vend(itemNamed:)`` throws an error that doesn't match against
-any of the ``VendingMachineError`` enums cases,
-``nourish(with:)`` propogates the error to its call site.
+In the ``nourish(with:)`` function,
+if ``vend(itemNamed:)`` throws an error that's
+one of the cases of the ``VendingMachineError`` enumeration,
+``nourish(with:)`` handles the error by printing a message.
+Otherwise,
+``nourish(with:)`` propagates the error to its call site.
 The error is then caught by the general ``catch`` clause.
 
 .. _ErrorHandling_Optional:
