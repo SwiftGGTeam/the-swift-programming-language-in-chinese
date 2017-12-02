@@ -374,7 +374,7 @@ caught by the calling function:
            do {
                try vendingMachine.vend(itemNamed: item)
            } catch is VendingMachineError {
-               print("User error! Wrong selection, out of stock, or not enough money.")
+               print("Invalid selection, out of stock, or not enough money.")
            }
        }
     ---
@@ -383,7 +383,7 @@ caught by the calling function:
        } catch {
            print("Unexpected non-vending-machine-related error: \(error)")
        }
-    << User error! Wrong selection, out of stock, or not enough money.
+    << Invalid selection, out of stock, or not enough money.
 
 If ``vend(itemNamed:)`` throws an error that doesn't match against
 any of the ``VendingMachineError`` enums cases,
