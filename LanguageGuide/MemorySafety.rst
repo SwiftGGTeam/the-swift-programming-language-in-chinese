@@ -240,7 +240,6 @@ is to make an explicit copy of ``stepSize``:
     >> func incrementInPlace(_ number: inout Int) {
     >>     number += stepSize
     >> }
-    ---
     // Make an explicit copy.
     -> var copyOfStepSize = stepSize
     << // copyOfStepSize : Int = 1
