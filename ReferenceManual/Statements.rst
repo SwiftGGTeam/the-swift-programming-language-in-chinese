@@ -968,14 +968,12 @@ consists of a major number, optional minor number, optional patch number, and so
 with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
 
-The module name for the ``canImport()`` platform condition
-should be the name of a module that may not be available on all platforms.
-This condition doesn't cause the module to imported.
-Rather, it simply tests for the availability of the named module
-in the context of the current compilation.
-If the module named within the ``canImport()`` platform condition is available,
-code in that conditional branch can safely import the module.
-
+The argument for the ``canImport()`` platform condition
+is the name of a module that may not be present on all platforms.
+This condition tests whether it's possible to import the module,
+but doesn't actually import it.
+If the module is present, the platform condition returns ``true``;
+otherwise, it returns ``false``.
 
 .. note::
 
