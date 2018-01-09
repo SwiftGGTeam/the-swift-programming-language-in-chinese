@@ -126,6 +126,18 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+    !! <REPL Input>:1:38: note: did you mean to use 'try'?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try
+    !! <REPL Input>:1:38: note: did you mean to handle error as optional value?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try?
+    !! <REPL Input>:1:38: note: did you mean to disable error propagation?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try!
 
 A ``try`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator

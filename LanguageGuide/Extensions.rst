@@ -171,7 +171,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    -> class C {}
    -> extension C { var x = 0 }
-   !! /tmp/swifttest.swift:2:19: error: extensions may not contain stored properties
+   !! /tmp/swifttest.swift:2:19: error: extensions must not contain stored properties
    !! extension C { var x = 0 }
    !!                   ^
 
