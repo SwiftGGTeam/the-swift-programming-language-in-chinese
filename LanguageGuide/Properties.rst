@@ -10,7 +10,7 @@ Stored properties are provided only by classes and structures.
 .. assertion:: enumerationsCantProvideStoredProperties
 
    -> enum E { case a, b; var x = 0 }
-   !! <REPL Input>:1:25: error: enums may not contain stored properties
+   !! <REPL Input>:1:25: error: enums must not contain stored properties
    !! enum E { case a, b; var x = 0 }
    !! ^
 
@@ -396,10 +396,12 @@ and can be accessed through dot syntax, but cannot be set to a different value.
       }
    !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be computed properties
    !! let x: Int { return 42 }
-   !! ^
+   !! ~~~        ^
+   !! var
    !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be computed properties
    !! let y: Int { get { return 42 } set {} }
-   !! ^
+   !! ~~~        ^
+   !! var
 
 You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
@@ -474,7 +476,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
             didSet { print("C didSet x from \(oldValue)") }
          }
       }
-   !! <REPL Input>:2:6: error: lazy properties may not have observers
+   !! <REPL Input>:2:6: error: lazy properties must not have observers
    !! lazy var x: Int = 0 {
    !! ^~~~~
    !!-
