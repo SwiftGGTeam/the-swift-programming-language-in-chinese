@@ -768,6 +768,40 @@ and the return type of the subscript.
 Swift can therefore infer that ``Element`` is the appropriate type to use
 as the ``Item`` for this particular container.
 
+.. _Generics_RecursiveProtocol:
+
+Recursive Protocol Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. XXX: Probably need a better name.
+   Just because the SE proposal called it this
+   doesn't actually mean we have to.
+
+.. Outline
+   - Suppose you want to model containers whose elements can be reversed.
+   - Simple way:
+         protocol ReversibleContainer: Container { func reversed() -> Container }
+   - But if a container con be reversed once,
+     the reversed version should be reversible too.
+   - Ok, how about:
+         protocol ReversibleContainer: Container { func reversed() -> ReversibleContainer }
+   - Nope...  ReversibleContainer it has an associated type,
+     so it can be used only as a generic constraint.
+   - You also don't want:
+         protocol ReversibleContainer: Container { func reversed() -> Self }
+   - This requires the container to return exactly the same type
+     when you reverse it.
+   - Using an associated type lets you
+     wrap the old container in a "reverser" type
+     and iterate it backwards, without needing to copy it.
+
+.. testcode:: associatedTypes
+
+   -> protocol ReversibleContainer: Container {
+          associatedtype T: ReversibleContainer where T.Item == Item
+          func reversed() -> T
+      }
+
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
 
 Extending an Existing Type to Specify an Associated Type
