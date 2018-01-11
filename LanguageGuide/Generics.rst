@@ -795,11 +795,61 @@ Recursive Protocol Constraints
      wrap the old container in a "reverser" type
      and iterate it backwards, without needing to copy it.
 
+A protocol can appear as part of its own requirements.
+For example,
+here's a protocol for containers that support a *reverse* operation:
+
 .. testcode:: associatedTypes
 
    -> protocol ReversibleContainer: Container {
-          associatedtype T: ReversibleContainer where T.Item == Item
-          func reversed() -> T
+          associatedtype Reversed: ReversibleContainer where Reversed.Item == Item
+          func reversed() -> Reversed
+      }
+
+The associated ``Reversed`` type
+has two requirements:
+It must conform to the ``ReversibleContainer`` protocol,
+and its ``Item`` type must be the same as the container's ``Item`` type.
+The ``reversed()`` method uses this type as its return value.
+
+This approach allows for more implementation flexibility
+than defining ``reversed()`` to return ``Self``.
+Returning ``Self`` would mean reversing a container
+always returns the exact same container type,
+meaning the *reverse* operation has to copy the container
+and reverse the copy.
+Allowing any reversible container
+still supports the copy-and-reverse implementation,
+but also supports using a wrapper type
+to translate (and reverse) the indices.
+
+.. testcode:: associatedTypes
+
+   -> struct ReversedContainer {
+          private let container: Container
+          var count { return container.count }
+          subscript(i: Int) { return container[container.count - i] }
+
+          // append --- need to copy, reverse, then append
+      }
+
+.. XXX actually, maybe building a reversed-container wrapper is too complicated
+   to slot into the discussion at this point,
+   because of the fact that there's no way to transform append()
+   into an operation on the wrapped container.
+
+.. Another possible example... but probably to be discarded...
+   
+   For example,
+   the ``Ignorable`` protocol below
+   requires a ``doNothing()`` method.
+   That method (presumably) does nothing,
+   but its result must also conform to the ``Ignorable`` protocol.
+
+   .. testcode:: associatedTypes_noop
+
+      -> protocol Ignorable {
+         function doNothing() -> Ignorable
       }
 
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
