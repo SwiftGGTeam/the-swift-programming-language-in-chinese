@@ -852,6 +852,61 @@ to translate (and reverse) the indices.
          function doNothing() -> Ignorable
       }
 
+::
+
+    // This doesn't work, conceptually, because Container supports append(_:)
+    // but a slice can only do append if it's taken from the end
+    protocol SliceableContainer: Container {
+        associatedType Slice: Container where Slice.Item == Item
+        subscript(i: Int, j: Int) -> Slice { get }
+    }
+
+::
+
+    // It works if you pin the slice to the end,
+    // although there's not really an obvious motivating reason to allow that...
+    protocol SliceableContainer: Container {
+        associatedType Slice: Container where Slice.Item == Item
+        sliceFromEnd(size: Int) -> Slice
+    }
+
+    // Simple implementation -- make a copy right away,
+    // and use the same type.
+    extension IntStack: SliceableContainer {
+        sliceFromEnd(size: Int) -> IntStack {
+            var result = IntStack()
+            for index in (count-size)..<count {
+                result.append(self[index])
+            }
+            return result
+        }
+    }
+
+    // Alternate implementation -- return a slice of the underlying array,
+    // so a differen type and no immediate copy.
+    extension IntStack: SliceableContainer {
+        sliceFromEnd(size: Int) -> ArraySlice {
+            return items[count-size...]
+        }
+    }
+
+::
+
+    // Aside:
+    // For conditional conformance, we could use this example.
+    // It might be possible to relax the requirement that T and Self
+    // need to have the same Item type, since cross-type '==' comparison
+    // can be well defined.
+    extension Container: Equatable where Item: Equatable {
+        func ==<T: Container, T.Item == Item>(_ other: T) {
+            guard count == other.count else { return false }
+            for i in 0..<count {
+                if self[i] != other[i] { return false }
+            }
+            return true
+        }
+    }
+
 .. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
 
 Extending an Existing Type to Specify an Associated Type
