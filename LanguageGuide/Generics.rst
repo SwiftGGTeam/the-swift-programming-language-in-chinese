@@ -827,103 +827,32 @@ Recursive Protocol Constraints
    Just because the SE proposal called it this
    doesn't actually mean we have to.
 
-.. Outline
-   - Suppose you want to model containers whose elements can be reversed.
-   - Simple way:
-         protocol ReversibleContainer: Container { func reversed() -> Container }
-   - But if a container con be reversed once,
-     the reversed version should be reversible too.
-   - Ok, how about:
-         protocol ReversibleContainer: Container { func reversed() -> ReversibleContainer }
-   - Nope...  ReversibleContainer it has an associated type,
-     so it can be used only as a generic constraint.
-   - You also don't want:
-         protocol ReversibleContainer: Container { func reversed() -> Self }
-   - This requires the container to return exactly the same type
-     when you reverse it.
-   - Using an associated type lets you
-     wrap the old container in a "reverser" type
-     and iterate it backwards, without needing to copy it.
-
 A protocol can appear as part of its own requirements.
 For example,
-here's a protocol for containers that support a *reverse* operation:
+here's a protocol for containers that can return
+another container with the given number of elements
+from the end.
 
 .. testcode:: associatedTypes
 
-   -> protocol ReversibleContainer: Container {
-          associatedtype Reversed: ReversibleContainer where Reversed.Item == Item
-          func reversed() -> Reversed
-      }
+    -> protocol SliceableContainer: Container {
+           associatedType Slice: SliceableContainer where Slice.Item == Item
+           func suffix(_ size: Int) -> Slice
+       }
 
-The associated ``Reversed`` type
-has two requirements:
-It must conform to the ``ReversibleContainer`` protocol,
-and its ``Item`` type must be the same as the container's ``Item`` type.
-The ``reversed()`` method uses this type as its return value.
+The associated ``Slice`` type
+can be any sliceable container
+whose ``Item`` type is the same as this container's ``Item`` type.
+The ``suffix(_:)`` function uses ``Slice`` as its return type.
 
-This approach allows for more implementation flexibility
-than defining ``reversed()`` to return ``Self``.
-Returning ``Self`` would mean reversing a container
-always returns the exact same container type,
-meaning the *reverse* operation has to copy the container
-and reverse the copy.
-Allowing any reversible container
-still supports the copy-and-reverse implementation,
-but also supports using a wrapper type
-to translate (and reverse) the indices.
+.. XXX above para may need mor
 
-.. testcode:: associatedTypes
-
-   -> struct ReversedContainer {
-          private let container: Container
-          var count { return container.count }
-          subscript(i: Int) { return container[container.count - i] }
-
-          // append --- need to copy, reverse, then append
-      }
-
-.. XXX actually, maybe building a reversed-container wrapper is too complicated
-   to slot into the discussion at this point,
-   because of the fact that there's no way to transform append()
-   into an operation on the wrapped container.
-
-.. Another possible example... but probably to be discarded...
-   
-   For example,
-   the ``Ignorable`` protocol below
-   requires a ``doNothing()`` method.
-   That method (presumably) does nothing,
-   but its result must also conform to the ``Ignorable`` protocol.
-
-   .. testcode:: associatedTypes_noop
-
-      -> protocol Ignorable {
-         function doNothing() -> Ignorable
-      }
+.. XXX slice can be the same type
 
 ::
 
-    // This doesn't work, conceptually, because Container supports append(_:)
-    // but a slice can only do append if it's taken from the end
-    protocol SliceableContainer: Container {
-        associatedType Slice: Container where Slice.Item == Item
-        subscript(i: Int, j: Int) -> Slice { get }
-    }
-
-::
-
-    // It works if you pin the slice to the end,
-    // although there's not really an obvious motivating reason to allow that...
-    protocol SliceableContainer: Container {
-        associatedType Slice: Container where Slice.Item == Item
-        sliceFromEnd(size: Int) -> Slice
-    }
-
-    // Simple implementation -- make a copy right away,
-    // and use the same type.
     extension IntStack: SliceableContainer {
-        sliceFromEnd(size: Int) -> IntStack {
+        func suffix(_ size: Int) -> IntStack {
             var result = IntStack()
             for index in (count-size)..<count {
                 result.append(self[index])
@@ -932,21 +861,31 @@ to translate (and reverse) the indices.
         }
     }
 
-    // Alternate implementation -- return a slice of the underlying array,
-    // so a differen type and no immediate copy.
+Because ``Slice`` can be different from the type
+that conforms to ``SliceableContainer``,
+it's also possible for the slicing operation
+to return some other type.
+For example:
+
+::
+
+    extension Array: SliceableContainer {}
     extension IntStack: SliceableContainer {
-        sliceFromEnd(size: Int) -> ArraySlice {
-            return items[count-size...]
+        func suffix(_ size: Int) -> Array {
+            return Array(items[count-size...])
         }
     }
 
-::
+.. XXX Is the explicit Array() init in the return statement above needed?
+
+.. XXX
 
     // Aside:
     // For conditional conformance, we could use this example.
     // It might be possible to relax the requirement that T and Self
     // need to have the same Item type, since cross-type '==' comparison
     // can be well defined.
+
     extension Container: Equatable where Item: Equatable {
         func ==<T: Container, T.Item == Item>(_ other: T) {
             guard count == other.count else { return false }
