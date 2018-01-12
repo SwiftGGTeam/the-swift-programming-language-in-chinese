@@ -2142,11 +2142,7 @@ Extension declarations are declared using the ``extension`` keyword and have the
 
 .. syntax-outline::
 
-    extension <#type name#>: <#adopted protocols#> {
-       <#declarations#>
-    }
-
-    extension <#type name#> where <#requirements#> {
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
        <#declarations#>
     }
 
@@ -2166,14 +2162,20 @@ the extension extends all types that conform to that protocol.
 Declarations in a protocol extension's body
 can't be marked ``final``.
 
+Extension declarations that extend a generic type
+or a protocol with associated types
+can include *requirements*.
+If an instance of the extended type
+or of a type that conforms to the extended protocol
+satisfies the *requirements*,
+the instance gains the behavior specified in the declaration.
+
 Extension declarations can add protocol conformance to an existing
-class, structure, and enumeration type in the *adopted protocols*.
+class, structure, or enumeration type in the *adopted protocols*.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
-
-Extension declarations that extend a generic type can include *requirements*.
-If an instance of the extended type satisfies the *requirements*,
-the instance gains the behavior specified in the declaration.
+If an extension that adds protocol conformance also includes requirements,
+only instances of the extended type that satisfy the requirements gain that conformance.
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
@@ -2224,8 +2226,7 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT generic-where-clause-OPT extension-body
     extension-body --> ``{`` extension-members-OPT ``}``
 
     extension-members --> extension-member extension-members-OPT
