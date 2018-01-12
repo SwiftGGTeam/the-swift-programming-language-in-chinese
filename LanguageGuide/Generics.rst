@@ -768,6 +768,56 @@ and the return type of the subscript.
 Swift can therefore infer that ``Element`` is the appropriate type to use
 as the ``Item`` for this particular container.
 
+.. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
+
+Extending an Existing Type to Specify an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can extend an existing type to add conformance to a protocol,
+as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+This includes a protocol with an associated type.
+
+Swift's ``Array`` type already provides an ``append(_:)`` method,
+a ``count`` property, and a subscript with an ``Int`` index to retrieve its elements.
+These three capabilities match the requirements of the ``Container`` protocol.
+This means that you can extend ``Array`` to conform to the ``Container`` protocol
+simply by declaring that ``Array`` adopts the protocol.
+You do this with an empty extension,
+as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
+
+.. testcode:: associatedTypes
+
+   -> extension Array: Container {}
+
+Array's existing ``append(_:)`` method and subscript enable Swift to infer
+the appropriate type to use for ``Item``,
+just as for the generic ``Stack`` type above.
+After defining this extension, you can use any ``Array`` as a ``Container``.
+
+.. _Generics_ConstrainAssociatedType:
+
+Using Type Annotations to Constrain an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can add a type annotation to an associated type in a protocol,
+to require that conforming types satisfy the constraints
+described by the type annotation.
+For example,
+the following code defines a version of ``Container``
+that requires the items in the container to be equatable.
+
+.. testcode:: associatedTypes-equatable
+
+   -> protocol Container {
+         associatedtype Item: Equatable
+         mutating func append(_ item: Item)
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+      }
+
+To conform to this version of ``Container``,
+the container's ``Item`` type has to conform to the ``Equatable`` protocol.
+
 .. _Generics_RecursiveProtocol:
 
 Recursive Protocol Constraints
@@ -906,56 +956,6 @@ to translate (and reverse) the indices.
             return true
         }
     }
-
-.. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
-
-Extending an Existing Type to Specify an Associated Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can extend an existing type to add conformance to a protocol,
-as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
-This includes a protocol with an associated type.
-
-Swift's ``Array`` type already provides an ``append(_:)`` method,
-a ``count`` property, and a subscript with an ``Int`` index to retrieve its elements.
-These three capabilities match the requirements of the ``Container`` protocol.
-This means that you can extend ``Array`` to conform to the ``Container`` protocol
-simply by declaring that ``Array`` adopts the protocol.
-You do this with an empty extension,
-as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
-
-.. testcode:: associatedTypes
-
-   -> extension Array: Container {}
-
-Array's existing ``append(_:)`` method and subscript enable Swift to infer
-the appropriate type to use for ``Item``,
-just as for the generic ``Stack`` type above.
-After defining this extension, you can use any ``Array`` as a ``Container``.
-
-.. _Generics_ConstrainAssociatedType:
-
-Using Type Annotations to Constrain an Associated Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can add a type annotation to an associated type in a protocol,
-to require that conforming types satisfy the constraints
-described by the type annotation.
-For example,
-the following code defines a version of ``Container``
-that requires the items in the container to be equatable.
-
-.. testcode:: associatedTypes-equatable
-
-   -> protocol Container {
-         associatedtype Item: Equatable
-         mutating func append(_ item: Item)
-         var count: Int { get }
-         subscript(i: Int) -> Item { get }
-      }
-
-To conform to this version of ``Container``,
-the container's ``Item`` type has to conform to the ``Equatable`` protocol.
 
 .. _Generics_WhereClauses:
 
