@@ -857,6 +857,37 @@ adopt and conform to the ``TextRepresentable`` protocol:
    -> print(game.textualDescription)
    <- A game of Snakes and Ladders with 25 squares
 
+.. _Protocols_DeclaringConditionalConformanceToAProtocol:
+
+Declaring Conditional Conformance to a Protocol
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A generic type may only be able to satisfy the requirements of a protocol
+under certain conditions,
+such as when the type's generic parameter conforms to the protocol.
+You can make a generic type conditionally conform to a protocol
+by listing constraints when extending the type to adopt and conform.
+Write these constraints after the name of the protocol you're adopting
+using a generic ``where`` clause,
+as described in :ref:`Generics_WhereClauses`.
+
+.. testcode:: protocols
+   :compile: true
+
+   -> extension Array: TextRepresentable where Element: TextRepresentable {
+         var textualDescription: String {
+            let itemsAsText = self.map { $0.textualDescription }
+            return "[" + itemsAsText.joined(separator: ", ") + "]"
+         }
+      }
+      let myDice = [d6, d12]
+   -> print(myDice.textualDescription)
+   <- ["A 6-sided dice", "A 12-sided dice"]
+
+With this extension,
+``Array`` instances conform to the ``TextRepresentable`` protocol
+whenever they store elements of a type that conforms to ``TextRepresentable``.
+
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
 
 Declaring Protocol Adoption with an Extension
