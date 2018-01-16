@@ -1317,7 +1317,7 @@ to access a property of an optional string:
    ---
    // Do the same thing using a key path.
    -> let count = greetings[keyPath: \[String].first?.count]
-   << // count : String.IndexDistance? = Optional(5)
+   << // count : Int? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
 
