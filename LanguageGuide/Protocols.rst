@@ -1630,41 +1630,49 @@ as described in :ref:`Generics_WhereClauses`.
 For instance,
 you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
-to the ``TextRepresentable`` protocol from the example above.
+to the ``Equatable`` protocol.
+Constraining a collection's elements to the ``Equatable`` protocol,
+a part of the standard library,
+lets you use the `==` and `!=` operators to check for equality and inequality.
+
 
 .. testcode:: protocols
 
-   -> extension Collection where Iterator.Element: TextRepresentable {
-          var textualDescription: String {
-              let itemsAsText = self.map { $0.textualDescription }
-              return "[" + itemsAsText.joined(separator: ", ") + "]"
+   -> extension Collection where Element: Equatable {
+          func allEqual() -> Bool {
+              for element in self {
+                  if element != self.first {
+                      return false
+                  }
+              }
+              return true
           }
       }
 
-The ``textualDescription`` property returns the textual description
-of the entire collection by concatenating the textual representation
-of each element in the collection into a comma-separated list, enclosed in brackets.
+The ``allEqual()`` method returns ``true``
+if all the elements in the collection are equal.
+If the collection contains any elements that aren't equal to the others,
+the method returns ``false``.
 
-Consider the ``Hamster`` structure from before,
-which conforms to the ``TextRepresentable`` protocol,
-and an array of ``Hamster`` values:
+Consider two arrays of integers,
+one where all the elements are the same,
+and one where they aren't:
 
 .. testcode:: protocols
 
-   -> let murrayTheHamster = Hamster(name: "Murray")
-   -> let morganTheHamster = Hamster(name: "Morgan")
-   -> let mauriceTheHamster = Hamster(name: "Maurice")
-   -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+   -> let equalNumbers = [100, 100, 100, 100, 100]
+   -> let differentNumbers = [100, 100, 200, 100, 200]
 
 Because ``Array`` conforms to ``Collection``
-and the array's elements conform to the ``TextRepresentable`` protocol,
-the array can use the ``textualDescription`` property
-to get a textual representation of its contents:
+and integers conform to the ``Equatable`` protocol,
+the arrays can use the ``allEqual()`` method:
 
 .. testcode:: protocols
 
-   -> print(hamsters.textualDescription)
-   <- [A hamster named Murray, A hamster named Morgan, A hamster named Maurice]
+   -> print(equalNumbers.allEqual())
+   <- true
+   -> print(differentNumbers.allEqual())
+   <- false
 
 .. note::
 
