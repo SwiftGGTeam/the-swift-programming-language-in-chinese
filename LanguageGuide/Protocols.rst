@@ -1531,7 +1531,8 @@ Once the counter reaches zero, no more counting takes place:
 Protocol Extensions
 -------------------
 
-Protocols can be extended to provide method and property implementations
+Protocols can be extended to provide method, 
+initializer, subscript, and computed property implementations
 to conforming types.
 This allows you to define behavior on protocols themselves,
 rather than in each type's individual conformance or in a global function.
@@ -1567,6 +1568,10 @@ without any additional modification.
 
 .. The extra scope in the above test code allows this 'generator' variable to shadow
    the variable that already exists from a previous testcode block.
+
+Protocol extensions can add implementations to conforming types,
+but can't make a protocol extend or inherit from another protocol.
+Protocol inheritance is always specified in the protocol declaration itself.
 
 .. _Protocols_ProvidingDefaultImplementations:
 
