@@ -1216,7 +1216,7 @@ to check if it contains a value:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if assumedString != nil {
-         print(assumedString)
+         print(assumedString!)
       }
    <- An implicitly unwrapped optional string.
 
