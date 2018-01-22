@@ -836,7 +836,7 @@ from the end.
 .. testcode:: associatedTypes
 
     -> protocol SliceableContainer: Container {
-           associatedType Slice: SliceableContainer where Slice.Item == Item
+           associatedtype Slice: SliceableContainer where Slice.Item == Item
            func suffix(_ size: Int) -> Slice
        }
 
