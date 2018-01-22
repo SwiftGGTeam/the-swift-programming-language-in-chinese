@@ -849,17 +849,17 @@ The ``suffix(_:)`` function uses ``Slice`` as its return type.
 
 .. XXX slice can be the same type
 
-::
+.. testcode:: associatedTypes
 
-    extension IntStack: SliceableContainer {
-        func suffix(_ size: Int) -> IntStack {
-            var result = IntStack()
-            for index in (count-size)..<count {
-                result.append(self[index])
-            }
-            return result
-        }
-    }
+    -> extension IntStack: SliceableContainer {
+           func suffix(_ size: Int) -> IntStack {
+               var result = IntStack()
+               for index in (count-size)..<count {
+                   result.append(self[index])
+               }
+               return result
+           }
+       }
 
 Because ``Slice`` can be different from the type
 that conforms to ``SliceableContainer``,
@@ -867,16 +867,18 @@ it's also possible for the slicing operation
 to return some other type.
 For example:
 
-::
+.. testcode:: associatedTypes
 
-    extension Array: SliceableContainer {}
-    extension IntStack: SliceableContainer {
-        func suffix(_ size: Int) -> Array {
-            return Array(items[count-size...])
-        }
-    }
+    -> extension Array: SliceableContainer {}
+    -> extension IntStack: SliceableContainer {
+           func suffix(_ size: Int) -> Array {
+               return Array(items[count-size...])
+           }
+       }
 
 .. XXX Is the explicit Array() init in the return statement above needed?
+
+.. XXX Swift can't infer the Slice type in the above example.
 
 .. XXX
 
