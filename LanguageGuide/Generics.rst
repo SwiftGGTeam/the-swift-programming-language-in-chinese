@@ -823,80 +823,56 @@ the container's ``Item`` type has to conform to the ``Equatable`` protocol.
 Recursive Protocol Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. XXX: Probably need a better name.
-   Just because the SE proposal called it this
-   doesn't actually mean we have to.
-
 A protocol can appear as part of its own requirements.
 For example,
-here's a protocol for containers that can return
-another container with the given number of elements
-from the end.
+here's a protocol that refines the ``Container`` protocol,
+adding the requirement of a ``suffix(_:)`` method.
 
 .. testcode:: associatedTypes
 
-    -> protocol SliceableContainer: Container {
-           associatedtype Slice: SliceableContainer where Slice.Item == Item
-           func suffix(_ size: Int) -> Slice
+    -> protocol SuffixableContainer: Container {
+           associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
+           func suffix(_ size: Int) -> Suffix
        }
 
-The associated ``Slice`` type
-can be any sliceable container
-whose ``Item`` type is the same as this container's ``Item`` type.
-The ``suffix(_:)`` function uses ``Slice`` as its return type.
+In this protocol,
+``Suffix`` is an associated type,
+like the ``Item`` type in the ``Container`` example above.
+``Suffix`` has two requirements:
+it must conform to the ``SuffixableContainer`` protocol
+(the protocol currently being defined),
+and its ``Item`` type must be the same
+as the container's ``Item`` type.
 
-.. XXX above para may need mor
-
-.. XXX slice can be the same type
+Here's an extension of the ``Stack`` type from earlier
+that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes
 
-    -> extension IntStack: SliceableContainer {
-           func suffix(_ size: Int) -> IntStack {
-               var result = IntStack()
+    -> extension Stack: SuffixableContainer {
+           func suffix(_ size: Int) -> Stack {
+               var result = Stack()
                for index in (count-size)..<count {
                    result.append(self[index])
                }
                return result
            }
        }
+    >> var s = Stack<Int>()
+    << // s : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    >> s.append(10)
+    >> s.append(20)
+    >> s.append(30)
+    >> s.suffix(0)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    >> s.suffix(2)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
 
-Because ``Slice`` can be different from the type
-that conforms to ``SliceableContainer``,
-it's also possible for the slicing operation
-to return some other type.
-For example:
-
-.. testcode:: associatedTypes
-
-    -> extension Array: SliceableContainer {}
-    -> extension IntStack: SliceableContainer {
-           func suffix(_ size: Int) -> Array {
-               return Array(items[count-size...])
-           }
-       }
-
-.. XXX Is the explicit Array() init in the return statement above needed?
-
-.. XXX Swift can't infer the Slice type in the above example.
-
-.. XXX
-
-    // Aside:
-    // For conditional conformance, we could use this example.
-    // It might be possible to relax the requirement that T and Self
-    // need to have the same Item type, since cross-type '==' comparison
-    // can be well defined.
-
-    extension Container: Equatable where Item: Equatable {
-        func ==<T: Container, T.Item == Item>(_ other: T) {
-            guard count == other.count else { return false }
-            for i in 0..<count {
-                if self[i] != other[i] { return false }
-            }
-            return true
-        }
-    }
+In this example,
+the suffix operation on ``Stack`` returns another ``Stack``.
+However, ``Suffix`` can be different from the type
+that conforms to ``SuffixableContainer`` ---
+meaning the suffix operation returns a different type.
 
 .. _Generics_WhereClauses:
 
