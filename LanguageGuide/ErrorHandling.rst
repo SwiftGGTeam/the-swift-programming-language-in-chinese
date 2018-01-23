@@ -381,7 +381,7 @@ caught by the calling function:
     -> do {
            try nourish(with: "Beet-Flavored Chips")
        } catch {
-           print("Unexpected, non-vending-machine-related error: \(error)")
+           print("Unexpected non-vending-machine-related error: \(error)")
        }
     <- Invalid selection, out of stock, or not enough money.
 
