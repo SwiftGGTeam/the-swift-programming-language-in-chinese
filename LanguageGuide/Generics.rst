@@ -864,15 +864,40 @@ that adds conformance to the ``SuffixableContainer`` protocol:
     >> s.append(20)
     >> s.append(30)
     >> s.suffix(0)
-    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
     >> s.suffix(2)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
 
-In this example,
+In the example above,
 the suffix operation on ``Stack`` returns another ``Stack``.
 However, ``Suffix`` can be different from the type
 that conforms to ``SuffixableContainer`` ---
-meaning the suffix operation returns a different type.
+meaning the suffix operation can return a different type.
+For example,
+here's an extension to the nongeneric ``IntStack`` type
+that adds ``SuffixableContainer`` conformance,
+using ``Stack<Int>`` as its suffix type instead of ``IntStack``:
+
+.. testcode:: associatedTypes
+
+    -> extension IntStack: SuffixableContainer {
+           func suffix(_ size: Int) -> Stack<Int> {
+               var result = Stack<Int>()
+               for index in (count-size)..<count {
+                   result.append(self[index])
+               }
+               return result
+           }
+       }
+    >> var intStack = IntStack()
+    << // intStack : IntStack = REPL.IntStack(items: [])
+    >> intStack.append(10)
+    >> intStack.append(20)
+    >> intStack.append(30)
+    >> intStack.suffix(0)
+    >> intStack.suffix(2)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
 
 .. _Generics_WhereClauses:
 
