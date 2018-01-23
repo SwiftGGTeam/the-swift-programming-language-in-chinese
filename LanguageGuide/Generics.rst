@@ -820,7 +820,7 @@ the container's ``Item`` type has to conform to the ``Equatable`` protocol.
 
 .. _Generics_RecursiveProtocol:
 
-Using a Protocol in Its Associated Types' Constraints
+Using a Protocol in Its Associated Type's Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A protocol can appear as part of its own requirements.
