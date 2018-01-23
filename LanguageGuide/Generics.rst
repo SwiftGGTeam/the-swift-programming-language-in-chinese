@@ -857,6 +857,7 @@ that adds conformance to the ``SuffixableContainer`` protocol:
                }
                return result
            }
+           // Inferred that Suffix is Stack.
        }
     >> var s = Stack<Int>()
     << // s : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
@@ -888,6 +889,7 @@ using ``Stack<Int>`` as its suffix type instead of ``IntStack``:
                }
                return result
            }
+           // Inferred that Suffix is Stack<Int>.
        }
     >> var intStack = IntStack()
     << // intStack : IntStack = REPL.IntStack(items: [])
