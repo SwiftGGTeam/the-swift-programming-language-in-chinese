@@ -204,10 +204,10 @@ so they must be escaped with backticks in that context.
 
    -> func f(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
+   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
    !! func f(var x: Int) {}
    !!        ^~~
-   !! var x = x
+   !!-
 
 .. assertion:: let-requires-backticks
 

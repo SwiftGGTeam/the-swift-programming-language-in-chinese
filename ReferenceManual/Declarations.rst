@@ -568,7 +568,7 @@ a type alias can give a shorter and more convenient name
 to a type that is used frequently.
 For example:
 
-.. testcode:: typealias-in-prototol
+.. code-block:: swift
 
     -> protocol Sequence {
            associatedtype Iterator: IteratorProtocol
@@ -579,6 +579,10 @@ For example:
            // ...
     >>     return 9000
        }
+
+.. The code above shadows a protocol in the stdlib,
+   which causes a stack trace in the REPL.
+   Filed <rdar://problem/36549499>
 
 Without this type alias,
 the ``sum`` function would have to refer to the associated type
@@ -2208,15 +2212,14 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
+.. assertion:: extensions-can-have-where-clause-and-inheritance-together
 
-   >> protocol P { func foo() }
+   >> protocol P { func foo() -> Int }
    >> extension Array: P where Element: Equatable {
-   >>    func foo() {}
+   >>    func foo() -> Int { return 0 }
    >> }
-   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
-   !!    extension Array: P where Element: Equatable {
-   !!    ^                ~
+   >> [1, 2, 3].foo()
+   << // r0 : Int = 0
 
 .. langref-grammar
 
