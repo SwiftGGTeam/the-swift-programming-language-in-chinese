@@ -352,7 +352,7 @@ If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
 which decide whether to allow propagation to continue.
 If no pattern is matched, the error gets caught by the final ``catch``
-clause and is bound to a local ``error`` variable.
+clause and is bound to a local ``error`` constant.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
 
@@ -370,7 +370,7 @@ caught by the calling function:
 
 .. testcode:: errorHandling
 
-    -> func nourish(with item:String) throws {
+    -> func nourish(with item: String) throws {
            do {
                try vendingMachine.vend(itemNamed: item)
            } catch is VendingMachineError {
@@ -381,9 +381,9 @@ caught by the calling function:
     -> do {
            try nourish(with: "Beet-Flavored Chips")
        } catch {
-           print("Unexpected non-vending-machine-related error: \(error)")
+           print("Unexpected, non-vending-machine-related error: \(error)")
        }
-    << Invalid selection, out of stock, or not enough money.
+    <- Invalid selection, out of stock, or not enough money.
 
 In the ``nourish(with:)`` function,
 if ``vend(itemNamed:)`` throws an error that's
