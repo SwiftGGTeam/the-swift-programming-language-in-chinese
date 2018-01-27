@@ -838,7 +838,7 @@ adding the requirement of a ``suffix(_:)`` method.
 In this protocol,
 ``Suffix`` is an associated type,
 like the ``Item`` type in the ``Container`` example above.
-``Suffix`` has two requirements:
+``Suffix`` has two constraints:
 it must conform to the ``SuffixableContainer`` protocol
 (the protocol currently being defined),
 and its ``Item`` type must be the same
@@ -870,9 +870,11 @@ that adds conformance to the ``SuffixableContainer`` protocol:
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
 
 In the example above,
-the suffix operation on ``Stack`` returns another ``Stack``.
-However, ``Suffix`` can be different from the type
-that conforms to ``SuffixableContainer`` ---
+the ``Suffix`` associated type for ``Stack`` is also ``Stack``,
+so the suffix operation on ``Stack`` returns another ``Stack``.
+Alternatively,
+a type that conforms to ``SuffixableContainer``
+can have a ``Suffix`` type that's different from itself ---
 meaning the suffix operation can return a different type.
 For example,
 here's an extension to the nongeneric ``IntStack`` type
