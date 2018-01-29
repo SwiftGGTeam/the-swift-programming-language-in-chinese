@@ -7,6 +7,10 @@ This table describes the changes to *The Swift Programming Language*.
 Date        Notes
 ==========  ==============================================================================================
 2018-02-05  * Updated for Swift 4.1.
+
+            * Added information about
+              the ``canImport()`` and ``targetEnvironment()`` platform conditions
+              to :ref:`Statements_BuildConfigurationStatement`.
 ----------  ----------------------------------------------------------------------------------------------
 2017-12-04  * Updated for Swift 4.0.3.
 
