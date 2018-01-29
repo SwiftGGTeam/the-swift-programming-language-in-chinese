@@ -861,15 +861,17 @@ that adds conformance to the ``SuffixableContainer`` protocol:
            }
            // Inferred that Suffix is Stack.
        }
-    >> var s = Stack<Int>()
-    << // s : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
-    >> s.append(10)
-    >> s.append(20)
-    >> s.append(30)
-    >> s.suffix(0)
-    >> s.suffix(2)
+    -> var stackOfInts = Stack<Int>()
+    << // stackOfInts : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    -> stackOfInts.append(10)
+    -> stackOfInts.append(20)
+    -> stackOfInts.append(30)
+    >> stackOfInts.suffix(0)
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    -> let suffix = stackOfInts.suffix(2)
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
+    // suffix is a new instance of Stack<Int> that contains
+    // the two topmost items from stackOfInts, 20 and 30
 
 In the example above,
 the ``Suffix`` associated type for ``Stack`` is also ``Stack``,
