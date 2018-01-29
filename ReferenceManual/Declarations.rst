@@ -2142,11 +2142,12 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Extension declarations are declared using the ``extension`` keyword and have the following forms:
+Extension declarations are declared using the ``extension`` keyword
+and have the following form:
 
 .. syntax-outline::
 
-    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+    extension <#type name#> where <#requirements#> {
        <#declarations#>
     }
 
@@ -2175,14 +2176,18 @@ satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
 
 Extension declarations can add protocol conformance to an existing
-class, structure, or enumeration type in the *adopted protocols*.
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
-If an extension that adds protocol conformance also includes requirements,
-only instances of the extended type that satisfy the requirements gain that conformance.
+class, structure, or enumeration type by specifying *adopted protocols*:
+
+.. syntax-outline::
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
 
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
+Extension declarations can't add class inheritance to an existing class,
+and therefore you can specify only a list of protocols after the *type name* and colon.
 
 Extension declarations can contain initializer declarations. That said,
 if the type you're extending is defined in another module,

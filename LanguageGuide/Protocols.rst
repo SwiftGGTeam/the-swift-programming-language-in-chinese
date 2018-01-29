@@ -509,17 +509,6 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
    -> protocol P { init(i: Int) }
    -> class C: P { required init!(i: Int) {} }
    -> struct S: P { init!(i: Int) {} }
-   // This should actually work -- "expected" error below is due to <rdar://problem/36611041>
-   !! <REPL Input>:1:38: error: missing return in a function expected to return 'C!'
-   !! class C: P { required init!(i: Int) {} }
-   !! ^
-   !! <REPL Input>:1:30: error: missing return in a function expected to return 'S!'
-   !! struct S: P { init!(i: Int) {} }
-   !! ^
-
-.. The test above was also failing in the past because of <rdar://problem/27570549>.
-   The old expectation was:
-   xx Compiler segfaults due to <rdar://problem/27570549>
 
 .. _Protocols_ProtocolsAsTypes:
 
@@ -890,7 +879,7 @@ as described in :ref:`Generics_WhereClauses`.
       }
       let myDice = [d6, d12]
    -> print(myDice.textualDescription)
-   <- ["A 6-sided dice", "A 12-sided dice"]
+   <- [A 6-sided dice, A 12-sided dice]
 
 With this extension,
 ``Array`` instances conform to the ``TextRepresentable`` protocol
