@@ -856,8 +856,8 @@ adopt and conform to the ``TextRepresentable`` protocol:
 
 .. _Protocols_DeclaringConditionalConformanceToAProtocol:
 
-Declaring Conditional Conformance to a Protocol
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Conditionally Conforming to a Protocol
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A generic type may only be able to satisfy the requirements of a protocol
 under certain conditions,
