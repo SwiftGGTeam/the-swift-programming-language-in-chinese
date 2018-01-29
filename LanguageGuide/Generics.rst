@@ -828,8 +828,8 @@ For example,
 here's a protocol that refines the ``Container`` protocol,
 adding the requirement of a ``suffix(_:)`` method.
 The ``suffix(_:)`` method
-returns the final elements of the container,
-stored in an instance of the ``Suffix`` type.
+returns a given number of elements from the end of the container,
+storing them in an instance of the ``Suffix`` type.
 
 .. testcode:: associatedTypes
 
