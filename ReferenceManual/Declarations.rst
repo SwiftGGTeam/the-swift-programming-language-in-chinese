@@ -2198,17 +2198,6 @@ only instances of the extended type that satisfy the requirements gain that conf
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
 
-.. TODO: TR: Verify that this is indeed the correct about initializers.
-    For example, the Language Guide says:
-    "If you provide a new initializer via an extension,
-    you are still responsible for making sure that each instance is fully initialized
-    once the initializer has completed, as described in
-    :ref:`ClassesAndStructures_DefiniteInitialization`.
-    Depending on the type you are extending, you may need to
-    delegate to another initializer or call a superclass initializer
-    at the end of your own initializer,
-    to ensure that all instance properties are fully initialized."
-
 .. assertion:: extension-can-have-where-clause
 
    >> extension Array where Element: Equatable {
