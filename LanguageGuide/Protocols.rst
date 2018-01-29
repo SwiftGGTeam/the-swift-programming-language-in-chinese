@@ -859,11 +859,11 @@ adopt and conform to the ``TextRepresentable`` protocol:
 Conditionally Conforming to a Protocol
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A generic type may only be able to satisfy the requirements of a protocol
-under certain conditions,
+A generic type may be able to satisfy the requirements of a protocol
+only under certain conditions,
 such as when the type's generic parameter conforms to the protocol.
 You can make a generic type conditionally conform to a protocol
-by listing constraints when extending the type to adopt and conform.
+by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
 using a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
@@ -1566,7 +1566,7 @@ without any additional modification.
 .. The extra scope in the above test code allows this 'generator' variable to shadow
    the variable that already exists from a previous testcode block.
 
-Protocol extensions can add implementations to conforming types,
+Protocol extensions can add implementations to conforming types
 but can't make a protocol extend or inherit from another protocol.
 Protocol inheritance is always specified in the protocol declaration itself.
 
@@ -1633,10 +1633,9 @@ For instance,
 you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
 to the ``Equatable`` protocol.
-Constraining a collection's elements to the ``Equatable`` protocol,
+By constraining a collection's elements to the ``Equatable`` protocol,
 a part of the standard library,
-lets you use the `==` and `!=` operators to check for equality and inequality.
-
+you can use the ``==`` and ``!=`` operators to check for equality and inequality between two elements.
 
 .. testcode:: protocols
 
@@ -1652,9 +1651,7 @@ lets you use the `==` and `!=` operators to check for equality and inequality.
       }
 
 The ``allEqual()`` method returns ``true``
-if all the elements in the collection are equal.
-If the collection contains any elements that aren't equal to the others,
-the method returns ``false``.
+only if all the elements in the collection are equal.
 
 Consider two arrays of integers,
 one where all the elements are the same,
@@ -1665,9 +1662,9 @@ and one where they aren't:
    -> let equalNumbers = [100, 100, 100, 100, 100]
    -> let differentNumbers = [100, 100, 200, 100, 200]
 
-Because ``Array`` conforms to ``Collection``
-and integers conform to the ``Equatable`` protocol,
-the arrays can use the ``allEqual()`` method:
+Because arrays conform to ``Collection``
+and integers conform to ``Equatable``,
+``equalNumbers`` and ``differentNumbers`` can use the ``allEqual()`` method:
 
 .. testcode:: protocols
 
@@ -1680,7 +1677,7 @@ the arrays can use the ``allEqual()`` method:
 
     If a conforming type satisfies the requirements for multiple constrained extensions
     that provide implementations for the same method or property,
-    Swift will use the implementation corresponding to the most specialized constraints.
+    Swift uses the implementation corresponding to the most specialized constraints.
 
     .. TODO: It would be great to pull this out of a note,
        but we should wait until we have a better narrative that shows how this
