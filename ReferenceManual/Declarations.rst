@@ -2184,6 +2184,9 @@ class, structure, or enumeration type by specifying *adopted protocols*:
        <#declarations#>
     }
 
+If an extension that adds protocol conformance also includes requirements,
+only instances of the extended type that satisfy the requirements gain that conformance.
+
 Properties, methods, and initializers of an existing type
 can't be overridden in an extension of that type.
 Extension declarations can't add class inheritance to an existing class,
