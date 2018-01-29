@@ -2142,13 +2142,10 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Extension declarations are declared using the ``extension`` keyword and have the following forms:
+Extension declarations are declared using the ``extension`` keyword
+and have the following form:
 
 .. syntax-outline::
-
-    extension <#type name#>: <#adopted protocols#> {
-       <#declarations#>
-    }
 
     extension <#type name#> where <#requirements#> {
        <#declarations#>
@@ -2170,33 +2167,36 @@ the extension extends all types that conform to that protocol.
 Declarations in a protocol extension's body
 can't be marked ``final``.
 
-Extension declarations can add protocol conformance to an existing
-class, structure, and enumeration type in the *adopted protocols*.
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
-
-Extension declarations that extend a generic type can include *requirements*.
-If an instance of the extended type satisfies the *requirements*,
+Extension declarations that extend a generic type
+or a protocol with associated types
+can include *requirements*.
+If an instance of the extended type
+or of a type that conforms to the extended protocol
+satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
-
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
 
 Extension declarations can contain initializer declarations. That said,
 if the type you're extending is defined in another module,
 an initializer declaration must delegate to an initializer already defined in that module
 to ensure members of that type are properly initialized.
 
-.. TODO: TR: Verify that this is indeed the correct about initializers.
-    For example, the Language Guide says:
-    "If you provide a new initializer via an extension,
-    you are still responsible for making sure that each instance is fully initialized
-    once the initializer has completed, as described in
-    :ref:`ClassesAndStructures_DefiniteInitialization`.
-    Depending on the type you are extending, you may need to
-    delegate to another initializer or call a superclass initializer
-    at the end of your own initializer,
-    to ensure that all instance properties are fully initialized."
+Properties, methods, and initializers of an existing type
+can't be overridden in an extension of that type.
+
+Extension declarations can add protocol conformance to an existing
+class, structure, or enumeration type by specifying *adopted protocols*:
+
+.. syntax-outline::
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
+
+If an extension that adds protocol conformance also includes requirements,
+only instances of the extended type that satisfy the requirements gain that conformance.
+
+Extension declarations can't add class inheritance to an existing class,
+and therefore you can specify only a list of protocols after the *type name* and colon.
 
 .. assertion:: extension-can-have-where-clause
 
@@ -2227,8 +2227,7 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT generic-where-clause-OPT extension-body
     extension-body --> ``{`` extension-members-OPT ``}``
 
     extension-members --> extension-member extension-members-OPT

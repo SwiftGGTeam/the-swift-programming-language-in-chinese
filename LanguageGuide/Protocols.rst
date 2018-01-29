@@ -867,6 +867,37 @@ adopt and conform to the ``TextRepresentable`` protocol:
    -> print(game.textualDescription)
    <- A game of Snakes and Ladders with 25 squares
 
+.. _Protocols_DeclaringConditionalConformanceToAProtocol:
+
+Conditionally Conforming to a Protocol
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A generic type may be able to satisfy the requirements of a protocol
+only under certain conditions,
+such as when the type's generic parameter conforms to the protocol.
+You can make a generic type conditionally conform to a protocol
+by listing constraints when extending the type.
+Write these constraints after the name of the protocol you're adopting
+using a generic ``where`` clause,
+as described in :ref:`Generics_WhereClauses`.
+
+.. testcode:: protocols
+   :compile: true
+
+   -> extension Array: TextRepresentable where Element: TextRepresentable {
+         var textualDescription: String {
+            let itemsAsText = self.map { $0.textualDescription }
+            return "[" + itemsAsText.joined(separator: ", ") + "]"
+         }
+      }
+      let myDice = [d6, d12]
+   -> print(myDice.textualDescription)
+   <- [A 6-sided dice, A 12-sided dice]
+
+With this extension,
+``Array`` instances conform to the ``TextRepresentable`` protocol
+whenever they store elements of a type that conforms to ``TextRepresentable``.
+
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
 
 Declaring Protocol Adoption with an Extension
@@ -1510,7 +1541,8 @@ Once the counter reaches zero, no more counting takes place:
 Protocol Extensions
 -------------------
 
-Protocols can be extended to provide method and property implementations
+Protocols can be extended to provide method, 
+initializer, subscript, and computed property implementations
 to conforming types.
 This allows you to define behavior on protocols themselves,
 rather than in each type's individual conformance or in a global function.
@@ -1546,6 +1578,10 @@ without any additional modification.
 
 .. The extra scope in the above test code allows this 'generator' variable to shadow
    the variable that already exists from a previous testcode block.
+
+Protocol extensions can add implementations to conforming types
+but can't make a protocol extend or inherit from another protocol.
+Protocol inheritance is always specified in the protocol declaration itself.
 
 .. _Protocols_ProvidingDefaultImplementations:
 
@@ -1609,47 +1645,52 @@ as described in :ref:`Generics_WhereClauses`.
 For instance,
 you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
-to the ``TextRepresentable`` protocol from the example above.
+to the ``Equatable`` protocol.
+By constraining a collection's elements to the ``Equatable`` protocol,
+a part of the standard library,
+you can use the ``==`` and ``!=`` operators to check for equality and inequality between two elements.
 
 .. testcode:: protocols
 
-   -> extension Collection where Iterator.Element: TextRepresentable {
-          var textualDescription: String {
-              let itemsAsText = self.map { $0.textualDescription }
-              return "[" + itemsAsText.joined(separator: ", ") + "]"
+   -> extension Collection where Element: Equatable {
+          func allEqual() -> Bool {
+              for element in self {
+                  if element != self.first {
+                      return false
+                  }
+              }
+              return true
           }
       }
 
-The ``textualDescription`` property returns the textual description
-of the entire collection by concatenating the textual representation
-of each element in the collection into a comma-separated list, enclosed in brackets.
+The ``allEqual()`` method returns ``true``
+only if all the elements in the collection are equal.
 
-Consider the ``Hamster`` structure from before,
-which conforms to the ``TextRepresentable`` protocol,
-and an array of ``Hamster`` values:
-
-.. testcode:: protocols
-
-   -> let murrayTheHamster = Hamster(name: "Murray")
-   -> let morganTheHamster = Hamster(name: "Morgan")
-   -> let mauriceTheHamster = Hamster(name: "Maurice")
-   -> let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
-
-Because ``Array`` conforms to ``Collection``
-and the array's elements conform to the ``TextRepresentable`` protocol,
-the array can use the ``textualDescription`` property
-to get a textual representation of its contents:
+Consider two arrays of integers,
+one where all the elements are the same,
+and one where they aren't:
 
 .. testcode:: protocols
 
-   -> print(hamsters.textualDescription)
-   <- [A hamster named Murray, A hamster named Morgan, A hamster named Maurice]
+   -> let equalNumbers = [100, 100, 100, 100, 100]
+   -> let differentNumbers = [100, 100, 200, 100, 200]
+
+Because arrays conform to ``Collection``
+and integers conform to ``Equatable``,
+``equalNumbers`` and ``differentNumbers`` can use the ``allEqual()`` method:
+
+.. testcode:: protocols
+
+   -> print(equalNumbers.allEqual())
+   <- true
+   -> print(differentNumbers.allEqual())
+   <- false
 
 .. note::
 
     If a conforming type satisfies the requirements for multiple constrained extensions
     that provide implementations for the same method or property,
-    Swift will use the implementation corresponding to the most specialized constraints.
+    Swift uses the implementation corresponding to the most specialized constraints.
 
     .. TODO: It would be great to pull this out of a note,
        but we should wait until we have a better narrative that shows how this
