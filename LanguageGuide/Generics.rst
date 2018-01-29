@@ -843,6 +843,8 @@ It must conform to the ``SuffixableContainer`` protocol
 (the protocol currently being defined),
 and its ``Item`` type must be the same
 as the container's ``Item`` type.
+The constraint on ``Item`` is a ``where`` clause,
+which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
 Here's an extension of the ``Stack`` type from earlier
 that adds conformance to the ``SuffixableContainer`` protocol:
