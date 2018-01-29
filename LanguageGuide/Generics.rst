@@ -827,6 +827,9 @@ A protocol can appear as part of its own requirements.
 For example,
 here's a protocol that refines the ``Container`` protocol,
 adding the requirement of a ``suffix(_:)`` method.
+The ``suffix(_:)`` method
+returns the final elements of the container,
+stored in an instance of the ``Suffix`` type.
 
 .. testcode:: associatedTypes
 
@@ -843,7 +846,7 @@ It must conform to the ``SuffixableContainer`` protocol
 (the protocol currently being defined),
 and its ``Item`` type must be the same
 as the container's ``Item`` type.
-The constraint on ``Item`` is a ``where`` clause,
+The constraint on ``Item`` is a generic ``where`` clause,
 which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
 Here's an extension of the ``Stack`` type from earlier
@@ -869,9 +872,8 @@ that adds conformance to the ``SuffixableContainer`` protocol:
     >> stackOfInts.suffix(0)
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
     -> let suffix = stackOfInts.suffix(2)
+    // suffix contains 20 and 30
     <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
-    // suffix is a new instance of Stack<Int> that contains
-    // the two topmost items from stackOfInts, 20 and 30
 
 In the example above,
 the ``Suffix`` associated type for ``Stack`` is also ``Stack``,
