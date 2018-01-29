@@ -839,7 +839,7 @@ In this protocol,
 ``Suffix`` is an associated type,
 like the ``Item`` type in the ``Container`` example above.
 ``Suffix`` has two constraints:
-it must conform to the ``SuffixableContainer`` protocol
+It must conform to the ``SuffixableContainer`` protocol
 (the protocol currently being defined),
 and its ``Item`` type must be the same
 as the container's ``Item`` type.
