@@ -2175,6 +2175,14 @@ or of a type that conforms to the extended protocol
 satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
 
+Extension declarations can contain initializer declarations. That said,
+if the type you're extending is defined in another module,
+an initializer declaration must delegate to an initializer already defined in that module
+to ensure members of that type are properly initialized.
+
+Properties, methods, and initializers of an existing type
+can't be overridden in an extension of that type.
+
 Extension declarations can add protocol conformance to an existing
 class, structure, or enumeration type by specifying *adopted protocols*:
 
@@ -2187,15 +2195,8 @@ class, structure, or enumeration type by specifying *adopted protocols*:
 If an extension that adds protocol conformance also includes requirements,
 only instances of the extended type that satisfy the requirements gain that conformance.
 
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
-
-Extension declarations can contain initializer declarations. That said,
-if the type you're extending is defined in another module,
-an initializer declaration must delegate to an initializer already defined in that module
-to ensure members of that type are properly initialized.
 
 .. TODO: TR: Verify that this is indeed the correct about initializers.
     For example, the Language Guide says:
