@@ -8,9 +8,8 @@ Date        Notes
 ==========  ==============================================================================================
 2018-02-05  * Updated for Swift 4.1.
 
-            * Added information about conditional protocol conformance
-              to the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
-              and the :ref:`Declarations_ExtensionDeclaration` section.
+            * Added the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
+              with information about conditional protocol conformance.
 
             * Added information about recursive protocol constraints
               to the :ref:`Generics_RecursiveProtocol` section.
