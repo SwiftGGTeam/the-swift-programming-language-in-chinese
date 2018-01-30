@@ -5,17 +5,15 @@
 
 [英文原版](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
 
-**如果想帮忙翻译或者校对，请加QQ群：480616051，谢谢！**
-
 # 在线阅读
 
 使用 Gitbook 制作，可以直接[在线阅读](http://swiftguide.cn/)。
 
 # 当前阶段
 
+Swift 4.0 翻译中，请到 issue 中认领章节。
 
-
-已经更新到 Swift 3.0。 2016-09-23
+- 更新到 Swift 3.0。 2016-09-23
 
 # 3.0 译者记录
 相关[issue](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/issues/628)
