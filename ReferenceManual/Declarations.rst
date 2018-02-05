@@ -2192,11 +2192,151 @@ class, structure, or enumeration type by specifying *adopted protocols*:
        <#declarations#>
     }
 
-If an extension that adds protocol conformance also includes requirements,
+You can add :newTerm:`conditional conformance` to a protocol
+by including requirements in an extension declaration.
+With conditional conformance to a protocol,
 only instances of the extended type that satisfy the requirements gain that conformance.
 
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+A concrete type can conform to a particular protocol only once,
+even if the requirements on multiple extensions are mutually exclusive.
+In this example, two extension declarations attempt to add conditional conformance
+to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
+
+.. testcode:: multiple-conformances
+
+   >> protocol Loggable {
+        func log()
+      }
+    
+      extension Loggable {
+        func log() {
+          print(self)
+        }
+      }
+      
+      extension Array: Loggable where Element == Int {}
+      extension Array: Loggable where Element == String {}
+   !! error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+
+.. NOTE:
+    Should this give a resolving example about how to implement this?
+    We could show making a dummy protocol, adding conformance to Int
+    and String, and then extending Array to conform to Loggable where
+    the element conforms to the dummy protocol.
+
+
+Extensions for Conditional Conformance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using conditional conformance, 
+specialized implementations of protocol requirements may not be called
+when used in a generic context.
+The following example declares the ``TitledLoggable``, 
+which inherits from ``Loggable``,
+and a generic ``Pair`` type that stores two values of a particular type.
+
+.. testcode:: conditional-conformance
+
+   >> protocol Loggable {
+        func log()
+      }
+      
+      extension Loggable {
+        func log() {
+          print(self)
+        }
+      }
+      
+      protocol TitledLoggable : Loggable { 
+        static var logTitle: String { get }
+      }
+      
+      extension TitledLoggable {
+        func log() {
+          print("\(Self.logTitle): \(self)")
+        }
+      }
+      
+      struct Pair<T> : CustomStringConvertible {
+        let first: T
+        let second: T
+        
+        var description: String {
+          return "\(first), \(second)"
+        }
+      }
+      
+      extension Pair: Loggable where T: Loggable {}
+      
+      extension Pair: TitledLoggable where T: TitledLoggable {
+        static var logTitle: String {
+          return "Pair of '\(T.logTitle)'"
+        }
+      }
+
+      extension String: TitledLoggable {
+         static var logTitle: String {
+            return "String"
+         }
+      }
+      
+The ``Pair`` type has conformance to ``Loggable`` and ``TitledLoggable``
+whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
+When the ``log()`` method is called on a ``Pair`` instance directly,
+the specialized version containing the title string is used.
+
+.. testcode:: conditional-conformance
+
+   >> Pair(first: "one", second: "two").log()
+   << Pair of 'String': (one, two)
+   
+However, when a ``Pair`` instance is used in a generic context
+or as an instance of the ``Loggable`` protocol,
+the specialized version is not used.
+When determining which ``log()`` implementation to call in this context,
+only the minimal requirements for ``Pair`` to conform to the ``Loggable`` protocol are used,
+even if the particular ``Pair`` instance conforms to ``TitledLoggable`` as well.
+For this reason, 
+the default implementation given by the ``Loggable`` protocol is used instead.
+
+.. testcode:: conditional-conformance
+
+   >> (Pair(first: "one", second: "two") as Loggable).log()
+   << (one, two)
+
+Implicit and Explicit Inheritance of Protocol Conformance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a type conditionally conforms to a protocol,
+that type implicitly conforms to any parent protocols with the same requirements.
+
+If a type must conditionally conform to two protocols that inherit from a single parent,
+conformance to the parent must be declared explicitly.
+The following example explicitly declares the conformance of ``Array`` to ``Loggable`` to avoid a conflict when declaring its conformance to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
+
+.. testcode:: conditional-conformance
+
+   >> protocol MarkedLoggable: Loggable {
+         func markAndLog()
+      }
+      
+      extension MarkedLoggable {
+         func markAndLog() {
+            print("----------")
+            log()
+         }
+      }
+
+      extension Array: Loggable where Element: Loggable {}
+      extension Array: TitledLoggable where Element: TitledLoggable {
+         var logTitle: String {
+            return "Array of '\(Element)'"
+         }
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable {} 
 
 .. assertion:: extension-can-have-where-clause
 
