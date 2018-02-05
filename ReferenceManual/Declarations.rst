@@ -2207,16 +2207,16 @@ to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
 
 .. testcode:: multiple-conformances
 
-   >> protocol Loggable {
+   -> protocol Loggable {
         func log()
       }
-    
+   ---
       extension Loggable {
         func log() {
           print(self)
         }
       }
-      
+   ---
       extension Array: Loggable where Element == Int {}
       extension Array: Loggable where Element == String {}
    !! error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
@@ -2226,7 +2226,6 @@ to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
     We could show making a dummy protocol, adding conformance to Int
     and String, and then extending Array to conform to Loggable where
     the element conforms to the dummy protocol.
-
 
 Extensions for Conditional Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2241,42 +2240,38 @@ and a generic ``Pair`` type that stores two values of a particular type.
 .. testcode:: conditional-conformance
 
    >> protocol Loggable {
-        func log()
-      }
-      
-      extension Loggable {
-        func log() {
-          print(self)
-        }
-      }
-      
-      protocol TitledLoggable : Loggable { 
+   >>   func log()
+   >> }
+   >> extension Loggable {
+   >>   func log() {
+   >>     print(self)
+   >>   }
+   >> }
+   -> protocol TitledLoggable : Loggable { 
         static var logTitle: String { get }
       }
-      
+   ---
       extension TitledLoggable {
         func log() {
           print("\(Self.logTitle): \(self)")
         }
       }
-      
+   ---
       struct Pair<T> : CustomStringConvertible {
         let first: T
         let second: T
-        
         var description: String {
           return "\(first), \(second)"
         }
       }
-      
-      extension Pair: Loggable where T: Loggable {}
-      
+   ---
+      extension Pair: Loggable where T: Loggable {}      
       extension Pair: TitledLoggable where T: TitledLoggable {
         static var logTitle: String {
           return "Pair of '\(T.logTitle)'"
         }
       }
-
+   ---
       extension String: TitledLoggable {
          static var logTitle: String {
             return "String"
@@ -2290,8 +2285,8 @@ the specialized version containing the title string is used.
 
 .. testcode:: conditional-conformance
 
-   >> Pair(first: "one", second: "two").log()
-   << Pair of 'String': (one, two)
+   -> Pair(first: "one", second: "two").log()
+   <- Pair of 'String': (one, two)
    
 However, when a ``Pair`` instance is used in a generic context
 or as an instance of the ``Loggable`` protocol,
@@ -2304,8 +2299,8 @@ the default implementation given by the ``Loggable`` protocol is used instead.
 
 .. testcode:: conditional-conformance
 
-   >> (Pair(first: "one", second: "two") as Loggable).log()
-   << (one, two)
+   -> (Pair(first: "one", second: "two") as Loggable).log()
+   <- (one, two)
 
 Implicit and Explicit Inheritance of Protocol Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2319,17 +2314,17 @@ The following example explicitly declares the conformance of ``Array`` to ``Logg
 
 .. testcode:: conditional-conformance
 
-   >> protocol MarkedLoggable: Loggable {
+   -> protocol MarkedLoggable: Loggable {
          func markAndLog()
       }
-      
+   ---
       extension MarkedLoggable {
          func markAndLog() {
             print("----------")
             log()
          }
       }
-
+   ---
       extension Array: Loggable where Element: Loggable {}
       extension Array: TitledLoggable where Element: TitledLoggable {
          var logTitle: String {
