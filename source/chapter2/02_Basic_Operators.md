@@ -334,6 +334,7 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 Swift 提供了几种方便表达一个区间的值的*区间运算符*。
 
 ### 闭区间运算符
+
 *闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。
 ‌
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在 `for-in` 循环中：
@@ -511,5 +512,3 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 ```
 
 这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰的地方加个括号吧！
-
-

@@ -142,6 +142,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 
 <a name="memberwise_initializers_for_structure_types"></a>
 ### 结构体类型的成员逐一构造器
+
 所有结构体都有一个自动生成的*成员逐一构造器*，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
 ```swift

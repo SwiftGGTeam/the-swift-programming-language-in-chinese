@@ -475,7 +475,7 @@ f()
 > *延迟语句* → **defer** [*代码块*](05_Declarations.md#code-block)
 
 <a name="do_statements"></a>
-## Do 语句    
+## Do 语句
 
 `do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量只能在 `do` 语句作用域内使用。    
 
@@ -623,7 +623,7 @@ do {
 > *文件名* → [*静态字符串字面量*](02_Lexical_Structure.md#static-string-literal)
 
 <a name="availability_condition"></a>
-### 可用性条件    
+### 可用性条件
 
 可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。    
 
@@ -661,5 +661,3 @@ if #available(平台名称 版本, ..., *) {
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits)     
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)  
 > *平台版本* → [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](02_Lexical_Structure.md#decimal-digits)
-
-

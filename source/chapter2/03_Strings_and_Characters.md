@@ -818,5 +818,3 @@ for scalar in dogString.unicodeScalars {
 // ‼
 // 🐶
 ```
-
-

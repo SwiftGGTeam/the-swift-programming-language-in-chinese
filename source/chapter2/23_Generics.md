@@ -694,4 +694,3 @@ extension Container {
 
 综合一下，这些约束意味着，传入到 `indices` 下标，是一个整型的序列.
 (译者：原来的 `Container` 协议，`subscript` 必须是 `Int` 型的，扩展中新的 `subscript`，允许下标是一个的序列，而非单一的值。)
-
