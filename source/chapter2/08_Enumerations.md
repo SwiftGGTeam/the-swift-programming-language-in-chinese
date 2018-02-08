@@ -267,6 +267,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 <a name="initializing_from_a_raw_value"></a>
 ### 使用原始值初始化枚举实例
+
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法接收一个叫做`rawValue`的参数，参数类型即为原始值类型，返回值则是枚举成员或`nil`。你可以使用这个初始化方法来创建一个新的枚举实例。
 
 这个例子利用原始值`7`创建了枚举成员`uranus`：

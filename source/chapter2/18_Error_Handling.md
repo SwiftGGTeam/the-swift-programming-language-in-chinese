@@ -257,5 +257,3 @@ func processFile(filename: String) throws {
 
 > 注意  
 > 即使没有涉及到错误处理，你也可以使用`defer`语句。
-
-

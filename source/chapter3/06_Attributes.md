@@ -29,6 +29,7 @@
 
 <a name="declaration_attributes"></a>
 ##声明特性
+
 声明特性只能应用于声明。
 
 `available`
@@ -180,6 +181,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 <a name="declaration_attributes_used_by_interface_builder"></a>
 ###Interface Builder 使用的声明特性
+
 `Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及`IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
 
 `IBOutlet` 和 `IBInspectable` 用于修饰一个类的属性声明，`IBAction` 特性用于修饰一个类的方法声明，`IBDesignable` 用于修饰类的声明。
@@ -188,6 +190,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 <a name="type_attributes"></a>
 ##类型特性
+
 类型特性只能用于修饰类型。
 
 `autoclosure`

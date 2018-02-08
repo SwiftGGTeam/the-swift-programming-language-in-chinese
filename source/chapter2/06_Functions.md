@@ -39,12 +39,13 @@ Swift 统一的函数语法非常的灵活，可以用来表示任何函数，�
 
 <a name="Defining_and_Calling_Functions"></a>
 ## 函数的定义与调用
+
 当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入，称为*参数*，也可以定义某种类型的值作为函数执行结束时的输出，称为*返回类型*。
 
 每个函数有个*函数名*，用来描述函数执行的任务。要使用一个函数时，用函数名来“调用”这个函数，并传给它匹配的输入值（称作 *实参* ）。函数的实参必须与函数参数表里参数的顺序一致。
 
 
-下面例子中的函数的名字是`greet(person:)`，之所以叫这个名字,是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `person` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
+下面例子中的函数的名字是`greet(person:)`，之所以叫这个名字，是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `person` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
 
 
 ```swift
@@ -87,6 +88,7 @@ print(greetAgain(person: "Anna"))
 
 <a name="Function_Parameters_and_Return_Values"></a>
 ## 函数参数与返回值
+
 函数参数与返回值在 Swift 中非常的灵活。你可以定义任何类型的函数，包括从只带一个未名参数的简单函数到复杂的带有表达性参数名和不同参数选项的复杂函数。
 
 <a name="functions_without_parameters"></a>
@@ -168,6 +170,7 @@ printWithoutCounting(string: "hello, world")
 
 <a name="functions_with_multiple_return_values"></a>
 ### 多重返回值函数
+
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
 下例中定义了一个名为 `minMax(array:)` 的函数，作用是在一个 `Int` 类型的数组中找出最小值与最大值。
@@ -498,7 +501,6 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 上面这个例子中计算出从 `currentValue` 逐渐接近到0是需要向正数走还是向负数走。`currentValue` 的初始值是 `3`，这意味着 `currentValue > 0` 为真（true），这将使得 `chooseStepFunction(_:)` 返回 `stepBackward(_:)` 函数。一个指向返回的函数的引用保存在了 `moveNearerToZero` 常量中。
 
 现在，`moveNearerToZero`指向了正确的函数，它可以被用来数到零：
-
 
 ```swift
 print("Counting to zero:")

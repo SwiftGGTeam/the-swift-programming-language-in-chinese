@@ -185,6 +185,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 
 <a name="comments"></a>
 ## 注释
+
 请将你的代码中的非执行文本注释成提示或者笔记以方便你将来阅读。Swift 的编译器将会在编译代码时自动忽略掉注释部分。
 
 Swift 中的注释与 C 语言的注释非常相似。单行注释以双正斜杠（`//`）作为起始标记:
@@ -212,6 +213,7 @@ Swift 中的注释与 C 语言的注释非常相似。单行注释以双正斜�
 
 <a name="semicolons"></a>
 ## 分号
+
 与其他大部分编程语言不同，Swift 并不强制要求你在每条语句的结尾处使用分号（`;`），当然，你也可以按照你自己的习惯添加分号。有一种情况下必须要用分号，即你打算在同一行内写多条独立的语句：
 
 ```swift
@@ -727,6 +729,7 @@ if let definiteString = assumedString {
 
 <a name="error_handling"></a>
 ## 错误处理
+
 你可以使用 *错误处理（error handling）* 来应对程序执行中可能会遇到的错误条件。
 
 相对于可选中运用值的存在与缺失来表达函数的成功与失败，错误处理可以推断失败的原因，并传播至程序的其他部分。
@@ -834,4 +837,3 @@ precondition(index > 0, "Index must be greater than zero.")
 > 注意：  
 > 如果你使用unchecked模式（-Ounchecked）编译代码，先决条件将不会进行检查。编译器假设所有的先决条件总是为true（真），他将优化你的代码。然而，`fatalError(_:file:line:)`函数总是中断执行，无论你怎么进行优化设定。  
 >你能使用 `fatalError(_:file:line:)`函数在设计原型和早期开发阶段，这个阶段只有方法的声明，但是没有具体实现，你可以在方法体中写上fatalError("Unimplemented")作为具体实现。因为fatalError不会像断言和先决条件那样被优化掉，所以你可以确保当代码执行到一个没有被实现的方法时，程序会被中断。
-

@@ -33,8 +33,3 @@ Swift的访问控制等级和继承无关，是单维度、非常清楚明了的
 本章节不是老码的原创，是老码认真的阅读了苹果的官方博客，自己的练习总结，如果小伙伴们费了吃奶的劲还是看不懂，请找度娘谷歌。还是看不懂？请到老码[官方微博](http://weibo.com/u/5241713117)咆哮。  
 
 ##### 本文由翻译自Apple Swift Blog ：[Access Control and Protected](原文地址：https://developer.apple.com/swift/blog/?id=11)
-
-
-
-
-

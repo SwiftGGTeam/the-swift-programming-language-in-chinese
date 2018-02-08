@@ -281,5 +281,3 @@ if player.tracker.advance(to: 6) {
 }
 // 打印 "level 6 has not yet been unlocked"
 ```
-
-
