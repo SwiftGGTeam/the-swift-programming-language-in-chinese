@@ -328,6 +328,7 @@
     "generics-genericfunctions": "ID181", 
     "generics-generictypes": "ID184", 
     "generics-namingtypeparameters": "ID183", 
+    "generics-recursiveprotocol": "ID575", 
     "generics-subscripts": "ID558", 
     "generics-theproblemthatgenericssolve": "ID180", 
     "generics-typeconstraints": "ID186", 
@@ -442,6 +443,7 @@
     "protocols-classimplementationsofprotocolinitializerrequirements": "ID273", 
     "protocols-classonlyprotocols": "ID281", 
     "protocols-collectionsofprotocoltypes": "ID279", 
+    "protocols-declaringconditionalconformancetoaprotocol": "ID574", 
     "protocols-declaringprotocoladoptionwithanextension": "ID278", 
     "protocols-delegation": "ID276", 
     "protocols-extensions": "ID521", 
@@ -591,5 +593,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 574
+  "next_id": 576
 }
